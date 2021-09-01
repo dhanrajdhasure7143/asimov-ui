@@ -18,8 +18,7 @@
     </div>
     <div class="modal-body modelprbody">
       <div class="container p-0" style="width:100%">
-        <form [formGroup]="createtaskForm" (ngSubmit)="savetasks()">
-            <div class="row">
+          <div class="row">
               <div class="form-fields col-md-12">
                 <label>Select Environment</label>
                   <select class="form-control" value="" [(ngModel)]="importenv">                        
@@ -44,13 +43,12 @@
               
               
             </div>
-        </form>
       </div>
     </div>      
     <div class="modal-footer modelprfooter">
       <div class="pull-right">
         <button (click)="importfile='';importcat='';importenv='';file_error='';modalRef.hide()" class="btn btn-default">Cancel</button>
-        <button class="btn btn-primary btn-update" [disabled]="importfile=='' || importcat=='' || importenv=='' || (file_error!=''&& importbotfile!='')" 
+        <button class="btn btn-primary btn-update" [disabled]="importfile=='' || importcat=='' || importenv=='' || file_error!=''" 
         (click)="importbotfile()">Import</button>        
       </div>
     </div> 
@@ -245,10 +243,10 @@
                 <!-- &nbsp;<span>{{bot.botStatus}}</span> -->
               </span>
 
-              <span *ngIf="bot.botStatus=='Stop'" class="tableActionsIcons">
-                <span class="bg-danger" >
+              <span *ngIf="bot.botStatus=='Stop' || bot.botStatus=='Stopped'" class="tableActionsIcons">
+                <span >
                   <!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">-->
-                  <img src="../../../../../assets/images/RPA/stop_fail_icon.svg" style="filter: none; width: 19px;">
+                  <img src="../../../../../assets/images/RPA/stop_fail_icon.svg" >
                 </span>
                   <!-- &nbsp;<span>{{bot.botStatus}}</span> -->
                 </span>

@@ -260,7 +260,10 @@ export class RestApiService{
 
 
 
-
+  updateBotLog(botid,version, runid)
+  {
+    return this.http.get(`/rpa-service/updateLog/${botid}/${version}/${runid}`)
+  }
 
   getbotlist(botType, botDepartment)
   {

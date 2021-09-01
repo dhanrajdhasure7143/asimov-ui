@@ -321,19 +321,20 @@ placeholder="Enter Environment Type" >-->
                             <input type="checkbox" formControlName="activeStatus"> Active
                         </div>
                     
-                        <div class="form-footer">
-                            
-                            <button class="btn btn-default"[disabled]="insertForm.invalid || submitted" (click)="resetEnvForm()" >Reset</button>
-                            <button class="btn btn-primary btn-test" [disabled]="insertForm.invalid" (click)="testConnection('insert')" >Test Connection</button>
-                            <button class="btn btn-primary"[disabled]="insertForm.invalid || submitted" (click)="saveEnvironment()" >Save</button>
-                            
-                            
-                          </div>
+                        
                     <!-- <input type="button" class="btn btn-primary" value="Save" (click)="saveEnvironment()" [disabled]="insertForm.invalid || submitted">
                     <input type="button" class="btn btn-primary" value="Test Connection" (click)="testConnection('insert')" [disabled]="insertForm.invalid">
                     <input type="button" class="btn btn-primary" value="Reset" (click)="resetEnvForm()"> -->
                 </form>
 
+                <div class="form-footer">
+                            
+                    <button class="btn btn-default"[disabled]="insertForm.invalid || submitted" (click)="resetEnvForm()" >Reset</button>
+                    <button class="btn btn-primary btn-test" [disabled]="insertForm.invalid" (click)="testConnection('insert')" >Test Connection</button>
+                    <button class="btn btn-primary"[disabled]="insertForm.invalid || submitted" (click)="saveEnvironment()" >Save</button>
+                    
+                    
+                  </div>
             </div>
         </div>
     </div>
@@ -455,16 +456,17 @@ placeholder="Enter Environment Type" >-->
                         <div class="col-md-6 p-0 form-group">
                             <input type="checkbox" [checked]="toggle" formControlName="activeStatus"> Active
                         </div>
-                        <div class="form-footer">
-                            <button class="btn btn-default" (click)="resetupdateEnvForm()" >Reset</button>
-                            <button class="btn btn-primary btn-test" [disabled]="updateForm.invalid" (click)="testConnection('update')">Test Connection</button>
-                            <button class="btn btn-primary"[disabled]="updateForm.invalid || submitted" (click)="updateEnvironment()" >Modify</button>
-                          </div>
+                        
                   
                     <!-- <input type="button" class="btn btn-primary" value="Modify" (click)="updateEnvironment()" [disabled]="updateForm.invalid || submitted">
                     <input type="button" class="btn btn-primary" value="Test Connection" (click)="testConnection('update')" [disabled]="updateForm.invalid">
                     <input type="button" class="btn btn-primary" value="Reset" (click)="resetupdateEnvForm()"> -->
                 </form>
+                <div class="form-footer">
+                    <button class="btn btn-default" (click)="resetupdateEnvForm()" >Reset</button>
+                    <button class="btn btn-primary btn-test" [disabled]="updateForm.invalid" (click)="testConnection('update')">Test Connection</button>
+                    <button class="btn btn-primary"[disabled]="updateForm.invalid || submitted" (click)="updateEnvironment()" >Modify</button>
+                  </div>
             </div>
         </div>
     </div>

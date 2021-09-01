@@ -33,6 +33,7 @@ import 'highlightjs-line-numbers.js';
 // import hljs from '../../../../node_modules/highlight.js/lib/core';
 // document.defaultView['hljs'] = hljs;
 import { PopoverModule } from 'ngx-bootstrap/popover'
+import { MatSortModule } from '@angular/material';
 
 @NgModule({
   declarations: [BusinessProcessComponent, CreateBpmnDiagramComponent, BpsHomeComponent, UploadProcessModelComponent, ListOfChangesComponent,FilterPipe],
@@ -55,6 +56,7 @@ import { PopoverModule } from 'ngx-bootstrap/popover'
     ModalModule.forRoot(),
     MatPaginatorModule,
     PopoverModule.forRoot(),
+    MatSortModule
     // HighlightModule
   ],
   providers: [

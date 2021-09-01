@@ -17,6 +17,8 @@ import { fromMatPaginator, paginateRows } from './../model/datasource-utils';
 import { Observable  } from 'rxjs/Observable';
 import { of  } from 'rxjs/observable/of';
 import { map } from 'rxjs/operators';
+import { MatSort, Sort } from '@angular/material';;
+import { fromMatSort, sortRows } from './../model/datasource-utils';
 @Component({
   selector: 'app-bpshome',
   templateUrl: './home.component.html',
@@ -50,7 +52,7 @@ export class BpsHomeComponent implements OnInit {
 
   displayedRows$: Observable<any[]>;
   totalRows$: Observable<number>;
-
+  @ViewChild(MatSort,{static:false}) sort: MatSort;
   @ViewChild(MatPaginator,{static:false}) paginator: MatPaginator;
   constructor(private router:Router, private bpmnservice:SharebpmndiagramService, private dt:DataTransferService,
      private rest:RestApiService, private hints:BpsHints, private global:GlobalScript,
@@ -237,7 +239,7 @@ this.dt.bpsHeaderValues('');
       this.assignPagenation(this.saved_diagrams);
     }
   }
-  sort(colKey,ind) { // if not asc, desc
+  sort1(colKey,ind) { // if not asc, desc
     this.sortIndex=ind
     let asc=this.orderAsc
     this.orderAsc=!this.orderAsc
@@ -359,10 +361,11 @@ this.assignPagenation(filtered)
   }
  
   assignPagenation(data){
+    const sortEvents$: Observable<Sort> = fromMatSort(this.sort);
     const pageEvents$: Observable<PageEvent> = fromMatPaginator(this.paginator);
     const rows$ = of(data);
     this.totalRows$ = rows$.pipe(map(rows => rows.length));
-    this.displayedRows$ = rows$.pipe(paginateRows(pageEvents$));
+    this.displayedRows$ = rows$.pipe(sortRows(sortEvents$), paginateRows(pageEvents$));
   }
  
 }

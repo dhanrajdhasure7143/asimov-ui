@@ -78,6 +78,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   svg:any;
   public insertForm:FormGroup;
   modalRef: BsModalRef;
+  outputmodalRef:BsModalRef;
   public passwordtype1:Boolean;
   public passwordtype2:Boolean;
   public form_change:Boolean=false;
@@ -1249,7 +1250,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
 
 
-  outputbox(node) {
+  outputbox(node,template) {
+    this.modalRef=this.modalService.show(template);
     document.getElementById(this.outputboxid).style.display = "block";
     document.getElementById("output_" + node.id).style.display = "none"
   }

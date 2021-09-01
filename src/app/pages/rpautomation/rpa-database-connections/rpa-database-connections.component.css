@@ -135,8 +135,10 @@ input[type="text"]:not(.mat-input-element), input[type="password"] {
 
 .credential-tablegrid {
   width: 100%;
-  overflow-x: scroll;
+  overflow-x: auto;
   padding-top: 20px;
+  
+  height: calc(100vh - 330px);
 }
 
 .credential-tablegrid table td span{

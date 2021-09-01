@@ -56,7 +56,7 @@ export class CreateProjectFormComponent implements OnInit {
       let username=userfirstname+" "+userlastname
       this.insertForm2.value.status="New";
       this.insertForm2.value.createdBy=username;
-      this.insertForm2.value.mapValueChain=this.valuechain.find(item=>item.processGrpMasterId==this.insertForm2.value.mapValueChain).processName;
+      //this.insertForm2.value.mapValueChain=this.valuechain.find(item=>item.processGrpMasterId==this.insertForm2.value.mapValueChain).processName;
       let data=this.insertForm2.value;
       data["resource"]=data.resource.map(item=>{ return {resource:item}});
       data["effortsSpent"]=0;      

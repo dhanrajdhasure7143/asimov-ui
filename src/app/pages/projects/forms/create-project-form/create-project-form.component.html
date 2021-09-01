@@ -78,11 +78,12 @@
                 <div class="form-fields col-md-6 pr-0">
                     <label class="label-control">Map Value Chain<span
                             class="star">*</span></label>
-                    <select formControlName="mapValueChain" (change)="getValueChainProcesses($event.target.value)" class="form-control data"
+                    <!-- <select formControlName="mapValueChain" (change)="getValueChainProcesses($event.target.value)" class="form-control data"
                         [ngClass]="insertForm2.get('mapValueChain').valid?'enteredfield-color':'inputfield-color'">
                         <option value="">Select Map Value Chain</option>
                         <option *ngFor="let value of valuechain" [value]="value.processGrpMasterId">{{value.processName}}</option>
-                    </select>
+                    </select> -->
+                    <input type="text" class="form-control data"  placeholder="Enter Map Value Chain"   formControlName="mapValueChain" [ngClass]="insertForm2.get('mapValueChain').valid?'enteredfield-color':'inputfield-color'" >
                     <span
                         *ngIf="insertForm2.get('mapValueChain').invalid && insertForm2.get('mapValueChain').touched"
                         class="errspan required">Map Value Chain Required*</span>
@@ -96,8 +97,8 @@
                         [ngClass]="insertForm2.get('process').valid?'enteredfield-color':'inputfield-color'">
                         <option [value]="null" disabled hidden>Select Process</option>
                         <option value="" [selected]="true">Select Process</option>
-                        <option *ngFor="let process of valuechainprocesses"
-                            [value]="process.processInfoName">{{process.processInfoName}}</option>
+                        <option *ngFor="let process of processes"
+                            [value]="process.processId">{{process.processName}}</option>
                     </select>
                     <span
                         *ngIf="insertForm2.get('process').invalid && insertForm2.get('process').touched"

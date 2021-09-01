@@ -88,7 +88,7 @@
                         </div>
                         <div class="col-md-12">
                             <div class="form-fields col-md-6 pl-0">                         
-                                <label class="label-control" for="resources">Select Resources<span class="star">*</span></label>
+                                <label class="label-control" for="resources">Select Resource<span class="star">*</span></label>
                                 <select formControlName="resources" class="form-control data enteredfield-color">
                                     <option value="">Select Resources</option>
                                     <option *ngFor="let user of userslist" [value]="user.userId.userId">
@@ -105,7 +105,7 @@
                                     class="errspan required">Resources Required*</span>
                             </div>
                             <div class="form-fields col-md-6 pr-0">
-                                <label class="label-control" for="approvers">Select Approvers<span class="star">*</span></label>
+                                <label class="label-control" for="approvers">Select Approver<span class="star">*</span></label>
                                 <select class="form-control enteredfield-color"  formControlName="approvers">
                                     <option value="">Select Approvers</option>
                                     <option *ngFor="let user of approverslist" [value]="user.userId.id">

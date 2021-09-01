@@ -835,7 +835,9 @@ percentageComplete: number;
     //  fileData.append("filePath", this.fileUploadData)
      fileData.append("projectId", this.selectedtaskfileupload.projectId)
      fileData.append("taskId", this.selectedtaskfileupload.id)
+     fileData.append("description", this.uploadtaskFileForm.get("description").value)
 
+     console.log("fileDataaa", fileData)
      this.rpa.uploadProjectFile(fileData).subscribe(res => {
       
       this.spinner.hide();

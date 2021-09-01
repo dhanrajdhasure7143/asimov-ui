@@ -226,5 +226,8 @@ else
 
       console.log("taskc",this.taskcomments)
     }
+    resetupdatetaskproject(){
+      this.updatetaskForm.reset();
+    }
 
 }

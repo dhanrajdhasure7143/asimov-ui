@@ -294,8 +294,8 @@
           </form>
           <div class="modal-footer modelprfooter">
             <div class="pull-right">
-              <button disabled (click)="resetupdatetaskproject()" class="btn btn-default">Reset</button>
-              <button disabled (click)="canceltaskform()" class="btn btn-primary">Cancel</button>
+              <button [disabled]="updatetaskForm.invalid" routerLink="/pages/projects/projectdetails"  [queryParams]="{id:project_id}" class="btn btn-default">Cancel</button>
+              <!-- <button disabled (click)="canceltaskform()" class="btn btn-primary">Cancel</button> -->
               <button [disabled]="updatetaskForm.invalid" (click)="updatetask()"
                 class="btn btn-primary btn-update">Update</button>
             </div>
