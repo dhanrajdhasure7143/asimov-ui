@@ -1,10 +1,8 @@
 <div class="container-fluid mx-3">
     <div class="rpa-env-search">
-        <mat-form-field class="rpa-mat-form-field-search">
-            <mat-label>Search</mat-label>
-            <mat-icon matSuffix *ngIf="!isSearch" style="font-size: 1.2em">search</mat-icon>
-            <input class="toolbar-search" autocomplete="off" *ngIf="!isSearch" matInput (keyup)="applyFilter($event.target.value)">
-        </mat-form-field>
+        
+            <input class="form-control rpa-control" placeholder="Search" autocomplete="off" *ngIf="!isSearch" matInput (keyup)="applyFilter($event.target.value)">
+      
   
     </div>
     <div class="env-data-tool">

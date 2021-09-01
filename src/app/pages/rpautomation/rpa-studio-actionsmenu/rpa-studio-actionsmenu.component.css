@@ -334,17 +334,7 @@ ul#versions li:hover {
   color: #607088;
 }
 
-.tableActionsIcons img {
-  height: 20px;
-  width: auto;
-  margin-right: 4px;
-}
 
-
-.tableActionsIcons span {
-  font-size: 16px;
-  padding-top: 5px;
-}
 .newmodelcla {
   padding: 15px !important;
 }

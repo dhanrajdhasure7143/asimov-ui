@@ -243,10 +243,10 @@
                 <!-- &nbsp;<span>{{bot.botStatus}}</span> -->
               </span>
 
-              <span *ngIf="bot.botStatus=='Stop'" class="tableActionsIcons">
-                <span class="bg-danger" >
+              <span *ngIf="bot.botStatus=='Stop' || bot.botStatus=='Stopped'" class="tableActionsIcons">
+                <span >
                   <!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">-->
-                  <img src="../../../../../assets/images/RPA/stop_fail_icon.svg" style="filter: none; width: 19px;">
+                  <img src="../../../../../assets/images/RPA/stop_fail_icon.svg" >
                 </span>
                   <!-- &nbsp;<span>{{bot.botStatus}}</span> -->
                 </span>
