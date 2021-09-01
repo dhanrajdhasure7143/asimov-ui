@@ -507,4 +507,18 @@ export class DatadocumentComponent implements OnInit {
     this.totalRows$ = rows$.pipe(map(rows => rows.length));
     this.displayedRows$ = rows$.pipe(paginateRows(pageEvents$));
   }
+  ontableSearch(input){
+    if(input){
+    let filteredArray:any[]=[]
+    this.fileData.filter(item =>{
+          if(String(item) != null &&String(item).toString().toLowerCase().includes(input.toLowerCase())){
+              filteredArray.push(item)
+          }
+      });
+      this.assignPagenation(filteredArray)
+    }else{
+      this.assignPagenation(this.fileData)
+
+    }
+  }
 }
