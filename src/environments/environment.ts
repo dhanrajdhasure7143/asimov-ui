@@ -12,8 +12,8 @@ export const environment = {
   auth_url: "https://ezflow.epsoftinc.com/authservices",
   pi_node_url: "https://ezflow.epsoftinc.com/pinode",
   platform_url:'https://ezflow.epsoftinc.com/aiotalplatform',
-  schema_registry_url:"https://schema-connect:8081",
-  alerts_url:'https://eiapdemoapi.epsoftinc.com:96/alerts',
+  schema_registry_url:"https://schema-registry:8081",
+  alerts_url:'https://ezflow.epsoftinc.com/alerts',
 
  // Aiotal redirection urls 
   myaccount_url : "https://ezflow.epsoftinc.com/#/activation",
@@ -23,7 +23,7 @@ export const environment = {
 // PI Connectors
   connector_topic: 'nodeq',
   platform_home_url: 'https://ezflow.epsoftinc.com/#/',
-  pi_node_jobs: "http://172.16.0.67:5000",
+  pi_node_jobs: "http://pi-node-jobs:5000",
 
 
 //BPMN Platform URL
@@ -38,7 +38,7 @@ export const environment = {
 
 
   //BPMN Platform URL
-  bpmnplatformUrl : "https://eiapcamundademo.epsoftinc.com:86"
+  bpmnplatformUrl : "https://ezflow.epsoftinc.com"
 
  //  * QA ENV URl's
  
