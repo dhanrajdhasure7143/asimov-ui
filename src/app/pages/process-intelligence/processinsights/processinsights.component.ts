@@ -1264,13 +1264,13 @@ series2.stroke = am4core.color("#fc8d45");
         var hours: any = (millisec / (1000 * 60 * 60)).toFixed(1);
         var days = (millisec / (1000 * 60 * 60 * 24)).toFixed(1);
         if (seconds < 60) {
-            return seconds + " Sec";
+            return seconds + " sec";
         } else if (minutes < 60) {
-            return minutes + " Min";
+            return minutes + " min";
         } else if (hours < 24) {
-            return hours + " Hrs";
+            return hours + " hrs";
         } else {
-            return days + " Days"
+            return days + " days"
         }
     }
     onchangeVaraint(datavariant) {      // Variant List sorting 
