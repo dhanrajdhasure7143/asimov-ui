@@ -175,6 +175,8 @@ div#bpmn_list {
     }
     .cell1 {
         width:5%;
+        color: #5b5b5b;
+        opacity: 0.6;
     }
     .cell2 {
         width:12%;
@@ -202,4 +204,8 @@ div#bpmn_list {
     }
     .cell span{
         cursor: pointer;
+    }
+
+    .bps-labcls, .bps-serwksp {
+        margin-bottom: 8px !important;
     }

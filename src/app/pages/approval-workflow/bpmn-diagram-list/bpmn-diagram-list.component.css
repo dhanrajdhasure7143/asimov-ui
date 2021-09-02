@@ -73,6 +73,7 @@
 }
 .aprwkfl_table h4.child_list_header {
   color: #5b5b5b;
+  font-size: 15px;
 }
 .aprwkfl_table tr th {
   background-color: #e8f7fd;
@@ -133,13 +134,17 @@ i.material-icons.expand-close {
 }
 .mat-expanded i.material-icons.expand-close {
   display: block !important;
+  color: #5b5b5b;
+    opacity: 0.6;
 }
 i.material-icons.expand-open {
   display: block;
+  color: #5b5b5b;
+    opacity: 0.6;
 }
 .mat-expanded i.material-icons.expand-open {
   display: none !important;
 }
 .expan-icon{
-  width: 16%;
+  width: 16% !important;
 }

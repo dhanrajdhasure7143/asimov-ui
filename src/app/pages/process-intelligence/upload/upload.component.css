@@ -53,8 +53,6 @@
     margin-top: 5px;
    }
     
-    .modal-body {padding: 2px 0px;}
-    
     
     /* Add Animation */
     @-webkit-keyframes slideIn {
@@ -251,6 +249,7 @@ tr.mat-header-row {
 }
 .PI-uploadgrid ngx-dropzone{
     height: 90px;
+    padding: 0px 15px;
 }
 .PI-uploadgrid h5{
     margin-bottom: 0px !important;
@@ -324,13 +323,11 @@ img.hover-img {
     display: initial;
     margin: auto;
 }
-.upload_zone:hover, .upload_zone ngx-dropzone:hover {
+.upload_zone ngx-dropzone:hover {
     background-color:#00a0e3;
 }
 .model-uploadhvr {
     display: none;
 }
-.bpmnCreate .modal-content{
-    padding: 0px 10px 0px 10px !important;
-}
+
 

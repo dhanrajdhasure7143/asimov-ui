@@ -145,7 +145,9 @@
     <mat-accordion>
       <div class="flex-row Tabletype">
         <div class="TabletypeHeader">
-        
+          <div class="flex-col header gridheader-th">
+            <div class="cell cell1"></div>
+          </div>          
             <div class="flex-col header gridheader-th">
               <button  (click)="sortasc('botName','asc')">
                <span >Bot Name</span>
@@ -205,8 +207,12 @@
         <mat-panel-title>
 
           <div class="flex-row">
-           
-
+            <div class="">
+              <div class="cell cell1">
+                <i class="material-icons expand-open">chevron_right</i>
+                <i class="material-icons expand-close">expand_less</i>
+              </div>
+            </div>
             <div class="flex-col">
                 
                 <span [tooltip]=bot.botName placement="bottom"> {{(bot.botName.length > 10) ? ((bot.botName).slice(0, 10) + '...') : bot.botName}}</span>
@@ -246,7 +252,7 @@
               <span *ngIf="bot.botStatus=='Stop' || bot.botStatus=='Stopped'" class="tableActionsIcons">
                 <span >
                   <!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">-->
-                  <img src="../../../../../assets/images/RPA/stop_fail_icon.svg" >
+                  <img src="../../../../assets/images/RPA/icon_latest/stop.svg" >
                 </span>
                   <!-- &nbsp;<span>{{bot.botStatus}}</span> -->
                 </span>
