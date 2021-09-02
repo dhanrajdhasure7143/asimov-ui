@@ -1919,13 +1919,13 @@ select.small-input {
 
 button.action-button.clear {
   border: medium none;
-  color: #f44336;
+  color: #ccc;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   font-size: 18px;
   padding: 0px 0px;
-  top: 25%;
+  top: 30%;
   position: absolute;
   transform: translate(0px, -20%);
 }
@@ -2540,3 +2540,9 @@ th.mat-header-cell {
   font-size: 16px;
   padding-top: 5px;
 } */
+
+
+.bpp-properties-entry input[type=checkbox], .dpp-properties-entry input[type=checkbox] {
+  margin-right: 6px;
+  margin-top: 1px;
+}

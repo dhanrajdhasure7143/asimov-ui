@@ -160,5 +160,11 @@ span.testtooltip:before {
 .PI-insights-timefeed::after {
   right: 9% !important;
 }
+.timefeed-header span:hover img.default-img {
+  display: none;
+}
+.timefeed-header span:hover img.hover-img {
+  display: initial;
+}
 
 

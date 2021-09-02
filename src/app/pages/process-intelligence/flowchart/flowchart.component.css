@@ -289,10 +289,8 @@
   color: #000;
   }
   .modal-header .close {
-  margin-top: 5px;
+  margin-top: 2px;
  }
-  
-  .modal-body {padding: 2px 16px;}
   
   
   /* Add Animation */
@@ -453,4 +451,15 @@ img.hover-img {
 .newmaindiv {
   /* height: calc(100% - 65px); */
   height: 100%;
+}
+.modal-header span:hover img.default-img {
+  display: none;
+}
+.modal-header span:hover img.hover-img {
+  display: initial;
+}
+.variant-body {
+  height: 415px;
+  display: inline-block;
+  overflow: hidden auto;
 }

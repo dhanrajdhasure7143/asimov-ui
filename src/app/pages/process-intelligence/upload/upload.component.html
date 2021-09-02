@@ -11,7 +11,7 @@
                         </h4>
                         
                    </div>     
-                   <div class="col-md-3 upload_zone" id="upload_xl" *ngIf="this.isButtonVisible || enableuploadbuttons">
+                   <div class="col-md-3 p-0 upload_zone" id="upload_xl" *ngIf="this.isButtonVisible || enableuploadbuttons">
                         <ngx-dropzone (change)="onUpload($event,0)" [multiple]=false [accept]="xlsx_csv_mime" >
                            <div class="model-img">       
                                 <ngx-dropzone-label>
@@ -27,7 +27,7 @@
                            </div>
                         </ngx-dropzone>
                    </div>
-                   <div class="col-md-3 upload_zone" id="upload_xes" *ngIf="this.isButtonVisible || enableuploadbuttons">
+                   <div class="col-md-3 p-0 upload_zone" id="upload_xes" *ngIf="this.isButtonVisible || enableuploadbuttons">
                         <ngx-dropzone (change)="onUpload($event,3)" [multiple]=false accept=".xes, .gzip, .gz" >
                            <div class="model-img">
                                 <ngx-dropzone-label>
@@ -43,7 +43,7 @@
                            </div>                        
                         </ngx-dropzone>
                    </div>
-                   <div class="col-md-3 upload_zone" id="upload_db" (click)="onDbSelect()" *ngIf="this.isButtonVisible || enableuploadbuttons">
+                   <div class="col-md-3 p-0 upload_zone" id="upload_db" (click)="onDbSelect()" *ngIf="this.isButtonVisible || enableuploadbuttons">
                         <ngx-dropzone [multiple]=false [accept]="db_mime" [disableClick]=true >
                            <div class="model-img">
                                 <ngx-dropzone-label>

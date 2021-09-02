@@ -269,9 +269,9 @@ background-color: blue !important;
   right: 10px;
 }
 ul#environments {
-  width: 200px;
+  width: 165px;
   overflow: auto;
-  height: 325px;
+  height: 265px;
   font-size: 15px !important;
 }
 
