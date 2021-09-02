@@ -177,7 +177,8 @@ mat-tab-body {
 }
 
 #bpmn_list {
-  height: 62vh;
+  /* height: 62vh; */
+  height: 70vh;
   overflow: hidden auto;
 }
 
@@ -861,7 +862,8 @@ label {
 .box_area {
   /* margin-top: 20px; */
   margin-top: 5px;
-  margin-bottom: 24px;
+  margin-bottom: 15px;
+  /* margin-bottom: 24px; */
 }
 
 .keyboard_style_upload {
@@ -1122,4 +1124,7 @@ mat-panel-title.mat-expansion-panel-header-title {
 }
 .gen-upload {
   height: 500px;
+}
+mat-expansion-panel.menuprop-disabled {
+  background-color: #acacac !important;
 }

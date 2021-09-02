@@ -174,8 +174,9 @@ background-color: blue !important;
 .rpa-dropdown{
  /*top:-78px !important;*/
  /* min-width:53px !important; */
- min-width:100px !important;
- padding: 0px !important;
+ min-width: 80px !important;
+    padding: 0px !important;
+    left: -10px;
  /* left: -38px; */
 }
 
