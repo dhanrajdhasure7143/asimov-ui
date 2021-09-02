@@ -24,7 +24,7 @@ export const environment = {
   connector_topic: 'nodeq',
   platform_home_url: 'https://eiapclouddemo.epsoftinc.com:86/#/',
   pi_node_jobs: "http://172.16.0.67:5000",
-
+  projectendpoint_url:'http://172.16.0.67:8282',
 
 //BPMN Platform URL
  // bpmnplatformUrl : "http://10.11.0.127:8080",
@@ -36,6 +36,7 @@ export const environment = {
 // Data upload path
   data_path:"/home/applmgr",
 
+  camunda_url : "https://eiapcamundademo.epsoftinc.com:86",
 
   //BPMN Platform URL
   bpmnplatformUrl : "https://eiapcamundademo.epsoftinc.com:86"
