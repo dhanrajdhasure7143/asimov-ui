@@ -429,7 +429,7 @@
               </td>
           </ng-container>
           <ng-container matColumnDef="lastModifiedBy">
-            <th mat-header-cell *matHeaderCellDef>Last Updated by</th>
+            <th mat-header-cell *matHeaderCellDef>Last Updated By</th>
             <td mat-cell *matCellDef="let project">
                 <span *ngIf="project.lastModifiedBy!=null">{{project.lastModifiedBy}}</span>
                 <span *ngIf="project.lastModifiedBy==null || project.lastModifiedBy==undefined || project.lastModifiedBy=='' ">---</span>
@@ -893,7 +893,7 @@
 
     <ng-template  #linkprojecttemplate>
       <div class="modal-header modelprhead">
-        <h4 class="modal-title pull-left">Add Projects</h4>
+        <h4 class="modal-title pull-left">Add Project</h4>
           <button type="button" class="close pull-right" aria-label="Close" (click)="modalref.hide()">
             <span aria-hidden="true"><img src="../../../../assets/images/Projects/circle-close.svg" alt=""></span>
           </button>

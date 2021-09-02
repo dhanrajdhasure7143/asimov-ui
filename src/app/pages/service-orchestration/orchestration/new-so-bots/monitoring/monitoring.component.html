@@ -16,7 +16,7 @@
                                 </thead>
                             <tbody>
                                 <tr *ngFor="let bot of failedbots  | paginate: { itemsPerPage: 5,currentPage: q }">
-                                    <td>{{bot.botName}}</td><td>{{bot.createdAt | date}}</td>
+                                    <td>{{bot.botName}}</td><td>{{bot.createdAt | date : 'medium'}}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -55,7 +55,7 @@
             <div class="col-md-8 pr-0">
                 <div class="dbichart-block block chartinner">
                     <div class="dbichart-head">
-                        <label>Jobs History</label>
+                        <label>Job History</label>
                         <span *ngIf="runtimeflag==false" (click)="this.runtimeflag=true;botruntimestats();" class="clickable pull-right"><i class="fa fa-arrow-left"></i></span>
                     </div>
                     
@@ -111,7 +111,7 @@
                     <br>
                     <div class="dbichart-body" >
                         <div class="newexecbots_progress">
-                            <label>Successfull</label>
+                            <label>Successful</label>
                             <mat-progress-bar class="progress-bar-green" mode="determinate" [value]="executed.success"></mat-progress-bar>
                         </div>
                         <div class="newexecbots_progress">
@@ -132,7 +132,7 @@
             <div class="col-md-8 pr-0">
                 <div class="dbichart-block block chartinner">
                     <div class="dbichart-head">
-                        <label>Bot Transactions For Last 30 Days</label>
+                        <label>Bot Transactions (Last 30 Days)</label>
                     </div>
                     <div class="dbichart-body"  id="linechart_data">
                         <canvas id='linechart' style='width:100% !important ;height:300px !important;'></canvas>
