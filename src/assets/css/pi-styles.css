@@ -998,7 +998,7 @@ table.dataTable {
 .chart-legend .legend-label:hover{
   background-color: #0062cf !important;
 }
-.newpaginationdiv .mat-paginator-page-size {
+.graph_table .newpaginationdiv .mat-paginator-page-size {
   left: 5px !important;
 }
 .timefeed-body .ngx-timepicker {

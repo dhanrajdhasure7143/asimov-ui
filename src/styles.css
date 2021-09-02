@@ -877,11 +877,6 @@ foreignObject {
   color: rgb(211, 66, 66) !important;
 }
 
-.modal-body {
-  /* padding: 16px !important;
-  font-size: 16px; */
-}
-
 .canvas-container .mat-tab-label {
   min-width: 90px !important;
   /* height: 25px !important; */
@@ -894,8 +889,6 @@ foreignObject {
   z-index: 0;
   position: relative;
 }
-
-.mat-tab-group {}
 
 #piechart1 text,
 #piechart2 text {
@@ -1630,7 +1623,8 @@ select.form-control {
 
 .bpspaginationdiv {
   position: absolute;
-  bottom: 0px;
+  /* bottom: 0px; */
+  bottom: -28px;
   width: 100%;
 }
 
@@ -1790,7 +1784,7 @@ select.small-input {
 .mat-paginator {
   border-top: 1px solid #cccccc;
   min-height: 30px;
-  padding-top: 5px;
+  /* padding-top: 5px; */
   /* min-height: 50px;
   padding-top:5px; */
 }
@@ -2179,8 +2173,8 @@ button.btn:hover {
 
 .mat-paginator-page-size-label,
 .mat-paginator-range-label {
-  font-size: 12px;
-  margin: 0px 8px 0px 0px !important;
+  font-size: 14px;
+  margin: 4px 8px 0px 0px !important;
 }
 
 .table {
@@ -2494,13 +2488,7 @@ th.mat-header-cell {
   color:#00a0e3 !important;
   padding-left:0px !important;
 }
-.logs-table th button{
-  font-size: 16px !important;
-  text-align: left !important;
-  font-weight: 500 !important;
-  color:#00a0e3 !important;
-  padding-left:0px !important;
-}
+
 .logs-table th{
   background-color: white !important;
   
@@ -2530,9 +2518,8 @@ th.mat-header-cell {
 
 
 .tableActionsIcons img {
-  height: 20px;
+  height: 16px;
   width: auto;
-  margin-right: 4px;
 }
 
 /* 
@@ -2545,4 +2532,7 @@ th.mat-header-cell {
 .bpp-properties-entry input[type=checkbox], .dpp-properties-entry input[type=checkbox] {
   margin-right: 6px;
   margin-top: 1px;
+}  
+.djs-container.with-palette .dmn-definitions {
+  left: 180px !important;
 }
