@@ -36,7 +36,7 @@ export const environment = {
 // Data upload path
   data_path:"/home/applmgr",
 
-  camunda_url : "https://eiapcamundademo.epsoftinc.com:86",
+  camunda_url : "http://172.16.0.73:8080",
 
   //BPMN Platform URL
   bpmnplatformUrl : "https://eiapcamundademo.epsoftinc.com:86"
