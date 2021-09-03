@@ -48,7 +48,7 @@ this.getEnvironments();
   getslametrics()
   {
     this.rest.getslametrics().subscribe(metrics=>{
-      console.log(metrics);
+     //console.log(metrics);
     
     })
   }
@@ -953,7 +953,7 @@ pieSeries.labels.template.fontSize = 18;
         {
           let filteredCoordinates:any=filteredbot.coordinates;
           //.filter(item=>moment(item.startTime,"x").format("D-MM-YYYY")==moment(today).format("D-MM-YYYY")||moment(item.startTime,"x").format("D-MM-YYYY")==moment(yesterday).format("D-MM-YYYY"));
-          console.log("---------check--------",filteredCoordinates)
+         //console.log("---------check--------",filteredCoordinates)
           if(filteredCoordinates.length>0)
           {
               let timedur:any=0;
@@ -969,9 +969,9 @@ pieSeries.labels.template.fontSize = 18;
           }
         }
       });
-      console.log(this.runtimestats)
+     //console.log(this.runtimestats)
       this.runtimestats=runtimestats.sort(function(a, b){return b.value - a.value});
-      console.log(this.runtimestats)
+     //console.log(this.runtimestats)
       if(runtimestats.length!=0)
       {
         this.statschart();

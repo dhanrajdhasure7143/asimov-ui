@@ -1,3 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
-  <path id="Path_948" data-name="Path 948" d="M11,20a9,9,0,1,1,9-9A9,9,0,0,1,11,20Zm0-1.8A7.2,7.2,0,1,0,3.8,11,7.2,7.2,0,0,0,11,18.2ZM8.3,8.3h5.4v5.4H8.3Z" transform="translate(-2 -2)" fill="#ff270f"/>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
+  <defs>
+    <clipPath id="clip-stop">
+      <rect width="24" height="24"/>
+    </clipPath>
+  </defs>
+  <g id="stop" clip-path="url(#clip-stop)">
+    <path id="Path_948" data-name="Path 948" d="M14,26A12,12,0,1,1,26,14,12,12,0,0,1,14,26Zm0-2.4A9.6,9.6,0,1,0,4.4,14,9.6,9.6,0,0,0,14,23.6ZM10.4,10.4h7.2v7.2H10.4Z" transform="translate(-2 -2)" fill="#ff270f"/>
+  </g>
 </svg>

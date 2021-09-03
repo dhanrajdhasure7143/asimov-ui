@@ -134,7 +134,6 @@
     color: white !important;
     background-color: #00a0e3
   }
-  
   .activevaraint{
     color: #ffffff;
     background-color: #00a0e3;
@@ -289,10 +288,8 @@
   color: #000;
   }
   .modal-header .close {
-  margin-top: 5px;
+  margin-top: 2px;
  }
-  
-  .modal-body {padding: 2px 16px;}
   
   
   /* Add Animation */
@@ -436,13 +433,13 @@ img.hover-img {
 .closebtn img {
   vertical-align: top !important;
 }
-.tooltip1 {
+span.PI-frpr-spin {
   padding: 6px 8px;
   background-color: #00a0e3;
   border: 1px solid #00a0e3;
   border-radius: 4px;
 }
-.tooltip1:hover {
+span.PI-frpr-spin:hover {
   background-color: #001c47 !important;
   border: 1px solid #001c47 !important;
 }
@@ -453,4 +450,15 @@ img.hover-img {
 .newmaindiv {
   /* height: calc(100% - 65px); */
   height: 100%;
+}
+.modal-header span:hover img.default-img {
+  display: none;
+}
+.modal-header span:hover img.hover-img {
+  display: initial;
+}
+.variant-body {
+  height: 415px;
+  display: inline-block;
+  overflow: hidden auto;
 }

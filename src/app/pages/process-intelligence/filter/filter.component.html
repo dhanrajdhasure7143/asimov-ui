@@ -8,7 +8,10 @@
     </div>                    
     <div class="col-md-12 p-0 form-group">
         <div *ngFor="let pill of appliedFilters" class="pill col-sm-2">{{pill}}
-            <span (click)="removeTag(pill)">&times;</span>
+            <span (click)="removeTag(pill)">
+                <img alt="" class="default-img" src="../../../../assets/images/PI/close-white.svg">
+                <img alt="" class="hover-img" src="../../../../assets/images/PI/close-blue.svg">
+            </span>
         </div>
     </div>
     <div class="col-md-12 p-0 form-group" *ngIf="isActivity">
@@ -132,7 +135,10 @@
 <div id="myModal" class="modal">
     <div class="modal-content">
         <div class="modal-header timestamp-header">
-            <span class="close" (click)="closePerformancePopup();">&times;</span>
+            <span class="close" (click)="closePerformancePopup();">
+                <img alt="" class="default-img" src="../../../../assets/images/PI/close.svg">
+                <img alt="" class="hover-img" src="../../../../assets/images/PI/close-blue.svg">
+            </span>
             <h4>Time stamp</h4>
         </div>
         <div class="modal-body timestamp-body">                   

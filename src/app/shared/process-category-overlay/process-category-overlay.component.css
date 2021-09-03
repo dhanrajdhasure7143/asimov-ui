@@ -51,10 +51,7 @@
     .modal-header .close {
     margin-top: 5px;
    }
-    
-    .modal-body {padding: 2px 16px;}
-    
-    
+  
     /* Add Animation */
     @-webkit-keyframes slideIn {
     from {bottom: -300px; opacity: 0} 
