@@ -231,21 +231,23 @@ import { NgxSpinnerService } from "ngx-spinner";
       {
         this.spinner.hide();
         if(res.errorCode==undefined){
-        Swal.fire({
-          position: 'center',
-          icon: 'success',
-          title: "Successfully Connected",
-          showConfirmButton: false,
-          timer: 2000
-        })
+        // Swal.fire({
+        //   position: 'center',
+        //   icon: 'success',
+        //   title: "Successfully Connected",
+        //   showConfirmButton: false,
+        //   timer: 2000
+        // })
+        Swal.fire("Success","Successfully Connected","success")
         }else{
-          Swal.fire({
-            position: 'center',
-            icon: 'error',
-            title: 'Connection Failed',
-            showConfirmButton: false,
-            timer: 2000
-          })
+          // Swal.fire({
+          //   position: 'center',
+          //   icon: 'error',
+          //   title: 'Connection Failed',
+          //   showConfirmButton: false,
+          //   timer: 2000
+          // })
+          Swal.fire("Error","Connection Failed", "error")
         }
     });
     this.activestatus();
@@ -291,23 +293,27 @@ import { NgxSpinnerService } from "ngx-spinner";
      let environment=this.insertForm.value;
      await this.api.addenvironment(environment).subscribe( res =>
       {
-        Swal.fire({
-          position: 'center',
-          icon: 'success',
-          title: res.status,
-          showConfirmButton: false,
-          timer: 2000
-        })
-        this.getallData();
-        this.checktoupdate();
-        this.checktodelete();
-        document.getElementById("createenvironment").style.display='none'; 
-        this.insertForm.reset();
-        this.insertForm.get("portNumber").setValue("22");
-        this.insertForm.get("connectionType").setValue("SSH");
-        this.insertForm.get("activeStatus").setValue(true);
-        this.submitted=false;
+        let  response:any=res;
         this.spinner.hide();
+        if(response.errorMessage==undefined)
+        {
+
+          Swal.fire("Success",response.status,"success")
+          this.getallData();
+          this.checktoupdate();
+          this.checktodelete();
+          document.getElementById("createenvironment").style.display='none'; 
+          this.insertForm.reset();
+          this.insertForm.get("portNumber").setValue("22");
+          this.insertForm.get("connectionType").setValue("SSH");
+          this.insertForm.get("activeStatus").setValue(true);
+          this.submitted=false;
+        }
+        else
+        {
+          Swal.fire("Error",response.errorMessage,"error");
+        }
+
     });
   }
   else
@@ -336,13 +342,7 @@ import { NgxSpinnerService } from "ngx-spinner";
       updatFormValue["createdBy"]= this.updateenvdata.createdBy;
       updatFormValue["deployStatus"]= this.updateenvdata.deployStatus;
       await this.api.updateenvironment(updatFormValue).subscribe( res => {
-        Swal.fire({
-          position: 'center',
-          icon: 'success',
-          title: res.status,
-          showConfirmButton: false,
-          timer: 2000
-        })
+        Swal.fire("Success",res.status,"success")
       this.removeallchecks();
       this.getallData();
       this.checktoupdate();
@@ -415,13 +415,14 @@ import { NgxSpinnerService } from "ngx-spinner";
         if (result.value) {
           this.spinner.show();
           this.api.deleteenvironment(selectedEnvironments).subscribe( res =>{ 
-            Swal.fire({
-              position: 'center',
-              icon: 'success',
-              title: res.status,
-              showConfirmButton: false,
-              timer: 2000    
-            })
+            // Swal.fire({
+            //   position: 'center',
+            //   icon: 'success',
+            //   title: res.status,
+            //   showConfirmButton: false,
+            //   timer: 2000    
+            // })
+            Swal.fire("Success",res.status,"success")
             
             this.removeallchecks();
             this.getallData(); 

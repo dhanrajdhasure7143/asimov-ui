@@ -170,20 +170,27 @@ inputNumberOnly(event){
     this.api.save_credentials(Credentials).subscribe( res =>{
       let status:any=res;
       this.spinner.hide();
-    Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: status.status,
-            showConfirmButton: false,
-            timer: 2000
-          })
-          this.getallCredentials();
-          this.Credchecktoupdate();
-          this.checktodelete();
-          document.getElementById('createcredentials').style.display= "none";
-          this.resetCredForm();
-          this.submitted=false; 
-          this.spinner.hide();
+    // Swal.fire({
+    //         position: 'center',
+    //         icon: 'success',
+    //         title: status.status,
+    //         showConfirmButton: false,
+    //         timer: 2000
+    //       })
+      if(status.errorMessage==undefined)
+      {
+        Swal.fire("Success",status.status,"success");
+        this.getallCredentials();
+        this.Credchecktoupdate();
+        this.checktodelete();
+        document.getElementById('createcredentials').style.display= "none";
+        this.resetCredForm();
+        this.submitted=false; 
+      }
+      else
+      Swal.fire("Error",status.errorMessage,"error");
+
+  
     });
    
   }
@@ -209,24 +216,25 @@ inputNumberOnly(event){
     this.api.update_Credentials(credupdatFormValue).subscribe( res =>{
       let status: any= res;
       this.spinner.hide();
-      Swal.fire({
-        position: 'center',
-        icon: 'success',
-        title: status.status,
-        showConfirmButton: false,
-        timer: 2000
-      });
-      this.removeallchecks();
-      this.getallCredentials();
-      this.Credchecktoupdate();
-      this.checktodelete(); 
-      document.getElementById('Updatecredntials').style.display='none';   
-      this.spinner.hide();
+      if(status.errorMessage==undefined)
+      {
+        Swal.fire("Success",status.status,"success");
+        this.removeallchecks();
+        this.getallCredentials();
+        this.Credchecktoupdate();
+        this.checktodelete(); 
+        document.getElementById('Updatecredntials').style.display='none';   
+      }
+      else
+      {
+        Swal.fire("Error",status.errorMessage,"error");
+      }
+     
   });
 }
 else
 {
-  alert("please fill all details");
+  Swal.fire("Error","please fill all details","error");
 }
   
 }
@@ -276,18 +284,20 @@ updatecreddata()
         this.spinner.show();
         this.api.delete_Credentials(selectedcredentials).subscribe( res =>{ 
           let status:any = res;
-          Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: status.status,
-            showConfirmButton: false,
-            timer: 2000    
-          });
-          this.removeallchecks();
-          this.getallCredentials();
           this.spinner.hide();
-          this.Credchecktoupdate();  
-          this.checktodelete();                 
+          if(status.errorMessage==undefined)
+          {
+
+            Swal.fire("Success",status.status,"success");
+            this.removeallchecks();
+            this.getallCredentials();
+            
+            this.Credchecktoupdate();  
+            this.checktodelete();   
+          }else
+          {
+            Swal.fire("Error",status.errorMessage,"error")
+          }              
         });
       }
     });

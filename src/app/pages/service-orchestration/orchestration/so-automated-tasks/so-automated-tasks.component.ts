@@ -131,7 +131,7 @@ export class SoAutomatedTasksComponent implements OnInit, OnDestroy {
     {
       response=automatedtasks;
       this.responsedata=response.automationTasks;
-      console.log("automated tasks",response.automationTasks);
+     //console.log("automated tasks",response.automationTasks);
       if(process==0)
       {
         this.getprocessnames(undefined);
@@ -237,7 +237,7 @@ export class SoAutomatedTasksComponent implements OnInit, OnDestroy {
     this.selectedvalue="";
   }*/
   applyFilter(filterValue:any) {
-    console.log("applyfilter:", filterValue);
+   //console.log("applyfilter:", filterValue);
     if(filterValue == ''){
       this.dataSource2.filter = '';
     }
@@ -254,12 +254,12 @@ export class SoAutomatedTasksComponent implements OnInit, OnDestroy {
 
   applyFilter1(value) {
     if(value == ''){
-      console.log("applyfilter1",value)
+     //console.log("applyfilter1",value)
     this.dataSource2.filter = '';
     this.selected_process_names = this.process_names;
     }else{
     this.selectedcategory=parseInt(value);
-    console.log("applyfilter1:", this.selectedcategory);
+   //console.log("applyfilter1:", this.selectedcategory);
     this.dataSource2.filter = this.categaoriesList.find(data=>this.selectedcategory==data.categoryId).categoryName.toLowerCase();
     this.selected_process_names=this.process_names.filter(item=>item.categoryId==this.selectedcategory)
     this.selectedvalue="";
@@ -364,7 +364,7 @@ export class SoAutomatedTasksComponent implements OnInit, OnDestroy {
       //this.rpa_studio.spinner.hide();
       this.update_task_status();
     },(err)=>{
-      console.log(err)
+     //console.log(err)
       //this.rpa_studio.spinner.hide();
     })
   }
@@ -484,20 +484,20 @@ export class SoAutomatedTasksComponent implements OnInit, OnDestroy {
  {
    if(query != '')
    {
-    console.log('query', query);
+   //console.log('query', query);
     let result = this.categoryselectval(query);
-    console.log("Categoryresult:",result.length);
+   //console.log("Categoryresult:",result.length);
     if(result.length == 0){
       this.NorecordFound = true;
-      console.log("true");
+     //console.log("true");
       this.selectedCategorylist = result;
     }
     else
     {
-      console.log("false");
+     //console.log("false");
       this.NorecordFound = false;
       this.selectedCategorylist = result;
-      console.log("else categorysearch",result);
+     //console.log("else categorysearch",result);
     }
   }
   else
@@ -508,14 +508,14 @@ export class SoAutomatedTasksComponent implements OnInit, OnDestroy {
 
 categoryselectval(query: string):string[]{
   let result: string[] = [];
-  console.log("query:",query);
+ //console.log("query:",query);
   let value1 = query.toLowerCase();
   for(let a of this.categaoriesList){
     if(a.categoryName.toLowerCase().indexOf(value1) > -1){
       result.push(a)
     }
   }
-  console.log("result:",result);
+ //console.log("result:",result);
   return result;
 }
 
@@ -523,17 +523,17 @@ processsearchstring(query: string)
 {
   if(query != '')
   {
-    console.log('query', query);
+   //console.log('query', query);
     let result = this.processselectval(query);
-    console.log(result.length);
+   //console.log(result.length);
     if(result.length == 0){
       this.Select_pro_NorecordFound = true;
-      console.log("true");
+     //console.log("true");
       this.selectprocesslist = result;
     }
     else
     {
-      console.log("false");
+     //console.log("false");
       this.Select_pro_NorecordFound = false;
       this.selectprocesslist = result;
     }
@@ -541,20 +541,20 @@ processsearchstring(query: string)
   else
   {
     this.selectprocesslist = this.process_names;
-    console.log("this.selectprocesslist",this.selectprocesslist);
+   //console.log("this.selectprocesslist",this.selectprocesslist);
   }
 }
 
 processselectval(query: string):string[]{
   let result: string[] = [];
-  console.log("query:",query);
+ //console.log("query:",query);
   let value1 = query.toLowerCase();
   for(let a of this.selected_process_names){
     if(a.processName.toLowerCase().indexOf(value1) > -1){
       result.push(a)
     }
   }
-  console.log("result:",result);
+ //console.log("result:",result);
   return result;
 }
 
@@ -562,17 +562,17 @@ envsearchstring(query: string)
 {
   if(query != '')
   {
-    console.log('query', query);
+   //console.log('query', query);
     let result = this.envselectval(query);
-    console.log(result.length);
+   //console.log(result.length);
     if(result.length == 0){
       this.envlist_NorecordFound = true;
-      console.log("true");
+     //console.log("true");
       this.envlist = result;
     }
     else
     {
-      console.log("false");
+     //console.log("false");
       this.envlist_NorecordFound = false;
       this.envlist = result;
     }
@@ -581,14 +581,14 @@ envsearchstring(query: string)
 
 envselectval(query: string):string[]{
   let result: string[] = [];
-  console.log("query:",query);
+ //console.log("query:",query);
   let value1 = query.toLowerCase();
   for(let a of this.environments){
     if(a.environmentName.toLowerCase().indexOf(value1) > -1){
       result.push(a)
     }
   }
-  console.log("result:",result);
+ //console.log("result:",result);
   return result;
 }
 
