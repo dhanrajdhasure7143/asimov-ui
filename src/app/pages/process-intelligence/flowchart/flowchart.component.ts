@@ -157,6 +157,7 @@ isTimeChange:boolean=false;
 performanceFilterInput:any ={};
 isLoading:boolean=false;
 Pi_header_functions:Subscription;
+isGraph_changed:boolean=false;
 
   constructor(private dt: DataTransferService,
     private router: Router,
@@ -267,6 +268,7 @@ Pi_header_functions:Subscription;
 
   onchangegraphId(selectedpiId){  // change process  graps in dropdown
     this.isplay=false;
+    this.isGraph_changed=true;
     this.dt.pi_buttonValues({"isPlaybtn":false,"isTimefeed_btn":false});
     this.dt.piHeaderValues(null);
       let element=document.getElementById("tipsy_div");
@@ -276,16 +278,21 @@ Pi_header_functions:Subscription;
       }
     this.isNodata=true;
     let self = this;
-    this.route.queryParams.subscribe(params => {
-      let token = params['wpiId'];
-      if (token) {
-          let url=this.router.url.split('?')
-          this.location.replaceState(url[0]+'?wpiId='+selectedpiId);
-      }else{
-        let url=this.router.url.split('?')
-        this.location.replaceState(url[0]+'?piId='+selectedpiId);
-      }
-    });
+    this.varaint_data=[];
+    // this.route.queryParams.subscribe(params => {
+    //   let token = params['wpiId'];
+    //   if (token) {
+    //       let url=this.router.url.split('?')
+    //       this.location.replaceState(url[0]+'?wpiId='+selectedpiId);
+    //   }else{
+    //     let url=this.router.url.split('?')
+    //     this.location.replaceState(url[0]+'?piId='+selectedpiId);
+    //   }
+    // });
+
+    let params1= {"wpiId":selectedpiId};
+
+    this.router.navigate([],{ relativeTo:this.route, queryParams:params1 });
 
     let piId=selectedpiId
     let endTime:any
@@ -402,7 +409,8 @@ Pi_header_functions:Subscription;
         this.isSingleTraceBPMN = false;
         this.isMultiTraceBPMN = false;
         this.isSliderBPMN = false;
-        this.filterOverlay()
+        this.filterOverlay();
+        this.isGraph_changed=false;
     }
         },(err =>{
           this.spinner.hide();
@@ -422,9 +430,8 @@ Pi_header_functions:Subscription;
           'timeChange':this.isTimeChange,
           "workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+endTime+":00"
                }
-        this.rest.getSliderVariantGraph(sliderGraphbody).subscribe(data=>{this.sliderVariant=data
+        this.rest.getSliderVariantGraph(sliderGraphbody).subscribe(data=>{this.sliderVariant=data      
         })
-
         setTimeout(() => {
           this.process_graph_list.data.forEach(e => {
           if(e.piId==selectedpiId){
