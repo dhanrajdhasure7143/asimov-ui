@@ -822,11 +822,11 @@ $('.zoom-out').click( function(){   //zoom Out
 
 if(me.isdownloadJpeg==true||this.isdownloadPng==true||this.isdownloadpdf==true||this.isdownloadsvg==true){
   if(g.graph().width>1583 && g.graph().width<3160){
-    var initialScale1 = 0.35;
+    var initialScale1 = 0.30;
     svg.call(zoom.transform, d3.zoomIdentity.translate((svg.attr("width") - g.graph().width * initialScale1) / 2, 53).scale(initialScale1));
     svg.attr('height', g.graph().height * initialScale1 + 53)
   }else if(g.graph().width>3160){
-    var initialScale1 = 0.25;
+    var initialScale1 = 0.22;
     svg.call(zoom.transform, d3.zoomIdentity.translate((svg.attr("width") - g.graph().width * initialScale1) / 2, 53).scale(initialScale1));
     svg.attr('height', g.graph().height * initialScale1 + 53)
   }
