@@ -1173,9 +1173,8 @@
                   <option value="New">New</option>
                   <option value="In Progress">In Progress</option>
                   <option value="In Review">In Review</option>
-                  <option value="Approved">Approved</option>
-                  <option value="Rejected">Rejected</option>
-                </select>
+                  <option value="Done">Done</option>
+                 </select>
                 <span *ngIf="updatetaskForm.get('status').invalid && updatetaskForm.get('status').touched"
                   class="errspan required">Status Required*</span>
               </div>
