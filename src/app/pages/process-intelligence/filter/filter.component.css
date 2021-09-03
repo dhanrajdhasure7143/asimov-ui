@@ -230,7 +230,7 @@
 .event3, .Covered, .days {
   font-size: 14px;
 }
-.modal-header .close {
+.timestamp-header .close {
   font-size: 28px !important;
   line-height: unset;
 }
@@ -247,4 +247,15 @@
 .timestamp-footer .btn-primary {
   margin-right: 0px !important;
 }
-
+.timestamp-header.close {
+  margin-top: 2px;
+ }
+img.hover-img {
+  display: none;
+}
+.timestamp-header span:hover img.default-img, .pill span:hover img.default-img {
+  display: none;
+}
+.timestamp-header span:hover img.hover-img, .pill span:hover img.hover-img {
+  display: initial;
+}

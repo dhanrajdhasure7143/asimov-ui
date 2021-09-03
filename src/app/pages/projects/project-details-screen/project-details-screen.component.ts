@@ -238,6 +238,7 @@ percentageComplete: number;
  })
  this.uploadFileFormDetails.reset();
         this.listOfFiles = [];
+        this.fileList=[];
  this.spinner.hide();
   }
   resetdocform() {
@@ -872,6 +873,7 @@ percentageComplete: number;
      })
      this.uploadtaskFileForm.reset();
         this.listOfFiles = [];
+        this.fileList=[];
       }
       updateprojectDetails()
       {

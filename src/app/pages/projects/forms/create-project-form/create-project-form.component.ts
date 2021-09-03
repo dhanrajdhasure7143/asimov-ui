@@ -19,6 +19,7 @@ export class CreateProjectFormComponent implements OnInit {
   mindate= moment().format("YYYY-MM-DD");
   @Input('users_list') public users_list: any[];
   @Input('processes') public processes:any[];
+  selected_process_names:any=[];
   @Output() oncreate = new EventEmitter<String>();
   date = new Date();
   ngOnInit(): void {
@@ -42,9 +43,17 @@ export class CreateProjectFormComponent implements OnInit {
 
     })
     this.getvalchain();
+    this.getprocessnames();
   }
 
-
+  getprocessnames()
+{
+  this.rest.getprocessnames().subscribe(processnames=>{
+    let resp:any=[]
+    resp=processnames
+    this.selected_process_names=resp.filter(item=>item.status=="APPROVED");
+  })
+  }
 
  
   createproject()
@@ -85,11 +94,6 @@ export class CreateProjectFormComponent implements OnInit {
 
   getValueChainProcesses(value)
   {
-    // //this.valuechainprocesses=[];
-    // console.log(value);
-    // console.log(this.valuechain)
-  // let processmaster=this.valuechain.find(item=>item.processGrpMasterId==value)
-    //console.log("-processMaster-",value)
     this.rest.getvaluechainprocess(value).subscribe(data=>{
       let response:any=data;
       this.valuechainprocesses=response;
