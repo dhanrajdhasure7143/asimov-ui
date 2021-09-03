@@ -25,6 +25,7 @@ export class FilterComponent implements OnInit {
   @Input() public resetFilter: boolean;
   @Input() public isClearFilter: boolean;
   @Input() public isFilterApplied: boolean;
+  @Input() public isGraph_changed:boolean;
   @Output() selectedNodes = new EventEmitter<any[]>();
   @Output() applyFilterValue = new EventEmitter<boolean>();
   @Output() selectedStartpoints = new EventEmitter<any[]>();
@@ -132,6 +133,9 @@ export class FilterComponent implements OnInit {
 
   ngOnInit() {
     setTimeout(() => {
+      console.log(this.variantData)
+    console.log(this.dataValues)
+
       for (var i = 0; i < this.variantData.data.length; i++) {
         var obj = {};
         obj["name"] = this.variantData.data[i].name;
@@ -181,6 +185,45 @@ export class FilterComponent implements OnInit {
 }
 
   ngOnChanges() {
+    if(this.isGraph_changed){
+      setTimeout(() => {
+        for (var i = 0; i < this.variantData.data.length; i++) {
+          var obj = {};
+          obj["name"] = this.variantData.data[i].name;
+          obj["casepercent"] = this.variantData.data[i].casepercent;
+          obj["detail"] = this.variantData.data[i].detail;
+          obj["days"] = this.variantData.data[i].days;
+          obj["case_value"] = this.variantData.data[i].case_value;
+          obj["selected"] = "inactive";
+          this.variantListarray.push(obj)
+        }
+
+        this.dataValuesNames = [];
+        for (var i = 0; i < this.dataValues.length; i++) {
+          var obj = {};
+          obj["name"] = this.dataValues[i].name;
+          obj["selected"] = "inactive";
+          this.dataValuesNames.push(obj)
+        }
+  
+        this.startPointArray = [];
+        for (var i = 0; i < this.startArray.length; i++) {
+          var obj = {};
+          obj["name"] = this.startArray[i];
+          obj["selected"] = "inactive";
+          this.startPointArray.push(obj)
+        }
+        this.endPointArray = [];
+        for (var i = 0; i < this.endArray.length; i++) {
+          var obj = {};
+          obj["name"] = this.endArray[i];
+          obj["selected"] = "inactive";
+          this.endPointArray.push(obj)
+        }
+        this.performanceLogic(this.performanceFilterInput, 'caseduration');
+        // console.log("performance",this.performanceFilterInput)
+      }, 1000);
+    }
     this.chart_filter_options = Object.keys(Filter).filter(val => isNaN(Filter[val]));
 
     if (this.isClearFilter == true) {
