@@ -156,7 +156,8 @@
  </div>
      <div class="col-md-12 h-100">
              <!-- <div class="lableHide"></div> -->
-             <div class="tooltip_button tooltip1" #toogleBtn><img (click)='spinnermetrics()' src="..\assets\images\PI\options_icon.svg" id="variants" class="testplus1">
+             <div class="tooltip_button tooltip1" #toogleBtn>
+                 <span class="PI-frpr-spin" (click)='spinnermetrics()'><img  src="..\assets\images\PI\options_icon.svg" id="variants" class="testplus1"></span>
                  <div *ngIf='isedgespinner' class="tooltiptext1">
                     <form action="">
                      <div class="PI-flow-freq">

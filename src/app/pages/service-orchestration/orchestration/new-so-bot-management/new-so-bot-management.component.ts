@@ -354,11 +354,12 @@ public slaupdate : boolean = false;
           let resp:any=res
           if(resp.errorMessage==undefined)
           {
-            Swal.fire(resp.Status,"","success")
+            Swal.fire("Success",resp.Status,"success")
             this.get_sla_list();
+            document.getElementById("SLAConfig_overlay").style.display = "none";
           }
           else
-            Swal.fire(resp.errorMessage,"","success")
+            Swal.fire("Error",resp.errorMessage,"error")
     });
    else
     this.rest.update_sla_config(slaalertsc).subscribe( res =>
@@ -366,11 +367,12 @@ public slaupdate : boolean = false;
           let resp:any=res
           if(resp.errorMessage==undefined)
           {
-            Swal.fire(resp.Status,"","success")
+            Swal.fire("Success",resp.Status,"success")
             this.get_sla_list();
+            document.getElementById("SLAConfig_overlay").style.display = "none";
           }
           else
-            Swal.fire(resp.errorMessage,"","success")
+            Swal.fire("Error",resp.errorMessage,"error");
 
     });
  }
@@ -406,7 +408,7 @@ public slaupdate : boolean = false;
       if(response.errorMessage!=undefined)
       {
         this.spinner.hide();
-        Swal.fire(response.errorMessage,"","error");
+        Swal.fire("Error",response.errorMessage,"error");
         return;
         //this.rpa_studio.spinner.hide();
       }
