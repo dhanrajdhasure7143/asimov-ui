@@ -13,6 +13,7 @@ const routes: Routes = [
     {path:'rpautomation', loadChildren: './rpautomation/rpautomation.module#RpautomationModule'},
     {path:'serviceOrchestration', loadChildren: './service-orchestration/service-orchestration.module#ServiceOrchestrationModule'},
     {path:'projects', loadChildren: './projects/projects.module#ProjectsModule'},
+    {path:'admin', loadChildren:'./administration/administration.module#AdministrationModule'},
     {path:'**', redirectTo:'/home', pathMatch:"full"}
   ]}
 ];

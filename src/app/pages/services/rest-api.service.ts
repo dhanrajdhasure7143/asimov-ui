@@ -1003,4 +1003,16 @@ getvaluechainprocess(id)
     return this.http.get("/bpsprocess/get/"+bpmnId)
   }
 
+  updateUser(user: any): Observable<any> {
+    return this.http.post<any>(`/api/user/updateUserDetails`, user);
+
+  }
+  getDepartments():Observable<any>{
+    return this.http.get<any>('/processintelligence/v1/processgraph/categories')
+  }
+  changePassword(pswdbody:any): Observable<any>{
+    return this.http.post<any>('/api/user/passwordChange', pswdbody,httpOptions)
+  }
+  
+
 }

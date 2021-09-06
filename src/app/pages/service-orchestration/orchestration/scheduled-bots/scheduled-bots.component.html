@@ -53,24 +53,26 @@
             </ng-container>
             <ng-container matColumnDef="status">
                     <th mat-header-cell *matHeaderCellDef>Status</th>
-                    <td mat-cell *matCellDef="let element">
+                    <td class="font-weight-bold" mat-cell *matCellDef="let element">
                         <span *ngIf="element.status=='Running'" class="text-primary" ><span><img src="../../../../assets/images/RPA/DotSpin.gif" style="filter: none; width: 19px;align-items: center;"></span>&nbsp;{{element.status}}</span>
                                 
-                        <span *ngIf="element.status=='Success'|| element.status=='Completed'|| element.status=='Save'"  [matTooltip]="element.status" class="text-success"> <span>
-                            <li class="fa fa-check-circle"style="font-size:19px">
+                        <span *ngIf="element.status=='Success'|| element.status=='Completed'|| element.status=='Save'"  [matTooltip]="element.status" class="tableActionsIcons"> <span>
+                            <img src="../../../../assets/images/RPA/icon_latest/Success.svg" alt="">
                             </span>
                             &nbsp;Saved
                         </span>
-                        <span *ngIf="element.status=='Failure'|| element.status=='Failed'"  [matTooltip]="element.status" class="text-danger"><span><li class="fa fa-times-circle" style="font-size:19px"></span></span>
+                        <span *ngIf="element.status=='Failure'|| element.status=='Failed'"  [matTooltip]="element.status" class="tableActionsIcons"><span>
+                            <img src="../../../../assets/images/RPA/icon_latest/close-red.svg" alt=""></span></span>
                        
-                        <span *ngIf="element.status=='New'" class="text-primary"><span style="background-color:#0062cf;border-radius: 50%;color:white;padding-right:5px;padding-left:4px;padding-top:5px;padding-bottom:5px;font-size:10px;text-align: center;align-content: center;align-items: center;"><i class="fas fa-robot text-light"></i></span>&nbsp;<span>{{element.status}}</span></span>
-                        <span *ngIf="element.status=='Pending'" class="text-warning"><i class="fa fa-clock" style="font-size:19px"></i>&nbsp;<span>{{element.status}}</span></span>
+                        <span *ngIf="element.status=='New'" class="tableActionsIcons"><span>
+                            <img src="../../../../assets/images/RPA/userobot.png" style="filter: none;"></span>&nbsp;<span>{{element.status}}</span></span>
+                        <span *ngIf="element.status=='Pending'" class="tableActionsIcons"><i class="fa fa-clock" style="font-size:19px"></i>&nbsp;<span>{{element.status}}</span></span>
             
                         <span *ngIf="element.status=='Stop'"  >
-                            <span class="bg-danger"  [matTooltip]="element.status">
+                            <span class="tableActionsIcons"  [matTooltip]="element.status">
                               <!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">-->
                              
-                              <img src="../../../../../assets/images/RPA/stop_fail_icon.svg" style="filter: none; width: 19px;">
+                              <img src="../../../../../assets/images/RPA/icon_latest/stop.svg" style="filter: none;">
                             </span>&nbsp;Stopped
                             </span>
      
