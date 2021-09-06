@@ -22,6 +22,7 @@ import Swal from 'sweetalert2';
 export class ProgramDetailsComponent implements OnInit {
   unassigned_projects: any=[];
   addprojectsForm:FormGroup;
+  owner_letters: any;
 
   constructor(
     private rest:RestApiService,
@@ -110,6 +111,11 @@ export class ProgramDetailsComponent implements OnInit {
       this.get_linked_projects(program_id);
       this.program_detials=this.projects_and_programs_list[0].find(item=>item.id==program_id);
       console.log("pgrmdata: ", this.program_detials)
+      if(this.program_detials){
+        let usr_name=this.program_detials.owner.split('@')[0].split('.');
+        this.owner_letters=usr_name[0].charAt(0)+usr_name[1].charAt(0);
+        console.log(this.owner_letters)
+        }
       this.editdata=false;
     });
   }
@@ -431,7 +437,7 @@ export class ProgramDetailsComponent implements OnInit {
           if(response.errorMessage==undefined)
           {
             
-            Swal.fire("Success",response.message,"success")
+            Swal.fire("Success","Project Deleted Successfully !!","success")
             this.get_linked_projects(this.program_detials.id);
           }
           else
@@ -502,7 +508,7 @@ export class ProgramDetailsComponent implements OnInit {
       this.spinner.hide()
       let response:any=res;
       if(response.errorMessage == undefined)
-        Swal.fire("Success",response.message,"success")
+        Swal.fire("Success","Project Updated Successfully !!","success")
       else
         Swal.fire("Error",response.errorMessage,"error");
       this.getprogramdetails();

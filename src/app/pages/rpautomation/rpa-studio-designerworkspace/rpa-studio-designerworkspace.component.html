@@ -283,17 +283,18 @@
         <div class="rpa-modal-content">
             <div class="rpa-modal-header">
                 <!-- <span class="rpa-modal-close" (click)="closecredentials()">&times;</span> -->
-                <h4>Create Credentials</h4>
+                <div class="formelement">
+                <button (click)="back()" >
+                    <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                  </button>&nbsp;&nbsp;
+                    <span class="h4">Create Credentials</span>
+                </div>
             </div>
-            <div class="back-container">
-            <button (click)="back()" tooltip="Back" style='margin-top:10px;margin-left: 97%;'>
-                <i class="fa fa-arrow-left" aria-hidden="true"></i>
-              </button>
-              </div>
-            <div class="container">
+         
+            <div class="modal-body actions-mbody">
                 <form [formGroup]="insertForm" (ngSubmit)="savedata()">
-                    <div class="row">
-                        <div class="col-md-3 formelement">
+                    <!-- <div class="row"> -->
+                        <div class="formelement">
                             <label for="userName">Email<span style="color:red">*</span></label>
                             <input type="text" maxlength="51" class="form-control data" formControlName="userName" #userName value=""
                             pattern="^\S*[@]\S*[.]\S*$" placeholder="Enter Email">
@@ -304,7 +305,7 @@
                             </div>
                         </div>
                         
-                        <div class="col-md-3 formelement">
+                        <div class=" formelement">
                             <label for="password">Password<span style="color:red">*</span></label>
                             <input [type]="passwordtype1 ? 'text': 'password'" maxlength="51" class="form-control" formControlName="password" value="" placeholder="Enter Password" passwordToggle>
                             <span *ngIf="passwordtype1==false" class="fa fa-fw fa-eye field-icon" (click)="passwordtype1 =!passwordtype1"></span>
@@ -316,7 +317,7 @@
                             </div> 
                         </div>
               
-                        <div class="col-md-3 formelement">
+                        <div class=" formelement">
                             <label for="serverName">Mail Server<span style="color:red">*</span></label>
                             <select class="form-control" formControlName="serverName">
                                 <option value="" [selected]="true">--Select Mail Server--</option>
@@ -326,7 +327,7 @@
                             <span *ngIf="insertForm.get('serverName').invalid && insertForm.get('serverName').touched" style="color:red" class="fa fa-info-circle errspan"> Server Type Required*</span>
                         </div>
 
-                        <div class="col-md-3 formelement">
+                        <div class=" formelement">
                             <label for="inBoundAddress">In Bound Address<span style="color:red">*</span></label>
                             <input type="text" maxlength="51" class="form-control data" formControlName="inBoundAddress" #inBoundAddress value="" placeholder="Enter In Bound Address">
                             <span *ngIf="(insertForm.get('inBoundAddress').invalid && insertForm.get('inBoundAddress').touched) && !insertForm.controls['inBoundAddress'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">In Bound Address is required*</span>
@@ -334,10 +335,10 @@
                                 Maximum of 50 characters
                             </div>
                         </div>
-                  </div> 
+                  <!-- </div> 
 
-                  <div class="row">
-                        <div class="col-md-3 formelement">
+                  <div class="row"> -->
+                        <div class=" formelement">
                             <label for="inBoundAddressPort">In Bound Address Port<span style="color:red">*</span></label>
                             <input type="text" (keydown)="inputNumberOnly($event)" maxlength="6" class="form-control data" formControlName="inBoundAddressPort" #inBoundAddressPort value="" placeholder="Enter In Bound Address Port">
                             <span *ngIf="(insertForm.get('inBoundAddressPort').invalid && insertForm.get('inBoundAddressPort').touched) && !insertForm.controls['inBoundAddressPort'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">In Bound Address Port is required*</span>
@@ -346,7 +347,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-3 formelement">
+                        <div class=" formelement">
                             <label for="outBoundAddress">Out Bound Address<span style="color:red">*</span></label>
                             <input type="text" maxlength="51" class="form-control data" formControlName="outBoundAddress" #outBoundAddress value="" placeholder="Enter Out Bound Address">
                             <span *ngIf="(insertForm.get('outBoundAddress').invalid && insertForm.get('outBoundAddress').touched) && !insertForm.controls['outBoundAddress'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Out Bound Address is required*</span>
@@ -355,7 +356,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-3 formelement">
+                        <div class=" formelement">
                             <label for="outboundAddressPort">Out Bound Address Port<span style="color:red">*</span></label>
                             <input type="text" (keydown)="inputNumberOnly($event)" maxlength="6" class="form-control data" formControlName="outboundAddressPort" #outboundAddressPort value="" placeholder="Enter Out Bound Address Port">
                             <span *ngIf="(insertForm.get('outboundAddressPort').invalid && insertForm.get('outboundAddressPort').touched) && !insertForm.controls['outboundAddressPort'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Out Bound Address Port is required*</span>
@@ -366,22 +367,18 @@
 
                         
                       
-                    </div>
+                    <!-- </div>
                     <div class="row">  
                         
                         
-                    </div>
-                    <div class="row">
-                        <div class="col-md-3 formelement">
+                    </div> -->
+                        <div class=" formelement">
                             <input type="button" class="btn btn-primary" value="Save" (click)="saveCredentials()" [disabled]="insertForm.invalid || submitted">
+                            &nbsp;&nbsp;
                             <input type="button" class="btn btn-primary" value="Reset"  (click)="resetCredForm()">
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-3 formelement">
                    
-                        </div>
-                    </div>
+                    
                 </form>
             </div>
         </div>

@@ -15,8 +15,11 @@ export class ProjectDetailsHeaderComponent implements OnInit {
   constructor(private projectscreen:ProjectDetailsScreenComponent) { }
   editdata:Boolean=false
   ngOnInit() {
+    
+    
     this.projectdata=this.projectscreen.projectDetails
     console.log("project details component",this.projectscreen.projectDetails)
+    console.log(this.projectdata.owner, this.users_list);
   }
 
 

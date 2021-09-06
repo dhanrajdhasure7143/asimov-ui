@@ -125,7 +125,7 @@ export class EditTaskComponent implements OnInit {
         let status: any= res;
         if(status.errorMessage==undefined)
         {
-          Swal.fire("Success",status.message,"success");
+          Swal.fire("Success","Task Updated Successfully !!","success");
           this.route.navigate(['/pages/projects/projectdetails'],{queryParams:{id:this.project_id}})
         }
         else
