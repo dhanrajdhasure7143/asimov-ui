@@ -197,7 +197,7 @@ span.testtooltip:before {
   font-size: 13px !important;
 }
 .btn-test{
-  margin-left: 10px !important;
+  /* margin-left: 10px !important; */
 }
 button:disabled {
   cursor: not-allowed;

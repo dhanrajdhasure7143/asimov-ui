@@ -154,11 +154,11 @@ td{
   height: calc(100% - 50px);
   overflow-y: auto;
 }
-.orches_new .module-heading {
+/* .orches_new .module-heading {
   background-color: #f8f8f8;
   padding: 12px 6px;
   margin-bottom: 0px;
-}
+} */
 .orches_new .mat-ink-bar {
   transition: unset;
 }
