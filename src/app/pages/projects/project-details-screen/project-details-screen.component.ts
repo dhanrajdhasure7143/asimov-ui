@@ -125,6 +125,7 @@ percentageComplete: number;
   requestedFiledata: any;
   fileList: File[] = [];
   listOfFiles: any[] = [];
+  owner_letters: any;
   
   constructor(private dt:DataTransferService,private route:ActivatedRoute, private rpa:RestApiService,
     private modalService: BsModalService,private formBuilder: FormBuilder,private router: Router,
@@ -420,6 +421,15 @@ percentageComplete: number;
         this.rpa.getProjectDetailsById(paramsdata.id).subscribe( res =>{
           this.spinner.hide();
           this.projectDetails=res
+          console.log(this.projectDetails);
+          
+          if(this.projectDetails){
+            let usr_name=this.projectDetails.owner.split('@')[0].split('.');
+            this.owner_letters=usr_name[0].charAt(0)+usr_name[1].charAt(0);
+            console.log(this.owner_letters);
+            
+            }
+          
           this.project_id=this.projectDetails.id
           let users:any=[]
           if(this.projectDetails.resource.length!=0){
