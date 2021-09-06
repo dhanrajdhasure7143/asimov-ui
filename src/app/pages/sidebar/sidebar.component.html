@@ -186,8 +186,8 @@
     <!-- <mat-icon class="menu-button" [ngClass]="{'rotated' : showadminSubmenu}" >&#xe5cf;
     </mat-icon> -->
   </mat-list-item>
-  <!-- <div class="submenus" [ngClass]="{'expanded' : showadminSubmenu}">
-    <a mat-list-item  class="link" id="pi" (click)="hightlight('user','expand_admin')"  >
+  <div class="submenus" [ngClass]="{'expanded' : showadminSubmenu}">
+    <a mat-list-item  class="link" id="pi" (click)="hightlight('user','expand_admin')" routerLink="/pages/admin/myaccount" >
       <span class="side-icon">
         <mat-icon>manage_accounts</mat-icon>
       </span>
@@ -199,7 +199,7 @@
       </span>
       <span class="side-menu-font">System Setting</span>
     </a>
-  </div> -->
+  </div> 
    
     <!-- <div class="link">
       <span class="side-menu-font">
