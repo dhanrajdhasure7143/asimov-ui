@@ -90,6 +90,12 @@ button:disabled{
   margin-top: 15px;
   float: right;
 }
+
+.scheduletimer-actionbtns
+{
+
+  font-size:  20px !important
+}
 .RPA-scheduletimer input[type="date"] {
   background-image: url('../../../../assets/images/RPA/icon_latest/calendar.svg');
   background-position: calc(100% - 10px) center;
@@ -100,3 +106,7 @@ input[type="date"]::-webkit-inner-spin-button, input[type="date"]::-webkit-calen
   opacity: 0;
 }
 
+button:disabled {
+  cursor: not-allowed;
+  pointer-events: all !important;
+  }
