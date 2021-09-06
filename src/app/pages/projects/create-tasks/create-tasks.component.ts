@@ -76,7 +76,7 @@ export class CreateTasksComponent implements OnInit {
         //this.createtaskmodalref.hide();
         Swal.fire({
           title: 'Success',
-          text: ""+status.message,
+          text: "Task Created Successfully !!",
           position: 'center',
           icon: 'success',
           showCancelButton: false,

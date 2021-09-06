@@ -167,12 +167,16 @@
                 </div>
             </div>
             <div class="col-md-12">
-                <div class="form-fields col-md-6 pl-0">
+                <div class="form-fields">
                     <label class="label-control">Project Purpose<span
                             class="star">*</span></label>
-                    <input type="text" formControlName="projectPurpose" class="form-control data" placeholder="Enter Project Purpose"
-                        [ngClass]="insertForm2.get('projectPurpose').valid?'enteredfield-color':'inputfield-color'">
+                    <!-- <input type="text" formControlName="projectPurpose" class="form-control data" placeholder="Enter Project Purpose"
+                        [ngClass]="insertForm2.get('projectPurpose').valid?'enteredfield-color':'inputfield-color'"> -->
                    
+                        <textarea class="form-control data" formControlName="projectPurpose" row="3"
+                        placeholder="Enter Project Purpose"
+                        [ngClass]="insertForm2.get('projectPurpose').valid?'enteredfield-color':'inputfield-color'">
+                            </textarea>
                     <span
                         *ngIf="insertForm2.get('projectPurpose').invalid && insertForm2.get('projectPurpose').touched"
                         class="errspan required">Project Purpose Required*</span>

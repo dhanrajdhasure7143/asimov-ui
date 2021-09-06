@@ -179,6 +179,15 @@ yLeftTickFormat;
 yRightTickFormat;
 yLeftAxisScale:number;
 robotValue:number;
+bubbleData1:any[]=[];
+isevents_chart:boolean=true;
+isduration_chart:boolean=false;
+xAxisLabel_duration: string = 'Activity';
+yAxisLabel_duration: string = 'Duration(Hrs)';
+// maxRadius_duration: number = 1000;
+minRadius_duration: number = 0;
+yScaleMin_duration: number = 0;
+// yScaleMax: number = 200;
 
 
     constructor(
@@ -488,6 +497,7 @@ robotValue:number;
                             domain: ['#fc8d45']
                           };
                         this.yAxisLabel1="Occurences";
+                        this.getEventBubboleGraph('event')
                         activityDuration = tmp;
                         activityCost = tmp2;
                         this.dChart1 = activityDuration;
@@ -799,8 +809,10 @@ series2.stroke = am4core.color("#fc8d45");
 
     getEventBubboleGraph(type) {
         this.activityData = [];
+        if (type && type == 'event') {
+            this.isduration_chart=false;
+            this.isevents_chart=true;
         this.activity_Metrics.forEach((e, m) => {
-            if (type && type == 'event') {
                 this.activityData.push({ x: e.Activity, y: e.Frequency, r: e.Frequency, name: e.Activity, fullname: e.Activity.split(/\s/).reduce((response, word) => response += word.slice(0, 1), ''), title: 'No of Events', event_duration: e.Frequency });
                 this.bubbleColor = '#212F3C';
                 this.isEventGraph = true;
@@ -809,22 +821,36 @@ series2.stroke = am4core.color("#fc8d45");
                     domain: ['#fc8d45']
                   };
                   this.yAxisLabel1 = 'Occurences';
+            })
             } else {
-
-                this.activityData.push({ x: e.Activity, y: this.getHours2(e.Duration_range), r: this.getHours2(e.Duration_range), name: e.Activity, fullname: e.Activity.split(/\s/).reduce((response, word) => response += word.slice(0, 1), ''), title: 'Duration', event_duration: this.timeConversion(e.Duration_range) });
+                this.isduration_chart=true;
+                this.isevents_chart=false;
+                this.activity_Metrics.forEach((e, m) => {
+                
+                this.activityData.push({ x: e.Activity, y: Number(this.getHours(e.Duration_range)), r: Number(this.getHours(e.Duration_range)), name: e.Activity, fullname: e.Activity.split(/\s/).reduce((response, word) => response += word.slice(0, 1), ''), title: 'Duration', event_duration: this.timeConversion(e.Duration_range) });
                 this.bubbleColor = '#008080';
                 this.isEventGraph = false;
-                this.bubbleData = [{name:"", series: this.activityData}];
                 this.colorScheme1 = {
                     domain: ['#3EC1A4']
                   };
                   this.yAxisLabel1 = 'Duration(Hrs)';
+                });                
+                setTimeout(() => {
+                this.bubbleData1 = [{name:"", series: this.activityData}];
+                }, 500);
             }
-            console.log(this.bubbleData);
            // this.addchart2();
-        });
     }
-
+ getHours3(millisec) {
+        var hours: any = (millisec / (1000 * 60 * 60)).toFixed(1);
+        if(String(hours).indexOf('.') != -1){
+            let week=hours.toString().split('.')
+              hours=week[0];
+            }else{
+              hours=hours;
+            }
+        return hours;
+    }
     getTotalNoOfCases(type) {
         var noofcases = 0;
         this.totalCases = 0;

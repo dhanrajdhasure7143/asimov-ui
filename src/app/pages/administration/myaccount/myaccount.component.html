@@ -1,0 +1,216 @@
+<mat-card class="h-100">
+    <div class="module-heading title">
+        <!-- <span class="projects-back-button" routerLink="/pages/projects/listOfProjects" >
+            <i class="fa fa-angle-left" aria-hidden="true"></i>
+        </span> -->
+        <span class="module-back-button" routerLink="/pages/projects/listOfProjects">
+            <i class="fas fa-arrow-left" aria-hidden="true"></i>
+        </span>
+        <span class="module-header-title">
+            <span class="module-parent-title">My Account</span>
+        </span>
+        <!-- <span class="pull-right" style="font-size:20px;">
+          <span class="projects-menu-item" (click)="projects_toggle==false?projects_toggle=true:projects_toggle=false;" ><i class="ri-file-line"></i></span>
+          <span class="projects-menu-item"><i class="ri-filter-line"></i></span>
+          <span class="projects-menu-item"><i class="ri-more-2-line"></i></span>
+        </span> -->
+    </div>
+
+
+    <div class="container-fluid h-scroll">
+        <div class="maindivfoprm">
+            <div class="innersform card-form">
+
+                <div class="create-heading">Update Profile</div>
+                <mat-tab-group mat-align-tabs="end">
+
+                    <mat-tab label="My Account">
+                        <div class="container">
+                            <form autocomplete="off" class="col-sm-12" #updateUser="ngForm" (ngSubmit)="updateAccount(form)">
+                                <div class="row prj-crt-form">
+                                  <div class="col-md-6">
+                                    <label class="label-control" for="email">Email</label>
+                                    <input type="text" name="email" #email="ngModel" class="form-control data" [(ngModel)]="formOne.userId"
+                                                pattern="^\S*[@]\S*[.]\S*$" required email placeholder="Send from ex: abc@xyz.com" disabled/>
+                                  
+                                  </div>
+                                  <div class="col-md-6">
+                                    <label class="label-control" for="firstName">First Name</label>
+                                    <input type="text" name="firstName" #firstName="ngModel" class="form-control data" (keypress)="lettersOnly($event)" [(ngModel)]="formOne.firstName" placeholder="Enter First Name" maxlength="25" required/>
+                                <span *ngIf="((firstName.invalid && updateUser.submitted) || (firstName.errors && firstName.touched) )" 
+                                    class='errspan required'>
+                                First Name is required </span>
+                                    </div>
+                          
+                                      <div class="col-md-6">
+                                        <label class="label-control" for="lastName">Last Name</label>
+                                        <input type="text" name="lastName" #lastName="ngModel" class="form-control data" (keypress)="lettersOnly($event)" [(ngModel)]="formOne.lastName" placeholder="Enter Last Name" maxlength="25" required alphabetOnly />
+                                            <span *ngIf="((lastName.invalid && updateUser.submitted) || (lastName.errors && lastName.touched) )" 
+                                            class='errspan required'> Last Name is required </span>
+                                        </div>
+                                      <div class="col-md-6">
+                                        <label class="label-control" for="jobTitle">Job Title</label>
+                                        <input type="text" name="jobTitle" #jobTitle="ngModel" class="form-control data" (keypress)="lettersOnly($event)" [(ngModel)]="formOne.designation" placeholder="Enter Job Title" maxlength="25" required alphabetOnly/>
+                                        <span *ngIf="((jobTitle.invalid && updateUser.submitted) || (jobTitle.errors && jobTitle.touched) )" 
+                                        class='errspan required'>Job Title is required </span>
+                                    </div>
+                                   
+                                    <div class="col-md-6">
+                                      <label class="label-control" for="company">Company</label>
+                                      <input type="text" name="company" #company="ngModel" class="form-control data" [(ngModel)]="formOne.company" placeholder="Enter Company" maxlength="25" required alphabetOnly />
+                                      <span *ngIf="((company.invalid && updateUser.submitted) || (company.errors && company.touched) )" 
+                                      class='errspan required'> Company is required </span> 
+                                    
+                                    </div>
+                      
+                                    <div class="col-md-6">
+                                        <label class="label-control" for="country">Country</label>
+                                        <select id="country" name='country' class="form-control data" (change)='onChangeCountry(formOne.country)' #country="ngModel" [(ngModel)]="formOne.country" required>
+                                                <!-- <option hidden disabled [ngValue]="undefined" [selected]=true>Country</option> -->
+                                                <option  [value]="undefined" disabled hidden>Country</option>
+                                                <option  [value]="null" disabled hidden>Select Country</option>
+                                                <option *ngFor="let country of countryInfo" [ngValue]="country.CountryName">{{country.CountryName}}</option>
+                                          </select>
+                                          <span *ngIf="((country.invalid && updateUser.submitted)|| (country.errors && country.touched))"
+                                            class='errspan required'> Country is required </span>
+                                      </div>
+                                      <div class="col-md-6">
+                                          <label class="label-control" for="state">State</label>
+                                          <!-- <img src="assets/images/registration/State.svg" class="icon"> -->
+                                          <select class="form-control data" (change)="onChangeState($event.target.value)" name='state' #state='ngModel' [(ngModel)]="formOne.state" required>
+                                            <!-- <option *ngIf="stateInfo == ''" value="-1">State</option> -->
+                                            <option  [value]="undefined" disabled hidden>State</option>
+                                            <option  [value]="null" disabled hidden>Select State</option>
+                                            <option *ngFor="let state of stateInfo; let j = index" [value]='state.StateName'>{{state.StateName}}</option>
+                                          </select>
+                                          <span *ngIf="((state.invalid && updateUser.submitted)|| (state.errors && state.touched))"
+                                            class='errspan required'> State is required </span>
+                                        </div>
+                            
+                                        <div class="col-md-6">
+                                            <label class="label-control" for="city">City</label>
+                                          <!-- <img src="assets/images/registration/town.svg" class="icon"> -->
+                                          <select class="form-control data" name='city' #city='ngModel' [(ngModel)]='formOne.city' required>
+                                            <option  [value]="undefined" disabled hidden>City</option>
+                                            <option  [value]="null" disabled hidden>Select City</option>
+                                            <option *ngFor="let city of cityInfo; let k = index" [value]="city">{{city}}</option>
+                                          </select>
+                                          <span *ngIf="((city.invalid && updateUser.submitted)|| (city.errors && city.touched))"
+                                            class='errspan required'> City is required </span>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="label-control" for="zipCode">Zip Code</label>
+                                            <!-- <img src="assets/images/registration/Zip Code.svg" class="icon"> -->
+                                            <input type="text" (keydown)="onKeydown($event)" name="zipCode" #zipCode="ngModel" class="form-control data" [(ngModel)]="formOne.zipcode"
+                                               onKeyPress="if(this.value.length==6) return false;" placeholder="Enter Zip Code" required>
+                                            <span *ngIf="((zipCode.invalid && updateUser.submitted)|| (zipCode.errors && zipCode.touched))"
+                                              class='errspan required'> Zip Code is required </span>
+                                          </div>
+
+                                     
+                                                     
+                                  <div *ngIf ="!isRefresh" class="col-md-6">
+                                    <label class="label-control" for="phoneumber">Phone</label>
+                                            <input type="text" (keydown)="onKeydown($event)"  id="phoneNumber" name="phoneumber" style="margin-left:60px;" class="form-control data phonenumber" ng2TelInput [ng2TelInputOptions]="{initialCountry: phnCountryCode}"
+                                                #phoneumber="ngModel" [(ngModel)]="formOne.phoneNumber" onKeyPress="if(this.value.length==10) return false;" required/>
+                                    <span *ngIf="((phoneumber.invalid && updateUser.submitted) || (phoneumber.errors && phoneumber.touched) )" 
+                                    class='errspan required'> Phone Number is required </span>
+                                         </div> 
+                                              
+                                  <div *ngIf ="isRefresh" class="col-md-6">
+                                    <label class="label-control" for="phoneumber">Phone</label>
+                                            <input type="text" (keydown)="onKeydown($event)"  id="phoneNumber" name="phoneumber" style="margin-left:60px;" class="form-control data phonenumber" ng2TelInput [ng2TelInputOptions]="{initialCountry: phnCountryCode}"
+                                                #phoneumber="ngModel" [(ngModel)]="formOne.phoneNumber" onKeyPress="if(this.value.length==10) return false;" required/>
+                                    <span *ngIf="((phoneumber.invalid && updateUser.submitted) || (phoneumber.errors && phoneumber.touched) )" 
+                                    class='errspan required'> Phone Number is required </span>
+                                        </div> 
+<br>
+                            <div class="laemarleft">
+                                <button type="submit" class="btn btn-primary pull-right updtpswd1"  [disabled] = "updateUser.invalid">Save</button>
+                            </div>
+                        </div>
+                    </form>
+
+                         </div>
+                    </mat-tab>
+                    
+                    <mat-tab label="Change Password">
+                        <div class="container">
+                            <div class = "col-md-8 ">
+                                <form #f="ngForm" (ngSubmit)="passwordChange(f)">
+                                 
+                                  <div class="form-group col-md-8 inner-addon left-addon right-addon" >
+                                  <label class="label-control" for="password">Current Password </label>
+                                  <img src="assets/images/Lock.svg" class="lockicon">
+                                  <span (click)="curreyetoggle()" class="input-group-add eyeicon"> <i class="fa fa-eye" [ngClass]="(eyeshow==true) ? 'fa fa-eye' : 'fa fa-eye-slash'"  aria-hidden="true" ></i></span>
+                                <input [type]="(eyeshow==true) ? 'password' : 'text'"  class="form-control data" style="text-align: center;" name="password" #password="ngModel" [(ngModel)]="pswdmodel.currentPassword" placeholder="Enter Current Password" pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$%]).{8,20})" maxlength="20" required/>
+                                <span *ngIf="((password.invalid && f.submitted) || (password.errors && password.touched) )">
+                                  <span class='errspan required' *ngIf="password.errors.required"> Password is required*</span>
+                                  <span class='errspan required' *ngIf="password.errors.pattern"> Password must be 8-20 characters and have at least one uppercase letter, one lowercase letter, one special character(@,$,% are allowed) and one number*</span>
+                                </span>
+                                
+                                <!-- <input type="password" name="password" #password="ngModel" placeholder = "Enter Current Password" class="form-control botmbordr" [(ngModel)]="pswdmodel.currentPassword"/> -->
+                                </div>
+        
+                                <div class="form-group col-md-8 inner-addon left-addon right-addon">
+                                  <label class="label-control" for="newpassword">New Password </label>
+                                  <img src="assets/images/Lock.svg" class="lockicon">
+                                  <span (click)="neweyetoggle()" class="input-group-add eyeicon"> <i class="fa fa-eye" [ngClass]="(neweyeshow==true) ? 'fa fa-eye' : 'fa fa-eye-slash'"  aria-hidden="true" ></i></span>
+                                  <input [type]="(neweyeshow==true) ? 'password' : 'text'"  class="form-control data" style="text-align: center;" name="newpassword" ngModel #newpassword="ngModel" placeholder="Enter New Password" pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$%]).{8,20})" maxlength="20" required/>
+                                  <!-- <div class="fa fa-info-circle errspan" *ngIf="password.invalid && (password.dirty || password.touched)"> Password is required
+                                  </div> -->
+                                  <span *ngIf="((newpassword.invalid && f.submitted) || (newpassword.errors && newpassword.touched) )">
+                                      <span class='errspan required' *ngIf="newpassword.errors.required"> Password is required*</span>
+                                      <span class='errspan required' *ngIf="newpassword.errors.pattern"> Password must be 8-20 characters and have at least one uppercase letter, one lowercase letter, one special character(@,$,% are allowed) and one number*</span>
+                                    </span>
+                              </div>
+        
+                              <div class="form-group col-md-8 inner-addon left-addon right-addon">
+                                <label class="label-control" for="confpassword">Confirm Password </label>
+                                <img src="assets/images/Lock.svg" class="lockicon">
+                                <span (click)="confeyetoggle()" class="input-group-add eyeicon"> <i class="fa fa-eye" [ngClass]="(confeyeshow==true) ? 'fa fa-eye' : 'fa fa-eye-slash'"  aria-hidden="true" ></i></span>
+                                <input [type]="(confeyeshow==true) ? 'password' : 'text'"  class="form-control data" style="text-align: center;" name="confpassword" [(ngModel)]="pswdmodel.confirmPassword"ngModel #confpassword="ngModel" placeholder="Confirm Password" required compare="newpassword" />
+                                <span *ngIf="confpassword.touched && confpassword.errors">
+                                    <span *ngIf="confpassword.errors['required']" class='errspan required'> Password confirm is required*</span>
+                                    <span *ngIf="confpassword.errors['compare'] && !confpassword.errors['required']" class='errspan required'> Password confirm do not match*</span>
+                                </span>  
+                            </div>
+                            <div class="col-md-6">
+                              <div *ngIf="passwordvalidatemsg" class='fa fa-exclamation-triangle errspan errspan1'> {{passwordvalidatemsg}}</div>
+                            </div>
+         
+                              <div class="col-md-12 submitbtn">
+                                <button [disabled]="f.invalid" class="btn btn-primary pull-right updtpswd" type="submit">Update</button>
+                              </div>
+                            </form>
+                          </div>
+        
+ 
+                        </div>
+
+
+
+
+                    </mat-tab>
+
+                </mat-tab-group>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <ng-template class="modal-lg" #template>
+        <div class="modal-header modelprhead">
+            <h4 class="modal-title pull-left">Add New Project</h4>
+            <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                <span aria-hidden="true"><img src="../../../../assets/images/Projects/circle-close.svg" alt=""></span>
+            </button>
+        </div>
+        <div class="h-scroll">
+            <!-- <app-create-project-form [users_list]="userslist" (oncreate)="linkcreateproject($event)" [processes]="selected_process_names"></app-create-project-form> -->
+        </div>
+    </ng-template>
+</mat-card>
