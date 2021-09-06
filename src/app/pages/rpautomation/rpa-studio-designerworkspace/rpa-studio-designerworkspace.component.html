@@ -51,36 +51,33 @@
 
 <ng-template #outputboxModalRef>
   <div [id]="outputboxid">
-        <div  class="modal-header modelprhead newmodelcla">
-            Output Box
-            <span class="pull-right clickable" (click)="closeoutputbox();modalRef.hide()">
-                <img src="../../../../assets/images/Projects/circle-close.svg" alt="">
-            </span>
+        <div  class="modal-header modelprhead">
+            <h4 class="modal-title pull-left">Output Box</h4>
+            <button (click)="closeoutputbox();modalRef.hide()" class="close pull-right">
+                <span>
+                    <img src="../../../../assets/images/Projects/circle-close.svg" alt="">
+                </span>  
+            </button>          
         </div>
-        <div class="modal-body">
+        <div class="modal-body modelprbody">
+            <div class="row logs-container">
+                    <!-- <div class="col-md-2"></div> -->
 
-            <div class="container-fluid ">
-                <div class="row logs-container">
-                    <div class="col-md-2">
-                    </div>
-
-                    <div class="col-md-8" *ngIf="outputboxresult==undefined">
-                        <br><br>
-                        <select class="form-control" [(ngModel)]="SelectedOutputType">
-                  <option value="">--Select View Type--</option>
-                  <option value="Table">Table</option>
-                  <option value="Text">Text</option>
-                  <option value="Image">Image</option>
-                </select><br>
-                        <button class="btn btn-primary eiap-btn" style="float: right" (click)="getoutput()">Submit</button>
-
-                        <br><br>
-                    </div>
-                    <div class="col-md-2">
-
-                    </div>
-
+                <div class="col-md-12 form-group" *ngIf="outputboxresult==undefined">
+                        
+                    <select class="form-control" [(ngModel)]="SelectedOutputType">
+                        <option value="">--Select View Type--</option>
+                        <option value="Table">Table</option>
+                        <option value="Text">Text</option>
+                        <option value="Image">Image</option>
+                    </select>
+               
+                <button class="btn btn-primary eiap-btn" style="float: right" (click)="getoutput()">Submit</button>
+            
                 </div>
+                    <!-- <div class="col-md-2"></div> -->
+
+            </div>
 
                 <div class="row py-4" *ngIf="SelectedOutputType=='Table' && outputboxresult!=undefined">
                     <div class="col-md-12">
@@ -89,7 +86,6 @@
                     </div>
 
                     <div class="col-md-12  logs-container" style="height:300px; overflow-x:auto">
-                            <br>
                         <table class="table logs-table">
                             <thead>
                                 <th>Key</th>
@@ -132,10 +128,9 @@
                         <br>
                     </div>
                 </div>
-            </div>
 
         </div>
-        <br><br>
+        
     </div>
 </ng-template>
 
