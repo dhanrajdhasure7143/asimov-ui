@@ -186,7 +186,8 @@
                  <!-- <div id="scatter" class=""></div> <br/> -->
                  <div class="l_title"><label>Activity vs Occurrences</label></div>
                  <div id="scatter">
-                    <ngx-charts-bubble-chart
+                    <div *ngIf="isevents_chart">
+                        <ngx-charts-bubble-chart
                     [view]="view1"
                     [scheme]="colorScheme1"
                     [results]="bubbleData"
@@ -206,7 +207,32 @@
                     [maxRadius]="maxRadius"
                     [rotateXAxisTicks]="rotateXAxisTicks"
                     [legendPosition]="top">
-                </ngx-charts-bubble-chart>
+                        </ngx-charts-bubble-chart>
+                    </div>
+                    <div *ngIf="isduration_chart">
+                        <ngx-charts-bubble-chart
+                            [view]="view1"
+                            [scheme]="colorScheme1"
+                            [results]="bubbleData1"
+                            [xAxis]="showXAxis"
+                            [yAxis]="showYAxis"
+                            [legend]="false"
+                            [showXAxisLabel]="showXAxisLabel"
+                            [showYAxisLabel]="showYAxisLabel"
+                            [xAxisLabel]="xAxisLabel_duration"
+                            [yAxisLabel]="yAxisLabel_duration"
+                            [xScaleMin]="xScaleMin"
+                            [trimYAxisTicks]="true"
+                            [yScaleMin]="yScaleMin_duration"
+                            [rotateXAxisTicks]="rotateXAxisTicks"
+                            >
+                            <ng-template #tooltipTemplate let-model="model">
+                                <h4>{{ model.name}}</h4>
+                                <p>Activity: {{model.name}}</p>
+                                <p>Duration: <strong>{{model.event_duration}}</strong></p>
+                            </ng-template>
+                        </ngx-charts-bubble-chart>
+                    </div>
                  </div>
                 </div>
             </div>
