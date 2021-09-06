@@ -1,4 +1,4 @@
-  <mat-tab-group class="tabs" [selectedIndex]="tabsArray.length-1" >
+  <mat-tab-group class="tabs" (selectedTabChange)="change_active_bot($event)" [selectedIndex]="tabsArray.length-1" >
       <mat-tab  *ngFor="let tab of tabsArray">
         <ng-template mat-tab-label>
             <mat-icon class="text-primary">android</mat-icon>
@@ -10,6 +10,6 @@
               </button>
             </div>
         </ng-template>
-        <app-rpa-toolset [bot]="tab" ></app-rpa-toolset>
+        <app-rpa-toolset [bot]="tab" #rpa_bot_instance ></app-rpa-toolset>
       </mat-tab>
   </mat-tab-group>
