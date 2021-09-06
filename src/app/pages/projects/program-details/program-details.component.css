@@ -223,3 +223,15 @@ td a:hover img.testplus.hover-img {
 .det-innerheader {
   margin-bottom: 10px;
 }
+.user-owner{
+  border: 1px solid #a0a0a0;
+  border-radius: 50%;
+  padding: 7px 5px 7px 5px;
+  background-color: #00a0e3;
+  color:white;
+  font-weight: 600;
+  font-size: 16px;
+ }
+ .user-owner-div{
+   margin-top: 10px;
+ }

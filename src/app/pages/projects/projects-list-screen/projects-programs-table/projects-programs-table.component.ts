@@ -231,12 +231,12 @@ export class ProjectsProgramsTableComponent implements OnInit {
           if(response.errorMessage==undefined && response.warningMessage==undefined)
           {
             this.projects_list=[];
-            Swal.fire("Success",response.message,"success")
+            Swal.fire("Success","Project Deleted Successfully !!","success")
             this.getallProjectsdata();
           }
           else if(response.errorMessage==undefined && response.message==undefined)
           {
-            Swal.fire("Error..!!",response.warningMessage,"error")
+            Swal.fire("Error",response.warningMessage,"error")
           }else{
             Swal.fire("Error",response.errorMessage,"error")
           }
@@ -484,7 +484,7 @@ export class ProjectsProgramsTableComponent implements OnInit {
         let status: any= res;
         if(status.errorMessage==undefined)
         {
-          Swal.fire("Success",status.message,"success");
+          Swal.fire("Success","Project Updated Successfully !!","success");
           this.getallProjectsdata();
           this.spinner.hide();
         }
@@ -516,7 +516,7 @@ programupdate(){
       if(status.errorMessage==undefined)
       {
         //this.projects_list=[];
-        Swal.fire("Success",status.message,"success");
+        Swal.fire("Success","Project Updated Successfully !!","success");
         this.getallProjectsdata();
         this.spinner.hide();
       }
