@@ -51,8 +51,13 @@
 
 <ng-template #outputboxModalRef>
   <div [id]="outputboxid">
-        <div  class="modal-header modelprhead">
-            <h4 class="modal-title pull-left">Output Box</h4>
+        <div  class="modal-header modelprhead">            
+            <h4 class="modal-title pull-left">
+                <span *ngIf="outputboxresult!=undefined" class="module-back-button" (click)="outputlayoutback()">
+                    <i class="fas fa-arrow-left" aria-hidden="true"></i>
+                </span>
+                Output Box
+            </h4>
             <button (click)="closeoutputbox();modalRef.hide()" class="close pull-right">
                 <span>
                     <img src="../../../../assets/images/Projects/circle-close.svg" alt="">
@@ -60,74 +65,75 @@
             </button>          
         </div>
         <div class="modal-body modelprbody">
-            <div class="row logs-container">
-                    <!-- <div class="col-md-2"></div> -->
 
-                <div class="col-md-12 form-group" *ngIf="outputboxresult==undefined">
-                        
+            <div class="row" *ngIf="outputboxresult==undefined">
+
+                <div class="col-md-12 form-group" >                        
                     <select class="form-control" [(ngModel)]="SelectedOutputType">
                         <option value="">--Select View Type--</option>
                         <option value="Table">Table</option>
                         <option value="Text">Text</option>
                         <option value="Image">Image</option>
-                    </select>
-               
-                <button class="btn btn-primary eiap-btn" style="float: right" (click)="getoutput()">Submit</button>
-            
+                    </select>            
                 </div>
-                    <!-- <div class="col-md-2"></div> -->
+                <div class="col-md-12">
+                    <button class="btn btn-primary eiap-btn" style="float: right" (click)="getoutput()">Submit</button>
+                </div>
 
             </div>
 
-                <div class="row py-4" *ngIf="SelectedOutputType=='Table' && outputboxresult!=undefined">
-                    <div class="col-md-12">
-                        <button class="btn btn-primary eiap-btn" style="float: right" (click)="outputlayoutback()"><i class="fa fa-arrow-left" aria-hidden="true"></i> back</button>
-                        <br>
-                    </div>
-
-                    <div class="col-md-12  logs-container" style="height:300px; overflow-x:auto">
-                        <table class="table logs-table">
-                            <thead>
+            <div class="row" *ngIf="SelectedOutputType=='Table' && outputboxresult!=undefined">
+                <!-- <div class="col-md-12">
+                    <button class="btn btn-primary eiap-btn" style="float: right" (click)="outputlayoutback()">
+                        <i class="fa fa-arrow-left" aria-hidden="true"></i> back
+                    </button>
+                </div> -->
+                <div class="col-md-12">
+                    <table class="table logs-table">
+                        <thead>
+                            <tr>
                                 <th>Key</th>
                                 <th>Value</th>
-                            </thead>
-                           
-                                <tr *ngFor="let result of outputboxresult">
-                                    <td>{{result.Key}}</td>
-                                    <td>{{result.Value}}</td>
-                                </tr>
-                                <tr *ngIf="outputboxresult.length==0" colspan=2>
-                                    <td style='text-align: center'>No Records Found</td>
-                                </tr>
-                            
-                        </table>
-                    </div>
-                   
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let result of outputboxresult">
+                                <td>{{result.Key}}</td>
+                                <td>{{result.Value}}</td>
+                            </tr>
+                            <tr *ngIf="outputboxresult.length==0">
+                                <td colspan=2 style='text-align: center'>No Records Found</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>                   
+            </div>
+
+            <div class="row" *ngIf="SelectedOutputType=='Text' && outputboxresult!=undefined">
+                <!-- <div class="col-md-12">
+                    <button style="float: right" class="btn btn-primary eiap-btn" data-placement="bottom" tooltip="Back" (click)="outputlayoutback()">
+                        <i class="fa fa-arrow-left"></i>&nbsp;back
+                    </button>
+                </div> -->
+                <div class="col-md-12 form-group">
+                    <textarea [id]="'text_'+outputboxid" disabled class="form-control" rows="6" style="resize:none;"></textarea>                       
                 </div>
-                <div class="row" *ngIf="SelectedOutputType=='Text' && outputboxresult!=undefined">
-                    <div class="col-md-12">
-                        <button style="float: right" class="btn btn-primary eiap-btn" data-placement="bottom" tooltip="Back" (click)="outputlayoutback()"><i class="fa fa-arrow-left"></i>&nbsp;back</button>
-                    </div>
-                    <div class="col-md-12 logs-container">
-                            <br>
-                            <textarea [id]="'text_'+outputboxid" disabled class="outputtextareastyle"></textarea>
-                       
-                    </div>
+            </div>
+
+            <div class="row" *ngIf="SelectedOutputType=='Image' && outputboxresult!=undefined">
+                <div class="col-md-12">
+                    <a [href]="Image" download data-placement="bottom" tooltip="Download" style="float: right;margin-bottom: 5px;">
+                        <img src="../../../../assets/images/Projects/Download.svg" class="testplus">
+                    </a>
+                     <!-- <button class="btn btn-primary eiap-btn" style="float: right" (click)="outputlayoutback()">
+                         <i class="fa fa-arrow-left" aria-hidden="true"></i> back
+                     </button> -->                    
                 </div>
-                <div class="row" *ngIf="SelectedOutputType=='Image' && outputboxresult!=undefined">
-                   <div class="col-md-12">
-                        <a [href]="Image" download><img src="../../../../assets/downloadimage.svg" style="filter: none; width: 40px;"></a>
-                        <button class="btn btn-primary eiap-btn" style="float: right" (click)="outputlayoutback()"><i class="fa fa-arrow-left" aria-hidden="true"></i> back</button>
-                       
-                    </div>
-                  
-                    <div class="col-md-12 logs-container text-center">
-                            <br>
-                        <img [src]="Image" style="filter: none;height:400px;"><br><br>
-                      
-                        <br>
-                    </div>
+                
+                <div class="col-md-12 text-center">
+                    <img [src]="Image" style="filter: none;height:400px;">
                 </div>
+            </div>
 
         </div>
         

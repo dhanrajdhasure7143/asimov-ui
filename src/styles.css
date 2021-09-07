@@ -2482,13 +2482,13 @@ th.mat-header-cell {
 .logs-table{
   width:100% !important;
 }
-.logs-table th {
+/* .logs-table th {
   font-size: 16px !important;
   text-align: left !important;
   font-weight: 500 !important;
   color:#00a0e3 !important;
   padding-left:0px !important;
-}
+} */
 
 .logs-table th{
   background-color: white !important;
