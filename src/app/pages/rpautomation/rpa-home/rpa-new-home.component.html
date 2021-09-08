@@ -280,13 +280,13 @@
           </div>
         </mat-panel-title>
       </mat-expansion-panel-header>
-      <div class="diagram_container" style="height:350px;top:6px;overflow:scroll">
+      <div class="diagram_container">
 
         <button class="btn open-btn-click btn-xs" (click)="loadbotdata(bot.botId)">
           Click to open
         </button>
 
-        <button (click)="loadbotdata(bot.botId)">
+        <button (click)="loadbotdata(bot.botId)" class="rpa_botdiv">
           <img  [src]="bot.svg" style="width:100%">
         </button>
       </div>

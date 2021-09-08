@@ -86,28 +86,28 @@
                 <form [formGroup]="UipathForm" (ngSubmit)="savedata()">
                     
                         <div class="col-md-12 p-0 form-group">
-                            <label class="label-control" for="accountName">Account Name<span style="color:red">*</span></label>
+                            <label class="label-control" for="accountName">Account Name<span class="star">*</span></label>
                             <input type="text" maxlength="50" class="form-control data" formControlName="accountName" #accountName value="" placeholder="Enter Account Name">
-                            <span *ngIf="UipathForm.get('accountName').invalid && UipathForm.get('accountName').touched" style="color:red" class="fa fa-info-circle errspan">Account Name Required*</span>
+                            <span *ngIf="UipathForm.get('accountName').invalid && UipathForm.get('accountName').touched" class="errspan required">Account Name Required*</span>
                         </div>
                         
                         <div class="col-md-12 p-0 form-group">
-                            <label class="label-control" for="tenantName">Tenant Name<span style="color:red">*</span></label>
+                            <label class="label-control" for="tenantName">Tenant Name<span class="star">*</span></label>
                             <input type="text" maxlength="50" class="form-control" formControlName="tenantName" #tenantName value="" placeholder="Enter Tenant Name">
-                            <span *ngIf="UipathForm.get('tenantName').invalid && UipathForm.get('tenantName').touched" style="color:red" class="fa fa-info-circle errspan"> Tenant Name Required*</span>
+                            <span *ngIf="UipathForm.get('tenantName').invalid && UipathForm.get('tenantName').touched" class="errspan required"> Tenant Name Required*</span>
                         </div>
 
                         <div class="col-md-12 p-0 form-group">
-                            <label class="label-control" for="userKey">User Key<span style="color:red">*</span></label>
+                            <label class="label-control" for="userKey">User Key<span class="star">*</span></label>
                             <input type="text" maxlength="50" class="form-control" formControlName="userKey" #userKey value="" placeholder="Enter User Key">
-                            <span *ngIf="UipathForm.get('userKey').invalid && UipathForm.get('userKey').touched" style="color:red" class="fa fa-info-circle errspan"> User Key Required*</span>
+                            <span *ngIf="UipathForm.get('userKey').invalid && UipathForm.get('userKey').touched" class="errspan required"> User Key Required*</span>
   
                         </div>
 
                         <div class="col-md-12 p-0 form-group">
-                            <label class="label-control" for="clientId">Client Id<span style="color:red">*</span></label>
+                            <label class="label-control" for="clientId">Client Id<span class="star">*</span></label>
                             <input type="text" maxlength="50" class="form-control" formControlName="clientId" #clientId value="" placeholder="Enter Client Id">
-                            <span *ngIf="UipathForm.get('clientId').invalid && UipathForm.get('clientId').touched" style="color:red" class="fa fa-info-circle errspan"> Client Id Required*</span>
+                            <span *ngIf="UipathForm.get('clientId').invalid && UipathForm.get('clientId').touched" class="errspan required"> Client Id Required*</span>
                         </div>
                 
                    
@@ -121,16 +121,13 @@
                             </button>
                             <button class='btn btn-primary' (click)="saveUiPath()" tooltip="Save" [disabled]="UipathForm.invalid || submitted">Save</button>
                         </div>
-
-                   
-                   
                 </form>
                
             </div>
         </div>
-        <br><br>
+        
     </div>
-  <br><br>
+  
   </div>
   
 
@@ -146,43 +143,42 @@
                 <form [formGroup]="UpdateUipathForm" (ngSubmit)="updateBlueprism()">
                     
                         <div class="col-md-12 p-0 form-group">
-                            <label class="label-control" for="accountName">Account Name<span style="color:red">*</span></label>
+                            <label class="label-control" for="accountName">Account Name<span class="star">*</span></label>
                             <input type="text" maxlength="50" class="form-control data" formControlName="accountName" #accountName value="" placeholder="Enter Account Name">
-                            <span *ngIf="UpdateUipathForm.get('accountName').invalid && UpdateUipathForm.get('accountName').touched" style="color:red" class="fa fa-info-circle errspan">Account Name Required*</span>
+                            <span *ngIf="UpdateUipathForm.get('accountName').invalid && UpdateUipathForm.get('accountName').touched" class="errspan required">Account Name Required*</span>
                         </div>
                         
                         <div class="col-md-12 p-0 form-group">
-                            <label class="label-control" for="tenantName">Tenant Name<span style="color:red">*</span></label>
+                            <label class="label-control" for="tenantName">Tenant Name<span class="star">*</span></label>
                             <input type="text" maxlength="50" class="form-control" formControlName="tenantName" #tenantName value="" placeholder="Enter Tenant Name">
-                            <span *ngIf="UpdateUipathForm.get('tenantName').invalid && UpdateUipathForm.get('tenantName').touched" style="color:red" class="fa fa-info-circle errspan"> Tenant Name Required*</span>
+                            <span *ngIf="UpdateUipathForm.get('tenantName').invalid && UpdateUipathForm.get('tenantName').touched" class="errspan required"> Tenant Name Required*</span>
                         </div>
 
                         <div class="col-md-12 p-0 form-group">
-                            <label class="label-control" for="userKey">User Key<span style="color:red">*</span></label>
+                            <label class="label-control" for="userKey">User Key<span class="star">*</span></label>
                             <input type="text" maxlength="50" class="form-control" formControlName="userKey" #userKey value="" placeholder="Enter User Key">
-                            <span *ngIf="UpdateUipathForm.get('userKey').invalid && UpdateUipathForm.get('userKey').touched" style="color:red" class="fa fa-info-circle errspan"> User Key Required*</span>
+                            <span *ngIf="UpdateUipathForm.get('userKey').invalid && UpdateUipathForm.get('userKey').touched" class="errspan required"> User Key Required*</span>
   
                         </div>
 
                         <div class="col-md-12 p-0 form-group">
-                            <label class="label-control" for="clientId">Client Id<span style="color:red">*</span></label>
+                            <label class="label-control" for="clientId">Client Id<span class="star">*</span></label>
                             <input type="text" maxlength="50" class="form-control" formControlName="clientId" #clientId value="" placeholder="Enter Client Id">
-                            <span *ngIf="UpdateUipathForm.get('clientId').invalid && UpdateUipathForm.get('clientId').touched" style="color:red" class="fa fa-info-circle errspan"> Client Id Required*</span>
+                            <span *ngIf="UpdateUipathForm.get('clientId').invalid && UpdateUipathForm.get('clientId').touched" class="errspan required"> Client Id Required*</span>
                         </div>
                     
               
                         <div class="col-md-12 p-0 form-group">
                             <input type="checkbox" checked formControlName="active"> Active
                         </div>
+
                         <div class="form-footer">
                             <button class="btn btn-default" (click)="reset_UpdateUiPath()" tooltip="Reset">Reset
                             </button>
                             
-                    <button class="btn btn-primary btn-test"  (click)="testUiPath()" [disabled]="UpdateUipathForm.invalid " >Test Connection
-                    </button>
-                    <button class='btn btn-primary' (click)="Update_UiPath()" tooltip="Save" [disabled]="UipathForm.invalid ||updatesubmitted">Update</button>
-                   
-
+                            <button class="btn btn-primary btn-test"  (click)="testUiPath()" [disabled]="UpdateUipathForm.invalid " >Test Connection
+                            </button>
+                            <button class='btn btn-primary' (click)="Update_UiPath()" tooltip="Save" [disabled]="UipathForm.invalid ||updatesubmitted">Update</button>
                         </div>
                     
                     
@@ -190,9 +186,9 @@
                     
                 </div>
             </div>
-            <br><br>
+            
         </div>
-  <br><br>
+  
   </div>
   
   
