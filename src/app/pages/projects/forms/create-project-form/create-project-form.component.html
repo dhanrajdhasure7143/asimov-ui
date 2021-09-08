@@ -65,28 +65,28 @@
             </div>
             <div class="col-md-12">
                 <div class="form-fields col-md-6 pl-0">
-                    <label class="label-control">Identity Measurable Metrics<span
+                    <label class="label-control">Metrics To Be Measured<span
                             class="star">*</span></label>
                     <input type="text" formControlName="measurableMetrics" maxlength="50"
-                        placeholder="Enter Identity Measurable Metrics"
+                        placeholder="Enter Metrics To Be Measured"
                         class="form-control data"
                         [ngClass]="insertForm2.get('measurableMetrics').valid?'enteredfield-color':'inputfield-color'">
                     <span
                         *ngIf="insertForm2.get('measurableMetrics').invalid && insertForm2.get('measurableMetrics').touched"
-                        class="errspan required">Identity Measurable Metrics Required*</span>
+                        class="errspan required">Metrics To Be Measured Required*</span>
                 </div>
                 <div class="form-fields col-md-6 pr-0">
-                    <label class="label-control">Map Value Chain<span
+                    <label class="label-control">Value Chain<span
                             class="star">*</span></label>
                     <!-- <select formControlName="mapValueChain" (change)="getValueChainProcesses($event.target.value)" class="form-control data"
                         [ngClass]="insertForm2.get('mapValueChain').valid?'enteredfield-color':'inputfield-color'">
                         <option value="">Select Map Value Chain</option>
                         <option *ngFor="let value of valuechain" [value]="value.processGrpMasterId">{{value.processName}}</option>
                     </select> -->
-                    <input type="text" class="form-control data"  placeholder="Enter Map Value Chain"   formControlName="mapValueChain" [ngClass]="insertForm2.get('mapValueChain').valid?'enteredfield-color':'inputfield-color'" >
+                    <input type="text" class="form-control data"  placeholder="Enter Value Chain"   formControlName="mapValueChain" [ngClass]="insertForm2.get('mapValueChain').valid?'enteredfield-color':'inputfield-color'" >
                     <span
                         *ngIf="insertForm2.get('mapValueChain').invalid && insertForm2.get('mapValueChain').touched"
-                        class="errspan required">Map Value Chain Required*</span>
+                        class="errspan required">Value Chain Required*</span>
                 </div>
             </div>
             <div class="col-md-12">
@@ -105,7 +105,7 @@
                         class="errspan required">Process Required*</span>
                 </div>
                 <div class="form-fields col-md-6 pr-0">
-                    <label class="label-control">Access<span class="star">*</span></label>
+                    <!-- <label class="label-control">Access<span class="star">*</span></label>
                     <select formControlName="access" class="form-control data"
                         [ngClass]="insertForm2.get('access').valid?'enteredfield-color':'inputfield-color'">
                         <option [value]="null" disabled hidden>Select Access</option>
@@ -116,7 +116,20 @@
                     </select>
                     <span
                         *ngIf="insertForm2.get('access').invalid && insertForm2.get('access').touched"
-                        class="errspan required">Access Required*</span>
+                        class="errspan required">Access Required*</span> -->
+
+                        <label class="label-control">Project Priority<span
+                            class="star">*</span></label>
+                    <select formControlName="priority" class="form-control data"
+                        [ngClass]="insertForm2.get('priority').valid?'enteredfield-color':'inputfield-color'">
+                        <option value="">Select Project Priority</option>
+                        <option value="High">High</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Low">Low</option>
+                    </select>
+                    <span
+                        *ngIf="insertForm2.get('priority').invalid && insertForm2.get('priority').touched"
+                        class="errspan required">Project Priority Required*</span>
                 </div>
                 <!-- <label class="label-control" >Status<span style="color:red">*</span></label>
                                     <select   formControlName="status"  class="form-control data">
@@ -151,38 +164,25 @@
                         *ngIf="insertForm2.get('endDate').invalid && insertForm2.get('endDate').touched"
                         class="errspan required">End Date Required*</span>
                 </div>
-                <div class="form-fields col-md-6 pr-0">
-                    <label class="label-control">Project Priority<span
-                            class="star">*</span></label>
-                    <select formControlName="priority" class="form-control data"
-                        [ngClass]="insertForm2.get('priority').valid?'enteredfield-color':'inputfield-color'">
-                        <option value="">Select Project Priority</option>
-                        <option value="High">High</option>
-                        <option value="Medium">Medium</option>
-                        <option value="Low">Low</option>
-                    </select>
-                    <span
-                        *ngIf="insertForm2.get('priority').invalid && insertForm2.get('priority').touched"
-                        class="errspan required">Project Priority Required*</span>
-                </div>
+               
             </div>
             <div class="col-md-12">
                 <div class="form-fields">
-                    <label class="label-control">Project Purpose<span
+                    <label class="label-control">Project Description<span
                             class="star">*</span></label>
                     <!-- <input type="text" formControlName="projectPurpose" class="form-control data" placeholder="Enter Project Purpose"
                         [ngClass]="insertForm2.get('projectPurpose').valid?'enteredfield-color':'inputfield-color'"> -->
                    
                         <textarea class="form-control data" formControlName="projectPurpose" row="3"
-                        placeholder="Enter Project Purpose"
+                        placeholder="Enter Project Description"
                         [ngClass]="insertForm2.get('projectPurpose').valid?'enteredfield-color':'inputfield-color'">
                             </textarea>
                     <span
                         *ngIf="insertForm2.get('projectPurpose').invalid && insertForm2.get('projectPurpose').touched"
-                        class="errspan required">Project Purpose Required*</span>
+                        class="errspan required">Project Description Required*</span>
                 </div>
             </div>
-            <div class="col-md-12">
+            <!-- <div class="col-md-12">
                 <div class="">
                     <label class="label-control">Description</label>
                     <textarea class="form-control" formControlName="description" row="3"
@@ -190,7 +190,7 @@
                         [ngClass]="insertForm2.get('description').valid?'enteredfield-color':'inputfield-color'">
                             </textarea>
                 </div>
-            </div>
+            </div> -->
         </div>
     </form>
 
