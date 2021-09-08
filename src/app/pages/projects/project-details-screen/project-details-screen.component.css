@@ -580,3 +580,9 @@ span.testtooltip:before {
  .user-owner-div{
    margin-top: 10px;
  }
+ .project-owner-img{
+   border-radius: 100%;
+    width: 44px;
+    height: 41px;
+    margin-top: -10px;
+  }
