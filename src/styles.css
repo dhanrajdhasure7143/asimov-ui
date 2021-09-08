@@ -2492,15 +2492,21 @@ th.mat-header-cell {
 
 .logs-table th{
   background-color: white !important;
-  
+  color: #00a1e3 !important;
 }
 
 .as-horizontal > .as-split-gutter > .as-split-gutter-icon {
   background-color: #f3f3f3 !important;
 }
-.logs-modal td{
-  
-  padding-left:0px !important;
+.logs-modal td span{
+  font-size: 13px !important;
+  /* padding-left:0px !important; */
+}
+th .mat-sort-header-button {
+  font-size: 14px !important;
+}
+td.mat-cell span {
+  font-size: 13px;
 }
 
 .logs-table tr{

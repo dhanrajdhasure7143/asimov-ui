@@ -98,7 +98,7 @@
 
 
             <!-- <button type="button" id="deployBot" title="Deploy Bot Agent" [disabled]="savebotrespose==undefined" class="rpa-btn_style" aria-hidden="true" placement="bottom" (click)="deploybot()">
-        <img class="imageI1" src="/assets/images/RPA/deploy_icon.svg"><br>
+        <img class="imageI1" src="/assets/images/RPA/deploy_icon.svg">
         <div class="btn_title">Deploy</div>
       </button>-->
 
@@ -269,7 +269,7 @@
                 <h4>Schedule</h4>
             </div>
             <div class="rpa-modal-body">
-                <br>
+                
                 <div class="container-fluid card-body">
                     <div class="col-md-5">
                         <form style="background: white;" name="form" (ngSubmit)="f.form.valid && onCreateSubmit()" #f="ngForm" novalidate>
@@ -319,7 +319,7 @@
               <h3><b>{{cronExpression}}</b></h3>
             </div> -->
              <!--k               </div>
-                            <br>
+                            
                             <div class="form-group ">
                                 <button class="btn btn-primary eiap-btn" style="float: right;" (click)="addCron()">Add</button>
 
@@ -378,7 +378,7 @@
                                 </table>
 
                             </div>
-                            <br>
+                            
                             <div class="form-group">
                                 <button class="btn btn-primary eiap-btn" style="float: right;" [disabled]="scheduleLists.length ==0 && savebotrespose ==undefined" (click)="saveCronexp()">Save</button>
 
@@ -588,108 +588,98 @@
 </ng-template>
 
 <div [id]="'rpa_createenvironment'+'_'+botState.botName"  class="rpa-modal">
-  <div class="rpa-modal-content">
-      <div class="rpa-modal-header">
+    <div class="rpa-modal-content">
+        <div class="rpa-modal-header">
           <span class="rpa-modal-close" (click)="close_c_env()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
           <h4>Create Environment</h4>
-      </div>
-      <div class="rpa-modal-body" *ngIf="insertForm != undefined">
-          <br>
-          <div class="container">
-              <form [formGroup]="insertForm" (ngSubmit)="savedata()">
-                  <div class="row">
-                      <div class="col-md-3 formelement">
-                          <label for="environmentName">Name<span class="star">*</span></label>
-                          <input type="text" maxlength="50" class="form-control data" formControlName="environmentName" #environmentName value="" placeholder="Enter Name">
-                          <span *ngIf="insertForm.get('environmentName').invalid && insertForm.get
+        </div>
+        <div class="modal-body" *ngIf="insertForm != undefined">
+          
+            <div class="container m-contanier form-body">
+                <form [formGroup]="insertForm" (ngSubmit)="savedata()">
+                  
+                    <div class="col-md-12 p-0 form-group">
+                        <label class="label-control" for="environmentName">Name<span class="star">*</span></label>
+                        <input type="text" maxlength="50" class="form-control data" formControlName="environmentName" #environmentName value="" placeholder="Enter Name">
+                        <span *ngIf="insertForm.get('environmentName').invalid && insertForm.get('environmentName').touched" 
+                            class="errspan required">Name Required*</span>
+                    </div>
 
-('environmentName').touched" class="errspan required">Name Required*</span>
-                      </div>
-                      <div class="col-md-3 formelement ">
-                          <label for="environmentType">Type<span class="star">*</span></label>
-                          <!--<input type="text" class="form-control" formControlName="environmentType" value=""
+                    <div class="col-md-12 p-0 form-group ">
+                        <label class="label-control" for="environmentType">Type<span class="star">*</span></label>
+                        <!--<input type="text" class="form-control" formControlName="environmentType" value="" placeholder="Enter Environment Type" >-->
+                        <select class="form-control" formControlName="environmentType" (change)="EnvType1()">
+                            <option value="" [selected]="true">--Select Type--</option>
+                            <option value="Windows">Windows</option>
+                            <option value="Mac">Mac</option>
+                            <option value="Linux">Linux</option>
+                        </select>
+                        <span *ngIf="insertForm.get('environmentType').invalid && insertForm.get('environmentType').touched" 
+                            class="errspan required">Type Required*</span>
+                    </div>
 
-placeholder="Enter Environment Type" >-->
-                          <select class="form-control" formControlName="environmentType" (change)="EnvType1()">
-        <option value="" [selected]="true">--Select Type--</option>
-        <option value="Windows">Windows</option>
-        <option value="Mac">Mac</option>
-        <option value="Linux">Linux</option>
+                    <div class="col-md-12 p-0 form-group">
+                        <label class="label-control" for="agentPath">Agent Path<span class="star">*</span></label>
+                        <input type="text" maxlength="50" class="form-control" formControlName="agentPath" value="" placeholder="Enter Agent Path">
+                        <span *ngIf="insertForm.get('agentPath').invalid && insertForm.get('agentPath').touched" 
+                            class="errspan required"> Agent Path Required*</span>
+                    </div>
 
-      </select>
-                          <span *ngIf="insertForm.get('environmentType').invalid && insertForm.get
+                    <div class="col-md-12 p-0 form-group">
+                        <label class="label-control" for="hostAddress"> IP Address/Host<span class="star">*</span></label>
+                        <input type="text" maxlength="50" class="form-control" formControlName="hostAddress" value="" placeholder="Enter IP Address/Host">
+                        <span *ngIf="insertForm.get('hostAddress').invalid && insertForm.get('hostAddress').touched" 
+                            class="errspan required"> IP Address/Host Required*</span>
+                    </div>
 
-('environmentType').touched" class="errspan required">Type Required*</span>
+                    <div class="col-md-12 p-0 form-group">
+                        <label class="label-control" for="userName">Username<span class="star">*</span></label>
+                        <input type="text" maxlength="50" class="form-control" formControlName="username" value="" placeholder="Enter Username">
+                        <span *ngIf="insertForm.get('username').invalid && insertForm.get('username').touched" 
+                            class="errspan required"> Username Required*</span>
+                    </div>
 
-                      </div>
-                      <div class="col-md-3 formelement">
-                          <label for="agentPath">Agent Path<span class="star">*</span></label>
-                          <input type="text" maxlength="50" class="form-control" formControlName="agentPath" value="" placeholder="Enter Agent Path">
-                          <span *ngIf="insertForm.get('agentPath').invalid && insertForm.get('agentPath').touched" class="errspan required"> Agent Path Required*</span>
+                    <div class="col-md-12 p-0 form-group">
+                        <label class="label-control" for="password">Password<span class="star">*</span></label>
+                        <input [type]="passwordtype1 ? 'text': 'password'" maxlength="50" class="form-control" formControlName="password" value="" placeholder="Enter Password" passwordToggle>
+                        <span *ngIf="passwordtype1==false" (click)="passwordtype1 =!passwordtype1"  class="pdicon">
+                          <img src="../../../../../assets/images/Projects/eye-show.svg"  class="testplus1">
+                        </span>
+                        <span *ngIf="passwordtype1==true" (click)="passwordtype1 =!passwordtype1"  class="pdicon">
+                          <img src="../../../../../assets/images/Projects/eye-hide.svg"  class="testplus1">
+                        </span>
+                        <span *ngIf="insertForm.get('password').invalid && insertForm.get('password').touched" 
+                            class="errspan required"> Password Required*</span>
+                    </div>
 
-                      </div>
-                      <div class="col-md-3 formelement">
-                          <label for="hostAddress"> IP Address/Host<span class="star">*</span></label>
-                          <input type="text" maxlength="50" class="form-control" formControlName="hostAddress" value="" placeholder="Enter IP Address/Host">
-                          <span *ngIf="insertForm.get('hostAddress').invalid && insertForm.get
+                    <div class="col-md-12 p-0 form-group">
+                        <label class="label-control" for="connectionType">Connection Type<span class="star">*</span></label>
+                        <input type="text" maxlength="50" class="form-control" formControlName="connectionType" value="" placeholder="Enter Connection Type" readonly>
+                        <span *ngIf="insertForm.get('connectionType').invalid && insertForm.get('connectionType').touched"
+                         class="errspan required"> Connection Type Required*</span>
+                    </div>
 
-('hostAddress').touched" class="errspan required"> IP Address/Host Required*</span>
-                      </div>
-                  </div>
-                  <div class="row">
-                      <div class="col-md-3 formelement">
-                          <label for="userName">Username<span class="star">*</span></label>
-                          <input type="text" maxlength="50" class="form-control" formControlName="username" value="" placeholder="Enter Username">
-                          <span *ngIf="insertForm.get('username').invalid && insertForm.get('username').touched" class="errspan required"> Username Required*</span>
+                    <div class="col-md-12 p-0 form-group">
+                        <label class="label-control" for="portNumber">Port<span class="star">*</span></label>
+                        <input type="number"  maxlength="6" class="form-control" formControlName="portNumber" value="" placeholder="Enter Port">
+                        <span *ngIf="insertForm.get('portNumber').invalid && insertForm.get('portNumber').touched" 
+                            class="errspan required"> Port Required*</span>
+                    </div>
 
-                      </div>
+                    <div class="col-md-12 p-0 form-group">
+                        <input type="checkbox" checked formControlName="activeStatus"> Active
+                    </div>
 
-                      <div class="col-md-3 formelement">
-                          <label for="password">Password<span class="star">*</span></label>
-                          <input [type]="passwordtype1 ? 'text': 'password'" maxlength="50" class="form-control" formControlName="password" value="" placeholder="Enter Password" passwordToggle>
-                          <span *ngIf="passwordtype1==false" (click)="passwordtype1 =!passwordtype1"  class="pdicon">
-                            <img src="../../../../../assets/images/Projects/eye-show.svg"  class="testplus1">
-                          </span>
-                          <span *ngIf="passwordtype1==true" (click)="passwordtype1 =!passwordtype1"  class="pdicon">
-                            <img src="../../../../../assets/images/Projects/eye-hide.svg"  class="testplus1">
-                          </span>
-                          <span *ngIf="insertForm.get('password').invalid && insertForm.get('password').touched" class="errspan required"> Password Required*</span>
-                      </div>
+                    <div class="form-footer">
+                        <input type="button" class="btn btn-default" value="Reset" (click)="resetEnvForm()">
+                        <input type="button" class="btn btn-primary" value="Test Connection" (click)="testConnection('insert')" [disabled]="insertForm.invalid">
+                        <input type="button" class="btn btn-primary" value="Save" (click)="saveEnvironment()" [disabled]="insertForm.invalid || submitted">
+                    </div>
+                </form>
 
-                      <div class="col-md-3 formelement">
-                          <label for="connectionType">Connection Type<span class="star">*</span></label>
-                          <input type="text" maxlength="50" class="form-control" formControlName="connectionType" value="" placeholder="Enter Connection Type" readonly>
-                          <span *ngIf="insertForm.get('connectionType').invalid && insertForm.get
-
-('connectionType').touched" class="errspan required"> Connection Type Required*</span>
-
-                      </div>
-
-                      <div class="col-md-3 formelement">
-                          <label for="portNumber">Port<span class="star">*</span></label>
-                          <input type="number"  maxlength="6" class="form-control" formControlName="portNumber" value="" placeholder="Enter Port">
-
-                          <span *ngIf="insertForm.get('portNumber').invalid && insertForm.get
-
-('portNumber').touched" class="errspan required"> Port Required*</span>
-
-                      </div>
-
-                  </div>
-                  <div class="row">
-                      <div class="col-md-3 formelement">
-                          <input type="checkbox" checked formControlName="activeStatus"> Active
-                      </div>
-                  </div>
-                  <br>
-                  <input type="button" class="btn btn-primary" value="Save" (click)="saveEnvironment()" [disabled]="insertForm.invalid || submitted">
-                  <input type="button" class="btn btn-primary" value="Test Connection" (click)="testConnection('insert')" [disabled]="insertForm.invalid">
-                  <input type="button" class="btn btn-primary" value="Reset" (click)="resetEnvForm()">
-              </form>
-
-          </div>
-      </div>
-  </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 

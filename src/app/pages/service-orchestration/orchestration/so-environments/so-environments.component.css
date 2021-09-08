@@ -24,15 +24,6 @@ tr.mat-footer-row, tr.mat-row {
   height: auto !important;
 }
 
-.errspan{
-  position: relative;
-  z-index: 2;
-  color: #dc3545;
-  font-size: 12px;
-  letter-spacing: 0.2px;
-  padding-right: 10px;
-  line-height: 12px;
-  }
 
 .rpa-tablebox{
 padding-top:10px;
@@ -80,13 +71,6 @@ position: relative;
 z-index: 2;
 }
 
-td{
-  white-space:nowrap;
-}
-
-th{
-  white-space:nowrap;
-}
 
 /* ::-webkit-scrollbar-track {
   display:none;
@@ -100,29 +84,6 @@ background:lightgray;
 width: 10px;
 height:4px
 } */
-
-:host ::ng-deep .table>thead>tr>th{
-  /* background-color: rgb(74, 176, 245) !important;
-  color: white !important;
-  font-size: 18px !important;
-  text-align: center !important; 
-  background-color: #f6fcfe !important;
-    color: #333 !important;
-    font-size: 15px !important;
-    text-align: left !important;*/
-    background-color: #e8f7fd !important;
-    color: #00a0e3 !important;
-    font-size: 15px !important;
-    text-align: left !important;
-    border-top: none !important;
-    font-weight: 600;
-    border-bottom: 1px solid #4a4a4a33 !important;
-    padding: 8px 10px;
-}
-
-:host ::ng-deep .mat-cell, .mat-footer-cell {
-  font-size: 16px;
-}
 
 :host ::ng-deep .mat-sort-header-arrow {
   color: white;
