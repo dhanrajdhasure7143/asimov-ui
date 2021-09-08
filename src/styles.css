@@ -1693,13 +1693,13 @@ img.testplusupload {
   padding: 3px 4px;
   border-radius: 50%;
   background: #eef2f5;
-  color: #0081B8;
+  color: #00a1e3;
   margin-right: 8px;
 }
 
 .module-back-button:hover i {
   border-radius: 50%;
-  background: rgb(0 161 227) !important;
+  background: #00a1e3 !important;
   color: #fff;
 }
 
@@ -2539,4 +2539,10 @@ th.mat-header-cell {
 }
 .form-footer button.btn.btn-primary:last-child {
   margin-right: 0px !important;
+}
+
+span.pdicon {
+  position: absolute;
+  right: 13px;
+  top: 28px;
 }
