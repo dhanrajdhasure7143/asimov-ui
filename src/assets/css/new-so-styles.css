@@ -62,7 +62,7 @@
     width: 100%;
     margin: 5px auto 0px;
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 600;
 }
 #cheader li.nav-item {
     max-width: 120px;
@@ -141,7 +141,7 @@
     line-height: 25px;
     padding: 0;
     font-size: 12px !important;
-    font-weight: 500;
+    font-weight: 600;
 }
 .my-new-div ul#mainUl {
     display: inline-flex;
@@ -191,7 +191,6 @@
     padding: 0px;
 }
 body {
-    font-family: Montserrat, sans-serif;
     font-size: 15px;
 }
 /* h1,
@@ -219,7 +218,7 @@ button:focus {
     border: none;
 }
 .wrapper {
-    padding: 0px 40px 50px;
+    /* padding: 0px 40px 50px; */
 }
 .headerdbi-tabs {
     border: none;
@@ -277,14 +276,16 @@ button:focus {
     display: none;
 }
 .dbichart-block {
-    border: 1px solid rgb(221, 236, 248);
-    border-radius: 2px;
+    /* border: 1px solid rgb(221, 236, 248); */
+    border: 1px solid #e1e7ec;
+    border-radius: 4px;
     padding: 10px;
     width: 100%;
-    box-shadow: rgba(0, 0, 0, 0.07) 0px 4px 6px;
+    /* box-shadow: rgba(0, 0, 0, 0.07) 0px 4px 6px; */
+    /* box-shadow: 0px 0px 4px rgb(0 0 0 / 10%); */
 }
 .dbichart-block .dbichart-head label {
-    font-weight: 500;
+    font-weight: 600;
     margin-bottom: 0px;
 }
 .dbichart-block .dbichart-head {
@@ -300,15 +301,16 @@ button:focus {
     font-size: 14px;
 }
 .dbichart-block .dbichart-head .dbichart-dropdown select {
-    border-top: none;
+    /* border-top: none;
     border-right: none;
-    border-left: none;
+    border-left: none; */
     border-image: initial;
-    border-bottom: 1px solid rgba(51, 51, 51, 0.15);
+    border: 1px solid rgba(51, 51, 51, 0.15);
+    border-radius: 3px;
     color: rgb(51, 51, 51);
     font-weight: 600;
     background: transparent;
-    width: 110px;
+    width: 120px;
     padding: 0px 0px 6px;
 }
 .dbichart-block .dbichart-head .dbichart-dropdown select:focus {
@@ -329,7 +331,7 @@ button:focus {
 .botsbyprocess-sec2 .bbp-title {
     padding: 5px 0px 10px;
     color: rgb(0, 0, 0);
-    font-weight: 500;
+    font-weight: 600;
     display: inline-block;
     margin-right: 30px;
 }
@@ -359,7 +361,7 @@ button:focus {
     vertical-align: middle;
     width: 230px;
     text-align: center;
-    font-weight: 500;
+    font-weight: 600;
 }
 .botsbyprocess-sec .bbp-buttons button img,
 .botsbyprocess-sec2 .bbp-buttons button img,
@@ -469,7 +471,7 @@ button:focus {
     border: none;
 }
 .my-new-div button.close {
-    font-weight: 500;
+    font-weight: 600;
     color: rgb(220, 53, 69);
     font-size: 30px !important;
 }
@@ -494,7 +496,7 @@ button:focus {
     vertical-align: middle;
     width: 325px;
     text-align: left;
-    font-weight: 500;
+    font-weight: 600;
     border-radius: 0px !important;
 }
 .my-new-div .mspan {

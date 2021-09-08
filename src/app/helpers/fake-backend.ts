@@ -55,6 +55,8 @@ export class BackendURLInterceptor implements HttpInterceptor {
             url = this.config.rpaEndPoint + req.url;
         else if(req.url.indexOf('bpsprocess') > -1)
             url = this.config.bussinessProcessEndPoint + req.url;
+        else if(req.url.indexOf('vcmprocess') > -1)
+            url = this.config.bussinessProcessEndPoint + req.url;
         else if(req.url.indexOf('processintelligence') > -1)
             url = this.config.processIntelligenceEndPoint + req.url;
         else if(req.url.indexOf('ReddisCopy') > -1)
@@ -75,7 +77,8 @@ export class BackendURLInterceptor implements HttpInterceptor {
             url = this.config.alertsEndPoint + req.url;
         if(req.url.indexOf('notificationservice') > -1)
             url = this.config.alertsEndPoint + req.url;
-
+        else if(req.url.indexOf('platform-service') > -1)
+            url = this.config.projectendpoint_url + req.url;
 
         return url;
     }

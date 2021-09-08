@@ -50,7 +50,7 @@ export class SoSchedulerComponent implements OnInit {
   schedules:any=[];
   startdate:any= new Date();
   enddate:any;
-  timezone:any;
+  timezone:any="";
   schedule_list:any=[];
   botdata:any;
   selectedEnvironment:any;
@@ -80,6 +80,7 @@ export class SoSchedulerComponent implements OnInit {
     this.get_schedule()
     this.getenvironments();
     this.enddate=this.startdate;
+    this.timezone=""
     this.starttime=(new Date).getHours()+":"+(new Date).getMinutes();
   }
 
@@ -135,15 +136,17 @@ export class SoSchedulerComponent implements OnInit {
       let starttime=this.starttime.split(":")
       let starttimeparse=parseInt(starttime[0])
       let endtime=this.endtime.split(":")
-      let endtimeparse=parseInt(endtime[0])
+      let endtimeparse=parseInt(endtime[0]);
+      let startdate=this.startdate.split("-");
+      let enddate=this.enddate.split("-");
       let data:any;
       if(this.botid!="" && this.botid!=undefined)
       {
         data={
           intervalId:this.generateid(),
           scheduleInterval:this.cronExpression,
-          startDate:this.startdate.getFullYear()+","+(this.startdate.getMonth()+1)+","+this.startdate.getDate()+","+starttimeparse+","+starttime[1],
-          endDate:this.enddate.getFullYear()+","+(this.enddate.getMonth()+1)+","+this.enddate.getDate()+","+ endtimeparse+","+ endtime[1],
+          startDate:startdate[0]+","+(startdate[1])+","+startdate[2]+","+starttimeparse+","+starttime[1],
+          endDate:enddate[0]+","+enddate[1]+","+enddate[2]+","+ endtimeparse+","+ endtime[1],
           timeZone:this.timezone,
           save_status:"unsaved",
           check:false,
@@ -512,7 +515,7 @@ export class SoSchedulerComponent implements OnInit {
             status=schedule.schedularActionStatus
           else if(schedule.botActionStatus!=undefined)
             status=schedule.botActionStatus
-          if(status=='Save')
+          if(status=='New')
           {
 
             this.flags.startflag=true;

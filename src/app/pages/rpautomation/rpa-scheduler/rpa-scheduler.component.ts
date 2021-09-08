@@ -387,7 +387,7 @@ export class RpaSchedulerComponent implements OnInit {
             status=schedule.schedularActionStatus
           else if(schedule.botActionStatus!=undefined)
             status=schedule.botActionStatus
-          if(status=='Save')
+          if(status=='New')
           {
 
             this.flags.startflag=true;

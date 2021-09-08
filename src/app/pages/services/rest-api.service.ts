@@ -1,6 +1,5 @@
 
 
-
 import { Injectable, OnInit } from '@angular/core';
 import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
@@ -54,7 +53,7 @@ export class RestApiService{
   //password -Welcome@123
 
   getAccessToken(){
-    let data = {"userId":"lakshmi.kadali@epsoftinc.com",//"raghavendra.basavaraju@epsoftinc.com",
+    let data = {"userId":"karthik.peddinti@epsoftinc.com",//"raghavendra.basavaraju@epsoftinc.com",
                 "password":"Welcome@123"};
 
 
@@ -261,7 +260,10 @@ export class RestApiService{
 
 
 
-
+  updateBotLog(botid,version, runid)
+  {
+    return this.http.get(`/rpa-service/updateLog/${botid}/${version}/${runid}`)
+  }
 
   getbotlist(botType, botDepartment)
   {
@@ -852,4 +854,165 @@ save_blueprism_config(data)
     {
       return this.http.post("/rpa-service/management/save-source-details",data)
     }
+
+    getAllProjects(){
+      return this.http.get("/platform-service/project/fetchAll")
+    }
+
+    update_project(data:any){
+      return this.http.post("/platform-service/project/updateproject", data)
+    }
+
+    delete_Project(data: any) {
+      return this.http.post("/platform-service/project/deleteproject", data)
+    }
+    saveProgram(program: any) {
+      return this.http.post("/platform-service/program/create",program)
+    }
+
+    createProject(data)
+    {
+      return this.http.post("/platform-service/project/create",data)
+    }
+    
+    saveProjectByProgramId(programid, data)
+    {
+      return this.http.post("/platform-service/project/addProjectbyProgramId?programId="+programid,data);
+    }
+
+    getunassignedprojects()
+    {
+      return this.http.get("/platform-service/project/getUnassignedProjects");
+    }
+
+    getRole(userid){
+       return this.http.get("/authorizationservice/api/v1/user/role/userId/"+userid+"")
+    }
+
+
+    addresourcebyid(data:any)
+    {
+      return this.http.post("/platform-service/project/addResources",data)
+    }
+
+
+    getProjectDetailsById(id){
+      return this.http.get("/platform-service/project/findProjectById?projectId="+id+"")
+    }
+
+
+    getProjectsByProgramId(id)
+    {
+      return this.http.get("/platform-service/project/findByProgramId?programId="+id);
+    }
+
+
+
+
+  createTask(data) {
+    return this.http.post("/platform-service/task/create", data)
+  }
+
+  deleteTask(id){
+    return this.http.post("/platform-service/task/delete", id)
+  }
+  updateTask(data){
+    return this.http.post("/platform-service/task/update", data)
+  }
+  gettaskandComments(id){
+    return this.http.get("/platform-service/task/fetchTasksByProjectId?projectId="+id+"")
+  }
+  getTaskCategories(){
+    return this.http.get("/platform-service/task/fetchTaskCategories")
+  }
+  getTaskAttachments(projectid,taskid){
+    return this.http.get("/platform-service/document/tasksAttachments/"+projectid+"/"+taskid+"")
+  }
+
+
+  downloadTaskAttachment(attachment)
+  {
+    return this.http.post("/platform-service/document/downloadFile",attachment);
+  }
+  uploadTaskfile(data){
+    return this.http.post("/platform-service/document/uploadResource", data);
+  }
+  uploadProjectFile(body):Observable<any>{
+    return this.http.post("/platform-service/document/uploadResource", body)
+  }
+  getFileDetails(projectId):Observable<any>{
+    return this.http.get("/platform-service/document/uploadedFilesInfo/"+projectId)
+  }
+  revokeOrDenyFileRequest(body):Observable<any>{
+    return this.http.post("/platform-service/document/revokeorDenyFileRequest", body)
+  }
+  requestFile(projectId):Observable<any>{
+    return this.http.post("/platform-service/document/requestFileToUpload",projectId)
+  }
+  getFileCategories():Observable<any>{
+    return this.http.get("/platform-service/document/fileCategories")
+  }
+  deleteResource(body){
+    return this.http.post("/platform-service/project/deleteResources",body)
+  }
+  downloadFiles(id):Observable<any>{
+    return this.http.get("/platform-service/document/fileCategories")
+  }
+  // Business Insights API's Start
+  getBIActivityTime(processId){
+    return this.http.get("/processintelligence/v1/processgraph/getActivityTimeData/"+processId);
+  }
+  getBIThroughputTime(processId){
+    return this.http.get("/processintelligence/v1/processgraph/getThroughputTimeData/"+processId);
+  }
+  getBusinessMetrics(processId){
+    return this.http.get("/processintelligence/v1/processgraph/getBusinessMetricsData/"+processId);
+  }
+  getBIVariantsData(processId){
+    return this.http.get("/processintelligence/v1/processgraph/getVariantAnalysisData/"+processId);
+  }// BI Insighs apis End
+  
+  getLatestfiveAttachments(projectid,timezone){
+    return this.http.get("/platform-service/document/uploadedFilespaged/"+projectid,timezone)
+  }
+  deleteFiles(input){
+    return this.http.post("/platform-service/document/deleteUploadedFile",input)
+  }
+
+
+  getvaluechain()
+  {
+    return this.http.get("/vcmprocess/getVcmMasterContent")
+  }
+
+getvaluechainprocess(id)
+{
+  return this.http.get("/vcmprocess/getVcmProcessGroupInfoByMasterId/"+id);
+}
+
+
+  exportproject(projectid)
+  {
+    return this.http.get("/platform-service/program/exportProject?projectId="+projectid)
+  }
+  savedata(id,data){
+    return this.http.post("/platform-service/project/addProjecttoexistingProgram/"+id,data)
+  }
+  
+  getBpmnNotationById(bpmnId){
+    return this.http.get("/bpsprocess/get/"+bpmnId)
+  }
+
+  updateUser(user: any): Observable<any> {
+    return this.http.post<any>(`/api/user/updateUserDetails`, user);
+
+  }
+  getDepartments():Observable<any>{
+    return this.http.get<any>('/processintelligence/v1/processgraph/categories')
+  }
+  changePassword(pswdbody:any): Observable<any>{
+    return this.http.post<any>('/api/user/passwordChange', pswdbody,httpOptions)
+  }
+  
+
 }

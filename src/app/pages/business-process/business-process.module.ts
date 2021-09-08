@@ -18,6 +18,11 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatInputModule, MatIconModule, MatFormFieldModule, MatOptionModule, MatSelectModule, MatTooltipModule,MatDialogModule, MatTabsModule} from '@angular/material';
+import {MatMenuModule} from '@angular/material/menu';
+import {CustomMatPaginatorIntl} from './../../shared/custom-mat-paginator-int';
+import {MatPaginatorIntl} from '@angular/material';
+
+import {MatPaginatorModule} from '@angular/material/paginator';
 import{FilterPipe} from './custom_filter.pipe';
 import { ModalModule } from 'ngx-bootstrap/modal';
 // import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
@@ -27,6 +32,8 @@ import 'highlightjs-line-numbers.js';
 // hljs.registerLanguage('xml', xml);
 // import hljs from '../../../../node_modules/highlight.js/lib/core';
 // document.defaultView['hljs'] = hljs;
+import { PopoverModule } from 'ngx-bootstrap/popover'
+import { MatSortModule } from '@angular/material';
 
 @NgModule({
   declarations: [BusinessProcessComponent, CreateBpmnDiagramComponent, BpsHomeComponent, UploadProcessModelComponent, ListOfChangesComponent,FilterPipe],
@@ -45,8 +52,11 @@ import 'highlightjs-line-numbers.js';
     Ng2SearchPipeModule,
     MatProgressSpinnerModule,
     MatInputModule, MatIconModule, MatFormFieldModule,
-    MatOptionModule, MatSelectModule, MatTooltipModule,MatDialogModule, MatTabsModule,
-    ModalModule.forRoot()
+    MatOptionModule, MatSelectModule, MatTooltipModule, MatDialogModule, MatTabsModule, MatMenuModule,
+    ModalModule.forRoot(),
+    MatPaginatorModule,
+    PopoverModule.forRoot(),
+    MatSortModule
     // HighlightModule
   ],
   providers: [
@@ -59,7 +69,11 @@ import 'highlightjs-line-numbers.js';
     //       xml: () => import('highlight.js/lib/languages/xml')}
     //   }
     // },
-    BpsHints
+    BpsHints, 
+    {
+      provide: MatPaginatorIntl, 
+      useClass: CustomMatPaginatorIntl
+    }
   ]
 })
 export class BusinessProcessModule { }

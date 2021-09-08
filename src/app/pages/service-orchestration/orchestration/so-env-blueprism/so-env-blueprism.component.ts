@@ -99,27 +99,21 @@ getblueprismconnections()
   this.api.getblueprisconnections().subscribe(data=>{
    this.blueprism_configs=data;
    if(this.blueprism_configs.length > 0)
-     {
-      this.isTableHasData = false;
-     }
-     else 
-     {
-      this.isTableHasData = true;
-     }
-   console.log(this.blueprism_configs);
+    this.isTableHasData = false;
+    else 
+    this.isTableHasData = true;
    let envchange = this.blueprism_configs;
-      console.log(envchange);
- 
-      for(let i = 0; i< envchange.length;i++)
-      {
-       envchange[i].status = envchange[i].status == 1 ? 'Active': envchange[i].status == 0? 'Inactive': ''; 
-      }
-   this.dataSource1= new MatTableDataSource(envchange.filter(item=>item.activeStatus=="Active"));
-      this.isDataSource = true;
-      this.dataSource1.sort=this.sort1;
-      this.dataSource1.paginator=this.paginator1;
-   this.deleteflag=false;
-   this.updateflag=false;
+    envchange=envchange.map(data=>{
+      data.status = data.status == 1 ? 'Active': data.status == 0? 'Inactive': ''; 
+      return data;
+    });
+    //this.dataSource1= new MatTableDataSource(envchange.filter(item=>item.activeStatus=="Active"));
+    this.dataSource1= new MatTableDataSource(envchange);
+    this.isDataSource = true;
+    this.dataSource1.sort=this.sort1;
+    this.dataSource1.paginator=this.paginator1;
+    this.deleteflag=false;
+    this.updateflag=false;
   })
 }
 

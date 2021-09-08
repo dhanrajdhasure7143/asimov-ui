@@ -809,7 +809,7 @@ export class SoUpdatedDashboardComponent implements OnInit {
   openbotstatfilter()
   {
     const dialogRef = this.dialog.open(FilterBy,{
-      width: '300px',
+      width: '260px',
       data: {type:"date"}
     });
 
@@ -860,7 +860,7 @@ export class SoUpdatedDashboardComponent implements OnInit {
   openDialog(filterType)
   {
       const dialogRef = this.dialog.open(FilterBy,{
-        width: '300px',
+        width: '260px',
         data: {type:filterType}
       });
 

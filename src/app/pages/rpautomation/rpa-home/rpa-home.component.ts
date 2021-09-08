@@ -102,7 +102,10 @@ export class RpaHomeComponent implements OnInit {
   }
 
   openModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template);
+    this.importfile="";
+    this.file_error="";
+    this.importcat="";
+    this.modalRef = this.modalService.show(template,{class: 'modal-lr'});
   }
 
   ngOnInit() {

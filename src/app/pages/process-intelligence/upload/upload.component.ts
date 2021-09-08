@@ -75,6 +75,7 @@ export class UploadComponent implements OnInit {
   categoryName: any;
   public isButtonVisible = false;
   isUploadFileName:string;
+  isLoading:boolean=false;
 
   constructor(private router: Router,
     private dt: DataTransferService,
@@ -87,6 +88,8 @@ export class UploadComponent implements OnInit {
     @Inject(APP_CONFIG) private config) {  }
 
   ngOnInit() {
+    this.dt.piHeaderValues('');
+    if(document.getElementById("filters"))
     document.getElementById("filters").style.display = "block";
     this.dt.changeParentModule({ "route": "/pages/processIntelligence/upload", "title": "Process Intelligence" });
     this.dt.changeChildModule("");
@@ -126,7 +129,7 @@ export class UploadComponent implements OnInit {
         icon: 'error',
       })
     } else{
-      this.spinner.show();
+      this.isLoading=true;
     this.selectedFile = <File>event.addedFiles[0];
     const fd = new FormData();
     fd.append('file', this.selectedFile),
@@ -136,14 +139,14 @@ export class UploadComponent implements OnInit {
         let fileName = this.filedetails.data.split(':');
         this.rest.fileName.next(fileName[1]);
         this.onSelect(event, id)
-        this.spinner.hide();
+        this.isLoading=false;
       }, err => {
         Swal.fire({
           title: 'Error',
           text: 'Please try again!',
           icon: 'error',
         })
-        this.spinner.hide();
+        this.isLoading=false;
       });
     }
   }
@@ -370,7 +373,7 @@ export class UploadComponent implements OnInit {
     this.isIncrement=false;
     var modal = document.getElementById('myModal1');
     modal.style.display = "block";
-    this.dbDetails={};
+    // this.dbDetails={};
     this.rest.fileName.next(null);
   }
 
@@ -394,7 +397,7 @@ export class UploadComponent implements OnInit {
   }
 
   getAlluserProcessPiIds() {        // get user process ids list on workspace
-    this.spinner.show();
+    this.isLoading=true;
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 6,
@@ -412,7 +415,7 @@ export class UploadComponent implements OnInit {
       this.dataSource= new MatTableDataSource(this.process_graph_list);
       this.dataSource.sort=this.sort;
       this.dataSource.paginator=this.paginator;
-      this.spinner.hide();
+      this.isLoading=false;
     })
   }
 
@@ -517,6 +520,7 @@ export class UploadComponent implements OnInit {
 
 testDbConnection(){     // check DB connection with port id and psw
   this.processId = Math.floor(100000 + Math.random() * 900000);
+  this.isLoading=true;
     let modekey
     let modekey1
     let connectorBody:any= {}
@@ -578,6 +582,7 @@ testDbConnection(){     // check DB connection with port id and psw
         connectorBody[modekey]=this.dbDetails.timestamp
       }
     this.rest.getJDBCConnectorConfig(connectorBody).subscribe(res => {this.connectionResp=res
+        this.isLoading=false;
         if(this.connectionResp.data.length==0){
           this.isDisabled = false;
             this.notifier.show({
@@ -585,6 +590,7 @@ testDbConnection(){     // check DB connection with port id and psw
               message: "Connected Successfully."
               });
           }else{
+            this.isLoading=false;
             this.notifier.show({
               type: 'error',
               message: "Error"+this.connectionResp.data[0].errors
@@ -710,7 +716,7 @@ testDbConnection(){     // check DB connection with port id and psw
   }
   
 getDBTables(){      //get DB tables list
-  this.spinner.show()
+  this.isLoading=true;
   var reqObj =  {
       "dbType": this.dbDetails.dbType,
       "password": this.dbDetails.password,
@@ -728,7 +734,7 @@ getDBTables(){      //get DB tables list
         });
         this.tableList = [...new Set(this.tableList)];
       }
-      this.spinner.hide()
+      this.isLoading=false;
     },
     (err=>{
       this.isTableEnable=false;
@@ -737,7 +743,7 @@ getDBTables(){      //get DB tables list
           type: 'error',
           message: err.error.message
         });
-    this.spinner.hide();
+        this.isLoading=false;
     }))
 }
 

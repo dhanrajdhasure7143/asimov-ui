@@ -12,6 +12,10 @@ import { DataTransferService } from '../../services/data-transfer.service';
 import { PiHints } from '../model/process-intelligence-module-hints';
 import { GlobalScript } from 'src/app/shared/global-script';
 import { NgxSpinnerService } from "ngx-spinner";
+import * as am4core from '@amcharts/amcharts4/core';
+import * as am4charts from '@amcharts/amcharts4/charts';
+import am4themes_animated from '@amcharts/amcharts4/themes/animated';
+import * as $ from 'jquery'
 HC_more(Highcharts)
 enum VariantList {
     'Most Common',
@@ -94,8 +98,8 @@ export class ProcessinsightsComponent implements OnInit {
     multi: any = [];
 
     bubbleData:any =[];
-  view: any[] = [700, 420];
-  view1:any[] = [500, 340]
+  view: any[] = [800, 420];
+  view1:any[] = [600, 340]
 
   // options
   legend: boolean = false;
@@ -129,7 +133,7 @@ yAxisLabel1: string = 'Occurences';
     domain: ['#E44D25', '#5AA454', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5']
   };
   colorScheme1 = {
-    domain: ['#212F3C']
+    domain: ['#fc8d45']
   };
 
 
@@ -175,6 +179,15 @@ yLeftTickFormat;
 yRightTickFormat;
 yLeftAxisScale:number;
 robotValue:number;
+bubbleData1:any[]=[];
+isevents_chart:boolean=true;
+isduration_chart:boolean=false;
+xAxisLabel_duration: string = 'Activity';
+yAxisLabel_duration: string = 'Duration(Hrs)';
+// maxRadius_duration: number = 1000;
+minRadius_duration: number = 0;
+yScaleMin_duration: number = 0;
+// yScaleMax: number = 200;
 
 
     constructor(
@@ -187,6 +200,19 @@ robotValue:number;
     ) {
        // Object.assign(this, { multi });
       // Object.assign(this.bubbleData,  this.bubbleData );
+     }
+     ngAfterViewInit(){
+         let res_data
+         this.dt.processInsights_headerChanges.subscribe(res=>{
+             console.log(res)
+             res_data=res
+             if(res_data instanceof Object){
+                 this.workingHours=res_data
+                this.addWorkingHours();
+             }else if(res_data=="open_Varaint"){
+                this.openVariantListNav();
+            }
+         })
      }
 
     ngOnInit() {
@@ -468,14 +494,18 @@ robotValue:number;
                         this.activityData = adata;
                         this.bubbleData = [{name:"", series: this.activityData}];
                         this.colorScheme1 = {
-                            domain: ['#212F3C']
+                            domain: ['#fc8d45']
                           };
                         this.yAxisLabel1="Occurences";
+                        this.getEventBubboleGraph('event')
                         activityDuration = tmp;
                         activityCost = tmp2;
                         this.dChart1 = activityDuration;
                         this.dChart2 = activityCost;
                         //this.addchart2();
+                        console.log(this.dChart2)
+                        this.ActivityTimeChart();
+                        this.resourceCostByActivity();
                         this.getActivityWiseHumanvsBotCost(this.activity_Metrics);
                         this.getActivityTableData(this.activity_Metrics);
                     } else {
@@ -502,6 +532,7 @@ robotValue:number;
         var rCost = [];
         var d1 = [];
         var d2 = [];
+        var d3 = [];
         var dateArray = [];
         var t_array = []
         vData.dates_data.forEach(e => {
@@ -529,6 +560,7 @@ robotValue:number;
             rCost.push(rFinalCost);
             d1.push({name:moment(new Date(e.date)).format('DD/MM/YYYY'), value:humanCost})
             d2.push({name:moment(new Date(e.date)).format('DD/MM/YYYY'), value:rFinalCost})
+            d3.push({value1:humanCost,name1:"Human Cost",name2:"Bot Cost", value2:rFinalCost, date:moment(new Date(e.date)).format('yyyy,MM,DD'),date1:moment(new Date(e.date)).format('DD/MM/YYYY'),})
         });
 
         //this.caseIDs = this.removeDuplicate(this.caseIDs);
@@ -538,8 +570,70 @@ robotValue:number;
 
         this.multi = [{name:"Human Cost", series: d1},{name:'Bot Cost', series:d2}];
 
+    //    this.addcharts();
+    let chart = am4core.create("linechart1", am4charts.XYChart);
 
-    //    this.addcharts()
+// Add data
+chart.data = d3
+// Create axes
+let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+// Set date label formatting
+// dateAxis.dateFormats.setKey("day", "MMMM dt");
+// dateAxis.dateFormatter.dateFormat = "yyyy-MM-dd HH:mm";
+dateAxis.renderer.minGridDistance = 50;
+dateAxis.renderer.labels.template.text="date1"
+dateAxis.title.text = "Duration";
+let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+valueAxis.title.text = "Price";
+// Create series
+let series = chart.series.push(new am4charts.LineSeries());
+series.dataFields.valueY = "value1";
+series.dataFields.dateX = "date";
+series.strokeWidth = 2;
+series.minBulletDistance = 3;
+series.tooltipText = "[bold]Date: {date1}[/]\n{name1}: {value1}\n{name2}:{value2}";
+series.tooltip.pointerOrientation = "vertical";
+
+// Create series
+let series2 = chart.series.push(new am4charts.LineSeries());
+series2.dataFields.valueY = "value2";
+series2.dataFields.dateX = "date";
+series2.strokeWidth = 2;
+series2.strokeDasharray = "3,4";
+series2.stroke = series.stroke;
+// Add cursor
+chart.cursor = new am4charts.XYCursor();
+chart.cursor.xAxis = dateAxis;
+series2.stroke = am4core.color("#fc8d45");
+
+// // add ranges
+// var minRange = dateAxis.axisRanges.create();
+// // this overrides minLabelPosition/maxLabelPosition so that the range labels would be visible
+// minRange.maxPosition = 1;
+// minRange.minPosition = 0;
+// minRange.label.horizontalCenter = "left"
+// minRange.label.paddingLeft = 0;
+
+
+// var maxRange = dateAxis.axisRanges.create();
+// // this overrides minLabelPosition/maxLabelPosition so that the range labels would be visible
+// maxRange.maxPosition = 1;
+// maxRange.minPosition = 0;
+// maxRange.label.horizontalCenter = "right"
+// maxRange.label.paddingRight = 0;
+
+// dateAxis.events.on("startendchanged", updateRangeLabels)
+// dateAxis.events.on("extremeschanged", updateRangeLabels)
+
+// function updateRangeLabels() {
+//   minRange.value = dateAxis.min + dateAxis.start * (dateAxis.max - dateAxis.min);
+//   minRange.label.text = dateAxis.dateFormatter.format(minRange.value, "yyyy-MM-dd");
+
+//   maxRange.value = dateAxis.min + dateAxis.end * (dateAxis.max - dateAxis.min);
+//   maxRange.label.text = dateAxis.dateFormatter.format(maxRange.value, "yyyy-MM-dd");
+// }
+
+    $('g:has(> g[stroke="#3cabff"])').hide();
     }
 
     getHours(millisec) {
@@ -558,7 +652,7 @@ robotValue:number;
     }
     getHours1(millisec) {
         var hours: any = Math.round(millisec / (1000 * 60 * 60));
-        return hours + ' hrs';
+        return hours;
     }
 
     removeDuplicate(dataArray) {
@@ -647,11 +741,14 @@ robotValue:number;
                 });
                 this.bubbleData = [{name:"", series: this.activityData}];
                 this.colorScheme1 = {
-                    domain: ['#232832']
+                    domain: ['#fc8d45']
                   };
 
                 this.dChart1 = activityDuration;
                 this.dChart2 = activityCost;
+                console.log(this.dChart2)
+                this.ActivityTimeChart();
+                this.resourceCostByActivity();
                 //this.addchart2();
                 this.getActivityWiseHumanvsBotCost(this.activity_Metrics);
                 this.getActivityTableData(this.activity_Metrics);
@@ -712,32 +809,48 @@ robotValue:number;
 
     getEventBubboleGraph(type) {
         this.activityData = [];
+        if (type && type == 'event') {
+            this.isduration_chart=false;
+            this.isevents_chart=true;
         this.activity_Metrics.forEach((e, m) => {
-            if (type && type == 'event') {
                 this.activityData.push({ x: e.Activity, y: e.Frequency, r: e.Frequency, name: e.Activity, fullname: e.Activity.split(/\s/).reduce((response, word) => response += word.slice(0, 1), ''), title: 'No of Events', event_duration: e.Frequency });
                 this.bubbleColor = '#212F3C';
                 this.isEventGraph = true;
                 this.bubbleData = [{name:"", series: this.activityData}];
                 this.colorScheme1 = {
-                    domain: ['#212F3C']
+                    domain: ['#fc8d45']
                   };
                   this.yAxisLabel1 = 'Occurences';
+            })
             } else {
-
-                this.activityData.push({ x: e.Activity, y: this.getHours2(e.Duration_range), r: this.getHours2(e.Duration_range), name: e.Activity, fullname: e.Activity.split(/\s/).reduce((response, word) => response += word.slice(0, 1), ''), title: 'Duration', event_duration: this.timeConversion(e.Duration_range) });
+                this.isduration_chart=true;
+                this.isevents_chart=false;
+                this.activity_Metrics.forEach((e, m) => {
+                
+                this.activityData.push({ x: e.Activity, y: Number(this.getHours(e.Duration_range)), r: Number(this.getHours(e.Duration_range)), name: e.Activity, fullname: e.Activity.split(/\s/).reduce((response, word) => response += word.slice(0, 1), ''), title: 'Duration', event_duration: this.timeConversion(e.Duration_range) });
                 this.bubbleColor = '#008080';
                 this.isEventGraph = false;
-                this.bubbleData = [{name:"", series: this.activityData}];
                 this.colorScheme1 = {
                     domain: ['#3EC1A4']
                   };
                   this.yAxisLabel1 = 'Duration(Hrs)';
+                });                
+                setTimeout(() => {
+                this.bubbleData1 = [{name:"", series: this.activityData}];
+                }, 500);
             }
-            console.log(this.bubbleData);
            // this.addchart2();
-        });
     }
-
+ getHours3(millisec) {
+        var hours: any = (millisec / (1000 * 60 * 60)).toFixed(1);
+        if(String(hours).indexOf('.') != -1){
+            let week=hours.toString().split('.')
+              hours=week[0];
+            }else{
+              hours=hours;
+            }
+        return hours;
+    }
     getTotalNoOfCases(type) {
         var noofcases = 0;
         this.totalCases = 0;
@@ -1177,13 +1290,13 @@ robotValue:number;
         var hours: any = (millisec / (1000 * 60 * 60)).toFixed(1);
         var days = (millisec / (1000 * 60 * 60 * 24)).toFixed(1);
         if (seconds < 60) {
-            return seconds + " Sec";
+            return seconds + " sec";
         } else if (minutes < 60) {
-            return minutes + " Min";
+            return minutes + " min";
         } else if (hours < 24) {
-            return hours + " Hrs";
+            return hours + " hrs";
         } else {
-            return days + " Days"
+            return days + " days"
         }
     }
     onchangeVaraint(datavariant) {      // Variant List sorting 
@@ -1901,7 +2014,7 @@ svg
             .style("display", "none");
         });
     }
-    openHersOverLay(){
+    openHrsOverLay(){
         this.isAddHrs=!this.isAddHrs
     }
     canceladdHrs(){
@@ -1946,5 +2059,159 @@ svg
     // loopTrackBy(index, term){
     //     return index;
     //   }
+    ActivityTimeChart(){
+        // console.log(this.dChart1)
+        am4core.useTheme(am4themes_animated);
+        // Themes end
+        
+        var chart = am4core.create("pie_chart1", am4charts.PieChart);
+        chart.hiddenState.properties.opacity = 0; // this creates initial fade-in
+        chart.legend = new am4charts.Legend();
+        chart.legend.useDefaultMarker = true;
+        var marker = chart.legend.markers.template.children.getIndex(0);
+        marker.width = 18;
+        marker.height = 18;
+        // marker.cornerRadius(0, 0, 0, 0);
+        marker.strokeWidth = 2;
+        marker.strokeOpacity = 1;        
+        marker.stroke = am4core.color("#ccc");
+        chart.legend.scrollable = true;
+        chart.legend.fontSize = 12;
+  
+        // chart.data=data;
+        chart.data=this.dChart1;
+  
+        chart.legend.position = "right";
+        chart.legend.valign = "middle";
+        chart.innerRadius = 70;
+        var label = chart.seriesContainer.createChild(am4core.Label);
+          // label.text = "230,900 Sales";
+        // label.horizontalCenter = "middle";
+        // label.verticalCenter = "middle";
+        label.fontSize = 18;
+        var series = chart.series.push(new am4charts.PieSeries());
+        series.dataFields.value = "value";
+        series.dataFields.category = "name";
+        series.labels.template.disabled = true;
+        // series.slices.template.cornerRadius = 0;
+        series.tooltip.horizontalCenter = "middle";
+        // series.tooltip.verticalCenter = "middle";
+        // series.tooltip.fontSize=18;
+        // series.tooltipText = ' {name} ({_dataContext.totalDuration1})';
+        // series.slices.template.tooltipText = "{parent.parent.name} {parent.name} > {name} ({value})";
+        // series.columns.template.tooltipText = " caseId : {categoryX} \n  Duration : {valueY}[/] ";
+        // series.tooltip.text = " caseId";
+        // series.adapter.add("tooltipText", function(text, target) {
+        //   console.log(text,target.dataItem)
+        //   return "{_dataContext.activity} \n {_dataContext.totalDuration1}";
+        // });
+        var _self=this;
+        series.slices.template.adapter.add("tooltipText", function(text, target) {
+          // var text=_self.getTimeConversion('{_dataContext.totalDuration}');
+          return "{_dataContext.name} \n {_dataContext.label}";
+        });
+        $('g:has(> g[stroke="#3cabff"])').hide();
+        series.labels.template.text = "{_dataContext.label}";
+        series.colors.list = [
+            am4core.color("rgba(85, 216, 254, 0.9)"),
+            am4core.color("rgba(255, 131, 115, 0.9)"),
+            am4core.color("rgba(255, 218, 131, 0.9)"),
+            am4core.color("rgba(163, 160, 251, 0.9)"),
+            am4core.color("rgba(156, 39, 176, 0.9)"),
+            am4core.color("rgba(103, 58, 183, 0.9)"),
+            am4core.color("rgba(63, 81, 181, 0.9)"),
+            am4core.color("rgba(33, 150, 243, 0.9)"),
+            am4core.color("rgba(3, 169, 244, 0.9)"),
+            am4core.color("rgba(0, 188, 212, 0.9)"),
+            am4core.color("rgba(244, 67, 54, 0.9)"),
+            am4core.color("rgba(233, 33, 97, 0.9)"),
+            am4core.color("rgba(220, 103, 171, 0.9)"),
+            am4core.color("rgba(220, 103, 206, 0.9)"),
+            am4core.color("rgba(199, 103, 220, 0.9)"),
+            am4core.color("rgba(163, 103, 220, 0.9)"),
+            am4core.color("rgba(103, 113, 220, 0.9)"),
+            am4core.color("rgba(0, 136, 86, 0.9)"),
+            am4core.color("rgba(243, 195, 0, 0.9)"),
+            am4core.color("rgba(243, 132, 0, 0.9)"),
+            am4core.color("rgba(143, 13, 20, 0.9)"),
+        ];
+    }
 
+    resourceCostByActivity(){
+        am4core.useTheme(am4themes_animated);
+        // Themes end
+        
+        var chart = am4core.create("pie_chart2", am4charts.PieChart);
+        chart.hiddenState.properties.opacity = 0; // this creates initial fade-in
+        chart.legend = new am4charts.Legend();
+        chart.legend.useDefaultMarker = true;
+        var marker = chart.legend.markers.template.children.getIndex(0);
+        marker.width = 18;
+        marker.height = 18;
+        // marker.cornerRadius(0, 0, 0, 0);
+        marker.strokeWidth = 2;        
+        marker.strokeOpacity = 1;
+        marker.stroke = am4core.color("#fff");
+        chart.legend.scrollable = true;
+        chart.legend.fontSize = 12;
+  
+        // chart.data=data;
+        chart.data=this.dChart2;
+  
+        chart.legend.position = "right";
+        chart.legend.valign = "middle";
+        chart.innerRadius = 70;
+        var label = chart.seriesContainer.createChild(am4core.Label);
+          // label.text = "230,900 Sales";
+        // label.horizontalCenter = "middle";
+        // label.verticalCenter = "middle";
+        label.fontSize = 18;
+        var series = chart.series.push(new am4charts.PieSeries());
+        series.dataFields.value = "value";
+        series.dataFields.category = "name";
+        series.labels.template.disabled = true;
+        // series.slices.template.cornerRadius = 0;
+        series.tooltip.horizontalCenter = "middle";
+        // series.tooltip.verticalCenter = "middle";
+        // series.tooltip.fontSize=18;
+        // series.tooltipText = ' {name} ({_dataContext.totalDuration1})';
+        // series.slices.template.tooltipText = "{parent.parent.name} {parent.name} > {name} ({value})";
+        // series.columns.template.tooltipText = " caseId : {categoryX} \n  Duration : {valueY}[/] ";
+        // series.tooltip.text = " caseId";
+        // series.adapter.add("tooltipText", function(text, target) {
+        //   console.log(text,target.dataItem)
+        //   return "{_dataContext.activity} \n {_dataContext.totalDuration1}";
+        // });
+        var _self=this;
+        series.slices.template.adapter.add("tooltipText", function(text, target) {
+          // var text=_self.getTimeConversion('{_dataContext.totalDuration}');
+          return "{_dataContext.name} \n {_dataContext.label}";
+        });
+        series.labels.template.text = "{_dataContext.label}";
+        $('g:has(> g[stroke="#3cabff"])').hide();
+        series.colors.list = [
+            am4core.color("rgba(85, 216, 254, 0.9)"),
+            am4core.color("rgba(255, 131, 115, 0.9)"),
+            am4core.color("rgba(255, 218, 131, 0.9)"),
+            am4core.color("rgba(163, 160, 251, 0.9)"),
+            am4core.color("rgba(156, 39, 176, 0.9)"),
+            am4core.color("rgba(103, 58, 183, 0.9)"),
+            am4core.color("rgba(63, 81, 181, 0.9)"),
+            am4core.color("rgba(33, 150, 243, 0.9)"),
+            am4core.color("rgba(3, 169, 244, 0.9)"),
+            am4core.color("rgba(0, 188, 212, 0.9)"),
+            am4core.color("rgba(244, 67, 54, 0.9)"),
+            am4core.color("rgba(233, 33, 97, 0.9)"),
+            am4core.color("rgba(220, 103, 171, 0.9)"),
+            am4core.color("rgba(220, 103, 206, 0.9)"),
+            am4core.color("rgba(199, 103, 220, 0.9)"),
+            am4core.color("rgba(163, 103, 220, 0.9)"),
+            am4core.color("rgba(103, 113, 220, 0.9)"),
+            am4core.color("rgba(0, 136, 86, 0.9)"),
+            am4core.color("rgba(243, 195, 0, 0.9)"),
+            am4core.color("rgba(243, 132, 0, 0.9)"),
+            am4core.color("rgba(143, 13, 20, 0.9)"),
+        ];   
+    }
+  
 }

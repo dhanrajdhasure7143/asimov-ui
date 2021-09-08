@@ -1,0 +1,123 @@
+::ng-deep #projects_list_screen .mat-tab-label {
+  height: 80px !important;
+}
+
+/* .projects-header-title {
+  color: #001c47;
+  font-size: 16px;
+  padding: 5px;
+  padding-left: 10px;
+} */
+
+.projects-menu-item {
+  padding: 5px;
+  font-size: 22px;
+  color: #00a0e3;
+  cursor: pointer;
+}
+
+.status-tabs {
+  display: flex;
+  padding: 0px;
+
+}
+
+.tab-count, .tab-count span {
+
+  font-size: 36px;
+  font-weight: 300;
+  line-height: 32px;
+  color: #26272C;
+;
+}
+
+
+.status-img>img {
+  height: 40px !important;
+}
+
+.newstatu .status-img img {
+  padding: 0px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.newstatu .status-data {
+  text-align: left;
+  /* padding-left: 3px; */
+}
+
+.status-data {
+  vertical-align: middle;
+  color: black !important;
+}
+
+
+.projects-table-body {
+  padding: 0px 15px;
+}
+
+::ng-deep .mat-tab-label.mat-tab-label-active {
+
+  opacity: 1;
+}
+
+::ng-deep .mat-tab-group[mat-stretch-tabs]>.mat-tab-header .mat-tab-label {
+  flex-basis: 0;
+  flex-grow: 1;
+  opacity: 1;
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.mat-card-content>:first-child,
+.mat-card>:first-child {
+  margin-top: 0;
+  line-height: 16px;
+}
+
+::ng-deep .mat-tab-group.mat-primary .mat-ink-bar,
+.mat-tab-nav-bar.mat-primary .mat-ink-bar {
+  background-color: rgb(0, 161, 228) !important;
+}
+
+
+span.projects-menu-item.vreatbu {
+  background-color: #00a0e4;
+  color: #fff;
+  font-size: 14px;
+  padding: 7px 11px;
+  display: inline-block;
+  border-radius: 2px;
+  margin-right: 13px;
+  margin-top: 0px;
+  position: relative;
+  top: -5px;
+}
+
+span.tab-text {
+  display: block;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: normal;
+  color: #535353;
+}
+
+.prj-lstscr-btn button {
+  background-color: #00a0e3 !important;
+  border: none;
+  margin-right: 0px !important;
+  border-radius: 3px !important;
+}
+
+.prj-lstscr-btn button:hover {
+  background-color: #001c47 !important;
+  color: #fff;
+  font-weight: 400 !important;
+  border: none;
+}
+
+
+mat-tab-group.mat-tab-group.mat-primary {
+  height: calc(100% - 49px);
+}

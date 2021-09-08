@@ -1,7 +1,7 @@
 
 .drag-area{
   min-height:64vh;
-  width:1500px;
+  width:100%;
   position: relative;
   float: left;
   transform-origin:0% 0%;
@@ -41,7 +41,8 @@
 .main{
   width:100%;
   overflow: auto;
-  height: 64vh;
+  /* height: 64vh; */
+  height: 70vh;
 }
 
 
@@ -73,36 +74,41 @@
 
 .context-menu__item{
   padding: 6px;
-  border-bottom: 1px solid lightgray;
+  /* border-bottom: 1px solid lightgray; */
 }
 .context-menu1{
   border: 1px solid rgba(0,0,0,.15);
   border-radius: 8px;
   box-shadow: 0 6px 12px rgba(0,0,0,.175);
   z-index: 100;
-  position: sticky;
+  padding: 5px;
+  /* position: sticky;
   background-color: white;
   left: 153px;
   top: 47px;
-  padding: 5px;
-  margin: 2px 0 0;
+  margin: 2px 0 0; */
 }
 .context-menu{
   position: absolute;
-  margin: -15px 8px 8px 7px;
+  top: -17px;
+    left: 7px;
+    width: max-content;
+  /* margin: -15px 8px 8px 7px;
   white-space: nowrap;
-  background-color: white !important;
+  background-color: white !important; */
 }
 .context-menu__item a {
-    background-color: white;
-    color: black;
+    /* background-color: white;
+    color: black; */
 }
 
 .node_tooltip{
   content: "";
   position: absolute;
-  bottom: 0%;
-  left: 40px;
+  /* bottom: 0%;
+  left: 40px; */
+  bottom: -10px;
+  left: 45px;
   border-width: 6px;
   border-style: solid;
   border-color: transparent gray transparent transparent;
@@ -136,4 +142,42 @@
 .drag-area::-webkit-scrollbar
 {
   display:none !important;
+}
+
+.dragactionsdiv {
+  text-align:center;
+  position: absolute;
+    top: 20%;
+    left: 0%;
+    width: 100%;
+}
+.dragactionsdiv img {
+  width: 30%;
+  height: auto;
+}
+.dragactionsdiv span {
+  display: block;
+  font-size: 20px;
+  color: #001c47;
+  opacity: 0.5;
+  margin-top: 10px;
+}
+
+.modal-body.actions-mbody {
+  height: calc(100% - 135px);
+  overflow: hidden auto;
+  font-size:15px;
+}
+
+
+.dynamic-forms-modal{
+  left: unset !important;
+   top: unset !important; 
+   
+   width: unset !important;
+}
+
+.dynamic-forms-modal .rpa-modal-content{
+  
+  box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%) !important;
 }

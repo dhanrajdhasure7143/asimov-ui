@@ -12,6 +12,10 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { ApprovalHomeHints } from './bpmn-diagram-list/model/bpmn_approval_workflow';
 import {MatInputModule, MatIconModule, MatFormFieldModule, MatOptionModule, MatSelectModule,MatTooltipModule} from '@angular/material';
 import { OrderByPipe } from './oerderby-pipe';
+import {CustomMatPaginatorIntl} from './../../shared/custom-mat-paginator-int';
+import {MatPaginatorIntl} from '@angular/material';
+
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 
 
@@ -28,9 +32,13 @@ import { OrderByPipe } from './oerderby-pipe';
     ApprovalWorkflowRoutingModule,
     MatProgressSpinnerModule,
     MatInputModule, MatIconModule, MatFormFieldModule,
-    MatOptionModule, MatSelectModule,MatTooltipModule
+    MatOptionModule, MatSelectModule,MatTooltipModule,MatPaginatorModule
   ],
-  providers: [ApprovalHomeHints]
+  providers: [ApprovalHomeHints,
+    {
+      provide: MatPaginatorIntl, 
+      useClass: CustomMatPaginatorIntl
+    }]
 })
 
 export class ApprovalWorkflowModule { }

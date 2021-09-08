@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
+  <defs>
+    <clipPath id="clip-upload">
+      <rect width="24" height="24"/>
+    </clipPath>
+  </defs>
+  <g id="upload" clip-path="url(#clip-upload)">
+    <g id="upload-2" data-name="upload" transform="translate(-0.002 2)">
+      <g id="Group_2058" data-name="Group 2058" transform="translate(6.958 7.754)">
+        <g id="Group_2057" data-name="Group 2057">
+          <path id="Path_503" data-name="Path 503" d="M153.493,201.322l-5.067,5.067,1.324,1.324,2.807-2.807v9.3h1.872v-9.3l2.807,2.807,1.324-1.324Z" transform="translate(-148.426 -201.322)"/>
+        </g>
+      </g>
+      <g id="Group_2060" data-name="Group 2060" transform="translate(0.002 0)">
+        <g id="Group_2059" data-name="Group 2059">
+          <path id="Path_504" data-name="Path 504" d="M19.507,43.3A7.58,7.58,0,0,0,4.5,42,5.709,5.709,0,0,0,5.708,53.289h.983V51.417H5.7a3.837,3.837,0,0,1-.3-7.661l.773-.065.08-.775a5.708,5.708,0,0,1,11.386.591v1.637H19a3.137,3.137,0,1,1,0,6.274H17.358V53.29H19a5.007,5.007,0,0,0,.512-9.987Z" transform="translate(-0.002 -35.93)"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

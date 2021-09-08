@@ -1,0 +1,124 @@
+<div class="h-100">
+    <mat-card id="projects_list_screen" *ngIf="projects_toggle==false" class="h-100">
+      <div class="module-heading title">
+        <div class="">
+          <span class="module-back-button" routerLink="/pages/projects/projectdashboard"><i class="fas fa-arrow-left" aria-hidden="true"></i></span>
+          <span class="module-header-title"><span>Projects</span> <span class="backslash">/</span> Programs</span>
+        </div>
+        <div class="ml-auto prj-lstscr-btn" routerLink="/pages/projects/create-projects">
+          <button _ngcontent-svr-c17="" class="btn btn-primary" type="button">
+            <img  src="../../../../assets/images/Projects/White-plus.svg" class="testplus"/>Create New</button>
+        </div>    
+        <!-- <span class="pull-right" style="font-size:20px;">
+          <span class="projects-menu-item" routerLink="/pages/projects/create-projects" ><i class="ri-file-add-line"></i></span>
+          <span class="projects-menu-item" ><i class="ri-filter-2-line"></i></span>
+          <span class="projects-menu-item"><i class="ri-more-2-line"></i></span>
+        </span> -->
+      </div>
+        <mat-tab-group mat-stretch-tabs (selectedTabChange)="selected_tab=$event.index">
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <div class="status-tabs newstatu">
+                <div class="status-img">
+                  <img src="..\assets\images\Projects\total projects.svg" alt="" >
+                </div>
+                <div class="status-data">
+                  <span class="tab-count"><span *ngIf="projects_list.length<10">0</span>{{projects_list.length}}</span>
+                  <span class="tab-text" >Total</span>
+                </div>
+              </div>
+            </ng-template>
+            <div class="projects-table-body h-100" *ngIf="selected_tab==0">
+              <app-projects-programs-table [users_list]="users_list"  [processes]="processes"   status="All" [projects_list]="projects_list"></app-projects-programs-table>
+            </div>
+          </mat-tab>
+          <mat-tab>
+            <ng-template mat-tab-label>
+                <div class="status-tabs newstatu">
+                    <div class="status-img">
+                      <img src="..\assets\images\Projects\new.svg" alt="" >
+                    </div>
+                    <div class="status-data">
+                      <span class="tab-count"><span *ngIf="count.New<10">0</span>{{count.New}}</span>
+                      <span class="tab-text" >New</span>
+                    </div>
+                  </div>
+            </ng-template>
+            <div class="projects-table-body h-100"  *ngIf="selected_tab==1">
+                <app-projects-programs-table [users_list]="users_list" [processes]="processes"   status="New" [projects_list]="projects_list"></app-projects-programs-table>
+              </div>
+          </mat-tab>  
+          <mat-tab>
+            <ng-template mat-tab-label>
+                <div class="status-tabs newstatu">
+                    <div class="status-img">
+                      <img src="..\assets\images\Projects\inprogress.svg" alt="" >
+                    </div>
+                    <div class="status-data">
+                      <span class="tab-count"><span *ngIf="count.Inprogress<10">0</span>{{count.Inprogress}}</span>
+                      <span class="tab-text" >Inprogress</span>
+                    </div>
+                  </div>
+            </ng-template>
+            <div class="projects-table-body h-100"  *ngIf="selected_tab==2">
+                <app-projects-programs-table  [users_list]="users_list" [processes]="processes"  status="In Progress" [projects_list]="projects_list"></app-projects-programs-table>
+              </div>
+          </mat-tab>
+          <mat-tab>
+            <ng-template mat-tab-label>
+                <div class="status-tabs newstatu">
+                    <div class="status-img">
+                      <img src="..\assets\images\Projects\inreview.svg" alt="" >
+                    </div>
+                    <div class="status-data">
+                      <span class="tab-count"><span *ngIf="count.Inreview<10">0</span>{{count.Inreview}}</span>
+                      <span class="tab-text" >In Review</span>
+                    </div>
+                  </div>
+            
+            </ng-template>
+            <div class="projects-table-body h-100"  *ngIf="selected_tab==3">
+                <app-projects-programs-table [users_list]="users_list" [processes]="processes"  status="In Review" [projects_list]="projects_list"></app-projects-programs-table>
+              </div>
+          </mat-tab>
+          <mat-tab>
+            <ng-template mat-tab-label>
+                <div class="status-tabs newstatu">
+                    <div class="status-img">
+                      <img src="..\assets\images\Projects\approved.svg" alt="" >
+                    </div>
+                    <div class="status-data">
+                      <span class="tab-count"><span *ngIf="count.Approved<10">0</span>{{count.Approved}}</span>
+                      <span class="tab-text" >Approved</span>
+                    </div>
+                  </div>
+            </ng-template>
+            <div class="projects-table-body h-100"  *ngIf="selected_tab==4">
+                <app-projects-programs-table [users_list]="users_list" [processes]="processes"   status="Approved" [projects_list]="projects_list"></app-projects-programs-table>
+              </div>
+       
+          </mat-tab>
+          <mat-tab>
+            <ng-template mat-tab-label>
+                <div class="status-tabs newstatu">
+                    <div class="status-img">
+                      <img src="..\assets\images\Projects\rejected.svg" alt="" >
+                    </div>
+                    <div class="status-data">
+                      <span class="tab-count"><span *ngIf="count.Rejected<10">0</span>{{count.Rejected}}</span>
+                      <span class="tab-text" >Rejected</span>
+                    </div>
+                  </div>
+            </ng-template>
+            <div class="projects-table-body h-100"  *ngIf="selected_tab==5">
+                <app-projects-programs-table [users_list]="users_list" [processes]="processes"  status="Rejected" [projects_list]="projects_list"></app-projects-programs-table>
+              </div>
+            
+          </mat-tab>    
+        </mat-tab-group>
+    </mat-card>
+  
+    <mat-card *ngIf="projects_toggle==true">
+      <app-create-projects></app-create-projects>
+    </mat-card>
+  </div>

@@ -1,0 +1,173 @@
+::ng-deep #projects_details_screen .mat-tab-label {
+    height: 40px !important;
+    justify-content: left !important;
+    min-width: 100px !important;
+}
+
+#projects_details_screen button.btn.btn-primary {
+  background-color: #00a0e3 !important;
+  border-color: #00a0e3 !important;
+}
+
+.maindivfoprm button.btn.btn-primary.prj-form-btn-reset, .modelprfooter button.btn.btn-primary.prj-form-btn-reset {
+  background-color: #fff !important;
+  /* border: 1px solid #00a0e3 !important; */
+  color: #00a0e3 !important;
+}
+
+.maindivfoprm button.btn.btn-primary.prj-form-btn-hover:hover, .modelprfooter button.btn.btn-primary.prj-form-btn-hover:hover {
+  background-color: #001c47 !important;
+  color: #fff !important;
+  border-color: #001c47 !important;
+}
+
+.remove-action{
+    color: red;
+    font-size: 15px;
+}
+
+::ng-deep .modal-lr .modal-content {
+  margin-top: 0px !important;
+  height: 60%;
+  width: 100%;
+  overflow: overlay;
+}
+::ng-deep .modal-up .modal-content {
+  margin-top: 0px !important;
+  height: 60%;
+  width: 100%;
+  overflow: hidden;
+}
+.upload-action{
+  color:#4AB0F5;
+  font-size: 20px;
+  margin-left: 10px;
+  cursor: pointer;
+  
+}
+.align1{
+  margin-top: 15px;
+}
+.inputfile + label {
+  cursor: pointer; /* "hand" cursor */
+}
+.inputfile + label {
+  font-size: 1.25em;
+  font-weight: 700;
+  color: #00a0e3;
+  /* background-color: black; */
+  display: inline-block;
+}
+.inputfile {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.inputfile:focus + label,
+.inputfile + label:hover {
+  color: #00a0e3;
+  fill: #00a0e3;
+  /* background-color: #00a0e3; */
+}
+
+/* new styles */
+img.testplus.hover-img ,
+td span:hover img.testplus.default-img{
+    display: none;
+}
+td span:hover img.testplus.hover-img {
+    display: initial;
+}
+.projectrepo-body {
+  height: calc(100% - 48px);
+  overflow: auto;
+  padding: 10px;
+}
+span.projects-menu-item {
+  margin-left: 10px;
+}
+.projects-table-body {
+  margin-top:5px;
+}
+.projects-table-body td>span {
+  font-size: 13px !important;
+}
+img.hover-img {
+  display: none;
+}
+.gridicon:hover img.default-img {
+  display: none;
+}
+.gridicon:hover img.hover-img {
+  display: initial;
+}
+
+.default-img,.hover-img{
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+/* .box-fileupload {
+  background: #d3e7ff;
+  width: 100%;
+  padding: 5px;
+  border: 2px dashed #00a0e3;
+  border-radius: 3px;
+} */
+
+.box-fileupload {
+  background: #ffffff;
+  width: 100%;
+  padding: 5px;
+  border: 2px dashed #00a0e3;
+  border-radius: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+}
+.box-fileupload:hover{
+  background: #e3eaee !important; ;
+
+}
+.project-card {
+  background-color: #FFFFD5;
+  padding: 10px;
+  border: 1px solid #d7d7d7;
+  color: rgb(7, 7, 7);
+  transition: 0.3s;
+  border-radius: 2px;
+  margin-bottom: 15px;
+}
+
+.project-card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.card-placeholder {
+  flex-basis: 0;
+  flex-grow: 1;
+  opacity: 1;
+  font-size: 12px;
+  font-weight: 400;
+}
+.clickable {
+  cursor: pointer;
+}
+span.file-size {
+	color: #999;
+  font-size: 12px;
+  font-weight: 400;
+}
+.documents1{
+  padding: 0px 15px
+}
+.deny-serve{
+  opacity: 1;
+}

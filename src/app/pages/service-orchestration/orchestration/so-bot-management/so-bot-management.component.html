@@ -3,11 +3,10 @@
     <br>
     <div class="text-right">
         <span style="padding:10px">
-          <mat-form-field class="example-full-width" id="bmsearch">
-            <mat-label>Search</mat-label>
-            <input matInput placeholder="Search" [(ngModel)]="search" (keyup)="applyFilter2($event.target.value)">
-            <mat-icon matSuffix>search</mat-icon>
-          </mat-form-field>
+          
+            <input class="form-control" placeholder="Search" [(ngModel)]="search" (keyup)="applyFilter2($event.target.value)">
+            
+         
         </span>
       <span style="padding:10px">
        <!--- <mat-form-field id="bmategorySearch">
@@ -81,7 +80,7 @@
                         </span>
                       </span>
 
-                      <span *ngIf="element.botStatus=='Stop'" ><span class="bg-danger" style="background-color:#a94442;border-radius: 50%;color:white;padding-right:6px;padding-left:5px;padding-top:5px;padding-bottom:4px;font-size:9px;text-align: center;align-content: center;align-items: center;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><i class="verticalalignmiddle fas fa-stop"></i></span>&nbsp;<span>{{element.botStatus}}</span></span>
+                      <span *ngIf="element.botStatus=='Stop' || element.botStatus=='Stopped'" ><span class="bg-danger" ><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><i class=" fas fa-stop"></i></span>&nbsp;<span>{{element.botStatus}}</span></span>
 
                       <span *ngIf="element.botStatus=='Pause'||element.botStatus=='Paused'" ><span class="text-primary" style="font-size:19px;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><i class="verticalalignmiddle fas fa-pause-circle"></i></span>&nbsp;<span>{{element.botStatus}}</span></span>
 
@@ -142,7 +141,7 @@
 <div [id]="viewlogid" class="rpa-modal">
     <div class="rpa-modal-content">
         <div class="rpa-modal-header">
-            <span class="rpa-modal-close" (click)="viewlogclose()">&times;</span>
+            <span class="rpa-modal-close" (click)="viewlogclose()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
             <h4>Logs</h4>
         </div>
         <div class="container-fluid" style="background: white;" >
@@ -231,7 +230,7 @@
 <div [id]="viewlogid1" class="rpa-modal">
     <div class="rpa-modal-content">
         <div class="rpa-modal-header">
-            <span class="rpa-modal-close" (click)="viewlogclose1()">&times;</span>
+            <span class="rpa-modal-close" (click)="viewlogclose1()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
             <h4>Logs</h4>
         </div>
 
@@ -336,7 +335,7 @@
     <div id='sch' class="rpa-modal" style="display:block">
         <div class="rpa-modal-content">
             <div class="rpa-modal-header">
-                <span class="rpa-modal-close" (click)="close()">&times;</span>
+                <span class="rpa-modal-close" (click)="close()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
                 <h4>Scheduler</h4>
             </div>
             <div class="rpa-modal-body">

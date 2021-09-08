@@ -67,10 +67,10 @@ th{
   width: 12px;
 }
 
-::ng-deep  .mat-form-field
+/* ::ng-deep  .mat-form-field
 {
   line-height: 1.7 !important;
-}
+} */
 
 .lbl_chk_cls{
   font-size: 15px;
@@ -130,3 +130,14 @@ table tr .display_hover:hover{
 }
 
 
+.orchestration-table-container{
+  width: 100%;
+  height: calc(100vh - 330px);
+  overflow: auto;
+}
+
+
+.orchestration-action-btn{
+  height: 38px !important;
+  width: 38px !important;
+}

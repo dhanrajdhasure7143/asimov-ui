@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
+  <defs>
+    <clipPath id="clip-dots">
+      <rect width="24" height="24"/>
+    </clipPath>
+  </defs>
+  <g id="dots" clip-path="url(#clip-dots)">
+    <g id="more" transform="translate(-0.3 -1.5)">
+      <circle id="Ellipse_452" data-name="Ellipse 452" cx="2.4" cy="2.4" r="2.4" transform="translate(9.9 1.5)" fill="#00a0e3"/>
+      <circle id="Ellipse_453" data-name="Ellipse 453" cx="2.4" cy="2.4" r="2.4" transform="translate(9.9 11.1)" fill="#00a0e3"/>
+      <circle id="Ellipse_454" data-name="Ellipse 454" cx="2.4" cy="2.4" r="2.4" transform="translate(9.9 20.7)" fill="#00a0e3"/>
+    </g>
+  </g>
+</svg>

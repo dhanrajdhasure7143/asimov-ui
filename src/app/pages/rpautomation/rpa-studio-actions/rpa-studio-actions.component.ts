@@ -16,6 +16,7 @@ import { NotifierService } from 'angular-notifier';
 import {NgbDateStruct, NgbCalendar} from '@ng-bootstrap/ng-bootstrap';
 
 import { DatePipe } from '@angular/common'
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 @Component({
   selector: 'app-rpa-studio-actions',
   templateUrl: './rpa-studio-actions.component.html',
@@ -53,7 +54,7 @@ export class RpaStudioActionsComponent implements OnInit {
   Viewloglist:MatTableDataSource<any>;
   displayedColumns1: string[] = ['task_name','start_date','end_date', 'status','error_info' ];
   logbyrunid:MatTableDataSource<any>;
-
+  logsmodal:BsModalRef
   @ViewChild("paginator1",{static:false}) paginator1: MatPaginator;
   @ViewChild("paginator2",{static:false}) paginator2: MatPaginator;
   @ViewChild("sort1",{static:false}) sort1: MatSort;
@@ -128,6 +129,7 @@ export class RpaStudioActionsComponent implements OnInit {
     private rpa_tabs:RpaStudioTabsComponent, private rpa_studio:RpaStudioComponent,
     private notifier: NotifierService, private calender:NgbCalendar, private router:Router,
     private formBuilder: FormBuilder,
+    public modalService:BsModalService
     ) {
     this.form = this.fb.group({
       'startTime' : [this.startTime, Validators.required],
@@ -674,7 +676,7 @@ export class RpaStudioActionsComponent implements OnInit {
    }
 
 
-   viewlogdata(){
+   viewlogdata(log_popup_template){
      this.childBotWorkspace.addsquences();
     let response: any;
     let log:any=[];
@@ -721,8 +723,8 @@ export class RpaStudioActionsComponent implements OnInit {
 
       this.Viewloglist.paginator=this.paginator1;
       this.Viewloglist.sort=this.sort1;
-
-      document.getElementById(this.viewlogid).style.display="block";
+      this.logsmodal=this.modalService.show(log_popup_template)
+      //document.getElementById(this.viewlogid).style.display="block";
 
     });
   }

@@ -48,7 +48,7 @@ import { SoEnvUipathComponent } from './orchestration/so-env-uipath/so-env-uipat
 import { SoEnvEpsoftComponent ,ipcustompipecreation } from './orchestration/so-env-epsoft/so-env-epsoft.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { ModalModule } from 'ngx-bootstrap/modal';
+import { ModalModule, BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { SlicedateUpdate, SoUpdatedDashboardComponent,CategoryUpdate } from './orchestration/so-updated-dashboard/so-updated-dashboard.component';
 import { Checkbotslist, Checkhumanslist, NewSoAutomatedTasksComponent } from './orchestration/new-so-automated-tasks/new-so-automated-tasks.component';
 import { BotlistbycatPipe } from './orchestration/new-so-automated-tasks/botlistbycat.pipe';
@@ -66,7 +66,7 @@ import { ScheduledBotsComponent } from './orchestration/scheduled-bots/scheduled
     Category,
     Reverse,
     Slicedate,
-    BotManagementComponent, ServiceOrchestrationComponent, SoDashboardComponent, SoSchedulerComponent, SoProcesslogComponent, BotlistbycatPipe, HumanlistbycatPipe, Envname, SoInboxComponent, NewSoDashboardComponent,
+    BotManagementComponent, ServiceOrchestrationComponent, SoDashboardComponent, SoSchedulerComponent, SoProcesslogComponent, BotlistbycatPipe, HumanlistbycatPipe, Envname, SoInboxComponent,
   NewSoBotsComponent,
   NewSoManagementComponent,
   NewSoAutomatedTasksComponent,
@@ -115,7 +115,7 @@ import { ScheduledBotsComponent } from './orchestration/scheduled-bots/scheduled
   ],
   bootstrap: [SoDashboardComponent],
   entryComponents: [FilterBy],
-  providers:[MatDatepickerModule,sohints],
+  providers:[MatDatepickerModule,sohints, BsModalRef, BsModalService],
 })
 export class ServiceOrchestrationModule {
 }

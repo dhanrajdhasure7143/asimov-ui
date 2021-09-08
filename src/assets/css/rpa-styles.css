@@ -212,7 +212,7 @@ padding-bottom: 70px;
     
   }
   /* /* To style the document scrollbar, remove `.custom-scrollbar` */
-  .rpa-custom-scrollbar::-webkit-scrollbar {
+  /* .rpa-custom-scrollbar::-webkit-scrollbar {
     width: 3px;
   }
   .rpa-custom-scrollbar::-webkit-scrollbar-track {
@@ -222,64 +222,87 @@ padding-bottom: 70px;
   .rpa-custom-scrollbar::-webkit-scrollbar-thumb {
     background : rgb(209, 209, 209);
     border-radius: 10px;
-  } 
+  }  */
 
  
   /* The  rpa-modal (background) */
 .rpa-modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 10000; /* Sit on top */
+  display: none; 
+  position: fixed; 
+  z-index: 1000; 
   left: 0;
   top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-  -webkit-animation-name: fadeIn; /* Fade in the background */
+  width: 100%; 
+  height: 100%;
+  overflow: auto; 
+  background-color: rgb(0,0,0); 
+  background-color: rgba(0,0,0,0.4); 
+  -webkit-animation-name: fadeIn; 
   -webkit-animation-duration: 0.4s;
   animation-name: fadeIn;
   animation-duration: 0.4s
-  }
+}
   
   /*  rpa-modal Content */
   .rpa-modal-content {
-  position: fixed;
-  bottom: 0;
-  background-color: #fefefe;
-  width: 100%;
-  -webkit-animation-name: slideIn;
-  -webkit-animation-duration: 0.4s;
-  animation-name: slideIn;
-  animation-duration: 0.4s
+    position: fixed;
+    bottom: 0;
+    background-color: #fefefe;
+    width: 100%;
+    -webkit-animation-name: slideIn;
+    -webkit-animation-duration: 0.4s;
+    animation-name: slideIn;
+    animation-duration: 0.4s;
+    top: 51px;
+    width: 400px !important;
+    right: 0px;
+    border-radius: 0px;
+    max-height: 100% !important;
+    height: 100%;
   }
   
   /* The Close Button */
   .rpa-modal-close {
-  color: #000;
+  opacity: 0.2;
   float: right;
-  font-size: 28px;
-  font-weight: bold;
+  font-size: 24px;
+  }
+  .rpa-modal-close img {
+    width: 14px;
+    height: 14px;
   }
   
   .rpa-modal-close:hover,
   .rpa-modal-close:focus {
   color: #000;
+  opacity: 0.5;
   text-decoration: none;
   cursor: pointer;
   }
   
   .rpa-modal-header {
-  padding: 2px 16px;
-  background-color: #e5e5e5;
+  /* padding: 2px 16px;
+  background-color: #e5e5e5; */
+  padding: 11px 15px 1px !important;
+  border-bottom: 1px solid #e5e5e5;
   color: #000;
   }
   .rpa-modal-header .close {
   margin-top: 5px;
  }
-  
-  .rpa-modal-body {padding: 2px 16px;}
+ .rpa-modal .container.m-contanier.form-body {
+  height: calc(100% - 38px);
+  padding:0px;
+  width:100%;
+}
+.rpa-modal .form-footer {
+  margin-top: auto !important;
+  text-align: end;
+  position: fixed;
+    bottom: 10px;
+    right: 15px;
+}
+  /* .rpa-modal-body {padding: 2px 16px;} */
   
   
   /* Add Animation */
@@ -353,7 +376,8 @@ padding-bottom: 70px;
 
   .mat-paginator > div > div > div.mat-paginator-range-actions > button:disabled{
 
-    background-color:none;    
+    background-color: transparent !important;    
+    color: rgba(0,0,0,.26) !important;
   }
 
 
@@ -386,9 +410,129 @@ mat-paginator button:disabled{
   margin-right: 5px;
 }
 
-
+.rpa_botdiv {
+  position: absolute;
+  left: 10%;
+}
 
 .rpa-home-table{
-  height:50vh;
+  height:47vh;
   overflow-y: scroll;
+}
+.open-btn-click {
+  background-color: #f99d1c;
+  color: #fff !important;
+  position: absolute;
+  top: 10px;
+}
+.RPA-scheduletimer .ngx-timepicker{
+  border: 1px solid #D1D1D1 !important;
+  border-radius: 3px;
+  padding: 0px 10px;
+}
+
+.environment-tablegrid .mat-sort-header-button{
+  font-size: 14px !important;
+}
+
+.schedulemod .col-md-12.p-0.form-group .card {
+  border: medium none;
+}
+.schedulemod .card-header {
+  background-color: unset;
+  padding: 0px;
+}
+.schedulemod ul.nav.nav-tabs.card-header-tabs li a {
+  padding: 3px 8px !important;
+  font-size: 12px !important;
+  height: auto !important;
+  border: 1px solid #ddd;
+}
+.schedulemod .card-body {
+  padding: 20px 10px 10px 10px;
+  margin: 0px !important;
+  border: 1px solid #ddd;
+}
+.schedulemod .card-body .col-xs-12 {
+  padding: 0px;
+}
+.schedulemod ul.nav.nav-tabs.card-header-tabs{
+  border: medium none !important;
+}
+.schedulemod .tab-pane.ng-star-inserted.active div {
+  font-size: 14px;
+}
+.schedulemod .tab-pane.ng-star-inserted.active select {
+  padding: 2px 7px 2px 7px !important;
+  height: auto !important;
+  width: 38px !important;
+  font-size: 14px;
+  background-position: right 4px center;
+  background-size: 10px;
+}
+.schedulemod .tab-pane.ng-star-inserted.active label {
+  font-size: 13px;
+  font-weight: normal;
+}
+.schedulemod .tab-pane.ng-star-inserted.active input[type=radio] {
+  position: relative;
+  top: 2px;
+  margin-right: 5px;
+}
+.schedulemod .tab-pane.yearclas.ng-star-inserted div {
+  line-height: 35px !important;
+}
+.schedulemod .RPA-scheduletimer-body .col-md-6.pr-0 {
+  padding-left: 5px;
+}
+.schedulemod .RPA-scheduletimer-body .col-md-6.pl-0 {
+  padding-right: 5px;
+}
+.schedulemod .RPA-scheduletimer-body input {
+  margin-bottom: 10px !important;
+  font-size: 14px !important;
+}
+.schedulemod .RPA-scheduletimer-body .ngx-timepicker-control__arrows {
+  margin-top: 4px;
+}
+
+.schedulemod .RPA-scheduletimer-body .ngx-timepicker-control__arrows span {
+  font-size: 9px;
+  line-height: 11px;
+}
+.schedulemod .RPA-scheduletimer-footer button.btn.btn-primary {
+  width: 100%;
+  margin-bottom: 10px;
+}
+.schedulemod .RPA-scheduletimer-footer {
+  width: 100%;
+  margin-bottom: 20px;
+}
+.schedulemod .scheduletimer-actionbtns button {
+  margin-left: 8px;
+}
+.schedulemod .scheduletimer-actionbtns {
+  float: right;
+}
+
+.schedulemod .tab-pane.yearclas.ng-star-inserted.active select {
+  width: 100px !important;
+}
+.schedulemod .RPA-scheduletable {
+  display: inline-block;
+  width: 100%;
+}
+.tablmacl {
+  overflow: scroll;
+}
+.innertabld{
+  width: 500px;
+}
+.pagicl {
+  margin-top: 10px;
+  text-align: right;
+}
+.schedulemod ul.nav.nav-tabs.card-header-tabs a.nav-link.active {
+  color: #00a0e3 !important;
+  background: #fefefe !important;
 }

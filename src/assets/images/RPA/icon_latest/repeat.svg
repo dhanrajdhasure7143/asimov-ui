@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
+  <defs>
+    <clipPath id="clip-repeat">
+      <rect width="24" height="24"/>
+    </clipPath>
+  </defs>
+  <g id="repeat" clip-path="url(#clip-repeat)">
+    <g id="repeat-2" data-name="repeat" transform="translate(-2.161 -1.678)">
+      <path id="Path_1062" data-name="Path 1062" d="M25.3,10.181l-5.2-.349c.652-.582,1.164-1.071,1.687-1.49s.454-.593.093-1.047A10.078,10.078,0,0,0,11.636,4.013a9.926,9.926,0,0,0-7.459,9.1,1.038,1.038,0,0,1-.07.419H2.4C1.942,9.587,5,4.956,9.413,2.849,14.068.615,19.188,1.93,23.75,6.6l1.874-1.583Z" transform="translate(0 0)" fill="#607088" stroke="#607088" stroke-miterlimit="10" stroke-width="0.2"/>
+      <path id="Path_1063" data-name="Path 1063" d="M4.547,19.094,2.65,20.7l.337-5.167,5.19.337-1.4,1.245c-.861.768-.861.78-.1,1.606a10.008,10.008,0,0,0,16.769-3.13,30.629,30.629,0,0,0,.849-3.421h1.559c.57,3.561-2.537,8.472-6.389,10.473A12.079,12.079,0,0,1,4.547,19.094Z" transform="translate(0.049 1.699)" fill="#607088" stroke="#607088" stroke-miterlimit="10" stroke-width="0.2"/>
+    </g>
+  </g>
+</svg>

@@ -12,6 +12,8 @@ import {MatPaginator} from '@angular/material/paginator';
 import { NotifierService } from 'angular-notifier';
 import {NgbCalendar} from '@ng-bootstrap/ng-bootstrap';
 import { RpaToolsetComponent } from '../rpa-toolset/rpa-toolset.component';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-rpa-studio-actionsmenu',
@@ -83,6 +85,7 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
   public respdata2:boolean = false;
   public she:any;
   userRole;
+  logsmodalref:BsModalRef
   isButtonVisible: boolean;
   slider: number = 0;
   options: any = {
@@ -101,6 +104,8 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
     private calender:NgbCalendar,
     private formBuilder: FormBuilder,
     private changeDetector:ChangeDetectorRef,
+    private modalService:BsModalService,
+    private spinner:NgxSpinnerService
     ) {}
 
   ngOnInit() {
@@ -465,9 +470,23 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
    }
 
 
-   viewlogdata(){
+   updateLog(logid,Logtemplate)
+   {
+    
+      this.spinner.show();
+     this.rest.updateBotLog(this.savebotrespose.botId,this.savebotrespose.version,logid).subscribe(data=>{
+        let response:any=data;  
+        this.spinner.hide();
+        if(response.errorMessage==undefined)
+          this.viewlogdata(Logtemplate,'update');
+        else
+          Swal.fire("Error",response.errorMessage,"error");
+     });
+   }
+   viewlogdata(log_popup_template,action){
     this.childBotWorkspace.addsquences();
-    document.getElementById("filters").style.display = "none";
+    this.viewlogid1=undefined;
+    //document.getElementById("filters").style.display = "none";
    let response: any;
    let log:any=[];
    this.logresponse=[];
@@ -512,7 +531,9 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
      this.Viewloglist = new MatTableDataSource(log);
      this.Viewloglist.paginator=this.paginator1;
      this.Viewloglist.sort=this.sort1;
-     document.getElementById(this.viewlogid).style.display="block";
+    // document.getElementById(this.viewlogid1).style.display="none";
+    if(action=='open')
+      this.logsmodalref=this.modalService.show(log_popup_template, {class:"logs-modal"})
 
    });
  }
@@ -546,28 +567,10 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
      resplogbyrun.sort((a,b) => a.task_id > b.task_id ? 1 : -1);
      this.logbyrunid = new MatTableDataSource(resplogbyrun);
      this.logbyrunid.paginator=this.paginator2;
-     this.logbyrunid.sort=this.sort2;
-     document.getElementById(this.viewlogid).style.display="none";
-     document.getElementById(this.viewlogid1).style.display="block";
-       })
-   }
-
-    back(){
-      //document.getElementById("ViewLog").style.display="none";
-      document.getElementById(this.viewlogid1).style.display="none";
-      document.getElementById(this.viewlogid).style.display="block";
-    }
-
-    viewlogclose(){
-      document.getElementById(this.viewlogid).style.display="none";
-      document.getElementById("filters").style.display = "block";
-    }
-
-    viewlogclose1(){
-      document.getElementById(this.viewlogid1).style.display="none";
-      document.getElementById(this.viewlogid).style.display="none";
-      document.getElementById("filters").style.display = "block";
-    }
+     this.logbyrunid.sort=this.sort2
+     this.viewlogid1=runid;
+    })
+  }
 
 loadpredefinedbot(botId)
 {

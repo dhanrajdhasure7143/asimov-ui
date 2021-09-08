@@ -1,33 +1,35 @@
-    <div class="main">
-        <br><br>
-        <div class="container">
+    <div class="">
+        <div class="container-fluid new-PI-layout">
             <div class="secone">
                 <h1>Business Metrics</h1>
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-3 pl-0">
                         <div class="innersecone d-flex">
-                           <div class="leftinsec"><h2>10<span class="smalfon">Days</span></h2></div>
+                            <div class="leftinsec"><h2><span class="smalfon">{{getTimeConversion(this.b_metrics.slowestCase)}}</span></h2></div>
+                           <!-- <div class="leftinsec"><h2>{{getTimeConversion(this.b_metrics.fastestCase)}}</h2></div> -->
                             <div class="rightinsec"><p class="heading">Fastest Case</p></div>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3 pl-0">
                         <div class="innersecone d-flex">
-                            <div class="leftinsec"><h2>57<span class="smalfon">Days</span></h2></div>
+                            <div class="leftinsec"><h2><span class="smalfon">{{getTimeConversion(this.b_metrics.fastestCase)}}</span></h2></div>
+                            <!-- <div class="leftinsec"><h2>{{getTimeConversion(this.b_metrics.slowestCase)}}</h2></div> -->
                             <div class="rightinsec"><p class="heading">Slowest case</p></div>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3 p-0">
                         <div class="innersecone d-flex">
-                            <div class="leftinsec"><h2>20<span class="smalfon">Days</span></h2></div>
+                            <div class="leftinsec"><h2><span class="smalfon">{{getTimeConversion(this.b_metrics.avgTurnAround)}}</span></h2></div>
+                            <!-- <div class="leftinsec"><h2>{{getTimeConversion(this.b_metrics.avgTurnAround)}}</h2></div> -->
                             <div class="rightinsec"><p class="heading">Average Turn Around Time</p></div>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <!-- <div class="col-md-3">
                         <div class="innersecone d-flex">
-                            <div class="leftinsec"><h2>59%</h2></div>
+                            <div class="leftinsec"><h2><span class="smalfon">59%</span></h2></div>
                             <div class="rightinsec"><p class="heading">Rework Rate</p></div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <div class="chartssc">
@@ -35,85 +37,54 @@
                 
                 <h2 class="heading">Time Analysis</h2>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-6 pl-0">
                         <div class="chartinnsec">
-                            <div class="row pb-4">
-                                <div class="col-md-12">
-                                    <br>
-                                    <h3 class="heading">Activity Time</h3>
-                                </div>
-                                
+                            <div class="TA-Header">
+                                <label class="">Activity Time</label>                                
                             </div>
-                            <br>
                             <div id="chartdiv"></div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6 pr-0">
                         <div class="chartinnsec">
-                            <div class="row pb-4">
-                                <div class="col-md-12">
-                                    <br>
-                                    <h3 class="heading">Throughput Time</h3>
-                                </div>
+                            <div class="TA-Header">
+                                <label class="">Throughput Time in Days</label>
                             </div>
-                            <br>
                             <div id="chartdiv2"></div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="varienanal">
-                    <h1>Variant Analysis</h1>
-                    <div class="maintx d-flex">
+            <div class="varienanal chartinnsec">
+                    <label>Variant Analysis</label>
+                    <!-- <div class="maintx d-flex">
                         <div class="leftyext">
                             <h4>Variant 1</h4>
                         </div>
                         <div class="leftyight">
                           <h5>18% cases take 37 days on an average to complete the process</h5>
                         </div>
-                        <!-- <div class="rightsecr">
-                            <p>3.5 Days</p>
-                        </div> -->
-                    </div>
-                    <div class="maintx d-flex">
-                        <div class="leftyext">
-                            <h4>Variant 2</h4>
-                        </div>
-                        <div class="leftyight">
-                            <h5>17% cases take 16 days on an average to complete the process</h5>
-                            
-                        </div>
-                        <!-- <div class="rightsecr">
-                            <p>3.5 Days</p>
-                        </div> -->
-                    </div>
-                    <div class="maintx d-flex">
-                        <div class="leftyext">
-                            <h4>Variant 3</h4>
-                        </div>
-                        <div class="leftyight">
-                            <h5>17% of cases take 28 days on an average to complete the process</h5>
-                        
-                        </div>
-                        <!-- <div class="rightsecr">
-                            <p>3.5 Days</p>
-                        </div> -->
-                    </div>
-                    <div class="maintx d-flex">
-                        <div class="leftyext">
-                            <h4>Variant 4</h4>
-                        </div>
-                        <div class="leftyight">
-                            <h5>14% of cases take 19 days on an average to complete the process</h5>
-                          
-                        </div>
-                        <!-- <div class="rightsecr">
-                            <p>3.5 Days</p>
-                        </div> -->
-                    </div>
-                
-            </div>
-        </div>
+                    </div> -->
 
-        <br><br>
+                    <div class="maintx" *ngFor="let element of displayedRows$ | async;let i=index;trackBy:loopTrackBy">
+                        <div class="maintx d-flex">
+                            <div class="leftyext">
+                                <h4>Variant {{element.variantNumber}}</h4>
+                            </div>
+                            <div class="leftyight">
+                            <h5>{{convertedValue(element.percentage)}}% cases take {{getTimeConversion(element.medianDuration)}} on an average to complete the process</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bpspaginationdiv">
+                        <mat-paginator class="newpaginationdiv mat-paginator" #paginator [length]="totalRows$ | async" [pageIndex]="0" [pageSize]="5" [showFirstLastButtons]="true" [pageSizeOptions]="[5, 10, 25, 50]" ></mat-paginator>
+                    </div>                
+            </div>            
+        </div>
+    </div>
+    
+    <div class="spinoverlay" *ngIf="isLoading">
+        <div class="spincenter">
+            <img  src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader"/>
+        </div>
     </div>

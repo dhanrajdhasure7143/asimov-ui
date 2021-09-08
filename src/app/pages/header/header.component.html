@@ -1,4 +1,4 @@
-<div class="s1">
+<!-- <div class="s1">
     <section class="header">
         <div class="container-fluid">
             <nav class="navbar navbar-fixed-top" id="nv1">
@@ -24,7 +24,7 @@
                                             <label>{{each_page.title}}</label> </a>
                                     </li>
                                     <li class="notification-icon" style="padding-left:3px;" (click)='slideUp("notifications")'>
-                                        <!-- <img src="assets/images/Group 192.svg"> </li> -->
+                                        
                                         <li class="notification-icon" style="padding-left:3px;" (click)='slideUp("notifications")'>
                                            <img src="assets/images/Notification_Bell.svg">
                                             <div *ngIf="this.notificationscount!=0" class="notification-count" style = "position:absolute; left:66px; top:2px;">
@@ -32,17 +32,13 @@
                                          </div>
                                        </li>
                                     <li class="text-center">
-                                        <!-- <img src="assets/images/pro1.png"> -->
+                                       
                                         <div  class="res-circle " *ngIf="profilePicture==false">{{firstletter|uppercase}}</div>
                                         <div   *ngIf="profilePicture==true"><img class="res-circle " [src]="retrievedImage" ></div>
                                         <div class="dropdown">
                                             <span class="dropdown-toggle" data-toggle="dropdown"><i class="fas fa-chevron-down"></i></span>
                                             <div class="dropdown-menu drop_down" aria-labelledby="dropdownMenuButton">
-                                                <!-- <a (click)='slideUp("my_acc")'><i class="far fa-user hd_icon"></i> My Account</a>
-                          <a (click)='slideUp("user_manage")'><img class="header_icon" src="..\assets\icons\user_management_icon.svg">User Management</a>
-                          <a (click)='slideUp("config_alert")'><img class="header_icon" src="..\assets\icons\alert_icon.svg">Configure Alerts</a>
-                          <a (click)='slideUp("invite_user")'><img  class="header_icon" src="..\assets\icons\invite_user_icon.svg">Invite User</a>
-                          <a (click)='logout()'><i class="fas fa-sign-out-alt"></i>Signout</a> -->
+                                                
                                                 <a  (click)='myAccount()'><i class="far fa-user hd_icon"></i> My Account</a>
                                                 <a *ngIf="this.userRole.includes('Admin') || this.userRole.includes('SuperAdmin')" (click)='userManagement()'><img class="header_icon" src="..\assets\icons\user_management_icon.svg">User Management</a>
                                                 <a *ngIf="this.userRole.includes('Admin')" (click)='configAlerts()'><img class="header_icon" src="..\assets\icons\alert_icon.svg">Configuration</a>
@@ -61,5 +57,136 @@
         </div>
     </section>
 </div>
-<app-header-dropdown-overlay [overlay_notifications_dt]="overlay_notifications_model" [overlay_acc_dt]="overlay_acc_model" [overlay_user_manage_dt]="overlay_user_manage_model" [overlay_config_alert_dt]="overlay_config_alert_model" [overlay_invite_user_dt]="overlay_invite_user_model"></app-header-dropdown-overlay>
+<app-header-dropdown-overlay [overlay_notifications_dt]="overlay_notifications_model" [overlay_acc_dt]="overlay_acc_model" [overlay_user_manage_dt]="overlay_user_manage_model" [overlay_config_alert_dt]="overlay_config_alert_model" [overlay_invite_user_dt]="overlay_invite_user_model"></app-header-dropdown-overlay> -->
 <!-- <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#3385ff" type = "ball-spin-clockwise-fade-rotating" [fullScreen] = "true"><p style="color:white" ></p></ngx-spinner> -->
+
+<mat-toolbar class="ep-header-white ep-header-new">
+  <div class="header-logdiv">
+    <span>
+      <button mat-icon-button class="example-icon txt-wh" (click)="page_obj.onToolbarMenuToggle()" aria-label="Example icon-button with menu icon">
+        <img src="../../../assets/images/menu-line.svg" *ngIf="page_obj.sideBarOpen==false" [ngClass]="{sidebarclose: page_obj.sideBarOpen==false}">
+        <img src="../../../assets/images/menu-line.svg" *ngIf="page_obj.sideBarOpen==true" [ngClass]="{sidebaropen: page_obj.sideBarOpen==true}">
+        <!-- <em *ngIf="page_obj.sideBarOpen==false" [ngClass]="{sidebarclose: page_obj.sideBarOpen==false}" class="fa fa-bars"></em> -->
+        <!-- <em *ngIf="page_obj.sideBarOpen==true" [ngClass]="{sidebaropen: page_obj.sideBarOpen==true}" class="fa fa-bars"></em> -->
+      </button>
+    </span>
+  <span class="headerlogo">
+    <img src="assets/images/EZFlow_full_logo.svg" class="header-logo" alt="EZFlow Logo">
+   </span>
+  </div>
+
+   <span class="txt-wh bread-crumb">
+    <span *ngIf="(parent_link && parent_link.length != 0)||(child_link && child_link.length != 0)" routerLink="/pages/home" (click)="selectedIndex=pages.length"></span>
+    <span *ngIf="(parent_link && parent_link.length != 0)||(child_link && child_link.length != 0)" class="breadcrumb-home" id="home" routerLink="/pages/home" (click)="selectedIndex=pages.length">Home</span>
+    <span *ngIf="parent_link && parent_link.length != 0" [routerLink]="parent_link.route" style="font-weight: 400;" (click)="removenodes()" id="parent">&nbsp;|&nbsp;<u>{{parent_link.title}}</u></span>
+    <span *ngIf="child_link && child_link.length != 0" [routerLink]="child_link.route" id="child">&nbsp;<i class="fa fa-arrow-right"></i>&nbsp;{{child_link.title}}</span>
+   </span>
+   <span class="example-spacer"></span>
+   <button mat-icon-button class="txt-wh" aria-label="Example icon-button with heart icon">
+    <img src="../../../assets/images/search.svg">
+   </button>
+   <button mat-icon-button class="txt-wh" aria-label="Example icon-button with heart icon">
+    <img src="../../../assets/images/plus-square.svg">
+   </button>
+   <button mat-icon-button class="txt-wh"  (click)='slideUp("notifications")' aria-label="Example icon-button with heart icon">
+    <i style="font-size: 18px;opacity: 0.5;" class="fa fa-bell"></i>
+    <div *ngIf="this.notificationscount!=0" class="notification-count" >
+      <span>{{notificationscount}}</span>
+   </div>
+   </button>
+   <app-header-dropdown-overlay [overlay_notifications_dt]="overlay_notifications_model" [overlay_acc_dt]="overlay_acc_model" [overlay_user_manage_dt]="overlay_user_manage_model" [overlay_config_alert_dt]="overlay_config_alert_model" [overlay_invite_user_dt]="overlay_invite_user_model"></app-header-dropdown-overlay>
+  
+  <!-- <span class="txt-wh header-seperator">|</span> -->
+ 
+  <!-- <span class="header-demotxt">
+    <img src="../../../assets/images/Demo.svg">
+    <span class="txt-u" >Demo</span>
+    <button mat-icon-button class="txt-wh" aria-label="Example icon-button with heart icon">
+      <mat-icon class="menu-button header-dropicon">&#xe5cf;
+      </mat-icon>
+     </button>
+  </span> -->
+    <!-- <button mat-icon-button class="txt-wh" aria-label="Example icon-button with heart icon">
+      <i class="fa fa-caret-down text-white"></i>
+     </button> -->
+
+  <!-- <span class="header-demotxt">
+    <button mat-button [matMenuTriggerFor]="demo" >
+      <img src="../../../assets/images/Demo.svg">
+      <span class="txt-u" >Demo</span>
+      <mat-icon class="menu-button header-dropicon">&#xe5cf;</mat-icon>
+    </button>
+  </span>  -->
+  <mat-menu #demo="matMenu">
+   <button class="demodp">
+    <div class="levelsubblock">
+        <div class="levelsubblock-img">
+            <img alt="" src="../../../assets/images/Projects/process_icon.svg">
+        </div>
+        <div class="p-0 levelcont">
+            <label class="label-title">Extract Invoice</label>
+            <span class="label-content">IT | Account Payable | <span class="greentxt">Inreview</span></span>
+        </div>
+    </div>
+  </button>
+  <button class="demodp">
+    <div class="levelsubblock">
+        <div class="levelsubblock-img">
+            <img alt="" src="../../../assets/images/Projects/process_icon.svg">
+        </div>
+        <div class="p-0 levelcont">
+            <label class="label-title">Extract Invoice</label>
+            <span class="label-content">IT | Account Payable | <span class="greentxt">Inreview</span></span>
+        </div>
+    </div>
+  </button>
+  <button class="demodp">
+    <div class="levelsubblock">
+        <div class="levelsubblock-img">
+            <img alt="" src="../../../assets/images/Projects/process_icon.svg">
+        </div>
+        <div class="p-0 levelcont">
+            <label class="label-title">Extract Invoice</label>
+            <span class="label-content">IT | Account Payable | <span class="greentxt">Inreview</span></span>
+        </div>
+    </div>
+  </button>
+  </mat-menu>
+
+  <span class="txt-wh header-seperator">|</span>
+ 
+  <div style="line-height: 0.7;margin-right: 10px;">
+    <span class="txt-u header-rgttext">{{firstname}} {{lastname}}</span><br>
+    <span class="txt-u header-userrole">{{userRole}}</span>
+  </div>
+  
+  
+  
+  <span>
+  
+    <div   *ngIf="profilePicture==true">
+       <img class="res-circle-img" [src]="retrievedImage" >
+     </div>
+     <div  class="res-circle" *ngIf="profilePicture==false">
+       <span>{{firstletter|uppercase}}</span>
+     </div>
+  </span>
+
+    <span class="text-white">
+      <button mat-icon-button [matMenuTriggerFor]="menu" class="txt-wh" style="vertical-align: middle;" aria-label="Example icon-button with a menu">
+        <mat-icon class="menu-button" style="opacity: 0.5;">&#xe5cf;
+        </mat-icon>
+      </button>
+    </span>
+  <mat-menu #menu="matMenu">
+      <!-- <button class="ep-pad" (click)='myAccount()'><i class="far fa-user text-primary hd_icon"></i> My Account</button>
+      <button  class="ep-pad" *ngIf="this.userRole.includes('Admin') || this.userRole.includes('SuperAdmin')" (click)='userManagement()'><img class="header_icon" src="..\assets\icons\user_management_icon.svg">User Management</button>
+      <button  class="ep-pad" *ngIf="this.userRole.includes('Admin')" (click)='configAlerts()'><img class="header_icon" src="..\assets\icons\alert_icon.svg">Configuration</button>
+      <button  class="ep-pad" *ngIf="this.userRole.includes('Admin')" (click)='inviteUser()'><img class="header_icon" src="..\assets\icons\invite_user_icon.svg">Invite User</button> -->
+      <button  class="ep-pad" (click)='logout()'><i class="fas fa-sign-out-alt  text-primary "></i>Signout</button>
+  
+    <!-- <app-header-dropdown-overlay [overlay_notifications_dt]="overlay_notifications_model" [overlay_acc_dt]="overlay_acc_model" [overlay_user_manage_dt]="overlay_user_manage_model" [overlay_config_alert_dt]="overlay_config_alert_model" [overlay_invite_user_dt]="overlay_invite_user_model"></app-header-dropdown-overlay> -->
+  </mat-menu>
+  
+  </mat-toolbar>
+  

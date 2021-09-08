@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
+  <defs>
+    <clipPath id="clip-Msg">
+      <rect width="24" height="24"/>
+    </clipPath>
+  </defs>
+  <g id="Msg" clip-path="url(#clip-Msg)">
+    <path id="message-circle" d="M24.872,13.328a10.182,10.182,0,0,1-1.094,4.617,10.328,10.328,0,0,1-9.235,5.711,10.182,10.182,0,0,1-4.617-1.094L3,24.872l2.309-6.926a10.182,10.182,0,0,1-1.094-4.617A10.328,10.328,0,0,1,9.926,4.094,10.182,10.182,0,0,1,14.543,3h.608a10.3,10.3,0,0,1,9.721,9.721Z" transform="translate(-1.936 -1.936)" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+  </g>
+</svg>

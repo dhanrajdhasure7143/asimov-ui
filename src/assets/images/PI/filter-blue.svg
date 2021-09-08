@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
+  <defs>
+    <clipPath id="clip-filter_blue">
+      <rect width="24" height="24"/>
+    </clipPath>
+  </defs>
+  <g id="filter_blue" data-name="filter blue" clip-path="url(#clip-filter_blue)">
+    <path id="filter" d="M24.016,3H2l8.806,10.414v7.2l4.4,2.2v-9.4Z" transform="translate(-1.008 -0.907)" fill="#607088" stroke="#607088" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+  </g>
+</svg>

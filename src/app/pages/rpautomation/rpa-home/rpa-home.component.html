@@ -31,8 +31,8 @@
     
     <div class="col-md-3">
 
-        <h2 class="title-font" style="margin-top:10px !important;margin-bottom: 0px !important">Automate the Tasks</h2><br>
-        <h5 class="subtitle" style="margin-top:0px !important;font-size: 13.8px !important;">Select below option to create or configure the task</h5><br/>
+        <h2 class="title-font" style="margin-top:10px !important;margin-bottom: 0px !important">Let’s start automating!</h2><br>
+        <h5 class="subtitle" style="margin-top:0px !important;font-size: 13.8px !important;">Create and configure bots that suit your needs</h5><br/>
 
         <div class="rpa-home">
             <!--<div class="rpa-home-block" id="createbot-Home">
@@ -44,7 +44,7 @@
             </div>-->
             <div class="rpa-home-block" id="createbot-Home" style="border-radius: 5px;" *ngIf="this.isButtonVisible || enablecreatebot">
                 <img src="../../../../assets/images/RPA/create.svg"style="height:80px;">
-                <!--<h4 style="font-weight: 500;line-height: 1.1;">Create Bot</h4>
+                <!--<h4 style="font-weight: 600;line-height: 1.1;">Create Bot</h4>
                 <h5 style="color:gray">Click to Create New Bot</h5>-->
                 <br><br>
                 <button class="btn btn-primary rpa-home-btn-title eiap-btn" id="create_newbot" style="margin-left:17px;" (click)="createoverlay()" aria-hidden="true" placement="bottom">Create</button>
@@ -68,7 +68,7 @@
             </div>-->
             <div class="rpa-home-block py-5" id="Configuration_Home" style="border-radius: 5px;" *ngIf="this.isButtonVisible || enableConfiguration">
                 <img src="../../../../assets/images/RPA/Environments.svg"style="height:80px;">
-               <!-- <h4 style="font-weight: 500;line-height: 1.1;">Configutions</h4>
+               <!-- <h4 style="font-weight: 600;line-height: 1.1;">Configutions</h4>
                 <h5 style="color:gray">Click to View Bot Configurations</h5>-->
                 <br>
                 <br>
@@ -154,7 +154,10 @@
                                         <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
                                         <span *ngIf="element.botStatus=='New'" class="text-primary"><span style="background-color:#0062cf;border-radius: 50%;color:white;padding-right:5px;padding-left:4px;padding-top:5px;padding-bottom:5px;font-size:10px;text-align: center;align-content: center;align-items: center;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><i class="fas fa-robot text-light"></i></span>&nbsp;<span>{{element.botStatus}}</span></span>
 
-                                        <span *ngIf="element.botStatus=='Stop'" ><span class="bg-danger" style="background-color:#a94442;border-radius: 50%;color:white;padding-right:6px;padding-left:5px;padding-top:5px;padding-bottom:4px;font-size:9px;text-align: center;align-content: center;align-items: center;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><i class="fas fa-stop"></i></span>&nbsp;<span>{{element.botStatus}}</span></span>
+                                        <span *ngIf="element.botStatus=='Stop'" ><span class="bg-danger" ><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">-->
+                                        
+                                                <img src="../../../../assets/images/RPA/icon_latest/stop.svg" style="filter: none; width: 19px;">
+                                        </span>&nbsp;<span>{{element.botStatus}}</span></span>
 
                                         <span *ngIf="element.botStatus=='Pause'||element.botStatus=='Paused'" ><span class="text-primary" style="font-size:19px;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><i class="fas fa-pause-circle text-primary"></i></span>&nbsp;<span>{{element.botStatus}}</span></span>
 

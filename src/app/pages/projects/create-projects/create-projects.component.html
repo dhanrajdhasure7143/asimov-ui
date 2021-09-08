@@ -1,0 +1,377 @@
+<mat-card class="h-100">
+    <div class="module-heading title">
+        <!-- <span class="projects-back-button" routerLink="/pages/projects/listOfProjects" >
+            <i class="fa fa-angle-left" aria-hidden="true"></i>
+        </span> -->
+        <span class="module-back-button" routerLink="/pages/projects/listOfProjects">
+            <i class="fas fa-arrow-left" aria-hidden="true"></i>
+        </span>
+        <span class="module-header-title">
+            <span class="module-parent-title">Projects</span>
+            <span class="backslash">/</span>
+            <span class="module-parent-title">Programs</span>
+        </span>
+        <!-- <span class="pull-right" style="font-size:20px;">
+          <span class="projects-menu-item" (click)="projects_toggle==false?projects_toggle=true:projects_toggle=false;" ><i class="ri-file-line"></i></span>
+          <span class="projects-menu-item"><i class="ri-filter-line"></i></span>
+          <span class="projects-menu-item"><i class="ri-more-2-line"></i></span>
+        </span> -->
+    </div>
+
+
+    <div class="container-fluid h-scroll">
+        <div class="maindivfoprm">
+            <div class="innersform card-form">
+
+                <div class="create-heading">Create New</div>
+                <mat-tab-group mat-align-tabs="end">
+
+                    <mat-tab label="Project">
+                        <div class="container">
+                            <app-create-project-form [users_list]="userslist" (oncreate)="createproject($event)" [processes]="selected_process_names"></app-create-project-form>
+                        </div>
+                    </mat-tab>
+                    
+                    <mat-tab label="Program">
+                        <div class="container">
+
+                            <form [formGroup]="createprogram" (ngSubmit)="saveProgram()">
+                                <div class="row prj-crt-form">
+                                    <div class="col-md-12">
+                                        <div class="form-fields col-md-6 pl-0">
+                                            <label class="label-control" for="programname">Program Name<span
+                                                    class="star">*</span></label>
+                                            <input type="text" maxlength="51" class="form-control data"
+                                                formControlName="programName" value="" placeholder="Enter Program Name"
+                                                [ngClass]="createprogram.get('programName').valid?'enteredfield-color':'inputfield-color'">
+                                            <span
+                                                *ngIf="(createprogram.get('programName').invalid && createprogram.get('programName').touched) && !createprogram.controls['programName'].hasError('maxlength')"
+                                                class="errspan required">Program Name Required*</span>
+                                            <span *ngIf="createprogram.controls['programName'].hasError('maxlength')"
+                                                class="errspan required">
+                                                Maximum of 50 characters
+                                            </span>
+                                        </div>
+                                        <div class="form-fields col-md-6 pr-0">
+                                            <label class="label-control" for="initiatives">Initiatives<span
+                                                    class="star">*</span></label>
+                                            <select class="form-control" formControlName="initiatives"
+                                                [ngClass]="createprogram.get('initiatives').valid?'enteredfield-color':'inputfield-color'">
+                                                <option [value]="null" disabled hidden>Select Initiative</option>
+                                                <option value="">Select Initiative</option>
+                                                <option value="Process Improvement">Process Improvement</option>
+                                                <option value="Business Improvement">Business Improvement</option>
+                                            </select>
+                                            <span
+                                                *ngIf="(createprogram.get('initiatives').invalid && createprogram.get('initiatives').touched) && !createprogram.controls['initiatives'].hasError('maxlength')"
+                                                class="errspan required">Initiative Required*</span>
+                                            <span *ngIf="createprogram.controls['initiatives'].hasError('maxlength')"
+                                                class="errspan required">
+                                                Maximum of 50 characters
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-fields col-md-6 pl-0">
+                                            <label class="label-control" for="programpurpose">Add Program Purpose<span
+                                                    class="star">*</span></label>
+                                            <input type="text" maxlength="51" class="form-control data"
+                                                formControlName="purpose" value="" placeholder="Enter Program Purpose"
+                                                [ngClass]="createprogram.get('purpose').valid?'enteredfield-color':'inputfield-color'">
+                                            <span
+                                                *ngIf="(createprogram.get('purpose').invalid && createprogram.get('purpose').touched) && !createprogram.controls['purpose'].hasError('maxlength')"
+                                                class="errspan required">Program Purpose Required*</span>
+                                            <span *ngIf="createprogram.controls['purpose'].hasError('maxlength')"
+                                                class="errspan required">
+                                                Maximum of 50 characters
+                                            </span>
+                                        </div>
+                                        <div class="form-fields col-md-6 pr-0">
+                                            <label class="label-control" for="owner">Owner<span
+                                                    class="star">*</span></label>
+                                            <select formControlName="owner" class="form-control data"
+                                                [ngClass]="createprogram.get('owner').valid?'enteredfield-color':'inputfield-color'">
+                                                <option [value]="null" disabled hidden>Select Owner</option>
+                                                <option value="" [selected]="true">Select Owner</option>
+                                                <option *ngFor="let user of userslist" [value]="user.userId.userId">
+                                                    {{user.userId.firstName}} {{user.userId.lastName}}</option>
+                                            </select>
+                                            <span
+                                                *ngIf="createprogram.get('owner').invalid && createprogram.get('owner').touched"
+                                                class="errspan required">Owner Required*</span>
+                                        </div>
+                                        <!-- <label class="label-control" >Status<span style="color:red">*</span></label>
+                                                            <select   formControlName="status"  class="form-control data">
+                                                              <option  [value]="null" disabled hidden>Select Status</option>
+                                                              <option value="" [selected]="true">Select Status</option>
+                                                              <option value="New">New</option>
+                                                              <option value="In Progress">In Progress</option>
+                                                              <option value="In Review">In Review</option>
+                                                              <option value="Approved">Approved</option>
+                                                              <option value="Rejected">Rejected</option>
+                                                          </select>
+                                                          <span *ngIf="createprogram.get('status').invalid && createprogram.get('status').touched" style="color:red" class="fa fa-info-circle errspan">Status Required*</span>-->
+                                    </div>
+                                    <div class="col-md-12">
+                                        
+                                            <div class="form-fields col-md-6 pl-0">
+                                                <label class="label-control" for="programValueChain">Value Chain<span
+                                                        class="star">*</span></label>
+                                                        <!-- <select formControlName="programValueChain" (change)="getValueChainProcesses($event.target.value)" class="form-control data"
+                                                        [ngClass]="createprogram.get('programValueChain').valid?'enteredfield-color':'inputfield-color'">
+                                                      
+                                                        <option value=""  >Select Map Value Chain</option>
+                                                        <option *ngFor="let value of valuechain" [value]="value.processGrpMasterId">{{value.processName}}</option>
+                                                    </select> -->
+
+                                                    <input type="text" class="form-control data" placeholder="Enter  Value Chain" formControlName="programValueChain"  [ngClass]="createprogram.get('programValueChain').valid?'enteredfield-color':'inputfield-color'" > 
+                                                <span
+                                                    *ngIf="createprogram.get('programValueChain').invalid && createprogram.get('programValueChain').touched"
+                                                    class=" errspan required">Value Chain Required*</span>
+                                            </div>
+                                        
+                                        <div class="form-fields col-md-6 pr-0">
+                                            <label class="label-control" for="process">Process<span
+                                                    class="star">*</span></label>
+                                            <select class="form-control" formControlName="process"
+                                                [ngClass]="createprogram.get('process').valid?'enteredfield-color':'inputfield-color'">
+                                                <option [value]="null" disabled hidden>Select Process</option>
+                                                <option value="" [selected]="true">Select Process</option>
+                                                <option *ngFor="let process of selected_process_names"
+                                                    [value]="process.processId">{{process.processName}}</option>
+                                            </select>
+                                            <span
+                                                *ngIf="createprogram.get('process').invalid && createprogram.get('process').touched"
+                                                class="errspan required">Process Required*</span>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-fields col-md-6 pl-0">
+                                            <label class="label-control" for="measurableMetrics">Metrics To Be Measured<span class="star">*</span></label>
+                                            <input type="text" maxlength="51" class="form-control data"
+                                                formControlName="measurableMetrics" value=""
+                                                placeholder="Enter Metrics To Be Measured"
+                                                [ngClass]="createprogram.get('measurableMetrics').valid?'enteredfield-color':'inputfield-color'">
+                                            <span
+                                                *ngIf="createprogram.get('measurableMetrics').invalid && createprogram.get('measurableMetrics').touched"
+                                                class="errspan required">Metrics To Be Measured Required*</span>
+                                            <span
+                                                *ngIf="createprogram.controls['measurableMetrics'].hasError('maxlength')"
+                                                class="errspan required">
+                                                Maximum of 50 characters
+                                            </span>
+                                        </div>
+                                        <!-- <div class="form-fields col-md-3">
+                                                        <label class="label-control" for="access">Access<span class="star">*</span></label>
+                                                        <select   formControlName="access"  class="form-control data">
+                                                          <option  [value]="null" disabled hidden>Select Access</option>
+                                                          <option value="" [selected]="true">Select Access</option>
+                                                          <option value="Owner">Owner</option>
+                                                          <option value="Co-Editor">Co-Editor</option>
+                                                          <option value="Viewer">Viewer</option>
+                                                      </select>
+                                                      <span *ngIf="createprogram.get('access').invalid && createprogram.get('access').touched" class="errspan required">Access Required*</span>
+                                                    </div>                                                     -->
+                                        <div class="form-fields col-md-6 pr-0 slt-prjts">
+                                            <div class="select-project">
+                                                <label class="label-control">Select Projects</label>
+                                                <select class="form-control inputfield-color" id="selectprojects"
+                                                    (change)="selected_project=$event.target.value">
+                                                    <option [value]="null" disabled hidden>Select Project</option>
+                                                    <option value="" [selected]="true">Select Project</option>
+                                                    <option *ngFor="let project of unassigned_projects"
+                                                        [value]="project.id">{{project.projectName}}</option>
+                                                </select>
+                                            </div>
+                                            <div class="addproject-btn" [ngClass]="selected_project==null ?'add_projects':'undefined'" (click)="add_to_selected_projects()">
+                                                <!-- <button mat-mini-fab color="primary" (click)="add_to_selected_projects()" ><i class="fa fa-plus"></i> </button> -->
+                                                <span [ngClass]="selected_project==null ?'add_projects':'undefined'" mat-mini-fab color="primary"><i class="fa fa-plus"></i></span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-fields">
+                                            <label class="label-control" for="access">Access<span
+                                                    class="star">*</span></label>
+                                            <select formControlName="access" class="form-control data"
+                                                [ngClass]="createprogram.get('access').valid?'enteredfield-color':'inputfield-color'">
+                                                <option [value]="null" disabled hidden>Select Access</option>
+                                                <option value="" [selected]="true">Select Access</option>
+                                                <option value="Owner">Owner</option>
+                                                <option value="Co-Editor">Co-Editor</option>
+                                                <option value="Viewer">Viewer</option>
+                                            </select>
+                                            <span
+                                                *ngIf="createprogram.get('access').invalid && createprogram.get('access').touched"
+                                                class=" errspan required">Access Required*</span>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="col-md-6">
+                                        <div class="form-fields">
+                                            <label class="label-control" for="programHealth">Program Health<span
+                                                    class="star">*</span></label>
+                                            <select formControlName="programHealth" class="form-control data"
+                                                [ngClass]="createprogram.get('programHealth').valid?'enteredfield-color':'inputfield-color'">
+                                                <option [value]="null" disabled hidden>Select Program Health</option>
+                                                <option value="" [selected]="true">Select Program Health</option>
+                                                <option value="Good">Good</option>
+                                                <option value="Need Attention"><span class="status-ember"></span>Need
+                                                    Attention</option>
+                                                <option value="Risk"> <span class="status-risk"></span>Risk</option>
+                                            </select>
+                                            <div class="btn-group" dropdown>
+                                                        <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle"
+                                                                aria-controls="program-health">
+                                                          Button dropdown <span class="caret"></span>
+                                                        </button>
+                                                        <ul id="program-health" *dropdownMenu class="dropdown-menu"
+                                                            role="menu" aria-labelledby="button-basic">
+                                                          <li role="menuitem"><a class="dropdown-item" href="#">Action</a></li>
+                                                          <li role="menuitem"><a class="dropdown-item" href="#">Another action</a></li>
+                                                          <li role="menuitem"><a class="dropdown-item" href="#">Something else here</a></li>
+                                                          <li class="divider dropdown-divider"></li>
+                                                          <li role="menuitem"><a class="dropdown-item" href="#">Separated link</a>
+                                                          </li>
+                                                        </ul>
+                                                      </div>
+                                            <span
+                                                *ngIf="createprogram.get('access').invalid && createprogram.get('access').touched"
+                                                class=" errspan required">Access Required*</span>
+                                        </div>
+                                    </div> -->
+                                   
+                                    <div class="col-md-6">
+                                        <div class="form-fields">
+                                            <label class="label-control" for="priority">Program Priority<span
+                                                    class="star">*</span></label>
+                                            <select class="form-control" formControlName="priority"
+                                                [ngClass]="createprogram.get('priority').valid?'enteredfield-color':'inputfield-color'">
+                                                <option [value]="null" disabled hidden>--Select Program Priority --
+                                                </option>
+                                                <option value="">Select Program Priority</option>
+                                                <option value="High">High</option>
+                                                <option value="Medium">Medium</option>
+                                                <option value="Low">Low</option>
+                                            </select>
+                                            <span
+                                                *ngIf="(createprogram.get('priority').invalid && createprogram.get('priority').touched) && !createprogram.controls['priority'].hasError('maxlength')"
+                                                class="errspan required">Program Priority Required*</span>
+                                            <span *ngIf="createprogram.controls['priority'].hasError('maxlength')"
+                                                class="errspan required">
+                                                Maximum of 50 characters
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 martsascl">
+                                        <!-- <label  class="label-control"  for="description">Description<span style="color:rgb(90, 92, 212)">*</span></label> -->
+                                        <!-- <textarea maxlength="250" class="form-control data" formControlName="description" value="" 
+                                                        placeholder="Enter Description"></textarea>
+                                                        <span *ngIf="createprogram.get('description').invalid && createprogram.get('description').touched" style="color:red" class="fa fa-info-circle errspan">Description Required*</span>
+                                                        <span *ngIf="createprogram.controls['description'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                                                          Maximum of 200 characters
+                                                        </span> -->
+                                        <label class="label-control">Description</label>
+                                        <textarea class="form-control" formControlName="description" row="3"
+                                            placeholder="Enter Description"
+                                            [ngClass]="createprogram.get('description').valid?'enteredfield-color':'inputfield-color'">></textarea>
+                                            
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="form-footer">
+                                <div class="laemarleft">
+                                    <span class="pull-left ml-2">
+                                        <button (click)="addproject(template)"
+                                            class="btn btn-primary prj-form-btn-hover">Add New Project</button>
+                                    </span>
+                                    <span class="pull-right">
+                                        <button (click)="resetcreateprogram()"
+                                            class="btn btn-default">Reset</button>
+                                        <button [disabled]="createprogram.invalid" (click)="saveProgram()"
+                                            class="btn btn-primary">Save</button>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div *ngIf="selected_projects.length>0 || newproject.length>0" class="prj-slt">
+                                <h4>
+                                    Selected Projects
+                                    <span class="removeallprjcts">Remove All</span>
+                                </h4>
+                                <div class="row">
+                                    <div class="col-md-4 pl-0" *ngFor="let project of selected_projects">
+                                        <div class="project-card">
+                                            <span class="card-placeholder">
+                                                Project Name
+                                                <span class="pull-right clickable"
+                                                    (click)="remove_project(project,'selected')">
+                                                    <img class="testplus1" src="../../../../assets/images/Projects/circle-close.svg" />
+                                                    <!-- <i class="fa fa-trash"></i> -->
+                                                </span>
+                                            </span>
+                                            <h3 class="projectname">
+                                                {{project.projectName}}                                               
+                                            </h3>
+                                            <div class="prj-slt-lst">
+                                                <span>{{project.createdTimestamp | date:'MMM-d-y'}} </span>
+                                                 <!-- <span class="pull-right clickable"
+                                                    (click)="remove_project(project,'selected')"><i
+                                                        class="fa fa-trash"></i></span>-->
+                                            </div>
+                                        </div>
+                                       
+                                    </div>
+                                    <div class="col-md-4 pl-0 " *ngFor="let project of newproject">
+                                        <div class="project-card">
+                                            <span class="card-placeholder">
+                                                Project Name
+                                                <span class="pull-right clickable"
+                                                    (click)="remove_project(project,'new')">
+                                                    <img class="testplus1" src="../../../../assets/images/Projects/circle-close.svg" />
+                                                    <!-- <i class="fa fa-trash"></i> -->
+                                                </span>
+                                            </span>
+                                            <h3 class="projectname">
+                                                {{project.projectName}}                                                
+                                            </h3>
+                                            <div class="prj-slt-lst">
+                                                <span>Not Saved</span> 
+                                                <!-- <span class="pull-right clickable"
+                                                    (click)="remove_project(project,'new')"><i
+                                                        class="fa fa-trash"></i></span> -->
+                                            </div>
+                                        </div>
+                                       
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                    </mat-tab>
+
+                </mat-tab-group>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <ng-template class="modal-lg" #template>
+        <div class="modal-header modelprhead">
+            <h4 class="modal-title pull-left">Add New Project</h4>
+            <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                <span aria-hidden="true"><img src="../../../../assets/images/Projects/circle-close.svg" alt=""></span>
+            </button>
+        </div>
+        <div class="h-scroll">
+            <app-create-project-form [users_list]="userslist" (oncreate)="linkcreateproject($event)" [processes]="selected_process_names"></app-create-project-form>
+        </div>
+    </ng-template>
+</mat-card>

@@ -24,15 +24,6 @@ tr.mat-footer-row, tr.mat-row {
   height: auto !important;
 }
 
-.errspan{
-  position: relative;
-  z-index: 2;
-  color: #dc3545;
-  font-size: 12px;
-  letter-spacing: 0.2px;
-  padding-right: 10px;
-  line-height: 12px;
-  }
 
 .rpa-tablebox{
 padding-top:10px;
@@ -80,15 +71,8 @@ position: relative;
 z-index: 2;
 }
 
-td{
-  white-space:nowrap;
-}
 
-th{
-  white-space:nowrap;
-}
-
-::-webkit-scrollbar-track {
+/* ::-webkit-scrollbar-track {
   display:none;
 }
 
@@ -99,18 +83,7 @@ background:lightgray;
 ::-webkit-scrollbar {
 width: 10px;
 height:4px
-}
-
-:host ::ng-deep .table>thead>tr>th{
-  background-color: rgb(74, 176, 245) !important;
-  color: white !important;
-  font-size: 18px !important;
-  text-align: center !important;
-}
-
-:host ::ng-deep .mat-cell, .mat-footer-cell {
-  font-size: 16px;
-}
+} */
 
 :host ::ng-deep .mat-sort-header-arrow {
   color: white;

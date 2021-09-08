@@ -105,6 +105,13 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
   xmlTabContent: string;
   errXMLcontent: string = '';
   modalRef: BsModalRef;
+  menuToggleTitle : boolean = false;
+  propertiesContainer : boolean = false;
+  panelOpenState = false;
+  step = 0;
+  isOpenedState:number=0;
+  currentNotation_name:any;
+  push_Obj:any
   rpaJson = {
     "name": "RPA",
     "uri": "https://www.omg.org/spec/BPMN/20100524/DI",
@@ -131,7 +138,11 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
   isStartProcessBtn:boolean=false;
   definationId:any;
   businessKey:any;
-  selected_bpmn_list:any
+  selected_bpmn_list:any  
+  isEdit:boolean=false;
+  downloadFileformate:Subscription;
+  header_btn_functions:Subscription;
+  header_approvalBtn:Subscription;
   @ViewChild('variabletemplate',{ static: true }) variabletemplate: TemplateRef<any>;
   @ViewChild('keyboardShortcut',{ static: true }) keyboardShortcut: TemplateRef<any>;
   @ViewChild('dmnTabs',{ static: true }) dmnTabs: ElementRef<any>;
@@ -142,6 +153,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
       private dt:DataTransferService, private route:ActivatedRoute, private global:GlobalScript, private hints:BpsHints,public dialog:MatDialog,private shortcut:BpmnShortcut) { }
 
    ngOnInit() {
+    localStorage.setItem("isheader","true")
     this.randomNumber = UUID.UUID();
     this.dt.changeHints(this.hints.bpsUploadHints);
     this.bpmnservice.isConfNav.subscribe(res => this.isConfNavigation = res);
@@ -185,9 +197,62 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
        ngAfterViewInit(){
         if(this.isShowConformance)
           this.getAutoSavedDiagrams()
-       }
+        this.downloadFileformate=this.dt.download_notation.subscribe(res=>{
+          this.fileType=res
+          if(this.fileType != null){
+            this.downloadBpmn();
+          }
+        })
+        this.header_btn_functions=this.dt.header_value.subscribe(res=>{
+          let headerValue=res
+          console.log(res);
+          let result = headerValue instanceof Object;
+          if(!result){
+          if(headerValue == 'zoom_in'){
+            this.zoomIn();
+          }else if(headerValue == 'zoom_out'){
+            this.zoomOut();
+          }else if(headerValue == 'save_process'){
+            this.saveprocess(null);
+            this.isEdit=false;
+          }else if(headerValue=='edit'){
+            this.isEdit=true;
+          }else if(headerValue == 'save&approval'){
+            // this.submitDiagramForApproval();
+            this.isEdit=false;
+          }else if(headerValue == 'orchestartion'){
+            this.orchestrate()
+          }else if(headerValue == 'deploy'){
+            this.openDeployDialog();
+          }else if(headerValue == 'startProcess'){
+            this.openVariableDialog();
+          }else if(headerValue == 'fitNotation'){
+            this.fitNotationView();
+          }else if(headerValue == 'show_conformance'){
+            this.showConformance();
+          }else if(headerValue == 'getBpmn_differences'){
+            this.getBpmnDifferences();
+          }
+        }else if(result){
+          this.slideUp(headerValue)
+        }
+        })
+        this.header_approvalBtn=this.dt.subMitApprovalValues.subscribe(res=>{
+          console.log(res)
+          if(res){
+            this.submitDiagramForApproval(res.selectedApprovar);
+          }
+        })
+      }
        ngOnDestroy() {
         // this.subscription.unsubscribe();
+        this.downloadFileformate.unsubscribe();
+        this.header_btn_functions.unsubscribe();
+        this.header_approvalBtn.unsubscribe();
+        this.dt.bpsNotationaScreenValues(null);
+        this.dt.downloadNotationValue(null);
+        this.dt.bpsHeaderValues(null);
+        this.dt.submitForApproval(null)
       }
 
    setRPAData(){
@@ -249,11 +314,13 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
   fetchBpmnNotationFromPI(){
     this.rest.fetchBpmnNotationFromPI(this.pid).subscribe(res=>{
        this.pivalues=res;
+       console.log("PI",res)
     })
    }
 
   async getUserBpmnList(isFromConf){
     this.isLoading = true;
+    this.saved_bpmn_list=[];
     await this.rest.getUserBpmnsList().subscribe( (res:any[]) =>  {
       this.full_saved_bpmn_list = res;
       if(this.isShowConformance){
@@ -268,7 +335,9 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
       if(isFromConf) this.isUploaded = true;
       else this.getSelectedNotation();
       this.notationListOldValue = this.selected_notation;
-      this.isLoading = false;
+      setTimeout(() => {
+        this.isLoading = false;        
+      }, 2000);
       setTimeout(() => {
       this.getSelectedApprover();
       this.getAutoSavedDiagrams();
@@ -316,11 +385,14 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
       
     }else{
       current_bpmn_info = this.saved_bpmn_list[this.selected_notation];
+      console.log("current_bpmn_info",current_bpmn_info)
     }
 
     if(current_bpmn_info){
       this.isApprovedNotation = current_bpmn_info["bpmnProcessStatus"] == "APPROVED";
       this.rejectedOrApproved = current_bpmn_info["bpmnProcessStatus"];
+      this.updated_date_time = current_bpmn_info["modifiedTimestamp"];
+      this.currentNotation_name = current_bpmn_info["bpmnProcessName"];
     }
     if(!this.isShowConformance){
       let params:Params ={'bpsId':current_bpmn_info["bpmnModelId"], 'ver': current_bpmn_info["version"], 'ntype': current_bpmn_info["ntype"]};
@@ -335,8 +407,9 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
         let each = this.approver_list[s];
         if(each.userId){
           let userId = each.userId.split("@")[0];
+          this.selected_approver = s['selected_approver'];
           if(userId == current_bpmn_info["approverName"]){
-            this.selected_approver = s;
+            this.selected_approver = s['selected_approver'];
             break;
           }
         }
@@ -344,6 +417,12 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
     }
     else
       this.selected_approver = null;
+      this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
+    "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
+    "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize}
+      setTimeout(() => {
+        this.dt.bpsNotationaScreenValues(this.push_Obj);
+      }, 2000);
    }
 
   getAutoSavedDiagrams(){
@@ -373,6 +452,12 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
 
   fitNotationView(){
     let modeler_obj = this.isConfBpmnModeler ? "confBpmnModeler":"bpmnModeler";
+    if(this.selectedNotationType=="dmn"){
+      this[modeler_obj].getActiveViewer()
+        .get('canvas').zoom('fit-viewport');
+        this.global.notify("Notation is fit to view port", "success")
+        return;
+    }
     this[modeler_obj].get('canvas').zoom('fit-viewport');
     let msg = "";
     if(this.isConfBpmnModeler){
@@ -384,14 +469,6 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
     else
       msg = "Notation"
     this.global.notify(msg+" is fit to view port", "success")
-  }
-
-  togglePosition(){
-    let el = document.getElementById("properties");
-    if(el){
-      el.classList.toggle("slide-left");
-      el.classList.toggle("slide-right");
-    }
   }
 
   toggleChanges(){
@@ -434,10 +511,20 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
     if(this.isShowConformance && !this.reSize){
       this.rest.fetchBpmnNotationFromPI(this.pid).subscribe(res=>{
         this.pivalues=res;
+        console.log("pigraph",res)
         let selected_xml = this.pivalues['data'];
+        this.push_Obj={"rejectedOrApproved":'',"isfromApprover":this.isfromApprover,
+          "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.pivalues.updatedTime,
+          "isFromcreateScreen":false,'process_name':this.pivalues.piName,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize}
+            this.dt.bpsNotationaScreenValues(this.push_Obj);
         if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
           selected_xml = this.autosavedDiagramVersion[0]["bpmnProcessMeta"];
           this.updated_date_time = this.autosavedDiagramVersion[0]["modifiedTimestamp"];
+          // console.log(this.autosavedDiagramVersion)
+          this.push_Obj={"rejectedOrApproved":this.autosavedDiagramVersion[0]["bpmnModelTempStatus"],"isfromApprover":this.isfromApprover,
+          "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
+          "isFromcreateScreen":false,'process_name':this.pivalues.piName,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize}
+            this.dt.bpsNotationaScreenValues(this.push_Obj);
         }
         try{
           this[modeler_obj].importXML(atob(unescape(encodeURIComponent(selected_xml))))
@@ -467,6 +554,12 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
         }
       }
     }
+    this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
+    "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
+    "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize}
+    setTimeout(() => {
+      this.dt.bpsNotationaScreenValues(this.push_Obj);
+    }, 3000);
   }
 
   setUrlParam(name, value) {
@@ -491,6 +584,10 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
   this.updated_date_time = null;
   this.filterAutoSavedDiagrams();
   this.reSize = false;
+  this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
+  "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
+  "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize}
+this.dt.bpsNotationaScreenValues(this.push_Obj)
   if(this.isDiagramChanged){
     Swal.fire({
       title: 'Are you sure?',
@@ -522,6 +619,10 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
         if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
           selected_xml = atob(unescape(encodeURIComponent(this.autosavedDiagramVersion[0]["bpmnProcessMeta"])));
           this.updated_date_time = this.autosavedDiagramVersion[0]["modifiedTimestamp"];
+          this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
+          "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
+          "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize}
+      this.dt.bpsNotationaScreenValues(this.push_Obj)
         }
         this.initModeler();
         setTimeout(()=> {
@@ -577,6 +678,10 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
       if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
         selected_xml = atob(unescape(encodeURIComponent(this.autosavedDiagramVersion[0]["bpmnProcessMeta"])));
         this.updated_date_time = this.autosavedDiagramVersion[0]["modifiedTimestamp"];
+        this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
+        "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
+        "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize}
+      this.dt.bpsNotationaScreenValues(this.push_Obj)
       }
     this.initModeler();
     setTimeout(()=> {
@@ -666,6 +771,11 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
     this.notationListOldValue = 0;
     this.isUploaded = this.saved_bpmn_list.length != 0;
     this.reSize=true;
+    this.isEdit=false;
+    this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
+    "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
+    "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize}
+this.dt.bpsNotationaScreenValues(this.push_Obj)
     if(this.isUploaded){
       this.bpmnservice.changeConfNav(true);
       this.notationListOldValue = this.selected_notation;
@@ -680,8 +790,13 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
       data=>{
         this.getAutoSavedDiagrams();
         this.autosaveObj=data
+        this.isEdit=true;
         this.updated_date_time = new Date();
         this.spinner.hide();
+        this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
+        "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
+        "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':false,"hasConformance":this.hasConformance,"resize":this.reSize,"isEditbtn":true}
+      this.dt.bpsNotationaScreenValues(this.push_Obj)
       },
       err => {
         this.spinner.hide();
@@ -759,6 +874,9 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
         });
       }
     }
+    setTimeout(() => {
+      this.dt.downloadNotationValue(null)
+    }, 3000);
   }
 
   uploadAgainBpmn(e){
@@ -889,15 +1007,14 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
         _self.last_updated_time = now;
       }
     })
-
     if(this.isShowConformance){
       setTimeout(() => {
-        this.fitNotationViewfromPI()
+        this.fitNotationViewfromPI();
         }, 4000);
     }
   }
 
-  submitDiagramForApproval(){
+  submitDiagramForApproval(e){
     let yesProceed = true;
     this.isStartProcessBtn=false;
     if(this.isShowConformance && this.isUploaded && this.bpmnModeler){
@@ -905,6 +1022,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
     }
     if(!yesProceed) return;
     let bpmnModel:BpmnModel = new BpmnModel();
+    this.selected_approver=e
     if((!this.selected_approver && this.selected_approver != 0) || this.selected_approver <= -1){
       Swal.fire("No approver", "Please select approver from the list given above", "error");
       return;
@@ -961,6 +1079,11 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
               'error'
             );
           }else{
+            _self.rejectedOrApproved="PENDING";
+            _self.push_Obj={"rejectedOrApproved":"PENDING","isfromApprover":_self.isfromApprover,
+            "isShowConformance":_self.isShowConformance,"isStartProcessBtn":_self.isStartProcessBtn,"autosaveTime":_self.updated_date_time,
+            "isFromcreateScreen":false,'process_name':_self.currentNotation_name,'isSavebtn':true}
+            _self.dt.bpsNotationaScreenValues(_self.push_Obj);
             Swal.fire(
               'Saved!',
               'Your changes has been saved and submitted for approval successfully.',
@@ -1034,6 +1157,10 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
         _self.confBpmnModeler.saveXML({ format: true }, function(err, xml2) {
           bpmnModel.bpmnConfProcessMeta = btoa(unescape(encodeURIComponent(xml2)));;
         })
+        this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
+        "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
+        "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize}
+    this.dt.bpsNotationaScreenValues(this.push_Obj)
       }
       _self.rest.saveBPMNprocessinfofromtemp(bpmnModel).subscribe(
         data=>{
@@ -1092,6 +1219,10 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
           )
         })
     })
+    this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
+    "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
+    "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':false,"hasConformance":this.hasConformance,"resize":this.reSize}
+      this.dt.bpsNotationaScreenValues(this.push_Obj);
   }
 
   uploadConfBpmn(confBpmnData){
@@ -1197,6 +1328,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
   }
 
   getBpmnDifferences(){
+    this.isEdit=false;
     let bpmnDiffs = diff( this.confBpmnModeler.getDefinitions(), this.bpmnModeler.getDefinitions());
     let revBpmnDiffs = diff( this.bpmnModeler.getDefinitions(), this.confBpmnModeler.getDefinitions());
     let rev_added = revBpmnDiffs._added;
@@ -1238,6 +1370,10 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
     this.getElementsToColor('confBpmnModeler', revBpmnDiffs._layoutChanged, 'layout');
 
     this.slideUpDifferences();
+    this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
+    "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
+    "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':false,"hasConformance":this.hasConformance,"resize":this.reSize}
+this.dt.bpsNotationaScreenValues(this.push_Obj)
   }
 
   clearDifferences(){
@@ -1285,6 +1421,10 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
       deployResponse=res
           this.definationId=deployResponse.definationId
           this.isStartProcessBtn=deployResponse.startprocess
+          this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
+          "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
+          "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize}
+            this.dt.bpsNotationaScreenValues(this.push_Obj);
       }
     })
   }
@@ -1335,6 +1475,10 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
       
       this.cancelProcess();
       this.isStartProcessBtn=false;
+      this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
+      "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
+      "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize}
+        this.dt.bpsNotationaScreenValues(this.push_Obj);
     })    
   }
 
@@ -1346,15 +1490,60 @@ zoomIn() {
 if(this.isShowConformance){
 this.confBpmnModeler.get('zoomScroll').stepZoom(0.1);
     }else{
-this.bpmnModeler.get('zoomScroll').stepZoom(0.1);
+      if(this.selectedNotationType=="dmn"){
+        this.bpmnModeler.getActiveViewer()
+          .get('zoomScroll').stepZoom(0.1);
+          return;
+      }
+  this.bpmnModeler.get('zoomScroll').stepZoom(0.1);
     }
   }
 zoomOut() {
 if(this.isShowConformance){
 this.confBpmnModeler.get('zoomScroll').stepZoom(-0.1);
     }else{
-this.bpmnModeler.get('zoomScroll').stepZoom(-0.1);
+      if(this.selectedNotationType=="dmn"){
+        this.bpmnModeler.getActiveViewer()
+          .get('zoomScroll').stepZoom(-0.1);
+          return;
+      }
+  this.bpmnModeler.get('zoomScroll').stepZoom(-0.1);
     }
 }
+toggleOpen(){
+  this.menuToggleTitle = true;
+  this.propertiesContainer = true;
+  let el = document.getElementById("propertiesPanelBody");
+  if(el){
+    el.classList.remove("slide-right");
+    el.classList.add("slide-left");
+  }
+  
+}
+toggleClosed(){
+  this.menuToggleTitle = false;
+  this.propertiesContainer = false;
+  let el = document.getElementById("propertiesPanelBody");
+  if(el){
+    el.classList.remove("slide-left");
+    el.classList.add("slide-right");
+  }
+  this.isOpenedState=0;
+}
+onExpansionClik(i){
+  this.isOpenedState=i;
+  this.menuToggleTitle = true;
+  this.propertiesContainer = true;
+  let el = document.getElementById("propertiesPanelBody");
+  if(el){
+    el.classList.remove("slide-right");
+    el.classList.add("slide-left");
+  }
+}
 
+getBpmnById(){
+  this.rest.getBpmnNotationById(this.selected_modelId).subscribe(res=>{
+    console.log("get_bpmnById res",res)
+  })
+}
 }

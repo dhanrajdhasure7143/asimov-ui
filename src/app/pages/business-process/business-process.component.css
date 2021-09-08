@@ -1,0 +1,221 @@
+.module-heading.title {
+    margin-bottom: 0px;
+}
+.main-content1 .module-heading.title {
+    background-color: #F3F3F3;
+    padding: 12px 15px 8px !important;
+}
+
+.main-content1 .module-header-title {
+    font-weight: 600;
+    font-size: 22px;
+    color: #001c47;
+    line-height: 0px !important;
+}
+.main-content1 .module-heading.title .value span {
+    color: #001c47;
+    font-size: 12px;
+    /* font-weight: 300; */
+}
+/* .module-heading.title span {
+    padding-left: 10px;
+} */
+
+.value {
+    color: #001C47;
+    font-weight: 400;
+    font-size: 13px;
+    padding-top: 8px;
+}
+span.level3 {
+   /* padding-right: 8px !important;
+    margin-right: 8px !important;
+     border-right: 1px solid #ccc; */
+}
+.level3sep {
+    color:#ddd;
+    font-size: 20px;
+    margin: 5px;
+}
+.new-bps-icons button {
+    padding: 6px;
+    margin-right: 3px;
+    line-height: 18px;
+    position: relative;
+    z-index: 2;
+}
+.bps-upload {
+    margin: 0px 0px 0px 10px !important;
+    border-radius: 3px;
+    background-color: #00a0e3 !important;
+    padding: 8px 12px !important;
+    color: #fff;
+    font-size: 15px !important;
+}
+.bps-upload:hover {
+    background-color: #001c47 !important;
+}
+.bps-upload img {
+    padding-right: 8px;
+}
+.bps-save-icon {
+    /* border-left: 1px solid #ccc; */
+}
+.new-bps-header-title {
+    padding: 0px;
+}
+.new-bps-icons .bps-float {
+    float: right;
+}
+/* select.dowload-images {
+    background-image: url('../../../assets/images/BPMS/download.svg');
+    background-repeat: no-repeat;
+    border: unset;
+    outline: unset;
+    color: transparent;
+    width: 34px;
+    background-color: #f8f8f8;
+    padding: 10px 0px;
+    background-position: top 12px center;
+}
+select.dowload-images option {
+    color: #000;
+} */
+button.editprimary {
+    /* background-color: #00a1e3;
+    border-radius: 3px; */
+}
+.bpsbtnsep {
+    color:#ddd;
+    font-size: 20px;
+    margin: 10px;
+    padding: 0px !important;
+}
+
+::ng-deep .bpsHeaderTooltip {
+    color:#ffffff !important;
+    background-color: #001c47 !important;
+    font-size: 15px;
+    position: absolute;
+    top: 0px;
+    left: -40px;
+    width: auto;
+    white-space: nowrap;
+}
+
+span.label_icon.inpro-label {
+    padding: 3px 6px !important;
+    border-radius: 3px;
+    margin-left: 8px;
+}
+.upload_again_btn {
+    background-color: #f3f3f3 !important;
+}
+.bps-float button:hover, button.editprimary:disabled {
+    background-color: #00a0e3;
+    border-radius: 3px;
+}
+.bps-float button:hover img, button.editprimary:disabled img {
+    filter: brightness(2.5) !important;
+}
+.bps-float .clr-hvr:hover img {
+    filter: brightness(10) !important;
+}
+button.upload-btn.bps-upload:hover img, button.editprimary:hover img {
+    /* filter: unset !important; */
+}
+
+.bps-float span.label_icon {
+    text-transform: capitalize;
+    border-radius: 4px !important;
+    letter-spacing: 0.25px;
+}
+
+
+.bps-float button img {
+    height: 18px;
+    width: auto;
+}
+.icon-disabled{
+    cursor: no-drop !important;
+}
+
+.bps-header-title{
+    display: flex;
+    align-items: center;
+}
+
+.bg-orange {
+    font-weight: 600;
+    background: #f99d1c;
+    color: #ffffff;
+}
+
+span.testtooltip {
+    position: absolute;
+    top: 45px;
+    right: 0px;
+    background-color: #001c47;
+    color: #fff;
+    width: max-content;
+    padding: 3px 10px;
+    border-radius: 4px;
+    display: none;
+}
+
+span.testtooltip:before {
+    content: '';
+    border: 2px solid #001c47;
+    border-width: 0px 0px 2px 2px;
+    position: absolute;
+    padding: 4px;
+    right: 13px;
+    top:  -5px;
+    background: #001c47;
+    transform: rotate(45deg);
+}
+
+.tsttooltipbtn:hover span.testtooltip {
+    display: block;
+}
+span.module-back-button {
+    border: none !important;
+    margin: 0px !important;
+}
+.module-back-button i {
+    margin-right: 3px !important;
+}
+.value strong, .value b {
+    font-weight: 600;
+}
+
+.module-heading-buttons {
+    text-align: end;
+    padding: 0px;
+}
+
+.module-heading-buttons .btn {
+    margin-left: 10px;
+}
+img.hover-img {
+    display: none;
+  }
+.bps-aprwkfl button:hover img.default-img {
+    display: none;
+}
+.bps-aprwkfl button:hover img.hover-img {
+    display: initial;
+}
+.bps-aprwkfl button {
+    margin: 0px !important;
+}
+.bps-aprwkfl button.btn.btn-primary {
+    margin-left: 10px !important;
+}
+.custom-footer-content {
+    float: right;
+}
+
+span.bps-header-title.gen-bpsheader {
+    display: block;
+}

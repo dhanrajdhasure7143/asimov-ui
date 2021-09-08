@@ -1,0 +1,21 @@
+/* .form-control {
+    border:0px solid black;
+    border-bottom:1px solid black;
+    box-shadow: none;
+    border-radius: 0px;
+  }
+
+  input[type="text"]:not(.mat-input-element) {
+    width: 101%;
+    border: none;
+    
+    text-align: left;
+    padding: 1em;
+    border-bottom: 1px solid black;
+    border-radius: 0px;
+   
+    box-shadow: none;
+  }
+  .data{
+      width:100px;
+  } */

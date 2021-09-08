@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
+  <defs>
+    <clipPath id="clip-businessinsight">
+      <rect width="24" height="24"/>
+    </clipPath>
+  </defs>
+  <g id="businessinsight" clip-path="url(#clip-businessinsight)">
+    <g id="bar-chart-2" transform="translate(-2.013 -2.832)">
+      <line id="Line_94" data-name="Line 94" y1="13" transform="translate(22.013 12.332)" fill="none" stroke="#607088" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+      <line id="Line_95" data-name="Line 95" y1="21" transform="translate(14.013 4.332)" fill="none" stroke="#607088" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+      <line id="Line_96" data-name="Line 96" y1="7" transform="translate(6.013 18.332)" fill="none" stroke="#607088" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+    </g>
+  </g>
+</svg>

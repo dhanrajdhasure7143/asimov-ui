@@ -1,4 +1,4 @@
-import {ViewChild,Input, Component, OnInit,Pipe, PipeTransform } from '@angular/core';
+import {ViewChild,Input, Component, OnInit,OnDestroy,Pipe, PipeTransform } from '@angular/core';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
@@ -12,13 +12,15 @@ import {sohints} from '../model/new-so-hints';
 import { DataTransferService } from '../../../services/data-transfer.service';
 declare var $:any;
 import { NgxSpinnerService } from "ngx-spinner";
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { SoProcesslogComponent } from '../so-processlog/so-processlog.component';
 
 @Component({
   selector: 'app-new-so-automated-tasks',
   templateUrl: './new-so-automated-tasks.component.html',
   styleUrls: ['./new-so-automated-tasks.component.css']
 })
-export class NewSoAutomatedTasksComponent implements OnInit {
+export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
  schdata:any;
   public UiPathconfigoverlay: boolean = false;
   public slabotId : any;
@@ -31,6 +33,7 @@ export class NewSoAutomatedTasksComponent implements OnInit {
   public schedulepopup:Boolean=false;
   public queryparam:any='';
   public isTableHasData = true;
+  public Active_bots_list:any=[];
   public respdata1=false;
   public expectedTime : any = 0;
   public expectedDate : any = 0;
@@ -45,13 +48,12 @@ export class NewSoAutomatedTasksComponent implements OnInit {
   blueprismbots:any=[];
   configurations_data:any=[];
   configurations:any=[];
-  displayedColumns: string[] = ["processName","taskName","processOwner","taskOwner","taskType", "category","sourceType","Assign","status","Operations","Smoke_Test"];
+  displayedColumns: string[] = ["processName","taskName","processOwner","taskOwner","taskType", "category","sourceType","Assign","status","Operations"];
   dataSource2:MatTableDataSource<any>;
   public isDataSource: boolean;
   public userRole:any = [];
   public isButtonVisible = false;
   public bot_list:any=[];
-  public Active_bots_list:any=[];
   public humans_list:any=[];
   public process_names:any=[];
   public selected_process_names:any=[];
@@ -71,13 +73,14 @@ export class NewSoAutomatedTasksComponent implements OnInit {
   public blueprism_configs:any=[];
   public checkedsource:String="UiPath";
   @ViewChild("paginator10",{static:false}) paginator10: MatPaginator;
+ //@ViewChild(SoProcesslogComponent, { static: false }) processlogs_instance: SoProcesslogComponent;
   @ViewChild("sort10",{static:false}) sort10: MatSort;
   @Input('processid') public processId: any;
   public insertslaForm_so_bot:FormGroup;
   public BluePrismConfigForm:FormGroup;
   public BluePrismFlag:Boolean=false;
   public timer:any;
-
+  public logs_modal:BsModalRef;
   constructor(
     private route: ActivatedRoute,
     private rest:RestApiService,
@@ -87,6 +90,7 @@ export class NewSoAutomatedTasksComponent implements OnInit {
     private http:HttpClient,
     private hints: sohints,
     private dt : DataTransferService,
+    private modalService:BsModalService
    )
 
   {
@@ -137,6 +141,7 @@ export class NewSoAutomatedTasksComponent implements OnInit {
       this.isButtonVisible = false;
     }
     this.getenvironments();
+    //this.getCategoryList(this.processId);
     setTimeout(()=>{
       this.getCategoryList(this.processId);
     },400)
@@ -479,7 +484,6 @@ resetsla(){
     {
       this.bot_list=botlist;
     });
-    
   }
 
 
@@ -490,7 +494,6 @@ resetsla(){
     this.rest.getautomatedtasks(process).subscribe(automatedtasks=>{
       response=automatedtasks;
 
-      
       if(response.automationTasks != undefined)
       {
         this.rest.getAllActiveBots().subscribe(bots=>{
@@ -505,8 +508,8 @@ resetsla(){
               }
               return item;
           });
+
         });
-        
         this.automatedtask= response.automationTasks;
         this.dataSource2= new MatTableDataSource(response.automationTasks);
         this.dataSource2.sort=this.sort10;
@@ -521,7 +524,6 @@ resetsla(){
         }
         this.update_task_status();
       }
-      
       this.spinner.hide();
     },(err)=>{
       this.spinner.hide();
@@ -799,9 +801,9 @@ resetsla(){
     })
   }
 
-  getprocesslogs(){
-    document.getElementById("filters").style.display = "none";
-   
+  getprocesslogs(template){
+    //document.getElementById("filters").style.display = "none";
+    this.logs_modal=this.modalService.show(template,{class:"logs-modal"})
     this.processId1 = this.selectedvalue;
     this.popup=true;
    

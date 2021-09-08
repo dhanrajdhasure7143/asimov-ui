@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
+  <defs>
+    <clipPath id="clip-Envelop">
+      <rect width="24" height="24"/>
+    </clipPath>
+  </defs>
+  <g id="Envelop" clip-path="url(#clip-Envelop)">
+    <g id="mail" transform="translate(-1.001 -0.557)">
+      <path id="Path_848" data-name="Path 848" d="M4.2,4H21.8A2.177,2.177,0,0,1,24,6.139V18.975a2.177,2.177,0,0,1-2.2,2.139H4.2A2.177,2.177,0,0,1,2,18.975V6.139A2.177,2.177,0,0,1,4.2,4Z" fill="none" stroke="#f99d1c" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      <path id="Path_849" data-name="Path 849" d="M24,6,13,14.557,2,6" transform="translate(0 0.445)" fill="none" stroke="#f99d1c" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    </g>
+  </g>
+</svg>

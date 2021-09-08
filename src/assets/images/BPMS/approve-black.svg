@@ -1,0 +1,9 @@
+<svg id="approve" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <path id="Path_827" data-name="Path 827" d="M0,0H24V24H0Z" fill="none"/>
+  <g id="noun_Approve_1536805" transform="translate(-6.4 -6.4)">
+    <g id="Group" transform="translate(8.4 8.4)">
+      <path id="Compound_Path" data-name="Compound Path" d="M18.4,8.4a10,10,0,1,0,10,10A10,10,0,0,0,18.4,8.4Zm0,18.077A8.077,8.077,0,1,1,26.477,18.4,8.077,8.077,0,0,1,18.4,26.477Z" transform="translate(-8.4 -8.4)"/>
+      <path id="Path" d="M37.491,36.174,33.553,39.9l-1.719-1.762a.87.87,0,1,0-1.24,1.218L32.9,41.722a.914.914,0,0,0,.631.261.762.762,0,0,0,.587-.239l4.569-4.308a.87.87,0,0,0,.044-1.218A.892.892,0,0,0,37.491,36.174Z" transform="translate(-24.59 -29.008)"/>
+    </g>
+  </g>
+</svg>

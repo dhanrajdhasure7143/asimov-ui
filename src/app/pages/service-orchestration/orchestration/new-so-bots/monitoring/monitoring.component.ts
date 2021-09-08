@@ -28,7 +28,16 @@ export class MonitoringComponent implements OnInit {
   alerts:any;
   executed:any;
   failedbots:any=[];
+  chart5:any;
   bots_list:any=[];
+  Environments:any;
+  envcount:any;
+  bots:any;
+  runtimestats:any=[];
+  runtimestatschart:any=[];
+  Performance:any=[]
+  runtimeflag:boolean;
+  runschart:any;
   getallbots()
   {
     
@@ -49,14 +58,23 @@ export class MonitoringComponent implements OnInit {
         failure:this.bots_list.filter(item=>item.botStatus=="Failure").length,
         cancelled:this.bots_list.filter(item=>item.botStatus=="cancelled").lenght,
       }
-      this.failedbots=this.bots_list.filter(item=>item.botStatus=="Failed"||item.botStatus=="Failure").reverse();
-      
+      this.failedbots=this.bots_list.filter(item=>item.botStatus=="Failed"||item.botStatus=="Failure");
+      this.failedbots=this.failedbots.sort(function (var1, var2) { 
+        var a= new Date(var1.createdAt), b = new Date(var2.createdAt);
+         if (a > b)
+           return 1;
+         if (a < b)
+           return -1;
+        
+         return 0;
+     });
+     this.failedbots=this.failedbots.reverse();
       this.status1();
       this.status2();
       this.status4()
       this.spinner.hide();
-      
       this.getbotscount();
+      this.botruntimestats();
     })
   }
 
@@ -180,6 +198,7 @@ export class MonitoringComponent implements OnInit {
   
   }
 
+ 
 
 
   status1()
@@ -346,6 +365,234 @@ export class MonitoringComponent implements OnInit {
       },500)
   }
 
+
+
+
+  
+
+  botruntimestats()
+  {
+    this.rest.botPerformance().subscribe(data=>{
+      let botperformances:any=[]
+      botperformances=data;
+      this.bots=botperformances;
+      let today=new Date();
+      let yesterday=new Date();
+      let runtimestats:any=[]
+      yesterday.setDate(today.getDate()-1);
+      this.bots_list.forEach(bot => {
+        let filteredbot:any;
+        filteredbot=botperformances.find(item=>item.botId==bot.botId);
+        if(filteredbot != undefined)
+        {
+          let filteredCoordinates:any=filteredbot.coordinates
+          //.filter(item=>moment(item.startTime,"x").format("D-MM-YYYY")==moment(today).format("D-MM-YYYY")||moment(item.startTime,"x").format("D-MM-YYYY")==moment(yesterday).format("D-MM-YYYY"));
+          if(filteredCoordinates.length>0)
+          {
+              let timedur:any=0;
+              filteredCoordinates.forEach(timeseries=>{
+                timedur=timedur+timeseries.timeDuration;
+              })
+              let data:any={
+                "name":filteredbot.botName,
+                "value":timedur,
+                "createdAt":filteredbot.createdAt
+              }
+              runtimestats.push(data);
+          }
+        }
+      });
+      this.runtimestats=runtimestats.sort(function (var1, var2) { 
+        var a= new Date(var1.createdAt), b = new Date(var2.createdAt);
+         if (a > b)
+           return 1;
+         if (a < b)
+           return -1;
+        
+         return 0;
+     });
+     this.runtimestats=this.runtimestats.reverse();
+      if(runtimestats.length!=0)
+      {
+        this.statschart();
+      }
+      this.runtimeflag=true;
+    })
+  }
+
+
+
+  statschart()
+  {
+    am4core.useTheme(am4themes_animated);
+    setTimeout(()=>{
+      this.runtimestatschart = am4core.create("runtime-stats", am4charts.XYChart);
+      this.runtimestatschart.hiddenState.properties.opacity = 0; // this creates initial fade-in
+      this.runtimestatschart.data=this.runtimestats;
+      this.runtimestatschart.zoomOutButton.disabled = true;
+
+      this.runtimestatschart.colors.list = [
+        am4core.color("#bf9d76"),
+        am4core.color("#e99450"),
+        am4core.color("#d89f59"),
+        am4core.color("#f2dfa7"),
+        am4core.color("#ff5b4f"),
+        am4core.color("#74c7b8")
+      ]
+      var categoryAxis = this.runtimestatschart.xAxes.push(new am4charts.CategoryAxis());
+
+      categoryAxis.dataFields.category = "name";
+      categoryAxis.title.text = "Bots";
+      let label1 = categoryAxis.renderer.labels.template;
+      label1.truncate = true;
+      label1.maxWidth = 90;
+      label1.disabled = false;
+      categoryAxis.renderer.minGridDistance = 40;
+      var valueAxis = this.runtimestatschart.yAxes.push(new am4charts.ValueAxis());
+      valueAxis.renderer.inside = true;
+      valueAxis.renderer.labels.template.fillOpacity = 1;
+      valueAxis.renderer.grid.template.strokeOpacity = 0;
+      valueAxis.min = 0;
+      valueAxis.cursorTooltipEnabled = false;
+      valueAxis.renderer.gridContainer.zIndex = 1;
+      valueAxis.title.text = "Total Execution Time (ms)";
+      var series = this.runtimestatschart.series.push(new am4charts.ColumnSeries);
+      series.dataFields.valueY = "value";
+      series.dataFields.categoryX = "name";
+      series.tooltipText = "{valueY.value}";
+
+      var columnTemplate = series.columns.template;
+      columnTemplate.width = 40;
+      columnTemplate.column.cornerRadiusTopLeft = 10;
+      columnTemplate.column.cornerRadiusTopRight = 10;
+      columnTemplate.strokeOpacity = 0;
+      let runtimeref=this.runtimestatschart;
+      columnTemplate.events.once("inited", function(event){
+        event.target.fill = runtimeref.colors.getIndex(event.target.dataItem.index);
+      });
+      var cursor = new am4charts.XYCursor();
+      cursor.behavior = "panX";
+      this.runtimestatschart.cursor = cursor;
+      this.runtimestatschart.events.on("datavalidated", function () {
+        if(this.runtimestats.length>5)
+          categoryAxis.zoomToIndexes(0,7,false,true);
+        else
+          categoryAxis.zoomToIndexes(0,this.runtimestats.length,false,true);
+      },this);
+      series.columns.template.events.on("hit", function(ev) {
+        let getdata:any=ev.target.dataItem.categories.categoryX
+        let data={name:getdata};
+        this.getruns(data);
+
+      },this);
+
+
+      var label = this.runtimestatschart.plotContainer.createChild(am4core.Label);
+       label.x = 90;
+       label.y = 50;
+       $("#runtime-stats > div > svg > g > g:nth-child(2) > g:nth-child(2)").hide();
+
+    },30)
+
+  }
+  runsschart()
+  {
+    am4core.useTheme(am4themes_animated);
+    setTimeout(()=>{
+      this.runschart = am4core.create("runs", am4charts.XYChart);
+      this.runschart.hiddenState.properties.opacity = 0; // this creates initial fade-in
+      this.runschart.data=this.Performance;
+      this.runschart.zoomOutButton.disabled = true;
+
+      this.runtimestatschart.colors.list = [
+        am4core.color("#bf9d76"),
+        am4core.color("#e99450"),
+        am4core.color("#d89f59"),
+        am4core.color("#f2dfa7"),
+        am4core.color("#ff5b4f"),
+        am4core.color("#74c7b8")
+      ]
+      var categoryAxis = this.runschart.xAxes.push(new am4charts.CategoryAxis());
+
+      categoryAxis.dataFields.category = "name";
+      categoryAxis.title.text = "Jobs";
+      let label1 = categoryAxis.renderer.labels.template;
+      label1.truncate = true;
+      label1.maxWidth = 90;
+      label1.disabled = false;
+      categoryAxis.renderer.minGridDistance = 40;
+      var valueAxis = this.runschart.yAxes.push(new am4charts.ValueAxis());
+      valueAxis.renderer.inside = true;
+      valueAxis.renderer.labels.template.fillOpacity = 1;
+      valueAxis.renderer.grid.template.strokeOpacity = 0;
+      valueAxis.min = 0;
+      valueAxis.cursorTooltipEnabled = false;
+      valueAxis.renderer.gridContainer.zIndex = 1;
+      valueAxis.title.text = "Execution Time (ms)";
+      var series = this.runschart.series.push(new am4charts.ColumnSeries);
+      series.dataFields.valueY = "value";
+      series.dataFields.categoryX = "name";
+      series.tooltipText = "{valueY.value}";
+
+      var columnTemplate = series.columns.template;
+      columnTemplate.width = 40;
+      columnTemplate.column.cornerRadiusTopLeft = 10;
+      columnTemplate.column.cornerRadiusTopRight = 10;
+      columnTemplate.strokeOpacity = 0;
+      let runtimeref=this.runschart;
+      columnTemplate.events.once("inited", function(event){
+        event.target.fill = runtimeref.colors.getIndex(event.target.dataItem.index);
+      });
+      var cursor = new am4charts.XYCursor();
+      cursor.behavior = "panX";
+      this.runschart.cursor = cursor;
+      this.runschart.events.on("datavalidated", function () {
+        if(this.Performance.length>5)
+          categoryAxis.zoomToIndexes(0,7,false,true);
+        else
+          categoryAxis.zoomToIndexes(0,this.runtimestats.length,false,true);
+      },this);
+      series.columns.template.events.on("hit", function(ev) {
+        let getdata:any=ev.target.dataItem.categories.categoryX
+        let data={name:getdata};
+        this.getruns(data);
+
+      },this);
+
+
+      var label = this.runtimestatschart.plotContainer.createChild(am4core.Label);
+       label.x = 90;
+       label.y = 50;
+       $("#runs > div > svg > g > g:nth-child(2) > g:nth-child(2)").hide();
+
+    },30)
+
+  }
+  getruns(event)
+  {
+    let botName=event.name;
+    if(this.bots.find(botc=>botc.botName==botName) != undefined)
+    {
+      let bot_check =this.bots.filter(botc=>botc.botName==botName);
+      let performances=bot_check[0].coordinates;
+      performances=performances.reverse();
+      this.Performance=[];
+      for(let i=0;i<performances.length;i++)
+      {
+        if(performances[i]!=undefined)
+        {
+            this.Performance.push({
+              "name":""+performances[i].runId,
+              "value":performances[i].timeDuration
+            })
+        }
+      }
+      this.runtimeflag=false;
+      setTimeout(()=>{
+        this.runsschart();
+      },200)
+    }
+  }
   status4()
   {
     setTimeout(()=>{

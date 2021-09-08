@@ -11,7 +11,14 @@ import { BpsHints } from '../model/bpmn-module-hints';
 import Swal from 'sweetalert2';
 import { GlobalScript } from 'src/app/shared/global-script';
 import {MatTableDataSource} from '@angular/material/table';
-import {MatPaginator} from '@angular/material/paginator';
+
+import { MatPaginator, PageEvent } from '@angular/material';
+import { fromMatPaginator, paginateRows } from './../model/datasource-utils';
+import { Observable  } from 'rxjs/Observable';
+import { of  } from 'rxjs/observable/of';
+import { map } from 'rxjs/operators';
+import { MatSort, Sort } from '@angular/material';;
+import { fromMatSort, sortRows } from './../model/datasource-utils';
 @Component({
   selector: 'app-bpshome',
   templateUrl: './home.component.html',
@@ -42,13 +49,17 @@ export class BpsHomeComponent implements OnInit {
   userRole;
   savedDiagrams_list:any[]=[];
   isButtonVisible:boolean = false;
+
+  displayedRows$: Observable<any[]>;
+  totalRows$: Observable<number>;
+  @ViewChild(MatSort,{static:false}) sort: MatSort;
   @ViewChild(MatPaginator,{static:false}) paginator: MatPaginator;
   constructor(private router:Router, private bpmnservice:SharebpmndiagramService, private dt:DataTransferService,
      private rest:RestApiService, private hints:BpsHints, private global:GlobalScript,
     ) { }
 
   ngOnInit(){
-    document.getElementById("filters").style.display = "block";
+    localStorage.setItem("isheader","false")
     this.userRole = localStorage.getItem("userRole")
     this.userRole = this.userRole.split(',');
     if(this.userRole.includes('SuperAdmin')){
@@ -65,6 +76,10 @@ export class BpsHomeComponent implements OnInit {
     this.getBPMNList();
     this.getAutoSavedDiagrams();
     this.getAllCategories();
+    // document.getElementById("filters").style.display = "block";
+    let obj={}
+    this.dt.bpsNotationaScreenValues(obj);
+    this.dt.bpsHeaderValues('');
   }
 
   async getBPMNList(){
@@ -74,7 +89,8 @@ export class BpsHomeComponent implements OnInit {
       this.bkp_saved_diagrams = res; 
       this.isLoading = false;
       console.log(this.saved_diagrams);
-      this.savedDiagrams_list=this.saved_diagrams
+      this.savedDiagrams_list=this.saved_diagrams;
+      this.assignPagenation(this.saved_diagrams);
     },
     
     (err) => {
@@ -89,12 +105,18 @@ export class BpsHomeComponent implements OnInit {
   }
 
   openDiagram(bpmnDiagram){
+    console.log(bpmnDiagram)
     if(bpmnDiagram.bpmnProcessStatus && bpmnDiagram.bpmnProcessStatus =="PENDING" ) return;
     let binaryXMLContent = bpmnDiagram.bpmnXmlNotation; 
     let bpmnModelId = bpmnDiagram.bpmnModelId;
     let bpmnVersion = bpmnDiagram.version;
     let bpmnType = bpmnDiagram.ntype;
     this.bpmnservice.uploadBpmn(atob(binaryXMLContent));
+    let push_Obj={"rejectedOrApproved":bpmnDiagram.bpmnProcessStatus,"isfromApprover":false,
+    "isShowConformance":false,"isStartProcessBtn":false,"autosaveTime":bpmnDiagram.modifiedTimestamp,
+    "isFromcreateScreen":false,'process_name':bpmnDiagram.bpmnProcessName,'isEditbtn':false,'isSavebtn':true}
+this.dt.bpsNotationaScreenValues(push_Obj);
+this.dt.bpsHeaderValues('');
     this.router.navigate(['/pages/businessProcess/uploadProcessModel'], { queryParams: { bpsId: bpmnModelId , ver: bpmnVersion, ntype: bpmnType}});
   }
 
@@ -108,19 +130,25 @@ export class BpsHomeComponent implements OnInit {
   getColor(status) {
     switch (status) {
       case 'PENDING':
-        return 'orange';
+        return '#F99D1C';
       case 'REJECTED':
         return 'red';
       case 'APPROVED':
         return 'green';
       case 'INPROGRESS':
-        return 'orange';
+        return '#F99D1C';
     }
   }
 
   fitTableView(processName){
     if(processName && processName.length > 10)
       return processName.substr(0,15)+'..';
+    return processName;
+  }
+
+  fitTableViewTime(processName){
+    if(processName && processName.length > 10)
+      return processName.substr(0,12)+'...';
     return processName;
   }
 
@@ -142,6 +170,8 @@ export class BpsHomeComponent implements OnInit {
    }
 
   getDiagram(eachBPMN,i){
+      var element = document.getElementById('_diagram'+i);
+    element.scrollIntoView({behavior: "auto",block: "center", inline: "nearest"});
     let byteBpmn = atob(eachBPMN.bpmnXmlNotation);
     this.index=i;
     if(document.getElementsByClassName('diagram_container'+i)[0].innerHTML.trim() != "") return;
@@ -193,7 +223,8 @@ export class BpsHomeComponent implements OnInit {
     var filter_saved_diagrams= []
     this.saved_diagrams=[]
     if (category == "allcategories") {
-     this.saved_diagrams=this.savedDiagrams_list
+     this.saved_diagrams=this.savedDiagrams_list;
+     this.assignPagenation(this.saved_diagrams);
       // this.dataSource.filter = fulldata;
     }
     else{  
@@ -204,24 +235,29 @@ export class BpsHomeComponent implements OnInit {
         if(e.category===category){
           this.saved_diagrams.push(e)
         }
-      })
-      // this.dataSource.filterPredicate = (data: any, filter: string) => {
-      //   return data.categoryName === category;
-      //  };
-      //  this.dataSource.filter = category;
-      //  this.dataSource.paginator=this.paginator;
+      });
+      this.assignPagenation(this.saved_diagrams);
     }
   }
-  sort(colKey,ind) { // if not asc, desc
+  sort1(colKey,ind) { // if not asc, desc
     this.sortIndex=ind
     let asc=this.orderAsc
     this.orderAsc=!this.orderAsc
     this.saved_diagrams= this.saved_diagrams.sort(function(a,b){
-      if (asc) 
-       return (a[colKey] > b[colKey]) ? 1 : -1;
-      else 
-       return (a[colKey] < b[colKey]) ? 1 : -1;
+      if(ind!=1){
+        if (asc) 
+        return (a[colKey].toLowerCase() > b[colKey].toLowerCase()) ? 1 : -1;
+       else 
+        return (a[colKey].toLowerCase() < b[colKey].toLowerCase()) ? 1 : -1;
+      }else{
+        if (asc) 
+        return (a[colKey] > b[colKey]) ? 1 : -1;
+       else 
+        return (a[colKey] < b[colKey]) ? 1 : -1;
+      }
+      
     });
+    this.assignPagenation(this.saved_diagrams);
   }
 
   sendReminderMail(e, bpmNotation){
@@ -293,6 +329,43 @@ export class BpsHomeComponent implements OnInit {
        splitTenant = selecetedTenant.split('-')[0];
     }
     window.location.href = "https://eiapcamundademo.epsoftinc.com:86/camunda/app/welcome/"+splitTenant+"/#!/login?accessToken=" + token + "&userID="+userId+"&tenentID="+selecetedTenant;
+  }
+
+
+  
+  searchList(event: Event) {       // search entered process ids from search input
+    const filterValue = (event.target as HTMLInputElement).value;
+    let test:any=[]
+    if(!filterValue){
+      this.assignPagenation(this.saved_diagrams);
+      return;
+    }
+    this.saved_diagrams.filter(item =>{
+      Object.keys(item).some(k =>{ 
+        if(item[k] != null &&item[k].toString().toLowerCase().includes(filterValue.toLowerCase())){
+              test.push(item)
+        }
+      })
+      });
+ 
+var filtered = test.reduce((filtered, item) => {
+  if( !filtered.some(filteredItem => JSON.stringify(filteredItem.bpmnModelId) == JSON.stringify(item.bpmnModelId)) )
+    filtered.push(item)
+  return filtered
+}, [])
+this.assignPagenation(filtered)
+// const pageEvents$: Observable<PageEvent> = fromMatPaginator(this.paginator);
+//     const rows$ = of(filtered);
+//     this.totalRows$ = rows$.pipe(map(rows => rows.length));
+//     this.displayedRows$ = rows$.pipe(paginateRows(pageEvents$));
+  }
+ 
+  assignPagenation(data){
+    const sortEvents$: Observable<Sort> = fromMatSort(this.sort);
+    const pageEvents$: Observable<PageEvent> = fromMatPaginator(this.paginator);
+    const rows$ = of(data);
+    this.totalRows$ = rows$.pipe(map(rows => rows.length));
+    this.displayedRows$ = rows$.pipe(sortRows(sortEvents$), paginateRows(pageEvents$));
   }
  
 }

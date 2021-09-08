@@ -192,3 +192,231 @@
     /* margin-top: 75px; */
     /* z-index: 999999; */
 }
+
+
+.hideTitle .menuToggleTitle{
+    display: none;
+}
+
+
+.propertiesTitle.showTitle {
+    width: 100%;
+}
+
+img.menuToggleIcon {
+    /* height: 14px; */
+    vertical-align: bottom;
+    margin-right: 10px;
+}
+
+label.menuToggleTitle {
+    font-size: 15px;
+    margin: 0px;
+    color: #fff;
+    font-weight: 400;
+}
+
+.menuToggle {
+    display: flex;
+    align-items: center;
+}
+
+div#propertiesPanelBody {
+    height: calc(100% - 40px);
+    position: absolute;
+    top: 40px;
+    /* top: 40px; */
+    overflow: auto;
+    width: 100%;
+}
+
+mat-expansion-panel.mat-expansion-panel {
+    border-radius: 0px !important;
+}
+
+label.accordionHeader {
+    margin: 0px;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.propertiesContainer mat-expansion-panel {
+    background-color: #607088;
+    /* border-top: 1px solid #8694A9; */
+    /* border-bottom: 1px solid #8c94a0; */
+    margin: 0px;
+}
+.propertiesContainer mat-expansion-panel-header:hover {
+    background-color: #00a0e3;
+}
+.propertiesContainer .mat-expansion-panel-header-title {
+    border: none;
+}
+
+
+mat-panel-description.mat-expansion-panel-header-description {
+    background-color: #ffffff;
+    width: 100%;
+    color: #333;
+    margin: 0px !important;
+    min-height: 300px;
+}
+.activecollaboration {
+    padding: 0px;
+    height: 330px;
+    overflow-y: scroll;
+    width: 100%;
+}
+.collab {
+    padding: 16px;
+    height: 360px;
+}
+.row.lftusermsg {
+    background: aliceblue;
+    border-radius: 0px 15px 15px 15px;
+    padding: 10px 0px 10px 40px;
+    color: #001c47;
+    margin: 10px 0px 20px !important;
+    position: relative;
+    width: 280px;
+}
+.row.rgtusermsg {
+    background: #00a1e3;
+    border-radius: 15px 0px 15px 15px;
+    padding: 10px;
+    margin: 10px 0px 20px !important;
+    color: #fff;
+}
+.row.lftusermsg>img {
+    position: absolute;
+    top: -8px;
+    left: -8px;
+}
+.row.lftusermsg p {
+    width: 100%;
+}
+.lftusermsg a img {
+    padding-right: 5px;
+}
+.collab p {
+    margin-bottom: 10px;
+}
+.rgtusermsg p.rttime {
+    text-align: right !important;
+    width: 100%;
+}
+.row.collabottom {
+    padding: 10px;
+    background: #EDEBEB;
+    display: flex;
+    width: 100%;
+}
+textarea.msgip {
+    width: 75%;
+    /* height: 45px; */
+    margin-right: 15px;
+    margin-right: 10px;
+    border: 1px solid #607088;
+    border-radius: 4px;
+    resize:none;
+    padding-left:5px;
+}
+.collabottom button {
+    display: inline;
+    background: transparent !important;
+    padding: 0px !important;
+    min-width: 15px !important;
+    margin-right: 10px;
+}
+.shortcutslistdiv, .activitieslistdiv {
+    padding: 10px;
+    width:100%;
+}
+.shortcutslistdiv .row {
+    display: flex;
+}
+.shortcutslistdiv label {
+    min-width: 142px;
+    font-size: 12px;
+    font-weight: 600;
+    margin: 7px 0px;
+}
+.shortcutslistdiv span.bluetext {
+    color: #fff;
+    background-color: #00a1e3;
+    padding: 3px;
+    border-radius: 2px;
+}
+.favouriteslistdiv {
+    padding: 10px;
+    position: relative;
+}
+.favouriteslistdiv .row {
+    margin: 5px 0px !important;
+    display: inline-block;
+}
+.favouriteslistdiv label  {  
+    font-size: 12px;
+    font-weight: 600;
+}
+.favouriteslistdiv img {
+    vertical-align: middle;
+    width: 14px;
+    height: 14px;
+}
+.favouriteslistdiv .favsh {
+    position: absolute;
+    right: 15px;
+}
+.propexpandIcon {
+    position: absolute;
+    right: 15px;
+    width: 14px;
+    height: 14px;
+}
+.row.collabottom img {
+    width: 18px;
+    height: 18px;
+}
+@media screen and (max-width:1366px) {
+    .collab p {
+        font-size:12px;
+    }
+}
+
+
+.bpm-notation-fields mat-form-field {
+    width: 100%;
+}
+
+.bpm-notation-fields select.form-control {
+    display: inline-block;
+    width: 200px;
+    padding: 0px 12px !important;
+    height: 24px;
+}
+
+.bpm-notation-fields label.label-control {
+    display: inline-block;
+    margin: 0px !important;
+    margin-right: 5px !important;
+}
+.modal-footer1 .footer-btns{
+    margin-bottom: 20px;
+}
+.bps-c2-height {
+    height: 95% !important;
+}
+.menuicons-disable{
+    cursor: no-drop !important;
+}
+.menuicons-disable label{
+    cursor: no-drop !important;
+}
+.xml-input textarea{
+    width:100%
+}
+
+

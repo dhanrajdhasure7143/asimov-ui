@@ -1,27 +1,32 @@
 @import "//netdna.bootstrapcdn.com/font-awesome/3.0/css/font-awesome.css";
 .section {
-  overflow-y: scroll;
-  min-height: 65px;
-  max-height: 57vh;
-  white-space: nowrap;
+  /* overflow-y: scroll;
+  max-height: 61vh;
+  white-space: nowrap;   */
 }
 .nodes {
-  padding: 1px;
+  /* padding: 5px; */
 }
 .con-img{
-  width:32px;
-  height:auto
+  width: 28px;
+  height: 28px;
 }
 
 .search-content{
-  padding:10px;
-  padding-right:35px;
-  padding-left:10px;
+  /* padding:10px; */
+  /* padding-right:25px; */
+  /* padding-left:0px;
+  padding-right: 10px; */
+  position: relative;
+  display: flex;
+  width: 100%;
+  margin: 5px 0px;
 }
 
 .toolset{
    /* padding:10px;  */
-   width:300px !important;
+   width:260px !important;
+   margin: auto;
 }
 
 .check{
@@ -143,9 +148,10 @@ background-color: white;
 
 
 .nodename{
-  font-size: 18px;
-  color:#001c47;
+  /* font-size: 16px; */
+  color: #001c47;
   font-weight: 400;
+  font-size: 14px;
 }
 
 
@@ -159,18 +165,83 @@ background-color: white;
 
 
 .taskname{
-  padding:10px;
-  font-size: 16px;
-  color:001c47;
+  /* padding:10px; */
+  font-size: 14px;
+  color: #001c47;
   font-weight: 400;
 }
 
 .toolset mat-expansion-panel {
-  border-bottom:none !important;
+  border-top:none !important;
+  padding-right: 8px !important;
 }
  
 
 
 ::ng-deeep .mat-drawer.mat-drawer-side {
   z-index: 0 !important;
+}
+
+.search-content input.search {
+  position: relative;
+  padding: 0px 10px 0px !important;
+  border-radius: 4px !important;
+  margin-top: 5px !important;
+}
+
+.search-content img.testplus1 {
+  position: absolute;
+  right: 10px;
+  top: 15px;
+}
+
+.actionsheaderdiv {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+/* .actionsheaderdiv button span {
+  position: absolute;
+  right: 10px;
+  top: 3px;
+  color: #001c47;
+  font-size: 25px;
+  font-weight: 700;
+} */
+.actionsheaderdiv button img {
+  vertical-align: baseline;
+}
+.toolset-mainheader {
+  padding: 12px 10px 4px 10px;
+}
+.actionsheaderdiv img.testplus1 {
+  width: 12px;
+  height: 12px;
+}
+.actionsheaderdiv img.testplus {
+  margin-right: 12px !important;
+  opacity: 0.5;
+}
+.toolset-close {
+  width: 10%;
+  text-align: end;
+  margin: 0px;
+}
+.dragicons {
+  padding: 0px 10px;
+  overflow-y: scroll;
+  max-height: 61vh;
+  white-space: nowrap; 
+}
+span.con-text {
+  font-size: 14px;
+  font-weight: 400;
+  color: #001c47;
+  padding-left: 5px;
+  vertical-align: middle;
+}
+.toolset-con {
+  display: flex;
+  align-items: center;
+  padding: 3px 6px;
 }

@@ -1,0 +1,254 @@
+
+  .item-data{
+    padding:5px;
+    color: #4AB0F5;
+    font-size: 18px;
+  }
+  
+  .d-flex{
+    display:flex;
+  
+  }
+  
+
+  .program-details-main{
+    height:100%;
+    background-color:#e3eaef !important;
+  }
+ 
+  .card{
+    background-color: white !important;
+    border:none !important;
+  }
+  .program-graph{
+    height:400px;
+
+  }
+  .margin-none{
+    margin-right:0px !important;
+    margin-left:0px !important;
+    padding-right:0px !important;
+    padding-left:0px !important;
+  }
+.no-item-img{
+  height:200px;
+
+}
+
+
+
+.modelprbody, .modelprfooter {
+  background-color: #FFF !important;
+}
+.modelprhead {
+  border: none;
+}
+.modal-header.modelprhead h4 {
+  font-size: 18px;    
+  font-weight: normal;
+  /* padding: 0px 0px 0px 15px !important; */
+}
+.modal-header.modelprhead {
+  padding: 15px 25px 10px 25px!important;
+  background-color: #f0f8ff!important;
+}
+
+.modal-body.modelprbody {
+  height: calc(100% - 106px);
+  overflow: auto;
+}
+
+.modal-footer.modelprfooter {
+  padding: 10px 0px;
+  border: none !important;
+}
+
+
+button.btn.btn-primary.prj-lst-btn:hover img.testplus.hover-img {
+  display: initial;
+  cursor: pointer;
+}
+
+
+.slider {
+  -webkit-appearance: none;
+  width: 100px;
+  height: 10px;
+  border-radius: 5px;
+  background: linear-gradient(to right,red, orange, yellow, green);
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  
+  background: #ffffff;
+  height: 12px;
+  width: 12px;
+  border-radius: 100%;
+  border:1px solid gray;
+}
+
+/* All the same stuff for Firefox */
+input[type=range]::-moz-range-thumb {
+  
+  height: 10px;
+  width: 10px;
+  border-radius: 100%;
+  background: #ffffff;
+  cursor: pointer;
+  border:1px solid gray;
+}
+
+.h-scroll {
+  height: calc(100vh - 130px);
+  overflow: auto;
+}
+.project-details-set .py-5 {
+  padding: 5px 5px 5px 0px;
+}
+
+.project-details-set .py-5 img {
+  width: 20px;
+}
+
+.d-flex.w-100.project-details-set {
+  width: calc(100% / 7);
+}
+
+
+.program-details-div{
+  padding: 10px 15px;
+  background-color: #fff;
+  margin-bottom: 15px;
+}
+.row.newprhcl {
+  /* margin-bottom: 15px !important; */
+  border-bottom: 1px solid #e5e5e5;
+  padding-bottom: 10px;
+}
+.newprhcl .program-info img {
+  margin-right: 15px;
+  text-align: center;
+  /* width: 32px; */
+    height: auto;
+}
+.newprhcl .program-info {
+  display: flex;
+}
+span.labeltit, label.labeltit {
+  font-size: 14px !important;
+  /* color: #32486B; */
+  font-weight: 500;
+  display: block;
+  margin-bottom: 3px;
+}
+.row.newprjdates {
+  float: right;
+}
+span.tab-text{
+  font-size: 15px !important;
+  font-weight: 600;
+  display: block;
+  margin: 0px;
+}
+.programdetmain {
+  /* display: flex; */
+  align-items: center;
+  /* padding: 0px 10px 0px 5px; */
+  padding-right: 10px;
+  margin-bottom: 20px;
+}
+span.labelcont {
+  /* font-size: 13px; */
+  font-weight: 600;
+  color: #00a0e3;
+}
+span.programdesc {
+  font-size: 13px;
+  opacity: 0.6;
+}
+.status-tabs{
+  display: flex;
+}
+.status-data {
+  padding-left: 14px !important;
+  color:#001c47 !important;
+}
+.prgmgrid {
+  background-color: #fff;
+  padding: 10px;
+  /* min-height: 380px; */
+  position: relative;
+}
+.prgmgrid-body {
+  margin-top: 10px;
+}
+.new-program-contents {
+  overflow: auto;
+  height: calc(100% - 49px);
+  background-color: #e3eaee;
+}
+.newstatus {
+  background-color: #62BC27;
+    color: #fff !important;
+    padding: 2px 5px;
+    width:fit-content;
+}
+img.testplus.hover-img ,
+td a:hover img.testplus.default-img{
+    display: none;
+    cursor: pointer;
+}
+td a:hover img.testplus.hover-img {
+    display: initial;
+    cursor: pointer;
+}
+.link-button{
+  margin-right: 10px;
+}
+
+.col-sm-6.programinfo {
+  border-right: 1px solid #e5e5e5;
+  padding-top: 8px !important;
+}
+
+.col-sm-6.p-0.progressdet {
+  padding: 8px 0px 0px 15px !important;
+}
+.det-innerheader {
+  margin-bottom: 10px;
+}
+.user-owner{
+  border: 1px solid #a0a0a0;
+  border-radius: 50%;
+  padding: 7px 5px 7px 5px;
+  background-color: #00a0e3;
+  color:white;
+  font-weight: 600;
+  font-size: 16px;
+ }
+ .user-owner-div{
+   margin-top: 10px;
+ }
+
+  .letter-image{
+    border-radius: 100%;
+    color: #001c47;
+    background-color: #ddd;
+    padding: 7px;
+    text-align: center;
+    letter-spacing: 2.5px;
+    font-size: 15px;
+  }
+  
+  .program-owner-img{
+    border-radius: 100%;
+    width: 44px;
+    height: 41px;
+    margin-top: -10px;
+  }

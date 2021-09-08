@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { formatDate } from '@angular/common';
 import { Router } from '@angular/router';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
@@ -6,6 +6,12 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { DataTransferService } from "../../services/data-transfer.service";
 import { PiHints } from '../model/process-intelligence-module-hints';
 import { GlobalScript } from '../../../shared/global-script';
+
+import { MatPaginator, PageEvent } from '@angular/material';
+import { fromMatPaginator, paginateRows } from './../../business-process/model/datasource-utils';
+import { Observable  } from 'rxjs/Observable';
+import { of  } from 'rxjs/observable/of';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-datadocument',
@@ -44,6 +50,10 @@ export class DatadocumentComponent implements OnInit {
   dTypeArray = [];
   p=1;
   modalRef: BsModalRef;
+  displayedRows$: Observable<any[]>;
+  totalRows$: Observable<number>;
+
+  @ViewChild(MatPaginator,{static:false}) paginator: MatPaginator;
 
   constructor(private router:Router, private dt:DataTransferService, private hints:PiHints, private global:GlobalScript,private modalService: BsModalService)    { }
 
@@ -118,6 +128,9 @@ export class DatadocumentComponent implements OnInit {
                                     }
           }
         }
+        setTimeout(() => {
+          this.assignPagenation(this.fileData)
+        }, 500);
   }
 
   caseIdSelection() {
@@ -487,5 +500,25 @@ export class DatadocumentComponent implements OnInit {
         
       // Display the unique objects 
       return newArray;
+  }
+  assignPagenation(data){
+    const pageEvents$: Observable<PageEvent> = fromMatPaginator(this.paginator);
+    const rows$ = of(data);
+    this.totalRows$ = rows$.pipe(map(rows => rows.length));
+    this.displayedRows$ = rows$.pipe(paginateRows(pageEvents$));
+  }
+  ontableSearch(input){
+    if(input){
+    let filteredArray:any[]=[]
+    this.fileData.filter(item =>{
+          if(String(item) != null &&String(item).toString().toLowerCase().includes(input.toLowerCase())){
+              filteredArray.push(item)
+          }
+      });
+      this.assignPagenation(filteredArray)
+    }else{
+      this.assignPagenation(this.fileData)
+
+    }
   }
 }

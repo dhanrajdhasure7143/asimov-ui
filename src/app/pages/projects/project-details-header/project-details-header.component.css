@@ -1,0 +1,123 @@
+.projects-header{
+    width:100%;
+    padding:0px;
+  }
+
+  .status-tabs{
+    display: flex;
+    /* padding:20px; */
+    
+  }
+
+  .tab-number{
+    font-size: 20px !important;
+    display: block;
+  }
+
+  .status-img > img{
+    height: 30px !important;
+  }
+
+  .status-data{
+    vertical-align: middle;
+    padding-top: 0;
+    padding-left: 23px;
+    padding-bottom: 0;
+    color: black !important;
+  }
+
+  /* .project-data{
+    padding-left: 63px;
+    margin-top: -46px;
+  } */
+
+  .body-img> img{
+    height: 30px !important;
+  }
+   .tablprdetails .status-tabs {
+    padding: 10px;
+    width: 100%;
+}
+.tablprdetails .status-tabs .status-data {
+  width: 100%;
+}
+.tablprdetails {
+  width: 100%;
+}
+.tablprdetails .body-img img {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.tablprdetails .formelement {
+  padding: 0px;
+}
+.tablprdetails tr td .status-tabs {
+  margin-bottom: 20px;
+}
+.tablprdetails input[type="text"] {
+  padding: 2px;
+  width: 140px;
+}
+.tablprdetails input::placeholder {
+  font-size: 11px;
+}
+#projects_details_screen {
+  box-shadow: unset !important;
+  border-bottom: 1px solid #ddd !important;
+}
+.projects-header.newprhcl {
+  border-bottom: 1px solid #ccc;
+    display: inline-block;
+    padding-bottom: 15px;
+}
+.newprhcl .project-info img {
+  margin-right: 15px;
+  text-align: center;
+  width: 40px;
+    height: auto;
+}
+.newprhcl .project-info {
+  display: flex;
+}
+
+.col-md-2.newclasd {
+  margin: -31px 0px 0px -89px;
+  font-size: 14px;
+}
+
+#projects_details_screen {
+  box-shadow: unset;
+}
+
+
+.status-data {
+  padding-left: 14px !important;
+  color:#001c47 !important;
+}
+span.labeltit, label.labeltit {
+  font-size: 14px !important;
+  color: #32486B;
+  font-weight: 400;
+  display: block;
+}
+.row.newprjdates {
+  float: right;
+}
+.labelcont {
+  font-size: 14px;
+  font-weight: 600;
+  color: #32486B;
+}
+span.tab-text {
+  word-break: break-all;
+}
+td.testing {
+  width: 175px;
+}
+
+
+.focus-data{
+  border:1px solid lightgray;
+  
+}

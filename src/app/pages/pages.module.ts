@@ -20,6 +20,21 @@ import {Ng2TelInputModule} from 'ng2-tel-input';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { NgxPaginationModule } from 'ngx-pagination';
 import {MatExpansionModule} from '@angular/material/expansion';
+
+import { NewSoDashboardComponent } from './service-orchestration/orchestration/new-so-dashboard/new-so-dashboard.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
+
+import {MatListModule} from '@angular/material/list';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import { sohints } from './service-orchestration/orchestration/model/new-so-hints';
+import { ProgramComponent } from './program/programlandingpage.component';
+import { ProgramcreationComponent } from './programcreation/programcreation.component';
+import {MatTooltipModule} from '@angular/material/tooltip';
+
 @NgModule({
   declarations: [
     PagesComponent,
@@ -27,7 +42,12 @@ import {MatExpansionModule} from '@angular/material/expansion';
     HeaderComponent,
     FooterComponent,
     MyLoaderComponent,
-    HeaderDropdownOverlayComponent
+    HeaderDropdownOverlayComponent,
+    SidebarComponent,
+    NewSoDashboardComponent,
+    ProgramComponent,
+    ProgramcreationComponent,
+    
   ],
   imports: [
     CommonModule,
@@ -41,8 +61,9 @@ import {MatExpansionModule} from '@angular/material/expansion';
     NgxSpinnerModule,
     NgxPaginationModule,
     MatExpansionModule,
+    MatListModule,MatMenuModule,MatButtonModule,MatIconModule,MatToolbarModule,MatSidenavModule,MatTooltipModule
   ],
-  providers: [SharebpmndiagramService, PagesHints,
+  providers: [SharebpmndiagramService, PagesHints,sohints
   //  LoaderService,
   //  { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },
 ]

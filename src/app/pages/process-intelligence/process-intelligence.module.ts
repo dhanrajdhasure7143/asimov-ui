@@ -32,11 +32,13 @@ import { ProcessinsightsComponent } from './processinsights/processinsights.comp
 import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
-import {MatInputModule, MatIconModule, MatFormFieldModule, MatTooltipModule,MatDialogModule} from '@angular/material';
+import {MatInputModule, MatIconModule, MatFormFieldModule, MatTooltipModule,MatDialogModule, MatTabsModule,MatMenuModule} from '@angular/material';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import { ComboChartComponent } from './processinsights/combo-chart/combo-chart.component';
 import { ComboSeriesVerticalComponent } from './processinsights/combo-chart/combo-series-vertical.component';
+import {CustomMatPaginatorIntl} from './../../shared/custom-mat-paginator-int';
+import {MatPaginatorIntl} from '@angular/material';
 import { BusinessInsightsComponent } from './business-insights/business-insights.component';
 
 @NgModule({
@@ -54,7 +56,8 @@ import { BusinessInsightsComponent } from './business-insights/business-insights
     D3flowchartComponent,
     ProcessinsightsComponent,
     ComboChartComponent, 
-    ComboSeriesVerticalComponent, BusinessInsightsComponent
+    ComboSeriesVerticalComponent,
+    BusinessInsightsComponent,
   ],
   imports: [
     CommonModule,
@@ -81,9 +84,15 @@ import { BusinessInsightsComponent } from './business-insights/business-insights
     MatInputModule, MatIconModule, MatFormFieldModule,
     MatTooltipModule,MatDialogModule,
     NgbModule,
-    NgxMaterialTimepickerModule
+    NgxMaterialTimepickerModule,
+    MatTabsModule,
+    MatMenuModule
   ],
-  providers:[PiHints],
+  providers:[PiHints, 
+    {
+      provide: MatPaginatorIntl, 
+      useClass: CustomMatPaginatorIntl
+    }]
 
 })
 export class ProcessIntelligenceModule {

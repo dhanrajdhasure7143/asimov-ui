@@ -5,6 +5,7 @@ import { RestApiService } from '../services/rest-api.service';
 import { APP_CONFIG } from 'src/app/app.config';
 import { NgxSpinnerService } from "ngx-spinner";
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import {PagesComponent} from '../pages.component'
 
 @Component({
   selector: 'app-header',
@@ -38,15 +39,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
  public notificationList: any[];
  public dataid: any;
  notificationscount: any;
- public stopnotificationsapicall:any
-
+ public stopnotificationsapicall:any;
+ user_name:any;
+ user_designation:any;
+ sideBarOpen:Boolean=false;
   constructor(
     private router:Router,
+    private page_obj:PagesComponent,
     private dataTransfer:DataTransferService,
     private rpa:RestApiService,
     private spinner:NgxSpinnerService,
-    @Inject(APP_CONFIG) private config,
-    private authService:AuthenticationService) { }
+    @Inject(APP_CONFIG) private config) { }
 
   ngOnInit() {
     this.parent_subscription = this.dataTransfer.current_parent_module.subscribe(res => this.parent_link = res);
@@ -125,6 +128,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.spinner.show();
     setTimeout(() => {
       this.getImage();
+      this.profileName();
       this.getAllNotifications();
         },1000);
         setTimeout(() => {
@@ -187,17 +191,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
     localStorage.clear();
     var input = btoa("Signout")
     //window.location.href=this.config.logoutRedirectionURL+'?input='+input;
-    this.authService.logout();
-    localStorage.clear(); 
-    window.location.href=this.config.signoutRedirectionURL;
+    // window.location.href=this.config.logoutRedirectionURL+'?input='+input;
+    this.router.navigate(['/redirect']);
   }
 
   profileName(){
+    setTimeout(() => {
     this.firstname=localStorage.getItem('firstName');
       this.lastname=localStorage.getItem('lastName');
       var firstnameFirstLetter=this.firstname.charAt(0)
       var lastnameFirstLetter=this.lastname.charAt(0)
       this.firstletter=firstnameFirstLetter+lastnameFirstLetter
+    }, 1000);
   }
 
   getImage() {
@@ -205,6 +210,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
       const userid=localStorage.getItem('ProfileuserId');
           this.rpa.getUserDetails(userid).subscribe(res => {
                 this.retrieveResonse = res;
+                setTimeout(() => {
+                    this.user_name=this.retrieveResonse.firstName
+                    this.user_designation=this.retrieveResonse.designation
+                  }, 500);
                 if(this.retrieveResonse.image==null||this.retrieveResonse.image==""){
                  this.profileName();
                   this.profilePicture=false;

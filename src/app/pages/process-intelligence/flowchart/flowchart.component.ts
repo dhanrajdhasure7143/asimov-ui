@@ -15,6 +15,7 @@ import { RestApiService } from '../../services/rest-api.service';
 import Swal from 'sweetalert2';
 import { Location} from '@angular/common'
 import { GlobalScript } from 'src/app/shared/global-script';
+import { Subscription } from 'rxjs';
 
 enum ProcessGraphList {
   'Accounts_payable_04-07-2020',
@@ -153,6 +154,9 @@ isWorkingHrsBtn:boolean=true;
 allVaraintsCases:any[]=[];
 isTimeChange:boolean=false;
 performanceFilterInput:any ={};
+isLoading:boolean=false;
+Pi_header_functions:Subscription;
+isGraph_changed:boolean=false;
 
   constructor(private dt: DataTransferService,
     private router: Router,
@@ -178,6 +182,42 @@ performanceFilterInput:any ={};
   readOutputValueEmitted(val){
     this.startLinkvalue = val;
   }
+
+  ngAfterViewInit(){
+    this.isplay=false;
+    let res_data
+    this.Pi_header_functions=this.dt.pi_headerChanges.subscribe(res=>{res_data=res
+      console.log(res);
+      if(res){
+        let element=document.getElementById("tipsy_div");
+        if(element){
+          element.style.display = "none";
+          element.style.visibility = "hidden";
+        }
+      }
+      if(res_data=='svg'){
+        this.downloadSvg();
+      }else if(res_data=='png'){
+        this.downloadpng();
+      }else if(res_data=='jpg'){
+        this.downloadjpeg();
+      }else if(res_data=='pdf'){
+        this.downloadPdf();
+      }else if(res_data=='working_hrs'){
+        this.openHersOverLay();
+      }else if(res_data=='play_graph'){
+        this.playAnimation();
+      }else if(res_data=='bpmn'){
+        this.generateBpmn();
+      }else if(res_data=='variant_list'){
+        this.openVariantListNav()
+      }else if(res_data instanceof Object){
+        this.workingHours=res_data
+        // console.log(res_data)
+        this.addWorkingHours();
+      }
+    });
+  }
   
   ngOnInit() {   
     this.dt.changeParentModule({ "route": "/pages/processIntelligence/upload", "title": "Process Intelligence" });
@@ -193,7 +233,7 @@ performanceFilterInput:any ={};
           this.wpiIdNumber = parseInt(params['wpiId']);
           piId=this.wpiIdNumber;
           this.graphIds = piId;
-          this.loaderImgSrc = "/assets/images/PI/loader_anim.gif";
+          this.loaderImgSrc = "/assets/images/PI/Loader_Retrieving-Generated-Graph.gif";
           this.spinner.show();
           setTimeout(() => {
             this.onchangegraphId(piId);
@@ -203,7 +243,7 @@ performanceFilterInput:any ={};
         this.piIdNumber = parseInt(params['piId']);
         piId=this.piIdNumber;
         this.graphIds = piId;        
-        this.loaderImgSrc = "/assets/images/PI/loader_vr_1.gif"; 
+        this.loaderImgSrc = "/assets/images/PI/Loader_Generating-Graph.gif";
         this.spinner.show();
            this.graphgenetaionInterval = setInterval(() => {
              this.onchangegenerategraphId(piId);
@@ -226,18 +266,32 @@ performanceFilterInput:any ={};
   }
 
   onchangegraphId(selectedpiId){  // change process  graps in dropdown
+    this.isplay=false;
+    this.isGraph_changed=true;
+    this.dt.pi_buttonValues({"isPlaybtn":false,"isTimefeed_btn":false});
+    this.dt.piHeaderValues(null);
+      let element=document.getElementById("tipsy_div");
+      if(element){
+        element.style.display = "none";
+        element.style.visibility = "hidden";
+      }
     this.isNodata=true;
     let self = this;
-    this.route.queryParams.subscribe(params => {
-      let token = params['wpiId'];
-      if (token) {
-          let url=this.router.url.split('?')
-          this.location.replaceState(url[0]+'?wpiId='+selectedpiId);
-      }else{
-        let url=this.router.url.split('?')
-        this.location.replaceState(url[0]+'?piId='+selectedpiId);
-      }
-    });
+    this.varaint_data=[];
+    // this.route.queryParams.subscribe(params => {
+    //   let token = params['wpiId'];
+    //   if (token) {
+    //       let url=this.router.url.split('?')
+    //       this.location.replaceState(url[0]+'?wpiId='+selectedpiId);
+    //   }else{
+    //     let url=this.router.url.split('?')
+    //     this.location.replaceState(url[0]+'?piId='+selectedpiId);
+    //   }
+    // });
+
+    let params1= {"wpiId":selectedpiId};
+
+    this.router.navigate([],{ relativeTo:this.route, queryParams:params1 });
 
     let piId=selectedpiId
     let endTime:any
@@ -354,7 +408,8 @@ performanceFilterInput:any ={};
         this.isSingleTraceBPMN = false;
         this.isMultiTraceBPMN = false;
         this.isSliderBPMN = false;
-        this.filterOverlay()
+        this.filterOverlay();
+        this.isGraph_changed=false;
     }
         },(err =>{
           this.spinner.hide();
@@ -374,9 +429,8 @@ performanceFilterInput:any ={};
           'timeChange':this.isTimeChange,
           "workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+endTime+":00"
                }
-        this.rest.getSliderVariantGraph(sliderGraphbody).subscribe(data=>{this.sliderVariant=data
+        this.rest.getSliderVariantGraph(sliderGraphbody).subscribe(data=>{this.sliderVariant=data      
         })
-
         setTimeout(() => {
           this.process_graph_list.data.forEach(e => {
           if(e.piId==selectedpiId){
@@ -388,7 +442,7 @@ performanceFilterInput:any ={};
   }
 
   onchangegenerategraphId(selectedpiId){  // change process  graps in dropdown
-    //this.spinner.show();
+    //this.isLoading=true;
     this.isNodata=true;
     this.route.queryParams.subscribe(params => {
       let token = params['wpiId'];
@@ -553,6 +607,8 @@ performanceFilterInput:any ={};
 
   caseIdSelect(selectedData, index) { // Case selection on Variant list
     this.performanceValue=false
+    this.isplay=false;
+    // this.dt.piHeaderValues(null);
     this.activityValue=1;
     this.pathvalue=1;
     this.activity_value=[];
@@ -616,6 +672,7 @@ performanceFilterInput:any ={};
       this.isMultiTraceBPMN = false;
       this.isSliderBPMN = false;
       this.isWorkingHrsBtn=true;
+      this.dt.pi_buttonValues({"isPlaybtn":false,"isTimefeed_btn":this.isWorkingHrsBtn});
     }else if (this.selectedCaseArry.length == 1) {
       this.isvariantSelectedOne=true;
       this.issliderDisabled=true;
@@ -645,6 +702,7 @@ performanceFilterInput:any ={};
       this.isMultiTraceBPMN = false;
       this.isSliderBPMN = false;
       this.isWorkingHrsBtn=false;
+      this.dt.pi_buttonValues({"isPlaybtn":false,"isTimefeed_btn":this.isWorkingHrsBtn});
     }else{
       this.issliderDisabled=true;
       this.isvariantSelectedOne=false;
@@ -654,8 +712,8 @@ performanceFilterInput:any ={};
       }else{
         endTime=this.workingHours.shiftEndTime
       }
-      this.loaderImgSrc = "/assets/images/PI/loader_anim.gif";
-      this.spinner.show();
+      this.loaderImgSrc = "/assets/images/PI/Loader_Retrieving-Generated-Graph.gif";
+      this.spinner.show();;
       const variantComboBody={
         "data_type":"variant_combo",
         "pid":this.graphIds,
@@ -689,6 +747,7 @@ performanceFilterInput:any ={};
       this.isMultiTraceBPMN = true;
       this.isSliderBPMN = false;
       this.isWorkingHrsBtn=false;
+      this.dt.pi_buttonValues({"isPlaybtn":false,"isTimefeed_btn":this.isWorkingHrsBtn});
     }
     
     if(this.selectedCaseArry.length ==this.varaint_data.data.length||this.selectedCaseArry.length==0){
@@ -731,6 +790,7 @@ performanceFilterInput:any ={};
 
   playAnimation() {   // Process graph animation
     this.isplay = !this.isplay
+    console.log(this.isplay)
   }
 
   downloadSvg() { // Process graph download as SVG
@@ -816,6 +876,7 @@ performanceFilterInput:any ={};
       }
       this.isDefaultData = true;
       this.isWorkingHrsBtn=true;
+      this.dt.pi_buttonValues({"isPlaybtn":false,"isTimefeed_btn":this.isWorkingHrsBtn});
     }
       this.performanceValue=false
   }
@@ -896,6 +957,11 @@ performanceFilterInput:any ={};
 
   spinnermetrics(){
     this.isedgespinner= !this.isedgespinner;
+    let element=document.getElementById("tipsy_div");
+    if(element){
+      element.style.display = "none";
+      element.style.visibility = "hidden";
+    }
   }
 
   generateBpmn() {      //generate bpmn from process graph
@@ -1212,6 +1278,7 @@ flowchartDataOne(dataArray,index) {   //Links generate from responce for perform
       this.performanceValue=false;
       this.options = Object.assign({}, this.options, {disabled: false});
       this.isWorkingHrsBtn=true;
+      this.dt.pi_buttonValues({"isPlaybtn":false,"isTimefeed_btn":this.isWorkingHrsBtn});
   }
 
   resetActivityFiltermetrics(){        //process graph reset in leftside  spinner metrics
@@ -1270,6 +1337,7 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
   this.performanceValue=false;
   if(activity_slider==1&&path_slider==1){
     this.isWorkingHrsBtn=true;
+    this.dt.pi_buttonValues({"isPlaybtn":false,"isTimefeed_btn":this.isWorkingHrsBtn});
     this.isNodata=true;
     this.model1=this.fullgraph_model;
     this.filterPerformData = this.fullgraph_model;
@@ -1296,6 +1364,7 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
       this.isSliderBPMN = false;
   }else{
     this.isWorkingHrsBtn=false;
+    this.dt.pi_buttonValues({"isPlaybtn":false,"isTimefeed_btn":this.isWorkingHrsBtn});
   var sliderGraphArray = [];
     graphData.data.allSelectData.nodeDataArraycase.filter(function (item) {
       if (activity_slider == item.ActivitySlider && path_slider == item.PathSlider) {
@@ -1347,7 +1416,7 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
   }
 
   filterByActivity(SelectedActivities){   // filter process graph based on selected Activity (Node)
-    this.spinner.show();
+    this.spinner.show();;
     this.activity_value=SelectedActivities;
     this.model1=[]
     this.model2=[]
@@ -1522,6 +1591,7 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
     this.isFilterApplied=true;
     if(object.startPoint==null && object.endPoint==null && object.activity==null && object.variants.length==this.varaint_data.data.length){
       this.isWorkingHrsBtn=true;
+      this.dt.pi_buttonValues({"isPlaybtn":false,"isTimefeed_btn":this.isWorkingHrsBtn});
       this.model1 = this.fullgraph_model;
       this.model2 = this.flowchartData(this.model1); 
             this.startArray=[];
@@ -1537,14 +1607,15 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
             });
     }else{
         this.isWorkingHrsBtn=false;
+        this.dt.pi_buttonValues({"isPlaybtn":false,"isTimefeed_btn":this.isWorkingHrsBtn});
         let endTime:any
         if(this.workingHours.shiftEndTime=='23:59'){
           endTime="24:00"
         }else{
           endTime=this.workingHours.shiftEndTime
         }
-        this.loaderImgSrc = "/assets/images/PI/loader_anim.gif";
-        this.spinner.show();
+        this.loaderImgSrc = "/assets/images/PI/Loader_Retrieving-Generated-Graph.gif";
+        this.spinner.show();;
 
           var reqObj={
             "data_type":"endpoint_activity_filter",
@@ -1687,6 +1758,9 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
     if(this.graphgenetaionInterval){
       clearInterval(this.graphgenetaionInterval);
     }
+    this.Pi_header_functions.unsubscribe();
+    this.isplay=false;
+    this.dt.piHeaderValues(null);
   }
 
   viewInsights(){
@@ -1726,8 +1800,8 @@ addWorkingHours(){
   }else{
     endTime=this.workingHours.shiftEndTime
   }
-  this.loaderImgSrc = "/assets/images/PI/loader_anim.gif";
-  this.spinner.show();
+  this.loaderImgSrc = "/assets/images/PI/Loader_Retrieving-Generated-Graph.gif";
+  this.spinner.show();;
   const fullGraphbody= { 
     "data_type":"full_graph", 
      "pid":this.graphIds,
@@ -1982,5 +2056,8 @@ addWorkingHours(){
       this.spinner.hide();
        console.log(err);
      }));
+  }
+   viewbusinessinsights(){
+    this.router.navigate(["/pages/processIntelligence/business-insights"],{queryParams:{wpid:this.graphIds}})
   }
 }

@@ -1,0 +1,55 @@
+.create_box h3 {
+    /* padding-top: 10px; */
+}
+.box_area .row {
+    display: flex;
+}
+.drop_box.create_box {
+    margin: 0px;
+    display: flex;
+    align-items: center;
+    padding-top: 0px !important;
+}
+
+.model-text {
+    text-align: left;
+    padding-left: 22px;
+}
+.model-text button{
+    margin-left: 0px;
+    border-radius: 3px !important;
+    margin-top: 14px;
+    /* background-color: #00a0e3 !important; */
+    outline: none;
+    border: none;
+    /* padding: 8px 12px; */
+}
+
+.drop_box ngx-dropzone {
+    /* height: 160px !important; */
+    height: 145px !important;
+}
+.drop_box {
+    height: 150px;
+    margin: 0px 20px 0px 0px;
+    border: 1px solid #e1e7ec;
+    /* box-shadow: 0px 1px 6px rgb(0 0 0 / 10%); */
+    border-radius: 4px;
+}    
+
+.gen-newdiv .drop_box {
+    margin: 20px 0px;
+}
+.gen-newdiv .model-img {
+    margin-left: auto;
+}
+
+.gen-newdiv .model-text {
+    padding-left: 10px;
+}
+.gen-newdiv h3 {
+    margin-top: 0px;
+}
+.gen-newdiv {
+    padding: 0px 15px;
+}

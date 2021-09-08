@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
+  <defs>
+    <clipPath id="clip-desktop">
+      <rect width="24" height="24"/>
+    </clipPath>
+  </defs>
+  <g id="desktop" clip-path="url(#clip-desktop)">
+    <g id="desktop-2" data-name="desktop" transform="translate(-0.752 -0.652)">
+      <path id="Path_1053" data-name="Path 1053" d="M16.077,19.515v1.891H18.63a.737.737,0,1,1,0,1.464H7.946a.737.737,0,1,1,0-1.464h2.49V19.515H2.187C1.353,19.515,1,19.151,1,18.307V3.723a2.725,2.725,0,0,1,0-.417.93.93,0,0,1,1.068-.865H23.438a.962.962,0,0,1,1.068.919,2.9,2.9,0,0,1,0,.31V18.617a.962.962,0,0,1-1.068.9ZM12.754,3.306h-9.8a.972.972,0,0,0-.823.353,1.282,1.282,0,0,0-.224.812q0,5.8,0,11.614c0,.833.342,1.186,1.175,1.186H22.616a.748.748,0,0,0,.652-.331,1.838,1.838,0,0,0,.246-.8V4.449A1,1,0,0,0,22.37,3.306Zm2.66,16.134h-4.37v.31h4.338Zm-2.244-.63a.6.6,0,0,0,.6-.6.62.62,0,0,0-.6-.6.6.6,0,0,0-.6.609.577.577,0,0,0,.566.588Z" transform="translate(0)" fill="#607088" stroke="#607088" stroke-width="0.5"/>
+      <path id="Path_1054" data-name="Path 1054" d="M15.12,18.35v.337H10.4V18.35Z" transform="translate(0.453 1.076)" fill="#607088" stroke="#607088" stroke-width="0.5"/>
+    </g>
+  </g>
+</svg>

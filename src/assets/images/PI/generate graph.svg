@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
+  <defs>
+    <clipPath id="clip-graph">
+      <rect width="24" height="24"/>
+    </clipPath>
+  </defs>
+  <g id="graph" clip-path="url(#clip-graph)">
+    <g id="noun_Graph_1379084" transform="translate(-7.14 -9.918)">
+      <g id="Group" transform="translate(7.14 11)">
+        <path id="Path" d="M9.939,32.836H28.229a1.12,1.12,0,1,0,0-2.24H9.939a.56.56,0,0,1-.56-.56V12.12a1.12,1.12,0,0,0-2.24,0V30.037a2.8,2.8,0,0,0,2.8,2.8Z" transform="translate(-7.14 -11)" fill="#fff"/>
+        <path id="Path-2" data-name="Path" d="M39.082,21.86a1.12,1.12,0,0,0-1.12-1.12h-4.81a1.12,1.12,0,1,0,0,2.24h2.36L33.491,25.4l-4.157-.56a1.12,1.12,0,0,0-1.193.7l-1.789,4.591-4.18-.756a1.12,1.12,0,0,0-1.162.532l-2.685,4.527a1.12,1.12,0,1,0,1.926,1.142l2.287-3.861,4.322.781a1.12,1.12,0,0,0,1.243-.694l1.806-4.628L33.8,27.7a1.12,1.12,0,0,0,1.008-.392l2.027-2.424v1.786a1.12,1.12,0,0,0,2.24,0Z" transform="translate(-15.082 -18.013)" fill="#fff"/>
+      </g>
+    </g>
+  </g>
+</svg>

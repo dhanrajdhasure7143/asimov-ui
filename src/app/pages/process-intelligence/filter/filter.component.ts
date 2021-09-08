@@ -7,7 +7,7 @@ enum Filter {
   // 'Cases',
   'Variants',
   'End Points',
-  'Performance'
+  // 'Performance'
 }
 @Component({
   selector: 'app-filter',
@@ -25,6 +25,7 @@ export class FilterComponent implements OnInit {
   @Input() public resetFilter: boolean;
   @Input() public isClearFilter: boolean;
   @Input() public isFilterApplied: boolean;
+  @Input() public isGraph_changed:boolean;
   @Output() selectedNodes = new EventEmitter<any[]>();
   @Output() applyFilterValue = new EventEmitter<boolean>();
   @Output() selectedStartpoints = new EventEmitter<any[]>();
@@ -132,6 +133,9 @@ export class FilterComponent implements OnInit {
 
   ngOnInit() {
     setTimeout(() => {
+      console.log(this.variantData)
+    console.log(this.dataValues)
+
       for (var i = 0; i < this.variantData.data.length; i++) {
         var obj = {};
         obj["name"] = this.variantData.data[i].name;
@@ -166,6 +170,7 @@ export class FilterComponent implements OnInit {
         this.endPointArray.push(obj)
       }
       this.performanceLogic(this.performanceFilterInput, 'caseduration');
+      // console.log("performance",this.performanceFilterInput)
     }, 4000);
     this.chart_filter_options = Object.keys(Filter).filter(val => isNaN(Filter[val]));
 
@@ -180,6 +185,45 @@ export class FilterComponent implements OnInit {
 }
 
   ngOnChanges() {
+    if(this.isGraph_changed){
+      setTimeout(() => {
+        for (var i = 0; i < this.variantData.data.length; i++) {
+          var obj = {};
+          obj["name"] = this.variantData.data[i].name;
+          obj["casepercent"] = this.variantData.data[i].casepercent;
+          obj["detail"] = this.variantData.data[i].detail;
+          obj["days"] = this.variantData.data[i].days;
+          obj["case_value"] = this.variantData.data[i].case_value;
+          obj["selected"] = "inactive";
+          this.variantListarray.push(obj)
+        }
+
+        this.dataValuesNames = [];
+        for (var i = 0; i < this.dataValues.length; i++) {
+          var obj = {};
+          obj["name"] = this.dataValues[i].name;
+          obj["selected"] = "inactive";
+          this.dataValuesNames.push(obj)
+        }
+  
+        this.startPointArray = [];
+        for (var i = 0; i < this.startArray.length; i++) {
+          var obj = {};
+          obj["name"] = this.startArray[i];
+          obj["selected"] = "inactive";
+          this.startPointArray.push(obj)
+        }
+        this.endPointArray = [];
+        for (var i = 0; i < this.endArray.length; i++) {
+          var obj = {};
+          obj["name"] = this.endArray[i];
+          obj["selected"] = "inactive";
+          this.endPointArray.push(obj)
+        }
+        this.performanceLogic(this.performanceFilterInput, 'caseduration');
+        // console.log("performance",this.performanceFilterInput)
+      }, 1000);
+    }
     this.chart_filter_options = Object.keys(Filter).filter(val => isNaN(Filter[val]));
 
     if (this.isClearFilter == true) {
@@ -619,7 +663,7 @@ export class FilterComponent implements OnInit {
       cc += Number(r.caseCount);
     })
     this.chagnedCases = cc;
-    let casePer = ((Number(this.chagnedCases) / Number(this.totalCases)) * 100).toFixed(2);
+    let casePer = ((Number(this.chagnedCases) / Number(this.totalCases)) * 100).toFixed(0);
     this.casePercentage =Number(casePer);
     if(this.totalCases == this.chagnedCases){
       this.piesingle = [
@@ -644,7 +688,7 @@ export class FilterComponent implements OnInit {
       cc += Number(r.caseCount);
     })
     this.chagnedCases = cc;
-    let casePer = ((Number(this.chagnedCases) / Number(this.totalCases)) * 100).toFixed(2);
+    let casePer = ((Number(this.chagnedCases) / Number(this.totalCases)) * 100).toFixed(0);
     this.casePercentage =Number(casePer);
     if(this.totalCases == this.chagnedCases){
       this.piesingle = [
@@ -721,6 +765,7 @@ export class FilterComponent implements OnInit {
     this.minPerfValue = 0;
     this.maxPerfValue = 0;
     this.options1 = {};
+    // console.log("pData",pData)
     pData.data.filter(res => {
       this.totalCases += Number(res.case_value);
       this.performanceTotalDuration.push({ durationArray: res.filter_total_durations, caseValue: res.case_value });
@@ -740,6 +785,7 @@ export class FilterComponent implements OnInit {
       this.single.push({ name: res.duration, value: res.caseCount })
     });
 
+    // console.log(this.single)
     this.options1 = {
 
       floor: Number(this.perfrmanceFilterKeyValuepair[0].duration),
@@ -765,7 +811,7 @@ export class FilterComponent implements OnInit {
     }
     this.vaue = Number(this.perfrmanceFilterKeyValuepair[0].duration)
     this.highValue = Number(this.perfrmanceFilterKeyValuepair[this.perfrmanceFilterKeyValuepair.length - 1].duration)
-    console.log(this.casePercentage);
+    // console.log(this.casePercentage);
   }
   getMeanActiveTime(pData){
    
@@ -1056,6 +1102,7 @@ export class FilterComponent implements OnInit {
     this.perfrmanceFilterKeyValuepair.filter(res => {
       this.single.push({ name: res.duration, value: res.caseCount })
     });
+    // console.log(this.single)
 
     this.options1 = {
 

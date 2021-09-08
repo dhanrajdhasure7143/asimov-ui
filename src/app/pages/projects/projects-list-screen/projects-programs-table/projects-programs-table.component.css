@@ -1,0 +1,85 @@
+.prj-prg-tablelist {
+  width:100%;
+  overflow-x: auto;
+  height: calc(100% - 40px);
+  /* margin-top: 5px; */
+}
+.types2{
+    color:#0062cf  !important;
+    width:15%;
+}
+
+.env-btn > button > img{
+    color:black !important;
+    width:25px;
+    background-color: white !important;
+  }
+
+  .env-btn > button:disabled > img{
+    color:rgb(116, 116, 116) !important;
+    background-color:white!important;
+  }
+  .env-btn > button:disabled{
+    background-color:white;
+  }
+  .env-btn > button > div{
+    color:black !important;
+  }
+
+  .env-btn > button:disabled > div{
+    color:lightgrey !important;
+  }
+
+  .env-btn{
+    margin-left: 5px !important;
+    margin-right: 5px !important;
+  } 
+  
+  .projecttable.table th{    
+    vertical-align: middle !important;
+    background-color: #e8f7fd !important;
+    color: #00a0e3 !important;
+    font-size: 14px !important;
+    text-align: left !important;
+    border-top: none !important;
+    font-weight: 600;
+    border-bottom: 1px solid #4a4a4a33 !important;
+    padding: 5px 10px;
+  }
+  tr.mat-header-row {
+    height: 40px;
+}
+
+.projecttable.table td {
+  font-size: 13px !important;
+  padding: 5px 10px !important;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+.projecttable.table td span {
+  font-size: 13px !important;
+}
+.tablacs .newinntalx {
+  display: flex;
+}
+.tablacs button, .tablacs a {
+  margin: 0px 6px;
+}  
+.disable-bg{
+  /* background-color: gainsboro;
+  border-radius: 5px; */
+}
+.no-item-img{
+  height:calc(100vh - 430px)
+}
+   
+img.hover-img {
+  display: none;
+}
+.newinntalx a:hover img.default-img {
+  display: none;
+}
+
+.newinntalx a:hover img.hover-img {
+  display: initial;
+}

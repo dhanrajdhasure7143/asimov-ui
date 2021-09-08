@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
+  <defs>
+    <clipPath id="clip-duplicate">
+      <rect width="24" height="24"/>
+    </clipPath>
+  </defs>
+  <g id="duplicate" clip-path="url(#clip-duplicate)">
+    <path id="Path_1056" data-name="Path 1056" d="M7.8,6.8V3.2A1.2,1.2,0,0,1,9,2H23.4a1.2,1.2,0,0,1,1.2,1.2V20a1.2,1.2,0,0,1-1.2,1.2H19.8v3.6A1.2,1.2,0,0,1,18.592,26H4.208A1.2,1.2,0,0,1,3,24.8L3,8A1.2,1.2,0,0,1,4.212,6.8ZM5.4,9.2l0,14.4h12V9.2Zm4.8-2.4h9.6v12h2.4V4.4h-12Z" transform="translate(-1.8 -2)" fill="#607088"/>
+  </g>
+</svg>

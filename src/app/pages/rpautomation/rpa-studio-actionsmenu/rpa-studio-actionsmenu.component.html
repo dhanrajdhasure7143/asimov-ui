@@ -1,18 +1,22 @@
-<div class="row col-md-12">
+<div class="row col-md-12 p-0 h-100">
   <div class="actionsmenu row">
-    <div class="col-md-3">
+    <div class="col-md-3 p-0">
       <div class="actionsmenu-left">
-        <button class="action-item"  placement="bottom" tooltip="Toolset" (click)="rpa_toolset.sidenavbutton==false?rpa_toolset.sidenavbutton=true:rpa_toolset.sidenavbutton=false;">
-            <span><i class="ri-function-line"></i></span>&nbsp;Toolset
+        <button class="action-item" placement="bottom" tooltip="Toolset & Actions" *ngIf="rpa_toolset.sidenavbutton==false" (click)="rpa_toolset.sidenavbutton=true">
+            <!-- <span><i class="ri-function-line"></i></span>&nbsp;Toolset -->
+            <span class="pull-left">
+              <img src="../../../../assets/images/RPA/icon_latest/menu-line.svg" class="toolset-menuicon" />Toolset & Actions
+            </span>
         </button>
       </div>
     </div>
-    <div class="col-md-9">
+    <div class="col-md-9 p-0">
       <div class="actionsmenu-right">
-        <div class="action-item "   dropdown  placement="bottom" tooltip="Versions" >
-            <button class=" dropdown-action-item clickable  text-primary dropdown-toggle" id="Versions" dropdownToggle type="button"
+        <div class="action-item "   dropdown   placement="bottom" tooltip="Versions" >
+            <button class=" dropdown-action-item clickable dropdown-toggle" id="Versions" dropdownToggle type="button"
               aria-controls="versions">
-              <span><i class="ri-stack-line"></i></span>
+              <img src="../../../../assets/images/RPA/icon_latest/layer.svg" />
+              <!-- <span><i class="ri-stack-line"></i></span> -->
               &nbsp;Version &nbsp;{{selectedversion}} &nbsp;<span class="caret"></span>
           </button>
           <ul id="versions" style="max-width:300px;max-height:250px;overflow:auto;left:auto;" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
@@ -22,83 +26,98 @@
             </li>
           </ul>
         </div>
-        <div class="action-item" dropdown  #dropdown="bs-dropdown"  placement="bottom" tooltip="Environments" [insideClick]="true" >
-          <button class= "dropdown-action-item clickable  text-primary dropdown-toggle" id="Environments" dropdownToggle type="button"
+        <div class="action-item" dropdown  #dropdown="bs-dropdown"   [insideClick]="true" >
+          <button class= "dropdown-action-item clickable dropdown-toggle" id="Environments" placement="bottom" tooltip="Environments" dropdownToggle type="button"
           aria-controls="environments">
-            <span><i class="ri-mac-line"></i></span>
+          <img src="../../../../assets/images/RPA/icon_latest/desktop.svg" />
+            <!-- <span><i class="ri-mac-line"></i></span> -->
             &nbsp;
             <span *ngIf="selectedEnvironments.length==0">Environment</span>
             <span *ngIf="selectedEnvironments.length>=1">{{selectedEnvironments[0].environmentName}}<span *ngIf="selectedEnvironments.length>1">...({{selectedEnvironments.length}})</span></span>
             &nbsp;<span class="caret"></span>
           </button>
-          <ul id="environments" style="max-width:300px;max-height:250px;overflow:auto;left:auto;" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
+          <ul id="environments" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
             <li  role="menuitem" class="clickable"  *ngFor="let env of environment" style="white-space: nowrap;" >
               <input type="checkbox" [checked]="env.checked==true" (change)="checkuncheckenv(env.environmentId)" >
               &nbsp; {{env.environmentName}}
             </li>
             <li role="menuitem" class="clickable"  >
-              <span class="clickable"  (click)="create_env();"><i class="fa  fa-plus"></i>&nbsp;&nbsp;New</span>
+              <span class="clickable"  (click)="create_env();">
+                <img src="../../../../assets/images/RPA/icon_latest/pluse-blue.svg" class="testplus"/>
+                New
+                <!-- <i class="fa  fa-plus"></i>&nbsp;&nbsp;New -->
+              </span>
             </li>
           </ul>
         </div>
        
         <div class="action-item" placement="bottom" tooltip="Save Bot" (click)="saveBotFunAct()">
-          <i class="ri-save-line"></i>
+          <img src="../../../../assets/images/RPA/icon_latest/save.svg" />
+          <!-- <i class="ri-save-line"></i> -->
         </div>
         <!-- <div class="action-item" >
             <i class="ri-play-line"></i>
         </div> -->
 
-        <div class="action-item" placement="bottom"  tooltip="Start Bot" (click)="executionAct()">
-            <i class="ri-play-circle-line"></i>
+        <div class="action-item"  placement="bottom" tooltip="Start Bot"  (click)="executionAct()">
+          <img src="../../../../assets/images/RPA/icon_latest/play.svg" />
+            <!-- <i class="ri-play-circle-line"></i> -->
         </div>
-        <div class="action-item" placement="bottom" tooltip="Stop Bot" (click)="stopBot()">
-            <i class="ri-stop-circle-line"></i>
+        <div class="action-item"  placement="bottom" tooltip="Stop Bot" (click)="stopBot()">
+          <img src="../../../../assets/images/RPA/icon_latest/pause.svg" />
+            <!-- <i class="ri-stop-circle-line"></i> -->
         </div>
       
-        <!-- <div class="action-item" placement="bottom" tooltip="Predefined Bots" >
-            <i class="ri-file-copy-line"></i>
-        </div> -->
-
-        <div class="action-item "   dropdown  placement="bottom" tooltip="Predefined Bots" >
-          <button class="clickable  text-primary dropdown-toggle" id="predefinedbot" dropdownToggle type="button"
-            aria-controls="predefined">
-            <span><i class="ri-robot-line"></i></span>
-        
-        </button>
-        <ul id="predefined" style="max-width:300px;max-height:250px;overflow:auto;left:auto;right:0" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
-          <li role="menuitem" class="clickable" style="white-space: nowrap;"  *ngFor="let bot of predefinedbotsData"  >
-            <a   class="clickable"  (click)="loadpredefinedbot(bot.botId)"> {{bot.botName}}</a>
-          </li>
-        </ul>
-      </div>
-        <div class="action-item" placement="bottom" tooltip="View Logs"(click)="viewlogdata()">
-            <i class="ri-clipboard-line"></i>
+        <div class="action-item" placement="bottom" tooltip="Predefined Bots">
+          <img src="../../../../assets/images/RPA/icon_latest/duplicate.svg" />
+            <!-- <i class="ri-file-copy-line"></i> -->
+        </div>
+        <div class="action-item" placement="bottom" tooltip="View Logs" (click)="viewlogdata(logspopup,'open')">
+          <img src="../../../../assets/images/RPA/icon_latest/artboard.svg" />
+            <!-- <i class="ri-clipboard-line"></i> -->
         </div>
         <div class="action-item" placement="bottom" tooltip="Scheduler" (click)="openschedule()">
-            <i class="ri-history-line"></i>
+          <img src="../../../../assets/images/RPA/icon_latest/time.svg" />
+            <!-- <i class="ri-history-line"></i> -->
+        </div>
+        <div class="action-item" placement="bottom" tooltip="Download">
+          <button type="button" placement="bottom" id="dropdownMenuButton" class="downloadBtn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <img src="../../../../assets/images/RPA/icon_latest/download.svg"   />
+          </button>
+          <div class="rpa-dropdown dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <div><a class="dropdown-item clickable" (click)="childBotWorkspace.downloadJpeg()">&nbsp;<span>JPEG</span></a></div>
+            <div><a class="dropdown-item clickable" (click)="childBotWorkspace.downloadPng()">&nbsp;<span>PNG</span></a></div>
+            <div><a class="dropdown-item clickable" (click)="childBotWorkspace.downloadPdf()">&nbsp;<span>PDF</span></a></div>
+          </div>
+        </div>
+        <div class="action-item" placement="bottom" tooltip="Reset">
+          <button (click)="childBotWorkspace.reset('');slider=0;">
+            <img src="../../../../assets/images/RPA/icon_latest/repeat.svg" />
+            <!-- <i class="fa fa-sync-alt" style="font-size:18px;font-weight: 700;"></i> -->
+          </button>
         </div>
         <div class="action-item" dropdown>
             
-            <button class="clickable  text-primary dropdown-toggle"  placement="bottom" tooltip="More" id="otherActions" dropdownToggle type="button"
+            <button class="clickable  text-primary dropdown-toggle" placement="bottom" tooltip="More" id="otherActions" dropdownToggle type="button"
             aria-controls="other_actions">
-            <i class="ri-more-2-fill"></i>
+            <img src="../../../../assets/images/RPA/icon_latest/more.svg" />
+            <!-- <i class="ri-more-2-fill"></i> -->
             </button>
-            <ul id="other_actions" style="max-width:300px;max-height:250px;overflow:auto;left:auto;right:0;" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
+            <ul id="other_actions" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
               <li class="clickable" class="clickable action-item-data" >
                   <button  placement="bottom"  [disabled]="savebotrespose == undefined" tooltip="Delete Bot" (click)="delete()">
-                      <i class="menu-icon fas fa-trash"></i>&nbsp;&nbsp;Delete
-                    </button>
+                    <img src="../../../../assets/images/RPA/icon_latest/delete.svg" />&nbsp;&nbsp;Delete
+                  </button>
               </li>  
               <li  role="menuitem" class="clickable action-item-data"  style="white-space: nowrap;" >
                     <button  placement="top" tooltip="Reset Bot" (click)="reset()" >
-                        <i class="menu-icon fas fa-sync-alt "></i>&nbsp;&nbsp;Reset
-                      </button>
+                      <img src="../../../../assets/images/RPA/icon_latest/reset.svg" />&nbsp;&nbsp;Reset
+                    </button>
               </li>
               <li  role="menuitem" class="clickable action-item-data"   style="white-space: nowrap;" >
                   <button  placement="top" tooltip="Export Bot" (click)="exportbot(botState)" >
-                      <i class="menu-icon fas fa-file-export "></i>&nbsp;&nbsp;Export 
-                    </button>
+                    <img src="../../../../assets/images/RPA/icon_latest/export.svg" />&nbsp;&nbsp;Export 
+                  </button>
               </li>
            
             </ul>
@@ -112,20 +131,18 @@
 
 
 
-    <div style="flex:1;width:97%">
+    <div class="col-md-11 p-0">
       <app-rpa-studio-designerworkspace [bot]="botState"></app-rpa-studio-designerworkspace>
     </div>
 
-    <div style="flex:1;width:3%"><br><br>
-    <div style="height:200px" class="rpa-custom-slider">
+    <div class="col-md-1 p-0">
+    <div class="rpa-custom-slider">
       <ng5-slider id="zoominzoomout" [value]="slider" [(ngModel)]="slider" [options]="options" (mouseup)="sliderEvent()"></ng5-slider>
 
     </div>
-  <br>
-  <button style="width: 45px;" tooltip="Reset" placement="bottom" (click)="childBotWorkspace.reset('');slider=0;"><i class="fa fa-sync-alt text-primary"></i></button><br>
-      
-  <br>
-    <div class="download">
+  
+  <!-- <button style="width: 45px; display: none;" tooltip="Reset" placement="bottom" (click)="childBotWorkspace.reset('');slider=0;"><i class="fa fa-sync-alt text-primary"></i></button>
+    <div class="download" style="display:none;">
       <button type="button" placement="bottom" id="dropdownMenuButton" class="downloadBtn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <img style="filter: none; width: 100%" src="../../../../assets/downloadimage.svg">
       </button>
@@ -134,7 +151,7 @@
         <div><a class="dropdown-item clickable" (click)="childBotWorkspace.downloadPng()"><i class="fas fa-file-image"></i>&nbsp;<span>PNG</span></a></div>
         <div><a class="dropdown-item clickable" (click)="childBotWorkspace.downloadPdf()"><i class="fas fa-file-pdf"></i>&nbsp;<span>PDF</span></a></div>
       </div>
-    </div>
+    </div> -->
     </div>
 
   </div>
@@ -387,13 +404,13 @@
 
 
 <div *ngIf="schpop">
-  <div id='sch' class="rpa-modal" style="display:block">
+  <div id='sch' class="rpa-modal schedulemod" style="display:block">
       <div class="rpa-modal-content">
           <div class="rpa-modal-header">
-              <span class="rpa-modal-close" (click)="closesch()">&times;</span>
+              <span class="rpa-modal-close" (click)="closesch()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
               <h4>Scheduler</h4>
           </div>
-          <div class="rpa-modal-body">
+          <div class="modal-body actions-mbody">
             <app-rpa-scheduler [data]="schedule"></app-rpa-scheduler>
           </div>
       </div>
@@ -401,321 +418,326 @@
 </div>
 
 
+<ng-template #logspopup>
+  <div class="modal-header modelprhead newmodelcla">
+    <!-- <span *ngIf="viewlogid1!=undefined">      
+    
+      <button (click)="viewlogid1=undefined" class="backarrcl">
+        <img src="../../../../assets/images/RPA/arrow.svg" style="height:17px">
+      </button>&nbsp;&nbsp;
+    </span>  -->
+    <span *ngIf="viewlogid1!=undefined" class="module-back-button" (click)="viewlogid1=undefined">
+      <i class="fas fa-arrow-left" aria-hidden="true"></i>
+    </span>
+    Logs  
+    
+    <span *ngIf="viewlogid1!=undefined">
+      - Run ID - {{viewlogid1}} 
+    </span>
+    <span (click)="viewlogdata(logspopup,'update')" *ngIf="viewlogid1==undefined" class="clickable refecls"  >
+      Refresh
+    </span>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div [id]="viewlogid" class="rpa-modal">
-  <div class="rpa-modal-content">
-      <div class="rpa-modal-header">
-          <span class="rpa-modal-close" (click)="viewlogclose()">&times;</span>
-          <h4>Logs</h4>
-      </div>
-
-      <div class="container-fluid" style="background: white;">
-        <button (click)="viewlogdata()" style='float:right;margin-top:10px;' tooltip="Refresh" ><i class="fas fa-sync-alt text-dark"  aria-hidden="true"></i></button>
-
-        <div class="container-fluid"  class="table w-100 w-100">
-
-              <table mat-table [dataSource]="Viewloglist" #sort1="matSort" matSort style="width:100%;max-height: 300px;overflow-x:scroll;">
-
-
-                  <!-- Run Id Column -->
-                  <ng-container matColumnDef="run_id">
-                      <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left:55px;width:13%"> Run ID </th>
-                      <td mat-cell *matCellDef="let element" style="padding-left:55px;width:13%"><button style="color:blue; text-decoration: underline;" (click)="ViewlogByrunid(element.run_id)">{{element.run_id}}</button></td>
-                  </ng-container>
-
-                  <!-- Version Column -->
-                  <ng-container matColumnDef="version">
-                      <th mat-header-cell *matHeaderCellDef> Version </th>
-                      <td mat-cell *matCellDef="let element">
-                          <span *ngIf="element.version!=null">V{{element.version}}</span>
-                          <span *ngIf="element.version == undefined">-</span>
-                      </td>
-                  </ng-container>
-
-                  <!-- Start Date Column -->
-                  <ng-container matColumnDef="start_date">
-                      <th mat-header-cell *matHeaderCellDef style="width:25%;"> Start Date </th>
-                      <td mat-cell *matCellDef="let element" style="width:25%;">
-                          <span *ngIf="element.start_date!=null">{{element.start_date  | date:'EEE MMM d, yyyy' }}, {{element.start_time}}</span>
-                          <span *ngIf="element.start_date == undefined">-</span>
-                      </td>
-                  </ng-container>
-
-                  <!-- End Date Column -->
-
-                  <ng-container matColumnDef="end_date">
-                      <th mat-header-cell *matHeaderCellDef style="width:25%;"> End Date </th>
-                      <td mat-cell *matCellDef="let element" style="width:25%;">
-                          <span *ngIf="element.end_date!=null">{{element.end_date  | date:'EEE MMM d, yyyy' }}, {{element.end_time}}</span>
-                          <span *ngIf="element.end_date == undefined">-</span>
-                      </td>
-                  </ng-container>
-                  <ng-container matColumnDef="bot_status">
-                      <th mat-header-cell *matHeaderCellDef>Status</th>
-                      <td mat-cell *matCellDef="let element">
-                              <span *ngIf="element.bot_status=='Running'" class="text-primary" ><span><img src="../../../../assets/images/RPA/DotSpin.gif" style="filter: none; width: 19px;"></span>&nbsp;{{element.bot_status}}</span>
-
-                              <span *ngIf="element.bot_status=='Success'" class="text-success"><span><li class="fa fa-check-circle"style="font-size:19px"></span>&nbsp;<span>{{element.bot_status}}</span></span>
-
-                              <span *ngIf="element.bot_status=='Failure'" class="text-danger"><span><li class="fa fa-times-circle" style="font-size:19px"></span>&nbsp;<span>{{element.bot_status}}</span></span>
-                              <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
-                              <span *ngIf="element.bot_status=='New'" class="text-primary"><span style="background-color:#0062cf;border-radius: 50%;color:white;padding-right:5px;padding-left:4px;padding-top:5px;padding-bottom:5px;font-size:10px;text-align: center;align-content: center;align-items: center;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><i class="fas fa-robot text-light"></i></span>&nbsp;<span>{{element.bot_status}}</span></span>
-
-                              <span *ngIf="element.bot_status=='Stop'" ><span class="bg-danger" style="background-color:#a94442;border-radius: 50%;color:white;padding-right:6px;padding-left:5px;padding-top:5px;padding-bottom:4px;font-size:9px;text-align: center;align-content: center;align-items: center;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><i class="fas fa-stop"></i></span>&nbsp;<span>{{element.bot_status}}</span></span>
-
-                              <span *ngIf="element.bot_status=='Pause'||element.bot_status=='Paused'" ><span class="text-primary" style="font-size:19px;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><i class="fas fa-pause-circle text-primary"></i></span>&nbsp;<span>{{element.bot_status}}</span></span>
-
-                          <span *ngIf="element.bot_status == undefined || element.bot_status == null">-</span></td>
-                  </ng-container>
-
-                  <ng-container matColumnDef="noData">
-                      <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="7">
-                          No Records Found
-                      </td>
-                  </ng-container>
-
-                  <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                  <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': !respdata1}"></tr>
-              </table>
-              <mat-paginator #paginator1 [pageSize]="5" [showFirstLastButtons]="true"></mat-paginator>
-          </div>
-      </div>
+    <span (click)="ViewlogByrunid(viewlogid1)" *ngIf="viewlogid1!=undefined" class="clickable refecls">
+      Refresh
+      </span>
+    <span class="pull-right">
+   
+    <span class=" clickable" (click)="logsmodalref.hide()">
+      <img src="../../../../assets/images/Projects/circle-close.svg" alt="">
+    </span>
+    
+  </span>
   </div>
-</div>
-<div [id]="viewlogid1" class="rpa-modal">
-  <div class="rpa-modal-content">
-      <div class="rpa-modal-header">
-          <span class="rpa-modal-close" (click)="viewlogclose1()">&times;</span>
-          <h4>Logs</h4>
-      </div>
-
-      <div class="logs-container">
-          <button (click)="back()" tooltip="Back" style='float:right;margin-top:10px;'>&nbsp;&nbsp;&nbsp;&nbsp;
-            <i class="fa fa-arrow-left" aria-hidden="true"></i>
-          </button>
-          <button (click)="ViewlogByrunid(botrunid)" tooltip="Refresh" placement="bottom" style='float:right;margin-top:10px;'>
-            <i class="fas fa-sync-alt" aria-hidden="true"></i>
-          </button>
-
-          <table mat-table [dataSource]="logbyrunid" #sort2="matSort" matSort style="width:100%;">
-
-              <!-- Task Name Column -->
-              <ng-container matColumnDef="task_name">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left:55px;width:18%"> Task Name </th>
-                  <td mat-cell *matCellDef="let element" style="padding-left:55px;width:18%">
-                      <span *ngIf="element.task_name != null" class="btntaskname">
-                          {{(element.task_name.length > 25) ? ((element.task_name).slice(0, 25) + '...') : element.task_name}}</span>
-                         <span *ngIf="element.task_name == undefined">-</span>
-                  </td>
-              </ng-container>
-
-              <!-- Status Column -->
-              <ng-container matColumnDef="status">
-                  <th mat-header-cell *matHeaderCellDef style="width:13%">Status</th>
-                  <td mat-cell *matCellDef="let element" style="width:13%">
-                      <span *ngIf="element.status=='Running'" class="text-primary" ><span><img src="../../../../assets/images/RPA/DotSpin.gif" style="filter: none; width: 19px;"></span>&nbsp;{{element.status}}</span>
-
-                      <span *ngIf="element.status=='Success'" class="text-success"><span><li class="fa fa-check-circle"style="font-size:19px"></span>&nbsp;<span>{{element.status}}</span></span>
-
-                      <span *ngIf="element.status=='Failure'" class="text-danger"><span><li class="fa fa-times-circle" style="font-size:19px"></span>&nbsp;<span>{{element.status}}</span></span>
-                      <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
-                      <span *ngIf="element.status=='New'" class="text-primary"><span style="background-color:#0062cf;border-radius: 50%;color:white;padding-right:5px;padding-left:4px;padding-top:5px;padding-bottom:5px;font-size:10px;text-align: center;align-content: center;align-items: center;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><i class="fas fa-robot text-light"></i></span>&nbsp;<span>{{element.status}}</span></span>
-
-                      <span *ngIf="element.status=='Stop'" ><span class="bg-danger" style="background-color:#a94442;border-radius: 50%;color:white;padding-right:6px;padding-left:5px;padding-top:5px;padding-bottom:4px;font-size:9px;text-align: center;align-content: center;align-items: center;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><i class="fas fa-stop"></i></span>&nbsp;<span>{{element.status}}</span></span>
-
-                      <span *ngIf="element.status=='Pause'||element.status=='Paused'" ><span class="text-primary" style="font-size:19px;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><i class="fas fa-pause-circle text-primary"></i></span>&nbsp;<span>{{element.status}}</span></span>
-
-                      <span *ngIf="element.status == undefined || element.status == null">-</span></td>
-              </ng-container>
-
-              <!-- Start date Column -->
-              <ng-container matColumnDef="start_date">
-                  <th mat-header-cell *matHeaderCellDef style="width:18%"> Start Date </th>
-                  <td mat-cell *matCellDef="let element" style="width:18%">
-                      <span *ngIf="element.start_date != null">{{element.start_date.split('T')[0] | date:'EEE MMM d, yyyy' }},{{element.start_time.slice(11,19)}}</span>
-                      <span *ngIf="element.start_date == undefined">-</span>
-                  </td>
-              </ng-container>
-
-              <!-- End Time Column -->
+  <div class="modal-body newmodelbodycl" *ngIf="viewlogid1==undefined" [id]="viewlogid" >
+      <!-- <div class="rpa-modal-header">
+         <h4>Logs</h4>
+      </div> -->
+    <div class="logs-container" style="background: white;">
+    
+            <table mat-table class="logs-table" [dataSource]="Viewloglist" #sort1="matSort" matSort>
 
 
-              <!-- End Date Column -->
-              <ng-container matColumnDef="end_date">
-                  <th mat-header-cell *matHeaderCellDef style="width:18%"> End Date </th>
-                  <td mat-cell *matCellDef="let element" style="width:18%">
-                      <span *ngIf="element.end_date != null">{{element.end_date.split('T')[0] | date:'EEE MMM d, yyyy' }},{{element.end_time.slice(11,19)}}</span>
-                      <span *ngIf="element.end_date == undefined">-</span>
-                  </td>
-              </ng-container>
+                <!-- Run Id Column -->
+                <ng-container matColumnDef="run_id">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left:55px;width:13%"> Run ID </th>
+                    <td mat-cell *matCellDef="let element" style="padding-left:55px;width:13%"><button style="color:#00a1e3; text-decoration: underline;" (click)="ViewlogByrunid(element.run_id)">{{element.run_id}}</button></td>
+                </ng-container>
 
-              <!-- Error Info Column -->
-              <ng-container matColumnDef="error_info">
-                  <th mat-header-cell *matHeaderCellDef> Error Info </th>
-                  <td mat-cell *matCellDef="let element">
-                      <span *ngIf="element.error_info!=null && element.error_info != 'NA'" [tooltip]="element.error_info" class="btnerrorinfo">
-                          {{(element.error_info.length > 50) ? ((element.error_info).slice(0, 50) + '...') : element.error_info}}</span>
-                      <span *ngIf="element.error_info == undefined ||element.error_info == 'NA' ">-</span>
-                      <!--<div class="errorinfoelement">{{element.error_info}}</div>-->
-                  </td>
-              </ng-container>
+                <!-- Version Column -->
+                <ng-container matColumnDef="version">
+                    <th mat-header-cell *matHeaderCellDef> Version </th>
+                    <td mat-cell *matCellDef="let element">
+                        <span *ngIf="element.version!=null">V{{element.version}}</span>
+                        <span *ngIf="element.version == undefined">-</span>
+                    </td>
+                </ng-container>
 
-              <ng-container matColumnDef="noData">
-                  <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="7">
-                      No Records Found
-                  </td>
-              </ng-container>
+                <!-- Start Date Column -->
+                <ng-container matColumnDef="start_date">
+                    <th mat-header-cell *matHeaderCellDef style="width:25%;"> Start Date </th>
+                    <td mat-cell *matCellDef="let element" style="width:25%;">
+                        <span *ngIf="element.start_date!=null">{{element.start_date  | date:'EEE MMM d, yyyy' }}, {{element.start_time}}</span>
+                        <span *ngIf="element.start_date == undefined">-</span>
+                    </td>
+                </ng-container>
 
-              <tr mat-header-row *matHeaderRowDef="displayedColumns1; sticky: true"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
-              <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': !respdata2}"></tr>
-          </table>
-          <mat-paginator #paginator2 [pageSize]="5" [showFirstLastButtons]="true"></mat-paginator>
-      </div>
+                <!-- End Date Column -->
+
+                <ng-container matColumnDef="end_date">
+                    <th mat-header-cell *matHeaderCellDef style="width:25%;"> End Date </th>
+                    <td mat-cell *matCellDef="let element" style="width:25%;">
+                        <span *ngIf="element.end_date!=null">{{element.end_date  | date:'EEE MMM d, yyyy' }}, {{element.end_time}}</span>
+                        <span *ngIf="element.end_date == undefined">-</span>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="bot_status">
+                    <th mat-header-cell *matHeaderCellDef>Status</th>
+                    <td class="font-weight-bold" mat-cell *matCellDef="let element">
+                            <span *ngIf="element.bot_status=='Running'" class="text-primary" >
+                              <span>
+                                <img src="../../../../assets/images/RPA/DotSpin.gif" style="filter: none; width: 19px;">
+                              </span>&nbsp;
+                              {{element.bot_status}}&nbsp;&nbsp;&nbsp;
+                              <span class="btn btn-xs btn-primary clickable" (click)="updateLog(element.run_id,logspopup)" >Kill</span> 
+                            </span>
+                            <span *ngIf="element.bot_status=='Success'" class="tableActionsIcons"><span><img src="../../../../assets/images/RPA/icon_latest/Success.svg" alt=""></span>&nbsp;<span>{{element.bot_status}}</span></span>
+
+                            <span *ngIf="element.bot_status=='Failure'" class="tableActionsIcons"><span><img src="../../../../assets/images/RPA/icon_latest/close-red.svg" alt=""></span>&nbsp;<span>{{element.bot_status}}</span></span>
+                            <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
+                            <span *ngIf="element.bot_status=='New'" class="text-primary tableActionsIcons"><span class="text-primary">
+                               <img src="../../../../assets/images/RPA/userobot.png" style="filter: none;">
+                              </span>&nbsp;<span>{{element.bot_status}}</span></span>
+
+                            <span *ngIf="element.bot_status=='Stop' ||element.bot_status=='Stopped'  " class="tableActionsIcons" ><span  ><img src="../../../../assets/images/RPA/icon_latest/stop.svg"></span>&nbsp;<span>{{element.bot_status}}</span></span>
+
+                            <span *ngIf="element.bot_status=='Pause'||element.bot_status=='Paused'" ><span class="text-primary" style="font-size:19px;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><i class="fas fa-pause-circle text-primary"></i></span>&nbsp;<span>{{element.bot_status}}</span></span>
+
+                        <span *ngIf="element.bot_status == undefined || element.bot_status == null">-</span></td>
+                </ng-container>
+
+                <ng-container matColumnDef="noData">
+                    <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="7">
+                        No Records Found
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': !respdata1}"></tr>
+            </table>
+         
+       
+    </div>
+    <!-- <mat-paginator #paginator1 [pageSize]="5" [showFirstLastButtons]="true"></mat-paginator> -->
   </div>
-</div>
+
+  <div [id]="viewlogid1" *ngIf="viewlogid1!=undefined" class="modal-body modelprbody">
+   
+    <div class="logs-container">
+   
+        <table mat-table class="logs-table" [dataSource]="logbyrunid" #sort2="matSort" matSort style="width:100%;">
+
+            <!-- Task Name Column -->
+            <ng-container matColumnDef="task_name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left:55px;width:18%"> Task Name </th>
+                <td mat-cell *matCellDef="let element" style="padding-left:55px;width:18%">
+                    <span *ngIf="element.task_name != null" class="btntaskname">
+                        {{(element.task_name.length > 25) ? ((element.task_name).slice(0, 25) + '...') : element.task_name}}</span>
+                        <span *ngIf="element.task_name == undefined">-</span>
+                </td>
+            </ng-container>
+
+            <!-- Status Column -->
+            <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef style="width:13%">Status</th>
+                <td class="font-weight-bold" mat-cell *matCellDef="let element" style="width:13%">
+                    <span *ngIf="element.status=='Running'" class="text-primary" ><span><img src="../../../../assets/images/RPA/DotSpin.gif" style="filter: none; width: 19px;"></span>&nbsp;{{element.status}}</span>
+
+                    <span *ngIf="element.status=='Success'" class="tableActionsIcons"><span><img src="../../../../assets/images/RPA/icon_latest/Success.svg" alt=""></span>&nbsp;<span>{{element.status}}</span></span>
+
+                    <span *ngIf="element.status=='Failure'" class="tableActionsIcons"><span><img src="../../../../assets/images/RPA/icon_latest/close-red.svg" alt=""></span>&nbsp;<span>{{element.status}}</span></span>
+                    <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
+                    <span *ngIf="element.status=='New'" class="text-primary tableActionsIcons"><span >
+                      <img src="../../../../assets/images/RPA/userobot.png" style="filter: none;">
+                    </span>&nbsp;<span>{{element.status}}</span></span>
+
+                    <span *ngIf="element.status=='Stop' || element.status=='Stopped'  " class="tableActionsIcons"><span><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">-->
+                      <img src="../../../../../assets/images/RPA/icon_latest/stop.svg" style="filter: none;">
+                    </span>&nbsp;<span>{{element.status}}</span></span>
+
+                    <span *ngIf="element.status=='Pause'||element.status=='Paused'" ><span class="text-primary" style="font-size:19px;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><i class="fas fa-pause-circle text-primary"></i></span>&nbsp;<span>{{element.status}}</span></span>
+
+                    <span *ngIf="element.status == undefined || element.status == null">-</span></td>
+            </ng-container>
+
+            <!-- Start date Column -->
+            <ng-container matColumnDef="start_date">
+                <th mat-header-cell *matHeaderCellDef style="width:18%"> Start Date </th>
+                <td mat-cell *matCellDef="let element" style="width:18%">
+                    <span *ngIf="element.start_date != null">{{element.start_date.split('T')[0] | date:'EEE MMM d, yyyy' }},{{element.start_time.slice(11,19)}}</span>
+                    <span *ngIf="element.start_date == undefined">-</span>
+                </td>
+            </ng-container>
+
+            <!-- End Time Column -->
 
 
+            <!-- End Date Column -->
+            <ng-container matColumnDef="end_date">
+                <th mat-header-cell *matHeaderCellDef style="width:18%"> End Date </th>
+                <td mat-cell *matCellDef="let element" style="width:18%">
+                    <span *ngIf="element.end_date != null||element.end_date != undefined">{{element.end_date.split('T')[0] | date:'EEE MMM d, yyyy' }},{{element.end_time.slice(11,19)}}</span>
+                    <span *ngIf="element.end_date == undefined">-</span>
+                </td>
+            </ng-container>
 
+            <!-- Error Info Column -->
+            <ng-container matColumnDef="error_info">
+                <th mat-header-cell *matHeaderCellDef> Error Info </th>
+                <td mat-cell *matCellDef="let element">
+                    <span *ngIf="element.error_info!=null && element.error_info != 'NA'" [tooltip]="element.error_info" class="btnerrorinfo">
+                        {{(element.error_info.length > 50) ? ((element.error_info).slice(0, 50) + '...') : element.error_info}}</span>
+                    <span *ngIf="element.error_info == undefined ||element.error_info == 'NA' ">-</span>
+                    <!--<div class="errorinfoelement">{{element.error_info}}</div>-->
+                </td>
+            </ng-container>
 
+            <ng-container matColumnDef="noData">
+                <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="7">
+                    No Records Found
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns1; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+            <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': !respdata2}"></tr>
+        </table>
+       
+    </div>
+    <!-- <mat-paginator #paginator2 [pageSize]="5" [showFirstLastButtons]="true"></mat-paginator> -->
+  </div>
+
+</ng-template>
 
 <div [id]="'rpa_createenvironment'+'_'+botState.botName"  class="rpa-modal">
   <div class="rpa-modal-content">
     <div class="rpa-modal-header">
-        <span class="rpa-modal-close" (click)=" close_c_env()">&times;</span>
+        <span class="rpa-modal-close" (click)=" close_c_env()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
         <h4>Create Environment</h4>
     </div>
-    <div class="rpa-modal-body">
-        <br>
-        <div class="container env">
-            <form [formGroup]="insertForm" (ngSubmit)="savedata()">
-                <div class="row">
-                    <div class="col-md-3 formelement">
-                        <label for="environmentName">Name<span style="color:red">*</span></label>
-                        <input type="text" maxlength="51" class="form-control data" formControlName="environmentName" #environmentName value="" placeholder="Enter Name">
-                        <span *ngIf="(insertForm.get('environmentName').invalid && insertForm.get('environmentName').touched) && !insertForm.controls['environmentName'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Name Required*</span>
-                        <div *ngIf="insertForm.controls['environmentName'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
-                            Maximum of 50 characters
-                        </div>
-                    </div>
-                    <div class="col-md-3 formelement ">
-                        <label for="environmentType">Type<span style="color:red">*</span></label>
-                        <!--<input type="text" class="form-control" formControlName="environmentType" value=""
+    <div class="modal-body createenv-mbody">
 
-placeholder="Enter Environment Type" >-->
-                        <select class="form-control" formControlName="environmentType" (change)="EnvType1()">
-      <option value="" [selected]="true">--Select Type--</option>
-      <option value="Windows">Windows</option>
-      <option value="Mac">Mac</option>
-      <option value="Linux">Linux</option>
+      <form [formGroup]="insertForm" (ngSubmit)="savedata()">
+        <div class="container m-contanier form-body">
+          <div class="col-md-12 p-0 form-group">
+            <label class="label-control" for="environmentName">Name<span class="star">*</span></label>
+            <input type="text" maxlength="51" class="form-control data" formControlName="environmentName" #environmentName value="" placeholder="Enter Name">
+            <span *ngIf="(insertForm.get('environmentName').invalid && insertForm.get('environmentName').touched) && !insertForm.controls['environmentName'].hasError('maxlength')" class="errspan required">Name Required*</span>
+            <div *ngIf="insertForm.controls['environmentName'].hasError('maxlength')" class="errspan required">
+                Maximum of 50 characters
+            </div>
+          </div>
+          <div class="col-md-12 p-0 form-group">
+            <label class="label-control" for="environmentType">Type<span class="star">*</span></label>
+            <!--<input type="text" class="form-control" formControlName="environmentType" value=""
+                        placeholder="Enter Environment Type" >-->
+            <select class="form-control" formControlName="environmentType" (change)="EnvType1()">
+                <option value="" [selected]="true">--Select Type--</option>
+                <option value="Windows">Windows</option>
+                <option value="Mac">Mac</option>
+                <option value="Linux">Linux</option>
 
-    </select>
-                        <span *ngIf="insertForm.get('environmentType').invalid && insertForm.get
+            </select>
+            <span *ngIf="insertForm.get('environmentType').invalid && insertForm.get('environmentType').touched" 
+                class="errspan required">Type Required*</span>
+          </div>
+          <div class="col-md-12 p-0 form-group">
+            <label class="label-control" for="agentPath">Agent Path<span class="star">*</span></label>
+            <input type="text" maxlength="51" class="form-control" formControlName="agentPath" value="" placeholder="Enter Agent Path">
+            <span *ngIf="(insertForm.get('agentPath').invalid && insertForm.get('agentPath').touched) && !insertForm.controls['agentPath'].hasError('maxlength')" class="errspan required"> Agent Path Required*</span>
 
-('environmentType').touched" style="color:red" class="fa fa-info-circle errspan">Type Required*</span>
+            <div *ngIf="insertForm.controls['agentPath'].hasError('maxlength')" class="errspan required">
+                Maximum of 50 characters
+            </div>            
+          </div>
+          <div class="col-md-12 p-0 form-group">
+            <label class="label-control" for="hostAddress"> IP Address/Host<span class="star">*</span></label>
+            <input type="text" maxlength="51" class="form-control" formControlName="hostAddress" value="" placeholder="Enter IP Address/Host">
+            <span *ngIf="(insertForm.get('hostAddress').invalid && insertForm.get('hostAddress').touched) && !insertForm.controls['hostAddress'].hasError('maxlength') && !insertForm.controls['hostAddress'].hasError('pattern')" class="errspan required"> IP Address/Host Required*</span>
 
-                    </div>
-                    <div class="col-md-3 formelement">
-                        <label for="agentPath">Agent Path<span style="color:red">*</span></label>
-                        <input type="text" maxlength="51" class="form-control" formControlName="agentPath" value="" placeholder="Enter Agent Path">
-                        <span *ngIf="(insertForm.get('agentPath').invalid && insertForm.get('agentPath').touched) && !insertForm.controls['agentPath'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan"> Agent Path Required*</span>
+            <!--<div *ngIf="insertForm.controls['hostAddress'].hasError('maxlength')" class="errspan required">
+                Maximum of 50 characters
+            </div>-->
+            <div *ngIf="(insertForm.controls['hostAddress'].hasError('pattern') && !insertForm.controls['hostAddress'].hasError('maxlength')) && insertForm.get('hostAddress').touched" class="errspan required">
+                Invalid IP Address format
+            </div>
+            <div *ngIf="(insertForm.controls['hostAddress'].hasError('pattern') && insertForm.controls['hostAddress'].hasError('maxlength'))" class="errspan required">
+                Invalid IP Address format
+            </div>
+          </div>
+          <div class="col-md-12 p-0 form-group">
+            <label class="label-control" for="userName">Username<span class="star">*</span></label>
+            <input type="text" maxlength="51" class="form-control" formControlName="username" value="" placeholder="Enter Username">
+            <span *ngIf="(insertForm.get('username').invalid && insertForm.get('username').touched) && !insertForm.controls['username'].hasError('maxlength')" class="errspan required"> Username Required*</span>
 
-                        <div *ngIf="insertForm.controls['agentPath'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
-                            Maximum of 50 characters
-                        </div>
-                    </div>
-                    <div class="col-md-3 formelement">
-                        <label for="hostAddress"> IP Address/Host<span style="color:red">*</span></label>
-                        <input type="text" maxlength="51" class="form-control" formControlName="hostAddress" value="" placeholder="Enter IP Address/Host">
-                        <span *ngIf="(insertForm.get('hostAddress').invalid && insertForm.get('hostAddress').touched) && !insertForm.controls['hostAddress'].hasError('maxlength') && !insertForm.controls['hostAddress'].hasError('pattern')" style="color:red" class="fa fa-info-circle errspan"> IP Address/Host Required*</span>
+            <div *ngIf="insertForm.controls['username'].hasError('maxlength')" class="errspan required">
+                Maximum of 50 characters
+            </div>            
+          </div>
+          <div class="col-md-12 p-0 form-group">
+            <label class="label-control" for="password">Password<span class="star">*</span></label>
+            <input [type]="passwordtype1 ? 'text': 'password'" maxlength="51" class="form-control" formControlName="password" value="" placeholder="Enter Password" passwordToggle>
+            <span *ngIf="passwordtype1==false" (click)="passwordtype1 =!passwordtype1"  class="pdicon">
+              <img src="../../../../../assets/images/Projects/eye-show.svg"  class="testplus1">
+            </span>
+            <span *ngIf="passwordtype1==true" (click)="passwordtype1 =!passwordtype1"  class="pdicon">
+              <img src="../../../../../assets/images/Projects/eye-hide.svg"  class="testplus1">
+            </span>
 
-                        <!--<div *ngIf="insertForm.controls['hostAddress'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
-                            Maximum of 50 characters
-                        </div>-->
-                        <div *ngIf="(insertForm.controls['hostAddress'].hasError('pattern') && !insertForm.controls['hostAddress'].hasError('maxlength')) && insertForm.get('hostAddress').touched" style="color:red" class="fa fa-info-circle errspan">
-                            Invalid IP Address format
-                        </div>
-                        <div *ngIf="(insertForm.controls['hostAddress'].hasError('pattern') && insertForm.controls['hostAddress'].hasError('maxlength'))" style="color:red" class="fa fa-info-circle errspan">
-                            Invalid IP Address format
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-3 formelement">
-                        <label for="userName">Username<span style="color:red">*</span></label>
-                        <input type="text" maxlength="51" class="form-control" formControlName="username" value="" placeholder="Enter Username">
-                        <span *ngIf="(insertForm.get('username').invalid && insertForm.get('username').touched) && !insertForm.controls['username'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan"> Username Required*</span>
+            <span *ngIf="(insertForm.get('password').invalid && insertForm.get('password').touched) && !insertForm.controls['password'].hasError('maxlength')" class="errspan required"> Password Required*</span>
 
-                        <div *ngIf="insertForm.controls['username'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
-                            Maximum of 50 characters
-                        </div>
+            <div *ngIf="insertForm.controls['password'].hasError('maxlength')" class="errspan required">
+                Maximum of 50 characters
+            </div>
+          </div>
+          <div class="col-md-12 p-0 form-group">
+            <label class="label-control" for="connectionType">Connection Type<span class="star">*</span></label>
+            <input type="text" maxlength="51" class="form-control" formControlName="connectionType" value="" placeholder="Enter Connection Type" readonly>
+            <span *ngIf="(insertForm.get('connectionType').invalid && insertForm.get('connectionType').touched) && !insertForm.controls['connectionType'].hasError('maxlength')" class="errspan required"> Connection Type Required*</span>
+            <div *ngIf="insertForm.controls['connectionType'].hasError('maxlength')" class="errspan required">
+                Maximum of 50 characters
+            </div>
+          </div>
+          <div class="col-md-12 p-0 form-group">
+            <label class="label-control" for="portNumber">Port<span class="star">*</span></label>
+            <input type="text" maxlength="7" class="form-control" onkeypress="return (event.charCode > 47 && event.charCode < 58)" formControlName="portNumber" value="" placeholder="Enter Port">
 
-                    </div>
+            <span *ngIf="(insertForm.get('portNumber').invalid && insertForm.get('portNumber').touched) && !insertForm.controls['portNumber'].hasError('maxlength')" class="errspan required"> Port Required*</span>
 
-                    <div class="col-md-3 formelement">
-                        <label for="password">Password<span style="color:red">*</span></label>
-                        <input [type]="passwordtype1 ? 'text': 'password'" maxlength="51" class="form-control" formControlName="password" value="" placeholder="Enter Password" passwordToggle>
-                        <span *ngIf="passwordtype1==false" class="fa fa-fw fa-eye field-icon" (click)="passwordtype1 =!passwordtype1"></span>
-                        <span *ngIf="passwordtype1==true" class="fa fa-fw fa-eye-slash field-icon" (click)="passwordtype1 =!passwordtype1"></span>
-
-                        <span *ngIf="(insertForm.get('password').invalid && insertForm.get('password').touched) && !insertForm.controls['password'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan"> Password Required*</span>
-
-                        <div *ngIf="insertForm.controls['password'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
-                            Maximum of 50 characters
-                        </div>
-                    </div>
-
-                    <div class="col-md-3 formelement">
-                        <label for="connectionType">Connection Type<span style="color:red">*</span></label>
-                        <input type="text" maxlength="51" class="form-control" formControlName="connectionType" value="" placeholder="Enter Connection Type" readonly>
-                        <span *ngIf="(insertForm.get('connectionType').invalid && insertForm.get('connectionType').touched) && !insertForm.controls['connectionType'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan"> Connection Type Required*</span>
-                        <div *ngIf="insertForm.controls['connectionType'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
-                            Maximum of 50 characters
-                        </div>
-
-                    </div>
-
-                    <div class="col-md-3 formelement">
-                        <label for="portNumber">Port<span style="color:red">*</span></label>
-                        <input type="text" maxlength="7" class="form-control" onkeypress="return (event.charCode > 47 && event.charCode < 58)" formControlName="portNumber" value="" placeholder="Enter Port">
-
-                        <span *ngIf="(insertForm.get('portNumber').invalid && insertForm.get('portNumber').touched) && !insertForm.controls['portNumber'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan"> Port Required*</span>
-
-                        <div *ngIf="insertForm.controls['portNumber'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
-                            Maximum of 6 characters
-                        </div>
-
-                    </div>
-
-                </div>
-                <div class="row">
-                    <div class="col-md-3 formelement">
-                        <input type="checkbox" formControlName="activeStatus"> Active
-                    </div>
-                </div>
-                <br>
-                <input type="button" class="btn btn-primary" value="Save" (click)="saveEnvironment()" [disabled]="insertForm.invalid || submitted">
-                <input type="button" class="btn btn-primary" value="Test Connection" (click)="testConnection('insert')" [disabled]="insertForm.invalid">
-                <input type="button" class="btn btn-primary" value="Reset" (click)="resetEnvForm()">
-            </form>
-
+            <div *ngIf="insertForm.controls['portNumber'].hasError('maxlength')" class="errspan required">
+                Maximum of 6 characters
+            </div>
+          </div>
+          <div class="col-md-6 p-0 form-group">
+            <input type="checkbox" formControlName="activeStatus"> Active
+          </div>
         </div>
+        <div class="form-footer">
+          <button type="button" class="btn btn-default"  (click)="resetEnvForm()">Reset</button>
+          <button type="button" class="btn btn-primary"  (click)="testConnection('insert')" [disabled]="insertForm.invalid">Test Connection</button>   
+          <button type="button" class="btn btn-primary"  (click)="saveEnvironment()" [disabled]="insertForm.invalid || submitted">Save</button>
+        </div>
+        <!-- <div class="form-footer">
+          <input type="button" class="btn btn-primary" value="Save" (click)="saveEnvironment()" [disabled]="insertForm.invalid || submitted">
+          <input type="button" class="btn btn-primary" value="Test Connection" (click)="testConnection('insert')" [disabled]="insertForm.invalid">
+          <input type="button" class="btn btn-primary" value="Reset" (click)="resetEnvForm()">
+        </div> -->
+
+      </form>
+
     </div>
-</div>
+
+  </div>
 </div>
 

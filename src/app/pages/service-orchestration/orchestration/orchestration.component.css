@@ -33,10 +33,17 @@ select {
 }
 
 th{
-  background-color:#4AB0F5  !important;
+  /* background-color:#4AB0F5  !important;
   vertical-align: middle !important;
   color:white !important;
-  font-size: 18px !important;
+  font-size: 18px !important; */
+  background-color: #e8f7fd !important;
+    color: #00a0e3 !important;
+    font-size: 15px !important;
+    text-align: left !important;
+    border-top: none !important;
+    border-bottom: 1px solid #4a4a4a33 !important;
+    padding: 8px 10px;
 }
 
 tr.mat-header-row {
@@ -47,10 +54,6 @@ tr.mat-header-row {
   color : white !important;
 }
 
-td{
-  font-size: 16px !important;
-  vertical-align: middle !important;
-}
 .clickable{
   cursor: pointer;
 }
@@ -108,7 +111,6 @@ td{
 
  #Orchestration-tabs  .mat-tab-label .mat-tab-label-content{
   color:black ;
-  font-family:noto-sans,Noto Sans,-apple-system,system-ui,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif !important;
   font-weight: 700 !important;
   font-size: 15px !important;
 }
@@ -119,7 +121,148 @@ td{
 #Orchestration-tabs .mat-tab-label-active .mat-tab-label-content {
   background-color: white !important;
   color:rgb(0, 98, 207) !important ;
-  font-family:noto-sans,Noto Sans,-apple-system,system-ui,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif !important;
   font-weight: 700 !important;
   font-size: 15px !important;
+}
+
+/* newstyles */
+.pr-0 {
+  padding-right: 0px;
+}
+.pl-0 {
+  padding-left: 0px;
+}
+/*.main-content.orches_new{
+  height: 100%;
+  padding: 16px;
+  overflow: auto;
+  position: relative;
+  background-color: #e3eaef;
+  box-shadow: 0px 0px 13px 0px rgb(236 236 241 / 44%);
+}
+
+.orches_new .content-area{
+  background: #ffffff;
+  padding: 5px;
+  box-shadow: 0px 0px 13px 0px #ececf170;
+  height: calc(100% - 50px);
+  overflow-y: auto;
+}
+ .orches_new .module-heading {
+  background-color: #f8f8f8;
+  padding: 12px 6px;
+  margin-bottom: 0px;
+} */
+.orches_new .mat-ink-bar {
+  transition: unset;
+}
+.orches_new .wrapper {
+  padding:0px;
+}
+.orches_new .mat-tab-label {
+  padding: 0px 15px !important;
+}
+.mat-form-field.mat-focused .mat-form-field-label {
+  color: #0062cf;
+  font-size: 16px !important;
+}
+.mat-form-field.mat-focused .mat-form-field-ripple {
+ background-color: #0062cf;
+}
+.newexecbots_progress label {
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+.orches_new span.module-heading-title {
+  padding-left: 10px;
+}
+.mat-form-field-wrapper {
+  padding: 0px 0px 15px 0px !important;
+}
+.modal-body.actions-mbody {
+  height: calc(100% - 83px);
+  overflow: hidden auto;
+  font-size: 15px;
+}
+.mat-tab-header-pagination.mat-tab-header-pagination-after.mat-elevation-z4.mat-ripple {
+  z-index: 0;
+}
+.scheduletimer-loadicon span{
+  float: right;
+  margin-top: 6px;
+}
+.RPA-scheduletimer input[type="date"] {
+  background-image: url(../../../../assets/images/RPA/icon_latest/calendar.svg);
+  background-position: calc(100% - 10px) center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+.newshacl .RPA-scheduletimer-footer button.btn.btn-primary {
+  margin: 0px 0px 10px 0px !important;
+}
+.newshacl .RPA-scheduletimer-footer {
+  display: inline-block;
+  margin: 15px 0px 20px 0px;
+}
+input[type="date"]::-webkit-inner-spin-button, input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0;
+}
+.schedulemod .RPA-scheduletimer .col-md-6.pl-0 {
+  padding-right: 5px;
+}
+.schedulemod .RPA-scheduletimer .col-md-6.pr-0 {
+  padding-left: 5px;
+}
+.newshacl .scheduletimer-actionbtns button {
+  width: auto;
+  background: unset !important;
+  box-shadow: unset !important;
+  height: auto;
+  padding: 0px !important;
+  margin-left: 10px;
+}
+.schedulemod .RPA-scheduletimer-body input {
+  margin-bottom: 10px !important;
+  font-size: 14px !important;
+}
+.tablmacl .table th {
+  font-size: 14px;
+  font-weight: 500;
+}
+body .leftfporm select {
+  border: 1px solid #D1D1D1 !important;
+  border-radius: 2px !important;
+  width: 100% !important;
+}
+.leftfporm {
+  display: flex !important;
+  margin: 0px !important;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.comncl {
+  width: 100%;
+  margin-right: 10px;
+}
+.resecl button {
+  padding: 7px 0px;
+  margin-left: 5px;
+}
+.roghtform button {
+  background-color: unset !important;
+  width: auto;
+}
+.roghtform {
+  margin-bottom: 0px !important;
+  padding: 7px 0px;
+}
+.roghtform span {
+  padding: 0px !important;
+  margin-left: 6px !important;
+}
+.RPA.table select.form-control {
+  border: 1px solid #ddd !important;
+  width: 100%;
+  padding-right: 30px !important;
+  border-radius: 2px !important;
 }

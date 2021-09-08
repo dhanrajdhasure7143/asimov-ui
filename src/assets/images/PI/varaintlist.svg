@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
+  <defs>
+    <clipPath id="clip-varaintlist">
+      <rect width="24" height="24"/>
+    </clipPath>
+  </defs>
+  <g id="varaintlist" clip-path="url(#clip-varaintlist)">
+    <path id="Path_859" data-name="Path 859" d="M9.667,4.175H27v2.7H9.667ZM5,7.547A2.024,2.024,0,1,1,7,5.524,2.012,2.012,0,0,1,5,7.547Zm0,9.444a2.024,2.024,0,1,1,2-2.024A2.012,2.012,0,0,1,5,16.991ZM5,26.3a2.024,2.024,0,1,1,2-2.024A2.012,2.012,0,0,1,5,26.3ZM9.667,13.618H27v2.7H9.667Zm0,9.444H27v2.7H9.667Z" transform="translate(-3 -2.9)" fill="#607088"/>
+  </g>
+</svg>

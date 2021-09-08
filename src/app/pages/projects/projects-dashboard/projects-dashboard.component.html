@@ -1,0 +1,350 @@
+<div class="module-heading title">
+  <!-- <span class="projects-back-button">
+    <i class="fa fa-arrow-left"></i>
+  </span> -->
+  <span class="module-header-title">Projects</span>
+  <span class="ml-auto module-heading-buttons">
+    <span class="prj-db-btn" routerLink="/pages/projects/listOfProjects">
+      <button type="button" class="btn btn-default">
+      <img src="../../../../assets/images/Projects/projectlist.svg" class="testplus default-img">
+      <img src="../../../../assets/images/Projects/projectlist-white.svg" class="testplus hover-img">
+      Projects List
+      </button>
+    </span>
+    <span class="projects-menu-item" routerLink="/pages/projects/create-projects">
+      <button type="button" class="btn btn-primary">
+        <img src="../../../../assets/images/Projects/White-plus.svg" class="testplus">Create New</button>
+    </span>
+    
+  </span>
+</div>
+
+<div class="module-body">
+  <mat-card id="projects_dashboard_screen" *ngIf="projects_toggle==false" class="h-100 p-0">
+    <div class="row toprow">
+      <div class="col-sm-3 pr-0">
+        <mat-card id="projects_dashboard_header">
+          <div class="status-tabs">
+            <div class="status-img">
+              <img src="..\assets\images\Projects\Aicon.svg" alt="" >
+            </div>
+            <div class="status-data">
+              <span class="tab-number">Active</span>
+              <span class="tab-text" >10</span>
+            </div>
+          </div>
+          
+        </mat-card>
+      </div>
+
+      <div class="col-sm-3 pr-0">
+        <mat-card id="projects_dashboard_header">
+          <div class="status-tabs">
+            <div class="status-img">
+              <img src="..\assets\images\Projects\PAicon.svg" alt="" >
+            </div>
+            <div class="status-data">
+              <span class="tab-number">Pending approval</span>
+              <span class="tab-text" >10</span>
+            </div>
+          </div>
+          
+        </mat-card>
+      </div>
+
+      <div class="col-sm-3 pr-0">
+        <mat-card id="projects_dashboard_header">
+          <div class="status-tabs">
+            <div class="status-img">
+              <img src="..\assets\images\Projects\CIicon.svg" alt="" >
+            </div>
+            <div class="status-data">
+              <span class="tab-number">Checkout items</span>
+              <span class="tab-text" >10</span>
+            </div>
+          </div>
+          
+        </mat-card>
+      </div>
+
+      <div class="col-sm-3">
+        <mat-card id="projects_dashboard_header">
+          <div class="status-tabs">
+            <div class="status-img">
+              <img src="..\assets\images\Projects\DPicons.svg" alt="" >
+            </div>
+            <div class="status-data">
+              <span class="tab-number">Deployed processes</span>
+              <span class="tab-text" >10</span>
+            </div>
+          </div>
+          
+        </mat-card>
+      </div>
+
+    </div>
+    <div class="row gridsais">
+
+      <div class="col-sm-3 pr-0">
+          <div class="projects_by_department">
+            <div class="dbichart-head">
+                <label>Projects By Department</label>
+            </div>
+            <div class="dbichart-body">
+                <div id="projectdashboard"></div>
+            </div>
+        </div>
+       
+        </div>
+
+        <div class="col-sm-6 pr-0">
+          <div class="projects_by_department">
+            <div class="dbichart-head">
+              <label>Needs Attention</label>
+          </div>
+          
+          <div class="dbichart-body">
+              <div id="projectattention">
+                <table class="table">
+                  <tr>
+                      <td>
+                        <div class="status-tabs1">
+                            <div class="body-img">
+                              <img src="..\assets\images\Projects\process_icon.svg" alt="" >
+                            </div>
+                            <div class="status-data1">
+                              <span class="prj-body-content-title" style="font-size: 17px;">Extra Invoice</span>
+                              <span class="tab-text" style="font-size: 10px;">IT | Account Payable | <span style="color: red;">High</span></span>
+                            </div>
+                          </div>
+                    </td>
+                   
+                        <td>
+                          <div class="status-tabs1">
+                            <div class="body-img">
+                            </div>
+                            <div class="status-data1">
+                              <span class="prj-body-content-title" style="font-size: 17px;">Review Pending</span>
+                              <span class="tab-text" style="font-size: 10px;">Requested by Tom</span>
+                            </div>
+                          </div>
+                      </td>
+
+                      <td>
+                        <div class="status-tabs1">
+                          <div class="body-img">
+                          </div>
+                          <div class="status-data1">
+                            <span class="prj-body-content-title" style="font-size: 17px;">15 days ago</span>
+                            <span class="tab-text" style="font-size: 10px;">10am,4th Sep 2020</span>
+                          </div>
+                        </div>
+                    </td>
+                    <hr>
+                    <tr>
+                      <td>
+                        <div class="status-tabs1">
+                          <div class="body-img">
+                            <img src="..\assets\images\Projects\bot.svg" alt="" >
+                          </div>
+                          <div class="status-data1">
+                            <span class="prj-body-content-title" style="font-size: 17px;">Extra Invoice</span>
+                            <span class="tab-text" style="font-size: 10px;">IT | Account Payable | <span style="color: red;">Medium</span></span>
+                          </div>
+                        </div>
+                    </td>
+
+                    <td>
+                      <div class="status-tabs1">
+                        <div class="body-img">
+                        </div>
+                        <div class="status-data1">
+                          <span class="prj-body-content-title" style="font-size: 17px;">Process Rejected</span>
+                          <span class="tab-text" style="font-size: 10px;">Requested by Charles</span>
+                        </div>
+                      </div>
+                  </td>
+
+                  <td>
+                    <div class="status-tabs1">
+                      <div class="body-img">
+                      </div>
+                      <div class="status-data1">
+                        <span class="prj-body-content-title" style="font-size: 17px;">Process Rejected</span>
+                        <span class="tab-text" style="font-size: 10px;">10am,4th Sep 2020</span>
+                      </div>
+                    </div>
+                </td>
+                    </tr>
+                </table>
+              </div>
+          </div>
+          
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="projects_favourites p-0">
+            <!-- <div class="dbichart-head">
+               
+            </div> -->
+            <div class="dbichart-body">
+                <div id="projectfavourites">
+                  <mat-tab-group [selectedIndex]="selectedTab" id="Project-dashboard-tabs" (selectedTabChange)="onTabChanged($event)">
+                  <mat-tab label="Favourites">
+
+                    <ng-template mat-tab-label>
+                      <!-- <mat-icon >android</mat-icon> -->
+                        Favourites
+                      </ng-template>
+                    <div >
+                      <table>
+                        <tr>
+                            <td>
+                              <div class="status-tabs1">
+                                  <div class="body-img">
+                                    <img src="..\assets\images\Projects\process_icon.svg" alt="" >
+                                  </div>
+                                  <div class="status-data1">
+                                    <span class="prj-body-content-title" style="font-size: 17px;">Extra Invoice</span>
+                                    <span class="tab-text fav-sub" style="font-size: 10px;">IT | Account Payable | <span style="color: green;">In Review</span></span>
+                                  </div>
+                                </div>
+                          </td>
+                         </tr>
+                         <tr>
+                              <td>
+                                <div class="status-tabs1">
+                                  <div class="body-img">
+                                    <img src="..\assets\images\Projects\document.svg" alt="" >
+                                  </div>
+                                  <div class="status-data1">
+                                    <span class="prj-body-content-title" style="font-size: 17px;">Accounts Payable</span>
+                                    <span class="tab-text fav-sub" style="font-size: 10px;">IT | Account Payable | <span style="color: red;">In Progress</span></span>
+                                  </div>
+                                </div>
+                            </td>
+                          </tr>
+                          <tr>
+                             <td>
+                              <div class="status-tabs1">
+                                <div class="body-img">
+                                  <img src="..\assets\images\Projects\bot.svg" alt="" >
+                                </div>
+                                <div class="status-data1">
+                                  <span class="prj-body-content-title" style="font-size: 17px;">Debit Account</span>
+                                  <span class="tab-text fav-sub" style="font-size: 10px;">IT | Account Payable | <span style="color: green;">In Review</span></span>
+                                </div>
+                              </div>
+                          </td>
+                          </tr>
+                          </table>
+                    </div>
+                  </mat-tab>
+                  <mat-tab label="Recent Activities">
+              
+                    <ng-template mat-tab-label>
+                      Recent Activities
+                      </ng-template>
+                    <div >
+                     
+                    </div>
+                  </mat-tab>
+                </mat-tab-group>
+                </div>
+            </div>
+        </div>
+        </div>
+        </div>
+      
+
+        <div class="row prjtalvcl">
+
+          <div class="col-sm-12">
+    
+            
+              <div class="projects-table-body">
+                <table class="table">
+                  <thead>
+                  <tr class="separated">
+                    <th scope="col" class="types2">Item</th>
+                    <th scope="col" class="types2">Added</th>
+                    <th scope="col" class="types2">Recorders</th>
+                    <th scope="col" class="types2">Record On Start</th>
+                    <th scope="col" class="types2">Record Screenshots</th>
+                    <th scope="col" class="types2">Included</th>
+                    <th scope="col" class="types2">Excluded</th>
+                    <th scope="col" class="types2">Actions</th>
+                  </tr>
+                </thead>
+                <hr>
+                <tbody class="" >
+                  <tr class="separated">
+                    <td>Default</td>
+                    <td>31-06-2021</td>
+                    <td >3</td>
+                    <td>
+                      <span  class="text-success">
+                        <span>
+                          <img src="../../../../assets/images/Projects/Success.svg" alt="" class="testplus1">
+                        </span>
+                      </span>
+                    </td>
+                    <td>
+                      <span  class="text-success">
+                        <span>
+                          <img src="../../../../assets/images/Projects/Success.svg" alt="" class="testplus1">
+                        </span>
+                      </span>
+                    </td>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>
+                      <a class="link" id="eiap-home" >
+                        <span><img src="../../../../assets/images/Projects/delete-red.svg" alt="" class="testplus1"></span>
+                      </a>
+                    </td>
+                  </tr>
+                  </tbody>
+                  
+                </table>
+                <!-- <table mat-table #sort10="matSort" [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+                  <ng-container matColumnDef="position">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+                    <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                  </ng-container>
+                
+                 
+                  <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                  </ng-container>
+                
+                 
+                  <ng-container matColumnDef="weight">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Weight </th>
+                    <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+                  </ng-container>
+                
+                  
+                  <ng-container matColumnDef="symbol">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Symbol </th>
+                    <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+                  </ng-container>
+                
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table> -->
+                </div>
+           
+            </div>
+    
+            
+            </div>
+            
+
+        </mat-card>
+</div>
+
+   

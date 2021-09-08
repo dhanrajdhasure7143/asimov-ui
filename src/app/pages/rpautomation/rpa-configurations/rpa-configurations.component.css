@@ -83,7 +83,7 @@
   th{
     white-space:nowrap;
   }
-
+/* 
   ::-webkit-scrollbar-track {
     display:none;
 }
@@ -95,7 +95,7 @@
 ::-webkit-scrollbar {
   width: 10px;
   height:4px
-}
+} */
 ::ng-deep .mat-tab-label{
   height :50px !important;
   padding: 0 10px !important;
@@ -108,16 +108,20 @@ min-width:10px !important;
 
 ::ng-deep.mat-tab-label.mat-tab-label-active:not(.mat-tab-disabled),
 ::ng-deep.mat-tab-label.mat-tab-label-active.cdk-keyboard-focused:not(.mat-tab-disabled) {
-  font-weight: 500;
+  font-weight: 600;
   color: black;
   opacity: 1;
 }
 
 .rpaenv_header_addon {
   position: relative !important;
-  top: 10px !important;
+  top: 7px !important;
   /*text-align: right !important;*/
   width: 0% !important;
   float: right !important;
-
 }
+.rpaenv_header_addon button {
+  float: right !important;
+  margin-right: 10px !important;
+}
+

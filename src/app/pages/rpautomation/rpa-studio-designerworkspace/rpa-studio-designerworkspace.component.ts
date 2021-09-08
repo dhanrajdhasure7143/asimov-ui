@@ -78,9 +78,10 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   svg:any;
   public insertForm:FormGroup;
   modalRef: BsModalRef;
+  outputmodalRef:BsModalRef;
   public passwordtype1:Boolean;
   public passwordtype2:Boolean;
-
+  public form_change:Boolean=false;
   @ViewChild('template', { static: false }) template: TemplateRef<any>;
   public nodedata: any;
 
@@ -600,6 +601,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
   formNodeFunc(node) {
     this.nodedata=node
+    this.form_change=false;
+    
     if (node.selectedNodeTask != "") {
       this.selectedTask = {
         name: node.selectedNodeTask,
@@ -724,13 +727,13 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   response(data,node) {
     if (data.error == "No Data Found") {
       this.fields = [];
-      this.hiddenPopUp = false;
       let type = "info";
       let message = "No Data Found"
       this.notifier.notify(type, message);
     } else {
       this.fields = [];
       this.hiddenPopUp = true;
+      this.form_change=true;
       data.forEach(element => {
         element.nodeId=node.id;
         if (element.type == "multipart") {
@@ -1247,7 +1250,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
 
 
-  outputbox(node) {
+  outputbox(node,template) {
+    this.modalRef=this.modalService.show(template);
     document.getElementById(this.outputboxid).style.display = "block";
     document.getElementById("output_" + node.id).style.display = "none"
   }

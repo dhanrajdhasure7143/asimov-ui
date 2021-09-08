@@ -15,6 +15,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 import { Pipe, PipeTransform } from '@angular/core';
 declare var $:any;
 import { NotifierService } from 'angular-notifier';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 @Component({
   selector: 'app-new-so-bot-management',
   templateUrl: './new-so-bot-management.component.html',
@@ -28,7 +29,7 @@ public slaupdate : boolean = false;
     public respdata1=false;
     public blueprismbotname: any;
     schdata:any;
-    displayedColumns: string[] = ["botName","botType","sourceType" ,"department","description","version","botStatus", "Action","Schedule","Logs","Smoke_Test"];
+    displayedColumns: string[] = ["botName","botType","sourceType" ,"department","description","version","botStatus", "Action","Schedule","Logs"];
     departmentlist :string[] = ['Development','QA','HR'];
     displayedblueprismcolums: string[] = ['bluePrismBotSessionid','startTimeStamp','endTimeStamp','status','error'];
     botNameFilter = new FormControl('');
@@ -43,8 +44,10 @@ public slaupdate : boolean = false;
     viewlogid1="check456";
     logflag:Boolean;
     respdata2:Boolean;
-    selectedcat:any;
-    search:any;
+    selectedcat:any="";
+    search:any="";    
+    public selected_source:any = "";
+    public sla_bot:any
     public isDataSource: boolean;
     public userRole:any = [];
     public isButtonVisible = false;
@@ -75,7 +78,8 @@ public slaupdate : boolean = false;
     public sla_list:any=[];
     public datasourcelist : any = [];
     public timer:any;
-
+    public logs_modal:BsModalRef;
+    public 
     @ViewChild("paginator1",{static:false}) paginator1: MatPaginator;
     @ViewChild("sort1",{static:false}) sort1: MatSort;
     @ViewChild("paginator4",{static:false}) paginator4: MatPaginator;
@@ -104,6 +108,7 @@ public slaupdate : boolean = false;
       private spinner:NgxSpinnerService,
       private formBuilder: FormBuilder,
       private notify:NotifierService,
+      private modalService:BsModalService
       )
     {
       this.insertslaForm_so_bot=this.formBuilder.group({
@@ -134,10 +139,10 @@ public slaupdate : boolean = false;
   method(){
     let result: any = [];
     this.dataSource1 = this.datasourcelist;
-    if(this.selectedcat == undefined){
+    if(this.selectedcat == undefined ){
       this.selectedcat = '';
     }
-    if(this.selected_source == undefined){
+    if(this.selected_source == undefined ){
       this.selected_source = '';
     }
     if(this.search == undefined){
@@ -145,7 +150,6 @@ public slaupdate : boolean = false;
     }
     if(this.search != '' && this.selected_source != '' && this.selectedcat != '')
     {
-      console.log(this.search, this.selectedcat, this.selected_source);
       let category =this.categaoriesList.find(val=>this.selectedcat==val.categoryId).categoryName;
       for(let a of this.datasourcelist){
         if( category == a.department){
@@ -155,15 +159,12 @@ public slaupdate : boolean = false;
         }
       }
       this.dataSource1 = new MatTableDataSource(result);
-      console.log(this.dataSource1);
       let value1 = this.search.toLowerCase();
-       console.log(value1);
        this.dataSource1.filter = value1;
-       console.log(this.dataSource1.filteredData);
        this.dataSource1.sort=this.sort1;
        this.dataSource1.paginator=this.paginator1;
     }
-    else if(this.search != '' && this.selected_source)
+    else if(this.search != '' && this.selected_source !="")
     {
       for(let a of this.bot_list){
         console.log(a.sourceType);
@@ -216,7 +217,7 @@ public slaupdate : boolean = false;
       this.dataSource1.sort=this.sort1;
       this.dataSource1.paginator=this.paginator1;
     }
-    else if(this.search)
+    else if(this.search !="")
     {
       this.dataSource1 = new MatTableDataSource(this.datasourcelist);
       let value1 = this.search.toLowerCase();
@@ -226,7 +227,7 @@ public slaupdate : boolean = false;
        this.dataSource1.sort=this.sort1;
        this.dataSource1.paginator=this.paginator1;
     }
-    else if(this.selected_source)
+    else if(this.selected_source!="")
     {
       for(let a of this.bot_list){
         console.log(a.sourceType);
@@ -238,7 +239,7 @@ public slaupdate : boolean = false;
       this.dataSource1.sort=this.sort1;
       this.dataSource1.paginator=this.paginator1;
     }
-    else if(this.selectedcat)
+    else if(this.selectedcat!="")
     {
       let category =this.categaoriesList.find(val=>this.selectedcat==val.categoryId).categoryName;
       for(let a of this.bot_list){
@@ -256,8 +257,6 @@ public slaupdate : boolean = false;
   getslaconfig(){
 
   }
-  public selected_source:any;
-  public sla_bot:any
   SelectSLACon(bot){
     this.sla_bot=bot;
     if(this.sla_bot.sourceType=="EPSoft")
@@ -355,11 +354,12 @@ public slaupdate : boolean = false;
           let resp:any=res
           if(resp.errorMessage==undefined)
           {
-            Swal.fire(resp.Status,"","success")
+            Swal.fire("Success",resp.Status,"success")
             this.get_sla_list();
+            document.getElementById("SLAConfig_overlay").style.display = "none";
           }
           else
-            Swal.fire(resp.errorMessage,"","success")
+            Swal.fire("Error",resp.errorMessage,"error")
     });
    else
     this.rest.update_sla_config(slaalertsc).subscribe( res =>
@@ -367,11 +367,12 @@ public slaupdate : boolean = false;
           let resp:any=res
           if(resp.errorMessage==undefined)
           {
-            Swal.fire(resp.Status,"","success")
+            Swal.fire("Success",resp.Status,"success")
             this.get_sla_list();
+            document.getElementById("SLAConfig_overlay").style.display = "none";
           }
           else
-            Swal.fire(resp.errorMessage,"","success")
+            Swal.fire("Error",resp.errorMessage,"error");
 
     });
  }
@@ -407,7 +408,7 @@ public slaupdate : boolean = false;
       if(response.errorMessage!=undefined)
       {
         this.spinner.hide();
-        Swal.fire(response.errorMessage,"","error");
+        Swal.fire("Error",response.errorMessage,"error");
         return;
         //this.rpa_studio.spinner.hide();
       }
@@ -498,7 +499,7 @@ public slaupdate : boolean = false;
         });
 
       //this.dataSource1.filterPredicate = this.customFilterPredicate();*/
-      this.update_bot_status();
+      //this.update_bot_status();
       this.spinner.hide();
     },(err)=>{
       this.spinner.hide();
@@ -506,41 +507,54 @@ public slaupdate : boolean = false;
   }
 
 
-  update_bot_status(){
-    this.timer = setInterval(() => {
-      this.rest.getallsobots().subscribe(botlist =>{
-        let responsedata:any=botlist
-        responsedata.forEach(statusdata => {
-          let data:any;
-          if(statusdata.status=="InProgress" || statusdata.status=="Running")
-                {
-                  data="<span matTooltip='"+statusdata.status+"' style='filter: none; width: 19px;' class='text-primary'><img src='../../../../assets/images/RPA/DotSpin.gif' style='filter: none; width: 19px;'></span>";
-                }
-                else if(statusdata.botStatus=="Success" || statusdata.botStatus=="Completed")
-                {
-                  data='<span  matTooltip="'+statusdata.botStatus+'"  style="filter: none; width: 19px;"  class="text-success"><i class="fa fa-check-circle"  style="font-size:19px" aria-hidden="true"></i></span>';
-                }
+  // update_bot_status(){
+  //   this.timer = setInterval(() => {
+  //     this.rest.getallsobots().subscribe(botlist =>{
+  //       let responsedata:any=botlist
+  //       responsedata.forEach(statusdata => {
+  //         let data:any;
+  //         if(statusdata.status=="InProgress" || statusdata.status=="Running")
+  //               {
+  //                 data="<span matTooltip='"+statusdata.status+"' style='filter: none; width: 19px;' class='text-primary'><img src='../../../../assets/images/RPA/DotSpin.gif' style='filter: none; width: 19px;'></span>";
+  //               }
+  //               else if(statusdata.botStatus=="Success" || statusdata.botStatus=="Completed")
+  //               {
+  //                 data='<span  matTooltip="'+statusdata.botStatus+'"  style="filter: none; width: 19px;"  class="text-success"><i class="fa fa-check-circle"  style="font-size:19px" aria-hidden="true"></i></span>';
+  //               }
                
-                else if(statusdata.botStatus=="Failure" || statusdata.botStatus=="Failed")
-                {
-                  data='<span  matTooltip="'+statusdata.botStatus+'"    style="filter: none; width: 19px;"  class="text-danger"><i class="fa fa-times-circle" aria-hidden="true"></i></span>&nbsp;<span class="text-danger"></span>';
-                }
+  //               else if(statusdata.botStatus=="Failure" || statusdata.botStatus=="Failed")
+  //               {
+  //                 data='<span  matTooltip="'+statusdata.botStatus+'"    style="filter: none; width: 19px;"  class="text-danger"><i class="fa fa-times-circle" aria-hidden="true"></i></span>&nbsp;<span class="text-danger"></span>';
+  //               }
                 
-          $("#"+statusdata.botId+"__status").html(data);
-        });
+  //         $("#"+statusdata.botId+"__status").html(data);
+  //       });
           
-        })
-    }, (5*60000));
+  //       })
+  //   }, (5*60000));
   
+  // }
+
+  updateLog(logid,Logtemplate)
+  {
+   
+     this.spinner.show();
+    this.rest.updateBotLog(this.log_botid,this.log_version,logid).subscribe(data=>{
+       let response:any=data;  
+       this.spinner.hide();
+       if(response.errorMessage==undefined)
+         this.getEpsoftLogs(this.log_botid,this.log_version,Logtemplate,'update');
+       else
+         Swal.fire("Error",response.errorMessage,"error");
+    });
   }
-
-
-  viewlogdata(botid ,version){
+  getEpsoftLogs(botid ,version, template, action){
   let response: any;
    let log:any=[];
    this.logresponse=[];
    this.log_botid=botid;
    this.log_version=version
+   this.viewlogid1=undefined;
    this.rest.getviewlogdata(botid,version).subscribe(data =>{
        this.logresponse=data;
        if(this.logresponse.length >0)
@@ -590,8 +604,11 @@ public slaupdate : boolean = false;
      this.Viewloglist.paginator=this.paginator4;
      this.Viewloglist.sort=this.sort4;
 
-     document.getElementById(this.viewlogid).style.display="block";
-     $(".tour_guide").hide()
+    //  document.getElementById(this.viewlogid).style.display="block";
+    //  $(".tour_guide").hide()
+
+    if(action=="open")
+      this.logs_modal=this.modalService.show(template,{class:"logs-modal"});
 
    });
  }
@@ -608,13 +625,10 @@ public slaupdate : boolean = false;
      if(responsedata.length >0)
      {
        this.respdata2 = false;
-       console.log(this.respdata2)
      }else
      {
        this.respdata2 = true;
-       console.log(this.respdata2);
      }
-     console.log(responsedata);
      responsedata.forEach(rlog=>{
        logbyrunidresp=rlog;
        logbyrunidresp["start_date"]=logbyrunidresp.start_time;
@@ -624,34 +638,15 @@ public slaupdate : boolean = false;
 
        resplogbyrun.push(logbyrunidresp)
      });
-     console.log(resplogbyrun);
      this.logflag=true;
      this.logbyrunid = new MatTableDataSource(resplogbyrun);
-     console.log(this.logbyrunid);
      this.logbyrunid.paginator=this.paginator5;
      this.logbyrunid.sort=this.sort5;
-     document.getElementById(this.viewlogid).style.display="none";
-     document.getElementById(this.viewlogid1).style.display="block";
-     $(".tour_guide").hide()
+     this.viewlogid1=runid;
        })
    }
 
-   back(){
-     //document.getElementById("ViewLog").style.display="none";
-     document.getElementById(this.viewlogid1).style.display="none";
-     document.getElementById(this.viewlogid).style.display="block";
-   }
-
-   viewlogclose(){
-    $(".tour_guide").show()
-     document.getElementById(this.viewlogid).style.display="none";
-   }
-
-   viewlogclose1(){
-    $(".tour_guide").show()
-     document.getElementById(this.viewlogid1).style.display="none";
-     document.getElementById(this.viewlogid).style.display="none";
-   }
+  
 
 
 
@@ -809,12 +804,10 @@ public slaupdate : boolean = false;
 
 
     public uipathbotName:any;
-    getuipathlogs(botname)
+    getuipathlogs(template,botname)
     {
       
       this.uipathbotName=botname;
-      document.getElementById("uipathlogs").style.display="block";
-      $(".tour_guide").hide()
       this.spinner.show();
       this.rest.getuipathlogs().subscribe(resp=>{
         let response:any=resp;
@@ -822,12 +815,13 @@ public slaupdate : boolean = false;
         let logsbytime:any=logs.sort((right,left)=>{
           return moment.utc(left.StartTime).diff(moment.utc(right.StartTime))
         });
-        console.log(logsbytime)
         this.uipathlogs=new MatTableDataSource(logsbytime);
         this.uipathlogs.sort=this.sort6;
         this.uipathlogs.paginator=this.paginator6;
         this.spinner.hide();
+        this.logs_modal=this.modalService.show(template,{class:"logs-modal"});
       });
+
 
     }
 

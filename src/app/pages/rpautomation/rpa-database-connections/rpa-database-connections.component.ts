@@ -83,7 +83,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
     }
 
   ngOnInit() {
-    document.getElementById("filters").style.display='block';
+  //   //     document.getElementById("filters").style.display='block';
     this.dt.changeHints(this.hints.rpadbchints);
     this.getallDBConnection();
     this.passwordtype1=false;
@@ -123,7 +123,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
           this.sortmethod(); 
         }, 80);
       });
-      document.getElementById("filters").style.display='block'; 
+    //     document.getElementById("filters").style.display='block'; 
   }
 
   sortmethod(){
@@ -140,13 +140,13 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
   
   createdbconnection()
   {
-    document.getElementById("filters").style.display='none';
+  //     document.getElementById("filters").style.display='none;
     document.getElementById("createdbconnection").style.display='block';
     document.getElementById("Updatedbconnection").style.display='none';
   }
 
   Updatedbconnection(){
-    document.getElementById("filters").style.display='none';
+  //     document.getElementById("filters").style.display='none;
     document.getElementById("createdbconnection").style.display='none';
     document.getElementById("Updatedbconnection").style.display='block';
   }
@@ -172,21 +172,24 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
       {
         this.spinner.hide();
         if(res.errorCode==undefined){
-        Swal.fire({
-          position: 'center',
-          icon: 'success',
-          title: "Successfully Connected",
-          showConfirmButton: false,
-          timer: 2000
-        })
+        // Swal.fire({
+        //   position: 'center',
+        //   icon: 'success',
+        //   title: "Successfully Connected",
+        //   showConfirmButton: false,
+        //   timer: 2000
+        // })
+        Swal.fire("Success","Successfully Connected","success")
         }else{
-          Swal.fire({
-            position: 'center',
-            icon: 'error',
-            title: 'Connection Failed',
-            showConfirmButton: false,
-            timer: 2000
-          })
+          // Swal.fire({
+          //   position: 'center',
+          //   icon: 'error',
+          //   title: 'Connection Failed',
+          //   showConfirmButton: false,
+          //   timer: 2000
+          // })
+          
+        Swal.fire("Error","Connection Failed","error")
         }
     });
     this.activestatus();
@@ -237,20 +240,30 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
     this.api.addDBConnection(DBConnection).subscribe( res =>{
       let status:any=res;
       this.spinner.hide();
-    Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: status.status,
-            showConfirmButton: false,
-            timer: 2000
-          })
-          this.getallDBConnection();
-          this.DBchecktoupdate();
-          this.checktodelete();
-          document.getElementById('createdbconnection').style.display= "none";
-          this.resetDBForm();
-          this.submitted=false;
-          this.insertdbForm.get("activeStatus").setValue(true);    
+    // Swal.fire({
+    //         position: 'center',
+    //         icon: 'success',
+    //         title: status.status,
+    //         showConfirmButton: false,
+    //         timer: 2000
+    //       })
+
+          if(status.errorMessage==undefined)
+          {
+            
+            Swal.fire("Success",status.status,"success")
+            this.getallDBConnection();
+            this.DBchecktoupdate();
+            this.checktodelete();
+            document.getElementById('createdbconnection').style.display= "none";
+            this.resetDBForm();
+            this.submitted=false;
+            this.insertdbForm.get("activeStatus").setValue(true);    
+          }
+          else
+          {
+              Swal.fire("Error",status.errorMessage,"error")
+          }
     });
    
   }
@@ -289,18 +302,26 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
     this.api.updateDBConnection(dbupdatFormValue).subscribe( res => {
       let status: any= res;
       this.spinner.hide();
-      Swal.fire({
-        position: 'center',
-        icon: 'success',
-        title: status.status,
-        showConfirmButton: false,
-        timer: 2000
-      });
-      this.removeallchecks();
-      this.getallDBConnection();
-      this.DBchecktoupdate();
-      this.checktodelete(); 
-      document.getElementById('Updatedbconnection').style.display='none';   
+      // Swal.fire({
+      //   position: 'center',
+      //   icon: 'success',
+      //   title: status.status,
+      //   showConfirmButton: false,
+      //   timer: 2000
+      // });
+      if(status.errorMessage==undefined)
+      {
+        Swal.fire("Success",status.status,"success")
+        this.removeallchecks();
+        this.getallDBConnection();
+        this.DBchecktoupdate();
+        this.checktodelete(); 
+        document.getElementById('Updatedbconnection').style.display='none';   
+      }
+      else
+      {
+        Swal.fire("Error",status.errorMessage,"error")
+      }
   });
 }
 else
@@ -312,7 +333,7 @@ else
 
 updatedbdata()
   {    
-    document.getElementById("filters").style.display='none';
+  //     document.getElementById("filters").style.display='none;
     document.getElementById('Updatedbconnection').style.display='block';
     let data:any;
     for(data of this.dbconnections)
@@ -342,7 +363,7 @@ updatedbdata()
 
   closedbconnection()
   {     
-    document.getElementById("filters").style.display='block';
+  //     document.getElementById("filters").style.display='block';
     document.getElementById('createdbconnection').style.display='none';
     document.getElementById('Updatedbconnection').style.display='none';
     this.resetDBForm();
@@ -360,19 +381,28 @@ updatedbdata()
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.value) {
+        this.spinner.show();
         this.api.deleteDBConnection(selecteddbconnection).subscribe( res =>{ 
           let status:any = res;
-          Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: status.status,
-            showConfirmButton: false,
-            timer: 2000    
-          });
-          this.removeallchecks();
-          this.getallDBConnection();
-          this.DBchecktoupdate();  
-          this.checktodelete();                 
+          this.spinner.hide();
+          // Swal.fire({
+          //   position: 'center',
+          //   icon: 'success',
+          //   title: status.status,
+          //   showConfirmButton: false,
+          //   timer: 2000    
+          // });
+          if(status.errorMessage==undefined)
+          {
+            Swal.fire("Success",status.status,"success")
+            this.removeallchecks();
+            this.getallDBConnection();
+            this.DBchecktoupdate();  
+            this.checktodelete();
+          }                 
+          else
+          Swal.fire("Error",status.errorMessage,"error")
+
         });
       }
     });
