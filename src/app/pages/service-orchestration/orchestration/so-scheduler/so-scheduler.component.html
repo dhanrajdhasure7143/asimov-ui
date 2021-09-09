@@ -48,22 +48,27 @@
             <div class="scheduletimer-actionbtns">
                
                         <button [disabled]="!(flags.startflag)"  tooltip="Start"   mat-mini-fab color="basic"   (click)="start_schedule()" >
-                            <img src="../../../../assets/images/RPA/icon_latest/play.svg" alt="" class="testplus">
+                            <!-- <img src="../../../../assets/images/RPA/icon_latest/play.svg" alt="" class="testplus"> -->
+                            <i class="ri-play-line testplus"></i>
                         </button>
 
                         <button [disabled]="!(flags.pauseflag)"  tooltip="Pause"   mat-mini-fab color="basic"   (click)="pause_schedule()">
-                            <img src="../../../../assets/images/RPA/icon_latest/pause.svg" alt="" class="testplus">
+                            <!-- <img src="../../../../assets/images/RPA/icon_latest/pause.svg" alt="" class="testplus"> -->
+                            <i class="ri-pause-line testplus"></i>
                         </button>
                     
                         <button  [disabled]="!(flags.resumeflag)"   tooltip="Resume"  mat-mini-fab color="basic"   (click)="resume_schedule()">
-                            <img src="../../../../assets/images/RPA/icon_latest/pause.svg" alt="" class="testplus">
+                            <!-- <img src="../../../../assets/images/RPA/icon_latest/pause.svg" alt="" class="testplus"> -->
+                            <i class="ri-skip-forward-line testplus"></i>
                         </button>
                       <button [disabled]="!(flags.deleteflag)"   tooltip="Delete" mat-mini-fab color="basic"   (click)="delete_schedule()">
-                        <img src="../../../../assets/images/RPA/icon_latest/delete.svg" alt="" class="testplus">
-                      </button>
+                        <!-- <img src="../../../../assets/images/RPA/icon_latest/delete.svg" alt="" class="testplus"> -->
+                        <i class="ri-delete-bin-line testplus"></i>
+                    </button>
                 
                       <button mat-mini-fab color="basic"  tooltip="Refresh"  (click)="get_schedule()">
-                        <img src="../../../../assets/images/RPA/icon_latest/reset.svg" alt="" class="testplus">
+                            <i class="ri-refresh-line testplus"></i>
+                        <!-- <img src="../../../../assets/images/RPA/icon_latest/reset.svg" alt="" class="testplus"> -->
                       </button>
             </div>
         </div>
@@ -90,7 +95,7 @@
                             <td *ngIf="schedule.nextRunTime!='null' && schedule.nextRunTime!=undefined">{{schedule.nextRunTime}}</td>
                             <td *ngIf="schedule.nextRunTime=='null' || schedule.nextRunTime==undefined">--</td>
                             <td *ngIf="schedule.botActionStatus!=undefined">{{schedule.botActionStatus}}</td>
-                            <td *ngIf="schedule.botActionStatus==undefined">{{schedule.save_status}}</td>
+                            <td *ngIf="schedule.botActionStatus==undefined"><span *ngIf="schedule.save_status=='unsaved'">--</span></td>
 
                           </tr>
                     </tbody>

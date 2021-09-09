@@ -50,7 +50,7 @@ export class SoSchedulerComponent implements OnInit {
   schedules:any=[];
   startdate:any= new Date();
   enddate:any;
-  timezone:any;
+  timezone:any="";
   schedule_list:any=[];
   botdata:any;
   selectedEnvironment:any;
@@ -80,6 +80,7 @@ export class SoSchedulerComponent implements OnInit {
     this.get_schedule()
     this.getenvironments();
     this.enddate=this.startdate;
+    this.timezone=""
     this.starttime=(new Date).getHours()+":"+(new Date).getMinutes();
   }
 
@@ -472,7 +473,7 @@ export class SoSchedulerComponent implements OnInit {
             status=schedule.schedularActionStatus
           else if(schedule.botActionStatus!=undefined)
             status=schedule.botActionStatus
-          if(status=='Save')
+          if(status=='New')
           {
 
             this.flags.startflag=true;

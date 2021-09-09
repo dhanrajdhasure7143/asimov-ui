@@ -1693,13 +1693,13 @@ img.testplusupload {
   padding: 3px 4px;
   border-radius: 50%;
   background: #eef2f5;
-  color: #0081B8;
+  color: #00a1e3;
   margin-right: 8px;
 }
 
 .module-back-button:hover i {
   border-radius: 50%;
-  background: rgb(0 161 227) !important;
+  background: #00a1e3 !important;
   color: #fff;
 }
 
@@ -1785,7 +1785,7 @@ select.small-input {
 .mat-paginator {
   border-top: 1px solid #cccccc;
   min-height: 30px;
-  /* padding-top: 5px; */
+  padding-top: 2px;
   /* min-height: 50px;
   padding-top:5px; */
 }
@@ -2482,25 +2482,31 @@ th.mat-header-cell {
 .logs-table{
   width:100% !important;
 }
-.logs-table th {
+/* .logs-table th {
   font-size: 16px !important;
   text-align: left !important;
   font-weight: 500 !important;
   color:#00a0e3 !important;
   padding-left:0px !important;
-}
+} */
 
 .logs-table th{
   background-color: white !important;
-  
+  color: #00a1e3 !important;
 }
 
 .as-horizontal > .as-split-gutter > .as-split-gutter-icon {
   background-color: #f3f3f3 !important;
 }
-.logs-modal td{
-  
-  padding-left:0px !important;
+.logs-modal td span{
+  font-size: 13px !important;
+  /* padding-left:0px !important; */
+}
+th .mat-sort-header-button {
+  font-size: 14px !important;
+}
+td.mat-cell span {
+  font-size: 13px;
 }
 
 .logs-table tr{
@@ -2536,4 +2542,13 @@ th.mat-header-cell {
 }  
 .djs-container.with-palette .dmn-definitions {
   left: 180px !important;
+}
+.form-footer button.btn.btn-primary:last-child {
+  margin-right: 0px !important;
+}
+
+span.pdicon {
+  position: absolute;
+  right: 13px;
+  top: 28px;
 }

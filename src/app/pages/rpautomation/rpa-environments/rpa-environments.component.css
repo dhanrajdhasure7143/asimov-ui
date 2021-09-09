@@ -29,16 +29,6 @@
     height: auto !important;
 }
 
-  .errspan{
-    position: relative;
-    z-index: 2;
-    color: #dc3545;
-    font-size: 12px;
-    letter-spacing: 0.2px;
-    padding-right: 10px;
-    line-height: 12px;
-    }
-  
   .rpa-tablebox{
   padding-top:10px;
   padding-bottom:10px;
@@ -114,18 +104,6 @@
   height:4px
 } */
 
-input[type="text"]:not(.mat-input-element), input[type="password"] {
-  width: 101%;
-  border: none;
-  /* border-bottom: 1px solid gray; */
-  text-align: left;
-  padding: 1em;
-  border-bottom: 1px solid black;
-  border-radius: 0px;
-  /* margin: 15px 0px; */
-  box-shadow: none;
-}
-
 
 .env-btn{
   margin-left: 5px !important;
@@ -197,7 +175,7 @@ span.testtooltip:before {
   font-size: 13px !important;
 }
 .btn-test{
-  margin-left: 10px !important;
+  /* margin-left: 10px !important; */
 }
 button:disabled {
   cursor: not-allowed;

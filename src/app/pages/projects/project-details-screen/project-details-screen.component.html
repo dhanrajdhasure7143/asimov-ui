@@ -86,8 +86,16 @@
           <div class="col-md-4 pr-0">
             <div class="row newprjdates">
               <div class="status-tabs">
-                <div class="user-owner-div">
+                <!-- <div class="user-owner-div">
                   <span class="user-owner">{{owner_letters | uppercase}}</span>
+                  </div> -->
+                  <div class="user-owner-div" *ngIf="(projectDetails.owner|userImagePipe: users_list)as result">
+                    <div  *ngIf="result.length==3">
+                      <span class="letter-image">{{owner_letters | uppercase}}</span>
+                    </div>
+                    <div *ngIf="result.length>3">
+                      <span >  <img class="project-owner-img " src="{{projectDetails.owner|userImagePipe: users_list}}"></span>
+                    </div>
                   </div>
                 <div class="status-data">
                   <span class="labeltit">Project Owner</span>
