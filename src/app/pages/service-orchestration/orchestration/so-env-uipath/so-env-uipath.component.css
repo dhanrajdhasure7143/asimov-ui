@@ -126,3 +126,7 @@ button:disabled {
   max-height: calc(100vh - 160px);
   overflow-y: auto;
 }
+
+.env-data-tool span {
+  padding: 0px 5px;
+}

@@ -3,8 +3,9 @@
       
       <div class="row">
         <div class="col-md-5"></div>
-          <div class="col-md-2">
+          <div class="col-md-2 form-group p-0 sosearchfield">
             <input type="search" class="form-control rpa-control" placeholder="Search" [(ngModel)]="search" (input)="method()"> 
+            <img src="../../../../assets/images/search.svg" alt="" class="testplus1"> 
           </div>
           <div class="col-md-2">
             <select [(ngModel)]="selected_source" value="" class="form-control rpa-control"  (change)="method()"> <!--(selectionChange)="applyFilter3($event.value)">-->

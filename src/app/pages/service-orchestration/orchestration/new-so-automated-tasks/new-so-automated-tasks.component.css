@@ -132,7 +132,7 @@ table tr .display_hover:hover{
 
 .orchestration-table-container{
   width: 100%;
-  height: calc(100vh - 330px);
+  height: 59vh;
   overflow: auto;
 }
 

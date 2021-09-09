@@ -11,7 +11,8 @@
 .inbox-tablegrid {
     width: 100%;
     overflow-x: scroll;
-    padding-top: 20px;
+    height: 60vh;
+    /* padding-top: 20px; */
   }
   
   .inbox-tablegrid table td span{
