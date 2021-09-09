@@ -31,7 +31,7 @@
                                   <div class="col-md-6">
                                     <label class="label-control" for="email">Email</label>
                                     <input type="text" name="email" #email="ngModel" class="form-control data" [(ngModel)]="formOne.userId"
-                                                pattern="^\S*[@]\S*[.]\S*$" required email placeholder="Send from ex: abc@xyz.com" disabled/>
+                                                pattern="^\S*[@]\S*[.]\S*$" required email placeholder="Send from ex: abc@xyz.com" readonly disabled/>
                                   
                                   </div>
                                   <div class="col-md-6">
@@ -57,7 +57,7 @@
                                    
                                     <div class="col-md-6">
                                       <label class="label-control" for="company">Company</label>
-                                      <input type="text" name="company" #company="ngModel" class="form-control data" [(ngModel)]="formOne.company" placeholder="Enter Company" maxlength="25" required alphabetOnly />
+                                      <input type="text" name="company" #company="ngModel" class="form-control data" [(ngModel)]="formOne.company" placeholder="Enter Company" maxlength="25" readonly disabled required alphabetOnly />
                                       <span *ngIf="((company.invalid && updateUser.submitted) || (company.errors && company.touched) )" 
                                       class='errspan required'> Company is required </span> 
                                     
@@ -74,12 +74,12 @@
                                           <span *ngIf="((country.invalid && updateUser.submitted)|| (country.errors && country.touched))"
                                             class='errspan required'> Country is required </span>
                                       </div>
-                                      <div class="col-md-6">
-                                          <label class="label-control" for="state">State</label>
+                                      <!-- <div class="col-md-6">
+                                          <label class="label-control" for="state">State</label> -->
                                           <!-- <img src="assets/images/registration/State.svg" class="icon"> -->
-                                          <select class="form-control data" (change)="onChangeState($event.target.value)" name='state' #state='ngModel' [(ngModel)]="formOne.state" required>
+                                          <!-- <select class="form-control data" (change)="onChangeState($event.target.value)" name='state' #state='ngModel' [(ngModel)]="formOne.state" required> -->
                                             <!-- <option *ngIf="stateInfo == ''" value="-1">State</option> -->
-                                            <option  [value]="undefined" disabled hidden>State</option>
+                                            <!-- <option  [value]="undefined" disabled hidden>State</option>
                                             <option  [value]="null" disabled hidden>Select State</option>
                                             <option *ngFor="let state of stateInfo; let j = index" [value]='state.StateName'>{{state.StateName}}</option>
                                           </select>
@@ -88,9 +88,9 @@
                                         </div>
                             
                                         <div class="col-md-6">
-                                            <label class="label-control" for="city">City</label>
+                                            <label class="label-control" for="city">City</label> -->
                                           <!-- <img src="assets/images/registration/town.svg" class="icon"> -->
-                                          <select class="form-control data" name='city' #city='ngModel' [(ngModel)]='formOne.city' required>
+                                          <!-- <select class="form-control data" name='city' #city='ngModel' [(ngModel)]='formOne.city' required>
                                             <option  [value]="undefined" disabled hidden>City</option>
                                             <option  [value]="null" disabled hidden>Select City</option>
                                             <option *ngFor="let city of cityInfo; let k = index" [value]="city">{{city}}</option>
@@ -99,13 +99,13 @@
                                             class='errspan required'> City is required </span>
                                         </div>
                                         <div class="col-md-6">
-                                            <label class="label-control" for="zipCode">Zip Code</label>
+                                            <label class="label-control" for="zipCode">Zip Code</label> -->
                                             <!-- <img src="assets/images/registration/Zip Code.svg" class="icon"> -->
-                                            <input type="text" (keydown)="onKeydown($event)" name="zipCode" #zipCode="ngModel" class="form-control data" [(ngModel)]="formOne.zipcode"
+                                            <!-- <input type="text" (keydown)="onKeydown($event)" name="zipCode" #zipCode="ngModel" class="form-control data" [(ngModel)]="formOne.zipcode"
                                                onKeyPress="if(this.value.length==6) return false;" placeholder="Enter Zip Code" required>
                                             <span *ngIf="((zipCode.invalid && updateUser.submitted)|| (zipCode.errors && zipCode.touched))"
                                               class='errspan required'> Zip Code is required </span>
-                                          </div>
+                                          </div> -->
 
                                      
                                                      

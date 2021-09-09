@@ -34,7 +34,7 @@ select {
 
   .lbl_chk_cls{
     font-size: 15px;
-    font-weight: lighter !important;
+    font-weight: 400;
     margin-left:3px
   }
 

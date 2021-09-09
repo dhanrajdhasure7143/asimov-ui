@@ -89,7 +89,7 @@
                           <td *ngIf="schedule.nextRunTime!='null' && schedule.nextRunTime!=undefined">{{schedule.lastRunTime}}</td>
                           <td *ngIf="schedule.nextRunTime=='null' || schedule.nextRunTime==undefined">--</td>
                           <td *ngIf="schedule.botActionStatus!=undefined">{{schedule.botActionStatus}}</td>
-                          <td *ngIf="schedule.botActionStatus==undefined">{{schedule.save_status}}</td>
+                          <td *ngIf="schedule.botActionStatus==undefined"><span *ngIf="schedule.save_status=='unsaved'">--</span></td>
                       </tr>
                   </tbody>
               </table></div></div>
