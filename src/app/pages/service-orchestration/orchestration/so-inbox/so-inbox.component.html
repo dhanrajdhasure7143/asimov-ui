@@ -1,14 +1,10 @@
-<div>
+<div style="padding-top: 5px;">
     <div class="container-fluid">
-        <br>
-        <div class="text-right">
-            <span style="padding:18px">
-              <mat-form-field class="example-full-width" id="inboxsearch">
-                <mat-label>Search</mat-label>
-                <input matInput placeholder="Search" [(ngModel)]="searchinbox" (keyup)="applyFilter($event.target.value)">
-                <mat-icon matSuffix>search</mat-icon>
-              </mat-form-field>
-            </span>
+        <div class="row">
+              <div class="col-md-2 form-group p-0 example-full-width sosearchfield" id="inboxsearch">
+                <input class="form-control" placeholder="Search" [(ngModel)]="searchinbox" (keyup)="applyFilter($event.target.value)">
+                <img src="../../../../assets/images/search.svg" alt="" class="testplus1">
+              </div>
           <span (click)="reset()"  style="cursor:pointer;padding: 12px;" id="inboxreset" matTooltip="Reset">
             <i  class="fa fa-undo"></i>
           </span >
@@ -118,8 +114,7 @@
             </div>
         
       </div>
-      <br><br>
-
+     
 </div>
 <!--<div id="showaction" class="rpa-modal">
     <div class="rpa-modal-content">

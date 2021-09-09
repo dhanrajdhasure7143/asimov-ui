@@ -4,6 +4,6 @@
 
 
 .schedule-table-container{
-    height: calc(100vh - 331px) !important;
+    height: 60vh;
     overflow:auto !important;
 }
