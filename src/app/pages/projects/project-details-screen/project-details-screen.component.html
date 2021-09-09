@@ -310,7 +310,7 @@
                   </div>
                   <div class="col-sm-4 p-0">
                       <div class="mainset">
-                        <span class="labeltit">Project Purpose</span>
+                        <span class="labeltit">Project Details</span>
       
                         <div *ngIf="editdata==false">
       
@@ -323,7 +323,7 @@
                         <div *ngIf="editdata==true">
                           <input type="text" (change)="projectDetails.projectPurpose=$event.target.value"
                             [value]="(projectDetails.projectPurpose==undefined||projectDetails.projectPurpose==null)?'':projectDetails.projectPurpose"
-                            class="small-input" placeholder="Enter Project Purpose">
+                            class="small-input" placeholder="Enter Project Description">
                         </div>
                       </div>
                   </div>
@@ -647,7 +647,7 @@
               <img src="..\assets\images\Projects\process_icon.svg" alt="">
             </div>
             <div class="py-5">
-              <span class="labeltit">Project Purpose</span>
+              <span class="labeltit">Project Description</span>
 
               <div *ngIf="editdata==false">
                 <span class="tab-text labelcont">Improve ROI</span>
@@ -655,7 +655,7 @@
               <div *ngIf="editdata==true">
                 <input type="text"
                   [value]="(projectDetails.projectPurpose==undefined||projectDetails.projectPurpose==null)?'':projectDetails.projectPurpose"
-                  class="small-input" placeholder="Enter Project Purpose">
+                  class="small-input" placeholder="Enter Project Description">
               </div>
             </div>
           </div>
