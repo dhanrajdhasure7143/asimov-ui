@@ -148,14 +148,14 @@
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-fields col-md-6 pl-0">
-                                            <label class="label-control" for="measurableMetrics">Metrics To Be Measured<span class="star">*</span></label>
+                                            <label class="label-control" for="measurableMetrics">Metrics to be measured<span class="star">*</span></label>
                                             <input type="text" maxlength="51" class="form-control data"
                                                 formControlName="measurableMetrics" value=""
-                                                placeholder="Enter Metrics To Be Measured"
+                                                placeholder="Enter Metrics to be measured"
                                                 [ngClass]="createprogram.get('measurableMetrics').valid?'enteredfield-color':'inputfield-color'">
                                             <span
                                                 *ngIf="createprogram.get('measurableMetrics').invalid && createprogram.get('measurableMetrics').touched"
-                                                class="errspan required">Metrics To Be Measured Required*</span>
+                                                class="errspan required">Metrics to be measured Required*</span>
                                             <span
                                                 *ngIf="createprogram.controls['measurableMetrics'].hasError('maxlength')"
                                                 class="errspan required">
