@@ -55,6 +55,8 @@ export class MyAccountComponent implements OnInit {
     }
     let encrypt = this.spacialSymbolEncryption + this.cryptoService.encrypt(JSON.stringify(this.formOne));
     let reqObj = {"enc": encrypt};
+    console.log(reqObj);
+    
     this.api.updateUser(reqObj).subscribe(data => {
     Swal.fire({
       title: "success",
@@ -166,6 +168,9 @@ export class MyAccountComponent implements OnInit {
       confirmButtonText: 'Ok'
     });}else if(res.errorMessage === "Your current password was incorrect."){
       Swal.fire("Error","Please check your current password!","error");
+     
+    }else if(res.errorMessage === "The new password must be different form your previous password."){
+      Swal.fire("Error",res.errorMessage,"error");
      
     }
   }, err => {

@@ -35,8 +35,8 @@ export class CreateProjectFormComponent implements OnInit {
       priority: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       measurableMetrics: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       process: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      description: ["", Validators.compose([Validators.maxLength(200)])],
-      access: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+     // description: ["", Validators.compose([Validators.maxLength(200)])],
+     // access: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       
       projectPurpose: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       // status: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],

@@ -235,3 +235,20 @@ td a:hover img.testplus.hover-img {
  .user-owner-div{
    margin-top: 10px;
  }
+
+  .letter-image{
+    border-radius: 100%;
+    color: #001c47;
+    background-color: #ddd;
+    padding: 7px;
+    text-align: center;
+    letter-spacing: 2.5px;
+    font-size: 15px;
+  }
+  
+  .program-owner-img{
+    border-radius: 100%;
+    width: 44px;
+    height: 41px;
+    margin-top: -10px;
+  }
