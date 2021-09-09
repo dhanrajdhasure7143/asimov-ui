@@ -410,7 +410,10 @@ mat-paginator button:disabled{
   margin-right: 5px;
 }
 
-
+.rpa_botdiv {
+  position: absolute;
+  left: 10%;
+}
 
 .rpa-home-table{
   height:47vh;
@@ -419,6 +422,8 @@ mat-paginator button:disabled{
 .open-btn-click {
   background-color: #f99d1c;
   color: #fff !important;
+  position: absolute;
+  top: 10px;
 }
 .RPA-scheduletimer .ngx-timepicker{
   border: 1px solid #D1D1D1 !important;

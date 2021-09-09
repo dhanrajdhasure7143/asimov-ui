@@ -74,36 +74,41 @@
 
 .context-menu__item{
   padding: 6px;
-  border-bottom: 1px solid lightgray;
+  /* border-bottom: 1px solid lightgray; */
 }
 .context-menu1{
   border: 1px solid rgba(0,0,0,.15);
   border-radius: 8px;
   box-shadow: 0 6px 12px rgba(0,0,0,.175);
   z-index: 100;
-  position: sticky;
+  padding: 5px;
+  /* position: sticky;
   background-color: white;
   left: 153px;
   top: 47px;
-  padding: 5px;
-  margin: 2px 0 0;
+  margin: 2px 0 0; */
 }
 .context-menu{
   position: absolute;
-  margin: -15px 8px 8px 7px;
+  top: -17px;
+    left: 7px;
+    width: max-content;
+  /* margin: -15px 8px 8px 7px;
   white-space: nowrap;
-  background-color: white !important;
+  background-color: white !important; */
 }
 .context-menu__item a {
-    background-color: white;
-    color: black;
+    /* background-color: white;
+    color: black; */
 }
 
 .node_tooltip{
   content: "";
   position: absolute;
-  bottom: 0%;
-  left: 40px;
+  /* bottom: 0%;
+  left: 40px; */
+  bottom: -10px;
+  left: 45px;
   border-width: 6px;
   border-style: solid;
   border-color: transparent gray transparent transparent;

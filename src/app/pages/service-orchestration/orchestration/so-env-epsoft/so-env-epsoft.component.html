@@ -174,7 +174,7 @@
               <div class="rpa-env-nav">
                   <button type="button" class="rpa-nav-btn" aria-hidden="true" placement="bottom" [routerLink]="['/pages/rpautomation/home']">
               <img src="..\\assets\\images\\RPA\\environments_icon.svg" class="rpa-nav-btn-img">
-                <br>
+                
                 <b>Bot Studio</b>
               </button>
               </div>
@@ -188,19 +188,19 @@
                         <h4>Create Environment</h4>
                     </div>
                     <div class="rpa-modal-body">
-                        <br>
-                        <div class="container">
+                        
+                        <div class="container m-contanier form-body">
                             <form [formGroup]="insertForm" (ngSubmit)="savedata()">
-                                <div class="row">
-                                    <div class="col-md-3 formelement">
-                                        <label for="environmentName">Name<span style="color:red">*</span></label>
+                                
+                                    <div class="col-md-12 p-0 form-group">
+                                        <label class="label-control" for="environmentName">Name<span class="star">*</span></label>
                                         <input type="text" maxlength="50" class="form-control data" formControlName="environmentName" #environmentName value="" placeholder="Enter Name">
                                         <span *ngIf="insertForm.get('environmentName').invalid && insertForm.get
               
-              ('environmentName').touched" style="color:red" class="fa fa-info-circle errspan">Name Required*</span>
+              ('environmentName').touched" class="errspan required">Name Required*</span>
                                     </div>
-                                    <div class="col-md-3 formelement ">
-                                        <label for="environmentType">Type<span style="color:red">*</span></label>
+                                    <div class="col-md-12 p-0 form-group ">
+                                        <label class="label-control" for="environmentType">Type<span class="star">*</span></label>
                                         <!--<input type="text" class="form-control" formControlName="environmentType" value=""
               
               placeholder="Enter Environment Type" >-->
@@ -213,74 +213,73 @@
                     </select>
                                         <span *ngIf="insertForm.get('environmentType').invalid && insertForm.get
               
-              ('environmentType').touched" style="color:red" class="fa fa-info-circle errspan">Type Required*</span>
+              ('environmentType').touched" class="errspan required">Type Required*</span>
               
                                     </div>
-                                    <div class="col-md-3 formelement">
-                                        <label for="agentPath">Agent Path<span style="color:red">*</span></label>
+                                    <div class="col-md-12 p-0 form-group">
+                                        <label class="label-control" for="agentPath">Agent Path<span class="star">*</span></label>
                                         <input type="text" maxlength="50" class="form-control" formControlName="agentPath" value="" placeholder="Enter Agent Path">
-                                        <span *ngIf="insertForm.get('agentPath').invalid && insertForm.get('agentPath').touched" style="color:red" class="fa fa-info-circle errspan"> Agent Path Required*</span>
+                                        <span *ngIf="insertForm.get('agentPath').invalid && insertForm.get('agentPath').touched" class="errspan required"> Agent Path Required*</span>
               
                                     </div>
-                                    <div class="col-md-3 formelement">
-                                        <label for="hostAddress"> IP Address/Host<span style="color:red">*</span></label>
+                                    <div class="col-md-12 p-0 form-group">
+                                        <label class="label-control" for="hostAddress"> IP Address/Host<span class="star">*</span></label>
                                         <input type="text" maxlength="50" class="form-control" formControlName="hostAddress" value="" placeholder="Enter IP Address/Host">
-                                        <span *ngIf="insertForm.get('hostAddress').invalid && insertForm.get
-              
-              ('hostAddress').touched" style="color:red" class="fa fa-info-circle errspan"> IP Address/Host Required*</span>
+                                        <span *ngIf="insertForm.get('hostAddress').invalid && insertForm.get('hostAddress').touched" class="errspan required"> IP Address/Host Required*</span>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-3 formelement">
-                                        <label for="userName">Username<span style="color:red">*</span></label>
+                                
+                                    <div class="col-md-12 p-0 form-group">
+                                        <label class="label-control" for="userName">Username<span class="star">*</span></label>
                                         <input type="text" maxlength="50" class="form-control" formControlName="username" value="" placeholder="Enter Username">
-                                        <span *ngIf="insertForm.get('username').invalid && insertForm.get('username').touched" style="color:red" class="fa fa-info-circle errspan"> Username Required*</span>
+                                        <span *ngIf="insertForm.get('username').invalid && insertForm.get('username').touched" class="errspan required"> Username Required*</span>
               
                                     </div>
               
-                                    <div class="col-md-3 formelement">
-                                        <label for="password">Password<span style="color:red">*</span></label>
+                                    <div class="col-md-12 p-0 form-group">
+                                        <label class="label-control" for="password">Password<span class="star">*</span></label>
                                         <input [type]="passwordtype1 ? 'text': 'password'" maxlength="50" class="form-control" formControlName="password" value="" placeholder="Enter Password" passwordToggle>
-                                        <span *ngIf="passwordtype1==false" class="fa fa-fw fa-eye field-icon" (click)="passwordtype1 =!passwordtype1"></span>
-                                        <span *ngIf="passwordtype1==true" class="fa fa-fw fa-eye-slash field-icon" (click)="passwordtype1 =!passwordtype1"></span>
-                                        <span *ngIf="insertForm.get('password').invalid && insertForm.get('password').touched" style="color:red" class="fa fa-info-circle errspan"> Password Required*</span>
+                                        <span *ngIf="passwordtype1==false" (click)="passwordtype1 =!passwordtype1" class="pdicon">
+                                            <img src="../../../../../assets/images/Projects/eye-show.svg"  class="testplus1">
+                                        </span>
+                                        <span *ngIf="passwordtype1==true" (click)="passwordtype1 =!passwordtype1" class="pdicon">
+                                            <img src="../../../../../assets/images/Projects/eye-hide.svg"  class="testplus1">
+                                        </span>
+                                        <span *ngIf="insertForm.get('password').invalid && insertForm.get('password').touched" class="errspan required"> Password Required*</span>
                                     </div>
               
-                                    <div class="col-md-3 formelement">
-                                        <label for="connectionType">Connection Type<span style="color:red">*</span></label>
+                                    <div class="col-md-12 p-0 form-group">
+                                        <label class="label-control" for="connectionType">Connection Type<span class="star">*</span></label>
                                         <input type="text" maxlength="50" class="form-control" formControlName="connectionType" value="" placeholder="Enter Connection Type" readonly>
-                                        <span *ngIf="insertForm.get('connectionType').invalid && insertForm.get
-              
-              ('connectionType').touched" style="color:red" class="fa fa-info-circle errspan"> Connection Type Required*</span>
+                                        <span *ngIf="insertForm.get('connectionType').invalid && insertForm.get('connectionType').touched" class="errspan required"> Connection Type Required*</span>
               
                                     </div>
               
-                                    <div class="col-md-3 formelement">
-                                        <label for="portNumber">Port<span style="color:red">*</span></label>
+                                    <div class="col-md-12 p-0 form-group">
+                                        <label class="label-control" for="portNumber">Port<span class="star">*</span></label>
                                         <input type="text" onkeypress="return (event.charCode > 48 && event.charCode < 57)" maxlength="6" class="form-control" formControlName="portNumber" value="" placeholder="Enter Port">
               
-                                        <span *ngIf="insertForm.get('portNumber').invalid && insertForm.get
-              
-              ('portNumber').touched" style="color:red" class="fa fa-info-circle errspan"> Port Required*</span>
+                                        <span *ngIf="insertForm.get('portNumber').invalid && insertForm.get('portNumber').touched" class="errspan required"> Port Required*</span>
               
                                     </div>
               
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-3 formelement">
+                                    <div class="col-md-12 p-0 form-group">
                                         <input type="checkbox" checked formControlName="activeStatus"> Active
                                     </div>
+                                
+                                <div class="form-footer">
+                                    <input type="button" class="btn btn-default" value="Reset" (click)="resetEnvForm()">
+
+                                    <input type="button" class="btn btn-primary" value="Test Connection" (click)="testConnection('insert')" [disabled]="insertForm.invalid">
+
+                                    <input type="button" class="btn btn-primary" value="Save" (click)="saveEnvironment()" [disabled]="insertForm.invalid || submitted">
                                 </div>
-                                <br>
-                                <input type="button" class="btn btn-primary" value="Save" (click)="saveEnvironment()" [disabled]="insertForm.invalid || submitted">
-                                <input type="button" class="btn btn-primary" value="Test Connection" (click)="testConnection('insert')" [disabled]="insertForm.invalid">
-                                <input type="button" class="btn btn-primary" value="Reset" (click)="resetEnvForm()">
+
                             </form>
               
                         </div>
                     </div>
                 </div>
-              <br><br>
+              
               </div>
               
               
@@ -291,19 +290,19 @@
                         <span class="rpa-modal-close" (click)="close()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
                         <h4>Modify Environment</h4>
                     </div>
-                    <div class="rpa-modal-body" *ngIf="updateflag==true">
+                    <div class="modal-body" *ngIf="updateflag==true">
               
-                        <div class="container" *ngIf="updateenvdata!=undefined">
+                        <div class="container m-contanier form-body" *ngIf="updateenvdata!=undefined">
                             <form [formGroup]="updateForm" (ngSubmit)="updateEnvironment()">
-                                <div class="row">
-                                    <div class="col-md-3 formelement">
-                                        <label for="environmentName">Name<span style="color:red">*</span></label>
+                               
+                                    <div class="col-md-12 p-0 form-group">
+                                        <label class="label-control" for="environmentName">Name<span class="star">*</span></label>
                                         <input type="text" class="form-control" maxlength="50" formControlName="environmentName" placeholder="Enter Name">
-                                        <span *ngIf="updateForm.get('environmentName').invalid && updateForm.get('environmentName').touched" style="color:red" class="fa fa-info-circle errspan">Name Required*</span>
+                                        <span *ngIf="updateForm.get('environmentName').invalid && updateForm.get('environmentName').touched" class="errspan required">Name Required*</span>
               
                                     </div>
-                                    <div class="col-md-3 formelement ">
-                                        <label for="environmentType">Type<span style="color:red">*</span></label>
+                                    <div class="col-md-12 p-0 form-group ">
+                                        <label class="label-control" for="environmentType">Type<span class="star">*</span></label>
                                         <!--<input type="text" class="form-control" formControlName=" environmentType"
               
               value="{{updateenvdata.environmentType}}" [(ngModel)]="updateenvdata.environmentType"
@@ -316,81 +315,87 @@
                           <option value="Linux" >Linux</option>
                         </select>
                                         <span *ngIf="updateForm.get('environmentType').invalid && updateForm.get
-              ('environmentType').touched" style="color:red" class="fa fa-info-circle errspan"> Environment Type Required*</span>
+              ('environmentType').touched" class="errspan required"> Environment Type Required*</span>
                                     </div>
               
-                                    <div class="col-md-3 formelement">
+                                    <div class="col-md-12 p-0 form-group">
               
-                                        <label for="agentPath">Agent Path<span style="color:red">*</span></label>
+                                        <label class="label-control" for="agentPath">Agent Path<span class="star">*</span></label>
                                         <input type="text" class="form-control" maxlength="50" formControlName="agentPath" placeholder="Enter Agent Path">
                                         <span *ngIf="updateForm.get('agentPath').invalid && updateForm.get
               
-              ('agentPath').touched" style="color:red" class="fa fa-info-circle errspan"> Agent Path Required*</span>
+              ('agentPath').touched" class="errspan required"> Agent Path Required*</span>
               
                                     </div>
-                                    <div class="col-md-3 formelement">
+                                    <div class="col-md-12 p-0 form-group">
               
-                                        <label for="hostAddress">IP Address/Host<span style="color:red">*</span></label>
+                                        <label class="label-control" for="hostAddress">IP Address/Host<span class="star">*</span></label>
                                         <input type="text" class="form-control" maxlength="50" formControlName="hostAddress" placeholder="Enter IP Address/Host">
                                         <span *ngIf="updateForm.get('hostAddress').invalid && updateForm.get
               
-              ('hostAddress').touched" style="color:red" class="fa fa-info-circle errspan"> IP Address/Host Required*</span>
+              ('hostAddress').touched" class="errspan required"> IP Address/Host Required*</span>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-3 formelement">
-                                        <label for="userName">Username<span style="color:red">*</span></label>
+                                
+                                    <div class="col-md-12 p-0 form-group">
+                                        <label class="label-control" for="userName">Username<span class="star">*</span></label>
                                         <input type="text" class="form-control" maxlength="50" formControlName="username" placeholder="Enter Username">
                                         <span *ngIf="updateForm.get('username').invalid && updateForm.get
               
-              ('username').touched" style="color:red" class="fa fa-info-circle errspan"> Username Required*</span>
+              ('username').touched" class="errspan required"> Username Required*</span>
               
                                     </div>
               
-                                    <div class="col-md-3 formelement">
-                                        <label for="password">Password<span style="color:red">*</span></label>
+                                    <div class="col-md-12 p-0 form-group">
+                                        <label class="label-control" for="password">Password<span class="star">*</span></label>
                                         <input [type]="passwordtype2 ? 'text': 'password'" class="form-control" maxlength="50" formControlName="password" placeholder="Enter Password">
-                                        <span *ngIf="passwordtype2==false" class="fa fa-fw fa-eye field-icon" (click)="passwordtype2 =!passwordtype2"></span>
-                                        <span *ngIf="passwordtype2==true" class="fa fa-fw fa-eye-slash field-icon" (click)="passwordtype2 =!passwordtype2"></span>
+                                        <span *ngIf="passwordtype2==false" (click)="passwordtype2 =!passwordtype2" class="pdicon">
+                                            <img src="../../../../../assets/images/Projects/eye-show.svg"  class="testplus1">
+                                        </span>
+                                        <span *ngIf="passwordtype2==true" (click)="passwordtype2 =!passwordtype2" class="pdicon">
+                                            <img src="../../../../../assets/images/Projects/eye-hide.svg"  class="testplus1">
+                                        </span>
               
                                         <span *ngIf="updateForm.get('password').invalid && updateForm.get
               
-              ('password').touched" style="color:red" class="fa fa-info-circle errspan"> Password Required*</span>
+              ('password').touched" class="errspan required"> Password Required*</span>
                                     </div>
               
-                                    <div class="col-md-3 formelement">
-                                        <label for=" connectionType">Connection Type<span style="color:red">*</span></label>
+                                    <div class="col-md-12 p-0 form-group">
+                                        <label class="label-control" for=" connectionType">Connection Type<span class="star">*</span></label>
                                         <input type="text" maxlength="50" class="form-control" pattern="[a-zA-Z ]*" formControlName="connectionType"  placeholder="Enter Connection Type" readonly>
                                         <span *ngIf="updateForm.get('connectionType').invalid && updateForm.get
               
-              ('connectionType').touched" style="color:red" class="fa fa-info-circle errspan"> Connection Type Required*</span>
+              ('connectionType').touched" class="errspan required"> Connection Type Required*</span>
               
                                     </div>
               
-                                    <div class="col-md-3 formelement">
-                                        <label for="portNumber">Port<span style="color:red">*</span></label>
+                                    <div class="col-md-12 p-0 form-group">
+                                        <label class="label-control" for="portNumber">Port<span class="star">*</span></label>
                                         <input type="text" onkeypress="return (event.charCode > 48 && event.charCode < 57)" maxlength="6" class="form-control" formControlName="portNumber" placeholder="Enter Port">
                                         <span *ngIf="updateForm.get('portNumber').invalid && updateForm.get
               
-              ('portNumber').touched" style="color:red" class="fa fa-info-circle errspan"> Port Required*</span>
+              ('portNumber').touched" class="errspan required"> Port Required*</span>
               
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-3 formelement">
+                               
+                                    <div class="col-md-12 p-0 form-group">
                                         <input type="checkbox" [checked]="toggle" formControlName="activeStatus"> Active
                                     </div>
-                                </div>
-                                <input type="button" class="btn btn-primary" value="Modify" [disabled]="updateForm.invalid || updatesubmitted" (click)="updateEnvironment()">
-                                <input type="button" class="btn btn-primary" value="Test Connection" [disabled]="updateForm.invalid"  (click)="testConnection('update')">
-                                <input type="button" class="btn btn-primary" value="Reset" (click)="reset_UpdateEpsoft()">
+                                <div class="form-footer">
+                                    <input type="button" class="btn btn-default" value="Reset" (click)="reset_UpdateEpsoft()">
+
+                                    <input type="button" class="btn btn-primary" value="Test Connection" [disabled]="updateForm.invalid"  (click)="testConnection('update')">
+                                    
+                                    <input type="button" class="btn btn-primary" value="Modify" [disabled]="updateForm.invalid || updatesubmitted" (click)="updateEnvironment()">
+                                    
                                 
+                                </div>
                             </form>
                         </div>
                     </div>
                 </div>
               
-              <br><br>
+              
               </div>
               
               
