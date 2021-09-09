@@ -1,5 +1,4 @@
 
-
 import { Component, OnInit, AfterViewInit,ViewChild,EventEmitter,ElementRef, Renderer2,Output ,HostListener} from '@angular/core';
 import { Options } from 'ng5-slider';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -2057,7 +2056,5 @@ addWorkingHours(){
        console.log(err);
      }));
   }
-   viewbusinessinsights(){
-    this.router.navigate(["/pages/processIntelligence/business-insights"],{queryParams:{wpid:this.graphIds}})
-  }
+   
 }
