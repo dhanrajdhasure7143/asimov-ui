@@ -51,7 +51,7 @@
 
               <span *ngIf="element.runStatus=='Failure'" class="text-danger"><span><li class="fa fa-times"></span>&nbsp;<span>{{element.runStatus}}</span></span>
               </span>-->
-              <span *ngIf="element.runStatus=='Running'" class="text-primary" ><span><img src="../../../../assets/images/RPA/DotSpin.gif" style="filter: none; width: 19px;"></span>&nbsp;{{element.runStatus}}</span>
+              <span *ngIf="element.runStatus=='Running'" class="text-primary" ><span><img src="../../../../assets/images/RPA/DotSpin.gif" style="filter: none; width: 19px;"></span>&nbsp;{{element.runStatus}}&nbsp;&nbsp;<span class="clickable btn btn-xs btn-primary" (click)="kill_process_run(element.processId,element.processRunId)">Kill</span></span>
 
             <span *ngIf="element.runStatus=='Success'" class="tableActionsIcons"><span><img src="../../../../assets/images/RPA/icon_latest/Success.svg" alt=""></span>&nbsp;<span>{{element.runStatus}}</span></span>
 
@@ -63,8 +63,8 @@
             </span>&nbsp;<span>{{element.runStatus}}</span></span>
             <span *ngIf="element.runStatus=='Pending'" class="text-warning"><i class="fa fa-clock" style="font-size:19px"></i>&nbsp;<span>{{element.runStatus}}</span></span>
 
-            <span *ngIf="element.runStatus=='Stop'" class="text-danger"><span>
-                <img src="../../../../../assets/images/RPA/stop_fail_icon.svg" style="filter: none; width: 19px;"></span>&nbsp;<span>{{element.runStatus}}</span></span>
+            <span *ngIf="element.runStatus=='Stop' || element.runStatus=='Stopped'" class="text-danger"><span>
+                <img src="../../../../assets/images/RPA/icon_latest/stop.svg" style="filter: none; width: 19px;"></span>&nbsp;<span>{{element.runStatus}}</span></span>
 
               <span *ngIf="element.runStatus == undefined">-</span></td>
            </ng-container>
@@ -150,7 +150,7 @@
 
                       <span *ngIf="element.bot_status=='Failure'" class="text-danger"><span><li class="fa fa-times"></span>&nbsp;<span>{{element.bot_status}}</span></span>
                       </span>-->
-                      <span *ngIf="element.bot_status=='Running'" class="text-primary" ><span><img src="../../../../assets/images/RPA/DotSpin.gif" style="filter: none; width: 19px;"></span>&nbsp;{{element.bot_status}}</span>
+                      <span *ngIf="element.bot_status=='Running'" class="text-primary" ><span><img src="../../../../assets/images/RPA/DotSpin.gif" style="filter: none; width: 19px;"></span>&nbsp;{{element.bot_status}} &nbsp;<span class="clickable btn btn-xs btn-primary" (click)="kill_bot_run(element)">Kill</span> </span>
 
                         <span *ngIf="element.bot_status=='Success'" class="tableActionsIcons"><span><img src="../../../../assets/images/RPA/icon_latest/Success.svg" alt=""></span>&nbsp;<span>{{element.bot_status}}</span></span>
 
@@ -162,8 +162,8 @@
                         </span>&nbsp;<span>{{element.bot_status}}</span></span>
                         <span *ngIf="element.bot_status=='Pending'" class="text-warning"><i class="fa fa-clock" style="font-size:19px"></i>&nbsp;<span>{{element.runStatus}}</span></span>
 
-                        <span *ngIf="element.bot_status=='Stop'" class="text-danger"><span>
-                            <img src="../../../../../assets/images/RPA/stop_fail_icon.svg" style="filter: none; width: 19px;"></span>&nbsp;<span>{{element.bot_status}}</span></span>
+                        <span *ngIf="element.bot_status=='Stop' || element.bot_status=='Stopped'" class="text-danger"><span>
+                            <img src="../../../../assets/images/RPA/icon_latest/stop.svg" style="filter: none; width: 19px;"></span>&nbsp;<span>{{element.bot_status}}</span></span>
 
                       <span *ngIf="element.bot_status == undefined">-</span>
                 </td>
@@ -246,8 +246,8 @@
                           <img src="../../../../assets/images/RPA/userobot.png" style="filter: none;"></span>&nbsp;<span>{{element.status}}</span></span>
                         <span *ngIf="element.status=='Pending'" class="text-warning"><i class="fa fa-clock" style="font-size:19px"></i>&nbsp;<span>{{element.runStatus}}</span></span>
 
-                        <span *ngIf="element.status=='Stop'" class="text-danger"><span>
-                            <img src="../../../../../assets/images/RPA/stop_fail_icon.svg" style="filter: none; width: 19px;"></span>&nbsp;<span>{{element.bot_status}}</span></span></span>
+                        <span *ngIf="element.status=='Stop' || element.status=='Stopped'" class="text-danger"><span>
+                            <img src="../../../../assets/images/RPA/icon_latest/stop.svg" style="filter: none; width: 19px;"></span>&nbsp;<span>{{element.bot_status}}</span></span></span>
                   <span *ngIf="element.status == undefined">-</span></td>
             </ng-container>
 
