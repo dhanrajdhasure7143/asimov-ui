@@ -2437,6 +2437,11 @@ th.mat-header-cell {
   background-color: #e3e9ef8c !important;
 }
 
+.resuractivity-header ng-multiselect-dropdown .dropdown-btn .selected-item {
+  background: #00a0e3 !important;
+  padding: 4px !important;
+  font-size: 14px !important;
+}
 .resuractivity-header ng-multiselect-dropdown .dropdown-list {
   margin-top: 0px !important;
 }
@@ -2449,6 +2454,34 @@ th.mat-header-cell {
 }
 .resuractivity-header ng-multiselect-dropdown .dropdown-list ul.item2 li {
   padding: 6px 8px !important;
+}
+.resuractivity-header ng-multiselect-dropdown .dropdown-list li div {
+  font-size: 14px;
+}
+.resuractivity-header ng-multiselect-dropdown .dropdown-list ul.item2 li div {
+  padding-left: 1.8em !important;
+}
+.resuractivity-header ng-multiselect-dropdown .dropdown-list ul.item1 .multiselect-item-checkbox input[type=checkbox] + div:before {
+  color: #00a0e3;
+  top: 0px;
+  margin-top: 2px;
+  border: 1px solid #337ab7;
+  border-radius: 2px;
+}
+.resuractivity-header ng-multiselect-dropdown .dropdown-list ul.item1 .multiselect-item-checkbox input[type=checkbox] + div:after {
+  left: 3px;
+  border-width: 0 0 2px 2px;
+}
+.resuractivity-header ng-multiselect-dropdown .dropdown-list ul.item2 .multiselect-item-checkbox input[type=checkbox] + div:before {
+  color: #00a0e3;
+  top: 0px;
+  margin-top: 2px;
+  border: 1px solid #337ab7;
+  border-radius: 2px;
+}
+.resuractivity-header ng-multiselect-dropdown .dropdown-list ul.item2 .multiselect-item-checkbox input[type=checkbox] + div:after {
+  left: 3px;
+  border-width: 0 0 2px 2px;
 }
 .resuractivity-header .multiselect-dropdown .dropdown-btn .dropdown-down {
   border-top: 6px solid #ccc !important;
@@ -2466,7 +2499,7 @@ th.mat-header-cell {
   border-radius: 3px !important;
   background-color: #fff !important;
   opacity: unset !important;
-  line-height: 14px !important;
+  line-height: 18px !important;
 }
 
 
@@ -2542,6 +2575,21 @@ td.mat-cell span {
 }  
 .djs-container.with-palette .dmn-definitions {
   left: 180px !important;
+}
+
+.Admin-countrylist .iti.iti--allow-dropdown {
+  display: flex;
+  background-color: #f6f6f6 !important;
+  border: 1px solid #D1D1D1;
+  border-radius: 2px;
+}
+.Admin-countrylist .iti__flag-container {
+  border-right: 1px solid #D1D1D1;
+}
+.Admin-countrylist .iti__country-list {
+  left: 0px;
+  white-space: unset;
+  width: 384px;
 }
 .form-footer button.btn.btn-primary:last-child {
   margin-right: 0px !important;

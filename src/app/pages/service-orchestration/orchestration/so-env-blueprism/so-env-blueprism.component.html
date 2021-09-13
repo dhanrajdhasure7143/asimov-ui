@@ -1,21 +1,22 @@
-<div class="container-fluid mx-3">
-    <div class="rpa-env-search">
-            <input class="form-control rpa-control" placeholder="Search" autocomplete="off" *ngIf="!isSearch"  (keyup)="applyFilter($event.target.value)">
+<div class="container-fluid mx-3" style="padding-top: 5px;">
+    <div class="col-md-2 form-group p-0 sosearchfield">
+        <input class="form-control rpa-control" placeholder="Search" autocomplete="off" *ngIf="!isSearch"  (keyup)="applyFilter($event.target.value)">
+        <img src="../../../../assets/images/search.svg" alt="" class="testplus1">
     </div>
-    <div class="env-data-tool">
-        <span style="padding:5px">
-            <button matTooltip="Create" mat-mini-fab color="basic" (click)="createBlueprism()"><i  class="fas fa-plus"></i></button>
+    <div class="col-md-10 p-0 env-data-tool text-right">
+        <span >
+            <button matTooltip="Create" (click)="createBlueprism()"><i  class="fas fa-plus"></i></button>
         </span>        
-        <span style="padding:5px">
-            <button [disabled]="updateflag == false" matTooltip="Modify" mat-mini-fab color="basic" (click)="updatedata()"><i style="margin-right: -4px !important;" class="fas fa-edit"></i></button>
+        <span >
+            <button [disabled]="updateflag == false" matTooltip="Modify" (click)="updatedata()"><i style="margin-right: -4px !important;" class="fas fa-edit"></i></button>
         </span>
-        <span style="padding:5px">
-            <button [disabled]="deleteflag == false" matTooltip="Delete" mat-mini-fab color="basic" (click)="delete_blueprism_config()"><i  class="fas fa-trash"></i></button>
+        <span >
+            <button [disabled]="deleteflag == false" matTooltip="Delete" (click)="delete_blueprism_config()"><i  class="fas fa-trash"></i></button>
         </span>
     </div>  
   
     <!--foms  -->
-    <div style="width:100%;height:45vh;overflow: scroll;">
+    <div style="width:100%;height:53vh;overflow: scroll;">
     <table mat-table #sort1="matSort" [dataSource]="dataSource1" matSort class=" RPA table" id="listofenv">
   
         <ng-container matColumnDef="check">
