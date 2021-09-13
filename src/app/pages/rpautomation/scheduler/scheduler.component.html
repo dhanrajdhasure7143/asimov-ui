@@ -69,28 +69,28 @@
               <br>
               <div class="text-right">
                   <span style="padding:5px">
-                      <button [disabled]="!(flags.startflag)"  tooltip="Start" mat-mini-fab color="basic"   (click)="start_schedule()" >
-                        <i class="fa fa-play"></i>
+                      <button [disabled]="!(flags.startflag)"  tooltip="Start"   (click)="start_schedule()" >
+                        <i class="ri-play-circle-line"></i>
                       </button>
                     </span>
                   <span style="padding:5px">
-                      <button [disabled]="!(flags.pauseflag)"  tooltip="Pause"   mat-mini-fab color="basic"   (click)="pause_schedule()">
-                        <i class="fa fa-pause"></i>
+                      <button [disabled]="!(flags.pauseflag)"  tooltip="Pause"     (click)="pause_schedule()">
+                        <i class="ri-pause-circle-line"></i>
                       </button>
                     </span>
                   <span style="padding:5px">
-                      <button  [disabled]="!(flags.resumeflag)"  tooltip="Resume"  mat-mini-fab color="basic"   (click)="resume_schedule()">
-                        <i class="fa fa-play-circle"></i>
+                      <button  [disabled]="!(flags.resumeflag)"  tooltip="Resume"    (click)="resume_schedule()">
+                        <i class="ri-skip-forward-fill"></i>
                       </button>
                     </span>
 
                   <span style="padding:5px">
-                    <button [disabled]="!(flags.deleteflag)" tooltip="Delete"  mat-mini-fab color="basic"   (click)="delete_schedule()">
-                      <i class="fa fa-trash"></i>
+                    <button [disabled]="!(flags.deleteflag)" tooltip="Delete"   (click)="delete_schedule()">
+                      <i class="ri-delete-bin-6-line"></i>
                     </button>
                   </span>
                   <span style="padding:5px">
-                    <button   mat-mini-fab color="basic"   tooltip="Refresh"  (click)="get_schedule()">
+                    <button  tooltip="Refresh"  (click)="get_schedule()">
                       <i class="fa fa-sync-alt"></i>
                     </button>
                   </span>
