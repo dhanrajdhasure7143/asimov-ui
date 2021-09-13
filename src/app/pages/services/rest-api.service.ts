@@ -265,6 +265,12 @@ export class RestApiService{
     return this.http.get(`/rpa-service/updateLog/${botid}/${version}/${runid}`)
   }
 
+
+  kill_process_log(processid, runid)
+  {
+    return this.http.post(`/rpa-service/updateProcessLog/${processid}/${runid}`,"")
+  }
+
   getbotlist(botType, botDepartment)
   {
     return this.http.get("/rpa-service/get-all-bots/"+botDepartment+"/"+botType);
@@ -352,8 +358,6 @@ export class RestApiService{
   fetchBpmnNotationFromPI(pid){
     return this.http.get("/bpsprocess/pi/generated/bpmn/"+pid+"/user")
   }
-
-
 
   // PI module rest api's
 
