@@ -48,7 +48,7 @@ export class MyAccountComponent implements OnInit {
    
   }
 
-  updateAccount(form) {
+  updateAccount() {
     if (this.formOne.department == "Others") {
 
       this.formOne.department = this.otherdepartment;

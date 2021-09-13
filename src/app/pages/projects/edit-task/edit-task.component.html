@@ -25,11 +25,11 @@
         <div class="bg-task">
           <!-- {{selectedtask.id}} /
            -->
-          <span class="task-name">{{selectedtask.taskCategory}} / {{selectedtask.taskName}}</span>
+          <span class="task-name">{{taskcategory}} / {{taskname}}</span>
           <div class="value">
-            <span class="level3">Last Modified By : {{selectedtask.lastModifiedBy}}</span>&nbsp;
+            <span class="level3">Last Modified By : {{lastModifiedBy}}</span>&nbsp;
             <span>|</span>&nbsp;
-            <span class="level3">{{selectedtask.lastModifiedTimestamp |  date:'MMM dd, y, HH:mm:ss'}}</span>
+            <span class="level3">{{lastModifiedTimestamp |  date:'MMM dd, y, HH:mm:ss'}}</span>
           </div>
           
         </div>
@@ -40,15 +40,15 @@
               <div class="col-md-12">
                 <div class="form-fields col-md-3 pl-0">
                   <label class="h6 label-control" id="assignee" for="assignee">Assignee</label>
-                  <span class="labelcont">{{selectedtask.resources| userPipe : users_list}}</span>
+                  <span class="labelcont">{{taskresource| userPipe : users_list}}</span>
                 </div>
                 <div class="form-fields col-md-3 pr-0">
                   <label  class="h6 label-control" id="startdate" for="startDate">Start Date</label>
-                  <span class="labelcont">{{selectedtask.startDate | date}}</span>
+                  <span class="labelcont">{{startDate  | date}}</span>
                 </div>
                 <div class="form-fields col-md-3 pr-0">
                   <label  class="h6 label-control" id="enddate" for="endDate">End Date</label><br>
-                  <span class="labelcont">{{selectedtask.endDate | date}}</span>
+                  <span class="labelcont">{{endDate  | date}}</span>
                 </div>
                 <div class="form-fields col-md-3 pr-0">
                   <label   class="h6 label-control" id="percentage" for="percentage">Percentage Completed</label>
@@ -99,8 +99,10 @@
                 <mat-tab label="Comment">
                   <div class="t-comments-box">
                     <div class="add-comment">
-                      <div class="res-circle " *ngIf="userdata.image=='' || userdata.image==null">{{firstletter|uppercase}}</div>
-                      <div *ngIf="(userdata.image!='' && userdata.image!=null)"><img class="res-circle-img " [src]="'data:image/jpeg;base64,'+userdata.image"></div>
+                    <!-- <div class="res-circle " *ngIf="userdata.image=='' || userdata.image==null">{{firstletter|uppercase}}</div>
+                      <div *ngIf="(userdata.image!='' && userdata.image!=null)"><img class="res-circle-img " [src]="'data:image/jpeg;base64,'+userdata.image"></div> -->
+                      <div class="res-circle " *ngIf="profilePicture==false">{{firstletter|uppercase}}</div>
+                      <div *ngIf="profilePicture==true"><img class="res-circle-img " [src]="retrievedImage"></div>
                       <div>
                       </div>
                       <div class="form-fields col-md-12 pr-0 comment-input">
@@ -226,8 +228,19 @@
                 </mat-tab>
                 <mat-tab label="Attachments">
                   <div class="row attachmentdiv">
+                    <span class="pull-right">
+                      <span class="projects-menu-item gridicon"  (click)="onDeleteSelectedItems($event)"   matTooltip="Delete" >
+                        <img src="../../../../assets/images/Projects/delete-black.svg" class="default-img">
+                        <img src="../../../../assets/images/Projects/delete-red.svg" class="hover-img">
+                      </span> 
+                      
+                      <span class="projects-menu-item gridicon"  (click)="onDownloadSelectedItems($event)"   matTooltip="Download" >
+                        <img src="../../../assets/images/BPMS/download.svg" class="default-img">
+                        <img src="../../../../assets/images/Projects/Download.svg" class="hover-img">
+                      </span>
+                      </span>
                     <div class="col-md-12 p-0">
-                      <table class="table" *ngIf="(taskattacments!=null && taskattacments.length!=0)">
+                    <!-- <table class="table" *ngIf="(taskattacments!=null && taskattacments.length!=0)">
                         <thead>
                           <tr>
                             <th class="text-left">File Name</th>
@@ -249,10 +262,70 @@
                         </tbody>
                       </table>
                       <pagination-controls *ngIf="(taskattacments!=null && taskattacments.length!=0)" class="pull-right"
-                        (pageChange)="att = $event"></pagination-controls>
+                        (pageChange)="att = $event"></pagination-controls> -->
+
+                        <table mat-table #sort11="matSort" [dataSource]="dataSource3" matSort class="projecttable table" id="autotable">
+                          <ng-container matColumnDef="check">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                <input [disabled]="filecheckeddisabled" type="checkbox" id="Credcheckall" [checked]="filecheckflag" (change)="filecheckAll($event)">
+                            </th>
+                            <td mat-cell *matCellDef="let element; let i = index">
+                                <input type="checkbox" [checked]="element.checked" (change)="filechecktoggle(element.id, $event)"> 
+                            </td>
+                          </ng-container>    
+                          
+                          <ng-container matColumnDef="fileName">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>File Name</th>
+                            <td mat-cell *matCellDef="let element">
+                              <span *ngIf="element.fileName!=null" [matTooltip]="element.fileName">{{element.fileName}}</span>
+                              <span *ngIf="element.fileName==null">---</span>                  
+                            </td>   
+                          </ng-container>
+                  
+                          <ng-container matColumnDef="fileSize">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>File Size (MB)</th>
+                            <td mat-cell *matCellDef="let element">
+                              <span *ngIf="element.fileSize!=null" [matTooltip]="element.fileName">{{element.fileSize | fileSizePipe}}</span>
+                                <span *ngIf="element.fileSize==null">---</span>
+                            </td>
+                          </ng-container>
+
+                          <ng-container matColumnDef="action">
+                            <th mat-header-cell *matHeaderCellDef> Actions</th>
+                            <td mat-cell *matCellDef="let element" class="action-link tablacs"> 
+                              <span class="gridicon"  (click)="onDeleteItem(element.id,element.fileName)"   matTooltip="Delete" >
+                                <img src="../../../../../assets/images/Projects/delete-black.svg" class="default-img">
+                                <img src="../../../../../assets/images/Projects/delete-red.svg" class="hover-img">
+                              </span> 
+
+                              <span class="gridicon"  (click)="onDownloadItem(element.fileName)"   matTooltip="Download" >
+                                <img src="../../../assets/images/BPMS/download.svg" class="default-img">
+                                <img src="../../../../assets/images/Projects/Download.svg" class="hover-img">
+                              </span> 
+                              
+                            </td>
+                          </ng-container>
+
+                          <ng-container matColumnDef="Loading">
+                            <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
+                                Loading
+                            </td>
+                          </ng-container>
+          
+                          <ng-container matColumnDef="noData">
+                              <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
+                                  No Records Found
+                              </td>
+                          </ng-container>
+                          <tr mat-header-row *matHeaderRowDef="displayedColumns3; sticky: true"></tr>
+                          <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
+                          <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['Loading']" [ngClass]="{'hide':dataSource3!=null}"></tr>
+                          <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(dataSource3!=null && dataSource3.data.length==0)}"></tr>
+                        </table>
                     </div>
                   </div>
-
+                  <mat-paginator class="newpaginationdiv" #paginator101 [pageSize]="2" [showFirstLastButtons]="true">
+                  </mat-paginator>
                 </mat-tab>
                 <mat-tab label="Resources">
                   <div class="edit-resourcesdiv">
@@ -268,19 +341,19 @@
                       <tbody>
                         <tr>
                           <td>
-                            <span *ngIf="(taskresourceemail|userImagePipe: users_list)as result">
+                            <span *ngIf="(taskresource|userImagePipe: users_list)as result">
                               <div class="res-circle" *ngIf="result.length==3">
-                                {{taskresourceemail|userImagePipe: users_list}}
+                                {{taskresource|userImagePipe: users_list}}
                               </div>
                               <div *ngIf="result.length>3">
-                                <img class="res-circle-img" src="{{taskresourceemail|userImagePipe: users_list}}">
+                                <img class="res-circle-img" src="{{taskresource|userImagePipe: users_list}}">
                               </div>
                             </span>
                           </td>
-                          <td>{{selectedtask.resources| userPipe : users_list}}</td>
+                          <td>{{taskresource| userPipe : users_list}}</td>
                           <!-- <td style="text-align:center">{{roles?roles:'-'}}</td> -->
                           <td class="text-left">{{roles?roles:'-'}}</td>
-                          <td class="text-left">{{selectedtask.lastModifiedTimestamp | date:'MMM dd, y, HH:mm:ss'}}</td>
+                          <td class="text-left">{{lastModifiedTimestamp  | date:'MMM dd, y, HH:mm:ss'}}</td>
                         </tr>
                       </tbody>
 
