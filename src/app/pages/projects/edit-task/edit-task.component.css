@@ -164,7 +164,7 @@ button.btn.btn-primary.prj-lst-btn:hover img.testplus.hover-img {
   color: #292929;
 }
 
-.attachmentdiv, ul.historydiv, .edit-resourcesdiv  {
+ul.historydiv, .edit-resourcesdiv  {
   padding: 15px 10px;
 }
 .attachmentdiv label.label-content {
@@ -172,10 +172,13 @@ button.btn.btn-primary.prj-lst-btn:hover img.testplus.hover-img {
   font-weight: 500 !important;
   color: #001c47 !important;
 }
+.attachmentdiv{
+  padding: 9px 10px;
+}
 .row.attachment-content {
   margin-bottom: 10px !important;
 }
-.attachmentdiv, ul.historydiv, .edit-resourcesdiv  {
+ ul.historydiv, .edit-resourcesdiv  {
   padding: 15px 10px;
 }
 .attachmentdiv label.label-content {
@@ -270,4 +273,19 @@ img.hover-img {
 .newinntalx:hover img.hover-img {
   display: initial;
   cursor: pointer;
+}
+
+
+.gridicon:hover img.default-img {
+  display: none;
+}
+.gridicon:hover img.hover-img {
+  display: initial;
+}
+
+.default-img,.hover-img{
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  margin-right: 5px;
 }
