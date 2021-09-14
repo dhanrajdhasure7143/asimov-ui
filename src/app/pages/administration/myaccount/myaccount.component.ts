@@ -147,7 +147,7 @@ export class MyAccountComponent implements OnInit {
         return false;
       }
   }
-  passwordChange(){
+  passwordChange(form:NgForm){
     let pswdbody = {
       "confirmPassword": this.pswdmodel.confirmPassword,
       "currentPassword": this.pswdmodel.currentPassword,
@@ -176,7 +176,7 @@ export class MyAccountComponent implements OnInit {
   }, err => {
     // console
     Swal.fire("Error","Please check your current password!","error");})
- // form.resetForm();
+ form.resetForm();
   }
 
   curreyetoggle() {
