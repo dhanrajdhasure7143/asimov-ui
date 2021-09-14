@@ -24,7 +24,7 @@ export const environment = {
   connector_topic: 'nodeq',
   platform_home_url: 'https://ezflow.epsoftinc.com/#/',
   pi_node_jobs: "http://pi-node-jobs:5000",
-  projectendpoint_url:'https://ezflow.epsoftinc.com/aiotalplatform/pcs',
+  projectendpoint_url:'https://ezflow.epsoftinc.com/pcs',
   camunda_url : "https://ezflow.camunda.epsoftinc.com",
 
 
