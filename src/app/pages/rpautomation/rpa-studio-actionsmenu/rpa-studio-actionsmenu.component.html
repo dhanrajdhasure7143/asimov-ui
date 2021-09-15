@@ -1,5 +1,5 @@
 <div class="row col-md-12 p-0 h-100">
-  <div class="actionsmenu row">
+  <div *ngIf="false" class="actionsmenu row">
     <div class="col-md-3 p-0">
       <div class="actionsmenu-left">
         <button class="action-item" placement="bottom" tooltip="Toolset & Actions" *ngIf="rpa_toolset.sidenavbutton==false" (click)="rpa_toolset.sidenavbutton=true">
@@ -131,11 +131,11 @@
 
 
 
-    <div class="col-md-11 p-0">
+    <div class="col-md-12 p-0">
       <app-rpa-studio-designerworkspace [bot]="botState"></app-rpa-studio-designerworkspace>
     </div>
 
-    <div class="col-md-1 p-0">
+    <div *ngIf="false" class="col-md-1 p-0">
     <div class="rpa-custom-slider">
       <ng5-slider id="zoominzoomout" [value]="slider" [(ngModel)]="slider" [options]="options" (mouseup)="sliderEvent()"></ng5-slider>
 
