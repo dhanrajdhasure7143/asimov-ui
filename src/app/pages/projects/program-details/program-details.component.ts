@@ -434,6 +434,10 @@ export class ProgramDetailsComponent implements OnInit {
         this.rest.delete_Project(delete_data).subscribe( res =>{ 
           this.spinner.hide();
           let response:any=res
+          if(response.warningMessage ==="Project can't be deleted with status In Progress"){
+            Swal.fire("Error","Project can't be deleted with status InProgress","error")
+            this.get_linked_projects(this.program_detials.id);
+          }else
           if(response.errorMessage==undefined)
           {
             

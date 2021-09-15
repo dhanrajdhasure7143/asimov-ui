@@ -900,7 +900,7 @@ save_blueprism_config(data)
     }
 
 
-    getProjectDetailsById(id){
+    getProjectDetailsById(id):Observable<any>{
       return this.http.get("/platform-service/project/findProjectById?projectId="+id+"")
     }
 
