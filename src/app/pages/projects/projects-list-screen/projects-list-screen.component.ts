@@ -43,6 +43,7 @@ export class ProjectsListScreenComponent implements OnInit {
     this.spinner.show();
     this.api.getAllProjects().subscribe(res=>{
       let response:any=res;
+      this.spinner.hide();
       this.projects_list=[...response[0].map(data=>{
       return {
         id:data.id,
@@ -79,7 +80,6 @@ export class ProjectsListScreenComponent implements OnInit {
           endDate:data.endDate
         }
     })];
-    this.spinner.hide();
     this.count.New=this.projects_list.filter(item=>item.status=="New").length
     this.count.Inprogress=this.projects_list.filter(item=>item.status=="In Progress").length
     this.count.Rejected=this.projects_list.filter(item=>item.status=="Rejected").length
