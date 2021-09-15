@@ -42,7 +42,7 @@ export class CreateProjectFormComponent implements OnInit {
       // status: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
 
     })
-    this.getvalchain();
+    //this.getvalchain();
     this.getprocessnames();
   }
 
