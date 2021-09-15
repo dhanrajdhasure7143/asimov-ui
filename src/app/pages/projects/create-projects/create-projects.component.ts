@@ -94,7 +94,7 @@ export class CreateProjectsComponent implements OnInit {
     this.getallProjects();
     this.getprocessnames();
     this.getunassignedprojectslist();
-    this.getvalchain();
+    //this.getvalchain();
     this.mindate= moment().format("YYYY-MM-DD");
   }
 
