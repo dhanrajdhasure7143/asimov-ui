@@ -4,15 +4,36 @@
         <img src="../../../../assets/images/search.svg" alt="" class="testplus1">  
     </div>
     <div class="col-md-10 p-0 env-data-tool text-right">
-        <span >
-            <button matTooltip="Create"  (click)="createUiPath()"><i  class="fas fa-plus"></i></button>
-        </span>        
-        <span >
-            <button [disabled]="updateflag == false" matTooltip="Modify"  (click)="updatedata()"><i style="margin-right: -4px !important;" class="fas fa-edit"></i></button>
-        </span>
-        <span >
-            <button [disabled]="deleteflag == false" matTooltip="Delete"  (click)="deleteUiPath()"><i  class="fas fa-trash"></i></button>
-        </span>
+        <div >
+            <button (click)="createUiPath()" class="tsttooltipbtn">
+                <img src='../../../../assets/images/RPA/icon_latest/new-blue.svg' class="testplus">
+                <span class="testtooltip">Create</span>
+            </button>
+        </div>        
+        <div *ngIf="updateflag == false">
+            <button (click)="updatedata()" class="tsttooltipbtn">
+                <img src='../../../../assets/images/RPA/icon_latest/edit-dis.svg' class="testplus">
+                <span class="testtooltip">Modify</span>
+            </button>
+        </div>
+        <div *ngIf="updateflag == true">
+            <button (click)="updatedata()" class="tsttooltipbtn">
+                <img src='../../../../assets/images/RPA/icon_latest/edit-blue.svg' class="testplus">
+                <span class="testtooltip">Modify</span>
+            </button>
+        </div>
+        <div *ngIf="deleteflag == false">
+            <button (click)="deleteUiPath()" class="tsttooltipbtn">
+                <img src='../../../../assets/images/RPA/icon_latest/delete-dis.svg' class="testplus">
+                <span class="testtooltip">Delete</span>
+            </button>
+        </div>
+        <div *ngIf="deleteflag == true">
+            <button (click)="deleteUiPath()" class="tsttooltipbtn">
+                <img src='../../../../assets/images/RPA/icon_latest/delete-blue.svg' class="testplus">
+                <span class="testtooltip">Delete</span>
+            </button>
+        </div>
     </div>  
   
     <!--foms  -->
