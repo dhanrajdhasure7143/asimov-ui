@@ -12,7 +12,7 @@ export const environment = {
   auth_url: "https://ezflow.epsoftinc.com/authservices",
   pi_node_url: "https://ezflow.epsoftinc.com/pinode",
   platform_url:'https://ezflow.epsoftinc.com/aiotalplatform',
-  schema_registry_url:"https://schema-registry:8081",
+  schema_registry_url:"http://schema-registry:8081",
   alerts_url:'https://ezflow.epsoftinc.com/alerts',
 
  // Aiotal redirection urls 
