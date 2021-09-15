@@ -115,7 +115,7 @@
               <div *ngIf="(insertbot.get('botName').invalid && insertbot.get('botName').touched) && !insertbot.controls['botName'].hasError('maxlength')"  class="errspan required">
                 Bot Name Required*
                 </div>
-                <div *ngIf="checkbotname && insertbot.get('botName').touched"  class="errspan required">
+                <div *ngIf="checkbotname "  class="errspan required">
                   Bot Name is already exists*
                 </div>
                 <div *ngIf="botNamespace"  class="errspan required">Spaces are not allowed</div>

@@ -333,7 +333,7 @@ placeholder="Enter Environment Type" >-->
 
                 <div class="form-footer">
                             
-                    <button class="btn btn-default"[disabled]="insertForm.invalid || submitted" (click)="resetEnvForm()" >Reset</button>
+                    <button class="btn btn-default" (click)="resetEnvForm()" >Reset</button>
                     <button class="btn btn-primary btn-test" [disabled]="insertForm.invalid" (click)="testConnection('insert')" >Test Connection</button>
                     <button class="btn btn-primary"[disabled]="insertForm.invalid || submitted" (click)="saveEnvironment()" >Save</button>
                     

@@ -165,6 +165,7 @@ export class RpaStudioComponent implements OnInit {
     }
     else{
       this.botNamespace = false;
+      this.checkbotname=false;
     }
   }
 
