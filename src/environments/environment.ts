@@ -36,7 +36,7 @@ export const environment = {
   dbName: "eiap_prod",
 
 // Data upload path
-  data_path:"/home/epsuser",
+  data_path:"/usr/share/confluent-ftp-data",
 
 
   //BPMN Platform URL
