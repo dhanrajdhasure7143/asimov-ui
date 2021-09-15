@@ -32,11 +32,11 @@ export const environment = {
  // bpmnplatformUrl : "http://10.11.0.127:8080",
 
 //DB Connector
-  dbConnectorHost: "pgpool",
+  dbConnectorHost: "pg-0",
   dbName: "eiap_prod",
 
 // Data upload path
-  data_path:"/home/applmgr",
+  data_path:"/home/epsuser",
 
 
   //BPMN Platform URL
