@@ -41,8 +41,7 @@
 .main{
   width:100%;
   overflow: auto;
-  /* height: 64vh; */
-  height: 70vh;
+  height: calc(100vh - 53px);
 }
 
 
@@ -135,13 +134,13 @@
 
 .main::-webkit-scrollbar
 {
-  display:none !important;
+  /* display:none !important; */
 }
 
 
 .drag-area::-webkit-scrollbar
 {
-  display:none !important;
+  /* display:none !important; */
 }
 
 .dragactionsdiv {

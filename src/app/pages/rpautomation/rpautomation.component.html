@@ -6,7 +6,7 @@
         <label>RPA Automation</label>
     </div> -->
 
-    <div class="main-content" [class.main-content1]="isHeaderShow == 'true'">
+    <div class="main-content" *ngIf="isHeaderShow == 'false'">
         <div class="row content-area">
             <div class="row module-heading title">
                 <!-- <div class="container"> -->
@@ -38,3 +38,4 @@
         </div>
     </div>
 
+    <router-outlet *ngIf="isHeaderShow == 'true'"></router-outlet>

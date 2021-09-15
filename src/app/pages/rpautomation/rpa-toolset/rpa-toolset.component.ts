@@ -2,6 +2,7 @@ import {ViewChild,Input, Component,Injectable, OnInit, ElementRef  } from '@angu
 import { RestApiService } from '../../services/rest-api.service';
 import { Options } from 'ng5-slider';
 import { DataTransferService } from '../../services/data-transfer.service';
+import { RpaStudioActionsComponent } from '../rpa-studio-actions/rpa-studio-actions.component';
 
 
 @Injectable()
@@ -19,7 +20,7 @@ export class RpaToolsetComponent implements OnInit {
 
   public userFilter:any={name:""};
   @ViewChild('section', {static: false}) section: ElementRef<any>;
-
+  @ViewChild('rpa_actions',{static:false}) rpa_actions_menu:RpaStudioActionsComponent
   @Input('bot') public botState: any;
   toolSetData:any=[];
   userRole:any;
