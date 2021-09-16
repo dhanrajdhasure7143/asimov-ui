@@ -40,6 +40,7 @@ import { ComboSeriesVerticalComponent } from './processinsights/combo-chart/comb
 import {CustomMatPaginatorIntl} from './../../shared/custom-mat-paginator-int';
 import {MatPaginatorIntl} from '@angular/material';
 import { BusinessInsightsComponent } from './business-insights/business-insights.component';
+import { PopoverModule } from 'ngx-bootstrap/popover';
 
 @NgModule({
   declarations: [
@@ -86,7 +87,8 @@ import { BusinessInsightsComponent } from './business-insights/business-insights
     NgbModule,
     NgxMaterialTimepickerModule,
     MatTabsModule,
-    MatMenuModule
+    MatMenuModule,
+    PopoverModule.forRoot()
   ],
   providers:[PiHints, 
     {
