@@ -145,7 +145,7 @@
             <div class="row">
                 <div class="col-md-12 p-0 ts-header">
                     <label class="label-control" for="performance_metrics">Filter Case By:</label>
-                    <select name="pFilterType" class="border_bottom form-control" [(ngModel)]="pFilterType" (change)="this.setselectedFilter(pFilterType)" required>
+                    <select name="pFilterType" class="border_bottom form-control" [(ngModel)]="pFilterType" (change)="setselectedFilter(pFilterType)" required>
                         <option value="noofcases">No of Cases</option>
                         <option value="caseutilization">Case Utilization</option>
                         <option value="caseduration">Case Duration</option>
@@ -156,10 +156,10 @@
                     </select>
                 </div>
                 <div class="ts-body">
-                    <div class="col-md-12 p-0">
-                        <div class="barchart_graph">
+                    <div class="col-md-12 p-0" >
+                        <div class="barchart_graph" #containerRef>
                             <ngx-charts-bar-vertical
-                                [view]="view"
+                                [view]="[containerRef.offsetWidth,200]"
                                 [scheme]="colorScheme"
                                 [results]="single"
                                 [gradient]="gradient"                          
@@ -171,6 +171,7 @@
                                 [showYAxisLabel]="showYAxisLabel"
                                 [xAxisLabel]="xAxisLabel"
                                 [yAxisLabel]="yAxisLabel"
+                                [customColors]="customColors"
                                 (select)="onSelect($event)">
                             </ngx-charts-bar-vertical>
                         </div>
@@ -179,11 +180,32 @@
                         </div>
                     </div>    
                     <div class="col-md-12 p-0 drp_btns">
-                        <div class="col-md-4 p-0 min_time_select" >
+                        <div class="col-md-3 p-0 min_time_select" >
                             <label class="label-control" for="timeStamp" style="display: inherit;">Minimum Duration</label>
-                            <input type="text" class="arrows form-control" [value]="convertMS(minPerfValue)">
+                            <input type="text" [popover]="popTemplate" [outsideClick]="true" placement="right" class="form-control" [value]="convertMS(minPerfValue)" readonly>
+                            
+                            <ng-template #popTemplate>
+                                <div *ngIf="isnoof_casesInput">
+                                        <div class='col-md-12'><input type="text" name="days_input" class="form-control" placeholder="Enter" [(ngModel)]="noof_casesInput_value"></div>
+                                </div>
+                                <div class="d-flex" *ngIf="!isnoof_casesInput">
+                                    <div class='col-md-9' *ngIf="isDays_input"><input type="text" name="days_input" class="form-control" placeholder="Enter" [(ngModel)]="setvalue_input"></div>
+                                    <div class='col-md-9' *ngIf="isHrs_input"><input type="text" name="hrs_input" class="form-control" placeholder="Enter" [(ngModel)]="setvalue_input1"></div>
+                                    <div class='col-md-9' *ngIf="isMints_input"><input type="text" name="minutes_input" class="form-control" placeholder="Enter" [(ngModel)]="setvalue_input2"></div>
+                                     <div class="col-md-12"> 
+                                        <select name="time-dropdwn" id="" class="form-control" (change)="ontimedropdown_change()" [(ngModel)]="time_dropwnValue">
+                                            <option value="undefined" hidden disabled>Select</option>
+                                            <option *ngFor="let data of performancedrop_array;let i=index" [value]="performancedrop_array[i]">{{data}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6"></div>
+                                <div class="col-md-4 setvalue-btn">
+                                    <button class="btn btn-primary float-right" (click)="onminvalueSet()">Set Value</button>
+                                </div>
+                            </ng-template>
                         </div>
-                        <div class="col-md-4 p-0 pp_chart">
+                        <div class="col-md-6 p-0 pp_chart">
                             <div class="piechart_graph">
                                 <ngx-charts-pie-chart
                                     [view]="pieview"
@@ -199,9 +221,31 @@
                                 <div> of cases</div>
                             </div>
                         </div>
-                        <div class="col-md-4 p-0 max_time_select">
+                        <div class="col-md-3 p-0 max_time_select">
                             <label class="label-control" for="timeRange" style="display: inherit;">Maximum Duration</label>
-                            <input type="text" class="arrows form-control" [value]="convertMS(maxPerfValue)">                        
+                            <input type="text" [popover]="popTemplate1" [outsideClick]="true" placement="left" class="form-control" [value]="convertMS(maxPerfValue)" readonly>                        
+                            
+                            <ng-template #popTemplate1>
+                                <div *ngIf="isnoof_casesInput1">
+                                    <div class='col-md-12'><input type="text" name="_input12" class="form-control" placeholder="Enter" [(ngModel)]="noof_casesInput_value1"></div>
+                                </div>
+                                    <div class="d-flex" *ngIf="!isnoof_casesInput1">
+                                        <div class='col-md-9' *ngIf="isDays_input1"><input type="text" name="days_input1" class="form-control" placeholder="Enter" [(ngModel)]="set_endvalue_input"></div>
+                                        <div class='col-md-9' *ngIf="isHrs_input1"><input type="text" name="hrs_input1" class="form-control" placeholder="Enter" [(ngModel)]="set_endvalue_input1"></div>
+                                        <div class='col-md-9' *ngIf="isMints_input1"><input type="text" name="minutes_input1" class="form-control" placeholder="Enter" [(ngModel)]="set_endvalue_input2"></div>
+                                         <div class="col-md-12">
+                                            <select name="time-dropdwn1" id="" class="form-control" (change)="ontimedropdown_change1()" [(ngModel)]="endtime_dropwnValue">
+                                                <option value="undefined" hidden disabled>Select</option>
+                                                <option *ngFor="let data of performancedrop_array;let i=index" [value]="performancedrop_array[i]">{{data}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6"></div>
+                                    <div class="col-md-4 setvalue-btn">
+                                        <button class="btn btn-primary float-right" (click)="onmaxvalueSet()">Set Value</button>
+                                    </div>
+                                
+                                </ng-template>
                         </div>
                     </div>
                 </div> 
