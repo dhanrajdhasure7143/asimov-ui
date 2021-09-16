@@ -132,3 +132,17 @@ span.tab-botname {
   opacity:1;
   border:none;
 }
+
+ul#environments {
+  width: 165px;
+  overflow: auto;
+  max-height: 263px;
+  font-size: 15px !important;
+}
+
+ul#environments li {
+  padding: 3px 5px; 
+}
+ul#environments li img {
+  vertical-align: sub;
+}

@@ -7,9 +7,9 @@
       <div class="col-md-7  ">
         
                 <div class="actionsmenu-right"  *ngIf="current_instance != undefined">
-                  <div class="action-item "   dropdown   placement="bottom" tooltip="Versions" >
+                  <div class="action-item "   dropdown    >
                       <button class=" dropdown-action-item clickable dropdown-toggle" id="Versions" dropdownToggle type="button"
-                        aria-controls="versions">
+                      placement="bottom" tooltip="Versions"  aria-controls="versions">
                         <img src="../../../../assets/images/RPA/icon_latest/layer.svg" />
                         <!-- <span><i class="ri-stack-line"></i></span> -->
                         &nbsp;Version &nbsp;{{current_instance.selectedversion}} &nbsp;<span class="caret"></span>
@@ -75,8 +75,8 @@
                     <img src="../../../../assets/images/RPA/icon_latest/time.svg" />
                       <!-- <i class="ri-history-line"></i> -->
                   </div>
-                  <div class="action-item" placement="bottom" tooltip="Download">
-                    <button type="button" placement="bottom" id="dropdownMenuButton" class="downloadBtn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <div class="action-item" >
+                    <button type="button" placement="bottom" tooltip="Download" id="dropdownMenuButton" class="downloadBtn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <img src="../../../../assets/images/RPA/icon_latest/download.svg"   />
                     </button>
                     <div class="rpa-dropdown dropdown-menu" aria-labelledby="dropdownMenuButton">
