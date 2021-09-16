@@ -343,7 +343,7 @@
 
 .rpa-actioncontent {
   padding: 0px;
-  height: calc(100% - 48px);
+  height: calc(100vh - 54px);
   overflow: hidden auto;
 }
 

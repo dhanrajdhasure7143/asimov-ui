@@ -165,6 +165,7 @@ export class RpaStudioComponent implements OnInit {
     }
     else{
       this.botNamespace = false;
+      this.checkbotname=false;
     }
   }
 
@@ -216,6 +217,7 @@ export class RpaStudioComponent implements OnInit {
       this.tabsArray.push(this.model);
     }
     this.tabActiveId = this.model.botName;
+    console.log("----------bot_array______", this.tabsArray);
     this.insertbot.reset();
 
   }

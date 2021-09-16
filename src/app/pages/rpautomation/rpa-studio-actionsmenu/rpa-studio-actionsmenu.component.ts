@@ -1,4 +1,4 @@
-import {Input,ViewChild,Output,EventEmitter, Component, OnInit,  ChangeDetectorRef,AfterContentChecked } from '@angular/core';
+import {Input,ViewChild,Output,EventEmitter, Component, OnInit,  ChangeDetectorRef,AfterContentChecked, ViewRef } from '@angular/core';
 import { RpaStudioDesignerworkspaceComponent } from '../rpa-studio-designerworkspace/rpa-studio-designerworkspace.component';
 import { RestApiService } from '../../services/rest-api.service';
 import { FormGroup,Validators,FormBuilder } from '@angular/forms';
@@ -66,6 +66,7 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
   @ViewChild('t', { static: false }) ngbTabset;
   @Input('tabsArray') public tabsArray: any[];
   @ViewChild(RpaStudioDesignerworkspaceComponent, { static: false }) childBotWorkspace: RpaStudioDesignerworkspaceComponent;
+  @ViewChild('logspopup' ,{static:false}) public logspopup:any;
   pause: any;
   resume: any;
   stop: any;
@@ -478,7 +479,7 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
         let response:any=data;  
         this.spinner.hide();
         if(response.errorMessage==undefined)
-          this.viewlogdata(Logtemplate,'update');
+          this.viewlogdata(this.logspopup,'update');
         else
           Swal.fire("Error",response.errorMessage,"error");
      });
@@ -533,7 +534,7 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
      this.Viewloglist.sort=this.sort1;
     // document.getElementById(this.viewlogid1).style.display="none";
     if(action=='open')
-      this.logsmodalref=this.modalService.show(log_popup_template, {class:"logs-modal"})
+      this.logsmodalref=this.modalService.show(this.logspopup, {class:"logs-modal"})
 
    });
  }

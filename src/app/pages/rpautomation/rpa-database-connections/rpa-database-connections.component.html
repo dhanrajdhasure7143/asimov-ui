@@ -321,7 +321,7 @@
                                 <input type="checkbox" formControlName="activeStatus"> Active
                             </div>
                             <div class="form-footer">                               
-                                <button class="btn btn-default"[disabled]="insertdbForm.invalid || submitted" (click)="resetDBForm()" >Reset</button>
+                                <button class="btn btn-default" (click)="resetDBForm()" >Reset</button>
                                 <button class="btn btn-primary btn-test" [disabled]="insertdbForm.invalid" (click)="testConnection('insert')" >Test Connection</button>
                                 <button class="btn btn-primary"[disabled]="insertdbForm.invalid || submitted" (click)="saveDBConnection()" >Save</button>
                             </div>
