@@ -7,7 +7,7 @@ enum Filter {
   // 'Cases',
   'Variants',
   'End Points',
-  // 'Performance'
+  'Performance'
 }
 @Component({
   selector: 'app-filter',
@@ -126,8 +126,27 @@ export class FilterComponent implements OnInit {
   piecolorScheme = {
     domain: ['#0db9f0', '#595555']
   };
+  customColors:any;
+  performancedrop_array:any[]=['Days','Hours','Minutes'];
+  time_dropwnValue="Days";
+  endtime_dropwnValue="Days";
+  setvalue_input:any;
+  setvalue_input1:any;
+  setvalue_input2:any;
+  set_endvalue_input:any;
+  set_endvalue_input1:any;
+  set_endvalue_input2:any;
+  isDays_input:boolean=true;
+  isHrs_input:boolean=false;
+  isMints_input:boolean=false;
+  isDays_input1:boolean=true;
+  isHrs_input1:boolean=false;
+  isMints_input1:boolean=false;
+  isnoof_casesInput:boolean=false;
+  isnoof_casesInput1:boolean=false;
+  noof_casesInput_value:any;
+  noof_casesInput_value1:any;
 
-  // performance filter Variable end
 
   constructor(private changeDetectorRef: ChangeDetectorRef) { }
 
@@ -649,12 +668,30 @@ export class FilterComponent implements OnInit {
   }
 
   startValue(e) {
-    this.fcount = []
+    this.fcount = [];
+    let fcount1 = [];
     this.perfrmanceFilterKeyValuepair.filter(res => {
       if (Number(res.duration) >= Number(this.minPerfValue) && Number(res.duration) <= Number(this.maxPerfValue)) {
         this.fcount.push(res);
       }
+      if(Number(res.duration) < Number(this.minPerfValue) || Number(res.duration) > Number(this.maxPerfValue)){
+        fcount1.push(res);      
+      }
     });
+
+    let single1=[];
+    fcount1.filter(res => {
+      single1.push({ name: res.duration, value: res.caseCount })
+    });
+    let custom_colorArray=[];
+    for(var i=0; i<single1.length; i++){
+      custom_colorArray.push({
+        name: single1[i].name,
+        value: '#333'
+      })
+    }
+    this.customColors=custom_colorArray;
+
    
     var cc = 0;
     //const unique = [...new Set(this.fcount.map(item => item.caseCount))];
@@ -677,12 +714,29 @@ export class FilterComponent implements OnInit {
   }
   }
   endValue(e) {
-    this.fcount = []
+    this.fcount = [];
+    let fcount1 = []
     this.perfrmanceFilterKeyValuepair.filter(res => {
       if (Number(res.duration) >= Number(this.minPerfValue) && Number(res.duration) <= Number(this.maxPerfValue)) {
         this.fcount.push(res);
       }
+      if(Number(res.duration) < Number(this.minPerfValue) || Number(res.duration) > Number(this.maxPerfValue)){
+        fcount1.push(res);        
+      }
     });
+    let single1=[];
+    fcount1.filter(res => {
+      single1.push({ name: res.duration, value: res.caseCount })
+    });
+    let custom_colorArray=[];
+    for(var i=0; i<single1.length; i++){
+      custom_colorArray.push({
+        name: single1[i].name,
+        value: '#333'
+      })
+    }
+    this.customColors=custom_colorArray;
+
     var cc = 0;
     this.fcount.filter(r => {
       cc += Number(r.caseCount);
@@ -708,11 +762,10 @@ export class FilterComponent implements OnInit {
   }
 
   performanceLogic(performData, pType) {
-    if(pType == 'caseduration'){
-      
+    this.isnoof_casesInput=false;
+      this.isnoof_casesInput1=false;
+    if(pType == 'caseduration'){ 
         this.getCaseDurationMetrics(performData)
-      
-     
     } else if(pType == 'meanactivetime'){
       this.getMeanActiveTime(performData);
     } else if(pType == 'meanwaitingtime'){
@@ -724,7 +777,9 @@ export class FilterComponent implements OnInit {
     } else if(pType == 'caseutilization'){
       this.getCaseUtilization(performData)
     } else if(pType == 'noofcases'){
-      this.getNoOfCases(performData)
+      this.getNoOfCases(performData);
+      this.isnoof_casesInput=true;
+      this.isnoof_casesInput1=true;
     }
     
   }
@@ -1140,7 +1195,69 @@ export class FilterComponent implements OnInit {
     this.appliedPerformanceFiterValues.emit(reqObj)
   }
 
+  ontimedropdown_change(e){
+    this.isDays_input=false;
+    this.isHrs_input=false;
+    this.isMints_input=false;
 
+  if(this.time_dropwnValue=="Days"){
+    this.isDays_input=true;
+  }else if(this.time_dropwnValue=="Hours"){
+    this.isHrs_input=true;
+  }else if(this.time_dropwnValue=="Minutes"){
+    this.isMints_input=true;
+  }
+}
+ontimedropdown_change1(e){
+  this.isDays_input1=false;
+  this.isHrs_input1=false;
+  this.isMints_input1=false;
 
+if(this.endtime_dropwnValue=="Days"){
+  this.isDays_input1=true;
+}else if(this.endtime_dropwnValue=="Hours"){
+  this.isHrs_input1=true;
+}else if(this.endtime_dropwnValue=="Minutes"){
+  this.isMints_input1=true;
+}
+}
+
+onminvalueSet(){
+  if(this.pFilterType=="noofcases"){
+    this.vaue=this.noof_casesInput_value
+  }else{
+    let h,m,d;
+    h=m=d=0;
+    if(this.setvalue_input){
+      d=Number(this.setvalue_input)*60000*60*24;
+    }
+    if(this.setvalue_input1){
+      h=Number(this.setvalue_input1)*60000* 60;
+    }
+    if(this.setvalue_input2){
+      m=Number(this.setvalue_input2)*60000;
+    }
+  this.vaue=d+h+m;
+  }
+}
+
+onmaxvalueSet(){
+  if(this.pFilterType=="noofcases"){
+    this.highValue=this.noof_casesInput_value1
+  }else{
+  let h,m,d;
+      h=m=d=0;
+      if(this.set_endvalue_input){
+        d=Number(this.set_endvalue_input)*60000*60*24;
+      }
+      if(this.set_endvalue_input1){
+        h=Number(this.set_endvalue_input1)*60000* 60;
+      }
+      if(this.set_endvalue_input2){
+        m=Number(this.set_endvalue_input2)*60000;
+      }
+    this.highValue=d+h+m;
+  }
+  }
 
 } 
