@@ -6,7 +6,7 @@ import { RpaStudioDesignerworkspaceComponent } from '../../rpa-studio-designerwo
     selector: 'dropdown',
     template: `
       <div [formGroup]="form">
-        <select (change)="onChangeEmail($event)" class="form-control" [value]="field.value" [id]="field.name" [formControlName]="field.name+'_'+field.id">
+        <select [required]="field.required==true" (change)="onChangeEmail($event)" class="form-control" [value]="field.value" [id]="field.name" [formControlName]="field.name+'_'+field.id">
         <option  value="" >--{{field.placeholder}}--</option>
         <option *ngFor="let opt of field.options" [value]="opt.key">{{opt.label}}</option>
         <option  *ngIf="field.label=='Email'" value="New">New</option>

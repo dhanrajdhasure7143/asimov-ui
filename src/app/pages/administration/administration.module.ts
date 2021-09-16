@@ -34,6 +34,7 @@ import { MatMenuModule } from '@angular/material';
 import {CustomMatPaginatorIntl} from './../../shared/custom-mat-paginator-int';
 import {MatPaginatorIntl} from '@angular/material';
 import {Ng2TelInputModule} from 'ng2-tel-input';
+import { CompareValidatorDirective } from './comparepsw-validator.directive';
 
 const materialModules: any[] = [
     
@@ -41,7 +42,7 @@ const materialModules: any[] = [
   ];
 
 @NgModule({
-  declarations: [AdministrationComponent, MyAccountComponent],
+  declarations: [AdministrationComponent, MyAccountComponent,CompareValidatorDirective],
   imports: [
     Ng2TelInputModule,
     CommonModule,

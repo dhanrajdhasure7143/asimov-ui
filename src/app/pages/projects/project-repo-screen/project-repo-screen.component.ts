@@ -299,6 +299,10 @@ this.getFileDetails();
       let loggedUser=localStorage.getItem("ProfileuserId")
       let responseArray=this.requestedFiledata
       this.filterdArray=[]
+      if(responseArray=[]){
+        this.dataSource5= new MatTableDataSource(this.requestedFiledata);
+        this.dataSource5.sort=this.sort13;
+      }
       responseArray.forEach(e=>{
         if(e.requestTo==loggedUser || e.requestFrom==loggedUser){
           this.filterdArray.push(e)

@@ -108,7 +108,8 @@ export class BpmnDiagramListComponent implements OnInit {
     let bpmnProcessStatus = this.selected_processInfo["bpmnProcessStatus"];
     let bpmnProcessName = this.selected_processInfo["bpmnProcessName"];
     let bpmnProcessTime = this.selected_processInfo["modifiedTimestamp"]
-    if(binaryXMLContent && bpmnModelId && bpmnProcessStatus != "PENDING"){
+    if(binaryXMLContent && bpmnModelId){
+      // && bpmnProcessStatus != "PENDING"
       let bpmnVersion = this.selected_processInfo["version"];
       let fromApprover=true;
       this.bpmnservice.uploadBpmn(atob(binaryXMLContent));

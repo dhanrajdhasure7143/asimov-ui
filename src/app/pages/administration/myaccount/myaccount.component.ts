@@ -59,8 +59,8 @@ export class MyAccountComponent implements OnInit {
     
     this.api.updateUser(reqObj).subscribe(data => {
     Swal.fire({
-      title: "success",
-      text: "Updated successfully!",
+      title: "Success",
+      text: "User Details Updated Successfully!!",
       position: 'center',
       icon: 'success',
       showCancelButton: false,
@@ -176,7 +176,7 @@ export class MyAccountComponent implements OnInit {
   }, err => {
     // console
     Swal.fire("Error","Please check your current password!","error");})
-  form.resetForm();
+ form.resetForm();
   }
 
   curreyetoggle() {

@@ -1178,7 +1178,7 @@ app-projects-programs-table {
 
 .new-bps-grid-data .bps_overlay g.viewport {
   position: absolute;
-  transform: translate(22%, 9%);
+  /* transform: translate(22%, 9%); */
 }
 
 .new-bps-layout h3 {
@@ -2582,6 +2582,7 @@ td.mat-cell span {
   background-color: #f6f6f6 !important;
   border: 1px solid #D1D1D1;
   border-radius: 2px;
+  width: 385px;
 }
 .Admin-countrylist .iti__flag-container {
   border-right: 1px solid #D1D1D1;
