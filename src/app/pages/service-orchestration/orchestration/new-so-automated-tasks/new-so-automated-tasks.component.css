@@ -19,18 +19,6 @@ select {
     color: #0062cf !important;
 }
 
-.errspan{
-  position: relative;
-  z-index: 2;
-  color: #dc3545;
-  font-size: 12px !important;
-  letter-spacing: 0.2px;
-  padding-right: 10px;
-  line-height: 12px;
-  }
-
-
-
 .undobtn {background-color:gainsboro; border-radius: 5px;}
 
 /*
@@ -140,4 +128,38 @@ table tr .display_hover:hover{
 .orchestration-action-btn{
   height: 38px !important;
   width: 38px !important;
+}
+
+.roghtform button.tsttooltipbtn {
+  position: relative;
+  padding: 0px 5px;
+}
+
+span.testtooltip {
+  position: absolute;
+  top: 35px;
+  right: 0px;
+  background-color: #001c47;
+  color: #fff;
+  width: max-content;
+  padding: 3px 10px;
+  border-radius: 4px;
+  display: none;
+  z-index: 999;
+}
+
+span.testtooltip:before {
+  content: '';
+  border: 2px solid #001c47;
+  border-width: 0px 0px 2px 2px;
+  position: absolute;
+  padding: 4px;
+  right: 13px;
+  top:  -5px;
+  background: #001c47;
+  transform: rotate(45deg);
+}
+
+.tsttooltipbtn:hover span.testtooltip {
+  display: block;
 }

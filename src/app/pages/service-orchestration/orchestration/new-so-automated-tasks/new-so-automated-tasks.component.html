@@ -3,14 +3,14 @@
 <div class="container-fluid">
 <div class="form-inline mainformco row">
 
-  <div class="form-group leftfporm col-md-10 pl-0">
+  <div class="form-group leftfporm col-md-9 pl-0">
       <div id="autocategorysearch" class="comncl">
           <select class="rpa-control form-control"  [value]="selectedcategory" (change)="applyFilter1($event.target.value)">
             <option value="" disabled>Select Process Group</option>
             <option *ngFor="let category of categaoriesList" [value]="category.categoryId">{{category.categoryName}}
             </option>
           </select>
-        </div>
+      </div>
       
         <div *ngIf="process_names!=undefined" id="autoprocesssearch"  class="comncl">
             <select class="rpa-control form-control" [(ngModel)]="selectedvalue" (change)="applyFilter($event.target.value)">
@@ -27,18 +27,25 @@
             </option>
           </select>
         </div>
-      <div id="autoreset" class="comncl resecl">
+      <!-- <div id="autoreset" class="comncl resecl">
       <button (click)="reset_all()" tooltip="Reset"><i class="fa fa-undo"></i></button>
-      </div>
+      </div> -->
   </div>
 
 
-  <div class="text-right roghtform col-md-2 pr-0">
+  <div class="text-right roghtform col-md-3 pr-0">
       <!--<span style="padding:5px" id="autoStartProcess">
         <button  matTooltip="View Configuration"   mat-mini-fab color="basic" (click)="configuration()"  ><i  class="fas fa-cog" style="margin-right: -5px !important;"></i></button>
       </span>-->
-        <span style="padding:5px" id="autoStartProcess">
-          <button [disabled]="selectedvalue=='' || selectedEnvironment==''" class="matbutton orchestration-action-btn" matTooltip="Start Process"   mat-mini-fab color="basic" (click)="startprocess()"   title="Run Process"><img src="../../../../assets/images/RPA/icon_latest/play.svg" alt="" class="testplus"></button>
+      <button (click)="reset_all()" id="autoreset" class="tsttooltipbtn" >
+        <img src="../../../../../assets/images/RPA/icon_latest/reset-blue.svg" class="testplus1">
+        <span class="testtooltip">Reset</span>
+      </button>
+        <span  id="autoStartProcess">
+          <button [disabled]="selectedvalue=='' || selectedEnvironment==''" class="matbutton orchestration-action-btn" (click)="startprocess()"   title="Run Process">
+            <img src="../../../../assets/images/RPA/icon_latest/play.svg" alt="" class="testplus1">
+            <span class="testtooltip">Start Process</span>
+          </button>
         </span>
        <!-- <span style="padding:5px">
           <button [disabled]="selectedvalue=='' || selectedEnvironment==''" matTooltip="Pause Process" mat-mini-fab color="basic" (click)="startprocess()"   title="Run Process"><i  class="fas fa-pause"></i></button>
@@ -47,8 +54,11 @@
         <!-- <span style="padding:5px" id="autoOpenScheduler">
           <button [disabled]="selectedvalue==''" class="orchestration-action-btn"  mat-mini-fab color="basic"   matTooltip="Open Scheduler" (click)="startscheduler()" ><img src="../../../../../assets/images/calicon.svg" alt="" class="testplus"></button>
         </span> -->
-        <span style="padding:5px" id="autoViewLogs">
-          <button [disabled]="selectedvalue==''" class="orchestration-action-btn"  mat-mini-fab color="basic"  matTooltip="View Logs"  (click)="getprocesslogs(process_logs)"  ><img src="../../../../../assets/images/file.svg" alt="" class="testplus"></button>
+        <span  id="autoViewLogs">
+          <button [disabled]="selectedvalue==''" class="orchestration-action-btn"  (click)="getprocesslogs(process_logs)"  >
+            <img src="../../../../../assets/images/file.svg" alt="" class="testplus1">
+            <span class="testtooltip">View Logs</span>
+          </button>
         </span>
   </div>
 

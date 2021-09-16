@@ -2,7 +2,7 @@
   <img  src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader"/>
   <!-- <img  src='\assets\images\RPA\rpa-loader.gif' /> -->
 </ngx-spinner>
-    <mat-tab-group class="h-100" [selectedIndex]="selectedTab" (selectedTabChange)="onTabChanged($event)">
+    <mat-tab-group class="h-100 so-subtab-header" [selectedIndex]="selectedTab" (selectedTabChange)="onTabChanged($event)">
         <!-- <mat-tab>
           <ng-template mat-tab-label>
               <img style="height:30px;width:30px;" src="..\\assets\\icons\icon-72x72.png">&nbsp;
@@ -19,7 +19,7 @@
         <img style="height:30px;width:30px;" src="..\\assets\\icons\BluePrism_icon.png">&nbsp;
         BluePrism
     </ng-template>
-    <div class="h-100" *ngIf="check_tab==0">
+    <div class="h-100 so-sub-tab-content" *ngIf="check_tab==0">
       <app-so-env-blueprism></app-so-env-blueprism>
     </div>
 </mat-tab>
@@ -31,7 +31,7 @@
       <img style="height: 22px;width: 43px;" src="..\\assets\\icons\uipath_icon.svg">
       UiPath
   </ng-template>
-  <div class="h-100" *ngIf="check_tab==1">
+  <div class="h-100 so-sub-tab-content" *ngIf="check_tab==1">
     <app-so-env-uipath></app-so-env-uipath>
   </div>
 </mat-tab>
