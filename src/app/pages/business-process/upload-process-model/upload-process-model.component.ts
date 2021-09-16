@@ -328,9 +328,10 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
           return each_bpmn.processIntelligenceId && each_bpmn.processIntelligenceId.toString() == this.pid.toString();
         });
       }else{
-        this.saved_bpmn_list = res.filter(each_bpmn => {
-          return each_bpmn.bpmnProcessStatus?each_bpmn.bpmnProcessStatus.toLowerCase() != "pending":true;
-        });
+        //   this.saved_bpmn_list = res.filter(each_bpmn => {
+        //   return each_bpmn.bpmnProcessStatus?each_bpmn.bpmnProcessStatus.toLowerCase() != "pending":true;
+        // });
+        this.saved_bpmn_list = res
       }
       if(isFromConf) this.isUploaded = true;
       else this.getSelectedNotation();

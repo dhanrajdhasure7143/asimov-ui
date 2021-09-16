@@ -88,7 +88,7 @@ export class BpsHomeComponent implements OnInit {
       this.saved_diagrams.map(item => {item.xpandStatus = false;return item;})
       this.bkp_saved_diagrams = res; 
       this.isLoading = false;
-      console.log(this.saved_diagrams);
+      // console.log(this.saved_diagrams);
       this.savedDiagrams_list=this.saved_diagrams;
       this.assignPagenation(this.saved_diagrams);
     },
@@ -105,8 +105,7 @@ export class BpsHomeComponent implements OnInit {
   }
 
   openDiagram(bpmnDiagram){
-    console.log(bpmnDiagram)
-    if(bpmnDiagram.bpmnProcessStatus && bpmnDiagram.bpmnProcessStatus =="PENDING" ) return;
+    // if(bpmnDiagram.bpmnProcessStatus && bpmnDiagram.bpmnProcessStatus =="PENDING" ) return;
     let binaryXMLContent = bpmnDiagram.bpmnXmlNotation; 
     let bpmnModelId = bpmnDiagram.bpmnModelId;
     let bpmnVersion = bpmnDiagram.version;
@@ -285,7 +284,13 @@ this.dt.bpsHeaderValues('');
     })
   }
 
-  fitNotationView(){    //Fit notation to canvas
+  fitNotationView(e){    //Fit notation to canvas
+    console.log(e)
+    if(e=='dmn'){
+      this.bpmnModeler.getActiveViewer().get('canvas').zoom('fit-viewport');
+        this.global.notify("Notation is fit to view port", "success")
+      return;
+    }
    let canvas = this.bpmnModeler.get('canvas');
     canvas.zoom('fit-viewport');
     let msg="Notation";

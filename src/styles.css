@@ -1178,7 +1178,7 @@ app-projects-programs-table {
 
 .new-bps-grid-data .bps_overlay g.viewport {
   position: absolute;
-  transform: translate(22%, 9%);
+  /* transform: translate(22%, 9%); */
 }
 
 .new-bps-layout h3 {
