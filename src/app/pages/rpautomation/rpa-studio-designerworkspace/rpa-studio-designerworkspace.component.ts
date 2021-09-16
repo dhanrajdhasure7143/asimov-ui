@@ -1357,6 +1357,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
   resetCredForm(){
     this.insertForm.reset();
+    this.passwordtype1=false;
   }
 
   back(){

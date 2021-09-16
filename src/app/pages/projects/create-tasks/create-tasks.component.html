@@ -81,7 +81,7 @@
                             </div>
                             <div class="form-fields col-md-6 pr-0">
                                 <label  class="label-control" for="endDate">End Date<span class="star">*</span></label>
-                                <input class="form-control enteredfield-color" type="date" name="daytime" max="9999-12-31" [min]="mindate" (keydown)="endDateMethod()"  formControlName="endDate">
+                                <input class="form-control enteredfield-color" type="date" name="daytime" [max]="maxdate" [min]="mindate" (keydown)="endDateMethod()"  formControlName="endDate">
                                 <span *ngIf="createtaskForm.get('endDate').invalid && createtaskForm.get('endDate').touched"
                                 class="errspan required">End Date Required*</span>
                             </div>

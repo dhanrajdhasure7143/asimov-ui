@@ -3,11 +3,11 @@
         <!-- <span class="projects-back-button" routerLink="/pages/projects/listOfProjects" >
             <i class="fa fa-angle-left" aria-hidden="true"></i>
         </span> -->
-        <span class="module-back-button" routerLink="/pages/projects/listOfProjects">
+        <span class="module-back-button" routerLink="/pages/home">
             <i class="fas fa-arrow-left" aria-hidden="true"></i>
         </span>
         <span class="module-header-title">
-            <span class="module-parent-title">My Account</span>
+            <span class="module-parent-title">User Management</span>
         </span>
         <!-- <span class="pull-right" style="font-size:20px;">
           <span class="projects-menu-item" (click)="projects_toggle==false?projects_toggle=true:projects_toggle=false;" ><i class="ri-file-line"></i></span>
@@ -58,7 +58,7 @@
                                   <div class="col-md-12">
                                     <div class="form-fields col-md-6 pl-0">
                                       <label class="label-control" for="company">Company<span class="star">*</span></label>
-                                      <input type="text" name="company" #company="ngModel" class="form-control data" [(ngModel)]="formOne.company" placeholder="Enter Company" maxlength="25" required alphabetOnly />
+                                      <input type="text" name="company" #company="ngModel" class="form-control data" [(ngModel)]="formOne.company" placeholder="Enter Company" maxlength="25" required alphabetOnly disabled/>
                                       <span *ngIf="((company.invalid && updateUser.submitted) || (company.errors && company.touched) )" 
                                       class='errspan required'> Company is required </span>                                    
                                     </div>                      
@@ -74,22 +74,20 @@
                                         class='errspan required'>Country is required</span>
                                     </div>
                                   </div>
-                                  <div class="col-md-12"> 
-                                    <div class="form-fields col-md-6 pl-0">
+                                 <!--   <div class="col-md-12"> 
+                                   <div class="form-fields col-md-6 pl-0">
                                       <label class="label-control" for="state">State<span class="star">*</span></label>
-                                      <!-- <img src="assets/images/registration/State.svg" class="icon"> -->
                                       <select class="form-control data" (change)="onChangeState($event.target.value)" name='state' #state='ngModel' [(ngModel)]="formOne.state" required>
-                                        <!-- <option *ngIf="stateInfo == ''" value="-1">State</option> -->
+                                       
                                         <option  [value]="undefined" disabled hidden>State</option>
                                         <option  [value]="null" disabled hidden>Select State</option>
                                         <option *ngFor="let state of stateInfo; let j = index" [value]='state.StateName'>{{state.StateName}}</option>
                                       </select>
                                       <span *ngIf="((state.invalid && updateUser.submitted)|| (state.errors && state.touched))"
                                         class='errspan required'> State is required </span>
-                                    </div>                            
-                                    <div class="form-fields col-md-6 pr-0">
+                                    </div>                             -->
+                                    <!-- <div class="form-fields col-md-6 pr-0">
                                       <label class="label-control" for="city">City<span class="star">*</span></label>
-                                      <!-- <img src="assets/images/registration/town.svg" class="icon"> -->
                                       <select class="form-control data" name='city' #city='ngModel' [(ngModel)]='formOne.city' required>
                                         <option  [value]="undefined" disabled hidden>City</option>
                                         <option  [value]="null" disabled hidden>Select City</option>
@@ -98,24 +96,22 @@
                                       <span *ngIf="((city.invalid && updateUser.submitted)|| (city.errors && city.touched))"
                                         class='errspan required'> City is required </span>
                                     </div>
-                                  </div>
+                                  </div> -->
                                   <div class="col-md-12">
-                                    <div class="form-fields col-md-6 pl-0">
-                                      <label class="label-control" for="zipCode">Zip Code<span class="star">*</span></label>
-                                      <!-- <img src="assets/images/registration/Zip Code.svg" class="icon"> -->
+                                    <!-- <div class="form-fields col-md-6 pl-0">
                                       <input type="text" (keydown)="onKeydown($event)" name="zipCode" #zipCode="ngModel" class="form-control data" [(ngModel)]="formOne.zipcode"
                                         onKeyPress="if(this.value.length==6) return false;" placeholder="Enter Zip Code" required>
                                       <span *ngIf="((zipCode.invalid && updateUser.submitted)|| (zipCode.errors && zipCode.touched))"
                                         class='errspan required'> Zip Code is required </span>
-                                    </div> 
-                                    <div *ngIf ="!isRefresh" class="form-fields col-md-6 pr-0 Admin-countrylist">
+                                    </div>  -->
+                                    <div *ngIf ="!isRefresh" style=" padding-left: 0px !important" class="form-fields col-md-6 pr-0 Admin-countrylist">
                                       <label class="label-control" for="phoneumber">Phone<span class="star">*</span></label>
                                       <input type="text" (keydown)="onKeydown($event)"  id="phoneNumber" name="phoneumber" style="margin-left:50px;" class="form-control data phonenumber" ng2TelInput [ng2TelInputOptions]="{initialCountry: phnCountryCode}"
                                         #phoneumber="ngModel" [(ngModel)]="formOne.phoneNumber" onKeyPress="if(this.value.length==10) return false;" required/>
                                       <span *ngIf="((phoneumber.invalid && updateUser.submitted) || (phoneumber.errors && phoneumber.touched) )" 
                                         class='errspan required'> Phone Number is required </span>
                                     </div>                                              
-                                    <div *ngIf ="isRefresh" class="form-fields col-md-6 pr-0 Admin-countrylist">
+                                    <div *ngIf ="isRefresh" style=" padding-left: 0px !important" class="form-fields col-md-6 pr-0 Admin-countrylist">
                                       <label class="label-control" for="phoneumber">Phone<span class="star">*</span></label>
                                       <input type="text" (keydown)="onKeydown($event)"  id="phoneNumber" name="phoneumber" style="margin-left:50px;" class="form-control data phonenumber" ng2TelInput [ng2TelInputOptions]="{initialCountry: phnCountryCode}"
                                         #phoneumber="ngModel" [(ngModel)]="formOne.phoneNumber" onKeyPress="if(this.value.length==10) return false;" required/>
@@ -127,7 +123,7 @@
                             </form>
                             <div class="form-footer pull-right">
                               <div class="laemarleft">
-                                <button type="submit" class="btn btn-primary"  [disabled] = "updateUser.invalid">Save</button>
+                                <button type="button" class="btn btn-primary" (click)="updateAccount()"  [disabled] = "updateUser.invalid">Save</button>
                               </div>
                             </div>
                          </div>
@@ -180,7 +176,7 @@
                               </div> 
                             </form>
                             <div class="form-footer pull-right">
-                              <button [disabled]="f.invalid" class="btn btn-primary" type="submit">Update</button>
+                              <button [disabled]="f.invalid" (click)="passwordChange(f)" class="btn btn-primary" type="button">Update</button>
                             </div> 
                         </div>
 
