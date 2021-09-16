@@ -259,13 +259,3 @@ img.hover-img {
 .timestamp-header span:hover img.hover-img, .pill span:hover img.hover-img {
   display: initial;
 }
-/* ::ng-deep popover-container{
-  background-color: #eeeeee !important;
-} */
-.setvalue-btn button{
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-::ng-deep .popover-content{
-  padding: 9px 0px !important;
-}

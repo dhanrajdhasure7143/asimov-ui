@@ -134,7 +134,7 @@
                   *ngIf="(each_diag.bpmnProcessStatus && each_diag.bpmnProcessStatus != 'PENDING')||(!each_diag.bpmnProcessStatus) ">Click
                   to open</span>
                 <span><button title="Fit to the view port" class="right header_btn fit_button"
-                    (click)="fitNotationView(each_diag.ntype)"><img src="..\assets\fillView.svg"></button></span>
+                    (click)="fitNotationView()"><img src="..\assets\fillView.svg"></button></span>
                 <span class="info"
                   *ngIf="each_diag.bpmnProcessStatus && each_diag.bpmnProcessStatus == 'PENDING'">Business Process
                   Notation has been submitted for approval. Cannot be edited till it is reviewed </span>
