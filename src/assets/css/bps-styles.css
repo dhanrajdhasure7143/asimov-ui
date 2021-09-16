@@ -204,7 +204,7 @@ mat-tab-body {
 }
 
 div[class^='diagram_container'] svg {
-  /* zoom: 50%; */
+  zoom: 50%;
   position: relative;
   z-index: -10;
 }
