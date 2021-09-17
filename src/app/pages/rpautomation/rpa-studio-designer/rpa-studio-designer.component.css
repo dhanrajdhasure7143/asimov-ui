@@ -92,7 +92,7 @@ span.tab-botname {
 ::ng-deep .tabs .mat-tab-header{
   width:85% !important;
   left:15% !important;
-  margin-top: -36px !important; 
+  margin-top: -28px !important; 
   border-bottom:none !important;
 
 }
@@ -138,7 +138,7 @@ span.tab-botname {
 }
 
 ul#environments {
-  width: 165px;
+  width: 230px;
   overflow: auto;
   max-height: 284px;
   font-size: 15px !important;
@@ -214,4 +214,17 @@ hr{
   height: 25px;
   width: 25px;
   margin-left: -5px;
+}
+.d-format {
+  padding: 8px;
+}
+.d-format:hover {
+  background: rgba(0,0,0,.04);
+}
+.d-format a {
+  color: rgba(0,0,0,.87);
+}
+.RPA-download {  
+  min-width: 100px !important;
+  padding: 0px !important;
 }

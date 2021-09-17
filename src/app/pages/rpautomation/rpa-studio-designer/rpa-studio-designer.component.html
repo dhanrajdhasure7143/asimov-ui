@@ -81,10 +81,10 @@
                     <button type="button" placement="bottom" tooltip="Download" id="dropdownMenuButton" class="downloadBtn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <img src="../../../../assets/images/RPA/icon_latest/download.svg"   />
                     </button>
-                    <div class="rpa-dropdown dropdown-menu" aria-labelledby="dropdownMenuButton">
-                      <div><a class="dropdown-item clickable" (click)=" current_instance.childBotWorkspace.downloadJpeg()">&nbsp;<span>JPEG</span></a></div>
-                      <div><a class="dropdown-item clickable" (click)=" current_instance.childBotWorkspace.downloadPng()">&nbsp;<span>PNG</span></a></div>
-                      <div><a class="dropdown-item clickable" (click)=" current_instance.childBotWorkspace.downloadPdf()">&nbsp;<span>PDF</span></a></div>
+                    <div class="rpa-dropdown dropdown-menu RPA-download" aria-labelledby="dropdownMenuButton">
+                      <div class="d-format"><a class="dropdown-item clickable" (click)=" current_instance.childBotWorkspace.downloadJpeg()">&nbsp;<span>JPEG</span></a></div>
+                      <div class="d-format"><a class="dropdown-item clickable" (click)=" current_instance.childBotWorkspace.downloadPng()">&nbsp;<span>PNG</span></a></div>
+                      <div class="d-format"><a class="dropdown-item clickable" (click)=" current_instance.childBotWorkspace.downloadPdf()">&nbsp;<span>PDF</span></a></div>
                     </div>
                   </div>
                   <div class="action-item" placement="bottom" tooltip="Zoom in"(click)="current_instance.childBotWorkspace.zoomin('')">
@@ -95,7 +95,7 @@
                   </div>
                   <div class="action-item" placement="bottom" tooltip="Fit to screen">
                     <button (click)=" current_instance.childBotWorkspace.reset('');slider=0;">
-                      <img src="../../../../assets/images/RPA/icon_latest/Fit to screen.svg" />
+                      <img src="../../../../assets/images/RPA/icon_latest/Fit screen.svg" />
                       <!-- <i class="fa fa-sync-alt" style="font-size:18px;font-weight: 700;"></i> -->
                     </button>
                   </div>
