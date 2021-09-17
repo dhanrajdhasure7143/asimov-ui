@@ -65,15 +65,15 @@
             </div>
             <div class="col-md-12">
                 <div class="form-fields col-md-6 pl-0">
-                    <label class="label-control">Metrics To Be Measured<span
+                    <label class="label-control">Metrics to be measured<span
                             class="star">*</span></label>
                     <input type="text" formControlName="measurableMetrics" maxlength="50"
-                        placeholder="Enter Metrics To Be Measured"
+                        placeholder="Enter Metrics to be measured"
                         class="form-control data"
                         [ngClass]="insertForm2.get('measurableMetrics').valid?'enteredfield-color':'inputfield-color'">
                     <span
                         *ngIf="insertForm2.get('measurableMetrics').invalid && insertForm2.get('measurableMetrics').touched"
-                        class="errspan required">Metrics To Be Measured Required*</span>
+                        class="errspan required">Metrics to be measured Required*</span>
                 </div>
                 <div class="form-fields col-md-6 pr-0">
                     <label class="label-control">Value Chain<span
