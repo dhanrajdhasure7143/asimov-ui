@@ -243,7 +243,7 @@ this.getFileDetails();
     this.spinner.hide();
      Swal.fire({
        title: 'Success',
-       text: "File/Files Uploaded Successfully",
+       text: "File(s) Uploaded Successfully",
        position: 'center',
        icon: 'success',
        showCancelButton: false,
