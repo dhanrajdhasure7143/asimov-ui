@@ -6,15 +6,26 @@
   
     <div class="toolset" >
       <div id="search">
+        <div class="actionsheaderdiv">
+          <span class="left-panel-header">
+            Toolset & Actions
+            <button type="button" class="toolset-close" (click)="sidenavbutton=false" aria-label="Close">
+              <span aria-hidden="true"><img src="../../../../assets/images/RPA/icon_latest/close-circle-white.svg" class="textplus"></span>
+            </button>
+          </span>
+          
+          
+        </div>
         <div class="toolset-mainheader" *ngIf="true" >
-          <div class="actionsheaderdiv">
+          <!-- <div class="actionsheaderdiv">
             <span class="module-sub-header-title">
               <img src="../../../../assets/images/RPA/icon_latest/menu-line.svg" class="testplus" />Toolset & Actions
             </span>
             <button type="button" class="close toolset-close" (click)="sidenavbutton=false" aria-label="Close">
                 <span aria-hidden="true"><img src="../../../../assets/images/RPA/icon_latest/close.svg"></span>
             </button>
-          </div>
+          </div> -->
+         
           <div class="search-content">
 
               <!-- onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)" -->
