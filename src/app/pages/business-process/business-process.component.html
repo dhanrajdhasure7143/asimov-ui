@@ -28,10 +28,16 @@
           </div>
           <div class="col-md-6 new-bps-icons p-0" *ngIf="isHeaderShow == 'true'">
             <div class="row bps-float">
-              <button *ngIf='!isfromApprover && !iscreate_notation' class="editprimary tsttooltipbtn" [disabled]="isEditMode || rejectedOrApproved=='PENDING'" (click)="editNotation()">
-                <img class="defaul-img" src="../../../assets/images/BPMS/Edit-blue.svg">
-                <span class="testtooltip">Edit</span>
-              </button>
+                <button *ngIf="rejectedOrApproved=='PENDING'" class="editprimary edit-disabled">
+                    <img class="defaul-img" src="../../../assets/images/BPMS/edit_disabled.svg">
+
+                  </button>
+                  <span *ngIf="rejectedOrApproved!='PENDING'">
+                    <button *ngIf='!isfromApprover && !iscreate_notation' class="editprimary tsttooltipbtn" [disabled]="isEditMode" (click)="editNotation()">
+                      <img class="defaul-img" src="../../../assets/images/BPMS/Edit-blue.svg">
+                      <span class="testtooltip">Edit</span>
+                    </button>
+                </span>
               <button mat-button [matMenuTriggerFor]="download" class="tsttooltipbtn">
                 <img src="../../../assets/images/BPMS/download.svg">
                 <span class="testtooltip">Download</span>
@@ -69,7 +75,7 @@
                 <img src="../../../assets/images/BPMS/Fit to screen.svg">
                 <span class="testtooltip">Fit to screen</span>
               </button>
-              <span class="bpsbtnsep">|</span>
+              <span *ngIf="rejectedOrApproved!='PENDING'" class="bpsbtnsep">|</span>
               <button class="bps-save-icon clr-hvr tsttooltipbtn" (click)="saveProcess()" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && !isSave_disabled && !iscreate_notation" >
                 <img src="../../../assets/images/BPMS/Save.svg" alt="" class="defaultimg">
                 <span class="testtooltip">Save</span>
@@ -135,7 +141,7 @@
               <!-- <button class="clr-hvr" matTooltip="Refresh" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below"><img src="../../../assets/images/BPMS/refresh.svg"></button>
               <button class="clr-hvr" matTooltip="Delete" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below"><img src="../../../assets/images/BPMS/Delete.svg"></button> -->
               <!-- <button class="upload-btn bps-upload"><img src="../../../assets/images/BPMS/upload.svg">Upload Again</button> -->
-              <ngx-dropzone class="upload_again_btn" (change)="UploadFile($event)" [multiple]=false [accept]="'.'+selectedNotationType">
+              <ngx-dropzone *ngIf="rejectedOrApproved!='PENDING'" class="upload_again_btn" (change)="UploadFile($event)" [multiple]=false [accept]="'.'+selectedNotationType">
                 <ngx-dropzone-label>
                   <button class="upload-btn bps-upload" *ngIf="!isfromApprover && !iscreate_notation"><img src="../../../assets/images/BPMS/upload.svg" *ngIf="!isfromApprover">Upload Again</button>  
                   <button class="upload-btn bps-upload" *ngIf="!isfromApprover && iscreate_notation"><img src="../../../assets/images/BPMS/upload.svg" *ngIf="!isfromApprover">Upload</button>  

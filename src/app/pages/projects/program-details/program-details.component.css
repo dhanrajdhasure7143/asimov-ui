@@ -252,3 +252,9 @@ td a:hover img.testplus.hover-img {
     height: 41px;
     margin-top: -10px;
   }
+
+
+  ::ng-deep .addrespopup .ng-dropdown-panel {
+    position: relative !important;
+    display: contents !important;
+}
