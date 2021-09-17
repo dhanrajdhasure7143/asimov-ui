@@ -271,7 +271,7 @@
                     </div> -->
                   <div class="col-sm-4 p-0">
                       <div class="mainset">
-                        <span class="labeltit">Efforts Spent</span>
+                        <span class="labeltit">Efforts Spent(Hrs)</span>
                         <div *ngIf="editdata==false">
                           <span
                             *ngIf="projectDetails.effortsSpent != null && projectDetails.effortsSpent != undefined && projectDetails.effortsSpent !='' "
@@ -310,7 +310,7 @@
                   </div>
                   <div class="col-sm-4 p-0">
                       <div class="mainset">
-                        <span class="labeltit">Project Details</span>
+                        <span class="labeltit">Project Description</span>
       
                         <div *ngIf="editdata==false">
       
@@ -647,7 +647,7 @@
               <img src="..\assets\images\Projects\process_icon.svg" alt="">
             </div>
             <div class="py-5">
-              <span class="labeltit">Project Description</span>
+              <span class="labeltit">Project Purpose</span>
 
               <div *ngIf="editdata==false">
                 <span class="tab-text labelcont">Improve ROI</span>
@@ -655,7 +655,7 @@
               <div *ngIf="editdata==true">
                 <input type="text"
                   [value]="(projectDetails.projectPurpose==undefined||projectDetails.projectPurpose==null)?'':projectDetails.projectPurpose"
-                  class="small-input" placeholder="Enter Project Description">
+                  class="small-input" placeholder="Enter Project Purpose">
               </div>
             </div>
           </div>

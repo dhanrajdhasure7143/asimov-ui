@@ -1,12 +1,13 @@
-<div class="bg-color">
+<div class="bg-color so-sub-tab-content">
   <div class="container-fluid">
       
-      <div class="row">
-        <div class="col-md-5"></div>
-          <div class="col-md-2">
+      <div class="row pt-5">
+        <div class="col-md-10 p-0">
+          <div class="col-md-3 form-group pl-0 sosearchfield">
             <input type="search" class="form-control rpa-control" placeholder="Search" [(ngModel)]="search" (input)="method()"> 
+            <img src="../../../../assets/images/search.svg" alt="" class="testplus"> 
           </div>
-          <div class="col-md-2">
+          <div class="col-md-3 pl-0">
             <select [(ngModel)]="selected_source" value="" class="form-control rpa-control"  (change)="method()"> <!--(selectionChange)="applyFilter3($event.value)">-->
               <option value="">Select Source</option>
               <option value="EPSoft">EPSoft</option>
@@ -14,18 +15,19 @@
               <option value="UiPath">UiPath</option>
             </select>
           </div>
-        <div class="col-md-2">
+          <div class="col-md-3 pl-0">
             <select [(ngModel)]="selectedcat" value="" class="form-control rpa-control"  (change)="method()"> <!--(selectionChange)="applyFilter($event.value)"-->
               <option  value="">Select Category</option>
                 <option *ngFor="let category of categaoriesList" [value]="category.categoryId">{{category.categoryName}}
               </option>
-            </select>
-           
+            </select>           
+          </div>
         </div>
-        <div class="col-md-1"> 
-          <span (click)="reset()" id="bmreset"  style="cursor:pointer" matTooltip="Reset">
-            <i  class="fa fa-undo"></i>
-          </span >
+        <div class="col-md-2 p-0 env-data-tool text-right"> 
+          <button (click)="reset()" id="bmreset" class="tsttooltipbtn">
+            <img src="../../../../../assets/images/RPA/icon_latest/reset-blue.svg" class="testplus1">
+            <span class="testtooltip">Reset</span>
+          </button >
         </div>
       </div>
       
@@ -72,7 +74,7 @@
                   <ng-container matColumnDef="botStatus">
                       <th mat-header-cell *matHeaderCellDef  mat-sort-header>Status </th>
                       <td mat-cell  *matCellDef="let element" >
-                        <div  class="margin-25"  >
+                        <div>
                           <span [id]="element.botId+'__status'">
                           <span *ngIf="element.botStatus=='Running'"  [matTooltip]="element.botStatus" class="text-primary" >
                             <span>
@@ -80,24 +82,24 @@
                             </span>
                           </span>
   
-                          <span *ngIf="element.botStatus=='Success'|| element.botStatus=='Completed'"  [matTooltip]="element.botStatus" class="text-success">
-                            <span>
-                              <li class="fa fa-check-circle"style="font-size:19px">
-                            </span>
+                          <span *ngIf="element.botStatus=='Success'|| element.botStatus=='Completed'"  [matTooltip]="element.botStatus">
+                            <img src="../../../../../assets/images/RPA/icon_latest/Success.svg" class="testplus" > 
                           </span>
   
-                          <span *ngIf="element.botStatus=='Failure'|| element.botStatus=='Failed'"  [matTooltip]="element.botStatus" class="text-danger"><span><li class="fa fa-times-circle" style="font-size:19px"></span></span>
+                          <span *ngIf="element.botStatus=='Failure'|| element.botStatus=='Failed'"  [matTooltip]="element.botStatus" class="text-danger"><span><li class="fa fa-times-circle"></span></span>
                           <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
-                          <span *ngIf="element.botStatus=='New'"   [matTooltip]="element.botStatus"  class="text-primary"><span><img src='../../../../../assets/images/RPA/newicon.png' style="filter: none; width: 19px;"></span></span>
+                          <span *ngIf="element.botStatus=='New'"   [matTooltip]="element.botStatus"  class="text-primary">
+                            <span><img src='../../../../../assets/images/RPA/newicon.png' class="testplus"></span>
+                          </span>
   
                           <span *ngIf="element.botStatus=='Stop' || element.botStatus=='Stopped'" >
                             <span class="tableActionsIcons"  [matTooltip]="element.botStatus">
-                              <img src="../../../../../assets/images/RPA/stop_fail_icon.svg" style="filter: none; width: 19px;"> 
+                              <img src="../../../../../assets/images/RPA/stop_fail_icon.svg" class="testplus"> 
                             </span>
                             </span>
   
                           <span *ngIf="element.botStatus=='Pause'||element.botStatus=='Paused'" >
-                            <span class="text-primary"  [matTooltip]="element.botStatus"  style="font-size:19px;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">-->
+                            <span class="text-primary"  [matTooltip]="element.botStatus"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">-->
                               <i class="fas fa-pause-circle"></i>
                             </span>
                           </span>
@@ -120,7 +122,7 @@
                             <i class="fa fa-play-circle" aria-hidden="true"></i> &nbsp;&nbsp;
                           </span> -->
                           <span (click)="stopBot(element.botId)"  matTooltip="Stop Bot">
-                          <i class="fa fa-stop text-danger" aria-hidden="true"></i> &nbsp;
+                          <i class="fa fa-stop text-danger" aria-hidden="true"></i>&nbsp;
                           </span >
                           <span>
                               <button (click)="SelectSLACon(element)" matTooltip="SLA Configuration">
@@ -130,18 +132,18 @@
                   </ng-container>
                   <ng-container matColumnDef="Schedule">
                       <th mat-header-cell *matHeaderCellDef>Schedule</th>
-                      <td mat-cell *matCellDef="let element" class=" text-center" >
-                          <span (click)="openscheduler(element)" matTooltip="Scheduler" style="cursor: pointer;margin-right: 25px;">
+                      <td mat-cell *matCellDef="let element">
+                          <span (click)="openscheduler(element)" matTooltip="Scheduler" style="cursor: pointer;">
                           <i class="fa fa-calendar text-primary"  aria-hidden="true"></i>
                         </span>
                       </td>
                   </ng-container>
                   <ng-container matColumnDef="Logs">
                       <th mat-header-cell *matHeaderCellDef >Logs </th>
-                      <td mat-cell *matCellDef="let element">
-                        <a class="text-primary text-center clickable" *ngIf="element.sourceType=='EPSoft'" matTooltip="View Logs" (click)="getEpsoftLogs(element.botId,element.version,epsoft_logs_modal_ref,'open')">View</a>
-                        <a class="text-primary text-center clickable" *ngIf="element.sourceType=='UiPath'" matTooltip="View Logs" (click)="getuipathlogs(uiPathLogsModal,element.botName)">View</a>
-                        <a class="text-primary text-center clickable" *ngIf="element.sourceType=='BluePrism'" matTooltip="View Logs" (click)="getBluePrismlogs(element.botName)">View</a>
+                      <td mat-cell *matCellDef="let element" class="logscol">
+                        <a class="text-primary clickable" *ngIf="element.sourceType=='EPSoft'" matTooltip="View Logs" (click)="getEpsoftLogs(element.botId,element.version,epsoft_logs_modal_ref,'open')">View</a>
+                        <a class="text-primary clickable" *ngIf="element.sourceType=='UiPath'" matTooltip="View Logs" (click)="getuipathlogs(uiPathLogsModal,element.botName)">View</a>
+                        <a class="text-primary clickable" *ngIf="element.sourceType=='BluePrism'" matTooltip="View Logs" (click)="getBluePrismlogs(element.botName)">View</a>
                       </td>
                   </ng-container>
                   <!-- <ng-container matColumnDef="Smoke_Test">

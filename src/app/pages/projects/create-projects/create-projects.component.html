@@ -130,7 +130,22 @@
                                                     class=" errspan required">Value Chain Required*</span>
                                             </div>
                                         
-                                        <div class="form-fields col-md-6 pr-0">
+                                            <div class="form-fields col-md-6 pr-0">
+                                                <label class="label-control" for="measurableMetrics">Metrics to be measured<span class="star">*</span></label>
+                                                <input type="text" maxlength="51" class="form-control data"
+                                                    formControlName="measurableMetrics" value=""
+                                                    placeholder="Enter Metrics to be measured"
+                                                    [ngClass]="createprogram.get('measurableMetrics').valid?'enteredfield-color':'inputfield-color'">
+                                                <span
+                                                    *ngIf="createprogram.get('measurableMetrics').invalid && createprogram.get('measurableMetrics').touched"
+                                                    class="errspan required">Metrics to be measured Required*</span>
+                                                <span
+                                                    *ngIf="createprogram.controls['measurableMetrics'].hasError('maxlength')"
+                                                    class="errspan required">
+                                                    Maximum of 50 characters
+                                                </span>
+                                            </div>
+                                        <!-- <div class="form-fields col-md-6 pr-0">
                                             <label class="label-control" for="process">Process<span
                                                     class="star">*</span></label>
                                             <select class="form-control" formControlName="process"
@@ -143,21 +158,28 @@
                                             <span
                                                 *ngIf="createprogram.get('process').invalid && createprogram.get('process').touched"
                                                 class="errspan required">Process Required*</span>
-                                        </div>
+                                        </div> -->
                                         
                                     </div>
                                     <div class="col-md-12">
+                                        
+
                                         <div class="form-fields col-md-6 pl-0">
-                                            <label class="label-control" for="measurableMetrics">Metrics to be measured<span class="star">*</span></label>
-                                            <input type="text" maxlength="51" class="form-control data"
-                                                formControlName="measurableMetrics" value=""
-                                                placeholder="Enter Metrics to be measured"
-                                                [ngClass]="createprogram.get('measurableMetrics').valid?'enteredfield-color':'inputfield-color'">
+                                            <label class="label-control" for="priority">Program Priority<span
+                                                    class="star">*</span></label>
+                                            <select class="form-control" formControlName="priority"
+                                                [ngClass]="createprogram.get('priority').valid?'enteredfield-color':'inputfield-color'">
+                                                <option [value]="null" disabled hidden>--Select Program Priority --
+                                                </option>
+                                                <option value="">Select Program Priority</option>
+                                                <option value="High">High</option>
+                                                <option value="Medium">Medium</option>
+                                                <option value="Low">Low</option>
+                                            </select>
                                             <span
-                                                *ngIf="createprogram.get('measurableMetrics').invalid && createprogram.get('measurableMetrics').touched"
-                                                class="errspan required">Metrics to be measured Required*</span>
-                                            <span
-                                                *ngIf="createprogram.controls['measurableMetrics'].hasError('maxlength')"
+                                                *ngIf="(createprogram.get('priority').invalid && createprogram.get('priority').touched) && !createprogram.controls['priority'].hasError('maxlength')"
+                                                class="errspan required">Program Priority Required*</span>
+                                            <span *ngIf="createprogram.controls['priority'].hasError('maxlength')"
                                                 class="errspan required">
                                                 Maximum of 50 characters
                                             </span>
@@ -192,7 +214,7 @@
 
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="form-fields">
+                                        <!-- <div class="form-fields">
                                             <label class="label-control" for="access">Access<span
                                                     class="star">*</span></label>
                                             <select formControlName="access" class="form-control data"
@@ -206,7 +228,7 @@
                                             <span
                                                 *ngIf="createprogram.get('access').invalid && createprogram.get('access').touched"
                                                 class=" errspan required">Access Required*</span>
-                                        </div>
+                                        </div> -->
                                     </div>
                                     <!-- <div class="col-md-6">
                                         <div class="form-fields">
@@ -243,26 +265,7 @@
                                     </div> -->
                                    
                                     <div class="col-md-6">
-                                        <div class="form-fields">
-                                            <label class="label-control" for="priority">Program Priority<span
-                                                    class="star">*</span></label>
-                                            <select class="form-control" formControlName="priority"
-                                                [ngClass]="createprogram.get('priority').valid?'enteredfield-color':'inputfield-color'">
-                                                <option [value]="null" disabled hidden>--Select Program Priority --
-                                                </option>
-                                                <option value="">Select Program Priority</option>
-                                                <option value="High">High</option>
-                                                <option value="Medium">Medium</option>
-                                                <option value="Low">Low</option>
-                                            </select>
-                                            <span
-                                                *ngIf="(createprogram.get('priority').invalid && createprogram.get('priority').touched) && !createprogram.controls['priority'].hasError('maxlength')"
-                                                class="errspan required">Program Priority Required*</span>
-                                            <span *ngIf="createprogram.controls['priority'].hasError('maxlength')"
-                                                class="errspan required">
-                                                Maximum of 50 characters
-                                            </span>
-                                        </div>
+                                       
                                     </div>
                                     <div class="col-md-12 martsascl">
                                         <!-- <label  class="label-control"  for="description">Description<span style="color:rgb(90, 92, 212)">*</span></label> -->

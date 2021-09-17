@@ -33,6 +33,8 @@
   min-width: 10px !important;
   display: flex;
   align-items: center;
+  border-radius: 4px 4px 0px 0px;
+  border: 1px solid #ccc;
 }
 
 ::ng-deep .tabs .mat-ink-bar{
@@ -56,4 +58,173 @@ span.tab-botname {
   width: 10px;
   height: 10px;
   opacity: 0.3;
+}
+
+.actionsmenu-right{
+  display:flex;
+  float:right
+}
+
+
+.action-item{
+  width:auto;
+  /* font-size: 18px; */
+  padding: 6px 8px;
+  cursor: pointer;
+  position: relative;
+}
+
+
+.action-item img {
+  height: 17px;
+  width: 17px;
+}
+
+.actionsmenu{
+  padding:20px;
+}
+
+
+.main-content1 .module-heading{
+  background-color: #e5e5e5 !important;
+}
+
+::ng-deep .tabs .mat-tab-header{
+  width:85% !important;
+  left:15% !important;
+  margin-top: -28px !important; 
+  border-bottom:none !important;
+
+}
+.toolset-mainheader {
+  background-color: #f3f3f3 !important;
+    padding-top: 10px;
+}
+.actionsheaderdiv img.testplus1 {
+  width: 12px;
+  height: 12px;
+}
+.actionsheaderdiv img.testplus {
+  /* margin-right: 12px !important;
+  opacity: 0.5; */
+  vertical-align: sub;
+}
+
+
+
+
+
+
+.toolset-close{
+  width:11px;
+  height:11px;
+}  
+.toolset-text{
+  font-weight: 600 !important;
+}
+
+
+
+.main-content1 .module-header-title {
+  font-weight: 600;
+  font-size: 22px;
+  color: #001c47;
+  line-height: 0px !important;
+}
+
+::ng-deep .tabs .mat-tab-label.mat-tab-disabled{
+  opacity:1;
+  border:none;
+}
+
+ul#environments {
+  width: 230px;
+  overflow: auto;
+  max-height: 284px;
+  font-size: 15px !important;
+}
+
+ul#environments li {
+  padding: 6px; 
+  display: flex;
+  align-items: center;
+}
+ul#environments li input {
+  margin: 0px;
+}
+ul#environments li img {
+  vertical-align: sub;
+}
+
+.rpa-layout-header {
+  background-color: #F3F3F3;
+  padding: 10px 15px 8px !important;
+}
+.rpa-layout-header .module-heading {
+  background-color: #f3f3f3 !important;
+  padding: 0px;
+  border: unset;
+}
+.rpa-layout-header span.module-heading-title {
+  font-weight: 600;
+  font-size: 18px;
+  color: #001c47;
+}
+
+span.bpsbtnsep {
+  color: #ddd;
+  font-size: 22px;
+  padding: 0px !important;
+}
+ul#other_actions {
+  
+  max-height: 250px;
+  overflow: auto;
+  left: auto;
+  right: 0;
+}
+ul#other_actions li {
+  padding: 8px 5px; 
+}
+ul#other_actions li img {
+  vertical-align: sub;
+}
+.designer-module-heading-title{
+
+font-weight: 600;
+    font-size: 22px;
+    color: #001c47;
+    
+}
+hr{
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
+  border: 0;
+  border-top: 1px solid #eee;
+
+}
+.menu-icon{
+  width: 20px;
+ height: 20px;
+ margin-right: 5px;
+
+}
+
+.add-new{
+  height: 25px;
+  width: 25px;
+  margin-left: -5px;
+}
+.d-format {
+  padding: 8px;
+}
+.d-format:hover {
+  background: rgba(0,0,0,.04);
+}
+.d-format a {
+  color: rgba(0,0,0,.87);
+}
+.RPA-download {  
+  min-width: 100px !important;
+  padding: 0px !important;
 }

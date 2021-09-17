@@ -410,43 +410,43 @@ percentageComplete: number;
         this.dataSource2.paginator=this.paginator101;
   }
 
-  projectdetails(){
-    this.spinner.show()
-    this.route.queryParams.subscribe(data=>{
-        let paramsdata:any=data
-        console.log(paramsdata)
-        paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsdata.programId;
-        this.editdata=false;
+ 
+projectdetails(){​​​​​​
 
-        this.rpa.getProjectDetailsById(paramsdata.id).subscribe( res =>{
-          this.spinner.hide();
-          this.projectDetails=res
-          console.log(this.projectDetails);
-          
-          if(this.projectDetails){
-            let usr_name=this.projectDetails.owner.split('@')[0].split('.');
-            this.owner_letters=usr_name[0].charAt(0)+usr_name[1].charAt(0);
-            console.log(this.owner_letters);
-            
-            }
-          
-          this.project_id=this.projectDetails.id
-          let users:any=[]
-          if(this.projectDetails.resource.length!=0){
-            this.projectDetails.resource.forEach(item=>{
-                users.push(item.resource)
-         })
-         this.resources=users
-        }
-        else{
-          this.resources=this.users_list
-        }  
-          this.getTaskandCommentsData();
-          this.getLatestFiveAttachments(this.project_id)
-        })
-    });
-  }
+this.spinner.show()
+this.route.queryParams.subscribe(data=>{​​​​​​
+let paramsdata:any=data
+this.project_id=paramsdata.id
+this.editdata=false;
+this.rpa.getProjectDetailsById(paramsdata.id).subscribe( res=>{​​​​​​
+this.spinner.hide();
+this.projectDetails=res
+console.log(this.projectDetails);
 
+if(this.projectDetails){​​​​​​
+let usr_name=this.projectDetails.owner.split('@')[0].split('.');
+this.owner_letters=usr_name[0].charAt(0)+usr_name[1].charAt(0);
+console.log(this.owner_letters);
+}​​​​​​
+
+//this.project_id=this.projectDetails.id
+let users:any=[]
+if(this.projectDetails.resource.length!=0){​​​​​​
+this.projectDetails.resource.forEach(item=>{​​​​​​
+users.push(item.resource)
+ }​​​​​​)
+this.resources=users
+ }​​​​​​
+else{​​​​​​
+this.resources=this.users_list
+ }​​​​​​ 
+ }​​​​​​)
+this.getTaskandCommentsData();
+this.getLatestFiveAttachments(this.project_id)
+paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsdata.programId;
+ }​​​​​​);
+
+}​​​​​​
 
   profileName(){
     setTimeout(() => {

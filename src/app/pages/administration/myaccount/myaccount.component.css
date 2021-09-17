@@ -58,21 +58,6 @@
   cursor: pointer;
 }
 
-label.label-control {
-  /* padding: 4px 0px; */
-  border: 1px solid transparent;
-  border-bottom: medium none;
-  margin: 0px !important;
-  border-radius: 2px;
-  color: black;
-  font-weight: 600;
-  font-size: 14px;
-  /* height: 30px; */
-  margin-bottom: 3px !important;
-  white-space: nowrap;
-  width: 100%;
-  text-overflow: ellipsis;
-}
 
 
 
@@ -97,12 +82,12 @@ label.label-control {
   display: inline-block;
   width: 100%;
   padding-left: 12px;
-  margin-top: 20px;
 }
 
 .h-scroll {
-  height: calc(100% - 48px);
+  height: calc(100% - 44px);
   overflow: auto;
+  padding-top: 15px;
 }
 
 .prj-crt-form {
@@ -224,14 +209,13 @@ span.removeallprjcts:hover {
   }
   .right-addon .eyeicon{
     position: absolute;
-    padding: 10px;
-    z-index: 1000;
-    margin-left: -30px !important;
-    width: 40px;
     color: #0061cf !important;
-    margin-top: 20px;
-     /* margin-right:60px */
+    right: 25px;
+    top: 32px;
   }
 
 
+  .Admin-countrylist input {
+    border: unset !important;
+  }  
 

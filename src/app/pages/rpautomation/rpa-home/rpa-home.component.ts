@@ -111,6 +111,7 @@ export class RpaHomeComponent implements OnInit {
   ngOnInit() {
     this.userRole = localStorage.getItem("userRole")
     this.userRole = this.userRole.split(',');
+    localStorage.setItem("isHeader","false");
     this.isButtonVisible = this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') || this.userRole.includes('RPA Admin');
 
     let processId=undefined;
@@ -167,7 +168,6 @@ export class RpaHomeComponent implements OnInit {
       }
           );
         })
-      
      }
 
   ngAfterViewInit() {

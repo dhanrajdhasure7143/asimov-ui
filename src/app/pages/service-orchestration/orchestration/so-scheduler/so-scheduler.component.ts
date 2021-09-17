@@ -134,19 +134,24 @@ export class SoSchedulerComponent implements OnInit {
     if(this.startdate !="" && this.enddate!=""  && this.cronExpression != "" && this.starttime!=undefined && this.endtime!=undefined && this.timezone!="" && this.timezone!=undefined)
     {
       let starttime=this.starttime.split(":")
-      let starttimeparse=parseInt(starttime[0])
+     let starttimeparse=parseInt(starttime[0])
       let endtime=this.endtime.split(":")
       let endtimeparse=parseInt(endtime[0]);
-      let startdate=this.startdate.split("-");
-      let enddate=this.enddate.split("-");
+      // let startdate=this.startdate.split("-");
+      // let enddate=this.enddate.split("-");
+      this.startdate=new Date(this.startdate);
+      this.enddate=new Date(this.enddate);
       let data:any;
       if(this.botid!="" && this.botid!=undefined)
       {
         data={
           intervalId:this.generateid(),
           scheduleInterval:this.cronExpression,
-          startDate:startdate[0]+","+(startdate[1])+","+startdate[2]+","+starttimeparse+","+starttime[1],
-          endDate:enddate[0]+","+enddate[1]+","+enddate[2]+","+ endtimeparse+","+ endtime[1],
+          // startDate:startdate[0]+","+(startdate[1])+","+startdate[2]+","+starttimeparse+","+starttime[1],
+          // endDate:enddate[0]+","+enddate[1]+","+enddate[2]+","+ endtimeparse+","+ endtime[1],
+          startDate:this.startdate.getFullYear()+","+(this.startdate.getMonth()+1)+","+this.startdate.getDate()+","+starttime[0]+","+starttime[1],
+          endDate:this.enddate.getFullYear()+","+(this.enddate.getMonth()+1)+","+this.enddate.getDate()+","+ endtime[0]+","+ endtime[1],
+        
           timeZone:this.timezone,
           save_status:"unsaved",
           check:false,

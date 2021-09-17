@@ -170,6 +170,20 @@ export class SoProcesslogComponent implements OnInit {
         })
     }
 
+    kill_bot_run(bot)
+    {
+      this.rest.updateBotLog(bot.bot_id,bot.version,bot.run_id).subscribe((res)=>{
+        this.getprocessrunid(this.selected_processRunId);
+      })
+    }
+
+
+    kill_process_run(processid, runid)
+    {
+      this.rest.kill_process_log(processid, runid).subscribe(data=>{
+        this.getprocesslog();
+      })
+    }
 }
 
 

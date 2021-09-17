@@ -39,11 +39,11 @@
                 </mat-menu>
               <!-- <button><img src="../../../assets/images/BPMS/Forward.svg" matTooltip="Forward" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below"></button> -->
 
-              <button (click)="playAnimation()" id="play_btn" class="tsttooltipbtn" *ngIf="!isplay" title="Play">
+              <button (click)="playAnimation()" id="play_btn" class="tsttooltipbtn" *ngIf="!isplay">
                 <img src="../../../assets/images/PI/play.svg">
                 <span class="testtooltip">Play</span>
               </button>
-              <button (click)="playAnimation()" class="tsttooltipbtn" title="Stop" *ngIf="isplay">
+              <button (click)="playAnimation()" class="tsttooltipbtn" *ngIf="isplay">
                 <img src="../../../assets/images/PI/stop.svg">
                 <span class="testtooltip">Stop</span>
               </button>

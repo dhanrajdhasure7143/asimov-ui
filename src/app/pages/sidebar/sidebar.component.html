@@ -56,7 +56,7 @@
     <span class="side-menu-font" (click)="hightlight('listOfProjects','null')" >Projects</span>
   </a>
 
-  <a mat-list-item class="link" id="process" (click)="hightlight('process',null)" [matTooltip]=" !obj.sideBarOpen ? 'Processes' : ''" matTooltipClass="sidebarTooltip" matTooltipPosition="right">
+  <!-- <a mat-list-item class="link" id="process" (click)="hightlight('process',null)" [matTooltip]=" !obj.sideBarOpen ? 'Processes' : ''" matTooltipClass="sidebarTooltip" matTooltipPosition="right">
     <span class="side-icon">
       <span class="active-img" id="eiap-home-icon-active">
           <img src="../../../assets/images/dashboard_icons/active-icons/Processes.svg">
@@ -70,7 +70,7 @@
     </span>
 
     <span class="side-menu-font">Processes</span>
-  </a>
+  </a> -->
   
   <a mat-list-item class="link" id='so' (click)="hightlight('so',null)" routerLink="/pages/serviceOrchestration/home" [matTooltip]=" !obj.sideBarOpen ? 'Orchestration' : ''" matTooltip="Orchestration" matTooltipClass="sidebarTooltip" matTooltipPosition="right">
     <span class="side-icon">
@@ -167,7 +167,7 @@
       <mat-icon>more_vert</mat-icon>
    </button>
   </a> -->
-  <mat-list-item (click)="showadminSubmenu = !showadminSubmenu; selection()" id="expand_admin" class="link" [matTooltip]=" !obj.sideBarOpen ? 'Administration' : ''" matTooltipClass="sidebarTooltip" matTooltipPosition="right">
+  <mat-list-item (click)="showadminSubmenu = !showadminSubmenu; selection()" [ngClass]="{'activeMenu' : showadminSubmenu}" id="expand_admin" class="link" [matTooltip]=" !obj.sideBarOpen ? 'Administration' : ''" matTooltipClass="sidebarTooltip" matTooltipPosition="right">
     <!-- <span class="full-width" >Workspace</span>
     <mat-icon mat-list-icon>work</mat-icon> -->
     <span class="side-icon">
@@ -183,8 +183,8 @@
     </span>
 
     <span class="side-menu-font">Administration</span>
-    <!-- <mat-icon class="menu-button" [ngClass]="{'rotated' : showadminSubmenu}" >&#xe5cf;
-    </mat-icon> -->
+    <mat-icon class="menu-button" [ngClass]="{'rotated' : showadminSubmenu}" >&#xe5cf;
+    </mat-icon>
   </mat-list-item>
   <div class="submenus" [ngClass]="{'expanded' : showadminSubmenu}">
     <a mat-list-item  class="link" id="pi" (click)="hightlight('user','expand_admin')" routerLink="/pages/admin/myaccount" >

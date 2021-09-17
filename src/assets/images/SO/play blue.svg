@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
+  <defs>
+    <clipPath id="clip-play_blue">
+      <rect width="24" height="24"/>
+    </clipPath>
+  </defs>
+  <g id="play_blue" data-name="play blue" clip-path="url(#clip-play_blue)">
+    <g id="play-circle" transform="translate(-0.539 -0.539)">
+      <path id="Path_930" data-name="Path 930" d="M10,8,26.514,19.009,10,30.018Z" transform="translate(-4.664 -6.471)" fill="none" stroke="#00a0e3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    </g>
+    <g id="Save" transform="translate(10 9.689)">
+      <path id="Path_827" data-name="Path 827" d="M0,0H24V24H0Z" fill="none"/>
+    </g>
+  </g>
+</svg>

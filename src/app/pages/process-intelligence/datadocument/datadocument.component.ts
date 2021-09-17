@@ -12,6 +12,7 @@ import { fromMatPaginator, paginateRows } from './../../business-process/model/d
 import { Observable  } from 'rxjs/Observable';
 import { of  } from 'rxjs/observable/of';
 import { map } from 'rxjs/operators';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-datadocument',
@@ -55,7 +56,8 @@ export class DatadocumentComponent implements OnInit {
 
   @ViewChild(MatPaginator,{static:false}) paginator: MatPaginator;
 
-  constructor(private router:Router, private dt:DataTransferService, private hints:PiHints, private global:GlobalScript,private modalService: BsModalService)    { }
+  constructor(private router:Router, private dt:DataTransferService, private hints:PiHints, private global:GlobalScript,private modalService: BsModalService,
+              private spinner: NgxSpinnerService)    { }
 
   ngOnInit() {
     this.resetColMap();
@@ -129,8 +131,16 @@ export class DatadocumentComponent implements OnInit {
           }
         }
         setTimeout(() => {
-          this.assignPagenation(this.fileData)
+          this.assignPagenation(this.fileData);
+          this.spinner.show();
         }, 500);
+        setTimeout(() => {
+          this.headerData.forEach(async(element,index) => {
+            this.selectedCell(0,index,false,element); 
+          });
+          // this.selectedCell(0,2,false,this.headerData[2]);
+        }, 1000);
+
   }
 
   caseIdSelection() {
@@ -172,7 +182,8 @@ export class DatadocumentComponent implements OnInit {
 
   selectedCell(tr_index, index, e, v) {     //Validate each cell for valid data type
     this.headerName = v;
-    if (!e.srcElement.classList.contains("valid") && this.headerName) {
+    // if (!e.srcElement.classList.contains("valid") && this.headerName) {
+      if ( this.headerName) {
       let reg_expression;
       let isDateCheck: boolean = false;
       if (this.headerName.indexOf('Timestamp') == -1 || this.headerName.indexOf('Time') == -1 || this.headerName.indexOf('Date') == -1) {
@@ -207,7 +218,7 @@ export class DatadocumentComponent implements OnInit {
                 }
                 
               formatDate(mydate, 'dd/MM/yyyy HH:mm:ss', 'en-US');
-              this.invalidCells['row' + x].splice(this.invalidCells['row' + x].indexOf('cell' + index), 1);
+              // this.invalidCells['row' + x].splice(this.invalidCells['row' + x].indexOf('cell' + index), 1);
               if (this.validCells['row' + x].indexOf('cell' + index) == -1)
                 this.validCells['row' + x].push('cell' + index);
             } catch (e) {
@@ -215,10 +226,10 @@ export class DatadocumentComponent implements OnInit {
               if (this.invalidCells['row' + x].indexOf('cell' + index) == -1)
                 this.invalidCells['row' + x].push('cell' + index);
               this.global.notify("Incorrect value for header " + this.headerName + " at cell - " + (x + 1), "error");
-              break;
+              // break;
             }
           } else {
-            this.invalidCells['row' + x].splice(this.invalidCells['row' + x].indexOf('cell' + index), 1);
+            // this.invalidCells['row' + x].splice(this.invalidCells['row' + x].indexOf('cell' + index), 1);
             if (this.validCells['row' + x].indexOf('cell' + index) == -1)
               this.validCells['row' + x].push('cell' + index);
           }
@@ -227,7 +238,7 @@ export class DatadocumentComponent implements OnInit {
           if (this.invalidCells['row' + x].indexOf('cell' + index) == -1)
             this.invalidCells['row' + x].push('cell' + index);
           this.global.notify("Incorrect value for header " + this.headerName + " at cell - " + (x + 1), "error");
-          break;
+          // break;
         }
       }
       if (!isInvalid) {
@@ -246,6 +257,9 @@ export class DatadocumentComponent implements OnInit {
         this.headerData[index] = this.headerName;
       }
     
+    }
+    if(this.headerData.length==index+1){
+      this.spinner.hide();
     }
   }
 

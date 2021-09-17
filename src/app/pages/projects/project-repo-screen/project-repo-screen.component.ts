@@ -243,7 +243,7 @@ this.getFileDetails();
     this.spinner.hide();
      Swal.fire({
        title: 'Success',
-       text: "File/Files Uploaded Successfully",
+       text: "File(s) Uploaded Successfully",
        position: 'center',
        icon: 'success',
        showCancelButton: false,
@@ -263,6 +263,7 @@ this.getFileDetails();
  })
   this.uploadFileForm.reset();
       this.listOfFiles=[];
+      this.fileList=[];
   this.spinner.hide();
   }
 
@@ -299,6 +300,10 @@ this.getFileDetails();
       let loggedUser=localStorage.getItem("ProfileuserId")
       let responseArray=this.requestedFiledata
       this.filterdArray=[]
+      if(responseArray=[]){
+        this.dataSource5= new MatTableDataSource(this.requestedFiledata);
+        this.dataSource5.sort=this.sort13;
+      }
       responseArray.forEach(e=>{
         if(e.requestTo==loggedUser || e.requestFrom==loggedUser){
           this.filterdArray.push(e)

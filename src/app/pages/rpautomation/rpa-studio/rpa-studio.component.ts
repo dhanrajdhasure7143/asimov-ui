@@ -165,6 +165,7 @@ export class RpaStudioComponent implements OnInit {
     }
     else{
       this.botNamespace = false;
+      this.checkbotname=false;
     }
   }
 
@@ -205,15 +206,19 @@ export class RpaStudioComponent implements OnInit {
     this.userFilter.name = "";
     document.getElementById("create-bot").style.display ="none";
     this.model=this.insertbot.value;
+    
     if(this.model.botDepartment=="others"){
-      this.saveRpaCategory().subscribe(data=>{
+      let rpaCategory:any={"categoryName":this.insertbot.value.newCategoryName,"categoryId":0, "createdAt":""};
+      this.rest.addCategory(rpaCategory).subscribe(data=>{
         let catResponse : any;
         catResponse=data;
         this.model.botDepartment=catResponse.data.categoryId;
         this.tabsArray.push(this.model);
       });
     }else{
-      this.tabsArray.push(this.model);
+        
+        this.tabsArray.push(this.model);
+        //localStorage.setItem("isHeader","true");
     }
     this.tabActiveId = this.model.botName;
     this.insertbot.reset();
@@ -329,11 +334,6 @@ export class RpaStudioComponent implements OnInit {
     })
   }
 
-saveRpaCategory(){
-  let rpaCategory:any={"categoryName":"","categoryId":0, "createdAt":""};
-   rpaCategory["categoryName"] =this.insertbot.value.newCategoryName;
- return this.rest.addCategory(rpaCategory);
-}
 
 getCategoryList(){
   this.rest.getCategoriesList().subscribe(data=>{

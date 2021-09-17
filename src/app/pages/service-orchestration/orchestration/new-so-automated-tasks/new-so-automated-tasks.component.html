@@ -1,18 +1,18 @@
-<div class="bg-color">
+<div class="bg-color so-sub-tab-content">
 
 <div class="container-fluid">
 <div class="form-inline mainformco row">
 
-  <div class="form-group leftfporm col-md-10 pl-0">
-      <div id="autocategorysearch" class="comncl">
+  <div class="form-group leftfporm col-md-9 pl-0">
+      <div id="autocategorysearch" class="col-md-3 pl-0">
           <select class="rpa-control form-control"  [value]="selectedcategory" (change)="applyFilter1($event.target.value)">
             <option value="" disabled>Select Process Group</option>
             <option *ngFor="let category of categaoriesList" [value]="category.categoryId">{{category.categoryName}}
             </option>
           </select>
-        </div>
+      </div>
       
-        <div *ngIf="process_names!=undefined" id="autoprocesssearch"  class="comncl">
+        <div *ngIf="process_names!=undefined" id="autoprocesssearch"  class="col-md-3 pl-0">
             <select class="rpa-control form-control" [(ngModel)]="selectedvalue" (change)="applyFilter($event.target.value)">
               <option value="" disabled>Select Process</option>  
               <option *ngFor="let process of selected_process_names" [value]="process.processId">{{process.processName}}
@@ -20,26 +20,31 @@
             </select>
           </div>
       
-        <div id="autoenvsearch"  class="comncl">
+        <div id="autoenvsearch"  class="col-md-3 pl-0">
           <select class="rpa-control form-control"  [(ngModel)]="selectedEnvironment">
             <option value="" disabled>Select Environment</option>  
               <option *ngFor="let environment of environments" [value]="environment.environmentId" >{{environment.environmentName}}
             </option>
           </select>
         </div>
-      <div id="autoreset" class="comncl resecl">
+      <!-- <div id="autoreset" class="comncl resecl">
       <button (click)="reset_all()" tooltip="Reset"><i class="fa fa-undo"></i></button>
-      </div>
+      </div> -->
   </div>
 
 
-  <div class="text-right roghtform col-md-2 pr-0">
+  <div class="text-right roghtform col-md-3 pr-0">
       <!--<span style="padding:5px" id="autoStartProcess">
         <button  matTooltip="View Configuration"   mat-mini-fab color="basic" (click)="configuration()"  ><i  class="fas fa-cog" style="margin-right: -5px !important;"></i></button>
       </span>-->
-        <span style="padding:5px" id="autoStartProcess">
-          <button [disabled]="selectedvalue=='' || selectedEnvironment==''" class="matbutton orchestration-action-btn" matTooltip="Start Process"   mat-mini-fab color="basic" (click)="startprocess()"   title="Run Process"><img src="../../../../assets/images/RPA/icon_latest/play.svg" alt="" class="testplus"></button>
-        </span>
+      <button (click)="reset_all()" id="autoreset" class="tsttooltipbtn" >
+        <img src="../../../../../assets/images/RPA/icon_latest/reset-blue.svg" class="testplus">
+        <span class="testtooltip">Reset</span>
+      </button>
+      <button [disabled]="selectedvalue=='' || selectedEnvironment==''" id="autoStartProcess" class="tsttooltipbtn" (click)="startprocess()">
+        <img src="../../../../assets/images/RPA/icon_latest/play.svg" alt="" class="testplus">
+        <span class="testtooltip">Run Process</span>
+      </button>
        <!-- <span style="padding:5px">
           <button [disabled]="selectedvalue=='' || selectedEnvironment==''" matTooltip="Pause Process" mat-mini-fab color="basic" (click)="startprocess()"   title="Run Process"><i  class="fas fa-pause"></i></button>
         </span>
@@ -47,9 +52,10 @@
         <!-- <span style="padding:5px" id="autoOpenScheduler">
           <button [disabled]="selectedvalue==''" class="orchestration-action-btn"  mat-mini-fab color="basic"   matTooltip="Open Scheduler" (click)="startscheduler()" ><img src="../../../../../assets/images/calicon.svg" alt="" class="testplus"></button>
         </span> -->
-        <span style="padding:5px" id="autoViewLogs">
-          <button [disabled]="selectedvalue==''" class="orchestration-action-btn"  mat-mini-fab color="basic"  matTooltip="View Logs"  (click)="getprocesslogs(process_logs)"  ><img src="../../../../../assets/images/file.svg" alt="" class="testplus"></button>
-        </span>
+      <button [disabled]="selectedvalue==''"  id="autoViewLogs" class="tsttooltipbtn"  (click)="getprocesslogs(process_logs)"  >
+        <img src="../../../../../assets/images/file.svg" alt="" class="testplus">
+        <span class="testtooltip">View Logs</span>
+      </button>
   </div>
 
 </div>
@@ -157,22 +163,49 @@
 
         <ng-container matColumnDef="status">
             <th mat-header-cell *matHeaderCellDef>Status</th>
-            <td mat-cell *matCellDef="let element" align="center">
+            <td mat-cell *matCellDef="let element">
               <span *ngIf="element.status!='null'" [id]="element.taskId+'__status'">
-                <span [matTooltip]="element.status" *ngIf="element.status=='Pending'" class="text-warning" ><span><i class="fa fa-clock" style="filter: none; font-size:19px;width: 19px;"></i></span></span>
-              <span [matTooltip]="element.status" *ngIf="element.status=='Running' || element.status=='InProgress'" class="text-primary" ><span><img src="../../../../assets/images/RPA/DotSpin.gif" style="filter: none; width: 19px;"></span>&nbsp; Running</span>
-              <span [matTooltip]="element.status" *ngIf="(element.status=='Success' || element.status=='Executed') " class="text-success"><span><li class="fa fa-check-circle" style="font-size:19px"></span>&nbsp;<span> </span></span>
-              <span [matTooltip]="element.status" *ngIf="element.status=='Rejected' " class="text-danger"><span><li class="fa fa-times-circle"style="font-size:19px"></span>&nbsp;<span> </span></span>
-              <span [matTooltip]="element.status"  *ngIf="element.status=='Approved' " class="text-success"><span><li class="fa fa-check-circle" style="font-size:19px"></span>&nbsp;<span> </span></span>
-              <span [matTooltip]="element.status" *ngIf="(element.status=='Failure' || element.status=='Failed')" class="text-danger"><span><li class="fa fa-times-circle" style="font-size:19px"></span>&nbsp;<span> </span></span>
+                <span [matTooltip]="element.status" *ngIf="element.status=='Pending'" class="text-warning" >
+                  <i class="fa fa-clock"></i>
+                </span>
+
+              <span [matTooltip]="element.status" *ngIf="element.status=='Running' || element.status=='InProgress'" class="text-primary" >
+                <img src="../../../../assets/images/RPA/DotSpin.gif" class="tesplus1">Running
+              </span>
+
+              <span [matTooltip]="element.status" *ngIf="(element.status=='Success' || element.status=='Executed') " >
+                <img src="../../../../../assets/images/RPA/icon_latest/Success.svg" class="testplus">
+              </span>
+
+              <span [matTooltip]="element.status" *ngIf="element.status=='Rejected' " class="text-danger">
+                <li class="fa fa-times-circle">
+              </span>
+
+              <span [matTooltip]="element.status"  *ngIf="element.status=='Approved' " >
+                <img src="../../../../../assets/images/RPA/icon_latest/Success.svg" class="testplus">
+                <!-- <span><li class="fa fa-check-circle" style="font-size:19px"></span>&nbsp;<span> </span> -->
+              </span>
+
+              <span [matTooltip]="element.status" *ngIf="(element.status=='Failure' || element.status=='Failed')" class="text-danger">
+                <li class="fa fa-times-circle">
+              </span>
+
               <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
-              <span [matTooltip]="element.status" *ngIf="element.status=='New'" class="text-primary"><span><img src='../../../../../assets/images/RPA/newicon.png' style='filter:none;height:20px' ></span>&nbsp;<span> </span></span>
+              <span [matTooltip]="element.status" *ngIf="element.status=='New'" class="text-primary">
+                <img src='../../../../../assets/images/RPA/newicon.png' class="testplus" >
+              </span>
               <!--<span *ngIf="element.status=='New'" class="text-primary"><span style="background-color:#0062cf;border-radius: 50%;color:white;padding-right:5px;padding-left:4px;padding-top:5px;padding-bottom:5px;font-size:10px;text-align: center;align-content: center;align-items: center;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><!--<i class="fas fa-robot text-light"></i></span>&nbsp;<span> </span></span>-->
-              <span [matTooltip]="element.status" *ngIf="element.status=='Stop'|| element.status=='Stopped'" class="text-danger"><span>
-                  <img src="../../../../../assets/images/RPA/stop_fail_icon.svg" style="filter: none; width: 19px;">
-                </span>&nbsp;<span> </span></span>
-              <span [matTooltip]="element.status" *ngIf="element.status=='Paused'||element.status=='Pause'" class="text-primary"><span><li class="fas fa-pause-circle" style="font-size: 19px;"></span>&nbsp;<span> </span></span>
-              <span [matTooltip]="element.status" *ngIf="element.status==null||element.status==''" class="text-primary"><span><li class="fas fa-pause-circle" style="font-size: 19px;"></span>--</span>
+              <span [matTooltip]="element.status" *ngIf="element.status=='Stop'|| element.status=='Stopped'" class="text-danger">
+                <img src="../../../../../assets/images/RPA/stop_fail_icon.svg" class="testplus">
+              </span>
+
+              <span [matTooltip]="element.status" *ngIf="element.status=='Paused'||element.status=='Pause'" class="text-primary">
+                <li class="fas fa-pause-circle">
+              </span>
+
+              <span [matTooltip]="element.status" *ngIf="element.status==null||element.status==''" class="text-primary">
+                <span><li class="fas fa-pause-circle"></span>--
+              </span>
               <!--<span *ngIf="element.status!='null'" [id]="element.taskId+'__status'">
               <span *ngIf="element.status=='InProgress'" class="text-primary" ><span><img src='../../../../assets/images/RPA/processloading.svg' style='height:25px'></span>&nbsp;<span> </span></span>
               <span *ngIf="element.status=='Success'" class="text-success"><span><li class="fa fa-check"></span>&nbsp;<span> </span></span>
@@ -396,13 +429,11 @@
                                 <td>{{config.port}}</td>
                                 <td>
                                   <span *ngIf="config.status==1">
-                                    <span ><img class="rpa-image1" src="/assets/images/RPA/GreenCricle.png" style="filter:none;"></span>
-                                    &nbsp;Active
+                                    <img class="rpa-image1" src="/assets/images/RPA/GreenCricle.png" >Active
                                   </span>
 
                                  <span *ngIf="config.status==0">
-                                   <span><img class="rpa-image1" src="/assets/images/RPA/red-circle.png" style="filter:none;"></span>
-                                   &nbsp;Inactive
+                                   <img class="rpa-image1" src="/assets/images/RPA/red-circle.png" >Inactive
                                 </span>
                                 </td>
                                 <td style="width:100px">
@@ -527,8 +558,12 @@
                             <td>{{config.userKey}}</td>
 
                             <td>
-                              <span *ngIf="config.active == true"><span><img class="rpa-image1" src="/assets/images/RPA/GreenCricle.png" style="filter:none;"></span>&nbsp;Active</span>
-                              <span *ngIf="config.active == false"><span><img class="rpa-image1" src="/assets/images/RPA/red-circle.png" style="filter:none;"></span>&nbsp;Inactive</span> &nbsp;
+                              <span *ngIf="config.active == true">
+                                <img class="rpa-image1" src="/assets/images/RPA/GreenCricle.png">Active
+                              </span>
+                              <span *ngIf="config.active == false">
+                                <img class="rpa-image1" src="/assets/images/RPA/red-circle.png" >Inactive
+                              </span>
                             </td>
                             <td style="width:100px;">
                               <span class="display_hover" style="background-color: #f5f5f5;">
