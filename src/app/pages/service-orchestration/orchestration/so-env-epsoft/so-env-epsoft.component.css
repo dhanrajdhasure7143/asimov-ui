@@ -66,12 +66,7 @@
   .env-btn > button:disabled > div{
     color:lightgrey !important;
   }
-  
-  .rpa-image1 {
-    height: 12px;
-    width: 12px;
-  }
-  
+
   .field-icon {
   float: right;
   margin-left: -25px;

@@ -66,12 +66,7 @@
   .env-btn > button:disabled > div{
     color:lightgrey !important;
   }
-  
-  .rpa-image1 {
-    height: 12px;
-    width: 12px;
-  }
-  
+
   .field-icon {
   float: right;
   margin-left: -25px;
@@ -127,6 +122,42 @@ button:disabled {
   overflow-y: auto;
 }
 
-.env-data-tool span {
+.env-data-tool {
+  line-height: 30px;
+}
+.env-data-tool div {
   padding: 0px 5px;
+  display: initial;
+}
+.env-data-tool div button.tsttooltipbtn {
+  position: relative;
+}
+
+span.testtooltip {
+  position: absolute;
+  top: 35px;
+  right: 0px;
+  background-color: #001c47;
+  color: #fff;
+  width: max-content;
+  padding: 3px 10px;
+  border-radius: 4px;
+  display: none;
+  z-index: 999;
+}
+
+span.testtooltip:before {
+  content: '';
+  border: 2px solid #001c47;
+  border-width: 0px 0px 2px 2px;
+  position: absolute;
+  padding: 4px;
+  right: 13px;
+  top:  -5px;
+  background: #001c47;
+  transform: rotate(45deg);
+}
+
+.tsttooltipbtn:hover span.testtooltip {
+  display: block;
 }

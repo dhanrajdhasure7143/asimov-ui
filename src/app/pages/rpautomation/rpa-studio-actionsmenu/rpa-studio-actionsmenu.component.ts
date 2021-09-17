@@ -304,7 +304,7 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
     {
       this.rest.execution(this.savebotrespose.botId).subscribe(res =>{
         response = res;
-        if(response.errorCode==undefined)
+        if(response.errorMessage==undefined && response.errorCode==undefined)
         {
           this.startbot=false;
           this.pausebot=true;

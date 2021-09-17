@@ -1,17 +1,17 @@
 <div class="container-fluid" *ngIf="bots_list.length!=0">
-        <br>
+        
         <div class="row">
         <div class="col-md-4 p-0">
                 <div class="dbichart-block block chartinner">
                     <div class="dbichart-head">
-                        <label>Status</label>
-                    </div><br>
+                        <span class="module-sub-header-title">Status</span>
+                    </div>
                     <div class="dbichart-body" >
                         <table class="table" >
                                 <thead>
                                     <tr>
-                                        <th><b>Failed Bots</b></th>
-                                        <th><b>Time</b></th>
+                                        <th>Failed Bots</th>
+                                        <th>Time</th>
                                     </tr>
                                 </thead>
                             <tbody>
@@ -31,22 +31,22 @@
                     <div class="dbichart-head">
                         <label>Ongoing Bots</label>
                     </div>
-                    <br>
+                    
                     <div class="dbichart-body" style="padding:10px;height:300px">
 
                         <div>
-                                Ready<br>
-                            <mat-progress-bar color="primary" mode="determinate" [value]="ongoingbots.ready"></mat-progress-bar><br>
+                                Ready
+                            <mat-progress-bar color="primary" mode="determinate" [value]="ongoingbots.ready"></mat-progress-bar>
                         </div>
                         <div>
-                                Running<br>
-                            <mat-progress-bar class="progress-bar-green" mode="determinate" [value]="ongoingbots.running"></mat-progress-bar><br>
+                                Running
+                            <mat-progress-bar class="progress-bar-green" mode="determinate" [value]="ongoingbots.running"></mat-progress-bar>
         
                         </div>
                         
                         <div>
-                                Pending<br>
-                            <mat-progress-bar  class="progress-bar-warn" mode="determinate" [value]="ongoingbots.pending"></mat-progress-bar><br>
+                                Pending
+                            <mat-progress-bar  class="progress-bar-warn" mode="determinate" [value]="ongoingbots.pending"></mat-progress-bar>
                         </div>
                     </div>
                 </div>
@@ -55,7 +55,7 @@
             <div class="col-md-8 pr-0">
                 <div class="dbichart-block block chartinner">
                     <div class="dbichart-head">
-                        <label>Job History</label>
+                        <span class="module-sub-header-title">Job History</span>
                         <span *ngIf="runtimeflag==false" (click)="this.runtimeflag=true;botruntimestats();" class="clickable pull-right"><i class="fa fa-arrow-left"></i></span>
                     </div>
                     
@@ -106,9 +106,9 @@
             <div class="col-md-4 p-0">
                 <div class="dbichart-block block chartinner" style="height: 380px">
                     <div class="dbichart-head">
-                        <label>Executed Bots</label>
+                        <span class="module-sub-header-title">Executed Bots</span>
                     </div>
-                    <br>
+                    
                     <div class="dbichart-body" >
                         <div class="newexecbots_progress">
                             <label>Successful</label>
@@ -132,7 +132,7 @@
             <div class="col-md-8 pr-0">
                 <div class="dbichart-block block chartinner">
                     <div class="dbichart-head">
-                        <label>Bot Transactions (Last 30 Days)</label>
+                        <span class="module-sub-header-title">Bot Transactions (Last 30 Days)</span>
                     </div>
                     <div class="dbichart-body"  id="linechart_data">
                         <canvas id='linechart' style='width:100% !important ;height:300px !important;'></canvas>

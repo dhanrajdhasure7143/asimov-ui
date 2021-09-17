@@ -263,6 +263,7 @@ this.getFileDetails();
  })
   this.uploadFileForm.reset();
       this.listOfFiles=[];
+      this.fileList=[];
   this.spinner.hide();
   }
 
