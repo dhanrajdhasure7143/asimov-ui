@@ -1,11 +1,11 @@
 <div class="so-sub-tab-content">
     <div class="container-fluid">
         <div class="row">
-              <div class="col-md-2 form-group p-0 example-full-width sosearchfield" id="inboxsearch">
+              <div class="col-md-3 form-group pl-0 example-full-width sosearchfield" id="inboxsearch">
                 <input class="form-control" placeholder="Search" [(ngModel)]="searchinbox" (keyup)="applyFilter($event.target.value)">
-                <img src="../../../../assets/images/search.svg" alt="" class="testplus1">
+                <img src="../../../../assets/images/search.svg" alt="" class="testplus">
               </div>
-              <div class="col-md-10 p-0 env-data-tool text-right">
+              <div class="col-md-9 p-0 env-data-tool text-right">
                 <button (click)="reset()" id="inboxreset" class="tsttooltipbtn">
                   <img src="../../../../../assets/images/RPA/icon_latest/reset-blue.svg" class="testplus">
                   <span class="testtooltip">Reset</span>
