@@ -88,7 +88,7 @@ export class BpsHomeComponent implements OnInit {
       this.saved_diagrams.map(item => {item.xpandStatus = false;return item;})
       this.bkp_saved_diagrams = res; 
       this.isLoading = false;
-      // console.log(this.saved_diagrams);
+      console.log(this.saved_diagrams);
       this.savedDiagrams_list=this.saved_diagrams;
       this.assignPagenation(this.saved_diagrams);
     },
@@ -285,7 +285,6 @@ this.dt.bpsHeaderValues('');
   }
 
   fitNotationView(e){    //Fit notation to canvas
-    console.log(e)
     if(e=='dmn'){
       this.bpmnModeler.getActiveViewer().get('canvas').zoom('fit-viewport');
         this.global.notify("Notation is fit to view port", "success")

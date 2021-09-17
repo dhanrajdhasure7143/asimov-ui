@@ -536,7 +536,13 @@ export class ProgramDetailsComponent implements OnInit {
   save(){
     let req_body:any=this.addprojectsForm.get("projects").value;
     this.rest.savedata(this.selectedProgram_id,req_body).subscribe(res=>{
+      this.modalref.hide();
+      if(res.message==="Project Added Successfully"){
+        Swal.fire("Success","Project Added Successfully !!","success")
+      }else
+      Swal.fire("Error","Unable to add the Project","error");
       console.log(res)
+      this.get_linked_projects(this.selectedProgram_id);
     })
   }
 }

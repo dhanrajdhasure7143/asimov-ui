@@ -140,6 +140,7 @@ export class DatadocumentComponent implements OnInit {
           });
           // this.selectedCell(0,2,false,this.headerData[2]);
         }, 1000);
+
   }
 
   caseIdSelection() {
@@ -259,7 +260,6 @@ export class DatadocumentComponent implements OnInit {
     }
     if(this.headerData.length==index+1){
       this.spinner.hide();
-
     }
   }
 
