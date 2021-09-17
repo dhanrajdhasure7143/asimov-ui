@@ -219,3 +219,6 @@ img.hover-img {
 span.bps-header-title.gen-bpsheader {
     display: block;
 }
+.edit-disabled{
+    cursor: no-drop;
+}

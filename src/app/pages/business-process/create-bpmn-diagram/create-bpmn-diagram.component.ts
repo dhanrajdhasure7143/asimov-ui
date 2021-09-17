@@ -150,7 +150,9 @@ export class CreateBpmnDiagramComponent implements OnInit {
         this.openDeployDialog();
       }else if(headerValue == 'startProcess'){
         this.openVariableDialog();
-      }
+    }else if(headerValue == 'fitNotation'){
+        this.fitNotationView()
+    }
       
     }else if(result){
       this.slideUp(headerValue)

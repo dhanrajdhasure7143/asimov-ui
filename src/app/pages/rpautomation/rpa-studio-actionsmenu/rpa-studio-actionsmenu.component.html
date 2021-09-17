@@ -1,5 +1,5 @@
 <div class="row col-md-12 p-0 h-100">
-  <div class="actionsmenu row">
+  <div *ngIf="false" class="actionsmenu row">
     <div class="col-md-3 p-0">
       <div class="actionsmenu-left">
         <button class="action-item" placement="bottom" tooltip="Toolset & Actions" *ngIf="rpa_toolset.sidenavbutton==false" (click)="rpa_toolset.sidenavbutton=true">
@@ -12,9 +12,9 @@
     </div>
     <div class="col-md-9 p-0">
       <div class="actionsmenu-right">
-        <div class="action-item "   dropdown   placement="bottom" tooltip="Versions" >
+        <div class="action-item "   dropdown   >
             <button class=" dropdown-action-item clickable dropdown-toggle" id="Versions" dropdownToggle type="button"
-              aria-controls="versions">
+            placement="bottom" tooltip="Versions" aria-controls="versions">
               <img src="../../../../assets/images/RPA/icon_latest/layer.svg" />
               <!-- <span><i class="ri-stack-line"></i></span> -->
               &nbsp;Version &nbsp;{{selectedversion}} &nbsp;<span class="caret"></span>
@@ -80,8 +80,8 @@
           <img src="../../../../assets/images/RPA/icon_latest/time.svg" />
             <!-- <i class="ri-history-line"></i> -->
         </div>
-        <div class="action-item" placement="bottom" tooltip="Download">
-          <button type="button" placement="bottom" id="dropdownMenuButton" class="downloadBtn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <div class="action-item"  >
+          <button type="button" placement="bottom" tooltip="Download" id="dropdownMenuButton" class="downloadBtn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <img src="../../../../assets/images/RPA/icon_latest/download.svg"   />
           </button>
           <div class="rpa-dropdown dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -109,12 +109,12 @@
                     <img src="../../../../assets/images/RPA/icon_latest/delete.svg" />&nbsp;&nbsp;Delete
                   </button>
               </li>  
-              <li  role="menuitem" class="clickable action-item-data"  style="white-space: nowrap;" >
+              <li  role="other_actions" class="clickable action-item-data"  style="white-space: nowrap;" >
                     <button  placement="top" tooltip="Reset Bot" (click)="reset()" >
                       <img src="../../../../assets/images/RPA/icon_latest/reset.svg" />&nbsp;&nbsp;Reset
                     </button>
               </li>
-              <li  role="menuitem" class="clickable action-item-data"   style="white-space: nowrap;" >
+              <li  role="other_actions" class="clickable action-item-data"   style="white-space: nowrap;" >
                   <button  placement="top" tooltip="Export Bot" (click)="exportbot(botState)" >
                     <img src="../../../../assets/images/RPA/icon_latest/export.svg" />&nbsp;&nbsp;Export 
                   </button>
@@ -131,11 +131,11 @@
 
 
 
-    <div class="col-md-11 p-0">
+    <div class="col-md-12 p-0">
       <app-rpa-studio-designerworkspace [bot]="botState"></app-rpa-studio-designerworkspace>
     </div>
 
-    <div class="col-md-1 p-0">
+    <div *ngIf="false" class="col-md-1 p-0">
     <div class="rpa-custom-slider">
       <ng5-slider id="zoominzoomout" [value]="slider" [(ngModel)]="slider" [options]="options" (mouseup)="sliderEvent()"></ng5-slider>
 

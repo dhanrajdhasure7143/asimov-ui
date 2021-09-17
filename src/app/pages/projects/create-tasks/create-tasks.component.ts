@@ -18,7 +18,7 @@ export class CreateTasksComponent implements OnInit {
 
   createtaskForm:FormGroup;
   mindate= moment().format("YYYY-MM-DD");
-
+  maxdate= moment().format("YYYY-MM-DD");
   userslist: any;
   projectdetails: Object;
   taskcategories: Object;
@@ -29,8 +29,7 @@ export class CreateTasksComponent implements OnInit {
 
   ngOnInit() {
 
-
-    this.createtaskForm=this.formBuilder.group({
+     this.createtaskForm=this.formBuilder.group({
       taskCategory: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       priority: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       startDate: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
@@ -50,6 +49,8 @@ export class CreateTasksComponent implements OnInit {
         this.getallusers();
         this.getTaskCategories();
       })
+      this.getProjectDetails();
+
   }
 
   inputNumberOnly(event){
@@ -110,7 +111,7 @@ export class CreateTasksComponent implements OnInit {
     let tenantid=localStorage.getItem("tenantName")
     this.api.getuserslist(tenantid).subscribe(item=>{
       let users:any=item
-      this.userslist=users;
+      this.userslist=users.sort((a,b) => (a.userId.firstName.toLowerCase() > b.userId.firstName.toLowerCase() ) ? 1 : ((b.userId.firstName.toLowerCase() > a.userId.firstName.toLowerCase() ) ? -1 : 0));
 
       for (let index = 0; index < this.userslist.length; index++) {
         let user=this.userslist[index]
@@ -140,5 +141,12 @@ export class CreateTasksComponent implements OnInit {
     this.createtaskForm.get("endDate").setValue("0000-00-00");
     this.mindate=this.createtaskForm.get("startDate").value;
   }
+  getProjectDetails(){
+    this.api.getProjectDetailsById(this.project_id).subscribe(response=>{
+      // this.maxdate=response.endDate;
+      this.maxdate = moment(response.endDate).format("YYYY-MM-DD")
+      console.log("date==========",this.maxdate)
+  })
+}
 
 }

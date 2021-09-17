@@ -900,7 +900,7 @@ save_blueprism_config(data)
     }
 
 
-    getProjectDetailsById(id){
+    getProjectDetailsById(id):Observable<any>{
       return this.http.get("/platform-service/project/findProjectById?projectId="+id+"")
     }
 
@@ -999,7 +999,7 @@ getvaluechainprocess(id)
   {
     return this.http.get("/platform-service/program/exportProject?projectId="+projectid)
   }
-  savedata(id,data){
+  savedata(id,data):Observable<any>{
     return this.http.post("/platform-service/project/addProjecttoexistingProgram/"+id,data)
   }
   
