@@ -1,10 +1,10 @@
 <div class="container-fluid main-content1 main-content">
   <div class=" content-area">
     <div class="row  module-heading title ">
-      <div class="col-md-2 ">
-          <span class="module-heading-title" (click)="removenodes()">RPA Studio</span>
+      <div  >
+          <span class="designer-module-heading-title" (click)="removenodes()">Design Studio</span>
       </div>
-      <div class="col-md-7  ">
+      <div class="col-md-10">
         
                 <div class="actionsmenu-right"  *ngIf="current_instance != undefined">
                   <div class="action-item "   dropdown    >
@@ -85,15 +85,15 @@
                       <div><a class="dropdown-item clickable" (click)=" current_instance.childBotWorkspace.downloadPdf()">&nbsp;<span>PDF</span></a></div>
                     </div>
                   </div>
-                  <div class="action-item" (click)="current_instance.childBotWorkspace.zoomin('')">
+                  <div class="action-item" placement="bottom" tooltip="Zoom in"(click)="current_instance.childBotWorkspace.zoomin('')">
                     <img src="../../../assets/images/BPMS/zoom-in.svg"/>
                   </div>
-                  <div class="action-item" (click)="current_instance.childBotWorkspace.zoomout('')">
+                  <div class="action-item" placement="bottom" tooltip="Zoom out"(click)="current_instance.childBotWorkspace.zoomout('')">
                     <img src="../../../assets/images/BPMS/zoom-out.svg"/>
                   </div>
-                  <div class="action-item" placement="bottom" tooltip="Reset">
+                  <div class="action-item" placement="bottom" tooltip="Fit to Screen">
                     <button (click)=" current_instance.childBotWorkspace.reset('');slider=0;">
-                      <img src="../../../../assets/images/RPA/icon_latest/repeat.svg" />
+                      <img src="../../../../assets/images/RPA/icon_latest/Fit to screen.svg" />
                       <!-- <i class="fa fa-sync-alt" style="font-size:18px;font-weight: 700;"></i> -->
                     </button>
                   </div>
@@ -107,26 +107,41 @@
                       <ul id="other_actions" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
                         <li class="clickable" class="clickable action-item-data" >
                             <button  placement="bottom"  [disabled]="current_instance.savebotrespose == undefined" tooltip="Delete Bot" (click)=" current_instance.delete()">
-                              <img src="../../../../assets/images/RPA/icon_latest/delete.svg" />&nbsp;&nbsp;Delete
+                              <img src="../../../../assets/images/RPA/icon_latest/delete.svg"  />&nbsp;&nbsp;Delete
                             </button>
                         </li>  
-                        <li  role="menuitem" class="clickable action-item-data"  style="white-space: nowrap;" >
+                        <hr>
+        
+                        <li  role="other_actions" class="clickable action-item-data"  style="white-space: nowrap;" >
                               <button  placement="top" tooltip="Reset Bot" (click)=" current_instance.reset()" >
                                 <img src="../../../../assets/images/RPA/icon_latest/reset.svg" />&nbsp;&nbsp;Reset
                               </button>
                         </li>
-                        <li  role="menuitem" class="clickable action-item-data"   style="white-space: nowrap;" >
+                        <hr>
+                        <li  role="other_actions" class="clickable action-item-data"   style="white-space: nowrap;" >
                             <button  placement="top" tooltip="Export Bot" (click)=" current_instance.exportbot(current_instance.botState)" >
                               <img src="../../../../assets/images/RPA/icon_latest/export.svg" />&nbsp;&nbsp;Export 
                             </button>
                         </li>
+                        <hr>
+                        <li  role="other_actions" class="clickable action-item-data"   style="white-space: nowrap;" >
+                          <button  placement="top" tooltip="Create Bot" (click)=" rpa_studio.onCreate(0)" >
+                            <img src="../../../../assets/images/RPA/icon_latest/add-fill.svg" />&nbsp;&nbsp;Create Bot 
+                          </button>
+                      </li>
+                      <hr>
+                      <li  role="other_actions" class="clickable action-item-data"   style="white-space: nowrap;" >
+                        <button  placement="top" tooltip="Load Bot" (click)="rpa_studio.onLoad()" >
+                          <img src="../../../../assets/images/RPA/icon_latest/load-bot-fill.svg" />&nbsp;&nbsp;Load Bot
+                        </button>
+                    </li>
                     
                       </ul>
                   </div>
                 </div>
               
       </div>
-      <div class="col-md-3">
+      <!-- <div class="col-md-3">
           <button  type="button" *ngIf="tabsArray.length > 0" class="btn btn-default" aria-hidden="true" placement="bottom" id="Load_Bot" (click)="rpa_studio.onLoad()">
               <img src="../../../../assets/images/RPA/icon_latest/load-blue.svg" class="default-img">
               <img src="../../../../assets/images/RPA/icon_latest/load.svg" class="hover-img">&nbsp;&nbsp;Load
@@ -136,15 +151,15 @@
               <img src="../../../../assets/images/Projects/White-plus.svg" class="testplus" />
               Create
             </button>
-      </div>
+      </div> -->
    
   </div>
   <div class="toolset-mainheader" >
     <div class="actionsheaderdiv">
       <span class="module-sub-header-title clickable">
-      <span   *ngIf="toolset_instance != undefined" (click)="toolset_instance.sidenavbutton=!(toolset_instance.sidenavbutton)">
+      <span  class="toolset-text" *ngIf="toolset_instance != undefined" (click)="toolset_instance.sidenavbutton=!(toolset_instance.sidenavbutton)">
         <img src="../../../../assets/images/RPA/icon_latest/menu-line.svg" *ngIf="toolset_instance.sidenavbutton==false" class="testplus" />
-        <img src="../../../../assets/images/RPA/icon_latest/close.svg" *ngIf="toolset_instance.sidenavbutton==true" class="toolset-close testplus" />
+        <img src="../../../../assets/images/RPA/icon_latest/close.svg" *ngIf="toolset_instance.sidenavbutton==true" class="testplus" />
         Toolset & Actions
       </span>
     </span>
@@ -169,10 +184,15 @@
       </mat-tab>
       <mat-tab [disabled]="true">
         <ng-template mat-tab-label>
-          <span  [matMenuTriggerFor]="menu" class="clickable text-primary"><i class="fa fa-plus"></i></span>
+          <span  [matMenuTriggerFor]="menu" class="clickable text-primary">
+            <img src="../../../../assets/images/RPA/icon_latest/add.svg" class="add-new"/>
+          </span>
           <mat-menu #menu="matMenu">
-              <button mat-menu-item (click)="rpa_studio.onCreate(0)">Create New</button>
-              <button mat-menu-item  (click)="rpa_studio.onLoad()">Load</button>
+              <button mat-menu-item (click)="rpa_studio.onCreate(0)">
+                <img src="../../../../assets/images/RPA/icon_latest/add-fill.svg" class="menu-icon"/> &nbsp;Create New</button>
+                <hr>
+              <button mat-menu-item  (click)="rpa_studio.onLoad()">
+                <img src="../../../../assets/images/RPA/icon_latest/load-bot-fill.svg" class="menu-icon"/> &nbsp;Load</button>
             </mat-menu>
             
         </ng-template>

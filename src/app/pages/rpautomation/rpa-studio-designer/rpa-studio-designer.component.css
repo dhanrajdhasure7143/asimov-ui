@@ -106,17 +106,17 @@ span.tab-botname {
   height: 12px;
 }
 .actionsheaderdiv img.testplus {
-  margin-right: 12px !important;
-  opacity: 0.5;
+  /* margin-right: 12px !important;
+  opacity: 0.5; */
+  vertical-align: sub;
 }
 
 
 
 
 
-.toolset-close{
-  width:11px;
-  height:11px;
+.toolset-text{
+  font-weight: 600 !important;
 }
 
 
@@ -145,4 +145,44 @@ ul#environments li {
 }
 ul#environments li img {
   vertical-align: sub;
+}
+
+ul#other_actions {
+  
+  max-height: 250px;
+  overflow: auto;
+  left: auto;
+  right: 0;
+}
+ul#other_actions li {
+  padding: 8px 5px; 
+}
+ul#other_actions li img {
+  vertical-align: sub;
+}
+.designer-module-heading-title{
+
+font-weight: 600;
+    font-size: 22px;
+    color: #001c47;
+    
+}
+hr{
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
+  border: 0;
+  border-top: 1px solid #eee;
+
+}
+.menu-icon{
+  width: 20px;
+ height: 20px;
+ margin-right: 5px;
+
+}
+
+.add-new{
+  height: 25px;
+  width: 25px;
+  margin-left: -5px;
 }
