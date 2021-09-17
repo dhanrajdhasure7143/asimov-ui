@@ -256,7 +256,7 @@ import { NgxSpinnerService } from "ngx-spinner";
   else
   {
     this.spinner.hide(); 
-     alert("Invalid Form");
+     //alert("Invalid Form");
      this.activestatus();
   }
 
@@ -320,7 +320,7 @@ import { NgxSpinnerService } from "ngx-spinner";
   else
   {
     this.spinner.hide();
-     alert("Invalid Form");
+     //alert("Invalid Form");
      this.activestatus();
   }
 
@@ -355,7 +355,7 @@ import { NgxSpinnerService } from "ngx-spinner";
     }
     else
     {
-      alert("please fill all details");
+      //alert("please fill all details");
     }
   }
 
