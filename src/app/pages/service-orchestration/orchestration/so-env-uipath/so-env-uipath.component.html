@@ -1,9 +1,9 @@
 <div class="container-fluid mx-3">
-    <div class="col-md-2 form-group p-0 sosearchfield">
+    <div class="col-md-3 form-group pl-0 sosearchfield">
         <input class="form-control rpa-control" placeholder="Search" autocomplete="off" *ngIf="!isSearch" matInput (keyup)="applyFilter($event.target.value)">
-        <img src="../../../../assets/images/search.svg" alt="" class="testplus1">  
+        <img src="../../../../assets/images/search.svg" alt="" class="testplus">  
     </div>
-    <div class="col-md-10 p-0 env-data-tool text-right">
+    <div class="col-md-9 p-0 env-data-tool text-right">
         <div >
             <button (click)="createUiPath()" class="tsttooltipbtn">
                 <img src='../../../../assets/images/RPA/icon_latest/new-blue.svg' class="testplus">
@@ -66,8 +66,12 @@
         <ng-container matColumnDef="active">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
             <td mat-cell *matCellDef="let element">
-                <span *ngIf="element.active == true"><span><img class="rpa-image1" src="/assets/images/RPA/GreenCricle.png"></span>&nbsp;Active</span>
-                <span *ngIf="element.active == false"><span><img class="rpa-image1" src="/assets/images/RPA/red-circle.png"></span>&nbsp;Inactive</span>
+                <span *ngIf="element.active == true">
+                    <img class="rpa-image1" src="/assets/images/RPA/GreenCricle.png">Active
+                </span>
+                <span *ngIf="element.active == false">
+                    <img class="rpa-image1" src="/assets/images/RPA/red-circle.png">Inactive
+                </span>
            </td>
         </ng-container>
         <ng-container matColumnDef="createdTimeStamp">

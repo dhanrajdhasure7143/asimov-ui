@@ -2601,3 +2601,7 @@ span.pdicon {
   right: 13px;
   top: 28px;
 }
+
+.newexecbots_progress .mat-progress-bar-fill::after {
+  background: none;
+}

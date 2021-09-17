@@ -50,11 +50,6 @@ th{
   padding:5px;
 }
 
-.rpa-image1 {
-  height: 12px;
-  width: 12px;
-}
-
 /* ::ng-deep  .mat-form-field
 {
   line-height: 1.7 !important;
@@ -126,8 +121,8 @@ table tr .display_hover:hover{
 
 
 .orchestration-action-btn{
-  height: 38px !important;
-  width: 38px !important;
+  /* height: 38px !important;
+  width: 38px !important; */
 }
 
 .roghtform button.tsttooltipbtn {

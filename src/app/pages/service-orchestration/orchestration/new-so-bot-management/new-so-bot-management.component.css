@@ -61,11 +61,11 @@ select {
 .search-fields-width{
   width:200px;
 }
-.tableActionsIcons img {
+/* .tableActionsIcons img {
   height: 18px;
   width: auto;
   margin-right: 4px;
-}
+} */
 
 
 .tableActionsIcons span {
@@ -130,4 +130,8 @@ span.testtooltip:before {
 
 .tsttooltipbtn:hover span.testtooltip {
   display: block;
+}
+
+.logscol a {
+  font-size: 13px;
 }
