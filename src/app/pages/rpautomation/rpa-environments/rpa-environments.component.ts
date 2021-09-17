@@ -200,6 +200,7 @@ import { NgxSpinnerService } from "ngx-spinner";
     this.insertForm.get("connectionType").setValue("SSH");
     this.insertForm.get("environmentType").setValue("");
     this.insertForm.get("activeStatus").setValue(true);
+    this.passwordtype1=false;
   }
 
   resetupdateEnvForm(){
