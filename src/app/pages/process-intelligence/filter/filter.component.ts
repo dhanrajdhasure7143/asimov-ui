@@ -6,8 +6,8 @@ enum Filter {
   'Activity',
   // 'Cases',
   'Variants',
-  'End Points',
-  'Performance'
+  'End Points'
+  // 'Performance'
 }
 @Component({
   selector: 'app-filter',

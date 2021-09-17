@@ -20,13 +20,21 @@
   position: relative;
   display: flex;
   width: 100%;
-  margin: 5px 0px;
+  margin: 0px 0px;
 }
 
 .toolset{
    /* padding:10px;  */
    width:260px !important;
    margin: auto;
+}
+.left-panel-header{
+  padding: 10px 10px;
+  min-height: 20px;
+  background-color: #00a0e3!important;
+  width: 100%;
+  font-weight: 600 !important;
+  color: white !important;
 }
 
 .check{
@@ -208,11 +216,11 @@ background-color: white;
   font-size: 25px;
   font-weight: 700;
 } */
-.actionsheaderdiv button img {
+/* .actionsheaderdiv button img {
   vertical-align: baseline;
-}
+} */
 .toolset-mainheader {
-  padding: 12px 10px 4px 10px;
+  padding: 5px 10px 4px 10px;
 }
 .actionsheaderdiv img.testplus1 {
   width: 12px;
@@ -226,6 +234,11 @@ background-color: white;
   width: 10%;
   text-align: end;
   margin: 0px;
+  float: right;
+}
+.textplus{
+  height:22px;
+  width:22px;
 }
 .dragicons {
   padding: 0px 10px;
