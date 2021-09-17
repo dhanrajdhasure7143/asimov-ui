@@ -1,10 +1,11 @@
 <div class="container-fluid main-content1 main-content">
-  <div class=" content-area">
-    <div class="row  module-heading title ">
-      <div class="col-md-2 ">
+  <div class="content-area RPA-Layout">
+    <div class="rpa-layout-header">
+      <div class="row  module-heading title ">
+        <div class="col-md-2 p-0">
           <span class="module-heading-title" (click)="removenodes()">RPA Studio</span>
-      </div>
-      <div class="col-md-7  ">
+        </div>
+        <div class="col-md-10 p-0">
         
                 <div class="actionsmenu-right"  *ngIf="current_instance != undefined">
                   <div class="action-item "   dropdown    >
@@ -21,6 +22,7 @@
                       </li>
                     </ul>
                   </div>
+                  <span _ngcontent-xmb-c13="" class="bpsbtnsep">|</span>
                   <div class="action-item" dropdown  #dropdown="bs-dropdown"   [insideClick]="true" >
                     <button class= "dropdown-action-item clickable dropdown-toggle" id="Environments" placement="bottom" tooltip="Environments" dropdownToggle type="button"
                     aria-controls="environments">
@@ -44,7 +46,7 @@
                       </li>
                     </ul>
                   </div>
-                
+                  <span _ngcontent-xmb-c13="" class="bpsbtnsep">|</span>
                   <div class="action-item" placement="bottom" tooltip="Save Bot" (click)=" current_instance.saveBotFunAct()">
                     <img src="../../../../assets/images/RPA/icon_latest/save.svg" />
                     <!-- <i class="ri-save-line"></i> -->
@@ -91,9 +93,9 @@
                   <div class="action-item" (click)="current_instance.childBotWorkspace.zoomout('')">
                     <img src="../../../assets/images/BPMS/zoom-out.svg"/>
                   </div>
-                  <div class="action-item" placement="bottom" tooltip="Reset">
+                  <div class="action-item" placement="bottom" tooltip="Fit to screen">
                     <button (click)=" current_instance.childBotWorkspace.reset('');slider=0;">
-                      <img src="../../../../assets/images/RPA/icon_latest/repeat.svg" />
+                      <img src="../../../../assets/images/RPA/icon_latest/Fit to screen.svg" />
                       <!-- <i class="fa fa-sync-alt" style="font-size:18px;font-weight: 700;"></i> -->
                     </button>
                   </div>
@@ -125,8 +127,8 @@
                   </div>
                 </div>
               
-      </div>
-      <div class="col-md-3">
+        </div>
+        <!-- <div class="col-md-3">
           <button  type="button" *ngIf="tabsArray.length > 0" class="btn btn-default" aria-hidden="true" placement="bottom" id="Load_Bot" (click)="rpa_studio.onLoad()">
               <img src="../../../../assets/images/RPA/icon_latest/load-blue.svg" class="default-img">
               <img src="../../../../assets/images/RPA/icon_latest/load.svg" class="hover-img">&nbsp;&nbsp;Load
@@ -136,21 +138,20 @@
               <img src="../../../../assets/images/Projects/White-plus.svg" class="testplus" />
               Create
             </button>
+        </div> -->   
       </div>
-   
-  </div>
-  <div class="toolset-mainheader" >
-    <div class="actionsheaderdiv">
-      <span class="module-sub-header-title clickable">
-      <span   *ngIf="toolset_instance != undefined" (click)="toolset_instance.sidenavbutton=!(toolset_instance.sidenavbutton)">
-        <img src="../../../../assets/images/RPA/icon_latest/menu-line.svg" *ngIf="toolset_instance.sidenavbutton==false" class="testplus" />
-        <img src="../../../../assets/images/RPA/icon_latest/close.svg" *ngIf="toolset_instance.sidenavbutton==true" class="toolset-close testplus" />
-        Toolset & Actions
-      </span>
-    </span>
+      <div class="toolset-mainheader" >
+        <div class="actionsheaderdiv">
+          <span class="module-sub-header-title clickable">
+          <span   *ngIf="toolset_instance != undefined" (click)="toolset_instance.sidenavbutton=!(toolset_instance.sidenavbutton)">
+            <img src="../../../../assets/images/RPA/icon_latest/menu-line.svg" *ngIf="toolset_instance.sidenavbutton==false" class="testplus" />
+            <img src="../../../../assets/images/RPA/icon_latest/close.svg" *ngIf="toolset_instance.sidenavbutton==true" class="toolset-close testplus" />
+            Toolset & Actions
+          </span>
+          </span>
+        </div> 
+      </div>
     </div>
- 
-  </div>
   <mat-tab-group class="tabs" (selectedTabChange)="change_active_bot($event)" [selectedIndex]="tabsArray.length -1 " >
       <!-- <span class="clickable">Toolset & Actions</span>  -->
       
@@ -169,8 +170,8 @@
       </mat-tab>
       <mat-tab [disabled]="true">
         <ng-template mat-tab-label>
-          <span  [matMenuTriggerFor]="menu" class="clickable text-primary"><i class="fa fa-plus"></i></span>
-          <mat-menu #menu="matMenu">
+          <span  [matMenuTriggerFor]="menu" class="clickable text-primary"><img src="../../../../assets/images/RPA/icon_latest/pluse-blue.svg" alt="" class="testplus1"></span>
+          <mat-menu #menu="matMenu" style="padding: 0px;">
               <button mat-menu-item (click)="rpa_studio.onCreate(0)">Create New</button>
               <button mat-menu-item  (click)="rpa_studio.onLoad()">Load</button>
             </mat-menu>
