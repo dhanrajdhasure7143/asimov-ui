@@ -250,7 +250,7 @@ async testConnection(data){
 }
 else
 {
-   alert("Invalid Form")
+   //alert("Invalid Form")
 }
 
 }
@@ -294,7 +294,7 @@ async saveEnvironment()
 }
 else
 {
-   alert("Invalid Form")
+  // alert("Invalid Form")
 }
 
 }

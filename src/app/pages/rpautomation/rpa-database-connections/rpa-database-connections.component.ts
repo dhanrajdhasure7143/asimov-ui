@@ -277,6 +277,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
     this.insertdbForm.reset();
     this.insertdbForm.get("dataBaseType").setValue("");
     this.insertdbForm.get("activeStatus").setValue(true);
+    this.passwordtype1=false;
   }
 
   resetupdateDBForm(){

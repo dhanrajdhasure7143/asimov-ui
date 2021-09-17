@@ -201,6 +201,7 @@ inputNumberOnly(event){
 
   resetCredForm(){
     this.insertForm.reset();
+    this.passwordtype1=false;
   }
 
   resetupdateCredForm(){
