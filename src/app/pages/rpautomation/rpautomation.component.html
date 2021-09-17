@@ -6,7 +6,7 @@
         <label>RPA Automation</label>
     </div> -->
 
-    <div class="main-content" *ngIf="isHeaderShow == 'false'">
+    <div class="main-content" >
         <div class="row content-area">
             <div class="row module-heading title">
                 <!-- <div class="container"> -->
@@ -31,11 +31,13 @@
             
                 <!-- </div> -->
 
-                <span class="module-header-title">RPA Studio</span>
+                <span class="module-header-title">Robotic Process Automation</span>
             </div>
 
             <router-outlet></router-outlet>
         </div>
     </div>
 
-    <router-outlet *ngIf="isHeaderShow == 'true'"></router-outlet>
+    <!-- <div *ngIf="isHeaderShow == 'true'">
+        <router-outlet ></router-outlet>
+    </div> -->

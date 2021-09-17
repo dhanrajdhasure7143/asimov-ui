@@ -22,16 +22,19 @@ export class RpaStudioDesignerComponent implements OnInit {
 
   ngAfterViewInit()
   {
-    setTimeout(()=>{
-      console.log(this.bot_instances)
-      this.bot_instances.forEach((instance,index)=>{
-        this.current_instance=instance.rpa_actions_menu;
-        this.toolset_instance=instance;
-        });
-        console.log(this.current_instance);
-       console.log(this.rpa_studio);
-    },2500)
-   
+    console.log(this.tabsArray.length)
+    localStorage.setItem("isHeader","true");
+  
+      setTimeout(()=>{
+        console.log(this.bot_instances)
+        this.bot_instances.forEach((instance,index)=>{
+          this.current_instance=instance.rpa_actions_menu;
+          this.toolset_instance=instance;
+          });
+      },2500)
+     
+  
+    localStorage.setItem("isHeader","true");
   }
 
   
