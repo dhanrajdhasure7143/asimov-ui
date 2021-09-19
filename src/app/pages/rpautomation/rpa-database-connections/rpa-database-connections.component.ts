@@ -197,7 +197,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
   else
   {
     this.spinner.hide();
-     alert("Invalid Form");
+     //alert("Invalid Form");
      this.activestatus();
   }
 
@@ -268,7 +268,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
    
   }
   else{
-    alert("Invalid Form");
+    //alert("Invalid Form");
     this.activestatus();
   }
    }
@@ -327,7 +327,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
 }
 else
 {
-  alert("please fill all details");
+  //alert("please fill all details");
 }
   
 }

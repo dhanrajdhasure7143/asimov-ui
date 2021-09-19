@@ -348,6 +348,7 @@ else
         this.spinner.show();
         this.rest.deleteFiles(input).subscribe( res =>{ 
           let status:any = res;
+        
           Swal.fire({
             title: 'Success',
             text: ""+status.message,
