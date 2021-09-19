@@ -320,16 +320,17 @@
                             <div class="col-md-6 p-0 form-group">
                                 <input type="checkbox" formControlName="activeStatus"> Active
                             </div>
-                            <div class="form-footer">                               
-                                <button class="btn btn-default" (click)="resetDBForm()" >Reset</button>
-                                <button class="btn btn-primary btn-test" [disabled]="insertdbForm.invalid" (click)="testConnection('insert')" >Test Connection</button>
-                                <button class="btn btn-primary"[disabled]="insertdbForm.invalid || submitted" (click)="saveDBConnection()" >Save</button>
-                            </div>
-                   
                         <!-- <input type="button" class="btn btn-primary" value="Save" (click)="saveDBConnection()" [disabled]="insertdbForm.invalid || submitted">
                         <input type="button" class="btn btn-primary" value="Test Connection" (click)="testConnection('insert')" [disabled]="insertdbForm.invalid">
                         <input type="button" class="btn btn-primary" value="Reset" (click)="resetDBForm()"> -->
                     </form>
+                    
+                    <div class="form-footer">                               
+                        <button class="btn btn-default" (click)="resetDBForm()" >Reset</button>
+                        <button class="btn btn-primary btn-test" [disabled]="insertdbForm.invalid" (click)="testConnection('insert')" >Test Connection</button>
+                        <button class="btn btn-primary"[disabled]="insertdbForm.invalid || submitted" (click)="saveDBConnection()" >Save</button>
+                    </div>
+           
 
                 </div>
             </div>
@@ -439,18 +440,18 @@
                                 <input type="checkbox" [checked]="toggle" formControlName="activeStatus"> Active
                             </div>
                         </div>
-                        <div class="form-footer">
-                            <button class="btn btn-default"(click)="resetupdateDBForm()" >Reset</button>
-                            <button class="btn btn-primary btn-test" [disabled]="updatedbForm.invalid" (click)="testConnection('insert')" >Test Connection</button>
-                            <button class="btn btn-primary"[disabled]="updatedbForm.invalid || submitted" (click)="dbconnectionupdate()" >Save</button>
-                            
-                            
-                        </div>
+
                         <!-- <input type="button" class="btn btn-primary" value="Save" (click)="dbconnectionupdate()" [disabled]="updatedbForm.invalid || submitted">
                         <input type="button" class="btn btn-primary" value="Test Connection" (click)="testConnection('update')" [disabled]="updatedbForm.invalid">
                          <input type="button" class="btn btn-primary" value="Reset" (click)="resetupdateDBForm()"> -->
                     </form>
-
+                    <div class="form-footer">
+                        <button class="btn btn-default"(click)="resetupdateDBForm()" >Reset</button>
+                        <button class="btn btn-primary btn-test" [disabled]="updatedbForm.invalid" (click)="testConnection('update')" >Test Connection</button>
+                        <button class="btn btn-primary"[disabled]="updatedbForm.invalid || submitted" (click)="dbconnectionupdate()" >Save</button>
+                        
+                        
+                    </div>
                 </div>
 
             </div>
