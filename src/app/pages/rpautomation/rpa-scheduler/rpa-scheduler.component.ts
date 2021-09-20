@@ -156,7 +156,7 @@ export class RpaSchedulerComponent implements OnInit {
     {
 
       this.notifier.notify("error", "Please fill all inputs");
-      //Swal.fire("Please fill all details","","warning");
+      //Swal.fire("Please fill all details","","error");
     }
 
   }
@@ -193,18 +193,20 @@ export class RpaSchedulerComponent implements OnInit {
         "intervalId":checked_schedule.intervalId,
       }
       this.rest.start_schedule(schedule).subscribe(data=>{
-        let resp:any=data
-        if(resp.errorMessage!=undefined)
+        let resp:any=data;
+        console.log(resp)
+        if(resp.errorMessgae==undefined)
         {
-
-          this.notifier.notify("warning", resp.errorMessage);
-          //Swal.fire(resp.errorMessage,"","warning");
-        }
-        else
-        {
+          alert(resp.errorMessgae)
           this.notifier.notify("success",resp.status)
           this.schedule_list.find(data=>data.check==true).run_status="started";
           this.updateflags();
+        }
+        else
+        {
+          
+          this.notifier.notify("error", resp.errorMessgae);
+         
         }
 
       })
@@ -224,15 +226,16 @@ export class RpaSchedulerComponent implements OnInit {
       }
       this.rest.pause_schedule(schedule).subscribe(data=>{
         let resp:any=data
-        if(resp.errorMessage!=undefined)
+        if(resp.errorMessgae==undefined)
         {
-          Swal.fire(resp.errorMessage,"","warning");
+          this.notifier.notify("success",resp.status)
+          this.schedule_list.find(data=>data.check==true).run_status="pause";
+          this.updateflags();
         }
         else
         {
-          Swal.fire(resp.status,"","success")
-          this.schedule_list.find(data=>data.check==true).run_status="pause";
-          this.updateflags();
+        
+          this.notifier.notify("error",resp.errorMessgae)
         }
       })
     }
@@ -249,16 +252,15 @@ export class RpaSchedulerComponent implements OnInit {
     }
     this.rest.resume_schedule(schedule).subscribe(data=>{
       let resp:any=data
-      if(resp.errorMessage!=undefined)
+      if(resp.errorMessgae==undefined)
       {
-        this.notifier.notify("warning", resp.errorMessage);
+        this.notifier.notify("success", resp.status);
+        this.schedule_list.find(data=>data.check==true).run_status="resume";
+        this.updateflags();
       }
       else
       {
-
-        this.notifier.notify("warning", resp.status);
-        this.schedule_list.find(data=>data.check==true).run_status="resume";
-        this.updateflags();
+        this.notifier.notify("error", resp.errorMessgae);
       }
     })
 
@@ -315,7 +317,7 @@ export class RpaSchedulerComponent implements OnInit {
         let resp:any=data;
         if(resp.botMainSchedulerEntity.scheduleIntervals.length==0)
         {
-          Swal.fire("Updated successfully","","success")
+          this.notifier.notify("success","Updated successfully")
         }
         else if(resp.botMainSchedulerEntity.scheduleIntervals.length==this.schedule_list.length)
         {
