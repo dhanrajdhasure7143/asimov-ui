@@ -261,7 +261,7 @@ export class RpaHomeComponent implements OnInit {
         }
         this.bot_list.push(object)
       })
-      response.forEach(data=>{
+      response.forEach(data=>{ 
         let object:any=data;
       if(this.categaoriesList.find(resp => resp.categoryId==data.department)!=undefined)
       {

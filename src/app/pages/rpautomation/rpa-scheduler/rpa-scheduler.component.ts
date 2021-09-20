@@ -397,14 +397,14 @@ export class RpaSchedulerComponent implements OnInit {
             this.flags.resumeflag=false;
             this.flags.stopflag=false;
           }
-          else if(status=='Sart' ||status=='Running' )
+          else if(status=='Sarted' ||status=='Running' )
           {
             this.flags.startflag=false;
             this.flags.pauseflag=true;
             this.flags.resumeflag=false;
             this.flags.stopflag=true;
           }
-          else if(status=='Pause')
+          else if(status=='Paused')
           {
             this.flags.startflag=false;
             this.flags.pauseflag=false;
