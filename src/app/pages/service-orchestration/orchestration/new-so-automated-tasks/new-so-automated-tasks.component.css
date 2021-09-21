@@ -19,7 +19,10 @@ select {
     color: #0062cf !important;
 }
 
-.undobtn {background-color:gainsboro; border-radius: 5px;}
+.undobtn {
+  background-color: transparent;
+   /* border-radius: 5px; */
+}
 
 /*
 .bg-color

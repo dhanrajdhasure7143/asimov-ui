@@ -170,7 +170,7 @@
                 </span>
 
               <span [matTooltip]="element.status" *ngIf="element.status=='Running' || element.status=='InProgress'" class="text-primary" >
-                <img src="../../../../assets/images/RPA/DotSpin.gif" class="tesplus1">Running
+                <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus">Running
               </span>
 
               <span [matTooltip]="element.status" *ngIf="(element.status=='Success' || element.status=='Executed') " >
@@ -240,7 +240,7 @@
               <div *ngIf="element.taskType=='Automated'">
                 <span>
                   <button [disabled]="element.taskType=='Human' || element.taskType==null" [class]="(element.taskType=='Human' || element.taskType==null)?'undobtn':''" (click)="createtaskbotoverlay(element.taskId)" matTooltip="Create and Assign Resource">
-                    <img src="../../../../../assets/images/RPA/icon_latest/pluse-blue.svg" class="tesplus1"/>
+                    <img src="../../../../../assets/images/RPA/icon_latest/pluse-blue.svg" class="testplus"/>
                   </button>
                 </span>
                 <span>
@@ -250,21 +250,19 @@
                 &nbsp;
                 <span>
                   <button (click)="resetbot(element.taskId)" matTooltip="Reset">
-                    <img src="../../../../../assets/images/RPA/icon_latest/repeat-blue.svg" class="tesplus1"/>
+                    <img src="../../../../../assets/images/RPA/icon_latest/repeat-blue.svg" class="testplus"/>
                   </button>
                 </span>
                  <span>
                   <button [disabled]="element.botId==0" [class]="element.botId==0?'undobtn':''" (click)="loadbotdatadesign(element.botId)" [disabled]="element.sourceType!='EPSoft'" *ngIf="element.taskType =='Automated'||element.taskType =='Bot'" matTooltip="View Bot">
-                    <!-- <i class="fa fa-eye"></i> -->
                     <img src="../../../../../assets/images/Projects/eye-show.svg" class="testplus1" />
                   </button>
                   <button  *ngIf="element.taskType !='Automated'" class="undobtn" >
                     <!-- <i class="fa fa-eye-slash"></i> -->
-                    <img src="../../../../../assets/images/SO/eye-hide dis.svg" class="testplus1" />
+                    <img src="../../../../../assets/images/Projects/eye-hide.svg" class="testplus1" />
 
                   </button>
                 </span>
-                &nbsp;
                 <span>
                   <!-- <button (click)="SLACon(element.botId)" matTooltip="SLA Configuration"><i class="fa fa-cog" aria-hidden="true"></i></button> -->
                   <!-- <button (click)="SLACon(element)" matTooltip="SLA Configuration"><i class="fa fa-cog" aria-hidden="true"></i></button> -->
@@ -273,17 +271,16 @@
               <div *ngIf="element.taskType=='Human'">
                 <span>
                   <button [disabled]="element.taskType=='Human' || element.taskType==null" [class]="(element.taskType=='Human' || element.taskType==null)?'undobtn':''" (click)="createtaskbotoverlay(element.taskId)" matTooltip="Create and Assign Resource">
-                    <img src="../../../../../assets/images/SO/plus dis.svg" class="tesplus1"/>
+                    <img src="../../../../../assets/images/SO/plus dis.svg" class="testplus"/>
                   </button>
                 </span>
-                &nbsp;
                 <span>
                   <button (click)="assignhuman(element.taskId)" matTooltip="Assign Resource"><i  class="fas fa-check text-success"></i></button>
                 </span>
                 &nbsp;
                 <span>
                   <button (click)="resetbot(element.taskId)" matTooltip="Reset">
-                    <img src="../../../../../assets/images/RPA/icon_latest/repeat-blue.svg" class="tesplus1"/>
+                    <img src="../../../../../assets/images/RPA/icon_latest/repeat-blue.svg" class="testplus"/>
                   </button>
                 </span>
                 <span>
@@ -293,10 +290,9 @@
                   </button>
                   <button  *ngIf="element.taskType !='Automated'" >
                     <!-- <i class="fa fa-eye-slash"></i> class="undobtn"-->
-                    <img src="../../../../../assets/images/SO/eye-hide dis.svg" class="testplus1" />
+                    <img src="../../../../../assets/images/Projects/eye-hide.svg" class="testplus1" />
                   </button>
                 </span>
-                &nbsp;
                 <span>
                   <!-- <button (click)="SLACon(element.botId)" matTooltip="SLA Configuration"><i class="fa fa-cog" aria-hidden="true"></i></button> -->
                   <!-- <button (click)="SLACon(element)" matTooltip="SLA Configuration"><i class="fa fa-cog" aria-hidden="true"></i></button> -->
