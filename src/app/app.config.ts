@@ -28,6 +28,7 @@ export interface AsimovAppConfig {
     platform_home_url:string;
     projectendpoint_url:string;
     camundaUrl:string;
+    socialLoginRedirectURL: String;
 }
 
 export const AppConfig: AsimovAppConfig = {
@@ -54,5 +55,6 @@ export const AppConfig: AsimovAppConfig = {
     piNodeJobsURL: environment.pi_node_jobs,
     platform_home_url:environment.platform_home_url,
     projectendpoint_url:environment.projectendpoint_url,
-    camundaUrl:environment.camunda_url
+    camundaUrl:environment.camunda_url,
+    socialLoginRedirectURL:environment.socialLoginRedirectURL
 };
