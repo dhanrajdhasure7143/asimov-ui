@@ -450,3 +450,7 @@ i.material-icons.expand-open {
 .flex-col.header.gridheader-th:first-child {
   width: auto;
 }
+
+.no-item-img{
+  height: calc(100vh - 500px)
+} 

@@ -292,9 +292,13 @@
       </div>
 
     </mat-expansion-panel>
+      <div class="text-center" *ngIf="bot_list.length==0">
+        <img class="no-item-img" src="../../../../assets/images/RPA/No-Items.svg">
+        <h4 class="text-center">No Items To Display</h4>
+      </div>
       </div>
     </mat-accordion>
-
+    
   </div>
   <!-- <mat-paginator #paginator2 [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons]="true" class="newpaginationdiv"></mat-paginator> -->
   <div class="text-right">
