@@ -26,6 +26,7 @@ export const environment = {
   pi_node_jobs: "http://pi-node-jobs:5000",
   projectendpoint_url:'https://ezflow.epsoftinc.com/pcs',
   camunda_url : "https://ezflow.camunda.epsoftinc.com",
+  socialLoginRedirectURL: 'https://ezflow.epsoftinc.com/#/user',
 
 
 //BPMN Platform URL
