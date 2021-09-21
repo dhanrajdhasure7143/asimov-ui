@@ -144,62 +144,68 @@
    
     <mat-accordion>
       <div class="flex-row Tabletype">
-        <div class="TabletypeHeader">
+        <div class="TabletypeHeader" matSort>
           <div class="flex-col header gridheader-th">
             <div class="cell cell1"></div>
           </div>          
             <div class="flex-col header gridheader-th">
-              <button  (click)="sortasc('botName','asc')">
+              <!-- <button  (click)="sortasc('botName','asc')"> -->
+                <button  mat-sort-header="botName">
                <span >Bot Name</span>
-               <i *ngIf="sortkey.botName==false" class="fa fa-arrow-up"></i>
-               <i *ngIf="sortkey.botName==true" class="fa fa-arrow-down"></i>
+               <!-- <i *ngIf="sortkey.botName==false" class="fa fa-arrow-up"></i>
+               <i *ngIf="sortkey.botName==true" class="fa fa-arrow-down"></i> -->
               </button>
             </div>
           
             <div class="flex-col header gridheader-th">
-              <button  (click)="sortasc('description','asc')">
+              <!-- <button  (click)="sortasc('description','asc')"> -->
+                <button   mat-sort-header="description">
                 <span >Description</span>
-                <i *ngIf="sortkey.description==false" class="fa fa-arrow-up"></i>
-                <i *ngIf="sortkey.description==true" class="fa fa-arrow-down"></i>
+                <!-- <i *ngIf="sortkey.description==false" class="fa fa-arrow-up"></i>
+                <i *ngIf="sortkey.description==true" class="fa fa-arrow-down"></i> -->
               </button>
             </div>
           
             <div class="flex-col header gridheader-th">
-              <button  (click)="sortasc('department','asc')">
+              <!-- <button  (click)="sortasc('department','asc')"> -->
+                <button  mat-sort-header="department">
                 <span >Category</span>
-                <i *ngIf="sortkey.department==false" class="fa fa-arrow-up"></i>
-                <i *ngIf="sortkey.department==true" class="fa fa-arrow-down"></i>
+                <!-- <i *ngIf="sortkey.department==false" class="fa fa-arrow-up"></i>
+                <i *ngIf="sortkey.department==true" class="fa fa-arrow-down"></i> -->
               </button>
             </div>
 
             <div class="flex-col header gridheader-th">
-              <button  (click)="sortasc('botType','asc')">
+              <!-- <button  (click)="sortasc('botType','asc')"> -->
+                <button   mat-sort-header="botType">
                 <span >Type</span>
-                <i *ngIf="sortkey.botType==false" class="fa fa-arrow-up"></i>
-                <i *ngIf="sortkey.botType==true" class="fa fa-arrow-down"></i>
+                <!-- <i *ngIf="sortkey.botType==false" class="fa fa-arrow-up"></i>
+                <i *ngIf="sortkey.botType==true" class="fa fa-arrow-down"></i> -->
               </button>
             </div>
           
             <div class="flex-col header gridheader-th">
-              <button  (click)="sortasc('version','asc')">
+              <!-- <button  (click)="sortasc('version','asc')"> -->
+                <button  mat-sort-header="version">
                 <span>Version</span> 
-                <i *ngIf="sortkey.version==false" class="fa fa-arrow-up"></i>
-                <i *ngIf="sortkey.version==true" class="fa fa-arrow-down"></i>
+                <!-- <i *ngIf="sortkey.version==false" class="fa fa-arrow-up"></i>
+                <i *ngIf="sortkey.version==true" class="fa fa-arrow-down"></i> -->
               </button>
             </div>
           
             <div class="flex-col header gridheader-th">
-              <button  (click)="sortasc('botStatus','asc')">
+              <!-- <button  (click)="sortasc('botStatus','asc')"> -->
+                <button  mat-sort-header="botStatus">
                 <span>Status</span>
-                <i *ngIf="sortkey.botStatus==false" class="fa fa-arrow-up"></i>
-                <i *ngIf="sortkey.botStatus==true" class="fa fa-arrow-down"></i>
+                <!-- <i *ngIf="sortkey.botStatus==false" class="fa fa-arrow-up"></i>
+                <i *ngIf="sortkey.botStatus==true" class="fa fa-arrow-down"></i> -->
               </button>
             </div>
 
         </div>
       </div>
       <div  class="rpa-home-table">
-    <mat-expansion-panel hideToggle  *ngFor="let bot of bot_list | filterBy:userFilter | paginate: { itemsPerPage: 10, currentPage: p } ;let i=index;"  >
+    <mat-expansion-panel hideToggle  *ngFor="let bot of displayedRows$ | async | filterBy:userFilter ;let i=index;">
      
         
       <mat-expansion-panel-header >
@@ -301,9 +307,15 @@
     
   </div>
   <!-- <mat-paginator #paginator2 [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons]="true" class="newpaginationdiv"></mat-paginator> -->
-  <div class="text-right">
-
-    <pagination-controls class="pagination " (pageChange)="p = $event"></pagination-controls>
+  <div class="rpapaginationdiv">
+    <!-- <pagination-controls class="pagination " (pageChange)="p = $event"></pagination-controls> -->
+    <mat-paginator #paginator301 
+            [length]="totalRows$ | async"
+            [pageIndex]="0"
+            [pageSize]="10"
+            [showFirstLastButtons]="true"
+            [pageSizeOptions]="[5, 10, 25, 50]"
+          ></mat-paginator>
   </div>
   
   </div>
