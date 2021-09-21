@@ -57,6 +57,8 @@ import { RpaCredentialsComponent } from './rpa-credentials/rpa-credentials.compo
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { TaskPipe } from './custom-pipes/task.pipe';
 import { TasksearchPipe } from './custom-pipes/tasksearch.pipe';
+import {MatPaginatorIntl} from '@angular/material';
+import { CustomMatPaginatorIntl } from 'src/app/shared/custom-mat-paginator-int';
 @NgModule({
   declarations: [
     RpautomationComponent,
@@ -119,6 +121,11 @@ import { TasksearchPipe } from './custom-pipes/tasksearch.pipe';
     MatSlideToggleModule,
     Ng5SliderModule,
   ],
-  providers: [MatDatepickerModule,Rpa_Hints, BsModalRef, BsModalService]
+  providers: [MatDatepickerModule,Rpa_Hints, BsModalRef, BsModalService,
+    {
+           provide: MatPaginatorIntl, 
+           useClass: CustomMatPaginatorIntl
+    }
+  ]
 })
 export class RpautomationModule { }
