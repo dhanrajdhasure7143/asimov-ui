@@ -14,6 +14,7 @@ import {PagesComponent} from '../pages.component'
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   selectedIndex: number;
+  logintype: string;
   parent_link:any={};
   child_link:any={};
   pages:any[] = [];
@@ -187,8 +188,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
     window.location.href=this.config.logoutRedirectionURL+'?input='+input;
   }
   logout(){
+
+   this.logintype = localStorage.getItem('userRole');
     clearTimeout(this.stopnotificationsapicall)
     localStorage.clear();
+    sessionStorage.clear();
+    
+    if(this.logintype == 'User'){
+      
+      window.location.href = 'https://login.microsoftonline.com/common/oauth2/logout?post_logout_redirect_uri='+this.config.socialLoginRedirectURL
+    }
+
     var input = btoa("Signout")
     //window.location.href=this.config.logoutRedirectionURL+'?input='+input;
     // window.location.href=this.config.logoutRedirectionURL+'?input='+input;
