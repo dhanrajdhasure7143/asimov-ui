@@ -134,7 +134,7 @@ export class NewSoDashboardComponent implements OnInit {
     let processgroup=[]
     this.categories.forEach(item=>{
       processgroup.push({
-        country:item.categoryName,
+        country:item.categoryName.charAt(0).toUpperCase()+ item.categoryName.slice(1),
         research:this.processnames.filter(item2=>item2.categoryId==item.categoryId && item2.status=="APPROVED").length
       })
       //console.log(this.processnames.filter(item2=>item2.categoryId==item.categoryId && item2.status=="APPROVED"))
@@ -144,7 +144,7 @@ export class NewSoDashboardComponent implements OnInit {
     this.processnames.forEach(item=>{
         if(item.status=="APPROVED")
           botscount.push({
-            botnametwo:item.processName,
+            botnametwo:item.processName.charAt(0).toUpperCase()+ item.processName.slice(1),
             "UiPath": this.automatedtasks.filter(item2=>item2.processId==item.processId && item2.sourceType=="UiPath" ).length,
             "EPSoft":  this.automatedtasks.filter(item2=>item2.processId==item.processId && item2.sourceType=="EPSoft").length,
             "BluePrism":  this.automatedtasks.filter(item2=>item2.processId==item.processId && item2.sourceType=="BluePrism").length,
