@@ -28,7 +28,7 @@
                   <option value="allcategories">All Categories</option>
                   <option *ngFor="let each_diag of categoryList.data;let i=index;trackBy:loopTrackBy"
                     [value]="each_diag.categoryName">
-                    {{each_diag.categoryName}}</option>
+                    {{each_diag.categoryName|titlecase}}</option>
                 </select>
               
             </div>
