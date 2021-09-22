@@ -60,7 +60,7 @@
                                     class="errspan required">Priority Required*</span>
                             </div>
                             <div class="form-fields col-md-6 pr-0">
-                                <label class="label-control" for="timeEstimate">Time Estimate(Hrs)<span class="star">*</span></label>
+                                <label class="label-control" for="timeEstimate">Time Estimate (Hrs)<span class="star">*</span></label>
                                 <input type="text" (keydown)="inputNumberOnly($event)" maxlength="6" formControlName="timeEstimate" class="form-control data enteredfield-color"
                                     placeholder="Enter Time Estimate">
                                 <span
@@ -92,7 +92,7 @@
                                 <select formControlName="resources" class="form-control data enteredfield-color">
                                     <option value="">Select Resources</option>
                                     <option *ngFor="let user of userslist" [value]="user.userId.userId">
-                                        {{user.userId.firstName}} {{user.userId.lastName}}</option>   
+                                        {{user.userId.firstName|titlecase}} {{user.userId.lastName|titlecase}}</option>   
                                 </select>
 
                                 <!-- <ng-select  formControlName="resources" [multiple]="true"  placeholder="Select Resources"
@@ -109,7 +109,7 @@
                                 <select class="form-control enteredfield-color"  formControlName="approvers">
                                     <option value="">Select Approvers</option>
                                     <option *ngFor="let user of approverslist" [value]="user.userId.id">
-                                        {{user.userId.firstName}} {{user.userId.lastName}}</option>    
+                                        {{user.userId.firstName|titlecase}} {{user.userId.lastName|titlecase}}</option>    
                                 </select>
                                 <!-- <ng-select  formControlName="approvers" [multiple]="true"  placeholder="Select Approvers"
                                     [(ngModel)]="selectedapprovers"  required>
