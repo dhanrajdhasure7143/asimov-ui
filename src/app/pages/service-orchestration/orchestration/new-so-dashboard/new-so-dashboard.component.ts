@@ -465,7 +465,7 @@ valueAxis.min = 0;
       categoryAxis.renderer.labels.template.rotation=270;
 
       var  valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-      valueAxis.title.text = "No.of Bots";
+      valueAxis.title.text = "No. Of Bots";
 
       // Create series
       var series1 = chart.series.push(new am4charts.ColumnSeries());
@@ -490,9 +490,9 @@ valueAxis.min = 0;
       series2.columns.template.strokeWidth = 0;
 
       var series3 = chart.series.push(new am4charts.ColumnSeries());
-      series3.dataFields.valueY = "BluePrism";
+      series3.dataFields.valueY = "Blue Prism";
       series3.dataFields.categoryX = "botnametwo";
-      series3.name = "BluePrism";
+      series3.name = "Blue Prism";
       series3.tooltipText = "{name}: [bold]{valueY}[/]";
       series3.stacked = true;
       series3.columns.template.width = am4core.percent(20);
