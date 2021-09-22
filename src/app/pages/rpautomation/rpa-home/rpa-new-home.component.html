@@ -239,26 +239,28 @@
                 <!-- &nbsp;{{bot.botStatus}} -->
               </span>
 
-              <span *ngIf="bot.botStatus=='Success'" class="tableActionsIcons"><span><img src="../../../../assets/images/RPA/icon_latest/Success.svg" alt=""></span>
+              <span *ngIf="bot.botStatus=='Success'" >
+                <span><img class="testplus" src="../../../../assets/images/RPA/icon_latest/Success.svg" alt=""></span>
                 <!-- &nbsp;<span>{{bot.botStatus}}</span> -->
               </span>
 
               <span *ngIf="bot.botStatus=='Failure'">
-                <span class="tableActionsIcons"><img src="../../../../assets/images/RPA/icon_latest/close-red.svg" alt=""></span>
+                <span ><img class="testplus" src="../../../../assets/images/RPA/icon_latest/close-red.svg" alt=""></span>
                   <!-- &nbsp;<span>{{bot.botStatus}}</span> -->
-                </span>
-              <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
-              <span *ngIf="bot.botStatus=='New'" class="text-primary tableActionsIcons"><span class="text-primary">
-                <img src="../../../../assets/images/RPA/userobot.png" style="filter: none;">
-                <!-- <i class="fas fa-robot text-light"></i> -->
               </span>
+              <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
+              <span *ngIf="bot.botStatus=='New'" class="text-primary">
+                <span class="text-primary">
+                  <img class="testplus" src="../../../../assets/images/RPA/userobot.png" style="filter: none;">
+                <!-- <i class="fas fa-robot text-light"></i> -->
+                </span>
                 <!-- &nbsp;<span>{{bot.botStatus}}</span> -->
               </span>
 
-              <span *ngIf="bot.botStatus=='Stop' || bot.botStatus=='Stopped'" class="tableActionsIcons">
+              <span *ngIf="bot.botStatus=='Stop' || bot.botStatus=='Stopped'" >
                 <span >
                   <!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">-->
-                  <img src="../../../../assets/images/RPA/icon_latest/stop.svg" >
+                  <img class="testplus" src="../../../../assets/images/RPA/icon_latest/stop.svg" >
                 </span>
                   <!-- &nbsp;<span>{{bot.botStatus}}</span> -->
                 </span>
@@ -272,8 +274,10 @@
 
 
               <span *ngIf="bot.botStatus==null">---</span>
-              <span class="tableActionsIcons">
-                <button mat-button tooltip="More Actions" class="bg_threebtn"  placement="top" (click)="$event.stopPropagation();" [matMenuTriggerFor]="menu"><img src="../../../../assets/images/RPA/icon_latest/dots.svg" alt=""></button>
+              <span>
+                <button mat-button tooltip="More Actions" class="bg_threebtn"  placement="top" (click)="$event.stopPropagation();" [matMenuTriggerFor]="menu">
+                  <img class="testplus" src="../../../../assets/images/RPA/icon_latest/dots.svg" alt="">
+                </button>
                 <mat-menu #menu="matMenu">
                   <button  mat-menu-item (click)="editbotoverlay(bot)"><img src="../../../../assets/images/RPA/icon_latest/edit.svg" alt="" class="testplus">&nbsp;Edit </button>
                   <button  mat-menu-item (click)="botdelete(bot.botId)"><img src="../../../../assets/images/RPA/icon_latest/delete.svg" alt="" class="testplus">&nbsp;Delete</button>

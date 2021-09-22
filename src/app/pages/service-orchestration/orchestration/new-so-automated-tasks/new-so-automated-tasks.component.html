@@ -177,8 +177,9 @@
                 <img src="../../../../../assets/images/RPA/icon_latest/Success.svg" class="testplus">
               </span>
 
-              <span [matTooltip]="element.status" *ngIf="element.status=='Rejected' " class="text-danger">
-                <li class="fa fa-times-circle">
+              <span [matTooltip]="element.status" *ngIf="element.status=='Rejected' ">
+                <!-- <li class="fa fa-times-circle"> -->
+                  <img src="../../../../../assets/images/RPA/icon_latest/close-red.svg" class="testplus">
               </span>
 
               <span [matTooltip]="element.status"  *ngIf="element.status=='Approved' " >
@@ -186,8 +187,9 @@
                 <!-- <span><li class="fa fa-check-circle" style="font-size:19px"></span>&nbsp;<span> </span> -->
               </span>
 
-              <span [matTooltip]="element.status" *ngIf="(element.status=='Failure' || element.status=='Failed')" class="text-danger">
-                <li class="fa fa-times-circle">
+              <span [matTooltip]="element.status" *ngIf="(element.status=='Failure' || element.status=='Failed')">
+                <!-- <li class="fa fa-times-circle"> -->
+                  <img src="../../../../../assets/images/RPA/icon_latest/close-red.svg" class="testplus">
               </span>
 
               <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
@@ -195,16 +197,20 @@
                 <img src='../../../../../assets/images/RPA/newicon.png' class="testplus" >
               </span>
               <!--<span *ngIf="element.status=='New'" class="text-primary"><span style="background-color:#0062cf;border-radius: 50%;color:white;padding-right:5px;padding-left:4px;padding-top:5px;padding-bottom:5px;font-size:10px;text-align: center;align-content: center;align-items: center;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><!--<i class="fas fa-robot text-light"></i></span>&nbsp;<span> </span></span>-->
-              <span [matTooltip]="element.status" *ngIf="element.status=='Stop'|| element.status=='Stopped'" class="text-danger">
+              <span [matTooltip]="element.status" *ngIf="element.status=='Stop'|| element.status=='Stopped'">
                 <img src="../../../../../assets/images/RPA/stop_fail_icon.svg" class="testplus">
               </span>
 
-              <span [matTooltip]="element.status" *ngIf="element.status=='Paused'||element.status=='Pause'" class="text-primary">
-                <li class="fas fa-pause-circle">
+              <span [matTooltip]="element.status" *ngIf="element.status=='Paused'||element.status=='Pause'">
+                <!-- <li class="fas fa-pause-circle"> -->
+                  <img src="../../../../../assets/images/SO/pause-circle.svg" class="testplus"/>
               </span>
 
-              <span [matTooltip]="element.status" *ngIf="element.status==null||element.status==''" class="text-primary">
-                <span><li class="fas fa-pause-circle"></span>--
+              <span [matTooltip]="element.status" *ngIf="element.status==null||element.status==''">
+                <span>
+                  <!-- <li class="fas fa-pause-circle"> -->
+                    <img src="../../../../../assets/images/SO/pause-circle.svg" class="testplus"/>
+                  </span>--
               </span>
               <!--<span *ngIf="element.status!='null'" [id]="element.taskId+'__status'">
               <span *ngIf="element.status=='InProgress'" class="text-primary" ><span><img src='../../../../assets/images/RPA/processloading.svg' style='height:25px'></span>&nbsp;<span> </span></span>
@@ -244,10 +250,15 @@
                   </button>
                 </span>
                 <span>
-                  <button  (click)="assignbot(element.taskId)" *ngIf="element.taskType == 'Automated'" matTooltip="Assign Bot"><i  class="fas fa-check text-success"></i></button>
-                  <button (click)="assignbot(element.taskId)" *ngIf="element.taskType == 'Human'" matTooltip="Assign Resource"><i  class="fas fa-check text-success"></i></button>
+                  <button  (click)="assignbot(element.taskId)" *ngIf="element.taskType == 'Automated'" matTooltip="Assign Bot">
+                    <!-- <i  class="fas fa-check text-success"></i> -->
+                    <img src="../../../../../assets/images/SO/check-success.svg" class="testplus"/>
+                  </button>
+                  <button (click)="assignbot(element.taskId)" *ngIf="element.taskType == 'Human'" matTooltip="Assign Resource">
+                    <!-- <i  class="fas fa-check text-success"></i> -->
+                    <img src="../../../../../assets/images/SO/check-success.svg" class="testplus"/>
+                  </button>
                 </span>
-                &nbsp;
                 <span>
                   <button (click)="resetbot(element.taskId)" matTooltip="Reset">
                     <img src="../../../../../assets/images/RPA/icon_latest/repeat-blue.svg" class="testplus"/>
@@ -275,9 +286,10 @@
                   </button>
                 </span>
                 <span>
-                  <button (click)="assignhuman(element.taskId)" matTooltip="Assign Resource"><i  class="fas fa-check text-success"></i></button>
+                  <button (click)="assignhuman(element.taskId)" matTooltip="Assign Resource">
+                    <img src="../../../../../assets/images/SO/check-success.svg" class="testplus"/>
+                  </button>
                 </span>
-                &nbsp;
                 <span>
                   <button (click)="resetbot(element.taskId)" matTooltip="Reset">
                     <img src="../../../../../assets/images/RPA/icon_latest/repeat-blue.svg" class="testplus"/>
