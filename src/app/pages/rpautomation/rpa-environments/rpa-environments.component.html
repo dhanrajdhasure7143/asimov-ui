@@ -131,7 +131,7 @@
             <td mat-cell *matCellDef="let element"> <span *ngIf="element.environmentName!=null">{{element.environmentName}}</span> <span *ngIf="element.environmentName==''">-</span> </td>
         </ng-container>
         <ng-container matColumnDef="hostAddress">
-            <th mat-header-cell *matHeaderCellDef>IP Address/Host</th>
+            <th mat-header-cell *matHeaderCellDef>IP Address / Host</th>
             <td mat-cell *matCellDef="let element"> 
                 <span *ngIf="element.hostAddress!=null">{{element.hostAddress | ipcustompipe}}</span> 
                 <span *ngIf="element.hostAddress==''">-</span> </td>
@@ -253,8 +253,8 @@ placeholder="Enter Environment Type" >-->
                             </div>
                         </div>
                         <div class="col-md-12 p-0 form-group">
-                            <label class="label-control" for="hostAddress"> IP Address/Host<span class="star">*</span></label>
-                            <input type="text" maxlength="51" class="form-control" formControlName="hostAddress" value="" placeholder="Enter IP Address/Host">
+                            <label class="label-control" for="hostAddress"> IP Address / Host<span class="star">*</span></label>
+                            <input type="text" maxlength="51" class="form-control" formControlName="hostAddress" value="" placeholder="Enter IP Address / Host">
                             <span *ngIf="(insertForm.get('hostAddress').invalid && insertForm.get('hostAddress').touched) && !insertForm.controls['hostAddress'].hasError('maxlength') && !insertForm.controls['hostAddress'].hasError('pattern')"  class="errspan required"> IP Address/Host Required*</span>
 
                             <!--<div *ngIf="insertForm.controls['hostAddress'].hasError('maxlength')"  class="errspan required">
@@ -396,8 +396,8 @@ placeholder="Enter Environment Type" >-->
                         </div>
                         <div class="col-md-12 p-0 form-group">
 
-                            <label class="label-control" for="hostAddress">IP Address/Host<span class="star">*</span></label>
-                            <input type="text" class="form-control" maxlength="51" formControlName="hostAddress" placeholder="Enter IP Address/Host">
+                            <label class="label-control" for="hostAddress">IP Address / Host<span class="star">*</span></label>
+                            <input type="text" class="form-control" maxlength="51" formControlName="hostAddress" placeholder="Enter IP Address / Host">
                             <span *ngIf="(updateForm.get('hostAddress').invalid && updateForm.get('hostAddress').touched) && !updateForm.controls['hostAddress'].hasError('maxlength') && !updateForm.controls['hostAddress'].hasError('pattern')"  class="errspan required"> IP Address/Host Required*</span>
 
                             <!--<div *ngIf="updateForm.controls['hostAddress'].hasError('maxlength')"  class="errspan required">

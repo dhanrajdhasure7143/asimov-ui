@@ -134,7 +134,7 @@ export class NewSoDashboardComponent implements OnInit {
     let processgroup=[]
     this.categories.forEach(item=>{
       processgroup.push({
-        country:item.categoryName,
+        country:item.categoryName.charAt(0).toUpperCase()+ item.categoryName.slice(1),
         research:this.processnames.filter(item2=>item2.categoryId==item.categoryId && item2.status=="APPROVED").length
       })
       //console.log(this.processnames.filter(item2=>item2.categoryId==item.categoryId && item2.status=="APPROVED"))
@@ -144,7 +144,7 @@ export class NewSoDashboardComponent implements OnInit {
     this.processnames.forEach(item=>{
         if(item.status=="APPROVED")
           botscount.push({
-            botnametwo:item.processName,
+            botnametwo:item.processName.charAt(0).toUpperCase()+ item.processName.slice(1),
             "UiPath": this.automatedtasks.filter(item2=>item2.processId==item.processId && item2.sourceType=="UiPath" ).length,
             "EPSoft":  this.automatedtasks.filter(item2=>item2.processId==item.processId && item2.sourceType=="EPSoft").length,
             "BluePrism":  this.automatedtasks.filter(item2=>item2.processId==item.processId && item2.sourceType=="BluePrism").length,
@@ -465,7 +465,7 @@ valueAxis.min = 0;
       categoryAxis.renderer.labels.template.rotation=270;
 
       var  valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-      valueAxis.title.text = "No.of Bots";
+      valueAxis.title.text = "No. Of Bots";
 
       // Create series
       var series1 = chart.series.push(new am4charts.ColumnSeries());
@@ -490,9 +490,9 @@ valueAxis.min = 0;
       series2.columns.template.strokeWidth = 0;
 
       var series3 = chart.series.push(new am4charts.ColumnSeries());
-      series3.dataFields.valueY = "BluePrism";
+      series3.dataFields.valueY = "Blue Prism";
       series3.dataFields.categoryX = "botnametwo";
-      series3.name = "BluePrism";
+      series3.name = "Blue Prism";
       series3.tooltipText = "{name}: [bold]{valueY}[/]";
       series3.stacked = true;
       series3.columns.template.width = am4core.percent(20);

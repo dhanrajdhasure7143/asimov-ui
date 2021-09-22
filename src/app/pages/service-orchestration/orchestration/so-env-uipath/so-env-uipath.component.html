@@ -60,7 +60,7 @@
             <td mat-cell *matCellDef="let element"> <span *ngIf="element.clientId!=null">{{(element.clientId.length > 15) ? ((element.clientId).slice(0, 15) + '...') : element.clientId}}</span> <span *ngIf="element.clientId==''">-</span> </td>
         </ng-container>
         <ng-container matColumnDef="userKey">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>UserKey</th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>User Key</th>
             <td mat-cell *matCellDef="let element"> <span *ngIf="element.userKey!=null">{{(element.userKey.length > 15) ? ((element.userKey).slice(0, 15) + '...') : element.userKey}}</span> <span *ngIf="element.userKey==''">-</span> </td>
         </ng-container>
         <ng-container matColumnDef="active">

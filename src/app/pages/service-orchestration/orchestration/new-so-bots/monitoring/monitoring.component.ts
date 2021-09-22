@@ -773,7 +773,7 @@ export class MonitoringComponent implements OnInit {
                           yAxes: [{
                             scaleLabel: {
                                  display: true,
-                                 labelString: 'No of Bots'
+                                 labelString: 'No. Of Bots'
                                },
                               display: true,
                               position: 'left',

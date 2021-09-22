@@ -94,7 +94,7 @@
                                                 <option [value]="null" disabled hidden>Select Owner</option>
                                                 <option value="" [selected]="true">Select Owner</option>
                                                 <option *ngFor="let user of userslist" [value]="user.userId.userId">
-                                                    {{user.userId.firstName}} {{user.userId.lastName}}</option>
+                                                    {{user.userId.firstName|titlecase}} {{user.userId.lastName|titlecase}}</option>
                                             </select>
                                             <span
                                                 *ngIf="createprogram.get('owner').invalid && createprogram.get('owner').touched"
@@ -124,21 +124,21 @@
                                                         <option *ngFor="let value of valuechain" [value]="value.processGrpMasterId">{{value.processName}}</option>
                                                     </select> -->
 
-                                                    <input type="text" class="form-control data" placeholder="Enter  Value Chain" formControlName="programValueChain"  [ngClass]="createprogram.get('programValueChain').valid?'enteredfield-color':'inputfield-color'" > 
+                                                    <input type="text" class="form-control data" placeholder="Enter  Value Chain" maxlength="50" formControlName="programValueChain"  [ngClass]="createprogram.get('programValueChain').valid?'enteredfield-color':'inputfield-color'" > 
                                                 <span
                                                     *ngIf="createprogram.get('programValueChain').invalid && createprogram.get('programValueChain').touched"
                                                     class=" errspan required">Value Chain Required*</span>
                                             </div>
                                         
                                             <div class="form-fields col-md-6 pr-0">
-                                                <label class="label-control" for="measurableMetrics">Metrics to be measured<span class="star">*</span></label>
+                                                <label class="label-control" for="measurableMetrics">Metrics To Be Measured<span class="star">*</span></label>
                                                 <input type="text" maxlength="51" class="form-control data"
                                                     formControlName="measurableMetrics" value=""
-                                                    placeholder="Enter Metrics to be measured"
+                                                    placeholder="Enter Metrics To Be Measured"
                                                     [ngClass]="createprogram.get('measurableMetrics').valid?'enteredfield-color':'inputfield-color'">
                                                 <span
                                                     *ngIf="createprogram.get('measurableMetrics').invalid && createprogram.get('measurableMetrics').touched"
-                                                    class="errspan required">Metrics to be measured Required*</span>
+                                                    class="errspan required">Metrics To Be Measured Required*</span>
                                                 <span
                                                     *ngIf="createprogram.controls['measurableMetrics'].hasError('maxlength')"
                                                     class="errspan required">
