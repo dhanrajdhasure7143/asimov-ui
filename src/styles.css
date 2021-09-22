@@ -1632,15 +1632,21 @@ select.form-control {
 }
 
 .bpspaginationdiv .mat-form-field-wrapper,
-.newpaginationdiv .mat-form-field-wrapper {
+.newpaginationdiv .mat-form-field-wrapper, .rpapaginationdiv .mat-form-field-wrapper{
   padding-bottom: 0px !important;
 }
 
 .bpspaginationdiv .mat-form-field-flex,
-.newpaginationdiv .mat-form-field-flex {
+.newpaginationdiv .mat-form-field-flex, .rpapaginationdiv .mat-form-field-flex {
   height: 20px !important;
 }
 
+.rpapaginationdiv{
+    position: absolute;
+    /* bottom: 0px; */
+    bottom: -28px;
+    width: 100%;
+  }
 /* span.actions-seperator {
   margin: 0px 3px;
   font-size: 15px;
