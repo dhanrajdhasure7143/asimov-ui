@@ -287,7 +287,6 @@ saveBluePrism()
     }
   else
   {
-     alert("Invalid Form")
   }
 }
 
@@ -328,7 +327,7 @@ Update_BluePrism()
     }
   else
   {
-     alert("Invalid Form")
+    // alert("Invalid Form")
   }
 }
 

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
+  <defs>
+    <clipPath id="clip-file_blue">
+      <rect width="24" height="24"/>
+    </clipPath>
+  </defs>
+  <g id="file_blue" data-name="file blue" clip-path="url(#clip-file_blue)">
+    <g id="Save" transform="translate(10 9.689)">
+      <path id="Path_827" data-name="Path 827" d="M0,0H24V24H0Z" fill="none"/>
+    </g>
+    <path id="file" d="M8.679.4H21.808a1.247,1.247,0,0,1,1.231,1.231V23.169A1.247,1.247,0,0,1,21.808,24.4H2.731A1.247,1.247,0,0,1,1.5,23.169h0V7.477ZM4.885,7.477H8.679V3.682Zm6.154-4.718V8.708A1.247,1.247,0,0,1,9.808,9.938H3.859v11.9H20.577V2.759Z" transform="translate(-0.269 -0.4)" fill="#00a0e3"/>
+  </g>
+</svg>

@@ -78,7 +78,7 @@
                                                         <option value="undefined" disabled hidden >Select Category</option>
                                                         <option value="allcategories">All Categories</option>
                                                         <option *ngFor="let eachcat of categoryList.data;let i=index;trackBy:loopTrackBy" [value]="eachcat.categoryName">
-                                                        {{eachcat.categoryName}}</option>
+                                                        {{eachcat.categoryName| titlecase}}</option>
                                                 </select>
                                         </div>
                                         <div class="col-md-6 form-group pr-0 PI-serwksp">

@@ -1,7 +1,7 @@
 import {Component, OnInit, TemplateRef,ViewChild} from '@angular/core';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
-import {MatPaginator} from '@angular/material/paginator';
+import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {RestApiService} from '../../services/rest-api.service';
 import {RpaStudioComponent} from '../rpa-studio/rpa-studio.component';
 import { HttpClient } from '@angular/common/http';
@@ -18,7 +18,11 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { validateHorizontalPosition } from '@angular/cdk/overlay';
 import { isNumber } from 'util';
 
-
+import { Observable  } from 'rxjs/Observable';
+import { Sort } from '@angular/material';
+import { of  } from 'rxjs/observable/of';
+import { map } from 'rxjs/operators';
+import { fromMatPaginator, fromMatSort, paginateRows, sortRows } from '../model/datasource-utils';
 
 declare var $:any;
 
@@ -80,6 +84,11 @@ export class RpaHomeComponent implements OnInit {
   public editbot:FormGroup;
   rpaCategory: any;
   newRpaCategory: any;
+
+  displayedRows$: Observable<any[]>;
+  @ViewChild(MatSort,{static:false}) sort: MatSort;
+  totalRows$: Observable<number>;
+  @ViewChild(MatPaginator,{static:false}) paginator301: MatPaginator;
 
   constructor(
     private route: ActivatedRoute, 
@@ -260,8 +269,9 @@ export class RpaHomeComponent implements OnInit {
           object.botType='Unattended';
         }
         this.bot_list.push(object)
+        this.assignPagination( this.bot_list);
       })
-      response.forEach(data=>{
+      response.forEach(data=>{ 
         let object:any=data;
       if(this.categaoriesList.find(resp => resp.categoryId==data.department)!=undefined)
       {
@@ -801,6 +811,14 @@ export class RpaHomeComponent implements OnInit {
           })
           document.getElementById("edit-bot").style.display="none";
         }
+      }
+
+      assignPagination(data){
+        const sortEvents$: Observable<Sort> = fromMatSort(this.sort);
+        const pageEvents$: Observable<PageEvent> = fromMatPaginator(this.paginator301);
+        const rows$ = of(data);
+        this.totalRows$ = rows$.pipe(map(rows => rows.length));
+        this.displayedRows$ = rows$.pipe(sortRows(sortEvents$), paginateRows(pageEvents$));
       }
 }
 

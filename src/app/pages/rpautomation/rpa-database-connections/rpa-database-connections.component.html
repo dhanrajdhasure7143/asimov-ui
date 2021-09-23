@@ -82,7 +82,7 @@
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="hostAddress">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>IP Address/Host</th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>IP Address / Host</th>
                     <td mat-cell *matCellDef="let element"> 
                         <span *ngIf="element.hostAddress!=null">{{element.hostAddress}}</span> 
                         <span *ngIf="element.hostAddress==''">-</span> </td>
@@ -93,7 +93,7 @@
                          <span *ngIf="element.portNumber==''">-</span> </td>
                 </ng-container>
                 <ng-container matColumnDef="username">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>User Name</th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Username</th>
                     <td mat-cell *matCellDef="let element"> <span *ngIf="element.username!=null">{{element.username}}</span>
                          <span *ngIf="element.username==''">-</span></td>
                 </ng-container>
@@ -255,8 +255,8 @@
                                 </div>
                             </div>
                             <div class="col-md-12 p-0 form-group">
-                                <label class="label-control" for="hostAddress">IP Address/Host<span class="star">*</span></label>
-                                <input type="text" maxlength="51" class="form-control data" formControlName="hostAddress" #hostAddress value="" placeholder="Enter IP Address/Host">
+                                <label class="label-control" for="hostAddress">IP Address / Host<span class="star">*</span></label>
+                                <input type="text" maxlength="51" class="form-control data" formControlName="hostAddress" #hostAddress value="" placeholder="Enter IP Address / Host">
                                 <span *ngIf="(insertdbForm.get('hostAddress').invalid && insertdbForm.get('hostAddress').touched) && !insertdbForm.controls['hostAddress'].hasError('maxlength') && !insertdbForm.controls['hostAddress'].hasError('pattern')" class="errspan required"> IP Address/Host Required*</span>
     
                                 <!--<div *ngIf="insertdbForm.controls['hostAddress'].hasError('maxlength')" class="errspan required">
@@ -320,16 +320,17 @@
                             <div class="col-md-6 p-0 form-group">
                                 <input type="checkbox" formControlName="activeStatus"> Active
                             </div>
-                            <div class="form-footer">                               
-                                <button class="btn btn-default" (click)="resetDBForm()" >Reset</button>
-                                <button class="btn btn-primary btn-test" [disabled]="insertdbForm.invalid" (click)="testConnection('insert')" >Test Connection</button>
-                                <button class="btn btn-primary"[disabled]="insertdbForm.invalid || submitted" (click)="saveDBConnection()" >Save</button>
-                            </div>
-                   
                         <!-- <input type="button" class="btn btn-primary" value="Save" (click)="saveDBConnection()" [disabled]="insertdbForm.invalid || submitted">
                         <input type="button" class="btn btn-primary" value="Test Connection" (click)="testConnection('insert')" [disabled]="insertdbForm.invalid">
                         <input type="button" class="btn btn-primary" value="Reset" (click)="resetDBForm()"> -->
                     </form>
+                    
+                    <div class="form-footer">                               
+                        <button class="btn btn-default" (click)="resetDBForm()" >Reset</button>
+                        <button class="btn btn-primary btn-test" [disabled]="insertdbForm.invalid" (click)="testConnection('insert')" >Test Connection</button>
+                        <button class="btn btn-primary"[disabled]="insertdbForm.invalid || submitted" (click)="saveDBConnection()" >Save</button>
+                    </div>
+           
 
                 </div>
             </div>
@@ -372,8 +373,8 @@
                                 </div>
                             </div>
                             <div class="col-md-12 p-0 form-group">
-                                <label class="label-control" for="hostAddress">IP Address/Host<span class="star">*</span></label>
-                                <input type="text" maxlength="51" class="form-control data" formControlName="hostAddress" #hostAddress value="" placeholder="Enter IP Address/Host">
+                                <label class="label-control" for="hostAddress">IP Address / Host<span class="star">*</span></label>
+                                <input type="text" maxlength="51" class="form-control data" formControlName="hostAddress" #hostAddress value="" placeholder="Enter IP Address / Host">
                                 <span *ngIf="(updatedbForm.get('hostAddress').invalid && updatedbForm.get('hostAddress').touched) && !updatedbForm.controls['hostAddress'].hasError('maxlength') && !updatedbForm.controls['hostAddress'].hasError('pattern')" class="errspan required"> IP Address/Host Required*</span>
     
                                 <!--<div *ngIf="updatedbForm.controls['hostAddress'].hasError('maxlength')" class="errspan required">
@@ -439,18 +440,18 @@
                                 <input type="checkbox" [checked]="toggle" formControlName="activeStatus"> Active
                             </div>
                         </div>
-                        <div class="form-footer">
-                            <button class="btn btn-default"(click)="resetupdateDBForm()" >Reset</button>
-                            <button class="btn btn-primary btn-test" [disabled]="updatedbForm.invalid" (click)="testConnection('insert')" >Test Connection</button>
-                            <button class="btn btn-primary"[disabled]="updatedbForm.invalid || submitted" (click)="dbconnectionupdate()" >Save</button>
-                            
-                            
-                        </div>
+
                         <!-- <input type="button" class="btn btn-primary" value="Save" (click)="dbconnectionupdate()" [disabled]="updatedbForm.invalid || submitted">
                         <input type="button" class="btn btn-primary" value="Test Connection" (click)="testConnection('update')" [disabled]="updatedbForm.invalid">
                          <input type="button" class="btn btn-primary" value="Reset" (click)="resetupdateDBForm()"> -->
                     </form>
-
+                    <div class="form-footer">
+                        <button class="btn btn-default"(click)="resetupdateDBForm()" >Reset</button>
+                        <button class="btn btn-primary btn-test" [disabled]="updatedbForm.invalid" (click)="testConnection('update')" >Test Connection</button>
+                        <button class="btn btn-primary"[disabled]="updatedbForm.invalid || submitted" (click)="dbconnectionupdate()" >Save</button>
+                        
+                        
+                    </div>
                 </div>
 
             </div>

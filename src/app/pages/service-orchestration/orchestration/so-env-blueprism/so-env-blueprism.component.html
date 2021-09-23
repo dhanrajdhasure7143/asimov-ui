@@ -1,22 +1,43 @@
-<div class="container-fluid mx-3" style="padding-top: 5px;">
-    <div class="col-md-2 form-group p-0 sosearchfield">
+<div class="container-fluid mx-3" >
+    <div class="col-md-3 form-group pl-0 sosearchfield">
         <input class="form-control rpa-control" placeholder="Search" autocomplete="off" *ngIf="!isSearch"  (keyup)="applyFilter($event.target.value)">
-        <img src="../../../../assets/images/search.svg" alt="" class="testplus1">
+        <img src="../../../../assets/images/search.svg" alt="" class="testplus">
     </div>
-    <div class="col-md-10 p-0 env-data-tool text-right">
-        <span >
-            <button matTooltip="Create" (click)="createBlueprism()"><i  class="fas fa-plus"></i></button>
-        </span>        
-        <span >
-            <button [disabled]="updateflag == false" matTooltip="Modify" (click)="updatedata()"><i style="margin-right: -4px !important;" class="fas fa-edit"></i></button>
-        </span>
-        <span >
-            <button [disabled]="deleteflag == false" matTooltip="Delete" (click)="delete_blueprism_config()"><i  class="fas fa-trash"></i></button>
-        </span>
+    <div class="col-md-9 p-0 env-data-tool text-right">
+        <div >
+            <button (click)="createBlueprism()" class="tsttooltipbtn">
+                <img src='../../../../assets/images/RPA/icon_latest/new-blue.svg' class="testplus">
+                <span class="testtooltip">Create</span>
+            </button>
+        </div>        
+        <div *ngIf="updateflag == false">
+            <button (click)="updatedata()" class="tsttooltipbtn">
+                <img src='../../../../assets/images/RPA/icon_latest/edit-dis.svg' class="testplus">
+                <span class="testtooltip">Modify</span>
+            </button>
+        </div>
+        <div *ngIf="updateflag == true">
+            <button (click)="updatedata()" class="tsttooltipbtn">
+                <img src='../../../../assets/images/RPA/icon_latest/edit-blue.svg' class="testplus">
+                <span class="testtooltip">Modify</span>
+            </button>
+        </div>
+        <div *ngIf="deleteflag == false">
+            <button (click)="delete_blueprism_config()" class="tsttooltipbtn">
+                <img src='../../../../assets/images/RPA/icon_latest/delete-dis.svg' class="testplus">
+                <span class="testtooltip">Delete</span>
+            </button>
+        </div>
+        <div *ngIf="deleteflag == true">
+            <button (click)="delete_blueprism_config()" class="tsttooltipbtn">
+                <img src='../../../../assets/images/RPA/icon_latest/delete-blue.svg' class="testplus">
+                <span class="testtooltip">Delete</span>
+            </button>
+        </div>
     </div>  
   
     <!--foms  -->
-    <div style="width:100%;height:53vh;overflow: scroll;">
+    <div style="width:100%;height:52vh;overflow: scroll;">
     <table mat-table #sort1="matSort" [dataSource]="dataSource1" matSort class=" RPA table" id="listofenv">
   
         <ng-container matColumnDef="check">
@@ -25,7 +46,7 @@
         </ng-container>
         
         <ng-container matColumnDef="bluePrismUsername">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>BluePrism Username</th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Blue Prism Username</th>
             <td mat-cell *matCellDef="let element"> <span *ngIf="element.bluePrismUsername!=null">{{(element.bluePrismUsername.length > 15) ? ((element.bluePrismUsername).slice(0, 15) + '...') : element.bluePrismUsername}}</span> <span *ngIf="element.bluePrismUsername==''">-</span> </td>
         </ng-container>
 
@@ -35,11 +56,11 @@
         </ng-container>
         
         <ng-container matColumnDef="bluPrismPassword">
-            <th mat-header-cell *matHeaderCellDef >BluePrism Password</th>
+            <th mat-header-cell *matHeaderCellDef >Blue Prism Password</th>
             <td mat-cell *matCellDef="let element"> <span *ngIf="element.bluPrismPassword!=null">{{element.bluPrismPassword  | ipcustompipe}}</span> <span *ngIf="element.bluPrismPassword==''">-</span> </td>
         </ng-container>
         <ng-container matColumnDef="hostAddress">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>IP Address/Host</th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>IP Address / Host</th>
             <td mat-cell *matCellDef="let element">
                 <span *ngIf="element.hostAddress!=null">{{element.hostAddress | ipcustompipe}}</span>
                 <span *ngIf="element.hostAddress==''">-</span> </td>
@@ -60,8 +81,12 @@
        <ng-container matColumnDef="status">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
             <td mat-cell *matCellDef="let element">
-                <span *ngIf="element.status == 'Active'"><span><img class="rpa-image1" src="/assets/images/RPA/GreenCricle.png"></span>&nbsp;Active</span>
-                <span *ngIf="element.status == 'Inactive'"><span><img class="rpa-image1" src="/assets/images/RPA/red-circle.png"></span>&nbsp;Inactive</span>
+                <span *ngIf="element.status == 'Active'">
+                    <img class="rpa-image1" src="/assets/images/RPA/GreenCricle.png">Active
+                </span>
+                <span *ngIf="element.status == 'Inactive'">
+                    <img class="rpa-image1" src="/assets/images/RPA/red-circle.png">Inactive
+                </span>
            </td>
         </ng-container>
         <ng-container matColumnDef="createdTimeStamp">
@@ -109,7 +134,7 @@
                         </div>
 
                         <div class="col-md-12 p-0 form-group">
-                            <label  class="label-control" for="bluPrismPassword">BluPrism Password<span class="star">*</span></label>
+                            <label  class="label-control" for="bluPrismPassword">BluePrism Password<span class="star">*</span></label>
                             <input [type]="passwordtype2 ? 'text': 'password'" maxlength="50" class="form-control" formControlName="bluPrismPassword" #bluPrismPassword value="" placeholder="Enter BluPrism Password" passwordToggle>
                             <span *ngIf="passwordtype2==false" (click)="passwordtype2 =!passwordtype2" class="pdicon">
                                 <img src="../../../../../assets/images/Projects/eye-show.svg" class="testplus1" />

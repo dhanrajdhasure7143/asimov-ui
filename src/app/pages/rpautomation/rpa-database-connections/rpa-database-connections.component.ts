@@ -197,7 +197,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
   else
   {
     this.spinner.hide();
-     alert("Invalid Form");
+     //alert("Invalid Form");
      this.activestatus();
   }
 
@@ -268,7 +268,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
    
   }
   else{
-    alert("Invalid Form");
+    //alert("Invalid Form");
     this.activestatus();
   }
    }
@@ -277,6 +277,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
     this.insertdbForm.reset();
     this.insertdbForm.get("dataBaseType").setValue("");
     this.insertdbForm.get("activeStatus").setValue(true);
+    this.passwordtype1=false;
   }
 
   resetupdateDBForm(){
@@ -326,7 +327,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
 }
 else
 {
-  alert("please fill all details");
+  //alert("please fill all details");
 }
   
 }

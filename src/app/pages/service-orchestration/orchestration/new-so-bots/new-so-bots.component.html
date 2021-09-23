@@ -1,4 +1,4 @@
-<mat-tab-group  (selectedTabChange)="onTabChanged($event)">
+<mat-tab-group  (selectedTabChange)="onTabChanged($event)" class="so-subtab-header">
   <mat-tab label="Statistics">
 
    <ng-template mat-tab-label>
@@ -6,7 +6,7 @@
        <!-- &nbsp;&nbsp; -->
        Statistics
      </ng-template>
-   <div *ngIf="check_tab==0" >
+   <div *ngIf="check_tab==0" class="so-sub-tab-content">
      <app-statistics></app-statistics>
    </div>
  </mat-tab>
@@ -18,7 +18,7 @@
        <!-- &nbsp;&nbsp; -->
        Monitoring
    </ng-template>
-   <div *ngIf="check_tab==1" >
+   <div *ngIf="check_tab==1" class="so-sub-tab-content">
     <app-monitoring></app-monitoring>
    </div>
  </mat-tab>

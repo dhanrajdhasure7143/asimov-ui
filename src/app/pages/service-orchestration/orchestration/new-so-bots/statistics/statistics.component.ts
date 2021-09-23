@@ -79,7 +79,7 @@ this.getEnvironments();
         "litres": this.allbots.filter(item=>item.sourceType=="UiPath").length,
         "color": "#fa4616"
       },{
-        "country": "BluePrism",
+        "country": "Blue Prism",
         "litres":  this.allbots.filter(item=>item.sourceType=="BluePrism").length,
         "color": "#001c47"
       },{

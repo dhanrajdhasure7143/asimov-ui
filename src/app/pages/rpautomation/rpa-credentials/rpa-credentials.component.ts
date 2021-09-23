@@ -195,12 +195,13 @@ inputNumberOnly(event){
    
   }
   else{
-    alert("Invalid Form");
+    //alert("Invalid Form");
   }
    }
 
   resetCredForm(){
     this.insertForm.reset();
+    this.passwordtype1=false;
   }
 
   resetupdateCredForm(){
