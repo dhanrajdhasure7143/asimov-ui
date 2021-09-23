@@ -617,7 +617,7 @@ var tooltip = d3.select("body")
 
 var fontSize
 inner.selectAll('g.node').on('mouseover', function(d){
-  
+
   let selectedNode = d3.select(this)
 
   this.hoverNodeName = '';
@@ -642,7 +642,7 @@ inner.selectAll('g.node').on('mouseover', function(d){
     fontSize=d3.select(this).select("g text")['_groups'][0][0]['attributes'][1]['value']
     d3.select(this).select("g text")
       .style('font-size','18')
-      
+
   }
   
 })
@@ -734,8 +734,9 @@ inner.selectAll('g.edgePath path').on('mouseover', function(this){
 })
 
 
-d3.selectAll("g .node")
-.style("fill","#fff")
+
+// d3.selectAll("g .node")
+// .style("fill","#fff")
 
 d3.selectAll("g g.label g")
 .attr("transform","translate(-5,-15)")
@@ -750,8 +751,8 @@ d3.selectAll("g.edgeLabel g.label")
 .attr("transform","translate(-30,-10)")
   d3.selectAll("g.circl g.label").attr("transform","translate(0,5)")
 
-  if(me.isplay==true){
-    
+  if(me.isplay==true){ 
+       
     d3.selectAll("g.edgePath")
       .append("circle")
       .attr("r",'10')
@@ -786,8 +787,23 @@ d3.selectAll("g.edgeLabel g.label")
   d3.selectAll("g.edgePath circle").remove()
 }
 
+// inner.selectAll('g.node')['_groups'][0][1]['attributes'][2].value="opacity: 1;fill: rgb(209, 54, 54)"
+  // console.log(inner.selectAll('g.node')['_groups'][0])
+  // console.log(d3.selectAll("g text")['_groups'][0][1]['parentNode'].__data__);
+  // console.log(d3.selectAll("g text")['_groups'][0]);
+let nodes_Array=d3.selectAll("g text")['_groups'][0];
 
-
+nodes_Array.forEach((element,i) => {
+  let node_color=g.node(element['parentNode'].__data__)['style'].split(':')[1].trim();
+  // console.log(node_color);
+ if(node_color=="#024C7F" || node_color=="#B40001"){
+  nodes_Array[i]['attributes'][1].value="font-size: 14px;fill: #fff"
+  // inner.selectAll('g.node')['_groups'][0][i]['attributes'][2].value="opacity: 1;fill: #030303"
+ }else{
+  nodes_Array[i]['attributes'][1].value="font-size: 14px;fill: #030303"
+  // inner.selectAll('g.node')['_groups'][0][i]['attributes'][2].value="opacity: 1;fill: #fff"
+ }
+});
  
 // Center the graph
 var initialScale = 0.42;

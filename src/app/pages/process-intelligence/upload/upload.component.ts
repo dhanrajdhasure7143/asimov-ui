@@ -822,9 +822,50 @@ getDBTables(){      //get DB tables list
 
   }
 
+  onDeleteSelectedProcess(id){
+    let req_body={
+      "piId":id
+    }
+    // this.rest.deleteSelectedProcessID(req_body).subscribe(res=>{
+    //   this.getAlluserProcessPiIds();
+    // })
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
+        this.isLoading=true;
+        this.rest.deleteSelectedProcessID(req_body).subscribe(res=>{
+          let status:any = res;
+          Swal.fire({
+            title: 'Success',
+            text: ""+status.data,
+            position: 'center',
+            icon: 'success',
+            showCancelButton: false,
+            confirmButtonColor: '#007bff',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ok'
+          })
+          this.isLoading=false;
+          this.getAlluserProcessPiIds();
+          },err => {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Something went wrong!',
+            })
+            this.spinner.hide();
+                         
+          })
+      }
+    });
+
+  }
+
 }
-
-
-
-
-

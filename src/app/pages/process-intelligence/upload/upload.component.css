@@ -329,5 +329,12 @@ img.hover-img {
 .model-uploadhvr {
     display: none;
 }
+.delete-icon img{
+    width: 16px;
+    height: 16px;
+}
+.delete-icon-disabled{
+    cursor: no-drop !important;
+}
 
 
