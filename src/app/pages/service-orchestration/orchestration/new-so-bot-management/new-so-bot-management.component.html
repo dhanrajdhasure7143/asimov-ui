@@ -5,7 +5,7 @@
         <div class="col-md-10 p-0">
           <div class="col-md-3 form-group pl-0 sosearchfield">
             <input type="search" class="form-control rpa-control" placeholder="Search" [(ngModel)]="search" (input)="method()"> 
-            <img src="../../../../assets/images/search.svg" alt="" class="testplus"> 
+            <img src="../../../../assets/images/search.svg"  class="testplus"> 
           </div>
           <div class="col-md-3 pl-0">
             <select [(ngModel)]="selected_source" value="" class="form-control rpa-control"  (change)="method()"> <!--(selectionChange)="applyFilter3($event.value)">-->
@@ -78,7 +78,7 @@
                           <span [id]="element.botId+'__status'">
                           <span *ngIf="element.botStatus=='Running'"  [matTooltip]="element.botStatus" class="text-primary" >
                             <span>
-                              <img src="../../../../assets/images/RPA/DotSpin.gif"  style="filter: none; width: 19px;">
+                              <img src="../../../../assets/images/RPA/DotSpin.gif"  class="testplus">
                             </span>
                           </span>
   
@@ -86,14 +86,17 @@
                             <img src="../../../../../assets/images/RPA/icon_latest/Success.svg" class="testplus" > 
                           </span>
   
-                          <span *ngIf="element.botStatus=='Failure'|| element.botStatus=='Failed'"  [matTooltip]="element.botStatus" class="text-danger"><span><li class="fa fa-times-circle"></span></span>
+                          <span *ngIf="element.botStatus=='Failure'|| element.botStatus=='Failed'"  [matTooltip]="element.botStatus" class="text-danger">
+                            <!-- <li class="fa fa-times-circle"> -->
+                            <img src="../../../../../assets/images/RPA/icon_latest/close-red.svg" class="testplus" >
+                          </span>
                           <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
                           <span *ngIf="element.botStatus=='New'"   [matTooltip]="element.botStatus"  class="text-primary">
                             <span><img src='../../../../../assets/images/RPA/newicon.png' class="testplus"></span>
                           </span>
   
                           <span *ngIf="element.botStatus=='Stop' || element.botStatus=='Stopped'" >
-                            <span class="tableActionsIcons"  [matTooltip]="element.botStatus">
+                            <span   [matTooltip]="element.botStatus">
                               <img src="../../../../../assets/images/RPA/stop_fail_icon.svg" class="testplus"> 
                             </span>
                             </span>
@@ -114,8 +117,9 @@
                       <th mat-header-cell *matHeaderCellDef >Actions </th>
                       <td mat-cell *matCellDef="let element">
                           <span (click)="executionAct(element.botId,element.sourceType)"   matTooltip="Start Bot">
-                            <li class="fa fa-play text-success" ></li>
-                          </span>&nbsp;
+                            <!-- <li class="fa fa-play text-success" ></li> -->
+                            <img src="../../../../../assets/images/SO/start-bot.svg" class="testplus" >
+                          </span>
                           <!-- <span (click)="pauseBot(element.botId)"  matTooltip="Pause Bot">
                             <i class="fa fa-pause "  aria-hidden="true" ></i> &nbsp;&nbsp;
                           </span>
@@ -123,19 +127,23 @@
                             <i class="fa fa-play-circle" aria-hidden="true"></i> &nbsp;&nbsp;
                           </span> -->
                           <span (click)="stopBot(element.botId)"  matTooltip="Stop Bot">
-                          <i class="fa fa-stop text-danger" aria-hidden="true"></i>&nbsp;
+                            <!-- <i class="fa fa-stop text-danger" aria-hidden="true"></i> -->
+                            <img src="../../../../../assets/images/SO/stop-bot.svg" class="testplus" >
                           </span >
                           <span>
-                              <button (click)="SelectSLACon(element)" matTooltip="SLA Configuration">
-                                  <i class="fa fa-cog" aria-hidden="true"></i></button>
-                            </span>
+                            <button (click)="SelectSLACon(element)" matTooltip="SLA Configuration">
+                                  <!-- <i class="fa fa-cog" aria-hidden="true"></i> -->
+                              <img src="../../../../../assets/images/SO/configuration.svg" class="testplus" >
+                            </button>
+                          </span>
                       </td>
                   </ng-container>
                   <ng-container matColumnDef="Schedule">
                       <th mat-header-cell *matHeaderCellDef>Schedule</th>
                       <td mat-cell *matCellDef="let element">
                           <span (click)="openscheduler(element)" matTooltip="Scheduler" style="cursor: pointer;">
-                          <i class="fa fa-calendar text-primary"  aria-hidden="true"></i>
+                          <!-- <i class="fa fa-calendar text-primary"  aria-hidden="true"></i> -->
+                          <img src="../../../../../assets/images/SO/scheduler.svg" class="testplus" >
                         </span>
                       </td>
                   </ng-container>
@@ -204,10 +212,8 @@
             Refresh
           </span>
           <span class="pull-right">
-
-            &nbsp;&nbsp;
           <span class=" clickable" (click)="logs_modal.hide()">
-            <img src="../../../../assets/images/Projects/circle-close.svg" alt="">
+            <img src="../../../../assets/images/Projects/circle-close.svg" class="testplus1">
           </span>
           
         </span>
@@ -256,8 +262,8 @@
               </ng-container>
 
               <ng-container matColumnDef="bot_status">
-                  <th mat-header-cell *matHeaderCellDef>Status</th>
-                  <td class="font-weight-bold" mat-cell class="font-weight-bold" *matCellDef="let element">
+                <th mat-header-cell *matHeaderCellDef>Status</th>
+                <td class="" mat-cell  *matCellDef="let element">
                       <!--<span *ngIf="element.bot_status!=null">
                         <span *ngIf="element.bot_status=='Running'" class="text-primary" ><span class="fa fa-spinner fa-spin"></span>&nbsp;<span>{{element.bot_status}}</span></span>
 
@@ -269,26 +275,34 @@
                       </span>-->
                       <span *ngIf="element.bot_status=='Running'" class="text-primary" >
                         <span>
-                          <img src="../../../../assets/images/RPA/DotSpin.gif" style="filter: none; width: 19px;">
+                          <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus">
                         </span>
-                        &nbsp;{{element.bot_status}}&nbsp;&nbsp;&nbsp;
+                        {{element.bot_status}}&nbsp;&nbsp;&nbsp;
                         <span class="btn btn-xs btn-primary clickable" (click)="updateLog(element.run_id,epsoft_logs_modal_ref)" >Kill</span>
                       </span>
 
-                  <span *ngIf="element.bot_status=='Success'" class="tableActionsIcons"><span><img src="../../../../assets/images/RPA/icon_latest/Success.svg" alt=""></span>&nbsp;<span>{{element.bot_status}}</span></span>
+                  <span *ngIf="element.bot_status=='Success'" >
+                    <img src="../../../../assets/images/RPA/icon_latest/Success.svg" class="testplus">
+                    <span>{{element.bot_status}}</span>
+                  </span>
 
-                  <span *ngIf="element.bot_status=='Failure'" class="tableActionsIcons"><span><img src="../../../../assets/images/RPA/icon_latest/close-red.svg" alt=""></span>&nbsp;<span>{{element.bot_status}}</span></span>
+                  <span *ngIf="element.bot_status=='Failure'" >
+                    <img src="../../../../assets/images/RPA/icon_latest/close-red.svg" class="testplus">
+                    <span>{{element.bot_status}}</span>
+                  </span>
                   <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
                   <!--<span *ngIf="element.bot_status=='New'" class="text-primary"><span><img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;"></span>&nbsp;<span>{{element.bot_status}}</span></span>-->
-                  <span *ngIf="element.bot_status=='New'" class="text-primary tableActionsIcons"><span>
-                    <img src="../../../../assets/images/RPA/userobot.png" style="filter: none; ">
-                  </span>&nbsp;<span>{{element.bot_status}}</span></span>
+                  <span *ngIf="element.bot_status=='New'" class="text-primary">
+                    <img src="../../../../assets/images/RPA/userobot.png" class="testplus">
+                    <span>{{element.bot_status}}</span>
+                  </span>
 
-                  <span *ngIf="element.bot_status=='Stop' ||element.bot_status=='Stopped'  " class="tableActionsIcons">
-                    <span>
-                      <img src="../../../../../assets/images/RPA/icon_latest/stop.svg"  class="testplus">
-                    </span><span>{{element.bot_status}}</span></span>
-                      <span *ngIf="element.bot_status == undefined">-</span></td>
+                  <sapn *ngIf="element.bot_status=='Stop' ||element.bot_status=='Stopped'" >
+                    <img src="../../../../../assets/images/RPA/icon_latest/stop.svg"  class="testplus">
+                    <span>{{element.bot_status}}</span>
+                  </span>
+                  <span *ngIf="element.bot_status == undefined">-</span>
+                </td>
               </ng-container>
 
               <ng-container matColumnDef="noData">
@@ -341,7 +355,7 @@
                               <!-- Status Column -->
               <ng-container matColumnDef="status">
                 <th mat-header-cell *matHeaderCellDef style="width:15%">Status</th>
-                <td class="font-weight-bold" mat-cell *matCellDef="let element" style="width:15%">
+                <td class="" mat-cell *matCellDef="let element" style="width:15%">
                   <!-- <span *ngIf="element.status!=null">
                       <span *ngIf="element.status=='Running'" class="text-primary" ><span class="fa fa-spinner fa-spin"></span>&nbsp;<span>{{element.status}}</span></span>
 
@@ -353,34 +367,32 @@
                     </span>-->
 
                     <span *ngIf="element.status=='Running'" class="text-primary" >
-                      <span><img src="../../../../assets/images/RPA/DotSpin.gif"  class="testplus"></span>{{element.status}}
+                      <img src="../../../../assets/images/RPA/DotSpin.gif"  class="testplus">{{element.status}}
                     </span>
 
-                      <span *ngIf="element.status=='Success'" class="tableActionsIcons">
-                        <span><img src="../../../../assets/images/RPA/icon_latest/Success.svg"  class="testplus"></span>
+                      <span *ngIf="element.status=='Success'" >
+                        <img src="../../../../assets/images/RPA/icon_latest/Success.svg"  class="testplus">
                         <span>{{element.status}}</span>
                       </span>
 
-                      <span *ngIf="element.status=='Failure'" class="tableActionsIcons">
-                        <span><img src="../../../../assets/images/RPA/icon_latest/close-red.svg"  class="testplus"></span>
+                      <span *ngIf="element.status=='Failure'" >
+                        <img src="../../../../assets/images/RPA/icon_latest/close-red.svg"  class="testplus">
                         <span>{{element.status}}</span>
                       </span>
                       <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
                       <!--<span *ngIf="element.status=='New'" class="text-primary"><span><img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;"></span>&nbsp;<span>{{element.status}}</span></span>-->
                       <span *ngIf="element.status=='New'" class="text-primary tableActionsIcons">
-                        <span>
                         <img src="../../../../assets/images/RPA/userobot.png"  class="testplus">
-                        </span>
                         <span>{{element.status}}</span>
                       </span>
 
-                      <span *ngIf="element.status=='Stop' || element.status=='Stopped'"  class="tableActionsIcons">
-                        <span><img src="../../../../../assets/images/RPA/icon_latest/stop.svg" class="testplus"></span>
+                      <span *ngIf="element.status=='Stop' || element.status=='Stopped'" >
+                        <img src="../../../../../assets/images/RPA/icon_latest/stop.svg" class="testplus">
                         <span>{{element.status}}</span>
                       </span>
 
-
-                    <span *ngIf="element.status == undefined">-</span></td>
+                    <span *ngIf="element.status == undefined">-</span>
+                </td>
               </ng-container>
 
 
@@ -414,7 +426,7 @@
       <div id='sch' class="rpa-modal schedulemod newshacl" style="display:block">
           <div class="rpa-modal-content">
               <div class="rpa-modal-header">
-                  <span class="rpa-modal-close" (click)="close()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
+                  <span class="rpa-modal-close" (click)="close()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" class="testplus1"></span>
                   <h4>Scheduler</h4>
               </div>
               <div class="modal-body actions-mbody">
@@ -431,16 +443,17 @@
   <ng-template #uiPathLogsModal>
     <div class="modal-header modelprhead ">
           Logs
-          <span class="pull-right" (click)="logs_modal.hide()">
-              <span (click)="getuipathlogs(uiPathLogsModal,uipathbotName)" ><img src="../../../../../assets/images/RPA/">&nbsp; Refresh</span>
-     
-            <img src="../../../../../assets/images/Projects/circle-close.svg" alt="">
+          <span (click)="getuipathlogs(uiPathLogsModal,uipathbotName)" class="logrefresh">
+            Refresh
+          </span>
+          <span class="pull-right" (click)="logs_modal.hide()">    
+            <img src="../../../../../assets/images/Projects/circle-close.svg" class="testplus1">
           </span>
           
     </div>
     <div class="modal-body">
-      <div class="text-right">
-        </div>
+      <!-- <div class="text-right">
+        </div> -->
   
       <div class="logs-container" >
           <table mat-table [dataSource]="uipathlogs" #sort6="matSort" matSort class="logs-table">
@@ -512,24 +525,26 @@
       <!-- <mat-paginator #paginator6 [pageSize]="5" [showFirstLastButtons]="true"></mat-paginator> -->
       </div>
        
-</ng-template>
+  </ng-template>
   <div id="divblueprismlogs" class="rpa-modal">
       <div class="rpa-modal-content">
           <div class="rpa-modal-header">
-              <span class="rpa-modal-close" (click)="viewblueprismlogclose()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
+              <span class="rpa-modal-close" (click)="viewblueprismlogclose()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" class="testplus1"></span>
               <h4>BluePrism Logs</h4>
           </div>
-          <div class="container-fluid" style="background: white;" >
-            <div class="container-fluid w-100" >
-              <button (click)="getBluePrismlogs(blueprismbotname)" matTooltip="Refresh" style='float:right;margin-top:10px;' ><i class="fas fa-sync-alt text-dark" aria-hidden="true"></i> &nbsp;Refresh</button>
-              <div class="container-fluid w-100" >
-                  <table mat-table [dataSource]="blueprimslogs" #sort7="matSort" matSort style="width:100%;max-height: 300px;overflow-x:scroll;">
+          <div class="modal-body">
+            <div class="container m-contanier form-body" >
+              <button (click)="getBluePrismlogs(blueprismbotname)" matTooltip="Refresh" style='float:right;' >
+                <img src="../../../../../assets/images/RPA/icon_latest/repeat-blue.svg" class="testplus" >
+              </button>
+              <div class="" >
+                <table mat-table [dataSource]="blueprimslogs" #sort7="matSort" matSort style="width:100%;overflow-x:scroll;">
   
   
                       <!-- Run Id Column -->
                       <ng-container matColumnDef="bluePrismBotSessionid">
-                          <th mat-header-cell *matHeaderCellDef mat-sort-header  style="width:320px;">Session Id </th>
-                          <td mat-cell *matCellDef="let element" [matTooltip]="element.bluePrismBotSessionid" style="width:320px;">
+                          <th mat-header-cell *matHeaderCellDef mat-sort-header>Session Id </th>
+                          <td mat-cell *matCellDef="let element" [matTooltip]="element.bluePrismBotSessionid">
                             <span *ngIf="element.bluePrismBotSessionid != null">{{(element.bluePrismBotSessionid.length > 30) ? ((element.bluePrismBotSessionid).slice(0, 30) + '...') : element.bluePrismBotSessionid}}
                             </span>
                             <span *ngIf="element.bluePrismBotSessionid == null">-</span>
@@ -538,8 +553,8 @@
   
                        <!-- Start Date Column -->
                        <ng-container matColumnDef="startTimeStamp">
-                          <th mat-header-cell *matHeaderCellDef style="width:210px;">Start Time</th>
-                          <td mat-cell *matCellDef="let element" style="width:210px;">
+                          <th mat-header-cell *matHeaderCellDef >Start Time</th>
+                          <td mat-cell *matCellDef="let element" >
                               <span *ngIf="element.startTimeStamp != null">{{element.startTimeStamp | date:'medium':'+0000'}}</span>
                               <span *ngIf="element.startTimeStamp == null">-</span>
                           </td>
@@ -547,8 +562,8 @@
   
                       <!-- Start Date Column -->
                       <ng-container matColumnDef="endTimeStamp">
-                          <th mat-header-cell *matHeaderCellDef style="width:210px;">End Time</th>
-                          <td mat-cell *matCellDef="let element" style="width:210px;">
+                          <th mat-header-cell *matHeaderCellDef >End Time</th>
+                          <td mat-cell *matCellDef="let element" >
                             <span *ngIf="element.endTimeStamp != null">{{element.endTimeStamp | date:'medium':'+0000'}}</span>
                             <span *ngIf="element.endTimeStamp == null">-</span>
                           </td>
@@ -557,16 +572,26 @@
                       <!-- End Date Column -->
   
                       <ng-container matColumnDef="status">
-                          <th mat-header-cell *matHeaderCellDef style="width:125px;">Status</th>
-                          <td mat-cell *matCellDef="let element" style="width:125px;" [matTooltip]="element.status">
+                          <th mat-header-cell *matHeaderCellDef >Status</th>
+                          <td mat-cell *matCellDef="let element"  [matTooltip]="element.status">
                             <span *ngIf="element.status != null">
-                              <span style="text-align: center;" *ngIf="element.status=='Running'" class="text-primary" ><span><img src="../../../../assets/images/RPA/DotSpin.gif" style="filter: none; width: 19px;"></span>&nbsp;{{element.status}}</span>
+                              <span *ngIf="element.status=='Running'" class="text-primary" >
+                                <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus">{{element.status}}
+                              </span>
   
-                        <span style="text-align: center;" *ngIf="element.status=='Completed'" class="text-success"><span><li class="fa fa-check-circle"style="font-size:19px"></span>&nbsp;<span>{{element.status}}</span></span>
+                              <span *ngIf="element.status=='Completed'" class="text-success">
+                                <!-- <li class="fa fa-check-circle"style="font-size:19px"> -->
+                                <img src="../../../../../assets/images/RPA/icon_latest/Success.svg" class="testplus" >
+                                <span>{{element.status}}</span>
+                              </span>
   
-                        <span style="text-align: center;" *ngIf="element.status=='Failed'" class="text-danger"><span><li class="fa fa-times-circle" style="font-size:19px"></span>&nbsp;<span>{{element.status}}</span></span>
-                        </span>
-                        <span *ngIf="element.status == null">-</span>
+                              <span *ngIf="element.status=='Failed'" class="text-danger">
+                                <!-- <li class="fa fa-times-circle" style="font-size:19px"> -->
+                                <img src="../../../../../assets/images/RPA/icon_latest/close-red.svg" class="testplus" >
+                                <span>{{element.status}}</span>
+                              </span>
+                            </span>
+                            <span *ngIf="element.status == null">-</span>
                           </td>
                       </ng-container>
   
@@ -583,11 +608,11 @@
                       </td>
                   </ng-container>  
   
-                      <tr mat-header-row *matHeaderRowDef="displayedblueprismcolums; sticky: true"></tr>
-                      <tr mat-row *matRowDef="let row; columns: displayedblueprismcolums;"></tr>
-                      <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': blueplogsdata }"></tr>
-                 </table>
-                  <mat-paginator #paginator7 [pageSize]="10" [showFirstLastButtons]="true"></mat-paginator>
+                  <tr mat-header-row *matHeaderRowDef="displayedblueprismcolums; sticky: true"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedblueprismcolums;"></tr>
+                  <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': blueplogsdata }"></tr>
+                </table>
+                <mat-paginator #paginator7 [pageSize]="10" [showFirstLastButtons]="true"></mat-paginator>
               </div>
             </div>
           </div>
@@ -596,7 +621,9 @@
    <div id='SLAConfig_overlay' class="rpa-modal" >
       <div class="rpa-modal-content">
           <div class="rpa-modal-header">
-              <span class="rpa-modal-close" (click)="SLAclose_SO_bot()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
+              <span class="rpa-modal-close" (click)="SLAclose_SO_bot()">
+                <img src="../../../../assets/images/RPA/icon_latest/close.svg" alt="">
+              </span>
               <h4>SLA Configuration</h4>
           </div>
           <div class="modal-body">
