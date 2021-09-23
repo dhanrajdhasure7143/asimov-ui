@@ -41,6 +41,7 @@
     "bpmn": "^0.2.2",
     "bpmn-js": "^7.3.0",
     "bpmn-js-bpmnlint": "^0.15.0",
+    "bpmn-js-color-picker": "^0.3.1",
     "bpmn-js-differ": "^2.0.2",
     "bpmn-js-properties-panel": "^0.36.0",
     "bpmn-to-image": "^0.5.1",

@@ -574,7 +574,7 @@ body {
 }
 
 .node {
-  fill: #fff;
+  /* fill: #fff; */
 }
 
 .edgePath path {
@@ -2607,7 +2607,12 @@ span.pdicon {
   right: 13px;
   top: 28px;
 }
-
+#exportSVGtoPDF .node g.label{
+  font-weight: 400 !important;
+}
+.bpmn-icon-color::before {
+  content: url("assets/images/BPMS/brush1.svg") !important;
+}
 .newexecbots_progress .mat-progress-bar-fill::after {
   background: none;
 }
