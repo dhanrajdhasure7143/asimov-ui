@@ -123,7 +123,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
      }
 
     },error => {
-      this.error = "Please complete your registration process";
+      //this.error = "Please complete your registration process";
 
     })
     this.spinner.show();
