@@ -309,10 +309,10 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
           this.startbot=false;
           this.pausebot=true;
           this.resumebot=false;
-          Swal.fire(response.status,"","success")
+          Swal.fire("Success",response.status,"success")
         }else
         {
-          Swal.fire(response.errorMessage,"","warning");
+          Swal.fire("Error",response.errorMessage,"error");
         }
       })
     }
@@ -348,7 +348,7 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
           this.pausebot=true;
           this.startbot=false;
           this.resumebot=false;
-          Swal.fire(response.status,"","success");
+          Swal.fire("Success",response.status,"success");
         }
       })
     }
@@ -365,11 +365,11 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
             this.startbot=true;
             this.pausebot=false;
             this.resumebot=false;
-            Swal.fire(response.status,"","success");
+            Swal.fire("Success",response.status,"success");
           }
           else
           {
-            Swal.fire(response.errorMessage,"","warning");
+            Swal.fire("Error",response.errorMessage,"error");
           }
         })
     }

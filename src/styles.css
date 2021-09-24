@@ -2349,9 +2349,9 @@ th.mat-header-cell {
 
 /* RPA Module New Styles */
 .rpa-content-div {
-  padding: 10px;
-  overflow: hidden auto;
-  height: calc(100% - 48px);
+  /* padding: 10px; */
+  overflow:  auto;
+  height: calc(100% - 10px);
 }
 /* RPA Module New Styles */
 

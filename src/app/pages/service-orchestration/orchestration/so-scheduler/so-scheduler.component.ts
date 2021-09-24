@@ -2,6 +2,7 @@ import {Input, Component, OnInit ,Pipe, PipeTransform } from '@angular/core';
 import { CronOptions } from 'src/app/shared/cron-editor/CronOptions';
 import {RestApiService} from 'src/app/pages/services/rest-api.service';
 import Swal from 'sweetalert2';
+import { NotifierService } from 'angular-notifier';
 import cronstrue from 'cronstrue';
 @Component({
   selector: 'app-so-scheduler',
@@ -53,7 +54,7 @@ export class SoSchedulerComponent implements OnInit {
   timezone:any="";
   schedule_list:any=[];
   botdata:any;
-  selectedEnvironment:any;
+  selectedEnvironment:any="";
   environmentid:any;
   deletestack:any=[];
   flags={
@@ -64,7 +65,7 @@ export class SoSchedulerComponent implements OnInit {
     deleteflag:false,
   }
   q=0;
-  constructor(private rest:RestApiService) { }
+  constructor(private rest:RestApiService, private notifier: NotifierService) { }
 
   ngOnInit() {
     if(this.data.processid!=undefined)
@@ -225,7 +226,7 @@ export class SoSchedulerComponent implements OnInit {
         let resp:any=data
         if(resp.errorMessage!=undefined)
         {
-          Swal.fire(resp.errorMessage,"","warning");
+          (resp.errorMessage,"","warning");
         }
         else
         {
