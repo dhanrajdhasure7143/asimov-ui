@@ -416,7 +416,7 @@ mat-paginator button:disabled{
 }
 
 .rpa-home-table{
-  height: calc(100vh - 450px);
+  height: calc(100vh - 295px);
   overflow-y: scroll;
 }
 .open-btn-click {
@@ -535,4 +535,16 @@ mat-paginator button:disabled{
 .schedulemod ul.nav.nav-tabs.card-header-tabs a.nav-link.active {
   color: #00a0e3 !important;
   background: #fefefe !important;
+}
+
+.row.environment-search-tools, .credential-search-tools {
+  padding: 10px 10px 0px 10px;
+}
+.con-envr {
+  padding: 10px !important;
+}
+.environment-tablegrid, .credential-tablegrid {
+  width: 100%;
+  overflow-x: scroll;
+  height: calc(100vh - 318px);
 }

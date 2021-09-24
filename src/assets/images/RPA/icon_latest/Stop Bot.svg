@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="22" height="22" viewBox="0 0 22 22">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_2289" data-name="Rectangle 2289" width="22" height="22" transform="translate(0)"/>
+    </clipPath>
+  </defs>
+  <g id="Stop_Bot" data-name="Stop Bot" clip-path="url(#clip-path)">
+    <g id="stop-circle" transform="translate(1 1)">
+      <g id="Rectangle_2061" data-name="Rectangle 2061" transform="translate(0)" fill="none" stroke="#607088" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+        <rect width="20" height="20" stroke="none"/>
+        <rect x="1" y="1" width="18" height="18" fill="none"/>
+      </g>
+    </g>
+  </g>
+</svg>
