@@ -49,9 +49,12 @@
           <button [disabled]="selectedvalue=='' || selectedEnvironment==''" matTooltip="Pause Process" mat-mini-fab color="basic" (click)="startprocess()"   title="Run Process"><i  class="fas fa-pause"></i></button>
         </span>
         -->
-        <!-- <span style="padding:5px" id="autoOpenScheduler">
-          <button [disabled]="selectedvalue==''" class="orchestration-action-btn"  mat-mini-fab color="basic"   matTooltip="Open Scheduler" (click)="startscheduler()" ><img src="../../../../../assets/images/calicon.svg" alt="" class="testplus"></button>
-        </span> -->
+        
+      <button [disabled]="selectedvalue==''" id="openScheduler" class="tsttooltipbtn"   (click)="startscheduler()" >
+        <img src="../../../../../assets/images/calicon.svg" alt="" class="testplus">
+        <span class="testtooltip">View Logs</span>
+      </button>
+       
       <button [disabled]="selectedvalue==''"  id="autoViewLogs" class="tsttooltipbtn"  (click)="getprocesslogs(process_logs)"  >
         <img src="../../../../../assets/images/file.svg" alt="" class="testplus">
         <span class="testtooltip">View Logs</span>
@@ -363,13 +366,13 @@
 
 
 <div *ngIf="schedulepopup">
-  <div id='sch' class="rpa-modal" style="display:block">
+  <div id='sch' class="rpa-modal  schedulemod newshacl" style="display:block">
       <div class="rpa-modal-content">
           <div class="rpa-modal-header">
               <span class="rpa-modal-close" (click)="closescheduler()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
               <h4>Scheduler</h4>
           </div>
-          <div class="rpa-modal-body">
+          <div class="rpa-modal-body actions-mbody py-10">
               <app-so-scheduler [data]="schdata" id="Scheduler"></app-so-scheduler>
           </div>
       </div>

@@ -158,3 +158,8 @@ span.testtooltip:before {
 .tsttooltipbtn:hover span.testtooltip {
   display: block;
 }
+
+
+.py-10{
+  padding:10px !important;
+}
