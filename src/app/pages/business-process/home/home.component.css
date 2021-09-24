@@ -180,27 +180,34 @@ div#bpmn_list {
     }
     .cell2 {
         width:12%;
+        font-size: 13px;
     }
     .cell3,.cell5 {
         width:7%;
+        font-size: 13px;
     }
     .cell4 {
         width:10%;
+        font-size: 13px;
     }
     .cell6 {
         width:20%;
+        font-size: 13px;
     }
     .cell7 {
         width:16%;
+        font-size: 13px;
     }
     .cell8 {
         width:14%;
+        font-size: 13px;
     }
     .cell9 {
         width:6%;
     }
     .cell10 {
         width:4%;
+        font-size: 14px;
     }
     .cell span{
         cursor: pointer;
@@ -208,4 +215,8 @@ div#bpmn_list {
 
     .bps-labcls, .bps-serwksp {
         margin-bottom: 8px !important;
+    }
+
+    .workspace-title.table button.mat-sort-header-button {
+        font-size: 14px;
     }

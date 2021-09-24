@@ -52,7 +52,7 @@
         
       <button [disabled]="selectedvalue==''" id="openScheduler" class="tsttooltipbtn"   (click)="startscheduler()" >
         <img src="../../../../../assets/images/calicon.svg" alt="" class="testplus">
-        <span class="testtooltip">View Logs</span>
+        <span class="testtooltip">Open Scheduler</span>
       </button>
        
       <button [disabled]="selectedvalue==''"  id="autoViewLogs" class="tsttooltipbtn"  (click)="getprocesslogs(process_logs)"  >
@@ -352,15 +352,14 @@
 <ng-template #process_logs>
   <div id='logsid'>
     <div class="modal-header modelprhead">
-
+      <!-- <span *ngIf="viewlogid1!=undefined" class="module-back-button" (click)="viewlogid1=undefined">
+        <i class="fas fa-arrow-left" aria-hidden="true"></i>
+      </span> -->
        Logs
-       <span></span>
+       <!-- <span (click)="getprocesslog()" class="logrefresh">Refresh</span> -->
        
-       <span></span>
-       
-       <span></span>
-        <button type="button" class="close pull-right" aria-label="Close" (click)="logs_modal.hide()">
-          <span aria-hidden="true"><img alt="" src="../../../../../assets/images/Projects/circle-close.svg"></span>
+        <button type="button" class="close pull-right" (click)="logs_modal.hide()">
+          <img alt="" src="../../../../../assets/images/Projects/circle-close.svg">
         </button>
      
       <!-- <span class="pull-right clickable" (click)="logs_modal.hide()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span> -->

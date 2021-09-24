@@ -31,7 +31,7 @@
         </div>
       </div>
       
-        <div class="row">
+      <div class="row">
           <div class="botmanagement-tablelist" >
             <!-- <mat-card> -->
               
@@ -182,9 +182,10 @@
                   No Record Found
               </div>
             
-          <mat-paginator #paginator1 [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]"  [showFirstLastButtons]="true"></mat-paginator>
+          
             <!-- </mat-card> -->
           </div>
+          <mat-paginator #paginator1 [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]"  [showFirstLastButtons]="true"></mat-paginator>
       </div>
     </div>
   
@@ -213,7 +214,7 @@
           </span>
           <span class="pull-right">
           <span class=" clickable" (click)="logs_modal.hide()">
-            <img src="../../../../assets/images/Projects/circle-close.svg" class="testplus1">
+            <img src="../../../../assets/images/Projects/circle-close.svg">
           </span>
           
         </span>
@@ -297,7 +298,7 @@
                     <span>{{element.bot_status}}</span>
                   </span>
 
-                  <sapn *ngIf="element.bot_status=='Stop' ||element.bot_status=='Stopped'" >
+                  <span *ngIf="element.bot_status=='Stop' ||element.bot_status=='Stopped'" >
                     <img src="../../../../../assets/images/RPA/icon_latest/stop.svg"  class="testplus">
                     <span>{{element.bot_status}}</span>
                   </span>
@@ -447,14 +448,11 @@
             Refresh
           </span>
           <span class="pull-right" (click)="logs_modal.hide()">    
-            <img src="../../../../../assets/images/Projects/circle-close.svg" class="testplus1">
+            <img src="../../../../../assets/images/Projects/circle-close.svg">
           </span>
           
     </div>
     <div class="modal-body">
-      <!-- <div class="text-right">
-        </div> -->
-  
       <div class="logs-container" >
           <table mat-table [dataSource]="uipathlogs" #sort6="matSort" matSort class="logs-table">
 
@@ -617,8 +615,8 @@
             </div>
           </div>
       </div>
-    </div>
-   <div id='SLAConfig_overlay' class="rpa-modal" >
+  </div>
+  <div id='SLAConfig_overlay' class="rpa-modal" >
       <div class="rpa-modal-content">
           <div class="rpa-modal-header">
               <span class="rpa-modal-close" (click)="SLAclose_SO_bot()">
