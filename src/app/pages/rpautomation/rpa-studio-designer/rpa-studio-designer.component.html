@@ -108,47 +108,22 @@
                       <!-- <i class="fa fa-sync-alt" style="font-size:18px;font-weight: 700;"></i> -->
                     </button>
                   </div>
-                  <div class="action-item" *ngIf="current_instance != undefined" dropdown>
-                      
-                      <button class="clickable  text-primary dropdown-toggle" placement="bottom" tooltip="More" id="otherActions" dropdownToggle type="button"
-                      aria-controls="other_actions">
-                      <img src="../../../../assets/images/RPA/icon_latest/more.svg" />
-                      <!-- <i class="ri-more-2-fill"></i> -->
-                      </button>
-                      <ul id="other_actions" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
-                        <li class="clickable" class="clickable action-item-data" >
-                            <button  placement="bottom"  [disabled]="current_instance.savebotrespose == undefined" tooltip="Delete Bot" (click)=" current_instance.delete()">
-                              <img src="../../../../assets/images/RPA/icon_latest/delete.svg"  />&nbsp;&nbsp;Delete
-                            </button>
-                        </li>  
-                        <hr>
-        
-                        <li  role="other_actions" class="clickable action-item-data"  style="white-space: nowrap;" >
-                              <button  placement="top" tooltip="Reset Bot" (click)=" current_instance.reset()" >
-                                <img src="../../../../assets/images/RPA/icon_latest/reset.svg" />&nbsp;&nbsp;Reset
-                              </button>
-                        </li>
-                        <hr>
-                        <li  role="other_actions"  class="clickable action-item-data"   style="white-space: nowrap;" >
-                            <button  placement="top" [disabled]="current_instance.savebotrespose==undefined" tooltip="Export Bot" (click)=" current_instance.exportbot(current_instance.botState)" >
-                              <img src="../../../../assets/images/RPA/icon_latest/export.svg" />&nbsp;&nbsp;Export 
-                            </button>
-                        </li>
-                        <hr>
-                        <li  role="other_actions" class="clickable action-item-data"   style="white-space: nowrap;" >
-                          <button  placement="top" tooltip="Create Bot" (click)=" rpa_studio.onCreate(0)" >
-                            <img src="../../../../assets/images/RPA/icon_latest/add-fill.svg" />&nbsp;&nbsp;Create Bot 
+               
+                    <div class="action-item" *ngIf="current_instance != undefined" placement="bottom" tooltip="Zoom out"(click)="current_instance.childBotWorkspace.zoomout('')">
+                        <button  placement="bottom"  [disabled]="current_instance.savebotrespose == undefined" tooltip="Delete Bot" (click)=" current_instance.delete()">
+                            <img src="../../../../assets/images/RPA/icon_latest/delete.svg"  />
                           </button>
-                      </li>
-                      <hr>
-                      <li  role="other_actions" class="clickable action-item-data"   style="white-space: nowrap;" >
-                        <button  placement="top" tooltip="Load Bot" (click)="rpa_studio.onLoad()" >
-                          <img src="../../../../assets/images/RPA/icon_latest/load-bot-fill.svg" />&nbsp;&nbsp;Load Bot
-                        </button>
-                    </li>
-                    
-                      </ul>
-                  </div>
+                    </div>
+                    <div class="action-item" *ngIf="current_instance != undefined" placement="bottom" tooltip="Zoom out"(click)="current_instance.childBotWorkspace.zoomout('')">
+                        <button  placement="top" tooltip="Reset Bot" (click)=" current_instance.reset()" >
+                            <img src="../../../../assets/images/RPA/icon_latest/reset.svg" />
+                          </button>
+                    </div>
+                    <div class="action-item" *ngIf="current_instance != undefined" placement="bottom" tooltip="Zoom out"(click)="current_instance.childBotWorkspace.zoomout('')">
+                        <button  placement="top" [disabled]="current_instance.savebotrespose==undefined" tooltip="Export Bot" (click)=" current_instance.exportbot(current_instance.botState)" >
+                            <img src="../../../../assets/images/RPA/icon_latest/export.svg" /> 
+                          </button>
+                    </div>
                 </div>
               
       
