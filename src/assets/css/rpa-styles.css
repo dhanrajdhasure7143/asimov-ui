@@ -416,7 +416,7 @@ mat-paginator button:disabled{
 }
 
 .rpa-home-table{
-  height:47vh;
+  height: calc(100vh - 450px);
   overflow-y: scroll;
 }
 .open-btn-click {

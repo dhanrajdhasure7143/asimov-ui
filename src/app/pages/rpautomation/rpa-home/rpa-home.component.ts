@@ -35,7 +35,7 @@ export class RpaHomeComponent implements OnInit {
   public isTableHasData = true;
   public respdata1=false;
 
-  displayedColumns: string[] = ["botName","description","department","botType","version","botStatus"];
+  displayedColumns: string[] = ["botName","description","department","botType","version","botStatus","actions"];
   displayedColumns2: string[] = ["processName","taskName","Assign","status","successTask","failureTask","Operations"];
   departmentlist :string[] = ['Development','QA','HR'];
   botNameFilter = new FormControl('');
@@ -164,19 +164,19 @@ export class RpaHomeComponent implements OnInit {
 
     );
 
-    this.rest.getCustomUserRole(2).subscribe(role=>{
-      this.customUserRole=role.message[0].permission;
-      this.customUserRole.forEach(element => {
-        if(element.permissionName.includes('RPA_Bot_Configuration_full')){
-          this.enableConfiguration=true;
-        } if(element.permissionName.includes('RPA_Bot_Create')){
-          this.enablecreatebot=true;
-        }if(element.permissionName.includes('RPA_Workspace_full')){
-          this.showWorkspace=true;
-        }
-      }
-          );
-        })
+    // this.rest.getCustomUserRole(2).subscribe(role=>{
+    //   this.customUserRole=role.message[0].permission;
+    //   this.customUserRole.forEach(element => {
+    //     if(element.permissionName.includes('RPA_Bot_Configuration_full')){
+    //       this.enableConfiguration=true;
+    //     } if(element.permissionName.includes('RPA_Bot_Create')){
+    //       this.enablecreatebot=true;
+    //     }if(element.permissionName.includes('RPA_Workspace_full')){
+    //       this.showWorkspace=true;
+    //     }
+    //   }
+    //       );
+    //     })
      }
 
   ngAfterViewInit() {

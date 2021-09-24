@@ -4,20 +4,20 @@
             <div class="RPA-scheduletimer-header">
                 <div class="col-md-11 p-0">
               <span>
-                <select class="rpa-control form-control" [(ngModel)]="timezone">
+                <select  class="rpa-control form-control" [(ngModel)]="timezone">
                   <option value="" disabled>Select Timezone</option>
                   <option *ngFor="let timeZone of timesZones" [value]="timeZone">{{timeZone}}</option>
                 </select>
               </span>&nbsp;&nbsp;
               <span  *ngIf="processid!='' && processid !=undefined">
-                <mat-form-field>
-                    <mat-label>Select Environemt</mat-label>
-                    <mat-select [(ngModel)]="selectedEnvironment">
-                        <mat-option *ngFor="let env of Environments" [value]="env.environmentId">
+               <br>
+                    <select  class="rpa-control form-control" [(ngModel)]="selectedEnvironment">
+                            <option value="" disabled>Select Environment</option>
+                        <option *ngFor="let env of Environments" [value]="env.environmentId">
                             {{env.environmentName}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
+                        </option>
+                    </select>
+                <br>
               </span>
               </div>
               <div class="col-md-1 p-0 scheduletimer-loadicon">

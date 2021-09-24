@@ -348,7 +348,7 @@ h4.gridHeader {
   /* border-bottom: 1px solid #4a4a4a33 !important; */
   padding: 8px 10px;
   display: inline-block;
-  width: calc(100% / 7);
+  width: calc(100% / 7.1);
 }
 
 .gridheader-th i {
