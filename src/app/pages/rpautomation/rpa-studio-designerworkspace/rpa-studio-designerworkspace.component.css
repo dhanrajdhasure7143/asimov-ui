@@ -42,7 +42,7 @@
   width:100%;
   overflow: auto;
   /* height: calc(100vh - 53px); */
-  height:70vh;
+  height: calc(100vh - 208px);
   padding:10px;
 }
 

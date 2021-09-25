@@ -12,6 +12,7 @@ export class RpaStudioDesignerComponent implements OnInit {
   @ViewChildren("rpa_bot_instance") bot_instances:QueryList<any>;
   current_instance:any;
   toolset_instance:any;
+  selected_tab_instance:any;
   constructor(private rpa_studio:RpaStudioComponent) { }
 
   ngOnInit() {
@@ -24,12 +25,15 @@ export class RpaStudioDesignerComponent implements OnInit {
   {
     console.log(this.tabsArray.length)
     localStorage.setItem("isHeader","true");
-  
+    console.log("check")
       setTimeout(()=>{
-        console.log(this.bot_instances)
+      console.log(this.bot_instances)
+       localStorage.setItem("isHeader","true");
         this.bot_instances.forEach((instance,index)=>{
+          console.log(instance)
           this.current_instance=instance.rpa_actions_menu;
           this.toolset_instance=instance;
+          this.selected_tab_instance=instance;
           });
       },2500)
      
@@ -54,6 +58,7 @@ export class RpaStudioDesignerComponent implements OnInit {
         if(index==event.index)
         {
           this.toolset_instance=instance
+          this.selected_tab_instance=instance;
           this.current_instance=instance.rpa_actions_menu;
           this.rpa_studio.spinner.hide();
         }
@@ -62,6 +67,31 @@ export class RpaStudioDesignerComponent implements OnInit {
     
     
     console.log(this.current_instance)
+  }
+
+  version_change(versionId)
+  {
+    this.current_instance.switchversion(versionId);
+    let botName=this.current_instance.botState.botName
+    this.selected_tab_instance=this.current_instance;
+    this.rpa_studio.spinner.show();
+    
+    setTimeout(()=>{
+      this.bot_instances.forEach((instance,index)=>{
+        if(instance.botState.botName==botName)
+        {
+          this.toolset_instance=instance
+          this.current_instance=instance.rpa_actions_menu;
+          this.selected_tab_instance=instance;
+          this.rpa_studio.spinner.hide();
+        }
+      })
+    },2500)
+  }
+
+  removenodes()
+  {
+    $(".bot-close").click();
   }
 
 }

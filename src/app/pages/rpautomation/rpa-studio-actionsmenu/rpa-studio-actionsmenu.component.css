@@ -253,7 +253,7 @@ background-color: blue !important;
 .rpa-custom-slider {
   height: 200px;
   position: absolute;
-  top: 25%;
+  bottom: -80px;
   right: 15px;
 }
 
