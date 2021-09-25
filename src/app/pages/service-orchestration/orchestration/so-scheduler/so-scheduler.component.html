@@ -86,7 +86,7 @@
                         <th>Status</th>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let schedule of schedule_list | paginate: { itemsPerPage: 4,currentPage: q }">
+                        <tr *ngFor="let schedule of schedule_list | paginate: { itemsPerPage: 2,currentPage: q }">
                             <td class="text-center"><input type="checkbox" (click)="check_schedule($event,schedule.intervalId)" [checked]="schedule.check"></td>
                             <td>{{convertcron(schedule.scheduleInterval)}}</td>
                             <td>{{ schedule.timeZone}}</td>
@@ -116,7 +116,7 @@
                         <th>Status</th>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let schedule of (schedule_list | Reverse) |  paginate: { itemsPerPage: 4,currentPage: q }" >
+                        <tr *ngFor="let schedule of (schedule_list | Reverse) |  paginate: { itemsPerPage:2,currentPage: q }" >
                             <td class="text-center"><input type="checkbox" (click)="check_schedule($event,schedule.intervalId)" [checked]="schedule.check"></td>
                             <td>{{convertcron(schedule.scheduleInterval)}}</td>
                             <td>{{ schedule.timezone}}</td>
@@ -131,9 +131,10 @@
                 </table></div></div>
                 <div class="pagicl float-right"><pagination-controls (pageChange)="q = $event"></pagination-controls></div> 
                 </div>
-                <div class="text-right">
-                    <button class="btn btn-primary eiap-btn" (click)="saveschedule()">Save</button>
-                </div>
+               
             
         </div>
+    </div>
+    <div class="text-right form-footer">
+            <button class="btn btn-primary eiap-btn" (click)="saveschedule()">Save</button>
     </div>

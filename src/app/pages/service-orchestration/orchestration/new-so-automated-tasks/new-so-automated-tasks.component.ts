@@ -828,7 +828,7 @@ resetsla(){
 
   startscheduler()
   {
-    document.getElementById("filters").style.display = "none";
+    //document.getElementById("filters").style.display = "none";
     this.schdata={
       processid:this.selectedvalue,
       environment:this.selectedEnvironment,
