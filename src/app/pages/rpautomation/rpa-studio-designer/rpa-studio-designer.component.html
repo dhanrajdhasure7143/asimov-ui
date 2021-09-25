@@ -2,17 +2,31 @@
   <div class="content-area RPA-Layout">
     <div class="rpa-layout-header">
       <div class="row  module-heading title ">
-        <div class="col-md-2 p-0">
-          <span class="module-heading-title" (click)="removenodes()">RPA Studio</span>
+        <div class="col-md-4 rpa-header-data">
+          <div>
+            <span *ngIf="current_instance != undefined">
+            <span class="clickable module-back-button rpa-header-back-button"  (click)="removenodes()">
+              <i class="fas fa-arrow-left"></i></span>
+            </span>&nbsp;
+            <span  class="bpsbtnsep">|</span>&nbsp;
+            <span  class="rpa-main-title" >RPA Studio</span>&nbsp;
+            <span  class="bpsbtnsep">/</span>&nbsp;
+            <span *ngIf="current_instance != undefined" >{{current_instance.botState.botName}}</span>
+          </div>
+          
+          <!-- <div *ngIf="current_instance != undefined" class="rpa-subtitle">
+            <span class="clickable module-back-button"  *ngIf="current_instance.botState.botId!=undefined" (click)="removenodes()"><i class="text-primary fas fa-arrow-left"></i></span>
+            <span *ngIf="current_instance.botState.botId!=undefined">Created By: {{current_instance.botState.createdBy}}&nbsp;|&nbsp;{{current_instance.botState.lastSubmittedTS | date :'medium'}}</span>
+          </div> -->
         </div>
-        <div class="col-md-10 p-0">
+        <div class="col-md-8 p-0">
         
                 <div class="actionsmenu-right"  >
-                  <div class="action-item " *ngIf="current_instance != undefined"  dropdown    >
+                  <!-- <div class="action-item " *ngIf="current_instance != undefined"  dropdown    >
                       <button class=" dropdown-action-item clickable dropdown-toggle" id="Versions" dropdownToggle type="button"
                       placement="bottom" tooltip="Versions"  aria-controls="versions">
                         <img src="../../../../assets/images/RPA/icon_latest/layer.svg" />
-                        <!-- <span><i class="ri-stack-line"></i></span> -->
+                        
                         &nbsp;Version &nbsp;{{current_instance.selectedversion}} &nbsp;<span class="caret"></span>
                     </button>
                     <ul id="versions" style="max-width:300px;max-height:250px;overflow:auto;left:auto;" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
@@ -21,8 +35,8 @@
                         Version&nbsp; {{version.vId}}
                       </li>
                     </ul>
-                  </div>
-                  <span _ngcontent-xmb-c13="" class="bpsbtnsep">|</span>
+                  </div> -->
+
                   <div class="action-item"  *ngIf="current_instance != undefined" dropdown  #dropdown="bs-dropdown"   [insideClick]="true" >
                     <button class= "dropdown-action-item clickable dropdown-toggle" id="Environments" placement="bottom" tooltip="Environments" dropdownToggle type="button"
                     aria-controls="environments">
@@ -47,17 +61,18 @@
                     </ul>
                   </div>
                   <span _ngcontent-xmb-c13="" class="bpsbtnsep">|</span>
-                  <div class="action-item"  *ngIf="current_instance != undefined"  placement="bottom">
-                   <button  tooltip="Save Bot" (click)=" current_instance.saveBotFunAct()" [disabled]="current_instance.selectedEnvironments.length==0"></button>
-                    <img src="../../../../assets/images/RPA/icon_latest/save.svg" />
+                  <div class="action-item"  *ngIf="current_instance != undefined" >
+                    <button  tooltip="Save Bot" (click)=" current_instance.saveBotFunAct()"  placement="bottom" [disabled]="current_instance.selectedEnvironments.length==0">
+                      <img src="../../../../assets/images/RPA/icon_latest/save.svg" />
+                    </button>
                     <!-- <i class="ri-save-line"></i> -->
                   </div>
                   <!-- <div class="action-item" >
                       <i class="ri-play-line"></i>
                   </div> -->
           
-                  <div class="action-item" *ngIf="current_instance != undefined" placement="bottom" >
-                    <button tooltip="Start Bot"  [disabled]="current_instance.savebotrespose==undefined" (click)=" current_instance.executionAct()">
+                  <div class="action-item" *ngIf="current_instance != undefined">
+                    <button tooltip="Start Bot"  placement="bottom"  [disabled]="current_instance.savebotrespose==undefined" (click)=" current_instance.executionAct()">
                       <img src="../../../../assets/images/RPA/icon_latest/play.svg" />
                         <!-- <i class="ri-play-circle-line"></i> -->
                     </button>
@@ -96,7 +111,7 @@
                       <div class="d-format"><a class="dropdown-item clickable" (click)=" current_instance.childBotWorkspace.downloadPdf()">&nbsp;<span>PDF</span></a></div>
                     </div>
                   </div>
-                  <div class="action-item" *ngIf="current_instance != undefined" placement="bottom" tooltip="Zoom in"(click)="current_instance.childBotWorkspace.zoomin('')">
+                  <!-- <div class="action-item" *ngIf="current_instance != undefined" placement="bottom" tooltip="Zoom in"(click)="current_instance.childBotWorkspace.zoomin('')">
                     <img src="../../../assets/images/BPMS/zoom-in.svg"/>
                   </div>
                   <div class="action-item" *ngIf="current_instance != undefined" placement="bottom" tooltip="Zoom out"(click)="current_instance.childBotWorkspace.zoomout('')">
@@ -105,22 +120,21 @@
                   <div class="action-item" *ngIf="current_instance != undefined" placement="bottom" tooltip="Fit to screen">
                     <button (click)=" current_instance.childBotWorkspace.reset('');slider=0;">
                       <img src="../../../../assets/images/RPA/icon_latest/Fit screen.svg" />
-                      <!-- <i class="fa fa-sync-alt" style="font-size:18px;font-weight: 700;"></i> -->
                     </button>
-                  </div>
+                  </div> -->
                
-                    <div class="action-item" *ngIf="current_instance != undefined" placement="bottom" tooltip="Zoom out"(click)="current_instance.childBotWorkspace.zoomout('')">
-                        <button  placement="bottom"  [disabled]="current_instance.savebotrespose == undefined" tooltip="Delete Bot" (click)=" current_instance.delete()">
+                    <div class="action-item" *ngIf="current_instance != undefined" >
+                        <button  placement="bottom"  [disabled]="current_instance.savebotrespose == undefined" placement="bottom" tooltip="Delete" (click)=" current_instance.delete()">
                             <img src="../../../../assets/images/RPA/icon_latest/delete.svg"  />
                           </button>
                     </div>
-                    <div class="action-item" *ngIf="current_instance != undefined" placement="bottom" tooltip="Zoom out"(click)="current_instance.childBotWorkspace.zoomout('')">
-                        <button  placement="top" tooltip="Reset Bot" (click)=" current_instance.reset()" >
+                    <div class="action-item" *ngIf="current_instance != undefined">
+                        <button  placement="top" tooltip="Reset Bot" placement="bottom" tooltip="Reset" (click)=" current_instance.reset()" >
                             <img src="../../../../assets/images/RPA/icon_latest/reset.svg" />
                           </button>
                     </div>
-                    <div class="action-item" *ngIf="current_instance != undefined" placement="bottom" tooltip="Zoom out"(click)="current_instance.childBotWorkspace.zoomout('')">
-                        <button  placement="top" [disabled]="current_instance.savebotrespose==undefined" tooltip="Export Bot" (click)=" current_instance.exportbot(current_instance.botState)" >
+                    <div class="action-item" *ngIf="current_instance != undefined" >
+                        <button  placement="top" [disabled]="current_instance.savebotrespose==undefined" placement="bottom" tooltip="Export" (click)=" current_instance.exportbot(current_instance.botState)" >
                             <img src="../../../../assets/images/RPA/icon_latest/export.svg" /> 
                           </button>
                     </div>
@@ -146,11 +160,11 @@
   <div class="toolset-mainheader" >
     <div class="actionsheaderdiv">
       <span class="module-sub-header-title clickable">
-          &nbsp;&nbsp;
+          &nbsp;&nbsp; &nbsp;
       <span  class="toolset-text" *ngIf="toolset_instance != undefined" (click)="toolset_instance.sidenavbutton=!(toolset_instance.sidenavbutton)">
         <img src="../../../../assets/images/RPA/icon_latest/menu-line.svg" *ngIf="toolset_instance.sidenavbutton==false" class="testplus" />
         <img src="../../../../assets/images/RPA/icon_latest/close.svg" *ngIf="toolset_instance.sidenavbutton==true" class="testplus" />
-        Toolset & Actions
+        <!-- Toolset & Actions -->
       </span>
     </span>
     </div>
@@ -186,4 +200,17 @@
         </ng-template>
       </mat-tab>
   </mat-tab-group>
+  <div class="rpa-bottom-tab" headerPosition="below">
+    
+              <div *ngIf="current_instance != undefined" class="action-item">
+                <img src="../../../../assets/images/RPA/icon_latest/layer.svg" /> &nbsp; 
+                <select  id="versions" (change)="version_change($event.target.value)" [value]="current_instance.selectedversion" >
+                  <option disabled>Select Version</option>
+                  <option  [value]="version.vId"  *ngFor="let version of current_instance.versionsList"  >
+                    Version&nbsp; {{version.vId}}
+                  </option>
+                </select>
+              </div>
+       
+  </div>
 </div>
