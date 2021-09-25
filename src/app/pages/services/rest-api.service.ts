@@ -551,9 +551,9 @@ export class RestApiService{
     return this.http.post("/rpa-service/stop-process-schedule",schedule);
   }
 
-  resumeprocessschedule(processid)
+  resumeprocessschedule(schedule_data)
   {
-    return this.http.post("/rpa-service/resume-process-schedule?processId="+processid,"");
+    return this.http.post("/rpa-service/resume-process-schedule",schedule_data);
   }
 
   assign_bot_and_task_develop(id,taskid,type)

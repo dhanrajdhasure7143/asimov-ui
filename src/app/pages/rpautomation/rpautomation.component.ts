@@ -33,9 +33,6 @@ export class RpautomationComponent implements OnInit,AfterContentChecked  {
   ngAfterContentChecked() : void {
     this.cdRef.detectChanges();
 }
-  removenodes()
-  {
-    $(".bot-close").click();
-  }
+
 
 }
