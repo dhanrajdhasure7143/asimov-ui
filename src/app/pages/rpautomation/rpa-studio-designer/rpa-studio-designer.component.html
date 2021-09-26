@@ -2,7 +2,7 @@
   <div class="content-area RPA-Layout">
     <div class="rpa-layout-header">
       <div class="row  module-heading title ">
-        <div class="col-md-4 rpa-header-data">
+        <div class="col-md-6 rpa-header-data">
           <div>
             <span *ngIf="current_instance != undefined">
             <span class="clickable module-back-button rpa-header-back-button"  (click)="removenodes()">
@@ -19,7 +19,7 @@
             <span *ngIf="current_instance.botState.botId!=undefined">Created By: {{current_instance.botState.createdBy}}&nbsp;|&nbsp;{{current_instance.botState.lastSubmittedTS | date :'medium'}}</span>
           </div> -->
         </div>
-        <div class="col-md-8 p-0">
+        <div class="col-md-6 p-0">
         
                 <div class="actionsmenu-right"  >
                   <!-- <div class="action-item " *ngIf="current_instance != undefined"  dropdown    >
@@ -173,7 +173,7 @@
       
       <mat-tab  *ngFor="let tab of tabsArray">
         <ng-template mat-tab-label>
-            <mat-icon class="text-primary">android</mat-icon>
+           <span><img src="../../../../assets/images/Projects/bot.svg" class="bot-img"></span>
             <span class="tab-botname">{{tab.botName}}</span>
             <div class="text-right">
               <button [id]="'close_bot_'+tab.botName"  class="bot-close" (click)="removetab(tab)">
