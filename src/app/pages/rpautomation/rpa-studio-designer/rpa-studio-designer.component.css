@@ -38,7 +38,7 @@
 }
 
 ::ng-deep .tabs .mat-ink-bar{
-  min-width:10px !important;
+  min-width:0px !important;
 }
 
 
@@ -159,7 +159,7 @@ ul#environments li img {
 
 .rpa-layout-header {
   background-color: #F3F3F3;
-  padding: 10px 15px 8px !important;
+  padding: 5px !important;
 }
 .rpa-layout-header .module-heading {
   background-color: #f3f3f3 !important;
@@ -283,4 +283,9 @@ hr{
   padding: 10px;
   border-top: 1px solid lightgray;
   text-align : end !important;
+}
+
+
+.bot-img{
+  height: 25px;
 }
