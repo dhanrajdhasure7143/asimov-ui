@@ -137,7 +137,7 @@
             <span *ngIf="element.taskType=='Bot' || element.taskType=='Automated'">
               <span *ngIf="element.sourceType=='EPSoft'">
                 <select class="form-control" style="width:200px;padding:0px"  [value]="element.botId" [id]="element.taskId+'__select'">
-                    <option value="0"  >Select Resource</option>
+                    <option  value="0" disabled hidden  >Select Resource</option>
                     <!-- <option *ngFor="let bot of (bot_list | botlistbycat : element.categoryId)" [value]="bot.botId"  [selected]="bot.botId == element.botId">{{bot.botName}}</option> -->
                     <option *ngFor="let bot of (bot_list | BotlistbycatPipe : element.categoryId)" [value]="bot.botId"  [selected]="bot.botId == element.botId">{{bot.botName}}</option>
                   </select>
@@ -380,7 +380,7 @@
               <span class="rpa-modal-close" (click)="closescheduler()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
               <h4>Scheduler</h4>
           </div>
-          <div class="rpa-modal-body actions-mbody py-10">
+          <div >
               <app-so-scheduler [data]="schdata" id="Scheduler"></app-so-scheduler>
           </div>
       </div>
