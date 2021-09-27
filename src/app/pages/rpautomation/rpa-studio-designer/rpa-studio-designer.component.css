@@ -39,7 +39,7 @@
 }
 
 ::ng-deep .tabs .mat-ink-bar{
-  min-width:10px !important;
+  min-width:0px !important;
 }
 
 
@@ -63,7 +63,7 @@ span.tab-botname {
 
 .actionsmenu-right{
   display:flex;
-  float:right
+  float:right;
 }
 
 
@@ -83,6 +83,7 @@ span.tab-botname {
 
 .actionsmenu{
   padding:20px;
+  height:40px;
 }
 
 
@@ -91,8 +92,8 @@ span.tab-botname {
 }
 
 ::ng-deep .tabs .mat-tab-header{
-  width:85% !important;
-  left:15% !important;
+  width:97% !important;
+  left:3% !important;
   margin-top: -28px !important; 
   border-bottom:none !important;
 
@@ -159,7 +160,7 @@ ul#environments li img {
 
 .rpa-layout-header {
   background-color: #F3F3F3;
-  padding: 10px 15px 8px !important;
+  padding: 5px !important;
 }
 .rpa-layout-header .module-heading {
   background-color: #f3f3f3 !important;
@@ -246,4 +247,64 @@ ul#versions li.clickable:hover {
 }
 .action-item.hovericon:hover img.testplus1 {
   filter: brightness(2.5) !important;
+}
+.action-item button:disabled{
+  cursor: not-allowed !important;
+}
+
+
+
+.rpa-subtitle
+{
+ 
+    color: #001C47;
+    font-weight: 400;
+    font-size: 13px;
+    padding-top: 8px;
+
+}
+
+.rpa-main-title
+{
+  font-weight: 600;
+  font-size: 22px;
+  color: #001c47;
+  line-height: 0px !important;
+}
+
+
+/* span.module-back-button {
+  border: none !important;
+  margin: 0px !important;
+  font-size: 12px !important;
+} */
+
+.rpa-header-data{
+  line-height: 1cm
+}
+
+.rpa-header-back-button{
+  border: none !important;
+  margin: 0px !important;
+  font-size: 16px !important;
+}
+
+
+::ng-deep .rpa-bottom-tab .mat-tab-header{
+  background: white !important;
+}
+
+::ng-deep .rpa-bottom-tab 
+{
+  background: white !important;
+  height: 48px !important;
+  color:black !important;
+  padding: 10px;
+  border-top: 1px solid lightgray;
+  text-align : end !important;
+}
+
+
+.bot-img{
+  height: 25px;
 }
