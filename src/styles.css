@@ -2619,3 +2619,8 @@ span.pdicon {
 .newexecbots_progress .mat-progress-bar-fill::after {
   background: none;
 }
+
+
+.mat-tab-body-wrapper {
+   overflow: auto !important;
+}

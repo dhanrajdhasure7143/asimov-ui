@@ -55,6 +55,7 @@ export class RpaHomeComponent implements OnInit {
   public selectedEnvironment:any='';
   public environments:any=[];
   public categaoriesList:any=[];
+  loadflag:Boolean=false;
   customUserRole: any;
   term:any;
   userFilter:any = { botName:'',department:'' };
@@ -138,11 +139,9 @@ export class RpaHomeComponent implements OnInit {
     this.dt.changeHints(this.datahints.rpahomehints );
     this.getCategoryList();
     this.getenvironments();
-    setTimeout(()=> {
+    
       
-      this.rpa_studio.spinner.show()
       this.getallbots();
-      }, 100);
     if(localStorage.getItem("taskId")!=undefined)
     {
        this.createtaskbotoverlay(localStorage.getItem("taskId"))
@@ -249,11 +248,18 @@ export class RpaHomeComponent implements OnInit {
   getallbots()
   {
     let response:any=[];
-
+    this.rpa_studio.spinner.show();
+    this.loadflag=true;
+    //spinner.show();
     //http://192.168.0.7:8080/rpa-service/get-all-bots
     this.rest.getAllActiveBots().subscribe(botlist =>
     {
+      setTimeout(()=>{
+        this.rpa_studio.spinner.hide();
+        this.loadflag=false;
+      },1000)
       response=botlist;
+      response=response.reverse();
       if(response.length==0)
       {
         this.rpa_studio.spinner.hide();
@@ -299,7 +305,9 @@ export class RpaHomeComponent implements OnInit {
       {
         this.respdata1 = true;
       }
-      response.sort((a,b) => a.createdAt > b.createdAt ? -1 : 1);
+      //response.sort((a,b) => a.createdAt > b.createdAt ? -1 : 1);
+      
+      //response=response.reverse();
       this.dataSource1= new MatTableDataSource(response);
       this.isDataSource = true;
       this.dataSource1.sort=this.sort1;
@@ -320,7 +328,7 @@ export class RpaHomeComponent implements OnInit {
       } else {
         this.isTableHasData = false;
       }
-
+   
       },(err)=>{
 
         this.rpa_studio.spinner.hide();
@@ -337,7 +345,6 @@ export class RpaHomeComponent implements OnInit {
         });
 
       this.dataSource1.filterPredicate = this.customFilterPredicate();
-      this.rpa_studio.spinner.hide()
     },(err)=>{
       this.rpa_studio.spinner.hide();
     })
@@ -363,7 +370,7 @@ export class RpaHomeComponent implements OnInit {
   {
     let response:any=[];
 
-    this.rpa_studio.spinner.show();
+    //this.rpa_studio.spinner.show();
     this.rest.getautomatedtasks(process).subscribe(automatedtasks=>{
       response=automatedtasks;
       this.responsedata=response.automationTasks;
@@ -380,9 +387,9 @@ export class RpaHomeComponent implements OnInit {
         this.getprocessnames(process);
       }
       this.update_task_status();
-      this.rpa_studio.spinner.hide()
+     // this.rpa_studio.spinner.hide()
     },(err)=>{
-      this.rpa_studio.spinner.hide()
+      //this.rpa_studio.spinner.hide()
 
     })
   }
@@ -403,11 +410,11 @@ export class RpaHomeComponent implements OnInit {
       else
       {
 
-        this.rpa_studio.spinner.hide();
+        //this.rpa_studio.spinner.hide();
         this.selectedvalue="";
       }
     },(err)=>{
-      this.rpa_studio.spinner.hide();
+      //this.rpa_studio.spinner.hide();
     })
   }
 

@@ -60,11 +60,12 @@
                       </li>
                     </ul>
                   </div>
-                  <span _ngcontent-xmb-c13="" class="bpsbtnsep">|</span>
+                  <span class="bpsbtnsep">|</span>
                   <div class="action-item hovericon"  *ngIf="current_instance != undefined" placement="bottom" tooltip="Save Bot">
-                   <button  tooltip="Save Bot" (click)=" current_instance.saveBotFunAct()" [disabled]="current_instance.selectedEnvironments.length==0"></button>
-                    <img src="../../../../assets/images/RPA/icon_latest/save.svg" class="testplus1">
-                    <!-- <i class="ri-save-line"></i> -->
+                    <button   (click)="current_instance.saveBotFunAct()"  [disabled]="current_instance.selectedEnvironments.length==0">
+                      <img src="../../../../assets/images/RPA/icon_latest/save.svg" class="testplus1">
+                      <!-- <i class="ri-save-line"></i> -->
+                      </button>
                   </div>
                   <!-- <div class="action-item" >
                       <i class="ri-play-line"></i>
@@ -156,7 +157,6 @@
   <div class="toolset-mainheader" >
     <div class="actionsheaderdiv">
       <span class="module-sub-header-title clickable">
-          &nbsp;&nbsp; &nbsp;
       <span  class="toolset-text" *ngIf="toolset_instance != undefined" (click)="toolset_instance.sidenavbutton=!(toolset_instance.sidenavbutton)">
         <img src="../../../../assets/images/RPA/icon_latest/menu-line.svg" *ngIf="toolset_instance.sidenavbutton==false" class="testplus" />
         <img src="../../../../assets/images/RPA/icon_latest/close.svg" *ngIf="toolset_instance.sidenavbutton==true" class="testplus" />
