@@ -199,21 +199,23 @@ export class RpaHomeComponent implements OnInit {
             response= data;
             if(response.status!=undefined)
             {
-              Swal.fire({
-                position:'center',
-                icon:"success",
-                title:response.status,
-                showConfirmButton:false,
-                timer:2000})
+              Swal.fire("Success",response.status,"success");
+              this.getallbots();
+              // Swal.fire({
+              //   position:'center',
+              //   icon:"success",
+              //   title:response.status,
+              //   showConfirmButton:false,
+              //   timer:2000})
             }else
             {
-
-                Swal.fire({
-                  position:'center',
-                  icon:"error",
-                  title:response.errorMessage,
-                  showConfirmButton:false,
-                  timer:2000})
+              Swal.fire("Error",response.errorMessage,"error");
+                // Swal.fire({
+                //   position:'center',
+                //   icon:"error",
+                //   title:response.errorMessage,
+                //   showConfirmButton:false,
+                //   timer:2000})
                   //this.rpa_tabs.closeTab(this.botState);
 
             }
@@ -571,11 +573,11 @@ export class RpaHomeComponent implements OnInit {
         this.importfile="";
         if(response.errorMessage==undefined)
         {
-          Swal.fire(response.status,"","success");
+          Swal.fire("Success",response.status,"success");
           this.getallbots();
         }
         else
-          Swal.fire(response.errorMessage,"","warning");
+          Swal.fire("Error",response.errorMessage,"error");
           this.modalRef.hide()
           this.getallbots();
        })
@@ -606,7 +608,7 @@ export class RpaHomeComponent implements OnInit {
         downloadLink.target = '_self';
         downloadLink.download = bot.botName+"-V"+bot.version+".sql";
         downloadLink.click(); 
-        Swal.fire("Bot Exported Successfully","","success");
+        Swal.fire("Success","Bot Exported Successfully","success");
     })
   }
 
