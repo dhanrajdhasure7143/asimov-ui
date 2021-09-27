@@ -323,7 +323,8 @@
               </mat-expansion-panel>
                 <div class="text-center" *ngIf="bot_list.length==0">
                   <img class="no-item-img" src="../../../../assets/images/RPA/No-Items.svg">
-                  <h4 class="text-center">No Items To Display</h4>
+                  <h4 class="text-center"*ngIf="loadflag==false">No Items To Display</h4>
+                  <h4 class="text-center"*ngIf="loadflag==true">Loading</h4>
                 </div>
                 </div>
               </mat-accordion>
