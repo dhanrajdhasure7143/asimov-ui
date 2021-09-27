@@ -722,23 +722,23 @@ resetsla(){
               let data:any;
               if(statusdata.status=="InProgress" || statusdata.status=="Running")
               {
-                data="<span matTooltip='"+statusdata.status+"' class='text-primary'><img src='../../../../assets/images/RPA/DotSpin.gif' style='filter: none; width: 19px;'></span>";
+                data="<span matTooltip='"+statusdata.status+"' class='text-primary'><img src='../../../../assets/images/RPA/DotSpin.gif'></span>";
               }
               else if(statusdata.status=="Success" || statusdata.status=="Approved")
               {
-                data='<span  matTooltip="'+statusdata.status+'"  class="text-success"><i class="fa fa-check-circle"  style="font-size:19px" aria-hidden="true"></i></span>';
+                data='<span  matTooltip="'+statusdata.status+'"><img src="../../../../../assets/images/RPA/icon_latest/Success.svg" class="testplus"></span>';
               }
               else if(statusdata.status=="Failed" || statusdata.status=="Failure" || statusdata.status=="Rejected")
               {
-                data='<span  matTooltip="'+statusdata.status+'"  class="text-danger"><i class="fa fa-times-circle" aria-hidden="true"></i></span>&nbsp;<span class="text-danger"></span>';
+                data='<span  matTooltip="'+statusdata.status+'"><img src="../../../../../assets/images/RPA/icon_latest/close-red.svg" class="testplus"></span><span class="text-danger"></span>';
               }
               else if(statusdata.status=="New")
               {
-                data="<span   matTooltip='"+statusdata.status+"'  ><img src='../../../../../assets/images/RPA/newicon.png' style='filter:none;height:20px' ></span>&nbsp;<span class='text-primary'>" +"</span>";
+                data="<span   matTooltip='"+statusdata.status+"'><img src='../../../../../assets/images/RPA/newicon.png' class='testplus1' ></span><span class='text-primary'>" +"</span>";
               }
               else if(statusdata.status=="Pending")
               {
-                data="<span  matTooltip='"+statusdata.status+"'  class='text-warning' style='font-size:20px'><i class='fa fa-clock'></i></span>";
+                data="<span  matTooltip='"+statusdata.status+"'  class='text-warning'><i class='fa fa-clock'></i></span>";
               }
               else if(statusdata.status=="")
               {

@@ -510,25 +510,49 @@
                 </ng-container>
                 <ng-container matColumnDef="bot_status">
                     <th mat-header-cell *matHeaderCellDef>Status</th>
-                    <td class="font-weight-bold" mat-cell *matCellDef="let element">
+                    <td class="" mat-cell *matCellDef="let element">
                             <span *ngIf="element.bot_status=='Running'" class="text-primary" >
                               <span>
-                                <img src="../../../../assets/images/RPA/DotSpin.gif" style="filter: none; width: 19px;">
-                              </span>&nbsp;
+                                <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus">
+                              </span>
                               {{element.bot_status}}&nbsp;&nbsp;&nbsp;
                               <span class="btn btn-xs btn-primary clickable" (click)="updateLog(element.run_id,logspopup)" >Kill</span> 
                             </span>
-                            <span *ngIf="element.bot_status=='Success'" class="tableActionsIcons"><span><img src="../../../../assets/images/RPA/icon_latest/Success.svg" alt=""></span>&nbsp;<span>{{element.bot_status}}</span></span>
+                            <span *ngIf="element.bot_status=='Success'" >
+                              <span>
+                                <img src="../../../../assets/images/RPA/icon_latest/Success.svg" class="testplus">
+                              </span>
+                              <span>{{element.bot_status}}</span>
+                            </span>
 
-                            <span *ngIf="element.bot_status=='Failure'" class="tableActionsIcons"><span><img src="../../../../assets/images/RPA/icon_latest/close-red.svg" alt=""></span>&nbsp;<span>{{element.bot_status}}</span></span>
+                            <span *ngIf="element.bot_status=='Failure'" >
+                              <span>
+                                <img src="../../../../assets/images/RPA/icon_latest/close-red.svg" class="testplus">
+                              </span>
+                              <span>{{element.bot_status}}</span>
+                            </span>
                             <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
-                            <span *ngIf="element.bot_status=='New'" class="text-primary tableActionsIcons"><span class="text-primary">
-                               <img src="../../../../assets/images/RPA/userobot.png" style="filter: none;">
-                              </span>&nbsp;<span>{{element.bot_status}}</span></span>
+                            <span *ngIf="element.bot_status=='New'" class="text-primary tableActionsIcons">
+                              <span >
+                               <img src="../../../../assets/images/RPA/userobot.png" class="testplus">
+                              </span>
+                              <span>{{element.bot_status}}</span>
+                            </span>
 
-                            <span *ngIf="element.bot_status=='Stop' ||element.bot_status=='Stopped'  " class="tableActionsIcons" ><span  ><img src="../../../../assets/images/RPA/icon_latest/stop.svg"></span>&nbsp;<span>{{element.bot_status}}</span></span>
+                            <span *ngIf="element.bot_status=='Stop' ||element.bot_status=='Stopped'  "  >
+                              <span  >
+                                <img src="../../../../assets/images/RPA/icon_latest/stop.svg" class="testplus">
+                              </span>
+                              <span>{{element.bot_status}}</span>
+                            </span>
 
-                            <span *ngIf="element.bot_status=='Pause'||element.bot_status=='Paused'" ><span class="text-primary" style="font-size:19px;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><i class="fas fa-pause-circle text-primary"></i></span>&nbsp;<span>{{element.bot_status}}</span></span>
+                            <span *ngIf="element.bot_status=='Pause'||element.bot_status=='Paused'" >
+                              <span >
+                                <img src="../../../../assets/images/SO/pause-circle.svg" class="testplus">
+                                <!-- <i class="fas fa-pause-circle text-primary"></i> -->
+                              </span>
+                              <span>{{element.bot_status}}</span>
+                            </span>
 
                         <span *ngIf="element.bot_status == undefined || element.bot_status == null">-</span></td>
                 </ng-container>
@@ -568,22 +592,49 @@
             <!-- Status Column -->
             <ng-container matColumnDef="status">
                 <th mat-header-cell *matHeaderCellDef style="width:13%">Status</th>
-                <td class="font-weight-bold" mat-cell *matCellDef="let element" style="width:13%">
-                    <span *ngIf="element.status=='Running'" class="text-primary" ><span><img src="../../../../assets/images/RPA/DotSpin.gif" style="filter: none; width: 19px;"></span>&nbsp;{{element.status}}</span>
+                <td class="" mat-cell *matCellDef="let element" style="width:13%">
+                    <span *ngIf="element.status=='Running'" class="text-primary" >
+                      <span>
+                        <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus">
+                      </span>{{element.status}}
+                    </span>
 
-                    <span *ngIf="element.status=='Success'" class="tableActionsIcons"><span><img src="../../../../assets/images/RPA/icon_latest/Success.svg" alt=""></span>&nbsp;<span>{{element.status}}</span></span>
+                    <span *ngIf="element.status=='Success'" >
+                      <span>
+                        <img src="../../../../assets/images/RPA/icon_latest/Success.svg" class="testplus">
+                      </span>
+                      <span>{{element.status}}</span>
+                    </span>
 
-                    <span *ngIf="element.status=='Failure'" class="tableActionsIcons"><span><img src="../../../../assets/images/RPA/icon_latest/close-red.svg" alt=""></span>&nbsp;<span>{{element.status}}</span></span>
+                    <span *ngIf="element.status=='Failure'" >
+                      <span>
+                        <img src="../../../../assets/images/RPA/icon_latest/close-red.svg" class="testplus">
+                      </span>
+                      <span>{{element.status}}</span>
+                    </span>
                     <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
-                    <span *ngIf="element.status=='New'" class="text-primary tableActionsIcons"><span >
-                      <img src="../../../../assets/images/RPA/userobot.png" style="filter: none;">
-                    </span>&nbsp;<span>{{element.status}}</span></span>
+                    <span *ngIf="element.status=='New'" class="text-primary tableActionsIcons">
+                      <span >
+                      <img src="../../../../assets/images/RPA/userobot.png" class="testplus">
+                      </span>
+                      <span>{{element.status}}</span>
+                    </span>
 
-                    <span *ngIf="element.status=='Stop' || element.status=='Stopped'  " class="tableActionsIcons"><span><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">-->
-                      <img src="../../../../../assets/images/RPA/icon_latest/stop.svg" style="filter: none;">
-                    </span>&nbsp;<span>{{element.status}}</span></span>
+                    <span *ngIf="element.status=='Stop' || element.status=='Stopped'  " >
+                      <span>
+                        <!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">-->
+                        <img src="../../../../../assets/images/RPA/icon_latest/stop.svg" class="testplus">
+                      </span>
+                      <span>{{element.status}}</span>
+                    </span>
 
-                    <span *ngIf="element.status=='Pause'||element.status=='Paused'" ><span class="text-primary" style="font-size:19px;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><i class="fas fa-pause-circle text-primary"></i></span>&nbsp;<span>{{element.status}}</span></span>
+                    <span *ngIf="element.status=='Pause'||element.status=='Paused'" >
+                      <span class="text-primary">
+                        <img src="../../../../assets/images/SO/pause-circle.svg" class="testplus">
+                        <!-- <i class="fas fa-pause-circle text-primary"></i> -->
+                      </span>
+                      <span>{{element.status}}</span>
+                    </span>
 
                     <span *ngIf="element.status == undefined || element.status == null">-</span></td>
             </ng-container>

@@ -61,49 +61,45 @@
                     </ul>
                   </div>
                   <span _ngcontent-xmb-c13="" class="bpsbtnsep">|</span>
-                  <div class="action-item"  *ngIf="current_instance != undefined" >
-                    <button  tooltip="Save Bot" (click)=" current_instance.saveBotFunAct()"  placement="bottom" [disabled]="current_instance.selectedEnvironments.length==0">
-                      <img src="../../../../assets/images/RPA/icon_latest/save.svg" />
-                    </button>
+                  <div class="action-item hovericon"  *ngIf="current_instance != undefined" placement="bottom" tooltip="Save Bot">
+                   <button  tooltip="Save Bot" (click)=" current_instance.saveBotFunAct()" [disabled]="current_instance.selectedEnvironments.length==0"></button>
+                    <img src="../../../../assets/images/RPA/icon_latest/save.svg" class="testplus1">
                     <!-- <i class="ri-save-line"></i> -->
                   </div>
                   <!-- <div class="action-item" >
                       <i class="ri-play-line"></i>
-                  </div> -->
-          
-                  <div class="action-item" *ngIf="current_instance != undefined">
-                    <button tooltip="Start Bot"  placement="bottom"  [disabled]="current_instance.savebotrespose==undefined" (click)=" current_instance.executionAct()">
-                      <img src="../../../../assets/images/RPA/icon_latest/play.svg" />
+                  </div> -->          
+                  <div class="action-item hovericon" *ngIf="current_instance != undefined" placement="bottom" tooltip="Start Bot">
+                    <button [disabled]="current_instance.savebotrespose==undefined" (click)=" current_instance.executionAct()">
+                      <img src="../../../../assets/images/RPA/icon_latest/play.svg" class="testplus1">
                         <!-- <i class="ri-play-circle-line"></i> -->
                     </button>
                   </div>
-                  <div class="action-item"*ngIf="current_instance != undefined" >
-                    <button  placement="bottom" [disabled]="current_instance.savebotrespose==undefined" tooltip="Stop Bot" (click)=" current_instance.stopBot()">
-                      <img src="../../../../assets/images/RPA/icon_latest/pause.svg" />
+                  <div class="action-item hovericon"*ngIf="current_instance != undefined" placement="bottom" tooltip="Stop Bot">
+                    <button  [disabled]="current_instance.savebotrespose==undefined" (click)=" current_instance.stopBot()">
+                      <img src="../../../../assets/images/RPA/icon_latest/Stop Bot.svg"class="testplus1">
                     </button>
                       <!-- <i class="ri-stop-circle-line"></i> -->
                   </div>
-                
- 
-                  <div class="action-item" *ngIf="current_instance != undefined"placement="bottom" tooltip="Predefined Bots">
-                    <img src="../../../../assets/images/RPA/icon_latest/duplicate.svg" />
+                  <div class="action-item hovericon" *ngIf="current_instance != undefined" placement="bottom" tooltip="Predefined Bots">
+                    <img src="../../../../assets/images/RPA/icon_latest/Predefined Bots.svg" class="testplus1">
                       <!-- <i class="ri-file-copy-line"></i> -->
                   </div>
-                  <div class="action-item"*ngIf="current_instance != undefined">
-                    <button  placement="bottom" tooltip="View Logs" [disabled]="current_instance.savebotrespose==undefined" (click)=" current_instance.viewlogdata( current_instance.logspopup,'open')">
-                    <img src="../../../../assets/images/RPA/icon_latest/artboard.svg" />
+                  <div class="action-item hovericon"*ngIf="current_instance != undefined" placement="bottom" tooltip="View Logs">
+                    <button  [disabled]="current_instance.savebotrespose==undefined" (click)=" current_instance.viewlogdata( current_instance.logspopup,'open')">
+                    <img src="../../../../assets/images/RPA/icon_latest/View Logs.svg" class="testplus1">
                       <!-- <i class="ri-clipboard-line"></i> -->
                     </button>
                   </div>
-                  <div class="action-item"*ngIf="current_instance != undefined">
-                    <button  placement="bottom" tooltip="Scheduler"  [disabled]="current_instance.savebotrespose==undefined" (click)=" current_instance.openschedule()">
-                    <img src="../../../../assets/images/RPA/icon_latest/time.svg" />
+                  <div class="action-item hovericon"*ngIf="current_instance != undefined" placement="bottom" tooltip="Scheduler">
+                    <button  [disabled]="current_instance.savebotrespose==undefined" (click)=" current_instance.openschedule()">
+                    <img src="../../../../assets/images/RPA/icon_latest/schedule.svg" class="testplus1">
                       <!-- <i class="ri-history-line"></i> -->
                     </button>
                   </div>
-                  <div class="action-item" *ngIf="current_instance != undefined">
-                    <button type="button" placement="bottom" tooltip="Download" [disabled]="current_instance.savebotrespose==undefined" id="dropdownMenuButton" class="downloadBtn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <img src="../../../../assets/images/RPA/icon_latest/download.svg"   />
+                  <div class="action-item hovericon" *ngIf="current_instance != undefined" placement="bottom" tooltip="Download">
+                    <button type="button"  [disabled]="current_instance.savebotrespose==undefined" id="dropdownMenuButton" class="downloadBtn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <img src="../../../../assets/images/RPA/icon_latest/download.svg" class="testplus1">
                     </button>
                     <div class="rpa-dropdown dropdown-menu RPA-download" aria-labelledby="dropdownMenuButton">
                       <div class="d-format"><a class="dropdown-item clickable" (click)=" current_instance.childBotWorkspace.downloadJpeg()">&nbsp;<span>JPEG</span></a></div>
@@ -114,27 +110,27 @@
                   <!-- <div class="action-item" *ngIf="current_instance != undefined" placement="bottom" tooltip="Zoom in"(click)="current_instance.childBotWorkspace.zoomin('')">
                     <img src="../../../assets/images/BPMS/zoom-in.svg"/>
                   </div>
-                  <div class="action-item" *ngIf="current_instance != undefined" placement="bottom" tooltip="Zoom out"(click)="current_instance.childBotWorkspace.zoomout('')">
-                    <img src="../../../assets/images/BPMS/zoom-out.svg"/>
+                  <div class="action-item hovericon" *ngIf="current_instance != undefined" placement="bottom" tooltip="Zoom out"(click)="current_instance.childBotWorkspace.zoomout('')">
+                    <img src="../../../../assets/images/RPA/icon_latest/Zoom Out.svg" class="testplus1">
                   </div>
-                  <div class="action-item" *ngIf="current_instance != undefined" placement="bottom" tooltip="Fit to screen">
+                  <div class="action-item hovericon" *ngIf="current_instance != undefined" placement="bottom" tooltip="Fit to screen">
                     <button (click)=" current_instance.childBotWorkspace.reset('');slider=0;">
                       <img src="../../../../assets/images/RPA/icon_latest/Fit screen.svg" />
                     </button>
                   </div> -->
                
-                    <div class="action-item" *ngIf="current_instance != undefined" >
-                        <button  placement="bottom"  [disabled]="current_instance.savebotrespose == undefined" placement="bottom" tooltip="Delete" (click)=" current_instance.delete()">
+                    <div class="action-item hovericon" *ngIf="current_instance != undefined" placement="bottom" tooltip="Delete">
+                        <button [disabled]="current_instance.savebotrespose == undefined" (click)=" current_instance.delete()">
                             <img src="../../../../assets/images/RPA/icon_latest/delete.svg"  />
                           </button>
                     </div>
-                    <div class="action-item" *ngIf="current_instance != undefined">
-                        <button  placement="top" tooltip="Reset Bot" placement="bottom" tooltip="Reset" (click)=" current_instance.reset()" >
+                    <div class="action-item hovericon" *ngIf="current_instance != undefined" tooltip="Reset Bot" placement="bottom">
+                        <button (click)=" current_instance.reset()" >
                             <img src="../../../../assets/images/RPA/icon_latest/reset.svg" />
                           </button>
                     </div>
-                    <div class="action-item" *ngIf="current_instance != undefined" >
-                        <button  placement="top" [disabled]="current_instance.savebotrespose==undefined" placement="bottom" tooltip="Export" (click)=" current_instance.exportbot(current_instance.botState)" >
+                    <div class="action-item hovericon" *ngIf="current_instance != undefined" placement="bottom" tooltip="Export">
+                        <button [disabled]="current_instance.savebotrespose==undefined" (click)=" current_instance.exportbot(current_instance.botState)" >
                             <img src="../../../../assets/images/RPA/icon_latest/export.svg" /> 
                           </button>
                     </div>

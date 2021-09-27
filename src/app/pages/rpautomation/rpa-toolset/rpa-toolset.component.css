@@ -239,11 +239,12 @@ background-color: white;
 .textplus{
   height:22px;
   width:22px;
+  margin-top: -3px;
 }
 .dragicons {
   padding: 0px 10px;
   overflow-y: scroll;
-  max-height: 57vh;
+  max-height: 60vh;
   white-space: nowrap; 
 }
 span.con-text {

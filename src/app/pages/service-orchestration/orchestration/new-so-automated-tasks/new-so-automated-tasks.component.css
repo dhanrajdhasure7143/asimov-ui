@@ -19,7 +19,10 @@ select {
     color: #0062cf !important;
 }
 
-.undobtn {background-color:gainsboro; border-radius: 5px;}
+.undobtn {
+  background-color: transparent;
+   /* border-radius: 5px; */
+}
 
 /*
 .bg-color
@@ -162,4 +165,14 @@ span.testtooltip:before {
 
 .py-10{
   padding:10px !important;
+}
+
+span.logrefresh {
+  cursor: pointer;
+  font-size: 10px;
+  background-color: #00a0e3 !important;
+  color: #fff;
+  padding: 2px 9px;
+  border-radius: 10px;
+  margin-left: 8px;
 }

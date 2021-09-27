@@ -122,10 +122,10 @@ span.smalfon {
 }
 #chartdiv2{
     width: 100%;
-    height: 347px;
+    height: 340px;
 }
 .chartssc, .varienanal {
-    margin-top: 30px;
+    margin-top: 20px;
 }
 .rightsecr {
     width: 80px;
@@ -167,4 +167,8 @@ span.smalfon {
     font-size: 16px;
     font-weight: 600;
     margin-bottom: 15px;
+}
+
+.varienanal.chartinnsec {
+    height: 230px;
 }

@@ -100,7 +100,7 @@
                                                 *ngIf="createprogram.get('owner').invalid && createprogram.get('owner').touched"
                                                 class="errspan required">Owner Required*</span>
                                         </div>
-                                        <!-- <label class="label-control" >Status<span style="color:red">*</span></label>
+                                        <!-- <label class="label-control" >Status<span class="star">*</span></label>
                                                             <select   formControlName="status"  class="form-control data">
                                                               <option  [value]="null" disabled hidden>Select Status</option>
                                                               <option value="" [selected]="true">Select Status</option>
@@ -110,7 +110,7 @@
                                                               <option value="Approved">Approved</option>
                                                               <option value="Rejected">Rejected</option>
                                                           </select>
-                                                          <span *ngIf="createprogram.get('status').invalid && createprogram.get('status').touched" style="color:red" class="fa fa-info-circle errspan">Status Required*</span>-->
+                                                          <span *ngIf="createprogram.get('status').invalid && createprogram.get('status').touched" class="errspan required">Status Required*</span>-->
                                     </div>
                                     <div class="col-md-12">
                                         
@@ -271,8 +271,8 @@
                                         <!-- <label  class="label-control"  for="description">Description<span style="color:rgb(90, 92, 212)">*</span></label> -->
                                         <!-- <textarea maxlength="250" class="form-control data" formControlName="description" value="" 
                                                         placeholder="Enter Description"></textarea>
-                                                        <span *ngIf="createprogram.get('description').invalid && createprogram.get('description').touched" style="color:red" class="fa fa-info-circle errspan">Description Required*</span>
-                                                        <span *ngIf="createprogram.controls['description'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                                                        <span *ngIf="createprogram.get('description').invalid && createprogram.get('description').touched" class="errspan required">Description Required*</span>
+                                                        <span *ngIf="createprogram.controls['description'].hasError('maxlength')" class="errspan required">
                                                           Maximum of 200 characters
                                                         </span> -->
                                         <label class="label-control">Description</label>
