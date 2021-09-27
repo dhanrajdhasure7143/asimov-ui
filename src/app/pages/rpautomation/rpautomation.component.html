@@ -5,11 +5,24 @@
     <div class="bps-heading-title">
         <label>RPA Automation</label>
     </div> -->
-
-    <div class="main-content" >
+<!-- 
+    <div class="main-content"  *ngIf="isHeaderShow == 'false'" >
         <div class="row content-area">
             <div class="row module-heading title">
-                <!-- <div class="container"> -->
+              
+
+                <span class="module-header-title">Robotic Process Automation</span>
+            </div>
+
+            <router-outlet></router-outlet>
+        </div>
+    </div> -->
+
+        <router-outlet ></router-outlet>
+   
+
+
+      <!-- <div class="container"> -->
                 <!-- <div class="breadcrumb">
                     <ul class="breadcrumb">
                         <li>
@@ -30,14 +43,3 @@
                     <span class="module-heading-title">RPA Studio</span> -->
             
                 <!-- </div> -->
-
-                <span class="module-header-title">Robotic Process Automation</span>
-            </div>
-
-            <router-outlet></router-outlet>
-        </div>
-    </div>
-
-    <!-- <div *ngIf="isHeaderShow == 'true'">
-        <router-outlet ></router-outlet>
-    </div> -->

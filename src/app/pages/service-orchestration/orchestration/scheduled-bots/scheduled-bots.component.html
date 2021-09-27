@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-md-3 form-group pl-0 example-full-width sosearchfield" id="bmsearch">
                 <input class="form-control" placeholder="Search" autocomplete="off" [(ngModel)]="search" (keyup)="applyFilter2($event.target.value)">
-                <img src="../../../../assets/images/search.svg" alt="" class="testplus">
+                <img src="../../../../assets/images/search.svg" class="testplus">
             </div>
         </div>
         <div class="schedule-table-container"  >
@@ -49,37 +49,40 @@
                 </td>
             </ng-container>
             <ng-container matColumnDef="status">
-                    <th mat-header-cell *matHeaderCellDef>Status</th>
-                    <td class="font-weight-bold" mat-cell *matCellDef="let element">
-                        <span *ngIf="element.status=='Running'" class="text-primary" ><span><img src="../../../../assets/images/RPA/DotSpin.gif" style="filter: none; width: 19px;align-items: center;"></span>&nbsp;{{element.status}}</span>
+                <th mat-header-cell *matHeaderCellDef>Status</th>
+                <td class="" mat-cell *matCellDef="let element">
+                    <span *ngIf="element.status=='Running'" class="text-primary" >
+                        <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus">{{element.status}}
+                    </span>
                                 
-                        <span *ngIf="element.status=='Success'|| element.status=='Completed'|| element.status=='Save'"  [matTooltip]="element.status" class="tableActionsIcons"> <span>
-                            <img src="../../../../assets/images/RPA/icon_latest/Success.svg" alt="">
-                            </span>
-                            &nbsp;Saved
-                        </span>
-                        <span *ngIf="element.status=='Failure'|| element.status=='Failed'"  [matTooltip]="element.status" class="tableActionsIcons"><span>
-                            <img src="../../../../assets/images/RPA/icon_latest/close-red.svg" alt=""></span></span>
-                       
-                        <span *ngIf="element.status=='New'" class="tableActionsIcons"><span>
-                            <img src="../../../../assets/images/RPA/userobot.png" style="filter: none;"></span>&nbsp;<span>{{element.status}}</span></span>
-                        <span *ngIf="element.status=='Pending'" class="tableActionsIcons"><i class="fa fa-clock" style="font-size:19px"></i>&nbsp;<span>{{element.status}}</span></span>
+                    <span *ngIf="element.status=='Success'|| element.status=='Completed'|| element.status=='Save'"  [matTooltip]="element.status">
+                        <img src="../../../../assets/images/RPA/icon_latest/Success.svg" class="testplus">Saved
+                    </span>
+                    
+                    <span *ngIf="element.status=='Failure'|| element.status=='Failed'"  [matTooltip]="element.status">
+                        <img src="../../../../assets/images/RPA/icon_latest/close-red.svg" class="testplus">
+                    </span>
+                    
+                    <span *ngIf="element.status=='New'">
+                        <img src="../../../../assets/images/RPA/userobot.png" class="testplus">
+                        <span>{{element.status}}</span>
+                    </span>
+                    
+                    <span *ngIf="element.status=='Pending'">
+                        <i class="fa fa-clock"></i>&nbsp;
+                        <span>{{element.status}}</span>
+                    </span>
             
-                        <span *ngIf="element.status=='Stop'"  >
-                            <span class="tableActionsIcons"  [matTooltip]="element.status">
+                    <span *ngIf="element.status=='Stop'" [matTooltip]="element.status">
                               <!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">-->
-                             
-                              <img src="../../../../../assets/images/RPA/icon_latest/stop.svg" style="filter: none;">
-                            </span>&nbsp;Stopped
-                            </span>
-     
-            
-                          <span *ngIf="element.status == undefined">-</span>
-                    </td>
-                </ng-container>
+                        <img src="../../../../../assets/images/RPA/icon_latest/stop.svg" class="testplus">Stopped
+                    </span>
+                    <span *ngIf="element.status == undefined">-</span>
+                </td>
+            </ng-container>
 
             <ng-container matColumnDef="timezone">
-                <th mat-header-cell *matHeaderCellDef>Timezone</th>
+                <th mat-header-cell *matHeaderCellDef>Time Zone</th>
                 <td mat-cell *matCellDef="let element">
                     <span *ngIf="element.timezone != null">{{element.timezone}}</span>
                     <span *ngIf="element.timezone == null">-</span>

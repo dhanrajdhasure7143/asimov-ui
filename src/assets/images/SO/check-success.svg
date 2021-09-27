@@ -1,0 +1,28 @@
+<svg version="1.2" baseProfile="tiny-ps" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+	<title>check-success-svg</title>
+	<defs>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp1">
+			<path d="M0 0L24 0L24 24L0 24L0 0Z" />
+		</clipPath>
+		<clipPath clipPathUnits="userSpaceOnUse" id="cp2">
+			<path d="M0 0L24 0L24 24L0 24L0 0Z" />
+		</clipPath>
+		<image  width="23" height="23" id="img1" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAXAgMAAACdRDwzAAAAAXNSR0IB2cksfwAAAAlQTFRFAAAA////Y9Iadzuo7wAAAAN0Uk5TAAAgwRjkFgAAAD1JREFUeJxjYBANDY1gYGAIBQIGBkYQ5cDACqICQFIgSTAVAlZBATUVQkENU4VQUIug1kIdAZIMAVJMIDEAlmIndQtT+KUAAAAASUVORK5CYII="/>
+		<image  width="15" height="12" id="img2" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAMAQMAAACHjHWnAAAAAXNSR0IB2cksfwAAAAZQTFRFAAAAY9IaoZqSUQAAAAJ0Uk5TAP9bkSK1AAAAKUlEQVR4nGNg4GFgkGNgsGFgqGBg+MDA+IDh8QGG7w0M/xkY6sDCEgwAfFAHmwq8FzoAAAAASUVORK5CYII="/>
+	</defs>
+	<style>
+		tspan { white-space:pre }
+	</style>
+	<g id="Clip-Path: success" clip-path="url(#cp1)">
+		<g id="success">
+			<g id="Clip-Path: Success-2" clip-path="url(#cp2)">
+				<g id="Success-2">
+					<g id="Success-3">
+						<use id="Path" href="#img1" x="0" y="1" />
+						<use id="Path-2" href="#img2" x="5" y="6" />
+					</g>
+				</g>
+			</g>
+		</g>
+	</g>
+</svg>
