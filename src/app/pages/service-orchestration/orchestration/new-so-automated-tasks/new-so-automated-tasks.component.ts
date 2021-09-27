@@ -607,10 +607,10 @@ resetsla(){
       let response:any=data;
       if(response.status!=undefined)
       {
-        Swal.fire("Resource Assigned Successfully","","success");
+        Swal.fire("Success","Resource Assigned Successfully","success");
       }else
       {
-        Swal.fire("Failed to Assign Resource","","warning");
+        Swal.fire("Error","Failed to Assign Resource","error");
       }
     })
   }
@@ -624,10 +624,10 @@ resetsla(){
       let response:any=data;
       if(response.status!=undefined)
       {
-        Swal.fire(response.status,"","success");
+        Swal.fire("Success",response.status,"success");
       }else
       {
-        Swal.fire(response.errorMessage,"","warning");
+        Swal.fire("Error",response.errorMessage,"warning");
       }
     })
   }
@@ -663,20 +663,11 @@ resetsla(){
     this.rest.startprocess(this.selectedvalue,this.selectedEnvironment).subscribe(data=>{
       let response:any=data;
       if(response.errorMessage==undefined){
-      Swal.fire({
-        icon: 'success',
-        title:response.status,
-        showConfirmButton: true,
-      });
+      Swal.fire("Success",response.status,"success");
       this.update_task_status()
     }else
     {
-      Swal.fire({
-        icon: 'warning',
-        title:response.errorMessage,
-        showConfirmButton: true,
-      })
-
+      Swal.fire("Error",response.errorMessage,"error");
     }
       //this.rpa_studio.spinner.hide();
       this.update_task_status();
@@ -722,7 +713,7 @@ resetsla(){
               let data:any;
               if(statusdata.status=="InProgress" || statusdata.status=="Running")
               {
-                data="<span matTooltip='"+statusdata.status+"' class='text-primary'><img src='../../../../assets/images/RPA/DotSpin.gif'></span>";
+                data="<span matTooltip='"+statusdata.status+"' class='text-primary'><img src='../../../../assets/images/RPA/DotSpin.gif' class='testplus'></span>";
               }
               else if(statusdata.status=="Success" || statusdata.status=="Approved")
               {
