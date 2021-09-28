@@ -397,7 +397,7 @@ export class RpaSchedulerComponent implements OnInit {
             this.flags.resumeflag=false;
             this.flags.stopflag=false;
           }
-          else if(status=='Sarted' ||status=='Running' )
+          else if(status=='Sarted' ||status=='Running' || status=="Resumed"  )
           {
             this.flags.startflag=false;
             this.flags.pauseflag=true;

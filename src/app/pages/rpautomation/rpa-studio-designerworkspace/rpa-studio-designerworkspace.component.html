@@ -1,32 +1,33 @@
 
   <div class="main" id="screen">
-    <div [id]="dragareaid" class="drag-area" dndDropzone (dndDrop)="onDrop($event,$event)" (click)="closemenu()" [ngClass]="{ 'workspace': disable, 'dndDropzoneDisabled': false, 'lightTheme': lightTheme }">
+    <div [id]="dragareaid" class="drag-area" dndDropzone  (contextmenu)="$event.preventDefault()" (dndDrop)="onDrop($event,$event)" (click)="closemenu()" [ngClass]="{ 'workspace': disable, 'dndDropzoneDisabled': false, 'lightTheme': lightTheme }">
   
       <ng-container *ngFor="let node of nodes; let i = index">
-        <div id="{{node.id}}" class="dndDropzone" (mouseover)="openoutputmenu(node)" (dblclick)="formNodeFunc(node)" (contextmenu)="onRightClick(node, $event,i);$event.prevent" [ngStyle]="{'left': node.x, 'top' : node.y, 'background-image' :  'url(' + node.path + ')' }">
-            <span *ngIf="node.name!='START' && node.name !='STOP'" class="node-delete" (click)="deletenode(node)">x</span>
-            <div class="connector-name" *ngIf="node.selectedNodeTask==''">{{node.name}} </div>
-            <div class="connector-name" *ngIf="node.selectedNodeTask!=''">{{node.selectedNodeTask}}</div>
+        <div id="{{node.id}}" class="dndDropzone" (mouseover)="openoutputmenu(node)" (dblclick)="formNodeFunc(node)" (contextmenu)="onRightClick(node, $event,i);$event.prevent" [ngStyle]="{'left': node.x, 'top' : node.y,'background-image' :  'url(' + node.path + ')'  }">
 
-            <div *ngIf="selectedNode.id==node.id && optionsVisible" class="node_tooltip">
-                <nav id="context-menu" class="context-menu contextmenu">
-                    <div class="context-menu1">
-                        <div class="context-menu__item" *ngFor="let menu of stud">
-                            <a class="context-menu__link" id="{{menu.name}}" (click)="callFunction(menu,node)" data-action="View">{{menu.name}}</a>
+                <span *ngIf="node.name!='START' && node.name !='STOP'" class="node-delete" (click)="deletenode(node)"><img src="../../../../assets/images/RPA/close-circle-fill.svg"></span>
+                <div class="connector-name" *ngIf="node.selectedNodeTask==''">{{node.name}} </div>
+                <div class="connector-name" *ngIf="node.selectedNodeTask!=''">{{node.selectedNodeTask}}</div>
+
+                <div *ngIf="selectedNode.id==node.id && optionsVisible" class="node_tooltip">
+                    <nav id="context-menu" class="context-menu contextmenu">
+                        <div class="context-menu1">
+                            <div class="context-menu__item" *ngFor="let menu of stud">
+                                <a class="context-menu__link" id="{{menu.name}}" (click)="callFunction(menu,node)" data-action="View">{{menu.name}}</a>
+                            </div>
                         </div>
-                    </div>
-                </nav>
-            </div>
-            <div [id]="'output_'+node.id" *ngIf="finalbot.botId!=undefined && node.selectedNodeTask=='Output Box' && (node | Checkoutputbox : finalbot) " style="display:none" class="node_tooltip">
-                <nav id="context-menu" class="context-menu contextmenu">
-                    <div class="context-menu1">
-                        <div class="context-menu__item">
-                            <a class="context-menu__link" (click)="outputbox(node, outputboxModalRef)" data-action="View">Open Output Box
-                            </a>
+                    </nav>
+                </div>
+                <div [id]="'output_'+node.id" *ngIf="finalbot.botId!=undefined && node.selectedNodeTask=='Output Box' && (node | Checkoutputbox : finalbot) " style="display:none" class="node_tooltip">
+                    <nav id="context-menu" class="context-menu contextmenu">
+                        <div class="context-menu1">
+                            <div class="context-menu__item">
+                                <a class="context-menu__link" (click)="outputbox(node, outputboxModalRef)" data-action="View">Open Output Box
+                                </a>
+                            </div>
                         </div>
-                    </div>
-                </nav>
-            </div>
+                    </nav>
+                </div>
         </div>
       </ng-container>
       <div *ngIf="nodes.length==0" class="dragactionsdiv">        
@@ -36,6 +37,7 @@
     </div>
     </div>
   </div>
+
     <div *ngIf="hiddenPopUp" class="rpa-modal dynamic-forms-modal" style="display: block;">
       <div class="rpa-modal-content">
           <div class="rpa-modal-header">
@@ -197,62 +199,62 @@
         <form [formGroup]="insertForm" (ngSubmit)="savedata()">
             <div class="row">
                 <div class="col-md-4 formelement">
-                    <label for="userName">Email<span style="color:red">*</span></label>
+                    <label for="userName">Email<span class="star">*</span></label>
                     <input type="text" maxlength="51" class="form-control data" formControlName="userName" #userName value="" placeholder="Enter Email">
-                    <span *ngIf="(insertForm.get('userName').invalid && insertForm.get('userName').touched) && !insertForm.controls['userName'].hasError('maxlength')" style="color:red" class="errspan required">Email Required*</span>
-                    <div *ngIf="insertForm.controls['userName'].hasError('maxlength')" style="color:red" class="errspan required">
+                    <span *ngIf="(insertForm.get('userName').invalid && insertForm.get('userName').touched) && !insertForm.controls['userName'].hasError('maxlength')"  class="errspan required">Email Required*</span>
+                    <div *ngIf="insertForm.controls['userName'].hasError('maxlength')"  class="errspan required">
                         Maximum of 50 characters
                     </div>
                 </div>
                 
                 <div class="col-md-4 formelement">
-                    <label for="password">Password<span style="color:red">*</span></label>
+                    <label for="password">Password<span class="star">*</span></label>
                     <input [type]="passwordtype1 ? 'text': 'password'" maxlength="51" class="form-control" formControlName="password" value="" placeholder="Enter Password" passwordToggle>
                     <span *ngIf="passwordtype1==false" class="fa fa-fw fa-eye field-icon" (click)="passwordtype1 =!passwordtype1"></span>
                     <span *ngIf="passwordtype1==true" class="fa fa-fw fa-eye-slash field-icon" (click)="passwordtype1 =!passwordtype1"></span>
     
-                    <span *ngIf="(insertForm.get('password').invalid && insertForm.get('password').touched) && !insertForm.controls['password'].hasError('maxlength')" style="color:red" class="errspan required"> Password Required*</span>
-                    <div *ngIf="insertForm.controls['password'].hasError('maxlength')" style="color:red" class="errspan required">
+                    <span *ngIf="(insertForm.get('password').invalid && insertForm.get('password').touched) && !insertForm.controls['password'].hasError('maxlength')"  class="errspan required"> Password Required*</span>
+                    <div *ngIf="insertForm.controls['password'].hasError('maxlength')"  class="errspan required">
                         Maximum of 50 characters
                     </div> 
                 </div>
 
                 <div class="col-md-4 formelement">
-                    <label for="serverName">Mail Server<span style="color:red">*</span></label>
+                    <label for="serverName">Mail Server<span class="star">*</span></label>
                     <select class="form-control" formControlName="serverName">
                         <option value="" [selected]="true">--Select Mail Server--</option>
                         <option value="Office365">Office365</option>
                         <option value="G-mail">G-mail</option>            
                       </select>
-                    <span *ngIf="insertForm.get('serverName').invalid && insertForm.get('serverName').touched" style="color:red" class="errspan required"> Server Type Required*</span>
+                    <span *ngIf="insertForm.get('serverName').invalid && insertForm.get('serverName').touched"  class="errspan required"> Server Type Required*</span>
                 </div>
       
               
             </div>
             <div class="row">  
                 <div class="col-md-4 formelement">
-                    <label for="inBoundAddress">In Bound Address<span style="color:red">*</span></label>
+                    <label for="inBoundAddress">In Bound Address<span class="star">*</span></label>
                     <input type="text" maxlength="51" class="form-control data" formControlName="inBoundAddress" #inBoundAddress value="" placeholder="Enter In Bound Address">
-                    <span *ngIf="(insertForm.get('inBoundAddress').invalid && insertForm.get('inBoundAddress').touched) && !insertForm.controls['inBoundAddress'].hasError('maxlength')" style="color:red" class="errspan required">In Bound Address is required*</span>
-                    <div *ngIf="insertForm.controls['inBoundAddress'].hasError('maxlength')" style="color:red" class="errspan required">
+                    <span *ngIf="(insertForm.get('inBoundAddress').invalid && insertForm.get('inBoundAddress').touched) && !insertForm.controls['inBoundAddress'].hasError('maxlength')"  class="errspan required">In Bound Address is required*</span>
+                    <div *ngIf="insertForm.controls['inBoundAddress'].hasError('maxlength')"  class="errspan required">
                         Maximum of 50 characters
                     </div>
                 </div>
 
                 <div class="col-md-4 formelement">
-                    <label for="inBoundAddressPort">In Bound Address Port<span style="color:red">*</span></label>
+                    <label for="inBoundAddressPort">In Bound Address Port<span class="star">*</span></label>
                     <input type="text" maxlength="51" class="form-control data" formControlName="inBoundAddressPort" #inBoundAddressPort value="" placeholder="Enter In Bound Address Port">
-                    <span *ngIf="(insertForm.get('inBoundAddressPort').invalid && insertForm.get('inBoundAddressPort').touched) && !insertForm.controls['inBoundAddressPort'].hasError('maxlength')" style="color:red" class="errspan required">In Bound Address Port is required*</span>
-                    <div *ngIf="insertForm.controls['inBoundAddressPort'].hasError('maxlength')" style="color:red" class="errspan required">
+                    <span *ngIf="(insertForm.get('inBoundAddressPort').invalid && insertForm.get('inBoundAddressPort').touched) && !insertForm.controls['inBoundAddressPort'].hasError('maxlength')"  class="errspan required">In Bound Address Port is required*</span>
+                    <div *ngIf="insertForm.controls['inBoundAddressPort'].hasError('maxlength')"  class="errspan required">
                         Maximum of 50 characters
                     </div>
                 </div>
 
                 <div class="col-md-4 formelement">
-                    <label for="outBoundAddress">Out Bound Address<span style="color:red">*</span></label>
+                    <label for="outBoundAddress">Out Bound Address<span class="star">*</span></label>
                     <input type="text" maxlength="51" class="form-control data" formControlName="outBoundAddress" #outBoundAddress value="" placeholder="Enter Out Bound Address">
-                    <span *ngIf="(insertForm.get('outBoundAddress').invalid && insertForm.get('outBoundAddress').touched) && !insertForm.controls['outBoundAddress'].hasError('maxlength')" style="color:red" class="errspan required">Out Bound Address is required*</span>
-                    <div *ngIf="insertForm.controls['outBoundAddress'].hasError('maxlength')" style="color:red" class="errspan required">
+                    <span *ngIf="(insertForm.get('outBoundAddress').invalid && insertForm.get('outBoundAddress').touched) && !insertForm.controls['outBoundAddress'].hasError('maxlength')"  class="errspan required">Out Bound Address is required*</span>
+                    <div *ngIf="insertForm.controls['outBoundAddress'].hasError('maxlength')"  class="errspan required">
                         Maximum of 50 characters
                     </div>
                 </div>
@@ -260,10 +262,10 @@
             </div>
             <div class="row">
                 <div class="col-md-4 formelement">
-                    <label for="outboundAddressPort">Out Bound Address Port<span style="color:red">*</span></label>
+                    <label for="outboundAddressPort">Out Bound Address Port<span class="star">*</span></label>
                     <input type="text" maxlength="51" class="form-control data" formControlName="outboundAddressPort" #outboundAddressPort value="" placeholder="Enter Out Bound Address Port">
-                    <span *ngIf="(insertForm.get('outboundAddressPort').invalid && insertForm.get('outboundAddressPort').touched) && !insertForm.controls['outboundAddressPort'].hasError('maxlength')" style="color:red" class="errspan required">Out Bound Address Port is required*</span>
-                    <div *ngIf="insertForm.controls['outboundAddressPort'].hasError('maxlength')" style="color:red" class="errspan required">
+                    <span *ngIf="(insertForm.get('outboundAddressPort').invalid && insertForm.get('outboundAddressPort').touched) && !insertForm.controls['outboundAddressPort'].hasError('maxlength')"  class="errspan required">Out Bound Address Port is required*</span>
+                    <div *ngIf="insertForm.controls['outboundAddressPort'].hasError('maxlength')"  class="errspan required">
                         Maximum of 50 characters
                     </div>
                 </div>

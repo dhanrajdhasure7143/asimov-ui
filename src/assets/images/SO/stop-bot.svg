@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
+  <defs>
+    <clipPath id="clip-stop-bot">
+      <rect width="24" height="24"/>
+    </clipPath>
+  </defs>
+  <g id="stop-bot" clip-path="url(#clip-stop-bot)">
+    <path id="Icon_awesome-stop" data-name="Icon awesome-stop" d="M21.429,2.25H2.571A2.572,2.572,0,0,0,0,4.821V23.679A2.572,2.572,0,0,0,2.571,26.25H21.429A2.572,2.572,0,0,0,24,23.679V4.821A2.572,2.572,0,0,0,21.429,2.25Z" transform="translate(0 -2.25)" fill="#a94442"/>
+  </g>
+</svg>

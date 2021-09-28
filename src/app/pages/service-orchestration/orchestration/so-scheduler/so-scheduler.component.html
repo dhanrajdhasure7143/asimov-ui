@@ -1,23 +1,24 @@
+<div class="modal-body">
 <div class="container m-contanier form-body">
     <div class="row">
         <div class="RPA-scheduletimer">
             <div class="RPA-scheduletimer-header">
                 <div class="col-md-11 p-0">
               <span>
-                <select class="rpa-control form-control" [(ngModel)]="timezone">
+                <select  class="rpa-control form-control" [(ngModel)]="timezone">
                   <option value="" disabled>Select Timezone</option>
                   <option *ngFor="let timeZone of timesZones" [value]="timeZone">{{timeZone}}</option>
                 </select>
               </span>&nbsp;&nbsp;
               <span  *ngIf="processid!='' && processid !=undefined">
-                <mat-form-field>
-                    <mat-label>Select Environemt</mat-label>
-                    <mat-select [(ngModel)]="selectedEnvironment">
-                        <mat-option *ngFor="let env of Environments" [value]="env.environmentId">
+               <br>
+                    <select  class="rpa-control form-control" [(ngModel)]="selectedEnvironment">
+                            <option value="" disabled>Select Environment</option>
+                        <option *ngFor="let env of Environments" [value]="env.environmentId">
                             {{env.environmentName}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
+                        </option>
+                    </select>
+                <br>
               </span>
               </div>
               <div class="col-md-1 p-0 scheduletimer-loadicon">
@@ -86,7 +87,7 @@
                         <th>Status</th>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let schedule of schedule_list | paginate: { itemsPerPage: 4,currentPage: q }">
+                        <tr *ngFor="let schedule of schedule_list | paginate: { itemsPerPage: 2,currentPage: q }">
                             <td class="text-center"><input type="checkbox" (click)="check_schedule($event,schedule.intervalId)" [checked]="schedule.check"></td>
                             <td>{{convertcron(schedule.scheduleInterval)}}</td>
                             <td>{{ schedule.timeZone}}</td>
@@ -116,7 +117,7 @@
                         <th>Status</th>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let schedule of (schedule_list | Reverse) |  paginate: { itemsPerPage: 4,currentPage: q }" >
+                        <tr *ngFor="let schedule of (schedule_list | Reverse) |  paginate: { itemsPerPage:2,currentPage: q }" >
                             <td class="text-center"><input type="checkbox" (click)="check_schedule($event,schedule.intervalId)" [checked]="schedule.check"></td>
                             <td>{{convertcron(schedule.scheduleInterval)}}</td>
                             <td>{{ schedule.timezone}}</td>
@@ -131,9 +132,11 @@
                 </table></div></div>
                 <div class="pagicl float-right"><pagination-controls (pageChange)="q = $event"></pagination-controls></div> 
                 </div>
-                <div class="text-right">
-                    <button class="btn btn-primary eiap-btn" (click)="saveschedule()">Save</button>
-                </div>
+               
             
         </div>
+    </div>
+</div>
+    <div class="text-right form-footer">
+            <button class="btn btn-primary eiap-btn" (click)="saveschedule()">Save</button>
     </div>

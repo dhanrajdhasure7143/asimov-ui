@@ -164,12 +164,7 @@ span.testtooltip:before {
 .environment-search-tools {
   /* padding-top: 10px; */
 }
-.environment-tablegrid {
-  width: 100%;
-  overflow-x: scroll;
-  padding-top: 10px;
-  height: calc(100vh - 300px);
-}
+
 
 .environment-tablegrid table td span{
   font-size: 13px !important;

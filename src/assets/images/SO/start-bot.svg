@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
+  <defs>
+    <clipPath id="clip-start-bot">
+      <rect width="24" height="24"/>
+    </clipPath>
+  </defs>
+  <g id="start-bot" clip-path="url(#clip-start-bot)">
+    <path id="Icon_awesome-play" data-name="Icon awesome-play" d="M19.893,10.064,3.394.31A2.237,2.237,0,0,0,0,2.246v19.5a2.248,2.248,0,0,0,3.394,1.936l16.5-9.749A2.248,2.248,0,0,0,19.893,10.064Z" transform="translate(1.501 -0.002)" fill="#4fa908"/>
+  </g>
+</svg>

@@ -1472,7 +1472,9 @@ select.form-control {
   background-repeat: no-repeat;
   cursor: pointer;
 }
-
+.createform input[type="date"]::-webkit-calendar-picker-indicator {
+  display:none;
+}
 .maindivfoprm input[type="date"]::-webkit-calendar-picker-indicator,
 .modelprbody input[type="date"]::-webkit-calendar-picker-indicator {
   width: 16px;
@@ -1701,6 +1703,7 @@ img.testplusupload {
   background: #eef2f5;
   color: #00a1e3;
   margin-right: 8px;
+  font-size: 14px;
 }
 
 .module-back-button:hover i {
@@ -2349,9 +2352,9 @@ th.mat-header-cell {
 
 /* RPA Module New Styles */
 .rpa-content-div {
-  padding: 10px;
-  overflow: hidden auto;
-  height: calc(100% - 48px);
+  /* padding: 10px; */
+  overflow:  auto;
+  height: calc(100% - 0px);
 }
 /* RPA Module New Styles */
 
@@ -2625,3 +2628,7 @@ span.pdicon {
     font-size: 14px !important;
   }
   }
+
+.mat-tab-body-wrapper {
+   overflow: auto !important;
+}
