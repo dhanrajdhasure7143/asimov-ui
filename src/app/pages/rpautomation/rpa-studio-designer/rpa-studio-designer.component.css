@@ -123,6 +123,7 @@ span.tab-botname {
 }  
 .toolset-text{
   font-weight: 600 !important;
+  margin-left:1%;
 }
 
 
@@ -302,10 +303,10 @@ ul#versions li.clickable:hover {
 ::ng-deep .rpa-bottom-tab 
 {
   background: white !important;
-  /* height: 48px !important;
+  height: 40px !important;
   color:black !important;
-  padding: 10px; */
-  border-top: 1px solid #ccc;
+  padding: 2px;
+  border-top: 1px solid lightgray;
   text-align : end !important;
 }
 
