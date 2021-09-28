@@ -2616,3 +2616,12 @@ span.pdicon {
 .newexecbots_progress .mat-progress-bar-fill::after {
   background: none;
 }
+
+@media (max-width: 1920px) {
+  .cell10 {
+    width: 3% !important;
+  }
+  .cell2, .cell3, .cell4, .cell5, .cell6, .cell7, .cell8, .cell10  {
+    font-size: 14px !important;
+  }
+  }

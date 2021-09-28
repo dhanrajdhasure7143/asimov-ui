@@ -1762,6 +1762,7 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
     this.Pi_header_functions.unsubscribe();
     this.isplay=false;
     this.dt.piHeaderValues(null);
+    this.spinner.hide();
   }
 
   viewInsights(){

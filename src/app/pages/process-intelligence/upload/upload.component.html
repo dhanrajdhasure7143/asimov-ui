@@ -123,14 +123,14 @@
                                                         <img src="../../../../assets/images/PI/refresh-blue.svg" alt="" class="testplus hover-img">
                                                 </span>
                                                 <span>
-                                                        <span *ngIf="element.status!='Inprogress'" (click)="onDeleteSelectedProcess(element.piId)" class="delete-icon">
+                                                        <span  (click)="onDeleteSelectedProcess(element.piId,element.status)" class="delete-icon">
                                                                 <!-- <img matTooltip="Delete Process" matTooltipPosition="left" src="../../../../assets/images/BPMS/delete-red.svg"  > -->
-                                                                <img src="../../../../assets/images/Projects/delete-black.svg" class="default-img">
-                                                                <img src="../../../../assets/images/Projects/delete-red.svg" class="hover-img">
+                                                                <img src="../../../../assets/images/Projects/delete-black.svg" matTooltip="Delete Process" matTooltipPosition="left" class="default-img">
+                                                                <img src="../../../../assets/images/Projects/delete-red.svg" matTooltip="Delete Process" matTooltipPosition="left" class="hover-img">
                                                         </span>
-                                                        <span *ngIf="element.status=='Inprogress'" class="delete-icon delete-icon-disabled">
+                                                        <!-- <span *ngIf="element.status=='Inprogress'" class="delete-icon delete-icon-disabled">
                                                                 <img matTooltip="Delete Process" matTooltipPosition="left" src="../../../../assets/images/PI/delete_disabled.svg"  >
-                                                        </span>
+                                                        </span> -->
                                                 </span>
                                         </td>
                                 </ng-container>                                  
