@@ -555,8 +555,10 @@ public slaupdate : boolean = false;
    this.log_botid=botid;
    this.log_version=version
    this.viewlogid1=undefined;
+   this.spinner.show();
    this.rest.getviewlogdata(botid,version).subscribe(data =>{
        this.logresponse=data;
+        this.spinner.hide();
        if(this.logresponse.length >0)
        {
          this.respdata1 = false;
@@ -610,18 +612,23 @@ public slaupdate : boolean = false;
     if(action=="open")
       this.logs_modal=this.modalService.show(template,{class:"logs-modal"});
 
+   },(err)=>{
+      console.log(err)
+      this.spinner.hide();
+      Swal.fire("Error","Failed to get runs","error");
    });
  }
 
  public botrunid
  ViewlogByrunid(runid){
-   console.log(runid);
    this.botrunid=runid;
    let responsedata:any=[];
    let logbyrunidresp:any;
    let resplogbyrun:any=[];
+   this.spinner.show();
    this.rest.getViewlogbyrunid(this.log_botid,this.log_version,runid).subscribe((data)=>{
      responsedata = data;
+     this.spinner.hide();
      if(responsedata.length >0)
      {
        this.respdata2 = false;
@@ -643,6 +650,10 @@ public slaupdate : boolean = false;
      this.logbyrunid.paginator=this.paginator5;
      this.logbyrunid.sort=this.sort5;
      this.viewlogid1=runid;
+       },(err)=>{
+         this.spinner.hide();
+         console.log(err);
+         Swal.fire("Error","Failed to get bot logs","error");
        })
    }
 
@@ -667,9 +678,9 @@ public slaupdate : boolean = false;
         response=res;
         this.spinner.hide();
         if(response.status!= undefined)
-        Swal.fire(response.status,"","success")
+        Swal.fire("Success",response.status,"success")
         else
-        Swal.fire(response.errorMessage,"","warning");
+        Swal.fire("Error",response.errorMessage,"error");
       });
       else if(source=="UiPath")
       this.rest.startuipathbot(botid).subscribe(res=>{
@@ -677,12 +688,16 @@ public slaupdate : boolean = false;
         this.spinner.hide();
         if(response.value!=undefined)
         {
-          Swal.fire("Bot  Execution Initated Successfully !!","","success");
+          Swal.fire("Success","Bot  Execution Initated Successfully !!","success");
         }
         else
         {
-          Swal.fire(response.errorMessage,"","warning");
+          Swal.fire("Error",response.errorMessage,"error");
         }
+      },(err)=>{
+        console.log(err)
+        this.spinner.hide();
+        Swal.fire("Error","Failed to start bot","error")
       })
       // else if(source=="BluePrism")
       // {
@@ -700,7 +715,7 @@ public slaupdate : boolean = false;
         this.spinner.show();
           setTimeout(()=>{
             this.spinner.hide();
-            Swal.fire("Bot Execution initiated successfully","","success");
+            Swal.fire("Success","Bot Execution initiated successfully","success");
           },3000)
         this.rest.start_blueprism_bot(bot.botName).subscribe(data=>{
           // console.log(data);
@@ -712,6 +727,10 @@ public slaupdate : boolean = false;
            this.notify.notify("success",response.status);
           else
            this.notify.notify("error",response.errorMessage);
+        },(err)=>{
+          console.log(err);
+          this.spinner.hide();
+          Swal.fire("Error","Failed to start bot","error");
         });
       }
 
@@ -720,37 +739,40 @@ public slaupdate : boolean = false;
     }
 
 
-    pauseBot(botId) {
-        Swal.fire({
-          icon: 'success',
-          title: "Bot Paused Sucessfully !!",
-          showConfirmButton: true,
-        })
+    pauseBot(botId) 
+    {
 
-        this.rest.getUserPause(botId).subscribe(data => {
-        });
+      this.rest.getUserPause(botId).subscribe(data => {
+        let  response:any=data;
+        if(response.errorMessage==undefined)
+        {
+          Swal.fire("Success",response.status,"success")
+        }
+        else
+          Swal.fire("Error",response.errorMessage,"error")
+      });
+      
     }
 
     resumeBot(botid) {
-        Swal.fire({
-          icon: 'success',
-          title: "Bot Resumed Sucessfully !!",
-          showConfirmButton: true,
-        })
         this.rest.getUserResume(botid).subscribe(data => {
+           let response:any=data;
+           response.errorMessage==undefined?Swal.fire("Success",response.status,"success"):Swal.fire("Error",response.errorMessage,"error");
         })
     }
 
     stopBot(botid) {
-        Swal.fire({
-          icon: 'success',
-          title: "Bot Execution Stopped !!",
-          showConfirmButton: true,
-          })
-
+     
+          this.spinner.show();
           this.rest.stopbot(botid,"").subscribe(data=>{
-            console.log(data)
-
+            let response:any=data;
+            
+            this.spinner.hide();
+            response.errorMessage==undefined?Swal.fire("Success",response.status,"success"):Swal.fire("Error",response.errorMessage,"error"); 
+          },(err)=>{
+            console.log(err);
+            this.spinner.hide();
+            Swal.fire("Error","Bot failed to stop","error");
           })
     }
 
