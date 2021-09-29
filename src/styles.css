@@ -301,7 +301,7 @@ div[class^='diagram_container'] .djs-container svg {
 
 button:disabled {
   cursor: no-drop;
-  background-color: grey;
+  background-color: #d1d1d1;
 }
 
 .eiap-btn {
