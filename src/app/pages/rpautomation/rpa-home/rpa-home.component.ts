@@ -1,7 +1,7 @@
 import {Component, OnInit, TemplateRef,ViewChild} from '@angular/core';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
-import {MatPaginator} from '@angular/material/paginator';
+import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {RestApiService} from '../../services/rest-api.service';
 import {RpaStudioComponent} from '../rpa-studio/rpa-studio.component';
 import { HttpClient } from '@angular/common/http';
@@ -18,7 +18,11 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { validateHorizontalPosition } from '@angular/cdk/overlay';
 import { isNumber } from 'util';
 
-
+import { Observable  } from 'rxjs/Observable';
+import { Sort } from '@angular/material';
+import { of  } from 'rxjs/observable/of';
+import { map } from 'rxjs/operators';
+import { fromMatPaginator, fromMatSort, paginateRows, sortRows } from '../model/datasource-utils';
 
 declare var $:any;
 
@@ -31,7 +35,7 @@ export class RpaHomeComponent implements OnInit {
   public isTableHasData = true;
   public respdata1=false;
 
-  displayedColumns: string[] = ["botName","description","department","botType","version","botStatus"];
+  displayedColumns: string[] = ["botName","description","department","botType","version","botStatus","actions"];
   displayedColumns2: string[] = ["processName","taskName","Assign","status","successTask","failureTask","Operations"];
   departmentlist :string[] = ['Development','QA','HR'];
   botNameFilter = new FormControl('');
@@ -51,6 +55,7 @@ export class RpaHomeComponent implements OnInit {
   public selectedEnvironment:any='';
   public environments:any=[];
   public categaoriesList:any=[];
+  loadflag:Boolean=false;
   customUserRole: any;
   term:any;
   userFilter:any = { botName:'',department:'' };
@@ -80,6 +85,11 @@ export class RpaHomeComponent implements OnInit {
   public editbot:FormGroup;
   rpaCategory: any;
   newRpaCategory: any;
+
+  displayedRows$: Observable<any[]>;
+  @ViewChild(MatSort,{static:false}) sort: MatSort;
+  totalRows$: Observable<number>;
+  @ViewChild(MatPaginator,{static:false}) paginator301: MatPaginator;
 
   constructor(
     private route: ActivatedRoute, 
@@ -129,11 +139,9 @@ export class RpaHomeComponent implements OnInit {
     this.dt.changeHints(this.datahints.rpahomehints );
     this.getCategoryList();
     this.getenvironments();
-    setTimeout(()=> {
+    
       
-      this.rpa_studio.spinner.show()
       this.getallbots();
-      }, 100);
     if(localStorage.getItem("taskId")!=undefined)
     {
        this.createtaskbotoverlay(localStorage.getItem("taskId"))
@@ -155,19 +163,19 @@ export class RpaHomeComponent implements OnInit {
 
     );
 
-    this.rest.getCustomUserRole(2).subscribe(role=>{
-      this.customUserRole=role.message[0].permission;
-      this.customUserRole.forEach(element => {
-        if(element.permissionName.includes('RPA_Bot_Configuration_full')){
-          this.enableConfiguration=true;
-        } if(element.permissionName.includes('RPA_Bot_Create')){
-          this.enablecreatebot=true;
-        }if(element.permissionName.includes('RPA_Workspace_full')){
-          this.showWorkspace=true;
-        }
-      }
-          );
-        })
+    // this.rest.getCustomUserRole(2).subscribe(role=>{
+    //   this.customUserRole=role.message[0].permission;
+    //   this.customUserRole.forEach(element => {
+    //     if(element.permissionName.includes('RPA_Bot_Configuration_full')){
+    //       this.enableConfiguration=true;
+    //     } if(element.permissionName.includes('RPA_Bot_Create')){
+    //       this.enablecreatebot=true;
+    //     }if(element.permissionName.includes('RPA_Workspace_full')){
+    //       this.showWorkspace=true;
+    //     }
+    //   }
+    //       );
+    //     })
      }
 
   ngAfterViewInit() {
@@ -191,21 +199,23 @@ export class RpaHomeComponent implements OnInit {
             response= data;
             if(response.status!=undefined)
             {
-              Swal.fire({
-                position:'center',
-                icon:"success",
-                title:response.status,
-                showConfirmButton:false,
-                timer:2000})
+              Swal.fire("Success",response.status,"success");
+              this.getallbots();
+              // Swal.fire({
+              //   position:'center',
+              //   icon:"success",
+              //   title:response.status,
+              //   showConfirmButton:false,
+              //   timer:2000})
             }else
             {
-
-                Swal.fire({
-                  position:'center',
-                  icon:"error",
-                  title:response.errorMessage,
-                  showConfirmButton:false,
-                  timer:2000})
+              Swal.fire("Error",response.errorMessage,"error");
+                // Swal.fire({
+                //   position:'center',
+                //   icon:"error",
+                //   title:response.errorMessage,
+                //   showConfirmButton:false,
+                //   timer:2000})
                   //this.rpa_tabs.closeTab(this.botState);
 
             }
@@ -240,11 +250,18 @@ export class RpaHomeComponent implements OnInit {
   getallbots()
   {
     let response:any=[];
-
+    this.rpa_studio.spinner.show();
+    this.loadflag=true;
+    //spinner.show();
     //http://192.168.0.7:8080/rpa-service/get-all-bots
     this.rest.getAllActiveBots().subscribe(botlist =>
     {
+      setTimeout(()=>{
+        this.rpa_studio.spinner.hide();
+        this.loadflag=false;
+      },1000)
       response=botlist;
+      response=response.reverse();
       if(response.length==0)
       {
         this.rpa_studio.spinner.hide();
@@ -260,8 +277,9 @@ export class RpaHomeComponent implements OnInit {
           object.botType='Unattended';
         }
         this.bot_list.push(object)
+        this.assignPagination( this.bot_list);
       })
-      response.forEach(data=>{
+      response.forEach(data=>{ 
         let object:any=data;
       if(this.categaoriesList.find(resp => resp.categoryId==data.department)!=undefined)
       {
@@ -289,7 +307,9 @@ export class RpaHomeComponent implements OnInit {
       {
         this.respdata1 = true;
       }
-      response.sort((a,b) => a.createdAt > b.createdAt ? -1 : 1);
+      //response.sort((a,b) => a.createdAt > b.createdAt ? -1 : 1);
+      
+      //response=response.reverse();
       this.dataSource1= new MatTableDataSource(response);
       this.isDataSource = true;
       this.dataSource1.sort=this.sort1;
@@ -310,7 +330,7 @@ export class RpaHomeComponent implements OnInit {
       } else {
         this.isTableHasData = false;
       }
-
+   
       },(err)=>{
 
         this.rpa_studio.spinner.hide();
@@ -327,7 +347,6 @@ export class RpaHomeComponent implements OnInit {
         });
 
       this.dataSource1.filterPredicate = this.customFilterPredicate();
-      this.rpa_studio.spinner.hide()
     },(err)=>{
       this.rpa_studio.spinner.hide();
     })
@@ -353,7 +372,7 @@ export class RpaHomeComponent implements OnInit {
   {
     let response:any=[];
 
-    this.rpa_studio.spinner.show();
+    //this.rpa_studio.spinner.show();
     this.rest.getautomatedtasks(process).subscribe(automatedtasks=>{
       response=automatedtasks;
       this.responsedata=response.automationTasks;
@@ -370,9 +389,9 @@ export class RpaHomeComponent implements OnInit {
         this.getprocessnames(process);
       }
       this.update_task_status();
-      this.rpa_studio.spinner.hide()
+     // this.rpa_studio.spinner.hide()
     },(err)=>{
-      this.rpa_studio.spinner.hide()
+      //this.rpa_studio.spinner.hide()
 
     })
   }
@@ -393,11 +412,11 @@ export class RpaHomeComponent implements OnInit {
       else
       {
 
-        this.rpa_studio.spinner.hide();
+        //this.rpa_studio.spinner.hide();
         this.selectedvalue="";
       }
     },(err)=>{
-      this.rpa_studio.spinner.hide();
+      //this.rpa_studio.spinner.hide();
     })
   }
 
@@ -554,11 +573,11 @@ export class RpaHomeComponent implements OnInit {
         this.importfile="";
         if(response.errorMessage==undefined)
         {
-          Swal.fire(response.status,"","success");
+          Swal.fire("Success",response.status,"success");
           this.getallbots();
         }
         else
-          Swal.fire(response.errorMessage,"","warning");
+          Swal.fire("Error",response.errorMessage,"error");
           this.modalRef.hide()
           this.getallbots();
        })
@@ -589,7 +608,7 @@ export class RpaHomeComponent implements OnInit {
         downloadLink.target = '_self';
         downloadLink.download = bot.botName+"-V"+bot.version+".sql";
         downloadLink.click(); 
-        Swal.fire("Bot Exported Successfully","","success");
+        Swal.fire("Success","Bot Exported Successfully","success");
     })
   }
 
@@ -801,6 +820,14 @@ export class RpaHomeComponent implements OnInit {
           })
           document.getElementById("edit-bot").style.display="none";
         }
+      }
+
+      assignPagination(data){
+        const sortEvents$: Observable<Sort> = fromMatSort(this.sort);
+        const pageEvents$: Observable<PageEvent> = fromMatPaginator(this.paginator301);
+        const rows$ = of(data);
+        this.totalRows$ = rows$.pipe(map(rows => rows.length));
+        this.displayedRows$ = rows$.pipe(sortRows(sortEvents$), paginateRows(pageEvents$));
       }
 }
 

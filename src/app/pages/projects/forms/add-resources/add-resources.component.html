@@ -17,11 +17,11 @@
     
                          <ng-select  formControlName="resources" [multiple]="true"  placeholder="Select Resources"
                                 required>
-                                <ng-option [disabled]="getresource(user.userId.userId)" *ngFor="let user of userslist" [value]="user.userId.userId">{{user.userId.firstName}} {{user.userId.lastName}}</ng-option>
+                                <ng-option [disabled]="getresource(user.userId.userId)" *ngFor="let user of userslist" [value]="user.userId.userId">{{user.userId.firstName|titlecase}} {{user.userId.lastName|titlecase}}</ng-option>
                             </ng-select> 
     
                         <!-- <span *ngIf="addresourcesForm.get('resources').invalid && addresourcesForm.get('resources').touched"
-                            style="color:red" class="fa fa-info-circle errspan">Resources Required*</span> -->
+                            class="errspan required">Resources Required*</span> -->
                 </div>
             </div>
         </form>

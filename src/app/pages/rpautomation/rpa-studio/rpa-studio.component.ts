@@ -89,6 +89,7 @@ export class RpaStudioComponent implements OnInit {
   {
     
    // document.getElementById("filters").style.display = "block";
+   
     if(localStorage.getItem("botId"))
     {
       this.localstore = false;
@@ -218,7 +219,7 @@ export class RpaStudioComponent implements OnInit {
     }else{
         
         this.tabsArray.push(this.model);
-        //localStorage.setItem("isHeader","true");
+        localStorage.setItem("isHeader","true");
     }
     this.tabActiveId = this.model.botName;
     this.insertbot.reset();
@@ -317,12 +318,7 @@ export class RpaStudioComponent implements OnInit {
       else
       {
         this.spinner.hide();
-        Swal.fire({
-          title: 'Selected Bot is already loaded',
-          icon: 'warning',
-          showConfirmButton: false,
-          timer: 2000
-        });
+        Swal.fire("Warning","Selected Bot is already loaded","warning");
       }
       this.loadbot.reset();
       this.loadbot.get("bot").setValue("");

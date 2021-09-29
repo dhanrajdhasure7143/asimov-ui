@@ -110,7 +110,8 @@ export class RestApiService{
     return this.http.get("/bpsprocess/approver/info/"+role)
   }
   getUserBpmnsList(){
-    return this.http.get("/bpsprocess/fetchByUser");
+    // return this.http.get("/bpsprocess/fetchByUser");
+    return this.http.get("/bpsprocess/fetchByTenant");
   }
   saveBPMNprocessinfofromtemp(bpmnModel){
     return this.http.post("/bpsprocess/save/bpms/notation/from/temp",bpmnModel)
@@ -371,7 +372,8 @@ export class RestApiService{
     return this.http.post('/processintelligence/v1/processgraph/categories',data)
   }
   getAlluserProcessPiIds(){
-    return this.http.get('/processintelligence/v1/processgraph/userProcess')
+    // return this.http.get('/processintelligence/v1/processgraph/userProcess')
+    return this.http.get('/processintelligence/v1/processgraph/ProcessByTenant')
   }
   getAllVaraintList(listBody){
     //return this.http.get("/processintelligence/v1/processgraph/variantList?pid="+piId)
@@ -549,9 +551,9 @@ export class RestApiService{
     return this.http.post("/rpa-service/stop-process-schedule",schedule);
   }
 
-  resumeprocessschedule(processid)
+  resumeprocessschedule(schedule_data)
   {
-    return this.http.post("/rpa-service/resume-process-schedule?processId="+processid,"");
+    return this.http.post("/rpa-service/resume-process-schedule",schedule_data);
   }
 
   assign_bot_and_task_develop(id,taskid,type)
@@ -1017,6 +1019,9 @@ getvaluechainprocess(id)
   changePassword(pswdbody:any): Observable<any>{
     return this.http.post<any>('/api/user/passwordChange', pswdbody,httpOptions)
   }
-  
+
+  deleteSelectedProcessID(request_body:any): Observable<any>{
+    return this.http.post<any>('/processintelligence/v1/processgraph/deletebyPiId', request_body)
+  }
 
 }

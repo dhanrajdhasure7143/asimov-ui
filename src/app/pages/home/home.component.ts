@@ -172,7 +172,7 @@ export class HomeComponent implements OnInit {
      this.hintsArray.push({ selector:'#launch_btn', description:'Click to open the module' })
      this.dt.changeHints(this.hintsArray);     
     },error => {
-      this.error = "Please complete your registration process";
+      //this.error = "Please complete your registration process";
     })
 
     //  this.dt.changeHints(this.hints.homeHints);

@@ -45,9 +45,6 @@
     padding-bottom:25px !important;
   }
 
-  .mat-paginator{
-    padding-right:25px !important;
-  }
   
   .env-btn > button:disabled > img{
     color:rgb(116, 116, 116) !important;
@@ -103,13 +100,7 @@
   margin-right: 5px !important;
 } 
 
-.credential-tablegrid {
-  width: 100%;
-  overflow-x: auto;
-  padding-top: 10px;
-  
-  height: calc(100vh - 300px);
-}
+
 
 .credential-tablegrid table td span{
   font-size: 13px !important;

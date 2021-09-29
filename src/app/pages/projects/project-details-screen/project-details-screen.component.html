@@ -164,7 +164,7 @@
                   </div>
                   <div class="col-sm-4 p-0">
                     <div class="mainset">
-                      <span class="labeltit">Process Id</span>
+                      <span class="labeltit">Process ID</span>
       
                       <span class="tab-text labelcont">{{projectDetails.process }}</span>
                     </div>
@@ -246,7 +246,7 @@
                           [value]="(projectDetails.projectHealth==undefined||projectDetails.projectHealth==null)?'':projectDetails.projectHealth">
                           <option value="">Select Project Health</option>
                           <option value="Good">Good</option>
-                          <option value="Need Attention">Need Attention</option>
+                          <option value="Need Attention">Needs Attention</option>
                           <option value="Risk">Risk</option>
                         </select>
                       </span>
@@ -271,7 +271,7 @@
                     </div> -->
                   <div class="col-sm-4 p-0">
                       <div class="mainset">
-                        <span class="labeltit">Efforts Spent(Hrs)</span>
+                        <span class="labeltit">Efforts Spent (Hrs)</span>
                         <div *ngIf="editdata==false">
                           <span
                             *ngIf="projectDetails.effortsSpent != null && projectDetails.effortsSpent != undefined && projectDetails.effortsSpent !='' "
@@ -945,7 +945,7 @@
               <ng-container matColumnDef="userId.firstName">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
                 <td mat-cell   *matCellDef="let user">
-                  <span *ngIf="user.userId.firstName!=null" [matTooltip]="user.userId.firstName">{{user.userId.firstName+" "+ user.userId.lastName}}</span>
+                  <span *ngIf="user.userId.firstName!=null" [matTooltip]="user.userId.firstName">{{user.userId.firstName+" "+ user.userId.lastName|titlecase}}</span>
                   <span *ngIf="user.userId.firstName==null">---</span>
                 </td>
       

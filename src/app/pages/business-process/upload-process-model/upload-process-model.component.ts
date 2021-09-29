@@ -33,6 +33,7 @@ import * as bpmnlintConfig from '../model/packed-config';
 import { DeployNotationComponent } from 'src/app/shared/deploy-notation/deploy-notation.component';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import minimapModule from "diagram-js-minimap";
+import BpmnColorPickerModule from 'bpmn-js-color-picker';
 declare var require:any;
 
 @Component({
@@ -982,7 +983,8 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
           {[InjectionNames.propertiesProvider]: ['type', PreviewFormProvider]},
           // {[InjectionNames.replaceMenuProvider]: ['type', ReplaceMenuProvider]},
           // CustomRenderer,
-          lintModule
+          lintModule,
+          BpmnColorPickerModule
         ],
         container: '#'+elId,
         keyboard: {
