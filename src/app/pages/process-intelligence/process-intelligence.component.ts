@@ -190,6 +190,10 @@ addWorkingHours(){
      this.router.navigate(['/pages/processIntelligence/upload'])
    }
 
+   ngOnDestroy(){
+    localStorage.setItem("pi_search_category",'allcategories')
+   }
+
 }
 
 // <img class="module-heading-image" src='..\\assets\\busineeprocessstudionewicon.svg'>

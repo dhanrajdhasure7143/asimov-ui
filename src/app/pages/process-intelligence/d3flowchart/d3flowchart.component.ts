@@ -481,24 +481,24 @@ const max = nodesArray.reduce(function(prev, current) {
     for(var i =0;i<nodesArray.length;i++){  // for performance metrics
       if (Number(nodesArray[i].days) <= maxDivided) {
         var eachLine = nodesArray[i].label.split('\n')[0];
-            g.node(eachLine).style = "fill: #f7cb86";
+            g.node(eachLine).style = "fill: #eddfc8";
       }
       else if (Number(nodesArray[i].days) > maxDivided && Number(nodesArray[i].days) <= Number(maxDivided*2)) {
         var eachLine = nodesArray[i].label.split('\n')[0];
-            g.node(eachLine).style = "fill: #ffbc5e";
+            g.node(eachLine).style = "fill: #eab977";
       } else if (Number(nodesArray[i].days) > Number(maxDivided*2) && Number(nodesArray[i].days) <= Number(maxDivided*3)) {
         var eachLine = nodesArray[i].label.split('\n')[0];
-            g.node(eachLine).style = "fill: #fc8047" ;
+            g.node(eachLine).style = "fill: #f48551" ;
       } else if (Number(nodesArray[i].days) > Number(maxDivided*3) && Number(nodesArray[i].days) <= Number(maxDivided*4)) {
         var eachLine = nodesArray[i].label.split('\n')[0];
-        g.node(eachLine).style = "fill: #E24A33";   
+        g.node(eachLine).style = "fill: #d94029";   
       }
       else if (Number(nodesArray[i].days) > Number(maxDivided*4) && Number(nodesArray[i].days) <= Number(maxDivided*5)) {
         var eachLine = nodesArray[i].label.split('\n')[0];
-        g.node(eachLine).style = "fill: #B40001"; 
+        g.node(eachLine).style = "fill: #a40000"; 
       }else{
         var eachLine = nodesArray[i].label.split('\n')[0];
-        g.node(eachLine).style = "fill: #B40001";
+        g.node(eachLine).style = "fill: #a40000";
       }
     
     }
@@ -524,20 +524,20 @@ const max = nodesArray.reduce(function(prev, current) {
 for(var i =0;i<nodesArray.length;i++){
   if (nodesArray[i].metrics <= maxDivided) {
     var eachLine = nodesArray[i].label.split('\n')[0];
-        g.node(eachLine).style = "fill: #b7aace";
+        g.node(eachLine).style = "fill: #e6e3eb";
   }
   else if (nodesArray[i].metrics > maxDivided && nodesArray[i].metrics <= Number(maxDivided*2)) {
     var eachLine = nodesArray[i].label.split('\n')[0];
-        g.node(eachLine).style = "fill: #ADB9D1";
+        g.node(eachLine).style = "fill: #aebad2";
   } else if (nodesArray[i].metrics > Number(maxDivided*2) && nodesArray[i].metrics <= Number(maxDivided*3)) {
     var eachLine = nodesArray[i].label.split('\n')[0];
-        g.node(eachLine).style = "fill: #37607d" ;
+        g.node(eachLine).style = "fill: #679cc2" ;
   } else if (nodesArray[i].metrics > Number(maxDivided*3) && nodesArray[i].metrics <= Number(maxDivided*4)) {
     var eachLine = nodesArray[i].label.split('\n')[0];  
-    g.node(eachLine).style = "fill: #0b629e";    
+    g.node(eachLine).style = "fill: #2182b4";    
   }else if (nodesArray[i].metrics > Number(maxDivided*4) && nodesArray[i].metrics <= Number(maxDivided*5)) {
     var eachLine = nodesArray[i].label.split('\n')[0];
-    g.node(eachLine).style = "fill: #024C7F"; 
+    g.node(eachLine).style = "fill: #035386"; 
   }
 
 }
@@ -798,13 +798,9 @@ let nodes_Array=d3.selectAll("g text")['_groups'][0];
 nodes_Array.forEach((element,i) => {
   let node_color=g.node(element['parentNode'].__data__)['style'].split(':')[1].trim();
   // console.log(node_color);
- if(node_color=="#024C7F" || node_color=="#B40001"){
+ if(node_color=="#035386" || node_color=="#2182b4"|| node_color=="#a40000"){
   nodes_Array[i]['attributes'][1].value="font-size: 14px;fill: #fff"
   // inner.selectAll('g.node')['_groups'][0][i]['attributes'][2].value="opacity: 1;fill: #030303"
- }else if(node_color=="#0b629e"){
-  nodes_Array[i]['attributes'][1].value="font-size: 14px;fill: #fff"
- }else if(node_color=="#37607d"){
-  nodes_Array[i]['attributes'][1].value="font-size: 14px;fill: #fff"
  }else{
   nodes_Array[i]['attributes'][1].value="font-size: 14px;fill: #030303"
   // inner.selectAll('g.node')['_groups'][0][i]['attributes'][2].value="opacity: 1;fill: #fff"
