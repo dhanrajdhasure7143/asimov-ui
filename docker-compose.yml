@@ -10,7 +10,7 @@ networks:
 
 services:
   asimov-uinew:
-    image: ${DOCKER_REGISTRY_URL}/aiotal-platform:${DOCKER_TAG}
+    image: ${DOCKER_REGISTRY_URL}/asimov-uinew:${DOCKER_TAG}
     deploy:
       mode: global
     networks:
