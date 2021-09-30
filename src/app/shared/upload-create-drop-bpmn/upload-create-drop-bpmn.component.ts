@@ -60,7 +60,7 @@ export class UploadCreateDropBpmnComponent implements OnInit {
     }else{
       let message = "Oops! Something went wrong";
       if(e.rejectedFiles[0].reason == "type")
-        message = "Please upload proper notation";
+        message = "Please upload proper notation.";
       this.global.notify(message,"error");
     }
   }

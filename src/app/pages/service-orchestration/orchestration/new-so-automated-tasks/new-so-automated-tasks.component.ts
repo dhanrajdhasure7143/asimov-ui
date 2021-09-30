@@ -603,16 +603,20 @@ resetsla(){
       this.applyFilter(this.selectedvalue);
     }
     if(botId!=0)
-    this.rest.assign_bot_and_task(botId,id,source,"Automated").subscribe(data=>{
-      let response:any=data;
-      if(response.status!=undefined)
-      {
-        Swal.fire("Success","Resource Assigned Successfully","success");
-      }else
-      {
-        Swal.fire("Error","Failed to Assign Resource","error");
-      }
-    })
+    {
+      this.spinner.show();
+      this.rest.assign_bot_and_task(botId,id,source,"Automated").subscribe(data=>{
+        let response:any=data;
+        this.spinner.hide();
+        if(response.status!=undefined)
+        {
+          Swal.fire("Success","Resource Assigned Successfully","success");
+        }else
+        {
+          Swal.fire("Error","Failed to Assign Resource","error");
+        }
+      })
+    }
   }
 
 
@@ -620,16 +624,20 @@ resetsla(){
   {
     let botId=$("#"+taskid+"__select").val();
     if(botId!=0)
-    this.rest.assign_bot_and_task(botId,taskid,"","Human").subscribe(data=>{
-      let response:any=data;
-      if(response.status!=undefined)
-      {
-        Swal.fire("Success",response.status,"success");
-      }else
-      {
-        Swal.fire("Error",response.errorMessage,"warning");
-      }
-    })
+    {
+      this.spinner.show();
+      this.rest.assign_bot_and_task(botId,taskid,"","Human").subscribe(data=>{
+        let response:any=data;
+        this.spinner.show();
+        if(response.status!=undefined)
+        {
+          Swal.fire("Success",response.status,"success");
+        }else
+        {
+          Swal.fire("Error",response.errorMessage,"warning");
+        }
+      })
+    }
   }
 
 
@@ -660,15 +668,17 @@ resetsla(){
 
     if(this.selectedvalue!=undefined)
     {
+      this.spinner.show();
     this.rest.startprocess(this.selectedvalue,this.selectedEnvironment).subscribe(data=>{
       let response:any=data;
+      this.spinner.hide();
       if(response.errorMessage==undefined){
-      Swal.fire("Success",response.status,"success");
-      this.update_task_status()
-    }else
-    {
-      Swal.fire("Error",response.errorMessage,"error");
-    }
+        Swal.fire("Success",response.status,"success");
+        this.update_task_status()
+      }else
+      {
+        Swal.fire("Error",response.errorMessage,"error");
+      }
       //this.rpa_studio.spinner.hide();
       this.update_task_status();
     },(err)=>{
@@ -683,7 +693,9 @@ resetsla(){
   {
 
     //this.rpa_studio.spinner.show();
+    this.spinner.show();
     this.rest.getautomatedtasks(0).subscribe(response=>{
+      this.spinner.hide();
       let data:any=response;
       this.dataSource2= new MatTableDataSource(data.automationTasks);
       this.dataSource2.sort=this.sort10;

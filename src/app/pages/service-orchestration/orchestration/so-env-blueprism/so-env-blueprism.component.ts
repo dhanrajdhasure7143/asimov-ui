@@ -266,23 +266,31 @@ saveBluePrism()
       this.submitted=true;
       this.api.save_blueprism_config(response).subscribe(resp=>{
         let response:any=resp;
-        Swal.fire({
-          position: 'center',
-          icon: 'success',
-          title: response.status,
-          showConfirmButton: false,
-          timer: 2000
-        })
-      //this.getallData();
-        this.checktoupdate();
-        this.checktodelete();
-        document.getElementById("createbprism").style.display='none';        
-        this.createblueprism = false;
-        this.updateblueprims = false;
-        this.BluePrismConfigForm.reset();
-        this.getblueprismconnections();
-        this.submitted=true;
         this.spinner.hide();
+        if(response.errorMessage==undefined)
+        {
+          // Swal.fire({
+          //   position: 'center',
+          //   icon: 'success',
+          //   title: response.status,
+          //   showConfirmButton: false,
+          //   timer: 2000
+          // })
+          Swal.fire("Success",response.status,"success")
+        //this.getallData();
+          this.checktoupdate();
+          this.checktodelete();
+          document.getElementById("createbprism").style.display='none';        
+          this.createblueprism = false;
+          this.updateblueprims = false;
+          this.BluePrismConfigForm.reset();
+          this.getblueprismconnections();
+          this.submitted=true;
+        }
+        else
+        {
+          Swal.fire("Error",response.errorMessage,"error")
+        }
         });
     }
   else
@@ -305,25 +313,29 @@ Update_BluePrism()
       this.updatesubmitted = true;
       this.api.edit_blueprism_config(response).subscribe(resp=>{
         let response:any=resp;
-        Swal.fire({
-          position: 'center',
-          icon: 'success',
-          title: response.status,
-          showConfirmButton: false,
-          timer: 2000
-        })
-      //this.getallData();
-        this.removeallchecks();
-        this.checktoupdate();
-        this.checktodelete();
-        document.getElementById("updatebprism").style.display='none';        
-        this.createblueprism = false;
-        this.updateblueprims = false;
-        this.UpdateBluePrismConfigForm.reset();
-        this.getblueprismconnections();
-        this.updatesubmitted = false;
-        this.spinner.hide();
-        });
+        if(response.errorMessage==undefined)
+        {
+          this.spinner.hide();
+          Swal.fire("Success",response.status,"success")
+          this.removeallchecks();
+          this.checktoupdate();
+          this.checktodelete();
+          document.getElementById("updatebprism").style.display='none';        
+          this.createblueprism = false;
+          this.updateblueprims = false;
+          this.UpdateBluePrismConfigForm.reset();
+          this.getblueprismconnections();
+          this.updatesubmitted = false;
+            
+        }
+        else
+        {
+          Swal.fire("Error",response.errorMessage,"error")
+        }
+      },(err)=>{
+        console.log(err);
+        Swal.fire("Error","Failed to update environment","error");
+      });
     }
   else
   {
@@ -394,21 +406,24 @@ testBluePrismconnection()
         let response:any=resp
         Swal.fire(response.status,"","success");
         if(response.errorCode==undefined){
-          Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: response.status,
-            showConfirmButton: false,
-            timer: 2000
-          })
+          // Swal.fire({
+          //   position: 'center',
+          //   icon: 'success',
+          //   title: response.status,
+          //   showConfirmButton: false,
+          //   timer: 2000
+          // })
+          Swal.fire("Success",response.status,"success");
           }else{
-            Swal.fire({
-              position: 'center',
-              icon: 'error',
-              title: response.errorMessage,
-              showConfirmButton: false,
-              timer: 2000
-            })
+            // Swal.fire({
+            //   position: 'center',
+            //   icon: 'error',
+            //   title: response.errorMessage,
+            //   showConfirmButton: false,
+            //   timer: 2000
+            // })
+            
+            Swal.fire("Error",response.errorMessage,"error");
           }
       })
     }
