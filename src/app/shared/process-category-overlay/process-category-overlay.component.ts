@@ -105,8 +105,8 @@ export class ProcessCategoryOverlayComponent implements OnInit {
         "categoryName": this.categoryName == 'other' ? this.othercategory : this.categoryName,
         "ntype": this.notationType
       }
-      // this.slideDown(null);
-      // this.proceed.emit(data);
+      this.slideDown(null);
+      this.proceed.emit(data);
     }
   }
 

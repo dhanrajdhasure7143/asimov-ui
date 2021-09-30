@@ -39,6 +39,8 @@ export class D3flowchartComponent {
   searchNode: any;
   isnoNode:boolean=false;
   activeCssStyle = "stroke";
+  graph_height:any;
+  graph_width:any;
   
     constructor(){
   
@@ -111,7 +113,7 @@ let svg = d3.select("#exportSVGtoPDF").append("svg")
   .attr("xmlns", "http://www.w3.org/2000/svg")
   .attr("xmlns:xlink", "http://www.w3.org/1999/xlink")
   .attr("width", w)
-  .attr("height", h)
+  // .attr("height", h)
   // .attr("overflow", 'auto')
   // .attr("viewBox", '0 0 800 800')
   // .attr("preserveAspectRatio", 'none')
@@ -799,6 +801,10 @@ nodes_Array.forEach((element,i) => {
  if(node_color=="#024C7F" || node_color=="#B40001"){
   nodes_Array[i]['attributes'][1].value="font-size: 14px;fill: #fff"
   // inner.selectAll('g.node')['_groups'][0][i]['attributes'][2].value="opacity: 1;fill: #030303"
+ }else if(node_color=="#0b629e"){
+  nodes_Array[i]['attributes'][1].value="font-size: 14px;fill: #fff"
+ }else if(node_color=="#37607d"){
+  nodes_Array[i]['attributes'][1].value="font-size: 14px;fill: #fff"
  }else{
   nodes_Array[i]['attributes'][1].value="font-size: 14px;fill: #030303"
   // inner.selectAll('g.node')['_groups'][0][i]['attributes'][2].value="opacity: 1;fill: #fff"
@@ -835,24 +841,30 @@ $('.zoom-out').click( function(){   //zoom Out
 });
 
 
-
+this.graph_height=g.graph().height;
+this.graph_width=g.graph().width;
 if(me.isdownloadJpeg==true||this.isdownloadPng==true||this.isdownloadpdf==true||this.isdownloadsvg==true){
-  if(g.graph().width>1583 && g.graph().width<3160){
+  if(this.graph_width>1403){
     var initialScale1 = 0.30;
     svg.call(zoom.transform, d3.zoomIdentity.translate((svg.attr("width") - g.graph().width * initialScale1) / 2, 53).scale(initialScale1));
     svg.attr('height', g.graph().height * initialScale1 + 53)
-  }else if(g.graph().width>3160){
-    var initialScale1 = 0.22;
-    svg.call(zoom.transform, d3.zoomIdentity.translate((svg.attr("width") - g.graph().width * initialScale1) / 2, 53).scale(initialScale1));
-    svg.attr('height', g.graph().height * initialScale1 + 53)
   }
+  // if(g.graph().width>1583 && g.graph().width<3160){
+  //   var initialScale1 = 0.30;
+  //   svg.call(zoom.transform, d3.zoomIdentity.translate((svg.attr("width") - g.graph().width * initialScale1) / 2, 53).scale(initialScale1));
+  //   svg.attr('height', g.graph().height * initialScale1 + 53)
+  // }else if(g.graph().width>3160){
+  //   var initialScale1 = 0.22;
+  //   svg.call(zoom.transform, d3.zoomIdentity.translate((svg.attr("width") - g.graph().width * initialScale1) / 2, 53).scale(initialScale1));
+  //   svg.attr('height', g.graph().height * initialScale1 + 53)
+  // }
 }
 }
 }
 }
     
     
-    exportSVG(fileType){ 
+   exportSVG(fileType){ 
       if(fileType == 'svg'){
         //get svg element.
   
@@ -879,21 +891,20 @@ if(me.isdownloadJpeg==true||this.isdownloadPng==true||this.isdownloadpdf==true||
         this.isdownloadsvg=false;
         this.issvg.emit(this.isdownloadsvg)
       }else{
- 
-      html2canvas(this.exportSVGtoPDF.nativeElement, { 
 
+    html2canvas(this.exportSVGtoPDF.nativeElement, {
           allowTaint: true,
           scrollY: -window.scrollY,
           useCORS: true,
           logging:true,
-          scale:5
+          scale:2,
+          height: this.graph_height/2+100
+          // windowHeight: window.outerHeight + window.innerHeight
         }).then(canvas => {
         if(fileType == 'png' || fileType == 'jpeg'){
           this.downloadLink.nativeElement.href = canvas.toDataURL('image/'+fileType);
-          
           this.downloadLink.nativeElement.download = this.processGraphName;
           this.downloadLink.nativeElement.click();
-
           this.isdownloadJpeg=false;
             this.isjpeg.emit(this.isdownloadJpeg)
             this.isdownloadPng=false;
@@ -901,10 +912,18 @@ if(me.isdownloadJpeg==true||this.isdownloadPng==true||this.isdownloadpdf==true||
           
         }
         if(fileType == 'pdf'){
-          var contentDataURL = canvas.toDataURL("image/png");
-          var doc = new jsPDF('l','pt',[1020, 768]);
-          doc.setFontSize(18)
-          doc.addImage(contentDataURL, 'PNG',10, 10, 1020, 500);
+          var contentDataURL = canvas.toDataURL("image/png",0.5);
+          // var doc = new jsPDF('l','pt',[700,600],{compress: true}); --final
+          var doc = new jsPDF('p', 'mm', 'a4', true);
+          // var doc = new jsPDF('l','pt',[this.graph_height,1100],'a4',{compress: true});
+          // var doc = new jsPDF('1', 'pt', 'a4', true);--final
+          // doc.setFontSize(20)
+          // doc.addImage(contentDataURL, 'PNG',10, 10, 1620, 600);
+          // doc.addImage(contentDataURL, 'PNG', 0, 0, 1000, 1400, undefined,'FAST')
+          // doc.addImage(contentDataURL, 'PNG', 0, 0, 700, 600,undefined,'FAST')--final
+          doc.addImage(contentDataURL, 'PNG', 5, 0, 210, 297,undefined,'FAST')
+          // doc.addImage(contentDataURL, 'PNG', 0, 0, 485, 270, undefined,'FAST')
+          // doc.addImage(contentDataURL, "PNG", 0, 0, canvas.width * ratio, canvas.height * ratio,);
           doc.save(this.processGraphName+'.pdf');
           this.isdownloadpdf=false;
             this.ispdf.emit(this.isdownloadpdf)

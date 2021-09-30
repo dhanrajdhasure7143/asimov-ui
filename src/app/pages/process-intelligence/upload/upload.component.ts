@@ -455,13 +455,16 @@ export class UploadComponent implements OnInit {
     if (category == "allcategories") {
       var fulldata='';
       this.dataSource.filter = fulldata;
+      this.dataSource.paginator.firstPage();
     }else{  
       this.dataSource.filterPredicate = (data: any, filter: string) => {
         return data.categoryName === category;
        };
        this.dataSource.filter = category;
        this.dataSource.paginator=this.paginator;
+       this.dataSource.paginator.firstPage();
     }
+
     // if (category == "allcategories") {
     //   this.dtElement.dtInstance.then((dtInstance) => {
     //     this.process_graph_list = this.process_List.data;
@@ -822,53 +825,53 @@ getDBTables(){      //get DB tables list
 
   }
 
-  // onDeleteSelectedProces1s(id){
-  //   let req_body={
-  //     "piId":id
-  //   }
-  //   // this.rest.deleteSelectedProcessID(req_body).subscribe(res=>{
-  //   //   this.getAlluserProcessPiIds();
-  //   // })
-  //   Swal.fire({
-  //     title: 'Are you sure?',
-  //     text: "You won't be able to revert this!",
-  //     icon: 'warning',
-  //     showCancelButton: true,
-  //     confirmButtonColor: '#3085d6',
-  //     cancelButtonColor: '#d33',
-  //     confirmButtonText: 'Yes, delete it!'
-  //   }).then((result) => {
-  //     if (result.value) {
-  //       this.isLoading=true;
-  //       this.rest.deleteSelectedProcessID(req_body).subscribe(res=>{
-  //         let status:any = res;
-  //         Swal.fire({
-  //           title: 'Success',
-  //           text: ""+status.data,
-  //           position: 'center',
-  //           icon: 'success',
-  //           showCancelButton: false,
-  //           confirmButtonColor: '#007bff',
-  //           cancelButtonColor: '#d33',
-  //           confirmButtonText: 'Ok'
-  //         })
-  //         this.isLoading=false;
-  //         this.getAlluserProcessPiIds();
-  //         },err => {
-  //           Swal.fire({
-  //             icon: 'error',
-  //             title: 'Oops...',
-  //             text: 'Something went wrong!',
-  //           })
-  //           this.spinner.hide();
+  onDeleteSelectedProces1s(id,status){
+    let req_body={
+      "piId":id
+    }
+    // this.rest.deleteSelectedProcessID(req_body).subscribe(res=>{
+    //   this.getAlluserProcessPiIds();
+    // })
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
+        this.isLoading=true;
+        this.rest.deleteSelectedProcessID(req_body).subscribe(res=>{
+          let status:any = res;
+          Swal.fire({
+            title: 'Success',
+            text: ""+status.data,
+            position: 'center',
+            icon: 'success',
+            showCancelButton: false,
+            confirmButtonColor: '#007bff',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ok'
+          })
+          this.isLoading=false;
+          this.getAlluserProcessPiIds();
+          },err => {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Something went wrong!',
+            })
+            this.spinner.hide();
                          
-  //         })
-  //     }
-  //   });
+          })
+      }
+    });
 
-  // }
+  }
 
-  onDeleteSelectedProcess(id,status){
+  onDeleteSelectedProcess1(id,status){
     if(status=='Inprogress'){
       Swal.fire({
         icon: 'info',
