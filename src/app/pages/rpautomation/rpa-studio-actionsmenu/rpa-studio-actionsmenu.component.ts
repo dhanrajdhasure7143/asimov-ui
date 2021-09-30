@@ -302,8 +302,10 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
     let response:any;
     if(this.savebotrespose!=undefined)
     {
+      this.rpa_studio.spinner.show();
       this.rest.execution(this.savebotrespose.botId).subscribe(res =>{
         response = res;
+        this.rpa_studio.spinner.hide();
         if(response.errorMessage==undefined && response.errorCode==undefined)
         {
           this.startbot=false;
@@ -322,8 +324,10 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
   {
     if(this.savebotrespose!=undefined)
     {
+      this.rpa_studio.spinner.show();
       this.rest.getUserPause(this.savebotrespose.botId).subscribe(data => {
         let response:any = data;
+        this.rpa_studio.spinner.hide();
         if(response.status!=undefined)
         {
           this.pausebot=false;
@@ -341,8 +345,10 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
   resumeBot() {
     if(this.savebotrespose!=undefined)
     {
+      this.rpa_studio.spinner.show();
       this.rest.getUserResume(this.savebotrespose.botId).subscribe(data => {
         let response:any = data;
+        this.rpa_studio.spinner.hide();
         if(response.status!=undefined)
         {
           this.pausebot=true;
@@ -358,8 +364,10 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
     if(this.savebotrespose!=undefined)
     {
         let data:any=""
+        this.rpa_studio.spinner.show();
         this.rest.stopbot(this.savebotrespose.botId,data).subscribe(res=>{
           let response:any=res;
+          this.rpa_studio.spinner.hide();
           if(response.status!=undefined)
           {
             this.startbot=true;
@@ -491,8 +499,10 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
    let response: any;
    let log:any=[];
    this.logresponse=[];
+   this.rpa_studio.spinner.show()
    this.rest.getviewlogdata(this.savebotrespose.botId,this.savebotrespose.version).subscribe(data =>{
        this.logresponse=data;
+       this.rpa_studio.spinner.hide()
        if(this.logresponse.length >0)
        {
          this.respdata1 = false;
@@ -546,8 +556,10 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
    let responsedata:any=[];
    let logbyrunidresp:any;
    let resplogbyrun:any=[];
+   this.rpa_studio.spinner.show();
    this.rest.getViewlogbyrunid(this.savebotrespose.botId,this.savebotrespose.version,runid).subscribe((data)=>{
      responsedata = data;
+     this.rpa_studio.spinner.hide();
      if(responsedata.length >0)
      {
        this.respdata2 = false;
@@ -640,7 +652,11 @@ loadpredefinedbot(botId)
 
   rpa_assignbot(botId,taskId)
   {
+    
+   this.rpa_studio.spinner.show();
     this.rest.assign_bot_and_task(botId,taskId, "EPSoft","Automated").subscribe(data=>{
+      
+      this.rpa_studio.spinner.hide();
       let response:any=data;
       if(response.status!=undefined)
       {
@@ -724,8 +740,11 @@ loadpredefinedbot(botId)
 
   exportbot(bot)
   {
+    this.rpa_studio.spinner.show();
     this.rest.bot_export(bot.botId).subscribe((data)=>{
-      console.log(data)
+      
+        this.rpa_studio.spinner.hide();
+        console.log(data)
         const linkSource = `data:application/txt;base64,${data}`;
         const downloadLink = document.createElement('a');
         document.body.appendChild(downloadLink);
