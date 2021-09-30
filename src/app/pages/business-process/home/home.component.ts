@@ -371,5 +371,15 @@ this.assignPagenation(filtered)
     this.totalRows$ = rows$.pipe(map(rows => rows.length));
     this.displayedRows$ = rows$.pipe(sortRows(sortEvents$), paginateRows(pageEvents$));
   }
+
+  getNotationStatus(value){
+    if(value=="PENDING"){
+      return "PENDING APPROVAL"
+    }else if(value=="INPROGRESS"){
+      return "In Progress"
+    }else {
+      return value;
+    }
+  }
  
 }

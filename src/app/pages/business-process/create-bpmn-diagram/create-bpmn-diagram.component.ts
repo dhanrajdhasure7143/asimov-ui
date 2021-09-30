@@ -28,6 +28,7 @@ import { DeployNotationComponent } from 'src/app/shared/deploy-notation/deploy-n
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import minimapModule from "diagram-js-minimap";
 declare var require:any;
+import BpmnColorPickerModule from 'bpmn-js-color-picker';
 
 @Component({
   selector: 'app-create-bpmn-diagram',
@@ -193,7 +194,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
     canvas.zoom('fit-viewport');
     let msg = "Notation";
     if(document.getElementById("canvas") )
-    this.global.notify(msg+" is fit to view port", "success")
+    this.global.notify(msg+" Is fit to view port.", "success")
    }
   
    setRPAData(){
@@ -621,7 +622,8 @@ export class CreateBpmnDiagramComponent implements OnInit {
           PropertiesProviderModule,
           {[InjectionNames.bpmnPropertiesProvider]: ['type', OriginalPropertiesProvider.propertiesProvider[1]]},
           {[InjectionNames.propertiesProvider]: ['type', PreviewFormProvider]},
-          lintModule
+          lintModule,
+          BpmnColorPickerModule
         ],
         container: '#canvas',
         keyboard: {
