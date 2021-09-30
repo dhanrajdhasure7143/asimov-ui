@@ -416,6 +416,9 @@ export class UploadComponent implements OnInit {
       this.dataSource.sort=this.sort;
       this.dataSource.paginator=this.paginator;
       this.isLoading=false;
+      let selected_category=localStorage.getItem("pi_search_category");
+      this.categoryName=selected_category?selected_category:'allcategories';
+      this.searchByCategory(this.categoryName);
     })
   }
 
@@ -452,6 +455,7 @@ export class UploadComponent implements OnInit {
   }
 
   searchByCategory(category) {      // Filter table data based on selected categories
+    localStorage.setItem("pi_search_category",category)
     if (category == "allcategories") {
       var fulldata='';
       this.dataSource.filter = fulldata;
@@ -825,7 +829,7 @@ getDBTables(){      //get DB tables list
 
   }
 
-  onDeleteSelectedProces1s(id,status){
+  onDeleteSelectedProcess(id,status){
     let req_body={
       "piId":id
     }
