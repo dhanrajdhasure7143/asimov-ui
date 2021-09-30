@@ -29,6 +29,7 @@ export class ProcessCategoryOverlayComponent implements OnInit {
   isBpmnModule: boolean = false;
   uploadedFileSplit:any=[];
   uploadedFileExtension:string;
+  count:number=0;
 
   @ViewChild('processCategoryForm', {static: true}) processForm: NgForm;
   constructor( private rest:RestApiService, private activatedRoute: ActivatedRoute, private global:GlobalScript) { }
@@ -124,5 +125,29 @@ export class ProcessCategoryOverlayComponent implements OnInit {
     if(event.target.classList.contains('modal')){
       this.slideDown(this.processForm);
     }
+  }
+
+  lettersOnly(event): boolean {
+    if(event.target.value.length==0 && event.code=="Space"){
+      event.preventDefault();
+      return false;
+    }
+    
+    let count1;
+    if(event.code=="Space"){
+      console.log('test')
+      count1=this.count++;
+    }else{
+      this.count=0;
+    }
+    if(count1>=1){
+      event.preventDefault();
+      return false;
+    }
+
+    // var str=event.target.value
+    // console.log("othercategory",this.othercategory);
+    // console.log(str.replace(/\s\s/g, " "))
+
   }
 }

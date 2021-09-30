@@ -65,15 +65,15 @@
               </button>
               <button class="tsttooltipbtn" (click)="zoomIn()" >
                 <img src="../../../assets/images/BPMS/zoom-in.svg">
-                <span class="testtooltip">Zoom in</span>
+                <span class="testtooltip">Zoom In</span>
               </button>
               <button class="tsttooltipbtn" (click)="zoomOut()">
                 <img src="../../../assets/images/BPMS/zoom-out.svg">
-                <span class="testtooltip">Zoom out</span>
+                <span class="testtooltip">Zoom Out</span>
               </button>
               <button class="tsttooltipbtn" (click)="fitNotation()" >
                 <img src="../../../assets/images/BPMS/Fit to screen.svg">
-                <span class="testtooltip">Fit to screen</span>
+                <span class="testtooltip">Fit To Screen</span>
               </button>
               <span *ngIf="rejectedOrApproved!='PENDING'" class="bpsbtnsep">|</span>
               <button class="bps-save-icon clr-hvr tsttooltipbtn" (click)="saveProcess()" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && !isSave_disabled && !iscreate_notation" >

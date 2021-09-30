@@ -39,6 +39,8 @@ export class D3flowchartComponent {
   searchNode: any;
   isnoNode:boolean=false;
   activeCssStyle = "stroke";
+  graph_height:any;
+  graph_width:any;
   
     constructor(){
   
@@ -111,7 +113,7 @@ let svg = d3.select("#exportSVGtoPDF").append("svg")
   .attr("xmlns", "http://www.w3.org/2000/svg")
   .attr("xmlns:xlink", "http://www.w3.org/1999/xlink")
   .attr("width", w)
-  .attr("height", h)
+  // .attr("height", h)
   // .attr("overflow", 'auto')
   // .attr("viewBox", '0 0 800 800')
   // .attr("preserveAspectRatio", 'none')
@@ -252,7 +254,7 @@ let svg = d3.select("#exportSVGtoPDF").append("svg")
     
         var nodeName=this.model1[j].name
         states[nodeName]={
-          description: "<p class='metrics-name'>Frequency</p><ul class='left-content'><li><div>Absolute Frequency</div><div>"+this.model1[j].toolCount[0]+"</div></li><li><div>Case Frequency</div><div>"+this.model1[j].toolCount[1]+"</div></li><li><div>Max Repititions</div><div>"+this.model1[j].toolCount[2]+"</div></li><li><div>Start Frequency</div><div>"+this.model1[j].toolCount[3]+"</div></li><li><div>End Frequency</div><div>"+this.model1[j].toolCount[4]+"</div></li></ul><p class='metrics-name'>Performance </p><ul class='left-content'><li><div>Total Duration</div><div>"+performanceCount1+"</div></li><li><div>Median Duration</div><div>"+performanceCount2+"</div></li><li><div>Mean Duration </div><div>"+performanceCount3+"</div></li><li><div>Max Duration </div><div>"+performanceCount4+"</div></li><li><div>Min Duration </div><div>"+performanceCount5+"</div></li></ul>",
+          description: "<p class='metrics-name'>Frequency</p><ul class='left-content'><li><div>Absolute Frequency</div><div>"+this.model1[j].toolCount[0]+"</div></li><li><div>Case Frequency</div><div>"+this.model1[j].toolCount[1]+"</div></li><li><div>Max Repetition</div><div>"+this.model1[j].toolCount[2]+"</div></li><li><div>Start Frequency</div><div>"+this.model1[j].toolCount[3]+"</div></li><li><div>End Frequency</div><div>"+this.model1[j].toolCount[4]+"</div></li></ul><p class='metrics-name'>Performance </p><ul class='left-content'><li><div>Total Duration</div><div>"+performanceCount1+"</div></li><li><div>Median Duration</div><div>"+performanceCount2+"</div></li><li><div>Mean Duration </div><div>"+performanceCount3+"</div></li><li><div>Max Duration </div><div>"+performanceCount4+"</div></li><li><div>Min Duration </div><div>"+performanceCount5+"</div></li></ul>",
         metrics: this.model1[j].count
         }
       }
@@ -300,7 +302,7 @@ var count1
       let maxLinkCount=maxCount.days/5;
       for(var i=0; i<this.model2.length;i++){
         if(this.model2[i].from=="Start"||this.model2[i].to=="End"){
-          var linkTooltip = "<p>"+this.model2[i].from+"-"+this.model2[i].to+"</p><p>Frequency</p><ul><li><div>Absolute Frequency</div><div>"+this.model2[i].toolDataCount[0]+"</div></li><li><div>Case Frequency</div><div>"+this.model2[i].toolDataCount[1]+"</div></li><li><div>Max Repititions</div><div>"+this.model2[i].toolDataCount[2]+"</div></li><li><div>Start Frequency</div><div>"+this.model2[i].toolDataCount[3]+"</div></li><li><div>End Frequency</div><div>"+this.model2[i].toolDataCount[4]+"</div></li></ul>";
+          var linkTooltip = "<p>"+this.model2[i].from+" - "+this.model2[i].to+"</p><p>Frequency</p><ul><li><div>Absolute Frequency</div><div>"+this.model2[i].toolDataCount[0]+"</div></li><li><div>Case Frequency</div><div>"+this.model2[i].toolDataCount[1]+"</div></li><li><div>Max Repetition</div><div>"+this.model2[i].toolDataCount[2]+"</div></li><li><div>Start Frequency</div><div>"+this.model2[i].toolDataCount[3]+"</div></li><li><div>End Frequency</div><div>"+this.model2[i].toolDataCount[4]+"</div></li></ul>";
               if(this.performanceValue==true){
                 g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: '', labelType: "html", style: "stroke: #333; stroke-width: 3px;stroke-dasharray: 5, 5;marker-end:url(#arrow);fill:none;",
                 arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead: "normal"})
@@ -315,7 +317,7 @@ var count1
           var performanceLinkCount4=this.timeConversion(this.model2[i].toolDataCount[8])
           var performanceLinkCount5=this.timeConversion(this.model2[i].toolDataCount[9])
     
-          var linkTooltip = "<p>"+this.model2[i].from+"-"+this.model2[i].to+"</p><p>Frequency</p><ul><li><div>Absolute Frequency</div><div>"+this.model2[i].toolDataCount[0]+"</div></li><li><div>Case Frequency</div><div>"+this.model2[i].toolDataCount[1]+"</div></li><li><div>Max Repititions</div><div>"+this.model2[i].toolDataCount[2]+"</div></li><li><div>Start Frequency</div><div>"+this.model2[i].toolDataCount[3]+"</div></li><li><div>End Frequency</div><div>"+this.model2[i].toolDataCount[4]+"</div></li></ul><p>Performance </p><ul><li><div>Total Duration</div><div>"+performanceLinkCount1+"</div></li><li><div>Median Duration</div><div>"+performanceLinkCount2+"</div></li><li><div>Mean Duration </div><div>"+performanceLinkCount3+"</div></li><li><div>Max Duration </div><div>"+performanceLinkCount4+"</div></li><li><div>Min Duration </div><div>"+performanceLinkCount5+"</div></li></ul>";
+          var linkTooltip = "<p>"+this.model2[i].from+"-"+this.model2[i].to+"</p><p>Frequency</p><ul><li><div>Absolute Frequency</div><div>"+this.model2[i].toolDataCount[0]+"</div></li><li><div>Case Frequency</div><div>"+this.model2[i].toolDataCount[1]+"</div></li><li><div>Max Repetition</div><div>"+this.model2[i].toolDataCount[2]+"</div></li><li><div>Start Frequency</div><div>"+this.model2[i].toolDataCount[3]+"</div></li><li><div>End Frequency</div><div>"+this.model2[i].toolDataCount[4]+"</div></li></ul><p>Performance </p><ul><li><div>Total Duration</div><div>"+performanceLinkCount1+"</div></li><li><div>Median Duration</div><div>"+performanceLinkCount2+"</div></li><li><div>Mean Duration </div><div>"+performanceLinkCount3+"</div></li><li><div>Max Duration </div><div>"+performanceLinkCount4+"</div></li><li><div>Min Duration </div><div>"+performanceLinkCount5+"</div></li></ul>";
         if(this.model2[i].text.includes('Days')){
           let v1=this.model2[i].text.split(' ')[0];
           let v3
@@ -377,7 +379,7 @@ var count1
     let maxLinkCount=maxCount/5;
     for(var i=0; i<this.model2.length;i++){
       if(this.model2[i].from=="Start"||this.model2[i].to=="End"){
-        var linkTooltip = "<p>"+this.model2[i].from+"-"+this.model2[i].to+"</p><p>Frequency</p><ul><li><div>Absolute Frequency</div><div>"+this.model2[i].toolDataCount[0]+"</div></li><li><div>Case Frequency</div><div>"+this.model2[i].toolDataCount[1]+"</div></li><li><div>Max Repititions</div><div>"+this.model2[i].toolDataCount[2]+"</div></li><li><div>Start Frequency</div><div>"+this.model2[i].toolDataCount[3]+"</div></li><li><div>End Frequency</div><div>"+this.model2[i].toolDataCount[4]+"</div></li></ul>";
+        var linkTooltip = "<p>"+this.model2[i].from+"-"+this.model2[i].to+"</p><p>Frequency</p><ul><li><div>Absolute Frequency</div><div>"+this.model2[i].toolDataCount[0]+"</div></li><li><div>Case Frequency</div><div>"+this.model2[i].toolDataCount[1]+"</div></li><li><div>Max Repetition</div><div>"+this.model2[i].toolDataCount[2]+"</div></li><li><div>Start Frequency</div><div>"+this.model2[i].toolDataCount[3]+"</div></li><li><div>End Frequency</div><div>"+this.model2[i].toolDataCount[4]+"</div></li></ul>";
         if(this.performanceValue==true){
           g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: '', labelType: "html", style: "stroke: #333; stroke-width: 3px;stroke-dasharray: 5, 5;marker-end:url(#arrow);fill:none;",
            curve: d3.curveBasis,arrowhead: "normal"})
@@ -393,7 +395,7 @@ var count1
         var performanceLinkCount4=this.timeConversion(this.model2[i].toolDataCount[8])
         var performanceLinkCount5=this.timeConversion(this.model2[i].toolDataCount[9])
       
-        var linkTooltip = "<p>"+this.model2[i].from+"-"+this.model2[i].to+"</p><p>Frequency</p><ul><li><div>Absolute Frequency</div><div>"+this.model2[i].toolDataCount[0]+"</div></li><li><div>Case Frequency</div><div>"+this.model2[i].toolDataCount[1]+"</div></li><li><div>Max Repititions</div><div>"+this.model2[i].toolDataCount[2]+"</div></li><li><div>Start Frequency</div><div>"+this.model2[i].toolDataCount[3]+"</div></li><li><div>End Frequency</div><div>"+this.model2[i].toolDataCount[4]+"</div></li></ul><p>Performance </p><ul><li><div>Total Duration</div><div>"+performanceLinkCount1+"</div></li><li><div>Median Duration</div><div>"+performanceLinkCount2+"</div></li><li><div>Mean Duration </div><div>"+performanceLinkCount3+"</div></li><li><div>Max Duration </div><div>"+performanceLinkCount4+"</div></li><li><div>Min Duration </div><div>"+performanceLinkCount5+"</div></li></ul>";
+        var linkTooltip = "<p>"+this.model2[i].from+"-"+this.model2[i].to+"</p><p>Frequency</p><ul><li><div>Absolute Frequency</div><div>"+this.model2[i].toolDataCount[0]+"</div></li><li><div>Case Frequency</div><div>"+this.model2[i].toolDataCount[1]+"</div></li><li><div>Max Repetition</div><div>"+this.model2[i].toolDataCount[2]+"</div></li><li><div>Start Frequency</div><div>"+this.model2[i].toolDataCount[3]+"</div></li><li><div>End Frequency</div><div>"+this.model2[i].toolDataCount[4]+"</div></li></ul><p>Performance </p><ul><li><div>Total Duration</div><div>"+performanceLinkCount1+"</div></li><li><div>Median Duration</div><div>"+performanceLinkCount2+"</div></li><li><div>Mean Duration </div><div>"+performanceLinkCount3+"</div></li><li><div>Max Duration </div><div>"+performanceLinkCount4+"</div></li><li><div>Min Duration </div><div>"+performanceLinkCount5+"</div></li></ul>";
       if(this.model2[i].text <= maxLinkCount){
         g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: this.model2[i].text,  labelType: "html",class: this.class6, style: "stroke: #a8a5a5; stroke-width: 3px;marker-end:url(#arrow3);fill:none;", 
          curve: d3.curveBasis,arrowhead: "normal"})
@@ -479,24 +481,24 @@ const max = nodesArray.reduce(function(prev, current) {
     for(var i =0;i<nodesArray.length;i++){  // for performance metrics
       if (Number(nodesArray[i].days) <= maxDivided) {
         var eachLine = nodesArray[i].label.split('\n')[0];
-            g.node(eachLine).style = "fill: #f7cb86";
+            g.node(eachLine).style = "fill: #eddfc8";
       }
       else if (Number(nodesArray[i].days) > maxDivided && Number(nodesArray[i].days) <= Number(maxDivided*2)) {
         var eachLine = nodesArray[i].label.split('\n')[0];
-            g.node(eachLine).style = "fill: #ffbc5e";
+            g.node(eachLine).style = "fill: #eab977";
       } else if (Number(nodesArray[i].days) > Number(maxDivided*2) && Number(nodesArray[i].days) <= Number(maxDivided*3)) {
         var eachLine = nodesArray[i].label.split('\n')[0];
-            g.node(eachLine).style = "fill: #fc8047" ;
+            g.node(eachLine).style = "fill: #f48551" ;
       } else if (Number(nodesArray[i].days) > Number(maxDivided*3) && Number(nodesArray[i].days) <= Number(maxDivided*4)) {
         var eachLine = nodesArray[i].label.split('\n')[0];
-        g.node(eachLine).style = "fill: #E24A33";   
+        g.node(eachLine).style = "fill: #d94029";   
       }
       else if (Number(nodesArray[i].days) > Number(maxDivided*4) && Number(nodesArray[i].days) <= Number(maxDivided*5)) {
         var eachLine = nodesArray[i].label.split('\n')[0];
-        g.node(eachLine).style = "fill: #B40001"; 
+        g.node(eachLine).style = "fill: #a40000"; 
       }else{
         var eachLine = nodesArray[i].label.split('\n')[0];
-        g.node(eachLine).style = "fill: #B40001";
+        g.node(eachLine).style = "fill: #a40000";
       }
     
     }
@@ -522,20 +524,20 @@ const max = nodesArray.reduce(function(prev, current) {
 for(var i =0;i<nodesArray.length;i++){
   if (nodesArray[i].metrics <= maxDivided) {
     var eachLine = nodesArray[i].label.split('\n')[0];
-        g.node(eachLine).style = "fill: #b7aace";
+        g.node(eachLine).style = "fill: #e6e3eb";
   }
   else if (nodesArray[i].metrics > maxDivided && nodesArray[i].metrics <= Number(maxDivided*2)) {
     var eachLine = nodesArray[i].label.split('\n')[0];
-        g.node(eachLine).style = "fill: #ADB9D1";
+        g.node(eachLine).style = "fill: #aebad2";
   } else if (nodesArray[i].metrics > Number(maxDivided*2) && nodesArray[i].metrics <= Number(maxDivided*3)) {
     var eachLine = nodesArray[i].label.split('\n')[0];
-        g.node(eachLine).style = "fill: #37607d" ;
+        g.node(eachLine).style = "fill: #679cc2" ;
   } else if (nodesArray[i].metrics > Number(maxDivided*3) && nodesArray[i].metrics <= Number(maxDivided*4)) {
     var eachLine = nodesArray[i].label.split('\n')[0];  
-    g.node(eachLine).style = "fill: #0b629e";    
+    g.node(eachLine).style = "fill: #2182b4";    
   }else if (nodesArray[i].metrics > Number(maxDivided*4) && nodesArray[i].metrics <= Number(maxDivided*5)) {
     var eachLine = nodesArray[i].label.split('\n')[0];
-    g.node(eachLine).style = "fill: #024C7F"; 
+    g.node(eachLine).style = "fill: #035386"; 
   }
 
 }
@@ -692,14 +694,14 @@ var styleTooltip1 = function(name) {
   for( var i=0;i<me.model2.length;i++){
     if(me.model2[i].from==name.v&&me.model2[i].to==name.w){
       if(name.v=="Start"||name.w=="End"||name.v=="End"||name.w=="Start"){
-      var linkTooltip1 = "<p class='node-name'>"+me.model2[i].from+"-"+me.model2[i].to+"</p><p class='metrics-name'>Frequency</p><ul class='left-content'><li><div>Absolute Frequency</div><div>"+me.model2[i].toolDataCount[0]+"</div></li><li><div>Case Frequency</div><div>"+me.model2[i].toolDataCount[1]+"</div></li><li><div>Max Repititions</div><div>"+me.model2[i].toolDataCount[2]+"</div></li><li><div>Start Frequency</div><div>"+me.model2[i].toolDataCount[3]+"</div></li><li><div>End Frequency</div><div>"+me.model2[i].toolDataCount[4]+"</div></li></ul>";
+      var linkTooltip1 = "<p class='node-name'>"+me.model2[i].from+"-"+me.model2[i].to+"</p><p class='metrics-name'>Frequency</p><ul class='left-content'><li><div>Absolute Frequency</div><div>"+me.model2[i].toolDataCount[0]+"</div></li><li><div>Case Frequency</div><div>"+me.model2[i].toolDataCount[1]+"</div></li><li><div>Max Repetition</div><div>"+me.model2[i].toolDataCount[2]+"</div></li><li><div>Start Frequency</div><div>"+me.model2[i].toolDataCount[3]+"</div></li><li><div>End Frequency</div><div>"+me.model2[i].toolDataCount[4]+"</div></li></ul>";
       }else{
         var performanceLinkCount1=me.timeConversion(me.model2[i].toolDataCount[5])
         var performanceLinkCount2=me.timeConversion(me.model2[i].toolDataCount[6])
         var performanceLinkCount3=me.timeConversion(me.model2[i].toolDataCount[7])
         var performanceLinkCount4=me.timeConversion(me.model2[i].toolDataCount[8])
         var performanceLinkCount5=me.timeConversion(me.model2[i].toolDataCount[9])
-        var linkTooltip1 = "<p class='node-name'>"+me.model2[i].from+"-"+me.model2[i].to+"</p><p class='metrics-name'>Frequency</p><ul class='left-content'><li><div>Absolute Frequency</div><div>"+me.model2[i].toolDataCount[0]+"</div></li><li><div>Case Frequency</div><div>"+me.model2[i].toolDataCount[1]+"</div></li><li><div>Max Repititions</div><div>"+me.model2[i].toolDataCount[2]+"</div></li><li><div>Start Frequency</div><div>"+me.model2[i].toolDataCount[3]+"</div></li><li><div>End Frequency</div><div>"+me.model2[i].toolDataCount[4]+"</div></li></ul><p class='metrics-name'>Performance </p><ul class='left-content'><li><div>Total Duration</div><div>"+performanceLinkCount1+"</div></li><li><div>Median Duration</div><div>"+performanceLinkCount2+"</div></li><li><div>Mean Duration </div><div>"+performanceLinkCount3+"</div></li><li><div>Max Duration </div><div>"+performanceLinkCount4+"</div></li><li><div>Min Duration </div><div>"+performanceLinkCount5+"</div></li></ul>";
+        var linkTooltip1 = "<p class='node-name'>"+me.model2[i].from+"-"+me.model2[i].to+"</p><p class='metrics-name'>Frequency</p><ul class='left-content'><li><div>Absolute Frequency</div><div>"+me.model2[i].toolDataCount[0]+"</div></li><li><div>Case Frequency</div><div>"+me.model2[i].toolDataCount[1]+"</div></li><li><div>Max Repetition</div><div>"+me.model2[i].toolDataCount[2]+"</div></li><li><div>Start Frequency</div><div>"+me.model2[i].toolDataCount[3]+"</div></li><li><div>End Frequency</div><div>"+me.model2[i].toolDataCount[4]+"</div></li></ul><p class='metrics-name'>Performance </p><ul class='left-content'><li><div>Total Duration</div><div>"+performanceLinkCount1+"</div></li><li><div>Median Duration</div><div>"+performanceLinkCount2+"</div></li><li><div>Mean Duration </div><div>"+performanceLinkCount3+"</div></li><li><div>Max Duration </div><div>"+performanceLinkCount4+"</div></li><li><div>Min Duration </div><div>"+performanceLinkCount5+"</div></li></ul>";
         }
       }
 }
@@ -796,7 +798,7 @@ let nodes_Array=d3.selectAll("g text")['_groups'][0];
 nodes_Array.forEach((element,i) => {
   let node_color=g.node(element['parentNode'].__data__)['style'].split(':')[1].trim();
   // console.log(node_color);
- if(node_color=="#024C7F" || node_color=="#B40001"){
+ if(node_color=="#035386" || node_color=="#2182b4"|| node_color=="#a40000"){
   nodes_Array[i]['attributes'][1].value="font-size: 14px;fill: #fff"
   // inner.selectAll('g.node')['_groups'][0][i]['attributes'][2].value="opacity: 1;fill: #030303"
  }else{
@@ -835,24 +837,30 @@ $('.zoom-out').click( function(){   //zoom Out
 });
 
 
-
+this.graph_height=g.graph().height;
+this.graph_width=g.graph().width;
 if(me.isdownloadJpeg==true||this.isdownloadPng==true||this.isdownloadpdf==true||this.isdownloadsvg==true){
-  if(g.graph().width>1583 && g.graph().width<3160){
+  if(this.graph_width>1403){
     var initialScale1 = 0.30;
     svg.call(zoom.transform, d3.zoomIdentity.translate((svg.attr("width") - g.graph().width * initialScale1) / 2, 53).scale(initialScale1));
     svg.attr('height', g.graph().height * initialScale1 + 53)
-  }else if(g.graph().width>3160){
-    var initialScale1 = 0.22;
-    svg.call(zoom.transform, d3.zoomIdentity.translate((svg.attr("width") - g.graph().width * initialScale1) / 2, 53).scale(initialScale1));
-    svg.attr('height', g.graph().height * initialScale1 + 53)
   }
+  // if(g.graph().width>1583 && g.graph().width<3160){
+  //   var initialScale1 = 0.30;
+  //   svg.call(zoom.transform, d3.zoomIdentity.translate((svg.attr("width") - g.graph().width * initialScale1) / 2, 53).scale(initialScale1));
+  //   svg.attr('height', g.graph().height * initialScale1 + 53)
+  // }else if(g.graph().width>3160){
+  //   var initialScale1 = 0.22;
+  //   svg.call(zoom.transform, d3.zoomIdentity.translate((svg.attr("width") - g.graph().width * initialScale1) / 2, 53).scale(initialScale1));
+  //   svg.attr('height', g.graph().height * initialScale1 + 53)
+  // }
 }
 }
 }
 }
     
     
-    exportSVG(fileType){ 
+   exportSVG(fileType){ 
       if(fileType == 'svg'){
         //get svg element.
   
@@ -879,21 +887,20 @@ if(me.isdownloadJpeg==true||this.isdownloadPng==true||this.isdownloadpdf==true||
         this.isdownloadsvg=false;
         this.issvg.emit(this.isdownloadsvg)
       }else{
- 
-      html2canvas(this.exportSVGtoPDF.nativeElement, { 
 
+    html2canvas(this.exportSVGtoPDF.nativeElement, {
           allowTaint: true,
           scrollY: -window.scrollY,
           useCORS: true,
           logging:true,
-          scale:5
+          scale:2,
+          height: this.graph_height/2+100
+          // windowHeight: window.outerHeight + window.innerHeight
         }).then(canvas => {
         if(fileType == 'png' || fileType == 'jpeg'){
           this.downloadLink.nativeElement.href = canvas.toDataURL('image/'+fileType);
-          
           this.downloadLink.nativeElement.download = this.processGraphName;
           this.downloadLink.nativeElement.click();
-
           this.isdownloadJpeg=false;
             this.isjpeg.emit(this.isdownloadJpeg)
             this.isdownloadPng=false;
@@ -901,10 +908,18 @@ if(me.isdownloadJpeg==true||this.isdownloadPng==true||this.isdownloadpdf==true||
           
         }
         if(fileType == 'pdf'){
-          var contentDataURL = canvas.toDataURL("image/png");
-          var doc = new jsPDF('l','pt',[1020, 768]);
-          doc.setFontSize(18)
-          doc.addImage(contentDataURL, 'PNG',10, 10, 1020, 500);
+          var contentDataURL = canvas.toDataURL("image/png",0.5);
+          // var doc = new jsPDF('l','pt',[700,600],{compress: true}); --final
+          var doc = new jsPDF('p', 'mm', 'a4', true);
+          // var doc = new jsPDF('l','pt',[this.graph_height,1100],'a4',{compress: true});
+          // var doc = new jsPDF('1', 'pt', 'a4', true);--final
+          // doc.setFontSize(20)
+          // doc.addImage(contentDataURL, 'PNG',10, 10, 1620, 600);
+          // doc.addImage(contentDataURL, 'PNG', 0, 0, 1000, 1400, undefined,'FAST')
+          // doc.addImage(contentDataURL, 'PNG', 0, 0, 700, 600,undefined,'FAST')--final
+          doc.addImage(contentDataURL, 'PNG', 5, 0, 210, 297,undefined,'FAST')
+          // doc.addImage(contentDataURL, 'PNG', 0, 0, 485, 270, undefined,'FAST')
+          // doc.addImage(contentDataURL, "PNG", 0, 0, canvas.width * ratio, canvas.height * ratio,);
           doc.save(this.processGraphName+'.pdf');
           this.isdownloadpdf=false;
             this.ispdf.emit(this.isdownloadpdf)
