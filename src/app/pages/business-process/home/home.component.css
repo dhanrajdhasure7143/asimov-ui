@@ -29,7 +29,7 @@
 
 .workspace-title {
     background-color: #e8f7fd;
-    padding: 12px 10px !important;
+    padding: 6px 10px !important;
     display: flex;
     width: 100%;
     /* padding-right: 18px !important; */
@@ -39,6 +39,7 @@
     font-weight: 600;
     /* border-bottom: 1px solid #4a4a4a33 !important; */
     border: none;
+    height: 40px;
 }
 
 .myworkspace-style .col-md-6 mat-form-field {
@@ -78,6 +79,7 @@ span.comment {
     padding: 0px;
     display: flex;
     color: #212529;
+    align-items: center;
 }
 .bps_overlay div {
     border-radius: 4px;
@@ -157,23 +159,26 @@ div#bpmn_list {
         display: none !important;
     }
 
-    .table {
+    /* .table {
         display:table;
-    }
+    } */
     .workspace-title.header {
         display:table-header-group;
         font-weight:bold;
     }
-    .rowGroup {
+    /* .rowGroup {
         display:table-row-group;
     }
     #bpmn_list.row {
         display:table-row;
-    }
+    } */
     .cell {
-        display:table-cell;
+        /* display:table-cell; */
+        width: 100%;
+        font-size: 13px;
+        padding-right: 15px;
     }
-    .cell1 {
+    /* .cell1 {
         width:5%;
         color: #5b5b5b;
         opacity: 0.6;
@@ -208,7 +213,7 @@ div#bpmn_list {
     .cell10 {
         width:4%;
         font-size: 14px;
-    }
+    } */
     .cell span{
         cursor: pointer;
     }
@@ -219,4 +224,10 @@ div#bpmn_list {
 
     .workspace-title.table button.mat-sort-header-button {
         font-size: 14px;
+    }
+
+    .expan-icon {
+        width: 20%;
+        color: #5b5b5b;
+        opacity: 0.6;
     }

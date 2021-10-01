@@ -41,9 +41,9 @@
             </div>
           </div>
         </div>
-        <div class="col-md-12 text-bold workspace-title table">
-            <div class="header" matSort>
-            <div class="cell cell1"></div>
+        <div class="row col-md-12 text-bold workspace-title" matSort>
+            <!-- <div class="header" matSort> -->
+            <div class="expan-icon"></div>
             <div class="cell cell2" mat-sort-header="bpmnProcessName">Process Name
               <!-- <div class="cell cell2" mat-sort-header="bpmnProcessName" (click)="sort('bpmnProcessName',0)">Process Name -->
               <!-- <span class="asc" *ngIf="orderAsc && sortIndex==0">&#8595;</span> -->
@@ -85,7 +85,7 @@
                   <!-- <span class="desc" *ngIf="!orderAsc && sortIndex==5">&#8593;</span> -->
             </div>
             <div class="cell cell10">Actions</div>
-          </div>
+          <!-- </div> -->
           
         </div>
         <div class="row col-md-12 new-bps-grid-data" id="bpmn_list">
@@ -96,10 +96,10 @@
               <mat-expansion-panel-header class="dropdown_icon">
                 <mat-panel-title>
                         <!-- id="bpmn_list_row" -->
-                  <div class="table">
-                    <div class="rowGroup">
-                      <div class="row">
-                        <div class="cell cell1">
+                  <!-- <div class="table">
+                    <div class="rowGroup"> -->
+                      <div class="row col-md-12">
+                        <div class="expan-icon">
                           <i class="material-icons expand-open">chevron_right</i>
                           <i class="material-icons expand-close">expand_less</i>
                         </div>
@@ -126,8 +126,8 @@
                           <i *ngIf="each_diag.bpmnProcessStatus!='INPROGRESS' && (each_diag.bpmnProcessStatus=='APPROVED' || each_diag.bpmnProcessStatus=='REJECTED' || !isAdminUser)">-</i>
                         </div>
                       </div>
-                    </div>
-                  </div>
+                    <!-- </div>
+                  </div> -->
                  
                 </mat-panel-title>
               </mat-expansion-panel-header>
