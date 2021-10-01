@@ -153,7 +153,7 @@
 } 
 .PI-srh-graph {
     float: right;
-    width: 28.4%;
+    /* width: 28.4%; */
 }
 .resur-value-data h5 {
     color: #00a0e3;
@@ -167,7 +167,6 @@
     color: unset !important;
     margin: 0px 0px 10px 0px!important;
     width: 71.6%;
-
 }
 .sltrst-xclose {
     height: 12px;

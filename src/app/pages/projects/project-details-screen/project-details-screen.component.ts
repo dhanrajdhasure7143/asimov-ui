@@ -126,7 +126,14 @@ percentageComplete: number;
   fileList: File[] = [];
   listOfFiles: any[] = [];
   owner_letters: any;
-  
+  public isButtonVisible = false;
+  public userRole:any = [];
+  customUserRole: any;
+  enableeditproject: boolean=false;
+  enablecreatetask: boolean=false;
+  enableedittask: boolean=false;
+  enabledeletetask: boolean=false;
+
   constructor(private dt:DataTransferService,private route:ActivatedRoute, private rpa:RestApiService,
     private modalService: BsModalService,private formBuilder: FormBuilder,private router: Router,
     private spinner:NgxSpinnerService) { }
@@ -163,6 +170,33 @@ percentageComplete: number;
        })
     this.dt.changeParentModule({"route":"/pages/projects/projects-list-screen", "title":"Projects"});
     this.dt.changeChildModule(undefined);
+
+    this.userRole = localStorage.getItem("userRole")
+    // this.userRole = this.userRole.split(',');
+    // this.isButtonVisible = this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') || this.userRole.includes('Process Owner')
+    // || this.userRole.includes('Process Architect') || this.userRole.includes('System Admin') 
+    // || this.userRole.includes('Process Analyst')|| this.userRole.includes('RPA Developer');
+    
+    this.rpa.getCustomUserRole(2).subscribe(role=>{
+      this.customUserRole=role;
+      let element=[]
+      for (let index = 0; index < this.customUserRole.message.length; index++) {
+       element = this.customUserRole.message[index].permission;
+        element.forEach(element1 => {
+         if(element1.permissionName.includes('Project_Edit')){
+           this.enableeditproject=true;
+         }else if(element1.permissionName.includes('Task_Create')){
+          this.enablecreatetask=true;
+         }else if(element1.permissionName.includes('Task_Edit')){
+          this.enableedittask=true;
+         }else if(element1.permissionName=='Task_Delete'){
+          this.enabledeletetask=true;
+         }
+        });
+      }
+        })
+
+        
     this.getallusers();
     this.projectdetails();
     this.getallprocesses();

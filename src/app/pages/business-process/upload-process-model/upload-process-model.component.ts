@@ -457,7 +457,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
     if(this.selectedNotationType=="dmn"){
       this[modeler_obj].getActiveViewer()
         .get('canvas').zoom('fit-viewport');
-        this.global.notify("Notation is fit to view port", "success")
+        this.global.notify("Notation Is fit to view port.", "success")
         return;
     }
     this[modeler_obj].get('canvas').zoom('fit-viewport');
@@ -470,7 +470,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
     }
     else
       msg = "Notation"
-    this.global.notify(msg+" is fit to view port", "success")
+    this.global.notify(msg+" Is fit to view port.", "success")
   }
 
   toggleChanges(){

@@ -26,7 +26,7 @@
                     <div *ngIf='isotherCategory'>
                         <div class="col-md-12 p-0 from-group">
                            <label>Enter Category<span class="star">*</span></label>
-                            <input type="text" name="other_category" [(ngModel)]="othercategory" #other_category="ngModel" pattern="[a-zA-Z0-9 _-]+" required class="form-group" placeholder="Enter Category" class="form-control">
+                            <input type="text" name="other_category" [(ngModel)]="othercategory" #other_category="ngModel" pattern="[a-zA-Z0-9 _-]+" required class="form-group" (keypress)="lettersOnly($event)" placeholder="Enter Category" class="form-control">
                             <span *ngIf="((other_category.invalid && processCategoryForm.submitted) || (other_category.errors && other_category.touched) )">
                                 <span class='errspan required' *ngIf="other_category.errors.required"> Please Enter category</span>
                                 <span class='errspan required' *ngIf="other_category.errors.pattern"> Alphanumerics with _- are allowed having 4 - 25 characters</span>
