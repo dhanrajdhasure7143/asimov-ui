@@ -1472,9 +1472,7 @@ select.form-control {
   background-repeat: no-repeat;
   cursor: pointer;
 }
-.createform input[type="date"]::-webkit-calendar-picker-indicator {
-  display:none;
-}
+.createform input[type="date"]::-webkit-calendar-picker-indicator,
 .maindivfoprm input[type="date"]::-webkit-calendar-picker-indicator,
 .modelprbody input[type="date"]::-webkit-calendar-picker-indicator {
   width: 16px;
