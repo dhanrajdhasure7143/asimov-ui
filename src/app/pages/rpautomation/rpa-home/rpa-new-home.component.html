@@ -5,6 +5,10 @@
           
 
             <span class="module-header-title">Robotic Process Automation</span>
+            <button type="button" class="btn btn-primary import-btn ml-auto"  (click)="openModal(template)">
+              <img src="../../../../assets/images/RPA/import-white.svg" class="testplus" >
+              Import
+            </button>
         </div>
 
 <!-- <div class="header_addon header-btn1">
@@ -417,3 +421,51 @@
         </div>
     </div>
   </div>
+
+
+
+  <ng-template #template>
+    <div class="modal-header modelprhead">
+      <h4 class="modal-title pull-left">Import Bot</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true"><img alt="" src="../../../../../assets/images/Projects/circle-close.svg"></span>
+      </button>
+    </div>
+    <div class="modal-body modelprbody">
+      <div class="container p-0" style="width:100%">
+          <div class="row">
+              <div class="form-fields col-md-12">
+                <label>Select Environment</label>
+                  <select class="form-control" value="" [(ngModel)]="importenv">                        
+                      <option value="">Select Environment</option>
+                      <option *ngFor="let env of environments" [value]="env.environmentId">{{env.environmentName}}</option>
+                  </select>
+              </div>
+              <div class="form-fields col-md-12">
+                <label>Select Category</label>
+                  <select class="form-control" value="" [(ngModel)]="importcat">                        
+                    <option value="">Select Category</option>
+                    <option *ngFor="let cat of categaoriesList" [value]="cat.categoryId">{{cat.categoryName}}</option>
+                  </select>
+              </div>
+              <div class="form-fields col-md-12">
+                <label>Browse File</label>
+                <div class="text-center">
+                  <input  class="form-control custom-file-input"  (change)="upload($event.target.files[0])" type="file">
+                </div>
+                <span class="required">{{file_error}}</span>
+              </div>
+              
+              
+            </div>
+      </div>
+    </div>      
+    <div class="modal-footer modelprfooter">
+      <div class="pull-right">
+        <button (click)="importfile='';importcat='';importenv='';file_error='';modalRef.hide()" class="btn btn-default">Cancel</button>
+        <button class="btn btn-primary btn-update" [disabled]="importfile=='' || importcat=='' || importenv=='' || file_error!=''" 
+        (click)="importbotfile()">Import</button>        
+      </div>
+    </div> 
+
+  </ng-template>

@@ -1128,10 +1128,11 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   downloadPng()
   {
     var element=document.getElementById(this.dragareaid)
+    var botName=this.finalbot.botName;
     domtoimage.toPng(element)
       .then(function (dataUrl) {
         var link = document.createElement('a');
-        link.download = 'bot_image.png';
+        link.download = botName+".png";
         link.href = dataUrl;
         link.click();
       })
@@ -1143,10 +1144,11 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   downloadJpeg() {
 
     var element=document.getElementById(this.dragareaid)
+    var botName=this.finalbot.botName;
     domtoimage.toPng(element,{ quality: 1,background: "white"})
     .then(function (dataUrl) {
       var link = document.createElement('a');
-      link.download = 'bot_image.jpeg';
+      link.download = `${botName}.jpeg`;
       link.href = dataUrl;
       link.click();
     })
@@ -1158,6 +1160,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   downloadPdf() {
 
     var element=document.getElementById(this.dragareaid)
+    var botName=this.finalbot.botName;
     domtoimage.toPng(element)
       .then(function (dataUrl) {
       let img=dataUrl;
@@ -1168,7 +1171,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       const pdfWidth = doc.internal.pageSize.getWidth() - 2 * bufferX;
       const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
       doc.addImage(img, 'PNG', bufferX, bufferY, pdfWidth, pdfHeight, undefined, 'FAST');
-      doc.save('bot_image.pdf');
+      doc.save(`${botName}.pdf`);
       })
       .catch(function (error) {
           console.error('oops, something went wrong!', error);
