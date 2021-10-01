@@ -139,7 +139,16 @@
       
       
             </div>
-        </div>
+      </div>
+      <div class="toolsetmenuicon">
+        <span class="module-sub-header-title clickable">
+        <span  class="toolset-text" *ngIf="toolset_instance != undefined" (click)="toolset_instance.sidenavbutton=!(toolset_instance.sidenavbutton)">
+          <img src="../../../../assets/images/RPA/icon_latest/menu-line.svg" *ngIf="toolset_instance.sidenavbutton==false" class="testplus" />
+          <img src="../../../../assets/images/RPA/icon_latest/menu-line.svg" *ngIf="toolset_instance.sidenavbutton==true" class="testplus" />
+          <!-- Toolset & Actions -->
+        </span>
+        </span>
+      </div>
       <!-- <div class="col-md-3">
           <button  type="button" *ngIf="tabsArray.length > 0" class="btn btn-default" aria-hidden="true" placement="bottom" id="Load_Bot" (click)="rpa_studio.onLoad()">
               <img src="../../../../assets/images/RPA/icon_latest/load-blue.svg" class="default-img">
@@ -154,15 +163,7 @@
    
   </div>
   <div class="toolset-mainheader" >
-    <div class="actionsheaderdiv">
-      <span class="module-sub-header-title clickable">
-      <span  class="toolset-text" *ngIf="toolset_instance != undefined" (click)="toolset_instance.sidenavbutton=!(toolset_instance.sidenavbutton)">
-        <img src="../../../../assets/images/RPA/icon_latest/menu-line.svg" *ngIf="toolset_instance.sidenavbutton==false" class="testplus" />
-        <img src="../../../../assets/images/RPA/icon_latest/menu-line.svg" *ngIf="toolset_instance.sidenavbutton==true" class="testplus" />
-        <!-- Toolset & Actions -->
-      </span>
-    </span>
-    </div>
+    
   <mat-tab-group class="tabs" (selectedTabChange)="change_active_bot($event)" [selectedIndex]="tabsArray.length -1 " >
       <!-- <span class="clickable">Toolset & Actions</span>  -->
       
@@ -197,8 +198,8 @@
   </mat-tab-group>
   <div class="rpa-bottom-tab" headerPosition="below">
     
-              <div *ngIf="current_instance != undefined" class="action-item">
-                <img src="../../../../assets/images/RPA/icon_latest/layer.svg" /> &nbsp; 
+              <div *ngIf="current_instance != undefined" class="footer-versions">
+                <!-- <img src="../../../../assets/images/RPA/icon_latest/layer.svg" /> &nbsp;  -->
                 <select  id="versions" (change)="version_change($event.target.value)" [value]="current_instance.selectedversion" >
                   <option disabled>Select Version</option>
                   <option  [value]="version.vId"  *ngFor="let version of current_instance.versionsList"  >

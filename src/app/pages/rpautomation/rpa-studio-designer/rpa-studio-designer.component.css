@@ -94,22 +94,22 @@ span.tab-botname {
 ::ng-deep .tabs .mat-tab-header{
   width:100% !important;
   left:4% !important;
-  margin-top: -28px !important; 
+  margin-top: -36px !important; 
   border-bottom:none !important;
 
 }
 .toolset-mainheader {
   background-color: #f3f3f3 !important;
-    padding-top: 10px;
 }
 .actionsheaderdiv img.testplus1 {
   width: 12px;
   height: 12px;
 }
-.actionsheaderdiv img.testplus {
+.toolsetmenuicon img.testplus {
   /* margin-right: 12px !important;
   opacity: 0.5; */
   vertical-align: sub;
+  margin: 3px 4px;
 }
 
 
@@ -123,7 +123,7 @@ span.tab-botname {
 }  
 .toolset-text{
   font-weight: 600 !important;
-  margin-left:1%;
+  /* margin-left:1%; */
 }
 
 
@@ -303,14 +303,21 @@ ul#versions li.clickable:hover {
 ::ng-deep .rpa-bottom-tab 
 {
   background: white !important;
-  height: 40px !important;
-  color:black !important;
-  padding: 2px;
+  /* height: 40px !important;
+  color:black !important; */
+  padding: 10px;
   border-top: 1px solid lightgray;
   text-align : end !important;
 }
 
 
 .bot-img{
-  height: 25px;
+  height: 20px;
+  width: 20px;
 }
+
+.toolsetmenuicon {
+  padding-top: 15px;
+}
+
+
