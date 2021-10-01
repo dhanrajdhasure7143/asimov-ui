@@ -128,6 +128,7 @@ percentageComplete: number;
   owner_letters: any;
   public isButtonVisible = false;
   public userRole:any = [];
+  public userName:any;
   customUserRole: any;
   enableeditproject: boolean=false;
   enablecreatetask: boolean=false;
@@ -171,7 +172,8 @@ percentageComplete: number;
     this.dt.changeParentModule({"route":"/pages/projects/projects-list-screen", "title":"Projects"});
     this.dt.changeChildModule(undefined);
 
-    this.userRole = localStorage.getItem("userRole")
+    this.userRole = localStorage.getItem("userRole");
+    this.userName=localStorage.getItem("firstName")+" "+localStorage.getItem("lastName");
     // this.userRole = this.userRole.split(',');
     // this.isButtonVisible = this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') || this.userRole.includes('Process Owner')
     // || this.userRole.includes('Process Architect') || this.userRole.includes('System Admin') 

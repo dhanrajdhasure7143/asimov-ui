@@ -13,7 +13,7 @@ export class RedirectionComponent{
               private spinner:NgxSpinnerService) { 
       this.spinner.show();
       this.authService.logout();
-      window.location.href=this.config.redirectout_url;
+      window.location.href=this.config.signoutRedirectionURL;
       //window.location.href="http://localhost:4200/#/signout";
   }
 

@@ -805,8 +805,7 @@
               <img src="../../../../../assets/images/Projects/Edit-blue.svg" class="hover-img">
             </a> 
             
-            <a (click)="deletetask(element)" matTooltip="Delete Task" *ngIf="this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') ||
-            this.userRole.includes('System Admin') || this.userRole.includes('Process Owner') || this.userRole.includes('Process Architect')">
+            <a (click)="deletetask(element)" matTooltip="Delete Task" *ngIf="((this.userRole.includes('Process Analyst') || this.userRole.includes('RPA Developer')) && userName==element.createdBy)|| (!(this.userRole.includes('Process Analyst') || this.userRole.includes('RPA Developer')))">
               <!-- <img src="../../../../assets/images/Projects/delete-black.svg"> -->
               <img src="../../../../../assets/images/Projects/delete-black.svg" class="default-img">
               <img src="../../../../../assets/images/Projects/delete-red.svg" class="hover-img">
