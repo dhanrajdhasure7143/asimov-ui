@@ -225,9 +225,9 @@ saveUiPath(){
     this.api.save_ui_path_env(data).subscribe(res=>{
       let response:any=res;
       if(response.errorMessage==undefined)
-        Swal.fire(response.status,"","success")
+        Swal.fire("Success",response.status,"success")
       else
-        Swal.fire(response.errorMessage,"","warning")
+        Swal.fire("Error",response.errorMessage,"error")
       this.spinner.hide();
       this.getUiPath();
     })

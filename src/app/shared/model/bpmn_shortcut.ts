@@ -5,7 +5,7 @@ export class BpmnShortcut{
       {"labelName":"Copy","labelValue":"Ctrl + C"},
       {"labelName":"Cut","labelValue":"Ctrl + X"},
       {"labelName":"Paste","labelValue":"Ctrl + V"},
-      {"labelName":"Scroling(Vertical)","labelValue":"Mouse Scroll"},
+      {"labelName":"Scroling(Vertical)","labelValue":"Mouse scroll"},
       {"labelName":"Scrolling(Horizontal)","labelValue":"Two finger touchpad scroll "},
       {"labelName":"Zoom","labelValue":"Pinch zoom"},
       {"labelName":"Select All","labelValue":"Ctrl + A"},

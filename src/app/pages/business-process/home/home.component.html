@@ -110,8 +110,10 @@
                         <div class="cell cell5">{{each_diag.bpmnProcessName ? " V1."+each_diag.version+" ": '-'}}</div>
                         <div class="cell cell6" >{{each_diag.convertedModifiedTime*1000 | date:'medium'}}</div>
                         <div class="cell cell7">{{each_diag.approverName ? formatApproverName(each_diag.approverName): '-'}}</div>
-                        <div class="cell cell8" [ngStyle]="{'color':getColor(each_diag.bpmnProcessStatus)}"
-                        [class.pending_value_properties]="each_diag.bpmnProcessStatus=='PENDING'">{{each_diag.bpmnProcessStatus=='PENDING'?pendingStatus:each_diag.bpmnProcessStatus}}</div>
+                        <!-- <div class="cell cell8" [ngStyle]="{'color':getColor(each_diag.bpmnProcessStatus)}"
+                        [class.pending_value_properties]="each_diag.bpmnProcessStatus=='PENDING'">{{each_diag.bpmnProcessStatus=='PENDING'?pendingStatus:each_diag.bpmnProcessStatus}}</div> -->
+                        <div class="cell cell8" [ngStyle]="{'color':getColor(each_diag.bpmnProcessStatus)}" [class.pending_value_properties]="each_diag.bpmnProcessStatus=='PENDING'">{{getNotationStatus(each_diag.bpmnProcessStatus)}}</div>
+                        
                         <div class="cell cell9"><img src="../../../../assets/images/BPMS/Msg.svg" class="testplus" [matTooltip]=each_diag.reviewComments matTooltipClass="bpsHeaderTooltip" matTooltipPosition="right"></div>
                         <div class="cell cell10">
                           <img src="../../../../assets/images/BPMS/Envelop.svg" (click)="sendReminderMail($event, each_diag)" *ngIf="isAdminUser && each_diag.bpmnProcessStatus=='PENDING'" matTooltip="Click to send reminder mail to Approver" matTooltipPosition="left" class="testplus1">
