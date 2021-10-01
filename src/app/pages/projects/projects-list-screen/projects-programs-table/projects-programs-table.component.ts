@@ -48,6 +48,12 @@ export class ProjectsProgramsTableComponent implements OnInit {
    userslist:any;
    updateprogramForm: FormGroup;
    mindate: any;
+   customUserRole: any;
+  viewallprojects: boolean = false;
+  public userRoles: any;
+  public name: any;
+  email: any;
+
   //   public createprogram:FormGroup;
   // updateddata: any;
   // public updateflag: boolean;
@@ -149,9 +155,27 @@ export class ProjectsProgramsTableComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.api.getCustomUserRole(2).subscribe(role=>{
+      this.customUserRole=role;
+      let element=[]
+     for (let index = 0; index < this.customUserRole.message.length; index++) {
+      element = this.customUserRole.message[index].permission;
+       element.forEach(element1 => {
+      if(element1.permissionName=='View_All_Projects') {
+      this.viewallprojects=true
+    }
+  });
+}
+
+   })
+
     setTimeout(()=>{
       this.getallProjects();
     },500)
+    this.userRoles = localStorage.getItem("userRole")
+    this.userRoles = this.userRoles.split(',');
+    this.name=localStorage.getItem("firstName")+" "+localStorage.getItem("lastName")
+    this.email=localStorage.getItem('ProfileuserId');
 
     this.mindate= moment().format("YYYY-MM-DD");
   }
@@ -232,7 +256,7 @@ export class ProjectsProgramsTableComponent implements OnInit {
           {
             this.projects_list=[];
             Swal.fire("Success","Project Deleted Successfully !!","success")
-            this.getallProjectsdata();
+            this.getallProjectsdata(this.userRoles,this.name,this.email);
           }
           else if(response.errorMessage==undefined && response.message==undefined)
           {
@@ -277,9 +301,9 @@ export class ProjectsProgramsTableComponent implements OnInit {
   
 
 
-  getallProjectsdata(){
+  getallProjectsdata(roles,name,email){
     this.spinner.show();
-    this.api.getAllProjects().subscribe(res=>{
+    this.api.getAllProjects(roles,name,email).subscribe(res=>{
       let response:any=res;
       this.projects_list=[];
       this.projects_list=[...response[0].map(data=>{
@@ -485,7 +509,7 @@ export class ProjectsProgramsTableComponent implements OnInit {
         if(status.errorMessage==undefined)
         {
           Swal.fire("Success","Project Updated Successfully !!","success");
-          this.getallProjectsdata();
+          this.getallProjectsdata(this.userRoles,this.name,this.email);
           this.spinner.hide();
         }
         else
@@ -517,7 +541,7 @@ programupdate(){
       {
         //this.projects_list=[];
         Swal.fire("Success","Project Updated Successfully !!","success");
-        this.getallProjectsdata();
+        this.getallProjectsdata(this.userRoles,this.name,this.email);
         this.spinner.hide();
       }
       else

@@ -10,7 +10,7 @@ networks:
 
 services:
   asimov-uinew:
-    image: ${DOCKER_REGISTRY_URL}/asimov-uinew:${DOCKER_TAG}
+    image: nexus.epsoftinc.in/asimov-uinew:${DOCKER_TAG}
     deploy:
       mode: global
     networks:

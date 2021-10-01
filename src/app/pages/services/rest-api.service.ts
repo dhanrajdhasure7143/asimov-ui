@@ -861,8 +861,8 @@ save_blueprism_config(data)
       return this.http.post("/rpa-service/management/save-source-details",data)
     }
 
-    getAllProjects(){
-      return this.http.get("/platform-service/project/fetchAll")
+    getAllProjects(roles,name,email){
+      return this.http.get("/platform-service/project/fetchAll?roles="+roles+"&name="+name+"&email="+email+"")
     }
 
     update_project(data:any){
