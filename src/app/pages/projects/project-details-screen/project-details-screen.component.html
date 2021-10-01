@@ -246,7 +246,7 @@
                           [value]="(projectDetails.projectHealth==undefined||projectDetails.projectHealth==null)?'':projectDetails.projectHealth">
                           <option value="">Select Project Health</option>
                           <option value="Good">Good</option>
-                          <option value="Need Attention">Needs Attention</option>
+                          <option value="Needs Attention">Needs Attention</option>
                           <option value="Risk">Risk</option>
                         </select>
                       </span>
@@ -805,7 +805,8 @@
               <img src="../../../../../assets/images/Projects/Edit-blue.svg" class="hover-img">
             </a> 
             
-            <a (click)="deletetask(element)" matTooltip="Delete Task" >
+            <a (click)="deletetask(element)" matTooltip="Delete Task" *ngIf="this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') ||
+            this.userRole.includes('System Admin') || this.userRole.includes('Process Owner') || this.userRole.includes('Process Architect')">
               <!-- <img src="../../../../assets/images/Projects/delete-black.svg"> -->
               <img src="../../../../../assets/images/Projects/delete-black.svg" class="default-img">
               <img src="../../../../../assets/images/Projects/delete-red.svg" class="hover-img">
@@ -852,7 +853,8 @@
 
 
     <div class="row bortopsec">
-      <div class="col-md-12 p-0 resources">
+      <div class="col-md-12 p-0 resources" *ngIf="this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') ||
+      this.userRole.includes('System Admin') || this.userRole.includes('Process Owner') || this.userRole.includes('Process Architect')">
         <mat-card id="projects_details_screen" class="new-resourcediv" *ngIf="projects_toggle==false">
           <div class="row module-subheader-title">
             <div class="col-md-6 p-0">
@@ -1007,7 +1009,8 @@
         
         </mat-card>
       </div>
-      <div class="col-md-12 p-0 documents">
+      <div class="col-md-12 p-0 documents" *ngIf="this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') ||
+      this.userRole.includes('System Admin')">
         <mat-card id="projects_details_screen" class="new-docdiv" *ngIf="projects_toggle==false">
           <div class="row module-subheader-title">
             <div class="col-md-6 p-0">
