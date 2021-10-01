@@ -91,6 +91,10 @@ export class BpsHomeComponent implements OnInit {
       console.log(this.saved_diagrams);
       this.savedDiagrams_list=this.saved_diagrams;
       this.assignPagenation(this.saved_diagrams);
+
+      let selected_category=localStorage.getItem("bps_search_category");
+      this.categoryName=selected_category?selected_category:'allcategories';
+      this.searchByCategory(this.categoryName);
     },
     
     (err) => {
@@ -219,6 +223,7 @@ this.dt.bpsHeaderValues('');
     })
   }
   searchByCategory(category) {      // Filter table data based on selected categories
+    localStorage.setItem('bps_search_category',category);
     var filter_saved_diagrams= []
     this.saved_diagrams=[]
     if (category == "allcategories") {
