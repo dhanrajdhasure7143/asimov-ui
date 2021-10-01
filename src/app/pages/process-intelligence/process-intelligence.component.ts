@@ -191,7 +191,7 @@ addWorkingHours(){
    }
 
    ngOnDestroy(){
-    localStorage.setItem("pi_search_category",'allcategories')
+    // localStorage.setItem("pi_search_category",'allcategories')
    }
 
 }

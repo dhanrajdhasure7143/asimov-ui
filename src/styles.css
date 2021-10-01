@@ -754,7 +754,7 @@ div.tipsy.tipsy-e {
 }
 
 foreignObject {
-  width: 100px !important;
+  width: 160px !important;
   padding-right: 90px !important;
 }
 
@@ -2620,7 +2620,7 @@ span.pdicon {
   background: none;
 }
 
-@media (max-width: 1920px) {
+@media (min-width: 1600px) {
   .cell10 {
     width: 3% !important;
   }
@@ -2628,6 +2628,17 @@ span.pdicon {
     font-size: 14px !important;
   }
   }
+@media (min-width: 1800px) {
+  .cell10 {
+    width: 8% !important;
+  }
+}
+@media (min-width: 1920px) {
+.cell10 {
+    width: 22% !important;
+}
+}
+  
 
 .mat-tab-body-wrapper {
    overflow: auto !important;
