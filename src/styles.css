@@ -301,7 +301,7 @@ div[class^='diagram_container'] .djs-container svg {
 
 button:disabled {
   cursor: no-drop;
-  background-color: grey;
+  background-color: #d1d1d1;
 }
 
 .eiap-btn {
@@ -2620,14 +2620,14 @@ span.pdicon {
   background: none;
 }
 
-@media (max-width: 1920px) {
+/* @media (max-width: 1920px) {
   .cell10 {
     width: 3% !important;
   }
   .cell2, .cell3, .cell4, .cell5, .cell6, .cell7, .cell8, .cell10  {
     font-size: 14px !important;
   }
-  }
+  } */
 
 .mat-tab-body-wrapper {
    overflow: auto !important;
