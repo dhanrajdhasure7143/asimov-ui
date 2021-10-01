@@ -47,6 +47,8 @@ export class BpsHomeComponent implements OnInit {
   autosavedDiagramVersion = [];
   pendingStatus='PENDING APPROVAL';
   userRole;
+  systemAdmin:Boolean=false;
+  userEmail:any="";
   savedDiagrams_list:any[]=[];
   isButtonVisible:boolean = false;
 
@@ -68,6 +70,8 @@ export class BpsHomeComponent implements OnInit {
       this.isButtonVisible = true;
       this.isAdminUser = true;
     }
+    this.systemAdmin=this.userRole.includes("System Admin");
+    this.userEmail=localStorage.getItem("ProfileuserId");
     this.isApproverUser = this.userRole.includes('Process Architect')
     this.isLoading = true;
     this.dt.changeParentModule({"route":"/pages/businessProcess/home", "title":"Business Process Studio"});

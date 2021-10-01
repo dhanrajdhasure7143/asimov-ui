@@ -85,7 +85,7 @@ export class RpaHomeComponent implements OnInit {
   public editbot:FormGroup;
   rpaCategory: any;
   newRpaCategory: any;
-
+  userName:any="";
   displayedRows$: Observable<any[]>;
   @ViewChild(MatSort,{static:false}) sort: MatSort;
   totalRows$: Observable<number>;
@@ -122,8 +122,9 @@ export class RpaHomeComponent implements OnInit {
     this.userRole = localStorage.getItem("userRole")
     this.userRole = this.userRole.split(',');
     localStorage.setItem("isHeader","false");
-    this.isButtonVisible = this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') || this.userRole.includes('RPA Admin');
-
+    //this.isButtonVisible = this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') || this.userRole.includes('RPA Admin')||this.userRole.includes("Process Owner")||this.userRole.includes("System Admin")||;
+    this.isButtonVisible=this.userRole.includes("Process Analyst")
+    this.userName=localStorage.getItem("firstName")+" "+localStorage.getItem("lastName");
     let processId=undefined;
     //this.dataSource1.filterPredicate = this.createFilter();
     this.dt.changeParentModule({"route":"/pages/rpautomation/home", "title":"RPA Studio"});

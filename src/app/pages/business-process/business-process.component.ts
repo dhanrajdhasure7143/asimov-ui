@@ -30,7 +30,7 @@ export class BusinessProcessComponent implements AfterViewChecked {
   hasConformance:boolean = false;
   reSize:boolean=false;
   process_id:any;
-
+  systemAdmin:Boolean=false;
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private cdRef: ChangeDetectorRef, private dt: DataTransferService,private rest:RestApiService,
               @Inject(APP_CONFIG) private config, ) { }
 
@@ -40,6 +40,7 @@ export class BusinessProcessComponent implements AfterViewChecked {
     this.userRole = localStorage.getItem("userRole")
     this.userRole = this.userRole.split(',');
     this.isApproverUser = this.userRole.includes('Process Architect');
+    this.systemAdmin=this.userRole.includes("System Admin")
     this.getApproverList();
   }
 

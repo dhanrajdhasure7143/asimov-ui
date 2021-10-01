@@ -103,8 +103,7 @@
                 </div>-->
                 <div class="rpa-home-block" id="createbot-Home" style="border-radius: 5px;" *ngIf="this.isButtonVisible || enablecreatebot">
                     <img src="../../../../assets/images/RPA/create.svg"style="height:10vh;">
-                    <!--<h4 style="font-weight: 600;line-height: 1.1;">Create Bot</h4>
-                    <h5 style="color:gray">Click to Create New Bot</h5>-->
+                   
                     
                     <button class="btn btn-primary rpa-home-btn-title eiap-btn" id="create_newbot" style="margin-left:17px;" (click)="createoverlay()" aria-hidden="true" placement="bottom">Create</button>
                 </div>
@@ -127,8 +126,7 @@
                 </div>-->
                 <div class="rpa-home-block py-5" id="Configuration_Home" style="border-radius: 5px;" *ngIf="this.isButtonVisible || enableConfiguration">
                     <img src="../../../../assets/images/RPA/Environments.svg"style="height:10vh;">
-                  <!-- <h4 style="font-weight: 600;line-height: 1.1;">Configutions</h4>
-                    <h5 style="color:gray">Click to View Bot Configurations</h5>-->
+                
                     
                     
                     <button class="btn btn-primary rpa-home-btn-title eiap-btn" id="create_Configuration" style="margin-left:17px;" [routerLink]="[ '/pages/rpautomation/configurations']" placement="bottom">Configurations</button>
@@ -304,8 +302,8 @@
                         </span> -->
                       </div>
                       <div class="flex-col">
-                          <button (click)="editbotoverlay(bot)"><img src="../../../../assets/images/RPA/icon_latest/edit.svg" alt="" class="testplus">&nbsp;</button>
-                          <button  (click)="botdelete(bot.botId)"><img src="../../../../assets/images/RPA/icon_latest/delete.svg" alt="" class="testplus">&nbsp;</button>
+                          <button [disabled]="!((isButtonVisible==true && userName==bot.createdBy)||(isButtonVisible==false))" (click)="editbotoverlay(bot)"><img src="../../../../assets/images/RPA/icon_latest/edit.svg" alt="" class="testplus">&nbsp;</button>
+                          <button [disabled]="isButtonVisible==true" (click)="botdelete(bot.botId)"><img src="../../../../assets/images/RPA/icon_latest/delete.svg" alt="" class="testplus">&nbsp;</button>
                           <button (click)="exportbot(bot)"><img src="../../../../assets/images/RPA/icon_latest/export.svg" alt="" class="testplus">&nbsp;</button>
                         
                       </div>
