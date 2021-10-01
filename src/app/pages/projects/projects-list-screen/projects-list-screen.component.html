@@ -5,7 +5,7 @@
           <!-- <span class="module-back-button" routerLink="/pages/projects/projectdashboard"><i class="fas fa-arrow-left" aria-hidden="true"></i></span> -->
           <span class="module-header-title"><span>Projects</span> <span class="backslash">/</span> Programs</span>
         </div>
-        <div class="ml-auto prj-lstscr-btn" routerLink="/pages/projects/create-projects">
+        <div class="ml-auto prj-lstscr-btn" routerLink="/pages/projects/create-projects" *ngIf="enablecreateproject">
           <button _ngcontent-svr-c17="" class="btn btn-primary" type="button">
             <img  src="../../../../assets/images/Projects/White-plus.svg" class="testplus"/>Create New</button>
         </div>    
