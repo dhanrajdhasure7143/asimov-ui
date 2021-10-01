@@ -2,15 +2,14 @@
   <div class="content-area RPA-Layout">
     <div class="rpa-layout-header">
       <div class="row  module-heading title ">
-        <div class="col-md-6 rpa-header-data">
+        <div class="col-md-6 rpa-header-data p-0">
           <div>
             <span *ngIf="current_instance != undefined">
             <span class="clickable module-back-button rpa-header-back-button"  (click)="removenodes()">
               <i class="fas fa-arrow-left"></i></span>
-            </span>&nbsp;
-            <span  class="bpsbtnsep">|</span>&nbsp;
-            <span  class="rpa-main-title" >RPA Studio</span>&nbsp;
-            <span  class="bpsbtnsep">/</span>&nbsp;
+            </span>
+            <span  class="rpa-main-title" >RPA Studio</span>
+            <span  class="rpatitsep">/</span>
             <span *ngIf="current_instance != undefined" >{{current_instance.botState.botName}}</span>
           </div>
           
@@ -122,17 +121,17 @@
                
                     <div class="action-item hovericon" *ngIf="current_instance != undefined" placement="bottom" tooltip="Delete">
                         <button [disabled]="current_instance.savebotrespose == undefined" (click)=" current_instance.delete()">
-                            <img src="../../../../assets/images/RPA/icon_latest/delete.svg"  />
+                            <img src="../../../../assets/images/RPA/icon_latest/delete.svg" class="testplus1">
                           </button>
                     </div>
                     <div class="action-item hovericon" *ngIf="current_instance != undefined" tooltip="Reset Bot" placement="bottom">
                         <button (click)=" current_instance.reset()" >
-                            <img src="../../../../assets/images/RPA/icon_latest/reset.svg" />
+                            <img src="../../../../assets/images/RPA/icon_latest/reset.svg" class="testplus1">
                           </button>
                     </div>
                     <div class="action-item hovericon" *ngIf="current_instance != undefined" placement="bottom" tooltip="Export">
                         <button [disabled]="current_instance.savebotrespose==undefined" (click)=" current_instance.exportbot(current_instance.botState)" >
-                            <img src="../../../../assets/images/RPA/icon_latest/export.svg" /> 
+                            <img src="../../../../assets/images/RPA/icon_latest/export.svg" class="testplus1"> 
                           </button>
                     </div>
                 </div>
@@ -140,7 +139,16 @@
       
       
             </div>
-        </div>
+      </div>
+      <div class="toolsetmenuicon">
+        <span class="module-sub-header-title clickable">
+        <span  class="toolset-text" *ngIf="toolset_instance != undefined" (click)="toolset_instance.sidenavbutton=!(toolset_instance.sidenavbutton)">
+          <img src="../../../../assets/images/RPA/icon_latest/menu-line.svg" *ngIf="toolset_instance.sidenavbutton==false" class="testplus" />
+          <img src="../../../../assets/images/RPA/icon_latest/menu-line.svg" *ngIf="toolset_instance.sidenavbutton==true" class="testplus" />
+          <!-- Toolset & Actions -->
+        </span>
+        </span>
+      </div>
       <!-- <div class="col-md-3">
           <button  type="button" *ngIf="tabsArray.length > 0" class="btn btn-default" aria-hidden="true" placement="bottom" id="Load_Bot" (click)="rpa_studio.onLoad()">
               <img src="../../../../assets/images/RPA/icon_latest/load-blue.svg" class="default-img">
@@ -155,15 +163,7 @@
    
   </div>
   <div class="toolset-mainheader" >
-    <div class="actionsheaderdiv">
-      <span class="module-sub-header-title clickable">
-      <span  class="toolset-text" *ngIf="toolset_instance != undefined" (click)="toolset_instance.sidenavbutton=!(toolset_instance.sidenavbutton)">
-        <img src="../../../../assets/images/RPA/icon_latest/menu-line.svg" *ngIf="toolset_instance.sidenavbutton==false" class="testplus" />
-        <img src="../../../../assets/images/RPA/icon_latest/close.svg" *ngIf="toolset_instance.sidenavbutton==true" class="testplus" />
-        <!-- Toolset & Actions -->
-      </span>
-    </span>
-    </div>
+    
   <mat-tab-group class="tabs" (selectedTabChange)="change_active_bot($event)" [selectedIndex]="tabsArray.length -1 " >
       <!-- <span class="clickable">Toolset & Actions</span>  -->
       
@@ -198,8 +198,8 @@
   </mat-tab-group>
   <div class="rpa-bottom-tab" headerPosition="below">
     
-              <div *ngIf="current_instance != undefined" class="action-item">
-                <img src="../../../../assets/images/RPA/icon_latest/layer.svg" /> &nbsp; 
+              <div *ngIf="current_instance != undefined" class="footer-versions">
+                <!-- <img src="../../../../assets/images/RPA/icon_latest/layer.svg" /> &nbsp;  -->
                 <select  id="versions" (change)="version_change($event.target.value)" [value]="current_instance.selectedversion" >
                   <option disabled>Select Version</option>
                   <option  [value]="version.vId"  *ngFor="let version of current_instance.versionsList"  >
