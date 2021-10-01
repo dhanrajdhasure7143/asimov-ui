@@ -176,7 +176,8 @@ div#bpmn_list {
         /* display:table-cell; */
         width: 100%;
         font-size: 13px;
-        padding-right: 15px;
+        /* padding-right: 15px; */
+        white-space: nowrap;
     }
     /* .cell1 {
         width:5%;
@@ -230,4 +231,10 @@ div#bpmn_list {
         width: 20%;
         color: #5b5b5b;
         opacity: 0.6;
+    }
+    .cell.cell6 {
+        padding-right: 10px;
+    }
+    .cell.cell9, .cell.cell10 {
+        width: 50% !important;
     }
