@@ -19,6 +19,10 @@
             <img src="../../../../assets/images/Projects/Project-Repo.svg" class="testplus" >
             <span class="testtooltip">Project Repo</span>
           </button>
+          <button class="tsttooltipbtn" (click)="navigateToOrchestration()">
+                <img height="20" width="20" src="../../../assets/images/BPMS/orchestration.svg">
+                <span class="testtooltip">Orchestration</span>
+              </button>
           <!-- <button class="btn btn-default">
             <img src="../../../../assets/images/Projects/Project-Repo.svg" class="testplus default-img">
             <img src="../../../../assets/images/Projects/project-repo-white.svg" class="testplus hover-img">
@@ -147,7 +151,7 @@
                         *ngIf="projectDetails.mapValueChain==null||projectDetails.mapValueChain==''|| projectDetails.mapValueChain==undefined">-</span>
                       <span
                         *ngIf="projectDetails.mapValueChain!=null && projectDetails.mapValueChain!=''&& projectDetails.mapValueChain!=undefined"
-                        class="tab-text labelcont clickable">{{projectDetails.mapValueChain}}</span>
+                        class="tab-text labelcont">{{projectDetails.mapValueChain}}</span>
       
                     </div>
                   </div>
@@ -157,9 +161,8 @@
       
                       <span class="tab-text"
                         *ngIf="projectDetails.process==null || projectDetails.process==undefined || projectDetails.process==''">-</span>
-                      <span
-                        *ngIf="projectDetails.process!=null && projectDetails.process!=undefined && projectDetails.process!=''"
-                        class="tab-text clickable labelcont">{{projectDetails.process | processName : processes}}</span>
+                      <span *ngIf="projectDetails.process!=null && projectDetails.process!=undefined && projectDetails.process!=''"
+                        class="tab-text labelcont">{{projectDetails.process | processName : processes}}</span>
                     </div>
                   </div>
                   <div class="col-sm-4 p-0">
