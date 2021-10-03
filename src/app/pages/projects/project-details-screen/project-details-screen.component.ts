@@ -141,7 +141,9 @@ percentageComplete: number;
 
 
   ngOnInit() {
-
+    localStorage.setItem('project_id',null);
+    $('.link').removeClass('active');
+    $('#projects').addClass("active");
     this.updatetaskForm=this.formBuilder.group({
      // taskCategory: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
      priority: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
@@ -834,9 +836,17 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
         this.updatetaskForm.get("editcomment").setValue("");
       }
       navigateToProjectRepo(){
-        this.router.navigate(["/pages/projects/projectreposcreen"], {queryParams:{"id":this.projectDetails.id}})
+        if(localStorage.getItem('project_id')=="null"){
+          this.router.navigate(["/pages/projects/projectreposcreen"], {queryParams:{"id":this.projectDetails.id}})
+        }
       }
-  
+
+      navigateToOrchestration(){
+        localStorage.setItem('project_id',this.projectDetails.id);
+        this.router.navigate(["/pages/serviceOrchestration/home"], 
+        {queryParams:{"processid":this.projectDetails.process}})
+      }
+
       editComments(comments,i){
         this.updatetaskForm.get("editcomment").setValue(comments);
         this.showeditcomment=true;
