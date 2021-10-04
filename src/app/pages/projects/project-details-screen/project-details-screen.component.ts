@@ -142,6 +142,7 @@ percentageComplete: number;
 
   ngOnInit() {
     localStorage.setItem('project_id',null);
+    localStorage.setItem('bot_id',null);
     $('.link').removeClass('active');
     $('#projects').addClass("active");
     this.updatetaskForm=this.formBuilder.group({
@@ -604,11 +605,17 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
   
       navigateToWorkspace(data){
 
+        localStorage.setItem('project_id',this.projectDetails.id);
         if(data.taskCategory=="RPA Implementation"){
+          localStorage.setItem('bot_id',data.correlationID);
           this.router.navigate(['/pages/rpautomation/home'])
         }
         if(data.taskCategory=="BPMN Design"){
-          this.router.navigate(['/pages/businessProcess/home'])
+          this.router.navigate(['pages/businessProcess/uploadProcessModel'],
+          {queryParams:{"bpsId":data.correlationID.split(":")[0],"ver":data.correlationID.split(":")[1]}})
+        }
+        if(data.taskCategory=="Process Mining"){
+          this.router.navigate(['pages/processIntelligence/flowChart'], {queryParams:{"wpiId":data.correlationID}})
         }
         else{
           this.modeldisable==true
@@ -964,11 +971,13 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
       uploadtaskFilemodalCancel(){
         this.uploadtaskFileForm.reset();
         this.listOfFiles = [];
+        this.fileList=[];
         this.uploadtaskFilemodalref.hide();
       }
       uploadFilemodalCancel(){
         this.uploadFileFormDetails.reset();
         this.listOfFiles = [];
+        this.fileList=[];
         this.uploadFilemodalref.hide();
 
       }

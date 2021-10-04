@@ -318,6 +318,7 @@ export class RpaStudioComponent implements OnInit {
       else
       {
         this.spinner.hide();
+        if(localStorage.getItem('bot_id')=="null")
         Swal.fire("Warning","Selected Bot is already loaded","warning");
       }
       this.loadbot.reset();

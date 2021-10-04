@@ -119,6 +119,9 @@ export class RpaHomeComponent implements OnInit {
   }
 
   ngOnInit() {
+    $('.link').removeClass('active');
+    $('#rpa').addClass("active"); 
+    $('#expand_menu').addClass("active");   
     this.userRole = localStorage.getItem("userRole")
     this.userRole = this.userRole.split(',');
     localStorage.setItem("isHeader","false");
@@ -143,6 +146,8 @@ export class RpaHomeComponent implements OnInit {
     
       
       this.getallbots();
+
+
     if(localStorage.getItem("taskId")!=undefined)
     {
        this.createtaskbotoverlay(localStorage.getItem("taskId"))
@@ -177,6 +182,12 @@ export class RpaHomeComponent implements OnInit {
     //   }
     //       );
     //     })
+
+
+          if(localStorage.getItem('project_id')!="null" && localStorage.getItem('bot_id')!="null"){
+            this.loadbotdata(localStorage.getItem('bot_id'));
+          }
+
      }
 
   ngAfterViewInit() {
