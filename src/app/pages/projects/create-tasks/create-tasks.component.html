@@ -125,21 +125,21 @@
                     <div class="col-md-12" *ngIf="optionValue == 'BPMN Design'">
                             <div class="form-fields col-md-6 pl-0">                         
                                             
-                          <span class="labeltit">Process</span>
+                          <span class="labeltit" for="correlationID">Process</span>
           
-                          <select formControlName="resources" class="form-control data enteredfield-color">
+                          <select formControlName="correlationID" class="form-control data enteredfield-color">
                                     <option value="">Select Process</option>
-                                    <option *ngFor="let process of bpm_process_list" [value]="process.processId">
+                                    <option *ngFor="let process of bpm_process_list" [value]="process.correlationID">
                                     {{process.processName}}</option>   
                                 </select>
                         </div>    
                     </div>
-                    <div class="col-md-12" *ngIf="optionValue == 'Task Mining'">
+                    <div class="col-md-12" *ngIf="optionValue == 'Process Mining'">
                             <div class="form-fields col-md-6 pl-0">                         
                                             
-                          <span class="labeltit">Process</span>
+                          <span class="labeltit" for="correlationID">Process</span>
           
-                          <select formControlName="resources" class="form-control data enteredfield-color">
+                          <select formControlName="correlationID" class="form-control data enteredfield-color">
                                     <option value="">Select Process</option>
                                     <option *ngFor="let process of pi_process_list" [value]="process.piId">
                                     {{process.piName}}</option>   
@@ -150,9 +150,9 @@
                     <div class="col-md-12" *ngIf="optionValue == 'RPA Implementation'">
                             <div class="form-fields col-md-6 pl-0">                         
                                             
-                          <span class="labeltit">Bot</span>
+                          <span class="labeltit" for="correlationID">Bot</span>
           
-                          <select formControlName="resources" class="form-control data enteredfield-color">
+                          <select formControlName="correlationID" class="form-control data enteredfield-color">
                                     <option value="">Select Bot</option>
                                     <option *ngFor="let bot of bot_list" [value]="bot.botId">
                                     {{bot.botName}}</option>   

@@ -11,6 +11,7 @@ import { DataTransferService } from '../services/data-transfer.service';
 })
 export class ProcessIntelligenceComponent implements OnInit {
  isShow:boolean  = false;
+ isProjDetails = false;
  wpiIdNumber:any;
  isPIHeaderShow:any="true";
  isplay:boolean=false;
@@ -42,9 +43,11 @@ btn_obj:any;
   }
 
   ngOnInit() {
-   
-   
- }
+    $('.link').removeClass('active');
+    $('#pi').addClass("active"); 
+    $('#expand_menu').addClass("active");  
+  }
+
  ngAfterViewChecked(){
 
     let windowUrl = window.location.href;
@@ -55,6 +58,9 @@ btn_obj:any;
     } else{
       this.isShow=true;
   }
+
+
+
   if(windowUrl.indexOf('flowChart') == -1){
     this.isPIHeaderShow=false;
     this.isplay=false;
@@ -67,15 +73,21 @@ btn_obj:any;
     // console.log('test')
     this.workingHours = {formDay:'Mon',toDay: 'Sun',shiftStartTime:"00:00",shiftEndTime:"23:59"};
   } else{
-    this.isPIHeaderShow=true;
+    this.isPIHeaderShow = true;
+    if(localStorage.getItem('project_id')!="null"){
+      this.isProjDetails = true;
+      this.isPIHeaderShow = false;
+    }
   }
 if(windowUrl.indexOf('processIntelligence/insights') != -1||windowUrl.indexOf('business-insights') !=-1){
   this.isBackbutton=true;
+  this.isProjDetails=false;
 } else{
   this.isBackbutton=false;
 }
 if(windowUrl.indexOf('processIntelligence/insights') != -1){
   this.insights_header=true;
+  this.isProjDetails=false;
 } else{
   this.insights_header=false;
 }
@@ -108,6 +120,11 @@ if(windowUrl.indexOf('processIntelligence/insights') != -1){
 
  gotoProcessgraph(){
   this.router.navigate(["/pages/processIntelligence/flowChart"],{queryParams:{wpiId:this.wpiIdNumber}})
+}
+
+gotoProjectDetails(){
+  this.router.navigate(["/pages/projects/projectdetails"], 
+   {queryParams:{"id":localStorage.getItem('project_id')}})
 }
 
 downloadNotaton(e){
