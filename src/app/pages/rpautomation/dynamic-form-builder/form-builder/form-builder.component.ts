@@ -4,7 +4,7 @@ import { Component,Input, OnInit } from '@angular/core';
 @Component({
 selector:'form-builder',
 template:`
-  <div  [formGroup]="form">
+  <div [formGroup]="form">
     <div *ngIf ="field.visibility">
       <label *ngIf="field.type!='checkbox'" class="label-control" [attr.for]="field.label">
         {{field.label}}
@@ -35,6 +35,9 @@ template:`
         </div>
         <div *ngIf ="field.visibility">
           <checkbox *ngSwitchCase="'checkbox'" [field]="field" [form]="form"></checkbox>
+        </div>
+        <div *ngIf ="field.visibility">
+          <checkbox *ngSwitchCase="'checkboxToggle'" [field]="field" [form]="form"></checkbox>
         </div>
         <div *ngIf ="field.visibility">
           <radio *ngSwitchCase="'radio'" [field]="field" [form]="form"></radio>
