@@ -754,8 +754,8 @@ div.tipsy.tipsy-e {
 }
 
 foreignObject {
-  width: 150px !important;
-  padding-right: 90px !important;
+  width: 140px !important;
+  padding-right: 125px !important;
 }
 
 .breadcrumb>li+li:before {
@@ -2359,6 +2359,7 @@ th.mat-header-cell {
 #exportSVGtoPDF .edgeLabels g.label {
   color: #000 !important;
   font-size: 24px !important;
+  width: 100px;
 }
 
 .mat-progress-bar {
