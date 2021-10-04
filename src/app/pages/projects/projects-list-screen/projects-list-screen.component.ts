@@ -30,6 +30,8 @@ export class ProjectsListScreenComponent implements OnInit {
   constructor(private dt:DataTransferService, private api:RestApiService, private spinner:NgxSpinnerService){}
 
   ngOnInit() {
+    localStorage.setItem('project_id',null);
+    localStorage.setItem('bot_id',null);
     this.dt.changeParentModule({"route":"/pages/projects/projects-list-screen", "title":"Projects"});
     this.dt.changeChildModule(undefined);
     this.getallProjects();
