@@ -301,7 +301,7 @@ div[class^='diagram_container'] .djs-container svg {
 
 button:disabled {
   cursor: no-drop;
-  background-color: grey;
+  background-color: #d1d1d1;
 }
 
 .eiap-btn {
@@ -2619,14 +2619,14 @@ span.pdicon {
   background: none;
 }
 
-@media (max-width: 1600px) {
+/*@media (max-width: 1600px) {
   .cell10 {
     width: 3% !important;
   }
   .cell2, .cell3, .cell4, .cell5, .cell6, .cell7, .cell8, .cell10  {
     font-size: 14px !important;
   }
-  }
+  }*/
 
 
 @media (min-width: 1800px) {
