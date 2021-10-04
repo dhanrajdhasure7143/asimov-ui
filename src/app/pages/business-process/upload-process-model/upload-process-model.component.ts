@@ -354,6 +354,10 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
       if(this.selected_modelId){
         this.rest.getBPMNProcessArchNotations(this.selected_modelId).subscribe(res=>{
           this.saved_bpmn_list=res
+          this.saved_bpmn_list.forEach((each_bpmn,i) => {
+          if(this.selected_version == each_bpmn.version)
+                this.selected_notation = i;
+          })
             this.isLoading=false;
         })
       }else{
@@ -383,7 +387,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
     let user_role=localStorage.getItem('userRole')
     let current_bpmn_info
     if(user_role=='Process Architect'){
-      current_bpmn_info = this.saved_bpmn_list[0];
+      current_bpmn_info = this.saved_bpmn_list[this.selected_notation];
       
     }else{
       current_bpmn_info = this.saved_bpmn_list[this.selected_notation];

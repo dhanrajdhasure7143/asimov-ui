@@ -223,6 +223,7 @@ this.dt.bpsHeaderValues('');
     })
   }
   searchByCategory(category) {      // Filter table data based on selected categories
+    localStorage.setItem('bps_search_category',category);
     var filter_saved_diagrams= []
     this.saved_diagrams=[]
     if (category == "allcategories") {

@@ -813,21 +813,15 @@ d3.selectAll("g.edgeLabel g.label")
 }
 
 // inner.selectAll('g.node')['_groups'][0][1]['attributes'][2].value="opacity: 1;fill: rgb(209, 54, 54)"
-  // console.log(inner.selectAll('g.node')['_groups'][0])
-  // console.log(d3.selectAll("g text")['_groups'][0][1]['parentNode'].__data__);
-  // console.log(d3.selectAll("g text")['_groups'][0]);
+  
 let nodes_Array=d3.selectAll("g text")['_groups'][0];
 
 nodes_Array.forEach((element,i) => {
-  // console.log(g.node(element['parentNode'].__data__).label.split('\n')[0])
-  // if(g.node(element['parentNode'].__data__).label){
-//   let nodeText_length=g.node(element['parentNode'].__data__).label.split('\n')[0].length;
-  //   console.log(nodeText_length)
-  // }
-  let node_width=g.node(element['parentNode'].__data__)['width']
-  let node_textLength=g.node(element['parentNode'].__data__).label.split('\n')[0].length;
-  let node_color=g.node(element['parentNode'].__data__)['style'].split(':')[1].trim();
-  // console.log(node_color);
+if(g.node(element['parentNode'].__data__).label){
+  if((g.node(element['parentNode'].__data__).label !='Start') && (g.node(element['parentNode'].__data__).label!='End')){
+    let node_width=g.node(element['parentNode'].__data__)['width']
+    let node_textLength=g.node(element['parentNode'].__data__).label.split('\n')[0].length;
+    let node_color=g.node(element['parentNode'].__data__)['style'].split(':')[1].trim();
   if(node_width!=200 && node_textLength >=30){
     if(node_color=="#035386" || node_color=="#2182b4"|| node_color=="#a40000"){
       nodes_Array[i]['attributes'][1].value="font-size: 13px;fill: #fff"
@@ -853,7 +847,8 @@ nodes_Array.forEach((element,i) => {
       // inner.selectAll('g.node')['_groups'][0][i]['attributes'][2].value="opacity: 1;fill: #fff"
      }
   }
-
+ }
+}
 });
  
 // Center the graph
@@ -960,15 +955,16 @@ if(me.isdownloadJpeg==true||this.isdownloadPng==true||this.isdownloadpdf==true||
         if(fileType == 'pdf'){
           var contentDataURL = canvas.toDataURL("image/png",0.3);
           // var doc = new jsPDF('l','pt',[700,600],{compress: true}); --final
-          var doc = new jsPDF('p', 'mm', 'a4', true);
+          //var doc = new jsPDF('p', 'mm', 'a4', true);
+          var doc = new jsPDF('p', 'pt', 'a4', true);
           // var doc = new jsPDF('l','pt',[this.graph_height,1100],'a4',{compress: true});
           // var doc = new jsPDF('1', 'pt', 'a4', true);--final
           // doc.setFontSize(20)
           // doc.addImage(contentDataURL, 'PNG',10, 10, 1620, 600);
           // doc.addImage(contentDataURL, 'PNG', 0, 0, 1000, 1400, undefined,'FAST')
           // doc.addImage(contentDataURL, 'PNG', 0, 0, 700, 600,undefined,'FAST')--final
-          doc.addImage(contentDataURL, 'PNG', -10,0, 250, 297,undefined,'FAST')
-          // doc.addImage(contentDataURL, 'PNG', 0, 0, 485, 270, undefined,'FAST')
+          // doc.addImage(contentDataURL, 'PNG', -10,0, 250, 297,undefined,'FAST')
+          doc.addImage(contentDataURL, 'PNG', 0, 0, 400, 400,undefined,'FAST')
           // doc.addImage(contentDataURL, "PNG", 0, 0, canvas.width * ratio, canvas.height * ratio,);
           doc.save(this.processGraphName+'.pdf');
           this.isdownloadpdf=false;
