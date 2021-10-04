@@ -754,7 +754,7 @@ div.tipsy.tipsy-e {
 }
 
 foreignObject {
-  width: 100px !important;
+  width: 150px !important;
   padding-right: 90px !important;
 }
 
@@ -1472,9 +1472,7 @@ select.form-control {
   background-repeat: no-repeat;
   cursor: pointer;
 }
-.createform input[type="date"]::-webkit-calendar-picker-indicator {
-  display:none;
-}
+.createform input[type="date"]::-webkit-calendar-picker-indicator,
 .maindivfoprm input[type="date"]::-webkit-calendar-picker-indicator,
 .modelprbody input[type="date"]::-webkit-calendar-picker-indicator {
   width: 16px;

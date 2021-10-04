@@ -169,7 +169,7 @@ export class MyAccountComponent implements OnInit {
     });}else if(res.errorMessage === "Your current password was incorrect."){
       Swal.fire("Error","Please check your current password!","error");
      
-    }else if(res.errorMessage === "The new password must be different from your previous password."){
+    }else if(res.errorMessage === "The new password must be different from your previous used passwords"){
       Swal.fire("Error",res.errorMessage,"error");
      
     }
