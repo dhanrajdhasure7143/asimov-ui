@@ -97,11 +97,9 @@
                 <mat-panel-title>
                         <!-- id="bpmn_list_row" -->
                   <!-- <div class="table">
-+                    <div class="rowGroup"> -->
-                  <div class="row col-md-12">
-                       <div class="expan-icon">
-                      <div class="row">
-                        <div class="cell cell1">
+                    <div class="rowGroup"> -->
+                      <div class="row col-md-12">
+                        <div class="expan-icon">
                           <i class="material-icons expand-open">chevron_right</i>
                           <i class="material-icons expand-close">expand_less</i>
                         </div>
@@ -124,7 +122,7 @@
                             title="Click to send reminder mail to Approver" class="fa fa-envelope"></i> -->
                           <!-- <i (click)="deleteProcess($event, each_diag)" *ngIf="each_diag.bpmnProcessStatus=='INPROGRESS'"
                             title="Delete BPMNotation" class="glyphicon glyphicon-trash"></i> -->
-                          <img (click)="deleteProcess($event, each_diag)" *ngIf="each_diag.bpmnProcessStatus=='INPROGRESS'" matTooltip="Delete BPMNotation" matTooltipPosition="left" src="../../../../assets/images/BPMS/delete-red.svg" class="testplus1">
+                          <img (click)="deleteProcess($event, each_diag)" *ngIf="(each_diag.bpmnProcessStatus=='INPROGRESS') && ((systemAdmin==true) || ((systemAdmin==false) && (each_diag.userEmail==userEmail) ))" matTooltip="Delete BPMNotation" matTooltipPosition="left" src="../../../../assets/images/BPMS/delete-red.svg" class="testplus1">
                           <i *ngIf="each_diag.bpmnProcessStatus!='INPROGRESS' && (each_diag.bpmnProcessStatus=='APPROVED' || each_diag.bpmnProcessStatus=='REJECTED' || !isAdminUser)">-</i>
                         </div>
                       </div>
