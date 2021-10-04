@@ -1,6 +1,6 @@
 import { Component, OnInit,ViewEncapsulation } from '@angular/core';
 import { DataTransferService } from '../../services/data-transfer.service';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {NgxSpinnerService} from 'ngx-spinner';
 import * as $ from 'jquery';
 @Component({
@@ -11,10 +11,11 @@ import * as $ from 'jquery';
 })
 export class OrchestrationComponent implements OnInit {
 
-  constructor(private dt:DataTransferService, private route:ActivatedRoute, private spinner:NgxSpinnerService) { }
+  constructor(private dt:DataTransferService, private route:ActivatedRoute, private spinner:NgxSpinnerService, private router: Router) { }
   public selectedTab=0;
   public check_tab=0;
   public param:any=0;
+  public back_button=false;
   ngOnInit() {
     $('.link').removeClass('active')
     $('#so').addClass("active")
@@ -22,6 +23,10 @@ export class OrchestrationComponent implements OnInit {
     $("#nav-link-2").removeClass("active");
     $("#nav-link-1").removeClass("active");
     $("#nav-link-0").removeClass("active");
+   
+     if(localStorage.getItem('project_id')!="null"){
+      this.back_button = true;
+     }
 
     //.className+="active"
     this.dt.changeParentModule({"route":"/pages/serviceOrchestration/home", "title":"Service Orchestration"});
@@ -48,7 +53,10 @@ export class OrchestrationComponent implements OnInit {
     });
   }
 
-
+  routeToProjectDetails(){
+   this.router.navigate(["/pages/projects/projectdetails"], 
+   {queryParams:{"id":localStorage.getItem('project_id')}})
+  }
 
 
   isEmpty(obj) {

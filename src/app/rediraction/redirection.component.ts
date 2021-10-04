@@ -14,6 +14,7 @@ export class RedirectionComponent{
       this.spinner.show();
       this.authService.logout();
       window.location.href=this.config.signoutRedirectionURL;
+      //window.location.href="http://localhost:4200/#/signout";
   }
 
   ngOnInit() {}

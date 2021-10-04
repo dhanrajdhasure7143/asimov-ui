@@ -133,7 +133,10 @@ percentageComplete: number;
 
 
   ngOnInit() {
-
+    localStorage.setItem('project_id',null);
+    localStorage.setItem('bot_id',null);
+    $('.link').removeClass('active');
+    $('#projects').addClass("active");
     this.updatetaskForm=this.formBuilder.group({
      // taskCategory: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
      priority: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
@@ -566,11 +569,17 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
   
       navigateToWorkspace(data){
 
+        localStorage.setItem('project_id',this.projectDetails.id);
         if(data.taskCategory=="RPA Implementation"){
+          localStorage.setItem('bot_id',data.correlationID);
           this.router.navigate(['/pages/rpautomation/home'])
         }
         if(data.taskCategory=="BPMN Design"){
-          this.router.navigate(['/pages/businessProcess/home'])
+          this.router.navigate(['pages/businessProcess/uploadProcessModel'],
+          {queryParams:{"bpsId":data.correlationID.split(":")[0],"ver":data.correlationID.split(":")[1]}})
+        }
+        if(data.taskCategory=="Process Mining"){
+          this.router.navigate(['pages/processIntelligence/flowChart'], {queryParams:{"wpiId":data.correlationID}})
         }
         else{
           this.modeldisable==true
@@ -798,9 +807,17 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
         this.updatetaskForm.get("editcomment").setValue("");
       }
       navigateToProjectRepo(){
-        this.router.navigate(["/pages/projects/projectreposcreen"], {queryParams:{"id":this.projectDetails.id}})
+        if(localStorage.getItem('project_id')=="null"){
+          this.router.navigate(["/pages/projects/projectreposcreen"], {queryParams:{"id":this.projectDetails.id}})
+        }
       }
-  
+
+      navigateToOrchestration(){
+        localStorage.setItem('project_id',this.projectDetails.id);
+        this.router.navigate(["/pages/serviceOrchestration/home"], 
+        {queryParams:{"processid":this.projectDetails.process}})
+      }
+
       editComments(comments,i){
         this.updatetaskForm.get("editcomment").setValue(comments);
         this.showeditcomment=true;
@@ -918,11 +935,13 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
       uploadtaskFilemodalCancel(){
         this.uploadtaskFileForm.reset();
         this.listOfFiles = [];
+        this.fileList=[];
         this.uploadtaskFilemodalref.hide();
       }
       uploadFilemodalCancel(){
         this.uploadFileFormDetails.reset();
         this.listOfFiles = [];
+        this.fileList=[];
         this.uploadFilemodalref.hide();
 
       }

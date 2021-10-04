@@ -1,7 +1,8 @@
-<div class=" createform ">
+<div class="container-fluid h-scroll">
+<div class="container createform">
 
-    <form [formGroup]="insertForm2" (ngSubmit)="createproject()" class="prj-form">
-        <div class="row prj-crt-form">
+    <form [formGroup]="insertForm2" (ngSubmit)="createproject()" class="prj-crt-form">
+        <div class="row">
             <div class="col-md-12">
                 <div class="form-fields col-md-6 pl-0">
                     <label class="label-control">Project Name<span class="star">*</span></label>
@@ -200,4 +201,5 @@
         <button [disabled]="insertForm2.invalid" (click)="createproject()"
             class="btn btn-primary">Save</button>
     </div>
+</div>
 </div>

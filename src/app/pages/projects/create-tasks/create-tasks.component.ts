@@ -20,6 +20,9 @@ export class CreateTasksComponent implements OnInit {
   mindate= moment().format("YYYY-MM-DD");
   maxdate= moment().format("YYYY-MM-DD");
   userslist: any;
+  pi_process_list: any;
+  bpm_process_list: any;
+  bot_list: any;
   projectdetails: Object;
   taskcategories: Object;
   approverslist: any=[];
@@ -34,6 +37,7 @@ export class CreateTasksComponent implements OnInit {
       priority: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       startDate: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       resources: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      correlationID: [""],
       taskName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       timeEstimate: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       endDate: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
@@ -48,6 +52,9 @@ export class CreateTasksComponent implements OnInit {
         this.project_id=response.project_id
         this.getallusers();
         this.getTaskCategories();
+        this.getallpiprocess();
+        this.getallbpmprocess();
+        this.getallbots();
       })
       this.getProjectDetails();
 
@@ -98,7 +105,25 @@ export class CreateTasksComponent implements OnInit {
     })
   }
 
+  getallbpmprocess(){
+    this.api.getprocessnames().subscribe(data =>{
+      let response:any=data;
+      this.bpm_process_list=response.filter(data=>data.status=="APPROVED");
+    })
+  }
 
+  getallpiprocess(){
+    this.api.getAlluserProcessPiIds().subscribe(data =>{
+      let response:any=data;
+      this.pi_process_list=response.data;
+    })
+  }
+
+  getallbots(){
+    this.api.getAllActiveBots().subscribe(data =>{
+      this.bot_list=data;
+    })
+  }
 
   getTaskCategories(){
     this.api.getTaskCategories().subscribe(data =>{
@@ -129,6 +154,7 @@ export class CreateTasksComponent implements OnInit {
   this.createtaskForm.get("priority").setValue("");
   this.createtaskForm.get("resources").setValue("");
   this.createtaskForm.get("approvers").setValue("");
+  this.createtaskForm.get("correlationID").setValue("");
   }
   DateMethod(){
     return false;

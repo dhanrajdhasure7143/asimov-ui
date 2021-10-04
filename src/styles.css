@@ -301,7 +301,7 @@ div[class^='diagram_container'] .djs-container svg {
 
 button:disabled {
   cursor: no-drop;
-  background-color: grey;
+  background-color: #d1d1d1;
 }
 
 .eiap-btn {
@@ -754,8 +754,8 @@ div.tipsy.tipsy-e {
 }
 
 foreignObject {
-  width: 100px !important;
-  padding-right: 90px !important;
+  width: 140px !important;
+  padding-right: 125px !important;
 }
 
 .breadcrumb>li+li:before {
@@ -1472,9 +1472,7 @@ select.form-control {
   background-repeat: no-repeat;
   cursor: pointer;
 }
-.createform input[type="date"]::-webkit-calendar-picker-indicator {
-  display:none;
-}
+.createform input[type="date"]::-webkit-calendar-picker-indicator,
 .maindivfoprm input[type="date"]::-webkit-calendar-picker-indicator,
 .modelprbody input[type="date"]::-webkit-calendar-picker-indicator {
   width: 16px;
@@ -2361,6 +2359,7 @@ th.mat-header-cell {
 #exportSVGtoPDF .edgeLabels g.label {
   color: #000 !important;
   font-size: 24px !important;
+  width: 100px;
 }
 
 .mat-progress-bar {
@@ -2620,15 +2619,28 @@ span.pdicon {
   background: none;
 }
 
-@media (max-width: 1920px) {
+/*@media (max-width: 1600px) {
   .cell10 {
     width: 3% !important;
   }
   .cell2, .cell3, .cell4, .cell5, .cell6, .cell7, .cell8, .cell10  {
     font-size: 14px !important;
   }
-  }
+  }*/
 
+
+@media (min-width: 1800px) {
+  .cell10 {
+    width: 8% !important;
+  }
+}
+
+@media (min-width: 1920px) {
+.cell10 {
+    width: 22% !important;
+  }
+}
+ 
 .mat-tab-body-wrapper {
    overflow: auto !important;
 }

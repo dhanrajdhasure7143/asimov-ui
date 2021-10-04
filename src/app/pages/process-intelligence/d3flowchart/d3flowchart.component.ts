@@ -421,6 +421,16 @@ var count1
 
     // Set some general styles
 let nodesArray= [];
+let node_textLength_array=[];
+g.nodes().forEach(element => {
+  var node = g.node(element);
+  node_textLength_array.push(node.label.length)
+});
+const max_length = node_textLength_array.reduce(function(prev, current) {
+  return (prev > current) ? prev : current
+})
+// console.log(max_length);
+
 g.nodes().forEach(function(v) {
   var node = g.node(v);
   if(node.label == 'Start' || node.label == 'End'){
@@ -432,7 +442,17 @@ g.nodes().forEach(function(v) {
     node.paddingRight=10
   }
  else{
-   node.width=200
+   if(max_length>30 && max_length<=40){
+    node.width=300
+   }else if(max_length>40 && max_length<=50){
+    node.width=330
+   }else if(max_length>50 && max_length<=60){
+    node.width=360
+   }else if(max_length>60){
+    node.width=400
+   }else{
+    node.width=200
+   }
   nodesArray.push(node)
  }
   node.rx = node.ry = 5;
@@ -639,11 +659,13 @@ inner.selectAll('g.node').on('mouseover', function(d){
     };
     d3.select(this)['_groups'][0][0]['childNodes'][0]['attributes'][3]['value'] = -30;
     d3.select(this)['_groups'][0][0]['childNodes'][0]['attributes'][4]['value'] = this.rectNodeData.width *1;
-    d3.select(this)['_groups'][0][0]['childNodes'][0]['attributes'][5]['value'] = this.rectNodeData.height *1.3;
+    d3.select(this)['_groups'][0][0]['childNodes'][0]['attributes'][5]['value'] = this.rectNodeData.height *1.4;
     d3.select('g.node text tspan')['style']= 'font-size: 30px';
     fontSize=d3.select(this).select("g text")['_groups'][0][0]['attributes'][1]['value']
+    // d3.select(this).select("g text")
+    //   .style('font-size','18px')
     d3.select(this).select("g text")
-      .style('font-size','18')
+      .style('font-weight','600')
 
   }
   
@@ -655,7 +677,8 @@ inner.selectAll('g.node').on('mouseover', function(d){
     d3.select(this)['_groups'][0][0]['childNodes'][0]['attributes'][5]['value'] = this.rectNodeData.height;
     
     this.style = this.nodeTextPreviousStyle;
-   d3.select(this).select("g text")['_groups'][0][0]['attributes'][1]['value']=fontSize
+   d3.select(this).select("g text")['_groups'][0][0]['attributes'][1]['value']=fontSize;
+   d3.select(this).select("g text").style('font-weight','400')
   }
 })
 
@@ -750,7 +773,7 @@ d3.selectAll("g text")
 .style('font-size','14')
 
 d3.selectAll("g.edgeLabel g.label")
-.attr("transform","translate(-30,-10)")
+.attr("transform","translate(-50,-10)")
   d3.selectAll("g.circl g.label").attr("transform","translate(0,5)")
 
   if(me.isplay==true){ 
@@ -790,21 +813,42 @@ d3.selectAll("g.edgeLabel g.label")
 }
 
 // inner.selectAll('g.node')['_groups'][0][1]['attributes'][2].value="opacity: 1;fill: rgb(209, 54, 54)"
-  // console.log(inner.selectAll('g.node')['_groups'][0])
-  // console.log(d3.selectAll("g text")['_groups'][0][1]['parentNode'].__data__);
-  // console.log(d3.selectAll("g text")['_groups'][0]);
-let nodes_Array=d3.selectAll("g text")['_groups'][0];
+  
+let nodes_Array=d3.selectAll("g.node text")['_groups'][0];
 
 nodes_Array.forEach((element,i) => {
-  let node_color=g.node(element['parentNode'].__data__)['style'].split(':')[1].trim();
-  // console.log(node_color);
- if(node_color=="#035386" || node_color=="#2182b4"|| node_color=="#a40000"){
-  nodes_Array[i]['attributes'][1].value="font-size: 14px;fill: #fff"
-  // inner.selectAll('g.node')['_groups'][0][i]['attributes'][2].value="opacity: 1;fill: #030303"
- }else{
-  nodes_Array[i]['attributes'][1].value="font-size: 14px;fill: #030303"
-  // inner.selectAll('g.node')['_groups'][0][i]['attributes'][2].value="opacity: 1;fill: #fff"
+if(g.node(element['parentNode'].__data__).label){
+  if((g.node(element['parentNode'].__data__).label !='Start') && (g.node(element['parentNode'].__data__).label!='End')){
+    let node_width=g.node(element['parentNode'].__data__)['width']
+    let node_textLength=g.node(element['parentNode'].__data__).label.split('\n')[0].length;
+    let node_color=g.node(element['parentNode'].__data__)['style'].split(':')[1].trim();
+  if(node_width!=200 && node_textLength >=30){
+    if(node_color=="#035386" || node_color=="#2182b4"|| node_color=="#a40000"){
+      nodes_Array[i]['attributes'][1].value="font-size: 13px;fill: #fff"
+      // inner.selectAll('g.node')['_groups'][0][i]['attributes'][2].value="opacity: 1;fill: #030303"
+     }else{
+      nodes_Array[i]['attributes'][1].value="font-size: 13px;fill: #030303"
+      // inner.selectAll('g.node')['_groups'][0][i]['attributes'][2].value="opacity: 1;fill: #fff"
+     }
+  }else if(node_width==200 ){
+    if(node_color=="#035386" || node_color=="#2182b4"|| node_color=="#a40000"){
+      nodes_Array[i]['attributes'][1].value="font-size: 14px;fill: #fff"
+      // inner.selectAll('g.node')['_groups'][0][i]['attributes'][2].value="opacity: 1;fill: #030303"
+     }else{
+      nodes_Array[i]['attributes'][1].value="font-size: 14px;fill: #030303"
+      // inner.selectAll('g.node')['_groups'][0][i]['attributes'][2].value="opacity: 1;fill: #fff"
+     }
+  }else{
+    if(node_color=="#035386" || node_color=="#2182b4"|| node_color=="#a40000"){
+      nodes_Array[i]['attributes'][1].value="font-size: 18px;fill: #fff"
+      // inner.selectAll('g.node')['_groups'][0][i]['attributes'][2].value="opacity: 1;fill: #030303"
+     }else{
+      nodes_Array[i]['attributes'][1].value="font-size: 18px;fill: #030303"
+      // inner.selectAll('g.node')['_groups'][0][i]['attributes'][2].value="opacity: 1;fill: #fff"
+     }
+  }
  }
+}
 });
  
 // Center the graph
@@ -893,8 +937,9 @@ if(me.isdownloadJpeg==true||this.isdownloadPng==true||this.isdownloadpdf==true||
           scrollY: -window.scrollY,
           useCORS: true,
           logging:true,
-          scale:2,
-          height: this.graph_height/2+100
+          scale:5,
+          height: this.graph_height/2+100,
+          // width:this.graph_width+100100
           // windowHeight: window.outerHeight + window.innerHeight
         }).then(canvas => {
         if(fileType == 'png' || fileType == 'jpeg'){
@@ -908,17 +953,18 @@ if(me.isdownloadJpeg==true||this.isdownloadPng==true||this.isdownloadpdf==true||
           
         }
         if(fileType == 'pdf'){
-          var contentDataURL = canvas.toDataURL("image/png",0.5);
+          var contentDataURL = canvas.toDataURL("image/png",0.3);
           // var doc = new jsPDF('l','pt',[700,600],{compress: true}); --final
-          var doc = new jsPDF('p', 'mm', 'a4', true);
+          //var doc = new jsPDF('p', 'mm', 'a4', true);
+          var doc = new jsPDF('p', 'pt', 'a4', true);
           // var doc = new jsPDF('l','pt',[this.graph_height,1100],'a4',{compress: true});
           // var doc = new jsPDF('1', 'pt', 'a4', true);--final
           // doc.setFontSize(20)
           // doc.addImage(contentDataURL, 'PNG',10, 10, 1620, 600);
           // doc.addImage(contentDataURL, 'PNG', 0, 0, 1000, 1400, undefined,'FAST')
           // doc.addImage(contentDataURL, 'PNG', 0, 0, 700, 600,undefined,'FAST')--final
-          doc.addImage(contentDataURL, 'PNG', 5, 0, 210, 297,undefined,'FAST')
-          // doc.addImage(contentDataURL, 'PNG', 0, 0, 485, 270, undefined,'FAST')
+          // doc.addImage(contentDataURL, 'PNG', -10,0, 250, 297,undefined,'FAST')
+          doc.addImage(contentDataURL, 'PNG', 0, 0, 400, 400,undefined,'FAST')
           // doc.addImage(contentDataURL, "PNG", 0, 0, canvas.width * ratio, canvas.height * ratio,);
           doc.save(this.processGraphName+'.pdf');
           this.isdownloadpdf=false;
