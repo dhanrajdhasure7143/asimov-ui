@@ -35,6 +35,9 @@ export class BusinessProcessComponent implements AfterViewChecked {
               @Inject(APP_CONFIG) private config, ) { }
 
   ngOnInit(){
+    $('.link').removeClass('active');
+    $('#bps').addClass("active"); 
+    $('#expand_menu').addClass("active");   
     localStorage.setItem("isheader","false");
     this.logged_User=localStorage.getItem("firstName")+' '+localStorage.getItem("lastName")
     this.userRole = localStorage.getItem("userRole")
@@ -139,7 +142,12 @@ export class BusinessProcessComponent implements AfterViewChecked {
   }
   
   backtoNavigate(){
-    this.router.navigate(['/pages/businessProcess/home'])
+    if(localStorage.getItem('project_id')!="null"){
+      this.router.navigate(["/pages/projects/projectdetails"], 
+      {queryParams:{"id":localStorage.getItem('project_id')}})
+    } else{
+      this.router.navigate(['/pages/businessProcess/home'])
+    }
   }
 
   backtoApprovalWorkflow(){

@@ -17,6 +17,7 @@
             <span class="bps-header-title">
               <span *ngIf="isBackbutton" class="module-back-button" (click)='gotoProcessgraph()'><i aria-hidden="true" class="fas fa-arrow-left"></i></span>
               <span *ngIf="isPIHeaderShow" class="module-back-button" (click)='backtoWorkspace()'><i aria-hidden="true" class="fas fa-arrow-left"></i></span>
+              <span *ngIf="isProjDetails" class="module-back-button" (click)='gotoProjectDetails()'><i aria-hidden="true" class="fas fa-arrow-left"></i></span>
               <span class="module-header-title">Process Intelligence
                 <!-- <span *ngIf="isHeaderShow == 'true'"> / {{currentNotation_name | titlecase}}</span> -->
               </span>
@@ -24,7 +25,7 @@
             </span>
 
           </div>
-          <div class="col-md-7 new-bps-icons p-0" *ngIf="isPIHeaderShow">
+          <div class="col-md-7 new-bps-icons p-0" *ngIf="isPIHeaderShow || isProjDetails">
             <div class="row bps-float">
 
               <button mat-button [matMenuTriggerFor]="download" class="tsttooltipbtn">

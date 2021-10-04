@@ -37,6 +37,7 @@ export class CreateTasksComponent implements OnInit {
       priority: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       startDate: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       resources: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      correlationID: [""],
       taskName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       timeEstimate: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       endDate: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
@@ -153,6 +154,7 @@ export class CreateTasksComponent implements OnInit {
   this.createtaskForm.get("priority").setValue("");
   this.createtaskForm.get("resources").setValue("");
   this.createtaskForm.get("approvers").setValue("");
+  this.createtaskForm.get("correlationID").setValue("");
   }
   DateMethod(){
     return false;

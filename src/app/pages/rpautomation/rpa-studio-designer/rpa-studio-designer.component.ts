@@ -1,5 +1,6 @@
 import {Input, Component, OnInit, QueryList,ViewChildren } from '@angular/core';
 import { RpaStudioComponent } from '../rpa-studio/rpa-studio.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-rpa-studio-designer',
@@ -16,7 +17,7 @@ export class RpaStudioDesignerComponent implements OnInit {
   userName:any;
   isButtonVisible:Boolean=false;
   selected_tab_instance:any;
-  constructor(private rpa_studio:RpaStudioComponent) { }
+  constructor(private rpa_studio:RpaStudioComponent, private router:Router) { }
 
   ngOnInit() {
     
@@ -101,7 +102,11 @@ export class RpaStudioDesignerComponent implements OnInit {
 
   removenodes()
   {
-    $(".bot-close").click();
+    if(localStorage.getItem('project_id')!="null"){
+      this.router.navigate(["/pages/projects/projectdetails"], 
+     {queryParams:{"id":localStorage.getItem('project_id')}})
+    }else{
+      $(".bot-close").click();
+    }
   }
-
 }
