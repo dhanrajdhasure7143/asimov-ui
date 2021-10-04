@@ -660,11 +660,13 @@ inner.selectAll('g.node').on('mouseover', function(d){
     };
     d3.select(this)['_groups'][0][0]['childNodes'][0]['attributes'][3]['value'] = -30;
     d3.select(this)['_groups'][0][0]['childNodes'][0]['attributes'][4]['value'] = this.rectNodeData.width *1;
-    d3.select(this)['_groups'][0][0]['childNodes'][0]['attributes'][5]['value'] = this.rectNodeData.height *1.3;
+    d3.select(this)['_groups'][0][0]['childNodes'][0]['attributes'][5]['value'] = this.rectNodeData.height *1.4;
     d3.select('g.node text tspan')['style']= 'font-size: 30px';
     fontSize=d3.select(this).select("g text")['_groups'][0][0]['attributes'][1]['value']
+    // d3.select(this).select("g text")
+    //   .style('font-size','18px')
     d3.select(this).select("g text")
-      .style('font-size','18')
+      .style('font-weight','600')
 
   }
   
@@ -676,7 +678,8 @@ inner.selectAll('g.node').on('mouseover', function(d){
     d3.select(this)['_groups'][0][0]['childNodes'][0]['attributes'][5]['value'] = this.rectNodeData.height;
     
     this.style = this.nodeTextPreviousStyle;
-   d3.select(this).select("g text")['_groups'][0][0]['attributes'][1]['value']=fontSize
+   d3.select(this).select("g text")['_groups'][0][0]['attributes'][1]['value']=fontSize;
+   d3.select(this).select("g text").style('font-weight','400')
   }
 })
 
@@ -771,7 +774,7 @@ d3.selectAll("g text")
 .style('font-size','14')
 
 d3.selectAll("g.edgeLabel g.label")
-.attr("transform","translate(-30,-10)")
+.attr("transform","translate(-50,-10)")
   d3.selectAll("g.circl g.label").attr("transform","translate(0,5)")
 
   if(me.isplay==true){ 
@@ -822,15 +825,36 @@ nodes_Array.forEach((element,i) => {
   //   let nodeText_length=g.node(element['parentNode'].__data__).label.split('\n')[0].length;
   //   console.log(nodeText_length)
   // }
+  let node_width=g.node(element['parentNode'].__data__)['width']
+  let node_textLength=g.node(element['parentNode'].__data__).label.split('\n')[0].length;
   let node_color=g.node(element['parentNode'].__data__)['style'].split(':')[1].trim();
   // console.log(node_color);
- if(node_color=="#035386" || node_color=="#2182b4"|| node_color=="#a40000"){
-  nodes_Array[i]['attributes'][1].value="font-size: 14px;fill: #fff"
-  // inner.selectAll('g.node')['_groups'][0][i]['attributes'][2].value="opacity: 1;fill: #030303"
- }else{
-  nodes_Array[i]['attributes'][1].value="font-size: 14px;fill: #030303"
-  // inner.selectAll('g.node')['_groups'][0][i]['attributes'][2].value="opacity: 1;fill: #fff"
- }
+  if(node_width!=200 && node_textLength >=30){
+    if(node_color=="#035386" || node_color=="#2182b4"|| node_color=="#a40000"){
+      nodes_Array[i]['attributes'][1].value="font-size: 13px;fill: #fff"
+      // inner.selectAll('g.node')['_groups'][0][i]['attributes'][2].value="opacity: 1;fill: #030303"
+     }else{
+      nodes_Array[i]['attributes'][1].value="font-size: 13px;fill: #030303"
+      // inner.selectAll('g.node')['_groups'][0][i]['attributes'][2].value="opacity: 1;fill: #fff"
+     }
+  }else if(node_width==200 ){
+    if(node_color=="#035386" || node_color=="#2182b4"|| node_color=="#a40000"){
+      nodes_Array[i]['attributes'][1].value="font-size: 14px;fill: #fff"
+      // inner.selectAll('g.node')['_groups'][0][i]['attributes'][2].value="opacity: 1;fill: #030303"
+     }else{
+      nodes_Array[i]['attributes'][1].value="font-size: 14px;fill: #030303"
+      // inner.selectAll('g.node')['_groups'][0][i]['attributes'][2].value="opacity: 1;fill: #fff"
+     }
+  }else{
+    if(node_color=="#035386" || node_color=="#2182b4"|| node_color=="#a40000"){
+      nodes_Array[i]['attributes'][1].value="font-size: 18px;fill: #fff"
+      // inner.selectAll('g.node')['_groups'][0][i]['attributes'][2].value="opacity: 1;fill: #030303"
+     }else{
+      nodes_Array[i]['attributes'][1].value="font-size: 18px;fill: #030303"
+      // inner.selectAll('g.node')['_groups'][0][i]['attributes'][2].value="opacity: 1;fill: #fff"
+     }
+  }
+
 });
  
 // Center the graph
