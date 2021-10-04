@@ -814,7 +814,7 @@ d3.selectAll("g.edgeLabel g.label")
 
 // inner.selectAll('g.node')['_groups'][0][1]['attributes'][2].value="opacity: 1;fill: rgb(209, 54, 54)"
   
-let nodes_Array=d3.selectAll("g text")['_groups'][0];
+let nodes_Array=d3.selectAll("g.node text")['_groups'][0];
 
 nodes_Array.forEach((element,i) => {
 if(g.node(element['parentNode'].__data__).label){

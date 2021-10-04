@@ -301,6 +301,7 @@ ul#versions li.clickable:hover {
 
 ::ng-deep .rpa-bottom-tab .mat-tab-header{
   background: white !important;
+ 
 }
 
 ::ng-deep .rpa-bottom-tab 
@@ -311,6 +312,10 @@ ul#versions li.clickable:hover {
   padding: 2px;*/
   border-top: 1px solid lightgray;
   text-align : end !important;
+  padding:10px !important; 
+
+  
+
 }
 
 
