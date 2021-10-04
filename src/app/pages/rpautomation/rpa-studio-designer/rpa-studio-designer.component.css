@@ -305,9 +305,10 @@ ul#versions li.clickable:hover {
   background: white !important;
   /* height: 40px !important;
   color:black !important; */
-  padding: 10px;
+  padding:10px !important; 
   border-top: 1px solid lightgray;
   text-align : end !important;
+  
 }
 
 
