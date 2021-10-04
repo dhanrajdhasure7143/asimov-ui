@@ -548,6 +548,7 @@ this.getFileDetails();
    uploadFilemodalCancel(){
      this.uploadFileForm.reset();
      this.listOfFiles=[];
+     this.fileList=[];
      this.uploadFilemodalref.hide();
      
    }
