@@ -138,7 +138,8 @@ export class BusinessInsightsComponent implements OnInit {
       var _self=this;
       series.slices.template.adapter.add("tooltipText", function(text, target) {
         // var text=_self.getTimeConversion('{_dataContext.totalDuration}');
-        return "{_dataContext.activity} \n {_dataContext.convertedDuration}";
+        //return "{_dataContext.activity} \n {_dataContext.convertedDuration}";
+        return "{_dataContext.activity} \n {value.percent.formatNumber('#.#')}% [/]"
       });
       series.colors.list = [
           am4core.color("rgba(85, 216, 254, 0.9)"),

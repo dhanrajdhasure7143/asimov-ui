@@ -964,11 +964,13 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
       uploadtaskFilemodalCancel(){
         this.uploadtaskFileForm.reset();
         this.listOfFiles = [];
+        this.fileList=[];
         this.uploadtaskFilemodalref.hide();
       }
       uploadFilemodalCancel(){
         this.uploadFileFormDetails.reset();
         this.listOfFiles = [];
+        this.fileList=[];
         this.uploadFilemodalref.hide();
 
       }
