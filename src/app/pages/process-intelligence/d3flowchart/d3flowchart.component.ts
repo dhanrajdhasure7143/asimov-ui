@@ -814,9 +814,9 @@ d3.selectAll("g.edgeLabel g.label")
 }
 
 // inner.selectAll('g.node')['_groups'][0][1]['attributes'][2].value="opacity: 1;fill: rgb(209, 54, 54)"
-  let nodes_Array=d3.selectAll("g text")['_groups'][0];
+  let nodes_Array=d3.selectAll("g.node text")['_groups'][0];
 
-nodes_Array.forEach((element,i) => {
+  nodes_Array.forEach((element,i) => {
   if(g.node(element['parentNode'].__data__).label){
   // console.log(g.node(element['parentNode'].__data__).label.split('\n')[0])
   if((g.node(element['parentNode'].__data__).label !='Start') && (g.node(element['parentNode'].__data__).label!='End')){
@@ -969,7 +969,7 @@ if(me.isdownloadJpeg==true||this.isdownloadPng==true||this.isdownloadpdf==true||
           // doc.addImage(contentDataURL, "PNG", 0, 0, canvas.width * ratio, canvas.height * ratio,);
           doc.save(this.processGraphName+'.pdf');
           this.isdownloadpdf=false;
-            this.ispdf.emit(this.isdownloadpdf)
+            this.ispdf.emit(this.isdownloadpdf)       
         }   
       });
     } 

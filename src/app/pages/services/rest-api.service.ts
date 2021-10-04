@@ -969,7 +969,7 @@ save_blueprism_config(data)
     return this.http.get("/processintelligence/v1/processgraph/getActivityTimeData/"+processId);
   }
   getBIThroughputTime(processId){
-    return this.http.get("/processintelligence/v1/processgraph/getThroughputTimeData/"+processId);
+    return this.http.get("/processintelligence/v1/processgraph/getThroughputTimeDataV2/"+processId);
   }
   getBusinessMetrics(processId){
     return this.http.get("/processintelligence/v1/processgraph/getBusinessMetricsData/"+processId);
