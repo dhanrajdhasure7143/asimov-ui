@@ -88,6 +88,9 @@ export class BusinessInsightsComponent implements OnInit {
   }
 
   ActivityTimeChart(){
+      this.activitytime_data.sort(function (a, b) {
+        return b.totalDuration - a.totalDuration;
+      });
       am4core.useTheme(am4themes_animated);
       // Themes end
       
@@ -102,7 +105,7 @@ export class BusinessInsightsComponent implements OnInit {
       marker.stroke = am4core.color("#ccc");
       chart.legend.scrollable = true;
       chart.legend.fontSize = 12;
-
+      chart.legend.reverseOrder = false;
       // chart.data=data;
       chart.data=this.activitytime_data;
 

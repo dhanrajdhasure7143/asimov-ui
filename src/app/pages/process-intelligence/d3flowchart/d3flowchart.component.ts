@@ -421,6 +421,16 @@ var count1
 
     // Set some general styles
 let nodesArray= [];
+let node_textLength_array=[];
+g.nodes().forEach(element => {
+  var node = g.node(element);
+  node_textLength_array.push(node.label.length)
+});
+const max_length = node_textLength_array.reduce(function(prev, current) {
+  return (prev > current) ? prev : current
+})
+// console.log(max_length);
+
 g.nodes().forEach(function(v) {
   var node = g.node(v);
   if(node.label == 'Start' || node.label == 'End'){
@@ -432,7 +442,17 @@ g.nodes().forEach(function(v) {
     node.paddingRight=10
   }
  else{
-   node.width=200
+   if(max_length>30 && max_length<=40){
+    node.width=300
+   }else if(max_length>40 && max_length<=50){
+    node.width=330
+   }else if(max_length>50 && max_length<=60){
+    node.width=360
+   }else if(max_length>60){
+    node.width=400
+   }else{
+    node.width=200
+   }
   nodesArray.push(node)
  }
   node.rx = node.ry = 5;
@@ -796,6 +816,11 @@ d3.selectAll("g.edgeLabel g.label")
 let nodes_Array=d3.selectAll("g text")['_groups'][0];
 
 nodes_Array.forEach((element,i) => {
+  // console.log(g.node(element['parentNode'].__data__).label.split('\n')[0])
+  // if(g.node(element['parentNode'].__data__).label){
+//   let nodeText_length=g.node(element['parentNode'].__data__).label.split('\n')[0].length;
+  //   console.log(nodeText_length)
+  // }
   let node_color=g.node(element['parentNode'].__data__)['style'].split(':')[1].trim();
   // console.log(node_color);
  if(node_color=="#035386" || node_color=="#2182b4"|| node_color=="#a40000"){
@@ -893,8 +918,9 @@ if(me.isdownloadJpeg==true||this.isdownloadPng==true||this.isdownloadpdf==true||
           scrollY: -window.scrollY,
           useCORS: true,
           logging:true,
-          scale:2,
-          height: this.graph_height/2+100
+          scale:5,
+          height: this.graph_height/2+100,
+          // width:this.graph_width+100100
           // windowHeight: window.outerHeight + window.innerHeight
         }).then(canvas => {
         if(fileType == 'png' || fileType == 'jpeg'){
@@ -908,7 +934,7 @@ if(me.isdownloadJpeg==true||this.isdownloadPng==true||this.isdownloadpdf==true||
           
         }
         if(fileType == 'pdf'){
-          var contentDataURL = canvas.toDataURL("image/png",0.5);
+          var contentDataURL = canvas.toDataURL("image/png",0.3);
           // var doc = new jsPDF('l','pt',[700,600],{compress: true}); --final
           var doc = new jsPDF('p', 'mm', 'a4', true);
           // var doc = new jsPDF('l','pt',[this.graph_height,1100],'a4',{compress: true});
@@ -917,7 +943,7 @@ if(me.isdownloadJpeg==true||this.isdownloadPng==true||this.isdownloadpdf==true||
           // doc.addImage(contentDataURL, 'PNG',10, 10, 1620, 600);
           // doc.addImage(contentDataURL, 'PNG', 0, 0, 1000, 1400, undefined,'FAST')
           // doc.addImage(contentDataURL, 'PNG', 0, 0, 700, 600,undefined,'FAST')--final
-          doc.addImage(contentDataURL, 'PNG', 5, 0, 210, 297,undefined,'FAST')
+          doc.addImage(contentDataURL, 'PNG', -10,0, 250, 297,undefined,'FAST')
           // doc.addImage(contentDataURL, 'PNG', 0, 0, 485, 270, undefined,'FAST')
           // doc.addImage(contentDataURL, "PNG", 0, 0, canvas.width * ratio, canvas.height * ratio,);
           doc.save(this.processGraphName+'.pdf');
