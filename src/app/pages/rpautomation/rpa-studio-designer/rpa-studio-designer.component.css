@@ -322,3 +322,8 @@ ul#versions li.clickable:hover {
 }
 
 
+button:disabled{
+  background: none !important;
+  opacity: 0.5 !important;
+  cursor: not-allowed !important;
+}
