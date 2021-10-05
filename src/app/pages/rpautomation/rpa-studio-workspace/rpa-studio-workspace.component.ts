@@ -834,7 +834,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     this.arrange_task_order("START_" + this.finalbot.botName);
     this.saveBotdata = {
       "botName": botProperties.botName,
-      "botType": botProperties.botType,
+      "botType": '0',
       "description": botProperties.botDescription,
       "department": botProperties.botDepartment,
       "botMainSchedulerEntity": this.scheduler,
