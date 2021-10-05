@@ -302,9 +302,9 @@
                         </span> -->
                       </div>
                       <div class="flex-col">
-                          <button [disabled]="!((isButtonVisible==true && userName==bot.createdBy)||(isButtonVisible==false))" (click)="editbotoverlay(bot)"><img src="../../../../assets/images/RPA/icon_latest/edit.svg" alt="" class="testplus">&nbsp;</button>
-                          <button [disabled]="isButtonVisible==true" (click)="botdelete(bot.botId)"><img src="../../../../assets/images/RPA/icon_latest/delete.svg" alt="" class="testplus">&nbsp;</button>
-                          <button (click)="exportbot(bot)"><img src="../../../../assets/images/RPA/icon_latest/export.svg" alt="" class="testplus">&nbsp;</button>
+                          <button tooltip="Edit Bot" placement="bottom" [disabled]="!((isButtonVisible==true && userName==bot.createdBy)||(isButtonVisible==false))" (click)="editbotoverlay(bot)"><img src="../../../../assets/images/RPA/icon_latest/edit.svg" alt="" class="testplus">&nbsp;</button>
+                          <button tooltip="Delete Bot" placement="bottom"  [disabled]="isButtonVisible==true" (click)="botdelete(bot.botId)"><img src="../../../../assets/images/RPA/icon_latest/delete.svg" alt="" class="testplus">&nbsp;</button>
+                          <button  tooltip="Export Bot" placement="bottom" (click)="exportbot(bot)"><img src="../../../../assets/images/RPA/icon_latest/export.svg" alt="" class="testplus">&nbsp;</button>
                         
                       </div>
           
