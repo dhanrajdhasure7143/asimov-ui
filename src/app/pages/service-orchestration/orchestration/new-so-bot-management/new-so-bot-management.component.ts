@@ -29,11 +29,10 @@ public slaupdate : boolean = false;
     public respdata1=false;
     public blueprismbotname: any;
     schdata:any;
-    displayedColumns: string[] = ["botName","botType","sourceType" ,"department","description","version","botStatus", "Action","Schedule","Logs"];
+    displayedColumns: string[] = ["botName","sourceType" ,"department","description","version","botStatus", "Action","Schedule","Logs"];
     departmentlist :string[] = ['Development','QA','HR'];
     displayedblueprismcolums: string[] = ['bluePrismBotSessionid','startTimeStamp','endTimeStamp','status','error'];
     botNameFilter = new FormControl('');
-    botTypeFilter = new FormControl('');
     departmentFilter = new FormControl('');
     blueprimslogs : MatTableDataSource<any>;
     dataSource1:MatTableDataSource<any>;
@@ -414,14 +413,14 @@ public slaupdate : boolean = false;
       }
       response.forEach(data=>{
         let object:any=data;
-        if(data.botType==0)
+        /*if(data.botType==0)
         {
           object.botType='Attended'
         }
         else if(data.botType==1)
         {
           object.botType='Unattended';
-        }
+        }*/
         this.bot_list.push(object)
       })
       response.forEach(data=>{
