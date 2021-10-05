@@ -252,7 +252,11 @@ background-color: blue !important;
   /* padding-left:15px; */
 }
 .rpa-custom-slider {
-  /* height: 200px; */
+  /* height: 200px;
+  position: absolute;
+  bottom: -80px;
+  right: 15px; */
+  height: auto;
   position: absolute;
   bottom: 15px;
   right: 15px;
@@ -366,4 +370,8 @@ ul#versions li:hover {
 }
 .action-item.hovericon:hover img {
   filter: brightness(2.5) !important;
+}  
+.rpa-custom-slider button.action-item {
+  display: block;
+  margin-top: 10px;
 }
