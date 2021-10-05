@@ -85,7 +85,7 @@ export class RpaHomeComponent implements OnInit {
   public editbot:FormGroup;
   rpaCategory: any;
   newRpaCategory: any;
-
+  rpaVisible:boolean=true;
   displayedRows$: Observable<any[]>;
   @ViewChild(MatSort,{static:false}) sort: MatSort;
   totalRows$: Observable<number>;
