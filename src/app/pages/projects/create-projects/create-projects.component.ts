@@ -178,9 +178,13 @@ createproject(event)
   getprocessnames()
 {
   this.api.getprocessnames().subscribe(processnames=>{
+    let response:any=processnames;
     let resp:any=[]
-    resp=processnames
-    this.selected_process_names=resp.filter(item=>item.status=="APPROVED");
+    //resp=processnames
+    //this.selected_process_names=resp.filter(item=>item.status=="APPROVED");
+    resp=response.filter(item=>item.status=="APPROVED");
+    this.selected_process_names=resp.sort((a,b) => (a.processName.toLowerCase() > b.processName.toLowerCase() ) ? 1 : ((b.processName.toLowerCase() > a.processName.toLowerCase() ) ? -1 : 0));
+    
   })
   }
 
