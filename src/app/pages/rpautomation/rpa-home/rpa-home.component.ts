@@ -35,7 +35,7 @@ export class RpaHomeComponent implements OnInit {
   public isTableHasData = true;
   public respdata1=false;
 
-  displayedColumns: string[] = ["botName","description","department","botType","version","botStatus","actions"];
+  displayedColumns: string[] = ["botName","description","department","version","botStatus","actions"];
   displayedColumns2: string[] = ["processName","taskName","Assign","status","successTask","failureTask","Operations"];
   departmentlist :string[] = ['Development','QA','HR'];
   botNameFilter = new FormControl('');
@@ -85,7 +85,7 @@ export class RpaHomeComponent implements OnInit {
   public editbot:FormGroup;
   rpaCategory: any;
   newRpaCategory: any;
-
+  rpaVisible:boolean=true;
   displayedRows$: Observable<any[]>;
   @ViewChild(MatSort,{static:false}) sort: MatSort;
   totalRows$: Observable<number>;

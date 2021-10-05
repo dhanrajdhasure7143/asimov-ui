@@ -1,12 +1,12 @@
 
-<div class="main-content "   >
+<div class="main-content "    >
     <div class="row content-area">
         <div class="module-heading title">
           
 
             <span class="module-header-title">Robotic Process Automation</span>
             <button type="button" class="btn btn-primary import-btn ml-auto"  (click)="openModal(template)">
-              <img src="../../../../assets/images/RPA/import-white.svg" class="testplus" >
+              <img src="../../../../assets/images/RPA/import-white.svg" class="testplus" *ngIf="rpaVisible">
               Import
             </button>
         </div>
@@ -67,7 +67,7 @@
 </div> -->
 
 
-        <div class="row rpa-content-home">
+        <div class="row rpa-content-home" *ngIf="(rpaVisible)">
 
           <div class="main-subheader">
             <div class="main-subheaderTitle">
@@ -103,8 +103,7 @@
                 </div>-->
                 <div class="rpa-home-block" id="createbot-Home" style="border-radius: 5px;" *ngIf="this.isButtonVisible || enablecreatebot">
                     <img src="../../../../assets/images/RPA/create.svg"style="height:10vh;">
-                    <!--<h4 style="font-weight: 600;line-height: 1.1;">Create Bot</h4>
-                    <h5 style="color:gray">Click to Create New Bot</h5>-->
+                   
                     
                     <button class="btn btn-primary rpa-home-btn-title eiap-btn" id="create_newbot" style="margin-left:17px;" (click)="createoverlay()" aria-hidden="true" placement="bottom">Create</button>
                 </div>
@@ -127,8 +126,7 @@
                 </div>-->
                 <div class="rpa-home-block py-5" id="Configuration_Home" style="border-radius: 5px;" *ngIf="this.isButtonVisible || enableConfiguration">
                     <img src="../../../../assets/images/RPA/Environments.svg"style="height:10vh;">
-                  <!-- <h4 style="font-weight: 600;line-height: 1.1;">Configutions</h4>
-                    <h5 style="color:gray">Click to View Bot Configurations</h5>-->
+                
                     
                     
                     <button class="btn btn-primary rpa-home-btn-title eiap-btn" id="create_Configuration" style="margin-left:17px;" [routerLink]="[ '/pages/rpautomation/configurations']" placement="bottom">Configurations</button>
@@ -193,14 +191,14 @@
                         </button>
                       </div>
           
-                      <div class="flex-col header gridheader-th">
+                      <!-- <div class="flex-col header gridheader-th"> -->
                         <!-- <button  (click)="sortasc('botType','asc')"> -->
-                          <button   mat-sort-header="botType">
-                          <span >Type</span>
+                          <!-- <button   mat-sort-header="botType">
+                          <span >Type</span> -->
                           <!-- <i *ngIf="sortkey.botType==false" class="fa fa-arrow-up"></i>
                           <i *ngIf="sortkey.botType==true" class="fa fa-arrow-down"></i> -->
-                        </button>
-                      </div>
+                        <!-- </button> -->
+                      <!-- </div> -->
                     
                       <div class="flex-col header gridheader-th">
                         <!-- <button  (click)="sortasc('version','asc')"> -->
@@ -246,14 +244,14 @@
                       </div>
                       <div class="flex-col">
                           
-                          <span [tooltip]=bot.botName placement="bottom"> {{(bot.botName.length > 10) ? ((bot.botName).slice(0, 10) + '...') : bot.botName}}</span>
+                          <span [tooltip]=bot.botName placement="bottom"> {{(bot.botName.length > 20) ? ((bot.botName).slice(0, 20) + '...') : bot.botName}}</span>
                         </div>
                       <div class="flex-col">
-                        <span *ngIf="bot.description!=null" placement="bottom" [tooltip]="bot.description" class="btndes"> {{(bot.description.length > 10) ? ((bot.description).slice(0, 10) + '...') : bot.description}}</span>
+                        <span *ngIf="bot.description!=null" placement="bottom" [tooltip]="bot.description" class="btndes"> {{(bot.description.length > 20) ? ((bot.description).slice(0, 20) + '...') : bot.description}}</span>
                         <span *ngIf="bot.description==null">-</span>
                       </div>
                       <div class="flex-col">{{bot.department}}</div>
-                      <div class="flex-col">{{bot.botType}}</div>
+                      <!-- <div class="flex-col">{{bot.botType}}</div> -->
                       <div class="flex-col">V{{bot.version}}</div>
                       <div class="flex-col">
                           
@@ -304,11 +302,11 @@
                         </span> -->
                       </div>
                       <div class="flex-col">
-                          <button (click)="editbotoverlay(bot)"><img src="../../../../assets/images/RPA/icon_latest/edit.svg" alt="" class="testplus">&nbsp;</button>
-                          <button  (click)="botdelete(bot.botId)"><img src="../../../../assets/images/RPA/icon_latest/delete.svg" alt="" class="testplus">&nbsp;</button>
-                          <button (click)="exportbot(bot)"><img src="../../../../assets/images/RPA/icon_latest/export.svg" alt="" class="testplus">&nbsp;</button>
-                        
-                      </div>
+                        <button (click)="editbotoverlay(bot)"><img src="../../../../assets/images/RPA/icon_latest/edit.svg" alt="" class="testplus">&nbsp;</button>
+                        <button  (click)="botdelete(bot.botId)"><img src="../../../../assets/images/RPA/icon_latest/delete.svg" alt="" class="testplus">&nbsp;</button>
+                        <button (click)="exportbot(bot)"><img src="../../../../assets/images/RPA/icon_latest/export.svg" alt="" class="testplus">&nbsp;</button>    
+                      
+                    </div>
           
                     </div>
                   </mat-panel-title>
@@ -350,7 +348,10 @@
           </div>
 
         </div>
-
+        <div class="row rpa-content-home no-items-content"  *ngIf="!(rpaVisible)">
+           <img class="no-items-img" src="../../../../assets/images/RPA/No-Items.svg">
+        <h4>No items to display</h4>
+        </div>
         <div id="edit-bot" class="modal rpa-modal">
           <div class="rpa-modal-content">
             <div class="rpa-modal-header">

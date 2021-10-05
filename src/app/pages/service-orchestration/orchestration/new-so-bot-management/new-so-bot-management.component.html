@@ -38,7 +38,7 @@
               <table mat-table #sort1="matSort" [dataSource]="dataSource1" matSort class=" RPA table" id="bmtable">
   
                   <ng-container matColumnDef="botName"id="bmbotname">
-                      <th mat-header-cell *matHeaderCellDef mat-sort-header>Bot Names </th>
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header>Bot Name </th>
                       <td mat-cell *matCellDef="let element"> <button *ngIf="element.botName!=null" (click)="loadbotdatadesign(element.botId);"><span *ngIf="element.botName!=null" [matTooltip]="element.botName">{{(element.botName.length > 15) ? ((element.botName).slice(0, 15) + '...') : element.botName}}</span>
                           <span *ngIf="element.botName==null || element.botName==''">---</span></button> </td>
                   </ng-container>
@@ -50,14 +50,15 @@
                           <span *ngIf="element.description!=null" [matTooltip]="element.description">{{(element.description.length > 15) ? ((element.description).slice(0, 15) + '...') : element.description}}</span>
                            <span *ngIf="element.description==null || element.description==''">-</span> </td>
                   </ng-container>
-                  <ng-container matColumnDef="botType"id="bottype">
+                 <!--  <ng-container matColumnDef="botType"id="bottype">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Type </th>
                     <td mat-cell *matCellDef="let element"> <button *ngIf="element.botType!=null">{{element.botType}}</button> <span *ngIf="element.botName==''">-</span> </td>
-                </ng-container>
+                </ng-container> -->
   
                 <ng-container matColumnDef="sourceType">
                   <th mat-header-cell *matHeaderCellDef mat-sort-header>Source </th>
-                  <td mat-cell *matCellDef="let element"> <button *ngIf="element.botType!=null">{{element.sourceType}}</button> <span *ngIf="element.botName==''">-</span> </td>
+                  <!-- <td mat-cell *matCellDef="let element"> <button *ngIf="element.botType!=null"> -->
+                    <td mat-cell *matCellDef="let element"> <button>{{element.sourceType}}</button> <span *ngIf="element.botName==''">-</span> </td>
               </ng-container>
                 <ng-container matColumnDef="department">
                   <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
@@ -656,12 +657,13 @@
                           <label class="label-control" for="taskOwner">Task Owner<span class="star">*</span></label>
                           <input type="text" maxlength="51" class="form-control data" formControlName="taskOwner"  value="" placeholder="Enter Connection Name">
                           <span *ngIf="(insertslaForm_so_bot.get('taskOwner').invalid && insertslaForm_so_bot.get('taskOwner').touched) && !insertslaForm_so_bot.controls['taskOwner'].hasError('maxlength')" class="errspan required">Required Task Owner*</span>
+                          <p style="font-size:12px;">Note* : Notifications will be send to this User Email ID</p>
                           <!--<div *ngIf="insertslaForm_so_bot.controls['taskOwner'].hasError('maxlength')" class="errspan required">
                               Maximum of 50 characters
                           </div>-->
                       </div>
                       <div class="col-md-6 pl-0 form-group">
-                        <label class="label-control" for="slaConfigId">SLA Breach Limit
+                        <label class="label-control" for="slaConfigId">SLA Breach Limit (Min)
                            <!-- <span class="star">*</span> -->
                          </label>
                           <input type="number" min=0 max=60 maxlength="2" formControlName="slaConfigId"  onkeypress="return (event.charCode > 47 && event.charCode < 58)" class="form-control data"   value="" placeholder="00">
@@ -688,7 +690,7 @@
                     </div>-->
                 <!-- </div> -->
                       <div class="col-md-6 pr-0 form-group">
-                        <label class="label-control" for="thresholdLimit">Threshold Limit 
+                        <label class="label-control" for="thresholdLimit">Threshold Limit (Min)
                            <!-- <span class="star">*</span> -->
                          </label>
                           <input type="number" min=0 max=60 onkeypress="return (event.charCode > 47 && event.charCode < 58)" class="form-control data" formControlName="thresholdLimit"  value="" maxlength="2" placeholder="00">
@@ -704,22 +706,22 @@
                           </div>-->
                       </div>
                       <div class="col-md-6 pr-0 form-group">
-                          <label class="label-control" for="retriesInterval">Retry Interval</label>
+                          <label class="label-control" for="retriesInterval">Retry Interval (Min)</label>
                           <input type="number"  maxlength="2" min=0 max=60 onkeypress="return (event.charCode > 47 && event.charCode < 58)" class="form-control data" formControlName="retriesInterval"  value="" placeholder="00">
                           <!-- <span *ngIf="insertslaForm_so_bot.get('retriesInterval').invalid && insertslaForm_so_bot.get('retriesInterval').touched" class="errspan required">Required Retries Interval*</span> -->
                       </div>
   
                       <div class="col-md-12 p-0 form-group">
-                        <label class="label-control" for="notificationType">Notificaion Type<span class="star">*</span></label>
+                        <label class="label-control" for="notificationType">Notification Type<span class="star">*</span></label>
                         <div class="row">
                           <div class="col-md-6 p-0">
                             <input type="checkbox" formControlName="email" class="emailcheck" id="emailcheck" >
                             <label class="lbl_chk_cls"  for="emailcheck">E-mail</label>
                           </div>
-                          <div class="col-md-6 p-0">
+                          <!-- <div class="col-md-6 p-0">
                             <input type="checkbox" class="smscheck" formControlName="sms"  id="smscheck">
                             <label class="lbl_chk_cls" for="smscheck">SMS</label>
-                          </div>
+                          </div> -->
                         </div>
                       </div>
 
