@@ -1,0 +1,208 @@
+<p>create-ticket works!</p>
+<div class="content" style="overflow-x: hidden;">
+    <mat-card>
+        <div style="padding: 12px;font-weight: bold;">
+            <span class="module-back-button" routerLink="/pages/support/ticket-list">
+                <i class="fas fa-arrow-left" aria-hidden="true"></i>
+            </span> Issues
+        </div>
+        <mat-divider></mat-divider>
+        <div class="content">
+            <h3 style="font-weight: bold;color: #2c4a6f;">Create Ticket</h3> <br>
+            <div class="grid" style="margin-left: 1%;">
+                <form [formGroup]="createTicket" novalidate>
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="row">
+                                <div class="col-12">
+                                    <p style="margin-left: 1%;">Summary</p>
+                                    <input type="text" formControlName="summary" [(ngModel)]="summary" matInput placeholder="Summary" class="summary-input">
+                                    <span *ngIf="requestKey != undefined && createRequestData != undefined">
+                                        <div style="margin-top: 2%;"
+                                            *ngIf="createRequestData[0].summary != summary && summary.length != 0">
+                                            <button class="cancelbutton" (click)="cancelSummary()">Cancel</button>
+                                            <button class="savebutton" (click)="editSummary()">Save</button>
+                                        </div>
+                                    </span>
+                                    <br>
+                                    <span *ngIf="createTicket.get('summary').invalid && createTicket.get('summary').touched" class="errspan required">Summary Required*</span>
+                                </div>
+                            </div> <br>
+                            <div class="row">
+                                <div class="col-12">
+                                    <p style="margin-left: 1%;">Description</p>
+                                    <textarea style="padding: 10px;" type="text" formControlName="description" [(ngModel)]="description" matInput placeholder="Enter Description" class="description-input"></textarea>
+                                    <span *ngIf="requestKey != undefined && createRequestData != undefined">
+                                        <div style="margin-top: 2%;"
+                                            *ngIf="createRequestData[0].description != description && description.length != 0">
+                                            <button class="cancelbutton" (click)="cancelDescription()">Cancel</button>
+                                            <button class="savebutton" (click)="editDescription()">Save</button>
+                                        </div>
+                                    </span>
+                                    <br>
+                                    <span *ngIf="createTicket.get('description').invalid && createTicket.get('description').touched" class="errspan required">Description Required*</span>
+                                </div>
+                            </div> <br>
+                            <div class="row" *ngIf="requestKey != undefined">
+                                <div class="col-12">
+                                    <p style="margin-left: 1%;">Comment</p>
+                                    <input class="summary-input" type="text" matInput formControlName="comment" [(ngModel)]="comment" placeholder="Enter Comment">
+                                    <span *ngIf="commentRequest != '' || undefined">
+                                        <div style="margin-top: 2%;" *ngIf="commentRequest[0].comment != comment">
+                                            <button class="cancelbutton" (click)="cancelComment()">Cancel</button>
+                                            <button class="savebutton" (click)="editComment()">Save</button>
+                                        </div>
+                                    </span>
+                                    <span *ngIf="commentRequest == '' || undefined">
+                                        <div style="margin-top: 2%;" *ngIf="comment">
+                                            <button class="cancelbutton" (click)="cancelComment()">Cancel</button>
+                                            <button class="savebutton" (click)="editComment()">Save</button>
+                                        </div>
+                                    </span>
+                                </div>
+                            </div> <br *ngIf="requestKey != undefined || null">
+                            <div class="row" style="cursor: pointer;width: 189%;">
+                                <p style="margin-left: 0.8%;">Attachment</p>
+                                <div (click)="fileInput.click()" style="padding: 10px;background: #f6f6f6;;width: 44.5%;border-radius: 5px;margin-left: 10px;border: dotted 3px rgb(197, 196, 196);">
+                                    <span style="display: flex;justify-content: center;">
+                                        <i class="fa fa-cloud-upload-alt" style="margin: 1px" aria-hidden="true"></i>
+                                        &nbsp;&nbsp;
+                                        Find files to attach, or browse.</span>
+                                    <input multiple #fileInput accept=".jpg,.png,.pdf,.xls,.xlsx" type="file" (change)="file($event)" style="display:none;" />
+                                </div>
+                                <div class="fileerror" *ngIf="fileError && requestKey == undefined || null">
+                                    <p>This file or image don't support or empty , Please try again later.</p>
+                                </div>
+                                <span *ngIf="!fileError && requestKey == undefined || null">
+                                    <div *ngFor="let item of fileName; index as i" class="row">
+                                        <div class="col-1"
+                                            style="flex: 0 0 auto;width: 5.666667%;padding: 1.5%;padding-left: 3%;display: flex;align-self: center;">
+                                            <i style="margin-bottom: 50%;" class="far fa-file-alt"></i>
+                                        </div>
+                                        <div class="col-8" style="flex: 0 0 auto;margin-top: 6px;">
+                                            <span>
+                                                <span class="filenameoverflow">{{item.name}}</span> <span style="position: absolute;
+                                                left: 42%;">{{item.size}} KB</span><br>
+                                <mat-progress-bar mode="determinate" [value]=progress>
+                                </mat-progress-bar>
+                                </span>
+                                <span style="position: relative;left: 50%;top: -40%;font-size: x-large;">
+                                                <span class="closefile" (click)="DeleteFile(item , i)">
+                                                    <i class="fa fa-times"></i>
+                                                </span>
+                                </span>
+                            </div>
+                        </div>
+                        </span>
+                    </div><br>
+                    <div class="row" style="position: relative;left: 2%;" *ngIf="requestKey != undefined || null">
+                        <div class="col-6" *ngFor="let item of imageArray">
+                            <a *ngIf="item.type == 'pdf'" href="data:application/pdf;base64,{{item.file}}" download="{{item.name}}">
+                                <i class="fas fa-download"></i> &nbsp; <span>Click to download</span>
+                                <p style="margin-top: 2.5%;margin-left: 4%;">{{item.name}}</p>
+                            </a>
+                            <a *ngIf="item.type == 'txt'" href="data:image/png;base64,{{item.file}}" download="{{item.name}}">
+                                <i class="fas fa-download"></i> &nbsp; <span>Click to download</span>
+                                <p style="margin-top: 2.5%;margin-left: 4%;">{{item.name}}</p>
+                            </a>
+                            <a *ngIf="item.type == 'xlsx'" href="data:image/png;base64,{{item.file}}" download="{{item.name}}">
+                                <i class="fas fa-download"></i> &nbsp; <span>Click to download</span>
+                                <p style="margin-top: 2.5%;margin-left: 4%;">{{item.name}}</p>
+                            </a>
+                            <a *ngIf="item.type == 'jpg' || item.type == 'png' || item.type == 'jpeg'" href="data:image/png;base64,{{item.file}}" download="{{item.name}}">
+                                <i class="fas fa-download"></i> &nbsp; <span>Click to download</span>
+                                <p style="margin-top: 2.5%;margin-left: 4%;">{{item.name}}</p>
+                            </a>
+                            <a *ngIf="item.type == 'svg'" href="data:image/png;base64,{{item.file}}" download="{{item.name}}">
+                                <i class="fas fa-download"></i> &nbsp; <span>Click to download</span>
+                                <p style="margin-top: 2.5%;margin-left: 4%;">{{item.name}}</p>
+                            </a>
+                        </div>
+                    </div>
+            </div>
+            <!-- col-2 -->
+            <div class="col-4">
+                <div [ngClass]="requestKey != undefined || null ? 'disabled' : ''">
+                    <p>Component</p>
+                    <mat-form-field class="issue-type">
+                        <mat-label class="labelcolor">
+                            Select Component
+                        </mat-label>
+                        <mat-select multiple formControlName="component" [(ngModel)]="component" #toppings>
+                            <mat-option value="Task Mining">Task Mining</mat-option>
+                            <mat-option value="Service Orchestration">Service Orchestration</mat-option>
+                            <mat-option value="Robatic Process Automation">Robatic Process Automation
+                            </mat-option>
+                            <mat-option value="Process Intelligence">Process Intelligence</mat-option>
+                            <mat-option value="Business Process Studio">Business Process Studio</mat-option>
+                            <button style="margin: 0px 8% 2% 0px;float: right;background: #00a3e9;color: white;border-radius: 5px;" (click)="toppings.close()"><span style="padding: 8px;">OK</span></button>
+                        </mat-select>
+                    </mat-form-field><br>
+                    <span *ngIf="createTicket.get('component').invalid && createTicket.get('component').touched" class="errspan required">Component Required*</span>
+                </div>
+                <div style="margin-top: 1.3em;" [ngClass]="requestKey != undefined || null ? 'disabled' : ''">
+                    <p>Priority</p>
+                    <mat-form-field class="issue-type">
+                        <mat-label class="labelcolor">Select Priority</mat-label>
+                        <mat-select formControlName="priority" [(ngModel)]='priority'>
+                            <mat-option value="High">High</mat-option>
+                            <mat-option value="Medium">Medium</mat-option>
+                            <mat-option value="Low">Low</mat-option>
+                            <mat-option value="Lowest">Lowest</mat-option>
+                        </mat-select>
+                    </mat-form-field><br>
+                    <span *ngIf="createTicket.get('priority').invalid && createTicket.get('priority').touched" class="errspan required">Priority Required*</span>
+                </div>
+                <div style="margin-top: 1.3em;" [ngClass]="requestKey != undefined || null ? 'disabled' : ''">
+                    <p>Impact</p>
+                    <mat-form-field class="issue-type">
+                        <mat-label class="labelcolor">
+                            Select Impact
+                        </mat-label>
+                        <mat-select formControlName="impact" [(ngModel)]='impact'>
+                            <mat-option *ngFor="let item of impactArray" [value]=item.impact>{{item.impact}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field><br>
+                    <span *ngIf="createTicket.get('impact').invalid && createTicket.get('impact').touched" class="errspan required">Impact Required*</span>
+                </div>
+                <div style="margin-top: 1.3em;" [ngClass]="requestKey != undefined || null ? 'disabled' : ''">
+                    <p>Severity</p>
+                    <mat-form-field class="issue-type">
+                        <mat-label class="labelcolor" *ngIf="createTicket.get('severity').invalid">
+                            Select Severity
+                        </mat-label>
+                        <mat-select formControlName="severity" [(ngModel)]='severity'>
+                            <mat-option *ngFor="let item of severityLevelsArray" [value]=item.severity>
+                                {{item.severity}}</mat-option>
+                        </mat-select>
+                    </mat-form-field><br>
+                    <span *ngIf="createTicket.get('severity').invalid && createTicket.get('severity').touched" class="errspan required">Severity Required*</span>
+                </div>
+                <div style="margin-top: 1.3em;pointer-events: none;">
+                    <p>Reporter</p>
+                    <mat-form-field class="issue-type">
+                        <mat-select formControlName="reporter">
+                            <mat-option [value]=userName>
+                                {{userName}}</mat-option>
+                        </mat-select>
+                    </mat-form-field><br>
+                    <span *ngIf="createTicket.get('reporter').invalid && createTicket.get('reporter').touched" class="errspan required">Reporter Required*</span>
+                </div>
+                <div style="margin:4em 0 0 32%" *ngIf="requestKey == undefined">
+                    <button class="cancel" (click)="reset()" mat-button color="primary">Reset</button> &nbsp;&nbsp;&nbsp;
+                    <button class="btn btn-primary" [disabled]="createTicket.invalid" (click)="CreateNewTicket()">Create</button>
+                </div>
+            </div>
+        </div>
+        </form>
+</div>
+</div><br>
+</mat-card>
+</div>
+
+<div class="spinoverlay" *ngIf="isLoading">
+    <div class="spincenter">
+        <img src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader" />
+    </div>
+</div>

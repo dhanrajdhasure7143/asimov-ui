@@ -1,0 +1,221 @@
+.content {
+    padding: 1em;
+}
+
+mat-card {
+    min-height: 89vh;
+    max-height: auto;
+}
+
+p {
+    font-weight: bold;
+    font-size: small;
+}
+
+.new {
+    background: #dcf4fd;
+    padding: 5px;
+    border-radius: 7px;
+}
+
+.title-input {
+    width: 72%;
+    background: #f6f6f6;
+    height: 2em;
+    border: solid 1px rgb(197, 196, 196);
+    border-radius: 5px;
+}
+
+input::placeholder {
+    padding: 2px;
+}
+
+textarea::placeholder {
+    padding: 2px;
+}
+
+input[type=text],
+select {
+    padding-left: 10px;
+    border: solid 1px rgb(197, 196, 196);
+}
+
+.attachment-input {
+    width: 72%;
+    background: #f6f6f6;
+    height: 2em;
+    border: solid 1px rgb(197, 196, 196);
+    border-radius: 5px;
+}
+
+.summary-input {
+    width: 86%;
+    background: #f6f6f6;
+    height: 2.6em;
+    border: solid 1px rgb(197, 196, 196);
+    border-radius: 5px;
+}
+
+.description-input {
+    width: 86%;
+    background: #f6f6f6;
+    height: 8em;
+    border: solid 1px rgb(197, 196, 196);
+    border-radius: 5px;
+}
+
+textarea:focus {
+    outline: 0;
+    padding: 5px;
+}
+
+.comments-input {
+    width: 86%;
+    background: #f6f6f6;
+    height: 2em;
+    border: solid 1px rgb(197, 196, 196);
+    border-radius: 5px;
+}
+
+.issue-type {
+    background: #f6f6f6;
+    border: solid 1px rgb(197, 196, 196);
+    height: 2em;
+    border-radius: 5px;
+    width: 70%;
+}
+
+mat-select {
+    padding: 3px;
+}
+
+mat-select-value {
+    padding: 2px;
+}
+
+mat-form-field {
+    line-height: normal;
+}
+
+.cancel {
+    border: solid 1px #00a3e9;
+    color: #00a3e9;
+}
+
+.file-input {
+    display: none;
+}
+
+.mat-progress-bar {
+    display: block;
+    height: 6px;
+    overflow: hidden;
+    position: relative;
+    background-color: whitesmoke;
+    width: 50%;
+    margin-top: 2%;
+}
+
+::ng-deep .mat-progress-bar-fill::after {
+    background-color: green;
+}
+
+::ng-deep .mat-progress-bar-buffer {
+    background: #E4E8EB;
+}
+
+::ng-deep .mat-progress-bar {
+    border-radius: 2px;
+}
+
+.closefile {
+    margin: -3px 0% 0% 4%;
+    font-size: large;
+    color: black;
+    cursor: pointer;
+}
+
+.closefile:hover {
+    color: red;
+}
+
+.fa-cloud-upload-alt:before {
+    content: "\f382";
+    font-size: x-large;
+}
+
+.far {
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 450;
+    font-size: xx-large;
+}
+
+.filenameoverflow {
+    width: 180px;
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+    display: inline-flex;
+    justify-content: space-between;
+    align-self: center;
+}
+
+.fileerror {
+    color: red;
+    padding: 5px;
+    margin-left: 11%;
+}
+
+::ng-deep .ng-tns-c18-4 ng-trigger ng-trigger-transformPanel mat-select-panel mat-primary my-panel-class {
+    width: 40% !important;
+}
+
+::ng-deep .ng-tns-c18-4 ng-trigger ng-trigger-transformPanel mat-select-panel mat-primary my-panel-class {
+    width: 40% !important;
+}
+
+::ng-deep .ng-tns-c18-4 ng-trigger ng-trigger-transformPanel mat-select-panel mat-primary my-panel-class {
+    width: 40% !important;
+}
+
+::ng-deep .ng-tns-c18-4 ng-trigger ng-trigger-transformPanel mat-select-panel mat-primary my-panel-class {
+    width: 40% !important;
+}
+
+::ng-deep.mat-form-field-underline {
+    display: none;
+}
+
+.labelcolor {
+    background-color: #f6f6f6;
+    color: gray;
+    padding: 5px;
+}
+
+::ng-deep.mat-primary .mat-pseudo-checkbox-checked {
+    background-color: #00a3e9;
+}
+
+::ng-deep.mat-option-text {
+    color: #00a3e9;
+}
+
+.savebutton {
+    margin-left: 2%;
+    background: #00a3e9;
+    color: white;
+    padding: 6px;
+    border-radius: 50px;
+}
+
+.cancelbutton {
+    background: white;
+    color: #00a3e9;
+    padding: 6px;
+    border: solid 1px #00a3e9;
+    border-radius: 50px;
+}
+
+.disabled {
+    pointer-events: none;
+}

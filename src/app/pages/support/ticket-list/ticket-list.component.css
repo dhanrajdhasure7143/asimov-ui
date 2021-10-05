@@ -1,0 +1,76 @@
+.content {
+    padding: 1em;
+}
+
+.graph_table {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    overflow-y: hidden;
+    min-height: 79%;
+    background-color: white;
+}
+
+.mat-raised-button {
+    border-radius: 0%;
+    background-color: #00a0e3 !important;
+    color: white;
+}
+
+th.mat-header-cell {
+    color: #00a0e3;
+    font-weight: bold;
+}
+
+::ng-deep .mat-tab-header {
+    width: 30em;
+    border: none;
+}
+
+.blue {
+    color: #00a0e3;
+    font-weight: bold;
+}
+
+.green {
+    color: green;
+    font-weight: bold;
+}
+
+select {
+    border: solid 1px #00a0e3;
+    background-color: transparent;
+    color: #00a0e3;
+    width: 8em;
+    border-radius: 7px;
+    height: 2em;
+}
+
+input {
+    border: solid 1px rgb(148, 144, 144);
+    box-shadow: rgb(148, 144, 144);
+    border-radius: 7px;
+    height: 2em;
+}
+
+input::placeholder {
+    padding-left: 5px;
+}
+
+.mat-elevation-z8 {
+    box-shadow: none;
+}
+
+table th,
+td {
+    cursor: pointer;
+}
+
+table tbody td {
+    padding: 5px 15px !important;
+    vertical-align: middle !important;
+    font-size: 13px !important;
+}
+
+table td::first-letter {
+    text-transform: capitalize;
+}
