@@ -1,5 +1,5 @@
 
-<div class="row new-PI-layout">
+<div class="row new-PI-layout " *ngIf="isButtonVisible">
                 <div class='col-md-12 PI-uploadgrid p-0'>
                   <div class="row">
                    <div class="PI-heading">
@@ -11,7 +11,7 @@
                         </h4>
                         
                    </div>     
-                   <div class="col-md-3 p-0 upload_zone" id="upload_xl" *ngIf="this.isButtonVisible || enableuploadbuttons">
+                   <div class="col-md-3 p-0 upload_zone" id="upload_xl" >
                         <ngx-dropzone (change)="onUpload($event,0)" [multiple]=false [accept]="xlsx_csv_mime" >
                            <div class="model-img">       
                                 <ngx-dropzone-label>
@@ -27,7 +27,7 @@
                            </div>
                         </ngx-dropzone>
                    </div>
-                   <div class="col-md-3 p-0 upload_zone" id="upload_xes" *ngIf="this.isButtonVisible || enableuploadbuttons">
+                   <div class="col-md-3 p-0 upload_zone" id="upload_xes">
                         <ngx-dropzone (change)="onUpload($event,3)" [multiple]=false accept=".xes, .gzip, .gz" >
                            <div class="model-img">
                                 <ngx-dropzone-label>
@@ -43,7 +43,7 @@
                            </div>                        
                         </ngx-dropzone>
                    </div>
-                   <div class="col-md-3 p-0 upload_zone" id="upload_db" (click)="onDbSelect()" *ngIf="this.isButtonVisible || enableuploadbuttons">
+                   <div class="col-md-3 p-0 upload_zone" id="upload_db" (click)="onDbSelect()" >
                         <ngx-dropzone [multiple]=false [accept]="db_mime" [disableClick]=true >
                            <div class="model-img">
                                 <ngx-dropzone-label>
@@ -144,6 +144,10 @@
                 </div>
 </div>
 
+<div class="row new-PI-layout no-items-content " *ngIf="!(isButtonVisible)">
+        <img class="no-items-img" src="../../../../assets/images/RPA/No-Items.svg">
+        <h4>No items to display</h4>
+</div>
 <div class="bpmnCreate">
      <div id="myModal1" class="modal">
         <div class="modal-content">
@@ -283,8 +287,12 @@
      </div>
 </div>
 
+
 <process-category-overlay headerTitle="Save Process" buttonName="Save & Generate" (proceed)="generateGraph($event)" class="bpmnCreate"></process-category-overlay>
 <!-- <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "ball-spin-clockwise-fade-rotating" [fullScreen] = "true"><p style="color: white" ></p></ngx-spinner> -->
+
+
+
 <div class="spinoverlay" *ngIf="isLoading">
         <div class="spincenter">
             <img  src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader"/>

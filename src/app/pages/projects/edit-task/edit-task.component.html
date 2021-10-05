@@ -22,14 +22,23 @@
     <div class="h-scroll">  
     <div class="container-fluid" >
       
-        <div class="bg-task">
+        <div class="bg-task row">
           <!-- {{selectedtask.id}} /
            -->
-          <span class="task-name">{{taskcategory}} / {{taskname}}</span>
-          <div class="value">
-            <span class="level3">Last Modified By : {{lastModifiedBy}}</span>&nbsp;
-            <span>|</span>&nbsp;
-            <span class="level3">{{lastModifiedTimestamp |  date:'MMM dd, y, HH:mm:ss'}}</span>
+          <div class="col-md-10">
+            <div class="d-flex">
+                <div class="task-name">{{taskcategory}} / &nbsp;</div>
+                <div><input type="text" class="form-control rpa-control task-name-input" formControlName="taskName" [value]="taskname" ></div>
+            </div>
+            <div class="value">
+              <span class="level3">Last Modified By : {{lastModifiedBy}}</span>&nbsp;
+              <span>|</span>&nbsp;
+              <span class="level3">{{lastModifiedTimestamp |  date:'MMM dd, y, HH:mm:ss'}}</span>
+            </div>
+          </div>
+          <div class="col-md-2">
+                  <label  class="h6 label-control" id="startdate" for="startDate">Start Date</label>
+                  <span class="labelcont">{{startDate  | date}}</span>
           </div>
           
         </div>
@@ -40,23 +49,22 @@
               <div class="col-md-12">
                 <div class="form-fields col-md-3 pl-0">
                   <label class="h6 label-control" id="assignee" for="assignee">Assignee</label>
-                  <span class="labelcont">{{taskresource| userPipe : users_list}}</span>
+                  <!-- <span class="labelcont">{{taskresource| userPipe : users_list}}</span> -->
+                  <select [value]="taskresource" formControlName="resources" class="form-control rpa-control">
+                    <option >Select Assignee</option>
+                    <option *ngFor="let user of users_list" [value]="user.userId.userId">{{user.userId.firstName}} {{user.userId.lastName}}</option>
+                  </select>
                 </div>
                 <div class="form-fields col-md-3 pr-0">
-                  <label  class="h6 label-control" id="startdate" for="startDate">Start Date</label>
-                  <span class="labelcont">{{startDate  | date}}</span>
-                </div>
-                <div class="form-fields col-md-3 pr-0">
-                  <label  class="h6 label-control" id="enddate" for="endDate">End Date</label><br>
-                  <span class="labelcont">{{endDate  | date}}</span>
+                  <label  class="h6 label-control"  id="enddate" for="endDate">Task Completion Date</label><br>
+                  <!-- <span class="labelcont">{{endDate  | date}}</span> -->
+                  <input type="date" class="form-control rpa-control" [value]="endDate" formControlName="endDate">
                 </div>
                 <div class="form-fields col-md-3 pr-0">
                   <label   class="h6 label-control" id="percentage" for="percentage">Percentage Completed</label>
                   <!-- <ng5-slider [(value)]="slider" formControlName="percentageComplete" [options]="options"></ng5-slider> -->
                   <div class="labelcont">{{slider}}%<input type="range" min=0 max=100 (change)="slider=$event.target.value" formControlName="percentageComplete" [value]="slider"></div>
                 </div>
-              </div>
-             
                 <div class=" col-md-3 form-fields pr-0">
                   <label id="status" class="h6 label-control" for="status">Status<span class="star">*</span></label>
                   <select formControlName="status" class="form-control data">
@@ -69,29 +77,30 @@
                   <span *ngIf="updatetaskForm.get('status').invalid && updatetaskForm.get('status').touched"
                     class="errspan required">Status Required*</span>
                 </div>
+              </div>
+             
                 <div class="form-fields col-md-3 pr-0">
-                  <label id="priority" class="h6 label-control" for="priority">Priority<span class="star">*</span></label>
-                  <select formControlName="priority" class="form-control data">
-                    <option value="">Select Priority</option>
-                    <option value="High">High</option>
-                    <option value="Medium">Medium</option>
-                    <option value="Low">Low</option>
-                  </select>
-                  <span *ngIf="updatetaskForm.get('priority').invalid && updatetaskForm.get('priority').touched"
-                    class="errspan required">Priority Required*</span>
-                </div>
-                <div class=" col-md-3">
+                    <label id="priority" class="h6 label-control" for="priority">Priority<span class="star">*</span></label>
+                    <select formControlName="priority" class="form-control data">
+                      <option value="">Select Priority</option>
+                      <option value="High">High</option>
+                      <option value="Medium">Medium</option>
+                      <option value="Low">Low</option>
+                    </select>
+                    <span *ngIf="updatetaskForm.get('priority').invalid && updatetaskForm.get('priority').touched"
+                      class="errspan required">Priority Required*</span>
+                  </div>
+                <div class="form-fields col-md-3 pr-0">
                   <label class="h6 label-control" id="summary" class="label-control">Summary</label>
                   <textarea class="form-control" formControlName="summary" rows="3" placeholder="Enter Summary">
                             </textarea>
                 </div>
-                <div class=" col-md-3">
+                <div class="form-fields col-md-3 pr-0">
                   <label class="h6" id="description" class="label-control">Description</label>
                   <textarea class="form-control" formControlName="description" rows="3" placeholder="Enter Description">
                             </textarea>
                 </div>
-            
-             
+              
               <div class="col-md-12">
                 <h4 class="module-sub-header-title">Activity</h4>
                 <mat-tab-group id="Project-dashboard-tabs" class="edit-task-tabs"
