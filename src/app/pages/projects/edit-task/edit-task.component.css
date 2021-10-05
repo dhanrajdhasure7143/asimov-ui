@@ -1,10 +1,10 @@
 .t-comments-box {
-    padding: 0px 10px;
+    padding: 10px;
   }
     
     .add-comment {
       display: flex;
-      margin: 15px 0px;
+      margin: 10px 0px 20px;
     }
       .comment-input {
         position: relative;
@@ -44,8 +44,8 @@
       }
       .comment-content {
         width: 100%;
-        margin-bottom: 15px;
-        border-bottom: 1px solid #ddd;
+        margin-bottom: 12px;
+        border-bottom: 1px solid #e5e5e5;
         padding-bottom: 15px;
     }
     .updatecomments .modal-footer.modelprfooter {
@@ -63,10 +63,6 @@
       font-family:sans-serif;
     }
   
-    .h-scroll {
-      height: calc(100% - 48px) !important;
-      overflow: auto !important;
-    }
   
     
   label.label-control {
@@ -155,8 +151,8 @@ button.btn.btn-primary.prj-lst-btn:hover img.testplus.hover-img {
 }
 
 
-.histcontent {
-  line-height: 30px;
+.ET-history .histcontent {
+  padding-left: 15px;
 }
 .attachment-name{
   font-weight: bold;
@@ -173,13 +169,13 @@ ul.historydiv, .edit-resourcesdiv  {
   color: #001c47 !important;
 }
 .attachmentdiv{
-  padding: 9px 10px;
+  padding: 10px;
 }
 .row.attachment-content {
   margin-bottom: 10px !important;
 }
  ul.historydiv, .edit-resourcesdiv  {
-  padding: 15px 10px;
+  padding: 10px;
 }
 .attachmentdiv label.label-content {
   margin-left: 10px;
@@ -191,11 +187,11 @@ ul.historydiv, .edit-resourcesdiv  {
 }
 ul.historydiv li {
   border-bottom: 1px solid #e5e5e5;
-  padding: 10px 0px;
+  padding: 10px 0px 15px;
 }
-ul.historydiv li:first-child {
+/* ul.historydiv li:first-child {
   padding-top: 0px;
-}
+} */
 ul.historydiv li:last-child {
   border-bottom: none !important;
 }
@@ -208,30 +204,30 @@ table tbody tr {
 
 
 .userimage{
-  padding:10px;
-  margin-right: 10px;
+  /* padding:10px; */
+  margin-right: 15px;
 }
 .commentsadded {
   /* font-weight: 600; */
   color: #001c47;
   background-color: #f8f8f8;
-  padding: 10px;
+  padding: 6px 10px;
   border-radius: 4px;
   margin-top: 10px;
   font-size: 15px;
-  margin-left: 8px;
+  /* margin-left: 8px; */
 }
 
 ::ng-deep .edit-task-tabs .mat-tab-body-content{
-  height:170px !important;
+  height:178px !important;
   overflow:auto !important;
-  border : 1px solid lightgray;
+  border : 1px solid #ddd;
 }
 
 
 .bg-task{
   background-color: #F3F3F3;
-  padding: 15px 15px !important;
+  padding: 12px 10px !important;
 
 }
 .task-name{
@@ -248,11 +244,12 @@ table tbody tr {
   color: #001C47;
   font-weight: 400;
   font-size: 13px;
-  padding-top: 8px;
+  padding-top: 6px;
 }
 
-.h-scroll {
-  height: calc(100% - 48px) !important;
+.edit-task-body {
+  padding: 10px;
+  height: calc(100% - 120px) !important;
   overflow: auto !important;
 }
 
@@ -288,4 +285,22 @@ img.hover-img {
   height: 18px;
   cursor: pointer;
   margin-right: 5px;
+}
+
+.modal-footer.modelprfooter {
+  padding: 20px 0px 0px !important;
+}
+.modal-footer.modelprfooter button.btn.btn-primary {
+  margin-right: 0px !important;
+}
+.ET-history {
+  display: flex;
+  align-items: center;
+}
+.Attachmentsicons {
+  float: right;
+  padding-bottom: 15px;
+}
+.mat-paginator {
+  padding-top: 6px;
 }
