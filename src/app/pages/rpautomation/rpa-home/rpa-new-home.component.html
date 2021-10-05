@@ -191,14 +191,11 @@
                         </button>
                       </div>
           
-                      <div class="flex-col header gridheader-th">
-                        <!-- <button  (click)="sortasc('botType','asc')"> -->
+                      <!-- <div class="flex-col header gridheader-th">
                           <button   mat-sort-header="botType">
                           <span >Type</span>
-                          <!-- <i *ngIf="sortkey.botType==false" class="fa fa-arrow-up"></i>
-                          <i *ngIf="sortkey.botType==true" class="fa fa-arrow-down"></i> -->
-                        </button>
-                      </div>
+                          </button>
+                      </div> -->
                     
                       <div class="flex-col header gridheader-th">
                         <!-- <button  (click)="sortasc('version','asc')"> -->
@@ -251,7 +248,6 @@
                         <span *ngIf="bot.description==null">-</span>
                       </div>
                       <div class="flex-col">{{bot.department}}</div>
-                      <div class="flex-col">{{bot.botType}}</div>
                       <div class="flex-col">V{{bot.version}}</div>
                       <div class="flex-col">
                           
@@ -302,9 +298,9 @@
                         </span> -->
                       </div>
                       <div class="flex-col">
-                          <button [disabled]="!((isButtonVisible==true && userName==bot.createdBy)||(isButtonVisible==false))" (click)="editbotoverlay(bot)"><img src="../../../../assets/images/RPA/icon_latest/edit.svg" alt="" class="testplus">&nbsp;</button>
-                          <button [disabled]="isButtonVisible==true" (click)="botdelete(bot.botId)"><img src="../../../../assets/images/RPA/icon_latest/delete.svg" alt="" class="testplus">&nbsp;</button>
-                          <button (click)="exportbot(bot)"><img src="../../../../assets/images/RPA/icon_latest/export.svg" alt="" class="testplus">&nbsp;</button>
+                          <button tooltip="Edit Bot" placement="bottom" [disabled]="!((isButtonVisible==true && userName==bot.createdBy)||(isButtonVisible==false))" (click)="editbotoverlay(bot)"><img src="../../../../assets/images/RPA/icon_latest/edit.svg" alt="" class="testplus">&nbsp;</button>
+                          <button tooltip="Delete Bot" placement="bottom"  [disabled]="isButtonVisible==true" (click)="botdelete(bot.botId)"><img src="../../../../assets/images/RPA/icon_latest/delete.svg" alt="" class="testplus">&nbsp;</button>
+                          <button  tooltip="Export Bot" placement="bottom" (click)="exportbot(bot)"><img src="../../../../assets/images/RPA/icon_latest/export.svg" alt="" class="testplus">&nbsp;</button>
                         
                       </div>
           
