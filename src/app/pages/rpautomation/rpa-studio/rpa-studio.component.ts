@@ -70,13 +70,13 @@ export class RpaStudioComponent implements OnInit {
       botName: ["", Validators.compose([Validators.required, Validators.maxLength(30)])],
       botDepartment:["", Validators.required],
       botDescription:["", Validators.compose([Validators.maxLength(500)])],
-      botType:["", Validators.required],
+      //botType:["", Validators.required],
       taskId:[""],
       predefinedBot:["false"],
       newCategoryName:[""]
   });
   this.loadbot=this.formBuilder.group({
-   botType:["",Validators.required],
+   //botType:["",Validators.required],
    botDepartment:["",Validators.required],
    bot:["",Validators.required],
 
@@ -230,7 +230,7 @@ export class RpaStudioComponent implements OnInit {
     this.getCategoryList();
     this.insertbot.reset();
     this.insertbot.get("botDepartment").setValue("");
-    this.insertbot.get("botType").setValue("");
+    //this.insertbot.get("botType").setValue("");
     this.insertbot.get("taskId").setValue(taskId);
     document.getElementById('create-bot').style.display='block';
   }
@@ -251,7 +251,7 @@ export class RpaStudioComponent implements OnInit {
     this.getCategoryList();
     this.loadbot.reset();
     this.loadbot.get("bot").setValue("");
-    this.loadbot.get("botType").setValue("");
+    //this.loadbot.get("botType").setValue("");
     this.loadbot.get("botDepartment").setValue("");
     document.getElementById("load-bot").style.display="block";
   }
@@ -260,13 +260,14 @@ export class RpaStudioComponent implements OnInit {
   loadbotdata()
   {
     this.botlist=[];
-    let botType=this.loadbot.get("botType").value
+    //let botType=this.loadbot.get("botType").value
     let botDepartment=this.loadbot.get("botDepartment").value
-    if(botType!="" && botDepartment !="")
+    //if(botType!="" && botDepartment !="")
+    if(botDepartment !="")
     {
       let response:any;
       this.spinner.show();
-      this.rest.getbotlist(botType,botDepartment).subscribe(data=>{
+      this.rest.getbotlist('0',botDepartment).subscribe(data=>{
          response=data
         if(response.errorMessage==undefined){
         this.botlist=data;
@@ -323,7 +324,7 @@ export class RpaStudioComponent implements OnInit {
       }
       this.loadbot.reset();
       this.loadbot.get("bot").setValue("");
-      this.loadbot.get("botType").setValue("");
+      //this.loadbot.get("botType").setValue("");
       this.loadbot.get("botDepartment").setValue("");
       //this.loadbot.reset();
       document.getElementById("load-bot").style.display="none";
