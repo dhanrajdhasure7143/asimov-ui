@@ -63,6 +63,14 @@ export class NewSoManagementComponent implements OnInit {
   nodata:Boolean=false;
   ngOnInit(){
     this.spinner.show();
+
+     $(".left_arrow_chart1").hide();
+              $('.chartdivbody').hide();
+              $('.ASSolvedPer').hide();
+              $('.AsClosedRes').hide();
+              $('.ASSolvedWA').hide();
+              $('.ASSolvedRemo').hide();
+              $('.ASNew').hide();
     
     //this.urlSafe= this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
     $('.ASSolvedPer').hide();
@@ -124,7 +132,14 @@ export class NewSoManagementComponent implements OnInit {
   }
   
   chart1(){
+
     this.spinner.show();
+    $('.chartdivbody').show();
+    $('.ASSolvedPer').hide();
+    $('.AsClosedRes').hide();
+    $('.ASSolvedWA').hide();
+    $('.ASSolvedRemo').hide();
+    $('.ASNew').hide();
     this.activestatusSolvedPer = [];
     this.inactivestatusClosedRes = [];
     this.inactivestatusSolvedWA = [];
@@ -562,6 +577,13 @@ chart.cursor = new am4charts.XYCursor();
 chart4(){
   // Themes begin
   this.spinner.show();
+
+    $('.chart_div_4').show();
+    $(".left_arrow_chart4").hide();
+    $('.chart_div_High_4').hide();
+    $('.chart_div_Medium_4').hide();
+    $('.chart_div_Low_4').hide();
+    
 
 am4core.useTheme(am4themes_animated);
 // Themes end

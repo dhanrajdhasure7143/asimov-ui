@@ -108,20 +108,23 @@ export class CreateTasksComponent implements OnInit {
   getallbpmprocess(){
     this.api.getprocessnames().subscribe(data =>{
       let response:any=data;
-      this.bpm_process_list=response.filter(data=>data.status=="APPROVED");
+      let resp:any="";
+    resp=response.filter(item=>item.status=="APPROVED");
+    this.bpm_process_list=resp.sort((a,b) => (a.processName.toLowerCase() > b.processName.toLowerCase() ) ? 1 : ((b.processName.toLowerCase() > a.processName.toLowerCase() ) ? -1 : 0));
     })
   }
 
   getallpiprocess(){
     this.api.getAlluserProcessPiIds().subscribe(data =>{
       let response:any=data;
-      this.pi_process_list=response.data;
+      this.pi_process_list=response.data.sort((a,b) => (a.piName.toLowerCase() > b.piName.toLowerCase() ) ? 1 : ((b.piName.toLowerCase() > a.piName.toLowerCase() ) ? -1 : 0));
     })
   }
 
   getallbots(){
     this.api.getAllActiveBots().subscribe(data =>{
-      this.bot_list=data;
+      let response:any=data;
+     this.bot_list=response.sort((a,b) => (a.botName.toLowerCase() > b.botName.toLowerCase() ) ? 1 : ((b.botName.toLowerCase() > a.botName.toLowerCase() ) ? -1 : 0));
     })
   }
 
