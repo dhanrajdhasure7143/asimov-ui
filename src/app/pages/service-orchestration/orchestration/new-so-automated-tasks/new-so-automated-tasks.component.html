@@ -34,44 +34,45 @@
 
 
   <div class="text-right roghtform col-md-3 pr-0">
-      <!--<span style="padding:5px" id="autoStartProcess">
-        <button  matTooltip="View Configuration"   mat-mini-fab color="basic" (click)="configuration()"  ><i  class="fas fa-cog" style="margin-right: -5px !important;"></i></button>
-      </span>-->
-      <button (click)="reset_all()" id="autoreset" class="tsttooltipbtn" >
-        <img src="../../../../../assets/images/RPA/icon_latest/reset-blue.svg" class="testplus">
-        <span class="testtooltip">Reset</span>
-      </button>
-      <button *ngIf="selectedvalue=='' || selectedEnvironment==''" id="autoStartProcess" class="tsttooltipbtn" (click)="startprocess()">
-        <img src="../../../../assets/images/RPA/icon_latest/play.svg" alt="" class="testplus">
-        <span class="testtooltip">Run Process</span>
-      </button>
-      <!-- <button *ngIf="selectedvalue!='' || selectedEnvironment!=''" id="autoStartProcess" class="tsttooltipbtn" (click)="startprocess()">
-        <img src="../../../../../assets/images/SO/play blue.svg" alt="" class="testplus">
-        <span class="testtooltip">Run Process</span>
-      </button> -->
-       <!-- <span style="padding:5px">
-          <button [disabled]="selectedvalue=='' || selectedEnvironment==''" matTooltip="Pause Process" mat-mini-fab color="basic" (click)="startprocess()"   title="Run Process"><i  class="fas fa-pause"></i></button>
-        </span>
-        -->
-        
-      <button *ngIf="selectedvalue==''" id="openScheduler" class="tsttooltipbtn" >
-        <img src="../../../../../assets/images/RPA/icon_latest/calendar.svg" alt="" class="testplus">
-        <span class="testtooltip">Open Scheduler</span>
-      </button>
-      <button *ngIf="selectedvalue!=''" id="openScheduler" class="tsttooltipbtn"   (click)="startscheduler()" >
-        <img src="../../../../../assets/images/RPA/icon_latest/calendar-blue.svg" alt="" class="testplus">
-        <span class="testtooltip">Open Scheduler</span>
-      </button>
-       
-      <button *ngIf="selectedvalue==''"  id="autoViewLogs" class="tsttooltipbtn" >
-        <img src="../../../../../assets/images/file.svg" alt="" class="testplus">
-        <span class="testtooltip">View Logs</span>
-      </button>
-      <button *ngIf="selectedvalue!=''"  id="autoViewLogs" class="tsttooltipbtn"  (click)="getprocesslogs(process_logs)"  >
-        <img src="../../../../../assets/images/SO/file blue.svg" alt="" class="testplus">
-        <span class="testtooltip">View Logs</span>
-      </button>
-  </div>
+    <!--<span style="padding:5px" id="autoStartProcess">
+      <button  matTooltip="View Configuration"   mat-mini-fab color="basic" (click)="configuration()"  ><i  class="fas fa-cog" style="margin-right: -5px !important;"></i></button>
+    </span>-->
+    <button (click)="reset_all()" id="autoreset" class="tsttooltipbtn" >
+      <img src="../../../../../assets/images/RPA/icon_latest/reset-blue.svg" class="testplus">
+      <span class="testtooltip">Reset</span>
+    </button>
+    <button [disabled]="selectedvalue=='' || selectedEnvironment==''" id="autoStartProcess" class="tsttooltipbtn" (click)="startprocess()">
+      <img src="../../../../assets/images/RPA/icon_latest/play.svg" alt="" class="testplus">
+      <span *ngIf="!(selectedvalue=='' || selectedEnvironment=='')" class="testtooltip">Run Process</span>
+    </button>
+    <!-- <button *ngIf="selectedvalue!='' || selectedEnvironment!=''" id="autoStartProcess" class="tsttooltipbtn" (click)="startprocess()">
+      <img src="../../../../../assets/images/SO/play blue.svg" alt="" class="testplus">
+      <span class="testtooltip">Run Process</span>
+    </button> -->
+     <!-- <span style="padding:5px">
+        <button [disabled]="selectedvalue=='' || selectedEnvironment==''" matTooltip="Pause Process" mat-mini-fab color="basic" (click)="startprocess()"   title="Run Process"><i  class="fas fa-pause"></i></button>
+      </span>
+      -->
+      
+   <button disabled *ngIf="selectedvalue==''" id="openScheduler" class="tsttooltipbtn" >
+      <img src="../../../../../assets/images/RPA/icon_latest/calendar.svg" alt="" class="testplus">
+    
+    </button>
+    <button *ngIf="selectedvalue!=''" id="openScheduler" class="tsttooltipbtn"   (click)="startscheduler()" >
+     <img src="../../../../../assets/images/RPA/icon_latest/calendar-blue.svg" alt="" class="testplus">
+      <span class="testtooltip">Open Scheduler</span>
+    </button>
+     
+    <button dsiabled *ngIf="selectedvalue==''"  id="autoViewLogs" class="tsttooltipbtn" >
+      <img src="../../../../../assets/images/file.svg" alt="" class="testplus">
+     
+    </button>
+
+    <button *ngIf="selectedvalue!=''"  id="autoViewLogs" class="tsttooltipbtn"  (click)="getprocesslogs(process_logs)"  >
+      <img src="../../../../../assets/images/SO/file blue.svg" alt="" class="testplus">
+      <span class="testtooltip">View Logs</span>
+    </button>
+</div>
 
 </div>
 </div>
