@@ -1,7 +1,7 @@
 <div style="height: 100%;">
     <div class="row p-3">
         <div class="col-md-12 table-responsive PI-workspace-table p-0" id="my_workspace" style="height: 90vh;">
-            <div class="row" style="background: white;padding: 1%;position: sticky;top: 0;">
+            <div class="row" style="background: white;padding: 1%;">
                 <div class="" style="padding: 2px;font-weight: bold;">
                     Support
                 </div>
@@ -15,15 +15,11 @@
                     </button>
                 </div>
                 <div style="display: flex;justify-content: flex-end;margin-top: 1em;">
-                    <select name="Filter by" style="cursor: pointer;margin-right: 3%;width: 15%;">
-                        <option value="allcategories">All Categories</option>
-                        <option [value]="sample">ID</option>
-                        <option [value]="sample">Date</option>
-                        <option [value]="sample">Status</option>
-                    </select>
-                    &nbsp;&nbsp;
-                    <input style="width: 20%;padding: 5px;" type="search" (keyup)="applyFilter($event.target.value)"
-                        placeholder="Search Issue...">
+                    <select name="Filter by" style="cursor: pointer;margin-right: 3%;width: 15%;" (change)="categoryFilter($event)" panelClass="overlayMatSelect">
+                        <option value="" disabled hidden >Select Category</option>
+                        <option class="selectoptions" style="margin-top: 1%;" [value]="item" *ngFor="let item of categories">{{item}}</option>
+                    </select> &nbsp;&nbsp;
+                    <input style="width: 20%;padding: 5px;" type="search" (keyup)="applyFilter($event.target.value)" placeholder="Search Issue...">
                 </div>
             </div>
             <div class="table-responsive graph_table">
@@ -104,8 +100,7 @@
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="pList"></tr>
                 </table>
                 <div class="">
-                    <mat-paginator class="newpaginationdiv" #paginator [pageSize]="10"
-                        [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons]="true"></mat-paginator>
+                    <mat-paginator class="newpaginationdiv" #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons]="true"></mat-paginator>
                 </div>
             </div>
         </div><br>

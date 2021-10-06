@@ -219,3 +219,26 @@ mat-form-field {
 .disabled {
     pointer-events: none;
 }
+
+.deleteattachment:hover img.default-img {
+    display: none;
+}
+
+.deleteattachment:hover img.hover-img {
+    display: initial;
+}
+
+.removeallattachment {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 16%;
+    margin-bottom: 2%;
+}
+
+.removeallattachment button {
+    background: #00a3e9;
+    ;
+    color: white;
+    padding: 3px;
+    border-radius: 7px;
+}

@@ -4,7 +4,6 @@ import { RestApiService } from '../../services/rest-api.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import Swal from 'sweetalert2';
 import { ActivatedRoute } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -61,14 +60,14 @@ export class CreateTicketComponent implements OnInit {
 
     this.activateRouter.queryParams.subscribe(res => {
       this.requestKey = res.requestKey;
-      console.log(this.requestKey);
+      // console.log(this.requestKey);
     });
 
   }
 
   ngOnInit(): void {
     this.getUserDetails(this.userId);
-    console.log(this.createRequestData);
+    // console.log(this.createRequestData);
     this.getIssueType();
     this.getOrganizations();
     this.getAllImpactLevels();
@@ -90,7 +89,8 @@ export class CreateTicketComponent implements OnInit {
       severity: ['', [Validators.required]],
       reporter: [this.userName],
       component: ['', Validators.required],
-      comment: ['']
+      comment: [''],
+      status:['']
     });
   }
 
@@ -127,9 +127,9 @@ export class CreateTicketComponent implements OnInit {
       "component": this.createTicket.value.component,
       "tempattachmentid": this.createTicket.value.tempattachmentid
     }
-    console.log(record);
+    // console.log(record);
     this.api.createCustomerRequest(record).subscribe(res => {
-      console.log(res);
+      // console.log(res);
       if (res == 'created request sucessfully') {
         Swal.fire({
           title: 'Ticket Created Successfully',
@@ -234,7 +234,7 @@ export class CreateTicketComponent implements OnInit {
   }
 
   editComment() {
-    if (this.commentRequest) {
+    if (this.commentRequest.length == 0) {
       this.isLoading = true;
       let record = {};
       record['requestKey'] = this.requestKey;
@@ -311,15 +311,18 @@ export class CreateTicketComponent implements OnInit {
 
 
   reset() {
+    this.isLoading = true;
     this.ngOnInit();
     this.fileName = [];
     this.createTicket.value.tempattachmentid = [];
     this.fileError = false;
+    this.isLoading = false;
   }
 
   file(event) {
     if (this.requestKey != undefined || null) {
       this.isLoading = true;
+      this.fileName = [];
       for (var i = 0; i < event.target.files.length; i++) {
         this.fileName.push(event.target.files[i]);
       }
@@ -355,6 +358,7 @@ export class CreateTicketComponent implements OnInit {
     else {
       this.fileError = false;
       this.isLoading = true;
+      this.fileName = [];
       this.progress = 1;
       for (var i = 0; i < event.target.files.length; i++) {
         this.fileName.push(event.target.files[i]);
@@ -455,7 +459,7 @@ export class CreateTicketComponent implements OnInit {
     this.api.getRequestComments(id).subscribe((res:any) => {
       this.commentRequest = res;
       console.log(res, "comment");
-      if (this.commentRequest.length>0) {
+      if (this.commentRequest.length > 0) {
         this.comment = this.commentRequest[0].comment;
       }
       // this.isLoading = false;
@@ -485,9 +489,11 @@ export class CreateTicketComponent implements OnInit {
 
   getAttachmentsForCustomerRequest(id: any) {
     // this.isLoading = true;
+    this.imageArray = [];
     this.api.getAttachmentsForCustomerRequest(id).subscribe((res: any) => {
       this.attachmentsForCustomerRequest = res.attachmentData;
       if(this.attachmentsForCustomerRequest){
+        this.imageArray = [];
       let keyval: any[] = Object.keys(this.attachmentsForCustomerRequest);
       let imgObject = [];
       imgObject = Object.values(this.attachmentsForCustomerRequest);
@@ -508,10 +514,72 @@ export class CreateTicketComponent implements OnInit {
   }
 
   getCustomerRequestStatus(requestKey) {
-    this.api.getCustomerRequestStatus(requestKey).subscribe(res => {
+    this.api.getCustomerRequestStatus(requestKey).subscribe((res:any) => {
       this.customerStatus = res;
       this.createTicket.value.status = this.customerStatus;
-      // console.log(this.customerStatus);
+      console.log(this.customerStatus);
+    });
+  }
+
+  removeAttachmentsFromCustomerRequest(data){
+    this.isLoading = true;
+    console.log(data);
+    let record = {
+      "fileList": [
+          data.name
+      ],
+      "requestKey": this.requestKey
+  }
+  console.log(record);
+    this.api.removeAttachmentsFromCustomerRequest(record).subscribe((res:any)=>{      
+      console.log(res);
+      if(res == 'removed attachments sucessfully'){
+        Swal.fire({
+          title: 'Success',
+          text: 'Attachment Removed Sucessfully !',
+          icon: 'success',
+          timer: 2000
+        });
+        this.getAttachmentsForCustomerRequest(this.requestKey);
+        this.isLoading = false;
+      }
+      else{
+        Swal.fire({
+          title: 'Error occured',
+          text: 'Please try again later !',
+          icon: 'error',
+          timer: 2000
+        });
+        this.isLoading = false;
+      }
+    });
+  }
+
+  removeAllAttachmentsFromCustomerRequest(){
+    this.isLoading = true;
+    this.api.removeAllAttachmentsFromCustomerRequest(this.requestKey).subscribe((res:any)=>{      
+      console.log(res);
+      if(res == 'removed attachments sucessfully'){
+        Swal.fire({
+          title: 'Success',
+          text: 'Attachment Removed Sucessfully !',
+          icon: 'success',
+          timer: 2000
+        });
+        this.getAttachmentsForCustomerRequest(this.requestKey);
+        this.imageArray = [];
+        this.fileName = [];
+        this.isLoading = false;
+      }
+      else{
+        Swal.fire({
+          title: 'Error occured',
+          text: 'Please try again later !',
+          icon: 'error',
+          timer: 2000
+        });
+        this.isLoading = false;
+      }
     });
   }
 
