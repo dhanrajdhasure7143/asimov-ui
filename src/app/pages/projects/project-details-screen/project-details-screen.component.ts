@@ -12,7 +12,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MatMenuModule, MatButtonModule } from '@angular/material'; 
-
+import moment from 'moment';
 
 @Component({
   selector: 'app-project-details-screen',
@@ -126,7 +126,8 @@ percentageComplete: number;
   fileList: File[] = [];
   listOfFiles: any[] = [];
   owner_letters: any;
-  
+  mindate= moment().format("YYYY-MM-DD");
+  projectenddate:any;
   constructor(private dt:DataTransferService,private route:ActivatedRoute, private rpa:RestApiService,
     private modalService: BsModalService,private formBuilder: FormBuilder,private router: Router,
     private spinner:NgxSpinnerService) { }
@@ -424,6 +425,7 @@ this.editdata=false;
 this.rpa.getProjectDetailsById(paramsdata.id).subscribe( res=>{​​​​​​
 this.spinner.hide();
 this.projectDetails=res
+this.projectenddate=moment(this.projectDetails.endDate).format("YYYY-MM-DD");
 console.log(this.projectDetails);
 
 if(this.projectDetails){​​​​​​
@@ -541,7 +543,7 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
         this.updatetaskForm.get("resources").setValue(data["resources"]);
        //  this.updatetaskForm.get("taskName").setValue(data["taskName"]);
       //  this.updatetaskForm.get("timeEstimate").setValue(data["timeEstimate"]);
-        this.updatetaskForm.get("endDate").setValue(data["endDate"]);
+      this.updatetaskForm.get("endDate").setValue(this.projectenddate);
         this.updatetaskForm.get("approvers").setValue(data["approvers"]);
         this.updatetaskForm.get("status").setValue(data["status"]);
         this.updatetaskForm.get("description").setValue(data["description"]);
@@ -906,6 +908,7 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
       {
         this.spinner.show()
         this.projectDetails["type"]="Project";
+        this.projectDetails.endDate=this.projectenddate;
         this.projectDetails.effortsSpent=parseInt(this.projectDetails.effortsSpent)
         this.rpa.update_project(this.projectDetails).subscribe(res=>{
           this.spinner.hide()

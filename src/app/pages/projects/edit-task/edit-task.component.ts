@@ -70,6 +70,7 @@ export class EditTaskComponent implements OnInit {
   taskresource: any;
   startDate: any;
   endDate: any;
+  public hidetaskdeletedownload: boolean;
   constructor(private formBuilder:FormBuilder,
     private router:ActivatedRoute,
     private route:Router,
@@ -173,6 +174,7 @@ export class EditTaskComponent implements OnInit {
       taskupdatFormValue["comments"]=this.taskcomments
       taskupdatFormValue["history"]=this.taskhistory
       taskupdatFormValue["endDate"]=this.endDate
+      taskupdatFormValue["taskName"]=this.taskname
       this.spinner.show();
       this.rest.updateTask(taskupdatFormValue).subscribe( res =>{
         this.spinner.hide();
@@ -274,6 +276,12 @@ else
     getTaskAttachments(){
       this.rest.getTaskAttachments(this.selectedtask.projectId,this.selectedtask.id).subscribe(data =>{
         this.taskattacments=data
+        if(this.taskattacments.length==0){
+          this.hidetaskdeletedownload=false
+        }
+        else{
+          this.hidetaskdeletedownload=true
+        }
         this.dataSource3= new MatTableDataSource(this.taskattacments);
       this.dataSource3.sort=this.sort11;
       this.dataSource3.paginator=this.paginator101;

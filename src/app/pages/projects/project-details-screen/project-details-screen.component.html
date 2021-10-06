@@ -16,7 +16,7 @@
       <span class="pull-right">
         <span (click)="navigateToProjectRepo()" class="prj-db-btn">
           <button class="tsttooltipbtn">
-            <img src="../../../../assets/images/Projects/Project-Repo.svg" class="testplus" >
+            <img src="../../../../assets/images/Projects/Project-Repo.svg" class="testplus1" >
             <span class="testtooltip">Project Repo</span>
           </button>
           <button class="tsttooltipbtn" (click)="navigateToOrchestration()">
@@ -49,7 +49,7 @@
         <!-- <span class="projects-menu-item"><i class="ri-history-line"></i></span> -->
         <span class="prj-db-btn">
           <button  [matMenuTriggerFor]="menu" class="tsttooltipbtn">
-            <img class="more testplus" src="../../../../assets/images/Projects/Download.svg">
+            <img class="more testplus1" src="../../../../assets/images/Projects/Download.svg">
             <span class="testtooltip">Download</span>
           </button>
           <mat-menu #menu="matMenu">
@@ -142,23 +142,10 @@
                         {{projectDetails.initiatives}}
                       </span>
                     </div>
-                  </div>
-                  <div class="col-sm-4 p-0">
-                    <div class="mainset">
-                      <span class="labeltit">Value Chain</span>
-      
-                      <span class="tab-text"
-                        *ngIf="projectDetails.mapValueChain==null||projectDetails.mapValueChain==''|| projectDetails.mapValueChain==undefined">-</span>
-                      <span
-                        *ngIf="projectDetails.mapValueChain!=null && projectDetails.mapValueChain!=''&& projectDetails.mapValueChain!=undefined"
-                        class="tab-text labelcont">{{projectDetails.mapValueChain}}</span>
-      
-                    </div>
-                  </div>
+                  </div>                  
                   <div class="col-sm-4 p-0">
                     <div class="mainset">
                       <span class="labeltit">Process</span>
-      
                       <span class="tab-text"
                         *ngIf="projectDetails.process==null || projectDetails.process==undefined || projectDetails.process==''">-</span>
                       <span *ngIf="projectDetails.process!=null && projectDetails.process!=undefined && projectDetails.process!=''"
@@ -170,6 +157,18 @@
                       <span class="labeltit">Process ID</span>
       
                       <span class="tab-text labelcont">{{projectDetails.process }}</span>
+                    </div>
+                  </div>
+                  <div class="col-sm-4 p-0">
+                    <div class="mainset">
+                      <span class="labeltit">Value Chain</span>
+      
+                      <span class="tab-text"
+                        *ngIf="projectDetails.mapValueChain==null||projectDetails.mapValueChain==''|| projectDetails.mapValueChain==undefined">-</span>
+                      <span
+                        *ngIf="projectDetails.mapValueChain!=null && projectDetails.mapValueChain!=''&& projectDetails.mapValueChain!=undefined"
+                        class="tab-text labelcont">{{projectDetails.mapValueChain}}</span>
+      
                     </div>
                   </div>
                   <div class="col-sm-4 p-0">
@@ -186,7 +185,7 @@
                         </div>
                       </div>
                   </div>
-                  <div class="col-sm-4 p-0">
+                  <!-- <div class="col-sm-4 p-0">
                     <div class="mainset">
                       <span class="labeltit">End Date</span>
                       <div >
@@ -195,7 +194,7 @@
                        
                       </div>
                     </div>
-                  </div>
+                  </div> -->
       
                   <div class="col-sm-4 p-0">
                     <div class="mainset">
@@ -312,24 +311,21 @@
                       </div>
                   </div>
                   <div class="col-sm-4 p-0">
-                      <div class="mainset">
-                        <span class="labeltit">Project Description</span>
-      
-                        <div *ngIf="editdata==false">
-      
-                          <span class="tab-text labelcont">{{projectDetails.projectPurpose}}</span>
-                          <span
-                          *ngIf="projectDetails.projectPurpose == null || projectDetails.projectPurpose == undefined || projectDetails.projectPurpose =='' "
-                          class="tab-text labelcont">-</span>
-      
-                        </div>
-                        <div *ngIf="editdata==true">
-                          <input type="text" (change)="projectDetails.projectPurpose=$event.target.value"
-                            [value]="(projectDetails.projectPurpose==undefined||projectDetails.projectPurpose==null)?'':projectDetails.projectPurpose"
-                            class="small-input" placeholder="Enter Project Description">
-                        </div>
+                    <div class="mainset">
+                      <span class="labeltit">End Date</span>
+                      <div *ngIf="editdata==false">
+                        <span  *ngIf="projectenddate != null && projectenddate != undefined && projectenddate !='' "  class="tab-text labelcont" >{{projectenddate | date }}</span>
+                        <span  *ngIf="projectenddate == null || projectenddate == undefined || projectenddate =='' "  class="tab-text labelcont" >-</span>                  
                       </div>
-                  </div>
+                      <div *ngIf="editdata==true">
+                        <!-- <input type="date" name="daytime" max="9999-12-31" [min]="mindate" formControlName="endDate" (keydown)="endDateMethod()"
+                        (change)="projectenddate=$event.target.value"
+                        [value]="projectenddate | date:'yyyy-mm-dd'" class="small-input"
+                        [ngClass]="projectenddate?'enteredfield-color':'inputfield-color'" > -->
+                        <input type="date" class="form-control rpa-control" (change)="projectenddate=$event.target.value" [value]="projectenddate">
+                      </div>
+                    </div>
+                  </div>                  
                   
                   <div class="col-sm-4 p-0">
                       <div class="mainset">
@@ -370,6 +366,25 @@
                       </div>
                     </div>
                   </div>
+                  <div class="col-sm-12 p-0">
+                    <div class="mainset">
+                      <span class="labeltit">Project Description</span>
+    
+                      <div *ngIf="editdata==false">
+    
+                        <span class="tab-text labelcont">{{projectDetails.projectPurpose}}</span>
+                        <span
+                        *ngIf="projectDetails.projectPurpose == null || projectDetails.projectPurpose == undefined || projectDetails.projectPurpose =='' "
+                        class="tab-text labelcont">-</span>
+    
+                      </div>
+                      <div *ngIf="editdata==true">
+                        <input type="text" (change)="projectDetails.projectPurpose=$event.target.value"
+                          [value]="(projectDetails.projectPurpose==undefined||projectDetails.projectPurpose==null)?'':projectDetails.projectPurpose"
+                          class="small-input" placeholder="Enter Project Description">
+                      </div>
+                    </div>
+                </div>
               </div>
           </div>
       
