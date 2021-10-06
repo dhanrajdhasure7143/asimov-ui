@@ -242,7 +242,7 @@ categoryAxis.renderer.grid.template.location = 1;
 // categoryAxis.renderer.grid.template.strokeOpacity = 1;
 // categoryAxis.renderer.grid.template.location = 1;
 categoryAxis.renderer.minGridDistance = 20;
-categoryAxis.title.text="Throughput Time (Days)"
+categoryAxis.title.text="Throughput Time (Mins)"
 
 var valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
 valueAxis.title.text="No of Cases"
