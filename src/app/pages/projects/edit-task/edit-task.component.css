@@ -308,3 +308,13 @@ img.hover-img {
 .task-name-input{
   width:200px; 
 }
+.edit-task-body-content input[type=date]::-webkit-calendar-picker-indicator {
+  -webkit-appearance: none;
+  display: none;
+}
+.edit-task-body-content input.form-control {
+  background-image: url('../../../../assets/images/Projects/calendar.svg');
+  background-position: calc(100% - 10px) center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
