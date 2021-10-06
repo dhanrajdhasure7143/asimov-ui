@@ -348,7 +348,7 @@ h4.gridHeader {
   /* border-bottom: 1px solid #4a4a4a33 !important; */
   padding: 8px 10px;
   display: inline-block;
-  width: calc(100% / 7.3);
+  width: calc(100% / 6.1);
 }
 
 .gridheader-th i {
@@ -365,7 +365,7 @@ h4.gridHeader {
 mat-expansion-panel-header .flex-col {
   padding: 8px;
   text-align: left;
-  width: calc(100% / 7.3);
+  width: calc(100% / 6.1);
   font-size: 13px;
 }
 
@@ -463,4 +463,11 @@ mat-expansion-panel-header .flex-col span {
   padding: 10px;
   overflow: hidden auto;
   height: calc(100% - 48px);
+}
+
+
+button:disabled{
+  background: none;
+  opacity: 0.5;
+  cursor: not-allowed;
 }

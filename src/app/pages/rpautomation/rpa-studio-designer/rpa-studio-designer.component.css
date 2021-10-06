@@ -327,3 +327,12 @@ ul#versions li.clickable:hover {
 .toolsetmenuicon {
   padding-top: 15px;
 }
+
+
+
+
+button:disabled{
+  background: none;
+  opacity: 0.5;
+  cursor: not-allowed;
+}
