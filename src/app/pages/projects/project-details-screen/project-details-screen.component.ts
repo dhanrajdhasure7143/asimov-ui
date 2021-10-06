@@ -45,7 +45,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   selected_process_names: any;
   displayedColumns: string[] = ["taskCategory","taskName","resources","status","percentage","lastModifiedTimestamp","lastModifiedBy", "createdBy","action"];
   dataSource6:MatTableDataSource<any>;
-  displayedColumns6: string[] = ["check","profilePic","userId.firstName","roleID.displayName","userId.userId","uploadedDate"];
+  displayedColumns6: string[] = ["check","userId.firstName","roleID.displayName","userId.userId","uploadedDate"];
   @ViewChild("sort14",{static:false}) sort14: MatSort;
   @ViewChild("sort11",{static:false}) sort11: MatSort;
   @ViewChild("paginator104",{static:false}) paginator104: MatPaginator;
@@ -55,6 +55,8 @@ export class ProjectDetailsScreenComponent implements OnInit {
   @ViewChild("sort12",{static:false}) sort12: MatSort;
   dataSource5:MatTableDataSource<any>;
   @ViewChild("sort13",{static:false}) sort13: MatSort;
+  @ViewChild("sort10",{static:false}) sort10: MatSort;
+  @ViewChild("paginator101",{static:false}) paginator101: MatPaginator;
   responsedata: any;
   bot_list: any=[];
   automatedtask: any;
@@ -87,8 +89,7 @@ percentageComplete: number;
  editdata:Boolean=false;
  resources:any=[];
   
-  @ViewChild("sort10",{static:false}) sort10: MatSort;
-  @ViewChild("paginator101",{static:false}) paginator101: MatPaginator;
+  
   userid: any;
  
   rolelist: any=[];
@@ -395,7 +396,7 @@ percentageComplete: number;
 
   getTaskandCommentsData(){
     this.rpa.gettaskandComments(this.project_id).subscribe(data =>{
-      this.tasks=data
+      this.tasks=data;
       this.dataSource2= new MatTableDataSource(this.tasks);
       this.dataSource2.sort=this.sort10;
       this.dataSource2.paginator=this.paginator101;
@@ -551,6 +552,8 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
           this.dataSource6= new MatTableDataSource(users);
           this.dataSource6.sort=this.sort14;
           this.dataSource6.paginator=this.paginator104;
+          this.getTaskandCommentsData();
+          this.getLatestFiveAttachments(this.project_id);
         })
       }
 
@@ -745,7 +748,6 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
         {
           this.projectdetails();
           this.getallusers();
-          this.getTaskandCommentsData();
           this.removeallchecks();
           this.checktodelete();
           this.spinner.hide();
@@ -819,7 +821,6 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
             }) 
             this.projectdetails();
             this.getallusers();
-            this.getTaskandCommentsData();
             this.removeallchecks();
             this.checktodelete();
             this.spinner.hide();
