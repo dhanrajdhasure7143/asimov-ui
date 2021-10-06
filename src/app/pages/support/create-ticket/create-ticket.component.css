@@ -283,6 +283,7 @@ mat-form-field {
     color: white;
     border-radius: 3px;
     padding: 6px 20px;
+}    
 .deleteattachment:hover img.default-img {
     display: none;
 }
@@ -300,7 +301,6 @@ mat-form-field {
 
 .removeallattachment button {
     background: #00a3e9;
-    ;
     color: white;
     padding: 3px;
     border-radius: 7px;

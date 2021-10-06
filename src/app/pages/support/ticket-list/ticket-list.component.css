@@ -104,9 +104,3 @@ table td::first-letter {
     overflow: auto;
     width: 100%;
 }
-    text-transform: capitalize;
-}
-
-.selectoptions {
-    --padding: 2%;
-}
