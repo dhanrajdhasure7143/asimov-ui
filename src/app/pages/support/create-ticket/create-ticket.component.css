@@ -79,7 +79,7 @@ textarea:focus {
 
 .issue-type {
     background: #f6f6f6;
-    border: solid 1px rgb(197, 196, 196);
+    /* border: solid 1px rgb(197, 196, 196); */
     height: 2em;
     border-radius: 5px;
     width: 70%;
@@ -218,4 +218,69 @@ mat-form-field {
 
 .disabled {
     pointer-events: none;
+}
+
+
+.container-fluid .h-scroll {
+    height: calc(100% - 44px);
+    overflow: auto;
+    padding-top: 15px;
+}
+.CreateTkt-Heading {
+    padding: 0px 0px 10px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid rgba(0,0,0,.12);
+}
+.CreateTkt-Heading span {
+    font-size: 20px;
+    font-weight: 600;
+}
+.CreateTkt-Attachmentbox {
+    padding: 20px 0px;
+    background: #f6f6f6;
+    border-radius: 5px;
+    border: dotted 2px rgb(197, 196, 196);
+}
+.CreateTkt-footer {
+    float: right;
+    margin-top: 10px;
+}
+.CreateTkt-footer .btn-primary, .CreateTkt-buttons .btn-primary {
+    margin-right: 0px !important;
+}
+.CreateTkt-download {
+    display: flex;
+    margin-top: 15px;
+}
+.CreateTkt-download i {
+    width: 10%;
+}
+.CreateTkt-download span {
+    width: 60%;
+}
+.CreateTkt-download p {
+    width: 20%;
+}
+.h-scroll {
+    height: 535px;
+    overflow: auto;
+    padding-top: 15px;
+}
+.CreateTkt-buttons {
+    float: right;
+    margin-top: 10px;
+}
+.Component-filed mat-select{
+    appearance: none;
+    background-image: url('../../../../assets/images/Projects/down-arrow.svg');
+    background-repeat: no-repeat;
+    background-position: center right 12px;    
+}
+.component-button {
+    margin: 6px 15px 6px 0px;
+    float: right;
+    background: #00a3e9;
+    color: white;
+    border-radius: 3px;
+    padding: 6px 20px;
 }

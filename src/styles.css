@@ -2631,3 +2631,22 @@ span.pdicon {
 .mat-tab-body-wrapper {
    overflow: auto !important;
 }
+.supportpaginationdiv .mat-paginator-page-size {
+  margin-left: 15px;
+}
+.Component-filed .mat-form-field {    
+  background: none !important;
+  width: 100% !important;
+}
+.Component-filed .mat-form-field-flex {
+  border: medium none !important;
+  padding: 0px !important;
+  border-radius: none !important;
+  height: 0px !important;
+}
+.Admin-amyaccount .mat-tab-body-wrapper {
+  overflow: hidden !important;
+}
+.Component-filed .mat-select-arrow {
+  display: none;
+}

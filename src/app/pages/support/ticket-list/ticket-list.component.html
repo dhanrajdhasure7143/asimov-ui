@@ -1,33 +1,33 @@
-<div style="height: 100%;">
-    <div class="row p-3">
-        <div class="col-md-12 table-responsive PI-workspace-table p-0" id="my_workspace" style="height: 90vh;">
-            <div class="row" style="background: white;padding: 1%;position: sticky;top: 0;">
-                <div class="" style="padding: 2px;font-weight: bold;">
-                    Support
-                </div>
-                <mat-divider></mat-divider>
-                <div class="issues" style="padding: 10px 10px 0px 10px;">
-                    <div style="display: inline-block;font-weight: bold;">
-                        Issues
-                    </div>
-                    <button style="float: right;" mat-raised-button routerLink="/pages/support/create-ticket">
-                        <img src="../../../../assets/images/Projects/White-plus.svg" class="testplus">Create New
-                    </button>
-                </div>
-                <div style="display: flex;justify-content: flex-end;margin-top: 1em;">
-                    <select name="Filter by" style="cursor: pointer;margin-right: 3%;width: 15%;">
-                        <option value="allcategories">All Categories</option>
-                        <option [value]="sample">ID</option>
-                        <option [value]="sample">Date</option>
-                        <option [value]="sample">Status</option>
-                    </select>
-                    &nbsp;&nbsp;
-                    <input style="width: 20%;padding: 5px;" type="search" (keyup)="applyFilter($event.target.value)"
-                        placeholder="Search Issue...">
-                </div>
+<div class="Support-tktlist">
+    <div class="h-100" id="my_workspace">
+            <div class="module-heading title">
+                <span class="module-header-title">
+                    <span class="module-parent-title">Support</span>
+                </span>
             </div>
-            <div class="table-responsive graph_table">
-                <table mat-table [dataSource]="dataSource" matSort class="PI table w-100">
+            <div class="Support-tktlist-body">    
+                <div class="tktlist-Heading">
+                    <span class="col-md-1 p-0">Issues</span>
+                    <div class="col-md-11 p-0">
+                        <button class="btn btn-primary" routerLink="/pages/support/create-ticket">
+                            <img src="../../../../assets/images/Projects/White-plus.svg" class="testplus">
+                            Create New
+                        </button>
+                    </div>    
+                </div>
+                <div class="tktlist-fields">
+                        <select class="form-control" name="Filter by">
+                            <option value="allcategories">All Categories</option>
+                            <option [value]="sample">ID</option>
+                            <option [value]="sample">Date</option>
+                            <option [value]="sample">Status</option>
+                        </select>
+                        &nbsp;&nbsp;
+                        <input class="form-control" type="search" (keyup)="applyFilter($event.target.value)"
+                            placeholder="Search Issue...">
+                </div>
+                <div class="table_responsive graph_table">                    
+                    <table mat-table [dataSource]="dataSource" matSort class="PI table w-100">
 
                     <!-- Issue ID Column -->
                     <ng-container matColumnDef="id">
@@ -102,13 +102,14 @@
 
                     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="pList"></tr>
-                </table>
-                <div class="">
+                    </table>                           
+                </div>
+                <div class="supportpaginationdiv">
                     <mat-paginator class="newpaginationdiv" #paginator [pageSize]="10"
-                        [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons]="true"></mat-paginator>
+                        [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons]="true"></mat-paginator> 
                 </div>
             </div>
-        </div><br>
+        
     </div>
 
     <div class="spinoverlay" *ngIf="isLoading">
@@ -116,3 +117,4 @@
             <img src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader" />
         </div>
     </div>
+</div>    
