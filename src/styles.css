@@ -2632,3 +2632,16 @@ span.pdicon {
 .mat-tab-body-wrapper {
    overflow: auto !important;
 }
+
+.no-items-img{
+  height:calc(100vh - 250px)!important ;
+}
+
+
+.no-items-content
+{
+  text-align: center !important;
+}
+
+
+

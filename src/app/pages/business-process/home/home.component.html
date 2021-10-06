@@ -1,5 +1,5 @@
 <div class="module-body">
-  <div class="container-fluid new-bps-layout h-100">
+  <div class="container-fluid new-bps-layout h-100" *ngIf="bpmnVisible" >
     <div class="header_addon row approval_workflow_properties">
       <div class="col-md-8"></div>
       <!-- <div class="col-md-4 new-cockpit module-heading-buttons">
@@ -159,6 +159,12 @@
         </div>
       </div>
     </div>
+  </div>
+  <div class="container-fluid new-bps-layout h-100 no-items-content" *ngIf="!(bpmnVisible)" >
+    
+    <img class="no-items-img" src="../../../../assets/images/RPA/No-Items.svg">
+    <h4>No items to display</h4>
+
   </div>
 </div>
 

@@ -37,15 +37,16 @@
               <div class="col-md-12 p-0">
                 <div class="form-fields col-md-3 pl-0">
                   <label class="h6 label-control" id="assignee" for="assignee">Assignee</label>
-                  <span class="labelcont">{{taskresource| userPipe : users_list}}</span>
+                  <!-- <span class="labelcont">{{taskresource| userPipe : users_list}}</span> -->
+                  <select [value]="taskresource" formControlName="resources" class="form-control rpa-control">
+                    <option >Select Assignee</option>
+                    <option *ngFor="let user of users_list" [value]="user.userId.userId">{{user.userId.firstName}} {{user.userId.lastName}}</option>
+                  </select>
                 </div>
                 <div class="form-fields col-md-3 pr-0">
-                  <label  class="h6 label-control" id="startdate" for="startDate">Start Date</label>
-                  <span class="labelcont">{{startDate  | date}}</span>
-                </div>
-                <div class="form-fields col-md-3 pr-0">
-                  <label  class="h6 label-control" id="enddate" for="endDate">End Date</label><br>
-                  <span class="labelcont">{{endDate  | date}}</span>
+                  <label  class="h6 label-control"  id="enddate" for="endDate">Task Completion Date</label><br>
+                  <!-- <span class="labelcont">{{endDate  | date}}</span> -->
+                  <input type="date" class="form-control rpa-control" (change)="endDate=$event.target.value" [value]="endDate" formControlName="endDate">
                 </div>
                 <div class="form-fields col-md-3 pr-0">
                   <label   class="h6 label-control" id="percentage" for="percentage">Percentage Completed</label>
@@ -66,6 +67,19 @@
                   <span *ngIf="updatetaskForm.get('status').invalid && updatetaskForm.get('status').touched"
                     class="errspan required">Status Required*</span>
                 </div>
+              </div>
+             
+                <div class="form-fields col-md-3 pr-0">
+                    <label id="priority" class="h6 label-control" for="priority">Priority<span class="star">*</span></label>
+                    <select formControlName="priority" class="form-control data">
+                      <option value="">Select Priority</option>
+                      <option value="High">High</option>
+                      <option value="Medium">Medium</option>
+                      <option value="Low">Low</option>
+                    </select>
+                    <span *ngIf="updatetaskForm.get('priority').invalid && updatetaskForm.get('priority').touched"
+                      class="errspan required">Priority Required*</span>
+                  </div>
                 <div class="form-fields col-md-3 pr-0">
                   <label id="priority" class="h6 label-control" for="priority">Priority<span class="star">*</span></label>
                   <select formControlName="priority" class="form-control data">
@@ -218,10 +232,13 @@
                   <!-- <div class="comment-content" > 
                               
                                 </div> -->
+                                <div class="text-center" *ngIf="taskhistory.length==0">
+                                  <h4><b>No Records Found</b></h4>
+                                </div>
                 </mat-tab>
                 <mat-tab label="Attachments">
                   <div class="row attachmentdiv">
-                    <span class="Attachmentsicons">
+                    <span class="Attachmentsicons" *ngIf="hidetaskdeletedownload">
                       <span class="projects-menu-item gridicon"  (click)="onDeleteSelectedItems($event)"   matTooltip="Delete" >
                         <img src="../../../../assets/images/Projects/delete-black.svg" class="default-img">
                         <img src="../../../../assets/images/Projects/delete-red.svg" class="hover-img">
@@ -305,7 +322,7 @@
           
                           <ng-container matColumnDef="noData">
                               <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
-                                  No Records Found
+                                  <b>No Records Found</b>
                               </td>
                           </ng-container>
                           <tr mat-header-row *matHeaderRowDef="displayedColumns3; sticky: true"></tr>

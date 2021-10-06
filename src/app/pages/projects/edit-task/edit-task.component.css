@@ -235,6 +235,7 @@ table tbody tr {
   font-size: 22px;
   color: #001c47;
   line-height: 0px !important;
+  padding-top:16px;
 }
 .level3{
   color: #001c47;
@@ -303,4 +304,6 @@ img.hover-img {
 }
 .mat-paginator {
   padding-top: 6px;
+.task-name-input{
+  width:200px; 
 }
