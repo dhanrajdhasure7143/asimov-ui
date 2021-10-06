@@ -145,20 +145,7 @@
                   </div>
                   <div class="col-sm-4 p-0">
                     <div class="mainset">
-                      <span class="labeltit">Value Chain</span>
-      
-                      <span class="tab-text"
-                        *ngIf="projectDetails.mapValueChain==null||projectDetails.mapValueChain==''|| projectDetails.mapValueChain==undefined">-</span>
-                      <span
-                        *ngIf="projectDetails.mapValueChain!=null && projectDetails.mapValueChain!=''&& projectDetails.mapValueChain!=undefined"
-                        class="tab-text labelcont">{{projectDetails.mapValueChain}}</span>
-      
-                    </div>
-                  </div>
-                  <div class="col-sm-4 p-0">
-                    <div class="mainset">
                       <span class="labeltit">Process</span>
-      
                       <span class="tab-text"
                         *ngIf="projectDetails.process==null || projectDetails.process==undefined || projectDetails.process==''">-</span>
                       <span *ngIf="projectDetails.process!=null && projectDetails.process!=undefined && projectDetails.process!=''"
@@ -170,6 +157,18 @@
                       <span class="labeltit">Process ID</span>
       
                       <span class="tab-text labelcont">{{projectDetails.process }}</span>
+                    </div>
+                  </div>
+                  <div class="col-sm-4 p-0">
+                    <div class="mainset">
+                      <span class="labeltit">Value Chain</span>
+      
+                      <span class="tab-text"
+                        *ngIf="projectDetails.mapValueChain==null||projectDetails.mapValueChain==''|| projectDetails.mapValueChain==undefined">-</span>
+                      <span
+                        *ngIf="projectDetails.mapValueChain!=null && projectDetails.mapValueChain!=''&& projectDetails.mapValueChain!=undefined"
+                        class="tab-text labelcont">{{projectDetails.mapValueChain}}</span>
+      
                     </div>
                   </div>
                   <div class="col-sm-4 p-0">
@@ -186,16 +185,7 @@
                         </div>
                       </div>
                   </div>
-                  <div class="col-sm-4 p-0">
-                    <div class="mainset">
-                      <span class="labeltit">End Date</span>
-                      <div >
-                          <span  *ngIf="projectDetails.endDate != null && projectDetails.endDate != undefined && projectDetails.endDate !='' "  class="tab-text labelcont" >{{projectDetails.endDate | date }}</span>
-                        <span  *ngIf="projectDetails.endDate == null || projectDetails.endDate == undefined || projectDetails.endDate =='' "  class="tab-text labelcont" >-</span>
-                       
-                      </div>
-                    </div>
-                  </div>
+                  
       
                   <div class="col-sm-4 p-0">
                     <div class="mainset">
@@ -312,23 +302,21 @@
                       </div>
                   </div>
                   <div class="col-sm-4 p-0">
-                      <div class="mainset">
-                        <span class="labeltit">Project Description</span>
-      
-                        <div *ngIf="editdata==false">
-      
-                          <span class="tab-text labelcont">{{projectDetails.projectPurpose}}</span>
-                          <span
-                          *ngIf="projectDetails.projectPurpose == null || projectDetails.projectPurpose == undefined || projectDetails.projectPurpose =='' "
-                          class="tab-text labelcont">-</span>
-      
-                        </div>
-                        <div *ngIf="editdata==true">
-                          <input type="text" (change)="projectDetails.projectPurpose=$event.target.value"
-                            [value]="(projectDetails.projectPurpose==undefined||projectDetails.projectPurpose==null)?'':projectDetails.projectPurpose"
-                            class="small-input" placeholder="Enter Project Description">
-                        </div>
+                    <div class="mainset">
+                      <span class="labeltit">End Date</span>
+                      <div *ngIf="editdata==false">
+                          <span  *ngIf="projectenddate != null && projectenddate != undefined && projectenddate !='' "  class="tab-text labelcont" >{{projectenddate | date }}</span>
+                        <span  *ngIf="projectenddate == null || projectenddate == undefined || projectenddate =='' "  class="tab-text labelcont" >-</span>
+                       
                       </div>
+                      <div *ngIf="editdata==true">
+                        <!-- <input type="date" name="daytime" max="9999-12-31" [min]="mindate" formControlName="endDate" (keydown)="endDateMethod()"
+                        (change)="projectenddate=$event.target.value"
+                        [value]="projectenddate | date:'yyyy-mm-dd'" class="small-input"
+                        [ngClass]="projectenddate?'enteredfield-color':'inputfield-color'" > -->
+                        <input type="date" class="form-control rpa-control" (change)="projectenddate=$event.target.value" [value]="projectenddate">
+                      </div>
+                    </div>
                   </div>
                   
                   <div class="col-sm-4 p-0">
@@ -370,6 +358,25 @@
                       </div>
                     </div>
                   </div>
+                  <div class="col-sm-12 p-0">
+                    <div class="mainset">
+                      <span class="labeltit">Project Description</span>
+    
+                      <div *ngIf="editdata==false">
+    
+                        <span class="tab-text labelcont">{{projectDetails.projectPurpose}}</span>
+                        <span
+                        *ngIf="projectDetails.projectPurpose == null || projectDetails.projectPurpose == undefined || projectDetails.projectPurpose =='' "
+                        class="tab-text labelcont">-</span>
+    
+                      </div>
+                      <div *ngIf="editdata==true">
+                        <textarea  (change)="projectDetails.projectPurpose=$event.target.value"
+                          [value]="(projectDetails.projectPurpose==undefined||projectDetails.projectPurpose==null)?'':projectDetails.projectPurpose"
+                          class="small-input" placeholder="Enter Project Description"></textarea>
+                      </div>
+                    </div>
+                </div>
               </div>
           </div>
       
@@ -855,8 +862,7 @@
 
 
     <div class="row bortopsec">
-      <div class="col-md-12 p-0 resources" *ngIf="this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') ||
-      this.userRole.includes('System Admin') || this.userRole.includes('Process Owner') || this.userRole.includes('Process Architect')">
+      <div class="col-md-12 p-0 resources">
         <mat-card id="projects_details_screen" class="new-resourcediv" *ngIf="projects_toggle==false">
           <div class="row module-subheader-title">
             <div class="col-md-6 p-0">
@@ -866,7 +872,8 @@
             </div>
             <div class="col-md-6 pr-0">
               <span class="pull-right">
-                <button type="button" class="btn btn-primary" (click)="addresource(addresourcemodal)">
+                <button type="button" class="btn btn-primary" (click)="addresource(addresourcemodal)"  *ngIf="this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') ||
+                this.userRole.includes('System Admin') || this.userRole.includes('Process Owner') || this.userRole.includes('Process Architect')">
                   <img src="../../../../assets/images/Projects/White-plus.svg" class="testplus" />Add New
                 </button>
                 <span>
@@ -1011,8 +1018,7 @@
         
         </mat-card>
       </div>
-      <div class="col-md-12 p-0 documents" *ngIf="this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') ||
-      this.userRole.includes('System Admin')">
+      <div class="col-md-12 p-0 documents">
         <mat-card id="projects_details_screen" class="new-docdiv" *ngIf="projects_toggle==false">
           <div class="row module-subheader-title">
             <div class="col-md-6 p-0">

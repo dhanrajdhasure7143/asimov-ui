@@ -42,7 +42,7 @@ export class BusinessProcessComponent implements AfterViewChecked {
     this.logged_User=localStorage.getItem("firstName")+' '+localStorage.getItem("lastName")
     this.userRole = localStorage.getItem("userRole")
     this.userRole = this.userRole.split(',');
-    this.isApproverUser = this.userRole.includes('Process Architect');
+    this.isApproverUser = this.userRole.includes('Process Architect')||this.userRole.includes('Process Owner');
     this.systemAdmin=this.userRole.includes("System Admin")
     this.getApproverList();
   }
