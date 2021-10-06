@@ -1073,5 +1073,11 @@ getvaluechainprocess(id)
   getCustomerRequestStatus(requestKey){
     return this.http.get("/api/servicedesk/getCustomerRequestStatus?requestKey=" + requestKey, { responseType: "text" });
   }
+  removeAttachmentsFromCustomerRequest(data:any){
+   return this.http.post('/api/servicedesk/removeAttachmentsFromCustomerRequest', data, { responseType: "text" });
+  }
+  removeAllAttachmentsFromCustomerRequest(requestId:any){
+   return this.http.get("/api/servicedesk/removeAllAttachmentsFromCustomerRequest?requestKey="+ requestId, { responseType: "text" });
+  }
 
 }

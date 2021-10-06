@@ -40,6 +40,8 @@ export class TicketListComponent implements OnInit {
   userDetails: any;
   orgName: any;
   isLoading: boolean;
+  categories: any[] = [];
+  severityLevelsArray: any;
 
   constructor(private api: RestApiService, private jwtHelper: JwtHelperService, private router: Router) {
     var userDetails = localStorage.getItem('accessToken');
@@ -51,6 +53,7 @@ export class TicketListComponent implements OnInit {
   ngOnInit(): void {
     this.isLoading = true;
     this.getUserDetails(this.userId);
+    this.getAllSeverityLevels();
   }
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim();
@@ -83,14 +86,41 @@ export class TicketListComponent implements OnInit {
 
   ViewMode(element) {
     console.log(element);
-    this.router.navigate(['/pages/support/create-ticket'],{ queryParams: { requestKey: element.requestKey } });
+    this.router.navigate(['/pages/support/create-ticket'], { queryParams: { requestKey: element.requestKey } });
 
   }
 
-  // ngAfterViewInit() {
-  //   this.dataSource.paginator = this.paginator;
-  //   this.dataSource.sort = this.sort;
-  // }
+  getAllSeverityLevels() {
+    this.api.getAllSeverityLevels().subscribe(res => {
+      var category = [
+        "All Categories",  "High", "Low", "Medium", "Lowest", "Task Mining", "Service Orchestration", "Robatic Process Automation",
+        "Process Intelligence", "Business Process Studio"
+      ];
+      var Array = [];
+      this.severityLevelsArray = res;
+      this.severityLevelsArray.forEach((e) => {
+        Array.push(e.severity);
+      });
+      // console.log(Array);
+      // console.log(category);
+      this.categories = category.concat(Array);
+    });
+  }
+
+  categoryFilter(event) {
+    if (event.target.value == "All Categories") {
+      var fulldata = '';
+      this.dataSource.filter = fulldata;
+      this.dataSource.paginator.firstPage();
+    } else {
+      this.dataSource.filterPredicate = (data: any, filter: string) => {
+        return data.priority == event.target.value || data.severity == event.target.value || data.component == event.target.value;
+      };
+      this.dataSource.filter = event.target.value;
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.paginator.firstPage();
+    }
+  }
 
 
 }

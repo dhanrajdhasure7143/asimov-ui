@@ -72,7 +72,7 @@
                                         <i class="fa fa-cloud-upload-alt" style="margin: 1px" aria-hidden="true"></i>
                                         &nbsp;&nbsp;
                                         Find files to attach, or browse.</span>
-                                    <input multiple #fileInput accept=".jpg,.png,.pdf,.xls,.xlsx" type="file" (change)="file($event)" style="display:none;" />
+                                    <input multiple #fileInput accept=".jpg,.png,.pdf,.xls,.xlsx,.csv" type="file" (change)="file($event)" style="display:none;" />
                                 </div>
                                 <div class="fileerror" *ngIf="fileError && requestKey == undefined || null">
                                     <p>This file or image don't support or empty , Please try again later.</p>
@@ -124,6 +124,59 @@
                             </a>
                         </div>
                     </div>
+                    <table style="width: 83%;margin-left: 1.3%;" *ngIf="requestKey && imageArray.length > 0">
+                        <tr>
+                            <th style="width: 65%;">Attachments&nbsp;({{imageArray.length}})</th>
+                            <th style="width: 22%;text-align: center;">Delete</th>
+                            <th>Download</th>
+                        </tr>
+                        <tr *ngFor="let item of imageArray">
+                            <td style="width: 65%;">
+                                <a *ngIf="item.type == 'pdf'">
+                                    <i class="far fa-file-alt" style="padding: 3%;"></i> &nbsp; <span>{{item.name}}</span>
+                                </a>
+                                <a *ngIf="item.type == 'txt'">
+                                    <i class="far fa-file-alt" style="padding: 3%;"></i> &nbsp; <span>{{item.name}}</span>
+                                </a>
+                                <a *ngIf="item.type == 'xlsx'">
+                                    <i class="far fa-file-alt" style="padding: 3%;"></i> &nbsp; <span>{{item.name}}</span>
+                                </a>
+                                <a *ngIf="item.type == 'jpg' || item.type == 'png' || item.type == 'jpeg'">
+                                    <i class="far fa-file-alt" style="padding: 3%;"></i> &nbsp; <span>{{item.name}}</span>
+                                </a>
+                                <a *ngIf="item.type == 'svg'">
+                                    <i class="far fa-file-alt" style="padding: 3%;"></i> &nbsp; <span>{{item.name}}</span>
+                                </a>
+                                <a *ngIf="item.type == 'csv'">
+                                    <i class="far fa-file-alt" style="padding: 3%;"></i> &nbsp; <span>{{item.name}}</span>
+                                </a>
+                            </td>
+                            <td class="deleteattachment" style="width: 22%;text-align: center;cursor: pointer;">
+                                <img src="../../../../assets/images/Projects/delete-black.svg" matTooltip="Delete Process" matTooltipPosition="left" class="default-img">
+                                <img src="../../../../assets/images/Projects/delete-red.svg" matTooltip="Delete Process" (click)="removeAttachmentsFromCustomerRequest(item)" matTooltipPosition="left" class="hover-img">
+                            </td>
+                            <td style="text-align: center;">
+                                <a href="data:image/png;base64,{{item.file}}" *ngIf="item.type == 'jpg' || item.type == 'png' || item.type == 'jpeg'" download="{{item.name}}">
+                                    <i class="fas fa-download"></i>
+                                </a>
+                                <a *ngIf="item.type == 'xlsx'" href="data:image/png;base64,{{item.file}}" download="{{item.name}}">
+                                    <i class="fas fa-download"></i>
+                                </a>
+                                <a *ngIf="item.type == 'pdf'" href="data:image/png;base64,{{item.file}}" download="{{item.name}}">
+                                    <i class="fas fa-download"></i>
+                                </a>
+                                <a *ngIf="item.type == 'txt'" href="data:image/png;base64,{{item.file}}" download="{{item.name}}">
+                                    <i class="fas fa-download"></i>
+                                </a>
+                                <a *ngIf="item.type == 'svg'" href="data:image/png;base64,{{item.file}}" download="{{item.name}}">
+                                    <i class="fas fa-download"></i>
+                                </a>
+                                <a *ngIf="item.type == 'csv'" href="data:image/png;base64,{{item.file}}" download="{{item.name}}">
+                                    <i class="fas fa-download"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
             </div>
             <!-- col-2 -->
             <div class="col-md-6 pr-0">
