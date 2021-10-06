@@ -346,7 +346,7 @@ display: initial;
   width:200px; 
 }
 
-.edit-task-body-content input[type=date] {
+/*.edit-task-body-content input[type=date] {
   background-image: url('../../../../assets/images/Projects/calendar.svg');
   background-position: calc(100% - 10px) center;
   background-repeat: no-repeat;
@@ -356,4 +356,4 @@ display: initial;
 input[type=date]::-webkit-calendar-picker-indicator {
   -webkit-appearance: none;
   display: none;
-}
+}*/
