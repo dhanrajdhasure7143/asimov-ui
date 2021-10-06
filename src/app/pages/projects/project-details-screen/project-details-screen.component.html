@@ -942,7 +942,7 @@
               </td>
           </ng-container>
 
-            <ng-container matColumnDef="profilePic">
+            <!-- <ng-container matColumnDef="profilePic">
               <th mat-header-cell *matHeaderCellDef></th>
               <td mat-cell *matCellDef="let user" class="action-link tablacs"> 
                 <span *ngIf="user.userId.profilePic!=null"><img src="../../../../assets/images/BPMS/user1.png" /></span>
@@ -951,11 +951,15 @@
                 </span>
               
               </td>
-            </ng-container>
+            </ng-container> -->
     
               <ng-container matColumnDef="userId.firstName">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
                 <td mat-cell   *matCellDef="let user">
+                  <span style="margin-right: 10px;" *ngIf="user.userId.profilePic!=null"><img src="../../../../assets/images/BPMS/user1.png" /></span>
+                <span  class="letter-image" *ngIf="user.userId.profilePic==null">
+                  <span class="letter">{{user.userId.firstName|uppercase| slice:0:1}}{{user.userId.lastName| uppercase|slice:0:1}}</span>
+                </span>
                   <span *ngIf="user.userId.firstName!=null" [matTooltip]="user.userId.firstName">{{user.userId.firstName+" "+ user.userId.lastName|titlecase}}</span>
                   <span *ngIf="user.userId.firstName==null">---</span>
                 </td>
