@@ -28,7 +28,8 @@
       <div class="col-md-10">
         <div class="d-flex">
             <div class="task-name">{{taskcategory}} / &nbsp;</div>
-            <div><input type="text" class="form-control rpa-control task-name-input" formControlName="taskName" [value]="taskname" ></div>
+            <div><input type="text" class="form-control rpa-control task-name-input"
+              (change)="taskname=$event.target.value" formControlName="taskName" [value]="taskname" ></div>
         </div>
         <div class="value">
           <span class="level3">Last Modified By : {{lastModifiedBy}}</span>&nbsp;
@@ -58,7 +59,7 @@
             <div class="form-fields col-md-3 pr-0">
               <label  class="h6 label-control"  id="enddate" for="endDate">Task Completion Date</label><br>
               <!-- <span class="labelcont">{{endDate  | date}}</span> -->
-              <input type="date" class="form-control rpa-control" [value]="endDate" formControlName="endDate">
+              <input type="date" class="form-control rpa-control" (change)="endDate=$event.target.value" [value]="endDate" formControlName="endDate">
             </div>
             <div class="form-fields col-md-3 pr-0">
               <label   class="h6 label-control" id="percentage" for="percentage">Percentage Completed</label>
@@ -234,10 +235,13 @@
               <!-- <div class="comment-content" > 
                           
                             </div> -->
+                            <div class="text-center" *ngIf="taskhistory.length==0">
+                              <h4><b>No Records Found</b></h4>
+                            </div>
             </mat-tab>
             <mat-tab label="Attachments">
               <div class="row attachmentdiv">
-                <span class="pull-right">
+                <span class="pull-right" *ngIf="hidetaskdeletedownload">
                   <span class="projects-menu-item gridicon"  (click)="onDeleteSelectedItems($event)"   matTooltip="Delete" >
                     <img src="../../../../assets/images/Projects/delete-black.svg" class="default-img">
                     <img src="../../../../assets/images/Projects/delete-red.svg" class="hover-img">
@@ -323,7 +327,7 @@
       
                       <ng-container matColumnDef="noData">
                           <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
-                              No Records Found
+                            <b>No Records Found</b>
                           </td>
                       </ng-container>
                       <tr mat-header-row *matHeaderRowDef="displayedColumns3; sticky: true"></tr>
