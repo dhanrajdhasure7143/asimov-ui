@@ -2429,6 +2429,7 @@ th.mat-header-cell {
 }
 .rpa-actioncontent .mat-drawer-inner-container {
   /* padding: 0px 0px 10px 10px!important; */
+  overflow: hidden;
 }
 .section .mat-expansion-indicator::after {
   opacity: 0.5 !important;
