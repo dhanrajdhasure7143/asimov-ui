@@ -141,7 +141,7 @@
               <!-- <button class="clr-hvr" matTooltip="Refresh" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below"><img src="../../../assets/images/BPMS/refresh.svg"></button>
               <button class="clr-hvr" matTooltip="Delete" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below"><img src="../../../assets/images/BPMS/Delete.svg"></button> -->
               <!-- <button class="upload-btn bps-upload"><img src="../../../assets/images/BPMS/upload.svg">Upload Again</button> -->
-              <ngx-dropzone *ngIf="(!isShowConformance && rejectedOrApproved !='PENDING') || (isShowConformance && ((reSize && isConfNavigation)||hasConformance)) && rejectedOrApproved !='PENDING'" class="upload_again_btn" (change)="UploadFile($event)" [multiple]=false [accept]="'.'+selectedNotationType">
+              <ngx-dropzone *ngIf="(!isShowConformance && rejectedOrApproved !='PENDING') || (isShowConformance && ((reSize && isConfNavigation)||hasConformance)) && rejectedOrApproved !='PENDING' || (isUploaded && rejectedOrApproved !='PENDING')" class="upload_again_btn" (change)="UploadFile($event)" [multiple]=false [accept]="'.'+selectedNotationType">
                 <ngx-dropzone-label>
                   <button class="upload-btn bps-upload" *ngIf="!isfromApprover && !iscreate_notation"><img src="../../../assets/images/BPMS/upload.svg" *ngIf="!isfromApprover">Upload Again</button>  
                   <button class="upload-btn bps-upload" *ngIf="!isfromApprover && iscreate_notation"><img src="../../../assets/images/BPMS/upload.svg" *ngIf="!isfromApprover">Upload</button>  
