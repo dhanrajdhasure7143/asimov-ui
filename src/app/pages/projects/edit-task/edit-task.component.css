@@ -308,7 +308,7 @@ img.hover-img {
 .task-name-input{
   width:200px; 
 }
-.edit-task-body-content input[type=date]::-webkit-calendar-picker-indicator {
+/*.edit-task-body-content input[type=date]::-webkit-calendar-picker-indicator {
   -webkit-appearance: none;
   display: none;
 }
@@ -317,4 +317,4 @@ img.hover-img {
   background-position: calc(100% - 10px) center;
   background-repeat: no-repeat;
   cursor: pointer;
-}
+}*/
