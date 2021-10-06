@@ -30,6 +30,7 @@ export class BusinessProcessComponent implements AfterViewChecked {
   hasConformance:boolean = false;
   reSize:boolean=false;
   process_id:any;
+  isUploaded:boolean=false;
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private cdRef: ChangeDetectorRef, private dt: DataTransferService,private rest:RestApiService,
               @Inject(APP_CONFIG) private config, ) { }
@@ -54,6 +55,9 @@ export class BusinessProcessComponent implements AfterViewChecked {
 
 
     });
+    if(this.isUploaded){
+      this.selectedNotationType='bpmn'
+    }
     this.isHeaderShow = localStorage.getItem("isheader");
     this.cdRef.detectChanges();
   }
@@ -74,7 +78,10 @@ export class BusinessProcessComponent implements AfterViewChecked {
         this.isSave_disabled=notationValues_obj['isSavebtn'];
         this.hasConformance=notationValues_obj['hasConformance'];
         this.reSize=notationValues_obj['resize'];
-        console.log(this.iscreate_notation)
+        this.isUploaded=notationValues_obj['isUploaded'];
+        if(this.isUploaded){
+          this.selectedNotationType='bpmn'
+        }
       }
     });
   }
