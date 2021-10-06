@@ -344,7 +344,7 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <td>
+                      <td style="padding-left: 200px;width: 10px;">
                         <span *ngIf="(taskresource|userImagePipe: users_list)as result">
                           <div class="res-circle" *ngIf="result.length==3">
                             {{taskresource|userImagePipe: users_list}}
@@ -354,9 +354,9 @@
                           </div>
                         </span>
                       </td>
-                      <td>{{taskresource| userPipe : users_list}}</td>
+                      <td style="width: 350px;" class="text-left">{{taskresource| userPipe : users_list}}</td>
                       <!-- <td style="text-align:center">{{roles?roles:'-'}}</td> -->
-                      <td class="text-left">{{roles?roles:'-'}}</td>
+                      <td style="width: 350px;" class="text-left">{{roles?roles:'-'}}</td>
                       <td class="text-left">{{lastModifiedTimestamp  | date:'MMM dd, y, HH:mm:ss'}}</td>
                     </tr>
                   </tbody>
