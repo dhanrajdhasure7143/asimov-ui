@@ -227,7 +227,7 @@ table tbody tr {
 
 .bg-task{
   background-color: #F3F3F3;
-  padding: 12px 10px !important;
+  padding: 10px !important;
 
 }
 .task-name{
@@ -250,7 +250,7 @@ table tbody tr {
 
 .edit-task-body {
   padding: 10px;
-  height: calc(100% - 120px) !important;
+  height: calc(100% - 130px) !important;
   overflow: auto !important;
 }
 

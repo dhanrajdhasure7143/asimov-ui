@@ -551,12 +551,12 @@ span.testtooltip:before {
   display: block;
 }
 .col-sm-6.projinfo {
-  border-right: 1px solid #e5e5e5;
   padding-top: 8px !important;
 }
 
 .col-sm-6.p-0.progressdet {
   padding: 8px 0px 0px 15px !important;
+  border-left: 1px solid #e5e5e5;
 }
 .det-innerheader {
   margin-bottom: 10px;
