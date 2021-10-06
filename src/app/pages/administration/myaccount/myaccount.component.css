@@ -78,11 +78,11 @@
   overflow: unset !important;
 }
 
-.laemarleft {
+/* .laemarleft {
   display: inline-block;
   width: 100%;
   padding-left: 12px;
-}
+} */
 
 .h-scroll {
   height: calc(100% - 44px);
@@ -91,14 +91,14 @@
 }
 
 .prj-crt-form {
-  margin-right: -15px !important;
-  margin-left: -15px !important;
+  /* margin-right: -15px !important;
+  margin-left: -15px !important; */
   padding-top: 15px !important;
 }
 
-.laemarleft {
+/* .laemarleft {
   padding-left: 0px !important;
-}
+} */
 
 button.btn.btn-primary.prj-btn-save {
   margin-right: 0px !important;
@@ -193,9 +193,9 @@ span.removeallprjcts:hover {
 .inner-addon { 
   position: relative; 
 }
-.left-addon input  { padding-left:  50px; }
+/* .left-addon input  { padding-left:  50px; }
 .left-addon select  { padding-left:  50px; }
-.right-addon input { padding-right: 20px; }
+.right-addon input { padding-right: 20px; } */
 
 .inner-addon .lockicon {
   position: absolute;
@@ -210,8 +210,10 @@ span.removeallprjcts:hover {
   .right-addon .eyeicon{
     position: absolute;
     color: #0061cf !important;
-    right: 25px;
-    top: 32px;
+    /* right: 25px;
+    top: 32px; */
+    right: 10px;
+    top: 7px;
   }
 
 
