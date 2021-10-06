@@ -59,6 +59,9 @@ export class BusinessInsightsComponent implements OnInit {
      let res_data:any
      this.isLoading=true;
     await this.rest.getBIThroughputTime(this.processId).subscribe(res=>{res_data=res
+      if(res_data.data[0].value==0){
+        res_data.data.splice(0,1)
+      }
       this.throughtime_data=res_data.data
       this.thoughtputTimeChart();
       this.isLoading=false;
