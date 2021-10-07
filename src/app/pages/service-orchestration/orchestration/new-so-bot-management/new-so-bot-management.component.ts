@@ -78,7 +78,7 @@ public slaupdate : boolean = false;
     public datasourcelist : any = [];
     public timer:any;
     public logs_modal:BsModalRef;
-    public 
+    public usersList:any=[];
     @ViewChild("paginator1",{static:false}) paginator1: MatPaginator;
     @ViewChild("sort1",{static:false}) sort1: MatSort;
     @ViewChild("paginator4",{static:false}) paginator4: MatPaginator;
@@ -133,6 +133,7 @@ public slaupdate : boolean = false;
     this.getautomatedtasks();
     this.getprocessnames();
     this.get_sla_list();
+    this.getusersList();
     this.popup=false;
   }
   method(){
@@ -884,7 +885,14 @@ public slaupdate : boolean = false;
       this.categaoriesList=catResponse.data;
     });
   }
-
+  getusersList()
+  {
+    let tenant=localStorage.getItem("tenantName");
+    this.rest.getuserslist(tenant).subscribe(data=>
+    {
+        this.usersList=data;
+    })
+  }
 
 
   getautomatedtasks()
