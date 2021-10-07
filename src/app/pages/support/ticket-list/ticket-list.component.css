@@ -79,28 +79,34 @@ table td::first-letter {
     padding: 10px;
 }
 .tktlist-Heading {
-    display: flex;
-    align-items: center;
-}
-.tktlist-Heading span {
     font-weight: 600;
-    font-size: 18px;
-}
-.tktlist-Heading button {
-    float: right;
-    margin: 0px !important;
+    font-size: 20px;
+    width: 50%;
 }
 .tktlist-fields {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    margin-top: 15px;
-    margin-bottom: 15px;
-    float: right;
-    width: 40%;
+    width: 50%;
 }
 .table_responsive.graph_table {
-    height: 383px !important;
+    height: 426px !important;
     overflow: auto;
     width: 100%;
 }
+.tktlist-body-header {
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+@media (max-width: 1300px) {
+    .table_responsive.graph_table {
+      height: 370px !important;
+    }
+   }
+   @media (min-width: 1600px) {
+    .table_responsive.graph_table {
+      height: 580px !important;    
+    }
+   }
