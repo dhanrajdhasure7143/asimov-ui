@@ -21,7 +21,7 @@
                                     <div class="row">
                                         <div class="col-md-12 p-0 form-fields">
                                             <label class="label-control">Summary<span class="star">*</span></label>
-                                            <input type="text" formControlName="summary" [(ngModel)]="summary" matInput placeholder="Summary" class="form-control">
+                                            <input type="text" formControlName="summary" [(ngModel)]="summary" placeholder="Summary" maxlength="256" class="form-control">
                                             <span *ngIf="requestKey != undefined && createRequestData != undefined">
                                             <div class="CreateTkt-buttons"
                                                 *ngIf="createRequestData[0].summary != summary && summary.length != 0">
@@ -162,13 +162,15 @@
                     <div class="Component-filed" [ngClass]="requestKey != undefined || null ? 'disabled' : ''">
                         <label class="label-control">Component<span class="star">*</span></label>
                         <mat-form-field class="issue-type">
+                            <!-- <mat-label>Select Component</mat-label> -->
                             <mat-select multiple formControlName="component" [(ngModel)]="component" #toppings class="form-control data">
-                                <mat-option value="Task Mining">Task Mining</mat-option>
+                                <!-- <mat-option value="Task Mining">Task Mining</mat-option>
                                 <mat-option value="Service Orchestration">Service Orchestration</mat-option>
                                 <mat-option value="Robatic Process Automation">Robatic Process Automation
                                 </mat-option>
                                 <mat-option value="Process Intelligence">Process Intelligence</mat-option>
-                                <mat-option value="Business Process Studio">Business Process Studio</mat-option>
+                                <mat-option value="Business Process Studio">Business Process Studio</mat-option> -->
+                                <mat-option *ngFor="let each of component_list" [value]='each'>{{each}}</mat-option>
                                 <button class="component-button" (click)="toppings.close()">OK</button>
                             </mat-select>
                         </mat-form-field>
@@ -177,24 +179,26 @@
                     <div class="form-fields" [ngClass]="requestKey != undefined || null ? 'disabled' : ''">
                         <label class="label-control">Select Priority<span class="star">*</span></label>
                         <select formControlName="priority" [(ngModel)]='priority' class="form-control data" placeholder="Select Priority">
-                            <option [value]="High">High</option>
-                            <option value="Medium">Medium</option>
+                            <option [value]="undefined" disabled hidden>Select Priority</option>
+                            <option *ngFor="let each of Priority_list;let i=index" [value]="each">{{each}}</option>
+                            <!-- <option value="Medium">Medium</option>
                             <option value="Low">Low</option>
-                            <option value="Lowest">Lowest</option>
+                            <option value="Lowest">Lowest</option> -->
                         </select>
                         <span *ngIf="createTicket.get('priority').invalid && createTicket.get('priority').touched" class="errspan required">Priority Required*</span>
                     </div>
                     <div class="form-fields" [ngClass]="requestKey != undefined || null ? 'disabled' : ''">
                         <label class="label-control">Impact<span class="star">*</span></label>
                         <select formControlName="impact" [(ngModel)]='impact' class="form-control data" placeholder="Select Impact">
-                            <option *ngFor="let item of impactArray" [value]=item.impact>{{item.impact}}
-                            </option>
+                            <option value="undefined" hidden disabled>Select Impact</option>
+                            <option *ngFor="let item of impactArray" [value]=item.impact>{{item.impact}}</option>
                         </select>
                         <span *ngIf="createTicket.get('impact').invalid && createTicket.get('impact').touched" class="errspan required">Impact Required*</span>
                     </div>
                     <div class="form-fields" [ngClass]="requestKey != undefined || null ? 'disabled' : ''">
                         <label class="label-control">Severity<span class="star">*</span></label>
                         <select formControlName="severity" [(ngModel)]='severity' class="form-control data" placeholder="Select Severity">
+                            <option value="undefined" hidden disabled>Select Severity</option>
                             <option *ngFor="let item of severityLevelsArray" [value]=item.severity>{{item.severity}}</option>
                         </select>
                         <span *ngIf="createTicket.get('severity').invalid && createTicket.get('severity').touched" class="errspan required">Severity Required*</span>

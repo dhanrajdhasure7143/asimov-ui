@@ -45,6 +45,8 @@ export class CreateTicketComponent implements OnInit {
   attachmentsForCustomerRequest: any;
   imageArray: any[] = [];
   customerStatus: any;
+  Priority_list:any[]=["High","Medium","Low","Lowest"];
+  component_list:any[]=['Task Mining','Service Orchestration','Robatic Process Automation','Process Intelligence','Business Process Studio',]
 
   constructor
     (
@@ -476,6 +478,7 @@ export class CreateTicketComponent implements OnInit {
       this.createRequestData = this.createRequestData.filter((e: any) => e.requestKey == this.requestKey);
       console.log(this.createRequestData);
       this.summary = this.createRequestData[0].summary;
+      // this.createTicket.get('summary').setValue(this.createRequestData[0].summary)
       this.description = this.createRequestData[0].description;
       this.component = this.createRequestData[0].component;
       this.impact = this.createRequestData[0].impact;
@@ -581,6 +584,5 @@ export class CreateTicketComponent implements OnInit {
       }
     });
   }
-
 
 }
