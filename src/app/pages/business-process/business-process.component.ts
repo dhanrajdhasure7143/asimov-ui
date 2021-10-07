@@ -30,8 +30,8 @@ export class BusinessProcessComponent implements AfterViewChecked {
   hasConformance:boolean = false;
   reSize:boolean=false;
   process_id:any;
+  systemAdmin:Boolean=false;
   isUploaded:boolean=false;
-
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private cdRef: ChangeDetectorRef, private dt: DataTransferService,private rest:RestApiService,
               @Inject(APP_CONFIG) private config, ) { }
 
@@ -43,7 +43,8 @@ export class BusinessProcessComponent implements AfterViewChecked {
     this.logged_User=localStorage.getItem("firstName")+' '+localStorage.getItem("lastName")
     this.userRole = localStorage.getItem("userRole")
     this.userRole = this.userRole.split(',');
-    this.isApproverUser = this.userRole.includes('Process Architect');
+    this.isApproverUser = this.userRole.includes('Process Architect')||this.userRole.includes('Process Owner');
+    this.systemAdmin=this.userRole.includes("System Admin")
     this.getApproverList();
   }
 
@@ -82,11 +83,23 @@ export class BusinessProcessComponent implements AfterViewChecked {
         if(this.isUploaded){
           this.selectedNotationType='bpmn'
         }
+        console.log(this.iscreate_notation)
       }
     });
   }
-   async getApproverList(){
-    await this.rest.getApproverforuser('Process Architect').subscribe( res =>  {//Process Architect
+  //  async getApproverList(){
+  //   await this.rest.getApproverforuser('Process Architect').subscribe( res =>  {
+  //    if(Array.isArray(res))
+  //      this.approver_list = res;
+  //  });
+  // }
+
+  async getApproverList(){
+    let roles={
+      "roleNames": ["Process Owner","Process Architect"]
+    
+    }
+    await this.rest.getmultipleApproverforusers(roles).subscribe( res =>  {//Process Architect
      if(Array.isArray(res))
        this.approver_list = res;
    });

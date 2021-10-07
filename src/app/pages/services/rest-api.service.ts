@@ -109,6 +109,9 @@ export class RestApiService{
   getApproverforuser(role){
     return this.http.get("/bpsprocess/approver/info/"+role)
   }
+  getmultipleApproverforusers(roles){
+    return this.http.post("/bpsprocess/approver/info1/",roles)
+  }
   getUserBpmnsList(){
     // return this.http.get("/bpsprocess/fetchByUser");
     return this.http.get("/bpsprocess/fetchByTenant");
@@ -861,8 +864,8 @@ save_blueprism_config(data)
       return this.http.post("/rpa-service/management/save-source-details",data)
     }
 
-    getAllProjects(){
-      return this.http.get("/platform-service/project/fetchAll")
+    getAllProjects(roles,name,email){
+      return this.http.get("/platform-service/project/fetchAll?roles="+roles+"&name="+name+"&email="+email+"")
     }
 
     update_project(data:any){
@@ -968,11 +971,9 @@ save_blueprism_config(data)
   getBIActivityTime(processId){
     return this.http.get("/processintelligence/v1/processgraph/getActivityTimeData/"+processId);
   }
-  
   getBIThroughputTime(processId){
-    return this.http.get("/processintelligence/v1/processgraph/getThroughputTimeDataV2/"+processId);
+    return this.http.get("/processintelligence/v1/processgraph/getThroughputTimeDataV2/"+processId);
   }
-
   getBusinessMetrics(processId){
     return this.http.get("/processintelligence/v1/processgraph/getBusinessMetricsData/"+processId);
   }

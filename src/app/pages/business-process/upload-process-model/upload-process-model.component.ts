@@ -355,7 +355,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
         this.rest.getBPMNProcessArchNotations(this.selected_modelId).subscribe(res=>{
           this.saved_bpmn_list=res
           this.saved_bpmn_list.forEach((each_bpmn,i) => {
-          if(this.selected_version == each_bpmn.version)
+            if(this.selected_version == each_bpmn.version)
                 this.selected_notation = i;
           })
             this.isLoading=false;

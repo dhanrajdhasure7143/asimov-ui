@@ -13,6 +13,9 @@ export class RpaStudioDesignerComponent implements OnInit {
   @ViewChildren("rpa_bot_instance") bot_instances:QueryList<any>;
   current_instance:any;
   toolset_instance:any;
+  userRole:any;
+  userName:any;
+  isButtonVisible:Boolean=false;
   selected_tab_instance:any;
   constructor(private rpa_studio:RpaStudioComponent, private router:Router) { }
 
@@ -26,6 +29,13 @@ export class RpaStudioDesignerComponent implements OnInit {
   {
     console.log(this.tabsArray.length)
     localStorage.setItem("isHeader","true");
+    
+    this.userRole = localStorage.getItem("userRole")
+    this.userRole = this.userRole.split(',');
+    this.userName=localStorage.getItem("firstName")+" "+localStorage.getItem("lastName");
+    localStorage.setItem("isHeader","false");
+    //this.isButtonVisible = this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') || this.userRole.includes('RPA Admin')||this.userRole.includes("Process Owner")||this.userRole.includes("System Admin")||;
+    this.isButtonVisible=this.userRole.includes("Process Analyst")
     console.log("check")
       setTimeout(()=>{
       console.log(this.bot_instances)

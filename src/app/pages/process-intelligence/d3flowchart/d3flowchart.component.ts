@@ -442,6 +442,7 @@ g.nodes().forEach(function(v) {
     node.paddingRight=10
   }
  else{
+
    if(max_length>30 && max_length<=40){
     node.width=300
    }else if(max_length>40 && max_length<=50){
@@ -451,7 +452,7 @@ g.nodes().forEach(function(v) {
    }else if(max_length>60){
     node.width=400
    }else{
-    node.width=200
+   node.width=200
    }
   nodesArray.push(node)
  }
@@ -813,11 +814,11 @@ d3.selectAll("g.edgeLabel g.label")
 }
 
 // inner.selectAll('g.node')['_groups'][0][1]['attributes'][2].value="opacity: 1;fill: rgb(209, 54, 54)"
-  
-let nodes_Array=d3.selectAll("g.node text")['_groups'][0];
+  let nodes_Array=d3.selectAll("g.node text")['_groups'][0];
 
-nodes_Array.forEach((element,i) => {
-if(g.node(element['parentNode'].__data__).label){
+  nodes_Array.forEach((element,i) => {
+  if(g.node(element['parentNode'].__data__).label){
+  // console.log(g.node(element['parentNode'].__data__).label.split('\n')[0])
   if((g.node(element['parentNode'].__data__).label !='Start') && (g.node(element['parentNode'].__data__).label!='End')){
     let node_width=g.node(element['parentNode'].__data__)['width']
     let node_textLength=g.node(element['parentNode'].__data__).label.split('\n')[0].length;
@@ -847,7 +848,7 @@ if(g.node(element['parentNode'].__data__).label){
       // inner.selectAll('g.node')['_groups'][0][i]['attributes'][2].value="opacity: 1;fill: #fff"
      }
   }
- }
+}
 }
 });
  
@@ -939,7 +940,7 @@ if(me.isdownloadJpeg==true||this.isdownloadPng==true||this.isdownloadpdf==true||
           logging:true,
           scale:5,
           height: this.graph_height/2+100,
-          // width:this.graph_width+100100
+          // width:this.graph_width+100
           // windowHeight: window.outerHeight + window.innerHeight
         }).then(canvas => {
         if(fileType == 'png' || fileType == 'jpeg'){
@@ -955,7 +956,7 @@ if(me.isdownloadJpeg==true||this.isdownloadPng==true||this.isdownloadpdf==true||
         if(fileType == 'pdf'){
           var contentDataURL = canvas.toDataURL("image/png",0.3);
           // var doc = new jsPDF('l','pt',[700,600],{compress: true}); --final
-          //var doc = new jsPDF('p', 'mm', 'a4', true);
+          // var doc = new jsPDF('p', 'mm', 'a4', true);
           var doc = new jsPDF('p', 'pt', 'a4', true);
           // var doc = new jsPDF('l','pt',[this.graph_height,1100],'a4',{compress: true});
           // var doc = new jsPDF('1', 'pt', 'a4', true);--final
@@ -968,7 +969,7 @@ if(me.isdownloadJpeg==true||this.isdownloadPng==true||this.isdownloadpdf==true||
           // doc.addImage(contentDataURL, "PNG", 0, 0, canvas.width * ratio, canvas.height * ratio,);
           doc.save(this.processGraphName+'.pdf');
           this.isdownloadpdf=false;
-            this.ispdf.emit(this.isdownloadpdf)
+            this.ispdf.emit(this.isdownloadpdf)       
         }   
       });
     } 

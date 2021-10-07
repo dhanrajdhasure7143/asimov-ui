@@ -91,9 +91,10 @@ export class BusinessInsightsComponent implements OnInit {
   }
 
   ActivityTimeChart(){
-      this.activitytime_data.sort(function (a, b) {
-        return b.totalDuration - a.totalDuration;
-      });
+    this.activitytime_data.sort(function (a, b) {
+      return b.totalDuration - a.totalDuration;
+    });
+
       am4core.useTheme(am4themes_animated);
       // Themes end
       
@@ -140,8 +141,8 @@ export class BusinessInsightsComponent implements OnInit {
       var _self=this;
       series.slices.template.adapter.add("tooltipText", function(text, target) {
         // var text=_self.getTimeConversion('{_dataContext.totalDuration}');
-       // return "{_dataContext.activity} \n {_dataContext.convertedDuration}";
-       return "{_dataContext.activity} \n {value.percent.formatNumber('#.#')}% [/]";
+        //return "{_dataContext.activity} \n {_dataContext.convertedDuration}";
+        return "{_dataContext.activity} \n {value.percent.formatNumber('#.#')}% [/]"
       });
       series.colors.list = [
           am4core.color("rgba(85, 216, 254, 0.9)"),
@@ -258,8 +259,6 @@ series.columns.template.adapter.add("fill", function(fill, target) {
       });
 // valueLabel.label.text = "Hello";
 valueLabel.label.fontSize = 20;
-    
-  
     
   }
   parseMillisecondsIntoReadableTime(milliseconds){

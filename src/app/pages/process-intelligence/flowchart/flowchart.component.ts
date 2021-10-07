@@ -188,7 +188,7 @@ isGraph_changed:boolean=false;
     this.isplay=false;
     let res_data
     this.Pi_header_functions=this.dt.pi_headerChanges.subscribe(res=>{res_data=res
-      //console.log(res);
+      // console.log(res);
       if(res){
         let element=document.getElementById("tipsy_div");
         if(element){
@@ -309,7 +309,7 @@ isGraph_changed:boolean=false;
        } 
     this.rest.getAllVaraintList(variantListbody).subscribe(data=>{this.varaint_data=data // variant List call
       this.performanceFilterInput = data;
-      //console.log(this.performanceFilterInput);
+      // console.log(this.performanceFilterInput);
       for(var i=0; i<this.varaint_data.data.length; i++){
           this.varaint_data.data[i].selected= "inactive";
       }
@@ -472,7 +472,7 @@ isGraph_changed:boolean=false;
        } 
     this.rest.getAllVaraintList(variantListbody).subscribe(data=>{this.varaint_data=data // variant List call
       this.performanceFilterInput = data;
-      //console.log(this.performanceFilterInput);
+      // console.log(this.performanceFilterInput);
       if(this.varaint_data.data){ 
       for(var i=0; i<this.varaint_data.data.length; i++){
           this.varaint_data.data[i].selected= "inactive";
@@ -791,7 +791,7 @@ isGraph_changed:boolean=false;
 
   playAnimation() {   // Process graph animation
     this.isplay = !this.isplay
-    //console.log(this.isplay)
+    // console.log(this.isplay)
   }
 
   downloadSvg() { // Process graph download as SVG
@@ -2053,7 +2053,7 @@ addWorkingHours(){
     }
      ,(err=>{
       this.spinner.hide();
-       //console.log(err);
+      //  console.log(err);
      }));
   }
    viewbusinessinsights(){
