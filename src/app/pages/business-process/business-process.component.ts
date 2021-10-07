@@ -79,8 +79,19 @@ export class BusinessProcessComponent implements AfterViewChecked {
       }
     });
   }
-   async getApproverList(){
-    await this.rest.getApproverforuser('Process Architect').subscribe( res =>  {//Process Architect
+  //  async getApproverList(){
+  //   await this.rest.getApproverforuser('Process Architect').subscribe( res =>  {
+  //    if(Array.isArray(res))
+  //      this.approver_list = res;
+  //  });
+  // }
+
+  async getApproverList(){
+    let roles={
+      "roleNames": ["Process Owner","Process Architect"]
+    
+    }
+    await this.rest.getmultipleApproverforusers(roles).subscribe( res =>  {//Process Architect
      if(Array.isArray(res))
        this.approver_list = res;
    });
