@@ -21,6 +21,7 @@ export class StatisticsComponent implements OnInit {
     bots:any;
     processnames:any=[];
     processstatistics:any;
+    approved_processes:any;
   constructor(
     private spinner:NgxSpinnerService,
     private rest:RestApiService
@@ -79,7 +80,7 @@ this.getEnvironments();
         "litres": this.allbots.filter(item=>item.sourceType=="UiPath").length,
         "color": "#fa4616"
       },{
-        "country": "BluePrism",
+        "country": "Blue Prism",
         "litres":  this.allbots.filter(item=>item.sourceType=="BluePrism").length,
         "color": "#001c47"
       },{
@@ -92,6 +93,7 @@ this.getEnvironments();
       //this.chart4();
       
       this.getprocesses();
+      this.getBpmnApprovedProcesses();
       this.botruntimestats();
       this.spinner.hide();
       
@@ -1071,6 +1073,15 @@ pieSeries.labels.template.fontSize = 18;
 
   }
   
+  getBpmnApprovedProcesses()
+  {
+    this.rest.getUserBpmnsList().subscribe(data=>{
+      let response:any=data;
+      //console.log(response);
+      this.approved_processes=response.filter(data=>data.bpmnProcessStatus=="APPROVED");
+      this.getprocessstatistics();
+    })
+  }
   getprocesses()
   {
     this.rest.getautomatedtasks(0).subscribe(data=>{
@@ -1078,7 +1089,7 @@ pieSeries.labels.template.fontSize = 18;
         this.rest.getprocessnames().subscribe(data=>{
           this.processnames=data;
           //this.getbotsvshumans()
-          this.getprocessstatistics();
+          //this.getprocessstatistics();
         })
     })
   }
@@ -1087,7 +1098,7 @@ pieSeries.labels.template.fontSize = 18;
     let data=[
              {
                "country":"Processes",
-               "litres":this.processnames.length,
+               "litres":this.approved_processes.length,
                "color": "#ce3779"
 
              },

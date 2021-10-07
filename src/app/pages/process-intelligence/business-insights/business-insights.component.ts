@@ -59,6 +59,9 @@ export class BusinessInsightsComponent implements OnInit {
      let res_data:any
      this.isLoading=true;
     await this.rest.getBIThroughputTime(this.processId).subscribe(res=>{res_data=res
+      if(res_data.data[0].value==0){
+        res_data.data.splice(0,1)
+      }
       this.throughtime_data=res_data.data
       this.thoughtputTimeChart();
       this.isLoading=false;
@@ -88,6 +91,9 @@ export class BusinessInsightsComponent implements OnInit {
   }
 
   ActivityTimeChart(){
+      this.activitytime_data.sort(function (a, b) {
+        return b.totalDuration - a.totalDuration;
+      });
       am4core.useTheme(am4themes_animated);
       // Themes end
       
@@ -102,7 +108,7 @@ export class BusinessInsightsComponent implements OnInit {
       marker.stroke = am4core.color("#ccc");
       chart.legend.scrollable = true;
       chart.legend.fontSize = 12;
-
+      chart.legend.reverseOrder = false;
       // chart.data=data;
       chart.data=this.activitytime_data;
 
@@ -134,7 +140,8 @@ export class BusinessInsightsComponent implements OnInit {
       var _self=this;
       series.slices.template.adapter.add("tooltipText", function(text, target) {
         // var text=_self.getTimeConversion('{_dataContext.totalDuration}');
-        return "{_dataContext.activity} \n {_dataContext.convertedDuration}";
+       // return "{_dataContext.activity} \n {_dataContext.convertedDuration}";
+       return "{_dataContext.activity} \n {value.percent.formatNumber('#.#')}% [/]";
       });
       series.colors.list = [
           am4core.color("rgba(85, 216, 254, 0.9)"),
@@ -164,62 +171,95 @@ export class BusinessInsightsComponent implements OnInit {
 
   thoughtputTimeChart(){
     let _me=this
-    am4core.ready(function() {
-      // Themes begin
-      am4core.useTheme(am4themes_animated);
-      // Themes end
-      // Create chart instance
-      var chart = am4core.create("chartdiv2", am4charts.XYChart);
-      // Add data
 
-      chart.data=_me.throughtime_data
+    // am4core.ready(function() {
+    //   // Themes begin
+    //   am4core.useTheme(am4themes_animated);
+    //   // Themes end
+    //   // Create chart instance
+    //   var chart = am4core.create("chartdiv2", am4charts.XYChart);
+    //   // Add data
+
+    //   chart.data=_me.throughtime_data
       
-      // Create axes
+    //   // Create axes
   
-      var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
-      // categoryAxis.dataFields.category = "country";
-      categoryAxis.dataFields.category = "param";
-      categoryAxis.renderer.grid.template.location = 0;
-      categoryAxis.renderer.minGridDistance = 30;
-      // categoryAxis.title.text="Days"
-      // categoryAxis.title.text="Median Activity Duration"
-      // categoryAxis.title.fontWeight="bold"
-      // categoryAxis.renderer.labels.template.adapter.add("dy", function(dy, target) {
-      //   if (target.dataItem && target.dataItem.index && 2 == 2) {
-      //     return dy + 25;
-      //   }
-      //   return dy;
-      // });
+    //   var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+    //   // categoryAxis.dataFields.category = "country";
+    //   categoryAxis.dataFields.category = "param";
+    //   categoryAxis.renderer.grid.template.location = 0;
+    //   categoryAxis.renderer.minGridDistance = 30;
+    //   // categoryAxis.title.text="Days"
+    //   // categoryAxis.title.text="Median Activity Duration"
+    //   // categoryAxis.title.fontWeight="bold"
+    //   // categoryAxis.renderer.labels.template.adapter.add("dy", function(dy, target) {
+    //   //   if (target.dataItem && target.dataItem.index && 2 == 2) {
+    //   //     return dy + 25;
+    //   //   }
+    //   //   return dy;
+    //   // });
 
 
     
-      var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-      // valueAxis.title.text = "No.of.Cases";
-      valueAxis.title.text = "No of Cases";
-      //valueAxis.title.fontWeight="bold"
-      // Create series
-      var series = chart.series.push(new am4charts.ColumnSeries());
-      series.dataFields.valueY = "value";
-      series.dataFields.categoryX = "param";
-      // series.dataFields.valueY = "medianActivityDuration";
-      // series.dataFields.categoryX = "caseId";
-      series.name = "value";
-      series.columns.template.tooltipText = " Duration : {categoryX} \n  No of Cases : {valueY}[/] ";
-      series.columns.template.fillOpacity = 1;
-      series.columns.template.adapter.add("fill", function(fill, target) {
-          return am4core.color("#4d72be");
-        });
+    //   var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+    //   // valueAxis.title.text = "No.of.Cases";
+    //   valueAxis.title.text = "No of Cases";
+    //   //valueAxis.title.fontWeight="bold"
+    //   // Create series
+    //   var series = chart.series.push(new am4charts.ColumnSeries());
+    //   series.dataFields.valueY = "value";
+    //   series.dataFields.categoryX = "param";
+    //   // series.dataFields.valueY = "medianActivityDuration";
+    //   // series.dataFields.categoryX = "caseId";
+    //   series.name = "value";
+    //   series.columns.template.tooltipText = " Duration : {categoryX} \n  No of Cases : {valueY}[/] ";
+    //   series.columns.template.fillOpacity = 1;
+    //   series.columns.template.adapter.add("fill", function(fill, target) {
+    //       return am4core.color("#4d72be");
+    //     });
       
-      // chart.colors.list = [
+    //   // chart.colors.list = [
         
-      //   am4core.color("rgba(85, 216, 254, 0.9)"),
-      // ];
+    //   //   am4core.color("rgba(85, 216, 254, 0.9)"),
+    //   // ];
       
-      var columnTemplate = series.columns.template;
-      columnTemplate.strokeWidth = 0;
-      columnTemplate.strokeOpacity = 1;
+    //   var columnTemplate = series.columns.template;
+    //   columnTemplate.strokeWidth = 0;
+    //   columnTemplate.strokeOpacity = 1;
       
-      }); // end am4core.ready()
+    //   }); // end am4core.ready()
+   
+am4core.useTheme(am4themes_animated);
+
+// Create chart instance
+var chart = am4core.create("chartdiv2", am4charts.XYChart);
+
+chart.data=_me.throughtime_data
+
+var categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
+categoryAxis.dataFields.category = "param";
+categoryAxis.renderer.grid.template.location = 1;
+// categoryAxis.renderer.grid.template.strokeOpacity = 1;
+// categoryAxis.renderer.grid.template.location = 1;
+categoryAxis.renderer.minGridDistance = 20;
+categoryAxis.title.text="Throughput Time (Mins)"
+
+var valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
+valueAxis.title.text="No of Cases"
+var series = chart.series.push(new am4charts.ColumnSeries());
+series.dataFields.valueX = "value";
+series.dataFields.categoryY = "param";
+
+      series.columns.template.tooltipText = " Duration : {categoryY} \n  No of Cases : {valueX}[/] ";
+
+var valueLabel = series.bullets.push(new am4charts.LabelBullet());
+series.columns.template.adapter.add("fill", function(fill, target) {
+        return am4core.color("#4d72be");
+      });
+// valueLabel.label.text = "Hello";
+valueLabel.label.fontSize = 20;
+    
+  
     
   }
   parseMillisecondsIntoReadableTime(milliseconds){

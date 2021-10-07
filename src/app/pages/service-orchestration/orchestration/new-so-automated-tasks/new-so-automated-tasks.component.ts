@@ -603,16 +603,20 @@ resetsla(){
       this.applyFilter(this.selectedvalue);
     }
     if(botId!=0)
-    this.rest.assign_bot_and_task(botId,id,source,"Automated").subscribe(data=>{
-      let response:any=data;
-      if(response.status!=undefined)
-      {
-        Swal.fire("Resource Assigned Successfully","","success");
-      }else
-      {
-        Swal.fire("Failed to Assign Resource","","warning");
-      }
-    })
+    {
+      this.spinner.show();
+      this.rest.assign_bot_and_task(botId,id,source,"Automated").subscribe(data=>{
+        let response:any=data;
+        this.spinner.hide();
+        if(response.status!=undefined)
+        {
+          Swal.fire("Success","Resource Assigned Successfully","success");
+        }else
+        {
+          Swal.fire("Error","Failed to Assign Resource","error");
+        }
+      })
+    }
   }
 
 
@@ -620,16 +624,20 @@ resetsla(){
   {
     let botId=$("#"+taskid+"__select").val();
     if(botId!=0)
-    this.rest.assign_bot_and_task(botId,taskid,"","Human").subscribe(data=>{
-      let response:any=data;
-      if(response.status!=undefined)
-      {
-        Swal.fire(response.status,"","success");
-      }else
-      {
-        Swal.fire(response.errorMessage,"","warning");
-      }
-    })
+    {
+      this.spinner.show();
+      this.rest.assign_bot_and_task(botId,taskid,"","Human").subscribe(data=>{
+        let response:any=data;
+        this.spinner.show();
+        if(response.status!=undefined)
+        {
+          Swal.fire("Success",response.status,"success");
+        }else
+        {
+          Swal.fire("Error",response.errorMessage,"warning");
+        }
+      })
+    }
   }
 
 
@@ -660,24 +668,17 @@ resetsla(){
 
     if(this.selectedvalue!=undefined)
     {
+      this.spinner.show();
     this.rest.startprocess(this.selectedvalue,this.selectedEnvironment).subscribe(data=>{
       let response:any=data;
+      this.spinner.hide();
       if(response.errorMessage==undefined){
-      Swal.fire({
-        icon: 'success',
-        title:response.status,
-        showConfirmButton: true,
-      });
-      this.update_task_status()
-    }else
-    {
-      Swal.fire({
-        icon: 'warning',
-        title:response.errorMessage,
-        showConfirmButton: true,
-      })
-
-    }
+        Swal.fire("Success",response.status,"success");
+        this.update_task_status()
+      }else
+      {
+        Swal.fire("Error",response.errorMessage,"error");
+      }
       //this.rpa_studio.spinner.hide();
       this.update_task_status();
     },(err)=>{
@@ -692,7 +693,9 @@ resetsla(){
   {
 
     //this.rpa_studio.spinner.show();
+    this.spinner.show();
     this.rest.getautomatedtasks(0).subscribe(response=>{
+      this.spinner.hide();
       let data:any=response;
       this.dataSource2= new MatTableDataSource(data.automationTasks);
       this.dataSource2.sort=this.sort10;
@@ -722,23 +725,23 @@ resetsla(){
               let data:any;
               if(statusdata.status=="InProgress" || statusdata.status=="Running")
               {
-                data="<span matTooltip='"+statusdata.status+"' class='text-primary'><img src='../../../../assets/images/RPA/DotSpin.gif' style='filter: none; width: 19px;'></span>";
+                data="<span matTooltip='"+statusdata.status+"' class='text-primary'><img src='../../../../assets/images/RPA/DotSpin.gif' class='testplus'></span>";
               }
               else if(statusdata.status=="Success" || statusdata.status=="Approved")
               {
-                data='<span  matTooltip="'+statusdata.status+'"  class="text-success"><i class="fa fa-check-circle"  style="font-size:19px" aria-hidden="true"></i></span>';
+                data='<span  matTooltip="'+statusdata.status+'"><img src="../../../../../assets/images/RPA/icon_latest/Success.svg" class="testplus"></span>';
               }
               else if(statusdata.status=="Failed" || statusdata.status=="Failure" || statusdata.status=="Rejected")
               {
-                data='<span  matTooltip="'+statusdata.status+'"  class="text-danger"><i class="fa fa-times-circle" aria-hidden="true"></i></span>&nbsp;<span class="text-danger"></span>';
+                data='<span  matTooltip="'+statusdata.status+'"><img src="../../../../../assets/images/RPA/icon_latest/close-red.svg" class="testplus"></span><span class="text-danger"></span>';
               }
               else if(statusdata.status=="New")
               {
-                data="<span   matTooltip='"+statusdata.status+"'  ><img src='../../../../../assets/images/RPA/newicon.png' style='filter:none;height:20px' ></span>&nbsp;<span class='text-primary'>" +"</span>";
+                data="<span   matTooltip='"+statusdata.status+"'><img src='../../../../../assets/images/RPA/newicon.png' class='testplus1' ></span><span class='text-primary'>" +"</span>";
               }
               else if(statusdata.status=="Pending")
               {
-                data="<span  matTooltip='"+statusdata.status+"'  class='text-warning' style='font-size:20px'><i class='fa fa-clock'></i></span>";
+                data="<span  matTooltip='"+statusdata.status+"'  class='text-warning'><i class='fa fa-clock'></i></span>";
               }
               else if(statusdata.status=="")
               {
@@ -828,7 +831,7 @@ resetsla(){
 
   startscheduler()
   {
-    document.getElementById("filters").style.display = "none";
+    //document.getElementById("filters").style.display = "none";
     this.schdata={
       processid:this.selectedvalue,
       environment:this.selectedEnvironment,

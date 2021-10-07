@@ -37,7 +37,7 @@
     </div>  
   
     <!--foms  -->
-    <div style="width:100%;height:52vh;overflow: scroll;">
+    <div class="soenvbluegrid">
     <table mat-table #sort1="matSort" [dataSource]="dataSource1" matSort class=" RPA table" id="listofenv">
   
         <ng-container matColumnDef="check">
@@ -46,7 +46,7 @@
         </ng-container>
         
         <ng-container matColumnDef="bluePrismUsername">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>BluePrism Username</th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Blue Prism Username</th>
             <td mat-cell *matCellDef="let element"> <span *ngIf="element.bluePrismUsername!=null">{{(element.bluePrismUsername.length > 15) ? ((element.bluePrismUsername).slice(0, 15) + '...') : element.bluePrismUsername}}</span> <span *ngIf="element.bluePrismUsername==''">-</span> </td>
         </ng-container>
 
@@ -56,11 +56,11 @@
         </ng-container>
         
         <ng-container matColumnDef="bluPrismPassword">
-            <th mat-header-cell *matHeaderCellDef >BluePrism Password</th>
+            <th mat-header-cell *matHeaderCellDef >Blue Prism Password</th>
             <td mat-cell *matCellDef="let element"> <span *ngIf="element.bluPrismPassword!=null">{{element.bluPrismPassword  | ipcustompipe}}</span> <span *ngIf="element.bluPrismPassword==''">-</span> </td>
         </ng-container>
         <ng-container matColumnDef="hostAddress">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>IP Address/Host</th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>IP Address / Host</th>
             <td mat-cell *matCellDef="let element">
                 <span *ngIf="element.hostAddress!=null">{{element.hostAddress | ipcustompipe}}</span>
                 <span *ngIf="element.hostAddress==''">-</span> </td>

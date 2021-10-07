@@ -72,7 +72,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   fileobj:any;
   options:any=[];
   restapiresponse:any;
-  rp_url:string;
+  public rp_url:any;
   recordedcode:any;
   finalcode:any;
   svg:any;
@@ -115,7 +115,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     this.jsPlumbInstance = jsPlumb.getInstance();
     var self = this;
     this.jsPlumbInstance.importDefaults({
-      Connector: ["Flowchart", { curviness: 90 }],
+      Connector: ["Flowchart", { curviness: 200, cornerRadius:5 }],
       overlays: [
         ["Arrow", { width: 12, length: 12, location: 0.5 }],
         ["Label", { label: "FOO" }]
@@ -142,7 +142,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     this.jsPlumbInstance = jsPlumb.getInstance();
     var self = this;
     this.jsPlumbInstance.importDefaults({
-      Connector: ["Flowchart", { curviness: 90 }],
+      Connector: ["Flowchart", { curviness: 200, cornerRadius:5 }],
+      connectorStyle: { stroke: '#404040', strokeWidth: 2 },
       overlays: [
         ["Arrow", { width: 12, length: 12, location: 0.5 }],
         ["Arrow", { width: 12, length: 12, location: 1 }], ["Label", { label: "FOO" }],
@@ -303,7 +304,16 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
             anchors: ["Right", "Left"],
             detachable: true,
-            connectorHoverStyle: { lineWidth: 3 },
+            
+            paintStyle: {  stroke: "#404040",  strokeWidth: 2 },
+            // connectorStyle: {
+            //   lineWidth: 3,
+            //   strokeStyle: "red"
+            // },
+          //   Connector: ["Flowchart", { curviness: 90, cornerRadius: 5 }],
+          //   connectorClass: "path",
+          //  // connectorStyle: { stroke: '#404040', strokeWidth: 2 },
+          //   connectorHoverStyle: { lineWidth: 3 },
             overlays: [["Arrow", { width: 12, length: 12, location: 1 }],],
           })
 
@@ -469,9 +479,9 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         height: 8,
       }],
 
-      paintStyle: { stroke: "#0062cf", fill: "#0062cf", strokeWidth: 2 },
+      paintStyle: { stroke: "#d7eaff", fill: "#d7eaff", strokeWidth: 2 },
       isSource: true,
-      connectorStyle: { stroke: '#404040', strokeWidth: 1.5 },
+      connectorStyle: { stroke: '#404040', strokeWidth: 2 },
       anchor: 'Right',
       maxConnections: -1,
       cssClass: "path",
@@ -489,16 +499,17 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         width: 8,
         height: 8,
       }],
-      paintStyle: { stroke: "#0062cf", fill: "#0062cf", strokeWidth: 2 },
+      paintStyle: { stroke: "#d7eaff", fill: "#d7eaff", strokeWidth: 2 },
       isTarget: true,
-      connectorStyle: { stroke: '#404040', strokeWidth: 1.5 },
+      connectorStyle: { stroke: '#404040', strokeWidth: 2 },
       anchor: 'Left',
       maxConnections: -1,
       Connector: ["Flowchart", { curviness: 90, cornerRadius: 5 }],
       cssClass: "path",
       connectorClass: "path",
-      connectorOverlays: [
-      ]
+     
+      connectorOverlays: [['Arrow', { width: 10, length: 10, location: 1 }]],
+    
     };
     if (nodeData.name != "STOP")
       this.jsPlumbInstance.addEndpoint(nodeData.id, rightEndPointOptions);
@@ -1117,10 +1128,11 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   downloadPng()
   {
     var element=document.getElementById(this.dragareaid)
+    var botName=this.finalbot.botName;
     domtoimage.toPng(element)
       .then(function (dataUrl) {
         var link = document.createElement('a');
-        link.download = 'bot_image.png';
+        link.download = botName+".png";
         link.href = dataUrl;
         link.click();
       })
@@ -1132,10 +1144,11 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   downloadJpeg() {
 
     var element=document.getElementById(this.dragareaid)
+    var botName=this.finalbot.botName;
     domtoimage.toPng(element,{ quality: 1,background: "white"})
     .then(function (dataUrl) {
       var link = document.createElement('a');
-      link.download = 'bot_image.jpeg';
+      link.download = `${botName}.jpeg`;
       link.href = dataUrl;
       link.click();
     })
@@ -1147,6 +1160,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   downloadPdf() {
 
     var element=document.getElementById(this.dragareaid)
+    var botName=this.finalbot.botName;
     domtoimage.toPng(element)
       .then(function (dataUrl) {
       let img=dataUrl;
@@ -1157,7 +1171,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       const pdfWidth = doc.internal.pageSize.getWidth() - 2 * bufferX;
       const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
       doc.addImage(img, 'PNG', bufferX, bufferY, pdfWidth, pdfHeight, undefined, 'FAST');
-      doc.save('bot_image.pdf');
+      doc.save(`${botName}.pdf`);
       })
       .catch(function (error) {
           console.error('oops, something went wrong!', error);

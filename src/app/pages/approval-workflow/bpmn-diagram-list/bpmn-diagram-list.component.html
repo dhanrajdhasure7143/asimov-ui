@@ -20,7 +20,7 @@
     <div class="list_header" (click)="sort('createdTimestamp',2)">Modified Time<span class="asc" *ngIf="orderAsc && sortIndex==2">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==2">&#8593;</span></div>
     <div class="list_header" (click)="sort('userName',3)">Resource<span class="asc" *ngIf="orderAsc && sortIndex==3">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==3">&#8593;</span></div>
     <div class="list_header" (click)="sort('role',4)">Role<span class="asc" *ngIf="orderAsc && sortIndex==4">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==4">&#8593;</span></div>
-    <div class="list_header" (click)="sort('approvalStatus',5)">Actions<span class="asc" *ngIf="orderAsc && sortIndex==5">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==5">&#8593;</span></div>
+    <div class="list_header" (click)="sort('approvalStatus',5)">Status<span class="asc" *ngIf="orderAsc && sortIndex==5">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==5">&#8593;</span></div>
   </div>
   <div class="row col-md-12 p-0 aprwkfl-grid-data"  id="bpmn_list">
     <mat-accordion>
@@ -57,7 +57,7 @@
                 <th class="child_list_header"> Version </th>
                 <th class="child_list_header"> Status </th>
                 <th class="child_list_header"> Message </th>
-                <th class="child_list_header"> Action </th>
+                <th class="child_list_header"> Actions </th>
               </tr>
             </thead>
             <tbody>

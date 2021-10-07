@@ -325,9 +325,17 @@ img.hover-img {
 }
 .upload_zone ngx-dropzone:hover {
     background-color:#00a0e3;
+    border-radius: 4px;
 }
 .model-uploadhvr {
     display: none;
+}
+.delete-icon img{
+    width: 16px;
+    height: 16px;
+}
+.delete-icon-disabled{
+    cursor: no-drop !important;
 }
 
 

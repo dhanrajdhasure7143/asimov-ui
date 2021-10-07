@@ -28,7 +28,7 @@
                   <option value="allcategories">All Categories</option>
                   <option *ngFor="let each_diag of categoryList.data;let i=index;trackBy:loopTrackBy"
                     [value]="each_diag.categoryName">
-                    {{each_diag.categoryName}}</option>
+                    {{each_diag.categoryName|titlecase}}</option>
                 </select>
               
             </div>
@@ -41,9 +41,9 @@
             </div>
           </div>
         </div>
-        <div class="col-md-12 text-bold workspace-title table">
-            <div class="header" matSort>
-            <div class="cell cell1"></div>
+        <div class="row col-md-12 text-bold workspace-title" matSort>
+            <!-- <div class="header" matSort> -->
+            <div class="expan-icon"></div>
             <div class="cell cell2" mat-sort-header="bpmnProcessName">Process Name
               <!-- <div class="cell cell2" mat-sort-header="bpmnProcessName" (click)="sort('bpmnProcessName',0)">Process Name -->
               <!-- <span class="asc" *ngIf="orderAsc && sortIndex==0">&#8595;</span> -->
@@ -85,7 +85,7 @@
                   <!-- <span class="desc" *ngIf="!orderAsc && sortIndex==5">&#8593;</span> -->
             </div>
             <div class="cell cell10">Actions</div>
-          </div>
+          <!-- </div> -->
           
         </div>
         <div class="row col-md-12 new-bps-grid-data" id="bpmn_list">
@@ -96,10 +96,10 @@
               <mat-expansion-panel-header class="dropdown_icon">
                 <mat-panel-title>
                         <!-- id="bpmn_list_row" -->
-                  <div class="table">
-                    <div class="rowGroup">
-                      <div class="row">
-                        <div class="cell cell1">
+                  <!-- <div class="table">
+                    <div class="rowGroup"> -->
+                      <div class="row col-md-12">
+                        <div class="expan-icon">
                           <i class="material-icons expand-open">chevron_right</i>
                           <i class="material-icons expand-close">expand_less</i>
                         </div>
@@ -110,8 +110,10 @@
                         <div class="cell cell5">{{each_diag.bpmnProcessName ? " V1."+each_diag.version+" ": '-'}}</div>
                         <div class="cell cell6" >{{each_diag.convertedModifiedTime*1000 | date:'medium'}}</div>
                         <div class="cell cell7">{{each_diag.approverName ? formatApproverName(each_diag.approverName): '-'}}</div>
-                        <div class="cell cell8" [ngStyle]="{'color':getColor(each_diag.bpmnProcessStatus)}"
-                        [class.pending_value_properties]="each_diag.bpmnProcessStatus=='PENDING'">{{each_diag.bpmnProcessStatus=='PENDING'?pendingStatus:each_diag.bpmnProcessStatus}}</div>
+                        <!-- <div class="cell cell8" [ngStyle]="{'color':getColor(each_diag.bpmnProcessStatus)}"
+                        [class.pending_value_properties]="each_diag.bpmnProcessStatus=='PENDING'">{{each_diag.bpmnProcessStatus=='PENDING'?pendingStatus:each_diag.bpmnProcessStatus}}</div> -->
+                        <div class="cell cell8" [ngStyle]="{'color':getColor(each_diag.bpmnProcessStatus)}" [class.pending_value_properties]="each_diag.bpmnProcessStatus=='PENDING'">{{getNotationStatus(each_diag.bpmnProcessStatus)}}</div>
+                        
                         <div class="cell cell9"><img src="../../../../assets/images/BPMS/Msg.svg" class="testplus" [matTooltip]=each_diag.reviewComments matTooltipClass="bpsHeaderTooltip" matTooltipPosition="right"></div>
                         <div class="cell cell10">
                           <img src="../../../../assets/images/BPMS/Envelop.svg" (click)="sendReminderMail($event, each_diag)" *ngIf="isAdminUser && each_diag.bpmnProcessStatus=='PENDING'" matTooltip="Click to send reminder mail to Approver" matTooltipPosition="left" class="testplus1">
@@ -120,12 +122,12 @@
                             title="Click to send reminder mail to Approver" class="fa fa-envelope"></i> -->
                           <!-- <i (click)="deleteProcess($event, each_diag)" *ngIf="each_diag.bpmnProcessStatus=='INPROGRESS'"
                             title="Delete BPMNotation" class="glyphicon glyphicon-trash"></i> -->
-                          <img (click)="deleteProcess($event, each_diag)" *ngIf="each_diag.bpmnProcessStatus=='INPROGRESS'" matTooltip="Delete BPMNotation" matTooltipPosition="left" src="../../../../assets/images/BPMS/delete-red.svg" class="testplus1">
+                          <img (click)="deleteProcess($event, each_diag)" *ngIf="(each_diag.bpmnProcessStatus=='INPROGRESS') && ((systemAdmin==true) || ((systemAdmin==false) && (each_diag.userEmail==userEmail) ))" matTooltip="Delete BPMNotation" matTooltipPosition="left" src="../../../../assets/images/BPMS/delete-red.svg" class="testplus1">
                           <i *ngIf="each_diag.bpmnProcessStatus!='INPROGRESS' && (each_diag.bpmnProcessStatus=='APPROVED' || each_diag.bpmnProcessStatus=='REJECTED' || !isAdminUser)">-</i>
                         </div>
                       </div>
-                    </div>
-                  </div>
+                    <!-- </div>
+                  </div> -->
                  
                 </mat-panel-title>
               </mat-expansion-panel-header>
@@ -150,7 +152,7 @@
           <mat-paginator #paginator
             [length]="totalRows$ | async"
             [pageIndex]="0"
-            [pageSize]="10"
+            [pageSize]="25"
             [showFirstLastButtons]="true"
             [pageSizeOptions]="[5, 10, 25, 50]"
           ></mat-paginator>

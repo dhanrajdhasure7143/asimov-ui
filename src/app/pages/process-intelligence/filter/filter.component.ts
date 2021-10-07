@@ -670,6 +670,7 @@ export class FilterComponent implements OnInit {
   startValue(e) {
     this.fcount = [];
     let fcount1 = [];
+    console.log(this.perfrmanceFilterKeyValuepair)
     this.perfrmanceFilterKeyValuepair.filter(res => {
       if (Number(res.duration) >= Number(this.minPerfValue) && Number(res.duration) <= Number(this.maxPerfValue)) {
         this.fcount.push(res);
@@ -759,6 +760,7 @@ export class FilterComponent implements OnInit {
 
   setselectedFilter(type){
     this.performanceLogic(this.performanceFilterInput, type)
+    console.log("this.performanceFilterInput",this.performanceFilterInput)
   }
 
   performanceLogic(performData, pType) {
@@ -812,7 +814,7 @@ export class FilterComponent implements OnInit {
   } 
   };
   getCaseDurationMetrics(pData){
-
+console.log("case",pData)
     this.performanceTotalDuration =[];
     this.perfrmanceFilterKeyValuepair =[];
     this.single = [];
@@ -1140,7 +1142,10 @@ export class FilterComponent implements OnInit {
     this.maxPerfValue = 0;
     this.options1 = {};
     pData.data.filter(res => {
+
+
       this.totalCases += Number(res.case_value);
+      console.log(this.totalCases)
       this.performanceTotalDuration.push({ durationArray: res.filter_num_of_cases, caseValue: res.case_value });
     });
 
@@ -1154,6 +1159,8 @@ export class FilterComponent implements OnInit {
     this.perfrmanceFilterKeyValuepair = this.perfrmanceFilterKeyValuepair.sort((a, b) => {
       return a.duration - b.duration;
     });
+    console.log(this.performanceTotalDuration,this.perfrmanceFilterKeyValuepair)
+
     this.perfrmanceFilterKeyValuepair.filter(res => {
       this.single.push({ name: res.duration, value: res.caseCount })
     });

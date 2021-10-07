@@ -1,379 +1,380 @@
-    <div *ngIf="selectedtask!=undefined" class="edit-task-form">
-      <div class="module-heading title ">
-        <!-- <span class="projects-back-button" routerLink="/pages/projects/listOfProjects" >
-            <i class="fa fa-angle-left" aria-hidden="true"></i>
-        </span> -->
-        <span class="module-back-button" routerLink="/pages/projects/projectdetails"  [queryParams]="{id:project_id}">
-            <i class="fas fa-arrow-left" aria-hidden="true"></i>
-        </span>
-        <span class="module-header-title">
-            <span class="module-parent-title">Tasks</span>
-            <span class="backslash">/</span>
-            <span class="module-parent-title">Edit Task</span>
-        </span>
-        
-        <!-- <span class="pull-right" style="font-size:20px;">
-          <span class="projects-menu-item" (click)="projects_toggle==false?projects_toggle=true:projects_toggle=false;" ><i class="ri-file-line"></i></span>
-          <span class="projects-menu-item"><i class="ri-filter-line"></i></span>
-          <span class="projects-menu-item"><i class="ri-more-2-line"></i></span>
-        </span> -->
+<div *ngIf="selectedtask!=undefined" class="edit-task-form">
+  <div class="module-heading title ">
+    <!-- <span class="projects-back-button" routerLink="/pages/projects/listOfProjects" >
+        <i class="fa fa-angle-left" aria-hidden="true"></i>
+    </span> -->
+    <span class="module-back-button" routerLink="/pages/projects/projectdetails"  [queryParams]="{id:project_id}">
+        <i class="fas fa-arrow-left" aria-hidden="true"></i>
+    </span>
+    <span class="module-header-title">
+        <span class="module-parent-title">Tasks</span>
+        <span class="backslash">/</span>
+        <span class="module-parent-title">Edit Task</span>
+    </span>
+    
+    <!-- <span class="pull-right" style="font-size:20px;">
+      <span class="projects-menu-item" (click)="projects_toggle==false?projects_toggle=true:projects_toggle=false;" ><i class="ri-file-line"></i></span>
+      <span class="projects-menu-item"><i class="ri-filter-line"></i></span>
+      <span class="projects-menu-item"><i class="ri-more-2-line"></i></span>
+    </span> -->
+  </div>
+  <div class="bg-task row">
+    <!-- {{selectedtask.id}} /
+     -->
+    <div class="col-md-11 p-0">
+      <div class="d-flex">
+        <div class="task-name">{{taskcategory}} / &nbsp;</div>
+        <div><input type="text" class="form-control rpa-control task-name-input"
+          (change)="taskname=$event.target.value" [value]="taskname" ></div>
+      </div>
+      <div class="value">
+        <span class="level3">Last Modified By : {{lastModifiedBy}}</span>&nbsp;
+        <span>|</span>&nbsp;
+        <span class="level3">{{lastModifiedTimestamp |  date:'MMM dd, y, HH:mm:ss'}}</span>
+      </div>
     </div>
-    </div>
-    <div class="h-scroll">  
-    <div class="container-fluid" >
-      
-        <div class="bg-task">
-          <!-- {{selectedtask.id}} /
-           -->
-          <span class="task-name">{{taskcategory}} / {{taskname}}</span>
-          <div class="value">
-            <span class="level3">Last Modified By : {{lastModifiedBy}}</span>&nbsp;
-            <span>|</span>&nbsp;
-            <span class="level3">{{lastModifiedTimestamp |  date:'MMM dd, y, HH:mm:ss'}}</span>
+    <div class="col-md-1 p-0">
+      <label  class="h6 label-control" id="startdate" for="startDate">Start Date</label>
+      <span class="labelcont">{{startDate  | date}}</span>
+  </div>
+  
+  </div>
+</div>
+<div class="edit-task-body">
+    <div class="edit-task-body-content">
+      <form [formGroup]="updatetaskForm" (ngSubmit)="updatetask()">
+        <div class="row">
+          <div class="col-md-12 p-0">
+            <div class="form-fields col-md-3 p-0">
+              <label class="h6 label-control" id="assignee" for="assignee">Assignee</label>
+              <!-- <span class="labelcont">{{taskresource| userPipe : users_list}}</span> -->
+              <select [value]="taskresource" formControlName="resources" class="form-control rpa-control">
+                <option >Select Assignee</option>
+                <option *ngFor="let user of users_list" [value]="user.userId.userId">{{user.userId.firstName}} {{user.userId.lastName}}</option>
+              </select>
+            </div>
+            <div class="form-fields col-md-3 pr-0">
+              <label  class="h6 label-control"  id="enddate" for="endDate">Task Completion Date</label><br>
+              <!-- <span class="labelcont">{{endDate  | date}}</span> -->
+              <input type="date" class="form-control rpa-control" (change)="endDate=$event.target.value" [value]="endDate" formControlName="endDate">
+            </div>
+            <div class="form-fields col-md-3 pr-0">
+              <label id="status" class="h6 label-control" for="status">Status<span class="star">*</span></label>
+              <select formControlName="status" class="form-control data">
+                <option value="">Select Status</option>
+                <option value="New">New</option>
+                <option value="In Progress">In Progress</option>
+                <option value="In Review">In Review</option>
+                <option value="Done">Done</option>
+              </select>
+              <span *ngIf="updatetaskForm.get('status').invalid && updatetaskForm.get('status').touched"
+                class="errspan required">Status Required*</span>
+            </div>
+            <div class="form-fields col-md-3 pr-0">
+              <label id="priority" class="h6 label-control" for="priority">Priority<span class="star">*</span></label>
+              <select formControlName="priority" class="form-control data">
+                <option value="">Select Priority</option>
+                <option value="High">High</option>
+                <option value="Medium">Medium</option>
+                <option value="Low">Low</option>
+              </select>
+              <span *ngIf="updatetaskForm.get('priority').invalid && updatetaskForm.get('priority').touched"
+                class="errspan required">Priority Required*</span>
+            </div>                
           </div>
-          
-        </div>
-        <br>
-        <div class="container p-0" style="width:100%">
-          <form [formGroup]="updatetaskForm" (ngSubmit)="updatetask()">
-            <div class="row">
-              <div class="col-md-12">
-                <div class="form-fields col-md-3 pl-0">
-                  <label class="h6 label-control" id="assignee" for="assignee">Assignee</label>
-                  <span class="labelcont">{{taskresource| userPipe : users_list}}</span>
+          <div class="col-md-12 p-0">                
+            <div class="col-md-4 p-0">
+              <label   class="h6 label-control" id="percentage" for="percentage">Percentage Completed</label>
+              <!-- <ng5-slider [(value)]="slider" formControlName="percentageComplete" [options]="options"></ng5-slider> -->
+              <div class="labelcont">{{slider}}%<input type="range" min=0 max=100 (change)="slider=$event.target.value" formControlName="percentageComplete" [value]="slider"></div>
+            </div>
+            <div class="col-md-4 pr-0">
+              <label class="h6 label-control" id="summary" class="label-control">Summary</label>
+              <textarea class="form-control" formControlName="summary" rows="3" placeholder="Enter Summary">
+                        </textarea>
+            </div>
+            <div class="col-md-4 pr-0">
+              <label class="h6" id="description" class="label-control">Description</label>
+              <textarea class="form-control" formControlName="description" rows="3" placeholder="Enter Description">
+                        </textarea>
+            </div>
+          </div>
+          <div class="col-md-12 p-0">
+            <h4 class="module-sub-header-title">Activity</h4>
+            <mat-tab-group id="Project-dashboard-tabs" class="edit-task-tabs">
+            <mat-tab label="Comment">
+              <div class="t-comments-box">
+                <div class="add-comment">
+                <!-- <div class="res-circle " *ngIf="userdata.image=='' || userdata.image==null">{{firstletter|uppercase}}</div>
+                  <div *ngIf="(userdata.image!='' && userdata.image!=null)"><img class="res-circle-img " [src]="'data:image/jpeg;base64,'+userdata.image"></div> -->
+                  <div class="res-circle " *ngIf="profilePicture==false">{{firstletter|uppercase}}</div>
+                  <div *ngIf="profilePicture==true"><img class="res-circle-img " [src]="retrievedImage"></div>
+                  <div>
+                  </div>
+                  <div class="col-md-12 pr-0 comment-input">
+                    <input class=" form-control" type="text" #commentInput id="addcomment"
+                      placeholder="Add a comment.." />
+                    <div class="comment-send" id="sendcomment"  matTooltip="Send"  (click)="postcomments(commentInput.value)">
+                      <a class="newinntalx">
+                        <img src="../../../../assets/images/Projects/send.svg" class="default-img" />
+                        <img src="../../../../assets/images/Projects/send-blue.svg" class="hover-img" />
+                      </a>
+                      
+                      <!-- <i class="fab fa-telegram-plane" id="sendcomment" (click)="postcomments(commentInput.value)"></i> -->
+                    </div>
+                  </div>
                 </div>
-                <div class="form-fields col-md-3 pr-0">
-                  <label  class="h6 label-control" id="startdate" for="startDate">Start Date</label>
-                  <span class="labelcont">{{startDate  | date}}</span>
-                </div>
-                <div class="form-fields col-md-3 pr-0">
-                  <label  class="h6 label-control" id="enddate" for="endDate">End Date</label><br>
-                  <span class="labelcont">{{endDate  | date}}</span>
-                </div>
-                <div class="form-fields col-md-3 pr-0">
-                  <label   class="h6 label-control" id="percentage" for="percentage">Percentage Completed</label>
-                  <!-- <ng5-slider [(value)]="slider" formControlName="percentageComplete" [options]="options"></ng5-slider> -->
-                  <div class="labelcont">{{slider}}%<input type="range" min=0 max=100 (change)="slider=$event.target.value" formControlName="percentageComplete" [value]="slider"></div>
-                </div>
-              </div>
-             
-                <div class=" col-md-3 form-fields pr-0">
-                  <label id="status" class="h6 label-control" for="status">Status<span class="star">*</span></label>
-                  <select formControlName="status" class="form-control data">
-                    <option value="">Select Status</option>
-                    <option value="New">New</option>
-                    <option value="In Progress">In Progress</option>
-                    <option value="In Review">In Review</option>
-                    <option value="Done">Done</option>
-                  </select>
-                  <span *ngIf="updatetaskForm.get('status').invalid && updatetaskForm.get('status').touched"
-                    class="errspan required">Status Required*</span>
-                </div>
-                <div class="form-fields col-md-3 pr-0">
-                  <label id="priority" class="h6 label-control" for="priority">Priority<span class="star">*</span></label>
-                  <select formControlName="priority" class="form-control data">
-                    <option value="">Select Priority</option>
-                    <option value="High">High</option>
-                    <option value="Medium">Medium</option>
-                    <option value="Low">Low</option>
-                  </select>
-                  <span *ngIf="updatetaskForm.get('priority').invalid && updatetaskForm.get('priority').touched"
-                    class="errspan required">Priority Required*</span>
-                </div>
-                <div class=" col-md-3">
-                  <label class="h6 label-control" id="summary" class="label-control">Summary</label>
-                  <textarea class="form-control" formControlName="summary" rows="3" placeholder="Enter Summary">
-                            </textarea>
-                </div>
-                <div class=" col-md-3">
-                  <label class="h6" id="description" class="label-control">Description</label>
-                  <textarea class="form-control" formControlName="description" rows="3" placeholder="Enter Description">
-                            </textarea>
-                </div>
-            
-             
-              <div class="col-md-12">
-                <h4 class="module-sub-header-title">Activity</h4>
-                <mat-tab-group id="Project-dashboard-tabs" class="edit-task-tabs"
-                >
-                <mat-tab label="Comment">
-                  <div class="t-comments-box">
-                    <div class="add-comment">
-                    <!-- <div class="res-circle " *ngIf="userdata.image=='' || userdata.image==null">{{firstletter|uppercase}}</div>
-                      <div *ngIf="(userdata.image!='' && userdata.image!=null)"><img class="res-circle-img " [src]="'data:image/jpeg;base64,'+userdata.image"></div> -->
-                      <div class="res-circle " *ngIf="profilePicture==false">{{firstletter|uppercase}}</div>
-                      <div *ngIf="profilePicture==true"><img class="res-circle-img " [src]="retrievedImage"></div>
-                      <div>
+                <div class="comment comment-level-1" *ngIf="taskcomments.length!=0">
+                  <!-- <div  class="res-circle " *ngIf="userdata.image=='' || userdata.image==null">{{firstletter|uppercase}}</div> 
+                  <div  *ngIf="(userdata.image!='' && userdata.image!=null)">
+                    <img class="res-circle " [src]="'data:image/jpeg;base64,'+userdata.image" >
+                  </div> -->
+
+                  <div class="comment-content" *ngFor="let c of taskcomments;let i=index">
+                    <div class="comment-content-subdiv">
+                      <div class="userimage" *ngIf="(c.createdUserEmail|userImagePipe: users_list)as result">
+                        <div class="res-circle" *ngIf="result.length==3">
+                          {{c.createdUserEmail|userImagePipe:users_list}}
+                        </div>
+                        <div *ngIf="result.length>3">
+                          <img class="res-circle-img "src="{{c.createdUserEmail|userImagePipe: users_list}}">
+                        </div>
                       </div>
-                      <div class="form-fields col-md-12 pr-0 comment-input">
-                        <input class=" form-control" type="text" #commentInput id="addcomment"
-                          placeholder="Add a comment.." />
-                        <div class="comment-send" id="sendcomment"  matTooltip="Send"  (click)="postcomments(commentInput.value)">
-                          <a class="newinntalx">
-                            <img src="../../../../assets/images/Projects/send.svg" class="default-img" />
-                            <img src="../../../../assets/images/Projects/send-blue.svg" class="hover-img" />
-                          </a>
-                          
-                          <!-- <i class="fab fa-telegram-plane" id="sendcomment" (click)="postcomments(commentInput.value)"></i> -->
+                      <div class="w-100">
+                        <div class="row d-flex">
+                          <div class="col-md-10 pl-0 comment-name">
+                            {{c.createdBy}} {{c.createdTimestamp | date :'MMM dd, y, HH:mm:ss'}}
+                          </div>
+                          <div class="col-md-2 pr-0 comment-action" *ngIf="i!=commentnumber">
+                            <button type="button" (click)="editComments(c.comments,i)">
+                              Edit
+                            </button>
+                          </div>
+                        </div>
+                        <div class="commentsadded" *ngIf="i!=commentnumber">
+                          {{c.comments}}
                         </div>
                       </div>
                     </div>
-                    <div class="comment comment-level-1" *ngIf="taskcomments.length!=0">
-                      <!-- <div  class="res-circle " *ngIf="userdata.image=='' || userdata.image==null">{{firstletter|uppercase}}</div> 
-                      <div  *ngIf="(userdata.image!='' && userdata.image!=null)">
-                        <img class="res-circle " [src]="'data:image/jpeg;base64,'+userdata.image" >
-                      </div> -->
-
-                      <div class="comment-content" *ngFor="let c of taskcomments;let i=index">
-                        <div class="comment-content-subdiv">
-                          <div class="userimage py-5" *ngIf="(c.createdUserEmail|userImagePipe: users_list)as result">
-                            <div class="res-circle" *ngIf="result.length==3">
-                              {{c.createdUserEmail|userImagePipe:users_list}}
-                            </div>
-                            <div *ngIf="result.length>3">
-                              <img class="res-circle-img "src="{{c.createdUserEmail|userImagePipe: users_list}}">
-                            </div>
-                          </div>
-                          <div class="w-100">
-                            <div class="row d-flex">
-                              <div class="col-md-10 pl-0 comment-name">
-                                {{c.createdBy}} {{c.createdTimestamp | date :'MMM dd, y, HH:mm:ss'}}
-                              </div>
-                              <div class="col-md-2 pr-0 comment-action" *ngIf="i!=commentnumber">
-                                <button type="button" (click)="editComments(c.comments,i)">
-                                  Edit
-                                </button>
-                              </div>
-                            </div>
-                            <div class="commentsadded" *ngIf="i!=commentnumber">
-                              {{c.comments}}
-                            </div>
-                          </div>
-                        </div>
 
 
-                        <div class="updatecomments" *ngIf="(showeditcomment && i==commentnumber)">
-                          <div class="form-fields col-md-12 p-0">
-                            <input type="text" name="comment" class="form-control" formControlName="editcomment"
-                              placeholder="Add Comment..." />
-                          </div>
-                          <div class="modal-footer modelprfooter">
-                            <div class="pull-right">
-                              <button id="updatecancelcomment" type="button" class="btn btn-default"
-                                (click)="posteditcancelcomment()">
-                                Cancel
-                              </button>
-                              <button id="updatesavecomment" type="button" class="btn btn-primary btn-update"
-                                (click)="updatecomment(c.id)">
-                                Save
-                              </button>
-                              <!-- <div class="col-md-6" >
-                                          <button type="button" class="btn btn-primary" (click)="posteditcancelcomment()">Cancel</button>
-                                        </div> -->
-                            </div>
-                          </div>
-                        </div>
-                        <!-- <div class="comment-action" *ngIf="i!=commentnumber">
-                                        <button type="button" (click)="editComments(c.comments,i)" matTooltip="Edit Comment" 
-                                            style="color:red;cursor:pointer" >
-                                            Edit
-                                        </button>
+                    <div class="updatecomments" *ngIf="(showeditcomment && i==commentnumber)">
+                      <div class="form-fields col-md-12 p-0">
+                        <input type="text" name="comment" class="form-control" formControlName="editcomment"
+                          placeholder="Add Comment..." />
+                      </div>
+                      <div class="modal-footer modelprfooter">
+                        <div class="pull-right">
+                          <button id="updatecancelcomment" type="button" class="btn btn-default"
+                            (click)="posteditcancelcomment()">
+                            Cancel
+                          </button>
+                          <button id="updatesavecomment" type="button" class="btn btn-primary btn-update"
+                            (click)="updatecomment(c.id)">
+                            Save
+                          </button>
+                          <!-- <div class="col-md-6" >
+                                      <button type="button" class="btn btn-primary" (click)="posteditcancelcomment()">Cancel</button>
                                     </div> -->
+                        </div>
                       </div>
-
                     </div>
-
+                    <!-- <div class="comment-action" *ngIf="i!=commentnumber">
+                                    <button type="button" (click)="editComments(c.comments,i)" matTooltip="Edit Comment" 
+                                        style="color:red;cursor:pointer" >
+                                        Edit
+                                    </button>
+                                </div> -->
                   </div>
 
-                </mat-tab>
-                <mat-tab label="History">
+                </div>
 
-                  <ul class="historydiv">
-                    <li *ngFor="let history of taskhistory">
+              </div>
 
-                      <div class="row">
-                        <div class="col-sm-1 pr-0"
-                          *ngIf="(history.lastModifiedUserEmail|userImagePipe: users_list)as result">
-                          <div class="res-circle " *ngIf="result.length==3">
-                            {{history.lastModifiedUserEmail|userImagePipe: users_list}}
+            </mat-tab>
+            <mat-tab label="History">
+              <ul class="historydiv">
+                <li *ngFor="let history of taskhistory">
+                  <div class="ET-history">
+                    <div class=""
+                      *ngIf="(history.lastModifiedUserEmail|userImagePipe: users_list)as result">
+                      <div class="res-circle " *ngIf="result.length==3">
+                        {{history.lastModifiedUserEmail|userImagePipe: users_list}}
+                      </div>
+                      <div *ngIf="result.length>3">
+                        <img class="res-circle-img"
+                          src="{{history.lastModifiedUserEmail|userImagePipe: users_list}}">
+                      </div>
+                    </div>
+                    <div class="histcontent">
+                      {{history.message}}{{history.lastModifiedTimestamp | date:'MMM dd, y, HH:mm:ss'}}
+                    </div>
+                  </div>
+
+                  <!-- <div> 
+                                  <div class="usertaskimage" *ngIf="(history.lastModifiedUserEmail|userImagePipe: users_list)as result">
+                                    <div  class="res-circle " *ngIf="result.length==3">{{history.lastModifiedUserEmail|userImagePipe: users_list}}</div> 
+                                    <div  *ngIf="result.length>3">
+                                      <img class="res-circle " src="{{history.lastModifiedUserEmail|userImagePipe: users_list}}" >
+                                    </div>
+                                  </div>
+                                </div>
+                              <br>
+                              <div>
+                              {{history.message}}{{history.lastModifiedTimestamp | date:'MMM dd, y, HH:mm:ss'}}
+                            </div> -->
+
+                </li>
+              </ul>
+              <!-- <div class="comment-content" > 
+                          
+                            </div> -->
+                            <div class="text-center" *ngIf="taskhistory.length==0">
+                              <h4><b>No Records Found</b></h4>
+                            </div>
+            </mat-tab>
+            <mat-tab label="Attachments">
+              <div class="row attachmentdiv">
+                <span class="Attachmentsicons" *ngIf="hidetaskdeletedownload">
+                  <span class="projects-menu-item gridicon"  (click)="onDeleteSelectedItems($event)"   matTooltip="Delete" >
+                    <img src="../../../../assets/images/Projects/delete-black.svg" class="default-img">
+                    <img src="../../../../assets/images/Projects/delete-red.svg" class="hover-img">
+                  </span> 
+                  
+                  <span class="projects-menu-item gridicon"  (click)="onDownloadSelectedItems($event)"   matTooltip="Download" >
+                    <img src="../../../assets/images/BPMS/download.svg" class="default-img">
+                    <img src="../../../../assets/images/Projects/Download.svg" class="hover-img">
+                  </span>
+                </span>
+                <!-- <table class="table" *ngIf="(taskattacments!=null && taskattacments.length!=0)">
+                    <thead>
+                      <tr>
+                        <th class="text-left">File Name</th>
+                        <th class="text-left">File Size (MB)</th>
+                        <th class="text-left">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        *ngFor="let attachments of taskattacments | paginate: { itemsPerPage: 2, currentPage: att } ">
+                        <td>{{attachments.fileName}}</td>
+                        <td class="text-left">{{attachments.fileSize | fileSizePipe}}</td>
+                        <td class="text-left">
+                          <span class="clickable" (click)="downloadTaskAttachment(attachments)">
+                            <img src="../../../../assets/images/Projects/Download.svg" class="testplus" />
+                          </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <pagination-controls *ngIf="(taskattacments!=null && taskattacments.length!=0)" class="pull-right"
+                    (pageChange)="att = $event"></pagination-controls> -->
+                <table mat-table #sort11="matSort" [dataSource]="dataSource3" matSort class="projecttable table" id="autotable">
+                      <ng-container matColumnDef="check">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                            <input [disabled]="filecheckeddisabled" type="checkbox" id="Credcheckall" [checked]="filecheckflag" (change)="filecheckAll($event)">
+                        </th>
+                        <td mat-cell *matCellDef="let element; let i = index">
+                            <input type="checkbox" [checked]="element.checked" (change)="filechecktoggle(element.id, $event)"> 
+                        </td>
+                      </ng-container>    
+                      
+                      <ng-container matColumnDef="fileName">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>File Name</th>
+                        <td mat-cell *matCellDef="let element">
+                          <span *ngIf="element.fileName!=null" [matTooltip]="element.fileName">{{element.fileName}}</span>
+                          <span *ngIf="element.fileName==null">---</span>                  
+                        </td>   
+                      </ng-container>
+              
+                      <ng-container matColumnDef="fileSize">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>File Size (MB)</th>
+                        <td mat-cell *matCellDef="let element">
+                          <span *ngIf="element.fileSize!=null" [matTooltip]="element.fileName">{{element.fileSize | fileSizePipe}}</span>
+                            <span *ngIf="element.fileSize==null">---</span>
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="action">
+                        <th mat-header-cell *matHeaderCellDef> Actions</th>
+                        <td mat-cell *matCellDef="let element" class="action-link tablacs"> 
+                          <span class="gridicon"  (click)="onDeleteItem(element.id,element.fileName)"   matTooltip="Delete" >
+                            <img src="../../../../../assets/images/Projects/delete-black.svg" class="default-img">
+                            <img src="../../../../../assets/images/Projects/delete-red.svg" class="hover-img">
+                          </span> 
+
+                          <span class="gridicon"  (click)="onDownloadItem(element.fileName)"   matTooltip="Download" >
+                            <img src="../../../assets/images/BPMS/download.svg" class="default-img">
+                            <img src="../../../../assets/images/Projects/Download.svg" class="hover-img">
+                          </span> 
+                          
+                        </td>
+                      </ng-container>
+
+                      <ng-container matColumnDef="Loading">
+                        <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
+                            Loading
+                        </td>
+                      </ng-container>
+      
+                      <ng-container matColumnDef="noData">
+                          <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
+                              <b>No Records Found</b>
+                          </td>
+                      </ng-container>
+                      <tr mat-header-row *matHeaderRowDef="displayedColumns3; sticky: true"></tr>
+                      <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
+                      <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['Loading']" [ngClass]="{'hide':dataSource3!=null}"></tr>
+                      <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(dataSource3!=null && dataSource3.data.length==0)}"></tr>
+                </table>
+                <mat-paginator class="newpaginationdiv" #paginator101 [pageSize]="2" [showFirstLastButtons]="true">
+                </mat-paginator>
+              </div>                  
+            </mat-tab>
+            <mat-tab label="Resources">
+              <div class="edit-resourcesdiv">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th class="text-left">Name</th>
+                      <th class="text-left">Role</th>
+                      <th class="text-left">Last Updated</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style="padding-left: 200px;width: 10px;">
+                        <span *ngIf="(taskresource|userImagePipe: users_list)as result">
+                          <div class="res-circle" *ngIf="result.length==3">
+                            {{taskresource|userImagePipe: users_list}}
                           </div>
                           <div *ngIf="result.length>3">
-                            <img class="res-circle-img"
-                              src="{{history.lastModifiedUserEmail|userImagePipe: users_list}}">
+                            <img class="res-circle-img" src="{{taskresource|userImagePipe: users_list}}">
                           </div>
-                        </div>
-                        <div class="col-sm-11 p-0 histcontent">
-                          {{history.message}}{{history.lastModifiedTimestamp | date:'MMM dd, y, HH:mm:ss'}}
-                        </div>
-                      </div>
+                        </span>
+                      </td>
+                      <td style="width: 350px;" class="text-left">{{taskresource| userPipe : users_list}}</td>
+                      <!-- <td style="text-align:center">{{roles?roles:'-'}}</td> -->
+                      <td style="width: 350px;" class="text-left">{{roles?roles:'-'}}</td>
+                      <td class="text-left">{{lastModifiedTimestamp  | date:'MMM dd, y, HH:mm:ss'}}</td>
+                    </tr>
+                  </tbody>
 
-                      <!-- <div> 
-                                      <div class="usertaskimage" *ngIf="(history.lastModifiedUserEmail|userImagePipe: users_list)as result">
-                                        <div  class="res-circle " *ngIf="result.length==3">{{history.lastModifiedUserEmail|userImagePipe: users_list}}</div> 
-                                        <div  *ngIf="result.length>3">
-                                          <img class="res-circle " src="{{history.lastModifiedUserEmail|userImagePipe: users_list}}" >
-                                        </div>
-                                      </div>
-                                    </div>
-                                  <br>
-                                  <div>
-                                  {{history.message}}{{history.lastModifiedTimestamp | date:'MMM dd, y, HH:mm:ss'}}
-                                </div> -->
-
-                    </li>
-                  </ul>
-                  <!-- <div class="comment-content" > 
-                              
-                                </div> -->
-                </mat-tab>
-                <mat-tab label="Attachments">
-                  <div class="row attachmentdiv">
-                    <span class="pull-right">
-                      <span class="projects-menu-item gridicon"  (click)="onDeleteSelectedItems($event)"   matTooltip="Delete" >
-                        <img src="../../../../assets/images/Projects/delete-black.svg" class="default-img">
-                        <img src="../../../../assets/images/Projects/delete-red.svg" class="hover-img">
-                      </span> 
-                      
-                      <span class="projects-menu-item gridicon"  (click)="onDownloadSelectedItems($event)"   matTooltip="Download" >
-                        <img src="../../../assets/images/BPMS/download.svg" class="default-img">
-                        <img src="../../../../assets/images/Projects/Download.svg" class="hover-img">
-                      </span>
-                      </span>
-                    <div class="col-md-12 p-0">
-                    <!-- <table class="table" *ngIf="(taskattacments!=null && taskattacments.length!=0)">
-                        <thead>
-                          <tr>
-                            <th class="text-left">File Name</th>
-                            <th class="text-left">File Size (MB)</th>
-                            <th class="text-left">Actions</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr
-                            *ngFor="let attachments of taskattacments | paginate: { itemsPerPage: 2, currentPage: att } ">
-                            <td>{{attachments.fileName}}</td>
-                            <td class="text-left">{{attachments.fileSize | fileSizePipe}}</td>
-                            <td class="text-left">
-                              <span class="clickable" (click)="downloadTaskAttachment(attachments)">
-                                <img src="../../../../assets/images/Projects/Download.svg" class="testplus" />
-                              </span>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                      <pagination-controls *ngIf="(taskattacments!=null && taskattacments.length!=0)" class="pull-right"
-                        (pageChange)="att = $event"></pagination-controls> -->
-
-                        <table mat-table #sort11="matSort" [dataSource]="dataSource3" matSort class="projecttable table" id="autotable">
-                          <ng-container matColumnDef="check">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                                <input [disabled]="filecheckeddisabled" type="checkbox" id="Credcheckall" [checked]="filecheckflag" (change)="filecheckAll($event)">
-                            </th>
-                            <td mat-cell *matCellDef="let element; let i = index">
-                                <input type="checkbox" [checked]="element.checked" (change)="filechecktoggle(element.id, $event)"> 
-                            </td>
-                          </ng-container>    
-                          
-                          <ng-container matColumnDef="fileName">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header>File Name</th>
-                            <td mat-cell *matCellDef="let element">
-                              <span *ngIf="element.fileName!=null" [matTooltip]="element.fileName">{{element.fileName}}</span>
-                              <span *ngIf="element.fileName==null">---</span>                  
-                            </td>   
-                          </ng-container>
-                  
-                          <ng-container matColumnDef="fileSize">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header>File Size (MB)</th>
-                            <td mat-cell *matCellDef="let element">
-                              <span *ngIf="element.fileSize!=null" [matTooltip]="element.fileName">{{element.fileSize | fileSizePipe}}</span>
-                                <span *ngIf="element.fileSize==null">---</span>
-                            </td>
-                          </ng-container>
-
-                          <ng-container matColumnDef="action">
-                            <th mat-header-cell *matHeaderCellDef> Actions</th>
-                            <td mat-cell *matCellDef="let element" class="action-link tablacs"> 
-                              <span class="gridicon"  (click)="onDeleteItem(element.id,element.fileName)"   matTooltip="Delete" >
-                                <img src="../../../../../assets/images/Projects/delete-black.svg" class="default-img">
-                                <img src="../../../../../assets/images/Projects/delete-red.svg" class="hover-img">
-                              </span> 
-
-                              <span class="gridicon"  (click)="onDownloadItem(element.fileName)"   matTooltip="Download" >
-                                <img src="../../../assets/images/BPMS/download.svg" class="default-img">
-                                <img src="../../../../assets/images/Projects/Download.svg" class="hover-img">
-                              </span> 
-                              
-                            </td>
-                          </ng-container>
-
-                          <ng-container matColumnDef="Loading">
-                            <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
-                                Loading
-                            </td>
-                          </ng-container>
-          
-                          <ng-container matColumnDef="noData">
-                              <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
-                                  No Records Found
-                              </td>
-                          </ng-container>
-                          <tr mat-header-row *matHeaderRowDef="displayedColumns3; sticky: true"></tr>
-                          <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
-                          <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['Loading']" [ngClass]="{'hide':dataSource3!=null}"></tr>
-                          <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(dataSource3!=null && dataSource3.data.length==0)}"></tr>
-                        </table>
-                    </div>
-                  </div>
-                  <mat-paginator class="newpaginationdiv" #paginator101 [pageSize]="2" [showFirstLastButtons]="true">
-                  </mat-paginator>
-                </mat-tab>
-                <mat-tab label="Resources">
-                  <div class="edit-resourcesdiv">
-                    <table class="table">
-                      <thead>
-                        <tr>
-                          <th></th>
-                          <th class="text-left">Name</th>
-                          <th class="text-left">Role</th>
-                          <th class="text-left">Last Updated</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>
-                            <span *ngIf="(taskresource|userImagePipe: users_list)as result">
-                              <div class="res-circle" *ngIf="result.length==3">
-                                {{taskresource|userImagePipe: users_list}}
-                              </div>
-                              <div *ngIf="result.length>3">
-                                <img class="res-circle-img" src="{{taskresource|userImagePipe: users_list}}">
-                              </div>
-                            </span>
-                          </td>
-                          <td>{{taskresource| userPipe : users_list}}</td>
-                          <!-- <td style="text-align:center">{{roles?roles:'-'}}</td> -->
-                          <td class="text-left">{{roles?roles:'-'}}</td>
-                          <td class="text-left">{{lastModifiedTimestamp  | date:'MMM dd, y, HH:mm:ss'}}</td>
-                        </tr>
-                      </tbody>
-
-                    </table>
-                  </div>
-                </mat-tab>
-              </mat-tab-group>
+                </table>
               </div>
-            </div>
-          </form>
-          <div class="modal-footer modelprfooter">
-            <div class="pull-right">
-              <button [disabled]="updatetaskForm.invalid" routerLink="/pages/projects/projectdetails"  [queryParams]="{id:project_id}" class="btn btn-default">Cancel</button>
-              <!-- <button disabled (click)="canceltaskform()" class="btn btn-primary">Cancel</button> -->
-              <button [disabled]="updatetaskForm.invalid" (click)="updatetask()"
-                class="btn btn-primary btn-update">Update</button>
-            </div>
+            </mat-tab>
+          </mat-tab-group>
           </div>
         </div>
+      </form>
+      <div class="modal-footer modelprfooter">
+        <div class="pull-right">
+          <button [disabled]="updatetaskForm.invalid" routerLink="/pages/projects/projectdetails"  [queryParams]="{id:project_id}" class="btn btn-default">Cancel</button>
+          <!-- <button disabled (click)="canceltaskform()" class="btn btn-primary">Cancel</button> -->
+          <button [disabled]="updatetaskForm.invalid" (click)="updatetask()"
+            class="btn btn-primary btn-update">Update</button>
+        </div>
       </div>
-      </div>
-   
-  
+    </div>
+</div>

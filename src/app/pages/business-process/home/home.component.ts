@@ -47,6 +47,8 @@ export class BpsHomeComponent implements OnInit {
   autosavedDiagramVersion = [];
   pendingStatus='PENDING APPROVAL';
   userRole;
+  systemAdmin:Boolean=false;
+  userEmail:any="";
   savedDiagrams_list:any[]=[];
   isButtonVisible:boolean = false;
 
@@ -68,6 +70,8 @@ export class BpsHomeComponent implements OnInit {
       this.isButtonVisible = true;
       this.isAdminUser = true;
     }
+    this.systemAdmin=this.userRole.includes("System Admin");
+    this.userEmail=localStorage.getItem("ProfileuserId");
     this.isApproverUser = this.userRole.includes('Process Architect')
     this.isLoading = true;
     this.dt.changeParentModule({"route":"/pages/businessProcess/home", "title":"Business Process Studio"});
@@ -91,6 +95,10 @@ export class BpsHomeComponent implements OnInit {
       console.log(this.saved_diagrams);
       this.savedDiagrams_list=this.saved_diagrams;
       this.assignPagenation(this.saved_diagrams);
+
+      let selected_category=localStorage.getItem("bps_search_category");
+      this.categoryName=selected_category?selected_category:'allcategories';
+      this.searchByCategory(this.categoryName);
     },
     
     (err) => {
@@ -219,6 +227,7 @@ this.dt.bpsHeaderValues('');
     })
   }
   searchByCategory(category) {      // Filter table data based on selected categories
+    localStorage.setItem('bps_search_category',category);
     var filter_saved_diagrams= []
     this.saved_diagrams=[]
     if (category == "allcategories") {
@@ -370,6 +379,17 @@ this.assignPagenation(filtered)
     const rows$ = of(data);
     this.totalRows$ = rows$.pipe(map(rows => rows.length));
     this.displayedRows$ = rows$.pipe(sortRows(sortEvents$), paginateRows(pageEvents$));
+    this.paginator.firstPage();
+  }
+
+  getNotationStatus(value){
+    if(value=="PENDING"){
+      return "PENDING APPROVAL"
+    }else if(value=="INPROGRESS"){
+      return "In Progress"
+    }else {
+      return value;
+    }
   }
  
 }

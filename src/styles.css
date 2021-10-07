@@ -301,7 +301,7 @@ div[class^='diagram_container'] .djs-container svg {
 
 button:disabled {
   cursor: no-drop;
-  background-color: grey;
+  background-color: #d1d1d1;
 }
 
 .eiap-btn {
@@ -574,7 +574,7 @@ body {
 }
 
 .node {
-  fill: #fff;
+  /* fill: #fff; */
 }
 
 .edgePath path {
@@ -754,8 +754,8 @@ div.tipsy.tipsy-e {
 }
 
 foreignObject {
-  width: 100px !important;
-  padding-right: 90px !important;
+  width: 140px !important;
+  padding-right: 125px !important;
 }
 
 .breadcrumb>li+li:before {
@@ -1138,7 +1138,7 @@ foreignObject {
 .maintitle sub {
   top: 0px;
   margin-left: 5px;
-  font-size: 16px;
+  font-size: 18px;
 }
 
 app-home,
@@ -1472,7 +1472,7 @@ select.form-control {
   background-repeat: no-repeat;
   cursor: pointer;
 }
-
+.createform input[type="date"]::-webkit-calendar-picker-indicator,
 .maindivfoprm input[type="date"]::-webkit-calendar-picker-indicator,
 .modelprbody input[type="date"]::-webkit-calendar-picker-indicator {
   width: 16px;
@@ -1630,15 +1630,21 @@ select.form-control {
 }
 
 .bpspaginationdiv .mat-form-field-wrapper,
-.newpaginationdiv .mat-form-field-wrapper {
+.newpaginationdiv .mat-form-field-wrapper, .rpapaginationdiv .mat-form-field-wrapper{
   padding-bottom: 0px !important;
 }
 
 .bpspaginationdiv .mat-form-field-flex,
-.newpaginationdiv .mat-form-field-flex {
+.newpaginationdiv .mat-form-field-flex, .rpapaginationdiv .mat-form-field-flex {
   height: 20px !important;
 }
 
+.rpapaginationdiv{
+    position: absolute;
+    /* bottom: 0px; */
+    bottom: -28px;
+    width: 100%;
+  }
 /* span.actions-seperator {
   margin: 0px 3px;
   font-size: 15px;
@@ -1695,6 +1701,7 @@ img.testplusupload {
   background: #eef2f5;
   color: #00a1e3;
   margin-right: 8px;
+  font-size: 14px;
 }
 
 .module-back-button:hover i {
@@ -2343,15 +2350,16 @@ th.mat-header-cell {
 
 /* RPA Module New Styles */
 .rpa-content-div {
-  padding: 10px;
-  overflow: hidden auto;
-  height: calc(100% - 48px);
+  /* padding: 10px; */
+  overflow:  auto;
+  height: calc(100% - 0px);
 }
 /* RPA Module New Styles */
 
 #exportSVGtoPDF .edgeLabels g.label {
   color: #000 !important;
   font-size: 24px !important;
+  width: 100px;
 }
 
 .mat-progress-bar {
@@ -2421,6 +2429,7 @@ th.mat-header-cell {
 }
 .rpa-actioncontent .mat-drawer-inner-container {
   /* padding: 0px 0px 10px 10px!important; */
+  overflow:hidden;
 }
 .section .mat-expansion-indicator::after {
   opacity: 0.5 !important;
@@ -2601,7 +2610,38 @@ span.pdicon {
   right: 13px;
   top: 28px;
 }
-
+#exportSVGtoPDF .node g.label{
+  font-weight: 400 !important;
+}
+.bpmn-icon-color::before {
+  content: url("assets/images/BPMS/brush1.svg") !important;
+}
 .newexecbots_progress .mat-progress-bar-fill::after {
   background: none;
+}
+
+/*@media (max-width: 1600px) {
+  .cell10 {
+    width: 3% !important;
+  }
+  .cell2, .cell3, .cell4, .cell5, .cell6, .cell7, .cell8, .cell10  {
+    font-size: 14px !important;
+  }
+  }*/
+
+
+@media (min-width: 1800px) {
+  .cell10 {
+    width: 8% !important;
+  }
+}
+
+@media (min-width: 1920px) {
+.cell10 {
+    width: 22% !important;
+  }
+}
+ 
+.mat-tab-body-wrapper {
+   overflow: auto !important;
 }

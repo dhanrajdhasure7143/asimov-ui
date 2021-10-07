@@ -25,3 +25,9 @@ button:disabled {
     cursor: not-allowed;
     pointer-events: all !important;
     }
+
+
+    .modal-body{
+        max-height: calc(100vh - 160px) !important;
+        overflow-y: auto !important;
+    }

@@ -202,12 +202,12 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
             let response:any=data;
             if(response.status!=undefined)
             {
-                Swal.fire(response.status,"","success");
+                Swal.fire("Success",response.status,"success");
                 $("#close_bot_"+this.botState.botName).click();
             }
             else
             {
-                Swal.fire(response.errorMessage,"","error")
+                Swal.fire("Error",response.errorMessage,"error")
             }
           })
         }
@@ -232,7 +232,7 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
       if(checkbotres==false)
       {
         this.rpa_studio.spinner.hide();
-        Swal.fire("Please check connections","","warning");
+        Swal.fire("Warning","Please check connections","warning");
       }
       else
       {
@@ -243,7 +243,7 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
         if(this.savebotrespose.botId!=undefined)
         {
           this.botState=data;
-          Swal.fire("Bot saved successfully !!","","success");
+          Swal.fire("Success","Bot saved successfully !!","success");
           this.startbot=true;
           this.pausebot=false;
           this.resumebot=false;
@@ -258,7 +258,7 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
         }
         else
         {
-          Swal.fire("Bot failed to save","","error");
+          Swal.fire("Error","Bot failed to save","error");
           this.childBotWorkspace.disable=false;
         }
       });
@@ -270,7 +270,7 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
        if(checkbot==false)
        {
         this.rpa_studio.spinner.hide();
-        Swal.fire("Please check connections","","warning");
+        Swal.fire("Warning","Please check connections","warning");
        }else
        {
          await checkbot.subscribe(data=>{
@@ -283,13 +283,13 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
             this.selectedversion=response.version;
             this.rpa_studio.spinner.hide();
             this.getVersionlist();
-            Swal.fire("Bot updated successfully","","success")
+            Swal.fire("Success","Bot updated successfully","success")
             this.childBotWorkspace.uploadfile(this.finalenv);
           }
           else
           {
             this.rpa_studio.spinner.hide();
-            Swal.fire(response.errorMessage,"","warning");
+            Swal.fire("Error",response.errorMessage,"error");
           }
         });
       }
@@ -302,17 +302,19 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
     let response:any;
     if(this.savebotrespose!=undefined)
     {
+      this.rpa_studio.spinner.show();
       this.rest.execution(this.savebotrespose.botId).subscribe(res =>{
         response = res;
+        this.rpa_studio.spinner.hide();
         if(response.errorMessage==undefined && response.errorCode==undefined)
         {
           this.startbot=false;
           this.pausebot=true;
           this.resumebot=false;
-          Swal.fire(response.status,"","success")
+          Swal.fire("Success",response.status,"success")
         }else
         {
-          Swal.fire(response.errorMessage,"","warning");
+          Swal.fire("Error",response.errorMessage,"error");
         }
       })
     }
@@ -322,17 +324,19 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
   {
     if(this.savebotrespose!=undefined)
     {
+      this.rpa_studio.spinner.show();
       this.rest.getUserPause(this.savebotrespose.botId).subscribe(data => {
         let response:any = data;
+        this.rpa_studio.spinner.hide();
         if(response.status!=undefined)
         {
           this.pausebot=false;
           this.startbot=false;
           this.resumebot=true;
-          Swal.fire(response.status,"","success")
+          Swal.fire("Success",response.status,"success")
         }else
         {
-          Swal.fire(response.errorMessage,"","warning");
+          Swal.fire("Error",response.errorMessage,"error");
         }
       });
     }
@@ -341,14 +345,16 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
   resumeBot() {
     if(this.savebotrespose!=undefined)
     {
+      this.rpa_studio.spinner.show();
       this.rest.getUserResume(this.savebotrespose.botId).subscribe(data => {
         let response:any = data;
+        this.rpa_studio.spinner.hide();
         if(response.status!=undefined)
         {
           this.pausebot=true;
           this.startbot=false;
           this.resumebot=false;
-          Swal.fire(response.status,"","success");
+          Swal.fire("Success",response.status,"success");
         }
       })
     }
@@ -358,18 +364,20 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
     if(this.savebotrespose!=undefined)
     {
         let data:any=""
+        this.rpa_studio.spinner.show();
         this.rest.stopbot(this.savebotrespose.botId,data).subscribe(res=>{
           let response:any=res;
+          this.rpa_studio.spinner.hide();
           if(response.status!=undefined)
           {
             this.startbot=true;
             this.pausebot=false;
             this.resumebot=false;
-            Swal.fire(response.status,"","success");
+            Swal.fire("Success",response.status,"success");
           }
           else
           {
-            Swal.fire(response.errorMessage,"","warning");
+            Swal.fire("Error",response.errorMessage,"error");
           }
         })
     }
@@ -491,8 +499,10 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
    let response: any;
    let log:any=[];
    this.logresponse=[];
+   this.rpa_studio.spinner.show()
    this.rest.getviewlogdata(this.savebotrespose.botId,this.savebotrespose.version).subscribe(data =>{
        this.logresponse=data;
+       this.rpa_studio.spinner.hide()
        if(this.logresponse.length >0)
        {
          this.respdata1 = false;
@@ -546,8 +556,10 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
    let responsedata:any=[];
    let logbyrunidresp:any;
    let resplogbyrun:any=[];
+   this.rpa_studio.spinner.show();
    this.rest.getViewlogbyrunid(this.savebotrespose.botId,this.savebotrespose.version,runid).subscribe((data)=>{
      responsedata = data;
+     this.rpa_studio.spinner.hide();
      if(responsedata.length >0)
      {
        this.respdata2 = false;
@@ -640,7 +652,11 @@ loadpredefinedbot(botId)
 
   rpa_assignbot(botId,taskId)
   {
+    
+   this.rpa_studio.spinner.show();
     this.rest.assign_bot_and_task(botId,taskId, "EPSoft","Automated").subscribe(data=>{
+      
+      this.rpa_studio.spinner.hide();
       let response:any=data;
       if(response.status!=undefined)
       {
@@ -724,8 +740,11 @@ loadpredefinedbot(botId)
 
   exportbot(bot)
   {
+    this.rpa_studio.spinner.show();
     this.rest.bot_export(bot.botId).subscribe((data)=>{
-      console.log(data)
+      
+        this.rpa_studio.spinner.hide();
+        console.log(data)
         const linkSource = `data:application/txt;base64,${data}`;
         const downloadLink = document.createElement('a');
         document.body.appendChild(downloadLink);
@@ -734,7 +753,7 @@ loadpredefinedbot(botId)
         downloadLink.target = '_self';
         downloadLink.download = bot.botName+"-V"+bot.version+".sql";
         downloadLink.click(); 
-        Swal.fire("Bot Exported Successfully","","success");
+        Swal.fire("Success","Bot Exported Successfully","success");
     })
   }
 
@@ -767,7 +786,7 @@ loadpredefinedbot(botId)
         if(resp.status !=undefined)
         {
             this.close_c_env();
-            Swal.fire("Environment added successfully","","success");
+            Swal.fire("Success","Environment added successfully","success");
             //document.getElementById("rpa_createenvironment"+"_"+this.botState.botName).style.display='none';
             this.insertForm.reset();
             this.insertForm.get("portNumber").setValue("22");
@@ -775,16 +794,15 @@ loadpredefinedbot(botId)
             this.getEnvironmentlist()
         }else if(resp.errorMessage!=undefined)
         {
-          Swal.fire(resp.errorMessage,"","error");
+          Swal.fire("Error",resp.errorMessage,"error");
         }
       },()=>{
         this.rpa_studio.spinner.hide();
-        Swal.fire("Something went wrong","","warning");
+        Swal.fire("Error","Something went wrong","error");
       });
     }
     else
     {
-      alert("Invalid Form")
     }
   }
 

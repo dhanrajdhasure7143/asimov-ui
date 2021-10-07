@@ -41,3 +41,8 @@
 .form-scroll {
     overflow: auto;
   }
+  .prj-crt-form {
+    margin-right: -15px !important;
+    margin-left: -15px !important;
+    padding-top: 15px !important;
+  }

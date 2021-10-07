@@ -30,11 +30,15 @@ export class BusinessProcessComponent implements AfterViewChecked {
   hasConformance:boolean = false;
   reSize:boolean=false;
   process_id:any;
+  isUploaded:boolean=false;
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private cdRef: ChangeDetectorRef, private dt: DataTransferService,private rest:RestApiService,
               @Inject(APP_CONFIG) private config, ) { }
 
   ngOnInit(){
+    $('.link').removeClass('active');
+    $('#bps').addClass("active"); 
+    $('#expand_menu').addClass("active");   
     localStorage.setItem("isheader","false");
     this.logged_User=localStorage.getItem("firstName")+' '+localStorage.getItem("lastName")
     this.userRole = localStorage.getItem("userRole")
@@ -51,6 +55,9 @@ export class BusinessProcessComponent implements AfterViewChecked {
 
 
     });
+    if(this.isUploaded){
+      this.selectedNotationType='bpmn'
+    }
     this.isHeaderShow = localStorage.getItem("isheader");
     this.cdRef.detectChanges();
   }
@@ -71,7 +78,10 @@ export class BusinessProcessComponent implements AfterViewChecked {
         this.isSave_disabled=notationValues_obj['isSavebtn'];
         this.hasConformance=notationValues_obj['hasConformance'];
         this.reSize=notationValues_obj['resize'];
-        console.log(this.iscreate_notation)
+        this.isUploaded=notationValues_obj['isUploaded'];
+        if(this.isUploaded){
+          this.selectedNotationType='bpmn'
+        }
       }
     });
   }
@@ -138,7 +148,12 @@ export class BusinessProcessComponent implements AfterViewChecked {
   }
   
   backtoNavigate(){
-    this.router.navigate(['/pages/businessProcess/home'])
+    if(localStorage.getItem('project_id')!="null"){
+      this.router.navigate(["/pages/projects/projectdetails"], 
+      {queryParams:{"id":localStorage.getItem('project_id')}})
+    } else{
+      this.router.navigate(['/pages/businessProcess/home'])
+    }
   }
 
   backtoApprovalWorkflow(){

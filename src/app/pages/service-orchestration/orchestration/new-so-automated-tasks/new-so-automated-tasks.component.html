@@ -43,17 +43,33 @@
       </button>
       <button [disabled]="selectedvalue=='' || selectedEnvironment==''" id="autoStartProcess" class="tsttooltipbtn" (click)="startprocess()">
         <img src="../../../../assets/images/RPA/icon_latest/play.svg" alt="" class="testplus">
-        <span class="testtooltip">Run Process</span>
+        <span *ngIf="!(selectedvalue=='' || selectedEnvironment=='')" class="testtooltip">Run Process</span>
       </button>
+      <!-- <button *ngIf="selectedvalue!='' || selectedEnvironment!=''" id="autoStartProcess" class="tsttooltipbtn" (click)="startprocess()">
+        <img src="../../../../../assets/images/SO/play blue.svg" alt="" class="testplus">
+        <span class="testtooltip">Run Process</span>
+      </button> -->
        <!-- <span style="padding:5px">
           <button [disabled]="selectedvalue=='' || selectedEnvironment==''" matTooltip="Pause Process" mat-mini-fab color="basic" (click)="startprocess()"   title="Run Process"><i  class="fas fa-pause"></i></button>
         </span>
         -->
-        <!-- <span style="padding:5px" id="autoOpenScheduler">
-          <button [disabled]="selectedvalue==''" class="orchestration-action-btn"  mat-mini-fab color="basic"   matTooltip="Open Scheduler" (click)="startscheduler()" ><img src="../../../../../assets/images/calicon.svg" alt="" class="testplus"></button>
-        </span> -->
-      <button [disabled]="selectedvalue==''"  id="autoViewLogs" class="tsttooltipbtn"  (click)="getprocesslogs(process_logs)"  >
+        
+     <button disabled *ngIf="selectedvalue==''" id="openScheduler" class="tsttooltipbtn" >
+        <img src="../../../../../assets/images/RPA/icon_latest/calendar.svg" alt="" class="testplus">
+      
+      </button>
+      <button *ngIf="selectedvalue!=''" id="openScheduler" class="tsttooltipbtn"   (click)="startscheduler()" >
+       <img src="../../../../../assets/images/RPA/icon_latest/calendar-blue.svg" alt="" class="testplus">
+        <span class="testtooltip">Open Scheduler</span>
+      </button>
+       
+      <button dsiabled *ngIf="selectedvalue==''"  id="autoViewLogs" class="tsttooltipbtn" >
         <img src="../../../../../assets/images/file.svg" alt="" class="testplus">
+       
+      </button>
+
+      <button *ngIf="selectedvalue!=''"  id="autoViewLogs" class="tsttooltipbtn"  (click)="getprocesslogs(process_logs)"  >
+        <img src="../../../../../assets/images/SO/file blue.svg" alt="" class="testplus">
         <span class="testtooltip">View Logs</span>
       </button>
   </div>
@@ -81,7 +97,7 @@
           </td>
       </ng-container>
         <ng-container matColumnDef="taskType">
-            <th mat-header-cell *matHeaderCellDef>Task Type &nbsp;&nbsp;</th>
+            <th mat-header-cell *matHeaderCellDef>Task Type </th>
             <td mat-cell *matCellDef="let element">
                 <span *ngIf="element.taskType!=null">{{element.taskType}}</span>
                 <span *ngIf="element.taskType==null">---</span>
@@ -89,7 +105,7 @@
         </ng-container>
 
         <ng-container matColumnDef="category">
-          <th mat-header-cell *matHeaderCellDef>Category  &nbsp;&nbsp;</th>
+          <th mat-header-cell *matHeaderCellDef>Category  </th>
           <td mat-cell *matCellDef="let element">
               <span *ngIf="element.category!=null">{{element.category}}</span>
               <span *ngIf="element.category==null">---</span>
@@ -134,7 +150,7 @@
             <span *ngIf="element.taskType=='Bot' || element.taskType=='Automated'">
               <span *ngIf="element.sourceType=='EPSoft'">
                 <select class="form-control" style="width:200px;padding:0px"  [value]="element.botId" [id]="element.taskId+'__select'">
-                    <option value="0"  >Select Resource</option>
+                    <option  value="0" disabled hidden  >Select Resource</option>
                     <!-- <option *ngFor="let bot of (bot_list | botlistbycat : element.categoryId)" [value]="bot.botId"  [selected]="bot.botId == element.botId">{{bot.botName}}</option> -->
                     <option *ngFor="let bot of (bot_list | BotlistbycatPipe : element.categoryId)" [value]="bot.botId"  [selected]="bot.botId == element.botId">{{bot.botName}}</option>
                   </select>
@@ -170,15 +186,16 @@
                 </span>
 
               <span [matTooltip]="element.status" *ngIf="element.status=='Running' || element.status=='InProgress'" class="text-primary" >
-                <img src="../../../../assets/images/RPA/DotSpin.gif" class="tesplus1">Running
+                <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus">
               </span>
 
               <span [matTooltip]="element.status" *ngIf="(element.status=='Success' || element.status=='Executed') " >
                 <img src="../../../../../assets/images/RPA/icon_latest/Success.svg" class="testplus">
               </span>
 
-              <span [matTooltip]="element.status" *ngIf="element.status=='Rejected' " class="text-danger">
-                <li class="fa fa-times-circle">
+              <span [matTooltip]="element.status" *ngIf="element.status=='Rejected' ">
+                <!-- <li class="fa fa-times-circle"> -->
+                  <img src="../../../../../assets/images/RPA/icon_latest/close-red.svg" class="testplus">
               </span>
 
               <span [matTooltip]="element.status"  *ngIf="element.status=='Approved' " >
@@ -186,8 +203,9 @@
                 <!-- <span><li class="fa fa-check-circle" style="font-size:19px"></span>&nbsp;<span> </span> -->
               </span>
 
-              <span [matTooltip]="element.status" *ngIf="(element.status=='Failure' || element.status=='Failed')" class="text-danger">
-                <li class="fa fa-times-circle">
+              <span [matTooltip]="element.status" *ngIf="(element.status=='Failure' || element.status=='Failed')">
+                <!-- <li class="fa fa-times-circle"> -->
+                  <img src="../../../../../assets/images/RPA/icon_latest/close-red.svg" class="testplus">
               </span>
 
               <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
@@ -195,16 +213,20 @@
                 <img src='../../../../../assets/images/RPA/newicon.png' class="testplus" >
               </span>
               <!--<span *ngIf="element.status=='New'" class="text-primary"><span style="background-color:#0062cf;border-radius: 50%;color:white;padding-right:5px;padding-left:4px;padding-top:5px;padding-bottom:5px;font-size:10px;text-align: center;align-content: center;align-items: center;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><!--<i class="fas fa-robot text-light"></i></span>&nbsp;<span> </span></span>-->
-              <span [matTooltip]="element.status" *ngIf="element.status=='Stop'|| element.status=='Stopped'" class="text-danger">
+              <span [matTooltip]="element.status" *ngIf="element.status=='Stop' || element.status=='Stopped'">
                 <img src="../../../../../assets/images/RPA/stop_fail_icon.svg" class="testplus">
               </span>
 
-              <span [matTooltip]="element.status" *ngIf="element.status=='Paused'||element.status=='Pause'" class="text-primary">
-                <li class="fas fa-pause-circle">
+              <span [matTooltip]="element.status" *ngIf="element.status=='Paused' || element.status=='Pause'">
+                <!-- <li class="fas fa-pause-circle"> -->
+                  <img src="../../../../../assets/images/SO/pause-circle.svg" class="testplus"/>
               </span>
 
-              <span [matTooltip]="element.status" *ngIf="element.status==null||element.status==''" class="text-primary">
-                <span><li class="fas fa-pause-circle"></span>--
+              <span [matTooltip]="element.status" *ngIf="element.status==null || element.status==''">
+                <span>
+                  <!-- <li class="fas fa-pause-circle"> -->
+                    <img src="../../../../../assets/images/SO/pause-circle.svg" class="testplus"/>
+                  </span>--
               </span>
               <!--<span *ngIf="element.status!='null'" [id]="element.taskId+'__status'">
               <span *ngIf="element.status=='InProgress'" class="text-primary" ><span><img src='../../../../assets/images/RPA/processloading.svg' style='height:25px'></span>&nbsp;<span> </span></span>
@@ -240,22 +262,26 @@
               <div *ngIf="element.taskType=='Automated'">
                 <span>
                   <button [disabled]="element.taskType=='Human' || element.taskType==null" [class]="(element.taskType=='Human' || element.taskType==null)?'undobtn':''" (click)="createtaskbotoverlay(element.taskId)" matTooltip="Create and Assign Resource">
-                    <i  class="fas fa-plus text-primary"></i>
+                    <img src="../../../../../assets/images/RPA/icon_latest/pluse-blue.svg" class="testplus"/>
                   </button>
                 </span>
-                &nbsp;
                 <span>
-                  <button  (click)="assignbot(element.taskId)" *ngIf="element.taskType == 'Automated'" matTooltip="Assign Bot"><i  class="fas fa-check text-success"></i></button>
-                  <button (click)="assignbot(element.taskId)" *ngIf="element.taskType == 'Human'" matTooltip="Assign Resource"><i  class="fas fa-check text-success"></i></button>
+                  <button  (click)="assignbot(element.taskId)" *ngIf="element.taskType == 'Automated'" matTooltip="Assign Bot">
+                    <!-- <i  class="fas fa-check text-success"></i> -->
+                    <img src="../../../../../assets/images/SO/check-success.svg" class="testplus"/>
+                  </button>
+                  <button (click)="assignbot(element.taskId)" *ngIf="element.taskType == 'Human'" matTooltip="Assign Resource">
+                    <!-- <i  class="fas fa-check text-success"></i> -->
+                    <img src="../../../../../assets/images/SO/check-success.svg" class="testplus"/>
+                  </button>
                 </span>
-                &nbsp;
                 <span>
-                  <button (click)="resetbot(element.taskId)" matTooltip="Reset"><i  class="fas fa-sync-alt"></i></button>
+                  <button (click)="resetbot(element.taskId)" matTooltip="Reset">
+                    <img src="../../../../../assets/images/RPA/icon_latest/repeat-blue.svg" class="testplus"/>
+                  </button>
                 </span>
-                &nbsp;
                  <span>
                   <button [disabled]="element.botId==0" [class]="element.botId==0?'undobtn':''" (click)="loadbotdatadesign(element.botId)" [disabled]="element.sourceType!='EPSoft'" *ngIf="element.taskType =='Automated'||element.taskType =='Bot'" matTooltip="View Bot">
-                    <!-- <i class="fa fa-eye"></i> -->
                     <img src="../../../../../assets/images/Projects/eye-show.svg" class="testplus1" />
                   </button>
                   <button  *ngIf="element.taskType !='Automated'" class="undobtn" >
@@ -264,7 +290,6 @@
 
                   </button>
                 </span>
-                &nbsp;
                 <span>
                   <!-- <button (click)="SLACon(element.botId)" matTooltip="SLA Configuration"><i class="fa fa-cog" aria-hidden="true"></i></button> -->
                   <!-- <button (click)="SLACon(element)" matTooltip="SLA Configuration"><i class="fa fa-cog" aria-hidden="true"></i></button> -->
@@ -273,29 +298,29 @@
               <div *ngIf="element.taskType=='Human'">
                 <span>
                   <button [disabled]="element.taskType=='Human' || element.taskType==null" [class]="(element.taskType=='Human' || element.taskType==null)?'undobtn':''" (click)="createtaskbotoverlay(element.taskId)" matTooltip="Create and Assign Resource">
-                    <i  class="fas fa-plus text-primary"></i>
+                    <img src="../../../../../assets/images/SO/plus dis.svg" class="testplus"/>
                   </button>
                 </span>
-                &nbsp;
                 <span>
-                  <button (click)="assignhuman(element.taskId)"  matTooltip="Assign Resource"><i  class="fas fa-check text-success"></i></button>
+                  <button (click)="assignhuman(element.taskId)" matTooltip="Assign Resource">
+                    <img src="../../../../../assets/images/SO/check-success.svg" class="testplus"/>
+                  </button>
                 </span>
-                &nbsp;
                 <span>
-                  <button (click)="resetbot(element.taskId)" matTooltip="Reset"><i  class="fas fa-sync-alt"></i></button>
+                  <button (click)="resetbot(element.taskId)" matTooltip="Reset">
+                    <img src="../../../../../assets/images/RPA/icon_latest/repeat-blue.svg" class="testplus"/>
+                  </button>
                 </span>
-                &nbsp;
                 <span>
                   <button (click)="loadbotdatadesign(element.botId)" *ngIf="element.taskType =='Automated'||element.taskType =='Bot'" matTooltip="View Bot">
                     <!-- <i class="fa fa-eye"></i> -->
                     <img src="../../../../../assets/images/Projects/eye-show.svg" class="testplus1" />
                   </button>
-                  <button  *ngIf="element.taskType !='Automated'" class="undobtn">
-                    <!-- <i class="fa fa-eye-slash"></i> -->
+                  <button  *ngIf="element.taskType !='Automated'" >
+                    <!-- <i class="fa fa-eye-slash"></i> class="undobtn"-->
                     <img src="../../../../../assets/images/Projects/eye-hide.svg" class="testplus1" />
                   </button>
                 </span>
-                &nbsp;
                 <span>
                   <!-- <button (click)="SLACon(element.botId)" matTooltip="SLA Configuration"><i class="fa fa-cog" aria-hidden="true"></i></button> -->
                   <!-- <button (click)="SLACon(element)" matTooltip="SLA Configuration"><i class="fa fa-cog" aria-hidden="true"></i></button> -->
@@ -340,15 +365,14 @@
 <ng-template #process_logs>
   <div id='logsid'>
     <div class="modal-header modelprhead">
-
+      <!-- <span *ngIf="viewlogid1!=undefined" class="module-back-button" (click)="viewlogid1=undefined">
+        <i class="fas fa-arrow-left" aria-hidden="true"></i>
+      </span> -->
        Logs
-       <span></span>
+       <!-- <span (click)="getprocesslog()" class="logrefresh">Refresh</span> -->
        
-       <span></span>
-       
-       <span></span>
-        <button type="button" class="close pull-right" aria-label="Close" (click)="logs_modal.hide()">
-          <span aria-hidden="true"><img alt="" src="../../../../../assets/images/Projects/circle-close.svg"></span>
+        <button type="button" class="close pull-right" (click)="logs_modal.hide()">
+          <img alt="" src="../../../../../assets/images/Projects/circle-close.svg">
         </button>
      
       <!-- <span class="pull-right clickable" (click)="logs_modal.hide()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span> -->
@@ -363,13 +387,13 @@
 
 
 <div *ngIf="schedulepopup">
-  <div id='sch' class="rpa-modal" style="display:block">
+  <div id='sch' class="rpa-modal  schedulemod newshacl" style="display:block">
       <div class="rpa-modal-content">
           <div class="rpa-modal-header">
               <span class="rpa-modal-close" (click)="closescheduler()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
               <h4>Scheduler</h4>
           </div>
-          <div class="rpa-modal-body">
+          <div >
               <app-so-scheduler [data]="schdata" id="Scheduler"></app-so-scheduler>
           </div>
       </div>

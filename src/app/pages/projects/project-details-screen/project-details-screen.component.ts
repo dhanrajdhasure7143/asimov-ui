@@ -12,7 +12,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MatMenuModule, MatButtonModule } from '@angular/material'; 
-
+import moment from 'moment';
 
 @Component({
   selector: 'app-project-details-screen',
@@ -44,7 +44,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   selected_process_names: any;
   displayedColumns: string[] = ["taskCategory","taskName","resources","status","percentage","lastModifiedTimestamp","lastModifiedBy", "createdBy","action"];
   dataSource6:MatTableDataSource<any>;
-  displayedColumns6: string[] = ["check","profilePic","userId.firstName","roleID.displayName","userId.userId","uploadedDate"];
+  displayedColumns6: string[] = ["check","userId.firstName","roleID.displayName","userId.userId","uploadedDate"];
   @ViewChild("sort14",{static:false}) sort14: MatSort;
   @ViewChild("sort11",{static:false}) sort11: MatSort;
   @ViewChild("paginator104",{static:false}) paginator104: MatPaginator;
@@ -54,6 +54,8 @@ export class ProjectDetailsScreenComponent implements OnInit {
   @ViewChild("sort12",{static:false}) sort12: MatSort;
   dataSource5:MatTableDataSource<any>;
   @ViewChild("sort13",{static:false}) sort13: MatSort;
+  @ViewChild("sort10",{static:false}) sort10: MatSort;
+  @ViewChild("paginator101",{static:false}) paginator101: MatPaginator;
   responsedata: any;
   bot_list: any=[];
   automatedtask: any;
@@ -86,8 +88,7 @@ percentageComplete: number;
  editdata:Boolean=false;
  resources:any=[];
   
-  @ViewChild("sort10",{static:false}) sort10: MatSort;
-  @ViewChild("paginator101",{static:false}) paginator101: MatPaginator;
+  
   userid: any;
  
   rolelist: any=[];
@@ -126,14 +127,18 @@ percentageComplete: number;
   fileList: File[] = [];
   listOfFiles: any[] = [];
   owner_letters: any;
-  
+  mindate= moment().format("YYYY-MM-DD");
+  projectenddate:any;
   constructor(private dt:DataTransferService,private route:ActivatedRoute, private rpa:RestApiService,
     private modalService: BsModalService,private formBuilder: FormBuilder,private router: Router,
     private spinner:NgxSpinnerService) { }
 
 
   ngOnInit() {
-
+    localStorage.setItem('project_id',null);
+    localStorage.setItem('bot_id',null);
+    $('.link').removeClass('active');
+    $('#projects').addClass("active");
     this.updatetaskForm=this.formBuilder.group({
      // taskCategory: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
      priority: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
@@ -354,7 +359,7 @@ percentageComplete: number;
 
   getTaskandCommentsData(){
     this.rpa.gettaskandComments(this.project_id).subscribe(data =>{
-      this.tasks=data
+      this.tasks=data;
       this.dataSource2= new MatTableDataSource(this.tasks);
       this.dataSource2.sort=this.sort10;
       this.dataSource2.paginator=this.paginator101;
@@ -421,6 +426,7 @@ this.editdata=false;
 this.rpa.getProjectDetailsById(paramsdata.id).subscribe( res=>{​​​​​​
 this.spinner.hide();
 this.projectDetails=res
+this.projectenddate=moment(this.projectDetails.endDate).format("YYYY-MM-DD");
 console.log(this.projectDetails);
 
 if(this.projectDetails){​​​​​​
@@ -509,6 +515,8 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
           this.dataSource6= new MatTableDataSource(users);
           this.dataSource6.sort=this.sort14;
           this.dataSource6.paginator=this.paginator104;
+          this.getTaskandCommentsData();
+          this.getLatestFiveAttachments(this.project_id);
         })
       }
 
@@ -538,7 +546,7 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
         this.updatetaskForm.get("resources").setValue(data["resources"]);
        //  this.updatetaskForm.get("taskName").setValue(data["taskName"]);
       //  this.updatetaskForm.get("timeEstimate").setValue(data["timeEstimate"]);
-        this.updatetaskForm.get("endDate").setValue(data["endDate"]);
+      this.updatetaskForm.get("endDate").setValue(this.projectenddate);
         this.updatetaskForm.get("approvers").setValue(data["approvers"]);
         this.updatetaskForm.get("status").setValue(data["status"]);
         this.updatetaskForm.get("description").setValue(data["description"]);
@@ -566,11 +574,17 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
   
       navigateToWorkspace(data){
 
+        localStorage.setItem('project_id',this.projectDetails.id);
         if(data.taskCategory=="RPA Implementation"){
+          localStorage.setItem('bot_id',data.correlationID);
           this.router.navigate(['/pages/rpautomation/home'])
         }
         if(data.taskCategory=="BPMN Design"){
-          this.router.navigate(['/pages/businessProcess/home'])
+          this.router.navigate(['pages/businessProcess/uploadProcessModel'],
+          {queryParams:{"bpsId":data.correlationID.split(":")[0],"ver":data.correlationID.split(":")[1]}})
+        }
+        if(data.taskCategory=="Process Mining"){
+          this.router.navigate(['pages/processIntelligence/flowChart'], {queryParams:{"wpiId":data.correlationID}})
         }
         else{
           this.modeldisable==true
@@ -696,7 +710,6 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
         {
           this.projectdetails();
           this.getallusers();
-          this.getTaskandCommentsData();
           this.removeallchecks();
           this.checktodelete();
           this.spinner.hide();
@@ -770,7 +783,6 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
             }) 
             this.projectdetails();
             this.getallusers();
-            this.getTaskandCommentsData();
             this.removeallchecks();
             this.checktodelete();
             this.spinner.hide();
@@ -798,9 +810,17 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
         this.updatetaskForm.get("editcomment").setValue("");
       }
       navigateToProjectRepo(){
-        this.router.navigate(["/pages/projects/projectreposcreen"], {queryParams:{"id":this.projectDetails.id}})
+        if(localStorage.getItem('project_id')=="null"){
+          this.router.navigate(["/pages/projects/projectreposcreen"], {queryParams:{"id":this.projectDetails.id}})
+        }
       }
-  
+
+      navigateToOrchestration(){
+        localStorage.setItem('project_id',this.projectDetails.id);
+        this.router.navigate(["/pages/serviceOrchestration/home"], 
+        {queryParams:{"processid":this.projectDetails.process}})
+      }
+
       editComments(comments,i){
         this.updatetaskForm.get("editcomment").setValue(comments);
         this.showeditcomment=true;
@@ -889,6 +909,7 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
       {
         this.spinner.show()
         this.projectDetails["type"]="Project";
+        this.projectDetails.endDate=this.projectenddate;
         this.projectDetails.effortsSpent=parseInt(this.projectDetails.effortsSpent)
         this.rpa.update_project(this.projectDetails).subscribe(res=>{
           this.spinner.hide()
@@ -918,11 +939,13 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
       uploadtaskFilemodalCancel(){
         this.uploadtaskFileForm.reset();
         this.listOfFiles = [];
+        this.fileList=[];
         this.uploadtaskFilemodalref.hide();
       }
       uploadFilemodalCancel(){
         this.uploadFileFormDetails.reset();
         this.listOfFiles = [];
+        this.fileList=[];
         this.uploadFilemodalref.hide();
 
       }

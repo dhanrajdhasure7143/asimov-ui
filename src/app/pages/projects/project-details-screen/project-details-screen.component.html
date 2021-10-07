@@ -16,9 +16,13 @@
       <span class="pull-right">
         <span (click)="navigateToProjectRepo()" class="prj-db-btn">
           <button class="tsttooltipbtn">
-            <img src="../../../../assets/images/Projects/Project-Repo.svg" class="testplus" >
+            <img src="../../../../assets/images/Projects/Project-Repo.svg" class="testplus1" >
             <span class="testtooltip">Project Repo</span>
           </button>
+          <button class="tsttooltipbtn" (click)="navigateToOrchestration()">
+                <img height="20" width="20" src="../../../assets/images/BPMS/orchestration.svg">
+                <span class="testtooltip">Orchestration</span>
+              </button>
           <!-- <button class="btn btn-default">
             <img src="../../../../assets/images/Projects/Project-Repo.svg" class="testplus default-img">
             <img src="../../../../assets/images/Projects/project-repo-white.svg" class="testplus hover-img">
@@ -45,7 +49,7 @@
         <!-- <span class="projects-menu-item"><i class="ri-history-line"></i></span> -->
         <span class="prj-db-btn">
           <button  [matMenuTriggerFor]="menu" class="tsttooltipbtn">
-            <img class="more testplus" src="../../../../assets/images/Projects/Download.svg">
+            <img class="more testplus1" src="../../../../assets/images/Projects/Download.svg">
             <span class="testtooltip">Download</span>
           </button>
           <mat-menu #menu="matMenu">
@@ -138,6 +142,22 @@
                         {{projectDetails.initiatives}}
                       </span>
                     </div>
+                  </div>                  
+                  <div class="col-sm-4 p-0">
+                    <div class="mainset">
+                      <span class="labeltit">Process</span>
+                      <span class="tab-text"
+                        *ngIf="projectDetails.process==null || projectDetails.process==undefined || projectDetails.process==''">-</span>
+                      <span *ngIf="projectDetails.process!=null && projectDetails.process!=undefined && projectDetails.process!=''"
+                        class="tab-text labelcont">{{projectDetails.process | processName : processes}}</span>
+                    </div>
+                  </div>
+                  <div class="col-sm-4 p-0">
+                    <div class="mainset">
+                      <span class="labeltit">Process ID</span>
+      
+                      <span class="tab-text labelcont">{{projectDetails.process }}</span>
+                    </div>
                   </div>
                   <div class="col-sm-4 p-0">
                     <div class="mainset">
@@ -147,26 +167,8 @@
                         *ngIf="projectDetails.mapValueChain==null||projectDetails.mapValueChain==''|| projectDetails.mapValueChain==undefined">-</span>
                       <span
                         *ngIf="projectDetails.mapValueChain!=null && projectDetails.mapValueChain!=''&& projectDetails.mapValueChain!=undefined"
-                        class="tab-text labelcont clickable">{{projectDetails.mapValueChain}}</span>
+                        class="tab-text labelcont">{{projectDetails.mapValueChain}}</span>
       
-                    </div>
-                  </div>
-                  <div class="col-sm-4 p-0">
-                    <div class="mainset">
-                      <span class="labeltit">Process</span>
-      
-                      <span class="tab-text"
-                        *ngIf="projectDetails.process==null || projectDetails.process==undefined || projectDetails.process==''">-</span>
-                      <span
-                        *ngIf="projectDetails.process!=null && projectDetails.process!=undefined && projectDetails.process!=''"
-                        class="tab-text clickable labelcont">{{projectDetails.process | processName : processes}}</span>
-                    </div>
-                  </div>
-                  <div class="col-sm-4 p-0">
-                    <div class="mainset">
-                      <span class="labeltit">Process Id</span>
-      
-                      <span class="tab-text labelcont">{{projectDetails.process }}</span>
                     </div>
                   </div>
                   <div class="col-sm-4 p-0">
@@ -183,7 +185,7 @@
                         </div>
                       </div>
                   </div>
-                  <div class="col-sm-4 p-0">
+                  <!-- <div class="col-sm-4 p-0">
                     <div class="mainset">
                       <span class="labeltit">End Date</span>
                       <div >
@@ -192,7 +194,7 @@
                        
                       </div>
                     </div>
-                  </div>
+                  </div> -->
       
                   <div class="col-sm-4 p-0">
                     <div class="mainset">
@@ -246,7 +248,7 @@
                           [value]="(projectDetails.projectHealth==undefined||projectDetails.projectHealth==null)?'':projectDetails.projectHealth">
                           <option value="">Select Project Health</option>
                           <option value="Good">Good</option>
-                          <option value="Need Attention">Need Attention</option>
+                          <option value="Need Attention">Needs Attention</option>
                           <option value="Risk">Risk</option>
                         </select>
                       </span>
@@ -271,7 +273,7 @@
                     </div> -->
                   <div class="col-sm-4 p-0">
                       <div class="mainset">
-                        <span class="labeltit">Efforts Spent(Hrs)</span>
+                        <span class="labeltit">Efforts Spent (Hrs)</span>
                         <div *ngIf="editdata==false">
                           <span
                             *ngIf="projectDetails.effortsSpent != null && projectDetails.effortsSpent != undefined && projectDetails.effortsSpent !='' "
@@ -309,24 +311,21 @@
                       </div>
                   </div>
                   <div class="col-sm-4 p-0">
-                      <div class="mainset">
-                        <span class="labeltit">Project Description</span>
-      
-                        <div *ngIf="editdata==false">
-      
-                          <span class="tab-text labelcont">{{projectDetails.projectPurpose}}</span>
-                          <span
-                          *ngIf="projectDetails.projectPurpose == null || projectDetails.projectPurpose == undefined || projectDetails.projectPurpose =='' "
-                          class="tab-text labelcont">-</span>
-      
-                        </div>
-                        <div *ngIf="editdata==true">
-                          <input type="text" (change)="projectDetails.projectPurpose=$event.target.value"
-                            [value]="(projectDetails.projectPurpose==undefined||projectDetails.projectPurpose==null)?'':projectDetails.projectPurpose"
-                            class="small-input" placeholder="Enter Project Description">
-                        </div>
+                    <div class="mainset">
+                      <span class="labeltit">End Date</span>
+                      <div *ngIf="editdata==false">
+                        <span  *ngIf="projectenddate != null && projectenddate != undefined && projectenddate !='' "  class="tab-text labelcont" >{{projectenddate | date }}</span>
+                        <span  *ngIf="projectenddate == null || projectenddate == undefined || projectenddate =='' "  class="tab-text labelcont" >-</span>                  
                       </div>
-                  </div>
+                      <div *ngIf="editdata==true">
+                        <!-- <input type="date" name="daytime" max="9999-12-31" [min]="mindate" formControlName="endDate" (keydown)="endDateMethod()"
+                        (change)="projectenddate=$event.target.value"
+                        [value]="projectenddate | date:'yyyy-mm-dd'" class="small-input"
+                        [ngClass]="projectenddate?'enteredfield-color':'inputfield-color'" > -->
+                        <input type="date" class="form-control rpa-control" (change)="projectenddate=$event.target.value" [value]="projectenddate">
+                      </div>
+                    </div>
+                  </div>                  
                   
                   <div class="col-sm-4 p-0">
                       <div class="mainset">
@@ -367,6 +366,25 @@
                       </div>
                     </div>
                   </div>
+                  <div class="col-sm-12 p-0">
+                    <div class="mainset">
+                      <span class="labeltit">Project Description</span>
+    
+                      <div *ngIf="editdata==false">
+    
+                        <span class="tab-text labelcont">{{projectDetails.projectPurpose}}</span>
+                        <span
+                        *ngIf="projectDetails.projectPurpose == null || projectDetails.projectPurpose == undefined || projectDetails.projectPurpose =='' "
+                        class="tab-text labelcont">-</span>
+    
+                      </div>
+                      <div *ngIf="editdata==true">
+                        <input type="text" (change)="projectDetails.projectPurpose=$event.target.value"
+                          [value]="(projectDetails.projectPurpose==undefined||projectDetails.projectPurpose==null)?'':projectDetails.projectPurpose"
+                          class="small-input" placeholder="Enter Project Description">
+                      </div>
+                    </div>
+                </div>
               </div>
           </div>
       
@@ -811,14 +829,14 @@
               <img src="../../../../../assets/images/Projects/delete-red.svg" class="hover-img">
             </a> 
             <!-- <span class="actions-seperator">|</span> -->
-            <a class="clickable text-dark"  *ngIf="element.taskCategory =='RPA Implementation'|| element.taskCategory =='BPMN Design'"
+            <a class="clickable text-dark"  *ngIf="element.taskCategory =='RPA Implementation'|| element.taskCategory =='BPMN Design'|| element.taskCategory =='Process Mining'"
             (click)="navigateToWorkspace(element)" matTooltip="View Task">
               <!-- <img src="../../../../../assets/images/Projects/eye-show.svg" /> -->
               <img src="../../../../../assets/images/Projects/eye-show.svg" class="default-img">
               <img src="../../../../../assets/images/Projects/eye-show-blue.svg" class="hover-img">
             </a> 
 
-            <a *ngIf="element.taskCategory =='Analysis'|| element.taskCategory =='Task Mining'" >
+            <a *ngIf="element.taskCategory =='Analysis'">
               <img src="../../../../../assets/images/Projects/eye-hide.svg" class="icon-disabled" >
               
             </a>
@@ -931,7 +949,7 @@
               </td>
           </ng-container>
 
-            <ng-container matColumnDef="profilePic">
+            <!-- <ng-container matColumnDef="profilePic">
               <th mat-header-cell *matHeaderCellDef></th>
               <td mat-cell *matCellDef="let user" class="action-link tablacs"> 
                 <span *ngIf="user.userId.profilePic!=null"><img src="../../../../assets/images/BPMS/user1.png" /></span>
@@ -940,12 +958,16 @@
                 </span>
               
               </td>
-            </ng-container>
+            </ng-container> -->
     
               <ng-container matColumnDef="userId.firstName">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
                 <td mat-cell   *matCellDef="let user">
-                  <span *ngIf="user.userId.firstName!=null" [matTooltip]="user.userId.firstName">{{user.userId.firstName+" "+ user.userId.lastName}}</span>
+                  <span style="margin-right: 10px;" *ngIf="user.userId.profilePic!=null"><img src="../../../../assets/images/BPMS/user1.png" /></span>
+                <span  class="letter-image" *ngIf="user.userId.profilePic==null">
+                  <span class="letter">{{user.userId.firstName|uppercase| slice:0:1}}{{user.userId.lastName| uppercase|slice:0:1}}</span>
+                </span>
+                  <span *ngIf="user.userId.firstName!=null" [matTooltip]="user.userId.firstName">{{user.userId.firstName+" "+ user.userId.lastName|titlecase}}</span>
                   <span *ngIf="user.userId.firstName==null">---</span>
                 </td>
       

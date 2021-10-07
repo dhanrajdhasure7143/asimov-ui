@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
+  <defs>
+    <clipPath id="clip-scheduler">
+      <rect width="24" height="24"/>
+    </clipPath>
+  </defs>
+  <g id="scheduler" clip-path="url(#clip-scheduler)">
+    <path id="Icon_awesome-calendar" data-name="Icon awesome-calendar" d="M.563,9H20.438A.564.564,0,0,1,21,9.563V21.75A2.251,2.251,0,0,1,18.75,24H2.25A2.251,2.251,0,0,1,0,21.75V9.563A.564.564,0,0,1,.563,9ZM21,6.938V5.25A2.251,2.251,0,0,0,18.75,3H16.5V.563A.564.564,0,0,0,15.938,0H14.063A.564.564,0,0,0,13.5.563V3h-6V.563A.564.564,0,0,0,6.938,0H5.063A.564.564,0,0,0,4.5.563V3H2.25A2.251,2.251,0,0,0,0,5.25V6.938A.564.564,0,0,0,.563,7.5H20.438A.564.564,0,0,0,21,6.938Z" transform="translate(2)" fill="#00a0e3"/>
+  </g>
+</svg>

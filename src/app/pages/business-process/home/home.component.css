@@ -29,7 +29,7 @@
 
 .workspace-title {
     background-color: #e8f7fd;
-    padding: 12px 10px !important;
+    padding: 6px 10px !important;
     display: flex;
     width: 100%;
     /* padding-right: 18px !important; */
@@ -39,6 +39,7 @@
     font-weight: 600;
     /* border-bottom: 1px solid #4a4a4a33 !important; */
     border: none;
+    height: 40px;
 }
 
 .myworkspace-style .col-md-6 mat-form-field {
@@ -78,6 +79,7 @@ span.comment {
     padding: 0px;
     display: flex;
     color: #212529;
+    align-items: center;
 }
 .bps_overlay div {
     border-radius: 4px;
@@ -157,55 +159,82 @@ div#bpmn_list {
         display: none !important;
     }
 
-    .table {
+    /* .table {
         display:table;
-    }
+    } */
     .workspace-title.header {
         display:table-header-group;
         font-weight:bold;
     }
-    .rowGroup {
+    /* .rowGroup {
         display:table-row-group;
     }
     #bpmn_list.row {
         display:table-row;
-    }
+    } */
     .cell {
-        display:table-cell;
+        /* display:table-cell; */
+        width: 100%;
+        font-size: 13px;
+        /* padding-right: 15px; */
+        white-space: nowrap;
     }
-    .cell1 {
+    /* .cell1 {
         width:5%;
         color: #5b5b5b;
         opacity: 0.6;
     }
     .cell2 {
         width:12%;
+        font-size: 13px;
     }
     .cell3,.cell5 {
         width:7%;
+        font-size: 13px;
     }
     .cell4 {
         width:10%;
+        font-size: 13px;
     }
     .cell6 {
         width:20%;
+        font-size: 13px;
     }
     .cell7 {
         width:16%;
+        font-size: 13px;
     }
     .cell8 {
         width:14%;
+        font-size: 13px;
     }
     .cell9 {
         width:6%;
     }
     .cell10 {
         width:4%;
-    }
+        font-size: 14px;
+    } */
     .cell span{
         cursor: pointer;
     }
 
     .bps-labcls, .bps-serwksp {
         margin-bottom: 8px !important;
+    }
+
+    .workspace-title.table button.mat-sort-header-button {
+        font-size: 14px;
+    }
+
+    .expan-icon {
+        width: 20%;
+        color: #5b5b5b;
+        opacity: 0.6;
+    }
+    .cell.cell6 {
+        padding-right: 10px;
+    }
+    .cell.cell9, .cell.cell10 {
+        width: 50% !important;
     }

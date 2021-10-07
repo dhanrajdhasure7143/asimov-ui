@@ -23,7 +23,7 @@
                         <label for="taskName">Request To<span class="star">*</span></label>
                         <select formControlName="resources" class="form-control data">
                             <option value="">Select Resources</option>
-                            <option *ngFor="let user of userslist" [value]="user.userId.userId">{{user.userId.firstName}} {{user.userId.lastName}}</option>   
+                            <option *ngFor="let user of userslist" [value]="user.userId.userId">{{user.userId.firstName|titlecase}} {{user.userId.lastName|titlecase}}</option>   
                         </select>
                         <span *ngIf="requestFileForm.get('resources').invalid && requestFileForm.get('resources').touched"
                         class="errspan required">Request to Required*</span>

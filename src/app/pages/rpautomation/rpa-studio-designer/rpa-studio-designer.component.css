@@ -35,10 +35,11 @@
   align-items: center;
   border-radius: 4px 4px 0px 0px;
   border: 1px solid #ccc;
+  margin-right: 5px;
 }
 
 ::ng-deep .tabs .mat-ink-bar{
-  min-width:10px !important;
+  min-width:0px !important;
 }
 
 
@@ -62,7 +63,7 @@ span.tab-botname {
 
 .actionsmenu-right{
   display:flex;
-  float:right
+  float:right;
 }
 
 
@@ -76,12 +77,13 @@ span.tab-botname {
 
 
 .action-item img {
-  height: 17px;
-  width: 17px;
+  height: auto;
+  width: 16px;
 }
 
 .actionsmenu{
   padding:20px;
+  height:40px;
 }
 
 
@@ -90,24 +92,25 @@ span.tab-botname {
 }
 
 ::ng-deep .tabs .mat-tab-header{
-  width:85% !important;
-  left:15% !important;
-  margin-top: -28px !important; 
+  width:100% !important;
+  left:4% !important;
+  margin-top: -36px !important; 
   border-bottom:none !important;
 
 }
 .toolset-mainheader {
   background-color: #f3f3f3 !important;
-    padding-top: 10px;
 }
+
 .actionsheaderdiv img.testplus1 {
   width: 12px;
   height: 12px;
 }
-.actionsheaderdiv img.testplus {
+.toolsetmenuicon img.testplus{ 
   /* margin-right: 12px !important;
   opacity: 0.5; */
   vertical-align: sub;
+  margin: 3px 4px;
 }
 
 
@@ -121,6 +124,7 @@ span.tab-botname {
 }  
 .toolset-text{
   font-weight: 600 !important;
+  /* margin-left:1%; */
 }
 
 
@@ -140,7 +144,7 @@ span.tab-botname {
 ul#environments {
   width: 230px;
   overflow: auto;
-  max-height: 284px;
+  max-height: 315px;
   font-size: 15px !important;
 }
 
@@ -158,7 +162,7 @@ ul#environments li img {
 
 .rpa-layout-header {
   background-color: #F3F3F3;
-  padding: 10px 15px 8px !important;
+  padding: 5px 15px !important;
 }
 .rpa-layout-header .module-heading {
   background-color: #f3f3f3 !important;
@@ -167,15 +171,22 @@ ul#environments li img {
 }
 .rpa-layout-header span.module-heading-title {
   font-weight: 600;
-  font-size: 18px;
+  font-size: 20px;
   color: #001c47;
 }
 
 span.bpsbtnsep {
   color: #ddd;
-  font-size: 22px;
+  font-size: 20px;
   padding: 0px !important;
 }
+
+span.rpatitsep {
+  color: #333;
+  font-size: 20px;
+  padding: 0px 5px !important;
+}
+
 ul#other_actions {
   
   max-height: 250px;
@@ -227,4 +238,101 @@ hr{
 .RPA-download {  
   min-width: 100px !important;
   padding: 0px !important;
+}
+ul#versions {
+  padding: 0px !important;
+  min-width: 130px !important;
+}
+ul#versions li.clickable {
+  padding: 8px 10px;
+  color: rgba(0,0,0,.87);
+}
+ul#versions li.clickable:hover {
+  background: rgba(0,0,0,.04);
+}
+.action-item.hovericon:hover {
+  background-color: #00a0e3;
+  border-radius: 3px;
+}
+.action-item.hovericon:hover img.testplus1 {
+  filter: brightness(2.5) !important;
+}
+.action-item button:disabled{
+  cursor: not-allowed !important;
+}
+
+
+
+.rpa-subtitle
+{
+ 
+    color: #001C47;
+    font-weight: 400;
+    font-size: 13px;
+    padding-top: 8px;
+
+}
+
+.rpa-main-title
+{
+  font-weight: 600;
+  font-size: 18px;
+  color: #001c47;
+  line-height: 0px !important;
+}
+
+
+/* span.module-back-button {
+  border: none !important;
+  margin: 0px !important;
+  font-size: 12px !important;
+} */
+
+.rpa-header-data{
+  line-height: 1cm
+}
+
+/*.rpa-header-back-button{
+  border: none !important;
+  margin: 0px !important;
+  font-size: 16px !important;
+}*/
+
+
+::ng-deep .rpa-bottom-tab .mat-tab-header{
+  background: white !important;
+ 
+}
+
+::ng-deep .rpa-bottom-tab 
+{
+  background: white !important;
+  /*height: 40px !important;
+  color:black !important;
+  padding: 2px;*/
+  border-top: 1px solid lightgray;
+  text-align : end !important;
+  padding:10px !important; 
+
+  
+
+}
+
+
+.bot-img{
+  height: 20px;
+  width: 20px;
+}
+
+.toolsetmenuicon {
+  padding-top: 15px;
+}
+
+
+
+
+button:disabled{
+  background: none;
+  opacity: 0.5;
+  cursor: not-allowed;
 }
