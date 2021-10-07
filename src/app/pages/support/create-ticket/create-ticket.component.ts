@@ -358,7 +358,6 @@ export class CreateTicketComponent implements OnInit {
     else {
       this.fileError = false;
       this.isLoading = true;
-      this.fileName = [];
       this.progress = 1;
       for (var i = 0; i < event.target.files.length; i++) {
         this.fileName.push(event.target.files[i]);
@@ -475,7 +474,7 @@ export class CreateTicketComponent implements OnInit {
       });
       this.createRequestData = Array;
       this.createRequestData = this.createRequestData.filter((e: any) => e.requestKey == this.requestKey);
-      // console.log(this.createRequestData);
+      console.log(this.createRequestData);
       this.summary = this.createRequestData[0].summary;
       this.description = this.createRequestData[0].description;
       this.component = this.createRequestData[0].component;

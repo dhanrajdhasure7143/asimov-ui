@@ -112,7 +112,7 @@ mat-form-field {
     overflow: hidden;
     position: relative;
     background-color: whitesmoke;
-    width: 50%;
+    width: 80%;
     margin-top: 2%;
 }
 
@@ -130,7 +130,7 @@ mat-form-field {
 
 .closefile {
     margin: -3px 0% 0% 4%;
-    font-size: large;
+    font-size: x-large;
     color: black;
     cursor: pointer;
 }
@@ -151,13 +151,11 @@ mat-form-field {
 }
 
 .filenameoverflow {
-    width: 180px;
+    display: inline-block;
+    width: 155px;
     white-space: nowrap;
     overflow: hidden !important;
     text-overflow: ellipsis;
-    display: inline-flex;
-    justify-content: space-between;
-    align-self: center;
 }
 
 .fileerror {
@@ -220,62 +218,76 @@ mat-form-field {
     pointer-events: none;
 }
 
-
 .container-fluid .h-scroll {
     height: calc(100% - 44px);
     overflow: auto;
     padding-top: 15px;
 }
+
 .CreateTkt-Heading {
     padding: 0px 0px 10px;
     margin-bottom: 15px;
-    border-bottom: 1px solid rgba(0,0,0,.12);
+    border-bottom: 1px solid rgba(0, 0, 0, .12);
 }
+
 .CreateTkt-Heading span {
     font-size: 20px;
     font-weight: 600;
 }
+
 .CreateTkt-Attachmentbox {
     padding: 20px 0px;
+    margin-bottom: 3%;
     background: #f6f6f6;
     border-radius: 5px;
     border: dotted 2px rgb(197, 196, 196);
 }
+
 .CreateTkt-footer {
     float: right;
     margin-top: 10px;
 }
-.CreateTkt-footer .btn-primary, .CreateTkt-buttons .btn-primary {
+
+.CreateTkt-footer .btn-primary,
+.CreateTkt-buttons .btn-primary {
     margin-right: 0px !important;
 }
+
 .CreateTkt-download {
     display: flex;
     margin-top: 15px;
 }
+
 .CreateTkt-download i {
     width: 10%;
 }
+
 .CreateTkt-download span {
     width: 60%;
 }
+
 .CreateTkt-download p {
     width: 20%;
 }
+
 .h-scroll {
     height: 535px;
     overflow: auto;
     padding-top: 15px;
 }
+
 .CreateTkt-buttons {
     float: right;
     margin-top: 10px;
 }
-.Component-filed mat-select{
+
+.Component-filed mat-select {
     appearance: none;
     background-image: url('../../../../assets/images/Projects/down-arrow.svg');
     background-repeat: no-repeat;
-    background-position: center right 12px;    
+    background-position: center right 12px;
 }
+
 .component-button {
     margin: 6px 15px 6px 0px;
     float: right;
@@ -283,7 +295,8 @@ mat-form-field {
     color: white;
     border-radius: 3px;
     padding: 6px 20px;
-}    
+}
+
 .deleteattachment:hover img.default-img {
     display: none;
 }
@@ -301,7 +314,17 @@ mat-form-field {
 
 .removeallattachment button {
     background: #00a3e9;
+    margin-right: -18%;
+    margin-top: 2%;
     color: white;
     padding: 3px;
     border-radius: 7px;
+}
+
+.readfilename span {
+    display: inline-block;
+    width: 155px;
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
 }
