@@ -655,7 +655,11 @@
                       </div>
                       <div class="col-md-12 p-0 form-group">
                           <label class="label-control" for="taskOwner">Task Owner<span class="star">*</span></label>
-                          <input type="text" maxlength="51" class="form-control data" formControlName="taskOwner"  value="" placeholder="Enter Connection Name">
+                          <!-- <input type="text" maxlength="51" class="form-control data" formControlName="taskOwner"  value="" placeholder="Enter Connection Name"> -->
+                          <select  formControlName="taskOwner" class="form-control">
+                            <option value="" disabled>Select Task Owner</option>
+                            <option [value]="owner.userId.firstName+' '+owner.userId.lastName" *ngFor="let owner of usersList">{{owner.userId.firstName}} {{owner.userId.lastName}}</option>
+                          </select>
                           <span *ngIf="(insertslaForm_so_bot.get('taskOwner').invalid && insertslaForm_so_bot.get('taskOwner').touched) && !insertslaForm_so_bot.controls['taskOwner'].hasError('maxlength')" class="errspan required">Required Task Owner*</span>
                           <p style="font-size:12px;">Note* : Notifications will be send to this User Email ID</p>
                           <!--<div *ngIf="insertslaForm_so_bot.controls['taskOwner'].hasError('maxlength')" class="errspan required">

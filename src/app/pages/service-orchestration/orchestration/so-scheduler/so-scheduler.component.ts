@@ -390,6 +390,7 @@ export class SoSchedulerComponent implements OnInit {
         if(resp.errorMessage!=undefined)
         {
           Swal.fire(resp.errorMessage,"","warning");
+          
         }
         else
         {
@@ -405,15 +406,57 @@ export class SoSchedulerComponent implements OnInit {
     }
   }
 
-  delete_schedule()
+  async delete_schedule()
   {
     if(this.botid!="" && this.botid!=undefined)
     {
       let list=this.schedule_list.filter(data=>data.check==true);
+      
+      let saved_schedules:any=this.schedule_list.filter(data=>data.check==true && data.save_status=="saved");
+      let unsaved_schedules:any=this.schedule_list.filter(data=>data.check==true && data.save_status=="unsaved")
       list.forEach(data=>{
         let index2=this.schedule_list.findIndex(scheduleitem=>scheduleitem.intervalId==data.intervalId);
         this.schedule_list.splice(index2,1);
-      })
+      });
+      if(saved_schedules.length>0)
+      {
+        let schedules:any=[]
+        schedules=this.schedule_list.filter(item=>item.save_status=="saved");
+        
+        if(this.botdata.botMainSchedulerEntity==null)
+          this.botdata.botMainSchedulerEntity={"scheduleIntervals":schedules};
+        else
+          this.botdata.botMainSchedulerEntity.scheduleIntervals=schedules;
+        (await this.rest.updateBot(this.botdata)).subscribe(res=>{
+          let response:any=res
+          if(response.errorMessage==undefined)
+          {
+            this.notifier.notify("success","Schedule deleted successfully")
+          }
+          else
+            this.notifier.notify("error","Schedule not deleted successfully")
+        })
+      }else if(unsaved_schedules.length>0)
+      {
+          this.notifier.notify("success","Schedule deleted successfully") 
+      }
+      else if(saved_schedules.length==0 && unsaved_schedules.length==0)
+      {
+        this.botdata.botMainSchedulerEntity=null;
+        (await this.rest.updateBot(this.botdata)).subscribe(res=>{
+          let response:any=res
+          if(response.errorMessage==undefined)
+          {
+            this.notifier.notify("success","Schedule deleted successfully")
+          }
+          else
+            this.notifier.notify("error","Schedule not deleted successfully")
+        })
+      }
+      else
+      {
+        this.notifier.notify("error","No schedule selected to delete");
+      }
     }
     else if(this.processid!="" && this.processid != undefined)
     {
@@ -422,9 +465,27 @@ export class SoSchedulerComponent implements OnInit {
         let index2=this.schedule_list.findIndex(scheduleitem=>scheduleitem.intervalId==data.intervalId);
         let del_sch=this.schedule_list.find(scheduleitem=>scheduleitem.intervalId==data.intervalId);
         if(del_sch.save_status=="saved")
-          this.deletestack.push(del_sch);
+          this.deletestack.push(del_sch); 
         this.schedule_list.splice(index2,1);
       })
+      if(this.deletestack.lenght!=0)
+      {
+        this.rest.deleteprocessschedule(this.deletestack).subscribe(data=>{
+          let response:any=data;
+          if(response.errorMessage==undefined)
+          {
+            this.notifier.notify("success","Schedules deleted sucessfully");
+            this.deletestack=[];
+            this.updateflags();
+          }else{
+            this.notifier.notify("error","Unable to delete shcedule")
+          }
+          
+        })
+      }else
+      {
+        this.notifier.notify("success","Schedule deleted successfully")
+      }
     }
 
   }
@@ -503,13 +564,13 @@ export class SoSchedulerComponent implements OnInit {
           this.notifier.notify("error",resp.errorMessage);
         }
       })
-      if(this.deletestack.length!=0)
-      {
-        this.rest.deleteprocessschedule(this.deletestack).subscribe(data=>{
-          Swal.fire("Schedules deleted sucessfully","","success");
-          this.updateflags();
-        })
-      }
+      // if(this.deletestack.length!=0)
+      // {
+      //   this.rest.deleteprocessschedule(this.deletestack).subscribe(data=>{
+      //     this.notifier.notify("success","Schedules deleted sucessfully");
+      //     this.updateflags();
+      //   })
+      // }
     }
   }
 
