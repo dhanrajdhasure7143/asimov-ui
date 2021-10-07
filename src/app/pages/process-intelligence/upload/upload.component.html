@@ -145,8 +145,43 @@
 </div>
 
 <div class="row new-PI-layout no-items-content " *ngIf="!(isButtonVisible)">
-        <img class="no-items-img" src="../../../../assets/images/RPA/No-Items.svg">
-        <h4>No items to display</h4>
+        <div class="col-sm-12 graph_table">
+                <table mat-table [dataSource]="dataSource" matSort class="PI table w-100">
+                        <ng-container matColumnDef="piId">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="table_header">Process ID </th>
+                                
+                        </ng-container>
+                        <ng-container matColumnDef="createdTime">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="table_header">Created Date</th>
+                               
+                        </ng-container>
+                        <ng-container matColumnDef="piName">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="table_header">Process Name</th>
+                                
+                        </ng-container>
+                        <ng-container matColumnDef="categoryName">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="table_header">Category</th>
+                             
+                        </ng-container>
+                        <ng-container matColumnDef="status">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="table_header">Status</th>
+                             
+                        </ng-container>
+                        <ng-container matColumnDef="action">
+                                <th mat-header-cell *matHeaderCellDef class="table_header">Action</th>
+                               
+                        </ng-container>                                  
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="pList"></tr>
+
+                                
+                </table>
+                <div  class="text-center">
+                        <img  src="../../../../../assets/images/RPA/No-Items.svg" class="no-item-img">
+                        <h3 class="text-center">No Items to display</h3>
+                      </div>
+            </div>
+       
 </div>
 <div class="bpmnCreate">
      <div id="myModal1" class="modal">

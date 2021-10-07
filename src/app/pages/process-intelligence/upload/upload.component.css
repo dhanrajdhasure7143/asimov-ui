@@ -337,5 +337,7 @@ img.hover-img {
 .delete-icon-disabled{
     cursor: no-drop !important;
 }
-
+.no-item-img{
+    height: calc(100vh - 500px)
+  } 
 
