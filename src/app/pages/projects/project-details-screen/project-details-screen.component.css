@@ -505,12 +505,12 @@ span.file-size {
   font-weight: 400;
   display: block;
 }
-img.more{
+/* img.more{
   width: 16px;
   height: 16px;
   cursor: pointer;
   margin-left: 5px;
-}
+} */
 .icon-disabled{
   cursor: no-drop !important;
 }
@@ -551,12 +551,12 @@ span.testtooltip:before {
   display: block;
 }
 .col-sm-6.projinfo {
-  border-right: 1px solid #e5e5e5;
   padding-top: 8px !important;
 }
 
 .col-sm-6.p-0.progressdet {
   padding: 8px 0px 0px 15px !important;
+  border-left: 1px solid #e5e5e5;
 }
 .det-innerheader {
   margin-bottom: 10px;
@@ -586,3 +586,8 @@ span.testtooltip:before {
     height: 41px;
     margin-top: -10px;
   }
+
+  span.prj-db-btn button {
+    padding: 6px 8px;
+    position: relative;
+} 

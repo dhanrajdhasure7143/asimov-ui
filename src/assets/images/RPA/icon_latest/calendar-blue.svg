@@ -1,0 +1,18 @@
+<svg version="1.2" baseProfile="tiny-ps" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 18" width="16" height="18">
+	<title>calendarblue</title>
+	<defs>
+		<image  width="16" height="16" id="img1" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAAXNSR0IB2cksfwAAACFQTFRFAKHjAKHjAKHjAKHjAKHjAKHjAAAAAKHjAKHjAKHjAKHjO1O87AAAAAt0Uk5TCUD/XG8DAAYBTQJLM141AAAALElEQVR4nGNgVAIDAwYnCEOZQSksDQhSlRiU0sCAFowyEJ2hxDAJZulKqDMANaclNv1bsIgAAAAASUVORK5CYII="/>
+		<image  width="2" height="7" id="img2" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAHAgMAAABfFXQEAAAAAXNSR0IB2cksfwAAAAxQTFRFAKHjAKHjAKHjAAAABO3nBAAAAAR0Uk5TXNb/AChoYnAAAAAQSURBVHicYxBgWACFCgwHABX+A3H01XR/AAAAAElFTkSuQmCC"/>
+		<image  width="2" height="7" id="img3" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAHAgMAAABfFXQEAAAAAXNSR0IB2cksfwAAAAxQTFRFAKHjAKHjAKHjAAAABO3nBAAAAAR0Uk5T/1ytABOZdRsAAAAPSURBVHicYxBggAEFhgIAAa4AoQLhReAAAAAASUVORK5CYII="/>
+		<image  width="16" height="3" id="img4" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAADBAMAAABon5JnAAAAAXNSR0IB2cksfwAAACdQTFRFAKHjAKHjAKHjAKHjAKHjAKHjAKHjAKHjAKHjAKHjAKHjAKHjAKHjtca8TAAAAA10Uk5T/1wxRTRJVT49ZutNYnYSiRsAAAAiSURBVHicY2AQMnQJK+lkYGDgWrCKYRWQZtgtXih+XJABAE4gBguIvwZxAAAAAElFTkSuQmCC"/>
+	</defs>
+	<style>
+		tspan { white-space:pre }
+	</style>
+	<g id="calendar">
+		<use id="Path_742" href="#img1" x="0" y="2" />
+		<use id="Path_743" href="#img2" x="10" y="0" />
+		<use id="Path_744" href="#img3" x="4" y="0" />
+		<use id="Path_745" href="#img4" x="0" y="6" />
+	</g>
+</svg>
