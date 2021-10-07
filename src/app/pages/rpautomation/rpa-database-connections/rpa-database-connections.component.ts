@@ -91,7 +91,8 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
 
     this.userRole = localStorage.getItem("userRole")
     this.userRole = this.userRole.split(',');
-    this.isButtonVisible = this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') || this.userRole.includes('RPA Admin') || this.userRole.includes('RPA Designer');
+    this.isButtonVisible = this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') || this.userRole.includes('RPA Admin') || this.userRole.includes('RPA Designer')
+    || this.userRole.includes('Process Owner') || this.userRole.includes('Process Architect')  || this.userRole.includes('Process Analyst')  || this.userRole.includes('RPA Developer')  || this.userRole.includes('Process Architect') || this.userRole.includes("System Admin") ;
     
     this.api.getCustomUserRole(2).subscribe(role=>{
       this.customUserRole=role.message[0].permission;
