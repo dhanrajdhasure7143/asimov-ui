@@ -7,9 +7,10 @@ mat-card {
     max-height: auto;
 }
 
-p {
-    font-weight: bold;
-    font-size: small;
+.fileerror p {
+    font-weight: 600;
+    font-size: 14px;
+    color: #f70303;
 }
 
 .new {
@@ -78,11 +79,10 @@ textarea:focus {
 }
 
 .issue-type {
-    background: #f6f6f6;
+    /* background: #f6f6f6; */
     /* border: solid 1px rgb(197, 196, 196); */
-    height: 2em;
-    border-radius: 5px;
-    width: 70%;
+    border-radius: 4px;
+    width: 100%;
 }
 
 mat-select {
@@ -93,9 +93,6 @@ mat-select-value {
     padding: 2px;
 }
 
-mat-form-field {
-    line-height: normal;
-}
 
 .cancel {
     border: solid 1px #00a3e9;
@@ -146,22 +143,20 @@ mat-form-field {
 
 .far {
     font-family: 'Font Awesome 5 Free';
-    font-weight: 450;
-    font-size: xx-large;
+    font-weight: 400;
+    font-size: 20px;
 }
 
 .filenameoverflow {
     display: inline-block;
     width: 155px;
-    white-space: nowrap;
+    /* white-space: nowrap;
     overflow: hidden !important;
-    text-overflow: ellipsis;
+    text-overflow: ellipsis; */
 }
 
 .fileerror {
-    color: red;
-    padding: 5px;
-    margin-left: 11%;
+    margin-top: 10px;
 }
 
 ::ng-deep .ng-tns-c18-4 ng-trigger ng-trigger-transformPanel mat-select-panel mat-primary my-panel-class {
@@ -237,15 +232,17 @@ mat-form-field {
 
 .CreateTkt-Attachmentbox {
     padding: 20px 0px;
-    margin-bottom: 3%;
     background: #f6f6f6;
     border-radius: 5px;
     border: dotted 2px rgb(197, 196, 196);
+    text-align: center;
 }
 
 .CreateTkt-footer {
-    float: right;
+    display: flex;
+    justify-content: flex-end;
     margin-top: 10px;
+    padding: 0px;
 }
 
 .CreateTkt-footer .btn-primary,
@@ -273,7 +270,7 @@ mat-form-field {
 .h-scroll {
     height: 535px;
     overflow: auto;
-    padding-top: 15px;
+    padding-top: 10px;
 }
 
 .CreateTkt-buttons {
@@ -308,23 +305,47 @@ mat-form-field {
 .removeallattachment {
     display: flex;
     justify-content: flex-end;
-    margin-right: 16%;
-    margin-bottom: 2%;
+    margin: 15px 0px;
 }
 
-.removeallattachment button {
+/* .removeallattachment button {
     background: #00a3e9;
     margin-right: -18%;
     margin-top: 2%;
     color: white;
     padding: 3px;
     border-radius: 7px;
-}
+} */
 
-.readfilename span {
+/* .readfilename span {
     display: inline-block;
     width: 155px;
     white-space: nowrap;
     overflow: hidden !important;
     text-overflow: ellipsis;
+} */
+
+.Component-filed {
+    margin-bottom: 12px;
+}
+.deleteattachment img, .deleteattachment a, .readfilename a{
+    padding: 0px;
+}
+
+.Attached-contents {
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+}
+.attached-image {
+    width: 10%;
+}
+.attached-name {
+    width: 84%;
+}
+.attached-close {
+    width: 6%;
+}
+.CreateTkt-Attachmentbox div {
+    margin-bottom: 8px;
 }

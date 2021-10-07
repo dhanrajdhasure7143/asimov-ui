@@ -2267,7 +2267,7 @@ button.btn.btn-primary:first-child {
   margin-right: 0px !important;
 }
 
-.projecttable.table th, .PI.table th, .RPA.table th {
+.projecttable.table th, .PI.table th, .RPA.table th, .Admin.table th {
   background-color: #e8f7fd !important;
   vertical-align: middle !important;
   font-size: 14px !important;
@@ -2277,7 +2277,7 @@ button.btn.btn-primary:first-child {
   color: #00a0e3 !important;
 }
 
-.projects-table-body td, .PI.table tbody td, .RPA.table tbody td {
+.projects-table-body td, .PI.table tbody td, .RPA.table tbody td, .Admin.table td {
   padding: 5px 10px !important;
   vertical-align: middle !important;
   font-size: 13px !important;
@@ -2634,10 +2634,7 @@ span.pdicon {
 .supportpaginationdiv .mat-paginator-page-size {
   margin-left: 15px;
 }
-.Component-filed .mat-form-field {    
-  background: none !important;
-  width: 100% !important;
-}
+
 .Component-filed .mat-form-field-flex {
   border: medium none !important;
   padding: 0px !important;
@@ -2648,5 +2645,6 @@ span.pdicon {
   overflow: hidden !important;
 }
 .Component-filed .mat-select-arrow {
-  display: none;
+  border-left: 0px solid transparent !important;
+  border-right: 0px solid transparent !important;
 }

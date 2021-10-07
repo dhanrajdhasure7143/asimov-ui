@@ -16,153 +16,153 @@
                             <div class="col-md-12 CreateTkt-Heading">
                                 <span class="">Create Ticket</span>
                             </div>
-                            <div class="col-md-6 pl-0">
-                                <div class="row">
-                                    <div class="col-md-12 p-0 form-fields">
-                                        <label class="label-control">Summary<span class="star">*</span></label>
-                                        <input type="text" formControlName="summary" [(ngModel)]="summary" matInput placeholder="Summary" class="form-control">
-                                        <span *ngIf="requestKey != undefined && createRequestData != undefined">
-                                        <div class="CreateTkt-buttons"
-                                            *ngIf="createRequestData[0].summary != summary && summary.length != 0">
-                                            <button class="btn btn-default" (click)="cancelSummary()">Cancel</button>
-                                            <button class="btn btn-primary" (click)="editSummary()">Save</button>
+                            <div class="col-md-12 p-0">
+                                <div class="col-md-6 pl-0">
+                                    <div class="row">
+                                        <div class="col-md-12 p-0 form-fields">
+                                            <label class="label-control">Summary<span class="star">*</span></label>
+                                            <input type="text" formControlName="summary" [(ngModel)]="summary" matInput placeholder="Summary" class="form-control">
+                                            <span *ngIf="requestKey != undefined && createRequestData != undefined">
+                                            <div class="CreateTkt-buttons"
+                                                *ngIf="createRequestData[0].summary != summary && summary.length != 0">
+                                                <button class="btn btn-default" (click)="cancelSummary()">Cancel</button>
+                                                <button class="btn btn-primary" (click)="editSummary()">Save</button>
+                                            </div>
+                                            </span>
+                                            <span *ngIf="createTicket.get('summary').invalid && createTicket.get('summary').touched" class="errspan required">Summary Required*</span>
                                         </div>
-                                    </span>
-                                        <span *ngIf="createTicket.get('summary').invalid && createTicket.get('summary').touched" class="errspan required">Summary Required*</span>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12 p-0 form-fields">
-                                        <label class="label-control">Description<span class="star">*</span></label>
-                                        <textarea style="padding: 10px;" type="text" formControlName="description" [(ngModel)]="description" matInput placeholder="Enter Description" class="form-control"></textarea>
-                                        <span *ngIf="requestKey != undefined && createRequestData != undefined">
-                                        <div class="CreateTkt-buttons"
-                                            *ngIf="createRequestData[0].description != description && description.length != 0">
-                                            <button class="btn btn-default" (click)="cancelDescription()">Cancel</button>
-                                            <button class="btn btn-primary" (click)="editDescription()">Save</button>
+                                    <div class="row">
+                                        <div class="col-md-12 p-0 form-fields">
+                                            <label class="label-control">Description<span class="star">*</span></label>
+                                            <textarea style="padding: 10px;" type="text" formControlName="description" [(ngModel)]="description" matInput placeholder="Enter Description" class="form-control"></textarea>
+                                            <span *ngIf="requestKey != undefined && createRequestData != undefined">
+                                            <div class="CreateTkt-buttons" *ngIf="createRequestData[0].description != description && description.length != 0">
+                                                <button class="btn btn-default" (click)="cancelDescription()">Cancel</button>
+                                                <button class="btn btn-primary" (click)="editDescription()">Save</button>
+                                            </div>
+                                            </span>
+                                            <span *ngIf="createTicket.get('description').invalid && createTicket.get('description').touched" class="errspan required">Description Required*</span>
                                         </div>
-                                    </span>
-                                        <span *ngIf="createTicket.get('description').invalid && createTicket.get('description').touched" class="errspan required">Description Required*</span>
                                     </div>
-                                </div>
-                                <div class="row" *ngIf="requestKey != undefined">
-                                    <div class="col-md-12 p-0 form-fields">
-                                        <label class="label-control">Comment<span class="star">*</span></label>
-                                        <input class="form-control" type="text" matInput formControlName="comment" [(ngModel)]="comment" placeholder="Enter Comment">
-                                        <span *ngIf="commentRequest != '' || undefined">
-                                        <div class="CreateTkt-buttons" *ngIf="commentRequest[0].comment != comment">
-                                            <button class="btn btn-default" (click)="cancelComment()">Cancel</button>
-                                            <button class="btn btn-primary" (click)="editComment()">Save</button>
+                                    <div class="row" *ngIf="requestKey != undefined">
+                                        <div class="col-md-12 p-0 form-fields">
+                                            <label class="label-control">Comment<span class="star">*</span></label>
+                                            <input class="form-control" type="text" matInput formControlName="comment" [(ngModel)]="comment" placeholder="Enter Comment">
+                                            <span *ngIf="commentRequest != '' || undefined">
+                                            <div class="CreateTkt-buttons" *ngIf="commentRequest[0].comment != comment">
+                                                <button class="btn btn-default" (click)="cancelComment()">Cancel</button>
+                                                <button class="btn btn-primary" (click)="editComment()">Save</button>
+                                            </div>
+                                            </span>
+                                            <span *ngIf="commentRequest == '' || undefined">
+                                            <div class="CreateTkt-buttons" *ngIf="comment">
+                                                <button class="btn btn-default" (click)="cancelComment()">Cancel</button>
+                                                <button class="btn btn-primary" (click)="editComment()">Save</button>
+                                            </div>
+                                            </span>
                                         </div>
-                                    </span>
-                                        <span *ngIf="commentRequest == '' || undefined">
-                                        <div class="CreateTkt-buttons" *ngIf="comment">
-                                            <button class="btn btn-default" (click)="cancelComment()">Cancel</button>
-                                            <button class="btn btn-primary" (click)="editComment()">Save</button>
-                                        </div>
-                                    </span>
                                     </div>
-                                </div>
-                                <span *ngIf="requestKey != undefined || null"></span>
-                                <div class="row">
-                                    <div class="col-md-12 p-0">
-                                        <label class="label-control">Attachment<span class="star">*</span></label>
-                                        <div (click)="fileInput.click()" class="CreateTkt-Attachmentbox">
-                                            <span style="display: flex;justify-content: center;">
-                                        <i class="fa fa-cloud-upload-alt" style="margin: 1px" aria-hidden="true"></i>
-                                        &nbsp;&nbsp;
-                                        Find files to attach, or browse.</span>
-                                            <input multiple #fileInput accept=".jpg,.png,.pdf,.xls,.xlsx,.csv" type="file" (change)="file($event)" style="display:none;" />
-                                        </div>
-                                        <div class="fileerror" *ngIf="fileError && requestKey == undefined || null">
-                                            <p>This file or image don't support or empty , Please try again later.</p>
-                                        </div>
-                                        <span *ngIf="!fileError && requestKey == undefined || null">
-                                            <div class="row mt-1" *ngFor="let item of fileName; index as i">
-                                                <div class="col-1" style="width: 11.333333%;padding: 3%;">
-                                                    <i style="margin-bottom: 50%;" class="far fa-file-alt"></i>
+                                    <span *ngIf="requestKey != undefined || null"></span>
+                                    <div class="row">
+                                        <div class="col-md-12 p-0">
+                                            <label class="label-control">Attachments<span class="star">*</span></label>
+                                            <div (click)="fileInput.click()" class="CreateTkt-Attachmentbox">
+                                                <div><img src="../../../../assets/images/Admin/cloud.svg" alt=""></div>
+                                                <span>Find files to attach, or browse.</span>
+                                                <input multiple #fileInput accept=".jpg,.png,.pdf,.xls,.xlsx,.csv" type="file" (change)="file($event)" style="display:none;" />
+                                            </div>
+                                            <div class="fileerror" *ngIf="fileError && requestKey == undefined || null">
+                                                <p>This file or image don't support or empty , Please try again later.</p>
+                                            </div>
+                                            <span *ngIf="!fileError && requestKey == undefined || null">
+                                                <div class="Attached-contents" *ngFor="let item of fileName; index as i">
+                                                    <div class="attached-image">
+                                                        <img src="../../../../assets/images/Admin/fle.svg" class="">
+                                                    </div>
+                                                    <div class="attached-name">
+                                                        <span class="filenameoverflow">{{item.name}}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span>{{item.size}} KB</span>
+                                                        <mat-progress-bar mode="determinate" [value]=progress></mat-progress-bar>                                                    
+                                                    </div>
+                                                    <div class="attached-close">
+                                                        <span class="closefile" (click)="DeleteFile(item , i)">
+                                                            <img src="../../../../assets/images/Admin/close.svg" class="testplus1">
+                                                        </span>
+                                                    </div>                                                
                                                 </div>
-                                                <div class="col">
-                                                    <span>
-                                                    <span class="filenameoverflow">{{item.name}}</span> &nbsp;&nbsp;&nbsp; <span>{{item.size}} KB</span> <br>
-                                        <mat-progress-bar mode="determinate" [value]=progress>
-                                        </mat-progress-bar>
-                                        </span>
-                                        <span style="position: relative;top: -45%;left: 83%;">
-                                                            <span class="closefile" (click)="DeleteFile(item , i)">
-                                                                <i class="fa fa-times"></i>
-                                                            </span>
-                                        </span>
+                                            </span>
+                                        </div>
                                     </div>
+                                    <div class="removeallattachment" *ngIf="requestKey && imageArray.length > 0">
+                                        <button class="btn btn-primary" (click)="removeAllAttachmentsFromCustomerRequest()">
+                                            Delete All Files
+                                        </button>
+                                    </div>
+                                    <table class="Admin table" *ngIf="requestKey && imageArray.length > 0">
+                                        <tr>
+                                            <th>Attachments&nbsp;({{imageArray.length}})</th>
+                                            <th>Delete</th>
+                                            <th>Download</th>
+                                        </tr>
+                                        <tr *ngFor="let item of imageArray">
+                                            <td class="readfilename">
+                                            <a *ngIf="item.type == 'pdf'">
+                                                <img src="../../../../assets/images/Admin/fle.svg" class="testplus1"> &nbsp; <span>{{item.name}}</span>
+                                            </a>
+                                            <a *ngIf="item.type == 'txt'">
+                                                <img src="../../../../assets/images/Admin/fle.svg" class="testplus1"> &nbsp; <span>{{item.name}}</span>
+                                            </a>
+                                            <a *ngIf="item.type == 'xlsx'">
+                                                <img src="../../../../assets/images/Admin/fle.svg" class="testplus1"> &nbsp; <span>{{item.name}}</span>
+                                            </a>
+                                            <a *ngIf="item.type == 'jpg' || item.type == 'png' || item.type == 'jpeg'">
+                                                <img src="../../../../assets/images/Admin/fle.svg" class="testplus1"> &nbsp; <span>{{item.name}}</span>
+                                            </a>
+                                            <a *ngIf="item.type == 'svg'">
+                                                <img src="../../../../assets/images/Admin/fle.svg" class="testplus1"> &nbsp; <span>{{item.name}}</span>
+                                            </a>
+                                            <a *ngIf="item.type == 'csv'">
+                                                <img src="../../../../assets/images/Admin/fle.svg" class="testplus1"> &nbsp; <span>{{item.name}}</span>
+                                            </a>
+                                            </td>
+                                            <td class="deleteattachment">
+                                                <img src="../../../../assets/images/Admin/delete-black.svg" matTooltip="Delete Process" matTooltipPosition="left" class="default-img testplus1">
+                                                <img src="../../../../assets/images//Admin/delete-red.svg" matTooltip="Delete Process" (click)="removeAttachmentsFromCustomerRequest(item)" matTooltipPosition="left" class="hover-img testplus1">
+                                            </td>
+                                            <td class="deleteattachment">
+                                                <a href="data:image/png;base64,{{item.file}}" *ngIf="item.type == 'jpg' || item.type == 'png' || item.type == 'jpeg'" download="{{item.name}}">
+                                                    <img src="../../../../assets/images/Admin/download-black.svg" class="default-img testplus1">
+                                                    <img src="../../../../assets/images/Admin/download-blue.svg" class="hover-img testplus1">
+                                                </a>
+                                                <a *ngIf="item.type == 'xlsx'" href="data:image/png;base64,{{item.file}}" download="{{item.name}}">
+                                                    <img src="../../../../assets/images/Admin/download-black.svg" class="default-img testplus1">
+                                                    <img src="../../../../assets/images/Admin/download-blue.svg" class="hover-img testplus1">
+                                                </a>
+                                                <a *ngIf="item.type == 'pdf'" href="data:image/png;base64,{{item.file}}" download="{{item.name}}">
+                                                    <img src="../../../../assets/images/Admin/download-black.svg" class="default-img testplus1">
+                                                    <img src="../../../../assets/images/Admin/download-blue.svg" class="hover-img testplus1">
+                                                </a>
+                                                <a *ngIf="item.type == 'txt'" href="data:image/png;base64,{{item.file}}" download="{{item.name}}">
+                                                    <img src="../../../../assets/images/Admin/download-black.svg" class="default-img testplus1">
+                                                    <img src="../../../../assets/images/Admin/download-blue.svg" class="hover-img testplus1">
+                                                </a>
+                                                <a *ngIf="item.type == 'svg'" href="data:image/png;base64,{{item.file}}" download="{{item.name}}">
+                                                    <img src="../../../../assets/images/Admin/download-black.svg" class="default-img testplus1">
+                                                    <img src="../../../../assets/images/Admin/download-blue.svg" class="hover-img testplus1">
+                                                </a>
+                                                <a *ngIf="item.type == 'csv'" href="data:image/png;base64,{{item.file}}" download="{{item.name}}">
+                                                    <img src="../../../../assets/images/Admin/download-black.svg" class="default-img testplus1">
+                                                    <img src="../../../../assets/images/Admin/download-blue.svg" class="hover-img testplus1">
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </div>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="removeallattachment" *ngIf="requestKey && imageArray.length > 0">
-                            <button (click)="removeAllAttachmentsFromCustomerRequest()">
-                                Delete All Files
-                         </button>
-                        </div>
-                        <table *ngIf="requestKey && imageArray.length > 0">
-                            <tr>
-                                <th style="width: 65%;">Attachments&nbsp;({{imageArray.length}})</th>
-                                <th style="width: 22%;text-align: center;">Delete</th>
-                                <th>Download</th>
-                            </tr>
-                            <tr *ngFor="let item of imageArray">
-                                <td class="readfilename">
-                                    <a *ngIf="item.type == 'pdf'">
-                                        <i class="far fa-file-alt" style="padding: 5%;"></i> &nbsp; <span>{{item.name}}</span>
-                                    </a>
-                                    <a *ngIf="item.type == 'txt'">
-                                        <i class="far fa-file-alt" style="padding: 5%;"></i> &nbsp; <span>{{item.name}}</span>
-                                    </a>
-                                    <a *ngIf="item.type == 'xlsx'">
-                                        <i class="far fa-file-alt" style="padding: 5%;"></i> &nbsp; <span>{{item.name}}</span>
-                                    </a>
-                                    <a *ngIf="item.type == 'jpg' || item.type == 'png' || item.type == 'jpeg'">
-                                        <i class="far fa-file-alt" style="padding: 5%;"></i> &nbsp; <span>{{item.name}}</span>
-                                    </a>
-                                    <a *ngIf="item.type == 'svg'">
-                                        <i class="far fa-file-alt" style="padding: 5%;"></i> &nbsp; <span>{{item.name}}</span>
-                                    </a>
-                                    <a *ngIf="item.type == 'csv'">
-                                        <i class="far fa-file-alt" style="padding: 5%;"></i> &nbsp; <span>{{item.name}}</span>
-                                    </a>
-                                </td>
-                                <td class="deleteattachment" style="width: 22%;text-align: center;cursor: pointer;">
-                                    <img src="../../../../assets/images/Projects/delete-black.svg" matTooltip="Delete Process" matTooltipPosition="left" class="default-img">
-                                    <img src="../../../../assets/images/Projects/delete-red.svg" matTooltip="Delete Process" (click)="removeAttachmentsFromCustomerRequest(item)" matTooltipPosition="left" class="hover-img">
-                                </td>
-                                <td style="text-align: center;">
-                                    <a href="data:image/png;base64,{{item.file}}" *ngIf="item.type == 'jpg' || item.type == 'png' || item.type == 'jpeg'" download="{{item.name}}">
-                                        <i class="fas fa-download"></i>
-                                    </a>
-                                    <a *ngIf="item.type == 'xlsx'" href="data:image/png;base64,{{item.file}}" download="{{item.name}}">
-                                        <i class="fas fa-download"></i>
-                                    </a>
-                                    <a *ngIf="item.type == 'pdf'" href="data:image/png;base64,{{item.file}}" download="{{item.name}}">
-                                        <i class="fas fa-download"></i>
-                                    </a>
-                                    <a *ngIf="item.type == 'txt'" href="data:image/png;base64,{{item.file}}" download="{{item.name}}">
-                                        <i class="fas fa-download"></i>
-                                    </a>
-                                    <a *ngIf="item.type == 'svg'" href="data:image/png;base64,{{item.file}}" download="{{item.name}}">
-                                        <i class="fas fa-download"></i>
-                                    </a>
-                                    <a *ngIf="item.type == 'csv'" href="data:image/png;base64,{{item.file}}" download="{{item.name}}">
-                                        <i class="fas fa-download"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                        </table>
-                </div>
-                <!-- col-2 -->
-                <div class="col-md-6 pr-0">
-                    <div class="" [ngClass]="requestKey != undefined || null ? 'disabled' : ''">
-                        <label class="label-control" style="width: 100%;">Component<span class="star">*</span></label>
+                                <div class="col-md-6 pr-0">
+                    <div class="Component-filed" [ngClass]="requestKey != undefined || null ? 'disabled' : ''">
+                        <label class="label-control">Component<span class="star">*</span></label>
                         <mat-form-field class="issue-type">
-                            <mat-select multiple formControlName="component" [(ngModel)]="component" #toppings class="form-control data" style="width: 100%;">
+                            <mat-select multiple formControlName="component" [(ngModel)]="component" #toppings class="form-control data">
                                 <mat-option value="Task Mining">Task Mining</mat-option>
                                 <mat-option value="Service Orchestration">Service Orchestration</mat-option>
                                 <mat-option value="Robatic Process Automation">Robatic Process Automation
@@ -206,17 +206,18 @@
                         </select>
                         <span *ngIf="createTicket.get('reporter').invalid && createTicket.get('reporter').touched" class="errspan required">Reporter Required*</span>
                     </div>
-                </div>
-                <div class="CreateTkt-footer" *ngIf="requestKey == undefined">
-                    <button class="btn btn-default" (click)="reset()">Reset</button>
-                    <button class="btn btn-primary" [disabled]="createTicket.invalid" (click)="CreateNewTicket()">Create</button>
+                                </div>
+                            </div>    
+                            <div class="CreateTkt-footer" *ngIf="requestKey == undefined">
+                                <button class="btn btn-default" (click)="reset()">Reset</button>
+                                <button class="btn btn-primary" [disabled]="createTicket.invalid" (click)="CreateNewTicket()">Create</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
-            </form>
         </div>
-</div>
-</div>
-</mat-card>
+    </mat-card>
 </div>
 
 <div class="spinoverlay" *ngIf="isLoading">
