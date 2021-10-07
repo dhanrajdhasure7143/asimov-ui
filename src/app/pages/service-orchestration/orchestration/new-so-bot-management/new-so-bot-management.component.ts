@@ -102,7 +102,7 @@ public slaupdate : boolean = false;
     constructor(private route: ActivatedRoute,
       private rest:RestApiService,
       private router: Router,
-      private hints: sohints,
+     // private hints: sohints,
       private dt : DataTransferService,
       private spinner:NgxSpinnerService,
       private formBuilder: FormBuilder,
@@ -126,7 +126,7 @@ public slaupdate : boolean = false;
     }
 
   ngOnInit() {
-    this.dt.changeHints(this.hints.botmanagment);
+   // this.dt.changeHints(this.hints.botmanagment);
     this.spinner.show();
     this.getCategoryList();
     this.getallbots();

@@ -1,6 +1,4 @@
 
-
-
 import { Component, OnInit, AfterViewInit,ViewChild,EventEmitter,ElementRef, Renderer2,Output ,HostListener} from '@angular/core';
 import { Options } from 'ng5-slider';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -1772,7 +1770,10 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
     
   }
 
- 
+  viewbusinessinsights()
+  {
+    this.router.navigate(["/pages/processIntelligence/business-insights"],{queryParams:{wpid:this.graphIds}})
+  }
 
   readselectedNodes1(activies){    
     this.filterdNodes=[]
@@ -2056,7 +2057,5 @@ addWorkingHours(){
        //console.log(err);
      }));
   }
-   viewbusinessinsights(){
-    this.router.navigate(["/pages/processIntelligence/business-insights"],{queryParams:{wpid:this.graphIds}})
-  }
+   
 }

@@ -14,7 +14,9 @@ export class BackendURLInterceptor implements HttpInterceptor {
 
     var token=localStorage.getItem('accessToken');
     var aKey= localStorage.getItem('authKey');
-    var encryptedaKey=atob(aKey);
+    if(aKey != null){
+        var encryptedaKey=atob(aKey);
+    }
 
        let ipAddress = '192.168.0.1';
 

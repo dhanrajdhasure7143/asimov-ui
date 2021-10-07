@@ -207,7 +207,7 @@ export class SoDashboardComponent implements OnInit {
     let token={​​​​​
       headers: new HttpHeaders().set('Authorization', 'Bearer '+ localStorage.getItem('accessToken')),
     }​​​​
-    this.http.get("http://authdev.epsoftinc.in/authorizationservice/api/v1/application/2/usercount",token).subscribe(data=>{
+    this.http.get("https://eiapdemoapi.epsoftinc.com:96/authservices/authorizationservice/api/v1/application/2/usercount",token).subscribe(data=>{
       this.users=data;
     })
 
