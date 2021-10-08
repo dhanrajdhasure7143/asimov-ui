@@ -1,11 +1,11 @@
 
-<div class="main-content "   >
+<div class="main-content "    >
     <div class="row content-area">
         <div class="module-heading title">
           
 
             <span class="module-header-title">Robotic Process Automation</span>
-            <button type="button" class="btn btn-primary import-btn ml-auto"  (click)="openModal(template)">
+            <button type="button" class="btn btn-primary import-btn ml-auto"  (click)="openModal(template)" *ngIf="rpaVisible">
               <img src="../../../../assets/images/RPA/import-white.svg" class="testplus" >
               Import
             </button>
@@ -67,7 +67,7 @@
 </div> -->
 
 
-        <div class="row rpa-content-home">
+        <div class="row rpa-content-home" *ngIf="(rpaVisible)">
 
           <div class="main-subheader">
             <div class="main-subheaderTitle">
@@ -191,11 +191,14 @@
                         </button>
                       </div>
           
-                      <!-- <div class="flex-col header gridheader-th">
-                          <button   mat-sort-header="botType">
-                          <span >Type</span>
-                          </button>
-                      </div> -->
+                      <!-- <div class="flex-col header gridheader-th"> -->
+                        <!-- <button  (click)="sortasc('botType','asc')"> -->
+                          <!-- <button   mat-sort-header="botType">
+                          <span >Type</span> -->
+                          <!-- <i *ngIf="sortkey.botType==false" class="fa fa-arrow-up"></i>
+                          <i *ngIf="sortkey.botType==true" class="fa fa-arrow-down"></i> -->
+                        <!-- </button> -->
+                      <!-- </div> -->
                     
                       <div class="flex-col header gridheader-th">
                         <!-- <button  (click)="sortasc('version','asc')"> -->
@@ -241,13 +244,14 @@
                       </div>
                       <div class="flex-col">
                           
-                          <span [tooltip]=bot.botName placement="bottom"> {{(bot.botName.length > 10) ? ((bot.botName).slice(0, 10) + '...') : bot.botName}}</span>
+                          <span [tooltip]=bot.botName placement="bottom"> {{(bot.botName.length > 20) ? ((bot.botName).slice(0, 20) + '...') : bot.botName}}</span>
                         </div>
                       <div class="flex-col">
-                        <span *ngIf="bot.description!=null" placement="bottom" [tooltip]="bot.description" class="btndes"> {{(bot.description.length > 10) ? ((bot.description).slice(0, 10) + '...') : bot.description}}</span>
+                        <span *ngIf="bot.description!=null" placement="bottom" [tooltip]="bot.description" class="btndes"> {{(bot.description.length > 20) ? ((bot.description).slice(0, 20) + '...') : bot.description}}</span>
                         <span *ngIf="bot.description==null">-</span>
                       </div>
                       <div class="flex-col">{{bot.department}}</div>
+                      <!-- <div class="flex-col">{{bot.botType}}</div> -->
                       <div class="flex-col">V{{bot.version}}</div>
                       <div class="flex-col">
                           
@@ -344,7 +348,82 @@
           </div>
 
         </div>
-
+        <div class="row rpa-content-home no-items-content"  *ngIf="!(rpaVisible)">
+          <div class="flex-row Tabletype">
+            <div class="TabletypeHeader" matSort>
+              <div class="flex-col header gridheader-th">
+                <div class="cell cell1"></div>
+              </div>          
+                <div class="flex-col header gridheader-th">
+                  <!-- <button  (click)="sortasc('botName','asc')"> -->
+                    <button  mat-sort-header="botName">
+                   <span >Bot Name</span>
+                   <!-- <i *ngIf="sortkey.botName==false" class="fa fa-arrow-up"></i>
+                   <i *ngIf="sortkey.botName==true" class="fa fa-arrow-down"></i> -->
+                  </button>
+                </div>
+              
+                <div class="flex-col header gridheader-th">
+                  <!-- <button  (click)="sortasc('description','asc')"> -->
+                    <button   mat-sort-header="description">
+                    <span >Description</span>
+                    <!-- <i *ngIf="sortkey.description==false" class="fa fa-arrow-up"></i>
+                    <i *ngIf="sortkey.description==true" class="fa fa-arrow-down"></i> -->
+                  </button>
+                </div>
+              
+                <div class="flex-col header gridheader-th">
+                  <!-- <button  (click)="sortasc('department','asc')"> -->
+                    <button  mat-sort-header="department">
+                    <span >Category</span>
+                    <!-- <i *ngIf="sortkey.department==false" class="fa fa-arrow-up"></i>
+                    <i *ngIf="sortkey.department==true" class="fa fa-arrow-down"></i> -->
+                  </button>
+                </div>
+    
+                <!-- <div class="flex-col header gridheader-th"> -->
+                  <!-- <button  (click)="sortasc('botType','asc')"> -->
+                    <!-- <button   mat-sort-header="botType">
+                    <span >Type</span> -->
+                    <!-- <i *ngIf="sortkey.botType==false" class="fa fa-arrow-up"></i>
+                    <i *ngIf="sortkey.botType==true" class="fa fa-arrow-down"></i> -->
+                  <!-- </button> -->
+                <!-- </div> -->
+              
+                <div class="flex-col header gridheader-th">
+                  <!-- <button  (click)="sortasc('version','asc')"> -->
+                    <button  mat-sort-header="version">
+                    <span>Version</span> 
+                    <!-- <i *ngIf="sortkey.version==false" class="fa fa-arrow-up"></i>
+                    <i *ngIf="sortkey.version==true" class="fa fa-arrow-down"></i> -->
+                  </button>
+                </div>
+              
+                <div class="flex-col header gridheader-th">
+                  <!-- <button  (click)="sortasc('botStatus','asc')"> -->
+                    <button  mat-sort-header="botStatus">
+                    <span>Status</span>
+                    <!-- <i *ngIf="sortkey.botStatus==false" class="fa fa-arrow-up"></i>
+                    <i *ngIf="sortkey.botStatus==true" class="fa fa-arrow-down"></i> -->
+                  </button>
+                </div>
+                <div class="flex-col header gridheader-th">
+                    <!-- <button  (click)="sortasc('botStatus','asc')"> -->
+                      <button  mat-sort-header="actions">
+                      <span>Actions</span>
+                      <!-- <i *ngIf="sortkey.botStatus==false" class="fa fa-arrow-up"></i>
+                      <i *ngIf="sortkey.botStatus==true" class="fa fa-arrow-down"></i> -->
+                    </button>
+                  </div>
+            </div>
+          </div>
+          <div  class="rpa-home-table">
+            <div  class="text-center">
+              <img  src="../../../../../assets/images/RPA/No-Items.svg" class="no-item-img">
+              <h3 class="text-center">No Items to display</h3>
+            </div>
+          </div>
+        </div>
         <div id="edit-bot" class="modal rpa-modal">
           <div class="rpa-modal-content">
             <div class="rpa-modal-header">

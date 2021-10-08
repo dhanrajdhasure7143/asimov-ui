@@ -8,7 +8,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
-
+import  * as moment from 'moment'
 @Component({
   selector: 'app-edit-task',
   templateUrl: './edit-task.component.html',
@@ -70,6 +70,7 @@ export class EditTaskComponent implements OnInit {
   taskresource: any;
   startDate: any;
   endDate: any;
+  public hidetaskdeletedownload: boolean;
   constructor(private formBuilder:FormBuilder,
     private router:ActivatedRoute,
     private route:Router,
@@ -79,11 +80,11 @@ export class EditTaskComponent implements OnInit {
 
   ngOnInit(): void {
     this.updatetaskForm=this.formBuilder.group({
+      taskName:["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       // taskCategory: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       priority: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       startDate: ['', Validators.compose([Validators.maxLength(200)])],
       resources: ['', Validators.compose([Validators.maxLength(200)])],
-     // taskName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
      // timeEstimate: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       endDate: ['', Validators.compose([Validators.maxLength(200)])],
       approvers: ['', Validators.compose([Validators.maxLength(200)])],
@@ -121,7 +122,8 @@ export class EditTaskComponent implements OnInit {
         this.lastModifiedTimestamp=task.lastModifiedTimestamp
         this.taskresource=task.resources
         this.startDate=task.startDate
-        this.endDate=task.endDate
+        this.endDate=moment(task.endDate).format("YYYY-MM-DD")
+        console.log(this.endDate)
         this.updatetaskdata(task);
       })
     })
@@ -134,8 +136,10 @@ export class EditTaskComponent implements OnInit {
     this.taskhistory=[];
     this.rolelist=[];
     this.selectedtask=data
+    
+    this.updatetaskForm.get("taskName").setValue(data.taskName);
     this.updatetaskForm.get("priority").setValue(data["priority"]);
-    this.updatetaskForm.get("startDate").setValue(data["startDate"]);
+    this.updatetaskForm.get("endDate").setValue(this.endDate);
     this.updatetaskForm.get("resources").setValue(data["resources"]);
     this.updatetaskForm.get("endDate").setValue(data["endDate"]);
     this.updatetaskForm.get("approvers").setValue(data["approvers"]);
@@ -169,6 +173,8 @@ export class EditTaskComponent implements OnInit {
       taskupdatFormValue["percentageComplete"]=this.slider
       taskupdatFormValue["comments"]=this.taskcomments
       taskupdatFormValue["history"]=this.taskhistory
+      taskupdatFormValue["endDate"]=this.endDate
+      taskupdatFormValue["taskName"]=this.taskname
       this.spinner.show();
       this.rest.updateTask(taskupdatFormValue).subscribe( res =>{
         this.spinner.hide();
@@ -270,6 +276,12 @@ else
     getTaskAttachments(){
       this.rest.getTaskAttachments(this.selectedtask.projectId,this.selectedtask.id).subscribe(data =>{
         this.taskattacments=data
+        if(this.taskattacments.length==0){
+          this.hidetaskdeletedownload=false
+        }
+        else{
+          this.hidetaskdeletedownload=true
+        }
         this.dataSource3= new MatTableDataSource(this.taskattacments);
       this.dataSource3.sort=this.sort11;
       this.dataSource3.paginator=this.paginator101;
@@ -347,22 +359,19 @@ else
       if (result.value) {
         this.spinner.show();
         this.rest.deleteFiles(input).subscribe( res =>{ 
+          this.spinner.hide();
           let status:any = res;
-        
-          Swal.fire({
-            title: 'Success',
-            text: ""+status.message,
-            position: 'center',
-            icon: 'success',
-            showCancelButton: false,
-            confirmButtonColor: '#007bff',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ok'
-          }) 
+          if(status.errorMessage==undefined)
+          {
+          Swal.fire("Success",status.status,"success") 
           this.getTaskAttachments();
           this.removeallchecks();
           this.checktodelete();
-          this.spinner.hide();
+          }else
+          {
+            Swal.fire("Error",status.errorMessage,"error")
+          }
+
           },err => {
             Swal.fire({
               icon: 'error',

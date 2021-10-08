@@ -645,24 +645,29 @@
                               Maximum of 50 characters
                           </div>-->
                       </div>
-                      <div class="col-md-12 p-0 form-group">
+                     <!--  <div class="col-md-12 p-0 form-group">
                           <label class="label-control"  for="botSource">Bot Source<span class="star">*</span></label>
                           <input type="text" class="form-control data" formControlName="botSource"  value="" placeholder="Enter Bot Source">
                           <span *ngIf="(insertslaForm_so_bot.get('botSource').invalid && insertslaForm_so_bot.get('botSource').touched) && !insertslaForm_so_bot.controls['botSource'].hasError('maxlength')" class="errspan required">Required Bot Source*</span>
-                          <!--<div *ngIf="insertslaForm_so_bot.controls['botSource'].hasError('maxlength')" class="errspan required">
+                          <div *ngIf="insertslaForm_so_bot.controls['botSource'].hasError('maxlength')" class="errspan required">
                               Maximum of 50 characters
-                          </div>-->
-                      </div>
+                          </div>
+                      </div> -->
                       <div class="col-md-12 p-0 form-group">
                           <label class="label-control" for="taskOwner">Task Owner<span class="star">*</span></label>
-                          <input type="text" maxlength="51" class="form-control data" formControlName="taskOwner"  value="" placeholder="Enter Connection Name">
+                          <!-- <input type="text" maxlength="51" class="form-control data" formControlName="taskOwner"  value="" placeholder="Enter Connection Name"> -->
+                          <select  formControlName="taskOwner" class="form-control">
+                            <option value="" disabled>Select Task Owner</option>
+                            <option [value]="owner.userId.firstName+' '+owner.userId.lastName" *ngFor="let owner of usersList">{{owner.userId.firstName}} {{owner.userId.lastName}}</option>
+                          </select>
                           <span *ngIf="(insertslaForm_so_bot.get('taskOwner').invalid && insertslaForm_so_bot.get('taskOwner').touched) && !insertslaForm_so_bot.controls['taskOwner'].hasError('maxlength')" class="errspan required">Required Task Owner*</span>
+                          <p style="font-size:12px;">Note* : Notifications will be send to this User Email ID</p>
                           <!--<div *ngIf="insertslaForm_so_bot.controls['taskOwner'].hasError('maxlength')" class="errspan required">
                               Maximum of 50 characters
                           </div>-->
                       </div>
                       <div class="col-md-6 pl-0 form-group">
-                        <label class="label-control" for="slaConfigId">SLA Breach Limit
+                        <label class="label-control" for="slaConfigId">SLA Breach Limit (Min)
                            <!-- <span class="star">*</span> -->
                          </label>
                           <input type="number" min=0 max=60 maxlength="2" formControlName="slaConfigId"  onkeypress="return (event.charCode > 47 && event.charCode < 58)" class="form-control data"   value="" placeholder="00">
@@ -689,7 +694,7 @@
                     </div>-->
                 <!-- </div> -->
                       <div class="col-md-6 pr-0 form-group">
-                        <label class="label-control" for="thresholdLimit">Threshold Limit 
+                        <label class="label-control" for="thresholdLimit">Threshold Limit (Min)
                            <!-- <span class="star">*</span> -->
                          </label>
                           <input type="number" min=0 max=60 onkeypress="return (event.charCode > 47 && event.charCode < 58)" class="form-control data" formControlName="thresholdLimit"  value="" maxlength="2" placeholder="00">
@@ -704,14 +709,14 @@
                               Maximum of 50 characters
                           </div>-->
                       </div>
-                      <div class="col-md-6 pr-0 form-group">
-                          <label class="label-control" for="retriesInterval">Retry Interval</label>
+                     <!--  <div class="col-md-6 pr-0 form-group">
+                          <label class="label-control" for="retriesInterval">Retry Interval (Min)</label>
                           <input type="number"  maxlength="2" min=0 max=60 onkeypress="return (event.charCode > 47 && event.charCode < 58)" class="form-control data" formControlName="retriesInterval"  value="" placeholder="00">
-                          <!-- <span *ngIf="insertslaForm_so_bot.get('retriesInterval').invalid && insertslaForm_so_bot.get('retriesInterval').touched" class="errspan required">Required Retries Interval*</span> -->
-                      </div>
+                          <span *ngIf="insertslaForm_so_bot.get('retriesInterval').invalid && insertslaForm_so_bot.get('retriesInterval').touched" class="errspan required">Required Retries Interval*</span> 
+                      </div> -->
   
-                      <div class="col-md-12 p-0 form-group">
-                        <label class="label-control" for="notificationType">Notificaion Type<span class="star">*</span></label>
+                      <!-- <div class="col-md-12 p-0 form-group">
+                        <label class="label-control" for="notificationType">Notification Type<span class="star">*</span></label>
                         <div class="row">
                           <div class="col-md-6 p-0">
                             <input type="checkbox" formControlName="email" class="emailcheck" id="emailcheck" >
@@ -722,7 +727,7 @@
                             <label class="lbl_chk_cls" for="smscheck">SMS</label>
                           </div>
                         </div>
-                      </div>
+                      </div> -->
 
                       <div class="form-footer">
                         <button class="btn btn-default" (click)="resetsla()" >Reset</button>

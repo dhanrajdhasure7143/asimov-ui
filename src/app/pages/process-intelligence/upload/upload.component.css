@@ -325,6 +325,7 @@ img.hover-img {
 }
 .upload_zone ngx-dropzone:hover {
     background-color:#00a0e3;
+    border-radius: 4px;
 }
 .model-uploadhvr {
     display: none;
@@ -336,5 +337,7 @@ img.hover-img {
 .delete-icon-disabled{
     cursor: no-drop !important;
 }
-
+.no-item-img{
+    height: calc(100vh - 500px)
+  } 
 

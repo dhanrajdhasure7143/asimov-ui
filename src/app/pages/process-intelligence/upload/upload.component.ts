@@ -101,7 +101,7 @@ export class UploadComponent implements OnInit {
     this.getAllCategories();
     this.userRole = localStorage.getItem("userRole")
     this.userRole = this.userRole.split(',');
-    this.isButtonVisible = this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') || this.userRole.includes('Process Analyst');
+    this.isButtonVisible = this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') || this.userRole.includes('Process Owner') || this.userRole.includes('Process Architect')  || this.userRole.includes('Process Analyst')  || this.userRole.includes('RPA Developer')  || this.userRole.includes('Process Architect') || this.userRole.includes("System Admin") ;
     this.rest.getCustomUserRole(2).subscribe(role=>{
       this.customUserRole=role.message[0].permission;
       this.customUserRole.forEach(element => {

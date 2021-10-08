@@ -109,6 +109,9 @@ export class RestApiService{
   getApproverforuser(role){
     return this.http.get("/bpsprocess/approver/info/"+role)
   }
+  getmultipleApproverforusers(roles){
+    return this.http.post("/bpsprocess/approver/info1/",roles)
+  }
   getUserBpmnsList(){
     // return this.http.get("/bpsprocess/fetchByUser");
     return this.http.get("/bpsprocess/fetchByTenant");
