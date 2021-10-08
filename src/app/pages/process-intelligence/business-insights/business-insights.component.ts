@@ -24,6 +24,8 @@ export class BusinessInsightsComponent implements OnInit {
   totalRows$: Observable<number>;
   isLoading:boolean=false;
   @ViewChild(MatPaginator,{static:false}) paginator: MatPaginator;
+  valueType:any;
+
   constructor(private rest:RestApiService,private route:ActivatedRoute) { 
     let queryParamsResp
     this.route.queryParams.subscribe(res=>{queryParamsResp=res
@@ -170,6 +172,7 @@ export class BusinessInsightsComponent implements OnInit {
 
 
   thoughtputTimeChart(){
+    this.valueType=this.throughtime_data[0].unitOfTime
     let _me=this
 
     // am4core.ready(function() {
@@ -242,7 +245,8 @@ categoryAxis.renderer.grid.template.location = 1;
 // categoryAxis.renderer.grid.template.strokeOpacity = 1;
 // categoryAxis.renderer.grid.template.location = 1;
 categoryAxis.renderer.minGridDistance = 20;
-categoryAxis.title.text="Throughput Time (Mins)"
+// categoryAxis.title.text="Throughput Time (Mins)"
+categoryAxis.title.text="Throughput Time ("+_me.valueType+")"
 
 var valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
 valueAxis.title.text="No of Cases"
