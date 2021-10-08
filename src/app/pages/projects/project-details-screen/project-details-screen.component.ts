@@ -619,7 +619,7 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
         }
         if(data.taskCategory=="BPMN Design"){
           this.router.navigate(['pages/businessProcess/uploadProcessModel'],
-          {queryParams:{"bpsId":data.correlationID.split(":")[0],"ver":data.correlationID.split(":")[1]}})
+          {queryParams:{"bpsId":data.correlationID.split(":")[0],"ver":data.correlationID.split(":")[1],"ntype":"bpmn"}})
         }
         if(data.taskCategory=="Process Mining"){
           this.router.navigate(['pages/processIntelligence/flowChart'], {queryParams:{"wpiId":data.correlationID}})
