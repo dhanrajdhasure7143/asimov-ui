@@ -6,7 +6,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
   template:`
     <form (ngSubmit)="onSub()" [formGroup]="form" class="form-horizontal">
       <div class="container m-contanier form-body">
-        <div class="col-md-12 p-0 form-group" *ngFor="let field of fields; let i =index ">
+        <div class="col-md-12 p-0 form-group"  [id]="field.id+'_form_data'"  *ngFor="let field of fields; let i =index ">
             <form-builder [field]="field" [form]="form"></form-builder>
         </div>
         <div class="form-footer">
