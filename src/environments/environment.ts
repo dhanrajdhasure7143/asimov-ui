@@ -14,6 +14,7 @@ export const environment = {
   platform_url:'https://eiapdemoapi.epsoftinc.com:96/aiotalplatform',
   schema_registry_url:"http://172.16.0.60:8081",
   alerts_url:'https://eiapdemoapi.epsoftinc.com:96/alerts',
+  socialLoginRedirectURL: 'https://eiapclouddemo.epsoftinc.com:86/#/user',
 
  // Aiotal redirection urls 
   myaccount_url : "https://eiapclouddemo.epsoftinc.com:86/#/activation",
