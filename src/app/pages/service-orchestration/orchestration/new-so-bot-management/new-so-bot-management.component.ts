@@ -102,7 +102,7 @@ public slaupdate : boolean = false;
     constructor(private route: ActivatedRoute,
       private rest:RestApiService,
       private router: Router,
-      private hints: sohints,
+     // private hints: sohints,
       private dt : DataTransferService,
       private spinner:NgxSpinnerService,
       private formBuilder: FormBuilder,
@@ -112,9 +112,9 @@ public slaupdate : boolean = false;
     {
       this.insertslaForm_so_bot=this.formBuilder.group({
         botName: ["", Validators.compose([Validators.required])],
-        botSource: ["", Validators.compose([Validators.required])],
+        //botSource: ["", Validators.compose([Validators.required])],
         breachAlerts: ["", Validators.compose([Validators.required])],
-        notificationType: [""],
+        //notificationType: [""],
         retriesInterval: [""],
         slaConfigId: ["", Validators.compose([Validators.required])],
         taskOwner: ["", Validators.compose([Validators.required])],
@@ -126,7 +126,7 @@ public slaupdate : boolean = false;
     }
 
   ngOnInit() {
-    this.dt.changeHints(this.hints.botmanagment);
+   // this.dt.changeHints(this.hints.botmanagment);
     this.spinner.show();
     this.getCategoryList();
     this.getallbots();
@@ -269,14 +269,14 @@ public slaupdate : boolean = false;
     {
       //this.insertslaForm_so_bot.get("botName").setValue(this.slaconId.botName);
       this.insertslaForm_so_bot.get("botName").setValue(bot.botName);
-      this.insertslaForm_so_bot.get("botSource").setValue(this.slaconId.botSource);
+      //this.insertslaForm_so_bot.get("botSource").setValue(this.slaconId.botSource);
       this.insertslaForm_so_bot.get("breachAlerts").setValue(this.slaconId.breachAlerts);
       this.insertslaForm_so_bot.get("taskOwner").setValue(this.slaconId.taskOwner);
       this.insertslaForm_so_bot.get("retriesInterval").setValue(this.slaconId.retriesInterval);
       this.insertslaForm_so_bot.get("thresholdLimit").setValue(this.slaconId.thresholdLimit);
       this.insertslaForm_so_bot.get("totalRetries").setValue(this.slaconId.totalRetries);
       this.insertslaForm_so_bot.get("slaConfigId").setValue(this.slaconId.slaConfigId);
-      if(this.slaconId.notificationType=="email")
+      /*if(this.slaconId.notificationType=="email")
         this.insertslaForm_so_bot.get("email").setValue(true);
       if(this.slaconId.notificationType=="sms")
         this.insertslaForm_so_bot.get("sms").setValue(true);
@@ -284,13 +284,13 @@ public slaupdate : boolean = false;
       {
         this.insertslaForm_so_bot.get("sms").setValue(true);
         this.insertslaForm_so_bot.get("email").setValue(true);
-      }
+      }*/
     }
     else
     {
       this.insertslaForm_so_bot.get("taskOwner").setValue(this.sla_bot.createdBy);
       this.insertslaForm_so_bot.get("botName").setValue(this.sla_bot.botName);
-      this.insertslaForm_so_bot.get("botSource").setValue(this.sla_bot.sourceType);
+      //this.insertslaForm_so_bot.get("botSource").setValue(this.sla_bot.sourceType);
       this.insertslaForm_so_bot.get("breachAlerts").setValue("");
       this.slaconId=undefined
     }
@@ -315,22 +315,22 @@ public slaupdate : boolean = false;
    this.resetsla();
  }
  slaalerts(){
-  let notificationtype="";
+  /*let notificationtype="";
   if(this.insertslaForm_so_bot.get("email").value==true)
     notificationtype="email"
   if(this.insertslaForm_so_bot.get("sms").value==true)
     notificationtype="sms"
   if(this.insertslaForm_so_bot.get("sms").value==true&&this.insertslaForm_so_bot.get("email").value==true)
-    notificationtype="email,sms"
+    notificationtype="email,sms"*/
    let slaalertsc = {
      //botName : this.insertslaForm_so_bot.value.botName,
-     botSource : this.insertslaForm_so_bot.value.botSource,
+     botSource : "EPSoft",
      breachAlerts : this.insertslaForm_so_bot.value.breachAlerts,
      cascadingImpact : false,
      expectedETime : "0000-00-00T00:00:00.000Z",
-     notificationType : notificationtype,
+     notificationType : "email",
      processName : "NA",
-     retriesInterval :  parseInt(this.insertslaForm_so_bot.value.retriesInterval),
+     retriesInterval :  1,
      slaConfigId :  parseInt(this.insertslaForm_so_bot.value.slaConfigId),
      systemImpacted : "NA",
      taskOwner : this.insertslaForm_so_bot.value.taskOwner,
