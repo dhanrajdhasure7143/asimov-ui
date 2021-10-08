@@ -4,44 +4,43 @@
 
 export const environment = {
   production: false,
-  pi_url: 'https://ezflow.epsoftinc.com/prcintel',
-  bps_url: 'https://ezflow.epsoftinc.com/bpstudio',
-  rpa_url: 'https://ezflow.epsoftinc.com/wfrpa',
+  pi_url: 'https://eiapdemoapi.epsoftinc.com:96/prcintel',
+  bps_url: 'https://eiapdemoapi.epsoftinc.com:96/bpstudio',
+  rpa_url: 'https://eiapdemoapi.epsoftinc.com:96/wfrpa',
   loopback_url: 'http://10.11.0.107:3000',
-  idm_url:'https://ezflow.idm.epsoftinc.com',
-  auth_url: "https://ezflow.epsoftinc.com/authservices",
-  pi_node_url: "https://ezflow.epsoftinc.com/pinode",
-  platform_url:'https://ezflow.epsoftinc.com/aiotalplatform',
-  schema_registry_url:"http://schema-registry:8081",
-  alerts_url:'https://ezflow.epsoftinc.com/alerts',
+  idm_url:'https://eiapdemoapi.epsoftinc.com:96/idm',
+  auth_url: "https://eiapdemoapi.epsoftinc.com:96/authservices",
+  pi_node_url: "https://eiapdemoapi.epsoftinc.com:96/pinode",
+  platform_url:'https://eiapdemoapi.epsoftinc.com:96/aiotalplatform',
+  schema_registry_url:"http://172.16.0.60:8081",
+  alerts_url:'https://eiapdemoapi.epsoftinc.com:96/alerts',
 
  // Aiotal redirection urls 
-  myaccount_url : "https://ezflow.epsoftinc.com/#/activation",
-  logout_url: 'https://ezflow.epsoftinc.com/#/activation', 
+  myaccount_url : "https://eiapclouddemo.epsoftinc.com:86/#/activation",
+  logout_url: 'https://eiapclouddemo.epsoftinc.com:86/#/activation', 
   //redirection_logout_url: 'https://eiapclouddemo.epsoftinc.com:86/#/user',
-  redirectout_url: 'https://ezflow.epsoftinc.com/#/signout',
+  redirectout_url: 'https://eiapclouddemo.epsoftinc.com:86/#/signout',
 // PI Connectors
   connector_topic: 'nodeq',
-  platform_home_url: 'https://ezflow.epsoftinc.com/#/',
-  pi_node_jobs: "http://pi-node-jobs:5000",
-  projectendpoint_url:'https://ezflow.epsoftinc.com/pcs',
-  camunda_url : "https://ezflow.camunda.epsoftinc.com",
-  socialLoginRedirectURL: 'https://ezflow.epsoftinc.com/#/user',
-
+  platform_home_url: 'https://eiapclouddemo.epsoftinc.com:86/#/',
+  pi_node_jobs: "http://172.16.0.67:5000",
+  projectendpoint_url:'https://eiapdemoapi.epsoftinc.com:96/pcs',
 
 //BPMN Platform URL
  // bpmnplatformUrl : "http://10.11.0.127:8080",
 
 //DB Connector
-  dbConnectorHost: "pg-0",
-  dbName: "eiap_prod",
+  dbConnectorHost: "172.16.0.64",
+  dbName: "eiap_demo",
 
 // Data upload path
-  data_path:"/usr/share/confluent-ftp-data",
+  data_path:"/home/applmgr",
 
+  camunda_url : "http://172.16.0.73:8080",
 
   //BPMN Platform URL
-  bpmnplatformUrl : "https://ezflow.epsoftinc.com"
+  bpmnplatformUrl : "https://eiapcamundademo.epsoftinc.com:86"
+
 
  //  * QA ENV URl's
  
