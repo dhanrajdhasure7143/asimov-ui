@@ -57,6 +57,7 @@ export class NewSoDashboardComponent implements OnInit {
   }
 
   ngOnInit() {
+    localStorage.setItem('project_id',null);
     this.spinner.show();
     //this.dt.changeHints(this.hints.sodashboard1);
     setTimeout(()=>{
