@@ -1026,4 +1026,7 @@ getvaluechainprocess(id)
     return this.http.post<any>('/processintelligence/v1/processgraph/deletebyPiId', request_body)
   }
 
+  get_processes_scheduled(){
+    return this.http.get("/rpa-service/scheduled-process")
+  }
 }
