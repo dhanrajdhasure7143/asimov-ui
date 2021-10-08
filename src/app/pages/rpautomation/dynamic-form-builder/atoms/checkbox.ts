@@ -1,7 +1,7 @@
 import { Component,OnInit, Input } from '@angular/core';
 import { DynamicFormsComponent } from '../dynamic-forms/dynamic-forms.component';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import * as $ from 'jQuery';
+
 @Component({
     selector: 'checkbox',
     template: `
