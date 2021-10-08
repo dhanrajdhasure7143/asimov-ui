@@ -2652,7 +2652,7 @@ span.pdicon {
 
 @media (max-width: 1300px) {
   .CreateTkt.h-scroll {
-    height: 475px !important;
+    height: 480px !important;
   }
  }
  @media (min-width: 1600px) {

@@ -63,12 +63,12 @@
                                             </div>
                                             </span> -->
                                             <div class="comments-div">
-                                            <div class="comments-box col-md-12">
+                                            <div class="comments-box col-md-12 p-0">
                                                 <div>
                                                     <input class="form-control" type="text" formControlName="newcomment" (click)="addCommentClick()" [(ngModel)]="newComment_data" placeholder="Add Comment"> 
-                                                    <span *ngIf="isAddInputenable">    
-                                                        <i class="fas fa-check-circle" matTooltip="Save" (click)="addNewComment(newComment_data)"></i>
-                                                        <i class="fas fa-times-circle" matTooltip="Cancel" (click)="cancelCreateComment()"></i>
+                                                    <span *ngIf="isAddInputenable" class="comments-box-icons">    
+                                                        <img src="../../../../assets/images/Admin/submit.svg" class="" matTooltip="Save" (click)="addNewComment(newComment_data)">
+                                                        <img src="../../../../assets/images/Admin/cancel.svg" class="" matTooltip="Cancel" (click)="cancelCreateComment()">
                                                     </span>
                                                         <!-- <div class="CreateTkt-buttons" *ngIf="isAddInputenable">
                                                             <button class="btn btn-default" (click)="cancelCreateComment()">Cancel</button>
@@ -76,20 +76,26 @@
                                                         </div> -->
                                                 </div>
                                             </div>
-                                            <div>
-                                            <div *ngFor="let each_comment of comment;let i=index">
-                                                <div class="comments-box col-md-12">
-                                                    <div class="col-md-12">
-                                                        <p class="comment-date pull-right"><span class="comment-dateField"> Created : {{each_comment.timestamp | date:'MMM d, y, HH:mm'}}</span>  <span *ngIf='!(isCommentEditable == i)'><i class="fas fa-pen edit-icon" matTooltip="Edit" (click)="editComment1(i,each_comment)"></i></span></p> 
+                                            <div class="col-md-12 p-0">
+                                            <div *ngFor="let each_comment of comment;let i=index" class="col-md-12 p-0 Add-comments">
+                                                <div class="Inner-comments">
+                                                    <div class="Edit-comment">
+                                                        <span class="comment-date pull-right"><span class="comment-dateField"> Created : {{each_comment.timestamp | date:'MMM d, y, HH:mm'}}</span> 
+                                                            <span *ngIf='!(isCommentEditable == i)'>
+                                                                <img src="../../../../assets/images/Admin/edit-comment.svg" matTooltip="Edit" (click)="editComment1(i,each_comment)">
+                                                            </span>
+                                                        </span> 
                                                     </div>
-                                                    <div class="col-md-12">
-                                                        <p class="" (click)="editComment1(i,each_comment)" *ngIf='isCommentEditable != i'>{{each_comment.comment}} </p>
+                                                    <div class="Content-comment">
+                                                        <span class="" (click)="editComment1(i,each_comment)" *ngIf='isCommentEditable != i'>{{each_comment.comment}} </span>
                                                     </div>
 
-                                                    <div *ngIf='isCommentEditable == i'>
-                                                        <input class="form-control" type="text" formControlName="comment" [(ngModel)]="comment_data" placeholder="Enter Comment"> 
-                                                        <i class="fas fa-check-circle" matTooltip="Save" (click)="updateComment(comment_data,each_comment)"></i>
-                                                        <i class="fas fa-times-circle" matTooltip="Cancel" (click)="cancelCommentupdate()"></i>
+                                                    <div *ngIf='isCommentEditable == i' class="">
+                                                        <input class="form-control" type="text" formControlName="comment" [(ngModel)]="comment_data" placeholder="Enter Comment">
+                                                        <div class="comments-box-icons">
+                                                            <img src="../../../../assets/images/Admin/submit.svg" matTooltip="Save" (click)="updateComment(comment_data,each_comment)">
+                                                            <img src="../../../../assets/images/Admin/cancel.svg" matTooltip="Cancel" (click)="cancelCommentupdate()">
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -196,7 +202,7 @@
                     <div class="Component-filed">
                         <label class="label-control">Component<span class="star">*</span></label>
                         <mat-form-field class="issue-type">
-                            <mat-label><span *ngIf="component.length==0"> Select Component </span></mat-label>
+                            <mat-label><span *ngIf="component.length==0" style="margin-left: 10px;"> Select Component </span></mat-label>
                             <mat-select multiple formControlName="component" [disabled]='isEdit' [ngClass]="isEdit ? 'disabled' : ''" [(ngModel)]="component" #toppings class="form-control data">
                                 <!-- <mat-option value="Task Mining">Task Mining</mat-option>
                                 <mat-option value="Service Orchestration">Service Orchestration</mat-option>

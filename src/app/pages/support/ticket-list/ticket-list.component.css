@@ -90,7 +90,7 @@ table td::first-letter {
     width: 50%;
 }
 .table_responsive.graph_table {
-    height: 426px !important;
+    height: 420px !important;
     overflow: auto;
     width: 100%;
 }
@@ -109,4 +109,12 @@ table td::first-letter {
     .table_responsive.graph_table {
       height: 580px !important;    
     }
-   }
+}
+
+.Tkt-eyehover:hover img.default-img {
+    display: none;
+}
+
+.Tkt-eyehover:hover img.hover-img {
+    display: initial;
+}
