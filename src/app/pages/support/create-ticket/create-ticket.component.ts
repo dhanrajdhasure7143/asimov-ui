@@ -35,7 +35,7 @@ export class CreateTicketComponent implements OnInit {
   comment: any;
   summary: any;
   description: any;
-  component: any;
+  component: any[]=[];
   priority: any;
   severity: any;
   impact: any;
@@ -46,10 +46,14 @@ export class CreateTicketComponent implements OnInit {
   imageArray: any[] = [];
   customerStatus: any;
   Priority_list:any[]=["High","Medium","Low","Lowest"];
-  component_list:any[]=['Task Mining','Service Orchestration','Robatic Process Automation','Process Intelligence','Business Process Studio',]
+  component_list:any[]=['Task Mining','Service Orchestration','Robatic Process Automation','Process Intelligence','Business Process Studio']
+  isCommentEditable:any;
+  comment_data:any;
+  newComment_data:any;
+  isAddInputenable:boolean=false;
+  isEdit:boolean=false;
 
-  constructor
-    (
+  constructor(
       public formBuilder: FormBuilder,
       private api: RestApiService,
       private jwtHelper: JwtHelperService,
@@ -59,6 +63,7 @@ export class CreateTicketComponent implements OnInit {
     var deCryptUserDetails = this.jwtHelper.decodeToken(userDetails);
     this.userId = deCryptUserDetails.userDetails.userId;
     this.userName = deCryptUserDetails.userDetails.userName;
+    console.log(this.userId,this.userName)
 
     this.activateRouter.queryParams.subscribe(res => {
       this.requestKey = res.requestKey;
@@ -75,6 +80,7 @@ export class CreateTicketComponent implements OnInit {
     this.getAllImpactLevels();
     this.getAllSeverityLevels();
     if(this.requestKey){
+      this.isEdit=true;
     this.getCustomerRequestStatus(this.requestKey);
     this.getRequestComments(this.requestKey);
     this.getAttachmentsForCustomerRequest(this.requestKey);
@@ -92,6 +98,7 @@ export class CreateTicketComponent implements OnInit {
       reporter: [this.userName],
       component: ['', Validators.required],
       comment: [''],
+      newcomment: [''],
       status:['']
     });
   }
@@ -160,6 +167,14 @@ export class CreateTicketComponent implements OnInit {
           timer: 2000
         });
       }
+    },err=>{
+      this.isLoading = false;
+      Swal.fire({
+        title: 'Error occured',
+        text: 'Please try again later',
+        icon: 'error',
+        timer: 2000
+      });
     });
 
   }
@@ -235,67 +250,6 @@ export class CreateTicketComponent implements OnInit {
     });
   }
 
-  editComment() {
-    if (this.commentRequest.length == 0) {
-      this.isLoading = true;
-      let record = {};
-      record['requestKey'] = this.requestKey;
-      record['commentBody'] = this.comment;
-      this.api.createCommentInRequest(record).subscribe(res => {
-        if (res == 'comment created sucessfully') {
-          Swal.fire({
-            title: 'Success',
-            text: 'Comment Created Sucessfully !',
-            icon: 'success',
-            timer: 2000
-          });
-          this.getRequestComments(this.requestKey);
-          this.isLoading = false;
-        }
-        else {
-          Swal.fire({
-            title: 'Failed To Create',
-            text: 'Please try again later',
-            icon: 'error',
-            timer: 2000
-          });
-          this.isLoading = false;
-        }
-        console.log(res);
-      });
-    }
-    else {
-      this.isLoading = true;
-      let record = {};
-      record['requestKey'] = this.requestKey;
-      record['jiracommentId'] = this.commentRequest[0].commentId;
-      record['commentBody'] = this.comment;
-      console.log(record);
-      this.api.editComment(record).subscribe(res => {
-        if (res == 'comment Edited sucessfully') {
-          Swal.fire({
-            title: 'Success',
-            text: 'Comment Updated Sucessfully !',
-            icon: 'success',
-            timer: 2000
-          });
-          this.getRequestComments(this.requestKey);
-          this.isLoading = false;
-        }
-        else {
-          Swal.fire({
-            title: 'Failed To Update',
-            text: 'Please try again later',
-            icon: 'error',
-            timer: 2000
-          });
-          this.isLoading = false;
-        }
-        console.log(res);
-      });
-    }
-  }
-
   cancelComment() {
     if (this.commentRequest.length>0) {
       this.comment = this.commentRequest[0].comment;
@@ -304,6 +258,7 @@ export class CreateTicketComponent implements OnInit {
       this.comment = "";
     }
   }
+
   cancelSummary() {
     this.summary = this.createRequestData[0].summary;
   }
@@ -369,6 +324,7 @@ export class CreateTicketComponent implements OnInit {
         formdata.append("file", this.fileName[i]);
       }
       this.api.createTemporaryFile(formdata).subscribe(res => {
+        console.log("this.tempAttachmentId",this.tempAttachmentId)
         this.tempAttachmentId = res;
         this.isLoading = false;
         if (!res) {
@@ -461,7 +417,8 @@ export class CreateTicketComponent implements OnInit {
       this.commentRequest = res;
       console.log(res, "comment");
       if (this.commentRequest.length > 0) {
-        this.comment = this.commentRequest[0].comment;
+        // this.comment = this.commentRequest[0].comment;
+        this.comment = this.commentRequest;
       }
       // this.isLoading = false;
     });
@@ -584,5 +541,107 @@ export class CreateTicketComponent implements OnInit {
       }
     });
   }
+
+  editComment1(index,data){
+    this.isCommentEditable=index;
+    this.comment_data=data.comment;
+    this.newComment_data='';
+    this.isAddInputenable=false;
+  }
+
+  cancelCommentupdate(){
+    this.isCommentEditable=null;
+    // this.comment_data=''
+  }
+
+  cancelCreateComment(){
+    this.newComment_data='';
+    this.isAddInputenable=false;
+  }
+
+  addCommentClick(){
+    this.isAddInputenable=true;
+    this.isCommentEditable=null;
+  }
+
+  addNewComment(value){
+      this.isLoading = true;
+      let req_body = {
+        'requestKey':this.requestKey,
+        "commentBody":value
+      };
+      this.api.createCommentInRequest(req_body).subscribe(res => {
+        if (res == 'comment created sucessfully') {
+          Swal.fire({
+            title: 'Success',
+            text: 'Comment Created Sucessfully !',
+            icon: 'success',
+            timer: 2000
+          });
+          this.cancelCreateComment();
+          this.getRequestComments(this.requestKey);
+          this.isLoading = false;
+        }else {
+          Swal.fire({
+            title: 'Failed To Create',
+            text: 'Please try again later',
+            icon: 'error',
+            timer: 2000
+          });
+          this.isLoading = false;
+        }
+        console.log(res);
+      },err=>{
+        Swal.fire({
+          title: 'Failed To Create',
+          text: 'Please try again later',
+          icon: 'error',
+        });
+        this.isLoading = false;
+      });
+
+  }
+
+  updateComment(comment,obj){
+    this.isLoading = true;
+      let req_obj = {
+        'requestKey':this.requestKey,
+        'jiracommentId':obj.commentId,
+        'commentBody':comment
+      };
+
+      // console.log(req_obj);
+      this.api.editComment(req_obj).subscribe(res => {
+        if (res == 'comment Edited sucessfully') {
+          Swal.fire({
+            title: 'Success',
+            text: 'Comment Updated Sucessfully !',
+            icon: 'success',
+            timer: 2000
+          });
+          this.getRequestComments(this.requestKey);
+          this.isLoading = false;
+          this.cancelCommentupdate();
+        }else {
+          Swal.fire({
+            title: 'Failed To Update',
+            text: 'Please try again later',
+            icon: 'error',
+            timer: 2000
+          });
+          this.isLoading = false;
+        }
+        console.log(res);
+      },err=>{
+        Swal.fire({
+          title: 'Failed To Update',
+          text: 'Please try again later',
+          icon: 'error',
+        });
+        this.isLoading = false;
+      });
+  }
+
+
 
 }

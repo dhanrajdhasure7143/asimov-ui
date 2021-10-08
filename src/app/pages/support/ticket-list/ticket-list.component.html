@@ -79,13 +79,13 @@
                     <!-- CreatedDate Column -->
                     <ng-container matColumnDef="created_at">
                         <th style="width: 14%;" mat-header-cell *matHeaderCellDef mat-sort-header>Created</th>
-                        <td mat-cell *matCellDef="let element"> {{element.created_at}} </td>
+                        <td mat-cell *matCellDef="let element"> {{element.created_at | date:'MMM d, y, HH:mm'}} </td>
                     </ng-container>
 
                     <!-- LastModified Column -->
                     <ng-container matColumnDef="modified_at">
                         <th style="width: 14%;" mat-header-cell *matHeaderCellDef mat-sort-header>Updated</th>
-                        <td mat-cell *matCellDef="let element"> {{element.modified_at}} </td>
+                        <td mat-cell *matCellDef="let element"> {{element.modified_at | date:'MMM d, y, HH:mm'}} </td>
                     </ng-container>
 
                     <!-- Status Action -->

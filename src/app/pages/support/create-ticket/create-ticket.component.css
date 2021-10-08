@@ -211,6 +211,7 @@ mat-select-value {
 
 .disabled {
     pointer-events: none;
+    background-color: #e9e9e9;
 }
 
 .container-fluid .h-scroll {
@@ -236,6 +237,7 @@ mat-select-value {
     border-radius: 5px;
     border: dotted 2px rgb(197, 196, 196);
     text-align: center;
+    cursor: pointer;
 }
 
 .CreateTkt-footer {
@@ -348,4 +350,22 @@ mat-select-value {
 }
 .CreateTkt-Attachmentbox div {
     margin-bottom: 8px;
+}
+.comments-box {
+    /* border: 1px solid #e9e9e9; */
+    margin-bottom: 5px;
+    padding: 5px;
+}
+.comments-box .comment-date .edit-icon{
+    padding-left: 5px;
+}
+.comment-dateField{
+    font-size: 12px;
+}
+.comments-div{
+    /* border: 1px solid #e9e9e9; */
+    /* border-radius: 4px; */
+}
+.fas{
+    cursor: pointer;
 }

@@ -70,14 +70,14 @@ export class TicketListComponent implements OnInit {
   }
 
   getAllCustomerRequestsByOrg(orgName: string) {
-    var Array: any[] = [];
+    var res_Array: any[] = [];
     this.api.getAllCustomerRequestsByOrg(orgName).subscribe((res: PeriodicElement[]) => {
       res.forEach((e: any) => {
-        e.jiraServiceDesk.created_at = (e.jiraServiceDesk.created_at.split('T')[0] + " " + e.jiraServiceDesk.created_at.split('T')[1].split('.')[0]);
-        e.jiraServiceDesk.modified_at = (e.jiraServiceDesk.modified_at.split('T')[0] + " " + e.jiraServiceDesk.modified_at.split('T')[1].split('.')[0]);
-        Array.push(e.jiraServiceDesk);
+        // e.jiraServiceDesk.created_at = (e.jiraServiceDesk.created_at.split('T')[0] + " " + e.jiraServiceDesk.created_at.split('T')[1].split('.')[0]);
+        // e.jiraServiceDesk.modified_at = (e.jiraServiceDesk.modified_at.split('T')[0] + " " + e.jiraServiceDesk.modified_at.split('T')[1].split('.')[0]);
+        res_Array.push(e.jiraServiceDesk);
       });
-      this.dataSource = new MatTableDataSource(Array);
+      this.dataSource = new MatTableDataSource(res_Array);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       this.isLoading = false;
