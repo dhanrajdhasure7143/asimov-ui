@@ -37,6 +37,9 @@ template:`
           <checkbox *ngSwitchCase="'checkbox'" [field]="field" [form]="form"></checkbox>
         </div>
         <div *ngIf ="field.visibility">
+          <checkbox *ngSwitchCase="'checkboxToggle'" [field]="field" [form]="form"></checkbox>
+        </div>
+        <div *ngIf ="field.visibility">
           <radio *ngSwitchCase="'radio'" [field]="field" [form]="form"></radio>
         </div>
         <div *ngIf ="field.visibility">

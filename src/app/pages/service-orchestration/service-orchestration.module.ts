@@ -59,6 +59,8 @@ import { MonitoringComponent } from './orchestration/new-so-bots/monitoring/moni
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { SoMonitoringComponent } from './orchestration/so-monitoring/so-monitoring.component';
 import { ScheduledBotsComponent } from './orchestration/scheduled-bots/scheduled-bots.component';
+import { BotsComponent } from './orchestration/scheduled-bots/bots/bots.component';
+import { ProcessesComponent } from './orchestration/scheduled-bots/processes/processes.component';
 @NgModule({
   declarations: [OrchestrationComponent,ipcustompipecreation,
     BotStatusComponent,
@@ -83,6 +85,8 @@ import { ScheduledBotsComponent } from './orchestration/scheduled-bots/scheduled
     StatisticsComponent,
     MonitoringComponent,
     SoMonitoringComponent,
+    BotsComponent,
+    ProcessesComponent,
     ScheduledBotsComponent],
   imports: [
     CommonModule,

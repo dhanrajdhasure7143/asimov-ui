@@ -59,6 +59,7 @@ export class HomeComponent implements OnInit {
     this.userRole=res.message;
 
       localStorage.setItem('userRole',this.userRole);
+      localStorage.setItem('project_id',null);
       if(this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') || this.userRole.includes('User')){
       this.dataArr = [
            {"id":"PIBox", "img":"assets/images/Group 214.svg", "title":"Process Intelligence", "link":"processIntelligence/upload"},

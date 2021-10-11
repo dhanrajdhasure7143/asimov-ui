@@ -798,7 +798,7 @@ save_blueprism_config(data)
       return this.http.post("/rpa-service/agent/bot-testconnection?botId="+value,"", {responseType: "text" });
     }
 
-    loadChart1(){
+    getIncident(){
       return this.http.get('/rpa-service/management/incidents');
     }
 
@@ -1026,4 +1026,7 @@ getvaluechainprocess(id)
     return this.http.post<any>('/processintelligence/v1/processgraph/deletebyPiId', request_body)
   }
 
+  get_processes_scheduled(){
+    return this.http.get("/rpa-service/scheduled-process")
+  }
 }

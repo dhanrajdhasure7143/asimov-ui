@@ -1,0 +1,107 @@
+<div id="" class="container-fluid tests">
+    <div class="so-sub-tab-content">
+        <div class="row">
+            <div class="col-md-3 form-group pl-0 example-full-width sosearchfield" id="bmsearch">
+                <input class="form-control" placeholder="Search" autocomplete="off" [(ngModel)]="search" (keyup)="applyFilter2($event.target.value)">
+                <img src="../../../../assets/images/search.svg" class="testplus">
+            </div>
+        </div>
+        <div class="projecttable"  style="width:100%;height:52vh;overflow: scroll;">
+        <table class="table projecttable" mat-table [dataSource]="processschedule" #sort4="matSort" matSort>
+            <ng-container matColumnDef="processName">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header  style="width:200px;">Process Name </th>
+                <td mat-cell *matCellDef="let element" [matTooltip]="element.processName" style="width:200px;">
+                  <span *ngIf="element.processName != null">{{(element.processName.length > 20) ? ((element.processName).slice(0, 20) + '...') : element.botName}}
+                  </span>
+                  <span *ngIf="element.processName == null">-</span>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="environment">
+                <th mat-header-cell *matHeaderCellDef>Environment</th>
+                <td mat-cell *matCellDef="let element">
+                    <span *ngIf="element.environmentName != null">{{element.environmentName}}</span>
+                    <span *ngIf="element.environmentName == null">-</span>
+                </td>
+            </ng-container>
+
+             <ng-container matColumnDef="lastRunTS">
+                <th mat-header-cell *matHeaderCellDef>Previous Run</th>
+                <td mat-cell *matCellDef="let element">
+                    <span *ngIf="element.lastRunTS != null">{{element.lastRunTS}}</span>
+                    <span *ngIf="element.lastRunTS == null">-</span>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="nextRunTS">
+                <th mat-header-cell *matHeaderCellDef>Next Run</th>
+                <td mat-cell *matCellDef="let element">
+                    <span *ngIf="element.nextRunTS != null">{{element.nextRunTS}}</span>
+                    <span *ngIf="element.nextRunTS == null">-</span>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="scheduleInterval">
+                <th mat-header-cell *matHeaderCellDef>Schedule Interval</th>
+                <td mat-cell *matCellDef="let element">
+                    <span *ngIf="element.scheduleInterval != null">{{element.scheduleInterval}}</span>
+                    <span *ngIf="element.scheduleInterval == null">-</span>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef>Status</th>
+                <td class="" mat-cell *matCellDef="let element">
+                    <span *ngIf="element.status=='Running'" class="text-primary" >
+                        <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus">{{element.status}}
+                    </span>
+                                
+                    <span *ngIf="element.status=='Success'|| element.status=='Completed' || element.status=='Started'" [matTooltip]="element.status">
+                        <img src="../../../../assets/images/RPA/icon_latest/Success.svg" class="testplus">Success
+                    </span>
+
+                    <span *ngIf="element.status=='Paused'" [matTooltip]="element.status">
+                        <img src="../../../../assets/images/RPA/icon_latest/pause-circle-fill.svg" class="testplus">Paused
+                    </span>
+                    
+                    <span *ngIf="element.status=='Failure'|| element.status=='Failed'"  [matTooltip]="element.status">
+                        <img src="../../../../assets/images/RPA/icon_latest/close-red.svg" class="testplus">
+                    </span>
+                    
+                    <span *ngIf="element.status=='New'">
+                        <img src="../../../../assets/images/RPA/userobot.png" class="testplus">
+                        <span>{{element.status}}</span>
+                    </span>
+                    
+                    <span *ngIf="element.status=='Pending'">
+                        <i class="fa fa-clock"></i>&nbsp;
+                        <span>{{element.status}}</span>
+                    </span>
+            
+                    <span *ngIf="element.status=='Stop' || element.status=='Resume'" [matTooltip]="element.status">
+                              <!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">-->
+                        <img src="../../../../../assets/images/RPA/icon_latest/stop.svg" class="testplus">Stopped
+                    </span>
+                    <span *ngIf="element.status == undefined">-</span>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="timezone">
+                <th mat-header-cell *matHeaderCellDef>Time Zone</th>
+                <td mat-cell *matCellDef="let element">
+                    <span *ngIf="element.timezone != null">{{element.timezone}}</span>
+                    <span *ngIf="element.timezone == null">-</span>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="noData">
+                <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
+                    No Records Found
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displaycolumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displaycolumns;"></tr>
+            <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': tabledata}"></tr>
+       </table>
+       </div>
+        <mat-paginator #paginator4 [pageSize]="10" [pageSizeOptions]="[5, 10,25,50]" [showFirstLastButtons]="true"></mat-paginator>
+    </div>
+    </div>
