@@ -1082,5 +1082,8 @@ getvaluechainprocess(id)
   removeAllAttachmentsFromCustomerRequest(requestId:any){
    return this.http.get("/api/servicedesk/removeAllAttachmentsFromCustomerRequest?requestKey="+ requestId, { responseType: "text" });
   }
+  deleteComment(body){
+   return this.http.post('/api/servicedesk/deleteComment',body,{ responseType: "text" });
+  }
 
 }

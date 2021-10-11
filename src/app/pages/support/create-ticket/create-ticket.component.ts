@@ -642,6 +642,52 @@ export class CreateTicketComponent implements OnInit {
       });
   }
 
+  deleteComment(e){
+    let req_body={
+      "requestKey":this.requestKey,
+      "jiracommentId":e.commentId
+      }
+      
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.value) {
+          this.isLoading=true;
+          this.api.deleteComment(req_body).subscribe(res=>{
+            // console.log(res)
+            let status:any = res;
+            Swal.fire({
+              title: 'Success',
+              text: ""+status,
+              position: 'center',
+              icon: 'success',
+              showCancelButton: false,
+              confirmButtonColor: '#007bff',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Ok'
+            })
+            this.isLoading=false;
+            this.getRequestComments(this.requestKey);
+            },err => {
+              this.getRequestComments(this.requestKey);
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!',
+              })
+                           
+            })
+        }
+      });
+      
+  }
+
 
 
 }

@@ -15,7 +15,7 @@
                         <div class="row">
                             <div class="col-md-12 CreateTkt-Heading">
                                 <span class="" *ngIf="!isEdit">Create Ticket</span>
-                                <span class="" *ngIf="isEdit">Edit Ticket</span>
+                                <span class="" *ngIf="isEdit">Ticket&nbsp;({{requestKey}})</span>
                             </div>
                             <div class="col-md-12 p-0">
                                 <div class="col-md-6 pl-0">
@@ -83,6 +83,7 @@
                                                         <span class="comment-date pull-right"><span class="comment-dateField"> Created : {{each_comment.timestamp | date:'MMM d, y, HH:mm'}}</span> 
                                                             <span *ngIf='!(isCommentEditable == i)'>
                                                                 <img src="../../../../assets/images/Admin/edit-comment.svg" matTooltip="Edit" (click)="editComment1(i,each_comment)">
+                                                                <img src="/assets/images/Projects/delete-black.svg" matTooltip="Delete" (click)="deleteComment(each_comment)">
                                                             </span>
                                                         </span> 
                                                     </div>
