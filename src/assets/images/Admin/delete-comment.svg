@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
+  <defs>
+    <clipPath id="clip-delete_-_comment">
+      <rect width="24" height="24"/>
+    </clipPath>
+  </defs>
+  <g id="delete_-_comment" data-name="delete - comment" clip-path="url(#clip-delete_-_comment)">
+    <g id="Group_2790" data-name="Group 2790">
+      <g id="Success" transform="translate(-926 -311.952)">
+        <path id="Path" d="M12,0A12,12,0,1,0,24,12,12.013,12.013,0,0,0,12,0Z" transform="translate(926 311.952)" fill="#00a0e3"/>
+      </g>
+    </g>
+    <g id="trash-2" transform="translate(3.587 3.986)">
+      <path id="Path_851" data-name="Path 851" d="M3,6H13.825" transform="translate(0 -1.594)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+      <path id="Path_852" data-name="Path 852" d="M13.42,4.406v8.42a1.2,1.2,0,0,1-1.2,1.2H6.2a1.2,1.2,0,0,1-1.2-1.2V4.406m1.8,0V3.2A1.2,1.2,0,0,1,8.007,2h2.406a1.2,1.2,0,0,1,1.2,1.2v1.2" transform="translate(-0.797 0)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+      <line id="Line_88" data-name="Line 88" y2="3.608" transform="translate(7.21 7.413)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+      <line id="Line_89" data-name="Line 89" y2="3.608" transform="translate(9.615 7.413)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+    </g>
+  </g>
+</svg>

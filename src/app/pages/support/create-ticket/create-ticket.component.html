@@ -1,5 +1,5 @@
 <div class="h-100">
-    <mat-card>
+    <mat-card class="h-100">
         <div class="module-heading title">
             <span class="module-back-button" routerLink="/pages/support/ticket-list">
                 <i class="fas fa-arrow-left" aria-hidden="true"></i>
@@ -79,11 +79,17 @@
                                             <div class="col-md-12 p-0">
                                             <div *ngFor="let each_comment of comment;let i=index" class="col-md-12 p-0 Add-comments">
                                                 <div class="Inner-comments">
-                                                    <div class="Edit-comment">
+                                                    <div class="col-md-12 p-0">
                                                         <span class="comment-date pull-right"><span class="comment-dateField"> Created : {{each_comment.timestamp | date:'MMM d, y, HH:mm'}}</span> 
                                                             <span *ngIf='!(isCommentEditable == i)'>
-                                                                <img src="../../../../assets/images/Admin/edit-comment.svg" matTooltip="Edit" (click)="editComment1(i,each_comment)">
-                                                                <img src="/assets/images/Projects/delete-black.svg" matTooltip="Delete" (click)="deleteComment(each_comment)">
+                                                                <span class="comment-date-icons firsticon-edit">
+                                                                    <img src="../../../../assets/images/Admin/edit-comment.svg" matTooltip="Edit" (click)="editComment1(i,each_comment)" class="default-img">
+                                                                    <img src="../../../../assets/images/Admin/edit-comment-blue.svg" class="hover-img">
+                                                                </span>
+                                                                <span class="comment-date-icons">
+                                                                    <img src="../../../../assets/images/Admin/delete-comment.svg" matTooltip="Delete" (click)="deleteComment(each_comment)" class="default-img">
+                                                                    <img src="../../../../assets/images/Admin/delete-comment-red.svg" class="hover-img">
+                                                                </span>
                                                             </span>
                                                         </span> 
                                                     </div>
@@ -253,7 +259,7 @@
                     </div>
                                 </div>
                             </div>    
-                            <div class="CreateTkt-footer" *ngIf="requestKey == undefined">
+                            <div class="CreateTkt-footer col-md-12 p-0" *ngIf="requestKey == undefined">
                                 <button class="btn btn-default" (click)="reset()">Reset</button>
                                 <button class="btn btn-primary" [disabled]="createTicket.invalid" (click)="CreateNewTicket()">Create</button>
                             </div>

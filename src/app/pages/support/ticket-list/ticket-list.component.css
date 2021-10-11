@@ -76,7 +76,9 @@ table td::first-letter {
 }
 
 .Support-tktlist-body {
-    padding: 10px;
+    padding: 10px 10px 0px 10px;
+    height: calc(100% - 50px);
+    overflow: auto;
 }
 .tktlist-Heading {
     font-weight: 600;
@@ -90,7 +92,8 @@ table td::first-letter {
     width: 50%;
 }
 .table_responsive.graph_table {
-    height: 420px !important;
+    /* height: 420px !important; */
+    height: calc(100% - 97px);
     overflow: auto;
     width: 100%;
 }
@@ -100,7 +103,7 @@ table td::first-letter {
     margin-top: 5px;
     margin-bottom: 15px;
 }
-@media (max-width: 1300px) {
+/* @media (max-width: 1300px) {
     .table_responsive.graph_table {
       height: 370px !important;
     }
@@ -109,7 +112,7 @@ table td::first-letter {
     .table_responsive.graph_table {
       height: 580px !important;    
     }
-}
+} */
 
 .Tkt-eyehover:hover img.default-img {
     display: none;

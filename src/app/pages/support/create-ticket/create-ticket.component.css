@@ -214,10 +214,10 @@ mat-select-value {
     background-color: #e9e9e9;
 }
 
-.container-fluid .h-scroll {
-    height: calc(100% - 44px);
+.CreateTkt.h-scroll {
+    height: calc(100% - 70px);
     overflow: auto;
-    padding-top: 15px;
+    padding: 0px 0px 5px
 }
 
 .CreateTkt-Heading {
@@ -244,7 +244,6 @@ mat-select-value {
     display: flex;
     justify-content: flex-end;
     margin-top: 10px;
-    padding: 0px;
 }
 
 .CreateTkt-footer .btn-primary,
@@ -269,11 +268,6 @@ mat-select-value {
     width: 20%;
 }
 
-.h-scroll {
-    height: 540px;
-    overflow: auto;
-    padding-top: 6px;
-}
 
 .CreateTkt-buttons {
     float: right;
@@ -296,11 +290,11 @@ mat-select-value {
     padding: 6px 20px;
 }
 
-.deleteattachment:hover img.default-img {
+.deleteattachment:hover img.default-img, .comment-date-icons:hover img.default-img {
     display: none;
 }
 
-.deleteattachment:hover img.hover-img {
+.deleteattachment:hover img.hover-img, .comment-date-icons:hover img.hover-img {
     display: initial;
 }
 
@@ -377,10 +371,9 @@ mat-select-value {
     background-color: #00a0e3;
 }
 .comments-box-icons {
-    margin-top: 20px !important;
-    /* margin-bottom: 10px !important; */
-    display: inline-block;
-    float: right;
+    margin-top: 10px !important;
+    display: flex;
+    justify-content: flex-end;
 }
 .comments-box-icons img:first-child {
     margin-right: 10px !important;
@@ -391,4 +384,11 @@ mat-select-value {
 .Inner-comments {
     padding: 10px;    
     border-bottom: 1px solid #e5e5e5;
+}
+.Content-comment {
+    margin-top: 6px !important;
+    display: inline-block;
+}
+span.firsticon-edit {
+    margin-right: 6px;
 }
