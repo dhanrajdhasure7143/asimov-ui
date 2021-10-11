@@ -197,7 +197,6 @@ export class RpaSchedulerComponent implements OnInit {
         console.log(resp)
         if(resp.errorMessgae==undefined)
         {
-          alert(resp.errorMessgae)
           this.notifier.notify("success",resp.status)
           this.schedule_list.find(data=>data.check==true).run_status="started";
           this.updateflags();

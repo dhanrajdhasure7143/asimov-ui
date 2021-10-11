@@ -339,20 +339,20 @@ chart.cursor = new am4charts.XYCursor();
         markerTemplate.width = 10;
         markerTemplate.height = 10;
         
-        //chart.data = data
-        chart.data=[{
-          "country": "UiPath",
-          "litres": 122,
-          "color": "#ffda83"
-        },{
-          "country": "BluePrism",
-          "litres":  225,
-          "color": "#55d8fe"
-        },{
-          "country": "EPSoft",
-          "litres":369,
-          "color": "#fa4616"
-        }];
+        chart.data = data
+        // chart.data=[{
+        //   "country": "UiPath",
+        //   "litres": 122,
+        //   "color": "#ffda83"
+        // },{
+        //   "country": "BluePrism",
+        //   "litres":  225,
+        //   "color": "#55d8fe"
+        // },{
+        //   "country": "EPSoft",
+        //   "litres":369,
+        //   "color": "#fa4616"
+        // }];
         });  
 
   }
