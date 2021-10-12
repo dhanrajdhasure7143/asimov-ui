@@ -56,7 +56,7 @@ export class MonitoringComponent implements OnInit {
       this.executed={
         success:this.bots_list.filter(item=>item.botStatus=="Success").length,
         failure:this.bots_list.filter(item=>item.botStatus=="Failure").length,
-        cancelled:this.bots_list.filter(item=>item.botStatus=="cancelled").lenght,
+        cancelled:this.bots_list.filter(item=>item.botStatus=="Stopped").length,
       }
       this.failedbots=this.bots_list.filter(item=>item.botStatus=="Failed"||item.botStatus=="Failure");
       this.failedbots=this.failedbots.sort(function (var1, var2) { 
@@ -444,9 +444,8 @@ export class MonitoringComponent implements OnInit {
       categoryAxis.dataFields.category = "name";
       categoryAxis.title.text = "Bots";
       let label1 = categoryAxis.renderer.labels.template;
-      label1.truncate = true;
-      label1.maxWidth = 90;
-      label1.disabled = false;
+      label1.wrap = true;
+      label1.maxWidth = 120;
       categoryAxis.renderer.minGridDistance = 40;
       var valueAxis = this.runtimestatschart.yAxes.push(new am4charts.ValueAxis());
       valueAxis.renderer.inside = true;
