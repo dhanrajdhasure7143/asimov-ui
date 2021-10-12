@@ -1026,5 +1026,8 @@ getvaluechainprocess(id)
   deleteSelectedProcessID(request_body:any): Observable<any>{
     return this.http.post<any>('/processintelligence/v1/processgraph/deletebyPiId', request_body)
   }
+  get_processes_scheduled(){
+    return this.http.get("/rpa-service/scheduled-process")
+  }
 
 }
