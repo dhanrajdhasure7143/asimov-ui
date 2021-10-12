@@ -104,13 +104,15 @@ export class BusinessInsightsComponent implements OnInit {
       chart.legend = new am4charts.Legend();
       chart.legend.useDefaultMarker = true;
       var marker = chart.legend.markers.template.children.getIndex(0);
+      marker.width = 18;
+      marker.height = 18;
       //marker.cornerRadius(12, 12, 12, 12);
       marker.strokeWidth = 2;
       marker.strokeOpacity = 1;
       marker.stroke = am4core.color("#ccc");
       chart.legend.scrollable = true;
       chart.legend.fontSize = 12;
-      chart.legend.reverseOrder = false;
+      // chart.legend.reverseOrder = false;
       // chart.data=data;
       chart.data=this.activitytime_data;
 
@@ -120,15 +122,15 @@ export class BusinessInsightsComponent implements OnInit {
       // chart.tooltip="test";
       var label = chart.seriesContainer.createChild(am4core.Label);
         // label.text = "230,900 Sales";
-      label.horizontalCenter = "middle";
-      label.verticalCenter = "middle";
+      // label.horizontalCenter = "middle";
+      // label.verticalCenter = "middle";
       label.fontSize = 18;
       var series = chart.series.push(new am4charts.PieSeries());
       series.dataFields.value = "totalDuration";
       series.dataFields.category = "activity";
       series.labels.template.disabled = true;
-      series.slices.template.cornerRadius = 0;
-      series.tooltip.horizontalCenter = "middle";
+      // series.slices.template.cornerRadius = 0;
+      // series.tooltip.horizontalCenter = "middle";
       // series.tooltip.verticalCenter = "middle";
       // series.tooltip.fontSize=18;
       // series.tooltipText = ' {name} ({_dataContext.totalDuration1})';
@@ -145,6 +147,7 @@ export class BusinessInsightsComponent implements OnInit {
        // return "{_dataContext.activity} \n {_dataContext.convertedDuration}";
        return "{_dataContext.activity} \n {value.percent.formatNumber('#.#')}% [/]";
       });
+      $('g:has(> g[stroke="#3cabff"])').hide();
       series.colors.list = [
           am4core.color("rgba(85, 216, 254, 0.9)"),
           am4core.color("rgba(255, 131, 115, 0.9)"),
@@ -261,9 +264,8 @@ series.columns.template.adapter.add("fill", function(fill, target) {
         return am4core.color("#4d72be");
       });
 // valueLabel.label.text = "Hello";
-valueLabel.label.fontSize = 20;
-    
-  
+valueLabel.label.fontSize = 20;  
+$('g:has(> g[stroke="#3cabff"])').hide();
     
   }
   parseMillisecondsIntoReadableTime(milliseconds){
