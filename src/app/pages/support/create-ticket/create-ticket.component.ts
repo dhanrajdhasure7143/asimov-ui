@@ -46,7 +46,8 @@ export class CreateTicketComponent implements OnInit {
   imageArray: any[] = [];
   customerStatus: any;
   Priority_list:any[]=["High","Medium","Low","Lowest"];
-  component_list:any[]=['Task Mining','Service Orchestration','Robatic Process Automation','Process Intelligence','Business Process Studio']
+  // component_list:any[]=['Task Mining','Service Orchestration','Robatic Process Automation','Process Intelligence','Business Process Studio']
+  component_list:any[]=[]
   isCommentEditable:any;
   comment_data:any;
   newComment_data:any;
@@ -63,27 +64,26 @@ export class CreateTicketComponent implements OnInit {
     var deCryptUserDetails = this.jwtHelper.decodeToken(userDetails);
     this.userId = deCryptUserDetails.userDetails.userId;
     this.userName = deCryptUserDetails.userDetails.userName;
-    console.log(this.userId,this.userName)
-
     this.activateRouter.queryParams.subscribe(res => {
-      this.requestKey = res.requestKey;
-      // console.log(this.requestKey);
+      if(res){
+        this.requestKey = res.requestKey;
+      }
     });
 
   }
 
   ngOnInit(): void {
     this.getUserDetails(this.userId);
-    // console.log(this.createRequestData);
     this.getIssueType();
     this.getOrganizations();
     this.getAllImpactLevels();
     this.getAllSeverityLevels();
+    this.getComponentsList();
     if(this.requestKey){
       this.isEdit=true;
+    this.getAttachmentsForCustomerRequest(this.requestKey);
     this.getCustomerRequestStatus(this.requestKey);
     this.getRequestComments(this.requestKey);
-    this.getAttachmentsForCustomerRequest(this.requestKey);
     }
 
     this.createTicket = this.formBuilder.group({
@@ -136,14 +136,11 @@ export class CreateTicketComponent implements OnInit {
       "component": this.createTicket.value.component,
       "tempattachmentid": this.createTicket.value.tempattachmentid
     }
-    // console.log(record);
     this.api.createCustomerRequest(record).subscribe(res => {
-      // console.log(res);
       if (res == 'created request sucessfully') {
         Swal.fire({
           title: 'Ticket Created Successfully',
-          icon: 'success',
-          timer: 2000
+          icon: 'success'
         });
         this.reset();
         this.isLoading = false;
@@ -152,10 +149,9 @@ export class CreateTicketComponent implements OnInit {
         this.isLoading = false;
         this.fileError = false;
         Swal.fire({
-          title: 'Ticket Created failed',
+          title: 'Ticket creation failed',
           text: 'Please try again later',
-          icon: 'error',
-          timer: 2000
+          icon: 'error'
         });
       }
       else if (res == `{"errorMessage":"Error occured","errorCode":5030}`) {
@@ -163,8 +159,7 @@ export class CreateTicketComponent implements OnInit {
         Swal.fire({
           title: 'Error occured',
           text: 'Please try again later',
-          icon: 'error',
-          timer: 2000
+          icon: 'error'
         });
       }
     },err=>{
@@ -172,8 +167,7 @@ export class CreateTicketComponent implements OnInit {
       Swal.fire({
         title: 'Error occured',
         text: 'Please try again later',
-        icon: 'error',
-        timer: 2000
+        icon: 'error'
       });
     });
 
@@ -191,8 +185,7 @@ export class CreateTicketComponent implements OnInit {
         Swal.fire({
           title: 'Success',
           text: 'Summary Updated Sucessfully !',
-          icon: 'success',
-          timer: 2000
+          icon: 'success'
         });
         this.getUserDetails(this.userId);
         this.isLoading = false;
@@ -201,11 +194,9 @@ export class CreateTicketComponent implements OnInit {
         Swal.fire({
           title: 'Failed To Update',
           text: 'Please try again later',
-          icon: 'error',
-          timer: 2000
+          icon: 'error'
         });
       }
-      console.log(res);
     });
   }
 
@@ -231,8 +222,7 @@ export class CreateTicketComponent implements OnInit {
         Swal.fire({
           title: 'Success',
           text: 'Description Updated Sucessfully !',
-          icon: 'success',
-          timer: 2000
+          icon: 'success'
         });
         this.getUserDetails(this.userId);
         this.isLoading = false;
@@ -241,12 +231,10 @@ export class CreateTicketComponent implements OnInit {
         Swal.fire({
           title: 'Failed To Update',
           text: 'Please try again later',
-          icon: 'error',
-          timer: 2000
+          icon: 'error'
         });
         this.isLoading = false;
       }
-      console.log(res);
     });
   }
 
@@ -288,15 +276,12 @@ export class CreateTicketComponent implements OnInit {
       for (var i = 0; i < this.fileName.length; i++) {
         formdata.append("file", this.fileName[i]);
       }
-      console.log(formdata);
       this.api.createAttachmentsForATicket(formdata).subscribe(res => {
-        console.log(res);
         if(res == 'created attachment sucessfully'){
           Swal.fire({
             title: 'Success',
             text: 'Attachment added Sucessfully !',
-            icon: 'success',
-            timer: 2000
+            icon: 'success'
           });
           this.getAttachmentsForCustomerRequest(this.requestKey);
           this.isLoading = false;
@@ -305,11 +290,17 @@ export class CreateTicketComponent implements OnInit {
           Swal.fire({
             title: 'Failed',
             text: 'Please try again later',
-            icon: 'error',
-            timer: 2000
+            icon: 'error'
           });
           this.isLoading = false;
         }
+      },err=>{
+        Swal.fire({
+          title: 'Failed',
+          text: 'Please try again later',
+          icon: 'error'
+        });
+        this.isLoading = false;
       });
     }
     else {
@@ -324,7 +315,6 @@ export class CreateTicketComponent implements OnInit {
         formdata.append("file", this.fileName[i]);
       }
       this.api.createTemporaryFile(formdata).subscribe(res => {
-        console.log("this.tempAttachmentId",this.tempAttachmentId)
         this.tempAttachmentId = res;
         this.isLoading = false;
         if (!res) {
@@ -415,7 +405,6 @@ export class CreateTicketComponent implements OnInit {
     // this.isLoading = true;
     this.api.getRequestComments(id).subscribe((res:any) => {
       this.commentRequest = res;
-      console.log(res, "comment");
       if (this.commentRequest.length > 0) {
         // this.comment = this.commentRequest[0].comment;
         this.comment = this.commentRequest;
@@ -433,7 +422,6 @@ export class CreateTicketComponent implements OnInit {
       });
       this.createRequestData = Array;
       this.createRequestData = this.createRequestData.filter((e: any) => e.requestKey == this.requestKey);
-      console.log(this.createRequestData);
       this.summary = this.createRequestData[0].summary;
       // this.createTicket.get('summary').setValue(this.createRequestData[0].summary)
       this.description = this.createRequestData[0].description;
@@ -441,7 +429,6 @@ export class CreateTicketComponent implements OnInit {
       this.impact = this.createRequestData[0].impact;
       this.severity = this.createRequestData[0].severity;
       this.priority = this.createRequestData[0].priority;
-      // console.log(this.component);
       this.isLoading = false;
     });
   }
@@ -463,12 +450,11 @@ export class CreateTicketComponent implements OnInit {
         let obj = {}
         obj['name'] = keyval[i]
         obj['file'] = atob(img);
-        obj['type'] = type[1];
+        obj['type'] = type[type.length-1];
         this.imageArray.push(obj);
       }
     }
-      // console.log(this.imageArray);
-      // this.isLoading = false;
+      this.isLoading = false;
     });
   }
 
@@ -476,70 +462,102 @@ export class CreateTicketComponent implements OnInit {
     this.api.getCustomerRequestStatus(requestKey).subscribe((res:any) => {
       this.customerStatus = res;
       this.createTicket.value.status = this.customerStatus;
-      console.log(this.customerStatus);
     });
   }
 
   removeAttachmentsFromCustomerRequest(data){
-    this.isLoading = true;
-    console.log(data);
     let record = {
-      "fileList": [
-          data.name
-      ],
+      "fileList": [data.name],
       "requestKey": this.requestKey
-  }
-  console.log(record);
-    this.api.removeAttachmentsFromCustomerRequest(record).subscribe((res:any)=>{      
-      console.log(res);
-      if(res == 'removed attachments sucessfully'){
-        Swal.fire({
-          title: 'Success',
-          text: 'Attachment Removed Sucessfully !',
-          icon: 'success',
-          timer: 2000
+    }
+
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
+        this.isLoading=true;
+        this.api.removeAttachmentsFromCustomerRequest(record).subscribe((res:any)=>{      
+          if(res == 'removed attachments sucessfully'){
+            Swal.fire({
+              title: 'Success',
+              text: 'Attachment Removed Sucessfully !',
+              icon: 'success',
+            });
+            this.getAttachmentsForCustomerRequest(this.requestKey);
+            this.isLoading = false;
+          }else{
+            Swal.fire({
+              title: 'Error occured',
+              text: 'Please try again later !',
+              icon: 'error',
+            });
+            this.isLoading = false;
+          }
+        },err=>{
+          Swal.fire({
+            title: 'Error occured',
+            text: 'Please try again later !',
+            icon: 'error',
+          });
+          this.isLoading = false;
         });
-        this.getAttachmentsForCustomerRequest(this.requestKey);
-        this.isLoading = false;
-      }
-      else{
-        Swal.fire({
-          title: 'Error occured',
-          text: 'Please try again later !',
-          icon: 'error',
-          timer: 2000
-        });
-        this.isLoading = false;
       }
     });
+
+
+
+    
   }
 
   removeAllAttachmentsFromCustomerRequest(){
-    this.isLoading = true;
-    this.api.removeAllAttachmentsFromCustomerRequest(this.requestKey).subscribe((res:any)=>{      
-      console.log(res);
-      if(res == 'removed attachments sucessfully'){
-        Swal.fire({
-          title: 'Success',
-          text: 'Attachment Removed Sucessfully !',
-          icon: 'success',
-          timer: 2000
+
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
+        this.isLoading=true;
+        this.api.removeAllAttachmentsFromCustomerRequest(this.requestKey).subscribe((res:any)=>{      
+          if(res == 'removed attachments sucessfully'){
+            Swal.fire({
+              title: 'Success',
+              text: 'Attachments Removed Sucessfully !',
+              icon: 'success',
+            });
+            this.getAttachmentsForCustomerRequest(this.requestKey);
+            this.imageArray = [];
+            this.fileName = [];
+            this.isLoading = false;
+          }else{
+            Swal.fire({
+              title: 'Error occured',
+              text: 'Please try again later !',
+              icon: 'error'
+            });
+            this.isLoading = false;
+          }
+        },err=>{
+          Swal.fire({
+            title: 'Error occured',
+            text: 'Please try again later !',
+            icon: 'error'
+          });
+          this.isLoading = false;
         });
-        this.getAttachmentsForCustomerRequest(this.requestKey);
-        this.imageArray = [];
-        this.fileName = [];
-        this.isLoading = false;
-      }
-      else{
-        Swal.fire({
-          title: 'Error occured',
-          text: 'Please try again later !',
-          icon: 'error',
-          timer: 2000
-        });
-        this.isLoading = false;
       }
     });
+    
   }
 
   editComment1(index,data){
@@ -575,8 +593,7 @@ export class CreateTicketComponent implements OnInit {
           Swal.fire({
             title: 'Success',
             text: 'Comment Created Sucessfully !',
-            icon: 'success',
-            timer: 2000
+            icon: 'success'
           });
           this.cancelCreateComment();
           this.getRequestComments(this.requestKey);
@@ -585,17 +602,15 @@ export class CreateTicketComponent implements OnInit {
           Swal.fire({
             title: 'Failed To Create',
             text: 'Please try again later',
-            icon: 'error',
-            timer: 2000
+            icon: 'error'
           });
           this.isLoading = false;
         }
-        console.log(res);
       },err=>{
         Swal.fire({
           title: 'Failed To Create',
           text: 'Please try again later',
-          icon: 'error',
+          icon: 'error'
         });
         this.isLoading = false;
       });
@@ -610,14 +625,12 @@ export class CreateTicketComponent implements OnInit {
         'commentBody':comment
       };
 
-      // console.log(req_obj);
       this.api.editComment(req_obj).subscribe(res => {
         if (res == 'comment Edited sucessfully') {
           Swal.fire({
             title: 'Success',
             text: 'Comment Updated Sucessfully !',
             icon: 'success',
-            timer: 2000
           });
           this.getRequestComments(this.requestKey);
           this.isLoading = false;
@@ -626,12 +639,10 @@ export class CreateTicketComponent implements OnInit {
           Swal.fire({
             title: 'Failed To Update',
             text: 'Please try again later',
-            icon: 'error',
-            timer: 2000
+            icon: 'error'
           });
           this.isLoading = false;
         }
-        console.log(res);
       },err=>{
         Swal.fire({
           title: 'Failed To Update',
@@ -660,7 +671,6 @@ export class CreateTicketComponent implements OnInit {
         if (result.value) {
           this.isLoading=true;
           this.api.deleteComment(req_body).subscribe(res=>{
-            // console.log(res)
             let status:any = res;
             Swal.fire({
               title: 'Success',
@@ -681,13 +691,23 @@ export class CreateTicketComponent implements OnInit {
                 title: 'Oops...',
                 text: 'Something went wrong!',
               })
-                           
+              this.isLoading = false;     
             })
         }
       });
       
   }
 
+  getComponentsList(){
+    this.api.getListOfComponents().subscribe((res:any[])=>{
+      this.component_list=res
+    })
+  }
 
+  getFileName(e){
+    if(e && e.length > 15)
+      return e.substr(0,15)+'...';
+    return e;
+  }
 
 }

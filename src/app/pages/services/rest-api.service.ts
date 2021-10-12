@@ -1085,5 +1085,8 @@ getvaluechainprocess(id)
   deleteComment(body){
    return this.http.post('/api/servicedesk/deleteComment',body,{ responseType: "text" });
   }
+  getListOfComponents(){
+    return this.http.get('/api/servicedesk/getcomponents')
+  }
 
 }

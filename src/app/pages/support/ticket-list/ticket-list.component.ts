@@ -42,6 +42,7 @@ export class TicketListComponent implements OnInit {
   isLoading: boolean;
   categories: any[] = [];
   severityLevelsArray: any;
+  selectedCategory:any;
 
   constructor(private api: RestApiService, private jwtHelper: JwtHelperService, private router: Router) {
     var userDetails = localStorage.getItem('accessToken');
@@ -54,6 +55,7 @@ export class TicketListComponent implements OnInit {
     this.isLoading = true;
     this.getUserDetails(this.userId);
     this.getAllSeverityLevels();
+    this.selectedCategory="All Categories"
   }
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim();
@@ -76,6 +78,11 @@ export class TicketListComponent implements OnInit {
         // e.jiraServiceDesk.created_at = (e.jiraServiceDesk.created_at.split('T')[0] + " " + e.jiraServiceDesk.created_at.split('T')[1].split('.')[0]);
         // e.jiraServiceDesk.modified_at = (e.jiraServiceDesk.modified_at.split('T')[0] + " " + e.jiraServiceDesk.modified_at.split('T')[1].split('.')[0]);
         res_Array.push(e.jiraServiceDesk);
+        res_Array.sort(function (a, b) {
+          a = new Date(a.created_at);
+          b = new Date(b.created_at);
+          return a > b ? -1 : a < b ? 1 : 0;
+        });
       });
       this.dataSource = new MatTableDataSource(res_Array);
       this.dataSource.paginator = this.paginator;
@@ -85,25 +92,21 @@ export class TicketListComponent implements OnInit {
   }
 
   ViewMode(element) {
-    console.log(element);
     this.router.navigate(['/pages/support/create-ticket'], { queryParams: { requestKey: element.requestKey } });
-
   }
 
   getAllSeverityLevels() {
+    var category = [
+      "All Categories",  "High", "Low", "Medium", "Lowest", "Task Mining", "Service Orchestration", "Robatic Process Automation",
+      "Process Intelligence", "Business Process Studio"
+    ];
     this.api.getAllSeverityLevels().subscribe(res => {
-      var category = [
-        "All Categories",  "High", "Low", "Medium", "Lowest", "Task Mining", "Service Orchestration", "Robatic Process Automation",
-        "Process Intelligence", "Business Process Studio"
-      ];
-      var Array = [];
+      var severity_array = [];
       this.severityLevelsArray = res;
       this.severityLevelsArray.forEach((e) => {
-        Array.push(e.severity);
+        severity_array.push(e.severity);
       });
-      // console.log(Array);
-      // console.log(category);
-      this.categories = category.concat(Array);
+      this.categories = category.concat(severity_array);
     });
   }
 

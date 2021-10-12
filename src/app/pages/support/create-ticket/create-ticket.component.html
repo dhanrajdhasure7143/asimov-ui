@@ -67,13 +67,11 @@
                                                 <div>
                                                     <input class="form-control" type="text" formControlName="newcomment" (click)="addCommentClick()" [(ngModel)]="newComment_data" placeholder="Add Comment"> 
                                                     <span *ngIf="isAddInputenable" class="comments-box-icons">    
-                                                        <img src="../../../../assets/images/Admin/submit.svg" class="" matTooltip="Save" (click)="addNewComment(newComment_data)">
-                                                        <img src="../../../../assets/images/Admin/cancel.svg" class="" matTooltip="Cancel" (click)="cancelCreateComment()">
+                                                        <!-- <img src="../../../../assets/images/Admin/submit.svg" class="" matTooltip="Save" (click)="addNewComment(newComment_data)">
+                                                        <img src="../../../../assets/images/Admin/cancel.svg" class="" matTooltip="Cancel" (click)="cancelCreateComment()"> -->
+                                                        <button class="btn btn-default" (click)="cancelCreateComment()">Cancel</button>
+                                                        <button class="btn btn-primary" (click)="addNewComment(newComment_data)">Save</button>
                                                     </span>
-                                                        <!-- <div class="CreateTkt-buttons" *ngIf="isAddInputenable">
-                                                            <button class="btn btn-default" (click)="cancelCreateComment()">Cancel</button>
-                                                            <button class="btn btn-primary" (click)="addNewComment(newComment_data)">Save</button>
-                                                        </div> -->
                                                 </div>
                                             </div>
                                             <div class="col-md-12 p-0">
@@ -84,11 +82,11 @@
                                                             <span *ngIf='!(isCommentEditable == i)'>
                                                                 <span class="comment-date-icons firsticon-edit">
                                                                     <img src="../../../../assets/images/Admin/edit-comment.svg" matTooltip="Edit" (click)="editComment1(i,each_comment)" class="default-img">
-                                                                    <img src="../../../../assets/images/Admin/edit-comment-blue.svg" class="hover-img">
+                                                                    <img src="../../../../assets/images/Admin/edit-comment-blue.svg" (click)="editComment1(i,each_comment)" class="hover-img">
                                                                 </span>
                                                                 <span class="comment-date-icons">
                                                                     <img src="../../../../assets/images/Admin/delete-comment.svg" matTooltip="Delete" (click)="deleteComment(each_comment)" class="default-img">
-                                                                    <img src="../../../../assets/images/Admin/delete-comment-red.svg" class="hover-img">
+                                                                    <img src="../../../../assets/images/Admin/delete-comment-red.svg" matTooltip="Delete" (click)="deleteComment(each_comment)" class="hover-img">
                                                                 </span>
                                                             </span>
                                                         </span> 
@@ -100,8 +98,10 @@
                                                     <div *ngIf='isCommentEditable == i' class="">
                                                         <input class="form-control" type="text" formControlName="comment" [(ngModel)]="comment_data" placeholder="Enter Comment">
                                                         <div class="comments-box-icons">
-                                                            <img src="../../../../assets/images/Admin/submit.svg" matTooltip="Save" (click)="updateComment(comment_data,each_comment)">
-                                                            <img src="../../../../assets/images/Admin/cancel.svg" matTooltip="Cancel" (click)="cancelCommentupdate()">
+                                                            <!-- <img src="../../../../assets/images/Admin/submit.svg" matTooltip="Save" (click)="updateComment(comment_data,each_comment)">
+                                                            <img src="../../../../assets/images/Admin/cancel.svg" matTooltip="Cancel" (click)="cancelCommentupdate()"> -->
+                                                            <button class="btn btn-default" (click)="cancelCommentupdate()">Cancel</button>
+                                                            <button class="btn btn-primary" (click)="updateComment(comment_data,each_comment)">Save</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -154,22 +154,22 @@
                                         <tr *ngFor="let item of imageArray">
                                             <td class="readfilename">
                                             <a *ngIf="item.type == 'pdf'">
-                                                <img src="../../../../assets/images/Admin/fle.svg" class="testplus1"> &nbsp; <span>{{item.name}}</span>
+                                                <img src="../../../../assets/images/Admin/pdf.svg" class="testplus1" > &nbsp; <span [matTooltip]=item.name matTooltipClass="bpsHeaderTooltip">{{getFileName(item.name)}}</span>
                                             </a>
                                             <a *ngIf="item.type == 'txt'">
-                                                <img src="../../../../assets/images/Admin/fle.svg" class="testplus1"> &nbsp; <span>{{item.name}}</span>
+                                                <img src="../../../../assets/images/Admin/fle.svg" class="testplus1"> &nbsp; <span [matTooltip]=item.name matTooltipClass="bpsHeaderTooltip">{{getFileName(item.name)}}</span>
                                             </a>
                                             <a *ngIf="item.type == 'xlsx'">
-                                                <img src="../../../../assets/images/Admin/fle.svg" class="testplus1"> &nbsp; <span>{{item.name}}</span>
+                                                <img src="../../../../assets/images/Admin/xlsx.svg" class="testplus1"> &nbsp; <span [matTooltip]=item.name matTooltipClass="bpsHeaderTooltip">{{getFileName(item.name)}}</span>
                                             </a>
-                                            <a *ngIf="item.type == 'jpg' || item.type == 'png' || item.type == 'jpeg'">
-                                                <img src="../../../../assets/images/Admin/fle.svg" class="testplus1"> &nbsp; <span>{{item.name}}</span>
+                                            <a *ngIf="item.type == 'jpg' || item.type == 'png' || item.type == 'jpeg' || item.type == 'PNG'">
+                                                <img src="../../../../assets/images/Admin/image.svg" class="testplus1"> &nbsp; <span [matTooltip]=item.name matTooltipClass="bpsHeaderTooltip">{{getFileName(item.name)}}</span>
                                             </a>
                                             <a *ngIf="item.type == 'svg'">
-                                                <img src="../../../../assets/images/Admin/fle.svg" class="testplus1"> &nbsp; <span>{{item.name}}</span>
+                                                <img src="../../../../assets/images/Admin/image.svg" class="testplus1"> &nbsp; <span [matTooltip]=item.name matTooltipClass="bpsHeaderTooltip">{{getFileName(item.name)}}</span>
                                             </a>
                                             <a *ngIf="item.type == 'csv'">
-                                                <img src="../../../../assets/images/Admin/fle.svg" class="testplus1"> &nbsp; <span>{{item.name}}</span>
+                                                <img src="../../../../assets/images/Admin/csv.svg" class="testplus1"> &nbsp; <span [matTooltip]=item.name matTooltipClass="bpsHeaderTooltip">{{getFileName(item.name)}}</span>
                                             </a>
                                             </td>
                                             <td class="deleteattachment">
@@ -177,7 +177,7 @@
                                                 <img src="../../../../assets/images//Admin/delete-red.svg" matTooltip="Delete Process" (click)="removeAttachmentsFromCustomerRequest(item)" matTooltipPosition="left" class="hover-img testplus1">
                                             </td>
                                             <td class="deleteattachment">
-                                                <a href="data:image/png;base64,{{item.file}}" *ngIf="item.type == 'jpg' || item.type == 'png' || item.type == 'jpeg'" download="{{item.name}}">
+                                                <a href="data:image/png;base64,{{item.file}}" *ngIf="item.type == 'jpg' || item.type == 'png' || item.type == 'jpeg' || item.type == 'PNG'" download="{{item.name}}">
                                                     <img src="../../../../assets/images/Admin/download-black.svg" class="default-img testplus1">
                                                     <img src="../../../../assets/images/Admin/download-blue.svg" class="hover-img testplus1">
                                                 </a>

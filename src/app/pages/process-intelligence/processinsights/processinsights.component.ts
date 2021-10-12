@@ -1475,6 +1475,7 @@ series2.stroke = am4core.color("#fc8d45");
         this.getTotalNoOfCases('fullgraph');
         this.getActivityMetrics('fullgraph');
         this.getHumanBotCost('fullgraph');
+        this.selectedResources=[];
     }
 
     switch1(data) {
@@ -2061,6 +2062,9 @@ svg
     //   }
     ActivityTimeChart(){
         // console.log(this.dChart1)
+        this.dChart1.sort(function (a,b){
+            return b.value - a.value
+        })
         am4core.useTheme(am4themes_animated);
         // Themes end
         
@@ -2094,7 +2098,7 @@ svg
         series.dataFields.category = "name";
         series.labels.template.disabled = true;
         // series.slices.template.cornerRadius = 0;
-        series.tooltip.horizontalCenter = "middle";
+        // series.tooltip.horizontalCenter = "middle";
         // series.tooltip.verticalCenter = "middle";
         // series.tooltip.fontSize=18;
         // series.tooltipText = ' {name} ({_dataContext.totalDuration1})';
@@ -2138,6 +2142,10 @@ svg
     }
 
     resourceCostByActivity(){
+        console.log("this.dChart2",this.dChart2)
+        this.dChart2.sort(function(a,b){
+            return b.value-a.value
+        })
         am4core.useTheme(am4themes_animated);
         // Themes end
         

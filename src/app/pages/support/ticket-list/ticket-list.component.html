@@ -15,7 +15,7 @@
             <div class="tktlist-body-header">
                 <div class="tktlist-Heading">Issues</div>
                 <div class="tktlist-fields">
-                <select name="Filter by" (change)="categoryFilter($event)" class="form-control">
+                <select name="Filter by" (change)="categoryFilter($event)" class="form-control" [(ngModel)]="selectedCategory">
                         <option value="" disabled hidden >Select Category</option>
                         <option class="selectoptions" style="margin-top: 1%;" [value]="item" *ngFor="let item of categories">{{item}}</option>
                     </select> &nbsp;&nbsp;
