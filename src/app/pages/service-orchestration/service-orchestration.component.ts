@@ -23,7 +23,11 @@ import { Component } from '@angular/core';
 })
 export class ServiceOrchestrationComponent {
   constructor() { }
+  ngOnDestroy(){
+      localStorage.removeItem("orc_tab");
+  }
 }
+
 
 
 
