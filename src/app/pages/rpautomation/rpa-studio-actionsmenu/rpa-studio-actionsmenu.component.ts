@@ -242,6 +242,9 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
         this.rpa_studio.spinner.hide();
         if(this.savebotrespose.botId!=undefined)
         {
+          let url=window.location.hash;
+          window.history.pushState("", "", url.split("?botId=")[0]+"?botId="+this.savebotrespose.botId);
+       
           this.botState=data;
           Swal.fire("Success","Bot saved successfully !!","success");
           this.startbot=true;
@@ -251,6 +254,7 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
           let bottask:any=this.botState;
           this.getVersionlist();
           this.childBotWorkspace.uploadfile(this.finalenv);
+
           if(bottask.taskId!=0 && bottask.taskId!=undefined)
           {
             this.rpa_assignbot(this.savebotrespose.botId, bottask.taskId);

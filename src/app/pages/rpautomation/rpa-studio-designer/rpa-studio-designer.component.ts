@@ -1,20 +1,23 @@
-import {Input, Component, OnInit, QueryList,ViewChildren } from '@angular/core';
+import {Input, Component, OnInit, QueryList,ViewChildren, OnDestroy } from '@angular/core';
 import { RpaStudioComponent } from '../rpa-studio/rpa-studio.component';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-rpa-studio-designer',
   templateUrl: './rpa-studio-designer.component.html',
   styleUrls: ['./rpa-studio-designer.component.css']
 })
-export class RpaStudioDesignerComponent implements OnInit {
+export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
 
   @Input('tabsArray') public tabsArray: any[];
   @ViewChildren("rpa_bot_instance") bot_instances:QueryList<any>;
   current_instance:any;
   toolset_instance:any;
   selected_tab_instance:any;
-  constructor(private rpa_studio:RpaStudioComponent, private router:Router) { }
+
+  constructor(private rpa_studio:RpaStudioComponent, 
+    private router:Router,
+    private activeRoute:ActivatedRoute) { }
 
   ngOnInit() {
     
@@ -24,28 +27,33 @@ export class RpaStudioDesignerComponent implements OnInit {
 
   ngAfterViewInit()
   {
-    console.log(this.tabsArray.length)
-    localStorage.setItem("isHeader","true");
-    console.log("check")
-      setTimeout(()=>{
-      console.log(this.bot_instances)
-       localStorage.setItem("isHeader","true");
-        this.bot_instances.forEach((instance,index)=>{
-          console.log(instance)
-          this.current_instance=instance.rpa_actions_menu;
-          this.toolset_instance=instance;
-          this.selected_tab_instance=instance;
-          });
-      },2500)
+    // console.log(this.tabsArray.length)
+    // localStorage.setItem("isHeader","true");
+    // console.log("check")
+    //   setTimeout(()=>{
+    //   console.log(this.bot_instances)
+    //    localStorage.setItem("isHeader","true");
+    //     this.bot_instances.forEach((instance,index)=>{
+    //       console.log(instance)
+    //       this.current_instance=instance.rpa_actions_menu;
+    //       this.toolset_instance=instance;
+    //       this.selected_tab_instance=instance;
+    //       });
+    //   },2500)
      
   
-    localStorage.setItem("isHeader","true");
+    // localStorage.setItem("isHeader","true");
   }
 
   
   removetab(tab)
   {
+    localStorage.removeItem("bot_id")
     this.tabsArray.splice(this.tabsArray.indexOf(tab), 1)
+    if(this.tabsArray.length==0)
+    {
+      this.router.navigate(["pages/rpautomation/home"])  
+    }
   }
 
 
@@ -62,12 +70,14 @@ export class RpaStudioDesignerComponent implements OnInit {
           this.selected_tab_instance=instance;
           this.current_instance=instance.rpa_actions_menu;
           this.rpa_studio.spinner.hide();
+          let url=window.location.hash;
+          window.history.pushState("", "", url.split("?botId=")[0]+"?botId="+instance.botState.botId);
+    
         }
       })
-    },2500)
+    },2000)
     
     
-    console.log(this.current_instance)
   }
 
   version_change(versionId)
@@ -92,6 +102,7 @@ export class RpaStudioDesignerComponent implements OnInit {
 
   removenodes()
   {
+    localStorage.removeItem("bot_id")
     if(localStorage.getItem('project_id')!="null"){
       this.router.navigate(["/pages/projects/projectdetails"], 
      {queryParams:{"id":localStorage.getItem('project_id')}})
@@ -99,4 +110,25 @@ export class RpaStudioDesignerComponent implements OnInit {
       $(".bot-close").click();
     }
   }
+
+
+  navigateToBack()
+  {
+    this.activeRoute.queryParams.subscribe(data=>{
+      let params:any=data;
+      if(params.projectId!=undefined)
+      {
+        this.router.navigate(["/pages/projects/projectdetails"],{queryParams:{id:params.projectId}})
+      }else
+      {
+        this.router.navigate(["/pages/rpautomation/home"])
+      }
+    })
+  }
+
+  ngOnDestroy()
+  {
+    localStorage.removeItem("bot_id")
+  }
+  
 }
