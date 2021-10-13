@@ -273,6 +273,8 @@ chart.cursor = new am4charts.XYCursor();
   }
   chart3(data, length){
 
+    console.log(data);
+    
     am4core.ready(function() {
         
         // Themes begin
@@ -340,19 +342,7 @@ chart.cursor = new am4charts.XYCursor();
         markerTemplate.height = 10;
         
         //chart.data = data
-        chart.data=[{
-          "country": "UiPath",
-          "litres": 122,
-          "color": "#ffda83"
-        },{
-          "country": "BluePrism",
-          "litres":  225,
-          "color": "#55d8fe"
-        },{
-          "country": "EPSoft",
-          "litres":369,
-          "color": "#fa4616"
-        }];
+        chart.data=data
         });  
 
   }
@@ -1040,7 +1030,6 @@ pieSeries.labels.template.fontSize = 18;
       series.dataFields.valueY = "value";
       series.dataFields.categoryX = "name";
       series.tooltipText = "{valueY.value}";
-
       var columnTemplate = series.columns.template;
       columnTemplate.width = 40;
       columnTemplate.column.cornerRadiusTopLeft = 10;
