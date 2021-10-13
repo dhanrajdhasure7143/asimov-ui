@@ -444,7 +444,6 @@ export class CreateTicketComponent implements OnInit {
       this.impact = this.createRequestData[0].impact;
       this.severity = this.createRequestData[0].severity;
       this.priority = this.createRequestData[0].priority;
-      if(!this.isEdit)
       this.isLoading = false;
     });
   }
