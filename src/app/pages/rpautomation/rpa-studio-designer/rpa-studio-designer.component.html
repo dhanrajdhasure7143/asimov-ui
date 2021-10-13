@@ -97,8 +97,8 @@
                       <!-- <i class="ri-history-line"></i> -->
                     </button>
                   </div>
-                  <div class="action-item hovericon" *ngIf="current_instance != undefined" placement="bottom" tooltip="Download">
-                    <button type="button" [disabled]="current_instance.savebotrespose==undefined" id="dropdownMenuButton" class="downloadBtn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <div class="action-item hovericon" *ngIf="current_instance != undefined" >
+                    <button type="button" placement="bottom" tooltip="Download" [disabled]="current_instance.savebotrespose==undefined" id="dropdownMenuButton" class="downloadBtn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <img src="../../../../assets/images/RPA/icon_latest/download.svg" class="testplus1">
                     </button>
                     <div class="rpa-dropdown dropdown-menu RPA-download" aria-labelledby="dropdownMenuButton">

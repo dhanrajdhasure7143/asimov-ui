@@ -1112,7 +1112,7 @@
               </ng-container>
           
               <ng-container matColumnDef="fileSize">
-                  <th mat-header-cell *matHeaderCellDef>File Size</th>
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>File Size</th>
                   <td mat-cell *matCellDef="let element">
                       <span *ngIf="element.fileSize!=null">{{element.fileSize | fileSizePipe}}</span>
                       <span *ngIf="element.fileSize==null">---</span>
