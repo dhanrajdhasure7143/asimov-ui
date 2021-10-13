@@ -121,3 +121,7 @@ table td::first-letter {
 .Tkt-eyehover:hover img.hover-img {
     display: initial;
 }
+.summaty_field a:hover{
+    color: #00a0e3 !important;
+    text-decoration: underline !important;
+}

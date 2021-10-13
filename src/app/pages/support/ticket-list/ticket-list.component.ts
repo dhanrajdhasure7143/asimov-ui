@@ -43,6 +43,7 @@ export class TicketListComponent implements OnInit {
   categories: any[] = [];
   severityLevelsArray: any;
   selectedCategory:any;
+  searchInput_value:any;
 
   constructor(private api: RestApiService, private jwtHelper: JwtHelperService, private router: Router) {
     var userDetails = localStorage.getItem('accessToken');
@@ -58,9 +59,11 @@ export class TicketListComponent implements OnInit {
     this.selectedCategory="All Categories"
   }
   applyFilter(filterValue: string) {
+    this.selectedCategory="All Categories";
     filterValue = filterValue.trim();
     filterValue = filterValue.toLowerCase();
     this.dataSource.filter = filterValue;
+    this.dataSource.paginator.firstPage();
   }
 
   getUserDetails(userid) {
@@ -111,14 +114,15 @@ export class TicketListComponent implements OnInit {
   }
 
   categoryFilter(event) {
+    this.searchInput_value='';
     if (event.target.value == "All Categories") {
       var fulldata = '';
       this.dataSource.filter = fulldata;
       this.dataSource.paginator.firstPage();
     } else {
-      this.dataSource.filterPredicate = (data: any, filter: string) => {
-        return data.priority == event.target.value || data.severity == event.target.value || data.component == event.target.value;
-      };
+      // this.dataSource.filterPredicate = (data: any, filter: string) => {
+      //   return data.priority == event.target.value || data.severity == event.target.value || data.component == event.target.value;
+      // };
       this.dataSource.filter = event.target.value;
       this.dataSource.paginator = this.paginator;
       this.dataSource.paginator.firstPage();

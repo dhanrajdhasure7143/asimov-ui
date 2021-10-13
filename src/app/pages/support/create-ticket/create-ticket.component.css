@@ -383,3 +383,20 @@ mat-select-value {
 span.firsticon-edit {
     margin-right: 6px;
 }
+::ng-deep .mat-paginator-page-size{
+    display: none !important;
+}
+.deleteattachment{
+    padding-right: 5px;
+}
+
+/* ::ng-deep .mat-paginator-range-label{
+    display: none !important;
+} */
+.tablefile-name{
+    padding-left: 3px;
+}
+.supporttable-div{
+    height: 245px;
+    margin-top: 5px;
+}
