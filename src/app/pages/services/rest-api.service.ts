@@ -1030,4 +1030,66 @@ getvaluechainprocess(id)
     return this.http.get("/rpa-service/scheduled-process")
   }
 
+  // Support module
+  getAllCustomerRequests() {
+    return this.http.get("/api/servicedesk/getAllCustomerRequests");
+  }
+  getAllCustomerRequestsByOrg(orgName:string){
+   return this.http.get('/api/servicedesk/getAllCustomerRequestsByOrg?orgName=' + orgName);
+  }
+  createTemporaryFile(data){
+   return this.http.post("/api/servicedesk/createTemporaryFile",data);
+  }
+  createCustomerRequest(data:object){
+   return this.http.post('/api/servicedesk/createCustomerRequest',data, { responseType: "text" });
+  }
+  getAllImpactLevels() {
+    return this.http.get('/api/servicedesk/getAllImpactLevels');
+  }
+  getAllSeverityLevels(){
+    return this.http.get('/api/servicedesk/getAllSeverityLevels');
+  }
+  getAllRequestTypes(){
+    return this.http.get('/api/servicedesk/getAllRequestTypes');
+  }
+  getAllJiraOrganizations(){
+    return this.http.get('/api/servicedesk/getAllJiraOrganizations');
+  }
+  getRequestComments(id:any){
+    return this.http.get("/api/servicedesk/getRequestComments?requestKey=" + id);
+  }
+  createCommentInRequest(data:any){
+    return this.http.post('/api/servicedesk/createCommentInRequest',data,{ responseType: "text" })
+  }
+  editComment(comment:any){
+    return this.http.post('/api/servicedesk/editComment',comment, { responseType: "text" });
+  }
+  editSummary(id:any,data:any){
+    return this.http.post('/api/servicedesk/editSummary?request='+id,data, { responseType: "text" })
+  }
+  editDescription(id:any,data:any){
+    return this.http.post('/api/servicedesk/editDescription?request='+id,data, { responseType: "text" })
+  }
+  getAttachmentsForCustomerRequest(id:any){
+    return this.http.get('/api/servicedesk/getAttachmentsForCustomerRequest?requestKey='+id, { responseType: "json" });
+  }
+  createAttachmentsForATicket(data){
+    return this.http.post('/api/servicedesk/createAttachmentsForATicket',data , { responseType: "text" });
+  }
+  getCustomerRequestStatus(requestKey){
+    return this.http.get("/api/servicedesk/getCustomerRequestStatus?requestKey=" + requestKey, { responseType: "text" });
+  }
+  removeAttachmentsFromCustomerRequest(data:any){
+   return this.http.post('/api/servicedesk/removeAttachmentsFromCustomerRequest', data, { responseType: "text" });
+  }
+  removeAllAttachmentsFromCustomerRequest(requestId:any){
+   return this.http.get("/api/servicedesk/removeAllAttachmentsFromCustomerRequest?requestKey="+ requestId, { responseType: "text" });
+  }
+  deleteComment(body){
+   return this.http.post('/api/servicedesk/deleteComment',body,{ responseType: "text" });
+  }
+  getListOfComponents(){
+    return this.http.get('/api/servicedesk/getcomponents')
+  }
+
 }

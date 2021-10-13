@@ -1,0 +1,120 @@
+<div class="Support-tktlist h-100">
+    <div class="h-100" id="my_workspace">
+        <div class="module-heading title">
+            <span class="module-header-title">
+                <span class="module-parent-title">Support</span>
+            </span>
+            <div class="ml-auto">
+                <button class="btn btn-primary" routerLink="/pages/support/create-ticket">
+                    <img src="../../../../assets/images/Projects/White-plus.svg" class="testplus">
+                        Create New
+                </button>
+            </div>
+        </div>
+        <div class="Support-tktlist-body">
+            <div class="tktlist-body-header">
+                <div class="tktlist-Heading">Issues</div>
+                <div class="tktlist-fields">
+                <select name="Filter by" (change)="categoryFilter($event)" class="form-control" [(ngModel)]="selectedCategory">
+                        <option value="" disabled hidden >Select Category</option>
+                        <option class="selectoptions" style="margin-top: 1%;" [value]="item" *ngFor="let item of categories">{{item}}</option>
+                    </select> &nbsp;&nbsp;
+                    <input class="form-control" type="search" name="search_value" [(ngModel)]="searchInput_value" (keyup)="applyFilter($event.target.value)" placeholder="Search Issue...">
+                </div>
+            </div>
+            <div class="table_responsive graph_table">
+                <table mat-table [dataSource]="dataSource" matSort class="PI table w-100">
+
+                    <!-- Issue ID Column -->
+                    <ng-container matColumnDef="id">
+                        <th style="width: 7%;" mat-sort-header mat-header-cell *matHeaderCellDef>ID</th>
+                        <td mat-cell *matCellDef="let element"> {{element.requestKey}}
+                        </td>
+                    </ng-container>
+
+                    <!-- Summary Column -->
+                    <ng-container matColumnDef="summary">
+                        <th style="width: 27%;" mat-header-cell *matHeaderCellDef mat-sort-header> Summary </th>
+                        <td style="color: #00a0e3;" class="summaty_field" mat-cell *matCellDef="let element"> 
+                            <a (click)="ViewMode(element)">
+                                {{element.summary}} 
+                            </a>
+                        </td>
+                    </ng-container>
+
+                    <!-- Reporter Column -->
+                    <ng-container matColumnDef="reporter">
+                        <th style="width: 10%;" mat-header-cell *matHeaderCellDef mat-sort-header> Reporter </th>
+                        <td mat-cell *matCellDef="let element"> {{element.reporter}} </td>
+                    </ng-container>
+
+                    <!-- Component Column -->
+                    <ng-container matColumnDef="component">
+                        <th style="width: 14%;" mat-sort-header mat-header-cell *matHeaderCellDef>Component</th>
+                        <td style="color: #00a0e3;" mat-cell *matCellDef="let element"> {{element.component}}
+                        </td>
+                    </ng-container>
+
+                    <!-- Status Column -->
+                    <ng-container matColumnDef="status">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+                        <td mat-cell *matCellDef="let element" [ngClass]="element.Status == 'New' ? 'blue' : 'green'">
+                            {{element.status}} </td>
+                    </ng-container>
+
+                    <!-- Impact Column -->
+                    <ng-container matColumnDef="impact">
+                        <th style="width: 9%;" mat-header-cell *matHeaderCellDef mat-sort-header> Impact </th>
+                        <td mat-cell *matCellDef="let element"> {{element.impact}} </td>
+                    </ng-container>
+
+                    <!-- Severity Column -->
+                    <ng-container matColumnDef="severity">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Severity </th>
+                        <td mat-cell *matCellDef="let element"> {{element.severity}} </td>
+                    </ng-container>
+
+                    <!-- Priority Column -->
+                    <ng-container matColumnDef="priority">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Priority </th>
+                        <td mat-cell *matCellDef="let element"> {{element.priority}} </td>
+                    </ng-container>
+
+                    <!-- CreatedDate Column -->
+                    <ng-container matColumnDef="created_at">
+                        <th style="width: 14%;" mat-header-cell *matHeaderCellDef mat-sort-header>Created</th>
+                        <td mat-cell *matCellDef="let element"> {{element.created_at | date:'MMM d, y, HH:mm'}} </td>
+                    </ng-container>
+
+                    <!-- LastModified Column -->
+                    <ng-container matColumnDef="modified_at">
+                        <th style="width: 14%;" mat-header-cell *matHeaderCellDef mat-sort-header>Updated</th>
+                        <td mat-cell *matCellDef="let element"> {{element.modified_at | date:'MMM d, y, HH:mm'}} </td>
+                    </ng-container>
+
+                    <!-- Status Action -->
+                    <ng-container matColumnDef="Action">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
+                        <td mat-cell *matCellDef="let element" (click)="ViewMode(element)" class="Tkt-eyehover">
+                            <img src="../../../../assets/images/PI/eye-show.svg" alt="" class="testplus default-img">
+                            <img src="../../../../assets/images/Admin/eye-show-blue.svg" alt="" class="testplus hover-img">
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="pList"></tr>
+                </table>
+            </div>
+            <div class="supportpaginationdiv">
+                <mat-paginator class="newpaginationdiv" #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons]="true"></mat-paginator>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="spinoverlay" *ngIf="isLoading">
+        <div class="spincenter">
+            <img src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader" />
+        </div>
+    </div>
+</div>

@@ -24,6 +24,8 @@ export class BusinessInsightsComponent implements OnInit {
   totalRows$: Observable<number>;
   isLoading:boolean=false;
   @ViewChild(MatPaginator,{static:false}) paginator: MatPaginator;
+  valueType:any;
+
   constructor(private rest:RestApiService,private route:ActivatedRoute) { 
     let queryParamsResp
     this.route.queryParams.subscribe(res=>{queryParamsResp=res
@@ -126,8 +128,8 @@ export class BusinessInsightsComponent implements OnInit {
       series.dataFields.value = "totalDuration";
       series.dataFields.category = "activity";
       series.labels.template.disabled = true;
-      series.slices.template.cornerRadius = 0;
-      series.tooltip.horizontalCenter = "middle";
+      // series.slices.template.cornerRadius = 0;
+      // series.tooltip.horizontalCenter = "middle";
       // series.tooltip.verticalCenter = "middle";
       // series.tooltip.fontSize=18;
       // series.tooltipText = ' {name} ({_dataContext.totalDuration1})';
@@ -144,6 +146,7 @@ export class BusinessInsightsComponent implements OnInit {
         //return "{_dataContext.activity} \n {_dataContext.convertedDuration}";
         return "{_dataContext.activity} \n {value.percent.formatNumber('#.#')}% [/]"
       });
+      $('g:has(> g[stroke="#3cabff"])').hide();
       series.colors.list = [
           am4core.color("rgba(85, 216, 254, 0.9)"),
           am4core.color("rgba(255, 131, 115, 0.9)"),
@@ -171,6 +174,7 @@ export class BusinessInsightsComponent implements OnInit {
 
 
   thoughtputTimeChart(){
+    this.valueType=this.throughtime_data[0].unitOfTime
     let _me=this
 
     // am4core.ready(function() {
@@ -243,7 +247,7 @@ categoryAxis.renderer.grid.template.location = 1;
 // categoryAxis.renderer.grid.template.strokeOpacity = 1;
 // categoryAxis.renderer.grid.template.location = 1;
 categoryAxis.renderer.minGridDistance = 20;
-categoryAxis.title.text="Throughput Time (Days)"
+categoryAxis.title.text="Throughput Time ("+_me.valueType+")"
 
 var valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
 valueAxis.title.text="No of Cases"
@@ -259,6 +263,7 @@ series.columns.template.adapter.add("fill", function(fill, target) {
       });
 // valueLabel.label.text = "Hello";
 valueLabel.label.fontSize = 20;
+$('g:has(> g[stroke="#3cabff"])').hide();
     
   }
   parseMillisecondsIntoReadableTime(milliseconds){
