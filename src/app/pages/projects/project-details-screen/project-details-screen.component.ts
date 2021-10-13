@@ -576,8 +576,7 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
 
         localStorage.setItem('project_id',this.projectDetails.id);
         if(data.taskCategory=="RPA Implementation"){
-          localStorage.setItem('bot_id',data.correlationID);
-          this.router.navigate(['/pages/rpautomation/home'])
+          this.router.navigate(['/pages/rpautomation/designer'],{queryParams:{botId:data.correlationID,projectId:this.projectDetails.id}})
         }
         if(data.taskCategory=="BPMN Design"){
           this.router.navigate(['pages/businessProcess/uploadProcessModel'],
