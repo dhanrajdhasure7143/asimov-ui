@@ -401,7 +401,10 @@
                     <ng-container matColumnDef="error_info">
                         <th mat-header-cell *matHeaderCellDef>Info </th>
                         <td mat-cell *matCellDef="let element">
-                            <span *ngIf="element.error_info!=null && element.error_info != 'NA'" [matTooltip]="element.error_info">{{(element.error_info.length > 30) ? ((element.error_info).slice(0, 30) + '...') : element.error_info}}</span>
+                            <span *ngIf="element.error_info!=null && element.error_info != 'NA'" class="tsttooltipbtn">
+                              {{(element.error_info.length > 30) ? ((element.error_info).slice(0, 30) + '...') : element.error_info}}
+                              <span class="testtooltip">{{element.error_info}}</span>
+                            </span>
                             <span *ngIf="element.error_info == undefined ||element.error_info == 'NA' ">-</span></td>
                     </ng-container>
 
@@ -504,9 +507,10 @@
                     <ng-container matColumnDef="Info">
                         <th mat-header-cell *matHeaderCellDef>Info</th>
                         <td [matTooltip]="element.Info" placement="bottom" mat-cell *matCellDef="let element">
-                            <span *ngIf="element.Info!=null">
-                      {{(element.Info.length > 30) ? ((element.Info).slice(0, 30) + '...') : element.Info}}
-                    </span>
+                            <span *ngIf="element.error_info!=null && element.error_info != 'NA'" class="tsttooltipbtn">
+                            {{(element.error_info.length > 30) ? ((element.error_info).slice(0, 30) + '...') : element.error_info}}
+                            <span class="testtooltip">{{element.error_info}}</span>
+                            </span>
                             <span *ngIf="element.Info==null">
                       -
                     </span>

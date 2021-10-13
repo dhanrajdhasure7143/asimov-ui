@@ -348,7 +348,7 @@ export class RpaStudioComponent implements OnInit {
               this.designerInstance.toolset_instance=item;
               this.designerInstance.selected_tab_instance=item;
               let url=window.location.hash;
-              window.history.pushState("", "", url.split("?botId=")[0]+"?botId="+botdata.botId);
+              window.history.pushState("", "", url.split("botId=")[0]+"botId="+botdata.botId);
            }
             // if(item.botId==botdata.botId)
             // {

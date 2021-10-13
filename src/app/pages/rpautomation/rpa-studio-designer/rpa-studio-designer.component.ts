@@ -1,6 +1,7 @@
 import {Input, Component, OnInit, QueryList,ViewChildren, OnDestroy } from '@angular/core';
 import { RpaStudioComponent } from '../rpa-studio/rpa-studio.component';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Base64 } from 'js-base64';
 
 @Component({
   selector: 'app-rpa-studio-designer',
@@ -71,7 +72,13 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
           this.current_instance=instance.rpa_actions_menu;
           this.rpa_studio.spinner.hide();
           let url=window.location.hash;
-          window.history.pushState("", "", url.split("?botId=")[0]+"?botId="+instance.botState.botId);
+          if(instance.botState.botId!=undefined)
+            window.history.pushState("", "", url.split("botId")[0]+"botId="+instance.botState.botId);
+          else
+          {
+            let botId=Base64.encode(JSON.stringify(this.tabsArray.find(item=>item.botName==instance.botState.botName)))
+            window.history.pushState("", "", url.split("botId=")[0]+"botId="+botId);
+          }
     
         }
       })
