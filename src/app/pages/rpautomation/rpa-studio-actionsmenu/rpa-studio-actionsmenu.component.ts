@@ -243,7 +243,7 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
         if(this.savebotrespose.botId!=undefined)
         {
           let url=window.location.hash;
-          window.history.pushState("", "", url.split("?botId=")[0]+"?botId="+this.savebotrespose.botId);
+          window.history.pushState("", "", url.split("botId=")[0]+"botId="+this.savebotrespose.botId);
        
           this.botState=data;
           Swal.fire("Success","Bot saved successfully !!","success");

@@ -41,7 +41,7 @@
         <img src="../../../../../assets/images/RPA/icon_latest/reset-blue.svg" class="testplus">
         <span class="testtooltip">Reset</span>
       </button>
-                <button *ngIf="selectedvalue=='' || selectedEnvironment==''" id="autoStartProcess" class="tsttooltipbtn" (click)="startprocess()">
+                <button disabled *ngIf="selectedvalue=='' || selectedEnvironment==''" id="autoStartProcess" class="tsttooltipbtn" (click)="startprocess()">
         <img src="../../../../assets/images/RPA/icon_latest/play.svg" alt="" class="testplus">
         <span *ngIf="!(selectedvalue=='' || selectedEnvironment=='')" class="testtooltip">Run Process</span>
       </button>

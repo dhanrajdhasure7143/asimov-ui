@@ -199,8 +199,8 @@
 
                 <div *ngIf="current_instance != undefined" class="footer-versions">
                     <!-- <img src="../../../../assets/images/RPA/icon_latest/layer.svg" /> &nbsp;  -->
-                    <select id="versions" (change)="version_change($event.target.value)" [value]="current_instance.selectedversion">
-                  <option disabled>Select Version</option>
+                    <select id="versions" (change)="version_change($event.target.value)" [value]="current_instance.selectedversion==undefined?0:current_instance.selectedversion">
+                  <option value=0 disabled>Select Version</option>
                   <option  [value]="version.vId"  *ngFor="let version of current_instance.versionsList"  >
                     Version&nbsp; {{version.vId}}
                   </option>
