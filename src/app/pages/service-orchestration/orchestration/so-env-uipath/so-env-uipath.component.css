@@ -161,3 +161,9 @@ span.testtooltip:before {
 .tsttooltipbtn:hover span.testtooltip {
   display: block;
 }
+
+.soenvuipathgrid {
+  width:100%;
+  height: 52vh;
+  overflow: scroll;
+}

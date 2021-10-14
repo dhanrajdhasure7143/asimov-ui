@@ -85,8 +85,13 @@ export class RpaHomeComponent implements OnInit {
   public editbot:FormGroup;
   rpaCategory: any;
   newRpaCategory: any;
+<<<<<<< HEAD
   rpaVisible:boolean=true;
+=======
+  userName:any="";
+>>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
   displayedRows$: Observable<any[]>;
+  rpaVisible:boolean=false;
   @ViewChild(MatSort,{static:false}) sort: MatSort;
   totalRows$: Observable<number>;
   @ViewChild(MatPaginator,{static:false}) paginator301: MatPaginator;
@@ -125,8 +130,10 @@ export class RpaHomeComponent implements OnInit {
     this.userRole = localStorage.getItem("userRole")
     this.userRole = this.userRole.split(',');
     localStorage.setItem("isHeader","false");
-    this.isButtonVisible = this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') || this.userRole.includes('RPA Admin');
-
+    //this.isButtonVisible = this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') || this.userRole.includes('RPA Admin')||this.userRole.includes("Process Owner")||this.userRole.includes("System Admin")||;
+    this.isButtonVisible=this.userRole.includes("Process Analyst")
+    this.rpaVisible= this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') || this.userRole.includes('Process Owner') || this.userRole.includes('Process Architect')  || this.userRole.includes('Process Analyst')  || this.userRole.includes('RPA Developer')  || this.userRole.includes('Process Architect') || this.userRole.includes("System Admin") ;
+    this.userName=localStorage.getItem("firstName")+" "+localStorage.getItem("lastName");
     let processId=undefined;
     //this.dataSource1.filterPredicate = this.createFilter();
     this.dt.changeParentModule({"route":"/pages/rpautomation/home", "title":"RPA Studio"});
@@ -287,7 +294,11 @@ export class RpaHomeComponent implements OnInit {
         {
           object.botType='Unattended';
         }
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
       if(this.categaoriesList.find(resp => resp.categoryId==data.department)!=undefined)
       {
         object.department=this.categaoriesList.find(resp => resp.categoryId==data.department).categoryName;
@@ -306,7 +317,11 @@ export class RpaHomeComponent implements OnInit {
         }
         this.bot_list.push(object)
         this.assignPagination( this.bot_list);
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
       })
       //this.bot_list=botlist;
       if(this.bot_list.length >0)
@@ -319,7 +334,7 @@ export class RpaHomeComponent implements OnInit {
       //response.sort((a,b) => a.createdAt > b.createdAt ? -1 : 1);
       
       //response=response.reverse();
-      this.dataSource1= new MatTableDataSource(response);
+      this.dataSource1= new MatTableDataSource(this.bot_list);
       this.isDataSource = true;
       this.dataSource1.sort=this.sort1;
       this.dataSource1.paginator=this.paginator1;

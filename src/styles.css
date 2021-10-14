@@ -2267,7 +2267,7 @@ button.btn.btn-primary:first-child {
   margin-right: 0px !important;
 }
 
-.projecttable.table th, .PI.table th, .RPA.table th {
+.projecttable.table th, .PI.table th, .RPA.table th, .Admin.table th {
   background-color: #e8f7fd !important;
   vertical-align: middle !important;
   font-size: 14px !important;
@@ -2277,7 +2277,7 @@ button.btn.btn-primary:first-child {
   color: #00a0e3 !important;
 }
 
-.projects-table-body td, .PI.table tbody td, .RPA.table tbody td {
+.projects-table-body td, .PI.table tbody td, .RPA.table tbody td, .Admin.table td {
   padding: 5px 10px !important;
   vertical-align: middle !important;
   font-size: 13px !important;
@@ -2429,7 +2429,11 @@ th.mat-header-cell {
 }
 .rpa-actioncontent .mat-drawer-inner-container {
   /* padding: 0px 0px 10px 10px!important; */
+<<<<<<< HEAD
   overflow:hidden;
+=======
+  overflow: hidden;
+>>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
 }
 .section .mat-expansion-indicator::after {
   opacity: 0.5 !important;
@@ -2620,13 +2624,18 @@ span.pdicon {
   background: none;
 }
 
+<<<<<<< HEAD
 /*@media (max-width: 1600px) {
+=======
+/* @media (max-width: 1920px) {
+>>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
   .cell10 {
     width: 3% !important;
   }
   .cell2, .cell3, .cell4, .cell5, .cell6, .cell7, .cell8, .cell10  {
     font-size: 14px !important;
   }
+<<<<<<< HEAD
   }*/
 
 
@@ -2635,6 +2644,9 @@ span.pdicon {
     width: 8% !important;
   }
 }
+=======
+  } */
+>>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
 
 @media (min-width: 1920px) {
 .cell10 {
@@ -2645,3 +2657,44 @@ span.pdicon {
 .mat-tab-body-wrapper {
    overflow: auto !important;
 }
+.supportpaginationdiv .mat-paginator-page-size {
+  margin-left: 15px;
+}
+
+.Component-filed .mat-form-field-flex {
+  border: medium none !important;
+  padding: 0px !important;
+  border-radius: none !important;
+  height: 0px !important;
+}
+.Admin-amyaccount .mat-tab-body-wrapper {
+  overflow: hidden !important;
+}
+.Component-filed .mat-select-arrow {
+  border-left: 0px solid transparent !important;
+  border-right: 0px solid transparent !important;
+}
+
+/* @media (max-width: 1300px) {
+  .CreateTkt.h-scroll {
+    height: 480px !important;
+  }
+ }
+ @media (min-width: 1600px) {
+  .CreateTkt.h-scroll {
+    height: 640px !important;    
+  }
+ } */
+
+.no-items-img{
+  height:calc(100vh - 250px)!important ;
+}
+
+
+.no-items-content
+{
+  text-align: center !important;
+}
+
+
+

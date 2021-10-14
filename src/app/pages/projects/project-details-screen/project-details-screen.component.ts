@@ -13,6 +13,10 @@ import Swal from 'sweetalert2';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MatMenuModule, MatButtonModule } from '@angular/material'; 
 import moment from 'moment';
+<<<<<<< HEAD
+=======
+
+>>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
 
 @Component({
   selector: 'app-project-details-screen',
@@ -127,6 +131,17 @@ percentageComplete: number;
   fileList: File[] = [];
   listOfFiles: any[] = [];
   owner_letters: any;
+<<<<<<< HEAD
+=======
+  public isButtonVisible = false;
+  public userRole:any = [];
+  public userName:any;
+  customUserRole: any;
+  enableeditproject: boolean=false;
+  enablecreatetask: boolean=false;
+  enableedittask: boolean=false;
+  enabledeletetask: boolean=false;
+>>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
   mindate= moment().format("YYYY-MM-DD");
   projectenddate:any;
   constructor(private dt:DataTransferService,private route:ActivatedRoute, private rpa:RestApiService,
@@ -168,6 +183,34 @@ percentageComplete: number;
        })
     this.dt.changeParentModule({"route":"/pages/projects/projects-list-screen", "title":"Projects"});
     this.dt.changeChildModule(undefined);
+
+    this.userRole = localStorage.getItem("userRole");
+    this.userName=localStorage.getItem("firstName")+" "+localStorage.getItem("lastName");
+    // this.userRole = this.userRole.split(',');
+    // this.isButtonVisible = this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') || this.userRole.includes('Process Owner')
+    // || this.userRole.includes('Process Architect') || this.userRole.includes('System Admin') 
+    // || this.userRole.includes('Process Analyst')|| this.userRole.includes('RPA Developer');
+    
+    this.rpa.getCustomUserRole(2).subscribe(role=>{
+      this.customUserRole=role;
+      let element=[]
+      for (let index = 0; index < this.customUserRole.message.length; index++) {
+       element = this.customUserRole.message[index].permission;
+        element.forEach(element1 => {
+         if(element1.permissionName.includes('Project_Edit')){
+           this.enableeditproject=true;
+         }else if(element1.permissionName.includes('Task_Create')){
+          this.enablecreatetask=true;
+         }else if(element1.permissionName.includes('Task_Edit')){
+          this.enableedittask=true;
+         }else if(element1.permissionName=='Task_Delete'){
+          this.enabledeletetask=true;
+         }
+        });
+      }
+        })
+
+        
     this.getallusers();
     this.projectdetails();
     this.getallprocesses();
@@ -546,7 +589,12 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
         this.updatetaskForm.get("resources").setValue(data["resources"]);
        //  this.updatetaskForm.get("taskName").setValue(data["taskName"]);
       //  this.updatetaskForm.get("timeEstimate").setValue(data["timeEstimate"]);
+<<<<<<< HEAD
       this.updatetaskForm.get("endDate").setValue(this.projectenddate);
+=======
+      
+        this.updatetaskForm.get("endDate").setValue(this.projectenddate);
+>>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
         this.updatetaskForm.get("approvers").setValue(data["approvers"]);
         this.updatetaskForm.get("status").setValue(data["status"]);
         this.updatetaskForm.get("description").setValue(data["description"]);
@@ -950,6 +998,12 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
 
       }
 
-      
+      endDateMethod(){
+        return false;
+       }
 
+       onchangeDate(){
+        if(this.projectDetails.endDate)
+        this.projectDetails.endDate="0000-00-00";
+      }
 }

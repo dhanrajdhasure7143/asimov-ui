@@ -41,6 +41,7 @@
                       <th mat-header-cell *matHeaderCellDef mat-sort-header>Bot Name </th>
                       <td mat-cell *matCellDef="let element"> <button *ngIf="element.botName!=null" (click)="loadbotdatadesign(element.botId);"><span *ngIf="element.botName!=null" [matTooltip]="element.botName">{{(element.botName.length > 15) ? ((element.botName).slice(0, 15) + '...') : element.botName}}</span>
                           <span *ngIf="element.botName==null || element.botName==''">---</span></button> </td>
+<<<<<<< HEAD
                 </ng-container>
 
 
@@ -60,6 +61,27 @@
                     <!-- <td mat-cell *matCellDef="let element"> <button *ngIf="element.botType!=null"> -->
                     <td mat-cell *matCellDef="let element"> <button>{{element.sourceType}}</button> <span *ngIf="element.botName==''">-</span> </td>
                 </ng-container>
+=======
+                  </ng-container>
+  
+  
+                  <ng-container matColumnDef="description">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header>Description </th>
+                      <td mat-cell *matCellDef="let element">
+                          <span *ngIf="element.description!=null" [matTooltip]="element.description">{{(element.description.length > 15) ? ((element.description).slice(0, 15) + '...') : element.description}}</span>
+                           <span *ngIf="element.description==null || element.description==''">-</span> </td>
+                  </ng-container>
+                 <!--  <ng-container matColumnDef="botType"id="bottype">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Type </th>
+                    <td mat-cell *matCellDef="let element"> <button *ngIf="element.botType!=null">{{element.botType}}</button> <span *ngIf="element.botName==''">-</span> </td>
+                </ng-container> -->
+  
+                <ng-container matColumnDef="sourceType">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Source </th>
+                  <!-- <td mat-cell *matCellDef="let element"> <button *ngIf="element.botType!=null"> -->
+                    <td mat-cell *matCellDef="let element"> <button>{{element.sourceType}}</button> <span *ngIf="element.botName==''">-</span> </td>
+              </ng-container>
+>>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
                 <ng-container matColumnDef="department">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
                     <td mat-cell *matCellDef="let element">
@@ -647,8 +669,13 @@
                             <!--<div *ngIf="insertslaForm_so_bot.controls['botName'].hasError('maxlength')" class="errspan required">
                               Maximum of 50 characters
                           </div>-->
+<<<<<<< HEAD
                         </div>
                         <!--  <div class="col-md-12 p-0 form-group">
+=======
+                      </div>
+                     <!--  <div class="col-md-12 p-0 form-group">
+>>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
                           <label class="label-control"  for="botSource">Bot Source<span class="star">*</span></label>
                           <input type="text" class="form-control data" formControlName="botSource"  value="" placeholder="Enter Bot Source">
                           <span *ngIf="(insertslaForm_so_bot.get('botSource').invalid && insertslaForm_so_bot.get('botSource').touched) && !insertslaForm_so_bot.controls['botSource'].hasError('maxlength')" class="errspan required">Required Bot Source*</span>
@@ -656,6 +683,7 @@
                               Maximum of 50 characters
                           </div>
                       </div> -->
+<<<<<<< HEAD
                         <div class="col-md-12 p-0 form-group">
                             <label class="label-control" for="taskOwner">Task Owner<span class="star">*</span></label>
                             <!-- <input type="text" maxlength="51" class="form-control data" formControlName="taskOwner"  value="" placeholder="Enter Connection Name"> -->
@@ -671,6 +699,23 @@
                         </div>
                         <div class="col-md-6 pl-0 form-group">
                             <label class="label-control" for="slaConfigId">SLA Breach Limit (Min)
+=======
+                      <div class="col-md-12 p-0 form-group">
+                          <label class="label-control" for="taskOwner">Task Owner<span class="star">*</span></label>
+                          <!-- <input type="text" maxlength="51" class="form-control data" formControlName="taskOwner"  value="" placeholder="Enter Connection Name"> -->
+                          <select  formControlName="taskOwner" class="form-control">
+                            <option value="" disabled>Select Task Owner</option>
+                            <option [value]="owner.userId.firstName+' '+owner.userId.lastName" *ngFor="let owner of usersList">{{owner.userId.firstName}} {{owner.userId.lastName}}</option>
+                          </select>
+                          <span *ngIf="(insertslaForm_so_bot.get('taskOwner').invalid && insertslaForm_so_bot.get('taskOwner').touched) && !insertslaForm_so_bot.controls['taskOwner'].hasError('maxlength')" class="errspan required">Required Task Owner*</span>
+                          <p style="font-size:12px;">Note* : Notifications will be send to this User Email ID</p>
+                          <!--<div *ngIf="insertslaForm_so_bot.controls['taskOwner'].hasError('maxlength')" class="errspan required">
+                              Maximum of 50 characters
+                          </div>-->
+                      </div>
+                      <div class="col-md-6 pl-0 form-group">
+                        <label class="label-control" for="slaConfigId">SLA Breach Limit (Min)
+>>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
                            <!-- <span class="star">*</span> -->
                          </label>
                             <input type="number" min=0 max=60 maxlength="2" formControlName="slaConfigId" onkeypress="return (event.charCode > 47 && event.charCode < 58)" class="form-control data" value="" placeholder="00">
@@ -695,9 +740,15 @@
                         <!--<div *ngIf="insertslaForm_so_bot.controls['breachAlerts'].hasError('maxlength')" class="errspan required">
                         Maximum of 50 characters
                     </div>-->
+<<<<<<< HEAD
                         <!-- </div> -->
                         <div class="col-md-6 pr-0 form-group">
                             <label class="label-control" for="thresholdLimit">Threshold Limit (Min)
+=======
+                <!-- </div> -->
+                      <div class="col-md-6 pr-0 form-group">
+                        <label class="label-control" for="thresholdLimit">Threshold Limit (Min)
+>>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
                            <!-- <span class="star">*</span> -->
                          </label>
                             <input type="number" min=0 max=60 onkeypress="return (event.charCode > 47 && event.charCode < 58)" class="form-control data" formControlName="thresholdLimit" value="" maxlength="2" placeholder="00">
@@ -711,14 +762,24 @@
                           <div *ngIf="insertslaForm_so_bot.controls['totalRetries'].hasError('maxlength')" class="errspan required">
                               Maximum of 50 characters
                           </div>-->
+<<<<<<< HEAD
                         </div>
                         <!--  <div class="col-md-6 pr-0 form-group">
+=======
+                      </div>
+                     <!--  <div class="col-md-6 pr-0 form-group">
+>>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
                           <label class="label-control" for="retriesInterval">Retry Interval (Min)</label>
                           <input type="number"  maxlength="2" min=0 max=60 onkeypress="return (event.charCode > 47 && event.charCode < 58)" class="form-control data" formControlName="retriesInterval"  value="" placeholder="00">
                           <span *ngIf="insertslaForm_so_bot.get('retriesInterval').invalid && insertslaForm_so_bot.get('retriesInterval').touched" class="errspan required">Required Retries Interval*</span> 
                       </div> -->
+<<<<<<< HEAD
 
                         <!-- <div class="col-md-12 p-0 form-group">
+=======
+  
+                      <!-- <div class="col-md-12 p-0 form-group">
+>>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
                         <label class="label-control" for="notificationType">Notification Type<span class="star">*</span></label>
                         <div class="row">
                           <div class="col-md-6 p-0">
@@ -731,6 +792,7 @@
                           </div>
                         </div>
                       </div> -->
+<<<<<<< HEAD
 
                         <div class="form-footer">
                             <button class="btn btn-default" (click)="resetsla()">Reset</button>
@@ -738,6 +800,8 @@
                         </div>
                     </form>
                 </div>
+=======
+>>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
 
             </div>
 

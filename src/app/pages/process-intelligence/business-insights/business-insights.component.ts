@@ -93,9 +93,16 @@ export class BusinessInsightsComponent implements OnInit {
   }
 
   ActivityTimeChart(){
+<<<<<<< HEAD
       this.activitytime_data.sort(function (a, b) {
         return b.totalDuration - a.totalDuration;
       });
+=======
+    this.activitytime_data.sort(function (a, b) {
+      return b.totalDuration - a.totalDuration;
+    });
+
+>>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
       am4core.useTheme(am4themes_animated);
       // Themes end
       
@@ -127,8 +134,8 @@ export class BusinessInsightsComponent implements OnInit {
       series.dataFields.value = "totalDuration";
       series.dataFields.category = "activity";
       series.labels.template.disabled = true;
-      series.slices.template.cornerRadius = 0;
-      series.tooltip.horizontalCenter = "middle";
+      // series.slices.template.cornerRadius = 0;
+      // series.tooltip.horizontalCenter = "middle";
       // series.tooltip.verticalCenter = "middle";
       // series.tooltip.fontSize=18;
       // series.tooltipText = ' {name} ({_dataContext.totalDuration1})';
@@ -142,9 +149,15 @@ export class BusinessInsightsComponent implements OnInit {
       var _self=this;
       series.slices.template.adapter.add("tooltipText", function(text, target) {
         // var text=_self.getTimeConversion('{_dataContext.totalDuration}');
+<<<<<<< HEAD
        // return "{_dataContext.activity} \n {_dataContext.convertedDuration}";
        return "{_dataContext.activity} \n {value.percent.formatNumber('#.#')}% [/]";
+=======
+        //return "{_dataContext.activity} \n {_dataContext.convertedDuration}";
+        return "{_dataContext.activity} \n {value.percent.formatNumber('#.#')}% [/]"
+>>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
       });
+      $('g:has(> g[stroke="#3cabff"])').hide();
       series.colors.list = [
           am4core.color("rgba(85, 216, 254, 0.9)"),
           am4core.color("rgba(255, 131, 115, 0.9)"),
@@ -245,7 +258,10 @@ categoryAxis.renderer.grid.template.location = 1;
 // categoryAxis.renderer.grid.template.strokeOpacity = 1;
 // categoryAxis.renderer.grid.template.location = 1;
 categoryAxis.renderer.minGridDistance = 20;
+<<<<<<< HEAD
 // categoryAxis.title.text="Throughput Time (Mins)"
+=======
+>>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
 categoryAxis.title.text="Throughput Time ("+_me.valueType+")"
 
 var valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
@@ -262,8 +278,12 @@ series.columns.template.adapter.add("fill", function(fill, target) {
       });
 // valueLabel.label.text = "Hello";
 valueLabel.label.fontSize = 20;
+<<<<<<< HEAD
     
   
+=======
+$('g:has(> g[stroke="#3cabff"])').hide();
+>>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
     
   }
   parseMillisecondsIntoReadableTime(milliseconds){

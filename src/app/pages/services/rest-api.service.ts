@@ -109,6 +109,9 @@ export class RestApiService{
   getApproverforuser(role){
     return this.http.get("/bpsprocess/approver/info/"+role)
   }
+  getmultipleApproverforusers(roles){
+    return this.http.post("/bpsprocess/approver/info1/",roles)
+  }
   getUserBpmnsList(){
     // return this.http.get("/bpsprocess/fetchByUser");
     return this.http.get("/bpsprocess/fetchByTenant");
@@ -861,8 +864,8 @@ save_blueprism_config(data)
       return this.http.post("/rpa-service/management/save-source-details",data)
     }
 
-    getAllProjects(){
-      return this.http.get("/platform-service/project/fetchAll")
+    getAllProjects(roles,name,email){
+      return this.http.get("/platform-service/project/fetchAll?roles="+roles+"&name="+name+"&email="+email+"")
     }
 
     update_project(data:any){
@@ -970,7 +973,11 @@ save_blueprism_config(data)
   }
   
   getBIThroughputTime(processId){
+<<<<<<< HEAD
     return this.http.get("/processintelligence/v1/processgraph/getThroughputTimeDataV2/"+processId);
+=======
+    return this.http.get("/processintelligence/v1/processgraph/getThroughputTimeDataV2/"+processId);
+>>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
   }
 
   getBusinessMetrics(processId){
@@ -1024,6 +1031,71 @@ getvaluechainprocess(id)
 
   deleteSelectedProcessID(request_body:any): Observable<any>{
     return this.http.post<any>('/processintelligence/v1/processgraph/deletebyPiId', request_body)
+  }
+  get_processes_scheduled(){
+    return this.http.get("/rpa-service/scheduled-process")
+  }
+
+  // Support module
+  getAllCustomerRequests() {
+    return this.http.get("/api/servicedesk/getAllCustomerRequests");
+  }
+  getAllCustomerRequestsByOrg(orgName:string){
+   return this.http.get('/api/servicedesk/getAllCustomerRequestsByOrg?orgName=' + orgName);
+  }
+  createTemporaryFile(data){
+   return this.http.post("/api/servicedesk/createTemporaryFile",data);
+  }
+  createCustomerRequest(data:object){
+   return this.http.post('/api/servicedesk/createCustomerRequest',data, { responseType: "text" });
+  }
+  getAllImpactLevels() {
+    return this.http.get('/api/servicedesk/getAllImpactLevels');
+  }
+  getAllSeverityLevels(){
+    return this.http.get('/api/servicedesk/getAllSeverityLevels');
+  }
+  getAllRequestTypes(){
+    return this.http.get('/api/servicedesk/getAllRequestTypes');
+  }
+  getAllJiraOrganizations(){
+    return this.http.get('/api/servicedesk/getAllJiraOrganizations');
+  }
+  getRequestComments(id:any){
+    return this.http.get("/api/servicedesk/getRequestComments?requestKey=" + id);
+  }
+  createCommentInRequest(data:any){
+    return this.http.post('/api/servicedesk/createCommentInRequest',data,{ responseType: "text" })
+  }
+  editComment(comment:any){
+    return this.http.post('/api/servicedesk/editComment',comment, { responseType: "text" });
+  }
+  editSummary(id:any,data:any){
+    return this.http.post('/api/servicedesk/editSummary?request='+id,data, { responseType: "text" })
+  }
+  editDescription(id:any,data:any){
+    return this.http.post('/api/servicedesk/editDescription?request='+id,data, { responseType: "text" })
+  }
+  getAttachmentsForCustomerRequest(id:any){
+    return this.http.get('/api/servicedesk/getAttachmentsForCustomerRequest?requestKey='+id, { responseType: "json" });
+  }
+  createAttachmentsForATicket(data){
+    return this.http.post('/api/servicedesk/createAttachmentsForATicket',data , { responseType: "text" });
+  }
+  getCustomerRequestStatus(requestKey){
+    return this.http.get("/api/servicedesk/getCustomerRequestStatus?requestKey=" + requestKey, { responseType: "text" });
+  }
+  removeAttachmentsFromCustomerRequest(data:any){
+   return this.http.post('/api/servicedesk/removeAttachmentsFromCustomerRequest', data, { responseType: "text" });
+  }
+  removeAllAttachmentsFromCustomerRequest(requestId:any){
+   return this.http.get("/api/servicedesk/removeAllAttachmentsFromCustomerRequest?requestKey="+ requestId, { responseType: "text" });
+  }
+  deleteComment(body){
+   return this.http.post('/api/servicedesk/deleteComment',body,{ responseType: "text" });
+  }
+  getListOfComponents(){
+    return this.http.get('/api/servicedesk/getcomponents')
   }
 
   get_processes_scheduled(){

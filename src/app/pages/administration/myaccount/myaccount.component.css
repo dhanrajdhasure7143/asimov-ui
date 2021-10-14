@@ -207,11 +207,14 @@ span.removeallprjcts:hover {
   /* float: left !important; */
  
   }
-  .right-addon .eyeicon{
+  .inner-addon .eyeicon{
     position: absolute;
     color: #0061cf !important;
+<<<<<<< HEAD
     /* right: 25px;
     top: 32px; */
+=======
+>>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
     right: 10px;
     top: 7px;
   }

@@ -9,8 +9,13 @@ networks:
     name: host
 
 services:
+<<<<<<< HEAD
   asimov-ui:
     image: ${DOCKER_REGISTRY_URL}/asimov-ui:${DOCKER_TAG}
+=======
+  asimov-uinew:
+    image: ${DOCKER_REGISTRY_URL}/asimov-uinew:${DOCKER_TAG}
+>>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
     deploy:
       replicas: 1
     networks:

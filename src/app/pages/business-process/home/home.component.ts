@@ -51,7 +51,7 @@ export class BpsHomeComponent implements OnInit {
   userEmail:any="";
   savedDiagrams_list:any[]=[];
   isButtonVisible:boolean = false;
-
+  bpmnVisible:Boolean=false;
   displayedRows$: Observable<any[]>;
   totalRows$: Observable<number>;
   @ViewChild(MatSort,{static:false}) sort: MatSort;
@@ -64,6 +64,7 @@ export class BpsHomeComponent implements OnInit {
     localStorage.setItem("isheader","false")
     this.userRole = localStorage.getItem("userRole")
     this.userRole = this.userRole.split(',');
+    this.bpmnVisible=this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') || this.userRole.includes('Process Owner') || this.userRole.includes('Process Architect')  || this.userRole.includes('Process Analyst')  || this.userRole.includes('RPA Developer')  || this.userRole.includes('Process Architect') || this.userRole.includes("System Admin") ;
     if(this.userRole.includes('SuperAdmin')){
       this.isButtonVisible = true;
     }else if(this.userRole.includes('Admin') || this.userRole.includes('Process Architect')){

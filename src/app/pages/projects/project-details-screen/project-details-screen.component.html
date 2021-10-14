@@ -185,6 +185,7 @@
                         </div>
                       </div>
                   </div>
+<<<<<<< HEAD
                   <!-- <div class="col-sm-4 p-0">
                     <div class="mainset">
                       <span class="labeltit">End Date</span>
@@ -195,6 +196,9 @@
                       </div>
                     </div>
                   </div> -->
+=======
+                  
+>>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
       
                   <div class="col-sm-4 p-0">
                     <div class="mainset">
@@ -248,7 +252,7 @@
                           [value]="(projectDetails.projectHealth==undefined||projectDetails.projectHealth==null)?'':projectDetails.projectHealth">
                           <option value="">Select Project Health</option>
                           <option value="Good">Good</option>
-                          <option value="Need Attention">Needs Attention</option>
+                          <option value="Needs Attention">Needs Attention</option>
                           <option value="Risk">Risk</option>
                         </select>
                       </span>
@@ -314,8 +318,14 @@
                     <div class="mainset">
                       <span class="labeltit">End Date</span>
                       <div *ngIf="editdata==false">
+<<<<<<< HEAD
                         <span  *ngIf="projectenddate != null && projectenddate != undefined && projectenddate !='' "  class="tab-text labelcont" >{{projectenddate | date }}</span>
                         <span  *ngIf="projectenddate == null || projectenddate == undefined || projectenddate =='' "  class="tab-text labelcont" >-</span>                  
+=======
+                          <span  *ngIf="projectenddate != null && projectenddate != undefined && projectenddate !='' "  class="tab-text labelcont" >{{projectenddate | date }}</span>
+                        <span  *ngIf="projectenddate == null || projectenddate == undefined || projectenddate =='' "  class="tab-text labelcont" >-</span>
+                       
+>>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
                       </div>
                       <div *ngIf="editdata==true">
                         <!-- <input type="date" name="daytime" max="9999-12-31" [min]="mindate" formControlName="endDate" (keydown)="endDateMethod()"
@@ -325,7 +335,11 @@
                         <input type="date" class="form-control rpa-control" (change)="projectenddate=$event.target.value" [value]="projectenddate">
                       </div>
                     </div>
+<<<<<<< HEAD
                   </div>                  
+=======
+                  </div>
+>>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
                   
                   <div class="col-sm-4 p-0">
                       <div class="mainset">
@@ -379,9 +393,15 @@
     
                       </div>
                       <div *ngIf="editdata==true">
+<<<<<<< HEAD
                         <input type="text" (change)="projectDetails.projectPurpose=$event.target.value"
                           [value]="(projectDetails.projectPurpose==undefined||projectDetails.projectPurpose==null)?'':projectDetails.projectPurpose"
                           class="small-input" placeholder="Enter Project Description">
+=======
+                        <textarea  (change)="projectDetails.projectPurpose=$event.target.value"
+                          [value]="(projectDetails.projectPurpose==undefined||projectDetails.projectPurpose==null)?'':projectDetails.projectPurpose"
+                          class="small-input" placeholder="Enter Project Description"></textarea>
+>>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
                       </div>
                     </div>
                 </div>
@@ -823,7 +843,7 @@
               <img src="../../../../../assets/images/Projects/Edit-blue.svg" class="hover-img">
             </a> 
             
-            <a (click)="deletetask(element)" matTooltip="Delete Task" >
+            <a (click)="deletetask(element)" matTooltip="Delete Task" *ngIf="((this.userRole.includes('Process Analyst') || this.userRole.includes('RPA Developer')) && userName==element.createdBy)|| (!(this.userRole.includes('Process Analyst') || this.userRole.includes('RPA Developer')))">
               <!-- <img src="../../../../assets/images/Projects/delete-black.svg"> -->
               <img src="../../../../../assets/images/Projects/delete-black.svg" class="default-img">
               <img src="../../../../../assets/images/Projects/delete-red.svg" class="hover-img">
@@ -862,7 +882,7 @@
             [ngClass]="{'hide':!(dataSource2!=null && dataSource2.data.length==0)}"></tr>
         </table>
       </div>
-      <mat-paginator class="newpaginationdiv" #paginator101 [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 50]"
+      <mat-paginator class="newpaginationdiv" #paginator101 [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]"
         [showFirstLastButtons]="true">
       </mat-paginator>
 
@@ -880,7 +900,8 @@
             </div>
             <div class="col-md-6 pr-0">
               <span class="pull-right">
-                <button type="button" class="btn btn-primary" (click)="addresource(addresourcemodal)">
+                <button type="button" class="btn btn-primary" (click)="addresource(addresourcemodal)"  *ngIf="this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') ||
+                this.userRole.includes('System Admin') || this.userRole.includes('Process Owner') || this.userRole.includes('Process Architect')">
                   <img src="../../../../assets/images/Projects/White-plus.svg" class="testplus" />Add New
                 </button>
                 <span>
@@ -1119,7 +1140,7 @@
               </ng-container>
           
               <ng-container matColumnDef="fileSize">
-                  <th mat-header-cell *matHeaderCellDef>File Size</th>
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>File Size</th>
                   <td mat-cell *matCellDef="let element">
                       <span *ngIf="element.fileSize!=null">{{element.fileSize | fileSizePipe}}</span>
                       <span *ngIf="element.fileSize==null">---</span>
