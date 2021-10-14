@@ -7,12 +7,12 @@
        Dashboard
      </ng-template>
    <div *ngIf="check_tab==0" class="text-center">
-        <!-- <iframe [src]="urlSafe" scrolling='yes'   style="width:100%;height:71vh"  (load)="spinner.hide()" border='0' frameborder='0'></iframe> -->
-        <img src="../../../../../assets/images/RPA/No-Items.svg" style="height:calc(100vh - 350px)">
+        <iframe [src]="urlSafe" scrolling='yes'   style="width:100%;height:71vh"  (load)="spinner.hide()" border='0' frameborder='0'></iframe>
+        <!-- <img src="../../../../../assets/images/RPA/No-Items.svg" style="height:calc(100vh - 350px)">
         
         <h4>Configurations required to display content</h4>
         <br>
-        <h4><b>Contact EZFlow team for your INFRA integration</b></h4>
+        <h4><b>Contact EZFlow team for your INFRA integration</b></h4> -->
    </div>
  </mat-tab>
 
@@ -24,12 +24,28 @@
        Health Status
    </ng-template>
    <div class="text-center" *ngIf="check_tab==1" >
+       <!-- All Monitor Dashboard -->   
+      
+      <!--Performance Report:-->
+      <!-- <iframe src='https://www.site24x7.in/pv.do?id=ikrblr6WVp1BqbnZpLOUO4GG9c4aL4ELid64mibhMWKI8EF4L05qOqgbthhqtGcxKBO1KtPGXhrB8m6x3kHywZrg1kksvSb0'  scrolling='yes' align='center' height='500' style="width:100%"  border='0' frameborder='0'></iframe>
+      <br><br> -->
+      <!--Health Report-->
+      <!-- <iframe src='https://www.site24x7.in/pv.do?id=ikrblr6WVp2vNq2NdlL44CwANiECYpXeajoDMtvHBRGI8EF4L05qOqgbthhqtGcxKBO1KtPGXhrB8m6x3kHywZ0CM9PBXTHP' scrolling='yes' align='center' height='500' style="width:100%"  border='0' frameborder='0'></iframe>
+      <br><br> -->
+      <!--Avaiability report -->
+      <!-- <iframe src='https://www.site24x7.in/pv.do?id=ikrblr6WVp2vNq2NdlL44L6MR3QD7zoEOdnoRJfcXX2I8EF4L05qOqgbthhqtGcxKBO1KtPGXhrB8m6x3kHywZrg1kksvSb0' scrolling='yes' align='center' height='500' style="width:100%"   border='0' frameborder='0'></iframe>
+      <br><br> -->
+      <!--Summary report -->
+     
+    
+      <iframe src='https://www.site24x7.in/pv.do?id=ikrblr6WVp2vNq2NdlL44CwANiECYpXeajoDMtvHBRGI8EF4L05qOqgbthhqtGcxKBO1KtPGXhrB8m6x3kHywZ0CM9PBXTHP' scrolling='yes' align='center'  (load)="spinner.hide()" height='500' style="width:100%;height: calc(100vh - 225px);"  border='0' frameborder='0'></iframe>
+      <!-- <iframe src='https://ezflowstatus.site24x7signals.in' scrolling='yes' align='center' height='500' style="width:100%;height: calc(100vh - 225px);"  border='0' frameborder='0'></iframe> -->
       <!-- <app-so-health-status></app-so-health-status> -->
-      <img src="../../../../../assets/images/RPA/No-Items.svg"  style="height:calc(100vh - 350px)">
+      <!-- <img src="../../../../../assets/images/RPA/No-Items.svg"  style="height:calc(100vh - 350px)">
         
       <h4>Configurations required to display content</h4>
       <br>
-      <h4><b>Contact EZFlow team for your INFRA integration</b></h4>
+      <h4><b>Contact EZFlow team for your INFRA integration</b></h4> -->
     </div>
  </mat-tab>
  <!-- <mat-tab position=1 [disabled]="true" label="Monitoring">

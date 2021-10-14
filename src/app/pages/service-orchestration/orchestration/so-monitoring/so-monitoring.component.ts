@@ -7,7 +7,7 @@ import {NgxSpinnerService} from 'ngx-spinner';
   styleUrls: ['./so-monitoring.component.css']
 })
 export class SoMonitoringComponent implements OnInit {
-  url: string = "https://www.site24x7.in/public/dashboard/pKHl5Tx2Kb8CiuwPYYVUxlWp2x3RYPKPSAxnY70ddw5Ryc96EyKu/oDHVjt8ZTmMvy2blPi5kZ4kSBRbVULvP0sD6Evb3tA8VM+N2Y6iqaXdqnq0NXu6kw==";
+  url: string = "https://www.site24x7.in/public/dashboard/5iu29PDualgV4OYxAxAAQkn1AnKOyE5V1rWHWTBUyqszTXZLlUlX2n0FO0nANzg5iSu/RByjKVDW0ExkQDPLibMcCrBQysNSeRkLje2r1iAHJm24iG5vjA==";
   urlSafe: SafeResourceUrl;
 
   constructor(
@@ -15,7 +15,7 @@ export class SoMonitoringComponent implements OnInit {
   
 
   ngOnInit() {
-    //this.spinner.show();
+    this.spinner.show();
     this.urlSafe= this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
   }
 
@@ -29,7 +29,7 @@ export class SoMonitoringComponent implements OnInit {
     {
       this.selectedTab=event.index;
       this.check_tab=event.index;
-      //this.spinner.show();
+      this.spinner.show();
     }
   }
 }
