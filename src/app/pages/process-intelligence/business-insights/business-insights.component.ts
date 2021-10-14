@@ -111,13 +111,15 @@ export class BusinessInsightsComponent implements OnInit {
       chart.legend = new am4charts.Legend();
       chart.legend.useDefaultMarker = true;
       var marker = chart.legend.markers.template.children.getIndex(0);
+      marker.width = 18;
+      marker.height = 18;
       //marker.cornerRadius(12, 12, 12, 12);
       marker.strokeWidth = 2;
       marker.strokeOpacity = 1;
       marker.stroke = am4core.color("#ccc");
       chart.legend.scrollable = true;
       chart.legend.fontSize = 12;
-      chart.legend.reverseOrder = false;
+      // chart.legend.reverseOrder = false;
       // chart.data=data;
       chart.data=this.activitytime_data;
 
@@ -127,8 +129,8 @@ export class BusinessInsightsComponent implements OnInit {
       // chart.tooltip="test";
       var label = chart.seriesContainer.createChild(am4core.Label);
         // label.text = "230,900 Sales";
-      label.horizontalCenter = "middle";
-      label.verticalCenter = "middle";
+      // label.horizontalCenter = "middle";
+      // label.verticalCenter = "middle";
       label.fontSize = 18;
       var series = chart.series.push(new am4charts.PieSeries());
       series.dataFields.value = "totalDuration";
@@ -277,6 +279,7 @@ series.columns.template.adapter.add("fill", function(fill, target) {
         return am4core.color("#4d72be");
       });
 // valueLabel.label.text = "Hello";
+<<<<<<< HEAD
 valueLabel.label.fontSize = 20;
 <<<<<<< HEAD
     
@@ -284,6 +287,10 @@ valueLabel.label.fontSize = 20;
 =======
 $('g:has(> g[stroke="#3cabff"])').hide();
 >>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
+=======
+valueLabel.label.fontSize = 20;  
+$('g:has(> g[stroke="#3cabff"])').hide();
+>>>>>>> 6b036ccee78cf88c90956af41ac1bf9f01da6de7
     
   }
   parseMillisecondsIntoReadableTime(milliseconds){

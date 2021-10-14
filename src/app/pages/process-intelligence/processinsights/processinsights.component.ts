@@ -2142,10 +2142,16 @@ svg
     }
 
     resourceCostByActivity(){
+<<<<<<< HEAD
         console.log("this.dChart2",this.dChart2)
         this.dChart2.sort(function(a,b){
             return b.value-a.value
         })
+=======
+        this.dChart2.sort(function (a,b){
+            return b.value - a.value
+        });
+>>>>>>> 6b036ccee78cf88c90956af41ac1bf9f01da6de7
         am4core.useTheme(am4themes_animated);
         // Themes end
         

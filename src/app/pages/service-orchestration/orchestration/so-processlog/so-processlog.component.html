@@ -103,8 +103,13 @@
         <button (click)="getprocessrunid(selected_processRunId)" matTooltip="Refresh"><i class="fas fa-sync-alt"></i>&nbsp; Refresh</button>
     </div>
     <div class="logs-container">
+<<<<<<< HEAD
 
 
+=======
+
+
+>>>>>>> 6b036ccee78cf88c90956af41ac1bf9f01da6de7
         <table mat-table class="logs-table" [dataSource]="dataSourcep2" #sortp2="matSort" matSort>
 
 
@@ -248,11 +253,18 @@
             <ng-container matColumnDef="error_info">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Info</th>
                 <td mat-cell *matCellDef="let element">
+<<<<<<< HEAD
                     <button *ngIf="element.error_info!=null" class="tsttooltipbtn" [matTooltip]="element.error_info">{{(element.error_info.length > 30) ? ((element.error_info).slice(0, 30) + '...') : element.error_info}}
 
                       <span *ngIf="element.error_info!=null" class="testtooltip">{{element.error_info}}</span>
                     </button>
 
+=======
+                    <button *ngIf="element.error_info!=null" class="tsttooltipbtn">
+                    {{(element.error_info.length > 30) ? ((element.error_info).slice(0, 30) + '...') : element.error_info}}
+                    <span class="testtooltip">{{element.error_info}}</span>
+                  </button>
+>>>>>>> 6b036ccee78cf88c90956af41ac1bf9f01da6de7
                     <span *ngIf="element.error_info == undefined">-</span>
                 </td>
             </ng-container>

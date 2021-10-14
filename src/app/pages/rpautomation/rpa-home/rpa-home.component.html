@@ -1,5 +1,3 @@
-
-
 <div class="header_addon" style="padding-right:40px;padding-top:7px;">
     <!--
       <mat-slide-toggle
@@ -14,21 +12,21 @@
       placement="bottom"
       >
     </mat-slide-toggle> -->
-    
-      <button  type="button" class="btn btn-primary" style="float:right;" aria-hidden="true" placement="bottom" id="Load_Bot" (click)="onLoad()">
+
+    <button type="button" class="btn btn-primary" style="float:right;" aria-hidden="true" placement="bottom" id="Load_Bot" (click)="onLoad()">
         <i class="fa fa-list"></i>&nbsp;&nbsp;Load
       </button>
-    
-      <button  type="button"    class="btn btn-primary"  style="float:right;"  aria-hidden="true" placement="bottom" id="Create_Bot" (click)="onCreate(0)">
+
+    <button type="button" class="btn btn-primary" style="float:right;" aria-hidden="true" placement="bottom" id="Create_Bot" (click)="onCreate(0)">
         <i class="fa fa-plus"></i>&nbsp;&nbsp;Create
       </button>
-    
-    
-    </div>
+
+
+</div>
 
 <div class="row">
 
-    
+
     <div class="col-md-3">
 
         <h2 class="title-font" style="margin-top:10px !important;margin-bottom: 0px !important">Let’s Automate !</h2><br>
@@ -43,8 +41,8 @@
               </button>
             </div>-->
             <!-- <div class="rpa-home-block" id="createbot-Home" style="border-radius: 5px;" *ngIf="this.isButtonVisible || enablecreatebot"> -->
-                <div class="rpa-home-block" id="createbot-Home" style="border-radius: 5px;">
-                <img src="../../../../assets/images/RPA/create.svg"style="height:80px;">
+            <div class="rpa-home-block" id="createbot-Home" style="border-radius: 5px;">
+                <img src="../../../../assets/images/RPA/create.svg" style="height:80px;">
                 <!--<h4 style="font-weight: 600;line-height: 1.1;">Create Bot</h4>
                 <h5 style="color:gray">Click to Create New Bot</h5>-->
                 <br><br>
@@ -68,9 +66,9 @@
         </button>
             </div>-->
             <!-- <div class="rpa-home-block py-5" id="Configuration_Home" style="border-radius: 5px;" *ngIf="this.isButtonVisible || enableConfiguration"> -->
-                <div class="rpa-home-block py-5" id="Configuration_Home" style="border-radius: 5px;">
-                <img src="../../../../assets/images/RPA/Environments.svg"style="height:80px;">
-               <!-- <h4 style="font-weight: 600;line-height: 1.1;">Configutions</h4>
+            <div class="rpa-home-block py-5" id="Configuration_Home" style="border-radius: 5px;">
+                <img src="../../../../assets/images/RPA/Environments.svg" style="height:80px;">
+                <!-- <h4 style="font-weight: 600;line-height: 1.1;">Configutions</h4>
                 <h5 style="color:gray">Click to View Bot Configurations</h5>-->
                 <br>
                 <br>
@@ -80,53 +78,53 @@
 
     </div>
     <div class="col-md-9" style="padding-right:25px;" *ngIf="this.isButtonVisible || showWorkspace">
-            <div class="mat-elevation-z8 rpa-home-bots" id="botdetails-Home" style=" border-radius: 4px;">
+        <div class="mat-elevation-z8 rpa-home-bots" id="botdetails-Home" style=" border-radius: 4px;">
 
 
-               <!-- <mat-tab-group mat-align-tabs="start" [selectedIndex]="selectedTab">
+            <!-- <mat-tab-group mat-align-tabs="start" [selectedIndex]="selectedTab">
                     <mat-tab label="Bot Details">
                         <hr>-->
-                        <div class="row rpa-home-header">
-                            <div class="col-sm-7 col-md-7" style="float:left !important;padding-left:37px;">
-                                <h3 class="box-heading  rpa-home-heading">My Workspace</h3>
-                            </div>
-                            <div class="col-sm-5 col-md-5"  style="margin-right:8px;padding-top:3px;text-align: right;;">
-                            <mat-form-field class="filter departmentFilterclass ">
-                                <select matNativeControl id="departmentselect" [formControl]="departmentFilter">
+            <div class="row rpa-home-header">
+                <div class="col-sm-7 col-md-7" style="float:left !important;padding-left:37px;">
+                    <h3 class="box-heading  rpa-home-heading">My Workspace</h3>
+                </div>
+                <div class="col-sm-5 col-md-5" style="margin-right:8px;padding-top:3px;text-align: right;;">
+                    <mat-form-field class="filter departmentFilterclass ">
+                        <select matNativeControl id="departmentselect" [formControl]="departmentFilter">
                                     <option value="" selected>Select Category</option>
                                     <option [value]="department.categoryId" *ngFor="let department of categaoriesList">{{department.categoryName}}
                                     </option>
                                 </select>
-                            </mat-form-field>&nbsp;&nbsp;&nbsp;
-                            <mat-form-field class="filter" floatLabel="never" style="width:142px;">
-                                <mat-label>Search</mat-label>
-                                <input matInput autocomplete="off" id="botNameFilter" [formControl]="botNameFilter">
-                                <mat-icon matSuffix>search</mat-icon>
-                              </mat-form-field>
-                              &nbsp;
-                              <button class="undobtn" style="font-size:16px;text-align: center;vertical-align: center;" tooltip="Reset" (click)="Resetfilters()"><i class="fa fa-undo"></i></button>
-                            </div>
-                        </div>
-                        <div class="bots-container" style="width:100%;overflow: auto;">
+                    </mat-form-field>&nbsp;&nbsp;&nbsp;
+                    <mat-form-field class="filter" floatLabel="never" style="width:142px;">
+                        <mat-label>Search</mat-label>
+                        <input matInput autocomplete="off" id="botNameFilter" [formControl]="botNameFilter">
+                        <mat-icon matSuffix>search</mat-icon>
+                    </mat-form-field>
+                    &nbsp;
+                    <button class="undobtn" style="font-size:16px;text-align: center;vertical-align: center;" tooltip="Reset" (click)="Resetfilters()"><i class="fa fa-undo"></i></button>
+                </div>
+            </div>
+            <div class="bots-container" style="width:100%;overflow: auto;">
 
-                            <table mat-table #sort1="matSort" [dataSource]="dataSource1" matSort class=" table">
+                <table mat-table #sort1="matSort" [dataSource]="dataSource1" matSort class=" table">
 
-                                <ng-container matColumnDef="botName">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header style="width:18%;">Bot Name </th>
-                                    <td mat-cell *matCellDef="let element" style="width:18%;">
-                                        <button *ngIf="element.botName!=null" class="btnbot"  [tooltip]="element.botName" placement="bottom" (click)=loadbotdata(element.botId)>{{(element.botName.length > 15) ? ((element.botName).slice(0, 15) + '...') : element.botName}}</button>
-                                        <!--<div class="BotNameelement">{{element.botName}}</div>  -->
-                                        <span *ngIf="element.botName==''">-</span> </td>
-                                </ng-container>
+                    <ng-container matColumnDef="botName">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width:18%;">Bot Name </th>
+                        <td mat-cell *matCellDef="let element" style="width:18%;">
+                            <button *ngIf="element.botName!=null" class="btnbot" [tooltip]="element.botName" placement="bottom" (click)=loadbotdata(element.botId)>{{(element.botName.length > 15) ? ((element.botName).slice(0, 15) + '...') : element.botName}}</button>
+                            <!--<div class="BotNameelement">{{element.botName}}</div>  -->
+                            <span *ngIf="element.botName==''">-</span> </td>
+                    </ng-container>
 
-                                <ng-container matColumnDef="version">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Version </th>
-                                    <td mat-cell *matCellDef="let element">
-                                        <button *ngIf="element.version!=null">V{{element.version}}</button>
-                                        <span *ngIf="element.version==''">-</span> </td>
-                                </ng-container>
+                    <ng-container matColumnDef="version">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Version </th>
+                        <td mat-cell *matCellDef="let element">
+                            <button *ngIf="element.version!=null">V{{element.version}}</button>
+                            <span *ngIf="element.version==''">-</span> </td>
+                    </ng-container>
 
-                                <!-- <ng-container matColumnDef="botType">
+                    <!-- <ng-container matColumnDef="botType">
                                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Type</th>
                                     <td mat-cell *matCellDef="let element">
                                         <span *ngIf="element.botType!=null">{{element.botType}}</span>
@@ -134,79 +132,79 @@
                                     </td>
                                 </ng-container> -->
 
-                                <ng-container matColumnDef="department">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
-                                    <td mat-cell *matCellDef="let element">
-                                        <span *ngIf="element.department!=null">{{element.department}}</span>
-                                        <span *ngIf="element.department==null">---</span>
-                                    </td>
-                                </ng-container>
+                    <ng-container matColumnDef="department">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
+                        <td mat-cell *matCellDef="let element">
+                            <span *ngIf="element.department!=null">{{element.department}}</span>
+                            <span *ngIf="element.department==null">---</span>
+                        </td>
+                    </ng-container>
 
 
 
-                                <ng-container matColumnDef="botStatus">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Status </th>
-                                    <td mat-cell *matCellDef="let element">
+                    <ng-container matColumnDef="botStatus">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Status </th>
+                        <td mat-cell *matCellDef="let element">
 
-                                        <span *ngIf="element.botStatus=='Running'" class="text-primary" ><span><img src="../../../../assets/images/RPA/DotSpin.gif" style="filter: none; width: 19px;"></span>&nbsp;{{element.botStatus}}</span>
+                            <span *ngIf="element.botStatus=='Running'" class="text-primary"><span><img src="../../../../assets/images/RPA/DotSpin.gif" style="filter: none; width: 19px;"></span>&nbsp;{{element.botStatus}}</span>
 
-                                        <span *ngIf="element.botStatus=='Success'" class="text-success"><span><li class="fa fa-check-circle"style="font-size:19px"></span>&nbsp;<span>{{element.botStatus}}</span></span>
+                            <span *ngIf="element.botStatus=='Success'" class="text-success"><span><li class="fa fa-check-circle"style="font-size:19px"></span>&nbsp;<span>{{element.botStatus}}</span></span>
 
-                                        <span *ngIf="element.botStatus=='Failure'" class="text-danger"><span><li class="fa fa-times-circle" style="font-size:19px"></span>&nbsp;<span>{{element.botStatus}}</span></span>
-                                        <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
-                                        <span *ngIf="element.botStatus=='New'" class="text-primary"><span style="background-color:#0062cf;border-radius: 50%;color:white;padding-right:5px;padding-left:4px;padding-top:5px;padding-bottom:5px;font-size:10px;text-align: center;align-content: center;align-items: center;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><i class="fas fa-robot text-light"></i></span>&nbsp;<span>{{element.botStatus}}</span></span>
+                            <span *ngIf="element.botStatus=='Failure'" class="text-danger"><span><li class="fa fa-times-circle" style="font-size:19px"></span>&nbsp;<span>{{element.botStatus}}</span></span>
+                            <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
+                            <span *ngIf="element.botStatus=='New'" class="text-primary"><span style="background-color:#0062cf;border-radius: 50%;color:white;padding-right:5px;padding-left:4px;padding-top:5px;padding-bottom:5px;font-size:10px;text-align: center;align-content: center;align-items: center;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><i class="fas fa-robot text-light"></i></span>&nbsp;<span>{{element.botStatus}}</span></span>
 
-                                        <span *ngIf="element.botStatus=='Stop'" ><span class="bg-danger" ><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">-->
+                            <span *ngIf="element.botStatus=='Stop'"><span class="bg-danger" ><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">-->
                                         
                                                 <img src="../../../../assets/images/RPA/icon_latest/stop.svg" style="filter: none; width: 19px;">
                                         </span>&nbsp;<span>{{element.botStatus}}</span></span>
 
-                                        <span *ngIf="element.botStatus=='Pause'||element.botStatus=='Paused'" ><span class="text-primary" style="font-size:19px;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><i class="fas fa-pause-circle text-primary"></i></span>&nbsp;<span>{{element.botStatus}}</span></span>
+                            <span *ngIf="element.botStatus=='Pause'||element.botStatus=='Paused'"><span class="text-primary" style="font-size:19px;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><i class="fas fa-pause-circle text-primary"></i></span>&nbsp;<span>{{element.botStatus}}</span></span>
 
 
-                                        <span *ngIf="element.botStatus==null">---</span> </td>
-                                </ng-container>
-                                <ng-container matColumnDef="description">
-                                    <th mat-header-cell *matHeaderCellDef style="width:25%;">Description </th>
-                                    <td mat-cell *matCellDef="let element" style="width:25%;">
-                                        <span *ngIf="element.description!=null" placement="bottom" [tooltip]="element.description" class="btndes"> {{(element.description.length > 30) ? ((element.description).slice(0, 30) + '...') : element.description}}</span>
-                                        <span *ngIf="element.description==null">-</span>
-                                    </td>
-                                </ng-container>
-                                <!--<ng-container matColumnDef="description">
+                            <span *ngIf="element.botStatus==null">---</span> </td>
+                    </ng-container>
+                    <ng-container matColumnDef="description">
+                        <th mat-header-cell *matHeaderCellDef style="width:25%;">Description </th>
+                        <td mat-cell *matCellDef="let element" style="width:25%;">
+                            <span *ngIf="element.description!=null" placement="bottom" [tooltip]="element.description" class="btndes"> {{(element.description.length > 30) ? ((element.description).slice(0, 30) + '...') : element.description}}</span>
+                            <span *ngIf="element.description==null">-</span>
+                        </td>
+                    </ng-container>
+                    <!--<ng-container matColumnDef="description">
                               <th mat-header-cell *matHeaderCellDef mat-sort-header>Description</th>
                               <td mat-cell *matCellDef="let element">
                                   <button *ngIf="element.description!=null">{{element.description}}</button>
                                   <span *ngIf="element.description==''">-</span> </td>
                           </ng-container>-->
-                                <ng-container matColumnDef="Loading">
-                                    <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="6">
-                                        Loading
-                                    </td>
-                                </ng-container>
-                                <ng-container matColumnDef="noData">
-                                    <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="6">
-                                        No Records Found
-                                    </td>
-                                </ng-container>
-                                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                                <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                                <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['Loading']" [ngClass]="{'hide':dataSource1!=null}"></tr>
-                                <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': !respdata1 && isTableHasData}"></tr>
-                            </table>
-                            <!--<div [hidden]="isTableHasData" style="text-align:center;font-style:italic">
+                    <ng-container matColumnDef="Loading">
+                        <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="6">
+                            Loading
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="noData">
+                        <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="6">
+                            No Records Found
+                        </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                    <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['Loading']" [ngClass]="{'hide':dataSource1!=null}"></tr>
+                    <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': !respdata1 && isTableHasData}"></tr>
+                </table>
+                <!--<div [hidden]="isTableHasData" style="text-align:center;font-style:italic">
                               No Record Found
                              </div>-->
-                        </div>
-                        <mat-paginator #paginator1 [pageSize]="8" [showFirstLastButtons]="true"></mat-paginator>
-                   <!-- </mat-tab>
+            </div>
+            <mat-paginator #paginator1 [pageSize]="8" [showFirstLastButtons]="true"></mat-paginator>
+            <!-- </mat-tab>
                     <mat-tab *ngIf="false" label="Automated Tasks">
                         <div class="rpa-home-header">-->
-                            <!-- <h4 class="box-heading  rpa-home-heading">My Workspace</h4>-->
+            <!-- <h4 class="box-heading  rpa-home-heading">My Workspace</h4>-->
 
 
 
-                           <!-- <div class="box-heading rpa-home-process">
+            <!-- <div class="box-heading rpa-home-process">
 
                                 <span class="run-process">
                   <button [disabled]="selectedvalue=='' || selectedEnvironment==''" (click)="startprocess()" class="btn btn-primary" style="float:right;padding-right:10px;padding-left:10px" title="Run Process"><i  class="fas fa-play"></i></button>
@@ -327,4 +325,4 @@
                     </mat-tab>
                 </mat-tab-group>-->
         </div>
-</div>
+    </div>
