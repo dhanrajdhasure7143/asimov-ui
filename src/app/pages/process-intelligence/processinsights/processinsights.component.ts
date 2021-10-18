@@ -402,6 +402,11 @@ yScaleMin_duration: number = 0;
                 tmp.push(each.Resource_Name)
             }
         });
+        resources.sort(function(a, b){
+            if(a.item_text < b.item_text) { return -1; }
+            if(a.item_text > b.item_text) { return 1; }
+            return 0;
+        })
         this.resourcesList = resources;
         // this.selectedResources.forEach(each_sel => {
         //     if(tmp.indexOf(each_sel) != -1) tmp2.push(each_sel)

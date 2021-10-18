@@ -1091,5 +1091,8 @@ getvaluechainprocess(id)
   getListOfComponents(){
     return this.http.get('/api/servicedesk/getcomponents')
   }
+  getselectedRequestKey(key){
+   return this.http.get('/api/servicedesk/getCustomerRequestsByRequestKey?requestKey='+key);
+  }
 
 }

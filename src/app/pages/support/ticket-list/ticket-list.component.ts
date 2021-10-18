@@ -95,7 +95,7 @@ export class TicketListComponent implements OnInit {
   }
 
   ViewMode(element) {
-    this.router.navigate(['/pages/support/create-ticket'], { queryParams: { requestKey: element.requestKey } });
+    this.router.navigate(['/pages/support/view-ticket'], { queryParams: { requestKey: element.requestKey } });
   }
 
   getAllSeverityLevels() {
