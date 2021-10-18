@@ -6,7 +6,8 @@
       <span class="module-header-title">Program  Details</span>
 
       <div class="ml-auto module-heading-buttons">
-        <span class="pull-right">
+        <span class="pull-right" *ngIf="(!(this.userRoles.includes('System Admin')) && userName==program_detials.createdBy)
+        || (this.userRoles.includes('System Admin'))">
           <!-- <span>
             Summary
           </span>

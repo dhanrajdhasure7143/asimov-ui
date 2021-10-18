@@ -267,7 +267,7 @@ saveBluePrism()
       this.api.save_blueprism_config(response).subscribe(resp=>{
         let response:any=resp;
         this.spinner.hide();
-        if(response.errorMessage==undefined)
+        if(response.status=="Blue prism details saved successfully!!")
         {
           // Swal.fire({
           //   position: 'center',
@@ -286,6 +286,9 @@ saveBluePrism()
           this.BluePrismConfigForm.reset();
           this.getblueprismconnections();
           this.submitted=true;
+        }
+        else if(response.status=="Given Host Address Already Exists"){
+          Swal.fire("Error",response.status,"error")
         }
         else
         {
