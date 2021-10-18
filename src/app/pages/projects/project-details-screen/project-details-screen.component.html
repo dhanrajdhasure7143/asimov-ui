@@ -199,7 +199,8 @@
           <div class="col-sm-6 p-0 project-details-set progressdet">
               <div class="det-innerheader">
                   <span class="module-sub-header-title">PROGRESS DETAILS</span>
-                  <span style="margin-left: 10px">
+                  <span style="margin-left: 10px" *ngIf="(!(this.userRole.includes('System Admin')) && userName==projectDetails.createdBy)
+                  || (this.userRole.includes('System Admin'))">
                       <span *ngIf="editdata==true" (click)="projectdetails()">
                           <button class="btn btn-default">
                             Cancel

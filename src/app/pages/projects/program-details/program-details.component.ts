@@ -50,7 +50,8 @@ export class ProgramDetailsComponent implements OnInit {
     public userRoles: any;
     public name: any;
     email: any;
-
+    public userRole:any = [];
+    public userName:any;
   ngOnInit() {
     this.getprojects_and_programs();
     this.mindate= moment().format("YYYY-MM-DD");
@@ -83,6 +84,7 @@ export class ProgramDetailsComponent implements OnInit {
     projects: [null, Validators.compose([Validators.required, Validators.maxLength(50)])],
     
     })
+    this.userName=localStorage.getItem("firstName")+" "+localStorage.getItem("lastName");
   }
 
   getprojects_and_programs()

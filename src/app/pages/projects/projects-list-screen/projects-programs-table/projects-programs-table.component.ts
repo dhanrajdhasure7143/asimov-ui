@@ -53,6 +53,7 @@ export class ProjectsProgramsTableComponent implements OnInit {
   public userRoles: any;
   public name: any;
   email: any;
+  userName: string;
 
   //   public createprogram:FormGroup;
   // updateddata: any;
@@ -168,7 +169,7 @@ export class ProjectsProgramsTableComponent implements OnInit {
 }
 
    })
-
+   this.userName=localStorage.getItem("firstName")+" "+localStorage.getItem("lastName");
     setTimeout(()=>{
       this.getallProjects();
     },500)
