@@ -85,6 +85,7 @@ export class CreateTicketComponent implements OnInit {
     this.getComponentsList();
     this.getAllImpactLevels();
     this.getAllSeverityLevels();
+    this.getUserDetails(this.userId);
 
     this.createTicket = this.formBuilder.group({
       tempattachmentid: [this.tempAttachmentId],
@@ -262,6 +263,17 @@ export class CreateTicketComponent implements OnInit {
       this.component_list = res;
       this.isLoading = false;
     })
+  }
+
+  getUserDetails(userid) {
+    this.isLoading = true;
+    this.api.getUserDetails(userid).subscribe(res => {
+      this.userDetails = res;
+      this.orgName = this.userDetails.company;
+      this.createTicket.value.organization = this.orgName;
+    this.isLoading = false;
+
+    });
   }
 
 
