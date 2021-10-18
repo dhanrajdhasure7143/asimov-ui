@@ -115,7 +115,7 @@
     <div class="rpa-modal-content">
         <div class="rpa-modal-header">
             <span class="rpa-modal-close" (click)="close()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
-            <h4>Create BluePrism Configuration</h4>
+            <h4>Create Blue Prism Configuration</h4>
         </div>
         <div class="modal-body">
             <div class="container m-contanier form-body">
@@ -128,21 +128,21 @@
                         </div>
                         
                         <div class="col-md-12 p-0 form-group">
-                            <label  class="label-control" for="bluePrismUsername">BluePrism Username<span class="star">*</span></label>
-                            <input type="text" maxlength="50" class="form-control" formControlName="bluePrismUsername" #bluePrismUsername value="" placeholder="Enter BluePrism Username">
-                            <span *ngIf="BluePrismConfigForm.get('bluePrismUsername').invalid && BluePrismConfigForm.get('bluePrismUsername').touched" class="errspan required"> BluePrism Username Required*</span>
+                            <label  class="label-control" for="bluePrismUsername">Blue Prism Username<span class="star">*</span></label>
+                            <input type="text" maxlength="50" class="form-control" formControlName="bluePrismUsername" #bluePrismUsername value="" placeholder="Enter Blue Prism Username">
+                            <span *ngIf="BluePrismConfigForm.get('bluePrismUsername').invalid && BluePrismConfigForm.get('bluePrismUsername').touched" class="errspan required"> Blue Prism Username Required*</span>
                         </div>
 
                         <div class="col-md-12 p-0 form-group">
-                            <label  class="label-control" for="bluPrismPassword">BluePrism Password<span class="star">*</span></label>
-                            <input [type]="passwordtype2 ? 'text': 'password'" maxlength="50" class="form-control" formControlName="bluPrismPassword" #bluPrismPassword value="" placeholder="Enter BluPrism Password" passwordToggle>
+                            <label  class="label-control" for="bluPrismPassword">Blue Prism Password<span class="star">*</span></label>
+                            <input [type]="passwordtype2 ? 'text': 'password'" maxlength="50" class="form-control" formControlName="bluPrismPassword" #bluPrismPassword value="" placeholder="Enter Blue Prism Password" passwordToggle>
                             <span *ngIf="passwordtype2==false" (click)="passwordtype2 =!passwordtype2" class="pdicon">
                                 <img src="../../../../../assets/images/Projects/eye-show.svg" class="testplus1" />
                             </span>
                             <span *ngIf="passwordtype2==true" (click)="passwordtype2 =!passwordtype2" class="pdicon">
                                 <img src="../../../../../assets/images/Projects/eye-hide.svg" class="testplus1" />
                             </span>
-                            <span *ngIf="BluePrismConfigForm.get('bluPrismPassword').invalid && BluePrismConfigForm.get('bluPrismPassword').touched" class="errspan required">BluPrism Password Required*</span>
+                            <span *ngIf="BluePrismConfigForm.get('bluPrismPassword').invalid && BluePrismConfigForm.get('bluPrismPassword').touched" class="errspan required">Blue Prism Password Required*</span>
                         </div>
 
                         <div class="col-md-12 p-0 form-group">
@@ -201,7 +201,7 @@
     <div class="rpa-modal-content">
         <div class="rpa-modal-header">
             <span class="rpa-modal-close" (click)="closeUBP()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
-            <h4>Update BluePrism Configuration</h4>
+            <h4>Update Blue Prism Configuration</h4>
         </div>
         <div class="modal-body">
             
@@ -215,13 +215,13 @@
                         </div>
                         
                         <div class="col-md-12 p-0 form-group">
-                            <label class="label-control" for="bluePrismUsername">BluePrism Username<span class="star">*</span></label>
-                            <input type="text" maxlength="50" class="form-control" formControlName="bluePrismUsername" #bluePrismUsername value="" placeholder="Enter BluePrism Username">
-                            <span *ngIf="UpdateBluePrismConfigForm.get('bluePrismUsername').invalid && UpdateBluePrismConfigForm.get('bluePrismUsername').touched" class="errspan required"> BluePrism Username Required*</span>
+                            <label class="label-control" for="bluePrismUsername">Blue Prism Username<span class="star">*</span></label>
+                            <input type="text" maxlength="50" class="form-control" formControlName="bluePrismUsername" #bluePrismUsername value="" placeholder="Enter Blue Prism Username">
+                            <span *ngIf="UpdateBluePrismConfigForm.get('bluePrismUsername').invalid && UpdateBluePrismConfigForm.get('bluePrismUsername').touched" class="errspan required"> Blue Prism Username Required*</span>
                         </div>
 
                         <div class="col-md-12 p-0 form-group">
-                            <label class="label-control" for="bluPrismPassword">BluPrism Password<span class="star">*</span></label>
+                            <label class="label-control" for="bluPrismPassword">Blue Prism Password<span class="star">*</span></label>
                             <input [type]="passwordtype1 ? 'text': 'password'" maxlength="50" class="form-control" formControlName="bluPrismPassword" #bluPrismPassword value="" placeholder="Enter Password" passwordToggle>
                             <span *ngIf="passwordtype1==false" (click)="passwordtype1 =!passwordtype1" class="pdicon">
                                 <img src="../../../../../assets/images/Projects/eye-show.svg" class="testplus1" />
@@ -229,7 +229,7 @@
                             <span *ngIf="passwordtype1==true" (click)="passwordtype1 =!passwordtype1" class="pdicon">
                                 <img src="../../../../../assets/images/Projects/eye-hide.svg" class="testplus1" />
                             </span>
-                            <span *ngIf="UpdateBluePrismConfigForm.get('bluPrismPassword').invalid && UpdateBluePrismConfigForm.get('bluPrismPassword').touched" class="errspan required">BluPrism Password Required*</span>
+                            <span *ngIf="UpdateBluePrismConfigForm.get('bluPrismPassword').invalid && UpdateBluePrismConfigForm.get('bluPrismPassword').touched" class="errspan required">Blue Prism Password Required*</span>
                         </div>
 
                         <div class="col-md-12 p-0 form-group">
