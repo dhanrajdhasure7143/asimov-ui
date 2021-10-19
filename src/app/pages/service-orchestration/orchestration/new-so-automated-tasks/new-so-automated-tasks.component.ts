@@ -628,7 +628,7 @@ resetsla(){
       this.spinner.show();
       this.rest.assign_bot_and_task(botId,taskid,"","Human").subscribe(data=>{
         let response:any=data;
-        this.spinner.show();
+        this.spinner.hide();
         if(response.status!=undefined)
         {
           Swal.fire("Success",response.status,"success");

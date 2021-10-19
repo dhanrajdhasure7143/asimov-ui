@@ -65,8 +65,13 @@ this.getEnvironments();
       },{
         "country": "New",
         "litres":  this.allbots.filter(bot=>bot.botStatus=="New").length,
-        "color": "#6E6E6E"
+        "color": "#00a0e3"
       }, {
+        "country": "Stopped",
+        "litres":  this.allbots.filter(bot=>bot.botStatus=="Stopped").length,
+        "color": "#FF0000"
+      },
+      {
         "country": "Success",
         "litres":  this.allbots.filter(bot=>bot.botStatus=="Success").length,
         "color":"#62C849"
@@ -170,7 +175,8 @@ this.getEnvironments();
     pieSeries.labels.template.padding(0,0,0,0);
     pieSeries.ticks.template.disabled = true;
     pieSeries.alignLabels = false;
-    pieSeries.labels.template.text = "{value.percent.formatNumber('#.')}";
+    //pieSeries.labels.template.text = "{value.percent.formatNumber('#.')}";
+    pieSeries.labels.template.text = "{value}";
     pieSeries.labels.template.radius = am4core.percent(-40);
     pieSeries.labels.template.fill = am4core.color("white");
     // Create a base filter effect (as if it's not there) for the hover to return to
@@ -189,6 +195,7 @@ this.getEnvironments();
 
     chart.legend = new am4charts.Legend();
     chart.legend.fontSize = 13;
+    chart.legend.labels.template.text = "{category} - {value}";
     let markerTemplate = chart.legend.markers.template;
     markerTemplate.width = 10;
     markerTemplate.height = 10;
