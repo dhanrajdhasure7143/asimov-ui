@@ -2,7 +2,7 @@
     <div class="h-100" id="my_workspace">
         <div class="module-heading title">
             <span class="module-header-title">
-                <span class="module-parent-title">Support</span>
+                <span class="module-parent-title">Support / Issues</span>
             </span>
             <div class="ml-auto">
                 <button class="btn btn-primary" routerLink="/pages/support/create-ticket">
@@ -13,7 +13,7 @@
         </div>
         <div class="Support-tktlist-body">
             <div class="tktlist-body-header">
-                <div class="tktlist-Heading">Issues</div>
+                <!-- <div class="tktlist-Heading">Issues</div> -->
                 <div class="tktlist-fields">
                 <select name="Filter by" (change)="categoryFilter($event)" class="form-control" [(ngModel)]="selectedCategory">
                         <option value="" disabled hidden >Select Category</option>
