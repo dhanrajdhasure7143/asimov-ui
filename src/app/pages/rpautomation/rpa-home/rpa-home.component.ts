@@ -3,7 +3,6 @@ import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {RestApiService} from '../../services/rest-api.service';
-import {RpaStudioComponent} from '../rpa-studio/rpa-studio.component';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import 'rxjs/add/operator/filter';
@@ -97,7 +96,6 @@ export class RpaHomeComponent implements OnInit {
   constructor(
     private route: ActivatedRoute, 
     private rest:RestApiService, 
-    private rpa_studio:RpaStudioComponent,
     private http:HttpClient, 
     private dt:DataTransferService, 
     private datahints:Rpa_Hints,
