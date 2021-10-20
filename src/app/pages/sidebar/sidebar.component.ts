@@ -13,6 +13,7 @@ export class SidebarComponent implements OnInit {
   isShowing = false;
   showSubSubMenu: boolean = false;
   showadminSubSubMenu: boolean = false;
+  public userRoles:any = [];
   constructor(private obj:PagesComponent) { }
 
   ngOnInit() {
@@ -29,6 +30,11 @@ export class SidebarComponent implements OnInit {
       localStorage.setItem('selectedModule','eiap-home&'+ null);
       $('#eiap-home').addClass("active");
     }
+
+    setTimeout(() => {
+      this.userRoles = localStorage.getItem("userRole")
+    }, 1000);
+   
   }
 
   hightlight(element,name){
