@@ -9,8 +9,9 @@
             <div class="col-md-10 p-0">
                 <div class="tktlist-body-header">                    
                     <div class="tktlist-fields">
-                        <div class="col-md-3 pl-0">
+                        <div class="col-md-3 pl-0 tktsearchfield">
                             <input class="form-control" type="search" name="search_value" [(ngModel)]="searchInput_value" (keyup)="applyFilter($event.target.value)" placeholder="Search Issue...">
+                            <img alt="" class="testplus" src="../../../../assets/images/search.svg">
                         </div>
                         <div class="col-md-3 pl-0">
                             <select name="Filter by" (change)="categoryFilter($event)" class="form-control" [(ngModel)]="selectedCategory">

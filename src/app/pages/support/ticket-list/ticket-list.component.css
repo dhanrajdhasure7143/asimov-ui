@@ -77,7 +77,7 @@ table td::first-letter {
 
 .Support-tktlist-body {
     padding: 10px 10px 0px 10px;
-    height: calc(100% - 50px);
+    height: calc(100% - 44px);
     overflow: auto;
 }
 .tktlist-Heading {
@@ -128,4 +128,15 @@ table td::first-letter {
 
 .tktlist-fields .btn {
     margin-right: 0px !important;
+}
+.tktlist-fields .col-md-3 {
+    padding-right: 10px;
+}
+.tktsearchfield {
+    position: relative;
+}
+.tktsearchfield img.testplus {
+    position: absolute;
+    right: 15px;
+    top: 9px;
 }
