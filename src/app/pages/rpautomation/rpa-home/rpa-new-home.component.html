@@ -313,9 +313,10 @@
                 </mat-expansion-panel-header>
                 <div class="diagram_container">
           
-                  <button class="btn open-btn-click btn-xs" (click)="loadbotdata(bot.botId)">
+                 
+                  <a class="btn open-btn-click btn-xs" routerLink="/pages/rpautomation/designer" [queryParams]="{botId:bot.botId }">
                     Click to open
-                  </button>
+                   </a>
           
                   <button (click)="loadbotdata(bot.botId)" class="rpa_botdiv">
                     <img  [src]="bot.svg" style="width:100%">
