@@ -3,9 +3,8 @@ import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {RestApiService} from '../../services/rest-api.service';
-import {RpaStudioComponent} from '../rpa-studio/rpa-studio.component';
 import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import 'rxjs/add/operator/filter';
 import { DataTransferService } from "../../services/data-transfer.service";
 import { Rpa_Hints } from "../model/RPA-Hints"
@@ -23,7 +22,8 @@ import { Sort } from '@angular/material';
 import { of  } from 'rxjs/observable/of';
 import { map } from 'rxjs/operators';
 import { fromMatPaginator, fromMatSort, paginateRows, sortRows } from '../model/datasource-utils';
-
+import { NgxSpinnerService } from 'ngx-spinner';
+import {Base64} from 'js-base64';
 declare var $:any;
 
 @Component({
@@ -83,6 +83,7 @@ export class RpaHomeComponent implements OnInit {
   botNamespace: boolean;
   checkbotname: boolean;
   public editbot:FormGroup;
+  insertbot:FormGroup;
   rpaCategory: any;
   newRpaCategory: any;
   userName:any="";
@@ -95,12 +96,13 @@ export class RpaHomeComponent implements OnInit {
   constructor(
     private route: ActivatedRoute, 
     private rest:RestApiService, 
-    private rpa_studio:RpaStudioComponent,
     private http:HttpClient, 
     private dt:DataTransferService, 
     private datahints:Rpa_Hints,
     private modalService: BsModalService,
-    private formBuilder:FormBuilder
+    private formBuilder:FormBuilder,
+    private router:Router,
+    private spinner:NgxSpinnerService
     )
   {
     this.editbot=this.formBuilder.group({
@@ -264,21 +266,21 @@ export class RpaHomeComponent implements OnInit {
   getallbots()
   {
     let response:any=[];
-    this.rpa_studio.spinner.show();
+    this.spinner.show();
     this.loadflag=true;
     //spinner.show();
     //http://192.168.0.7:8080/rpa-service/get-all-bots
     this.rest.getAllActiveBots().subscribe(botlist =>
     {
       setTimeout(()=>{
-        this.rpa_studio.spinner.hide();
+        this.spinner.hide();
         this.loadflag=false;
       },1000)
       response=botlist;
       response=response.reverse();
       if(response.length==0)
       {
-        this.rpa_studio.spinner.hide();
+        //this.rpa_studio.spinner.hide();
       }
       response.forEach(data=>{
         let object:any=data;
@@ -290,7 +292,11 @@ export class RpaHomeComponent implements OnInit {
         {
           object.botType='Unattended';
         }
-
+        this.bot_list.push(object)
+        this.assignPagination( this.bot_list);
+      })
+      response.forEach(data=>{ 
+        let object:any=data;
       if(this.categaoriesList.find(resp => resp.categoryId==data.department)!=undefined)
       {
         object.department=this.categaoriesList.find(resp => resp.categoryId==data.department).categoryName;
@@ -308,10 +314,8 @@ export class RpaHomeComponent implements OnInit {
           object.department='QA';
         }
         this.bot_list.push(object)
-        this.assignPagination( this.bot_list);
-
       })
-      //this.bot_list=botlist;
+      this.bot_list=botlist;
       if(this.bot_list.length >0)
       {
         this.respdata1 = false;
@@ -322,7 +326,7 @@ export class RpaHomeComponent implements OnInit {
       //response.sort((a,b) => a.createdAt > b.createdAt ? -1 : 1);
       
       //response=response.reverse();
-      this.dataSource1= new MatTableDataSource(this.bot_list);
+      this.dataSource1= new MatTableDataSource(response);
       this.isDataSource = true;
       this.dataSource1.sort=this.sort1;
       this.dataSource1.paginator=this.paginator1;
@@ -345,7 +349,7 @@ export class RpaHomeComponent implements OnInit {
    
       },(err)=>{
 
-        this.rpa_studio.spinner.hide();
+        this.spinner.hide();
       });
 
         this.botNameFilter.valueChanges.subscribe((botNameFilterValue) => {
@@ -360,7 +364,7 @@ export class RpaHomeComponent implements OnInit {
 
       this.dataSource1.filterPredicate = this.customFilterPredicate();
     },(err)=>{
-      this.rpa_studio.spinner.hide();
+      this.spinner.hide();
     })
   }
 
@@ -384,7 +388,7 @@ export class RpaHomeComponent implements OnInit {
   {
     let response:any=[];
 
-    //this.rpa_studio.spinner.show();
+    this.spinner.show();
     this.rest.getautomatedtasks(process).subscribe(automatedtasks=>{
       response=automatedtasks;
       this.responsedata=response.automationTasks;
@@ -401,9 +405,9 @@ export class RpaHomeComponent implements OnInit {
         this.getprocessnames(process);
       }
       this.update_task_status();
-     // this.rpa_studio.spinner.hide()
+      this.spinner.hide()
     },(err)=>{
-      //this.rpa_studio.spinner.hide()
+      this.spinner.hide()
 
     })
   }
@@ -452,9 +456,45 @@ export class RpaHomeComponent implements OnInit {
 
   createoverlay()
   {
-    this.rpa_studio.onCreate(0);
+    document.getElementById("create-bot").style.display ="block";
   }
 
+
+  
+
+
+  onCreateSubmit() {
+    this.userFilter.name = "";
+    document.getElementById("create-bot").style.display ="none";
+    var createBotFormValue=this.insertbot.value;
+    
+    if(createBotFormValue.botDepartment=="others"){
+      let rpaCategory:any={"categoryName":this.insertbot.value.newCategoryName,"categoryId":0, "createdAt":""};
+      this.rest.addCategory(rpaCategory).subscribe(data=>{
+        let catResponse : any;
+        if(catResponse.errorMessage==undefined)
+        {
+          catResponse=data;
+          createBotFormValue.botDepartment=catResponse.data.categoryId;  
+          let botId=Base64.encode(JSON.stringify(createBotFormValue));
+          this.router.navigate(["/pages/rpautomation/designer"],{queryParams:{botId:botId}})
+        }
+        else
+        {
+          Swal.fire("Error",catResponse.errorMessage,"error");
+        }
+       
+      });
+    }else{
+
+      let botId=Base64.encode(JSON.stringify(createBotFormValue));
+      console.log(botId)
+      this.router.navigate(["/pages/rpautomation/designer"],{queryParams:{botId:botId}})
+       
+    }
+    this.insertbot.reset();
+
+  }
   /*openload()
   {
 
@@ -497,17 +537,16 @@ export class RpaHomeComponent implements OnInit {
 
   createtaskbotoverlay(taskId)
   {
-    this.rpa_studio.onCreate(taskId);
+   // this.rpa_studio.onCreate(taskId);
     //document.getElementById("create-bot").style.display ="block";
   }
 
 
-
-
   loadbotdata(botId)
   {
-    localStorage.setItem("botId",botId)
-    this.rpa_studio.getloadbotdata(botId);
+    //localStorage.setItem("botId",botId)
+    //this.rpa_studio.getloadbotdata(botId);
+    this.router.navigateByUrl(`./designer?botId=${botId}`)
   }
 
 
@@ -533,7 +572,7 @@ export class RpaHomeComponent implements OnInit {
 
     if(this.selectedvalue!=undefined)
     {
-    this.rpa_studio.spinner.show();
+    //this.rpa_studio.spinner.show();
     this.rest.startprocess(this.selectedvalue,this.selectedEnvironment).subscribe(data=>{
       let response:any=data;
       Swal.fire({
@@ -543,10 +582,10 @@ export class RpaHomeComponent implements OnInit {
         showConfirmButton: false,
         timer: 2000
       });
-      this.rpa_studio.spinner.hide();
+      //this.rpa_studio.spinner.hide();
       this.update_task_status();
     },(err)=>{
-      this.rpa_studio.spinner.hide();
+      //this.rpa_studio.spinner.hide();
     })
   }
   }
@@ -555,7 +594,7 @@ export class RpaHomeComponent implements OnInit {
   resettasks()
   {
 
-    this.rpa_studio.spinner.show();
+   // this.rpa_studio.spinner.show();
     this.rest.getautomatedtasks(0).subscribe(response=>{
       let data:any=response;
       this.dataSource2= new MatTableDataSource(data.automationTasks);
@@ -566,7 +605,7 @@ export class RpaHomeComponent implements OnInit {
         this.applyFilter(this.selectedvalue)
       }
 
-      this.rpa_studio.spinner.hide();
+     // this.rpa_studio.spinner.hide();
     });
   }
 
@@ -606,6 +645,9 @@ export class RpaHomeComponent implements OnInit {
     else
       this.file_error="Invalid file format, only it allows .sql format"
   }
+
+
+  
 
 
   exportbot(bot)
@@ -719,8 +761,16 @@ export class RpaHomeComponent implements OnInit {
       let catResponse : any;
       catResponse=data
       this.categaoriesList=catResponse.data;
+      console.log(this.categaoriesList)
     });
   }
+
+
+
+
+
+
+
 
   public sortkey:any;
 
