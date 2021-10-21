@@ -186,11 +186,7 @@ isGraph_changed:boolean=false;
     this.isplay=false;
     let res_data
     this.Pi_header_functions=this.dt.pi_headerChanges.subscribe(res=>{res_data=res
-<<<<<<< HEAD
-      //console.log(res);
-=======
       // console.log(res);
->>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
       if(res){
         let element=document.getElementById("tipsy_div");
         if(element){
@@ -311,11 +307,7 @@ isGraph_changed:boolean=false;
        } 
     this.rest.getAllVaraintList(variantListbody).subscribe(data=>{this.varaint_data=data // variant List call
       this.performanceFilterInput = data;
-<<<<<<< HEAD
-      //console.log(this.performanceFilterInput);
-=======
       // console.log(this.performanceFilterInput);
->>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
       for(var i=0; i<this.varaint_data.data.length; i++){
           this.varaint_data.data[i].selected= "inactive";
       }
@@ -478,11 +470,7 @@ isGraph_changed:boolean=false;
        } 
     this.rest.getAllVaraintList(variantListbody).subscribe(data=>{this.varaint_data=data // variant List call
       this.performanceFilterInput = data;
-<<<<<<< HEAD
-      //console.log(this.performanceFilterInput);
-=======
       // console.log(this.performanceFilterInput);
->>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
       if(this.varaint_data.data){ 
       for(var i=0; i<this.varaint_data.data.length; i++){
           this.varaint_data.data[i].selected= "inactive";
@@ -801,11 +789,7 @@ isGraph_changed:boolean=false;
 
   playAnimation() {   // Process graph animation
     this.isplay = !this.isplay
-<<<<<<< HEAD
-    //console.log(this.isplay)
-=======
     // console.log(this.isplay)
->>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
   }
 
   downloadSvg() { // Process graph download as SVG
@@ -2070,11 +2054,7 @@ addWorkingHours(){
     }
      ,(err=>{
       this.spinner.hide();
-<<<<<<< HEAD
-       //console.log(err);
-=======
       //  console.log(err);
->>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
      }));
   }
    

@@ -65,10 +65,6 @@
 .main{
   width:100%;
   overflow: auto;
-<<<<<<< HEAD
-  /* height: calc(100vh - 53px); */
-=======
->>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
   height: calc(100vh - 194px);
   padding:10px;
 }

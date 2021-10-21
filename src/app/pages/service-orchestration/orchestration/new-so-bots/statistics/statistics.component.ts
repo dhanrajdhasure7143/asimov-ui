@@ -341,7 +341,6 @@ chart.cursor = new am4charts.XYCursor();
         markerTemplate.width = 10;
         markerTemplate.height = 10;
         
-<<<<<<< HEAD
         chart.data = data
         // chart.data=[{
         //   "country": "UiPath",
@@ -356,10 +355,9 @@ chart.cursor = new am4charts.XYCursor();
         //   "litres":369,
         //   "color": "#fa4616"
         // }];
-=======
+
         //chart.data = data
         chart.data=data
->>>>>>> 6b036ccee78cf88c90956af41ac1bf9f01da6de7
         });  
 
   }
@@ -1030,10 +1028,7 @@ pieSeries.labels.template.fontSize = 18;
       label1.wrap = true;
       label1.maxWidth = 120;
       categoryAxis.renderer.minGridDistance = 30;
-<<<<<<< HEAD
-=======
-      
->>>>>>> 6b036ccee78cf88c90956af41ac1bf9f01da6de7
+
       var valueAxis = this.runtimestatschart.yAxes.push(new am4charts.ValueAxis());
       // valueAxis.renderer.inside = true;
       // valueAxis.renderer.labels.template.fillOpacity = 1;
@@ -1045,10 +1040,7 @@ pieSeries.labels.template.fontSize = 18;
       valueAxis.renderer.labels.template.fillOpacity = 1;
       valueAxis.renderer.grid.template.location = 0;
       valueAxis.renderer.minGridDistance = 30;
-<<<<<<< HEAD
 
-=======
->>>>>>> 6b036ccee78cf88c90956af41ac1bf9f01da6de7
       valueAxis.title.text = "Total Execution Time (ms)";
       var series = this.runtimestatschart.series.push(new am4charts.ColumnSeries);
       series.dataFields.valueY = "value";

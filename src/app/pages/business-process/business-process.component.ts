@@ -30,13 +30,9 @@ export class BusinessProcessComponent implements AfterViewChecked {
   hasConformance:boolean = false;
   reSize:boolean=false;
   process_id:any;
-<<<<<<< HEAD
   isUploaded:boolean=false;
-
-=======
   systemAdmin:Boolean=false;
-  isUploaded:boolean=false;
->>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
+
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private cdRef: ChangeDetectorRef, private dt: DataTransferService,private rest:RestApiService,
               @Inject(APP_CONFIG) private config, ) { }
 
@@ -88,10 +84,7 @@ export class BusinessProcessComponent implements AfterViewChecked {
         if(this.isUploaded){
           this.selectedNotationType='bpmn'
         }
-<<<<<<< HEAD
-=======
         console.log(this.iscreate_notation)
->>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
       }
     });
   }

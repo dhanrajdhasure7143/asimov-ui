@@ -442,10 +442,6 @@ g.nodes().forEach(function(v) {
     node.paddingRight=10
   }
  else{
-<<<<<<< HEAD
-=======
-
->>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
    if(max_length>30 && max_length<=40){
     node.width=300
    }else if(max_length>40 && max_length<=50){
@@ -455,11 +451,7 @@ g.nodes().forEach(function(v) {
    }else if(max_length>60){
     node.width=400
    }else{
-<<<<<<< HEAD
     node.width=200
-=======
-   node.width=200
->>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
    }
   nodesArray.push(node)
  }
@@ -628,9 +620,9 @@ var styleTooltip = function(name, description) {
 };
 
 var tooltip = d3.select("body")
-	.append("div")
+  .append("div")
   .attr('id', 'tooltip_template').attr('class', 'tooltip-panel')
-	.style("position", "absolute")
+  .style("position", "absolute")
   .style("background-color", "#fff")
   .style("color", "#0162cb")
   .style("font-size", "10.5px")
@@ -640,8 +632,8 @@ var tooltip = d3.select("body")
   .style("border-radius", "5px")  
   
   .style("text-align", "left")
-	.style("z-index", "10")
-	.style("visibility", "hidden")
+  .style("z-index", "10")
+  .style("visibility", "hidden")
   .text("Simple Tooltip...");
   render(inner, g);
 
@@ -821,19 +813,11 @@ d3.selectAll("g.edgeLabel g.label")
 }
 
 // inner.selectAll('g.node')['_groups'][0][1]['attributes'][2].value="opacity: 1;fill: rgb(209, 54, 54)"
-<<<<<<< HEAD
   
 let nodes_Array=d3.selectAll("g.node text")['_groups'][0];
 
 nodes_Array.forEach((element,i) => {
 if(g.node(element['parentNode'].__data__).label){
-=======
-  let nodes_Array=d3.selectAll("g.node text")['_groups'][0];
-
-  nodes_Array.forEach((element,i) => {
-  if(g.node(element['parentNode'].__data__).label){
-  // console.log(g.node(element['parentNode'].__data__).label.split('\n')[0])
->>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
   if((g.node(element['parentNode'].__data__).label !='Start') && (g.node(element['parentNode'].__data__).label!='End')){
     let node_width=g.node(element['parentNode'].__data__)['width']
     let node_textLength=g.node(element['parentNode'].__data__).label.split('\n')[0].length;
@@ -863,11 +847,7 @@ if(g.node(element['parentNode'].__data__).label){
       // inner.selectAll('g.node')['_groups'][0][i]['attributes'][2].value="opacity: 1;fill: #fff"
      }
   }
-<<<<<<< HEAD
  }
-=======
-}
->>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
 }
 });
  
@@ -959,11 +939,7 @@ if(me.isdownloadJpeg==true||this.isdownloadPng==true||this.isdownloadpdf==true||
           logging:true,
           scale:5,
           height: this.graph_height/2+100,
-<<<<<<< HEAD
           // width:this.graph_width+100100
-=======
-          // width:this.graph_width+100
->>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
           // windowHeight: window.outerHeight + window.innerHeight
         }).then(canvas => {
         if(fileType == 'png' || fileType == 'jpeg'){
@@ -979,11 +955,7 @@ if(me.isdownloadJpeg==true||this.isdownloadPng==true||this.isdownloadpdf==true||
         if(fileType == 'pdf'){
           var contentDataURL = canvas.toDataURL("image/png",0.3);
           // var doc = new jsPDF('l','pt',[700,600],{compress: true}); --final
-<<<<<<< HEAD
           //var doc = new jsPDF('p', 'mm', 'a4', true);
-=======
-          // var doc = new jsPDF('p', 'mm', 'a4', true);
->>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
           var doc = new jsPDF('p', 'pt', 'a4', true);
           // var doc = new jsPDF('l','pt',[this.graph_height,1100],'a4',{compress: true});
           // var doc = new jsPDF('1', 'pt', 'a4', true);--final
@@ -996,7 +968,7 @@ if(me.isdownloadJpeg==true||this.isdownloadPng==true||this.isdownloadpdf==true||
           // doc.addImage(contentDataURL, "PNG", 0, 0, canvas.width * ratio, canvas.height * ratio,);
           doc.save(this.processGraphName+'.pdf');
           this.isdownloadpdf=false;
-            this.ispdf.emit(this.isdownloadpdf)       
+            this.ispdf.emit(this.isdownloadpdf)
         }   
       });
     } 
@@ -1136,5 +1108,4 @@ if(me.isdownloadJpeg==true||this.isdownloadPng==true||this.isdownloadpdf==true||
       }
       
 }
-  
   

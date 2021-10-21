@@ -244,12 +244,8 @@ background-color: white;
 .dragicons {
   padding: 0px 10px;
   overflow-y: scroll;
-<<<<<<< HEAD
-  max-height: 55vh;
-=======
   /* max-height: 60vh; */
   max-height: 57vh;
->>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
   white-space: nowrap; 
 }
 span.con-text {

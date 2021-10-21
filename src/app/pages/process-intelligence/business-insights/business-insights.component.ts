@@ -93,16 +93,10 @@ export class BusinessInsightsComponent implements OnInit {
   }
 
   ActivityTimeChart(){
-<<<<<<< HEAD
-      this.activitytime_data.sort(function (a, b) {
-        return b.totalDuration - a.totalDuration;
-      });
-=======
     this.activitytime_data.sort(function (a, b) {
       return b.totalDuration - a.totalDuration;
     });
 
->>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
       am4core.useTheme(am4themes_animated);
       // Themes end
       
@@ -151,13 +145,8 @@ export class BusinessInsightsComponent implements OnInit {
       var _self=this;
       series.slices.template.adapter.add("tooltipText", function(text, target) {
         // var text=_self.getTimeConversion('{_dataContext.totalDuration}');
-<<<<<<< HEAD
-       // return "{_dataContext.activity} \n {_dataContext.convertedDuration}";
-       return "{_dataContext.activity} \n {value.percent.formatNumber('#.#')}% [/]";
-=======
         //return "{_dataContext.activity} \n {_dataContext.convertedDuration}";
         return "{_dataContext.activity} \n {value.percent.formatNumber('#.#')}% [/]"
->>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
       });
       $('g:has(> g[stroke="#3cabff"])').hide();
       series.colors.list = [
@@ -260,10 +249,7 @@ categoryAxis.renderer.grid.template.location = 1;
 // categoryAxis.renderer.grid.template.strokeOpacity = 1;
 // categoryAxis.renderer.grid.template.location = 1;
 categoryAxis.renderer.minGridDistance = 20;
-<<<<<<< HEAD
 // categoryAxis.title.text="Throughput Time (Mins)"
-=======
->>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
 categoryAxis.title.text="Throughput Time ("+_me.valueType+")"
 
 var valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
@@ -279,19 +265,11 @@ series.columns.template.adapter.add("fill", function(fill, target) {
         return am4core.color("#4d72be");
       });
 // valueLabel.label.text = "Hello";
-<<<<<<< HEAD
 valueLabel.label.fontSize = 20;
-<<<<<<< HEAD
     
+$('g:has(> g[stroke="#3cabff"])').hide();
+
   
-=======
-$('g:has(> g[stroke="#3cabff"])').hide();
->>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
-=======
-valueLabel.label.fontSize = 20;  
-$('g:has(> g[stroke="#3cabff"])').hide();
->>>>>>> 6b036ccee78cf88c90956af41ac1bf9f01da6de7
-    
   }
   parseMillisecondsIntoReadableTime(milliseconds){
     //Get hours from milliseconds

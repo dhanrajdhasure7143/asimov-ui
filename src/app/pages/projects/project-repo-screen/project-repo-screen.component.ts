@@ -548,13 +548,9 @@ this.getFileDetails();
    uploadFilemodalCancel(){
      this.uploadFileForm.reset();
      this.listOfFiles=[];
-<<<<<<< HEAD
-     this.fileList = [];
-=======
      this.fileList=[];
->>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
      this.uploadFilemodalref.hide();
-     
+    
    }
 
 }

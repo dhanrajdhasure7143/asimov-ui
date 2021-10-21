@@ -59,13 +59,10 @@
       color: #00a1e3;
     }
   
-<<<<<<< HEAD
     /* .h-scroll {
       height: calc(100% - 48px) !important;
       overflow: auto !important;
     } */
-=======
->>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
   
     
   label.label-control {
@@ -261,11 +258,7 @@ height: 40px;
 ::ng-deep .edit-task-tabs .mat-tab-body-content{
   height:178px !important;
   overflow:auto !important;
-<<<<<<< HEAD
-  border : 1px solid #ccc;
-=======
   border : 1px solid #ddd;
->>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
 }
 
 
@@ -275,19 +268,11 @@ height: 40px;
 
 }
 .task-name{
-<<<<<<< HEAD
-font-weight: 600;
-font-size: 22px;
-color: #001c47;
-line-height: 0px !important;
-padding-top:16px;
-=======
   font-weight: 600;
   font-size: 22px;
   color: #001c47;
   line-height: 0px !important;
   padding-top:16px;
->>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
 }
 .level3{
 color: #001c47;
@@ -301,10 +286,7 @@ font-size: 12px;
 }
 
 .edit-task-body {
-<<<<<<< HEAD
-=======
   padding: 10px;
->>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
   height: calc(100% - 130px) !important;
   overflow: auto !important;
   padding: 10px;
@@ -364,26 +346,3 @@ display: initial;
 .task-name-input{
   width:200px; 
 }
-<<<<<<< HEAD
-
-/*.edit-task-body-content input[type=date] {
-=======
-/*.edit-task-body-content input[type=date]::-webkit-calendar-picker-indicator {
-  -webkit-appearance: none;
-  display: none;
-}
-.edit-task-body-content input.form-control {
->>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
-  background-image: url('../../../../assets/images/Projects/calendar.svg');
-  background-position: calc(100% - 10px) center;
-  background-repeat: no-repeat;
-  cursor: pointer;
-<<<<<<< HEAD
-}
-
-input[type=date]::-webkit-calendar-picker-indicator {
-  -webkit-appearance: none;
-  display: none;
-=======
->>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
-}*/

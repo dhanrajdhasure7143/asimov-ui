@@ -973,11 +973,7 @@ save_blueprism_config(data)
   }
   
   getBIThroughputTime(processId){
-<<<<<<< HEAD
     return this.http.get("/processintelligence/v1/processgraph/getThroughputTimeDataV2/"+processId);
-=======
-    return this.http.get("/processintelligence/v1/processgraph/getThroughputTimeDataV2/"+processId);
->>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
   }
 
   getBusinessMetrics(processId){
@@ -1098,7 +1094,4 @@ getvaluechainprocess(id)
     return this.http.get('/api/servicedesk/getcomponents')
   }
 
-  get_processes_scheduled(){
-    return this.http.get("/rpa-service/scheduled-process")
-  }
 }

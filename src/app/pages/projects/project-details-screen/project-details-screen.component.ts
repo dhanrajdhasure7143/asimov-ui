@@ -13,10 +13,6 @@ import Swal from 'sweetalert2';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MatMenuModule, MatButtonModule } from '@angular/material'; 
 import moment from 'moment';
-<<<<<<< HEAD
-=======
-
->>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
 
 @Component({
   selector: 'app-project-details-screen',
@@ -131,8 +127,6 @@ percentageComplete: number;
   fileList: File[] = [];
   listOfFiles: any[] = [];
   owner_letters: any;
-<<<<<<< HEAD
-=======
   public isButtonVisible = false;
   public userRole:any = [];
   public userName:any;
@@ -141,7 +135,6 @@ percentageComplete: number;
   enablecreatetask: boolean=false;
   enableedittask: boolean=false;
   enabledeletetask: boolean=false;
->>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
   mindate= moment().format("YYYY-MM-DD");
   projectenddate:any;
   constructor(private dt:DataTransferService,private route:ActivatedRoute, private rpa:RestApiService,
@@ -589,12 +582,9 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
         this.updatetaskForm.get("resources").setValue(data["resources"]);
        //  this.updatetaskForm.get("taskName").setValue(data["taskName"]);
       //  this.updatetaskForm.get("timeEstimate").setValue(data["timeEstimate"]);
-<<<<<<< HEAD
-      this.updatetaskForm.get("endDate").setValue(this.projectenddate);
-=======
       
         this.updatetaskForm.get("endDate").setValue(this.projectenddate);
->>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
+
         this.updatetaskForm.get("approvers").setValue(data["approvers"]);
         this.updatetaskForm.get("status").setValue(data["status"]);
         this.updatetaskForm.get("description").setValue(data["description"]);

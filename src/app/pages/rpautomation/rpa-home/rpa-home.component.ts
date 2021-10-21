@@ -87,11 +87,7 @@ export class RpaHomeComponent implements OnInit {
   insertbot:FormGroup;
   rpaCategory: any;
   newRpaCategory: any;
-<<<<<<< HEAD
-  rpaVisible:boolean=true;
-=======
   userName:any="";
->>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
   displayedRows$: Observable<any[]>;
   rpaVisible:boolean=false;
   @ViewChild(MatSort,{static:false}) sort: MatSort;
@@ -308,11 +304,7 @@ export class RpaHomeComponent implements OnInit {
         {
           object.botType='Unattended';
         }
-<<<<<<< HEAD
-    
-=======
 
->>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
       if(this.categaoriesList.find(resp => resp.categoryId==data.department)!=undefined)
       {
         object.department=this.categaoriesList.find(resp => resp.categoryId==data.department).categoryName;
@@ -331,11 +323,6 @@ export class RpaHomeComponent implements OnInit {
         }
         this.bot_list.push(object)
         this.assignPagination( this.bot_list);
-<<<<<<< HEAD
-    
-=======
-
->>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
       })
       //this.bot_list=botlist;
       if(this.bot_list.length >0)

@@ -238,10 +238,7 @@ div#bpmn_list {
     .cell.cell9, .cell.cell10 {
         width: 50% !important;
     }
-<<<<<<< HEAD
-=======
 
     .no-item-img{
         height: calc(100vh - 500px)
       } 
->>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2

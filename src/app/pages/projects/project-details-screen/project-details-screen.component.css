@@ -550,11 +550,8 @@ span.testtooltip:before {
 .tsttooltipbtn:hover span.testtooltip {
   display: block;
 }
-<<<<<<< HEAD
-.col-sm-6.projinfo {  
-=======
+
 .col-sm-6.projinfo {
->>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
   padding-top: 8px !important;
 }
 
@@ -590,15 +587,8 @@ span.testtooltip:before {
     height: 41px;
     margin-top: -10px;
   }
-<<<<<<< HEAD
 span.prj-db-btn button {   
   padding: 6px 8px;   
   position: relative;
 }
-=======
 
-  span.prj-db-btn button {
-    padding: 6px 8px;
-    position: relative;
-} 
->>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2

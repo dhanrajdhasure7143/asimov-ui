@@ -106,11 +106,7 @@ span.tab-botname {
   width: 12px;
   height: 12px;
 }
-<<<<<<< HEAD
-.toolsetmenuicon img.testplus{ 
-=======
 .toolsetmenuicon img.testplus {
->>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
   /* margin-right: 12px !important;
   opacity: 0.5; */
   vertical-align: sub;
@@ -184,19 +180,13 @@ span.bpsbtnsep {
   font-size: 20px;
   padding: 0px !important;
 }
-<<<<<<< HEAD
 
-=======
->>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
 span.rpatitsep {
   color: #333;
   font-size: 20px;
   padding: 0px 5px !important;
 }
-<<<<<<< HEAD
 
-=======
->>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
 ul#other_actions {
   
   max-height: 250px;
@@ -302,20 +292,6 @@ ul#versions li.clickable:hover {
   line-height: 1cm
 }
 
-<<<<<<< HEAD
-/*.rpa-header-back-button{
-  border: none !important;
-  margin: 0px !important;
-  font-size: 16px !important;
-}*/
-=======
-/* .rpa-header-back-button{
-  border: none !important;
-  margin: 0px !important;
-  font-size: 16px !important;
-} */
->>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
-
 
 ::ng-deep .rpa-bottom-tab .mat-tab-header{
   background: white !important;
@@ -325,24 +301,12 @@ ul#versions li.clickable:hover {
 ::ng-deep .rpa-bottom-tab 
 {
   background: white !important;
-<<<<<<< HEAD
-  /*height: 40px !important;
-  color:black !important;
-  padding: 2px;*/
-  border-top: 1px solid lightgray;
-  text-align : end !important;
-  padding:10px !important; 
-
-  
-
-=======
   /* height: 40px !important;
   color:black !important; */
   padding:10px !important; 
   border-top: 1px solid lightgray;
   text-align : end !important;
   
->>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
 }
 
 
@@ -356,17 +320,8 @@ ul#versions li.clickable:hover {
 }
 
 
-<<<<<<< HEAD
-
-
-button:disabled{
-  background: none;
-  opacity: 0.5;
-  cursor: not-allowed;
-=======
 button:disabled{
   background: none !important;
   opacity: 0.5 !important;
   cursor: not-allowed !important;
->>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
 }
