@@ -1,18 +1,34 @@
 <div class="Support-tktlist h-100">
     <div class="h-100" id="my_workspace">
         <div class="module-heading title">
-            <span class="module-header-title">
-                <span class="module-parent-title">Support</span>
-            </span>
-            <div class="ml-auto">
-                <button class="btn btn-primary" routerLink="/pages/support/create-ticket">
-                    <img src="../../../../assets/images/Projects/White-plus.svg" class="testplus">
-                        Create New
-                </button>
+            <div class="col-md-2 p-0">
+                <span class="module-header-title">
+                    <span class="module-parent-title">Support / Issues</span>
+                </span>
+            </div>
+            <div class="col-md-10 p-0">
+                <div class="tktlist-body-header">                    
+                    <div class="tktlist-fields">
+                        <div class="col-md-3 pl-0 tktsearchfield">
+                            <input class="form-control" type="search" name="search_value" [(ngModel)]="searchInput_value" (keyup)="applyFilter($event.target.value)" placeholder="Search Issue...">
+                            <img alt="" class="testplus" src="../../../../assets/images/search.svg">
+                        </div>
+                        <div class="col-md-3 pl-0">
+                            <select name="Filter by" (change)="categoryFilter($event)" class="form-control" [(ngModel)]="selectedCategory">
+                                <option value="" disabled hidden >Select Category</option>
+                                <option class="selectoptions" style="margin-top: 1%;" [value]="item" *ngFor="let item of categories">{{item}}</option>
+                            </select>
+                        </div> 
+                        <button class="btn btn-primary" routerLink="/pages/support/create-ticket">
+                            <img src="../../../../assets/images/Projects/White-plus.svg" class="testplus">
+                                Create New
+                        </button>                       
+                    </div>
+                </div>                
             </div>
         </div>
         <div class="Support-tktlist-body">
-            <div class="tktlist-body-header">
+            <!-- <div class="tktlist-body-header">
                 <div class="tktlist-Heading">Issues</div>
                 <div class="tktlist-fields">
                 <select name="Filter by" (change)="categoryFilter($event)" class="form-control" [(ngModel)]="selectedCategory">
@@ -21,7 +37,7 @@
                     </select> &nbsp;&nbsp;
                     <input class="form-control" type="search" name="search_value" [(ngModel)]="searchInput_value" (keyup)="applyFilter($event.target.value)" placeholder="Search Issue...">
                 </div>
-            </div>
+            </div> -->
             <div class="table_responsive graph_table">
                 <table mat-table [dataSource]="dataSource" matSort class="PI table w-100">
 

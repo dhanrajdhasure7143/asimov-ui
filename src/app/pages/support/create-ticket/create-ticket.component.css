@@ -103,39 +103,6 @@ mat-select-value {
     display: none;
 }
 
-.mat-progress-bar {
-    display: block;
-    height: 6px;
-    overflow: hidden;
-    position: relative;
-    background-color: whitesmoke;
-    width: 90%;
-    margin-top: 2%;
-}
-
-::ng-deep .mat-progress-bar-fill::after {
-    background-color: green;
-}
-
-::ng-deep .mat-progress-bar-buffer {
-    background: #E4E8EB;
-}
-
-::ng-deep .mat-progress-bar {
-    border-radius: 2px;
-}
-
-.closefile {
-    margin: -3px 0% 0% 4%;
-    font-size: x-large;
-    color: black;
-    cursor: pointer;
-}
-
-.closefile:hover {
-    color: red;
-}
-
 .fa-cloud-upload-alt:before {
     content: "\f382";
     font-size: x-large;
@@ -148,8 +115,7 @@ mat-select-value {
 }
 
 .filenameoverflow {
-    display: inline-block;
-    width: 190px;
+    margin-right: 23px;
     /* white-space: nowrap;
     overflow: hidden !important;
     text-overflow: ellipsis; */
@@ -215,7 +181,8 @@ mat-select-value {
 }
 
 .CreateTkt.h-scroll {
-    height: calc(100% - 70px);
+    /* height: calc(100% - 70px); */
+    height: calc(100% - 60px);
     overflow: auto;
     padding: 0px 0px 5px
 }
@@ -227,8 +194,10 @@ mat-select-value {
 }
 
 .CreateTkt-Heading span {
-    font-size: 20px;
+    font-size: 24px;
     font-weight: 600;
+    color: #001c47;
+    line-height: 35px;
 }
 
 .CreateTkt-Attachmentbox {
@@ -243,7 +212,7 @@ mat-select-value {
 .CreateTkt-footer {
     display: flex;
     justify-content: flex-end;
-    margin-top: 10px;
+    /* margin-top: 10px; */
 }
 
 .CreateTkt-footer .btn-primary,
@@ -331,22 +300,26 @@ mat-select-value {
 .Attached-contents {
     display: flex;
     align-items: center;
-    margin-top: 15px;
+    margin: 15px 0px;
 }
 .attached-image {
-    width: 14%;
+    width: 8%;    
+    line-height: 30px;
 }
 .attached-name {
-    width: 80%;
+    width: 85%;
 }
 .attached-close {
-    width: 6%;
+    cursor: pointer;
+    text-align: right;
+    width: 5%;    
+    margin-top: 10px;
 }
 .attached-name span {
     font-size: 14px;
 }
 .CreateTkt-Attachmentbox div {
-    margin-bottom: 8px;
+    /* margin-bottom: 8px; */
 }
 .comments-box .comment-date .edit-icon{
     padding-left: 5px;
@@ -399,4 +372,21 @@ span.firsticon-edit {
 .supporttable-div{
     height: 245px;
     margin-top: 5px;
+}
+.CreateTkt-Attachmentbox:hover {
+    border: 2px dotted #00a1e3;
+    background-color: aliceblue;
+}
+.CreateTkt-Attachmentbox p {
+    margin: 10px 0px;
+}
+.CreateTkt-Attachmentbox button.btn {
+    border: 1px solid #00a1e3 !important;
+    background: transparent !important;
+    color: #00a1e3;
+    margin-right: 0px !important;
+}
+.CreateTkt-Attachmentbox button.btn:hover {
+    border: 1px solid transparent !important;
+    background: #001c47 !important;
 }
