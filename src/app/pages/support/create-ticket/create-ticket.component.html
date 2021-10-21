@@ -14,8 +14,15 @@
                     <form [formGroup]="createTicket" novalidate>
                         <div class="row">
                             <div class="col-md-12 CreateTkt-Heading">
-                                <span class="" *ngIf="!isEdit">Create Ticket</span>
-                                <span class="" *ngIf="isEdit">Ticket&nbsp;({{requestKey}})</span>
+                                <div class="col-md-9 p-0">
+                                    <span class="" *ngIf="!isEdit">Create Ticket</span>
+                                    <span class="" *ngIf="isEdit">Ticket&nbsp;({{requestKey}})</span>
+                                </div>
+                                <div class="CreateTkt-footer col-md-3 p-0" *ngIf="requestKey == undefined">
+                                    <button class="btn btn-default" (click)="reset()">Reset</button>
+                                    <button class="btn btn-primary" [disabled]="createTicket.invalid" (click)="CreateNewTicket()">Create</button>
+                                </div>
+                                
                             </div>
                             <div class="col-md-12 p-0">
                                 <div class="col-md-6 pl-0">
@@ -177,13 +184,35 @@
                                         <label class="label-control">Attachments</label>
                                         <div (click)="fileInput.click()" class="CreateTkt-Attachmentbox">
                                             <div><img src="../../../../assets/images/Admin/cloud.svg" alt=""></div>
-                                            <span>Find files to attach, or browse.</span>
+                                            <p>Find files to attach, or</p>
+                                            <!-- <p>Find files to attach, or browse.</p> -->
+                                            <button class="btn btn-primary">
+                                                <!-- <img src="../../../assets/images/BPMS/upload.svg" class="testplus"> -->
+                                                Browse Files
+                                            </button>
                                             <input multiple #fileInput type="file" (change)="file($event)" style="display:none;" />
+                                            <span *ngIf="!fileError && requestKey == undefined || null">
+                                                <div class="Attached-contents" *ngFor="let item of fileName; index as i">
+                                                    <div class="attached-image">
+                                                        <img src="../../../../assets/images/Admin/fle.svg" class="">
+                                                    </div>
+                                                    <div class="attached-name">
+                                                        <span class="filenameoverflow">{{item.name}}</span>
+                                                        <span>{{item.size}} KB</span>
+                                                        <mat-progress-bar mode="determinate" [value]=progress></mat-progress-bar>                                                    
+                                                    </div>
+                                                    <div class="attached-close">
+                                                        <span class="closefile" (click)="DeleteFile(item , i)">
+                                                            <img src="../../../../assets/images/RPA/icon_latest/close.svg" >
+                                                        </span>
+                                                    </div>                                                
+                                                </div>
+                                            </span>
                                         </div>
                                         <div class="fileerror" *ngIf="fileError && requestKey == undefined || null">
                                             <p>This file or image don't support or empty , Please try again later.</p>
                                         </div>
-                                        <span *ngIf="!fileError && requestKey == undefined || null">
+                                        <!-- <span *ngIf="!fileError && requestKey == undefined || null">
                                             <div class="Attached-contents" *ngFor="let item of fileName; index as i">
                                                 <div class="attached-image">
                                                     <img src="../../../../assets/images/Admin/fle.svg" class="">
@@ -199,7 +228,7 @@
                                                     </span>
                                                 </div>                                                
                                             </div>
-                                        </span>
+                                        </span> -->
                                     </div>
                                 </div>
                                 <div class="removeallattachment" *ngIf="requestKey && attachmentsForCustomerRequest.length > 1">
@@ -258,10 +287,10 @@
                                 </div>
                             </div>    
                         
-                            <div class="CreateTkt-footer col-md-12 p-0" *ngIf="requestKey == undefined">
+                            <!-- <div class="CreateTkt-footer col-md-12 p-0" *ngIf="requestKey == undefined">
                                 <button class="btn btn-default" (click)="reset()">Reset</button>
                                 <button class="btn btn-primary" [disabled]="createTicket.invalid" (click)="CreateNewTicket()">Create</button>
-                            </div>
+                            </div> -->
                         </div>
                     </form>
                 <!-- </div> -->

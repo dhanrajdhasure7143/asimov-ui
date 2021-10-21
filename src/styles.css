@@ -2679,5 +2679,5 @@ span.pdicon {
 }
 
 .Attached-contents .mat-progress-bar-fill::after {
-  background: green !important;
+  background: #4FA908  !important;
 }
