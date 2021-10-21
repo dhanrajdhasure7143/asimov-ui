@@ -35,7 +35,7 @@
   }
 
   .status-data {
-    padding-left: 14px !important;
+    padding-left: 10px !important;
     color:#001c47 !important;
   }
 
@@ -73,7 +73,7 @@
   background-color: #e3eaee;
 }
 .new-prj-details .projects-table-body , .project-details-div{
-  padding: 10px 15px;
+  padding: 10px 15px 0px;
 }
 mat-card#projects_details_screen {
   box-shadow: none !important;
@@ -391,7 +391,7 @@ img.hover-img {
 
 .mainset{
   /* padding: 0px 10px 0px 5px; */
-  padding-right: 10px;
+  padding-right: 30px;
   margin-bottom: 20px;
   /* min-height: 70px; */
 }
@@ -591,3 +591,46 @@ span.testtooltip:before {
     padding: 6px 8px;
     position: relative;
 } 
+
+.project-details-set.projinfo {
+  padding-top: 15px !important;
+}
+.project-details-set.projinfo .col-sm-2.p-0 {
+  width: 20%;
+}
+.status-data span.tab-text {
+  font-size: 17px !important;
+  font-weight: 500;
+}
+.status-data span.labeltit {
+  font-size: 13px !important;
+  font-weight: 300;
+  margin-top: -2px;
+}
+.user-owner-div span.letter-image {
+  padding: 10px;
+}
+.profile-table td span.letter-image {
+  margin-right: 10px;
+}
+.prjdetails-headerbuttons {
+  margin-left: 10px;
+}
+select.small-input:focus-visible, input.small-input:focus-visible {
+  outline: 1px solid #00a1e3 !important;
+}
+.project-data span.tab-number:focus-visible {
+  outline: 1px solid #ccc;
+  line-height: 30px;
+  min-width: 210px;
+  border-radius: 2px;
+}
+input.small-input[type="date"] {
+  background-image: url('../../../../assets/images/Projects/calendar.svg');
+  background-position: calc(100% - 10px) center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+input.small-input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0;
+}
