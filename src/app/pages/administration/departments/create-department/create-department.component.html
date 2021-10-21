@@ -1,0 +1,56 @@
+<div class="h-100">
+    <mat-card class="h-100">
+        <div class="module-heading title">
+            <span class="module-back-button" routerLink="/pages/admin/user-management">
+                <i class="fas fa-arrow-left" aria-hidden="true"></i>
+            </span>
+            <span class="module-header-title">
+                <span class="module-parent-title">Departments</span>
+            </span>
+        </div>
+        <div class="container-fluid  h-scroll">
+            <div class="maindivfoprm">
+                <div class="grid">
+                    <div class="create-heading">Create Department</div>
+                    <hr>
+                    <form [formGroup]="createDepartmentForm" #adddept="ngForm" (ngSubmit)="savedepartments()">
+                        <div class="row">
+                            <div class="col-md-12 p-0">
+                                <div class="col-md-6 pl-0">
+                                    <div class="row">
+                                        <div class="col-md-12 p-0 form-fields">
+                                            <label class="label-control">Department<span class="star">*</span></label>
+                                            <input type="text" formControlName="departmentName"  placeholder="Enter Department" maxlength="256" class="form-control data"  [ngClass]="createDepartmentForm.get('departmentName').valid?'enteredfield-color':'inputfield-color'">
+                                            <span
+                                                    *ngIf="(createDepartmentForm.get('departmentName').invalid && createDepartmentForm.get('departmentName').touched)
+                                                    && !createDepartmentForm.controls['departmentName'].hasError('maxlength')" class=" errspan required">Department Required*</span>
+                                                    <span
+                                                    *ngIf="createDepartmentForm.controls['departmentName'].hasError('maxlength')"
+                                                    class="errspan required">
+                                                    Maximum of 50 characters
+                                                </span>
+                                        
+                                        </div>
+                                    </div>
+                                   
+                                </div>
+                                
+                            </div>    
+                        
+                        </div>
+                    </form>
+                    <div class="pull-right">
+                        <button (click)="resetdepartment()" class="btn btn-default">Reset</button>
+                        <button [disabled]="createDepartmentForm.invalid" (click)="savedepartments()" class="btn btn-primary btn-update">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </mat-card>
+</div>
+
+<div class="spinoverlay" *ngIf="isLoading">
+    <div class="spincenter">
+        <img src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader" />
+    </div>
+</div>

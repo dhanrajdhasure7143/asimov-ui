@@ -1092,4 +1092,23 @@ getvaluechainprocess(id)
     return this.http.get('/api/servicedesk/getcomponents')
   }
 
+  deleteCategory(data):Observable<any>{
+    const httpOps = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+            }),
+      body: data
+    }
+    return this.http.delete<any>('/processintelligence/v1/processgraph/categories',httpOps)
+     
+  }
+
+  createCategory(body:any): Observable<any>{
+    return this.http.post<any>('/processintelligence/v1/processgraph/categories', body,httpOptions)
+  }
+
+  updateCategory(data:any): Observable<any>{
+    return this.http.put<any>('/processintelligence/v1/processgraph/categories', data,httpOptions)
+  }
+
 }
