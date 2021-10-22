@@ -8,17 +8,8 @@
 
 
             <span class="module-header-title">Robotic Process Automation</span>
-<<<<<<< HEAD
-<<<<<<< HEAD
-            <button type="button" class="btn btn-primary import-btn ml-auto"  (click)="openModal(template)">
-=======
             <button type="button" class="btn btn-primary import-btn ml-auto" (click)="openModal(template)">
->>>>>>> 6b036ccee78cf88c90956af41ac1bf9f01da6de7
               <img src="../../../../assets/images/RPA/import-white.svg" class="testplus" *ngIf="rpaVisible">
-=======
-            <button type="button" class="btn btn-primary import-btn ml-auto"  (click)="openModal(template)" *ngIf="rpaVisible">
-              <img src="../../../../assets/images/RPA/import-white.svg" class="testplus" >
->>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
               Import
             </button>
         </div>
@@ -312,30 +303,6 @@
                             <button (click)="exportbot(bot)" mat-menu-item><img src="../../../../assets/images/RPA/icon_latest/export.svg" alt="" class="testplus">&nbsp;Export</button>
                           </mat-menu>
                         </span> -->
-<<<<<<< HEAD
-                      </div>
-                      <div class="flex-col">
-<<<<<<< HEAD
-                        <button (click)="editbotoverlay(bot)"><img src="../../../../assets/images/RPA/icon_latest/edit.svg" alt="" class="testplus">&nbsp;</button>
-                        <button  (click)="botdelete(bot.botId)"><img src="../../../../assets/images/RPA/icon_latest/delete.svg" alt="" class="testplus">&nbsp;</button>
-                        <button (click)="exportbot(bot)"><img src="../../../../assets/images/RPA/icon_latest/export.svg" alt="" class="testplus">&nbsp;</button>    
-                      
-                    </div>
-=======
-                          <button tooltip="Edit Bot" placement="bottom" [disabled]="!((isButtonVisible==true && userName==bot.createdBy)||(isButtonVisible==false))" (click)="editbotoverlay(bot)"><img src="../../../../assets/images/RPA/icon_latest/edit.svg" alt="" class="testplus">&nbsp;</button>
-                          <button tooltip="Delete Bot" placement="bottom"  [disabled]="isButtonVisible==true" (click)="botdelete(bot.botId)"><img src="../../../../assets/images/RPA/icon_latest/delete.svg" alt="" class="testplus">&nbsp;</button>
-                          <button  tooltip="Export Bot" placement="bottom" (click)="exportbot(bot)"><img src="../../../../assets/images/RPA/icon_latest/export.svg" alt="" class="testplus">&nbsp;</button>
-                        
-                      </div>
->>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
-          
-                    </div>
-                  </mat-panel-title>
-                </mat-expansion-panel-header>
-                <div class="diagram_container">
-          
-                  <button class="btn open-btn-click btn-xs" (click)="loadbotdata(bot.botId)">
-=======
                                             </div>
                                             <div class="flex-col">
                                                 <button (click)="editbotoverlay(bot)"><img src="../../../../assets/images/RPA/icon_latest/edit.svg" alt="" class="testplus">&nbsp;</button>
@@ -350,7 +317,6 @@
                                 <div class="diagram_container">
 
                                     <a class="btn open-btn-click btn-xs" routerLink="/pages/rpautomation/designer" [queryParams]="{botId:bot.botId }">
->>>>>>> 6b036ccee78cf88c90956af41ac1bf9f01da6de7
                     Click to open
                                     </a>
 
@@ -379,92 +345,9 @@
             </div>
 
         </div>
-<<<<<<< HEAD
-        <div class="row rpa-content-home no-items-content"  *ngIf="!(rpaVisible)">
-<<<<<<< HEAD
-           <img class="no-items-img" src="../../../../assets/images/RPA/No-Items.svg">
-        <h4>No items to display</h4>
-=======
-          <div class="flex-row Tabletype">
-            <div class="TabletypeHeader" matSort>
-              <div class="flex-col header gridheader-th">
-                <div class="cell cell1"></div>
-              </div>          
-                <div class="flex-col header gridheader-th">
-                  <!-- <button  (click)="sortasc('botName','asc')"> -->
-                    <button  mat-sort-header="botName">
-                   <span >Bot Name</span>
-                   <!-- <i *ngIf="sortkey.botName==false" class="fa fa-arrow-up"></i>
-                   <i *ngIf="sortkey.botName==true" class="fa fa-arrow-down"></i> -->
-                  </button>
-                </div>
-              
-                <div class="flex-col header gridheader-th">
-                  <!-- <button  (click)="sortasc('description','asc')"> -->
-                    <button   mat-sort-header="description">
-                    <span >Description</span>
-                    <!-- <i *ngIf="sortkey.description==false" class="fa fa-arrow-up"></i>
-                    <i *ngIf="sortkey.description==true" class="fa fa-arrow-down"></i> -->
-                  </button>
-                </div>
-              
-                <div class="flex-col header gridheader-th">
-                  <!-- <button  (click)="sortasc('department','asc')"> -->
-                    <button  mat-sort-header="department">
-                    <span >Category</span>
-                    <!-- <i *ngIf="sortkey.department==false" class="fa fa-arrow-up"></i>
-                    <i *ngIf="sortkey.department==true" class="fa fa-arrow-down"></i> -->
-                  </button>
-                </div>
-    
-                <!-- <div class="flex-col header gridheader-th"> -->
-                  <!-- <button  (click)="sortasc('botType','asc')"> -->
-                    <!-- <button   mat-sort-header="botType">
-                    <span >Type</span> -->
-                    <!-- <i *ngIf="sortkey.botType==false" class="fa fa-arrow-up"></i>
-                    <i *ngIf="sortkey.botType==true" class="fa fa-arrow-down"></i> -->
-                  <!-- </button> -->
-                <!-- </div> -->
-              
-                <div class="flex-col header gridheader-th">
-                  <!-- <button  (click)="sortasc('version','asc')"> -->
-                    <button  mat-sort-header="version">
-                    <span>Version</span> 
-                    <!-- <i *ngIf="sortkey.version==false" class="fa fa-arrow-up"></i>
-                    <i *ngIf="sortkey.version==true" class="fa fa-arrow-down"></i> -->
-                  </button>
-                </div>
-              
-                <div class="flex-col header gridheader-th">
-                  <!-- <button  (click)="sortasc('botStatus','asc')"> -->
-                    <button  mat-sort-header="botStatus">
-                    <span>Status</span>
-                    <!-- <i *ngIf="sortkey.botStatus==false" class="fa fa-arrow-up"></i>
-                    <i *ngIf="sortkey.botStatus==true" class="fa fa-arrow-down"></i> -->
-                  </button>
-                </div>
-                <div class="flex-col header gridheader-th">
-                    <!-- <button  (click)="sortasc('botStatus','asc')"> -->
-                      <button  mat-sort-header="actions">
-                      <span>Actions</span>
-                      <!-- <i *ngIf="sortkey.botStatus==false" class="fa fa-arrow-up"></i>
-                      <i *ngIf="sortkey.botStatus==true" class="fa fa-arrow-down"></i> -->
-                    </button>
-                  </div>
-            </div>
-          </div>
-          <div  class="rpa-home-table">
-            <div  class="text-center">
-              <img  src="../../../../../assets/images/RPA/No-Items.svg" class="no-item-img">
-              <h3 class="text-center">No Items to display</h3>
-            </div>
-          </div>
->>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
-=======
         <div class="row rpa-content-home no-items-content" *ngIf="!(rpaVisible)">
             <img class="no-items-img" src="../../../../assets/images/RPA/No-Items.svg">
             <h4>No items to display</h4>
->>>>>>> 6b036ccee78cf88c90956af41ac1bf9f01da6de7
         </div>
         <div id="edit-bot" class="modal rpa-modal">
             <div class="rpa-modal-content">
