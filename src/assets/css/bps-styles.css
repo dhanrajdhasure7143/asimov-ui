@@ -1128,19 +1128,12 @@ mat-panel-title.mat-expansion-panel-header-title {
 mat-expansion-panel.menuprop-disabled {
   background-color: #acacac !important;
 }
-<<<<<<< HEAD
-=======
-
->>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
 .canvas1 .bjsl-button {
   bottom: 40px !important;
   position: fixed;
   left: 70%;
 }
-<<<<<<< HEAD
 
-=======
->>>>>>> 97a4260938c6933f985942092d3a54f004d03dc2
 .canvas1 .djs-minimap {
   position: fixed;
   bottom: 45px;
