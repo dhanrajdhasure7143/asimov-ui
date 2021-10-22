@@ -116,7 +116,7 @@ span.testtooltip {
     right: 0px;
     background-color: #001c47;
     color: #fff;
-    width: max-content;
+    min-width: 300px;
     padding: 3px 10px;
     border-radius: 4px;
     display: none;
@@ -165,7 +165,7 @@ span.testtooltip {
     right: 0px;
     background-color: #001c47;
     color: #fff;
-    width: max-content;
+    min-width: 300px;
     padding: 3px 10px;
     border-radius: 4px;
     display: none;
