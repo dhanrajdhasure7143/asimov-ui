@@ -1,16 +1,4 @@
-<<<<<<< HEAD
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
-  <defs>
-    <clipPath id="clip-Fit_to_screen">
-      <rect width="24" height="24"/>
-    </clipPath>
-  </defs>
-  <g id="Fit_to_screen" data-name="Fit to screen" clip-path="url(#clip-Fit_to_screen)">
-    <path id="Path_869" data-name="Path 869" d="M18.8,3H26v7.2H23.6V5.4H18.8ZM2,3H9.2V5.4H4.4v4.8H2ZM23.6,22.2V17.4H26v7.2H18.8V22.2Zm-19.2,0H9.2v2.4H2V17.4H4.4Z" transform="translate(-2 -1.8)" fill="#607088"/>
-  </g>
-=======
 <svg id="Fit_to_screen" data-name="Fit to screen" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
   <path id="Path_868" data-name="Path 868" d="M0,0H24V24H0Z" fill="none"/>
   <path id="Path_869" data-name="Path 869" d="M16,3h6V9H20V5H16ZM2,3H8V5H4V9H2ZM20,19V15h2v6H16V19ZM4,19H8v2H2V15H4Z" fill="#607088"/>
->>>>>>> develop-v2
 </svg>
