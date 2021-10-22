@@ -172,6 +172,7 @@ canceladdHrs(){ //close timefeed popup
 
 addWorkingHours(){
   this.dt.piHeaderValues(this.workingHours);
+  this.isAddHrs=!this.isAddHrs;
 }
 
  resetWorkingHours(){ //working hours reset in timffed   
@@ -195,6 +196,7 @@ addWorkingHours(){
 
   addWorkingHrsInsights(){
     this.dt.process_insightsHeaderValues(this.workingHours1);
+    this.isAddHrs1=!this.isAddHrs1;
   }
 
   resetWorkingHours1(){ //working hours reset in timffed   
