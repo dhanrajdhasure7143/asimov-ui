@@ -145,7 +145,6 @@ span.labeltit, label.labeltit {
   /* color: #32486B; */
   font-weight: 500;
   display: block;
-  margin-bottom: 3px;
 }
 .row.newprjdates {
   float: right;
@@ -160,7 +159,7 @@ span.tab-text{
   /* display: flex; */
   align-items: center;
   /* padding: 0px 10px 0px 5px; */
-  padding-right: 10px;
+  padding-right: 30px;
   margin-bottom: 20px;
 }
 span.labelcont {
@@ -176,7 +175,7 @@ span.programdesc {
   display: flex;
 }
 .status-data {
-  padding-left: 14px !important;
+  padding-left: 10px !important;
   color:#001c47 !important;
 }
 .prgmgrid {
@@ -242,7 +241,7 @@ td a:hover img.testplus.hover-img {
     background-color: #ddd;
     padding: 7px;
     text-align: center;
-    letter-spacing: 2.5px;
+    /* letter-spacing: 2.5px; */
     font-size: 15px;
   }
   
@@ -257,4 +256,43 @@ td a:hover img.testplus.hover-img {
   ::ng-deep .addrespopup .ng-dropdown-panel {
     position: relative !important;
     display: contents !important;
+}
+
+.project-details-set.programinfo {
+  padding-top: 15px !important;
+}
+.project-details-set.programinfo .col-sm-2.p-0 {
+  width: 20%;
+}
+.program-data textarea.small-input {
+  margin-top: 12px;
+}
+select.small-input:focus-visible, input.small-input:focus-visible, textarea.small-input:focus-visible {
+  outline: 1px solid #00a1e3 !important;
+}
+
+input.small-input[type="date"] {
+  background-image: url('../../../../assets/images/Projects/calendar.svg');
+  background-position: calc(100% - 10px) center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+input.small-input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0;
+}
+.program-info .program-data {
+  width: 100%;
+}
+.program-info .prg-title {
+  width: 30%;
+}
+.status-data span.labeltit {
+  font-size: 13px !important;
+  font-weight: 300;
+  margin-top: -2px;
+}
+.status-data span.labelcont {
+  font-size: 17px !important;
+  color: #001c47;
+  font-weight: 500;
 }
