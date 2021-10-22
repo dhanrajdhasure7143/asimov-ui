@@ -183,7 +183,9 @@
       <button  class="ep-pad" *ngIf="this.userRole.includes('Admin') || this.userRole.includes('SuperAdmin')" (click)='userManagement()'><img class="header_icon" src="..\assets\icons\user_management_icon.svg">User Management</button>
       <button  class="ep-pad" *ngIf="this.userRole.includes('Admin')" (click)='configAlerts()'><img class="header_icon" src="..\assets\icons\alert_icon.svg">Configuration</button>
       <button  class="ep-pad" *ngIf="this.userRole.includes('Admin')" (click)='inviteUser()'><img class="header_icon" src="..\assets\icons\invite_user_icon.svg">Invite User</button> -->
-      <button  class="ep-pad" (click)='logout()'><i class="fas fa-sign-out-alt  text-primary "></i>Signout</button>
+      <button class="ep-pad" (click)='myAccount()'><i class="far fa-user text-primary hd_icon"></i> My Account</button>
+      <button class="ep-pad" (click)='changepassword()'><i class="fas fa-lock text-primary hd_icon"></i> Change password</button>
+      <button  class="ep-pad" (click)='logout()'><i class="fas fa-sign-out-alt  text-primary hd_icon"></i>Signout</button>
   
     <!-- <app-header-dropdown-overlay [overlay_notifications_dt]="overlay_notifications_model" [overlay_acc_dt]="overlay_acc_model" [overlay_user_manage_dt]="overlay_user_manage_model" [overlay_config_alert_dt]="overlay_config_alert_model" [overlay_invite_user_dt]="overlay_invite_user_model"></app-header-dropdown-overlay> -->
   </mat-menu>

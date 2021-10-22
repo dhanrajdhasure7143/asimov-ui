@@ -195,17 +195,16 @@ export class RpaSchedulerComponent implements OnInit {
       this.rest.start_schedule(schedule).subscribe(data=>{
         let resp:any=data;
         console.log(resp)
-        if(resp.errorMessgae==undefined)
+        if(resp.errorMessage==undefined)
         {
-          alert(resp.errorMessgae)
+         
           this.notifier.notify("success",resp.status)
           this.schedule_list.find(data=>data.check==true).run_status="started";
           this.updateflags();
         }
         else
         {
-          
-          this.notifier.notify("error", resp.errorMessgae);
+          this.notifier.notify("error", resp.errorMessage);
          
         }
 
@@ -226,7 +225,7 @@ export class RpaSchedulerComponent implements OnInit {
       }
       this.rest.pause_schedule(schedule).subscribe(data=>{
         let resp:any=data
-        if(resp.errorMessgae==undefined)
+        if(resp.errorMessage==undefined)
         {
           this.notifier.notify("success",resp.status)
           this.schedule_list.find(data=>data.check==true).run_status="pause";
@@ -235,7 +234,7 @@ export class RpaSchedulerComponent implements OnInit {
         else
         {
         
-          this.notifier.notify("error",resp.errorMessgae)
+          this.notifier.notify("error",resp.errorMessage)
         }
       })
     }
@@ -252,7 +251,7 @@ export class RpaSchedulerComponent implements OnInit {
     }
     this.rest.resume_schedule(schedule).subscribe(data=>{
       let resp:any=data
-      if(resp.errorMessgae==undefined)
+      if(resp.errorMessage==undefined)
       {
         this.notifier.notify("success", resp.status);
         this.schedule_list.find(data=>data.check==true).run_status="resume";
@@ -260,7 +259,7 @@ export class RpaSchedulerComponent implements OnInit {
       }
       else
       {
-        this.notifier.notify("error", resp.errorMessgae);
+        this.notifier.notify("error", resp.errorMessage);
       }
     })
 
@@ -277,6 +276,7 @@ export class RpaSchedulerComponent implements OnInit {
         this.schedule_list.splice(index2,1);
       })
       this.updateflags();
+      this.notifier.notify("success", "Schedules Deleted Sucessfully");
     }
   }
 

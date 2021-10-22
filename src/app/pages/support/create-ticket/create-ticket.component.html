@@ -10,7 +10,7 @@
         </div>
         <div class="container-fluid CreateTkt h-scroll">
             <div class="maindivfoprm">
-                <div class="grid">
+                <!-- <div class="grid"> -->
                     <form [formGroup]="createTicket" novalidate>
                         <div class="row">
                             <div class="col-md-12 CreateTkt-Heading">
@@ -18,6 +18,24 @@
                             </div>
                             <div class="col-md-12 p-0">
                                 <div class="col-md-6 pl-0">
+                    
+                                    <div class="Component-filed">
+                                        <label class="label-control">Component<span class="star">*</span></label>
+                                        <mat-form-field class="issue-type">
+                                            <mat-label><span *ngIf="component.length==0" style="margin-left: 10px;"> Select Component </span></mat-label>
+                                            <mat-select multiple formControlName="component" [disabled]='isEdit' [ngClass]="isEdit ? 'disabled' : ''" [(ngModel)]="component" #toppings class="form-control data">
+                                                <!-- <mat-option value="Task Mining">Task Mining</mat-option>
+                                                <mat-option value="Service Orchestration">Service Orchestration</mat-option>
+                                                <mat-option value="Robatic Process Automation">Robatic Process Automation
+                                                </mat-option>
+                                                <mat-option value="Process Intelligence">Process Intelligence</mat-option>
+                                                <mat-option value="Business Process Studio">Business Process Studio</mat-option> -->
+                                                <mat-option *ngFor="let each of component_list" [value]='each'>{{each}}</mat-option>
+                                                <button class="component-button" (click)="toppings.close()">OK</button>
+                                            </mat-select>
+                                        </mat-form-field>
+                                        <span *ngIf="createTicket.get('component').invalid && createTicket.get('component').touched" class="errspan required">Component Required*</span>
+                                    </div>
                                     <div class="row">
                                         <div class="col-md-12 p-0 form-fields">
                                             <label class="label-control">Summary<span class="star">*</span></label>
@@ -32,6 +50,8 @@
                                             <textarea style="padding: 10px;" type="text" formControlName="description" [(ngModel)]="description" matInput placeholder="Enter Description" class="form-control"></textarea>
                                             <span *ngIf="createTicket.get('description').invalid && createTicket.get('description').touched" class="errspan required">Description Required*</span>
                                         </div>
+                                        </span>
+                                        <span *ngIf="createTicket.get('description').invalid && createTicket.get('description').touched" class="errspan required">Description Required*</span>
                                     </div>
 
                                     <div class="row">
@@ -51,12 +71,13 @@
                                                         <img src="../../../../assets/images/Admin/fle.svg" class="">
                                                     </div>
                                                     <div class="attached-name">
-                                                        <span class="filenameoverflow">{{item.name}}</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span>{{item.size}} KB</span>
+                                                        <span class="filenameoverflow">{{item.name}}</span>
+                                                        <span>{{item.size}} KB</span>
                                                         <mat-progress-bar mode="determinate" [value]=progress></mat-progress-bar>                                                    
                                                     </div>
                                                     <div class="attached-close">
                                                         <span class="closefile" (click)="DeleteFile(item , i)">
-                                                            <img src="../../../../assets/images/Admin/close.svg" class="testplus1">
+                                                            <img src="../../../../assets/images/RPA/icon_latest/close.svg" >
                                                         </span>
                                                     </div>                                                
                                                 </div>
@@ -118,10 +139,10 @@
                             <div class="CreateTkt-footer col-md-12 p-0">
                                 <button class="btn btn-default" (click)="reset()">Reset</button>
                                 <button class="btn btn-primary" [disabled]="createTicket.invalid" (click)="CreateNewTicket()">Create</button>
-                            </div>
+                            </div> -->
                         </div>
                     </form>
-                </div>
+                <!-- </div> -->
             </div>
         </div>
     </mat-card>
