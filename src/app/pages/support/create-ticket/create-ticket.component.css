@@ -356,16 +356,11 @@ mat-select-value {
 span.firsticon-edit {
     margin-right: 6px;
 }
-::ng-deep .mat-paginator-page-size{
-    display: none !important;
-}
+
 .deleteattachment{
     padding-right: 5px;
 }
 
-/* ::ng-deep .mat-paginator-range-label{
-    display: none !important;
-} */
 .tablefile-name{
     padding-left: 3px;
 }
@@ -389,4 +384,31 @@ span.firsticon-edit {
 .CreateTkt-Attachmentbox button.btn:hover {
     border: 1px solid transparent !important;
     background: #001c47 !important;
+}
+span.module-header-title.innertitle {
+    line-height: 35px;
+}
+
+::ng-deep .mat-select-panel.mat-primary {
+    max-height: 300px !important;
+    min-width: calc(100% + 18px) !important;
+    position: absolute;
+    right: -50px;
+    top: 39px;
+    border-radius: 0px !important;
+    box-shadow: none;
+    border: 1px solid #d1d1d1;
+}
+::ng-deep .Component-filed .mat-form-field-label {
+    color: #7B8694 !important;
+    font-size: 14px !important;
+    background: transparent !important;
+    transition: none;
+    position: relative;
+    top: 8px;
+}
+::ng-deep .Component-filed .mat-form-field.mat-focused .mat-form-field-label {
+  position: relative;
+  top: 5px !important;
+  transform: none;
 }

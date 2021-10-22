@@ -145,6 +145,7 @@ export class CreateTicketComponent implements OnInit {
         });
         this.reset();
         this.isLoading = false;
+        this.fileName = [];
       }
       else if (res == 'request creation failed') {
         this.isLoading = false;
@@ -189,7 +190,7 @@ export class CreateTicketComponent implements OnInit {
     this.fileError = false;
     this.isLoading = true;
     this.progress = 1;
-    this.fileName = [];
+    // this.fileName = [];
     for (var i = 0; i < event.target.files.length; i++) {
       this.fileName.push(event.target.files[i]);
     }

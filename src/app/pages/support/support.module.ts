@@ -18,8 +18,8 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { MatTooltipModule } from '@angular/material';
 import { ViewTicketComponent } from './view-ticket/view-ticket.component'
 
-
-
+import { CustomMatPaginatorIntl } from './../../shared/custom-mat-paginator-int';
+import { MatPaginatorIntl } from '@angular/material';
 @NgModule({
   declarations: [CreateTicketComponent, TicketListComponent, SupportComponent, ViewTicketComponent],
   imports: [
@@ -44,6 +44,11 @@ import { ViewTicketComponent } from './view-ticket/view-ticket.component'
       }
     }),
     MatTooltipModule
-  ]
+  ],
+  providers:[
+    {
+      provide: MatPaginatorIntl,
+      useClass: CustomMatPaginatorIntl
+    }]
 })
 export class SupportModule { }

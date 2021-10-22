@@ -215,7 +215,7 @@ mat-select-value {
 }
 
 .CreateTkt.h-scroll {
-    height: calc(100% - 70px);
+    height: calc(100% - 50px);
     overflow: auto;
     padding: 0px 0px 5px
 }
@@ -399,4 +399,30 @@ span.firsticon-edit {
 .supporttable-div{
     /* height: 245px; */
     margin-top: 5px;
+}
+
+.CreateTkt-Attachmentbox:hover {
+    border: 2px dotted #00a1e3;
+    background-color: aliceblue;
+}
+.CreateTkt-Attachmentbox p {
+    margin: 10px 0px;
+}
+.CreateTkt-Attachmentbox button.btn {
+    border: 1px solid #00a1e3 !important;
+    background: transparent !important;
+    color: #00a1e3;
+    margin-right: 0px !important;
+}
+.CreateTkt-Attachmentbox button.btn:hover {
+    border: 1px solid transparent !important;
+    background: #001c47 !important;
+}
+span.module-header-title.innertitle {
+    line-height: 35px;
+}
+.viewtktcontent {
+    padding: 15px;
+    padding-bottom: 0px;
+    height: 100%;
 }
