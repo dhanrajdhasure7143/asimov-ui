@@ -217,7 +217,7 @@ mat-select-value {
 .CreateTkt.h-scroll {
     height: calc(100% - 50px);
     overflow: auto;
-    padding: 0px 0px 5px
+    padding: 0px;
 }
 
 .CreateTkt-Heading {
@@ -232,12 +232,14 @@ mat-select-value {
 }
 
 .CreateTkt-Attachmentbox {
-    padding: 20px 0px;
+    padding: 10px;
     background: #f6f6f6;
-    border-radius: 5px;
+    border-radius: 4px;
     border: dotted 2px rgb(197, 196, 196);
     text-align: center;
     cursor: pointer;
+    margin-bottom: 5px;
+    /* height: calc(100vh - 400px); */
 }
 
 .CreateTkt-footer {
@@ -301,7 +303,7 @@ mat-select-value {
 .removeallattachment {
     display: flex;
     justify-content: flex-end;
-    margin: 15px 0px;
+    margin-bottom: 5px;
 }
 
 /* .removeallattachment button {
@@ -346,7 +348,7 @@ mat-select-value {
     font-size: 14px;
 }
 .CreateTkt-Attachmentbox div {
-    margin-bottom: 8px;
+    /* margin-bottom: 8px; */
 }
 .comments-box .comment-date .edit-icon{
     padding-left: 5px;
@@ -370,7 +372,7 @@ mat-select-value {
     margin-right: 10px !important;
 }
 .Add-comments {
-    margin-top: 10px;
+    margin-top: 7px;
 }
 .Inner-comments {
     padding: 10px;    
@@ -397,8 +399,10 @@ span.firsticon-edit {
     padding-left: 3px;
 }
 .supporttable-div{
-    /* height: 245px; */
-    margin-top: 5px;
+    /* margin-top: 10px; */
+    background-color: #fff;
+    height: calc(100vh - 400px);
+    overflow: hidden auto;
 }
 
 .CreateTkt-Attachmentbox:hover {
@@ -422,7 +426,43 @@ span.module-header-title.innertitle {
     line-height: 35px;
 }
 .viewtktcontent {
-    padding: 15px;
-    padding-bottom: 0px;
+    padding: 15px 0px 0px;
     height: 100%;
+}
+.comments-div .cmntslist {
+    height: calc(100vh - 200px);
+    overflow: hidden auto;
+}
+.tsttooltipbtn {
+    position: relative;
+}
+.tsttooltipbtn:hover .default-img{
+    display: none;
+}
+.tsttooltipbtn:hover span.testtooltip,
+.tsttooltipbtn:hover .hover-img {
+    display: block;
+}
+span.testtooltip {
+    position: absolute;
+    top: 32px;
+    right: 0px;
+    background-color: #001c47;
+    color: #fff;
+    width: -moz-max-content;
+    width: max-content;
+    padding: 3px 10px;
+    border-radius: 4px;
+    display: none;
+    z-index: 1;
+}
+span.testtooltip:after {
+    content: "";
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    top: -4px;
+    background-color: #001c47;
+    transform: rotate(45deg);
+    right: 10px;
 }

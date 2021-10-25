@@ -2287,6 +2287,7 @@ button.btn.btn-primary:first-child {
   padding: 5px 10px !important;
   vertical-align: middle !important;
   font-size: 13px !important;
+  text-align: left;
 }
 
 td.mat-cell,
