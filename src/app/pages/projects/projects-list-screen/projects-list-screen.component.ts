@@ -27,15 +27,6 @@ export class ProjectsListScreenComponent implements OnInit {
   }
 
   @ViewChild(ProjectsProgramsTableComponent,{static:false}) projecttable:ProjectsProgramsTableComponent;
-  public isButtonVisible = false;
-  public userRole:any = [];
-  customUserRole: any;
-  enablecreateproject: boolean=false;
-  viewallprojects: boolean=false;
-  public userRoles: any;
- public name: any;
- email:any;
-
   constructor(private dt:DataTransferService, private api:RestApiService, private spinner:NgxSpinnerService){}
 
   ngOnInit() {
@@ -43,36 +34,16 @@ export class ProjectsListScreenComponent implements OnInit {
     localStorage.setItem('bot_id',null);
     this.dt.changeParentModule({"route":"/pages/projects/projects-list-screen", "title":"Projects"});
     this.dt.changeChildModule(undefined);
-
-    this.api.getCustomUserRole(2).subscribe(role=>{
-      this.customUserRole=role;
-      let element=[]
-     for (let index = 0; index < this.customUserRole.message.length; index++) {
-      element = this.customUserRole.message[index].permission;
-       element.forEach(element1 => {
-        if(element1.permissionName.includes('Project_Create')){
-          this.enablecreateproject=true;
-        }
-       });
-     }
-    
-        })
-
-        this.userRoles = localStorage.getItem("userRole")
-        this.userRoles = this.userRoles.split(',');
-        this.name=localStorage.getItem("firstName")+" "+localStorage.getItem("lastName")
-        this.email=localStorage.getItem('ProfileuserId');
-    this.getallProjects(this.userRoles,this.name,this.email);
-
+    this.getallProjects();
     this.getallusers();
     this.getallprocesses();
   }
 
 
   
-  getallProjects(roles,name,email){
+  getallProjects(){
     this.spinner.show();
-    this.api.getAllProjects(roles,name,email).subscribe(res=>{
+    this.api.getAllProjects().subscribe(res=>{
       let response:any=res;
       this.spinner.hide();
       this.projects_list=[...response[0].map(data=>{

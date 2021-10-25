@@ -37,10 +37,6 @@ export class CreateProjectsComponent implements OnInit {
   unassigned_projects:any=[];
   valuechain:any=[];
   valuechainprocesses:any=[];
-  public userRoles: any;
-  public name: any;
-   email: any;
-
   constructor(
     private formBuilder: FormBuilder,
     private api:RestApiService, 
@@ -93,14 +89,9 @@ export class CreateProjectsComponent implements OnInit {
    // status: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
 
 })
-this.userRoles = localStorage.getItem("userRole")
-this.userRoles = this.userRoles.split(',');
-this.name=localStorage.getItem("firstName")+" "+localStorage.getItem("lastName")
-this.email=localStorage.getItem('ProfileuserId');
-
     this.resetcreateproject();
     this.getallusers();
-    this.getallProjects(this.userRoles,this.name,this.email);
+    this.getallProjects();
     this.getprocessnames();
     this.getunassignedprojectslist();
     //this.getvalchain();
@@ -114,9 +105,9 @@ this.email=localStorage.getItem('ProfileuserId');
   this.modalRef.hide();
   }
    
-  getallProjects(roles,name,email){
+  getallProjects(){
     this.spinner.show();
-    this.api.getAllProjects(roles,name,email).subscribe(data1 => {
+    this.api.getAllProjects().subscribe(data1 => {
         this.spinner.hide();
         this.projects_list=data1[1]
       })   
@@ -152,7 +143,7 @@ createproject(event)
           confirmButtonText: 'Ok'
       }).then((result) => {
         this.resetcreateproject();
-        this.getallProjects(this.userRoles,this.name,this.email);
+        this.getallProjects();
         // this.projectDetails={
         //   description: this.projectcreatedata.description,
         //   endDate: this.projectcreatedata.endDate,
@@ -231,7 +222,7 @@ createproject(event)
           confirmButtonText: 'Ok'
       }).then((result) => {
           this.resetcreateprogram();
-          this.getallProjects(this.userRoles,this.name,this.email);
+          this.getallProjects();
           
           this.router.navigate(['/pages/projects/programdetails'],{queryParams:{id:response.program.id}})
 
