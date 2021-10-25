@@ -55,7 +55,6 @@ export class ListOfChangesComponent implements OnInit {
     return elarr;
   }
   onDiff(x){
-    console.log(x)
   }
   getProcessType(type){
     return type?type.replace('bpmn:',''):'-';

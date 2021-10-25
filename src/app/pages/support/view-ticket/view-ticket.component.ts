@@ -99,12 +99,10 @@ export class ViewTicketComponent implements OnInit {
     this.isLoading = true;
     let res_data: any;
     this.api.getselectedRequestKey(this.requestKey).subscribe(res=>{res_data=res
-      console.log(res)
     // this.api.getAllCustomerRequestsByOrg(orgName).subscribe((res: any) => {
     //   res.forEach((e: any) => {
     //     res_array.push(e.jiraServiceDesk);
     //   });
-      console.log(res_data)
       this.createRequestData = res_data;
       // this.createRequestData = this.createRequestData.filter((e: any) => e.requestKey == this.requestKey);
       this.summary = res_data.summary;
@@ -203,7 +201,6 @@ export class ViewTicketComponent implements OnInit {
   }
 
   editComment1(index, data) {
-    console.log(data)
     this.isCommentEditable = index;
     this.comment_data = data.comment;
     this.newComment_data = '';

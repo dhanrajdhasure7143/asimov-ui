@@ -206,7 +206,6 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
         })
         this.header_btn_functions=this.dt.header_value.subscribe(res=>{
           let headerValue=res
-          console.log(res);
           let result = headerValue instanceof Object;
           if(!result){
           if(headerValue == 'zoom_in'){
@@ -239,7 +238,6 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
         }
         })
         this.header_approvalBtn=this.dt.subMitApprovalValues.subscribe(res=>{
-          console.log(res)
           if(res){
             this.submitDiagramForApproval(res.selectedApprovar);
           }
@@ -315,7 +313,6 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
   fetchBpmnNotationFromPI(){
     this.rest.fetchBpmnNotationFromPI(this.pid).subscribe(res=>{
        this.pivalues=res;
-       console.log("PI",res)
     })
    }
 
@@ -391,7 +388,6 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
       
     }else{
       current_bpmn_info = this.saved_bpmn_list[this.selected_notation];
-      console.log("current_bpmn_info",current_bpmn_info)
     }
 
     if(current_bpmn_info){
@@ -517,7 +513,6 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
     if(this.isShowConformance && !this.reSize){
       this.rest.fetchBpmnNotationFromPI(this.pid).subscribe(res=>{
         this.pivalues=res;
-        console.log("pigraph",res)
         let selected_xml = this.pivalues['data'];
         this.push_Obj={"rejectedOrApproved":'',"isfromApprover":this.isfromApprover,
           "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.pivalues.updatedTime,
@@ -526,7 +521,6 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
         if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
           selected_xml = this.autosavedDiagramVersion[0]["bpmnProcessMeta"];
           this.updated_date_time = this.autosavedDiagramVersion[0]["modifiedTimestamp"];
-          // console.log(this.autosavedDiagramVersion)
           this.push_Obj={"rejectedOrApproved":this.autosavedDiagramVersion[0]["bpmnModelTempStatus"],"isfromApprover":this.isfromApprover,
           "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
           "isFromcreateScreen":false,'process_name':this.pivalues.piName,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize,isUploaded:this.isUploaded}
@@ -1550,7 +1544,6 @@ onExpansionClik(i){
 
 getBpmnById(){
   this.rest.getBpmnNotationById(this.selected_modelId).subscribe(res=>{
-    console.log("get_bpmnById res",res)
   })
 }
 }
