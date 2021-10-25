@@ -15,172 +15,187 @@
         <div class="container-fluid CreateTkt h-scroll">
             <div class="viewtktcontent">
                 
-                <form autocomplete="off">
-                    <div class="row">
+                <form autocomplete="off" class="h-100">
+                    <div class="row h-100">
                         <!-- <div class="col-md-12 CreateTkt-Heading">
                             <span class="">Ticket&nbsp;({{requestKey}})</span>
                         </div> -->
-                        <div class="col-md-12 p-0">
-                               
-                            <div class="col-md-4 pl-0">
-                                <div class="Component-filed">
-                                    <label class="label-control">Component<span class="star">*</span></label>
-                                    <mat-form-field class="issue-type">
-                                        <mat-label><span *ngIf="component.length==0" style="margin-left: 10px;"> Select Component </span></mat-label>
-                                        <mat-select multiple name="component_field" [disabled]='isEdit' [ngClass]="isEdit ? 'disabled' : ''" [(ngModel)]="component" #toppings class="form-control data">
-                                            <mat-option *ngFor="let each of component_list" [value]='each'>{{each}}</mat-option>
-                                            <button class="component-button" (click)="toppings.close()">OK</button>
-                                        </mat-select>
-                                    </mat-form-field>
-                                </div>
-                                <div class="form-fields">
-                                    <label class="label-control">Select Priority<span class="star">*</span></label>
-                                    <select [(ngModel)]='priority' name="priority_field" [ngClass]="requestKey != undefined || null ? 'disabled' : ''" class="form-control data" placeholder="Select Priority">
-                                        <option [value]="undefined" disabled hidden>Select Priority</option>
-                                        <option value="null" disabled hidden>Select Priority</option>
-                                        <option *ngFor="let each of Priority_list;let i=index" [value]="each">{{each}}</option>
-                                    </select>
-                                </div>
-                                <div class="form-fields">
-                                    <label class="label-control">Impact<span class="star">*</span></label>
-                                    <select [(ngModel)]='impact' name="impact_field" [ngClass]="requestKey != undefined || null ? 'disabled' : ''" class="form-control data" placeholder="Select Impact">
-                                        <option value="undefined" hidden disabled>Select Impact</option>
-                                        <option value="null" hidden disabled>Select Impact</option>
-                                        <option *ngFor="let item of impactArray" [value]=item.impact>{{item.impact}}</option>
-                                    </select>
-                                </div>
-                                <div class="form-fields">
-                                    <label class="label-control">Severity<span class="star">*</span></label>
-                                    <select [(ngModel)]='severity' name="severity_field" [ngClass]="requestKey != undefined || null ? 'disabled' : ''" class="form-control data" placeholder="Select Severity">
-                                        <option value="undefined" hidden disabled>Select Severity</option>
-                                        <option value="null" hidden disabled>Select Severity</option>
-                                        <option *ngFor="let item of severityLevelsArray" [value]=item.severity>{{item.severity}}</option>
-                                    </select>
-                                </div>
-                                <div class="form-fields">
-                                    <label class="label-control">Reporter<span class="star">*</span></label>
-                                    <select class="form-control data" name="reporter_field" [ngClass]="requestKey != undefined || null ? 'disabled' : ''" placeholder="Select Reporter">
-                                        <option [value]=userName>{{userName}}</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-4 p-0">
-                                <div class="row">
-                                    <div class="col-md-12 p-0 form-fields">
-                                        <label class="label-control">Summary<span class="star">*</span></label>
-                                        <input type="text" [(ngModel)]="summary" name="summery_field" placeholder="Enter Summary" maxlength="256" class="form-control">
-                                        <span *ngIf="requestKey != undefined && createRequestData != undefined">
-                                            <div class="CreateTkt-buttons"
-                                                *ngIf="createRequestData.summary != summary && summary.length != 0">
-                                                <button class="btn btn-default" (click)="cancelSummary()">Cancel</button>
-                                                <button class="btn btn-primary" (click)="editSummary()">Save</button>
-                                            </div>
-                                        </span>
+                        <div class="col-md-12 p-0 h-100">
+                           
+                                <div class="col-md-4">
+                                    <div class="Component-filed">
+                                        <label class="label-control">Component<span class="star">*</span></label>
+                                        <mat-form-field class="issue-type">
+                                            <mat-label><span *ngIf="component.length==0" style="margin-left: 10px;"> Select Component </span></mat-label>
+                                            <mat-select multiple name="component_field" [disabled]='isEdit' [ngClass]="isEdit ? 'disabled' : ''" [(ngModel)]="component" #toppings class="form-control data">
+                                                <mat-option *ngFor="let each of component_list" [value]='each'>{{each}}</mat-option>
+                                                <button class="component-button" (click)="toppings.close()">OK</button>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="form-fields">
+                                        <label class="label-control">Select Priority<span class="star">*</span></label>
+                                        <select [(ngModel)]='priority' name="priority_field" [ngClass]="requestKey != undefined || null ? 'disabled' : ''" class="form-control data" placeholder="Select Priority">
+                                            <option [value]="undefined" disabled hidden>Select Priority</option>
+                                            <option value="null" disabled hidden>Select Priority</option>
+                                            <option *ngFor="let each of Priority_list;let i=index" [value]="each">{{each}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-fields">
+                                        <label class="label-control">Impact<span class="star">*</span></label>
+                                        <select [(ngModel)]='impact' name="impact_field" [ngClass]="requestKey != undefined || null ? 'disabled' : ''" class="form-control data" placeholder="Select Impact">
+                                            <option value="undefined" hidden disabled>Select Impact</option>
+                                            <option value="null" hidden disabled>Select Impact</option>
+                                            <option *ngFor="let item of impactArray" [value]=item.impact>{{item.impact}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-fields">
+                                        <label class="label-control">Severity<span class="star">*</span></label>
+                                        <select [(ngModel)]='severity' name="severity_field" [ngClass]="requestKey != undefined || null ? 'disabled' : ''" class="form-control data" placeholder="Select Severity">
+                                            <option value="undefined" hidden disabled>Select Severity</option>
+                                            <option value="null" hidden disabled>Select Severity</option>
+                                            <option *ngFor="let item of severityLevelsArray" [value]=item.severity>{{item.severity}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-fields">
+                                        <label class="label-control">Reporter<span class="star">*</span></label>
+                                        <select class="form-control data" name="reporter_field" [ngClass]="requestKey != undefined || null ? 'disabled' : ''" placeholder="Select Reporter">
+                                            <option [value]=userName>{{userName}}</option>
+                                        </select>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-12 p-0 form-fields">
-                                        <label class="label-control">Description<span class="star">*</span></label>
-                                        <textarea style="padding: 10px;" type="text" name="description_field" [(ngModel)]="description" matInput placeholder="Enter Description" class="form-control"></textarea>
-                                        <span *ngIf="requestKey != undefined && createRequestData != undefined">
-                                            <div class="CreateTkt-buttons" *ngIf="createRequestData.description != description && description.length != 0">
-                                                <button class="btn btn-default" (click)="cancelDescription()">Cancel</button>
-                                                <button class="btn btn-primary" (click)="editDescription()">Save</button>
-                                            </div>
-                                        </span>
-                                    </div>
-                                </div>
-                                  
-                                <div class="row">
-                                    <div class="col-md-12 p-0">
-                                        <label class="label-control">Attachments</label>
-                                        <div (click)="fileInput.click()" class="CreateTkt-Attachmentbox">
-                                            <div><img src="../../../../assets/images/Admin/cloud.svg" alt=""></div>
-                                            <p>Find files to attach, or</p>
-                                            <button class="btn">Browse Files</button>
-                                            <input multiple #fileInput type="file" (change)="file($event)" style="display:none;" />
-                                        </div>
-                                        <div class="fileerror" *ngIf="fileError && requestKey == undefined || null">
-                                            <p>This file or image don't support or empty , Please try again later.</p>
-                                        </div>
-                                        <span *ngIf="!fileError && requestKey == undefined || null">
-                                            <div class="Attached-contents" *ngFor="let item of fileName; index as i">
-                                                <div class="attached-image">
-                                                    <img src="../../../../assets/images/Admin/fle.svg" class="">
+                                <div class="col-md-4 h-100">
+                                    <div class="row">
+                                        <div class="col-md-12 p-0 form-fields">
+                                            <label class="label-control">Summary<span class="star">*</span></label>
+                                            <input type="text" [(ngModel)]="summary" name="summery_field" placeholder="Enter Summary" maxlength="256" class="form-control">
+                                            <span *ngIf="requestKey != undefined && createRequestData != undefined">
+                                                <div class="CreateTkt-buttons"
+                                                    *ngIf="createRequestData.summary != summary && summary.length != 0">
+                                                    <button class="btn btn-default" (click)="cancelSummary()">Cancel</button>
+                                                    <button class="btn btn-primary" (click)="editSummary()">Save</button>
                                                 </div>
-                                                <div class="attached-name">
-                                                    <span class="filenameoverflow">{{item.name}}</span> <span>{{item.size}} KB</span>
-                                                    <mat-progress-bar mode="determinate" [value]=progress></mat-progress-bar>                                                    
-                                                </div>
-                                                <div class="attached-close">
-                                                    <span class="closefile" (click)="DeleteFile(item , i)">
-                                                        <img src="../../../../assets/images/Admin/close.svg" class="testplus1">
-                                                    </span>
-                                                </div>                                                
-                                            </div>
-                                        </span>
+                                            </span>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="removeallattachment" *ngIf="requestKey && attachmentsForCustomerRequest.length > 1">
-                                    <button class="btn btn-primary" (click)="removeAllAttachmentsFromCustomerRequest()">
-                                        Delete All Files
-                                    </button>
-                                </div>
-                                <div class="table_responsive graph_table supporttable-div" *ngIf="requestKey && attachmentsForCustomerRequest.length > 0">
-                                    <table mat-table [dataSource]="dataSource" class="PI table w-100">
-                        
-                                            <ng-container matColumnDef="name">
-                                                <th  mat-header-cell *matHeaderCellDef>Name</th>
-                                                <td mat-cell *matCellDef="let element">
-                                                    <!-- <span>
-                                                        <img [src]="element.imgSrc" class="testplus1" >
-                                                    </span> -->
-                                                    <span class="" [matTooltip]='element.fileName'>{{getFileName(element.fileName)}}</span>
-                                                </td>
-                                            </ng-container>
-                        
-                                            <ng-container matColumnDef="created">
-                                                <th mat-header-cell *matHeaderCellDef> Created </th>
-                                                <td mat-cell *matCellDef="let element"> {{element.uploadedDate|date}} </td>
-                                            </ng-container>
-                        
-                                            <ng-container matColumnDef="file_size">
-                                                <th mat-header-cell *matHeaderCellDef>Size</th>
-                                                <td mat-cell *matCellDef="let element"> {{element.fileSize}}</td>
-                                            </ng-container>
-                                            <!-- Component Column -->
-                                            <ng-container matColumnDef="actions">
-                                                <th mat-header-cell *matHeaderCellDef>Actions</th>
-                                                <td mat-cell *matCellDef="let element">
-                                                    <span class="deleteattachment" (click)="downloadFile()" >
-                                                        <a href="data:image/png;base64,{{element.fileData}}" download="{{element.fileName}}">
-                                                        <img src="../../../../assets/images/Admin/download-black.svg" class="default-img testplus1" matTooltip="Download" matTooltipPosition="left">
-                                                        <img src="../../../../assets/images/Admin/download-blue.svg" class="hover-img testplus1" matTooltip="Download" matTooltipPosition="left">
-                                                        </a>
-                                                    </span>
-                                                    <span class="deleteattachment">
-                                                        <img src="../../../../assets/images/Admin/delete-black.svg" matTooltip="Delete Process" matTooltipPosition="left" class="default-img testplus1">
-                                                        <img src="../../../../assets/images//Admin/delete-red.svg" matTooltip="Delete Process" (click)="removeAttachmentsFromCustomerRequest(element)" matTooltipPosition="left" class="hover-img testplus1">
-                                                    </span>
-                                                    
-                                                </td>
-                                            </ng-container>
-                        
-                        
-                                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                                            <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="pList"></tr>
-                                    </table>
+                                    <div class="row">
+                                        <div class="col-md-12 p-0 form-fields">
+                                            <label class="label-control">Description<span class="star">*</span></label>
+                                            <textarea type="text" name="description_field" [(ngModel)]="description" matInput placeholder="Enter Description" class="form-control"></textarea>
+                                            <span *ngIf="requestKey != undefined && createRequestData != undefined">
+                                                <div class="CreateTkt-buttons" *ngIf="createRequestData.description != description && description.length != 0">
+                                                    <button class="btn btn-default" (click)="cancelDescription()">Cancel</button>
+                                                    <button class="btn btn-primary" (click)="editDescription()">Save</button>
+                                                </div>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 p-0">
+                                            <div class="row">
+                                                <div class="col-md-6 p-0">
+                                                    <label class="label-control">Attachments</label>
+                                                </div>
+                                                <div class="col-md-6 p-0 removeallattachment" *ngIf="requestKey && attachmentsForCustomerRequest.length >= 1">
+                                                    <button class="tsttooltipbtn" (click)="fileInput.click()">
+                                                        <input multiple #fileInput type="file" (change)="file($event)" style="display:none;" />
+                                                        <img src="../../../../assets/images/BPMS/attach.svg" class="testplus" >
+                                                        <span class="testtooltip">Attach More Files</span>
+                                                    </button>
+                                                    <button class="tsttooltipbtn" (click)="removeAllAttachmentsFromCustomerRequest()">
+                                                        <img src="../../../../assets/images/Admin/delete-red.svg" class="testplus" >
+                                                        <span class="testtooltip">Delete All Files</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="CreateTkt-Attachmentbox">
+                                                <div (click)="fileInput.click()" *ngIf="requestKey && attachmentsForCustomerRequest.length < 1">
+                                                    <img src="../../../../assets/images/Admin/cloud.svg" alt="">
+                                                    <p>Find files to attach, or</p>
+                                                    <button class="btn">Browse Files</button>
+                                                    <input multiple #fileInput type="file" (change)="file($event)" style="display:none;" />
+                                                </div>
+                                           
+                                                <div >
+                                                    <div class="table_responsive graph_table supporttable-div" *ngIf="requestKey &&     attachmentsForCustomerRequest.length > 0">
+                                                    <table mat-table [dataSource]="dataSource" class="PI table w-100">
                                         
+                                                            <ng-container matColumnDef="name">
+                                                                <th  mat-header-cell *matHeaderCellDef>Name</th>
+                                                                <td mat-cell *matCellDef="let element">
+                                                                    <!-- <span>
+                                                                        <img [src]="element.imgSrc" class="testplus1" >
+                                                                    </span> -->
+                                                                    <span class="" [matTooltip]='element.fileName'>{{getFileName(element.fileName)}}</span>
+                                                                </td>
+                                                            </ng-container>
+                                        
+                                                            <ng-container matColumnDef="created">
+                                                                <th mat-header-cell *matHeaderCellDef> Created </th>
+                                                                <td mat-cell *matCellDef="let element"> {{element.uploadedDate|date}} </td>
+                                                            </ng-container>
+                                        
+                                                            <ng-container matColumnDef="file_size">
+                                                                <th mat-header-cell *matHeaderCellDef>Size</th>
+                                                                <td mat-cell *matCellDef="let element"> {{element.fileSize}}</td>
+                                                            </ng-container>
+                                                            <!-- Component Column -->
+                                                            <ng-container matColumnDef="actions">
+                                                                <th mat-header-cell *matHeaderCellDef>Actions</th>
+                                                                <td mat-cell *matCellDef="let element">
+                                                                    <span class="deleteattachment" (click)="downloadFile()" >
+                                                                        <a href="data:image/png;base64,{{element.fileData}}" download="{{element.fileName}}">
+                                                                        <img src="../../../../assets/images/Admin/download-black.svg" class="default-img testplus1" matTooltip="Download" matTooltipPosition="left">
+                                                                        <img src="../../../../assets/images/Admin/download-blue.svg" class="hover-img testplus1" matTooltip="Download" matTooltipPosition="left">
+                                                                        </a>
+                                                                    </span>
+                                                                    <span class="deleteattachment">
+                                                                        <img src="../../../../assets/images/Admin/delete-black.svg" matTooltip="Delete Process" matTooltipPosition="left" class="default-img testplus1">
+                                                                        <img src="../../../../assets/images//Admin/delete-red.svg" matTooltip="Delete Process" (click)="removeAttachmentsFromCustomerRequest(element)" matTooltipPosition="left" class="hover-img testplus1">
+                                                                    </span>
+                                                                    
+                                                                </td>
+                                                            </ng-container>
+                                        
+                                        
+                                                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                                            <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="pList"></tr>
+                                                    </table>
+                                                        
+                                                    </div>
+                                                    <div class="" *ngIf="requestKey && attachmentsForCustomerRequest.length > 5">
+                                                    <mat-paginator class="newpaginationdiv" #paginator [pageSize]="5" [showFirstLastButtons]="false"></mat-paginator>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="fileerror" *ngIf="fileError && requestKey == undefined || null">
+                                                <p>This file or image don't support or empty , Please try again later.</p>
+                                            </div>
+                                            <span *ngIf="!fileError && requestKey == undefined || null">
+                                                <div class="Attached-contents" *ngFor="let item of fileName; index as i">
+                                                    <div class="attached-image">
+                                                        <img src="../../../../assets/images/Admin/fle.svg" class="">
+                                                    </div>
+                                                    <div class="attached-name">
+                                                        <span class="filenameoverflow">{{item.name}}</span> <span>{{item.size}} KB</span>
+                                                        <mat-progress-bar mode="determinate" [value]=progress></mat-progress-bar>                                                    
+                                                    </div>
+                                                    <div class="attached-close">
+                                                        <span class="closefile" (click)="DeleteFile(item , i)">
+                                                            <img src="../../../../assets/images/Admin/close.svg" class="testplus1">
+                                                        </span>
+                                                    </div>                                                
+                                                </div>
+                                            </span>
+                                            
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="supportpaginationdiv" *ngIf="requestKey && attachmentsForCustomerRequest.length > 5">
-                                    <mat-paginator class="newpaginationdiv" #paginator [pageSize]="5" [showFirstLastButtons]="false"></mat-paginator>
-                                </div>
-                                    
-                            </div>
+                                
 
-                            <div class="col-md-4 pr-0">
+                            <div class="col-md-4 h-100">
                                 <div class="col-md-12 p-0 form-fields">
-                                    <label class="label-control">Comment</label>
+                                    <label class="label-control">Comments</label>
                                     <div class="comments-div">
                                         <div class="comments-box col-md-12 p-0">
                                             <div>
@@ -193,7 +208,7 @@
                                                 </span>
                                             </div>
                                         </div>
-                                        <div class="col-md-12 p-0">
+                                        <div class="col-md-12 p-0 cmntslist">
                                             <div *ngFor="let each_comment of comment;let i=index" class="col-md-12 p-0 Add-comments">
                                                 <div class="Inner-comments">
                                                     <div class="col-md-12 p-0">
