@@ -430,7 +430,7 @@
   </ng-container>
       
           <ng-container matColumnDef="lastModifiedTimestamp">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>Last Updated</th>
+              <th mat-header-cell *matHeaderCellDef>Last Updated</th>
               <td mat-cell *matCellDef="let project">
                   <span *ngIf="project.lastModifiedTimestamp!=null">{{project.lastModifiedTimestamp | date:'MMM dd, y, HH:mm:ss'}}</span>
                   <span *ngIf="project.lastModifiedTimestamp==null || project.lastModifiedTimestamp==undefined || project.lastModifiedTimestamp=='' ">---</span>
@@ -438,7 +438,7 @@
               </td>
           </ng-container>
           <ng-container matColumnDef="lastModifiedBy">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Last Updated By</th>
+            <th mat-header-cell *matHeaderCellDef>Last Updated By</th>
             <td mat-cell *matCellDef="let project">
                 <span *ngIf="project.lastModifiedBy!=null">{{project.lastModifiedBy}}</span>
                 <span *ngIf="project.lastModifiedBy==null || project.lastModifiedBy==undefined || project.lastModifiedBy=='' ">---</span>
@@ -446,7 +446,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="createdBy">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Created By</th>
+          <th mat-header-cell *matHeaderCellDef>Created By</th>
           <td mat-cell *matCellDef="let project">
               <span *ngIf="project.createdBy!=null">{{project.createdBy}}</span>
               <span *ngIf="project.createdBy==null || project.createdBy==undefined || project.createdBy=='' ">---</span>

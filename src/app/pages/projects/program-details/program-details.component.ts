@@ -47,10 +47,6 @@ export class ProgramDetailsComponent implements OnInit {
     selectedProgram_id:any
     @ViewChild("sort104",{static:false}) sort104: MatSort;
     @ViewChild("paginator104",{static:false}) paginator104: MatPaginator;
-    public userRoles: any;
-    public name: any;
-    email: any;
-
   ngOnInit() {
     this.getprojects_and_programs();
     this.mindate= moment().format("YYYY-MM-DD");
@@ -88,11 +84,7 @@ export class ProgramDetailsComponent implements OnInit {
   getprojects_and_programs()
   {
     this.spinner.show()
-    this.userRoles = localStorage.getItem("userRole")
-    this.userRoles = this.userRoles.split(',');
-    this.name=localStorage.getItem("firstName")+" "+localStorage.getItem("lastName")
-    this.email=localStorage.getItem('ProfileuserId');
-    this.rest.getAllProjects(this.userRoles,this.name,this.email).subscribe(data=>{
+    this.rest.getAllProjects().subscribe(data=>{
       this.spinner.hide()
       this.projects_and_programs_list=data;
       this.getprogramdetails();
