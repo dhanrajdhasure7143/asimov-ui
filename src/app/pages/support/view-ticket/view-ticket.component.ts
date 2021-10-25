@@ -80,7 +80,7 @@ export class ViewTicketComponent implements OnInit {
 
   ngOnInit(): void {
     this.getComponentsList();
-    this.getAllCustomerRequestsByOrg();
+    this.getAllCustomerRequestsBykey();
     this.getAllImpactLevels();
     this.getAllSeverityLevels();
     this.getRequestComments(this.requestKey);
@@ -95,7 +95,7 @@ export class ViewTicketComponent implements OnInit {
     })
   }
 
-  async getAllCustomerRequestsByOrg() {
+  async getAllCustomerRequestsBykey() {
     this.isLoading = true;
     let res_data: any;
     this.api.getselectedRequestKey(this.requestKey).subscribe(res=>{res_data=res
@@ -394,16 +394,24 @@ export class ViewTicketComponent implements OnInit {
           text: 'Summary Updated Sucessfully !',
           icon: 'success'
         });
-        this.getAllCustomerRequestsByOrg();
+        this.getAllCustomerRequestsBykey();
         this.isLoading = false;
       }
       else {
+        this.isLoading = false;
         Swal.fire({
           title: 'Failed To Update',
           text: 'Please try again later',
           icon: 'error'
         });
       }
+    },err=>{
+      this.isLoading = false;
+      Swal.fire({
+        title: 'Failed To Update',
+        text: 'Please try again later',
+        icon: 'error'
+      });
     });
   }
 
@@ -432,7 +440,7 @@ export class ViewTicketComponent implements OnInit {
           icon: 'success'
         });
         // this.getUserDetails(this.userId);
-        this.getAllCustomerRequestsByOrg();
+        this.getAllCustomerRequestsBykey();
         this.isLoading = false;
       }
       else {
@@ -572,6 +580,13 @@ export class ViewTicketComponent implements OnInit {
     } else {
         return days + " Days"
     }
+  }
+
+  cancelSummary() {
+    this.summary = this.createRequestData.summary;
+  }
+  cancelDescription() {
+    this.description = this.createRequestData.description;
   }
 
 }
