@@ -512,7 +512,7 @@ export class ViewTicketComponent implements OnInit {
           text: 'Attachment added Sucessfully !',
           icon: 'success'
         });
-        this.isLoading = false;
+        // this.isLoading = false;
       }
       else {
         Swal.fire({
