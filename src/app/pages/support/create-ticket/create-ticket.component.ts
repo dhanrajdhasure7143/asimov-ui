@@ -184,6 +184,8 @@ export class CreateTicketComponent implements OnInit {
     this.component = [];
     this.createTicket.reset();
     this.createTicket.get('reporter').setValue(this.userName);
+    let element =document.getElementById("text-description")
+      element.style.height ="50px";
   }
 
   file(event) {
@@ -273,8 +275,13 @@ export class CreateTicketComponent implements OnInit {
       this.orgName = this.userDetails.company;
       this.createTicket.value.organization = this.orgName;
     this.isLoading = false;
-
     });
+  }
+
+  autoGrowTextZone() {
+    let element =document.getElementById("text-description")
+      element.style.height ="5px";
+      element.style.height = (element.scrollHeight+5)+"px";
   }
 
 

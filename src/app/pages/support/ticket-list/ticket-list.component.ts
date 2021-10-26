@@ -33,7 +33,7 @@ export class TicketListComponent implements OnInit {
   @ViewChild("paginator", { static: false }) paginator: MatPaginator;
 
   displayedColumns: string[] = ['id', 'summary', 'reporter', 'component', 'status',
-    'impact', 'severity', 'priority', 'created_at', 'modified_at', 'Action'];
+    'impact', 'severity', 'priority', 'created_at', 'Action'];
 
   dataSource: MatTableDataSource<PeriodicElement>;
   userId: any;
@@ -44,6 +44,7 @@ export class TicketListComponent implements OnInit {
   severityLevelsArray: any;
   selectedCategory:any;
   searchInput_value:any;
+  time="1635265043"
 
   constructor(private api: RestApiService, private jwtHelper: JwtHelperService, private router: Router) {
     var userDetails = localStorage.getItem('accessToken');

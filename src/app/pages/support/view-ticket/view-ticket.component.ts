@@ -112,6 +112,9 @@ export class ViewTicketComponent implements OnInit {
       this.severity = res_data.severity;
       this.priority = res_data.priority;
       // this.isLoading = false;
+      setTimeout(() => {
+        this.autoGrowTextZone();
+      }, 100);
     });
   }
 
@@ -205,6 +208,9 @@ export class ViewTicketComponent implements OnInit {
     this.comment_data = data.comment;
     this.newComment_data = '';
     this.isAddInputenable = false;
+    setTimeout(() => {
+      this.autoGrowcommentsBox1();
+    }, 100);
   }
 
   cancelCommentupdate() {
@@ -214,11 +220,18 @@ export class ViewTicketComponent implements OnInit {
   cancelCreateComment() {
     this.newComment_data = '';
     this.isAddInputenable = false;
+      let element =document.getElementById("text_new1")
+      element.style.height ="50px";
+      // element.style.height = "px";
   }
 
   addCommentClick() {
     this.isAddInputenable = true;
     this.isCommentEditable = null;
+    setTimeout(() => {
+      var element = document.getElementById('actn_div');
+    element.scrollIntoView({behavior: "auto",block: "center", inline: "nearest"});
+    }, 50);
   }
 
   addNewComment(value) {
@@ -498,7 +511,6 @@ export class ViewTicketComponent implements OnInit {
   }
 
   file(event) {
-    // console.log(event.target.files)
     this.isLoading = true;
     this.fileName = [];
     for (var i = 0; i < event.target.files.length; i++) {
@@ -547,7 +559,6 @@ export class ViewTicketComponent implements OnInit {
     }else{
       return this.timeConversion(diffTime)
     }
-// console.log(diffDays + " days");
   }
 
   timeConversion(millisec) {    //convert time duration millisec to proper formate
@@ -557,11 +568,12 @@ export class ViewTicketComponent implements OnInit {
     var days = (millisec / (1000 * 60 * 60 * 24)).toFixed(1);
     
     if (seconds < 60) {
-      if(seconds.includes('.')){
-        return seconds.split('.')[0] + " Sec ago";
-      }else{
-        return seconds + " Sec ago";
-      }
+      return '1 Min ago'
+      // if(seconds.includes('.')){
+      //   return seconds.split('.')[0] + " Sec ago";
+      // }else{
+      //   return seconds + " Sec ago";
+      // }
     } else if (minutes < 60) {
       if(minutes.includes('.')){
         return minutes.split('.')[0] + " Min ago";
@@ -581,9 +593,38 @@ export class ViewTicketComponent implements OnInit {
 
   cancelSummary() {
     this.summary = this.createRequestData.summary;
+    let element =document.getElementById("text_summary")
+    element.style.height ="50px";
   }
   cancelDescription() {
     this.description = this.createRequestData.description;
+    setTimeout(() => {
+    this.autoGrowTextZone();
+    }, 100);
   }
+  
+autoGrowTextZone() {
+  // let e = document.getElementById('text_new');
+  // e.style.height = "0px";
+  // e.style.height = (e.scrollHeight + 10)+"px";
+  let element =document.getElementById("text_new")
+    element.style.height ="5px";
+    element.style.height = (element.scrollHeight+5)+"px";
+}
+autoGrowcommentsBox() {
+  let element =document.getElementById("text_new1")
+    element.style.height ="5px";
+    element.style.height = (element.scrollHeight+10)+"px";
+}
+autoGrowcommentsBox1() {
+  let element =document.getElementById("text_new2")
+    element.style.height ="5px";
+    element.style.height = (element.scrollHeight+10)+"px";
+}
+autoGrowSummaryTextZone() {
+  let element =document.getElementById("text_summary")
+    element.style.height ="5px";
+    element.style.height = (element.scrollHeight+10)+"px";
+}
 
 }

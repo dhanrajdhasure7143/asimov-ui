@@ -6,8 +6,7 @@
             </span>
             <div class="col-md-12 p-0">
                 <div class="col-md-9 p-0">
-                    <span class="module-header-title innertitle">                
-                        Issues / Create Ticket
+                    <span class="module-header-title innertitle">Create Ticket
                     </span>
                 </div>
                 <div class="col-md-3 p-0 pull-right CreateTkt-footer">
@@ -95,7 +94,7 @@
                             </div>
                             <div class="col-md-12 p-0 form-fields">
                                 <label class="label-control">Description<span class="star">*</span></label>
-                                <textarea style="padding: 10px;" type="text" formControlName="description" [(ngModel)]="description" matInput placeholder="Enter Description" class="form-control"></textarea>
+                                <textarea style="padding: 10px;" id="text-description" type="text" (keyup)="autoGrowTextZone($event)" formControlName="description" [(ngModel)]="description" placeholder="Enter Description" class="form-control"></textarea>
                                 <span *ngIf="createTicket.get('description').invalid && createTicket.get('description').touched" class="errspan required">Description Required*</span>
                             </div>
                                     
