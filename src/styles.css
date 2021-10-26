@@ -1217,7 +1217,7 @@ div#propertiesPanelBody .bpp-properties-panel {
 }
 
 .mat-form-field-wrapper {
-  padding-bottom: 15px !important;
+  padding-bottom: 10px !important;
 }
 
 .mat-form-field.mat-focused .mat-form-field-label {
@@ -1624,7 +1624,8 @@ select.form-control {
 /* Modal popup New Styles */
 
 
-.bpspaginationdiv {
+.bpspaginationdiv ,
+.pipaginationdiv {
   position: absolute;
   /* bottom: 0px; */
   bottom: -28px;
@@ -2286,6 +2287,7 @@ button.btn.btn-primary:first-child {
   padding: 5px 10px !important;
   vertical-align: middle !important;
   font-size: 13px !important;
+  text-align: left;
 }
 
 td.mat-cell,

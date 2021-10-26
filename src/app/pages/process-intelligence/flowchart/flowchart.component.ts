@@ -1841,7 +1841,20 @@ addWorkingHours(){
         this.fullgraph_model1=this.fullgraph_model
         this.model1 = fullgraphOne.allSelectData.nodeDataArraycase;
         this.filterPerformData = this.fullgraph_model;
-        this.model2 = this.flowchartData(this.model1)
+        if(this.isPerformance==true){
+          if(this.selectedPerformancevalue==5||this.selectedPerformancevalue==6||this.selectedPerformancevalue==7||this.selectedPerformancevalue==8||this.selectedPerformancevalue==9){
+          var modelArray3=[]
+            modelArray3=this.model1
+                for(var i=1;i<modelArray3.length-1;i++){
+                    modelArray3[i].count=this.timeConversion(modelArray3[i].toolCount[this.selectedPerformancevalue])
+                  }
+                this.model1=modelArray3
+            }
+                this.model2 = this.flowchartDataOne(this.model1,this.selectedPerformancevalue)
+            }else{                
+              this.model2 = this.flowchartData(this.model1)
+            }
+        // this.model2 = this.flowchartData(this.model1)
         let fullModel2=this.model2
         this.startArray=[]
         this.endArray=[]

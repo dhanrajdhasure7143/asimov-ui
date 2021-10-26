@@ -178,7 +178,8 @@ mat-tab-body {
 
 #bpmn_list {
   /* height: 62vh; */
-  height: 70vh;
+  /* height: 70vh; */
+  height: calc(100vh - 95px);
   overflow: hidden auto;
 }
 
