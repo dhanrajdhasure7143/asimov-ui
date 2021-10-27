@@ -195,7 +195,7 @@ ul.historydiv li {
 ul.historydiv li:last-child {
   border-bottom: none !important;
 }
-table tbody tr {
+.edit-resourcesdiv table tr {
   height: 40px;
 } 
 .d-flex{
@@ -318,3 +318,19 @@ img.hover-img {
   background-repeat: no-repeat;
   cursor: pointer;
 }*/
+
+.Edittask-btns .btn-primary {
+  margin-right: 0px !important;
+}
+.edit-resourcesdiv table td {
+  font-size: 13px;
+}
+input.form-control[type="date"] {
+  background-image: url('../../../../assets/images/Projects/calendar.svg');
+  background-position: calc(100% - 10px) center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+input.form-control[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0;
+}
