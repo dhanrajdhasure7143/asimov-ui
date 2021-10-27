@@ -1,23 +1,31 @@
     <div *ngIf="selectedtask!=undefined" class="edit-task-form">
-      <div class="module-heading title ">
-        <!-- <span class="projects-back-button" routerLink="/pages/projects/listOfProjects" >
-            <i class="fa fa-angle-left" aria-hidden="true"></i>
-        </span> -->
-        <span class="module-back-button" routerLink="/pages/projects/projectdetails"  [queryParams]="{id:project_id}">
-            <i class="fas fa-arrow-left" aria-hidden="true"></i>
-        </span>
-        <span class="module-header-title">
-            <span class="module-parent-title">Tasks</span>
-            <span class="backslash">/</span>
-            <span class="module-parent-title">Edit Task</span>
-        </span>
-        
-        <!-- <span class="pull-right" style="font-size:20px;">
-          <span class="projects-menu-item" (click)="projects_toggle==false?projects_toggle=true:projects_toggle=false;" ><i class="ri-file-line"></i></span>
-          <span class="projects-menu-item"><i class="ri-filter-line"></i></span>
-          <span class="projects-menu-item"><i class="ri-more-2-line"></i></span>
-        </span> -->
-      </div>
+        <div class="module-heading title ">
+          <div class="Edittask-Title">
+            <!-- <span class="projects-back-button" routerLink="/pages/projects/listOfProjects" >
+              <i class="fa fa-angle-left" aria-hidden="true"></i>
+            </span> -->
+            <span class="module-back-button" routerLink="/pages/projects/projectdetails"  [queryParams]="{id:project_id}">
+              <i class="fas fa-arrow-left" aria-hidden="true"></i>
+            </span>
+            <span class="module-header-title">
+              <span class="module-parent-title">Tasks</span>
+              <span class="backslash">/</span>
+              <span class="module-parent-title">Edit Task</span>
+            </span>
+          </div>  
+          <div class="Edittask-btns ml-auto">
+            <button [disabled]="updatetaskForm.invalid" routerLink="/pages/projects/projectdetails"  [queryParams]="{id:project_id}" class="btn btn-default">Cancel</button>
+            <!-- <button disabled (click)="canceltaskform()" class="btn btn-primary">Cancel</button> -->
+            <button [disabled]="updatetaskForm.invalid" (click)="updatetask()"
+             class="btn btn-primary">Update</button>
+          </div>
+
+          <!-- <span class="pull-right" style="font-size:20px;">
+            <span class="projects-menu-item" (click)="projects_toggle==false?projects_toggle=true:projects_toggle=false;" ><i class="ri-file-line"></i></span>
+            <span class="projects-menu-item"><i class="ri-filter-line"></i></span>
+            <span class="projects-menu-item"><i class="ri-more-2-line"></i></span>
+          </span> -->
+        </div> 
       <div class="bg-task row">
         <!-- {{selectedtask.id}} /
          -->
@@ -44,8 +52,8 @@
         <div class="edit-task-body-content">
           <form [formGroup]="updatetaskForm" (ngSubmit)="updatetask()">
             <div class="row">
-              <div class="col-md-12 p-0">
-                <div class="form-fields col-md-3 pl-0">
+              <div class="col-md-5 pl-0">
+                <div class="form-fields col-md-6 pl-0">
                   <label class="h6 label-control" id="assignee" for="assignee">Assignee</label>
                   <!-- <span class="labelcont">{{taskresource| userPipe : users_list}}</span> -->
                   <select [value]="taskresource" formControlName="resources" class="form-control rpa-control">
@@ -53,12 +61,12 @@
                     <option *ngFor="let user of users_list" [value]="user.userId.userId">{{user.userId.firstName}} {{user.userId.lastName}}</option>
                   </select>
                 </div>
-                <div class="form-fields col-md-3 pr-0">
+                <div class="form-fields col-md-6 pr-0">
                   <label  class="h6 label-control"  id="enddate" for="endDate">Task Completion Date</label><br>
                   <!-- <span class="labelcont">{{endDate  | date}}</span> -->
                   <input type="date" class="form-control rpa-control" (change)="endDate=$event.target.value" [value]="endDate" formControlName="endDate">
                 </div>
-                <div class="form-fields col-md-3 pr-0">
+                <div class="form-fields col-md-6 pl-0">
                   <label id="status" class="h6 label-control" for="status">Status<span class="star">*</span></label>
                   <select formControlName="status" class="form-control data">
                     <option value="">Select Status</option>
@@ -70,7 +78,7 @@
                   <span *ngIf="updatetaskForm.get('status').invalid && updatetaskForm.get('status').touched"
                     class="errspan required">Status Required*</span>
                 </div>
-                <div class="form-fields col-md-3 pr-0">
+                <div class="form-fields col-md-6 pr-0">
                   <label id="priority" class="h6 label-control" for="priority">Priority<span class="star">*</span></label>
                   <select formControlName="priority" class="form-control data">
                     <option value="">Select Priority</option>
@@ -80,26 +88,24 @@
                   </select>
                   <span *ngIf="updatetaskForm.get('priority').invalid && updatetaskForm.get('priority').touched"
                     class="errspan required">Priority Required*</span>
-                </div>                
-              </div>
-              <div class="col-md-12 p-0">                
-                <div class="col-md-4 pl-0">
-                  <label   class="h6 label-control" id="percentage" for="percentage">Percentage Completed</label>
-                  <!-- <ng5-slider [(value)]="slider" formControlName="percentageComplete" [options]="options"></ng5-slider> -->
-                  <div class="labelcont">{{slider}}%<input type="range" min=0 max=100 (change)="slider=$event.target.value" formControlName="percentageComplete" [value]="slider"></div>
                 </div>
-                <div class="col-md-4 pr-0">
-                  <label class="h6 label-control" id="summary" class="label-control">Summary</label>
-                  <textarea class="form-control" formControlName="summary" rows="3" placeholder="Enter Summary">
-                            </textarea>
+                <div class="form-fields col-md-12 p-0">
+                    <label   class="h6 label-control" id="percentage" for="percentage">Percentage Completed</label>
+                    <!-- <ng5-slider [(value)]="slider" formControlName="percentageComplete" [options]="options"></ng5-slider> -->
+                    <div class="labelcont">{{slider}}%<input type="range" min=0 max=100 (change)="slider=$event.target.value" formControlName="percentageComplete" [value]="slider"></div>
                 </div>
-                <div class="col-md-4 pr-0">
-                  <label class="h6" id="description" class="label-control">Description</label>
-                  <textarea class="form-control" formControlName="description" rows="3" placeholder="Enter Description">
-                            </textarea>
+                <div class="form-fields col-md-12 p-0">
+                    <label class="h6 label-control" id="summary" class="label-control">Summary</label>
+                    <textarea class="form-control" formControlName="summary" rows="3" placeholder="Enter Summary">
+                              </textarea>
                 </div>
-              </div>
-              <div class="col-md-12 p-0">
+                <div class="form-fields col-md-12 p-0">
+                    <label class="h6" id="description" class="label-control">Description</label>
+                    <textarea class="form-control" formControlName="description" rows="3" placeholder="Enter Description">
+                              </textarea>
+                </div>                              
+              </div>              
+              <div class="col-md-7 pr-0">
                 <h4 class="module-sub-header-title">Activity</h4>
                 <mat-tab-group id="Project-dashboard-tabs" class="edit-task-tabs">
                 <mat-tab label="Comment">
@@ -333,18 +339,18 @@
                 </mat-tab>
                 <mat-tab label="Resources">
                   <div class="edit-resourcesdiv">
-                    <table class="table">
+                    <table class="projecttable table">
                       <thead>
                         <tr>
                           <th></th>
-                          <th class="text-left">Name</th>
-                          <th class="text-left">Role</th>
-                          <th class="text-left">Last Updated</th>
+                          <th>Name</th>
+                          <th>Role</th>
+                          <th>Last Updated</th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr>
-                          <td style="padding-left: 200px;width: 10px;">
+                          <td>
                             <span *ngIf="(taskresource|userImagePipe: users_list)as result">
                               <div class="res-circle" *ngIf="result.length==3">
                                 {{taskresource|userImagePipe: users_list}}
@@ -354,10 +360,10 @@
                               </div>
                             </span>
                           </td>
-                          <td style="width: 350px;">{{taskresource| userPipe : users_list}}</td>
+                          <td>{{taskresource| userPipe : users_list}}</td>
                           <!-- <td style="text-align:center">{{roles?roles:'-'}}</td> -->
-                          <td style="width: 350px;" class="text-left">{{roles?roles:'-'}}</td>
-                          <td class="text-left">{{lastModifiedTimestamp  | date:'MMM dd, y, HH:mm:ss'}}</td>
+                          <td>{{roles?roles:'-'}}</td>
+                          <td>{{lastModifiedTimestamp  | date:'MMM dd, y, HH:mm:ss'}}</td>
                         </tr>
                       </tbody>
 
@@ -368,14 +374,7 @@
               </div>
             </div>
           </form>
-          <div class="modal-footer modelprfooter">
-            <div class="pull-right">
-              <button [disabled]="updatetaskForm.invalid" routerLink="/pages/projects/projectdetails"  [queryParams]="{id:project_id}" class="btn btn-default">Cancel</button>
-              <!-- <button disabled (click)="canceltaskform()" class="btn btn-primary">Cancel</button> -->
-              <button [disabled]="updatetaskForm.invalid" (click)="updatetask()"
-                class="btn btn-primary btn-update">Update</button>
-            </div>
-          </div>
+          
         </div>
     </div>
    
