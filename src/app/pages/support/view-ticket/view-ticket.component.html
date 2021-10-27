@@ -155,17 +155,16 @@
                                 
 
                             <!-- <div class="col-md-4 h-100"> -->
-                                <div class="col-md-12 p-0 form-fields commentsMain-div">
+                                <!-- <div class="col-md-12 p-0 form-fields commentsMain-div">
                                     <label class="label-control">Comments</label>
                                     <div class="comments-div">
                                         <div class="comments-box col-md-12 p-0">
                                             <div>
                                             <textarea type="text" id="text_new1" (keyup)="autoGrowcommentsBox()" (click)="addCommentClick()" name="comment_field" [(ngModel)]="newComment_data" placeholder="Enter Comment" class="form-control"></textarea>
 
-                                                <!-- <input class="form-control" type="text" (click)="addCommentClick()" name="comment_field" [(ngModel)]="newComment_data" placeholder="Enter Comment">  -->
+                                                
                                                 <span *ngIf="isAddInputenable" class="comments-box-icons" >    
-                                                    <!-- <img src="../../../../assets/images/Admin/submit.svg" class="" matTooltip="Save" (click)="addNewComment(newComment_data)">
-                                                    <img src="../../../../assets/images/Admin/cancel.svg" class="" matTooltip="Cancel" (click)="cancelCreateComment()"> -->
+                                                    
                                                     <button class="btn btn-default" (click)="cancelCreateComment()">Cancel</button>
                                                     <button class="btn btn-primary" (click)="addNewComment(newComment_data)" id="actn_div">Save</button>
                                                 </span>
@@ -176,7 +175,7 @@
                                                 <div class="Inner-comments">
                                                     <div class="col-md-12 p-0">
                                                         <span class="comment-date pull-right"><span class="comment-dateField"> Created : {{getTime(each_comment.timestamp | date:'MMM d, y, HH:mm')}}</span> 
-                                                    <!-- <span class="comment-date pull-right"><span class="comment-dateField"> Created : {{each_comment.timestamp | date:'MMM d, y, HH:mm'}}</span>  -->
+                                                    
                                                             <span *ngIf='!(isCommentEditable == i)'>
                                                                 <span class="comment-date-icons firsticon-edit">
                                                                     <img src="../../../../assets/images/Admin/edit-comment.svg" matTooltip="Edit" (click)="editComment1(i,each_comment)" class="default-img">
@@ -196,10 +195,9 @@
                                                     <div *ngIf='isCommentEditable == i' class="">
                                                         <textarea type="text" id="text_new2" (keyup)="autoGrowcommentsBox1()" name="comment1_field" [(ngModel)]="comment_data" placeholder="Enter Comment" class="form-control"></textarea>
 
-                                                        <!-- <input class="form-control" type="text" [(ngModel)]="comment_data" name="comment1_field" placeholder="Enter Comment"> -->
+                                                       
                                                         <div class="comments-box-icons">
-                                                        <!-- <img src="../../../../assets/images/Admin/submit.svg" matTooltip="Save" (click)="updateComment(comment_data,each_comment)">
-                                                        <img src="../../../../assets/images/Admin/cancel.svg" matTooltip="Cancel" (click)="cancelCommentupdate()"> -->
+                                                        
                                                             <button class="btn btn-default" (click)="cancelCommentupdate()">Cancel</button>
                                                             <button class="btn btn-primary" (click)="updateComment(comment_data,each_comment)">Save</button>
                                                         </div>
@@ -208,7 +206,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
 
                             <div class="col-md-4 noneditdiv">
