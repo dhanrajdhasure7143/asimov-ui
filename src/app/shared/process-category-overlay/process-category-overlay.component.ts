@@ -62,7 +62,7 @@ export class ProcessCategoryOverlayComponent implements OnInit {
   }
 
   onchangeCategories(categoryName){
-    this.isotherCategory = categoryName =='other';
+    // this.isotherCategory = categoryName =='other';
   }
 
   saveCategory(){

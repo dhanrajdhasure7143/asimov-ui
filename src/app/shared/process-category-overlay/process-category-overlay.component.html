@@ -17,8 +17,8 @@
                             <option value="null" disabled hidden>Select Category</option>
                             <option value="undefined" disabled hidden>Select Category</option>
                             <option *ngFor="let categories of categoriesList.data;let i=index;trackBy:loopTrackBy" [value]="categories.categoryName">
-                                {{categories.categoryName}}</option>
-                            <option value="other">Other</option>
+                                {{categories.categoryName|titlecase}}</option>
+                            <!-- <option value="other">Other</option> -->
                         </select>
                         <span *ngIf="((category.invalid && processCategoryForm.submitted) || (category.errors && category.touched) )" 
                         class='errspan required'> Please select a category </span>

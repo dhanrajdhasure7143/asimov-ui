@@ -15,12 +15,13 @@ import { MatSortModule } from '@angular/material/sort';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule, MatPaginatorModule, MatProgressBarModule } from '@angular/material';
 import { JwtModule } from '@auth0/angular-jwt';
-import { MatTooltipModule } from '@angular/material'
+import { MatTooltipModule } from '@angular/material';
+import { ViewTicketComponent } from './view-ticket/view-ticket.component'
 
-
-
+import { CustomMatPaginatorIntl } from './../../shared/custom-mat-paginator-int';
+import { MatPaginatorIntl } from '@angular/material';
 @NgModule({
-  declarations: [CreateTicketComponent, TicketListComponent, SupportComponent],
+  declarations: [CreateTicketComponent, TicketListComponent, SupportComponent, ViewTicketComponent],
   imports: [
     CommonModule,
     SupportRoutingModule,
@@ -43,6 +44,11 @@ import { MatTooltipModule } from '@angular/material'
       }
     }),
     MatTooltipModule
-  ]
+  ],
+  providers:[
+    {
+      provide: MatPaginatorIntl,
+      useClass: CustomMatPaginatorIntl
+    }]
 })
 export class SupportModule { }

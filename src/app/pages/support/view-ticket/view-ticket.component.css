@@ -34,6 +34,24 @@ input::placeholder {
 textarea::placeholder {
     padding: 2px;
 }
+#text_new{
+    min-height: 60px;
+    max-height: 400px;
+    height: auto;
+    overflow: auto;
+}
+#text_new1{
+    min-height: 30px;
+    max-height: 200px;
+    height: auto;
+    overflow: auto;
+}
+#text_new2{
+    min-height: 30px;
+    max-height: 200px;
+    height: auto;
+    overflow: auto;
+}
 
 input[type=text],
 select {
@@ -103,6 +121,39 @@ mat-select-value {
     display: none;
 }
 
+.mat-progress-bar {
+    display: block;
+    height: 6px;
+    overflow: hidden;
+    position: relative;
+    background-color: whitesmoke;
+    width: 90%;
+    margin-top: 2%;
+}
+
+::ng-deep .mat-progress-bar-fill::after {
+    background-color: green;
+}
+
+::ng-deep .mat-progress-bar-buffer {
+    background: #E4E8EB;
+}
+
+::ng-deep .mat-progress-bar {
+    border-radius: 2px;
+}
+
+.closefile {
+    margin: -3px 0% 0% 4%;
+    font-size: x-large;
+    color: black;
+    cursor: pointer;
+}
+
+.closefile:hover {
+    color: red;
+}
+
 .fa-cloud-upload-alt:before {
     content: "\f382";
     font-size: x-large;
@@ -115,7 +166,8 @@ mat-select-value {
 }
 
 .filenameoverflow {
-    margin-right: 23px;
+    display: inline-block;
+    width: 190px;
     /* white-space: nowrap;
     overflow: hidden !important;
     text-overflow: ellipsis; */
@@ -181,10 +233,9 @@ mat-select-value {
 }
 
 .CreateTkt.h-scroll {
-    /* height: calc(100% - 70px); */
-    height: calc(100% - 60px);
+    height: calc(100% - 50px);
     overflow: auto;
-    padding: 0px 0px 5px
+    padding: 0px;
 }
 
 .CreateTkt-Heading {
@@ -194,25 +245,25 @@ mat-select-value {
 }
 
 .CreateTkt-Heading span {
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 600;
-    color: #001c47;
-    line-height: 35px;
 }
 
 .CreateTkt-Attachmentbox {
-    padding: 15px 0px;
+    padding: 10px;
     background: #f6f6f6;
-    border-radius: 5px;
+    border-radius: 4px;
     border: dotted 2px rgb(197, 196, 196);
     text-align: center;
     cursor: pointer;
+    margin-bottom: 5px;
+    /* height: calc(100vh - 400px); */
 }
 
 .CreateTkt-footer {
     display: flex;
     justify-content: flex-end;
-    /* margin-top: 10px; */
+    margin-top: 10px;
 }
 
 .CreateTkt-footer .btn-primary,
@@ -270,7 +321,7 @@ mat-select-value {
 .removeallattachment {
     display: flex;
     justify-content: flex-end;
-    margin: 15px 0px;
+    margin-bottom: 5px;
 }
 
 /* .removeallattachment button {
@@ -300,20 +351,16 @@ mat-select-value {
 .Attached-contents {
     display: flex;
     align-items: center;
-    margin: 15px 0px;
+    margin-top: 15px;
 }
 .attached-image {
-    width: 8%;    
-    line-height: 30px;
+    width: 14%;
 }
 .attached-name {
-    width: 85%;
+    width: 80%;
 }
 .attached-close {
-    cursor: pointer;
-    text-align: right;
-    width: 5%;    
-    margin-top: 10px;
+    width: 6%;
 }
 .attached-name span {
     font-size: 14px;
@@ -343,31 +390,40 @@ mat-select-value {
     margin-right: 10px !important;
 }
 .Add-comments {
-    margin-top: 10px;
+    margin-top: 7px;
 }
 .Inner-comments {
-    padding: 10px;    
+    padding: 10px 0px 10px 0px;  
     border-bottom: 1px solid #e5e5e5;
 }
 .Content-comment {
     margin-top: 6px !important;
     display: inline-block;
+    padding-left: 5px;
 }
 span.firsticon-edit {
     margin-right: 6px;
 }
-
+::ng-deep .mat-paginator-page-size{
+    display: none !important;
+}
 .deleteattachment{
     padding-right: 5px;
 }
 
+/* ::ng-deep .mat-paginator-range-label{
+    display: none !important;
+} */
 .tablefile-name{
     padding-left: 3px;
 }
 .supporttable-div{
-    height: 245px;
-    margin-top: 5px;
+    /* margin-top: 10px; */
+    background-color: #fff;
+    height: calc(100vh - 337px);
+    overflow: hidden auto;
 }
+
 .CreateTkt-Attachmentbox:hover {
     border: 2px dotted #00a1e3;
     background-color: aliceblue;
@@ -388,33 +444,54 @@ span.firsticon-edit {
 span.module-header-title.innertitle {
     line-height: 35px;
 }
-
-::ng-deep .mat-select-panel.mat-primary {
-    max-height: 300px !important;
-    min-width: calc(100% + 18px) !important;
-    position: absolute;
-    right: -50px;
-    top: 39px;
-    border-radius: 0px !important;
-    box-shadow: none;
-    border: 1px solid #d1d1d1;
+.viewtktcontent {
+    padding: 15px 0px 0px;
+    height: 100%;
 }
-::ng-deep .Component-filed .mat-form-field-label {
-    color: #7B8694 !important;
-    font-size: 14px !important;
-    background: transparent !important;
-    transition: none;
+.comments-div .cmntslist {
+    /* height: calc(100vh - 200px);
+    overflow: hidden auto; */
+    padding-bottom: 30px !important;
+}
+.tsttooltipbtn {
     position: relative;
-    top: 8px;
 }
-::ng-deep .Component-filed .mat-form-field.mat-focused .mat-form-field-label {
-  position: relative;
-  top: 5px !important;
-  transform: none;
+.tsttooltipbtn:hover .default-img{
+    display: none;
 }
-#text-description{
-    min-height: 60px;
-    max-height: 250px;
+.tsttooltipbtn:hover span.testtooltip,
+.tsttooltipbtn:hover .hover-img {
+    display: block;
+}
+span.testtooltip {
+    position: absolute;
+    top: 32px;
+    right: 0px;
+    background-color: #001c47;
+    color: #fff;
+    width: -moz-max-content;
+    width: max-content;
+    padding: 3px 10px;
+    border-radius: 4px;
+    display: none;
+    z-index: 1;
+}
+span.testtooltip:after {
+    content: "";
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    top: -4px;
+    background-color: #001c47;
+    transform: rotate(45deg);
+    right: 10px;
+}
+.commentsMain-div{
+    margin-top: 10px;
+}
+#text_summary{
+    min-height: 30px;
+    max-height: 100px;
     height: auto;
     overflow: auto;
 }

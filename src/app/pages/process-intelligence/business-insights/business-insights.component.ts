@@ -29,7 +29,6 @@ export class BusinessInsightsComponent implements OnInit {
   constructor(private rest:RestApiService,private route:ActivatedRoute) { 
     let queryParamsResp
     this.route.queryParams.subscribe(res=>{queryParamsResp=res
-      console.log(res)
       this.processId=queryParamsResp.wpid
     })
   }
@@ -51,7 +50,6 @@ export class BusinessInsightsComponent implements OnInit {
                       element['convertedDuration']=this.getTimeConversion(element.totalDuration);
                       this.activitytime_data.push(element);
                     });
-                    // console.log(this.activitytime_data);
                   this.ActivityTimeChart();
                   this.isLoading=false;
                   });
@@ -137,7 +135,6 @@ export class BusinessInsightsComponent implements OnInit {
       // series.columns.template.tooltipText = " caseId : {categoryX} \n  Duration : {valueY}[/] ";
       // series.tooltip.text = " caseId";
       // series.adapter.add("tooltipText", function(text, target) {
-      //   console.log(text,target.dataItem)
       //   return "{_dataContext.activity} \n {_dataContext.totalDuration1}";
       // });
       var _self=this;

@@ -134,7 +134,6 @@ export class CreateBpmnDiagramComponent implements OnInit {
     })
     this.dt.header_value.subscribe(res=>{
       let headerValue=res
-      console.log(res);
       let result = headerValue instanceof Object;
       if(!result){
       if(headerValue == 'zoom_in'){
@@ -845,7 +844,6 @@ export class CreateBpmnDiagramComponent implements OnInit {
       "variableList":this.variables
     };
     this.rest.startBpmnProcess(reqBody).subscribe(res=>{
-      console.log(res);
       Swal.fire(
         'Success!',
         'Process started successfully',

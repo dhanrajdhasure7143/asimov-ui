@@ -99,21 +99,21 @@
                     <!-- CreatedDate Column -->
                     <ng-container matColumnDef="created_at">
                         <th style="width: 14%;" mat-header-cell *matHeaderCellDef mat-sort-header>Created</th>
-                        <td mat-cell *matCellDef="let element"> {{element.created_at | date:'MMM d, y, HH:mm'}} </td>
+                        <td mat-cell *matCellDef="let element"> {{element.convertedCreatedTime*1000 | date:'medium'}} </td>
                     </ng-container>
 
                     <!-- LastModified Column -->
-                    <ng-container matColumnDef="modified_at">
+                    <!-- <ng-container matColumnDef="modified_at">
                         <th style="width: 14%;" mat-header-cell *matHeaderCellDef mat-sort-header>Updated</th>
                         <td mat-cell *matCellDef="let element"> {{element.modified_at | date:'MMM d, y, HH:mm'}} </td>
-                    </ng-container>
+                    </ng-container> -->
 
                     <!-- Status Action -->
                     <ng-container matColumnDef="Action">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
                         <td mat-cell *matCellDef="let element" (click)="ViewMode(element)" class="Tkt-eyehover">
-                            <img src="../../../../assets/images/PI/eye-show.svg" alt="" class="testplus default-img">
-                            <img src="../../../../assets/images/Admin/eye-show-blue.svg" alt="" class="testplus hover-img">
+                            <img src="../../../../assets/images/PI/eye-show.svg" alt="" title="View Ticket" class="testplus default-img">
+                            <img src="../../../../assets/images/Admin/eye-show-blue.svg" alt="" title="View Ticket" class="testplus hover-img">
                         </td>
                     </ng-container>
 
