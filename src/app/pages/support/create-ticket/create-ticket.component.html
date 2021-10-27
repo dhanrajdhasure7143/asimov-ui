@@ -22,7 +22,7 @@
                         <div class="row">
                             <div class="col-md-12 p-0 form-fields">
                                 <label class="label-control">Summary<span class="star">*</span></label>
-                                <textarea type="text" formControlName="summary" [(ngModel)]="summary" placeholder="Enter Summary" maxlength="256" class="form-control"></textarea>
+                                <textarea id="text-summary" type="text" formControlName="summary" [(ngModel)]="summary" placeholder="Enter Summary" maxlength="256" class="form-control" (keyup)="autoGrowTextZone1($event)"></textarea>
                                   
                                 <span *ngIf="createTicket.get('summary').invalid && createTicket.get('summary').touched" class="errspan required">Summary Required*</span>
                             </div>
@@ -105,7 +105,7 @@
                                             </div>
                                             <div class="attached-name">
                                                 <span class="filenameoverflow">{{item.name}}</span>
-                                                <span>{{item.size}} KB</span>
+                                                <span>{{item.convertedsize}}</span>
                                                     <mat-progress-bar mode="determinate" [value]=progress></mat-progress-bar>                                                    
                                             </div>
                                             <div class="attached-close">

@@ -194,6 +194,7 @@ export class CreateTicketComponent implements OnInit {
     this.progress = 1;
     // this.fileName = [];
     for (var i = 0; i < event.target.files.length; i++) {
+      event.target.files[i]['convertedsize']=this.convertFileSize(event.target.files[i].size);
       this.fileName.push(event.target.files[i]);
     }
     const formdata = new FormData();
@@ -283,6 +284,27 @@ export class CreateTicketComponent implements OnInit {
       element.style.height ="5px";
       element.style.height = (element.scrollHeight+5)+"px";
   }
+  autoGrowTextZone1() {
+    let element =document.getElementById("text-summary")
+      element.style.height ="5px";
+      element.style.height = (element.scrollHeight+5)+"px";
+  }
 
-
+  convertFileSize(e) {
+    let divided_size: any = String(e / 1024)
+    if (e / 1024 <= 1024) {
+      if (divided_size.includes('.')) {
+        return divided_size.split('.')[0] + ' KB'
+      } else {
+        return divided_size + ' KB';
+      }
+    } else {
+      let size1: any = String(divided_size / 1024)
+      if (size1.includes('.')) {
+        return size1.split('.')[0] + ' MB'
+      } else {
+        return size1 + ' MB';
+      }
+    }
+  }
 }
