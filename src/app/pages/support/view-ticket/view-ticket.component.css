@@ -342,7 +342,7 @@ mat-select-value {
 } */
 
 .Component-filed {
-    margin-bottom: 12px;
+    /* margin-bottom: 12px; */
 }
 .deleteattachment img, .deleteattachment a, .readfilename a{
     padding: 0px;
@@ -420,8 +420,8 @@ span.firsticon-edit {
 .supporttable-div{
     /* margin-top: 10px; */
     background-color: #fff;
-    height: calc(100vh - 337px);
-    overflow: hidden auto;
+    /* height: calc(100vh - 337px);
+    overflow: hidden auto; */
 }
 
 .CreateTkt-Attachmentbox:hover {
@@ -494,4 +494,9 @@ span.testtooltip:after {
     max-height: 100px;
     height: auto;
     overflow: auto;
+}
+.col-md-4.noneditdiv {
+    position: fixed;
+    float: right;
+    right: 5px;
 }

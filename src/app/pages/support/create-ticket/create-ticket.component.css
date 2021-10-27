@@ -412,7 +412,8 @@ span.module-header-title.innertitle {
   top: 5px !important;
   transform: none;
 }
-#text-description{
+#text-description,
+#text-summary {
     min-height: 60px;
     max-height: 250px;
     height: auto;

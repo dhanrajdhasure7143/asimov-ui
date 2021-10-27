@@ -155,17 +155,16 @@
                                 
 
                             <!-- <div class="col-md-4 h-100"> -->
-                                <div class="col-md-12 p-0 form-fields commentsMain-div">
+                                <!-- <div class="col-md-12 p-0 form-fields commentsMain-div">
                                     <label class="label-control">Comments</label>
                                     <div class="comments-div">
                                         <div class="comments-box col-md-12 p-0">
                                             <div>
                                             <textarea type="text" id="text_new1" (keyup)="autoGrowcommentsBox()" (click)="addCommentClick()" name="comment_field" [(ngModel)]="newComment_data" placeholder="Enter Comment" class="form-control"></textarea>
 
-                                                <!-- <input class="form-control" type="text" (click)="addCommentClick()" name="comment_field" [(ngModel)]="newComment_data" placeholder="Enter Comment">  -->
+                                                
                                                 <span *ngIf="isAddInputenable" class="comments-box-icons" >    
-                                                    <!-- <img src="../../../../assets/images/Admin/submit.svg" class="" matTooltip="Save" (click)="addNewComment(newComment_data)">
-                                                    <img src="../../../../assets/images/Admin/cancel.svg" class="" matTooltip="Cancel" (click)="cancelCreateComment()"> -->
+                                                    
                                                     <button class="btn btn-default" (click)="cancelCreateComment()">Cancel</button>
                                                     <button class="btn btn-primary" (click)="addNewComment(newComment_data)" id="actn_div">Save</button>
                                                 </span>
@@ -176,7 +175,7 @@
                                                 <div class="Inner-comments">
                                                     <div class="col-md-12 p-0">
                                                         <span class="comment-date pull-right"><span class="comment-dateField"> Created : {{getTime(each_comment.timestamp | date:'MMM d, y, HH:mm')}}</span> 
-                                                    <!-- <span class="comment-date pull-right"><span class="comment-dateField"> Created : {{each_comment.timestamp | date:'MMM d, y, HH:mm'}}</span>  -->
+                                                    
                                                             <span *ngIf='!(isCommentEditable == i)'>
                                                                 <span class="comment-date-icons firsticon-edit">
                                                                     <img src="../../../../assets/images/Admin/edit-comment.svg" matTooltip="Edit" (click)="editComment1(i,each_comment)" class="default-img">
@@ -196,10 +195,9 @@
                                                     <div *ngIf='isCommentEditable == i' class="">
                                                         <textarea type="text" id="text_new2" (keyup)="autoGrowcommentsBox1()" name="comment1_field" [(ngModel)]="comment_data" placeholder="Enter Comment" class="form-control"></textarea>
 
-                                                        <!-- <input class="form-control" type="text" [(ngModel)]="comment_data" name="comment1_field" placeholder="Enter Comment"> -->
+                                                       
                                                         <div class="comments-box-icons">
-                                                        <!-- <img src="../../../../assets/images/Admin/submit.svg" matTooltip="Save" (click)="updateComment(comment_data,each_comment)">
-                                                        <img src="../../../../assets/images/Admin/cancel.svg" matTooltip="Cancel" (click)="cancelCommentupdate()"> -->
+                                                        
                                                             <button class="btn btn-default" (click)="cancelCommentupdate()">Cancel</button>
                                                             <button class="btn btn-primary" (click)="updateComment(comment_data,each_comment)">Save</button>
                                                         </div>
@@ -208,11 +206,11 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
 
-                            <div class="col-md-4">
-                                <div class="Component-filed">
+                            <div class="col-md-4 noneditdiv">
+                                <div class="col-md-12 form-fields Component-filed">
                                     <label class="label-control">Component<span class="star">*</span></label>
                                     <mat-form-field class="issue-type">
                                         <!-- <mat-label><span *ngIf="component.length==0" style="margin-left: 10px;"> Select Component </span></mat-label> -->
@@ -222,7 +220,7 @@
                                         </mat-select>
                                     </mat-form-field>
                                 </div>
-                                <div class="form-fields">
+                                <div class="col-md-12 form-fields">
                                     <label class="label-control">Select Priority<span class="star">*</span></label>
                                     <select [(ngModel)]='priority' name="priority_field" [ngClass]="requestKey != undefined || null ? 'disabled' : ''" class="form-control data" placeholder="Select Priority">
                                         <option [value]="undefined" disabled hidden>Select Priority</option>
@@ -230,7 +228,7 @@
                                         <option *ngFor="let each of Priority_list;let i=index" [value]="each">{{each}}</option>
                                     </select>
                                 </div>
-                                <div class="form-fields">
+                                <div class="col-md-12 form-fields">
                                     <label class="label-control">Impact<span class="star">*</span></label>
                                     <select [(ngModel)]='impact' name="impact_field" [ngClass]="requestKey != undefined || null ? 'disabled' : ''" class="form-control data" placeholder="Select Impact">
                                         <option value="undefined" hidden disabled>Select Impact</option>
@@ -238,7 +236,7 @@
                                         <option *ngFor="let item of impactArray" [value]=item.impact>{{item.impact}}</option>
                                     </select>
                                 </div>
-                                <div class="form-fields">
+                                <div class="col-md-12 form-fields">
                                     <label class="label-control">Severity<span class="star">*</span></label>
                                     <select [(ngModel)]='severity' name="severity_field" [ngClass]="requestKey != undefined || null ? 'disabled' : ''" class="form-control data" placeholder="Select Severity">
                                         <option value="undefined" hidden disabled>Select Severity</option>
@@ -246,7 +244,7 @@
                                         <option *ngFor="let item of severityLevelsArray" [value]=item.severity>{{item.severity}}</option>
                                     </select>
                                 </div>
-                                <div class="form-fields">
+                                <div class="col-md-12 form-fields">
                                     <label class="label-control">Reporter<span class="star">*</span></label>
                                     <select class="form-control data" name="reporter_field" [ngClass]="requestKey != undefined || null ? 'disabled' : ''" placeholder="Select Reporter">
                                         <option [value]=userName>{{userName}}</option>

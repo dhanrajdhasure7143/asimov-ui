@@ -20,9 +20,18 @@
             <div class="maindivfoprm">
                     <form [formGroup]="createTicket" novalidate>
                         <div class="row">
-                            <!-- <div class="col-md-12 CreateTkt-Heading">
-                                <span class="" >Create Ticket</span>
-                            </div> -->
+                            <div class="col-md-12 p-0 form-fields">
+                                <label class="label-control">Summary<span class="star">*</span></label>
+                                <textarea id="text-summary" type="text" formControlName="summary" [(ngModel)]="summary" placeholder="Enter Summary" maxlength="256" class="form-control" (keyup)="autoGrowTextZone1($event)"></textarea>
+                                  
+                                <span *ngIf="createTicket.get('summary').invalid && createTicket.get('summary').touched" class="errspan required">Summary Required*</span>
+                            </div>
+                            <div class="col-md-12 p-0 form-fields">
+                                
+                                <label class="label-control">Description<span class="star">*</span></label>
+                                <textarea id="text-description" type="text" (keyup)="autoGrowTextZone($event)" formControlName="description" [(ngModel)]="description" placeholder="Enter Description" class="form-control"></textarea>
+                                <span *ngIf="createTicket.get('description').invalid && createTicket.get('description').touched" class="errspan required">Description Required*</span>
+                            </div>
                             <div class="col-md-12 p-0">
                                 <div class="col-md-6 pl-0">
                                     <div class="Component-filed">
@@ -39,28 +48,6 @@
                                 </div>
                                 <div class="col-md-6 pr-0">
                                     <div class="col-md-12 p-0 form-fields">
-                                        <label class="label-control">Select Priority<span class="star">*</span></label>
-                                        <select formControlName="priority" [(ngModel)]='priority' class="form-control data" placeholder="Select Priority">
-                                            <option [value]="undefined" disabled hidden>Select Priority</option>
-                                            <option value="null" disabled hidden>Select Priority</option>
-                                            <option *ngFor="let each of Priority_list;let i=index" [value]="each">{{each}}</option>
-                                        </select>
-                                        <span *ngIf="createTicket.get('priority').invalid && createTicket.get('priority').touched" class="errspan required">Priority Required*</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-12 p-0">
-                                <div class="col-md-6 pl-0">
-                                    <div class="col-md-12 p-0 form-fields">
-                                        <label class="label-control">Summary<span class="star">*</span></label>
-                                        <input type="text" formControlName="summary" [(ngModel)]="summary" placeholder="Enter Summary" maxlength="256" class="form-control">
-                                      
-                                        <span *ngIf="createTicket.get('summary').invalid && createTicket.get('summary').touched" class="errspan required">Summary Required*</span>
-                                    </div>
-                                </div>
-                                                            
-                                <div class="col-md-6 pr-0">
-                                    <div class="col-md-12 p-0 form-fields">
                                         <label class="label-control">Impact<span class="star">*</span></label>
                                         <select formControlName="impact" [(ngModel)]='impact' class="form-control data" placeholder="Select Impact">
                                             <option value="undefined" hidden disabled>Select Impact</option>
@@ -70,34 +57,39 @@
                                         <span *ngIf="createTicket.get('impact').invalid && createTicket.get('impact').touched" class="errspan required">Impact Required*</span>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-md-12 p-0">                               
+                                <div class="col-md-6 pl-0">
+                                    <div class="col-md-6 pl-0 form-fields">
+                                        <label class="label-control">Select Priority<span class="star">*</span></label>
+                                        <select formControlName="priority" [(ngModel)]='priority' class="form-control data" placeholder="Select Priority">
+                                            <option [value]="undefined" disabled hidden>Select Priority</option>
+                                            <option value="null" disabled hidden>Select Priority</option>
+                                            <option *ngFor="let each of Priority_list;let i=index" [value]="each">{{each}}</option>
+                                        </select>
+                                        <span *ngIf="createTicket.get('priority').invalid && createTicket.get('priority').touched" class="errspan required">Priority Required*</span>
+                                    </div>
+                                    <div class="col-md-6 pr-0 form-fields">
+                                        <label class="label-control">Severity<span class="star">*</span></label>
+                                        <select formControlName="severity" [(ngModel)]='severity' class="form-control data" placeholder="Select Severity">
+                                            <option value="undefined" hidden disabled>Select Severity</option>
+                                            <option value="null" hidden disabled>Select Severity</option>
+                                            <option *ngFor="let item of severityLevelsArray" [value]=item.severity>{{item.severity}}</option>
+                                        </select>
+                                        <span *ngIf="createTicket.get('severity').invalid && createTicket.get('severity').touched" class="errspan required">Severity Required*</span>
+                                    </div>
+                                </div> 
+                                <div class="col-md-6 pr-0">
+                                    <div class="col-md-12 p-0 form-fields">
+                                        <label class="label-control">Reporter<span class="star">*</span></label>
+                                        <select formControlName="reporter" class="form-control data" placeholder="Select Reporter">
+                                            <option [value]=userName>{{userName}}</option>
+                                        </select>
+                                        <span *ngIf="createTicket.get('reporter').invalid && createTicket.get('reporter').touched" class="errspan required">Reporter Required*</span>
+                                    </div>
+                                </div>                               
                             </div>                
-                            
-                            <div class="col-md-6 pl-0">
-                                <div class="col-md-12 p-0 form-fields">
-                                    <label class="label-control">Reporter<span class="star">*</span></label>
-                                    <select formControlName="reporter" class="form-control data" placeholder="Select Reporter">
-                                        <option [value]=userName>{{userName}}</option>
-                                    </select>
-                                    <span *ngIf="createTicket.get('reporter').invalid && createTicket.get('reporter').touched" class="errspan required">Reporter Required*</span>
-                                </div>
-                            </div>
-                            <div class="col-md-6 pr-0">
-                                <div class="col-md-12 p-0 form-fields">
-                                    <label class="label-control">Severity<span class="star">*</span></label>
-                                    <select formControlName="severity" [(ngModel)]='severity' class="form-control data" placeholder="Select Severity">
-                                        <option value="undefined" hidden disabled>Select Severity</option>
-                                        <option value="null" hidden disabled>Select Severity</option>
-                                        <option *ngFor="let item of severityLevelsArray" [value]=item.severity>{{item.severity}}</option>
-                                    </select>
-                                    <span *ngIf="createTicket.get('severity').invalid && createTicket.get('severity').touched" class="errspan required">Severity Required*</span>
-                                </div>
-                            </div>
-                            <div class="col-md-12 p-0 form-fields">
-                                <label class="label-control">Description<span class="star">*</span></label>
-                                <textarea style="padding: 10px;" id="text-description" type="text" (keyup)="autoGrowTextZone($event)" formControlName="description" [(ngModel)]="description" placeholder="Enter Description" class="form-control"></textarea>
-                                <span *ngIf="createTicket.get('description').invalid && createTicket.get('description').touched" class="errspan required">Description Required*</span>
-                            </div>
-                                    
+                                                        
                             <div class="col-md-12 p-0 form-fields">
                                 <label class="label-control">Attachments</label>
                                 <div (click)="fileInput.click()" class="CreateTkt-Attachmentbox">
@@ -113,7 +105,7 @@
                                             </div>
                                             <div class="attached-name">
                                                 <span class="filenameoverflow">{{item.name}}</span>
-                                                <span>{{item.size}} KB</span>
+                                                <span>{{item.convertedsize}}</span>
                                                     <mat-progress-bar mode="determinate" [value]=progress></mat-progress-bar>                                                    
                                             </div>
                                             <div class="attached-close">
