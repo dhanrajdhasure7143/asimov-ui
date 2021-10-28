@@ -71,6 +71,9 @@ export class EditTaskComponent implements OnInit {
   startDate: any;
   endDate: any;
   public hidetaskdeletedownload: boolean;
+  pi_process_list: any;
+  bpm_process_list: any;
+  bot_list: any;
   constructor(private formBuilder:FormBuilder,
     private router:ActivatedRoute,
     private route:Router,
@@ -94,6 +97,7 @@ export class EditTaskComponent implements OnInit {
       summary: ['', Validators.compose([Validators.maxLength(200)])],
       percentageComplete: ['', Validators.compose([Validators.maxLength(200)])],
       editcomment: ['', Validators.compose([Validators.maxLength(200)])],
+      correlationID: [""],
        })
 
 
@@ -105,6 +109,9 @@ export class EditTaskComponent implements OnInit {
         this.profileName();
           },500);
 
+        this.getallpiprocess();
+        this.getallbpmprocess();
+        this.getallbots();
   }
 
 
@@ -147,6 +154,7 @@ export class EditTaskComponent implements OnInit {
     this.updatetaskForm.get("description").setValue(data["description"]);
     this.updatetaskForm.get("summary").setValue(data["summary"]);
     this.slider=data["percentageComplete"];
+    this.updatetaskForm.get("correlationID").setValue(data.correlationID);
     this.updatetaskForm.get("percentageComplete").setValue(this.slider);
     this.updatetaskForm.get("comments").setValue(data["comments"]);
     
@@ -175,6 +183,7 @@ export class EditTaskComponent implements OnInit {
       taskupdatFormValue["history"]=this.taskhistory
       taskupdatFormValue["endDate"]=this.endDate
       taskupdatFormValue["taskName"]=this.taskname
+      taskupdatFormValue["taskCategory"]=this.taskcategory
       this.spinner.show();
       this.rest.updateTask(taskupdatFormValue).subscribe( res =>{
         this.spinner.hide();
@@ -487,6 +496,29 @@ else
         }
       });
       
+  }
+
+  getallbpmprocess(){
+    this.rest.getprocessnames().subscribe(data =>{
+      let response:any=data;
+      let resp:any="";
+    resp=response.filter(item=>item.status=="APPROVED");
+    this.bpm_process_list=resp.sort((a,b) => (a.processName.toLowerCase() > b.processName.toLowerCase() ) ? 1 : ((b.processName.toLowerCase() > a.processName.toLowerCase() ) ? -1 : 0));
+    })
+  }
+
+  getallpiprocess(){
+    this.rest.getAlluserProcessPiIds().subscribe(data =>{
+      let response:any=data;
+      this.pi_process_list=response.data.sort((a,b) => (a.piName.toLowerCase() > b.piName.toLowerCase() ) ? 1 : ((b.piName.toLowerCase() > a.piName.toLowerCase() ) ? -1 : 0));
+    })
+  }
+
+  getallbots(){
+    this.rest.getAllActiveBots().subscribe(data =>{
+      let response:any=data;
+     this.bot_list=response.sort((a,b) => (a.botName.toLowerCase() > b.botName.toLowerCase() ) ? 1 : ((b.botName.toLowerCase() > a.botName.toLowerCase() ) ? -1 : 0));
+    })
   }
 
 }
