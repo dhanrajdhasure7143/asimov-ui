@@ -94,6 +94,37 @@
                     <!-- <ng5-slider [(value)]="slider" formControlName="percentageComplete" [options]="options"></ng5-slider> -->
                     <div class="labelcont">{{slider}}%<input type="range" min=0 max=100 (change)="slider=$event.target.value" formControlName="percentageComplete" [value]="slider"></div>
                 </div>
+                
+                  <div class="form-fields col-md-6 pl-0" *ngIf="taskcategory == 'BPMN Design'">                         
+                                  
+                <span class="labeltit" for="correlationID">Process</span>
+
+                <select formControlName="correlationID" class="form-control data enteredfield-color">
+                          <option value="">Select Process</option>
+                          <option *ngFor="let process of bpm_process_list" [value]="process.correlationID">
+                          {{process.processName}}</option>   
+                      </select>
+              
+          </div>
+                  <div class="form-fields col-md-6 pl-0" *ngIf="taskcategory == 'Process Mining'">                 
+                <span class="labeltit" for="correlationID">Process</span>
+                <select formControlName="correlationID" class="form-control data enteredfield-color">
+                          <option value="">Select Process</option>
+                          <option *ngFor="let process of pi_process_list" [value]="process.piId">
+                          {{process.piName}}</option>   
+                      </select>
+         
+          </div>
+          
+                  <div class="form-fields col-md-6 pl-0" *ngIf="taskcategory == 'RPA Implementation'">   
+                <span class="labeltit" for="correlationID">Bot</span>
+                <select formControlName="correlationID" class="form-control data enteredfield-color">
+                          <option value="">Select Bot</option>
+                          <option *ngFor="let bot of bot_list" [value]="bot.botId">
+                          {{bot.botName}}</option>   
+                      </select>
+          
+          </div>
                 <div class="form-fields col-md-12 p-0">
                     <label class="h6 label-control" id="summary" class="label-control">Summary</label>
                     <textarea class="form-control" formControlName="summary" rows="3" placeholder="Enter Summary">
