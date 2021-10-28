@@ -39,6 +39,8 @@
             <button mat-menu-item (click)="downloadExcel()">Download as Excel</button>
           </mat-menu>        
         </span>
+        <span  *ngIf="(!(this.userRole.includes('System Admin')) && userName==projectDetails.createdBy)
+        || (this.userRole.includes('System Admin'))">
         <span class="prjdetails-headerbuttons" *ngIf="editdata==true" (click)="projectdetails()">
           <button class="btn btn-default">Cancel</button>
         </span>
@@ -50,7 +52,7 @@
             <img class="testplus" src="../../../../assets/images/Projects/edit.svg"> Edit
           </button>
         </span>          
-       
+       </span>
       </span>
     </div>
 

@@ -1,4 +1,4 @@
-<div class="main-content orches_new">
+<div class="h-100">
     <div class="row content-area">
       <div class="row module-heading title">
         <span  class="module-back-button" routerLink="/pages/home">
@@ -7,7 +7,7 @@
         <span class="module-header-title">User Management</span>
       </div>
       <div class="module-body">
-        <mat-tab-group class="h-100" [selectedIndex]="selectedTab" id="usermanagement-tabs" (selectedTabChange)="onTabChanged($event)">
+        <mat-tab-group class="" [selectedIndex]="selectedTab" id="usermanagement-tabs" (selectedTabChange)="onTabChanged($event)">
         
           <mat-tab label="Users">
       
@@ -17,10 +17,10 @@
                 Users
               </ng-template>
             <div class="h-100" *ngIf="check_tab==0">
-              <app-departments></app-departments>
+              <!-- <app-departments></app-departments> -->
             </div>
           </mat-tab>
-          <mat-tab label="Departments">
+          <mat-tab label="Departments" *ngIf="this.userRoles.includes('System Admin')">
       
             <ng-template mat-tab-label>
               <mat-icon  >category</mat-icon>

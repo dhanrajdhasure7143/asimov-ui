@@ -1095,23 +1095,31 @@ getvaluechainprocess(id)
    return this.http.get('/api/servicedesk/getCustomerRequestsByRequestKey?requestKey='+key);
   }
 
-  deleteCategory(data):Observable<any>{
+  deleteDepartments(data):Observable<any>{
     const httpOps = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
             }),
       body: data
     }
-    return this.http.delete<any>('/processintelligence/v1/processgraph/categories',httpOps)
+    return this.http.delete<any>('/platform-service/department/categories',httpOps)
      
   }
 
-  createCategory(body:any): Observable<any>{
-    return this.http.post<any>('/processintelligence/v1/processgraph/categories', body,httpOptions)
+  getDepartmentsList(){
+    return this.http.get('/platform-service/department/categories')
   }
 
-  updateCategory(data:any): Observable<any>{
-    return this.http.put<any>('/processintelligence/v1/processgraph/categories', data,httpOptions)
+  createDepartment(body:any): Observable<any>{
+    return this.http.post<any>('/platform-service/department/categories', body,httpOptions)
+  }
+
+  updateDepartment(data:any): Observable<any>{
+    return this.http.put<any>('/platform-service/department/categories', data,httpOptions)
+  }
+
+  getDepartmentDetails(id){
+    return this.http.get('/platform-service/department/'+id+'')
   }
 
 }

@@ -8,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 export class UserManagementComponent implements OnInit {
   public selectedTab=0;
   public check_tab=0;
+  userRoles: any;
   constructor() { }
 
   ngOnInit(): void {
+    localStorage.removeItem('department_search');
+    this.userRoles = localStorage.getItem("userRole")
   }
 
   onTabChanged(event)

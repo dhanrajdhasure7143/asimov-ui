@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
 import Swal from 'sweetalert2';
 
@@ -11,21 +12,26 @@ import Swal from 'sweetalert2';
 export class CreateDepartmentComponent implements OnInit {
 
   createDepartmentForm:FormGroup;
-  constructor(private formBuilder: FormBuilder,private api:RestApiService,) { }
+  users_list:any=[];
+  constructor(private formBuilder: FormBuilder,private api:RestApiService,private router:Router,) { }
 
   ngOnInit(): void {
 
     this.createDepartmentForm=this.formBuilder.group({
       departmentName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      owner: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       })
+
+      this.getallusers();
   }
 
 
   savedepartments(){
     let body = {
-      "categoryName": this.createDepartmentForm.value.departmentName
+      "categoryName": this.createDepartmentForm.value.departmentName,
+      "owner":this.createDepartmentForm.value.owner
     }
-    this.api.createCategory(body).subscribe(resp => {
+    this.api.createDepartment(body).subscribe(resp => {
       if(resp.message === "Successfully created the category"){
         Swal.fire({
           title: 'Success',
@@ -38,8 +44,13 @@ export class CreateDepartmentComponent implements OnInit {
           confirmButtonText: 'Ok'
       }).then((result) => {
         this.resetdepartment();
+        this.router.navigate(['/pages/admin/user-management'])
       }) 
-      }else {
+      }
+      else if(resp.message==="Category already exists"){
+        Swal.fire("Error","Department already exists","error");
+      }
+      else {
         Swal.fire("Error",resp.message,"error");
       }
     })
@@ -48,5 +59,15 @@ export class CreateDepartmentComponent implements OnInit {
   resetdepartment(){
     this.createDepartmentForm.reset();
     this.createDepartmentForm.get("departmentName").setValue("");
+    this.createDepartmentForm.get("owner").setValue("");
+  }
+
+  getallusers()
+  {
+    let tenantid=localStorage.getItem("tenantName")
+    this.api.getuserslist(tenantid).subscribe(item=>{
+      let users:any=item
+      this.users_list=users;
+    })
   }
 }

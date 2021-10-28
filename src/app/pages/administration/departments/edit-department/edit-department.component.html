@@ -15,11 +15,9 @@
                     <hr>
                     <form [formGroup]="editDepartmentForm"  (ngSubmit)="updateDepartment()">
                         <div class="row">
-                            <div class="col-md-12 p-0">
-                                <div class="col-md-6 pl-0">
-                                    <div class="row">
-                                        <div class="col-md-12 p-0 form-fields">
-                                            <label class="label-control">Department<span class="star">*</span></label>
+                            <div class="col-md-12">
+                                <div class="form-fields col-md-6 pl-0">
+                                    <label class="label-control">Department<span class="star">*</span></label>
                                             <input type="text" formControlName="departmentName"  placeholder="Enter Department" maxlength="256" class="form-control data"  [ngClass]="editDepartmentForm.get('departmentName').valid?'enteredfield-color':'inputfield-color'">
                                             <span
                                                     *ngIf="(editDepartmentForm.get('departmentName').invalid && editDepartmentForm.get('departmentName').touched)
@@ -29,14 +27,24 @@
                                                     class="errspan required">
                                                     Maximum of 50 characters
                                                 </span>
-                                        
-                                        </div>
-                                    </div>
-                                   
                                 </div>
-                                
-                            </div>    
-                        
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-fields col-md-6 pl-0">
+                                    <label class="label-control">Owner<span
+                                        class="star">*</span></label>
+                                <select  formControlName="owner" class="form-control data">
+                                    <option value="">Select Owner</option>
+                                    <option *ngFor="let user of users_list" [value]="user.userId.userId">
+                                        {{user.userId.firstName|titlecase}} {{user.userId.lastName|titlecase}}</option>
+                                </select>
+                                <span
+                                    *ngIf="editDepartmentForm.get('owner').invalid && editDepartmentForm.get('owner').touched"
+                                    class="errspan required">Owner Required*</span>
+                                </div>
+                            </div>
                         </div>
                     </form>
                     <div class="pull-right">
