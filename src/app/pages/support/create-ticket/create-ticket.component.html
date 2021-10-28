@@ -91,30 +91,47 @@
                             </div>                
                                                         
                             <div class="col-md-12 p-0 form-fields">
-                                <label class="label-control">Attachments</label>
-                                <div (click)="fileInput.click()" class="CreateTkt-Attachmentbox">
-                                    <div><img src="../../../../assets/images/Admin/cloud.svg" alt=""></div>
-                                    <p>Find files to attach, or</p>
-                                    <button class="btn">Browse Files</button>
-                                    <input multiple #fileInput type="file" (change)="file($event)" style="display:none;" />
-
-                                    <span *ngIf="!fileError && requestKey == undefined || null">
-                                        <div class="Attached-contents" *ngFor="let item of fileName; index as i">
-                                            <div class="attached-image">
-                                                <img src="../../../../assets/images/Admin/fle.svg" class="">
+                                <div class="row">
+                                    <div class="col-md-6 p-0">
+                                        <label class="label-control">Attachments</label>
+                                    </div>
+                                    <div class="col-md-6 p-0 removeallattachment" *ngIf="fileName.length >= 1"> 
+                                        <button class="tsttooltipbtn" (click)="fileInput.click()">
+                                            <input multiple #fileInput type="file" (change)="file($event)" style="display:none;" />
+                                            <img src="../../../../assets/images/Admin/attach-black.svg" class="testplus default-img" >
+                                            <img src="../../../../assets/images/BPMS/attach.svg" class="testplus hover-img" >
+                                            <span class="testtooltip">Attach More Files</span>
+                                        </button>                                        
+                                    </div>
+                                </div>
+                                <div class="CreateTkt-Attachmentbox">
+                                    <div (click)="fileInput.click()" *ngIf="fileName.length < 1">
+                                        <div><img src="../../../../assets/images/Admin/cloud.svg" alt=""></div>
+                                        <p>Find files to attach, or</p>
+                                        <button class="btn">Browse Files</button>
+                                        <input multiple #fileInput type="file" (change)="file($event)" style="display:none;" />
+                                    </div>
+                                    <div>
+                                        <span *ngIf="!fileError && requestKey == undefined || null">
+                                            <div class="Attached-contents" *ngFor="let item of fileName; index as i">
+                                                <div class="attached-image">
+                                                    <img src="../../../../assets/images/Admin/fle.svg" class="">
+                                                </div>
+                                                <div class="attached-name">
+                                                    <div class="attached-filedet">
+                                                        <span class="filenameoverflow">{{item.name}}</span>
+                                                        <span>{{item.convertedsize}}</span>
+                                                    </div>
+                                                        <mat-progress-bar mode="determinate" [value]=progress></mat-progress-bar>                                                    
+                                                </div>
+                                                <div class="attached-close">
+                                                    <span class="closefile" (click)="DeleteFile(item , i)">
+                                                        <img src="../../../../assets/images/RPA/icon_latest/close.svg" >
+                                                    </span>
+                                                </div>                                                
                                             </div>
-                                            <div class="attached-name">
-                                                <span class="filenameoverflow">{{item.name}}</span>
-                                                <span>{{item.convertedsize}}</span>
-                                                    <mat-progress-bar mode="determinate" [value]=progress></mat-progress-bar>                                                    
-                                            </div>
-                                            <div class="attached-close">
-                                                <span class="closefile" (click)="DeleteFile(item , i)">
-                                                    <img src="../../../../assets/images/RPA/icon_latest/close.svg" >
-                                                </span>
-                                            </div>                                                
-                                        </div>
-                                    </span>
+                                        </span>
+                                    </div>
                                 </div>
                                 <div class="fileerror" *ngIf="fileError && requestKey == undefined || null">
                                     <p>This file or image don't support or empty , Please try again later.</p>
