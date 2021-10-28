@@ -40,14 +40,14 @@ import { CreateDepartmentComponent } from './departments/create-department/creat
 import { EditDepartmentComponent } from './departments/edit-department/edit-department.component';
 import { UserManagementComponent } from './user-management/user-management.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
-
+import { UserPipePipe } from './pipes/user-pipe.pipe';
 const materialModules: any[] = [
     
     
   ];
 
 @NgModule({
-  declarations: [AdministrationComponent, MyAccountComponent,CompareValidatorDirective, DepartmentsComponent, CreateDepartmentComponent, EditDepartmentComponent, UserManagementComponent, ChangePasswordComponent],
+  declarations: [AdministrationComponent, MyAccountComponent,CompareValidatorDirective, DepartmentsComponent, CreateDepartmentComponent, EditDepartmentComponent, UserManagementComponent, ChangePasswordComponent,UserPipePipe],
   imports: [
     Ng2TelInputModule,
     CommonModule,
