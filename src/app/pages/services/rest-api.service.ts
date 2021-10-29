@@ -1135,6 +1135,9 @@ getvaluechainprocess(id)
 
 }
 
+updateUserRoleDepartment(data):Observable<any>{
+  return this.http.put<any>('/authorizationservice/api/v1/user/role/userUpdate', data)
+}
  
  
 

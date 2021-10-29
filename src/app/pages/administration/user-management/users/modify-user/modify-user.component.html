@@ -26,8 +26,7 @@
                                     </div>
                                     <div class="col-md-12 p-0 form-fields">
                                         <label class="label-control">Add Department(s)<span class="star">*</span></label>
-                                        <ng-select  formControlName="departments"  [multiple]="true"  placeholder="Select departments"
-                                        [(ngModel)]="departments"  required>
+                                        <ng-select  formControlName="departments"  [multiple]="true"  placeholder="Select departments" required>
                                         <ng-option *ngFor="let category of categories" [value]="category.categoryId">{{category.categoryName}}</ng-option>
                                        </ng-select>
 
@@ -48,7 +47,7 @@
                                               <option *ngFor="let role of allRoles" [value]="role.id">
                                                   {{role.name}}</option>
                                           </select> -->
-                                          <ng-select  formControlName="role" placeholder="Select Role" required>
+                                          <ng-select  formControlName="role" placeholder="Select Role" [multiple]="true" required>
                                           <ng-option *ngFor="let role of allRoles" [value]="role.id">{{role.name}}</ng-option>
                                          </ng-select>
 
@@ -62,8 +61,8 @@
                         </div>
                     </form>
                     <div class="pull-right">
-                        <button (click)="reseteditdepartment()" class="btn btn-default">Reset</button>
-                        <button [disabled]="editUserForm.invalid" (click)="updateDepartment()" class="btn btn-primary btn-update">Save</button>
+                        <!-- <button (click)="reseteditdepartment()" class="btn btn-default">Reset</button> -->
+                        <button [disabled]="editUserForm.invalid" (click)="updateUser()" class="btn btn-primary btn-update">Save</button>
                     </div>
                 </div>
             </div>
