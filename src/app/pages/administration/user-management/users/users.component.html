@@ -5,14 +5,19 @@
           <!-- <span class="module-header-title"><span>Departments</span></span> -->
         </div>
         <div class="ml-auto prj-lstscr-btn" routerLink="/pages/admin/invite-user">
-          <button _ngcontent-svr-c17="" class="btn btn-primary" type="button">
-            <img  src="../../../../assets/images/Projects/White-plus.svg" class="testplus"/>Invite User</button>
+          <button class="btn btn-primary" type="button" >
+            <img  src="../../../../assets/images/Projects/White-plus.svg" class="testplus"/>Invite User
+          </button>
+          <!-- <button class="tsttooltipbtn" type="button" >
+            <img  src="../../../../assets/images/RPA/icon_latest/new-blue.svg" class="testplus"/>
+            <span class="testtooltip">Invite User</span>
+          </button> -->
         </div>    
        
       </div>
-     <div class="project-list-table h-100">
-        <div class="prj-prg-tablelist">
-            <table mat-table #sort2="matSort"  [dataSource]="dataSource2" matSort class="projecttable table"  id="listofcred">
+      <div class="userscontentdiv">
+        <div class="users-tablelist">
+          <table mat-table #sort2="matSort"  [dataSource]="dataSource2" matSort class="projecttable table"  id="listofcred">
             <ng-container matColumnDef="firstName">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
                 <td mat-cell *matCellDef="let element"> 
@@ -111,7 +116,7 @@
                     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                     <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                     <tr class="row-highlight mat-footer" mat-footer-row  *matFooterRowDef="['noData']" [ngClass]="{'hide':!(userslist==undefined ||  userslist=='No records found')}"></tr>
-              </table>
+          </table>
 
               <div>
                 <div *ngIf="userslist.length==0" class="text-center">
@@ -119,8 +124,10 @@
                   <h3 class="text-center">No Items to display</h3>
                 </div>
               </div>
-      </div> 
-      <mat-paginator #paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons]="true" class="newpaginationdiv"></mat-paginator>
+        </div>
+        <div>
+          <mat-paginator #paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons]="true" class="newpaginationdiv"></mat-paginator>
+        </div>
       </div>
     </mat-card>
   
