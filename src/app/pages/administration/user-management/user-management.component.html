@@ -17,7 +17,7 @@
                 Users
               </ng-template>
             <div class="h-100" *ngIf="check_tab==0">
-              <!-- <app-departments></app-departments> -->
+              <app-users></app-users>
             </div>
           </mat-tab>
           <mat-tab label="Departments" *ngIf="this.userRoles.includes('System Admin')">

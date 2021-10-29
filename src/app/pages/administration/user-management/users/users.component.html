@@ -1,0 +1,127 @@
+<div class="h-100">
+    <mat-card id="projects_list_screen"  class="h-100">
+      <div class="module-heading title">
+        <div class="">
+          <!-- <span class="module-header-title"><span>Departments</span></span> -->
+        </div>
+        <div class="ml-auto prj-lstscr-btn" routerLink="/pages/admin/invite-user">
+          <button _ngcontent-svr-c17="" class="btn btn-primary" type="button">
+            <img  src="../../../../assets/images/Projects/White-plus.svg" class="testplus"/>Invite User</button>
+        </div>    
+       
+      </div>
+     <div class="project-list-table h-100">
+        <div class="prj-prg-tablelist">
+            <table mat-table #sort2="matSort"  [dataSource]="dataSource2" matSort class="projecttable table"  id="listofcred">
+            <ng-container matColumnDef="firstName">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+                <td mat-cell *matCellDef="let element"> 
+                    <span *ngIf="element.firstName!=null">{{element.firstName}}</span> 
+                    <span *ngIf="element.firstName==''">-</span>
+                    <span *ngIf="element.firstName==null">-</span>
+                </td>
+              </ng-container>
+              
+              <ng-container matColumnDef="email">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+                  <td mat-cell *matCellDef="let element"> 
+                      <span *ngIf="element.email!=null">{{element.email}}</span> 
+                      <span *ngIf="element.email==''">-</span>
+                      <span *ngIf="element.email==null">-</span>
+                  </td>
+              </ng-container>
+              
+              <ng-container matColumnDef="designation">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Designation</th>
+                  <td mat-cell *matCellDef="let element"> 
+                    <span *ngIf="element.designation!=null" >{{element.designation}}</span>
+                      <span *ngIf="element.designation==''">-</span>
+                      <span *ngIf="element.designation==null">-</span>
+                  </td>
+              </ng-container>
+    
+              <ng-container matColumnDef="department">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Department</th>
+                  <td mat-cell *matCellDef="let element"> 
+                    <span *ngIf="element.department!=null" >{{element.department}}</span>
+                      <span *ngIf="element.department==''">-</span> 
+                      <span *ngIf=" element.department==null">-</span> 
+                  </td>
+              </ng-container>
+
+              <!-- <ng-container matColumnDef="product">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Product</th>
+                <td mat-cell *matCellDef="let element"> 
+                  <span *ngIf="element.product!=null" >{{element.product}}</span>
+                    <span *ngIf="element.product==''">-</span> 
+                    <span *ngIf=" element.product==null">-</span> 
+                </td>
+            </ng-container> -->
+
+            <ng-container matColumnDef="roles">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Roles</th>
+                <td mat-cell *matCellDef="let element"> 
+                  <span *ngIf="element.roles!=null" >{{element.roles.join(', ')}}</span>
+                    <span *ngIf="element.roles==''">-</span> 
+                    <span *ngIf=" element.roles==null">-</span> 
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="created_at">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Created At</th>
+                <td mat-cell *matCellDef="let element"> 
+                  <span *ngIf="element.created_at!=null" >{{element.created_at | date:'MMM d, y, HH:mm'}}</span>
+                    <span *ngIf="element.created_at==''">-</span> 
+                    <span *ngIf=" element.created_at==null">-</span> 
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+                <td mat-cell *matCellDef="let element"> 
+                  <span *ngIf="element.status!=null" >{{element.status}}</span>
+                    <span *ngIf="element.status==''">-</span> 
+                    <span *ngIf=" element.status==null">-</span> 
+                </td>
+            </ng-container>
+
+              <ng-container matColumnDef="noData">
+                <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="11">
+                </td>
+                </ng-container>
+
+                <ng-container matColumnDef="action">
+                    <th mat-header-cell *matHeaderCellDef> Actions</th>
+                    <td mat-cell *matCellDef="let element" class="action-link tablacs"> 
+                      <div class="newinntalx">
+                        
+                        <a  (click)="modifyUser(element)" matTooltip="Edit User">
+                          <img src="../../../../assets/images/Projects/edit-black.svg" class="default-img">
+                          <img src="../../../../../assets/images/Projects/Edit-blue.svg" class="hover-img">
+                        </a> 
+
+                        <a (click)="deleteUser(element)"   matTooltip="Delete User">
+                          <img src="../../../../../assets/images/Projects/delete-black.svg" class="default-img">
+                          <img src="../../../../../assets/images/Projects/delete-red.svg" class="hover-img">
+                        </a> 
+                  
+                      </div>
+                    </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                    <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    <tr class="row-highlight mat-footer" mat-footer-row  *matFooterRowDef="['noData']" [ngClass]="{'hide':!(userslist==undefined ||  userslist=='No records found')}"></tr>
+              </table>
+
+              <div>
+                <div *ngIf="userslist.length==0" class="text-center">
+                  <img  src="../../../../../assets/images/RPA/No-Items.svg" class="no-item-img">
+                  <h3 class="text-center">No Items to display</h3>
+                </div>
+              </div>
+      </div> 
+      <mat-paginator #paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons]="true" class="newpaginationdiv"></mat-paginator>
+      </div>
+    </mat-card>
+  
+  </div>
