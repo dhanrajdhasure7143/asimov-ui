@@ -61,7 +61,8 @@
                   </div>
                   <span class="bpsbtnsep">|</span>
                   <div class="action-item hovericon"  *ngIf="current_instance != undefined " placement="bottom" tooltip="Save Bot">
-                    <button   (click)="current_instance.saveBotFunAct()"  [disabled]="current_instance.selectedEnvironments.length==0 || !((current_instance.savebotrespose!=undefined && isButtonVisible==true && userName==current_instance.savebotrespose.createdBy) || (current_instance.savebotrespose ==undefined) || (isButtonVisible==false))">
+                    <!-- <button   (click)="current_instance.saveBotFunAct()"  [disabled]="current_instance.selectedEnvironments.length==0 || !((current_instance.savebotrespose!=undefined && isButtonVisible==true && userName==current_instance.savebotrespose.createdBy) || (current_instance.savebotrespose ==undefined) || (isButtonVisible==false))"> -->
+                      <button   (click)="current_instance.saveBotFunAct()"  [disabled]="current_instance.selectedEnvironments.length==0 ">
                       <img src="../../../../assets/images/RPA/icon_latest/save.svg" class="testplus1">
                       <!-- <i class="ri-save-line"></i> -->
                       </button>

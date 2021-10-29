@@ -67,10 +67,10 @@ export class RpaHomeComponent implements OnInit {
  exportid:any;
  allbots:any=[];
 
- importenv:any="";
- importcat:any="";
- importfile:any="";
-
+  importenv:any="";
+  importcat:any="";
+  importfile:any="";
+  botImage:any=undefined;
   file_error:any="";
   @ViewChild("paginator1",{static:false}) paginator1: MatPaginator;
   @ViewChild("paginator2",{static:false}) paginator2: MatPaginator;
@@ -84,7 +84,7 @@ export class RpaHomeComponent implements OnInit {
   checkbotname: boolean;
   public editbot:FormGroup;
   insertbot:FormGroup;
-  rpaCategory: any;
+  rpaCategory: any="";
   newRpaCategory: any;
   userName:any="";
   displayedRows$: Observable<any[]>;
@@ -105,6 +105,17 @@ export class RpaHomeComponent implements OnInit {
     private spinner:NgxSpinnerService
     )
   {
+
+
+    this.insertbot=this.formBuilder.group({
+      botName: ["", Validators.compose([Validators.required, Validators.maxLength(30)])],
+      botDepartment:["", Validators.required],
+      botDescription:["", Validators.compose([Validators.maxLength(500)])],
+      //botType:["", Validators.required],
+      taskId:[""],
+      predefinedBot:["false"],
+      newCategoryName:[""]
+  });
     this.editbot=this.formBuilder.group({
       botId: ["", Validators.required],
       botName: ["", Validators.compose([Validators.required, Validators.maxLength(30)])],
@@ -277,24 +288,24 @@ export class RpaHomeComponent implements OnInit {
         this.loadflag=false;
       },1000)
       response=botlist;
-      response=response.reverse();
-      if(response.length==0)
-      {
-        //this.rpa_studio.spinner.hide();
-      }
-      response.forEach(data=>{
-        let object:any=data;
-        if(data.botType==0)
-        {
-          object.botType='Attended'
-        }
-        else if(data.botType==1)
-        {
-          object.botType='Unattended';
-        }
-        this.bot_list.push(object)
-        this.assignPagination( this.bot_list);
-      })
+     // response=response.reverse();
+      // if(response.length==0)
+      // {
+      //   //this.rpa_studio.spinner.hide();
+      // }
+      // response.forEach(data=>{
+      //   let object:any=data;
+      //   if(data.botType==0)
+      //   {
+      //     object.botType='Attended'
+      //   }
+      //   else if(data.botType==1)
+      //   {
+      //     object.botType='Unattended';
+      //   }
+      //   this.bot_list.push(object)
+      //   this.assignPagination( this.bot_list);
+      // })
       response.forEach(data=>{ 
         let object:any=data;
       if(this.categaoriesList.find(resp => resp.categoryId==data.department)!=undefined)
@@ -314,6 +325,7 @@ export class RpaHomeComponent implements OnInit {
           object.department='QA';
         }
         this.bot_list.push(object)
+        this.assignPagination( this.bot_list);
       })
       this.bot_list=botlist;
       if(this.bot_list.length >0)
@@ -332,56 +344,65 @@ export class RpaHomeComponent implements OnInit {
       this.dataSource1.paginator=this.paginator1;
      this.dataSource1.data = response;
      this.allbots=response;
-     this.departmentFilter.valueChanges.subscribe((departmentFilterValue) => {
-      if(departmentFilterValue != ""){
-    let category=this.categaoriesList.find(val=>departmentFilterValue ==val.categoryId);
-      this.filteredValues['department'] = category;
-      }
-      else{
-        this.filteredValues['department'] = departmentFilterValue;
-      }
-      this.dataSource1.filter = JSON.stringify(this.filteredValues);
-      if(this.dataSource1.filteredData.length > 0){
-        this.isTableHasData = true;
-      } else {
-        this.isTableHasData = false;
-      }
+    //  this.departmentFilter.valueChanges.subscribe((departmentFilterValue) => {
+    //   if(departmentFilterValue != ""){
+    // let category=this.categaoriesList.find(val=>departmentFilterValue ==val.categoryId);
+    //   this.filteredValues['department'] = category;
+    //   }
+    //   else{
+    //     this.filteredValues['department'] = departmentFilterValue;
+    //   }
+    //   this.dataSource1.filter = JSON.stringify(this.filteredValues);
+    //   if(this.dataSource1.filteredData.length > 0){
+    //     this.isTableHasData = true;
+    //   } else {
+    //     this.isTableHasData = false;
+    //   }
    
-      },(err)=>{
+    //   },(err)=>{
 
-        this.spinner.hide();
-      });
+    //     this.spinner.hide();
+    //   });
 
-        this.botNameFilter.valueChanges.subscribe((botNameFilterValue) => {
-          this.filteredValues['botName'] = botNameFilterValue;
-          this.dataSource1.filter = JSON.stringify(this.filteredValues);
-          if(this.dataSource1.filteredData.length > 0){
-            this.isTableHasData = true;
-          } else {
-            this.isTableHasData = false;
-          }
-        });
+    //     this.botNameFilter.valueChanges.subscribe((botNameFilterValue) => {
+    //       this.filteredValues['botName'] = botNameFilterValue;
+    //       this.dataSource1.filter = JSON.stringify(this.filteredValues);
+    //       if(this.dataSource1.filteredData.length > 0){
+    //         this.isTableHasData = true;
+    //       } else {
+    //         this.isTableHasData = false;
+    //       }
+    //     });
 
-      this.dataSource1.filterPredicate = this.customFilterPredicate();
+    //   this.dataSource1.filterPredicate = this.customFilterPredicate();
     },(err)=>{
       this.spinner.hide();
     })
   }
 
-  customFilterPredicate() {
-    const myFilterPredicate = (data: dataSource1, filter: string): boolean => {
-      let searchString = JSON.parse(filter);
-      if(searchString.department != ''){
-      return data.department.toString().trim().indexOf(searchString.department.categoryName) !== -1 &&
-        data.botName.toString().trim().toLowerCase().indexOf(searchString.botName.toLowerCase()) !== -1;
-    }
-    else
-    {
-      return true &&
-        data.botName.toString().trim().toLowerCase().indexOf(searchString.botName.toLowerCase()) !== -1;
-    }
-  }
-    return myFilterPredicate;
+  // customFilterPredicate() {
+  //   const myFilterPredicate = (data: dataSource1, filter: string): boolean => {
+  //     let searchString = JSON.parse(filter);
+  //     if(searchString.department != ''){
+  //     return data.department.toString().trim().indexOf(searchString.department.categoryName) !== -1 &&
+  //       data.botName.toString().trim().toLowerCase().indexOf(searchString.botName.toLowerCase()) !== -1;
+  //   }
+  //   else
+  //   {
+  //     return true &&
+  //       data.botName.toString().trim().toLowerCase().indexOf(searchString.botName.toLowerCase()) !== -1;
+  //   }
+  // }
+  //   return myFilterPredicate;
+  // }
+
+
+
+  applyFilter2(filterValue: string) {
+    alert(filterValue)
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.dataSource1.filter = filterValue;
   }
 
   getautomatedtasks(process)
@@ -688,6 +709,26 @@ export class RpaHomeComponent implements OnInit {
   }
 
 
+  getBotImage(botId,version,event)
+  {
+    this.botImage=undefined
+    this.rest.getBotImage(botId,version).subscribe(data=>{
+      let response:any=data;
+      if(response.errorMessage)
+      {
+        this.botImage={
+          errorMessage:"No Preview"
+        }
+      }
+      else
+      {
+        this.botImage={
+          svg:response.status
+        }
+      }
+    })
+  }
+
   update_task_status()
   {
     let timer= setInterval(() => {
@@ -761,7 +802,9 @@ export class RpaHomeComponent implements OnInit {
       let catResponse : any;
       catResponse=data
       this.categaoriesList=catResponse.data;
-      console.log(this.categaoriesList)
+      //console.log(this.categaoriesList)
+      if(this.categaoriesList.length==1)
+        this.rpaCategory=this.categaoriesList[0].categoryId;
     });
   }
 
@@ -891,6 +934,7 @@ export class RpaHomeComponent implements OnInit {
         this.totalRows$ = rows$.pipe(map(rows => rows.length));
         this.displayedRows$ = rows$.pipe(sortRows(sortEvents$), paginateRows(pageEvents$));
       }
+      
 }
 
 export interface dataSource1 {

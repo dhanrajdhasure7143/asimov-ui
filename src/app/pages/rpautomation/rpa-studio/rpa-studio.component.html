@@ -143,14 +143,14 @@ Workspace
                   <div class="col-md-12 p-0 form-group">
                       <label class="label-control" for="botDepartment">Category<span class="star">*</span></label>
 
-                      <select [(ngModel)]="rpaCategory" class="form-control" formControlName="botDepartment" name="botDepartment">
-              <option  value="" selected>Select Category</option>
+                      <select [(ngModel)]="rpaCategory"  [disabled]="categaoriesList.length==1" [value]="categaoriesList.length==1?categaoriesList[0].categoryId:''" class="form-control" formControlName="botDepartment" name="botDepartment">
+              <option  value="" >Select Category</option>
               <option *ngFor ="let category of categaoryList" [value]="category.categoryId">{{category.categoryName}}</option>
-              <option  value='others'>Others</option>
+              <!-- <option  value='others'>Others</option> -->
             </select>
-                      <div *ngIf="rpaCategory=='others'">
+                      <!-- <div *ngIf="rpaCategory=='others'">
                           <input type="text" class="form-control" formControlName="newCategoryName" onkeypress="return (event.charCode !== 32)" placeholder="Enter Category Name" [(ngModel)]="newRpaCategory">
-                      </div>
+                      </div> -->
                       <div *ngIf="insertbot.get('botDepartment').invalid && insertbot.get('botDepartment').touched" class="errspan required">
                           Category Required*
                       </div>

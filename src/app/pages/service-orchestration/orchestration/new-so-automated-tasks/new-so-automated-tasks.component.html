@@ -5,7 +5,7 @@
 
           <div class="form-group leftfporm col-md-9 pl-0">
               <div id="autocategorysearch" class="col-md-3 pl-0">
-                  <select class="rpa-control form-control" [value]="selectedcategory" (change)="applyFilter1($event.target.value)">
+                  <select class="rpa-control form-control" [disabled]="categaoriesList.length==1"  [value]="categaoriesList.length==1?categaoriesList[0].categoryId:''" (change)="applyFilter1($event.target.value)">
           <option value="" disabled>Select Process Group</option>
           <option *ngFor="let category of categaoriesList" [value]="category.categoryId">{{category.categoryName}}
           </option>

@@ -232,12 +232,12 @@
 
 placeholder="Enter Environment Type" >-->
                             <select class="form-control" formControlName="environmentType" (change)="EnvType1()">
-          <option value="" [selected]="true">--Select Type--</option>
-          <option value="Windows">Windows</option>
-          <option value="Mac">Mac</option>
-          <option value="Linux">Linux</option>
+                                <option value="" [selected]="true">--Select Type--</option>
+                                <option value="Windows">Windows</option>
+                                <option value="Mac">Mac</option>
+                                <option value="Linux">Linux</option>
 
-        </select>
+                                </select>
                             <span *ngIf="insertForm.get('environmentType').invalid && insertForm.get
 
 ('environmentType').touched"  class="errspan required">Type Required*</span>
@@ -268,7 +268,17 @@ placeholder="Enter Environment Type" >-->
                             </div>
                         </div>
                     
-                    
+                        <div class="col-md-12 p-0 form-group">
+                            <label class="label-control" for="categoryId">Category<span class="star">*</span></label>
+                            <select type="text" class="form-control" formControlName="categoryId" [disabled]="categoryList.length==1" [value]="categoryList.length==1?categoryList[0].categoryId:'0'">
+                                <option value="0" disabled>Select Category</option>
+                                <option [value]="category.categoryId" *ngFor="let category of categoryList">{{category.categoryName}}</option>
+                            </select>   
+                             <span *ngIf="(insertForm.get('categoryId').invalid && insertForm.get('categoryId').touched)"  class="errspan required"> Category Required*</span>
+
+                           
+
+                        </div>
                         <div class="col-md-12 p-0 form-group">
                             <label class="label-control" for="userName">Username<span class="star">*</span></label>
                             <input type="text" maxlength="51" class="form-control" formControlName="username" value="" placeholder="Enter Username">
@@ -410,7 +420,17 @@ placeholder="Enter Environment Type" >-->
                                 Invalid IP Address format
                             </div>
                         </div>
-                    
+                        <div class="col-md-12 p-0 form-group">
+                            <label class="label-control" for="categoryId">Category<span class="star">*</span></label>
+                            <select type="text" class="form-control" formControlName="categoryId" [disabled]="categoryList.length==1" >
+                                <option value="0" disabled>Select Category</option>
+                                <option [value]="category.categoryId" *ngFor="let category of categoryList">{{category.categoryName}}</option>
+                            </select>   
+                             <span *ngIf="(updateForm.get('categoryId').invalid && updateForm.get('categoryId').touched)"  class="errspan required"> Username Required*</span>
+
+                           
+
+                        </div>
                    
                         <div class="col-md-12 p-0 form-group">
                             <label class="label-control" for="userName">Username<span class="star">*</span></label>
