@@ -368,7 +368,7 @@ export class RestApiService{
   fileupload(file){
     return this.http.post('/processintelligence/v1/connectorconfiguration/upload',file)
   }
-  getCategoriesList(){
+  getCategoriesList():Observable<any>{
     return this.http.get('/processintelligence/v1/processgraph/categories')
   }
   addCategory(data){
@@ -1106,7 +1106,7 @@ getvaluechainprocess(id)
      
   }
 
-  getDepartmentsList(){
+  getDepartmentsList(): Observable<any>{
     return this.http.get('/platform-service/department/categories')
   }
 
@@ -1121,5 +1121,21 @@ getvaluechainprocess(id)
   getDepartmentDetails(id){
     return this.http.get('/platform-service/department/'+id+'')
   }
+
+  deleteSelectedUser(userId):Observable<any>{
+    return this.http.delete<any>('/api/user/deleteSelectedUser?userId='+userId)
+     
+ }
+
+ inviteUserwithoutReg(body):Observable<any>{
+  return this.http.post<any>("/api/user/userInviteRegistration", body)
+ }
+ getAllRoles(appId):Observable<any>{
+  return this.http.get<any>('/authorizationservice/api/v1/application/'+appId+'/roles')
+
+}
+
+ 
+ 
 
 }
