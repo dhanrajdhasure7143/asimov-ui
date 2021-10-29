@@ -7,6 +7,8 @@ import { DepartmentsComponent } from './departments/departments.component';
 import { EditDepartmentComponent } from './departments/edit-department/edit-department.component';
 import { MyAccountComponent } from './myaccount/myaccount.component';
 import { UserManagementComponent } from './user-management/user-management.component';
+import { InviteUserComponent } from './user-management/users/invite-user/invite-user.component';
+import { ModifyUserComponent } from './user-management/users/modify-user/modify-user.component';
 
 
 const routes: Routes = [
@@ -17,6 +19,8 @@ const routes: Routes = [
     {path:'create-department', component:CreateDepartmentComponent},
     {path:'edit-department', component:EditDepartmentComponent},
     {path:'changepassword', component:ChangePasswordComponent},
+    {path:'invite-user', component:InviteUserComponent},
+    {path:'modify-user', component:ModifyUserComponent}
   ]}
 ];
 
