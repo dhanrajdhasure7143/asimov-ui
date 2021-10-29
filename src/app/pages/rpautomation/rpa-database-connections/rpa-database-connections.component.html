@@ -282,6 +282,14 @@
                                 </div>
                             </div>  
                             <div class="col-md-12 p-0 form-group">
+                                <label class="label-control" for="categoryId">Category<span class="star">*</span></label>
+                                <select type="text" class="form-control" formControlName="categoryId" [disabled]="categoryList.length==1" [value]="categoryList.length==1?categoryList[0].categoryId:'0'">
+                                    <option value="0" disabled>Select Category</option>
+                                    <option [value]="category.categoryId" *ngFor="let category of categoryList">{{category.categoryName}}</option>
+                                </select>   
+                                 <span *ngIf="(insertdbForm.get('categoryId').invalid && insertdbForm.get('categoryId').touched)"  class="errspan required"> Username Required*</span>
+                            </div>
+                            <div class="col-md-12 p-0 form-group">
                                 <label class="label-control" for="username">Username<span class="star">*</span></label>
                                 <input type="text" maxlength="51" class="form-control" formControlName="username" #username value="" placeholder="Enter Username">
                                 <span *ngIf="(insertdbForm.get('username').invalid && insertdbForm.get('username').touched) && !insertdbForm.controls['username'].hasError('maxlength')" class="errspan required"> Username Required*</span>
@@ -401,6 +409,17 @@
                                     Maximum of 6 characters
                                 </div>
                             </div> 
+                            <div class="col-md-12 p-0 form-group">
+                                <label class="label-control" for="categoryId">Category<span class="star">*</span></label>
+                                <select type="text" class="form-control" formControlName="categoryId"[disabled]="categoryList.length==1" >
+                                    <option value="0" disabled>Select Category</option>
+                                    <option [value]="category.categoryId" *ngFor="let category of categoryList">{{category.categoryName}}</option>
+                                </select>   
+                                 <span *ngIf="(updatedbForm.get('categoryId').invalid && updatedbForm.get('categoryId').touched)"  class="errspan required"> Username Required*</span>
+    
+                               
+    
+                            </div>
                             <div class="col-md-12 p-0 form-group">
                                 <label class="label-control" for="username">Username<span class="star">*</span></label>
                                 <input type="text" maxlength="51" class="form-control" formControlName="username" #username value="" placeholder="Enter Username">

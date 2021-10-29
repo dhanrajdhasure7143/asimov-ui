@@ -884,6 +884,7 @@ public slaupdate : boolean = false;
       let catResponse : any;
       catResponse=data
       this.categaoriesList=catResponse.data;
+      (this.categaoriesList.length==1?this.selectedcat=this.categaoriesList[0].categoryId:"")
     });
   }
   getusersList()

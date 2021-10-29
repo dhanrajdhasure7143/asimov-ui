@@ -52,7 +52,7 @@ import { NgxSpinnerService } from "ngx-spinner";
     enabledbconnection: boolean=false;
     public isButtonVisible = false;
     public userRole:any = [];
-
+    public categoryList:any=[];
   constructor(private api:RestApiService, 
     private router:Router, 
     private formBuilder: FormBuilder,
@@ -69,6 +69,7 @@ import { NgxSpinnerService } from "ngx-spinner";
         environmentType: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         agentPath: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         hostAddress: ["", Validators.compose([Validators.required, Validators.pattern(ipPattern), Validators.maxLength(50)])],
+        categoryId:["0", Validators.compose([Validators.required])],
         username: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         password: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
         connectionType: ["SSH",Validators.compose([Validators.required,, Validators.maxLength(50), Validators.pattern("[A-Za-z]*")])],
@@ -82,6 +83,7 @@ import { NgxSpinnerService } from "ngx-spinner";
       environmentType: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       agentPath: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       hostAddress: ["", Validators.compose([Validators.required, Validators.pattern(ipPattern), Validators.maxLength(50)])],
+      categoryId:["0", Validators.compose([Validators.required])],
       username: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       password: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
       connectionType: ["SSH",Validators.compose([Validators.required,, Validators.maxLength(50), Validators.pattern("[A-Za-z]*")])],
@@ -100,6 +102,7 @@ import { NgxSpinnerService } from "ngx-spinner";
     //this.updatepopup=document.getElementById('env_updatepopup');
     this.dt.changeHints(this.hints.rpaenvhints);
     this.getallData();
+    this.getCategories();
     //document.getElementById("filters").style.display='block';
     //document.getElementById("createenvironment").style.display='none';
     //document.getElementById("update-popup").style.display='none';
@@ -344,14 +347,22 @@ import { NgxSpinnerService } from "ngx-spinner";
       updatFormValue["createdBy"]= this.updateenvdata.createdBy;
       updatFormValue["deployStatus"]= this.updateenvdata.deployStatus;
       await this.api.updateenvironment(updatFormValue).subscribe( res => {
-        Swal.fire("Success",res.status,"success")
-      this.removeallchecks();
-      this.getallData();
-      this.checktoupdate();
-      this.checktodelete();
-      
-      document.getElementById("update-popup").style.display='none';
+      let response:any=res;
       this.spinner.hide();
+      if(response.errorMessage==undefined)
+      {
+
+        Swal.fire("Success",res.status,"success")
+        this.removeallchecks();
+        this.getallData();
+        this.checktoupdate();
+        this.checktodelete();
+        document.getElementById("update-popup").style.display='none';
+      }else
+      {
+        Swal.fire("Error",response.errorMessage,"error")
+      }
+    
       });
     }
     else
@@ -382,6 +393,7 @@ import { NgxSpinnerService } from "ngx-spinner";
         this.updateForm.get("environmentName").setValue(this.updateenvdata["environmentName"]);
         this.updateForm.get("environmentType").setValue(this.updateenvdata["environmentType"]);
         this.updateForm.get("agentPath").setValue(this.updateenvdata["agentPath"]);
+        this.updateForm.get("categoryId").setValue(this.updateenvdata["categoryId"]);
         this.updateForm.get("hostAddress").setValue(this.updateenvdata["hostAddress"]);
         this.updateForm.get("username").setValue(this.updateenvdata["username"]);
         this.updateForm.get("password").setValue(this.updateenvdata["password"]);
@@ -527,6 +539,18 @@ import { NgxSpinnerService } from "ngx-spinner";
       this.environments[i].checked= false;
     }
     this.checkflag=false;
+  }
+
+
+  getCategories()
+  {
+    this.api.getCategoriesList().subscribe(data=>{
+      let response:any=data;
+      if(response.errorMessage==undefined)
+      {
+        this.categoryList=response.data;
+      }
+    })
   }
 
 }
