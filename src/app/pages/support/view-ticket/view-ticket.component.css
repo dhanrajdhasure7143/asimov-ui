@@ -8,7 +8,7 @@ mat-card {
 }
 
 .fileerror p {
-    font-weight: 600;
+    /* font-weight: 600; */
     font-size: 14px;
     color: #f70303;
 }
@@ -502,5 +502,6 @@ span.testtooltip:after {
 .col-md-4.noneditdiv {
     position: fixed;
     float: right;
-    right: 5px;
+    right: 25px;
+    width: 32%;
 }
