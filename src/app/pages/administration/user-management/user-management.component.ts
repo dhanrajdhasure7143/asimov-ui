@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DepartmentsComponent } from '../departments/departments.component';
 
 @Component({
   selector: 'app-user-management',
@@ -12,12 +13,16 @@ export class UserManagementComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    localStorage.removeItem('department_search');
     this.userRoles = localStorage.getItem("userRole")
   }
 
   onTabChanged(event)
   {
     this.check_tab=event.index;
+    if(this.check_tab==1){
+      localStorage.removeItem('department_search');
+    }
   }
+
+
 }
