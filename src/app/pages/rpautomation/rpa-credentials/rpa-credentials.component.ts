@@ -23,6 +23,7 @@ export class RpaCredentialsComponent implements OnInit {
   public submitted:Boolean;
   public Credcheckflag:boolean = false;
   public dbupdateid : any;
+  categoryList:any;
   @ViewChild("paginator2",{static:false}) paginator2: MatPaginator;
   @ViewChild("sort2",{static:false}) sort2: MatSort;
   public button:string;
@@ -54,6 +55,7 @@ export class RpaCredentialsComponent implements OnInit {
       this.insertForm=this.formBuilder.group({
         userName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         password: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        categoryId:["0", Validators.compose([Validators.required])],
         serverName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         inBoundAddress: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         inBoundAddressPort: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
@@ -65,6 +67,7 @@ export class RpaCredentialsComponent implements OnInit {
     this.updateForm=this.formBuilder.group({
         userName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         password: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
+        categoryId:["0", Validators.compose([Validators.required])],
         serverName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         inBoundAddress: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         inBoundAddressPort: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
@@ -82,6 +85,7 @@ export class RpaCredentialsComponent implements OnInit {
    // document.getElementById("filters").style.display='block';
     this.dt.changeHints(this.hints.rpadbchints);
     this.getallCredentials();
+    this.getCategories();
     this.passwordtype1=false;
     this.passwordtype2=false;
 
@@ -359,5 +363,15 @@ updatecreddata()
       this.credentials[i].checked= false;
     }
     this.Credcheckflag=false;
+  }
+  getCategories()
+  {
+    this.api.getCategoriesList().subscribe(data=>{
+      let response:any=data;
+      if(response.errorMessage==undefined)
+      {
+        this.categoryList=response.data;
+      }
+    })
   }
 }

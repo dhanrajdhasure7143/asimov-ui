@@ -16,11 +16,10 @@
           </select>
               </div>
               <div class="col-md-3 pl-0">
-                  <select [(ngModel)]="selectedcat" value="" class="form-control rpa-control" (change)="method()"> <!--(selectionChange)="applyFilter($event.value)"-->
-            <option  value="">Select Category</option>
-              <option *ngFor="let category of categaoriesList" [value]="category.categoryId">{{category.categoryName}}
-            </option>
-          </select>
+                <select [(ngModel)]="selectedcat" class="form-control rpa-control" [disabled]="categaoriesList.length==1"   [value]="categaoriesList.length==1?categaoriesList[0].categoryId:''"  (change)="method()"> <!--(selectionChange)="applyFilter($event.value)"-->
+                    <option  value="">Select Category</option>
+                    <option *ngFor="let category of categaoriesList" [value]="category.categoryId">{{category.categoryName}}</option>
+                </select>
               </div>
           </div>
           <div class="col-md-2 p-0 env-data-tool text-right">

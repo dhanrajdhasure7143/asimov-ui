@@ -546,5 +546,5 @@ mat-paginator button:disabled{
 .environment-tablegrid, .credential-tablegrid {
   width: 100%;
   overflow-x: scroll;
-  height: calc(100vh - 318px);
+  height: calc(100vh - 280px);
 }

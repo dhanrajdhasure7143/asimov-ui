@@ -454,7 +454,7 @@ i.material-icons.expand-open {
 }
 
 .no-item-img {
-  height: calc(100vh - 500px)
+  height: calc(100vh - 330px)
 }
 
 mat-expansion-panel-header .flex-col span {

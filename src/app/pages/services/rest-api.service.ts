@@ -286,6 +286,12 @@ export class RestApiService{
     return this.http.get("/rpa-service/get-bot/"+botid);
   }
 
+
+  getBotImage(botId, version)
+  {
+    return this.http.get(`/rpa-service/get-botImage?bot-id=${botId}&version=${version}`)
+  }
+
   scheduleList(botid){
     let data=""
     return this.http.post('/rpa-service/getschedulesintervals-bot/'+botid,data)
@@ -865,9 +871,10 @@ save_blueprism_config(data)
     }
 
     getAllProjects(roles,name,email){
-      return this.http.get("/platform-service/project/fetchAll?roles="+roles+"&name="+name+"&email="+email+"")
+      return this.http.get("/platform-service/project/fetchAllByDept?roles="+roles+"&name="+name+"&email="+email+"")
     }
 
+ 
     update_project(data:any){
       return this.http.post("/platform-service/project/updateproject", data)
     }
