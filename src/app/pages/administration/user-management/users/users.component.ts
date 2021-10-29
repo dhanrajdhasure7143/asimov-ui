@@ -3,6 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { element } from 'protractor';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
 import Swal from 'sweetalert2';
 
@@ -27,6 +28,7 @@ export class UsersComponent implements OnInit {
   getUsers(){
     this.api.getuserslist(localStorage.getItem("tenantName")).subscribe(resp => {
       this.users = resp
+      this.userslist = [];
       this.users.forEach(element => {
         let roles=[];
         let roleslist=[];
@@ -38,7 +40,7 @@ export class UsersComponent implements OnInit {
           "firstName": element.userId.firstName+" "+element.userId.lastName,
           "email":element.userId.userId,
           "designation":element.userId.designation,
-          "department":element.userId.department,
+          "department":element.departmentsList,
           // "product": "EZFlow",
           "roles": roleslist,
           // "roles": "Admin",
@@ -68,10 +70,9 @@ export class UsersComponent implements OnInit {
       this.api.deleteSelectedUser(data.email).subscribe(resp => {
        console.log("del resp===", resp)
         let value: any = resp
-        this.getUsers();
         if (value.message === "User Deleted Successfully") {
           Swal.fire("Success", "User Deleted Sucessfully!!", "success")
-          
+          this.getUsers();
         }
         else {
           Swal.fire("Error", "Failed to delete user", "error");
@@ -83,7 +84,7 @@ export class UsersComponent implements OnInit {
   }
 
   modifyUser(data){
-    this.router.navigate(['/pages/admin/modify-user'], { queryParams: {id:data.email} });
+    this.router.navigate(['/pages/admin/modify-user'], { queryParams: {id:data.email,role:data.roles, dept:data.department} });
 
   }
 

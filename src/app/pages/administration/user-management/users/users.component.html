@@ -48,7 +48,7 @@
               <ng-container matColumnDef="department">
                   <th mat-header-cell *matHeaderCellDef mat-sort-header>Department</th>
                   <td mat-cell *matCellDef="let element"> 
-                    <span *ngIf="element.department!=null" >{{element.department}}</span>
+                    <span *ngIf="element.department!=null" >{{element.department.join(', ')}}</span>
                       <span *ngIf="element.department==''">-</span> 
                       <span *ngIf=" element.department==null">-</span> 
                   </td>

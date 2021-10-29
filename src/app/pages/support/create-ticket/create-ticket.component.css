@@ -115,7 +115,7 @@ mat-select-value {
 }
 
 .filenameoverflow {
-    margin-right: 23px;
+    margin-right: 50%;
     /* white-space: nowrap;
     overflow: hidden !important;
     text-overflow: ellipsis; */
@@ -270,7 +270,7 @@ mat-select-value {
 .removeallattachment {
     display: flex;
     justify-content: flex-end;
-    margin: 15px 0px;
+    margin-bottom: 5px;
 }
 
 /* .removeallattachment button {
@@ -308,6 +308,7 @@ mat-select-value {
 }
 .attached-name {
     width: 85%;
+    text-align: left;
 }
 .attached-close {
     cursor: pointer;
@@ -418,4 +419,42 @@ span.module-header-title.innertitle {
     max-height: 250px;
     height: auto;
     overflow: auto;
+}
+.tsttooltipbtn {
+    position: relative;
+}
+.tsttooltipbtn:hover .default-img{
+    display: none;
+}
+.tsttooltipbtn:hover .hover-img {
+    display: initial;
+}
+.tsttooltipbtn:hover span.testtooltip {
+    display: block;
+}
+span.testtooltip {
+    position: absolute;
+    top: 32px;
+    right: 0px;
+    background-color: #001c47;
+    color: #fff;
+    width: -moz-max-content;
+    width: max-content;
+    padding: 3px 10px;
+    border-radius: 4px;
+    display: none;
+    z-index: 1;
+}
+span.testtooltip:after {
+    content: "";
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    top: -4px;
+    background-color: #001c47;
+    transform: rotate(45deg);
+    right: 10px;
+}
+.attached-filedet {
+    margin-bottom: 5px;
 }
