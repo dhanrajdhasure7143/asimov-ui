@@ -176,7 +176,10 @@
                                             <div *ngFor="let each_comment of comment;let i=index" class="col-md-12 p-0 Add-comments">
                                                 <div class="Inner-comments">
                                                     <div class="col-md-12 p-0">
-                                                        <span><strong>{{each_comment.createdBy}}</strong></span>
+                                                        <span class="cmntuserdet">
+                                                            <img src="../../../../assets/images/username_icon.png" /> 
+                                                            <strong>{{each_comment.createdBy}}</strong>
+                                                        </span>
                                                         <span class="comment-date pull-right"><span class="comment-dateField"> Created : {{getTime(each_comment.timestamp | date:'MMM d, y, HH:mm')}}</span> 
                                                     
                                                             <span *ngIf='!(isCommentEditable == i)'>
@@ -214,8 +217,14 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-4 noneditdiv">
-                                <div class="col-md-12 pr-0 form-fields Component-filed">
+                            <div class="col-md-4 pl-0 noneditdiv">
+                                <div class="col-md-12 p-0 form-fields">
+                                    <label class="label-control">Status</label>
+                                    <select class="form-control data" name="status_field" [ngClass]="requestKey != undefined || null ? 'disabled' : ''" placeholder="Select Status">
+                                        <option [value]=ticket_status>{{ticket_status}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-12 p-0 form-fields Component-filed">
                                     <label class="label-control">Component<span class="star">*</span></label>
                                     <mat-form-field class="issue-type">
                                         <!-- <mat-label><span *ngIf="component.length==0" style="margin-left: 10px;"> Select Component </span></mat-label> -->
@@ -225,7 +234,7 @@
                                         </mat-select>
                                     </mat-form-field>
                                 </div>
-                                <div class="col-md-12 pr-0 form-fields">
+                                <div class="col-md-12 p-0 form-fields">
                                     <label class="label-control">Select Priority<span class="star">*</span></label>
                                     <select [(ngModel)]='priority' name="priority_field" [ngClass]="requestKey != undefined || null ? 'disabled' : ''" class="form-control data" placeholder="Select Priority">
                                         <option [value]="undefined" disabled hidden>Select Priority</option>
@@ -233,7 +242,7 @@
                                         <option *ngFor="let each of Priority_list;let i=index" [value]="each">{{each}}</option>
                                     </select>
                                 </div>
-                                <div class="col-md-12 pr-0 form-fields">
+                                <div class="col-md-12 p-0 form-fields">
                                     <label class="label-control">Impact<span class="star">*</span></label>
                                     <select [(ngModel)]='impact' name="impact_field" [ngClass]="requestKey != undefined || null ? 'disabled' : ''" class="form-control data" placeholder="Select Impact">
                                         <option value="undefined" hidden disabled>Select Impact</option>
@@ -241,7 +250,7 @@
                                         <option *ngFor="let item of impactArray" [value]=item.impact>{{item.impact}}</option>
                                     </select>
                                 </div>
-                                <div class="col-md-12 pr-0 form-fields">
+                                <div class="col-md-12 p-0 form-fields">
                                     <label class="label-control">Severity<span class="star">*</span></label>
                                     <select [(ngModel)]='severity' name="severity_field" [ngClass]="requestKey != undefined || null ? 'disabled' : ''" class="form-control data" placeholder="Select Severity">
                                         <option value="undefined" hidden disabled>Select Severity</option>
@@ -249,18 +258,13 @@
                                         <option *ngFor="let item of severityLevelsArray" [value]=item.severity>{{item.severity}}</option>
                                     </select>
                                 </div>
-                                <div class="col-md-12 pr-0 form-fields">
+                                <div class="col-md-12 p-0 form-fields">
                                     <label class="label-control">Reporter<span class="star">*</span></label>
                                     <select class="form-control data" name="reporter_field" [ngClass]="requestKey != undefined || null ? 'disabled' : ''" placeholder="Select Reporter">
                                         <option [value]=userName>{{userName}}</option>
                                     </select>
                                 </div>
-                                <div class="col-md-12 form-fields">
-                                    <label class="label-control">Status</label>
-                                    <select class="form-control data" name="status_field" [ngClass]="requestKey != undefined || null ? 'disabled' : ''" placeholder="Select Status">
-                                        <option [value]=ticket_status>{{ticket_status}}</option>
-                                    </select>
-                                </div>
+                                
                             </div>
 
                         </div>    
