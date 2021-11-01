@@ -54,7 +54,15 @@ export class ProcessCategoryOverlayComponent implements OnInit {
     if(this.activatedRoute.snapshot['_routerState'].url.includes('businessProcess')){
       this.isBpmnModule = true;
     }
-    this.rest.getCategoriesList().subscribe(res=> this.categoriesList=res );
+    this.rest.getCategoriesList().subscribe(res=> {
+
+      this.categoriesList=res 
+      if(this.categoriesList.data.length==1){
+
+        this.categoryName=this.categoriesList.data[0].categoryName
+  
+      }
+    });
   }
 
   loopTrackBy(index, term){
