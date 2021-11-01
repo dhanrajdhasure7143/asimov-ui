@@ -42,9 +42,9 @@
                                     <div class="row">
                                         <div class="col-md-12 p-0 form-fields">
                                             <label class="label-control">Description<span class="star">*</span></label>
-                                            <textarea type="text" id="text_new" (keyup)="autoGrowTextZone($event)" name="description_field" [(ngModel)]="description" placeholder="Enter Description" class="form-control"></textarea>
+                                            <textarea type="text" id="text_new" (keyup)="autoGrowTextZone('x')" name="description_field" [(ngModel)]="description" placeholder="Enter Description" class="form-control"></textarea>
                                             <span *ngIf="requestKey != undefined && createRequestData != undefined">
-                                                <div class="CreateTkt-buttons" *ngIf="createRequestData.description != description && description.length != 0">
+                                                <div class="CreateTkt-buttons" id="CreateTkt-btns1" *ngIf="createRequestData.description != description && description.length != 0">
                                                     <button class="btn btn-default" (click)="cancelDescription()">Cancel</button>
                                                     <button class="btn btn-primary" (click)="editDescription()">Save</button>
                                                 </div>
@@ -176,13 +176,15 @@
                                             <div *ngFor="let each_comment of comment;let i=index" class="col-md-12 p-0 Add-comments">
                                                 <div class="Inner-comments">
                                                     <div class="col-md-12 p-0">
-                                                        <span>{{each_comment.createdBy}}</span>
+                                                        <span><strong>{{each_comment.createdBy}}</strong></span>
                                                         <span class="comment-date pull-right"><span class="comment-dateField"> Created : {{getTime(each_comment.timestamp | date:'MMM d, y, HH:mm')}}</span> 
                                                     
                                                             <span *ngIf='!(isCommentEditable == i)'>
-                                                                <span class="comment-date-icons firsticon-edit">
+                                                                <span class="comment-date-icons firsticon-edit" *ngIf="each_comment.createdBy != 'EPSoft IT Admin'">
+                                                                    <!-- <button EPSoft IT Admin> -->
                                                                     <img src="../../../../assets/images/Admin/edit-comment.svg" matTooltip="Edit" (click)="editComment1(i,each_comment)" class="default-img">
-                                                                    <img src="../../../../assets/images/Admin/edit-comment-blue.svg" (click)="editComment1(i,each_comment)" class="hover-img">
+                                                                    <img  src="../../../../assets/images/Admin/edit-comment-blue.svg" (click)="editComment1(i,each_comment)" class="hover-img">
+                                                                <!-- </button> -->
                                                                 </span>
                                                                 <span class="comment-date-icons">
                                                                     <img src="../../../../assets/images/Admin/delete-comment.svg" matTooltip="Delete" (click)="deleteComment(each_comment)" class="default-img">

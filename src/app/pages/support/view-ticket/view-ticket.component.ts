@@ -117,7 +117,7 @@ export class ViewTicketComponent implements OnInit {
       this.ticket_status = res_data.status;
       // this.isLoading = false;
       setTimeout(() => {
-        this.autoGrowTextZone();
+        this.autoGrowTextZone('y');
       }, 100);
     });
   }
@@ -283,8 +283,8 @@ export class ViewTicketComponent implements OnInit {
     this.isLoading = true;
     let req_obj = {
       'requestKey': this.requestKey,
-      'commentBody': comment,
-      "createdBy":this.userName
+      'jiracommentId': obj.commentId,
+      'commentBody': comment
     };
 
     this.api.editComment(req_obj).subscribe(res => {
@@ -609,18 +609,22 @@ export class ViewTicketComponent implements OnInit {
   cancelDescription() {
     this.description = this.createRequestData.description;
     setTimeout(() => {
-    this.autoGrowTextZone();
+    this.autoGrowTextZone('z');
     }, 100);
   }
   
-autoGrowTextZone() {
+autoGrowTextZone(value) {
   // let e = document.getElementById('text_new');
   // e.style.height = "0px";
   // e.style.height = (e.scrollHeight + 10)+"px";
   let element =document.getElementById("text_new")
     element.style.height ="5px";
     element.style.height = (element.scrollHeight+5)+"px";
-    element.scrollIntoView({behavior: "auto",block: "end", inline: "nearest"});
+    let ele=document.getElementById('CreateTkt-btns1')
+    if(value=='x')
+    ele.scrollIntoView({behavior: "auto",block: "end", inline: "nearest"});
+    if(value=='z')
+    element.scrollIntoView();
 }
 autoGrowcommentsBox() {
   let element =document.getElementById("text_new1")
