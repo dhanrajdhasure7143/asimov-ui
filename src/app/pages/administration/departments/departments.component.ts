@@ -157,4 +157,12 @@ export class DepartmentsComponent implements OnInit {
       this.users_list=users;
     })
   }
+  
+  applyFilter(filterValue: string) {
+    this.dataSource2.filter = filterValue.trim().toLowerCase();
+    //console.log(this.dataSource2.filter);
+    if (this.dataSource2.paginator) {
+      this.dataSource2.paginator.firstPage();
+    }
+  }
 }

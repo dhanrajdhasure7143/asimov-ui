@@ -1146,6 +1146,8 @@ updateUserRoleDepartment(data):Observable<any>{
   return this.http.put<any>('/authorizationservice/api/v1/user/role/userUpdate', data)
 }
  
- 
+getProjectIntitiatives():Observable<any>{
+  return this.http.get<any>('/platform-service/project/get-initiatives')
+ }
 
 }

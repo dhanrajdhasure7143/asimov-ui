@@ -60,3 +60,12 @@ span.testtooltip:before {
 .newinntalx a:hover img.hover-img {
   display: initial;
 }
+
+.departmentsearch {
+  position: relative;
+}
+.departmentsearch img.testplus {
+  position: absolute;
+  right: 15px;
+  top: 9px;
+}
