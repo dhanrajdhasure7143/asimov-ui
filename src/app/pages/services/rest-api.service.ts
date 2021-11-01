@@ -653,6 +653,10 @@ export class RestApiService{
       return this.http.get<any>('/api/user/tenants/'+tenantid +'/users');
     }
 
+    getAllUsersByDept()
+    {
+      return this.http.get("/platform-service/project/getallUsersByDept");
+    }
     getProcesslogsdata(processId)
     {
       return this.http.get("/rpa-service/process-logs/"+processId);
@@ -744,7 +748,10 @@ save_blueprism_config(data)
     {
       return this.http.post("/rpa-service/management/get-uipath-bots","");
     }
-	
+	update_uipath_env(data)
+  {
+     return this.http.put("/rpa-service/management/update-source-details",data)
+  }
 	getslalist()
     {
       return this.http.get("/rpa-service/list-sla-confuguration");

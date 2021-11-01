@@ -17,7 +17,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 })
 
 export class RpaDatabaseConnectionsComponent implements OnInit {
-  displayedColumns1: string[] = ["check","connectiontName","dataBaseType","hostAddress","portNumber","username","password","databasename","schemaName","activeStatus","createdTimeStamp","createdBy"];
+  displayedColumns1: string[] = ["check","connectiontName","category","dataBaseType","hostAddress","portNumber","username","password","databasename","schemaName","activeStatus","createdTimeStamp","createdBy"];
   public toggle:boolean;
   dataSource2:MatTableDataSource<any>;
   public dbupdateflag: boolean;
@@ -88,7 +88,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
   ngOnInit() {
   //   //     document.getElementById("filters").style.display='block';
     this.dt.changeHints(this.hints.rpadbchints);
-    this.getallDBConnection();
+    //this.getallDBConnection();
     this.getCategories()
     this.passwordtype1=false;
     this.passwordtype2=false;
@@ -123,6 +123,10 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
            this.DBcheckeddisabled = true;
          }
         this.dbconnections.sort((a,b) => a.connectionId > b.connectionId ? -1 : 1);
+        this.dbconnections=this.dbconnections.map(item=>{
+          item["categoryName"]=this.categoryList.find(item2=>item2.categoryId==item.categoryId).categoryName;
+          return item;
+        })
         this.dataSource2= new MatTableDataSource(this.dbconnections);
         setTimeout(() => {
           this.sortmethod(); 
@@ -281,6 +285,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
   resetDBForm(){
     this.insertdbForm.reset();
     this.insertdbForm.get("dataBaseType").setValue("");
+    this.insertdbForm.get("categoryId").setValue(this.categoryList.length==1?this.categoryList[0].categoryId:'0')
     this.insertdbForm.get("activeStatus").setValue(true);
     this.passwordtype1=false;
   }
@@ -483,6 +488,7 @@ updatedbdata()
       if(response.errorMessage==undefined)
       {
         this.categoryList=response.data;
+        this.getallDBConnection();
       }
     })
   }
