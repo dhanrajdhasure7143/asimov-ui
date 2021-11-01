@@ -616,7 +616,7 @@ span.testtooltip:before {
 .prjdetails-headerbuttons {
   margin-left: 10px;
 }
-select.small-input:focus-visible, input.small-input:focus-visible {
+select.small-input:focus-visible, input.small-input:focus-visible, textarea.small-input:focus-visible {
   outline: 1px solid #00a1e3 !important;
 }
 .project-data span.tab-number:focus-visible {
@@ -633,4 +633,17 @@ input.small-input[type="date"] {
 }
 input.small-input[type="date"]::-webkit-calendar-picker-indicator {
   opacity: 0;
+}
+.project-info .project-data {
+  width: 100%;
+}
+.project-data .prj-title {
+  width: 30%;
+}
+.project-data textarea.small-input {
+  margin-top: 12px;
+}
+span.projectdesc {
+  font-size: 13px;
+  opacity: 0.6;
 }
