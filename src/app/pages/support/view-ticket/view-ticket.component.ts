@@ -610,6 +610,7 @@ autoGrowTextZone() {
   let element =document.getElementById("text_new")
     element.style.height ="5px";
     element.style.height = (element.scrollHeight+5)+"px";
+    element.scrollIntoView({behavior: "auto",block: "end", inline: "nearest"});
 }
 autoGrowcommentsBox() {
   let element =document.getElementById("text_new1")

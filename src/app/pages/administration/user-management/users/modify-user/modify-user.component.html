@@ -5,36 +5,32 @@
                 <i class="fas fa-arrow-left" aria-hidden="true"></i>
             </span>
             <span class="module-header-title">
-                <span class="module-parent-title">Users</span>
+                <span class="module-parent-title">Update User</span>
             </span>
+            <div class="ml-auto pull-right">
+                <!-- <button (click)="reseteditdepartment()" class="btn btn-default">Reset</button> -->
+                <button [disabled]="editUserForm.invalid" (click)="updateUser()" class="btn btn-primary btn-update">Save</button>
+            </div>
         </div>
         <div class="container-fluid  h-scroll">
             <div class="maindivfoprm">
-                <div class="grid">
-                    <div class="create-heading">Update User</div>
-                    <hr>
-                    <form [formGroup]="editUserForm"  (ngSubmit)="updateUser()">
-                        <div class="row">
-                            <div class="col-md-12 p-0">
-                                <div class="col-md-6 pl-0">
-                                    <div class="row">
-                                        <div class="col-md-12 p-0 form-fields">
-                                            <label class="label-control">Username<span class="star">*</span></label>
-                                            <input type="text" disabled formControlName="email"  placeholder="Enter Email" maxlength="256" class="form-control data"  [ngClass]="editUserForm.get('email').valid?'enteredfield-color':'inputfield-color'">
-                                                                                   
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 p-0 form-fields">
-                                        <label class="label-control">Add Department(s)<span class="star">*</span></label>
-                                        <ng-select  formControlName="departments"  [multiple]="true"  placeholder="Select departments" required>
-                                        <ng-option *ngFor="let category of categories" [value]="category.categoryId">{{category.categoryName}}</ng-option>
-                                       </ng-select>
-
-                                       <span *ngIf="editUserForm.get('departments').invalid && editUserForm.get('departments').touched" class="errspan required">Departments Required*</span>
-                                      </div>
-
-                                      <div class="col-md-12 p-0 form-fields">
-                                          <label class="label-control">Add Role<span class="star">*</span></label>
+                  
+                <form [formGroup]="editUserForm"  (ngSubmit)="updateUser()">
+                    <div class="row fcont">
+                        
+                        <div class="col-md-12 p-0 form-fields">
+                            <label class="label-control">Username<span class="star">*</span></label>
+                            <input type="text" disabled formControlName="email"  placeholder="Enter Email" maxlength="256" class="form-control data"  [ngClass]="editUserForm.get('email').valid?'enteredfield-color':'inputfield-color'">
+                        </div>
+                        <div class="col-md-12 p-0 form-fields">
+                            <label class="label-control">Add Department(s)<span class="star">*</span></label>
+                            <ng-select  formControlName="departments"  [multiple]="true"  placeholder="Select departments" required>
+                                <ng-option *ngFor="let category of categories" [value]="category.categoryId">{{category.categoryName}}</ng-option>
+                            </ng-select>
+                            <span *ngIf="editUserForm.get('departments').invalid && editUserForm.get('departments').touched" class="errspan required">Departments Required*</span>
+                        </div>
+                        <div class="col-md-12 p-0 form-fields">
+                            <label class="label-control">Add Role<span class="star">*</span></label>
                                           <!-- <ng-select name = "multiroles" [multiple]="true" [items] =  "allRoles" [(ngModel)] = "roles"
                                           bindValue = "name"
                                           bindLabel = "name" required>
@@ -47,24 +43,16 @@
                                               <option *ngFor="let role of allRoles" [value]="role.id">
                                                   {{role.name}}</option>
                                           </select> -->
-                                          <ng-select  formControlName="role" placeholder="Select Role" [multiple]="true" required>
-                                          <ng-option *ngFor="let role of allRoles" [value]="role.id">{{role.name}}</ng-option>
-                                         </ng-select>
-
-                                         <span *ngIf="editUserForm.get('role').invalid && editUserForm.get('role').touched" class="errspan required">Role Required*</span>
-                                        </div>
-                                   
-                                </div>
-                                
-                            </div>    
-                        
+                            <ng-select  formControlName="role" placeholder="Select Role" [multiple]="true" required>
+                                <ng-option *ngFor="let role of allRoles" [value]="role.id">{{role.name}}</ng-option>
+                            </ng-select>
+                            <span *ngIf="editUserForm.get('role').invalid && editUserForm.get('role').touched" class="errspan required">Role Required*</span>
                         </div>
-                    </form>
-                    <div class="pull-right">
-                        <!-- <button (click)="reseteditdepartment()" class="btn btn-default">Reset</button> -->
-                        <button [disabled]="editUserForm.invalid" (click)="updateUser()" class="btn btn-primary btn-update">Save</button>
+                        
                     </div>
-                </div>
+                    
+                </form>
+               
             </div>
         </div>
     </mat-card>

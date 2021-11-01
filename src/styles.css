@@ -2683,3 +2683,6 @@ span.pdicon {
 .Attached-contents .mat-progress-bar-fill::after {
   background: #4FA908  !important;
 }
+.ng-select .ng-select-container {
+  min-height: 34px !important;
+}
