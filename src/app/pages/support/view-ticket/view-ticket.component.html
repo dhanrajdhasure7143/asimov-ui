@@ -157,7 +157,7 @@
                                 
 
                             <!-- <div class="col-md-4 h-100"> -->
-                                <!-- <div class="col-md-12 p-0 form-fields commentsMain-div">
+                                <div class="col-md-12 p-0 form-fields commentsMain-div">
                                     <label class="label-control">Comments</label>
                                     <div class="comments-div">
                                         <div class="comments-box col-md-12 p-0">
@@ -176,6 +176,7 @@
                                             <div *ngFor="let each_comment of comment;let i=index" class="col-md-12 p-0 Add-comments">
                                                 <div class="Inner-comments">
                                                     <div class="col-md-12 p-0">
+                                                        <span>{{each_comment.createdBy}}</span>
                                                         <span class="comment-date pull-right"><span class="comment-dateField"> Created : {{getTime(each_comment.timestamp | date:'MMM d, y, HH:mm')}}</span> 
                                                     
                                                             <span *ngIf='!(isCommentEditable == i)'>
@@ -208,7 +209,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div> -->
+                                </div>
                             </div>
 
                             <div class="col-md-4 noneditdiv">
@@ -250,6 +251,12 @@
                                     <label class="label-control">Reporter<span class="star">*</span></label>
                                     <select class="form-control data" name="reporter_field" [ngClass]="requestKey != undefined || null ? 'disabled' : ''" placeholder="Select Reporter">
                                         <option [value]=userName>{{userName}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-12 form-fields">
+                                    <label class="label-control">Status</label>
+                                    <select class="form-control data" name="status_field" [ngClass]="requestKey != undefined || null ? 'disabled' : ''" placeholder="Select Status">
+                                        <option [value]=ticket_status>{{ticket_status}}</option>
                                     </select>
                                 </div>
                             </div>

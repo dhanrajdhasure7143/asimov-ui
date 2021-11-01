@@ -58,6 +58,7 @@ export class ViewTicketComponent implements OnInit {
   dataSource: MatTableDataSource<any>;
   listof_uploadFiles: any[];
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  ticket_status: any;
 
   constructor(
     public formBuilder: FormBuilder,
@@ -69,6 +70,8 @@ export class ViewTicketComponent implements OnInit {
     var deCryptUserDetails = this.jwtHelper.decodeToken(userDetails);
     this.userId = deCryptUserDetails.userDetails.userId;
     this.userName = deCryptUserDetails.userDetails.userName;
+    console.log("name", this.userName,"id", this.userId);
+    
     this.activateRouter.queryParams.subscribe(res => {
       if (res) {
         this.requestKey = res.requestKey;
@@ -111,6 +114,7 @@ export class ViewTicketComponent implements OnInit {
       this.impact = res_data.impact;
       this.severity = res_data.severity;
       this.priority = res_data.priority;
+      this.ticket_status = res_data.status;
       // this.isLoading = false;
       setTimeout(() => {
         this.autoGrowTextZone();
@@ -133,6 +137,8 @@ export class ViewTicketComponent implements OnInit {
 
   getRequestComments(id) {
     this.api.getRequestComments(id).subscribe((res: any) => {
+      console.log(res);
+      
       this.commentRequest = res;
       if (this.commentRequest.length > 0) {
         this.comment = this.commentRequest;
@@ -237,8 +243,12 @@ export class ViewTicketComponent implements OnInit {
   addNewComment(value) {
     this.isLoading = true;
     let req_body = {
+
+      //'requestKey': this.requestKey,
+      //"commentBody": value
       'requestKey': this.requestKey,
-      "commentBody": value
+      'commentBody': value,
+      "createdBy":this.userName
     };
     this.api.createCommentInRequest(req_body).subscribe(res => {
       if (res == 'comment created sucessfully') {
@@ -273,8 +283,8 @@ export class ViewTicketComponent implements OnInit {
     this.isLoading = true;
     let req_obj = {
       'requestKey': this.requestKey,
-      'jiracommentId': obj.commentId,
-      'commentBody': comment
+      'commentBody': comment,
+      "createdBy":this.userName
     };
 
     this.api.editComment(req_obj).subscribe(res => {

@@ -1069,7 +1069,7 @@ getvaluechainprocess(id)
     return this.http.post('/api/servicedesk/createCommentInRequest',data,{ responseType: "text" })
   }
   editComment(comment:any){
-    return this.http.post('/api/servicedesk/editComment',comment, { responseType: "text" });
+    return this.http.post('/api/servicedesk/createCommentInRequest',comment, { responseType: "text" });
   }
   editSummary(id:any,data:any){
     return this.http.post('/api/servicedesk/editSummary?request='+id,data, { responseType: "text" })
