@@ -19,6 +19,7 @@ export class CreateProjectFormComponent implements OnInit {
   mindate= moment().format("YYYY-MM-DD");
   @Input('users_list') public users_list: any[];
   @Input('processes') public processes:any[];
+  @Input('initiatives_list') public initiatives_list:any[];
   selected_process_names:any=[];
   @Output() oncreate = new EventEmitter<String>();
   date = new Date();

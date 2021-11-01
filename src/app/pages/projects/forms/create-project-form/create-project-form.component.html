@@ -20,11 +20,18 @@
                 </div>
                 <div class="form-fields col-md-6 pr-0">
                     <label class="label-control">Initiatives<span class="star">*</span></label>
-                    <select formControlName="initiatives" class="form-control data"
+                    <!-- <select formControlName="initiatives" class="form-control data"
                         [ngClass]="insertForm2.get('initiatives').valid?'enteredfield-color':'inputfield-color'">
                         <option value="">Select Initiatives</option>
                         <option value="Process Improvement">Process Improvement</option>
                         <option value="Business Improvement">Business Improvement</option>
+                    </select> -->
+                    <select formControlName="initiatives" class="form-control data"
+                        [ngClass]="insertForm2.get('initiatives').valid?'enteredfield-color':'inputfield-color'">
+                        <option [value]="null" disabled hidden>Select Initiative</option>
+                        <option value="" [selected]="true">Select Initiative</option>
+                        <option *ngFor="let initiativedata of initiatives_list" [value]="initiativedata.id">
+                            {{initiativedata.initiative|titlecase}}</option>
                     </select>
                     <span
                         *ngIf="insertForm2.get('initiatives').invalid && insertForm2.get('initiatives').touched"

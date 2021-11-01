@@ -16,7 +16,7 @@
             <div class="maindivfoprm">
                 <!-- <div class="create-heading">Invite User</div> -->
                 <form [formGroup]="inviteUserForm" #adduser="ngForm" (ngSubmit)="inviteUser()">
-                    <div class="row fcont">
+                    <!-- <div class="row fcont"> -->
                         
                         <div class="col-md-12 p-0 form-fields">
                             <label class="label-control">Email<span class="star">*</span></label>
@@ -29,24 +29,27 @@
                             </span>
                             <span class='errspan required' *ngIf="inviteeMail"> Email is required</span>
                                        
-                        </div>
-                        <div class="col-md-12 p-0 form-fields">
-                            <label class="label-control">Add Department(s)<span class="star">*</span></label>
-                            <ng-select  formControlName="departments"  [multiple]="true"  placeholder="Select departments"
-                                    [(ngModel)]="departments"  required>
-                                <ng-option *ngFor="let category of categories" [value]="category.categoryId">{{category.categoryName}}</ng-option>
-                            </ng-select>
-                            <span *ngIf="inviteUserForm.get('departments').invalid && inviteUserForm.get('departments').touched" class="errspan required">Departments Required*</span>
-                        </div>
-                        <div class="col-md-12 p-0 form-fields">
-                            <label class="label-control">Add Role<span class="star">*</span></label>
-                            <select formControlName="role" class="form-control data"
-                                    [ngClass]="inviteUserForm.get('role').valid?'enteredfield-color':'inputfield-color'">
-                                <option [value]="null" disabled hidden>Select Role</option>
-                                <option value="" [selected]="true">Select Role</option>
-                                <option *ngFor="let role of allRoles" [value]="role.id">
-                                        {{role.name}}</option>
-                            </select>
+                                        </div>
+                                    <!-- </div> -->
+                                        <div class="col-md-12 p-0 form-fields">
+                                          <label class="label-control">Department(s)<span class="star">*</span></label>
+                                          <ng-select  formControlName="departments"  [multiple]="true"  placeholder="Select departments"
+                                          [(ngModel)]="departments"  required>
+                                          <ng-option *ngFor="let category of categories" [value]="category.categoryId">{{category.categoryName}}</ng-option>
+                                         </ng-select>
+
+                                         <span *ngIf="inviteUserForm.get('departments').invalid && inviteUserForm.get('departments').touched" class="errspan required">Departments Required*</span>
+                                        </div>
+
+                                        <div class="col-md-12 p-0 form-fields">
+                                            <label class="label-control">Role<span class="star">*</span></label>
+                                            <select formControlName="role" class="form-control data"
+                                                [ngClass]="inviteUserForm.get('role').valid?'enteredfield-color':'inputfield-color'">
+                                                <option [value]="null" disabled hidden>Select Role</option>
+                                                <option value="" [selected]="true">Select Role</option>
+                                                <option *ngFor="let role of allRoles" [value]="role.id">
+                                                    {{role.name}}</option>
+                                            </select>
                                             <!-- <ng-select  formControlName="role" placeholder="Select Role"
                                             [(ngModel)]="role"  required>
                                             <ng-option *ngFor="let category of categories" [value]="category.categoryId">{{category.categoryName}}</ng-option>
@@ -55,7 +58,7 @@
                             <span *ngIf="inviteUserForm.get('role').invalid && inviteUserForm.get('role').touched" class="errspan required">Role Required*</span>
                         </div>
                                                 
-                    </div>
+                    <!-- </div> -->
                 </form>
                 <!-- <div class="pull-right">
                     <button (click)="resetUserInvite()" class="btn btn-default">Cancel</button>

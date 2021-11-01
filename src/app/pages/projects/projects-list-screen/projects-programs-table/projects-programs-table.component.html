@@ -505,7 +505,7 @@
           <ng-container matColumnDef="initiatives">
               <th mat-header-cell *matHeaderCellDef mat-sort-header>Initiative</th>
               <td mat-cell *matCellDef="let element"> 
-                <span *ngIf="element.initiatives!=null" [matTooltip]="element.initiatives" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below">{{getreducedValue(element.initiatives)}}</span>
+                <span *ngIf="element.initiatives!=null" [matTooltip]="element.initiatives|initiativePipe : initiatives|titlecase" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below">{{getreducedValue(element.initiatives|initiativePipe : initiatives|titlecase)}}</span>
                   <span *ngIf="element.initiatives==''">-</span>
                   <span *ngIf="element.initiatives==null">-</span>
           </ng-container>
