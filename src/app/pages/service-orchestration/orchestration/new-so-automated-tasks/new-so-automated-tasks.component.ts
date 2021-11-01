@@ -798,7 +798,8 @@ resetsla(){
   gethumanslist()
   {
     let tenant=localStorage.getItem("tenantName");
-    this.rest.getuserslist(tenant).subscribe(data=>
+    //this.rest.getuserslist(tenant).subscribe(data=>
+    this.rest.getAllUsersByDept().subscribe(data=>
     {
         this.humans_list=data;
     })

@@ -358,9 +358,11 @@ export class RpaStudioComponent implements OnInit {
             //   this.designerInstance.current_instance=item.
             // }
             
-            this.spinner.hide();
+            //
           });
         },2000)
+
+        this.spinner.hide();
       }
       else
       {

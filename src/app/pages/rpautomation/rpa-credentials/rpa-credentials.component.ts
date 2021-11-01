@@ -16,7 +16,7 @@ import { NgxSpinnerService } from "ngx-spinner";
   styleUrls: ['./rpa-credentials.component.css']
 })
 export class RpaCredentialsComponent implements OnInit {
-  displayedColumns1: string[] = ["check","userName","password","serverName","createdTimeStamp","createdBy"];
+  displayedColumns1: string[] = ["check","userName","password","serverName","category","createdTimeStamp","createdBy"];
   public toggle:boolean;
   dataSource2:MatTableDataSource<any>;
   public updateflag: boolean;
@@ -123,6 +123,11 @@ inputNumberOnly(event){
          { 
            this.Credcheckeddisabled = false;
            this.credentials.sort((a,b) => a.credentialId > b.credentialId ? -1 : 1);
+           this.credentials=this.credentials.map(item=>{
+            item["categoryName"]=this.categoryList.find(item2=>item2.categoryId==item.categoryId).categoryName;
+            return item;
+          })
+         
            setTimeout(() => {
             this.sortmethod(); 
           }, 80);
@@ -206,6 +211,9 @@ inputNumberOnly(event){
 
   resetCredForm(){
     this.insertForm.reset();
+    this.insertForm.get("categoryId").setValue(this.categoryList.length==1?this.categoryList[0].categoryId:'0')
+    this.insertForm.get("serverName").setValue("")
+    
     this.passwordtype1=false;
   }
 
@@ -258,6 +266,7 @@ updatecreddata()
         this.updateForm.get("userName").setValue(this.credupdatedata["userName"]);
         this.updateForm.get("password").setValue(this.credupdatedata["password"]);
         this.updateForm.get("serverName").setValue(this.credupdatedata["serverName"]);
+        this.updateForm.get("categoryId").setValue(this.credupdatedata["categoryId"]);
         this.updateForm.get("inBoundAddress").setValue(this.credupdatedata["inBoundAddress"]);
         this.updateForm.get("inBoundAddressPort").setValue(this.credupdatedata["inBoundAddressPort"]);
         this.updateForm.get("outBoundAddress").setValue(this.credupdatedata["outBoundAddress"]);
