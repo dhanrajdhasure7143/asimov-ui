@@ -133,7 +133,7 @@
                         *ngIf="projectDetails.initiatives==undefined ||  projectDetails.initiatives==null">-</span>
                       <span class="tab-text labelcont"
                         *ngIf="projectDetails.initiatives!=undefined &&  projectDetails.initiatives!=null">
-                        {{projectDetails.initiatives}}
+                        {{projectDetails.initiatives|initiativePipe : initiatives|titlecase}}
                       </span>
                     </div>
                   </div>

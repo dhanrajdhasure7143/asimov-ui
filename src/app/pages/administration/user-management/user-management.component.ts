@@ -14,10 +14,16 @@ export class UserManagementComponent implements OnInit {
 
   ngOnInit(): void {
     this.userRoles = localStorage.getItem("userRole")
+
+    if(localStorage.getItem("department_tab")){
+      this.selectedTab = Number(localStorage.getItem("department_tab"));
+      this.check_tab = Number(localStorage.getItem("department_tab"));
+      }
   }
 
   onTabChanged(event)
   {
+    localStorage.setItem("department_tab", event.index)
     this.check_tab=event.index;
     if(this.check_tab==1){
       localStorage.removeItem('department_search');

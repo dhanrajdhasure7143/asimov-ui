@@ -7,38 +7,39 @@
       
           
             <div class="col-md-12 p-0">
-              <div class="col-md-3 pl-0">
-                <select  name="category" (change)="searchByCategory(departmentName)" #category="ngModel" [(ngModel)]="departmentName" panelClass="overlayMatSelect" class="form-control department-feilds">
+              <div class="col-md-3 pl-0 departmentsearch">
+                <!-- <select  name="category" (change)="searchByCategory(departmentName)" #category="ngModel" [(ngModel)]="departmentName" panelClass="overlayMatSelect" class="form-control department-feilds">
                   <option value="" disabled hidden >Select Department</option>
                   <option value="null" disabled hidden >Select Department</option>
                   <option value="undefined" disabled hidden >Select Department</option>
                   <option *ngFor="let eachcat of departments.data;let i=index;trackBy:loopTrackBy" [value]="eachcat.categoryName">
                           {{eachcat.categoryName| titlecase}}</option>
-                </select>
+                </select> -->
+                <input class="form-control toolbar-search bps-home-fileds" matInput (keyup)="applyFilter($event.target.value)"
+                  placeholder="Search Department">
+                <img src="../../../../assets/images/search.svg" alt="" class="testplus">
               </div>
               <div class="col-md-9 p-0 env-data-tool text-right">
                 <div>
-                  <button (click)="resetSearch()" id="deptreset" class="tsttooltipbtn">
+                  <!-- <button (click)="resetSearch()" id="deptreset" class="tsttooltipbtn">
                     <img src="../../../../../assets/images/RPA/icon_latest/reset-blue.svg" class="testplus" >
                     <span class="testtooltip">Reset</span>
-                  </button >
+                  </button > -->
                 </div>
                 <div>
-                  <button  class="tsttooltipbtn" routerLink="/pages/admin/create-department">
-                    <img  src="../../../../assets/images/RPA/icon_latest/new-blue.svg" class="testplus"/>
-                    <span class="testtooltip">Create New</span>
+                  <button  class="btn btn-primary" routerLink="/pages/admin/create-department">
+                    <img  src="../../../../assets/images/Projects/White-plus.svg" class="testplus"/>
+                    Create New
                   </button>
                 </div>
                 <div *ngIf="Departmentdeleteflag==true">
-                  <button value="Delete" id="deletebtn" class="tsttooltipbtn" (click)="deleteDepartment()">
-                    <img src='../../../../assets/images/RPA/icon_latest/delete-blue.svg' class="testplus">
-                    <span class="testtooltip">Delete Department</span>
+                  <button value="Delete" data-toggle="tooltip" data-placement="top" title="Delete Department" id="deletebtn" class="btn btn-primary" (click)="deleteDepartment()">
+                    Delete
                   </button>
                 </div> 
                 <div *ngIf="Departmentdeleteflag==false">
-                  <button id="deletebtn" class="tsttooltipbtn" title="Delete Department">
-                    <img src='../../../../assets/images/RPA/icon_latest/delete-dis.svg' class="testplus">
-                    <span class="testtooltip">Delete Department</span>
+                  <button id="deletebtn" data-toggle="tooltip" data-placement="top" title="Delete Department" class="btn btn-primary" title="Delete Department" disabled>
+                    Delete
                   </button>
                 </div>
               </div>          

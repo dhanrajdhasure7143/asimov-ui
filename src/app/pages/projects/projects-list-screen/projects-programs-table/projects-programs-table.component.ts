@@ -54,7 +54,7 @@ export class ProjectsProgramsTableComponent implements OnInit {
   public name: any;
   email: any;
   userName: string;
-
+  initiatives: any;
   //   public createprogram:FormGroup;
   // updateddata: any;
   // public updateflag: boolean;
@@ -179,6 +179,7 @@ export class ProjectsProgramsTableComponent implements OnInit {
     this.email=localStorage.getItem('ProfileuserId');
 
     this.mindate= moment().format("YYYY-MM-DD");
+    this.getInitiatives();
   }
 
   
@@ -755,5 +756,10 @@ getreducedValue(value) {​​​​​​​​
   return value;
 }​​​​​​​​
 
-  
+getInitiatives(){
+  this.api.getProjectIntitiatives().subscribe(res=>{
+    let response:any=res;
+    this.initiatives=response;
+  })
+}
 }
