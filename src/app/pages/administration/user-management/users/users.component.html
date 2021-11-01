@@ -96,9 +96,9 @@
                 </ng-container>
 
                 <ng-container matColumnDef="action">
-                    <th mat-header-cell *matHeaderCellDef> Actions</th>
-                    <td mat-cell *matCellDef="let element" class="action-link tablacs"> 
-                      <div class="newinntalx">
+                    <th  mat-header-cell *matHeaderCellDef> Actions</th>
+                    <td  mat-cell *matCellDef="let element" class="action-link tablacs"> 
+                      <div *ngIf="!(element.email===loggedinUser)" class="newinntalx">
                         
                         <a  (click)="modifyUser(element)" matTooltip="Edit User">
                           <img src="../../../../assets/images/Projects/edit-black.svg" class="default-img">
@@ -118,17 +118,17 @@
                     <tr class="row-highlight mat-footer" mat-footer-row  *matFooterRowDef="['noData']" [ngClass]="{'hide':!(userslist==undefined ||  userslist=='No records found')}"></tr>
           </table>
 
-              <div>
-                <div *ngIf="userslist.length==0" class="text-center">
-                  <img  src="../../../../../assets/images/RPA/No-Items.svg" class="no-item-img">
-                  <h3 class="text-center">No Items to display</h3>
-                </div>
-              </div>
-        </div>
-        <div>
-          <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons]="true" class="newpaginationdiv"></mat-paginator>
-        </div>
+              
+             
+      </div> 
+      <mat-paginator #paginator [pageSize]="7" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons]="true" class="newpaginationdiv"></mat-paginator>
       </div>
     </mat-card>
   
   </div>
+
+  <div class="spinoverlay" *ngIf="userslist.length==0">
+    <div class="spincenter">
+        <img src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader" />
+    </div>
+</div>

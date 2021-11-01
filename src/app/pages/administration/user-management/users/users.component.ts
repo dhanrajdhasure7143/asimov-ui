@@ -19,13 +19,15 @@ export class UsersComponent implements OnInit {
   userslist = [];
   dataSource2:MatTableDataSource<any>;
   displayedColumns: string[] = ["firstName","email","designation","department","roles","created_at","status","action"];
+  loggedinUser: string;
 
-  constructor(private api: RestApiService, private router: Router) { }
+  constructor(private api: RestApiService, private router: Router){ }
 
   ngOnInit(): void {
     this.getUsers();
   }
   getUsers(){
+    this.loggedinUser = localStorage.getItem('ProfileuserId');
     this.api.getuserslist(localStorage.getItem("tenantName")).subscribe(resp => {
       this.users = resp
       this.userslist = [];
@@ -51,9 +53,10 @@ export class UsersComponent implements OnInit {
        });
        this.dataSource2 = new MatTableDataSource(this.userslist);
        this.dataSource2.paginator=this.paginator;
-       this.dataSource2.sort = this.sort;    
-          })
-  }
+       this.dataSource2.sort = this.sort;  
+   
+          })   
+   }
 
   deleteUser(data) {
 
