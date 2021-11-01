@@ -63,22 +63,31 @@
       <div class="project-details-div">
         <div class="row newprhcl">
           <div class="col-md-8 p-0 project-info">
-            <img src="..\assets\images\Projects\project_icon.svg" alt="">
-
+            <div>
+              <img src="..\assets\images\Projects\project_icon.svg" alt="">
+            </div>
             <div class="project-data">
+              <div class="prj-title" *ngIf="editdata==false">
+                <span class="tab-text"
+                  *ngIf="projectDetails.projectName==null || projectDetails.projectName==undefined">-</span>
+                <span class="tab-text">{{projectDetails.projectName |uppercase}}</span>
+              </div>
+              <div class="prj-title" *ngIf="editdata==true">
+                <input type="text" (change)="projectDetails.projectName=$event.target.value"
+                  [value]="(projectDetails.projectName==undefined||projectDetails.projectName==null)?'':projectDetails.projectName"
+                  class="small-input" placeholder="Enter Project Name">
+              </div>
 
-              <span (change)="projectDetails.projectName=$event.target.value" [attr.contenteditable]="editdata"
-                class="tab-number h3  clickable  '+(editdata==true?'focus-data':'')">
-                {{projectDetails.projectName |uppercase}}
-              </span>
-              <span class="clickable text-success " *ngIf="editdata.projectName==true" (click)="editdata.projectName=false">&nbsp;<i class="fa fa-check"></i></span>
-
-              
-              <span (change)="projectDetails.description=$event.target.value" [attr.contenteditable]="editdata"
-                [class]=" 'projdesc clickable '+(editdata.description==true?'focus-data':'')">
-                {{projectDetails.description}}
-              </span>
-              <span class="clickable text-success " *ngIf="editdata.description==true" (click)="editdata.description=false">&nbsp;<i class="fa fa-check"></i></span>
+              <div *ngIf="editdata==false">
+                <span class="projectdesc"
+                  *ngIf="projectDetails.description==undefined || projectDetails.description==null || projectDetails.description=='' " class="h6">-</span>
+                  <span class="projectdesc">{{projectDetails.description}}</span>
+              </div>  
+              <div *ngIf="editdata==true">
+                <textarea (change)="projectDetails.description=$event.target.value"
+                [value]="(projectDetails.description==undefined||projectDetails.description==null)?'':projectDetails.description"
+                class="small-input" placeholder="Enter Project Description"></textarea>                    
+              </div> 
             </div>
           </div>
           <div class="col-md-4 pr-0">
@@ -243,14 +252,14 @@
                 <div class="col-sm-2 p-0">
                 <div class="mainset">
                   <span class="labeltit">Start Date</span>
-
-                  <div>
-                    <span
-                      *ngIf="projectDetails.startDate != null && projectDetails.startDate != undefined && projectDetails.startDate !='' "
+                  <div *ngIf="editdata==false">
+                    <span *ngIf="projectDetails.startDate != null && projectDetails.startDate != undefined && projectDetails.startDate !='' "
                       class="tab-text labelcont">{{projectDetails.startDate | date }}</span>
-                    <span
-                      *ngIf="projectDetails.startDate == null || projectDetails.startDate == undefined || projectDetails.startDate =='' "
+                    <span *ngIf="projectDetails.startDate == null || projectDetails.startDate == undefined || projectDetails.startDate =='' "
                       class="tab-text labelcont">-</span>
+                  </div>
+                  <div *ngIf="editdata==true">
+                    <input type="date" class="small-input" (change)="projectDetails.startDate=$event.target.value" [value]="projectDetails.startDate">
                   </div>
                 </div>
                 </div>
