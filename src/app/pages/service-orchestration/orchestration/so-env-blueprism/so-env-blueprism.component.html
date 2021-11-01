@@ -135,7 +135,7 @@
                             <label  class="label-control" for="categoryId">Select Category<span class="star">*</span></label>
                             <select  class="form-control data" formControlName="categoryId" [disabled]="categoryList.length==1" [value]="categoryList.length==1?categoryList[0].categoryId:'0'">
                                 <option value="0">Select Category</option>
-                                <option *ngFor="let category of categoryList">{{category.categoryName}}</option>
+                                <option [value]="category.categoryId" *ngFor="let category of categoryList">{{category.categoryName}}</option>
                             </select>
                             <span *ngIf="BluePrismConfigForm.get('categoryId').invalid && BluePrismConfigForm.get('categoryId').touched" class="errspan required">Name Required*</span>
                         </div>

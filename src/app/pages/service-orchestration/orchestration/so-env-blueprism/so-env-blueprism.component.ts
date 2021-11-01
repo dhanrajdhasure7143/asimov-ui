@@ -250,11 +250,15 @@ checkAllCheckBox(ev) {
 }
 
 reset_createblueprism(){
+  
   this.BluePrismConfigForm.reset();
+  this.BluePrismConfigForm.get("categoryId").setValue("0")
 }
 
 reset_Updateblueprism(){
   this.UpdateBluePrismConfigForm.reset();
+  this.BluePrismConfigForm.get("categoryId").setValue("0")
+
 }
 
 
@@ -265,15 +269,13 @@ saveBluePrism()
  {
   let response:any;
       response=this.BluePrismConfigForm.value;
-      console.log(response);
       (response.status==true)?response.status=1:response.status=0;
       response.port=parseInt(response.port);
-      console.log(response);
       this.submitted=true;
       this.api.save_blueprism_config(response).subscribe(resp=>{
         let response:any=resp;
         this.spinner.hide();
-        if(response.status=="Blue prism details saved successfully!!")
+        if(response.errorMessage==undefined)
         {
           // Swal.fire({
           //   position: 'center',
@@ -292,9 +294,6 @@ saveBluePrism()
           this.BluePrismConfigForm.reset();
           this.getblueprismconnections();
           this.submitted=true;
-        }
-        else if(response.status=="Given Host Address Already Exists"){
-          Swal.fire("Error",response.status,"error")
         }
         else
         {
