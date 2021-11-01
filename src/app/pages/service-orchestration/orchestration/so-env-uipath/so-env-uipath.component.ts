@@ -160,10 +160,8 @@ UpdateUipath(){
 
 checkEnableDisableBtn(id, event)
 {
-  console.log(event);
-  console.log(id);
   console.log(event.target.checked);
-  this.Uipath_configs.find(data=>data.userKey==id).checked=event.target.checked;
+  this.Uipath_configs.find(data=>data.sourceAccId==id).checked=event.target.checked;
   if(this.Uipath_configs.filter(data=>data.checked==true).length==this.Uipath_configs.length)
   {
     this.checkflag=true;
@@ -182,7 +180,7 @@ checktoupdate()
   if(selectedBluePrism.length==1)
   {
     this.updateflag=true;
-    this.updateid=selectedBluePrism[0].userKey;
+    this.updateid=selectedBluePrism[0].sourceAccId;
   }else
   {
     this.updateflag=false;
@@ -251,7 +249,7 @@ updatedata()
   console.log("this.blueprism_configs.value",this.Uipath_configs);
   for(data of this.Uipath_configs)
   {
-    if(data.userKey==this.updateid)
+    if(data.sourceAccId==this.updateid)
     {
       (data.active==true)?data.active=1:data.active=0;
       this.UpdateUipathForm.get("accountName").setValue(data["accountName"]);
@@ -269,8 +267,11 @@ updatedata()
 
 Update_UiPath(){
   this.spinner.show();
-  console.log("--------------sample------------",this.UpdateUipathForm.value)
-    this.api.update_uipath_env(this.UpdateUipathForm.value).subscribe(res=>{
+    let updatedData=this.UpdateUipathForm.value;
+    updatedData["sourceAccId"]=this.updateid,
+    updatedData["sourceType"]="UiPath"
+    console.log(updatedData)
+    this.api.update_uipath_env(updatedData).subscribe(res=>{
       this.spinner.hide();
       let response:any=res;
       this.updatesubmitted=false;

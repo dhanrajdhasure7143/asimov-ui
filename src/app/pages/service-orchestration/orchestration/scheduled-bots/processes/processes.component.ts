@@ -51,21 +51,19 @@ export class ProcessesComponent implements OnInit {
 
   getscheduledata(){
     this.spinner.show();
-    function getdate(value,type){
-      let currentdate=new Date();
-      (type == "1") ? currentdate.setDate(currentdate.getDate() + value) : currentdate.setDate(currentdate.getDate() - value);
-      return moment(currentdate).format('DD-MM-YYYY');
-    }
+    
 
     this.rest.get_processes_scheduled().subscribe(data1=>{
    
-    this.log  = data1;
-    this.log=this.log.map(item=>{
-     item["environmentName"]=this.environment.find(item2=>item2.environmentId==item.environment).environmentName;
+    let response:any =[];
+    response=data1;
+    response=response.map(item=>{
+      let environment:any=this.environment.find(item2=>item2.environmentId==item.environment);
+     item["environmentName"]=(environment!=undefined?environment.environmentName:"--");
      return item;
     })
-    this.tabledata = this.log.length <= '0'  ? false: true;
-    this.processschedule = new MatTableDataSource(this.log);  
+    this.tabledata = response.length <= '0'  ? false: true;
+    this.processschedule = new MatTableDataSource(response);  
     this.processschedule.paginator=this.paginator4;
     this.processschedule.sort=this.sort4;
    //  });
