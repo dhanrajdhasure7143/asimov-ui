@@ -502,6 +502,12 @@ span.testtooltip:after {
 .col-md-4.noneditdiv {
     position: fixed;
     float: right;
-    right: 25px;
-    width: 32%;
+    right: 28px;
+    width: 29%;
+}
+.cmntuserdet img {
+    width: 16px;
+    height: auto;
+    margin-right: 5px;
+    margin-bottom: 4px;
 }
