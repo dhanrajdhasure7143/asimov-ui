@@ -32,6 +32,7 @@ export class DepartmentsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.spinner.show();
     this.getAllDepartments();
     this.Departmentdeleteflag=false;
     this.getallusers();
@@ -155,6 +156,7 @@ export class DepartmentsComponent implements OnInit {
     this.api.getuserslist(tenantid).subscribe(item=>{
       let users:any=item
       this.users_list=users;
+      this.spinner.hide();
     })
   }
   

@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
 import Swal from 'sweetalert2';
-
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-edit-department',
   templateUrl: './edit-department.component.html',
@@ -16,7 +16,7 @@ export class EditDepartmentComponent implements OnInit {
   users_list:any=[];
   constructor(private formBuilder: FormBuilder,private route:ActivatedRoute,
     private router:Router,
-    private api: RestApiService) { }
+    private api: RestApiService,private spinner:NgxSpinnerService) { }
 
   ngOnInit(): void {
     this.editDepartmentForm=this.formBuilder.group({
@@ -24,6 +24,7 @@ export class EditDepartmentComponent implements OnInit {
       owner: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       })
       this.getDepartmentdetails();
+      this.spinner.show();
       this.getallusers();
   }
 
@@ -89,6 +90,7 @@ export class EditDepartmentComponent implements OnInit {
     this.api.getuserslist(tenantid).subscribe(item=>{
       let users:any=item
       this.users_list=users;
+      this.spinner.hide();
     })
   }
 }

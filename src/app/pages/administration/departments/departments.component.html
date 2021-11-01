@@ -15,7 +15,7 @@
                   <option *ngFor="let eachcat of departments.data;let i=index;trackBy:loopTrackBy" [value]="eachcat.categoryName">
                           {{eachcat.categoryName| titlecase}}</option>
                 </select> -->
-                <input class="form-control toolbar-search bps-home-fileds" matInput (keyup)="applyFilter($event.target.value)"
+                <input class="form-control toolbar-search departments-home-fileds" matInput (keyup)="applyFilter($event.target.value)"
                   placeholder="Search Department">
                 <img src="../../../../assets/images/search.svg" alt="" class="testplus">
               </div>
