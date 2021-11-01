@@ -926,7 +926,6 @@ resetsla(){
     else
     {
       console.log("Invalid Form");
-
     }
   }
 
