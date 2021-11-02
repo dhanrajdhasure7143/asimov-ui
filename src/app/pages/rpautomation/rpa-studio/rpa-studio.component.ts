@@ -138,6 +138,7 @@ export class RpaStudioComponent implements OnInit {
           //   localStorage.removeItem("tabsArray");
           // }
           //this.spinner.hide();
+        });
           this.activatedRoute.queryParams.subscribe(data=>{
             let params:any=data;
             if(params==undefined)
@@ -164,12 +165,10 @@ export class RpaStudioComponent implements OnInit {
                     } 
                     this.spinner.hide();
                   });
-                },2000)
+                },2500)
               }
             }
           })
-        })
-       
       }
      
 
@@ -358,9 +357,11 @@ export class RpaStudioComponent implements OnInit {
             //   this.designerInstance.current_instance=item.
             // }
             
-            this.spinner.hide();
+            //
           });
-        },2000)
+        },2500)
+
+        this.spinner.hide();
       }
       else
       {

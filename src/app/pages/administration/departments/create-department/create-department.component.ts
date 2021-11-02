@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
 import Swal from 'sweetalert2';
-
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-create-department',
   templateUrl: './create-department.component.html',
@@ -13,10 +13,11 @@ export class CreateDepartmentComponent implements OnInit {
 
   createDepartmentForm:FormGroup;
   users_list:any=[];
-  constructor(private formBuilder: FormBuilder,private api:RestApiService,private router:Router,) { }
+  constructor(private formBuilder: FormBuilder,private api:RestApiService,private router:Router,
+    private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
-
+    this.spinner.show();
     this.createDepartmentForm=this.formBuilder.group({
       departmentName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       owner: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
@@ -41,6 +42,7 @@ export class CreateDepartmentComponent implements OnInit {
           showCancelButton: false,
           confirmButtonColor: '#007bff',
           cancelButtonColor: '#d33',
+          heightAuto: false,
           confirmButtonText: 'Ok'
       }).then((result) => {
         this.resetdepartment();
@@ -68,6 +70,7 @@ export class CreateDepartmentComponent implements OnInit {
     this.api.getuserslist(tenantid).subscribe(item=>{
       let users:any=item
       this.users_list=users;
+      this.spinner.hide();
     })
   }
 }

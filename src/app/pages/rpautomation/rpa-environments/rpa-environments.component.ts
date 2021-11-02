@@ -18,7 +18,7 @@ import { NgxSpinnerService } from "ngx-spinner";
   styleUrls: ['./rpa-environments.component.css']
 })
   export class RpaenvironmentsComponent implements  OnInit{
-    displayedColumns: string[] = ["check","environmentName","environmentType","agentPath","hostAddress","portNumber","username","password","activeStatus","deployStatus","createdTimeStamp","createdBy"]; //,"connectionType"
+    displayedColumns: string[] = ["check","environmentName","environmentType","agentPath","category","hostAddress","portNumber","username","password","activeStatus","deployStatus","createdTimeStamp","createdBy"]; //,"connectionType"
     dataSource1:MatTableDataSource<any>;
     public isDataSource: boolean;  
     @ViewChild("paginator1",{static:false}) paginator1: MatPaginator;
@@ -101,7 +101,6 @@ import { NgxSpinnerService } from "ngx-spinner";
     this.passwordtype2=false;
     //this.updatepopup=document.getElementById('env_updatepopup');
     this.dt.changeHints(this.hints.rpaenvhints);
-    this.getallData();
     this.getCategories();
     //document.getElementById("filters").style.display='block';
     //document.getElementById("createenvironment").style.display='none';
@@ -144,6 +143,10 @@ import { NgxSpinnerService } from "ngx-spinner";
           this.environments.push(Object.assign({}, response[i], checks));
         }
         this.environments.sort((a,b) => a.activeTimeStamp > b.activeTimeStamp ? -1 : 1);
+        this.environments=this.environments.map(item=>{
+           item["categoryName"]=this.categoryList.find(item2=>item2.categoryId==item.categoryId).categoryName;
+           return item;
+        })
         this.dataSource1= new MatTableDataSource(this.environments);
         this.isDataSource = true;
         this.dataSource1.sort=this.sort1;
@@ -202,6 +205,7 @@ import { NgxSpinnerService } from "ngx-spinner";
     
     this.insertForm.get("portNumber").setValue("22");
     this.insertForm.get("connectionType").setValue("SSH");
+    this.insertForm.get("categoryId").setValue(this.categoryList.length==1?this.categoryList[0].categoryId:'0');
     this.insertForm.get("environmentType").setValue("");
     this.insertForm.get("activeStatus").setValue(true);
     this.passwordtype1=false;
@@ -549,6 +553,8 @@ import { NgxSpinnerService } from "ngx-spinner";
       if(response.errorMessage==undefined)
       {
         this.categoryList=response.data;
+        this.getallData();
+    
       }
     })
   }

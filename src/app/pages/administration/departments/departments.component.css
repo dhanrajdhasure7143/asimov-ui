@@ -66,6 +66,12 @@ span.testtooltip:before {
 }
 .departmentsearch img.testplus {
   position: absolute;
-  right: 15px;
+  right: 152px;
   top: 9px;
+}
+
+input.departments-home-fileds {
+  display: inline-block;
+  width: 226px;
+  /* margin-left: 8px; */
 }

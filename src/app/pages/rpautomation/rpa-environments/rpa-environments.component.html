@@ -130,6 +130,13 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
             <td mat-cell *matCellDef="let element"> <span *ngIf="element.environmentName!=null">{{element.environmentName}}</span> <span *ngIf="element.environmentName==''">-</span> </td>
         </ng-container>
+        
+        <ng-container matColumnDef="category">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
+            <td mat-cell *matCellDef="let element"> <span *ngIf="element.categoryName!=null">{{element.categoryName}}</span> 
+                <span *ngIf="element.environmentName==''">-</span> 
+            </td>
+        </ng-container>
         <ng-container matColumnDef="hostAddress">
             <th mat-header-cell *matHeaderCellDef>IP Address / Host</th>
             <td mat-cell *matCellDef="let element"> 
@@ -270,7 +277,7 @@ placeholder="Enter Environment Type" >-->
                     
                         <div class="col-md-12 p-0 form-group">
                             <label class="label-control" for="categoryId">Category<span class="star">*</span></label>
-                            <select type="text" class="form-control" formControlName="categoryId" [disabled]="categoryList.length==1" [value]="categoryList.length==1?categoryList[0].categoryId:'0'">
+                            <select type="text" class="form-control" formControlName="categoryId" [disabled]="categoryList.lenght==1" [value]="categoryList.length==1?categoryList[0].categoryId:'0'">
                                 <option value="0" disabled>Select Category</option>
                                 <option [value]="category.categoryId" *ngFor="let category of categoryList">{{category.categoryName}}</option>
                             </select>   
@@ -422,7 +429,7 @@ placeholder="Enter Environment Type" >-->
                         </div>
                         <div class="col-md-12 p-0 form-group">
                             <label class="label-control" for="categoryId">Category<span class="star">*</span></label>
-                            <select type="text" class="form-control" formControlName="categoryId" [disabled]="categoryList.length==1" >
+                            <select  class="form-control"  formControlName="categoryId" [disabled]="categoryList.length=='1'" >
                                 <option value="0" disabled>Select Category</option>
                                 <option [value]="category.categoryId" *ngFor="let category of categoryList">{{category.categoryName}}</option>
                             </select>   
