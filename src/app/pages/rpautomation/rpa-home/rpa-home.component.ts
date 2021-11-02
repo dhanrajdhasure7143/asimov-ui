@@ -532,6 +532,10 @@ export class RpaHomeComponent implements OnInit {
     document.getElementById("edit-bot").style.display="none";
 
   }
+  editclose(){
+    document.getElementById("edit-bot").style.display="none";
+  }
+  
 
   assignbot(id)
   {

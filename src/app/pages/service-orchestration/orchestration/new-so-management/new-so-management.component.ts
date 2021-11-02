@@ -48,6 +48,7 @@ export class NewSoManagementComponent implements OnInit {
   public priorityMedium : any = [];
   public priorityLow : any = [];
   public objincidentId:any = [];
+  public incident_flag:Boolean=false;
   displayedColumns: string[] = [
   "incidentId",
   "short_description" ,
@@ -82,29 +83,42 @@ export class NewSoManagementComponent implements OnInit {
     $('.chart_div_High_4').hide();
     $('.chart_div_Medium_4').hide();
     $('.chart_div_Low_4').hide();
-    this.rest.loadChart1().subscribe( data =>{
-      this.spinner.show();
-      this.chart2();
-      console.log(data);
-      this.datasource = data;
-      console.log(this.datasource);
-      if(this.datasource.errorMessage!=undefined)
-        {
-        this.botstatistics = 0 ;
-          this.spinner.hide();
-          //Swal.fire(resp.errorMessage,"","warning");
-        }
-      else{
-        this.botstatistics = 1;
-      setTimeout(() => {
-        this.chart1();    
-        this.chart3();
-        this.chart4();
-      }, 500);
-    }
-    });
+    this.getIncidents();
   
     //this.gettickets();
+  }
+  getIncidents()
+  {
+    this.spinner.show();
+    this.rest.getIncident().subscribe( data =>{
+      this.spinner.hide();
+      let response:any=data
+      if(response.errorMessage==undefined)
+      {
+        this.chart2();
+        this.datasource = response;
+        this.botstatistics = 1;
+        setTimeout(() => {
+          this.chart1();    
+          this.chart3();
+          this.chart4();
+        }, 500);
+      }
+      else
+        {
+          this.botstatistics = 0 ;
+          if(response.errorCode==3001)
+          {
+            this.incident_flag=true;
+          }
+          else
+          {
+            Swal.fire(response.errorMessage,"","warning");
+          }
+          //
+        }
+  
+    });
   }
 
   selectchart1(){

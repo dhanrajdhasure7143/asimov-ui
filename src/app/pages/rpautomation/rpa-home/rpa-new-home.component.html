@@ -254,7 +254,7 @@
                         <span *ngIf="bot.description!=null" placement="bottom" [tooltip]="bot.description" class="btndes"> {{(bot.description.length > 20) ? ((bot.description).slice(0, 20) + '...') : bot.description}}</span>
                         <span *ngIf="bot.description==null">-</span>
                       </div>
-                      <div class="flex-col">{{bot.department}}</div>
+                      <div class="flex-col">{{bot.categoryName}}</div>
                       <!-- <div class="flex-col">{{bot.botType}}</div> -->
                       <div class="flex-col">V{{bot.version}}</div>
                       <div class="flex-col">
@@ -267,24 +267,24 @@
                         </span>
           
                         <span *ngIf="bot.botStatus=='Success'" >
-                          <img src="../../../../assets/images/RPA/icon_latest/Success.svg" alt="" class="testplus1">
+                          <img src="../../../../assets/images/RPA/icon_latest/Success.svg" tooltip="Success" placement="right"class="testplus1">
                           <!-- &nbsp;<span>{{bot.botStatus}}</span> -->
                         </span>
           
                         <span *ngIf="bot.botStatus=='Failure'">
-                          <img src="../../../../assets/images/RPA/icon_latest/close-red.svg" alt="" class="testplus1">
+                          <img src="../../../../assets/images/RPA/icon_latest/close-red.svg" tooltip="Failed" placement="right" class="testplus1">
                             <!-- &nbsp;<span>{{bot.botStatus}}</span> -->
                           </span>
                         <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
                         <span *ngIf="bot.botStatus=='New'" class="text-primary">
-                          <img src="../../../../assets/images/RPA/userobot.png" class="testplus1">
+                          <img src="../../../../assets/images/RPA/userobot.png"  tooltip="New" placement="right" class="testplus1">
                           <!-- <i class="fas fa-robot text-light"></i> -->
                           <!-- &nbsp;<span>{{bot.botStatus}}</span> -->
                         </span>
           
                         <span *ngIf="bot.botStatus=='Stop' || bot.botStatus=='Stopped'">
                           <!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">-->
-                            <img src="../../../../assets/images/RPA/icon_latest/stop.svg" class="testplus1">
+                            <img src="../../../../assets/images/RPA/icon_latest/stop.svg" tooltip="Stopped" placement="right"class="testplus1">
                             <!-- &nbsp;<span>{{bot.botStatus}}</span> -->
                           </span>
           
@@ -443,7 +443,7 @@
         <div id="edit-bot" class="modal rpa-modal">
           <div class="rpa-modal-content">
             <div class="rpa-modal-header">
-                  <span class="rpa-modal-close" (click)="close()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
+                  <span class="rpa-modal-close" (click)="editclose()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
                   <h4>Edit Bot Details</h4>
             </div>
             <div class="modal-body">
