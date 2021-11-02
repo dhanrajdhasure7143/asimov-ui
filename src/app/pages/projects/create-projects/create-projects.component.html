@@ -28,7 +28,7 @@
 
                     <mat-tab label="Project">
                         <div class="container">
-                            <app-create-project-form [users_list]="userslist" (oncreate)="createproject($event)" [processes]="selected_process_names"></app-create-project-form>
+                            <app-create-project-form [users_list]="userslist" [initiatives_list]="initiatives" (oncreate)="createproject($event)" [processes]="selected_process_names"></app-create-project-form>
                         </div>
                     </mat-tab>
                     
@@ -55,12 +55,20 @@
                                         <div class="form-fields col-md-6 pr-0">
                                             <label class="label-control" for="initiatives">Initiatives<span
                                                     class="star">*</span></label>
-                                            <select class="form-control" formControlName="initiatives"
+                                             <!-- <select class="form-control" formControlName="initiatives"
                                                 [ngClass]="createprogram.get('initiatives').valid?'enteredfield-color':'inputfield-color'">
                                                 <option [value]="null" disabled hidden>Select Initiative</option>
                                                 <option value="">Select Initiative</option>
                                                 <option value="Process Improvement">Process Improvement</option>
                                                 <option value="Business Improvement">Business Improvement</option>
+                                            </select> -->
+
+                                            <select formControlName="initiatives" class="form-control data"
+                                                [ngClass]="createprogram.get('initiatives').valid?'enteredfield-color':'inputfield-color'">
+                                                <option [value]="null" disabled hidden>Select Initiative</option>
+                                                <option value="" [selected]="true">Select Initiative</option>
+                                                <option *ngFor="let initiativedata of initiatives" [value]="initiativedata.id">
+                                                    {{initiativedata.initiative|titlecase}}</option>
                                             </select>
                                             <span
                                                 *ngIf="(createprogram.get('initiatives').invalid && createprogram.get('initiatives').touched) && !createprogram.controls['initiatives'].hasError('maxlength')"

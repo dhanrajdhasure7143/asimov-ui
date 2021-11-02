@@ -1,0 +1,142 @@
+.content {
+    padding: 1em;
+}
+
+/* .graph_table {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    overflow-y: hidden;
+    min-height: 79%;
+    background-color: white;
+} */
+
+/* .mat-raised-button {
+    border-radius: 0%;
+    background-color: #00a0e3 !important;
+    color: white;
+} */
+
+th.mat-header-cell {
+    color: #00a0e3;
+    font-weight: bold;
+}
+
+::ng-deep .mat-tab-header {
+    width: 30em;
+    border: none;
+}
+
+.blue {
+    color: #00a0e3;
+    font-weight: bold;
+}
+
+.green {
+    color: green;
+    font-weight: bold;
+}
+
+/* select {
+    border: solid 1px #00a0e3;
+    background-color: transparent;
+    color: #00a0e3;
+    width: 8em;
+    border-radius: 7px;
+    height: 2em;
+}
+
+input {
+    border: solid 1px rgb(148, 144, 144);
+    box-shadow: rgb(148, 144, 144);
+    border-radius: 7px;
+    height: 2em;
+}
+
+input::placeholder {
+    padding-left: 5px;
+} */
+
+.mat-elevation-z8 {
+    box-shadow: none;
+}
+
+table th,
+td {
+    cursor: pointer;
+}
+
+table tbody td {
+    padding: 5px 15px !important;
+    vertical-align: middle !important;
+    font-size: 13px !important;
+}
+
+table td::first-letter {
+    text-transform: capitalize;    
+}
+
+.Support-tktlist-body {
+    padding: 10px 10px 0px 10px;
+    height: calc(100% - 44px);
+    overflow: auto;
+}
+.tktlist-Heading {
+    font-weight: 600;
+    font-size: 20px;
+    width: 50%;
+}
+.tktlist-fields {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    /* width: 50%; */
+}
+.table_responsive.graph_table {
+    /* height: 420px !important; */
+    height: calc(100% - 44px);
+    overflow: auto;
+    width: 100%;
+}
+.tktlist-body-header {
+    /* display: flex;
+    align-items: center;
+    margin-top: 5px;
+    margin-bottom: 15px; */
+}
+/* @media (max-width: 1300px) {
+    .table_responsive.graph_table {
+      height: 370px !important;
+    }
+   }
+   @media (min-width: 1600px) {
+    .table_responsive.graph_table {
+      height: 580px !important;    
+    }
+} */
+
+.Tkt-eyehover:hover img.default-img {
+    display: none;
+}
+
+.Tkt-eyehover:hover img.hover-img {
+    display: initial;
+}
+.summaty_field a:hover{
+    color: #00a0e3 !important;
+    text-decoration: underline !important;
+}
+
+.tktlist-fields .btn {
+    margin-right: 0px !important;
+}
+.tktlist-fields .col-md-3 {
+    padding-right: 10px;
+}
+.tktsearchfield {
+    position: relative;
+}
+.tktsearchfield img.testplus {
+    position: absolute;
+    right: 15px;
+    top: 9px;
+}

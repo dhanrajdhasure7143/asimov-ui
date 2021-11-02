@@ -12,13 +12,13 @@
                 <div class="container m-contanier form-body">
                     <div class="col-md-12 p-0 form-group">
                         <label class="label-control">Select Category<span class="star">*</span></label>
-                        <select  name="category" (change)="onchangeCategories(categoryName)" #category="ngModel" [(ngModel)]="categoryName" required class="form-control">
+                        <select  name="category" (change)="onchangeCategories(categoryName)" [disabled]="categories_list.length==1" #category="ngModel" [(ngModel)]="categoryName" required class="form-control">
                             <option value="" disabled hidden>Select Category</option>
                             <option value="null" disabled hidden>Select Category</option>
                             <option value="undefined" disabled hidden>Select Category</option>
-                            <option *ngFor="let categories of categoriesList.data;let i=index;trackBy:loopTrackBy" [value]="categories.categoryName">
+                            <option *ngFor="let categories of categories_list;let i=index;trackBy:loopTrackBy" [value]="categories.categoryName">
                                 {{categories.categoryName}}</option>
-                            <option value="other">Other</option>
+                            <!-- <option value="other">Other</option> -->
                         </select>
                         <span *ngIf="((category.invalid && processCategoryForm.submitted) || (category.errors && category.touched) )" 
                         class='errspan required'> Please select a category </span>

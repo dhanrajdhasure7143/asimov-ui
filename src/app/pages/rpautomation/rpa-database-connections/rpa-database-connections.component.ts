@@ -17,7 +17,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 })
 
 export class RpaDatabaseConnectionsComponent implements OnInit {
-  displayedColumns1: string[] = ["check","connectiontName","dataBaseType","hostAddress","portNumber","username","password","databasename","schemaName","activeStatus","createdTimeStamp","createdBy"];
+  displayedColumns1: string[] = ["check","connectiontName","category","dataBaseType","hostAddress","portNumber","username","password","databasename","schemaName","activeStatus","createdTimeStamp","createdBy"];
   public toggle:boolean;
   dataSource2:MatTableDataSource<any>;
   public dbupdateflag: boolean;
@@ -37,6 +37,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
     public DBdeleteflag:Boolean;
     public passwordtype1:Boolean;
     public passwordtype2:Boolean;
+    public categoryList:any=[];
     customUserRole: any;
     enableDbconnection: boolean=false;
     userRole: any;
@@ -58,6 +59,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
         dataBaseType: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         databasename: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         hostAddress: ["", Validators.compose([Validators.required, Validators.pattern(ipPattern), Validators.maxLength(50)])],
+        categoryId:["0", Validators.compose([Validators.required])],
         password: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
         portNumber: ["",  Validators.compose([Validators.required, Validators.maxLength(6)])],
         schemaName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
@@ -69,6 +71,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
       connectiontName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         dataBaseType: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         databasename: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        categoryId:["0", Validators.compose([Validators.required])],
         hostAddress: ["", Validators.compose([Validators.required, Validators.pattern(ipPattern), Validators.maxLength(50)])],
         password: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
         portNumber: ["",  Validators.compose([Validators.required, Validators.maxLength(6)])],
@@ -85,7 +88,8 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
   ngOnInit() {
   //   //     document.getElementById("filters").style.display='block';
     this.dt.changeHints(this.hints.rpadbchints);
-    this.getallDBConnection();
+    //this.getallDBConnection();
+    this.getCategories()
     this.passwordtype1=false;
     this.passwordtype2=false;
 
@@ -119,6 +123,10 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
            this.DBcheckeddisabled = true;
          }
         this.dbconnections.sort((a,b) => a.connectionId > b.connectionId ? -1 : 1);
+        this.dbconnections=this.dbconnections.map(item=>{
+          item["categoryName"]=this.categoryList.find(item2=>item2.categoryId==item.categoryId).categoryName;
+          return item;
+        })
         this.dataSource2= new MatTableDataSource(this.dbconnections);
         setTimeout(() => {
           this.sortmethod(); 
@@ -277,6 +285,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
   resetDBForm(){
     this.insertdbForm.reset();
     this.insertdbForm.get("dataBaseType").setValue("");
+    this.insertdbForm.get("categoryId").setValue(this.categoryList.length==1?this.categoryList[0].categoryId:'0')
     this.insertdbForm.get("activeStatus").setValue(true);
     this.passwordtype1=false;
   }
@@ -351,9 +360,14 @@ updatedbdata()
       {
         this.dbupdatedata=data;
         this.updatedbForm.get("connectiontName").setValue(this.dbupdatedata["connectiontName"]);
+        this.updatedbForm.get("categoryId").setValue(this.dbupdatedata["categoryId"]);
+        
         this.updatedbForm.get("dataBaseType").setValue(this.dbupdatedata["dataBaseType"]);
+        
         this.updatedbForm.get("databasename").setValue(this.dbupdatedata["databasename"]);
+        
         this.updatedbForm.get("hostAddress").setValue(this.dbupdatedata["hostAddress"]);
+        
         this.updatedbForm.get("password").setValue(this.dbupdatedata["password"]);
         this.updatedbForm.get("portNumber").setValue(this.dbupdatedata["portNumber"]);
         this.updatedbForm.get("schemaName").setValue(this.dbupdatedata["schemaName"]);
@@ -464,5 +478,18 @@ updatedbdata()
       this.dbconnections[i].checked= false;
     }
     this.DBcheckflag=false;
+  }
+
+
+  getCategories()
+  {
+    this.api.getCategoriesList().subscribe(data=>{
+      let response:any=data;
+      if(response.errorMessage==undefined)
+      {
+        this.categoryList=response.data;
+        this.getallDBConnection();
+      }
+    })
   }
 }

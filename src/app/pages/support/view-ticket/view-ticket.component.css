@@ -1,0 +1,513 @@
+.content {
+    padding: 1em;
+}
+
+mat-card {
+    min-height: 89vh;
+    max-height: auto;
+}
+
+.fileerror p {
+    /* font-weight: 600; */
+    font-size: 14px;
+    color: #f70303;
+}
+
+.new {
+    background: #dcf4fd;
+    padding: 5px;
+    border-radius: 7px;
+}
+
+.title-input {
+    width: 72%;
+    background: #f6f6f6;
+    height: 2em;
+    border: solid 1px rgb(197, 196, 196);
+    border-radius: 5px;
+}
+
+input::placeholder {
+    padding: 2px;
+}
+
+textarea::placeholder {
+    padding: 2px;
+}
+#text_new{
+    min-height: 60px;
+    /* max-height: 400px; */
+    height: auto;
+    overflow: auto;
+}
+#text_new1{
+    min-height: 30px;
+    max-height: 200px;
+    height: auto;
+    overflow: auto;
+}
+#text_new2{
+    min-height: 30px;
+    max-height: 200px;
+    height: auto;
+    overflow: auto;
+}
+
+input[type=text],
+select {
+    padding-left: 10px;
+    border: solid 1px rgb(197, 196, 196);
+}
+
+.attachment-input {
+    width: 72%;
+    background: #f6f6f6;
+    height: 2em;
+    border: solid 1px rgb(197, 196, 196);
+    border-radius: 5px;
+}
+
+.summary-input {
+    width: 86%;
+    background: #f6f6f6;
+    height: 2.6em;
+    border: solid 1px rgb(197, 196, 196);
+    border-radius: 5px;
+}
+
+.description-input {
+    width: 86%;
+    background: #f6f6f6;
+    height: 8em;
+    border: solid 1px rgb(197, 196, 196);
+    border-radius: 5px;
+}
+
+textarea:focus {
+    outline: 0;
+    padding: 5px;
+}
+
+.comments-input {
+    width: 86%;
+    background: #f6f6f6;
+    height: 2em;
+    border: solid 1px rgb(197, 196, 196);
+    border-radius: 5px;
+}
+
+.issue-type {
+    /* background: #f6f6f6; */
+    /* border: solid 1px rgb(197, 196, 196); */
+    border-radius: 4px;
+    width: 100%;
+}
+
+mat-select {
+    padding: 3px;
+}
+
+mat-select-value {
+    padding: 2px;
+}
+
+
+.cancel {
+    border: solid 1px #00a3e9;
+    color: #00a3e9;
+}
+
+.file-input {
+    display: none;
+}
+
+.mat-progress-bar {
+    display: block;
+    height: 6px;
+    overflow: hidden;
+    position: relative;
+    background-color: whitesmoke;
+    width: 90%;
+    margin-top: 2%;
+}
+
+::ng-deep .mat-progress-bar-fill::after {
+    background-color: green;
+}
+
+::ng-deep .mat-progress-bar-buffer {
+    background: #E4E8EB;
+}
+
+::ng-deep .mat-progress-bar {
+    border-radius: 2px;
+}
+
+.closefile {
+    margin: -3px 0% 0% 4%;
+    font-size: x-large;
+    color: black;
+    cursor: pointer;
+}
+
+.closefile:hover {
+    color: red;
+}
+
+.fa-cloud-upload-alt:before {
+    content: "\f382";
+    font-size: x-large;
+}
+
+.far {
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 400;
+    font-size: 20px;
+}
+
+.filenameoverflow {
+    display: inline-block;
+    width: 190px;
+    /* white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis; */
+}
+
+.fileerror {
+    margin-top: 10px;
+}
+
+::ng-deep .ng-tns-c18-4 ng-trigger ng-trigger-transformPanel mat-select-panel mat-primary my-panel-class {
+    width: 40% !important;
+}
+
+::ng-deep .ng-tns-c18-4 ng-trigger ng-trigger-transformPanel mat-select-panel mat-primary my-panel-class {
+    width: 40% !important;
+}
+
+::ng-deep .ng-tns-c18-4 ng-trigger ng-trigger-transformPanel mat-select-panel mat-primary my-panel-class {
+    width: 40% !important;
+}
+
+::ng-deep .ng-tns-c18-4 ng-trigger ng-trigger-transformPanel mat-select-panel mat-primary my-panel-class {
+    width: 40% !important;
+}
+
+::ng-deep.mat-form-field-underline {
+    display: none;
+}
+
+.labelcolor {
+    background-color: #f6f6f6;
+    color: gray;
+    padding: 5px;
+}
+
+::ng-deep.mat-primary .mat-pseudo-checkbox-checked {
+    background-color: #00a3e9;
+}
+
+::ng-deep.mat-option-text {
+    color: #00a3e9;
+}
+
+.savebutton {
+    margin-left: 2%;
+    background: #00a3e9;
+    color: white;
+    padding: 6px;
+    border-radius: 50px;
+}
+
+.cancelbutton {
+    background: white;
+    color: #00a3e9;
+    padding: 6px;
+    border: solid 1px #00a3e9;
+    border-radius: 50px;
+}
+
+.disabled {
+    pointer-events: none;
+    background-color: #e9e9e9;
+}
+
+.CreateTkt.h-scroll {
+    height: calc(100% - 50px);
+    overflow: auto;
+    padding: 0px;
+}
+
+.CreateTkt-Heading {
+    padding: 0px 0px 10px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid rgba(0, 0, 0, .12);
+}
+
+.CreateTkt-Heading span {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.CreateTkt-Attachmentbox {
+    padding: 10px;
+    background: #f6f6f6;
+    border-radius: 4px;
+    border: dotted 2px rgb(197, 196, 196);
+    text-align: center;
+    cursor: pointer;
+    margin-bottom: 5px;
+    /* height: calc(100vh - 400px); */
+}
+
+.CreateTkt-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
+.CreateTkt-footer .btn-primary,
+.CreateTkt-buttons .btn-primary {
+    margin-right: 0px !important;
+}
+
+.CreateTkt-download {
+    display: flex;
+    margin-top: 15px;
+}
+
+.CreateTkt-download i {
+    width: 10%;
+}
+
+.CreateTkt-download span {
+    width: 60%;
+}
+
+.CreateTkt-download p {
+    width: 20%;
+}
+
+
+.CreateTkt-buttons {
+    float: right;
+    margin-top: 10px;
+}
+
+.Component-filed mat-select {
+    appearance: none;
+    background-image: url('../../../../assets/images/Projects/down-arrow.svg');
+    background-repeat: no-repeat;
+    background-position: center right 12px;
+}
+
+.component-button {
+    margin: 6px 15px 6px 0px;
+    float: right;
+    background: #00a3e9;
+    color: white;
+    border-radius: 3px;
+    padding: 6px 20px;
+}
+
+.deleteattachment:hover img.default-img, .comment-date-icons:hover img.default-img {
+    display: none;
+}
+
+.deleteattachment:hover img.hover-img, .comment-date-icons:hover img.hover-img {
+    display: initial;
+}
+
+.removeallattachment {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 5px;
+}
+
+/* .removeallattachment button {
+    background: #00a3e9;
+    margin-right: -18%;
+    margin-top: 2%;
+    color: white;
+    padding: 3px;
+    border-radius: 7px;
+} */
+
+/* .readfilename span {
+    display: inline-block;
+    width: 155px;
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+} */
+
+.Component-filed {
+    /* margin-bottom: 12px; */
+}
+.deleteattachment img, .deleteattachment a, .readfilename a{
+    padding: 0px;
+}
+
+.Attached-contents {
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+}
+.attached-image {
+    width: 14%;
+}
+.attached-name {
+    width: 80%;
+}
+.attached-close {
+    width: 6%;
+}
+.attached-name span {
+    font-size: 14px;
+}
+.CreateTkt-Attachmentbox div {
+    /* margin-bottom: 8px; */
+}
+.comments-box .comment-date .edit-icon{
+    padding-left: 5px;
+}
+.comment-dateField{
+    font-size: 12px;
+    margin-right: 8px;
+}
+.fas{
+    cursor: pointer;
+}
+.mat-progress-bar-fill::after {
+    background-color: #00a0e3;
+}
+.comments-box-icons {
+    margin-top: 10px !important;
+    display: flex;
+    justify-content: flex-end;
+}
+.comments-box-icons img:first-child {
+    margin-right: 10px !important;
+}
+.Add-comments {
+    margin-top: 7px;
+}
+.Inner-comments {
+    padding: 10px 0px 10px 0px;  
+    border-bottom: 1px solid #e5e5e5;
+}
+.Content-comment {
+    margin-top: 6px !important;
+    display: inline-block;
+    padding-left: 5px;
+}
+span.firsticon-edit {
+    margin-right: 6px;
+}
+.newpaginationdiv1 ::ng-deep .mat-paginator-page-size{
+    display: none !important;
+}
+.deleteattachment{
+    padding-right: 5px;
+}
+
+/* ::ng-deep .mat-paginator-range-label{
+    display: none !important;
+} */
+.tablefile-name{
+    padding-left: 3px;
+}
+.supporttable-div{
+    /* margin-top: 10px; */
+    background-color: #fff;
+    /* height: calc(100vh - 337px);
+    overflow: hidden auto; */
+}
+
+.CreateTkt-Attachmentbox:hover {
+    border: 2px dotted #00a1e3;
+    background-color: aliceblue;
+}
+.CreateTkt-Attachmentbox p {
+    margin: 10px 0px;
+}
+.CreateTkt-Attachmentbox button.btn {
+    border: 1px solid #00a1e3 !important;
+    background: transparent !important;
+    color: #00a1e3;
+    margin-right: 0px !important;
+}
+.CreateTkt-Attachmentbox button.btn:hover {
+    border: 1px solid transparent !important;
+    background: #001c47 !important;
+}
+span.module-header-title.innertitle {
+    line-height: 35px;
+}
+.viewtktcontent {
+    padding: 15px 0px 0px;
+    height: 100%;
+}
+.comments-div .cmntslist {
+    /* height: calc(100vh - 200px);
+    overflow: hidden auto; */
+    padding-bottom: 30px !important;
+}
+.tsttooltipbtn {
+    position: relative;    
+    margin-left: 5px;
+}
+.tsttooltipbtn:hover .default-img{
+    display: none;
+}
+
+.tsttooltipbtn:hover .hover-img {
+    display: initial;
+}
+.tsttooltipbtn:hover span.testtooltip {
+    display: block;
+}
+span.testtooltip {
+    position: absolute;
+    top: 32px;
+    right: 0px;
+    background-color: #001c47;
+    color: #fff;
+    width: -moz-max-content;
+    width: max-content;
+    padding: 3px 10px;
+    border-radius: 4px;
+    display: none;
+    z-index: 1;
+}
+span.testtooltip:after {
+    content: "";
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    top: -4px;
+    background-color: #001c47;
+    transform: rotate(45deg);
+    right: 10px;
+}
+.commentsMain-div{
+    margin-top: 10px;
+}
+#text_summary{
+    min-height: 30px;
+    /* max-height: 100px; */
+    height: auto;
+    overflow: auto;
+}
+.col-md-4.noneditdiv {
+    position: fixed;
+    float: right;
+    right: 28px;
+    width: 29%;
+}
+.cmntuserdet img {
+    width: 16px;
+    height: auto;
+    margin-right: 5px;
+    margin-bottom: 4px;
+}

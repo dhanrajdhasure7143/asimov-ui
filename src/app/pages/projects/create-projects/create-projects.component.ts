@@ -40,7 +40,7 @@ export class CreateProjectsComponent implements OnInit {
   public userRoles: any;
   public name: any;
    email: any;
-
+   initiatives: any;
   constructor(
     private formBuilder: FormBuilder,
     private api:RestApiService, 
@@ -105,6 +105,7 @@ this.email=localStorage.getItem('ProfileuserId');
     this.getunassignedprojectslist();
     this.getvalchain();
     this.mindate= moment().format("YYYY-MM-DD");
+    this.getInitiatives();
   }
 
 
@@ -333,6 +334,11 @@ createproject(event)
     })
   }
 
-
+  getInitiatives(){
+    this.api.getProjectIntitiatives().subscribe(res=>{
+      let response:any=res;
+      this.initiatives=response;
+    })
+  }
   
 }

@@ -599,7 +599,7 @@ public slaupdate : boolean = false;
        log.push(response)
      });
      console.log(log);
-     log.sort((a,b) => a.run_id < b.run_id ? -1 : 1);
+     log.sort((a,b) => a.run_id > b.run_id ? -1 : 1);
      this.Viewloglist = new MatTableDataSource(log);
      console.log(this.Viewloglist);
 
@@ -826,7 +826,7 @@ public slaupdate : boolean = false;
 
 
     public uipathbotName:any;
-    getuipathlogs(template,botname)
+    getuipathlogs(template,botname,action)
     {
       
       this.uipathbotName=botname;
@@ -841,6 +841,7 @@ public slaupdate : boolean = false;
         this.uipathlogs.sort=this.sort6;
         this.uipathlogs.paginator=this.paginator6;
         this.spinner.hide();
+        if(action=="closed")
         this.logs_modal=this.modalService.show(template,{class:"logs-modal"});
       });
 
@@ -883,6 +884,7 @@ public slaupdate : boolean = false;
       let catResponse : any;
       catResponse=data
       this.categaoriesList=catResponse.data;
+      (this.categaoriesList.length==1?this.selectedcat=this.categaoriesList[0].categoryId:"")
     });
   }
   getusersList()
@@ -1035,6 +1037,21 @@ public slaupdate : boolean = false;
           showConfirmButton:true
         });
       },5000)
+    }
+  }
+
+
+  getCheckbotList()
+  {
+    if((["UiPath","EPSoft","BluePrism"]).includes(this.selected_source))
+    {
+      if(this.bot_list.filter(item=>item.sourceType==this.selected_source).length==0)
+        return true;
+      else
+        return false;
+    }
+    else{
+        return false;
     }
   }
 }

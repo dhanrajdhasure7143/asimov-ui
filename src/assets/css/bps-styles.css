@@ -178,7 +178,8 @@ mat-tab-body {
 
 #bpmn_list {
   /* height: 62vh; */
-  height: 70vh;
+  /* height: 70vh; */
+  height: calc(100vh - 95px);
   overflow: hidden auto;
 }
 
@@ -1100,9 +1101,9 @@ mat-panel-title.mat-expansion-panel-header-title {
   padding-top: 10px;
   line-height: 16px;
 }
-.chartinnsec g[aria-labelledby*="-title"] {
+/* .chartinnsec g[aria-labelledby*="-title"] {
   display: none !important;
-}
+} */
 .canvas2propcontainer {
   top: 68px;
   height: calc(100vh - 155px);

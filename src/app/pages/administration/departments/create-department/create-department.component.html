@@ -1,0 +1,57 @@
+<div class="h-100">
+    <mat-card class="h-100">
+        <div class="module-heading title">
+            <span class="module-back-button" routerLink="/pages/admin/user-management">
+                <i class="fas fa-arrow-left" aria-hidden="true"></i>
+            </span>
+            <span class="module-header-title">
+                <span class="module-parent-title">Create Department</span>
+            </span>
+            <div class="ml-auto pull-right">
+                <button (click)="resetdepartment()" class="btn btn-default">Reset</button>
+                <button [disabled]="createDepartmentForm.invalid" (click)="savedepartments()" class="btn btn-primary btn-update">Save</button>
+            </div>
+        </div>
+        <div class="container-fluid  h-scroll">
+            <div class="maindivfoprm">
+                <!-- <div class="create-heading">Create Department</div> -->
+                <form [formGroup]="createDepartmentForm"  #adddept="ngForm" (ngSubmit)="savedepartments()">
+                    <div class="row fcont">
+                            <div class="form-fields col-md-12 p-0">
+                                <label class="label-control">Department<span class="star">*</span></label>
+                                <input type="text" formControlName="departmentName"  placeholder="Enter Department" maxlength="256" class="form-control data"  [ngClass]="createDepartmentForm.get('departmentName').valid?'enteredfield-color':'inputfield-color'">
+                                <span 
+                                    *ngIf="(createDepartmentForm.get('departmentName').invalid && createDepartmentForm.get('departmentName').touched)
+                                            && !createDepartmentForm.controls['departmentName'].hasError('maxlength')" class=" errspan required">Department Required*</span>
+                                <span *ngIf="createDepartmentForm.controls['departmentName'].hasError('maxlength')"
+                                            class="errspan required">Maximum of 50 characters</span>
+                            </div>
+                            <div class="form-fields col-md-12 p-0">
+                                <label class="label-control">Owner<span class="star">*</span></label>
+                                <select formControlName="owner" class="form-control data"
+                                    [ngClass]="createDepartmentForm.get('owner').valid?'enteredfield-color':'inputfield-color'">
+                                    <option value="">Select Owner</option>
+                                    <option *ngFor="let user of users_list" [value]="user.userId.userId">
+                                        {{user.userId.firstName|titlecase}} {{user.userId.lastName|titlecase}}</option>
+                                </select>
+                                <span
+                                    *ngIf="createDepartmentForm.get('owner').invalid && createDepartmentForm.get('owner').touched"
+                                    class="errspan required">Owner Required*</span>
+                            </div>
+                       
+                    </div>
+                </form>
+                <!-- <div class="pull-right">
+                    <button (click)="resetdepartment()" class="btn btn-default">Reset</button>
+                    <button [disabled]="createDepartmentForm.invalid" (click)="savedepartments()" class="btn btn-primary btn-update">Save</button>
+                </div> -->
+            </div>
+        </div>
+    </mat-card>
+</div>
+
+<div class="spinoverlay" *ngIf="isLoading">
+    <div class="spincenter">
+        <img src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader" />
+    </div>
+</div>

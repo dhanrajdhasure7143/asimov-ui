@@ -1,0 +1,77 @@
+.no-item-img{
+    height: calc(100vh - 500px)
+  } 
+
+  .table_responsive.graph_table {
+    /* height: 420px !important; */
+    height: calc(100% - 40px);
+    overflow: auto;
+    width: 100%;
+}
+
+.department-body {
+  padding: 10px 10px 0px 10px;
+  height: calc(100% - 40px);
+  overflow: auto;
+}
+
+span.testtooltip {
+  position: absolute;
+  top: 35px;
+  right: 0px;
+  background-color: #001c47;
+  color: #fff;
+  width: max-content;
+  padding: 3px 10px;
+  border-radius: 4px;
+  display: none;
+  z-index: 999;
+}
+
+span.testtooltip:before {
+  content: '';
+  border: 2px solid #001c47;
+  border-width: 0px 0px 2px 2px;
+  position: absolute;
+  padding: 4px;
+  right: 13px;
+  top:  -5px;
+  background: #001c47;
+  transform: rotate(45deg);
+}
+
+.tsttooltipbtn:hover span.testtooltip {
+  display: block;
+}
+#deptreset {
+  line-height: 35px;
+}
+.env-data-tool div {
+  padding: 0px 5px;
+  display: initial;
+}
+.env-data-tool button.tsttooltipbtn {
+  position: relative;
+}
+.newinntalx a:hover img.default-img {
+  display: none;
+}
+
+.newinntalx a:hover img.hover-img {
+  display: initial;
+}
+
+.departmentsearch {
+  position: relative;
+}
+.departmentsearch img.testplus {
+  position: absolute;
+  right: 152px;
+  top: 9px;
+}
+
+input.departments-home-fileds {
+  display: inline-block;
+  width: 226px;
+  /* margin-left: 8px; */
+}

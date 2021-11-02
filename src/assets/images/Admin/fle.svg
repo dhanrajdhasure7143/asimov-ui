@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
+  <defs>
+    <clipPath id="clip-fle">
+      <rect width="24" height="24"/>
+    </clipPath>
+  </defs>
+  <g id="fle" clip-path="url(#clip-fle)">
+    <g id="Icon_feather-file-text" data-name="Icon feather-file-text" transform="translate(-2.84 -2.05)">
+      <path id="Path_1172" data-name="Path 1172" d="M17.049,3H8.21A2.21,2.21,0,0,0,6,5.21V22.889A2.21,2.21,0,0,0,8.21,25.1H21.469a2.21,2.21,0,0,0,2.21-2.21V9.63Z" transform="translate(0)" fill="none" stroke="#31476a" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      <path id="Path_1173" data-name="Path 1173" d="M21,3V9.63h6.63" transform="translate(-3.951)" fill="none" stroke="#31476a" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      <path id="Path_1174" data-name="Path 1174" d="M20.84,19.5H12" transform="translate(-1.58 -4.346)" fill="none" stroke="#31476a" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      <path id="Path_1175" data-name="Path 1175" d="M20.84,25.5H12" transform="translate(-1.58 -5.926)" fill="none" stroke="#31476a" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      <path id="Path_1176" data-name="Path 1176" d="M14.21,13.5H12" transform="translate(-1.58 -2.765)" fill="none" stroke="#31476a" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    </g>
+  </g>
+</svg>

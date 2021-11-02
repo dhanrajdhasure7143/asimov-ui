@@ -332,6 +332,7 @@ isGraph_changed:boolean=false;
               text: ""+this.fullgraph.display_msg.info,
               icon: 'error',
               showCancelButton: false,
+              heightAuto: false,
               confirmButtonColor: '#007bff',
               cancelButtonColor: '#d33',
               confirmButtonText: 'Okay'
@@ -342,6 +343,7 @@ isGraph_changed:boolean=false;
                   icon: 'info',
                   title: 'Please wait, Redirecting to workspace',
                   showConfirmButton: false,
+                  heightAuto: false,
                   timer: 1500
                 })
                 setTimeout(() => {
@@ -362,6 +364,7 @@ isGraph_changed:boolean=false;
             text: "It is Not You it is Us, Please try again after some time",
             icon: 'error',
             showCancelButton: false,
+            heightAuto: false,
             confirmButtonColor: '#007bff',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Okay'
@@ -372,6 +375,7 @@ isGraph_changed:boolean=false;
                 icon: 'info',
                 title: 'Please wait, Redirecting to workspace',
                 showConfirmButton: false,
+                heightAuto: false,
                 timer: 1500
               })
               setTimeout(() => {
@@ -497,6 +501,7 @@ isGraph_changed:boolean=false;
               text: ""+this.fullgraph.display_msg.info,
               icon: 'error',
               showCancelButton: false,
+              heightAuto: false,
               confirmButtonColor: '#007bff',
               cancelButtonColor: '#d33',
               confirmButtonText: 'Okay'
@@ -507,6 +512,7 @@ isGraph_changed:boolean=false;
                   icon: 'info',
                   title: 'Please wait, Redirecting to workspace',
                   showConfirmButton: false,
+                  heightAuto: false,
                   timer: 1500
                 })
                 setTimeout(() => {
@@ -977,19 +983,21 @@ isGraph_changed:boolean=false;
           if(res.data != null){
           this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true,pid:this.graphIds,category:categoryName, processName:reqObj.pname}})
           } else{
-            Swal.fire(
-              'Oops!',
-              'Failed to generate BPM Notation, Please try again later.',
-              'error'
-            );
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: "Failed to generate BPM Notation, Please try again later. !",
+              heightAuto: false,
+            })
           }
         },
         (err =>{
-          Swal.fire(
-            '',
-            'Meaningful BPM notation cannot be derived from the 100% graph as this may result in duplication of activities, Please try generating BPM notation with the combination of cases under variants ',
-            'info'
-          );
+          Swal.fire({
+              icon: 'info',
+              title: '',
+              text: 'Meaningful BPM notation cannot be derived from the 100% graph as this may result in duplication of activities, Please try generating BPM notation with the combination of cases under variants ',
+              heightAuto: false,
+            });
         }))
 
     } else if (this.isSingleTraceBPMN == true) {
@@ -1003,19 +1011,21 @@ isGraph_changed:boolean=false;
           if(res.data != null){
             this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true,pid:this.graphIds,category:categoryName, processName:reqObj1.pname}})
             } else{
-              Swal.fire(
-                'Oops!',
-                'Failed to generate BPM Notation, Please try again later.',
-                'error'
-              );
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops!',
+                text: 'Failed to generate BPM Notation, Please try again later !',
+                heightAuto: false,
+              });
             }
         },
         (err =>{
-          Swal.fire(
-            '',
-            'Internal server error, Please try again later.',
-            'error'
-          );
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Internal server error, Please try again later !',
+            heightAuto: false,
+          });
         }))
 
     } else if (this.isMultiTraceBPMN == true) {
@@ -1029,19 +1039,21 @@ isGraph_changed:boolean=false;
           if(res.data != null){
             this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true,pid:this.graphIds,category:categoryName, processName:reqObj2.pname}})
             } else{
-              Swal.fire(
-                'Oops!',
-                'Failed to generate BPM Notation, Please try again later.',
-                'error'
-              );
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Failed to generate BPM Notation, Please try again later !',
+                heightAuto: false,
+              });
             }
         },
         (err =>{
-          Swal.fire(
-            '',
-            'Internal server error, Please try again later.',
-            'error'
-          );
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Internal server error, Please try again later !',
+            heightAuto: false,
+          });
         }))
 
     } else if (this.isSliderBPMN == true) {
@@ -1056,19 +1068,21 @@ isGraph_changed:boolean=false;
           if(res.data != null){
             this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true,pid:this.graphIds,category:categoryName, processName:reqObj3.pname}})
             } else{
-              Swal.fire(
-                'Oops!',
-                'Failed to generate BPM Notation, Please try again later.',
-                'error'
-              );
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Failed to generate BPM Notation, Please try again later !',
+                heightAuto: false,
+              });
             }
         },
         (err =>{
-          Swal.fire(
-            '',
-            'Internal server error, Please try again later.',
-            'error'
-          );
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Internal server error, Please try again later !',
+            heightAuto: false,
+          });
         }))
     }
   } 
@@ -1814,6 +1828,7 @@ addWorkingHours(){
           text: "It is Not You it is Us, Please try again after some time",
           icon: 'error',
           showCancelButton: false,
+          heightAuto: false,
           confirmButtonColor: '#007bff',
           cancelButtonColor: '#d33',
           confirmButtonText: 'Okay'
@@ -1824,6 +1839,7 @@ addWorkingHours(){
               icon: 'info',
               title: 'Please wait, Redirecting to workspace',
               showConfirmButton: false,
+              heightAuto: false,
               timer: 1500
             })
             setTimeout(() => {
@@ -1841,7 +1857,20 @@ addWorkingHours(){
         this.fullgraph_model1=this.fullgraph_model
         this.model1 = fullgraphOne.allSelectData.nodeDataArraycase;
         this.filterPerformData = this.fullgraph_model;
-        this.model2 = this.flowchartData(this.model1)
+        if(this.isPerformance==true){
+          if(this.selectedPerformancevalue==5||this.selectedPerformancevalue==6||this.selectedPerformancevalue==7||this.selectedPerformancevalue==8||this.selectedPerformancevalue==9){
+          var modelArray3=[]
+            modelArray3=this.model1
+                for(var i=1;i<modelArray3.length-1;i++){
+                    modelArray3[i].count=this.timeConversion(modelArray3[i].toolCount[this.selectedPerformancevalue])
+                  }
+                this.model1=modelArray3
+            }
+                this.model2 = this.flowchartDataOne(this.model1,this.selectedPerformancevalue)
+            }else{                
+              this.model2 = this.flowchartData(this.model1)
+            }
+        // this.model2 = this.flowchartData(this.model1)
         let fullModel2=this.model2
         this.startArray=[]
         this.endArray=[]
@@ -1894,6 +1923,7 @@ addWorkingHours(){
       html: 'I will close in <b></b> milliseconds.',
       timer: 2000,
       timerProgressBar: true,
+      heightAuto: false,
     }).then((result) => {
       /* Read more about handling dismissals below */
       if (result.dismiss === Swal.DismissReason.timer) {
@@ -2002,6 +2032,7 @@ addWorkingHours(){
           text: "It is Not You it is Us, Please try again after some time",
           icon: 'error',
           showCancelButton: false,
+          heightAuto: false,
           confirmButtonColor: '#007bff',
           cancelButtonColor: '#d33',
           confirmButtonText: 'Okay'
@@ -2012,6 +2043,7 @@ addWorkingHours(){
               icon: 'info',
               title: 'Please wait, Redirecting to workspace',
               showConfirmButton: false,
+              heightAuto: false,
               timer: 1500
             })
             setTimeout(() => {

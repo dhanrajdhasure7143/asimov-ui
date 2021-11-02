@@ -25,10 +25,18 @@
                 </td>
             </ng-container>
 
+            <ng-container matColumnDef="category">
+                <th mat-header-cell *matHeaderCellDef>Category</th>
+                <td mat-cell *matCellDef="let element">
+                    <span *ngIf="element.category != null">{{element.category}}</span>
+                    <span *ngIf="element.category == null">-</span>
+                </td>
+            </ng-container>
+
              <ng-container matColumnDef="lastRunTS">
                 <th mat-header-cell *matHeaderCellDef>Previous Run</th>
                 <td mat-cell *matCellDef="let element">
-                    <span *ngIf="element.lastRunTS != null">{{element.lastRunTS}}</span>
+                    <span *ngIf="element.lastRunTS != null">{{element.lastRunTS |date: 'MMM d, y, H:mm:ss' }}</span>
                     <span *ngIf="element.lastRunTS == null">-</span>
                 </td>
             </ng-container>
@@ -36,7 +44,7 @@
             <ng-container matColumnDef="nextRunTS">
                 <th mat-header-cell *matHeaderCellDef>Next Run</th>
                 <td mat-cell *matCellDef="let element">
-                    <span *ngIf="element.nextRunTS != null">{{element.nextRunTS}}</span>
+                    <span *ngIf="element.nextRunTS != null">{{element.nextRunTS |date: 'MMM d, y, H:mm:ss' }}</span>
                     <span *ngIf="element.nextRunTS == null">-</span>
                 </td>
             </ng-container>
@@ -63,7 +71,7 @@
                         <img src="../../../../assets/images/RPA/icon_latest/close-red.svg" class="testplus">
                     </span>
                     <span *ngIf="element.status=='Paused'" [matTooltip]="element.status">
-                        <img src="../../../../assets/images/RPA/icon_latest/pause-circle-fill.svg" class="testplus">Paused
+                        <img src="../../../../assets/images/RPA/icon_latest/pause-circle-fill.svg" class="testpause">Paused
                     </span>
                     <span *ngIf="element.status=='New'">
                         <img src="../../../../assets/images/RPA/userobot.png" class="testplus">
@@ -75,7 +83,7 @@
                         <span>{{element.status}}</span>
                     </span>
             
-                    <span *ngIf="element.status=='Stop' || element.status=='Resume'" [matTooltip]="element.status">
+                    <span *ngIf="element.status=='Stop' || element.status=='Resume' || element.status=='Resumed'" [matTooltip]="element.status">
                               <!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">-->
                         <img src="../../../../../assets/images/RPA/icon_latest/stop.svg" class="testplus">Stopped
                     </span>

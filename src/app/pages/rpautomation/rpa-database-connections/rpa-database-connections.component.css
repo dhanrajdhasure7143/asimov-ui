@@ -173,3 +173,16 @@ span.testtooltip:before {
 .btn-test{
   /* margin-left: 10px !important; */
 }
+.red {
+  color: red;
+  font-weight: bold;
+}
+
+.green {
+  color: green;
+  font-weight: bold;
+}
+
+.no-item-img{
+  height:calc(100vh - 430px)
+}

@@ -138,6 +138,7 @@ percentageComplete: number;
   enabledeletetask: boolean=false;
   mindate= moment().format("YYYY-MM-DD");
   projectenddate:any;
+  initiatives: any;
   constructor(private dt:DataTransferService,private route:ActivatedRoute, private rpa:RestApiService,
     private modalService: BsModalService,private formBuilder: FormBuilder,private router: Router,
     private spinner:NgxSpinnerService) { }
@@ -215,6 +216,7 @@ percentageComplete: number;
        
       
         this.getallusers();
+        this.getInitiatives();
         this.Resourcedeleteflag=false;
   }
 
@@ -614,8 +616,7 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
 
         localStorage.setItem('project_id',this.projectDetails.id);
         if(data.taskCategory=="RPA Implementation"){
-          localStorage.setItem('bot_id',data.correlationID);
-          this.router.navigate(['/pages/rpautomation/home'])
+          this.router.navigate(['/pages/rpautomation/designer'],{queryParams:{projectId:this.projectDetails.id,botId:data.correlationID}})
         }
         if(data.taskCategory=="BPMN Design"){
           this.router.navigate(['pages/businessProcess/uploadProcessModel'],
@@ -995,5 +996,12 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
        onchangeDate(){
         if(this.projectDetails.endDate)
         this.projectDetails.endDate="0000-00-00";
+      }
+
+      getInitiatives(){
+        this.rpa.getProjectIntitiatives().subscribe(res=>{
+          let response:any=res;
+          this.initiatives=response;
+        })
       }
 }

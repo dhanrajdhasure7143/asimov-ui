@@ -56,6 +56,8 @@ export class BpsHomeComponent implements OnInit {
   totalRows$: Observable<number>;
   @ViewChild(MatSort,{static:false}) sort: MatSort;
   @ViewChild(MatPaginator,{static:false}) paginator: MatPaginator;
+  categories_list:any[]=[];
+
   constructor(private router:Router, private bpmnservice:SharebpmndiagramService, private dt:DataTransferService,
      private rest:RestApiService, private hints:BpsHints, private global:GlobalScript,
     ) { }
@@ -93,12 +95,15 @@ export class BpsHomeComponent implements OnInit {
       this.saved_diagrams.map(item => {item.xpandStatus = false;return item;})
       this.bkp_saved_diagrams = res; 
       this.isLoading = false;
-      console.log(this.saved_diagrams);
       this.savedDiagrams_list=this.saved_diagrams;
       this.assignPagenation(this.saved_diagrams);
 
       let selected_category=localStorage.getItem("bps_search_category");
-      this.categoryName=selected_category?selected_category:'allcategories';
+      if(this.categories_list.length == 1){
+        this.categoryName=this.categories_list[0].categoryName;
+      }else{
+        this.categoryName=selected_category?selected_category:'allcategories';
+      }
       this.searchByCategory(this.categoryName);
     },
     
@@ -223,8 +228,8 @@ this.dt.bpsHeaderValues('');
   }
   getAllCategories() {    // get all categories list for dropdown
     this.rest.getCategoriesList().subscribe(res => {
-    this.categoryList = res
-    console.log(this.categoryList);
+    this.categoryList = res;
+    this.categories_list=this.categoryList.data
     })
   }
   searchByCategory(category) {      // Filter table data based on selected categories
@@ -237,7 +242,6 @@ this.dt.bpsHeaderValues('');
       // this.dataSource.filter = fulldata;
     }
     else{  
-      console.log(this.saved_diagrams);
       filter_saved_diagrams=this.savedDiagrams_list;
       
       filter_saved_diagrams.forEach(e=>{
@@ -276,6 +280,7 @@ this.dt.bpsHeaderValues('');
       text: bpmNotation.bpmnProcessName+' V1.'+bpmNotation.version+' reminder mail to '+bpmNotation.approverName,
       icon: 'info',
       showCancelButton: true,
+      heightAuto: false,
       confirmButtonText: 'Send',
       cancelButtonText: 'Cancel'
     }).then((res) => {
@@ -287,7 +292,6 @@ this.dt.bpsHeaderValues('');
         this.rest.sendReminderMailToApprover(data).subscribe(res => {
           this.global.notify('Sent reminder successfully','success')
         }, err => {
-          console.log(err)
           this.global.notify('Oops! Something went wrong','error')
         })
       }
@@ -314,6 +318,7 @@ this.dt.bpsHeaderValues('');
       text: bpmNotation.bpmnProcessName+' V1.'+bpmNotation.version+' in '+status+' status will be deleted',
       icon: 'warning',
       showCancelButton: true,
+      heightAuto: false,
       confirmButtonText: 'Delete',
       cancelButtonText: 'Cancel'
     }).then((res) => {
@@ -327,7 +332,6 @@ this.dt.bpsHeaderValues('');
           this.getBPMNList();
           this.global.notify(bpmNotation.bpmnProcessName+' V1.'+bpmNotation.version+' deleted','success')
         }, err => {
-          console.log(err)
           this.global.notify('Oops! Something went wrong','error')
         })
       }

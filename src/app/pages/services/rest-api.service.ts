@@ -286,6 +286,12 @@ export class RestApiService{
     return this.http.get("/rpa-service/get-bot/"+botid);
   }
 
+
+  getBotImage(botId, version)
+  {
+    return this.http.get(`/rpa-service/get-botImage?bot-id=${botId}&version=${version}`)
+  }
+
   scheduleList(botid){
     let data=""
     return this.http.post('/rpa-service/getschedulesintervals-bot/'+botid,data)
@@ -368,7 +374,7 @@ export class RestApiService{
   fileupload(file){
     return this.http.post('/processintelligence/v1/connectorconfiguration/upload',file)
   }
-  getCategoriesList(){
+  getCategoriesList():Observable<any>{
     return this.http.get('/processintelligence/v1/processgraph/categories')
   }
   addCategory(data){
@@ -647,6 +653,10 @@ export class RestApiService{
       return this.http.get<any>('/api/user/tenants/'+tenantid +'/users');
     }
 
+    getAllUsersByDept()
+    {
+      return this.http.get("/platform-service/project/getallUsersByDept");
+    }
     getProcesslogsdata(processId)
     {
       return this.http.get("/rpa-service/process-logs/"+processId);
@@ -738,7 +748,10 @@ save_blueprism_config(data)
     {
       return this.http.post("/rpa-service/management/get-uipath-bots","");
     }
-	
+	update_uipath_env(data)
+  {
+     return this.http.put("/rpa-service/management/update-source-details",data)
+  }
 	getslalist()
     {
       return this.http.get("/rpa-service/list-sla-confuguration");
@@ -801,7 +814,7 @@ save_blueprism_config(data)
       return this.http.post("/rpa-service/agent/bot-testconnection?botId="+value,"", {responseType: "text" });
     }
 
-    loadChart1(){
+    getIncident(){
       return this.http.get('/rpa-service/management/incidents');
     }
 
@@ -865,9 +878,10 @@ save_blueprism_config(data)
     }
 
     getAllProjects(roles,name,email){
-      return this.http.get("/platform-service/project/fetchAll?roles="+roles+"&name="+name+"&email="+email+"")
+      return this.http.get("/platform-service/project/fetchAllByDept?roles="+roles+"&name="+name+"&email="+email+"")
     }
 
+ 
     update_project(data:any){
       return this.http.post("/platform-service/project/updateproject", data)
     }
@@ -1026,5 +1040,121 @@ getvaluechainprocess(id)
   deleteSelectedProcessID(request_body:any): Observable<any>{
     return this.http.post<any>('/processintelligence/v1/processgraph/deletebyPiId', request_body)
   }
+  get_processes_scheduled(){
+    return this.http.get("/rpa-service/scheduled-process")
+  }
+
+  // Support module
+  getAllCustomerRequests() {
+    return this.http.get("/api/servicedesk/getAllCustomerRequests");
+  }
+  getAllCustomerRequestsByOrg(orgName:string){
+   return this.http.get('/api/servicedesk/getAllCustomerRequestsByOrg?orgName=' + orgName);
+  }
+  createTemporaryFile(data){
+   return this.http.post("/api/servicedesk/createTemporaryFile",data);
+  }
+  createCustomerRequest(data:object){
+   return this.http.post('/api/servicedesk/createCustomerRequest',data, { responseType: "text" });
+  }
+  getAllImpactLevels() {
+    return this.http.get('/api/servicedesk/getAllImpactLevels');
+  }
+  getAllSeverityLevels(){
+    return this.http.get('/api/servicedesk/getAllSeverityLevels');
+  }
+  getAllRequestTypes(){
+    return this.http.get('/api/servicedesk/getAllRequestTypes');
+  }
+  getAllJiraOrganizations(){
+    return this.http.get('/api/servicedesk/getAllJiraOrganizations');
+  }
+  getRequestComments(id:any){
+    return this.http.get("/api/servicedesk/getRequestComments?requestKey=" + id);
+  }
+  createCommentInRequest(data:any){
+    return this.http.post('/api/servicedesk/createCommentInRequest',data,{ responseType: "text" })
+  }
+  editComment(comment:any){
+    return this.http.post('/api/servicedesk/editComment',comment, { responseType: "text" });
+  }
+  editSummary(id:any,data:any){
+    return this.http.post('/api/servicedesk/editSummary?request='+id,data, { responseType: "text" })
+  }
+  editDescription(id:any,data:any){
+    return this.http.post('/api/servicedesk/editDescription?request='+id,data, { responseType: "text" })
+  }
+  getAttachmentsForCustomerRequest(id:any){
+    return this.http.get('/api/servicedesk/getAttachmentsForCustomerRequest?requestKey='+id, { responseType: "json" });
+  }
+  createAttachmentsForATicket(data){
+    return this.http.post('/api/servicedesk/createAttachmentsForATicket',data , { responseType: "text" });
+  }
+  getCustomerRequestStatus(requestKey){
+    return this.http.get("/api/servicedesk/getCustomerRequestStatus?requestKey=" + requestKey, { responseType: "text" });
+  }
+  removeAttachmentsFromCustomerRequest(data:any){
+   return this.http.post('/api/servicedesk/removeAttachmentsFromCustomerRequest', data, { responseType: "text" });
+  }
+  removeAllAttachmentsFromCustomerRequest(requestId:any){
+   return this.http.get("/api/servicedesk/removeAllAttachmentsFromCustomerRequest?requestKey="+ requestId, { responseType: "text" });
+  }
+  deleteComment(body){
+   return this.http.post('/api/servicedesk/deleteComment',body,{ responseType: "text" });
+  }
+  getListOfComponents(){
+    return this.http.get('/api/servicedesk/getcomponents')
+  }
+  getselectedRequestKey(key){
+   return this.http.get('/api/servicedesk/getCustomerRequestsByRequestKey?requestKey='+key);
+  }
+
+  deleteDepartments(data):Observable<any>{
+    const httpOps = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+            }),
+      body: data
+    }
+    return this.http.delete<any>('/platform-service/department/categories',httpOps)
+     
+  }
+
+  getDepartmentsList(): Observable<any>{
+    return this.http.get('/platform-service/department/categories')
+  }
+
+  createDepartment(body:any): Observable<any>{
+    return this.http.post<any>('/platform-service/department/categories', body,httpOptions)
+  }
+
+  updateDepartment(data:any): Observable<any>{
+    return this.http.put<any>('/platform-service/department/categories', data,httpOptions)
+  }
+
+  getDepartmentDetails(id){
+    return this.http.get('/platform-service/department/'+id+'')
+  }
+
+  deleteSelectedUser(userId):Observable<any>{
+    return this.http.delete<any>('/api/user/deleteSelectedUser?userId='+userId)
+     
+ }
+
+ inviteUserwithoutReg(body):Observable<any>{
+  return this.http.post<any>("/api/user/userInviteRegistration", body)
+ }
+ getAllRoles(appId):Observable<any>{
+  return this.http.get<any>('/authorizationservice/api/v1/application/'+appId+'/roles')
+
+}
+
+updateUserRoleDepartment(data):Observable<any>{
+  return this.http.put<any>('/authorizationservice/api/v1/user/role/userUpdate', data)
+}
+ 
+getProjectIntitiatives():Observable<any>{
+  return this.http.get<any>('/platform-service/project/get-initiatives')
+ }
 
 }

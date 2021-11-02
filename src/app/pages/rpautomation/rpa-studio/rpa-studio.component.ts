@@ -5,6 +5,8 @@ import { RestApiService } from '../../services/rest-api.service';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { NgxSpinnerService } from "ngx-spinner";
+import { RpaStudioDesignerComponent } from '../rpa-studio-designer/rpa-studio-designer.component';
+import { Base64 } from 'js-base64';
 
 @Component({
   selector: 'app-rpa-studio',
@@ -63,7 +65,14 @@ export class RpaStudioComponent implements OnInit {
   userRole;
   public checkbotname:Boolean;
   @ViewChild('section', {static: false}) section: ElementRef<any>;
-  constructor(public activatedRoute: ActivatedRoute, private router: Router, private dt:DataTransferService,private rest:RestApiService, private formBuilder:FormBuilder,public spinner: NgxSpinnerService) {
+  @ViewChild(RpaStudioDesignerComponent,{static:false}) designerInstance:RpaStudioDesignerComponent;
+  constructor(public activatedRoute: ActivatedRoute, 
+    private router: Router, 
+    private dt:DataTransferService,
+    private rest:RestApiService, 
+    private formBuilder:FormBuilder,
+    public spinner: NgxSpinnerService) 
+    {
     this.show = 8;
 
     this.insertbot=this.formBuilder.group({
@@ -87,27 +96,14 @@ export class RpaStudioComponent implements OnInit {
 
   ngOnInit()
   {
+
+
+
     
-   // document.getElementById("filters").style.display = "block";
-   
-    if(localStorage.getItem("botId"))
-    {
-      this.localstore = false;
-    }
-    if(localStorage.getItem("enablecreate"))
-    {
-      this.hiddenCreateBotPopUp=true;
-      localStorage.removeItem("enablecreate");
-      this.insertbot.reset();
-    }
-    else
-    {
-      this.hiddenCreateBotPopUp=false;
-    }
-    this.toolSetData;
     let data1:any = [];
     this.dt.changeParentModule({"route":"/pages/rpautomation/home", "title":"RPA"});
     this.dt.changeChildModule("");
+    this.spinner.show();
     this.rest.toolSet().subscribe(data => {
       data1 = data
       this.userRole = localStorage.getItem("userRole")
@@ -132,25 +128,56 @@ export class RpaStudioComponent implements OnInit {
             tasks: element.taskList
           };
           this.templateNodes.push(temp)
-          if(localStorage.getItem("tabsArray")!=undefined)
-          {
-            let tabsData:any=[];
-            tabsData=JSON.parse(localStorage.getItem("tabsArray"));
-            tabsData.forEach(data=>{
-                this.getloadbotdata(data.botId);
-            })
-            localStorage.removeItem("tabsArray");
-          }
-          this.spinner.hide();
-        })
+          // if(localStorage.getItem("tabsArray")!=undefined)
+          // {
+          //   let tabsData:any=[];
+          //   tabsData=JSON.parse(localStorage.getItem("tabsArray"));
+          //   tabsData.forEach(data=>{
+          //       this.getloadbotdata(data.botId);
+          //   })
+          //   localStorage.removeItem("tabsArray");
+          // }
+          //this.spinner.hide();
+        });
+          this.activatedRoute.queryParams.subscribe(data=>{
+            let params:any=data;
+            if(params==undefined)
+            {
+              this.router.navigate(["home"])
+            }
+            else
+            {
+              let botId=params.botId;
+              if(!(isNaN(botId)))
+                this.getloadbotdata(botId)
+              else
+              {
+                let BotData=JSON.parse(Base64.decode(botId));
+                console.log(BotData)
+                this.tabsArray.push(BotData)
+                setTimeout(()=>{
+                  this.designerInstance.bot_instances.forEach(item=>{
+                    if(item.botState.botName==BotData.botName)
+                    {
+                      this.designerInstance.current_instance=item.rpa_actions_menu;
+                      this.designerInstance.toolset_instance=item;
+                      this.designerInstance.selected_tab_instance=item;
+                    } 
+                    this.spinner.hide();
+                  });
+                },2500)
+              }
+            }
+          })
       }
-      if(localStorage.getItem("botId"))
-      {
-        this.getloadbotdata(localStorage.getItem("botId"));
-        localStorage.removeItem("botId");
-      }
+     
+
     })
   }
+
+
+
+
 
   validate(code){
     let validate = code;
@@ -306,7 +333,7 @@ export class RpaStudioComponent implements OnInit {
 
   getloadbotdata(botid)
   {
-    let botdata:any;
+    var botdata:any;
     this.spinner.show()
     this.rest.getbotdata(botid).subscribe(data=>{
        botdata=data;
@@ -315,9 +342,30 @@ export class RpaStudioComponent implements OnInit {
         this.userFilter.name="";
         this.tabsArray.push(botdata);
         this.tabActiveId=botdata.botName;
+        setTimeout(()=>{
+          this.designerInstance.bot_instances.forEach(item=>{
+            if(item.botState.botId==botdata.botId)
+            {
+              this.designerInstance.current_instance=item.rpa_actions_menu;
+              this.designerInstance.toolset_instance=item;
+              this.designerInstance.selected_tab_instance=item;
+              let url=window.location.hash;
+              window.history.pushState("", "", url.split("botId=")[0]+"botId="+botdata.botId);
+           }
+            // if(item.botId==botdata.botId)
+            // {
+            //   this.designerInstance.current_instance=item.
+            // }
+            
+            //
+          });
+        },2500)
+
+        this.spinner.hide();
       }
       else
       {
+        
         this.spinner.hide();
         if(localStorage.getItem('bot_id')=="null")
         Swal.fire("Warning","Selected Bot is already loaded","warning");
@@ -329,6 +377,10 @@ export class RpaStudioComponent implements OnInit {
       //this.loadbot.reset();
       document.getElementById("load-bot").style.display="none";
       this.localstore = true;
+    },(err)=>{
+      this.spinner.hide();
+      Swal.fire("Error","Unable to load bot","error");
+      this.router.navigate(["/home"])
     })
   }
 
