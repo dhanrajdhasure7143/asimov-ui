@@ -173,7 +173,7 @@
             </span>
                       </span>
                       <span *ngIf="element.taskType=='Human'">
-            <select class="form-control" style="width:200px;padding:0px;"  [value]="element.assignedUserId"  [id]="element.taskId+'__select'">
+            <select class="form-control" style="width:200px;padding:0px;"  [value]="element.assignedUserId | checkResource : humans_list :'humans' : 'Human'"  [id]="element.taskId+'__select'">
                 <option value="0" >Select Resource</option>
                 <option *ngFor="let human of (humans_list | HumanlistbycatPipe : element.category )" [value]="human.userId.id">{{human.userId.firstName}} {{human.userId.lastName}} </option>
             </select>

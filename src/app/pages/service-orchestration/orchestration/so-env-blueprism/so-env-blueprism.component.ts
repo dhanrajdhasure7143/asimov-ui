@@ -127,6 +127,7 @@ createBlueprism(){
   this.createblueprism = true;
   this.updateblueprims = false;
   document.getElementById("createbprism").style.display = "block";
+  this.BluePrismConfigForm.get("categoryId").setValue(this.categoryList.length==1?this.categoryList[0].categoryId:"0")
   document.getElementById("updatebprism").style.display='none';
 }
 
@@ -212,20 +213,21 @@ checktodelete()
           this.spinner.show();
           this.api.delete_blueprism_config(selectedEnvironments).subscribe( data =>{
             let res:any=data;
-            Swal.fire({
-              position: 'center',
-              icon: 'success',
-              title: res.status,
-              showConfirmButton: false,
-              timer: 2000
-            })
+            if(res.errorMessage==undefined)
+            {
+              Swal.fire("success",res.status,"success")
   
-            this.removeallchecks();
-            this.getblueprismconnections();
-            //this.getallData();
-            this.spinner.hide();
-            this.checktoupdate();
-            this.checktodelete();
+              this.removeallchecks();
+              this.getblueprismconnections();
+              //this.getallData();
+              this.spinner.hide();
+              this.checktoupdate();
+              this.checktodelete();
+            }else
+            {
+              Swal.fire("error",res.errorMessage,"error")
+            }
+            
           })
         }
       })
