@@ -183,28 +183,34 @@
                                             <div *ngFor="let each_comment of comment;let i=index" class="col-md-12 p-0 Add-comments">
                                                 <div class="Inner-comments">
                                                     <div class="col-md-12 p-0">
-                                                        <span class="cmntuserdet">
-                                                            <img src="../../../../assets/images/username_icon.png" /> 
-                                                            <strong>{{each_comment.createdBy}}</strong>
-                                                        </span>
-                                                        <span class="comment-date pull-right"><span class="comment-dateField"> Created : {{getTime(each_comment.timestamp | date:'MMM d, y, HH:mm')}}</span> 
+                                                        <span class="userimg">EA</span>
+                                                        <span class="cmntuserdet">{{each_comment.createdBy}}</span>
+                                                        <!-- <img src="../../../../assets/images/username_icon.png" />  -->
+                                                        <span class="comment-date"><span class="comment-dateField"> {{getTime(each_comment.timestamp | date:'MMM d, y, HH:mm')}}</span> 
                                                     
-                                                            <span *ngIf='!(isCommentEditable == i)'>
-                                                                <span class="comment-date-icons firsticon-edit" *ngIf="each_comment.createdBy != 'EPSoft IT Admin'">
-                                                                    <img src="../../../../assets/images/Admin/edit-comment.svg" matTooltip="Edit" (click)="editComment1(i,each_comment)" class="default-img">
-                                                                    <img  src="../../../../assets/images/Admin/edit-comment-blue.svg" (click)="editComment1(i,each_comment)" class="hover-img">
-                                                                </span>
-                                                                <span class="comment-date-icons" *ngIf="each_comment.createdBy != 'EPSoft IT Admin'">
-                                                                    <img src="../../../../assets/images/Admin/delete-comment.svg" matTooltip="Delete" (click)="deleteComment(each_comment)" class="default-img">
-                                                                    <img src="../../../../assets/images/Admin/delete-comment-red.svg" matTooltip="Delete" (click)="deleteComment(each_comment)" class="hover-img">
-                                                                </span>
-                                                            </span>
+                                                            
                                                         </span> 
                                                     </div>
-                                                    <div class="Content-comment">
-                                                        <span class="" *ngIf='isCommentEditable != i' style="white-space: pre-line"> {{each_comment.comment}} </span>
-                                                    </div>
 
+                                                    <div class="Content-comment">
+                                                        <span class="" *ngIf='isCommentEditable != i'> {{each_comment.comment}} </span>
+
+                                                        <div class="col-md-12 p-0 text-right" *ngIf='!(isCommentEditable == i)'>
+                                                            <span class="comment-date-icons firsticon-edit" *ngIf="each_comment.createdBy != 'EPSoft IT Admin'">
+                                                                <button class="btn btn-default" (click)="deleteComment(each_comment)">Delete</button>
+                                                                <!-- <img src="../../../../assets/images/Admin/delete-comment.svg" matTooltip="Delete" (click)="deleteComment(each_comment)" class="default-img">
+                                                                <img src="../../../../assets/images/Admin/delete-comment-red.svg" matTooltip="Delete" (click)="deleteComment(each_comment)" class="hover-img"> -->
+                                                            </span>
+                                                            <span class="comment-date-icons" *ngIf="each_comment.createdBy != 'EPSoft IT Admin'">
+                                                                <button class="btn btn-primary" (click)="editComment1(i,each_comment)">Edit</button>
+                                                                <!-- <img src="../../../../assets/images/Admin/edit-comment.svg" matTooltip="Edit" (click)="editComment1(i,each_comment)" class="default-img">
+                                                                <img  src="../../../../assets/images/Admin/edit-comment-blue.svg" (click)="editComment1(i,each_comment)" class="hover-img"> -->
+                                                                
+                                                            </span>
+                                                       
+                                                        </div>
+                                                    </div>
+                                                    
                                                     <div *ngIf='isCommentEditable == i' class="">
                                                         <textarea type="text" id="text_new2" (keyup)="autoGrowcommentsBox1()" name="comment1_field" [(ngModel)]="comment_data" placeholder="Enter Comment" class="form-control"></textarea>
 
