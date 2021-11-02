@@ -100,6 +100,7 @@ getAllCategories(){
         icon: 'success',
         showCancelButton: false,
         confirmButtonColor: '#007bff',
+        heightAuto: false,
         cancelButtonColor: '#d33',
         confirmButtonText: 'Ok'
     }).then((result) => {

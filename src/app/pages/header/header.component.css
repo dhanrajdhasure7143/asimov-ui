@@ -156,21 +156,21 @@
 
     } */
   .res-circle {
-    width: 38px;
+    width: 44px;
     border-radius: 100%;
-    height: 38px;
+    height: 42px;
     margin-top: 2px;
     color: rgb(255, 255, 255);
     background: rgb(0, 161, 228);
     margin-left: 5px;
     font-weight: bold;
-    padding: 3px 8px;
+    padding: 4px 12px;
 
     }
     .res-circle-img {
       border-radius: 100%;
-      width: 32px;
-      height: 32px;
+      width: 43px;
+      height: 41px;
       /* width: 45px;
       height: 45px; */
       margin-top: 0px;

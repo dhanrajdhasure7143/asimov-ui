@@ -42,6 +42,7 @@ export class CreateDepartmentComponent implements OnInit {
           showCancelButton: false,
           confirmButtonColor: '#007bff',
           cancelButtonColor: '#d33',
+          heightAuto: false,
           confirmButtonText: 'Ok'
       }).then((result) => {
         this.resetdepartment();
