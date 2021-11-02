@@ -156,12 +156,14 @@ export class ViewTicketComponent implements OnInit {
     this.imageArray = [];
     this.api.getAttachmentsForCustomerRequest(id).subscribe((res: any) => {
       this.attachmentsForCustomerRequest = res;
-      this.all_attachements=res
       this.attachmentsForCustomerRequest.forEach(element => {
+        let type=element.fileName.split('.')
         element['fileData'] = atob(element.fileData)
         element['fileSize'] = this.convertFileSize(element.fileSize);
         // element['imgSrc']=this.addImageSource(element.fileName)
+        element['type']=type[type.length-1];
       });
+      this.all_attachements=this.attachmentsForCustomerRequest
       this.dataSource = new MatTableDataSource(this.attachmentsForCustomerRequest);
       setTimeout(() => {
         this.dataSource.paginator = this.paginator;
@@ -689,8 +691,13 @@ autoGrowSummaryTextZone() {
     let _self=this;
     var zip = new JSZip();
     this.all_attachements.forEach((value,i) => {
-      zip.file(value.file_name,atob(value.fileData));
+      if(value.type=='jpg'|| 'PNG' || 'svg' || 'jpeg' || 'png'){
+      zip.file(value.file_name,value.fileData,{base64:true});
+      }else{
+      zip.file(value.file_name,value.fileData);
+      }
     });
+    // zip.file(this.all_attachements[1].file_name,this.all_attachements[1].fileData,{base64:true});
     zip.generateAsync({ type: "blob" }).then(function (content) {
       FileSaver.saveAs(content, _self.requestKey+".zip");
     });
