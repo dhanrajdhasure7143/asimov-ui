@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
 import Swal from 'sweetalert2';
 
@@ -14,7 +16,7 @@ export class InviteUserComponent implements OnInit {
   categories: Object;
   allRoles: any;
 
-  constructor(private formBuilder: FormBuilder,private api:RestApiService) { }
+  constructor(private formBuilder: FormBuilder,private api:RestApiService, private router: Router,private spinner:NgxSpinnerService ) { }
 
   ngOnInit(): void {
     this.inviteUserForm=this.formBuilder.group({
@@ -81,6 +83,7 @@ getAllCategories(){
  }
 
  inviteUser(){
+  this.spinner.show();
    let body = {
     "inviterMailId": localStorage.getItem('ProfileuserId'),
     "inviteeMailId": this.inviteUserForm.value.inviteeMail,
@@ -93,9 +96,10 @@ getAllCategories(){
    }
    this.api.inviteUserwithoutReg(body).subscribe(resp => {
      if(resp.message==="User invited Successfully !!"){
+      this.spinner.hide();
       Swal.fire({
         title: 'Success',
-        text: "User invited Successfully !!",
+        text: "User Invited Successfully !!",
         position: 'center',
         icon: 'success',
         showCancelButton: false,
@@ -104,6 +108,7 @@ getAllCategories(){
         confirmButtonText: 'Ok'
     }).then((result) => {
       this.resetUserInvite();
+      this.router.navigate(['/pages/admin/user-management'])
     }) 
     }else {
       Swal.fire("Error",resp.message,"error");

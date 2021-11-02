@@ -111,6 +111,17 @@
                         </a> 
                   
                       </div>
+                      <div *ngIf="(element.email===loggedinUser)" class="newinntalx1">
+                        
+                        <a  matTooltip="Edit User">
+                          <img src="../../../../assets/images/edit-dis.svg" class="default-img">
+                        </a> 
+
+                        <a    matTooltip="Delete User">
+                          <img src="assets/images/PI/delete_disabled.svg" class="default-img">
+                        </a> 
+                  
+                      </div>
                     </td>
                     </ng-container>
                     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
@@ -121,7 +132,7 @@
               
              
       </div> 
-      <mat-paginator #paginator [pageSize]="7" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons]="true" class="newpaginationdiv"></mat-paginator>
+      <mat-paginator #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons]="true" class="newpaginationdiv"></mat-paginator>
       </div>
     </mat-card>
   

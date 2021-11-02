@@ -3,6 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { element } from 'protractor';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
 import Swal from 'sweetalert2';
@@ -21,7 +22,7 @@ export class UsersComponent implements OnInit {
   displayedColumns: string[] = ["firstName","email","designation","department","roles","created_at","status","action"];
   loggedinUser: string;
 
-  constructor(private api: RestApiService, private router: Router){ }
+  constructor(private api: RestApiService, private router: Router,private spinner:NgxSpinnerService){ }
 
   ngOnInit(): void {
     this.getUsers();
@@ -38,8 +39,12 @@ export class UsersComponent implements OnInit {
         roles.forEach(element1 => {
           roleslist.push(element1.name);
         })
+        let name = null;
+        if(element.userId.firstName!=null&&element.userId.lastName!=null){
+          name = element.userId.firstName+" "+element.userId.lastName;
+        }
         let userdata={
-          "firstName": element.userId.firstName+" "+element.userId.lastName,
+          "firstName": name,
           "email":element.userId.userId,
           "designation":element.userId.designation,
           "department":element.departmentsList,
@@ -70,16 +75,17 @@ export class UsersComponent implements OnInit {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.value) {
+      this.spinner.show();
       this.api.deleteSelectedUser(data.email).subscribe(resp => {
-       console.log("del resp===", resp)
-        let value: any = resp
+          let value: any = resp
         if (value.message === "User Deleted Successfully") {
-          Swal.fire("Success", "User Deleted Sucessfully!!", "success")
           this.getUsers();
+          Swal.fire("Success", "User Deleted Sucessfully!!", "success")
         }
         else {
           Swal.fire("Error", "Failed to delete user", "error");
         }
+        this.spinner.hide();
       })
     }
     })
@@ -87,7 +93,10 @@ export class UsersComponent implements OnInit {
   }
 
   modifyUser(data){
-    this.router.navigate(['/pages/admin/modify-user'], { queryParams: {id:data.email,role:data.roles, dept:data.department} });
+    console.log("userdata====",data)
+     let userroles=[];
+     userroles=data.roles
+    this.router.navigate(['/pages/admin/modify-user'], { queryParams: {id:data.email,role:userroles, dept:data.department} });
 
   }
 

@@ -37,30 +37,39 @@ getAllCategories(){
   })
  }
  getRoles(){
+   var roles1:any=[];
   this.api.getAllRoles(2).subscribe(resp => {
     this.allRoles = resp;
+    console.log("allroles======",this.allRoles)
+    
     this.route.queryParams.subscribe(data=>{​​​​​​
+      console.log("data=",data)
       this.userId=data.id;
-      this.roles=data.role;
+      // this.roles=["3"];
+      data.role.forEach(element => {
+        this.allRoles.forEach(x => {
+          if(x.displayName === element){
+            roles1.push(x.id)
+          }
+          
+        });
+        // this.roleIds.push(this.roleObj.id);
+        });
       this.editUserForm.get("email").setValue(this.userId);
-      this.editUserForm.get("role").setValue(this.roles);
+      this.editUserForm.get("role").setValue(roles1);
       this.editUserForm.get("departments").setValue(data.dept);
-      console.log("form1=====",this.editUserForm)
   })
  })
 }
 
 updateUser(){
-  console.log("form2=====",this.editUserForm)
-  // this.editUserForm.get("role").value.forEach(element => {
-  // this.roleObj=this.allRoles.find(x => x.name === element);
-  // this.roleIds.push(this.roleObj.id);
-  // });
+ 
   let body={
       "userId":this.userId,
       "department":this.editUserForm.get("departments").value.toString(),
       "rolesList": this.editUserForm.get("role").value
   }
+  console.log("body=====",body)
   this.api.updateUserRoleDepartment(body).subscribe(resp=> {
     if(resp.message === "Successfuly updated role of an user for particular application"){
       Swal.fire({
