@@ -134,6 +134,7 @@ getUiPath()
 }
 
 createUiPath(){
+  this.insertForm.get("categoryId").setValue(this.categoryList.lenght==1?this.categoryList[0].categoryId:"")
   document.getElementById("createUipath").style.display = "block";
   document.getElementById("updateUipath").style.display = "none";
 }

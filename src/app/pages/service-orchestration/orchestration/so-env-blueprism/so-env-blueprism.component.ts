@@ -252,7 +252,7 @@ checkAllCheckBox(ev) {
 reset_createblueprism(){
   
   this.BluePrismConfigForm.reset();
-  this.BluePrismConfigForm.get("categoryId").setValue("0")
+  this.BluePrismConfigForm.get("categoryId").setValue(this.categoryList.lenght==1?this.categoryList[0].categoryId:"0")
 }
 
 reset_Updateblueprism(){

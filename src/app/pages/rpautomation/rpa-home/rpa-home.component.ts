@@ -526,11 +526,8 @@ export class RpaHomeComponent implements OnInit {
   close()
   {
     document.getElementById("create-bot").style.display ="none";
-    
-    document.getElementById("load-bot").style.display ="none";
-
     document.getElementById("edit-bot").style.display="none";
-
+    document.getElementById("load-bot").style.display ="none";
   }
   editclose(){
     document.getElementById("edit-bot").style.display="none";

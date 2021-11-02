@@ -61,6 +61,7 @@ import { SoMonitoringComponent } from './orchestration/so-monitoring/so-monitori
 import { ScheduledBotsComponent } from './orchestration/scheduled-bots/scheduled-bots.component';
 import { BotsComponent } from './orchestration/scheduled-bots/bots/bots.component';
 import { ProcessesComponent } from './orchestration/scheduled-bots/processes/processes.component';
+import { CheckResourcePipe } from './orchestration/new-so-automated-tasks/check-resource.pipe';
 @NgModule({
   declarations: [OrchestrationComponent,ipcustompipecreation,
     BotStatusComponent,
@@ -87,7 +88,8 @@ import { ProcessesComponent } from './orchestration/scheduled-bots/processes/pro
     SoMonitoringComponent,
     BotsComponent,
     ProcessesComponent,
-    ScheduledBotsComponent],
+    ScheduledBotsComponent,
+    CheckResourcePipe],
   imports: [
     CommonModule,
     FormsModule,

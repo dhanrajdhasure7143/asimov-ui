@@ -284,7 +284,7 @@ placeholder="Enter Environment Type" >-->
                     
                         <div class="col-md-12 p-0 form-group">
                             <label class="label-control" for="categoryId">Category<span class="star">*</span></label>
-                            <select type="text" class="form-control" formControlName="categoryId" [disabled]="categoryList.lenght==1" [value]="categoryList.length==1?categoryList[0].categoryId:'0'">
+                            <select type="text" class="form-control" formControlName="categoryId" [value]="categoryList.length==1?categoryList[0].categoryId:'0'">
                                 <option value="0" disabled>Select Category</option>
                                 <option [value]="category.categoryId" *ngFor="let category of categoryList">{{category.categoryName}}</option>
                             </select>   
@@ -436,11 +436,11 @@ placeholder="Enter Environment Type" >-->
                         </div>
                         <div class="col-md-12 p-0 form-group">
                             <label class="label-control" for="categoryId">Category<span class="star">*</span></label>
-                            <select  class="form-control"  formControlName="categoryId" [disabled]="categoryList.length=='1'" >
+                            <select  class="form-control"  formControlName="categoryId" [attr.disabled]="categoryList.length=='1'" >
                                 <option value="0" disabled>Select Category</option>
                                 <option [value]="category.categoryId" *ngFor="let category of categoryList">{{category.categoryName}}</option>
                             </select>   
-                             <span *ngIf="(updateForm.get('categoryId').invalid && updateForm.get('categoryId').touched)"  class="errspan required"> Username Required*</span>
+                             <span *ngIf="(updateForm.get('categoryId').invalid && updateForm.get('categoryId').touched)"  class="errspan required"> Category Required*</span>
 
                            
 
