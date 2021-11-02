@@ -16,6 +16,13 @@
                   <span *ngIf="element.processName == null">-</span>
                 </td>
             </ng-container>
+            <ng-container matColumnDef="category">
+                <th mat-header-cell *matHeaderCellDef>Category</th>
+                <td mat-cell *matCellDef="let element">
+                    <span *ngIf="element.category != null">{{element.category}}</span>
+                    <span *ngIf="element.category == null">-</span>
+                </td>
+            </ng-container>
 
             <ng-container matColumnDef="environment">
                 <th mat-header-cell *matHeaderCellDef>Environment</th>
@@ -60,7 +67,7 @@
                     </span>
 
                     <span *ngIf="element.status=='Paused'" [matTooltip]="element.status">
-                        <img src="../../../../assets/images/RPA/icon_latest/pause-circle-fill.svg" class="testplus">Paused
+                        <img src="../../../../assets/images/RPA/icon_latest/pause-circle-fill.svg" class="testpause">Paused
                     </span>
                     
                     <span *ngIf="element.status=='Failure'|| element.status=='Failed'"  [matTooltip]="element.status">

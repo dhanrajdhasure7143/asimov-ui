@@ -13,7 +13,7 @@ import { RestApiService } from 'src/app/pages/services/rest-api.service';
 })
 export class ProcessesComponent implements OnInit {
 
-  displaycolumns: string[] = ['processName','environment','scheduleInterval','timezone','lastRunTS','nextRunTS','status'];
+  displaycolumns: string[] = ['processName','category','environment','scheduleInterval','timezone','lastRunTS','nextRunTS','status'];
   dataSource5:MatTableDataSource<any>;
   public log:any=[];
   public tabledata: boolean = false;
