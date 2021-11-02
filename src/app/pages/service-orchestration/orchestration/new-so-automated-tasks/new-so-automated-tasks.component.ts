@@ -62,6 +62,7 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
   public responsedata;
   public selectedEnvironment:any='';
   public environments:any=[];
+  public environmentsData:any=[];
   public accountName:any="";
   public tenantId:any="";
   public userKey:any="";
@@ -569,6 +570,7 @@ resetsla(){
   applyFilter1(value)
   {
     this.selectedcategory=parseInt(value);
+    this.environments=this.environmentsData.filter(item=>item.categoryId==value);
     this.dataSource2.filter = this.categaoriesList.find(data=>this.selectedcategory==data.categoryId).categoryName.toLowerCase();
     this.selected_process_names=this.process_names.filter(item=>item.categoryId==this.selectedcategory)
     this.selectedvalue="";
@@ -781,6 +783,7 @@ resetsla(){
       if(resp.errorCode == undefined)
       {
         this.environments=response;
+        this.environmentsData=response;
       }
     })
   }
@@ -824,7 +827,10 @@ resetsla(){
   {
     this.selectedEnvironment="";
     this.selectedvalue="";
-    this.selectedcategory="";
+    if(this.categaoriesList.length!=0)
+      this.selectedcategory="";
+    else
+      this.selectedcategory=this.categaoriesList[0].catgeoryId
     this.getautomatedtasks(0)
 
   }

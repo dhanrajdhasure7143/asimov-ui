@@ -1039,4 +1039,19 @@ public slaupdate : boolean = false;
       },5000)
     }
   }
+
+
+  getCheckbotList()
+  {
+    if((["UiPath","EPSoft","BluePrism"]).includes(this.selected_source))
+    {
+      if(this.bot_list.filter(item=>item.sourceType==this.selected_source).length==0)
+        return true;
+      else
+        return false;
+    }
+    else{
+        return false;
+    }
+  }
 }

@@ -184,6 +184,14 @@
 
 
               <!-- </mat-card> -->
+         
+            </div>
+
+          <div *ngIf="getCheckbotList() || this.bot_list.length==9" style="text-align: center;">
+            <img src="../../../../../assets/images/RPA/No-Items.svg"  style="height:calc(100vh - 400px)">
+            <br><br>
+              <h4>No items to display</h4>
+              
           </div>
           <mat-paginator #paginator1 [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons]="true"></mat-paginator>
       </div>
