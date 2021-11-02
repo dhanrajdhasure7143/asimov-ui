@@ -63,6 +63,7 @@ export class DepartmentsComponent implements OnInit {
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
+      heightAuto: false,
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
