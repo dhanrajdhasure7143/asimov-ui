@@ -56,6 +56,8 @@ export class BpsHomeComponent implements OnInit {
   totalRows$: Observable<number>;
   @ViewChild(MatSort,{static:false}) sort: MatSort;
   @ViewChild(MatPaginator,{static:false}) paginator: MatPaginator;
+  categories_list:any[]=[];
+
   constructor(private router:Router, private bpmnservice:SharebpmndiagramService, private dt:DataTransferService,
      private rest:RestApiService, private hints:BpsHints, private global:GlobalScript,
     ) { }
@@ -97,7 +99,11 @@ export class BpsHomeComponent implements OnInit {
       this.assignPagenation(this.saved_diagrams);
 
       let selected_category=localStorage.getItem("bps_search_category");
-      this.categoryName=selected_category?selected_category:'allcategories';
+      if(this.categories_list.length == 1){
+        this.categoryName=this.categories_list[0].categoryName;
+      }else{
+        this.categoryName=selected_category?selected_category:'allcategories';
+      }
       this.searchByCategory(this.categoryName);
     },
     
@@ -222,7 +228,8 @@ this.dt.bpsHeaderValues('');
   }
   getAllCategories() {    // get all categories list for dropdown
     this.rest.getCategoriesList().subscribe(res => {
-    this.categoryList = res
+    this.categoryList = res;
+    this.categories_list=this.categoryList.data
     })
   }
   searchByCategory(category) {      // Filter table data based on selected categories
@@ -273,6 +280,7 @@ this.dt.bpsHeaderValues('');
       text: bpmNotation.bpmnProcessName+' V1.'+bpmNotation.version+' reminder mail to '+bpmNotation.approverName,
       icon: 'info',
       showCancelButton: true,
+      heightAuto: false,
       confirmButtonText: 'Send',
       cancelButtonText: 'Cancel'
     }).then((res) => {
@@ -310,6 +318,7 @@ this.dt.bpsHeaderValues('');
       text: bpmNotation.bpmnProcessName+' V1.'+bpmNotation.version+' in '+status+' status will be deleted',
       icon: 'warning',
       showCancelButton: true,
+      heightAuto: false,
       confirmButtonText: 'Delete',
       cancelButtonText: 'Cancel'
     }).then((res) => {

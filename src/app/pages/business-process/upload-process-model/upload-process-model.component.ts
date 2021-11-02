@@ -594,6 +594,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
       text: 'Your current changes will be lost on changing notation.',
       icon: 'warning',
       showCancelButton: true,
+      heightAuto: false,
       confirmButtonText: 'Save and Continue',
       cancelButtonText: 'Discard'
     }).then((res) => {
@@ -1025,7 +1026,13 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
     let bpmnModel:BpmnModel = new BpmnModel();
     this.selected_approver=e
     if((!this.selected_approver && this.selected_approver != 0) || this.selected_approver <= -1){
-      Swal.fire("No approver", "Please select approver from the list given above", "error");
+      // Swal.fire("No approver", "Please select approver from the list given above", "error");
+      Swal.fire({
+        icon: 'error',
+        title: 'No approver',
+        text: 'Please select approver from the list given above !',
+        heightAuto: false,
+      });
       return;
     }
     this.isLoading = true;
@@ -1074,30 +1081,33 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
           _self.isLoading = false;
           _self.isDiagramChanged = false;
           if(data["errorCode"] == "2005"){
-            Swal.fire(
-              'Already exists!',
-              'The notation is already in "PENDING" status.',
-              'error'
-            );
+            Swal.fire({
+              icon: 'error',
+              title: 'Already exists!',
+              text: 'The notation is already in "PENDING" status !',
+              heightAuto: false,
+            });
           }else{
             _self.rejectedOrApproved="PENDING";
             _self.push_Obj={"rejectedOrApproved":"PENDING","isfromApprover":_self.isfromApprover,
             "isShowConformance":_self.isShowConformance,"isStartProcessBtn":_self.isStartProcessBtn,"autosaveTime":_self.updated_date_time,
             "isFromcreateScreen":false,'process_name':_self.currentNotation_name,'isSavebtn':true}
             _self.dt.bpsNotationaScreenValues(_self.push_Obj);
-            Swal.fire(
-              'Saved!',
-              'Your changes has been saved and submitted for approval successfully.',
-              'success'
-            );
+            Swal.fire({
+              icon: 'success',
+              title: 'Saved!',
+              text: 'Your changes has been saved and submitted for approval successfully !',
+              heightAuto: false,
+            });
           }
         },err => {
           _self.isLoading = false;
-          Swal.fire(
-            'Oops!',
-            'Something went wrong. Please try again',
-            'error'
-          )
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops!',
+            text: 'Something went wrong. Please try again !',
+            heightAuto: false,
+          });
         })
     })
   }
@@ -1167,11 +1177,12 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
         data=>{
           _self.isLoading = false;
           if(data["errorCode"] == "2005"){
-            Swal.fire(
-              'Already exists!',
-              'The notation is already in "PENDING" status.',
-              'error'
-            );
+            Swal.fire({
+              icon: 'error',
+              title: 'Already exists!',
+              text: 'The notation is already in "PENDING" status !',
+              heightAuto: false,
+            });
           }else{
             if( !_self.isShowConformance && (status == "APPROVED" || status == "REJECTED")){
               let all_bpmns = _self.saved_bpmn_list.filter(each => { return each.bpmnModelId == sel_List["bpmnModelId"]})
@@ -1185,11 +1196,13 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
             }
             if(_self.isUploaded) _self.getUserBpmnList(true);
             else _self.getUserBpmnList(null);
-            Swal.fire(
-              'Saved!',
-              'Your changes has been saved successfully.',
-              'success'
-            );
+            
+            Swal.fire({
+              icon: 'success',
+              title: 'Saved!',
+              text: 'Your changes has been saved successfully !',
+              heightAuto: false,
+            });
             if(newVal){
               _self.selected_notation = newVal;
               let current_bpmn_info = _self.saved_bpmn_list[_self.selected_notation];
@@ -1207,17 +1220,19 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
         err => {
           _self.isLoading = false;
           if(err.error.message == "2002")
-          Swal.fire(
-            'Oops!',
-            'An Inprogress process already exists for the selected process. \nPlease do the changes in existing inprogress notation',
-            'warning'
-          )
+          Swal.fire({
+            icon: 'warning',
+            title: 'Oops!',
+            text: 'An Inprogress process already exists for the selected process. \nPlease do the changes in existing inprogress notation !',
+            heightAuto: false,
+          });
           else
-          Swal.fire(
-            'Oops!',
-            'Something went wrong. Please try again',
-            'error'
-          )
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops!',
+            text: 'Something went wrong. Please try again !',
+            heightAuto: false,
+          });
         })
     })
     this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,

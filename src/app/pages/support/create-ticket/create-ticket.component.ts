@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RestApiService } from '../../services/rest-api.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import Swal from 'sweetalert2';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -67,7 +67,8 @@ export class CreateTicketComponent implements OnInit {
     public formBuilder: FormBuilder,
     private api: RestApiService,
     private jwtHelper: JwtHelperService,
-    private activateRouter: ActivatedRoute
+    private activateRouter: ActivatedRoute,
+    private router:Router
   ) {
     var userDetails = localStorage.getItem('accessToken');
     var deCryptUserDetails = this.jwtHelper.decodeToken(userDetails);
@@ -140,9 +141,15 @@ export class CreateTicketComponent implements OnInit {
     this.api.createCustomerRequest(record).subscribe(res => {
       if (res == 'created request sucessfully') {
         Swal.fire({
-          title: 'Ticket Created Successfully',
-          icon: 'success'
-        });
+          title: 'Success',
+          text: 'Ticket Created Successfully',
+          icon: 'success',
+          heightAuto: false
+        }).then((result) => {
+          if (result.value) {
+            this.router.navigate(['/pages/support/ticket-list'])
+          }
+        })
         this.reset();
         this.isLoading = false;
         this.fileName = [];
@@ -153,7 +160,8 @@ export class CreateTicketComponent implements OnInit {
         Swal.fire({
           title: 'Ticket creation failed',
           text: 'Please try again later',
-          icon: 'error'
+          icon: 'error',
+          heightAuto: false
         });
       }
       else if (res == `{"errorMessage":"Error occured","errorCode":5030}`) {
@@ -161,7 +169,8 @@ export class CreateTicketComponent implements OnInit {
         Swal.fire({
           title: 'Error occured',
           text: 'Please try again later',
-          icon: 'error'
+          icon: 'error',
+          heightAuto: false
         });
       }
     }, err => {
@@ -169,7 +178,8 @@ export class CreateTicketComponent implements OnInit {
       Swal.fire({
         title: 'Error occured',
         text: 'Please try again later',
-        icon: 'error'
+        icon: 'error',
+        heightAuto: false
       });
     });
   }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input, HostListener, ViewChild, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, HostListener, ViewChild, SimpleChanges, ChangeDetectorRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
 import { ActivatedRoute } from '@angular/router';
@@ -30,9 +30,11 @@ export class ProcessCategoryOverlayComponent implements OnInit {
   uploadedFileSplit:any=[];
   uploadedFileExtension:string;
   count:number=0;
+  categories_list:any[]=[]
 
   @ViewChild('processCategoryForm', {static: true}) processForm: NgForm;
-  constructor( private rest:RestApiService, private activatedRoute: ActivatedRoute, private global:GlobalScript) { }
+  constructor( private rest:RestApiService, private activatedRoute: ActivatedRoute, private global:GlobalScript,
+    private cdRef: ChangeDetectorRef) { }
 
   ngOnChanges(changes: SimpleChanges) {
   if(changes['uploadedFileName']){
@@ -45,6 +47,13 @@ export class ProcessCategoryOverlayComponent implements OnInit {
     }
   }
   }
+  ngAfterViewChecked(){
+    if(this.categories_list.length==1){
+      this.categoryName=this.categories_list[0].categoryName
+    }
+    this.cdRef.detectChanges();
+  }
+
   ngOnInit() {
     if(this.data){
       let data_arr = this.data.split("@");
@@ -55,12 +64,10 @@ export class ProcessCategoryOverlayComponent implements OnInit {
       this.isBpmnModule = true;
     }
     this.rest.getCategoriesList().subscribe(res=> {
-
-      this.categoriesList=res 
-      if(this.categoriesList.data.length==1){
-
-        this.categoryName=this.categoriesList.data[0].categoryName
-  
+      this.categoriesList=res
+      this.categories_list=this.categoriesList.data
+      if(this.categories_list.length==1){
+        this.categoryName=this.categories_list[0].categoryName
       }
     });
   }
@@ -143,7 +150,6 @@ export class ProcessCategoryOverlayComponent implements OnInit {
     
     let count1;
     if(event.code=="Space"){
-      console.log('test')
       count1=this.count++;
     }else{
       this.count=0;

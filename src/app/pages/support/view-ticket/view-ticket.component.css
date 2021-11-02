@@ -404,7 +404,7 @@ mat-select-value {
 span.firsticon-edit {
     margin-right: 6px;
 }
-::ng-deep .mat-paginator-page-size{
+.newpaginationdiv1 ::ng-deep .mat-paginator-page-size{
     display: none !important;
 }
 .deleteattachment{

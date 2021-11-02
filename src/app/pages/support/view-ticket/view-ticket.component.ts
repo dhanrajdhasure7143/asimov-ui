@@ -7,6 +7,9 @@ import { ActivatedRoute } from '@angular/router';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import * as JSZip from 'jszip';
+import { saveAs } from "file-saver";
+import * as FileSaver from 'file-saver';
 
 @Component({
   selector: 'app-view-ticket',
@@ -59,6 +62,8 @@ export class ViewTicketComponent implements OnInit {
   listof_uploadFiles: any[];
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   ticket_status: any;
+  all_attachements:any[];
+  attachment_namesArray:any[];
 
   constructor(
     public formBuilder: FormBuilder,
@@ -151,6 +156,7 @@ export class ViewTicketComponent implements OnInit {
     this.imageArray = [];
     this.api.getAttachmentsForCustomerRequest(id).subscribe((res: any) => {
       this.attachmentsForCustomerRequest = res;
+      this.all_attachements=res
       this.attachmentsForCustomerRequest.forEach(element => {
         element['fileData'] = atob(element.fileData)
         element['fileSize'] = this.convertFileSize(element.fileSize);
@@ -172,6 +178,7 @@ export class ViewTicketComponent implements OnInit {
       text: "You won't be able to revert this!",
       icon: 'warning',
       showCancelButton: true,
+      heightAuto: false,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, delete it!'
@@ -184,6 +191,7 @@ export class ViewTicketComponent implements OnInit {
               title: 'Success',
               text: 'Attachments Removed Sucessfully !',
               icon: 'success',
+              heightAuto: false,
             });
             this.getAttachmentsForCustomerRequest(this.requestKey);
             this.imageArray = [];
@@ -192,7 +200,8 @@ export class ViewTicketComponent implements OnInit {
             Swal.fire({
               title: 'Error occured',
               text: 'Please try again later !',
-              icon: 'error'
+              icon: 'error',
+              heightAuto: false
             });
           }
           this.isLoading = false;
@@ -200,7 +209,8 @@ export class ViewTicketComponent implements OnInit {
           Swal.fire({
             title: 'Error occured',
             text: 'Please try again later !',
-            icon: 'error'
+            icon: 'error',
+            heightAuto: false
           });
           this.isLoading = false;
         });
@@ -255,7 +265,8 @@ export class ViewTicketComponent implements OnInit {
         Swal.fire({
           title: 'Success',
           text: 'Comment Created Sucessfully !',
-          icon: 'success'
+          icon: 'success',
+          heightAuto: false,
         });
         this.cancelCreateComment();
         this.getRequestComments(this.requestKey);
@@ -264,7 +275,8 @@ export class ViewTicketComponent implements OnInit {
         Swal.fire({
           title: 'Failed To Create',
           text: 'Please try again later',
-          icon: 'error'
+          icon: 'error',
+          heightAuto: false,
         });
         this.isLoading = false;
       }
@@ -272,7 +284,8 @@ export class ViewTicketComponent implements OnInit {
       Swal.fire({
         title: 'Failed To Create',
         text: 'Please try again later',
-        icon: 'error'
+        icon: 'error',
+        heightAuto: false,
       });
       this.isLoading = false;
     });
@@ -293,6 +306,7 @@ export class ViewTicketComponent implements OnInit {
           title: 'Success',
           text: 'Comment Updated Sucessfully !',
           icon: 'success',
+          heightAuto: false
         });
         this.getRequestComments(this.requestKey);
         this.isLoading = false;
@@ -301,7 +315,8 @@ export class ViewTicketComponent implements OnInit {
         Swal.fire({
           title: 'Failed To Update',
           text: 'Please try again later',
-          icon: 'error'
+          icon: 'error',
+          heightAuto: false
         });
         this.isLoading = false;
       }
@@ -310,6 +325,7 @@ export class ViewTicketComponent implements OnInit {
         title: 'Failed To Update',
         text: 'Please try again later',
         icon: 'error',
+        heightAuto: false
       });
       this.isLoading = false;
     });
@@ -326,6 +342,7 @@ export class ViewTicketComponent implements OnInit {
       text: "You won't be able to revert this!",
       icon: 'warning',
       showCancelButton: true,
+      heightAuto: false,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, delete it!'
@@ -340,6 +357,7 @@ export class ViewTicketComponent implements OnInit {
             position: 'center',
             icon: 'success',
             showCancelButton: false,
+            heightAuto: false,
             confirmButtonColor: '#007bff',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Ok'
@@ -352,6 +370,7 @@ export class ViewTicketComponent implements OnInit {
             icon: 'error',
             title: 'Oops...',
             text: 'Something went wrong!',
+            heightAuto: false,
           })
           this.isLoading = false;
         })
@@ -412,7 +431,8 @@ export class ViewTicketComponent implements OnInit {
         Swal.fire({
           title: 'Success',
           text: 'Summary Updated Sucessfully !',
-          icon: 'success'
+          icon: 'success',
+          heightAuto: false
         });
         this.getAllCustomerRequestsBykey();
         this.isLoading = false;
@@ -422,7 +442,8 @@ export class ViewTicketComponent implements OnInit {
         Swal.fire({
           title: 'Failed To Update',
           text: 'Please try again later',
-          icon: 'error'
+          icon: 'error',
+          heightAuto: false
         });
       }
     },err=>{
@@ -430,7 +451,8 @@ export class ViewTicketComponent implements OnInit {
       Swal.fire({
         title: 'Failed To Update',
         text: 'Please try again later',
-        icon: 'error'
+        icon: 'error',
+        heightAuto: false
       });
     });
   }
@@ -457,7 +479,8 @@ export class ViewTicketComponent implements OnInit {
         Swal.fire({
           title: 'Success',
           text: 'Description Updated Sucessfully !',
-          icon: 'success'
+          icon: 'success',
+          heightAuto: false
         });
         // this.getUserDetails(this.userId);
         this.getAllCustomerRequestsBykey();
@@ -467,7 +490,8 @@ export class ViewTicketComponent implements OnInit {
         Swal.fire({
           title: 'Failed To Update',
           text: 'Please try again later',
-          icon: 'error'
+          icon: 'error',
+          heightAuto: false
         });
         this.isLoading = false;
       }
@@ -485,6 +509,7 @@ export class ViewTicketComponent implements OnInit {
       text: "You won't be able to revert this!",
       icon: 'warning',
       showCancelButton: true,
+      heightAuto: false,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, delete it!'
@@ -497,6 +522,7 @@ export class ViewTicketComponent implements OnInit {
               title: 'Success',
               text: 'Attachment Removed Sucessfully !',
               icon: 'success',
+              heightAuto: false
             });
             this.getAttachmentsForCustomerRequest(this.requestKey);
             this.isLoading = false;
@@ -505,6 +531,7 @@ export class ViewTicketComponent implements OnInit {
               title: 'Error occured',
               text: 'Please try again later !',
               icon: 'error',
+              heightAuto: false
             });
             this.isLoading = false;
           }
@@ -513,6 +540,7 @@ export class ViewTicketComponent implements OnInit {
             title: 'Error occured',
             text: 'Please try again later !',
             icon: 'error',
+            heightAuto: false
           });
           this.isLoading = false;
         });
@@ -521,6 +549,7 @@ export class ViewTicketComponent implements OnInit {
   }
 
   file(event) {
+    console.log(event)
     this.isLoading = true;
     this.fileName = [];
     for (var i = 0; i < event.target.files.length; i++) {
@@ -537,7 +566,8 @@ export class ViewTicketComponent implements OnInit {
         Swal.fire({
           title: 'Success',
           text: 'Attachment added Sucessfully !',
-          icon: 'success'
+          icon: 'success',
+          heightAuto: false,
         });
         // this.isLoading = false;
       }
@@ -545,7 +575,8 @@ export class ViewTicketComponent implements OnInit {
         Swal.fire({
           title: 'Failed',
           text: 'Please try again later',
-          icon: 'error'
+          icon: 'error',
+          heightAuto: false,
         });
         this.isLoading = false;
       }
@@ -553,7 +584,8 @@ export class ViewTicketComponent implements OnInit {
       Swal.fire({
         title: 'Failed',
         text: 'Please try again later',
-        icon: 'error'
+        icon: 'error',
+        heightAuto: false
       });
       this.isLoading = false;
     });
@@ -641,5 +673,28 @@ autoGrowSummaryTextZone() {
     element.style.height ="5px";
     element.style.height = (element.scrollHeight+10)+"px";
 }
+
+  downloadAllFiles(){
+    this.attachment_namesArray=[]
+    this.all_attachements.forEach((e,i)=>{
+      let name= e.fileName.split('.')
+      if(this.attachment_namesArray.includes(e.fileName)){
+        this.attachment_namesArray.push(name[0]+'('+i+').'+name[1]);
+        e["file_name"]=name[0]+'('+i+').'+name[1]
+      }else{
+        this.attachment_namesArray.push(e.fileName);
+        e["file_name"]=e.fileName
+      }
+    })
+    let _self=this;
+    var zip = new JSZip();
+    this.all_attachements.forEach((value,i) => {
+      zip.file(value.file_name,atob(value.fileData));
+    });
+    zip.generateAsync({ type: "blob" }).then(function (content) {
+      FileSaver.saveAs(content, _self.requestKey+".zip");
+    });
+  }
+
 
 }
