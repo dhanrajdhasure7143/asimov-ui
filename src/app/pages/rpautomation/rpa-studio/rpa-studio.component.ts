@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, QueryList } from '@angular/core';
 import { Router,ActivatedRoute } from '@angular/router';
 import { DataTransferService } from "../../services/data-transfer.service";
 import { RestApiService } from '../../services/rest-api.service';
@@ -157,13 +157,16 @@ export class RpaStudioComponent implements OnInit {
                 this.tabsArray.push(BotData)
                 setTimeout(()=>{
                   this.designerInstance.bot_instances.forEach(item=>{
-                    if(item.botState.botName==BotData.botName)
-                    {
-                      this.designerInstance.current_instance=item.rpa_actions_menu;
-                      this.designerInstance.toolset_instance=item;
-                      this.designerInstance.selected_tab_instance=item;
-                    } 
-                    this.spinner.hide();
+              
+                      if(item.botState.botName==BotData.botName)
+                      {
+                        this.designerInstance.current_instance=item.rpa_actions_menu;
+                        this.designerInstance.toolset_instance=item;
+                        this.designerInstance.selected_tab_instance=item;
+                        this.spinner.hide();
+                      } 
+                      
+                   
                   });
                 },2500)
               }

@@ -151,6 +151,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
   {
   //     document.getElementById("filters").style.display='none;
     document.getElementById("createdbconnection").style.display='block';
+    this.insertdbForm.get("categoryId").setValue(this.categoryList.length==1?this.categoryList[0].categoryId:"0")
     document.getElementById("Updatedbconnection").style.display='none';
   }
 

@@ -113,7 +113,7 @@ export class RpaHomeComponent implements OnInit {
       botDescription:["", Validators.compose([Validators.maxLength(500)])],
       //botType:["", Validators.required],
       taskId:[""],
-      predefinedBot:["false"],
+      predefinedBot:[false],
       newCategoryName:[""]
   });
     this.editbot=this.formBuilder.group({
