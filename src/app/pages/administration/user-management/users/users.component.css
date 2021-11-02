@@ -46,3 +46,12 @@ span.testtooltip {
   .tsttooltipbtn:hover span.testtooltip {
     display: block;
   }
+  .newinntalx1 a img {
+    width: 16px;
+    height: 16px;
+    cursor: no-drop;
+    margin:0px;
+  }
+  .newinntalx1 a {
+    margin-right: 10px;
+  }
