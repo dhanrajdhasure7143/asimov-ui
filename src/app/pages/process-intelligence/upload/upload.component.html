@@ -72,13 +72,13 @@
                         <form action="" class="col-md-6 p-0 tableControls">
                                         <div class="col-md-6 form-group pr-0 offset-4">
                                                 <!-- <label>Select Category</label> -->
-                                                <select  name="category" (change)="searchByCategory(categoryName)" #category="ngModel" [(ngModel)]="categoryName" panelClass="overlayMatSelect" class="form-control bps-home-fileds">
+                                                <select  name="category" (change)="searchByCategory(categoryName)" [disabled]="categories_list.length == 1" #category="ngModel" [(ngModel)]="categoryName" panelClass="overlayMatSelect" class="form-control bps-home-fileds">
                                                         <option value="" disabled hidden >Select Category</option>
                                                         <option value="null" disabled hidden >Select Category</option>
                                                         <option value="undefined" disabled hidden >Select Category</option>
-                                                        <option value="allcategories">All Categories</option>
-                                                        <option *ngFor="let eachcat of categoryList.data;let i=index;trackBy:loopTrackBy" [value]="eachcat.categoryName">
-                                                        {{eachcat.categoryName| titlecase}}</option>
+                                                        <option value="allcategories" *ngIf="categories_list.length > 1">All Categories</option>
+                                                        <option *ngFor="let eachcat of categories_list;let i=index;trackBy:loopTrackBy" [value]="eachcat.categoryName">
+                                                        {{eachcat.categoryName}}</option>
                                                 </select>
                                         </div>
                                         <div class="col-md-6 form-group pr-0 PI-serwksp">

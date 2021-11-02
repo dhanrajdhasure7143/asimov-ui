@@ -76,6 +76,7 @@ export class UploadComponent implements OnInit {
   public isButtonVisible = false;
   isUploadFileName:string;
   isLoading:boolean=false;
+  categories_list:any[]=[];
 
   constructor(private router: Router,
     private dt: DataTransferService,
@@ -98,7 +99,7 @@ export class UploadComponent implements OnInit {
     this.db_mime = '.json';
     this.dt.changeHints(this.hints.uploadHints);
     this.getAlluserProcessPiIds();
-    this.getAllCategories();
+    // this.getAllCategories();
     this.userRole = localStorage.getItem("userRole")
     this.userRole = this.userRole.split(',');
     this.isButtonVisible = this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') || this.userRole.includes('Process Owner') || this.userRole.includes('Process Architect')  || this.userRole.includes('Process Analyst')  || this.userRole.includes('RPA Developer')  || this.userRole.includes('Process Architect') || this.userRole.includes("System Admin") ;
@@ -127,6 +128,7 @@ export class UploadComponent implements OnInit {
         title: 'Error',
         text: 'Please upload file with proper extension!',
         icon: 'error',
+        heightAuto: false
       })
     } else{
       this.isLoading=true;
@@ -145,6 +147,7 @@ export class UploadComponent implements OnInit {
           title: 'Error',
           text: 'Please try again!',
           icon: 'error',
+          heightAuto: false,
         })
         this.isLoading=false;
       });
@@ -231,6 +234,7 @@ export class UploadComponent implements OnInit {
           title: 'Error',
           text: 'No data found in uploaded file!',
           icon: 'error',
+          heightAuto: false,
         })
       }else{
         this.router.navigate(['/pages/processIntelligence/datadocument']);
@@ -256,6 +260,7 @@ export class UploadComponent implements OnInit {
           title: 'Error',
           text: 'No data found in uploaded file!',
           icon: 'error',
+          heightAuto: false
         })
       }else{
         this.router.navigate(['/pages/processIntelligence/datadocument']);
@@ -354,6 +359,7 @@ export class UploadComponent implements OnInit {
           title: 'Error',
           text: 'No data found in uploaded file!',
           icon: 'error',
+          heightAuto: false,
         })
       }else{
         _self.router.navigateByUrl('/pages/processIntelligence/xesdocument');
@@ -416,9 +422,13 @@ export class UploadComponent implements OnInit {
       this.dataSource.sort=this.sort;
       this.dataSource.paginator=this.paginator;
       this.isLoading=false;
-      let selected_category=localStorage.getItem("pi_search_category");
-      this.categoryName=selected_category?selected_category:'allcategories';
-      this.searchByCategory(this.categoryName);
+      this.getAllCategories();
+      
+      // let selected_category=localStorage.getItem("pi_search_category");
+      // console.log(this.categories_list)
+      // this.categoryName=selected_category?selected_category:'allcategories';
+      // this.searchByCategory(this.categoryName);
+
     })
   }
 
@@ -451,6 +461,15 @@ export class UploadComponent implements OnInit {
   getAllCategories() {    // get all categories list for dropdown
     this.rest.getCategoriesList().subscribe(res => {
     this.categoryList = res
+    this.categories_list=this.categoryList.data
+    let selected_category=localStorage.getItem("pi_search_category");
+      // console.log(this.categories_list)
+      if(this.categories_list.length == 1){
+        this.categoryName=this.categories_list[0].categoryName;
+      }else{
+        this.categoryName=selected_category?selected_category:'allcategories';
+      }
+      this.searchByCategory(this.categoryName);
     })
   }
 
@@ -794,12 +813,13 @@ getDBTables(){      //get DB tables list
     var _self = this;
     this.rest.retryFailedProcessGraph(processDt.piId).subscribe((res:any)=>{
       if(res.is_error == false){
-        Swal.fire("Great", ""+res.display_msg.info, "success");
+        // Swal.fire("Great", ""+res.display_msg.info, "success");
         Swal.fire({
           title: 'Great',
           text: ""+res.display_msg.info,
           icon: 'success',
           showCancelButton: false,
+          heightAuto: false,
           confirmButtonColor: '#007bff',
           cancelButtonColor: '#d33',
           confirmButtonText: 'Ok'
@@ -810,6 +830,7 @@ getDBTables(){      //get DB tables list
               icon: 'info',
               title: 'Please wait, Redirecting to process map',
               showConfirmButton: false,
+              heightAuto: false,
               timer: 1500
             })
             setTimeout(() => {
@@ -819,7 +840,13 @@ getDBTables(){      //get DB tables list
         })
        
       } else{
-        Swal.fire("Oops!", ""+res.display_msg.info, "error");
+        Swal.fire({
+          title: 'Oops!',
+          text: ""+res.display_msg.info,
+          icon: 'error',
+          heightAuto: false,
+        })
+        // Swal.fire("Oops!", ""+res.display_msg.info, "error");
       }
     },(err)=>{
     })
@@ -838,6 +865,7 @@ getDBTables(){      //get DB tables list
       text: "You won't be able to revert this!",
       icon: 'warning',
       showCancelButton: true,
+      heightAuto: false,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, delete it!'
@@ -852,6 +880,7 @@ getDBTables(){      //get DB tables list
             position: 'center',
             icon: 'success',
             showCancelButton: false,
+            heightAuto: false,
             confirmButtonColor: '#007bff',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Ok'
@@ -863,6 +892,7 @@ getDBTables(){      //get DB tables list
               icon: 'error',
               title: 'Oops...',
               text: 'Something went wrong!',
+              heightAuto: false,
             })
             this.spinner.hide();
                          
@@ -878,6 +908,7 @@ getDBTables(){      //get DB tables list
         icon: 'info',
         title: 'Oops...',
         text: "You can't delete inprogress process !",
+        heightAuto: false,
       })
       return;
     }
@@ -888,6 +919,7 @@ getDBTables(){      //get DB tables list
         autocapitalize: 'off'
       },
       showCancelButton: true,
+      heightAuto: false,
       confirmButtonText: 'Delete',
     }).then((result) => {
       let value:any=result.value
@@ -899,18 +931,31 @@ getDBTables(){      //get DB tables list
         this.isLoading=true;
         this.rest.deleteSelectedProcessID(req_body).subscribe(res=>{
           this.getAlluserProcessPiIds();
-          Swal.fire("Success","Process Deleted Successfully !!","success");
+          // Swal.fire("Success","Process Deleted Successfully !!","success");
+          Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: 'Process Deleted Successfully !!',
+            heightAuto: false
+          })
           this.isLoading=false;
         },err => {
                   Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
                     text: 'Something went wrong!',
+                    heightAuto: false,
                   })
                   this.isLoading=false;
           })
       }else{
-        Swal.fire("Error","Entered Process ID is Invalid","error")
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Entered Process ID is Invalid !!',
+          heightAuto: false
+        })
+        // Swal.fire("Error","Entered Process ID is Invalid","error")
       }
     })
   }
