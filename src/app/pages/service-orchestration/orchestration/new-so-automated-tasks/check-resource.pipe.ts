@@ -19,6 +19,7 @@ export class CheckResourcePipe implements PipeTransform {
       }
       else if(sourceType=="Human")
       {
+        console.log("------------",resourceList) 
       }
       return id
   }
