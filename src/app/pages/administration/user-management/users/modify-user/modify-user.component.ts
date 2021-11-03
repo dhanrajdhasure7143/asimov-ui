@@ -38,6 +38,7 @@ getAllCategories(){
  }
  getRoles(){
    var roles1:any=[];
+   var depts:any=[];
   this.api.getAllRoles(2).subscribe(resp => {
     this.allRoles = resp;
     console.log("allroles======",this.allRoles)
@@ -55,9 +56,18 @@ getAllCategories(){
         });
         // this.roleIds.push(this.roleObj.id);
         });
+      data.dept.forEach(element => {
+        this.categories.forEach(x => {
+          if(x.categoryName === element){
+             depts.push(x.categoryId)
+          }
+          
+        });
+        
+      });
       this.editUserForm.get("email").setValue(this.userId);
       this.editUserForm.get("role").setValue(roles1);
-      this.editUserForm.get("departments").setValue(data.dept);
+      this.editUserForm.get("departments").setValue(depts);
   })
  })
 }
