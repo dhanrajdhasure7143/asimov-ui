@@ -52,7 +52,7 @@ export const environment = {
     bps_url: 'http://bpsqa.epsoftinc.in',
     rpa_url: 'http://rpaqa.epsoftinc.in',
     loopback_url: 'http://10.11.0.107:3000',
-    idm_url:'http://10.11.0.108:8888',
+    idm_url:'http://idmqa.epsoftinc.in',
     pi_node_url: "http://10.11.0.108:3000",
       pi_node_jobs: "http://10.11.0.108:5000",
     auth_url: "http://authqa.epsoftinc.in",
