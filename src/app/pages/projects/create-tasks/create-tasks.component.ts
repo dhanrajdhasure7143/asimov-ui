@@ -45,7 +45,7 @@ export class CreateTasksComponent implements OnInit {
       description: ["", Validators.compose([Validators.maxLength(200)])],
       })
 
-
+      this.spinner.show();
 
       this.route.queryParams.subscribe(data=>{
         let response:any=data;
@@ -148,6 +148,7 @@ export class CreateTasksComponent implements OnInit {
         this.approverslist.push(element)
       }
       }
+      this.spinner.hide();
     })
   }
   

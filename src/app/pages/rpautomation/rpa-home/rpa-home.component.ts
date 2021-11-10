@@ -276,6 +276,7 @@ export class RpaHomeComponent implements OnInit {
 
   getallbots()
   {
+    this.bot_list=[];
     let response:any=[];
     this.spinner.show();
     this.loadflag=true;
