@@ -78,7 +78,7 @@
             </div>
 
             <div *ngIf="editdata==true">
-              <textarea (change)="program_detials.description=$event.target.value"
+              <textarea (change)="program_detials.description=$event.target.value" style=" resize: none;" maxlength="151"
               [value]="(program_detials.description==undefined||program_detials.description==null)?'':program_detials.description"
               class="small-input" placeholder="Enter Program Description"></textarea>
                   
@@ -380,7 +380,7 @@
             <ng-container matColumnDef="initiatives">
               <th mat-header-cell *matHeaderCellDef mat-sort-header>Initiative</th>
               <td mat-cell   *matCellDef="let project">
-                <span *ngIf="project.initiatives!=null" [matTooltip]="project.initiatives">{{project.initiatives}}</span>
+                <span *ngIf="project.initiatives!=null" [matTooltip]="project.initiatives|initiativePipe : initiatives|titlecase">{{getreducedValue(project.initiatives|initiativePipe : initiatives|titlecase)}}</span>
                 <span *ngIf="project.initiatives==null">---</span>
               </td>
     
@@ -937,7 +937,7 @@
 
       <div class="h-scroll">
 
-        <app-create-project-form [users_list]="users_list" (oncreate)="linkcreateproject($event)" [processes]="selected_process_names"></app-create-project-form>
+        <app-create-project-form [users_list]="users_list" [initiatives_list]="initiatives" (oncreate)="linkcreateproject($event)" [processes]="selected_process_names"></app-create-project-form>
 
     </div>
 

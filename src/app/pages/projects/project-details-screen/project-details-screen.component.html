@@ -80,12 +80,12 @@
 
               <div *ngIf="editdata==false">
                 <span class="projectdesc"
-                  *ngIf="projectDetails.description==undefined || projectDetails.description==null || projectDetails.description=='' " class="h6">-</span>
-                  <span class="projectdesc">{{projectDetails.description}}</span>
+                  *ngIf="projectDetails.projectPurpose==undefined || projectDetails.projectPurpose==null || projectDetails.projectPurpose=='' " class="h6">-</span>
+                  <span class="projectdesc">{{projectDetails.projectPurpose}}</span>
               </div>  
               <div *ngIf="editdata==true">
-                <textarea (change)="projectDetails.description=$event.target.value"
-                [value]="(projectDetails.description==undefined||projectDetails.description==null)?'':projectDetails.description"
+                <textarea (change)="projectDetails.projectPurpose=$event.target.value"
+                [value]="(projectDetails.projectPurpose==undefined||projectDetails.projectPurpose==null)?'':projectDetails.projectPurpose"
                 class="small-input" placeholder="Enter Project Description"></textarea>                    
               </div> 
             </div>

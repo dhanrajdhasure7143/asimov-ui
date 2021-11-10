@@ -9,7 +9,7 @@
             </span>
             <div class="ml-auto pull-right">
                 <button (click)="resetUserInvite()" class="btn btn-default">Reset</button>
-                <button  (click)="inviteUser()" class="btn btn-primary btn-update">Invite</button>
+                <button  [disabled]="inviteUserForm.invalid" (click)="inviteUser()" class="btn btn-primary btn-update">Invite</button>
             </div>
         </div>
         <div class="container-fluid  h-scroll">
