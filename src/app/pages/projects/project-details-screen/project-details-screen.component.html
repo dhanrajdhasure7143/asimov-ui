@@ -161,10 +161,19 @@
                   <div class="col-sm-2 p-0">
                     <div class="mainset">
                       <span class="labeltit">Process</span>
-                      <span class="tab-text"
-                        *ngIf="projectDetails.process==null || projectDetails.process==undefined || projectDetails.process==''">-</span>
-                      <span *ngIf="projectDetails.process!=null && projectDetails.process!=undefined && projectDetails.process!=''"
-                        class="tab-text labelcont">{{projectDetails.process | processName : processes}}</span>
+                        <div *ngIf="editdata==false">
+                          <span class="tab-text"
+                            *ngIf="projectDetails.process==null || projectDetails.process==undefined || projectDetails.process==''">-</span>
+                          <span *ngIf="projectDetails.process!=null && projectDetails.process!=undefined && projectDetails.process!=''"
+                            class="tab-text labelcont">{{projectDetails.process | processName : processes}}</span>
+                        </div>
+                        <div *ngIf="editdata==true">
+                          <select class="small-input" (change)="projectDetails.process=$event.target.value"
+                          [value]="(projectDetails.process==undefined||projectDetails.process==null)?'':projectDetails.process">
+                          <option value="">Select Process</option>
+                          <option *ngFor="let process of processes" [value]="process.processId">{{process.processName}}</option>
+                        </select>
+                        </div>
                     </div>
                   </div>
                   <div class="col-sm-2 p-0">
