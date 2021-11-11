@@ -121,3 +121,12 @@ span.tab-text {
 mat-tab-group.mat-tab-group.mat-primary {
   height: calc(100% - 49px);
 }
+
+
+.d-flex{
+  display: flex;
+}
+
+.py-5{
+  padding:5px;
+}
