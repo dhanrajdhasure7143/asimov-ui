@@ -94,9 +94,11 @@ export class UsersComponent implements OnInit {
 
   modifyUser(data){
     console.log("userdata====",data)
+    let depts=[];
+    depts=data.department;
      let userroles=[];
      userroles=data.roles
-    this.router.navigate(['/pages/admin/modify-user'], { queryParams: {id:data.email,role:userroles, dept:data.department} });
+    this.router.navigate(['/pages/admin/modify-user'], { queryParams: {id:data.email,role:userroles, dept:depts} });
 
   }
 

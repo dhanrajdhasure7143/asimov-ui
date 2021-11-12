@@ -52,6 +52,7 @@ export class ProgramDetailsComponent implements OnInit {
     email: any;
     public userRole:any = [];
     public userName:any;
+    initiatives: any;
   ngOnInit() {
     this.getprojects_and_programs();
     this.mindate= moment().format("YYYY-MM-DD");
@@ -85,6 +86,8 @@ export class ProgramDetailsComponent implements OnInit {
     
     })
     this.userName=localStorage.getItem("firstName")+" "+localStorage.getItem("lastName");
+
+    this.getInitiatives();
   }
 
   getprojects_and_programs()
@@ -522,7 +525,7 @@ export class ProgramDetailsComponent implements OnInit {
       this.spinner.hide()
       let response:any=res;
       if(response.errorMessage == undefined)
-        Swal.fire("Success","Project Updated Successfully !!","success")
+        Swal.fire("Success","Program Updated Successfully !!","success")
       else
         Swal.fire("Error",response.errorMessage,"error");
       this.getprogramdetails();
@@ -555,4 +558,18 @@ export class ProgramDetailsComponent implements OnInit {
       this.get_linked_projects(this.selectedProgram_id);
     })
   }
+
+  getInitiatives(){
+    this.rest.getProjectIntitiatives().subscribe(res=>{
+      let response:any=res;
+      this.initiatives=response;
+    })
+  }
+
+  getreducedValue(value) {​​​​​​​​
+    if (value.length > 15)
+    return value.substring(0,16) + '...';
+    else
+    return value;
+  }​​​​​​​​
 }

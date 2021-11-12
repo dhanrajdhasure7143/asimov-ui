@@ -197,6 +197,7 @@ import { NgxSpinnerService } from "ngx-spinner";
     
     //document.getElementById("filters").style.display='none';
     document.getElementById("createenvironment").style.display='block';
+    this.insertForm.get("categoryId").setValue(this.categoryList.length==1?this.categoryList[0].categoryId:"0")
     document.getElementById("update-popup").style.display='none';
   
   }

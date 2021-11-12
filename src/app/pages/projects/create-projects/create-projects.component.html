@@ -290,9 +290,9 @@
                                                         </span> -->
                                         <label class="label-control">Description</label>
                                         <textarea class="form-control" formControlName="description" row="3"
-                                            placeholder="Enter Description"
+                                            placeholder="Enter Description" style=" resize: none;" maxlength="151"
                                             [ngClass]="createprogram.get('description').valid?'enteredfield-color':'inputfield-color'">></textarea>
-                                            
+                                
                                     </div>
                                 </div>
                             </form>
@@ -314,7 +314,7 @@
                             <div *ngIf="selected_projects.length>0 || newproject.length>0" class="prj-slt">
                                 <h4>
                                     Selected Projects
-                                    <span class="removeallprjcts">Remove All</span>
+                                    <span class="removeallprjcts" (click)="selected_projects=[];newproject=[]">Remove All</span>
                                 </h4>
                                 <div class="row">
                                     <div class="col-md-4 pl-0" *ngFor="let project of selected_projects">
@@ -387,7 +387,7 @@
             </button>
         </div>
         <div class="h-scroll">
-            <app-create-project-form [users_list]="userslist" (oncreate)="linkcreateproject($event)" [processes]="selected_process_names"></app-create-project-form>
+            <app-create-project-form [users_list]="userslist" [initiatives_list]="initiatives" (oncreate)="linkcreateproject($event)" [processes]="selected_process_names"></app-create-project-form>
         </div>
     </ng-template>
 </mat-card>

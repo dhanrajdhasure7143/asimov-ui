@@ -141,7 +141,6 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
     }else{
       this.isButtonVisible = false;
     }
-    this.getenvironments();
     //this.getCategoryList(this.processId);
     setTimeout(()=>{
       this.getCategoryList(this.processId);
@@ -784,6 +783,9 @@ resetsla(){
       {
         this.environments=response;
         this.environmentsData=response;
+        if(this.categaoriesList.length==1)
+          this.environments=this.environmentsData.filter(item=>this.categaoriesList[0].categoryId==item.categoryId)
+
       }
     })
   }
@@ -794,6 +796,7 @@ resetsla(){
       let catResponse : any;
       catResponse=data
       this.categaoriesList=catResponse.data;
+      this.getenvironments();
       this.getautomatedtasks(processid);
     });
   }
@@ -801,8 +804,8 @@ resetsla(){
   gethumanslist()
   {
     let tenant=localStorage.getItem("tenantName");
-    //this.rest.getuserslist(tenant).subscribe(data=>
-    this.rest.getAllUsersByDept().subscribe(data=>
+    this.rest.getuserslist(tenant).subscribe(data=>
+    //this.rest.getAllUsersByDept().subscribe(data=>
     {
         this.humans_list=data;
     })
