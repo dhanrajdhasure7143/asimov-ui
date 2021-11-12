@@ -184,7 +184,7 @@
                                             <div *ngFor="let each_comment of comment;let i=index" class="col-md-12 p-0 Add-comments">
                                                 <div class="Inner-comments">
                                                     <div class="col-md-12 p-0">
-                                                        <span class="userimg">EA</span>
+                                                        <span class="userimg">{{getletters(each_comment.createdBy)}}</span>
                                                         <span class="cmntuserdet">{{each_comment.createdBy}}</span>
                                                         <!-- <img src="../../../../assets/images/username_icon.png" />  -->
                                                         <span class="comment-date"><span class="comment-dateField"> {{getTime(each_comment.timestamp | date:'MMM d, y, HH:mm')}}</span> 
@@ -273,7 +273,7 @@
                                 <div class="col-md-12 p-0 form-fields">
                                     <label class="label-control">Reporter<span class="star">*</span></label>
                                     <select class="form-control data" name="reporter_field" [ngClass]="requestKey != undefined || null ? 'disabled' : ''" placeholder="Select Reporter">
-                                        <option [value]=userName>{{userName}}</option>
+                                        <option [value]=ticket_created>{{ticket_created}}</option>
                                     </select>
                                 </div>
                                 
