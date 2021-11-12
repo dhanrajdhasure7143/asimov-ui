@@ -10,7 +10,7 @@ networks:
 
 services:
   asimov-ui:
-    image: ${DOCKER_REGISTRY_URL}/asimov-ui:${DOCKER_TAG}
+    image: ${DOCKER_REGISTRY_URL}/asimov-uinew:${DOCKER_TAG}
     deploy:
       replicas: 1
     networks:
