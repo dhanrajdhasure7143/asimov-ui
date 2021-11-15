@@ -372,8 +372,9 @@ mat-select-value {
     padding-left: 5px;
 }
 .comment-dateField{
-    font-size: 12px;
-    margin-right: 8px;
+    font-size: 13px;
+    /* margin-right: 8px; */
+    color: #606060;
 }
 .fas{
     cursor: pointer;
@@ -397,19 +398,20 @@ mat-select-value {
     border-bottom: 1px solid #e5e5e5;
 }
 .Content-comment {
-    margin-top: 6px !important;
     display: inline-block;
-    padding-left: 5px;
+    padding-left: 6%;
+    width: 100%;
+    margin-top: 6px;
 }
-span.firsticon-edit {
+/* span.firsticon-edit {
     margin-right: 6px;
-}
+} */
 .newpaginationdiv1 ::ng-deep .mat-paginator-page-size{
     display: none !important;
 }
-.deleteattachment{
+/* .deleteattachment{
     padding-right: 5px;
-}
+} */
 
 /* ::ng-deep .mat-paginator-range-label{
     display: none !important;
@@ -454,8 +456,7 @@ span.module-header-title.innertitle {
     padding-bottom: 30px !important;
 }
 .tsttooltipbtn {
-    position: relative;    
-    margin-left: 5px;
+    position: relative;
 }
 .tsttooltipbtn:hover .default-img{
     display: none;
@@ -499,7 +500,7 @@ span.testtooltip:after {
     height: auto;
     overflow: auto;
 }
-.col-md-4.noneditdiv {
+.noneditdiv {
     position: fixed;
     float: right;
     right: 28px;
@@ -510,4 +511,24 @@ span.testtooltip:after {
     height: auto;
     margin-right: 5px;
     margin-bottom: 4px;
+}
+.cmntuserdet {
+    margin-right: 10px;
+    font-weight: 600;
+    height: max-content;
+}
+span.userimg {
+    background-color: #00a1e3;
+    padding: 7px 8px;
+    border-radius: 100%;
+    margin-right: 15px;
+    color: #fff;
+    position: relative;
+    top: 8px;
+}
+.comments-box-icons .btn-primary {
+    margin-right: 0px !important;
+}
+.removeallattachment button {
+    margin-right: 5px;
 }
