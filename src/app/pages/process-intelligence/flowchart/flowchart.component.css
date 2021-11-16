@@ -124,6 +124,7 @@
     font-weight: 600;
     font-size: 13px;
     padding: 8px 10px;
+    cursor: auto;
   }
   .form-check-input{
     margin-top: 3px;
