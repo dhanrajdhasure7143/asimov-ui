@@ -58,7 +58,7 @@ export class EditTaskComponent implements OnInit {
   requestedFiledata: any;
   filedeleteflag:Boolean;
   filecheckeddisabled:boolean =false;
-  filecheckflag:boolean = false;
+  filecheckflag:boolean = true;
   selectedFiles: any=[];
   fileList: File[] = [];
   listOfFiles: any[] = [];
@@ -398,30 +398,23 @@ else
 
 
   filecheckAll(ev) {
-    this.taskattacments.forEach(x =>
-       x.checked = ev.target.checked);
+    if(this.filecheckeddisabled==false)
+      this.taskattacments=this.taskattacments.map(item=>{item.checked=true; return item});
+    if(this.filecheckeddisabled==true)
+      this.taskattacments=this.taskattacments.map(item=>{item.checked=false; return item});
     this.checktodelete();
   }
 
   checktodelete()
   {
-    const selectedresourcedata = this.taskattacments.filter(product => product.checked).map(p => p.id);
-    if(selectedresourcedata.length>0)
-    {
-      this.filedeleteflag=true;
-    }else
-    {
-      this.filedeleteflag=false;
-    }
+    this.taskattacments.filter(item=>item.checked==true).length>0?(this.filecheckflag=false):(this.filecheckflag=true);
+    this.taskattacments.filter(item=>item.checked==true).length==this.taskattacments.length?(this.filecheckeddisabled=true):(this.filecheckeddisabled=false);
   }
 
   removeallchecks()
   {
-    for(let i=0;i<this.taskattacments.length;i++)
-    {
-      this.taskattacments[i].checked= false;
-    }
-    this.filecheckflag=false;
+    this.taskattacments=this.taskattacments.map(item=>{item.checked=false;return item});
+    this.checktodelete();
   }
 
   filechecktoggle(id, event)
@@ -451,7 +444,7 @@ else
 
   onDeleteSelectedItems(event){
     const selectedFiles = [];
-    this.taskattacments.filter(product => product.checked==true).map(p=>{
+    this.taskattacments.filter(product => product.checked==true).forEach(p=>{
       let obj={
         "id": p.id,
         "fileName": p.fileName
@@ -467,23 +460,21 @@ else
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes, delete it!'
       }).then((result) => {
-        if (result.value) {
+        if (result.isConfirmed) {
           this.spinner.show();
           this.rest.deleteFiles(selectedFiles).subscribe( res =>{ 
-            let status:any = res;
-            Swal.fire({
-              title: 'Success',
-              text: ""+status.message,
-              position: 'center',
-              icon: 'success',
-              showCancelButton: false,
-              confirmButtonColor: '#007bff',
-              cancelButtonColor: '#d33',
-              confirmButtonText: 'Ok'
-            }) 
-            this.getTaskAttachments();
-            this.removeallchecks();
-            this.spinner.hide();
+              let status:any = res;
+              this.spinner.hide();
+              if(status.errorMessage==undefined)
+              {
+                Swal.fire("Success",status.status,"success");
+                this.getTaskAttachments();
+                this.removeallchecks();
+              } 
+              else
+              {
+                Swal.fire("Error",status.errorMessage,"error");
+              }
             },err => {
               Swal.fire({
                 icon: 'error',
