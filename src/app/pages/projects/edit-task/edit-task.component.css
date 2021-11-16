@@ -334,3 +334,17 @@ input.form-control[type="date"] {
 input.form-control[type="date"]::-webkit-calendar-picker-indicator {
   opacity: 0;
 }
+
+button:disabled{
+  opacity: 0.5 !important;
+  background-color: transparent !important;
+  cursor: not-allowed !important;
+
+}
+
+
+button:disabled .default-img .hover-img{
+  cursor: not-allowed !important;
+}
+
+

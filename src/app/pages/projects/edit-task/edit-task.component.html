@@ -50,9 +50,10 @@
     </div>
     <div class="edit-task-body">
         <div class="edit-task-body-content">
-          <form [formGroup]="updatetaskForm" (ngSubmit)="updatetask()">
             <div class="row">
               <div class="col-md-5 pl-0">
+                
+                <form [formGroup]="updatetaskForm" (ngSubmit)="updatetask()">
                 <div class="form-fields col-md-6 pl-0">
                   <label class="h6 label-control" id="assignee" for="assignee">Assignee</label>
                   <!-- <span class="labelcont">{{taskresource| userPipe : users_list}}</span> -->
@@ -130,8 +131,9 @@
                     <label class="h6" id="description" class="label-control">Description</label>
                     <textarea class="form-control" formControlName="description" rows="3" placeholder="Enter Description">
                               </textarea>
-                </div>                              
-              </div>              
+                </div>
+              </form>                              
+              </div>      
               <div class="col-md-7 pr-0">
                 <h4 class="module-sub-header-title">Activity</h4>
                 <mat-tab-group id="Project-dashboard-tabs" class="edit-task-tabs">
@@ -269,15 +271,15 @@
                 <mat-tab label="Attachments">
                   <div class="row attachmentdiv">
                     <span class="Attachmentsicons" *ngIf="hidetaskdeletedownload">
-                      <span class="projects-menu-item gridicon"  (click)="onDeleteSelectedItems($event)"   matTooltip="Delete" >
+                      <button [disabled]="filecheckflag" class="projects-menu-item gridicon"  (click)="onDeleteSelectedItems($event)"   matTooltip="Delete" >
                         <img src="../../../../assets/images/Projects/delete-black.svg" class="default-img">
                         <img src="../../../../assets/images/Projects/delete-red.svg" class="hover-img">
-                      </span> 
+                      </button> 
                       
-                      <span class="projects-menu-item gridicon"  (click)="onDownloadSelectedItems($event)"   matTooltip="Download" >
-                        <img src="../../../assets/images/BPMS/download.svg" class="default-img">
+                      <button [disabled]="filecheckflag" class="projects-menu-item gridicon" (click)="onDownloadSelectedItems($event)"   matTooltip="Download" >
+                        <img src="../../../assets/images/BPMS/download.svg"  class="default-img">
                         <img src="../../../../assets/images/Projects/Download.svg" class="hover-img">
-                      </span>
+                      </button>
                     </span>
                     <!-- <table class="table" *ngIf="(taskattacments!=null && taskattacments.length!=0)">
                         <thead>
@@ -305,7 +307,7 @@
                     <table mat-table #sort11="matSort" [dataSource]="dataSource3" matSort class="projecttable table" id="autotable">
                           <ng-container matColumnDef="check">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                                <input [disabled]="filecheckeddisabled" type="checkbox" id="Credcheckall" [checked]="filecheckflag" (change)="filecheckAll($event)">
+                                <input [checked]="filecheckeddisabled" type="checkbox" id="Credcheckall" [disabled]="taskattacments.length==0"(change)="filecheckAll($event)">
                             </th>
                             <td mat-cell *matCellDef="let element; let i = index">
                                 <input type="checkbox" [checked]="element.checked" (change)="filechecktoggle(element.id, $event)"> 
@@ -400,7 +402,7 @@
               </mat-tab-group>
               </div>
             </div>
-          </form>
+    x
           
         </div>
     </div>
