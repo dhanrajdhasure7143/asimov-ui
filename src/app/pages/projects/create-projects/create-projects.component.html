@@ -276,7 +276,22 @@
                                                 class=" errspan required">Access Required*</span>
                                         </div>
                                     </div> -->
-                                   
+                                    <div class="col-md-12">
+                                        <div class="form-fields col-md-6 pl-0">
+                                            <label class="label-control">Select Process<span
+                                                class="star">*</span></label>
+                                        <select class="form-control" formControlName="process"
+                                            [ngClass]="createprogram.get('process').valid?'enteredfield-color':'inputfield-color'">
+                                            <option [value]="null" disabled hidden>Select Process</option>
+                                            <option value="" [selected]="true">Select Process</option>
+                                            <option *ngFor="let process of selected_process_names"
+                                                [value]="process.processId">{{process.processName|titlecase}}</option>
+                                        </select>
+                                        <span
+                                            *ngIf="createprogram.get('process').invalid && createprogram.get('process').touched"
+                                            class="errspan required">Process Required*</span>
+                                            </div>
+                                        </div>
                                     <div class="col-md-6">
                                        
                                     </div>
