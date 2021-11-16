@@ -414,7 +414,7 @@ export class ProgramDetailsComponent implements OnInit {
       this.modalref.hide();
       if(response.errorMessage==undefined)
       {
-        Swal.fire("Success",response.status,"success");
+        Swal.fire("Success",response.message,"success");
         this.get_linked_projects(this.program_detials.id);
       }
       else
