@@ -373,13 +373,13 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
     })
   }
    }
-//   async getApproverList(){
-//     await this.rest.getApproverforuser('Process Architect').subscribe( res =>  {//Process Architect
-//      if(Array.isArray(res))
-//       this.approver_list = res;
-//   });
-//   }
-async getApproverList(){
+  //  async getApproverList(){
+  //   await this.rest.getApproverforuser('Process Architect').subscribe( res =>  {//Process Architect
+  //    if(Array.isArray(res))
+  //      this.approver_list = res;
+  //  });
+  // }
+  async getApproverList(){
     let roles={
       "roleNames": ["Process Owner","Process Architect"]
     }
@@ -388,7 +388,7 @@ async getApproverList(){
        this.approver_list = res;
    });
   }
-  
+
    getSelectedApprover(){
     let user_role=localStorage.getItem('userRole')
     let current_bpmn_info

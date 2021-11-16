@@ -64,6 +64,7 @@ export class ViewTicketComponent implements OnInit {
   ticket_status: any;
   all_attachements:any[];
   attachment_namesArray:any[];
+  ticket_created:any;
 
   constructor(
     public formBuilder: FormBuilder,
@@ -75,7 +76,7 @@ export class ViewTicketComponent implements OnInit {
     var deCryptUserDetails = this.jwtHelper.decodeToken(userDetails);
     this.userId = deCryptUserDetails.userDetails.userId;
     this.userName = deCryptUserDetails.userDetails.userName;
-    console.log("name", this.userName,"id", this.userId);
+    // console.log("name", this.userName,"id", this.userId);
     
     this.activateRouter.queryParams.subscribe(res => {
       if (res) {
@@ -120,6 +121,7 @@ export class ViewTicketComponent implements OnInit {
       this.severity = res_data.severity;
       this.priority = res_data.priority;
       this.ticket_status = res_data.status;
+      this.ticket_created= res_data.createdBy
       // this.isLoading = false;
       setTimeout(() => {
         this.autoGrowTextZone('y');
@@ -142,8 +144,6 @@ export class ViewTicketComponent implements OnInit {
 
   getRequestComments(id) {
     this.api.getRequestComments(id).subscribe((res: any) => {
-      console.log(res);
-      
       this.commentRequest = res;
       if (this.commentRequest.length > 0) {
         this.comment = this.commentRequest;
@@ -551,7 +551,6 @@ export class ViewTicketComponent implements OnInit {
   }
 
   file(event) {
-    console.log(event)
     this.isLoading = true;
     this.fileName = [];
     for (var i = 0; i < event.target.files.length; i++) {
@@ -701,6 +700,12 @@ autoGrowSummaryTextZone() {
     zip.generateAsync({ type: "blob" }).then(function (content) {
       FileSaver.saveAs(content, _self.requestKey+".zip");
     });
+  }
+  getletters(name){
+    let split_name=name.split(' ');
+    // return name;
+    let user_letters=split_name[0].charAt(0)+split_name[split_name.length-1].charAt(0)
+  return user_letters
   }
 
 

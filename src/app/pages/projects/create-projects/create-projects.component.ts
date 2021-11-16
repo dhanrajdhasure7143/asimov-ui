@@ -68,7 +68,7 @@ export class CreateProjectsComponent implements OnInit {
     measurableMetrics: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     //programHealth: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     programValueChain: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-    
+    process: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
    // project: ["", Validators.compose([Validators.maxLength(50)])],
     owner: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
    // process: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
@@ -144,7 +144,7 @@ createproject(event)
         let status: any= response;
         Swal.fire({
           title: 'Success',
-          text: "Project Created Successfully !!",
+          text:response.message,
           position: 'center',
           icon: 'success',
           showCancelButton: false,
@@ -218,7 +218,7 @@ createproject(event)
       this.api.saveProgram(data).subscribe( res=>{​​​​​​​​
         this.spinner.hide();
         let response:any=res
-        if(response.errormessage==undefined)
+        if(response.errorMessage==undefined)
         {
           let status: any= response;
         Swal.fire({
@@ -240,7 +240,7 @@ createproject(event)
         }
         else
         {
-          Swal.fire("error",response.errormessage,"error");
+          Swal.fire("error",response.errorMessage,"error");
         }
       }​​​​​​​​);
     }​​​​​​​​

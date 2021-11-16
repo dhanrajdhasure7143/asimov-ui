@@ -33,7 +33,7 @@
 
                   </button>
                   <span *ngIf="rejectedOrApproved!='PENDING'">
-                    <button *ngIf='!isfromApprover && !iscreate_notation && systemAdmin==false' class="editprimary tsttooltipbtn" [disabled]="isEditMode " (click)="editNotation()">
+                    <button *ngIf='!iscreate_notation' class="editprimary tsttooltipbtn" [disabled]="isEditMode " (click)="editNotation()">
                       <img class="defaul-img" src="../../../assets/images/BPMS/Edit-blue.svg">
                       <span class="testtooltip">Edit</span>
                     </button>
@@ -157,10 +157,10 @@
                 <img class="testplus hover-img" src="../../../assets/images/BPMS/White-Workflow.svg">
                 Approvals
               </button>
-              <!-- <button (click)="gotoBPMNPlatform()" class="btn btn-primary">
+              <button (click)="gotoBPMNPlatform()" class="btn btn-primary">
                 <img class="testplus" src="../../../assets/images/BPMS/White-eye.svg">
                 View Cockpit
-              </button> -->
+              </button> 
             </span>
           </div>
       </div>    
