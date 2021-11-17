@@ -1,0 +1,96 @@
+.wrapper {
+    margin: 1%;
+}
+
+.box {
+    width: 100%;
+    height: 305px;
+}
+
+#chartdiv {
+    width: 100%;
+    height: 351px;
+}
+
+.mat-progress-bar {
+    height: 15px !important;
+    /* margin-bottom: 5%; */
+}
+
+.resources {
+    width: 100%;
+    height: 450px;
+}
+
+.checked {
+    color: orange;
+}
+
+.space {
+    padding: 2px;
+}
+
+table td {
+    font-size: 13px;
+}
+
+.Tkt-eyehover:hover img.default-img {
+    display: none;
+}
+
+.Tkt-eyehover:hover img.hover-img {
+    display: initial;
+    cursor: pointer;
+}
+
+.block {
+    font-weight: bold;
+}
+
+.newexecbots_progress label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #001c47;
+}
+
+.activitys {
+    height: 666px;
+}
+
+.timesheet {
+    background: rgb(245, 241, 241);
+    border-radius: 5px;
+    padding: 2px;
+    padding-left: 5%;
+}
+
+* {
+    text-transform: capitalize;
+}
+
+.selectsize {
+    width: 135%;
+    position: relative;
+    right: 32%;
+}
+
+.activity {
+    width: 111%;
+    position: relative;
+    right: 7%;
+}
+
+.red {
+    color: red;
+}
+
+.green {
+    color: green;
+}
+
+.upcoming img {
+    height: 10px;
+    width: 10px;
+    vertical-align: baseline;
+    margin-right: 3px;
+}
