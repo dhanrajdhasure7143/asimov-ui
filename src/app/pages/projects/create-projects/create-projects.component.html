@@ -26,13 +26,13 @@
                 <div class="create-heading">Create New</div>
                 <mat-tab-group mat-align-tabs="end">
 
-                    <mat-tab label="Project">
+                    <mat-tab label="Project" *ngIf="projectsdata=='projects' || projectsdata=='projects&programs'">
                         <div class="container">
                             <app-create-project-form [users_list]="userslist" [initiatives_list]="initiatives" (oncreate)="createproject($event)" [processes]="selected_process_names"></app-create-project-form>
                         </div>
                     </mat-tab>
                     
-                    <mat-tab label="Program">
+                    <mat-tab label="Program" *ngIf="projectsdata!='projects' || projectsdata=='projects&programs'">
                         <div class="container">
 
                             <form [formGroup]="createprogram" (ngSubmit)="saveProgram()">

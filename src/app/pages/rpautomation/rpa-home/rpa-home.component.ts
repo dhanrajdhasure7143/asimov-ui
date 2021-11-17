@@ -127,10 +127,33 @@ export class RpaHomeComponent implements OnInit {
   }
 
   openModal(template: TemplateRef<any>) {
-    this.importfile="";
-    this.file_error="";
-    this.importcat="";
-    this.modalRef = this.modalService.show(template,{class: 'modal-lr'});
+    if (this.userRole == "User") {
+      if (this.bot_list.length == 1) {
+        Swal.fire({
+          title: 'Error',
+          text: "You have limited access to this product. Please contact EZFlow support team for more details.",
+          position: 'center',
+          icon: 'error',
+          showCancelButton: false,
+          confirmButtonColor: '#007bff',
+          cancelButtonColor: '#d33',
+          heightAuto: false,
+          confirmButtonText: 'Ok'
+        })
+      }
+      else {
+        this.importfile = "";
+        this.file_error = "";
+        this.importcat = "";
+        this.modalRef = this.modalService.show(template, { class: 'modal-lr' });
+      }
+    }
+    else {
+      this.importfile = "";
+      this.file_error = "";
+      this.importcat = "";
+      this.modalRef = this.modalService.show(template, { class: 'modal-lr' });
+    }
   }
 
   ngOnInit() {
@@ -480,7 +503,27 @@ export class RpaHomeComponent implements OnInit {
 
   createoverlay()
   {
-    document.getElementById("create-bot").style.display ="block";
+    if (this.userRole == "User") {
+      if (this.bot_list.length == 1) {
+        Swal.fire({
+          title: 'Error',
+          text: "You have limited access to this product. Please contact EZFlow support team for more details.",
+          position: 'center',
+          icon: 'error',
+          showCancelButton: false,
+          confirmButtonColor: '#007bff',
+          cancelButtonColor: '#d33',
+          heightAuto: false,
+          confirmButtonText: 'Ok'
+      })
+      }
+      else {
+        document.getElementById("create-bot").style.display = "block";
+      }
+    }
+    else{
+      document.getElementById("create-bot").style.display = "block";
+    }
   }
 
 

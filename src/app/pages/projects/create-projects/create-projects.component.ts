@@ -5,7 +5,7 @@ import { RestApiService } from '../../services/rest-api.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import Swal from 'sweetalert2';
 import { Base64 } from 'js-base64';
-import { Router } from '@angular/router';
+import { Router,ActivatedRoute } from '@angular/router';
 import moment from 'moment';
 
 @Component({
@@ -41,13 +41,20 @@ export class CreateProjectsComponent implements OnInit {
   public name: any;
    email: any;
    initiatives: any;
+   projectsdata:any;
+
   constructor(
     private formBuilder: FormBuilder,
     private api:RestApiService, 
     private spinner:NgxSpinnerService,
     private modalService: BsModalService,
-    private router: Router
-    ) { }
+     private router: Router,
+    private route:ActivatedRoute
+    ) {
+      this.route.queryParams.subscribe(data=>{
+        this.projectsdata=data.id;
+      })
+     }
 
   ngOnInit() {
     

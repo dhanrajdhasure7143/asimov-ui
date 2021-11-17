@@ -5,6 +5,7 @@ import { SharebpmndiagramService } from '../../pages/services/sharebpmndiagram.s
 import { GlobalScript } from '../global-script';
 import { UUID } from 'angular2-uuid';
 import { BpmnModel } from '../../pages/business-process/model/bpmn-autosave-model';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-upload-create-drop-bpmn',
@@ -32,6 +33,8 @@ export class UploadCreateDropBpmnComponent implements OnInit {
 
   @Output() update = new EventEmitter<any>();
   @Input() data;
+  @Input('bpmn_list') public bpmn_list: any=[];
+  userRoles: any;
 
   constructor(private router:Router,private bpmnservice:SharebpmndiagramService, private route:ActivatedRoute,
     private global: GlobalScript, private rest:RestApiService, private activatedRoute: ActivatedRoute, private cdRef: ChangeDetectorRef) { }
@@ -42,7 +45,7 @@ export class UploadCreateDropBpmnComponent implements OnInit {
       if(params['isShowConformance'] != 'true')
         this.validNotationTypes += ', .cmmn, .dmn';
     });
-    
+    this.userRoles = localStorage.getItem("userRole")
   }
   ngAfterViewChecked() {
     this.activatedRoute.queryParams.subscribe(params => {
@@ -66,9 +69,32 @@ export class UploadCreateDropBpmnComponent implements OnInit {
   }
 
   slideUp(){
-    this.uploaded_file = null;
-    var modal = document.getElementById('myModal');
-    modal.style.display="block";
+    if (this.userRoles == "User") {
+      if (this.bpmn_list.length == 1) {
+        // Swal.fire("Error","You have limited access to this product. Please contact EZFlow support team for more details.","error");
+        Swal.fire({
+          title: 'Error',
+          text: "You have limited access to this product. Please contact EZFlow support team for more details.",
+          position: 'center',
+          icon: 'error',
+          showCancelButton: false,
+          confirmButtonColor: '#007bff',
+          cancelButtonColor: '#d33',
+          heightAuto: false,
+          confirmButtonText: 'Ok'
+        })
+      }
+      else {
+        this.uploaded_file = null;
+        var modal = document.getElementById('myModal');
+        modal.style.display = "block";
+      }
+    }
+    else {
+      this.uploaded_file = null;
+      var modal = document.getElementById('myModal');
+      modal.style.display = "block";
+    }
   }
 
   uploadCreateBpmn(e){
