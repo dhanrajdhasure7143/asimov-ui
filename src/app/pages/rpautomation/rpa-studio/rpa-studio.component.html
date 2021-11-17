@@ -41,7 +41,7 @@ placement="bottom"
 <app-rpa-home></app-rpa-home>
 </div> -->
 <div *ngIf="changescreen_rpa_model==true && tabsArray.length > 0" class="rpa-actioncontent">
-  <app-rpa-studio-designer [tabsArray]="tabsArray"></app-rpa-studio-designer>
+  <app-rpa-studio-designer [toolset]="templateNodes" [tabsArray]="tabsArray"></app-rpa-studio-designer>
 </div>
 <div *ngIf="tabsArray.length > 0 && changescreen_rpa_model==false" class="container">
   <br><br><br>

@@ -100,7 +100,7 @@ export class RpaStudioComponent implements OnInit {
 
 
     
-    let data1:any = [];
+    var data1:any = [];
     this.dt.changeParentModule({"route":"/pages/rpautomation/home", "title":"RPA"});
     this.dt.changeChildModule("");
     this.spinner.show();
@@ -114,13 +114,14 @@ export class RpaStudioComponent implements OnInit {
           path : 'data:' + 'image/png' + ';base64,' + element.icon,
           tasks: element.taskList
         };
-        if((this.userRole.includes('User') &&
-              (temp.name === 'Email' || temp.name === 'Excel' || temp.name === 'Database' || temp.name === 'Developer'))
-            || !this.userRole.includes('User')){
+        // if((this.userRole.includes('User') && 
+        // (temp.name === 'Email' || temp.name === 'Excel' || temp.name === 'Database' || temp.name === 'Developer')) || 
+        // !this.userRole.includes('User')){
           this.templateNodes.push(temp)
-        }
+        //}
       })
-      if(!this.userRole.includes('User')){
+      if(!this.userRole.includes('User'))
+      {
         data1.Advanced.forEach(element => {
           let temp:any = {
             name : element.name,
@@ -139,6 +140,7 @@ export class RpaStudioComponent implements OnInit {
           // }
           //this.spinner.hide();
         });
+      }
           this.activatedRoute.queryParams.subscribe(data=>{
             let params:any=data;
             if(params==undefined)
@@ -172,7 +174,7 @@ export class RpaStudioComponent implements OnInit {
               }
             }
           })
-      }
+      
      
 
     })
