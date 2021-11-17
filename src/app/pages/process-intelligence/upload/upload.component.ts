@@ -123,34 +123,82 @@ export class UploadComponent implements OnInit {
     this.dtTrigger.unsubscribe();
   }
   onUpload(event, id) {     //for Upload csv/xls/xes/xes.gz file
-    if(event.addedFiles.length==0){
-      Swal.fire({
-        title: 'Error',
-        text: 'Please upload file with proper extension!',
-        icon: 'error',
-        heightAuto: false
-      })
-    } else{
-      this.isLoading=true;
-    this.selectedFile = <File>event.addedFiles[0];
-    const fd = new FormData();
-    fd.append('file', this.selectedFile),
-      fd.append('permissionStatus', 'yes'),
-      this.rest.fileupload(fd).subscribe(res => {
-      this.filedetails = res
-        let fileName = this.filedetails.data.split(':');
-        this.rest.fileName.next(fileName[1]);
-        this.onSelect(event, id)
-        this.isLoading=false;
-      }, err => {
+    if (this.userRole == "User") {
+      if (this.process_graph_list.length == 1) {
         Swal.fire({
           title: 'Error',
-          text: 'Please try again!',
+          text: "You have limited access to this product. Please contact EZFlow support team for more details.",
+          position: 'center',
           icon: 'error',
+          showCancelButton: false,
+          confirmButtonColor: '#007bff',
+          cancelButtonColor: '#d33',
           heightAuto: false,
+          confirmButtonText: 'Ok'
         })
-        this.isLoading=false;
-      });
+      }
+      else {
+        if (event.addedFiles.length == 0) {
+          Swal.fire({
+            title: 'Error',
+            text: 'Please upload file with proper extension!',
+            icon: 'error',
+            heightAuto: false
+          })
+        } else {
+          this.isLoading = true;
+          this.selectedFile = <File>event.addedFiles[0];
+          const fd = new FormData();
+          fd.append('file', this.selectedFile),
+            fd.append('permissionStatus', 'yes'),
+            this.rest.fileupload(fd).subscribe(res => {
+              this.filedetails = res
+              let fileName = this.filedetails.data.split(':');
+              this.rest.fileName.next(fileName[1]);
+              this.onSelect(event, id)
+              this.isLoading = false;
+            }, err => {
+              Swal.fire({
+                title: 'Error',
+                text: 'Please try again!',
+                icon: 'error',
+                heightAuto: false,
+              })
+              this.isLoading = false;
+            });
+        }
+      }
+    }
+    else {
+      if (event.addedFiles.length == 0) {
+        Swal.fire({
+          title: 'Error',
+          text: 'Please upload file with proper extension!',
+          icon: 'error',
+          heightAuto: false
+        })
+      } else {
+        this.isLoading = true;
+        this.selectedFile = <File>event.addedFiles[0];
+        const fd = new FormData();
+        fd.append('file', this.selectedFile),
+          fd.append('permissionStatus', 'yes'),
+          this.rest.fileupload(fd).subscribe(res => {
+            this.filedetails = res
+            let fileName = this.filedetails.data.split(':');
+            this.rest.fileName.next(fileName[1]);
+            this.onSelect(event, id)
+            this.isLoading = false;
+          }, err => {
+            Swal.fire({
+              title: 'Error',
+              text: 'Please try again!',
+              icon: 'error',
+              heightAuto: false,
+            })
+            this.isLoading = false;
+          });
+      }
     }
   }
 
@@ -229,6 +277,24 @@ export class UploadComponent implements OnInit {
       this.dt.changePiData(this.data);
       let excelfile = [];
       excelfile = this.data;
+      if(this.userRole=="User"){
+        if(excelfile.length>50){
+         Swal.fire({
+           title: 'Error',
+           text: "Data limit exceeded for user",
+           position: 'center',
+           icon: 'error',
+           showCancelButton: false,
+           confirmButtonColor: '#007bff',
+           cancelButtonColor: '#d33',
+           heightAuto: false,
+           confirmButtonText: 'Ok'
+       })
+      }
+      else{
+        this.router.navigate(['/pages/processIntelligence/datadocument']);
+      }
+     }else{
       if(excelfile.length<=2||excelfile[0].length==0||(excelfile[1].length==0&&excelfile[2].length==0)||excelfile[1].length==1){
         Swal.fire({
           title: 'Error',
@@ -239,6 +305,7 @@ export class UploadComponent implements OnInit {
       }else{
         this.router.navigate(['/pages/processIntelligence/datadocument']);
       }
+    }
     };
     reader.readAsBinaryString(target[0]);
   }

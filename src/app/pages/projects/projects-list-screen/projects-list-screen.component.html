@@ -11,7 +11,7 @@
             <input type="search" class="form-control" (keyup)="projecttable.applyfilter($event)" placeholder="Search Projects/Programs" >
           </div>
           <div class=" prj-lstscr-btn py-5">
-            <a _ngcontent-svr-c17=""  routerLink="/pages/projects/create-projects" *ngIf="enablecreateproject" class="btn btn-primary" type="button">
+            <a _ngcontent-svr-c17="" (click)="createNew()" *ngIf="enablecreateproject" class="btn btn-primary" type="button">
               <img  src="../../../../assets/images/Projects/White-plus.svg" class="testplus"/>
               Create New
             </a>
@@ -37,7 +37,7 @@
               </div>
             </ng-template>
             <div class="projects-table-body h-100" *ngIf="selected_tab==0">
-              <app-projects-programs-table [users_list]="users_list"  [processes]="processes"   status="All" [projects_list]="projects_list"></app-projects-programs-table>
+              <app-projects-programs-table [users_list]="users_list" (projectslistdata)="getprojectsList($event)"  [processes]="processes"   status="All" [projects_list]="projects_list"></app-projects-programs-table>
             </div>
           </mat-tab>
           <mat-tab>
