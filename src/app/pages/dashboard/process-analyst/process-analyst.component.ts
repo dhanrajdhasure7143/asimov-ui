@@ -102,7 +102,7 @@ export class ProcessAnalystComponent implements OnInit {
   // Api calls
 
   getPendingApprovals(duration) {
-    this.apiService.getPendingApprovals('Process Owner', 'harish.reddi@epsoftinc.com', this.userName, duration).subscribe((res: any) => {
+    this.apiService.getPendingApprovals(this.userRoles, this.userEmail, this.userName, duration).subscribe((res: any) => {
       this.pendingApprovals = res;
       console.log(res);
     });
