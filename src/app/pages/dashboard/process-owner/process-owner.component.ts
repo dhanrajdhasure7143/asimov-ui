@@ -26,7 +26,7 @@ export class ProcessOwnerComponent implements OnInit {
   upcomingDueDates: Object;
   expenditureDays: any;
   expenditureResources: any;
-  effortExpenditureAnalysis: Object;
+  effortExpenditureAnalysis: any;
   activityStreamRecent: any;
   activityStreamPending: any;
   filterByDays = ['All', '30', '60', '90'];
@@ -44,58 +44,71 @@ export class ProcessOwnerComponent implements OnInit {
 
   ngOnInit(): void {
 
-   this.userRoles = this.userDetails.userDetails.roles[0].roleName;
-   this.userEmail = this.userDetails.userDetails.userId;
-   this.userName = this.userDetails.userDetails.userName;
+    this.userRoles = this.userDetails.userDetails.roles[0].roleName;
+    this.userEmail = this.userDetails.userDetails.userId;
+    this.userName = this.userDetails.userDetails.userName;
 
-    if(this.userRoles === 'Process Owner'){
-    this.getProjectDuration('All');
-    this.getProjectStatus('All');
-    this.getProjectProgress('All');
-    this.getPendingApprovals('All');
+    if (this.userRoles === 'Process Owner') {
+      this.getProjectDuration('All');
+      this.getProjectStatus('All');
+      this.getProjectProgress('All');
+      this.getPendingApprovals('All');
 
-    // Api calss
-    this.apiService.getProjectsTasksProcessChanged(this.userEmail, this.userName, this.userRoles)
-      .subscribe(res => {
-        this.totalProjects = res['Total Projects'];
-        this.totalTasks = res['Tasks'];
-        this.processes = res['Processes'];
+      // Api calss
+      this.apiService.getProjectsTasksProcessChanged(this.userEmail, this.userName, this.userRoles)
+        .subscribe(res => {
+          this.totalProjects = res['Total Projects'];
+          this.totalTasks = res['Tasks'];
+          this.processes = res['Processes'];
+          console.log(res);
+          this.isLoading = false;
+        });
+
+
+      // this.apiService.getActivityStream(this.userRoles, this.userEmail, this.userName).subscribe(res => {
+      //   this.activityStreamRecent = res['Recent Approvals : '];
+      //   this.activityStreamPending = res['Pending Approvals : '];
+      //   this.activityStream = res['Recent Approvals : '];
+      //   console.log(res);
+      // });
+
+      this.apiService.getUpcomingDueDates(this.userRoles, this.userEmail, this.userName)
+        .subscribe(res => {
+          this.upcomingDueDates = res;
+          var currentDate = new Date().getTime();
+          for (var i = 0; i < Object.keys(res).length; i++) {
+            var dueDate = (new Date(res[i]['End Date']).getTime() - currentDate);
+            var result = Math.round(dueDate / (1000 * 3600 * 24));
+            if(result > 0){
+              this.upcomingDueDates[i]['dueDate']  = `Due in  ${result}  days` ;
+            }
+            else{
+              this.upcomingDueDates[i]['dueDate']  = `${- + result} days ago` ;
+            }
+            
+          }
+          console.log(this.upcomingDueDates, "UpcomingDueDates");
+        });
+
+      this.apiService.gettotalEffortExpenditure(this.userRoles, this.userEmail, this.userName)
+        .subscribe(res => {
+          this.expenditureDays = res['Total Days'];
+          this.expenditureResources = res['Total Resources'];
+          console.log(res);
+        });
+
+      this.apiService.getEffortExpenditureAnalysis(this.userRoles, this.userEmail, this.userName)
+        .subscribe((res:any) => {
+          this.effortExpenditureAnalysis = res;
+          console.log(res);
+          console.log(this.effortExpenditureAnalysis);
+        });
+
+      this.apiService.gettopEffortsSpent(this.userRoles, this.userEmail, this.userName).subscribe(res => {
         console.log(res);
-        this.isLoading = false;
-      });
-
-
-    this.apiService.getActivityStream(this.userRoles, 'All').subscribe(res => {
-      this.activityStreamRecent = res['Recent Approvals : '];
-      this.activityStreamPending = res['Pending Approvals : '];
-      this.activityStream = res['Recent Approvals : '];
-      console.log(res);
-    });
-
-    this.apiService.getUpcomingDueDates(this.userRoles, this.userEmail, this.userName)
-      .subscribe(res => {
-        this.upcomingDueDates = res;
-        console.log(this.upcomingDueDates, "UpcomingDueDates");
-      });
-
-    this.apiService.gettotalEffortExpenditure(this.userRoles, this.userEmail, this.userName)
-      .subscribe(res => {
-        this.expenditureDays = res['Total Days'];
-        this.expenditureResources = res['Total Resources'];
-        console.log(res);
-      });
-
-    this.apiService.getEffortExpenditureAnalysis(this.userRoles, this.userEmail, this.userName)
-      .subscribe(res => {
-        this.effortExpenditureAnalysis = res;
-        console.log(res);
-      });
-
-    this.apiService.gettopEffortsSpent(this.userRoles, this.userEmail, this.userName).subscribe(res=>{
-      console.log(res);
-      this.topEffortsSpent = res;
-    })
-  }
+        this.topEffortsSpent = res;
+      })
+    }
   }
 
   // Api calls
@@ -135,6 +148,7 @@ export class ProcessOwnerComponent implements OnInit {
 
   getProjectProgress(duration) {
     this.apiService.getAllProjectProgress(this.userRoles, this.userEmail, this.userName, duration).subscribe(res => {
+      this.runtimestats = [];
       this.allProjectProgress = res;
       for (var i = 0; i < Object.keys(res).length; i++) {
         var data = {
@@ -185,7 +199,7 @@ export class ProcessOwnerComponent implements OnInit {
       chart.logo.__disabled = true;
       var pieSeries = chart.series.push(new am4charts.PieSeries());
       var colorSet = new am4core.ColorSet();
-      colorSet.list = ["#ce3779", "#575fcd", "#d89f59", "##f2dfa7", "#ff5b4f", "#74c7b8"
+      colorSet.list = ["#ce3779", "#575fcd", "#d89f59", "#ff5b4f", "#74c7b8"
       ].map(function (color: any) {
         return am4core.color(color);
       });
@@ -251,6 +265,7 @@ export class ProcessOwnerComponent implements OnInit {
       this.runtimestatschart.hiddenState.properties.opacity = 0; // this creates initial fade-in
       this.runtimestatschart.data = this.runtimestats;
       this.runtimestatschart.zoomOutButton.disabled = true;
+      this.runtimestatschart.logo.disabled = true;
 
       this.runtimestatschart.colors.list = [
         am4core.color("#ff5b4f"),
@@ -265,25 +280,28 @@ export class ProcessOwnerComponent implements OnInit {
       categoryAxis.dataFields.category = "name";
       categoryAxis.title.text = "Projects";
       let label1 = categoryAxis.renderer.labels.template;
-      label1.truncate = true;
+      // label1.truncate = true;
       label1.maxWidth = 100;
-      label1.disabled = false;
+      // label1.disabled = false;
       categoryAxis.renderer.minGridDistance = 70;
       var valueAxis = this.runtimestatschart.yAxes.push(new am4charts.ValueAxis());
       valueAxis.renderer.inside = false;
+      valueAxis.min = 0;
+      valueAxis.max = 100;
       valueAxis.renderer.labels.template.fillOpacity = 1;
       valueAxis.renderer.grid.template.strokeOpacity = 0;
-      valueAxis.min = 0;
       valueAxis.cursorTooltipEnabled = false;
       valueAxis.renderer.gridContainer.zIndex = 1;
-      valueAxis.title.text = "Total Execution Time (ms)";
+      valueAxis.title.text = "Percentage Completed";
       var series = this.runtimestatschart.series.push(new am4charts.ColumnSeries);
       series.dataFields.valueY = "value";
       series.dataFields.categoryX = "name";
-      series.tooltipText = "{valueY.value}";
-
+      series.tooltipText = "{valueY.value}%";
+      valueAxis.renderer.labels.template.adapter.add("text", function (text) {
+        return text + "%";
+      });
       var columnTemplate = series.columns.template;
-      columnTemplate.width = 35;
+      columnTemplate.width = 45;
       columnTemplate.column.cornerRadiusTopLeft = 10;
       columnTemplate.column.cornerRadiusTopRight = 10;
       columnTemplate.strokeOpacity = 0;
@@ -309,8 +327,7 @@ export class ProcessOwnerComponent implements OnInit {
       var label = this.runtimestatschart.plotContainer.createChild(am4core.Label);
       label.x = 150;
       label.y = 50;
-      $("#runtimestatistics-piechart > div > svg > g > g:nth-child(2) > g:nth-child(2)").hide();
-
+      // $("#runtimestatistics-piechart > div > svg > g > g:nth-child(2) > g:nth-child(2)").hide();
     }, 30)
 
   }

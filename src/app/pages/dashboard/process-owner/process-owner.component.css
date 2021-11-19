@@ -54,7 +54,7 @@ table td {
 }
 
 .activitys {
-    height: 666px;
+    /* height: 92em; */
 }
 
 .timesheet {
@@ -93,4 +93,12 @@ table td {
     width: 10px;
     vertical-align: baseline;
     margin-right: 3px;
+}
+
+mat-drawer {
+    transition: none !important;
+    box-shadow: none !important;
+    margin-top: 8px;
+    border: none;
+    height: 95%;
 }

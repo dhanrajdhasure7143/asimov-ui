@@ -1,275 +1,36 @@
 <div class="row content-area ">
-    <div class="row module-heading title">
-        <!-- <span class="module-back-button">
-            <i aria-hidden="true" class="fas fa-arrow-left"></i>
-        </span> -->
+    <div class="module-heading title">
         <span class="module-header-title">Process Owner Dashboard</span>
+        <h4 class="module-header-title" style="position: absolute;left:95%;cursor:pointer" (click)="drawer.toggle()">
+            <img style="height: 30px;width: 30px;" src="../../../assets/images/menu-line.svg" alt="">
+        </h4>
     </div>
-    <div class="wrapper" style="height: 100%;overflow: scroll;overflow-x: hidden;">
-        <div id="" class="row" style="margin-bottom: 10%;">
-            <div class="col-md-9" style="width: 78%;">
-                <div class="row">
-                    <div class="col-md-4" style="margin-left: -15px;">
-                        <div class="chartinner">
-                            <div class="dbichart-block">
-                                <div class="dbichart-body">
-                                    <div style="display: flex;justify-content: center;">
-                                        <img style="padding-right: 7%;margin-top: 0%;" src="..\assets\images\Projects\approved.svg" alt="" srcset="">
-                                        <h2 style="margin-left:0%;">{{totalProjects}} <br> <span>Total Projects</span>
-                                        </h2>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="chartinner">
-                            <div class="dbichart-block">
-                                <div class="dbichart-body">
-                                    <div style="display: flex;justify-content: center;">
-                                        <img style="padding-right: 7%;margin-top: 0%;" src="..\assets\images\Projects\inprogress.svg" alt="" srcset="">
-                                        <h2 style="margin-left:0%;">{{totalTasks}} <br> <span>Total Tasks</span></h2>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="chartinner">
-                            <div class="dbichart-block">
-                                <div class="dbichart-body">
-                                    <div style="display: flex;justify-content: center;">
-                                        <img style="padding-right: 7%;margin-top: 0%;" src="..\assets\images\Projects\inreview.svg" alt="" srcset="">
-                                        <h2 style="margin-left:0%;">{{processes}} <br> <span>Processes</span></h2>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--  -->
-                <div class="row">
-                    <div class="col-md-5 p-0">
-                        <div class="dbichart-block block chartinner box">
-                            <div class="dbichart-head">
-                                <span class="module-header-title">Projects Completion Duration</span>
-                                <span class="module-header-title">
-                                    <select name="Filter by" class="form-control selectsize" (change)="projectDuration($event.target.value)">
-                                        <option value="All" disabled hidden>All</option>
-                                        <option *ngFor="let item of filterByDays" [value]=item>{{item}}&nbsp;Days</option>
-                                    </select>
-                                </span>
-                            </div>
-                            <div class="dbichart-body pt-1">
-                                <div class="newexecbots_progress" *ngFor="let item of ProjectCompletionDuration | keyvalue | paginate: {id:'paginator1' ,itemsPerPage: 3,currentPage: p }">
-                                    <label style="width: 97%;font-weight: bold;">{{item.key}} 
-                                        <span style="float: right;font-weight: bold;font-size: 14px;">{{item.value}} days</span>
-                                    </label>
-                                    <mat-progress-bar [ngClass]="item.value > 20 ? 'progress-bar-red':'progress-bar-green' " mode="determinate" [value]=item.value>
-                                    </mat-progress-bar><br>
-                                </div>
-                                <div class="text-right">
-                                    <pagination-controls id="paginator1" (pageChange)="p = $event"></pagination-controls>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-7 pl-2">
-                        <div class="dbichart-block block chartinner box">
-                            <div class="dbichart-head">
-                                <span class="module-header-title">Pending Approvals</span>
-                                <span class="module-header-title">
-                                    <select name="Filter by" class="form-control selectsize" (change)="projectPending($event.target.value)">
-                                        <option value="All" disabled hidden>All</option>
-                                        <option *ngFor="let item of filterByDays" [value]=item>{{item}}&nbsp;Days</option>
-                                    </select>
-                                </span>
-                            </div>
-                            <div class="dbichart-body">
-                                <table class="table table-responsive">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 30%;">Process Name</th>
-                                            <th style="width: 27%;">Created Date</th>
-                                            <th style="width: 39%;">Submitted By</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr *ngFor="let item of pendingApprovals  | paginate: {id:'paginator2' , itemsPerPage: 4,currentPage: q }">
-                                            <td>{{item['Process Name'] }}</td>
-                                            <td>{{item['Created Date'] | date: 'dd/MM/yyyy' }}</td>
-                                            <td>{{item['Submitted by'] }}</td>
-                                            <td class="Tkt-eyehover" style="text-align: center;">
-                                                <img src="../../../../assets/images/PI/eye-show.svg" alt="" class="testplus default-img">
-                                                <img src="../../../../assets/images/Admin/eye-show-blue.svg" alt="" class="testplus hover-img">
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <div class="text-right">
-                                    <pagination-controls id="paginator2" (pageChange)="q = $event"></pagination-controls>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 p-0">
-                            <div class="dbichart-block block chartinner ">
-                                <div class="dbichart-head">
-                                    <span class="module-header-title">Project Status</span>
-                                    <span class="module-header-title">
-                                        <select name="Filter by" class="form-control selectsize" (change)="projectStatus($event.target.value)">
-                                            <option value="All" disabled hidden>All</option>
-                                            <option *ngFor="let item of filterByDays" [value]=item>{{item}}&nbsp;Days</option>
-                                        </select>
-                                    </span>
-                                </div>
-                                <div class="dbichart-body">
-                                    <div id="projectstatus-chart" class="amart"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 pl-2">
-                            <div class="dbichart-block block chartinner ">
-                                <div class="dbichart-head">
-                                    <span class="module-header-title">Project Progress</span>
-                                    <span class="module-header-title">
-                                        <select name="Filter by" class="form-control selectsize" (change)="projectProgress($event.target.value)">
-                                            <option value="All" disabled hidden>All</option>
-                                            <option *ngFor="let item of filterByDays" [value]=item>{{item}}&nbsp;Days</option>
-                                        </select>
-                                    </span>
-                                </div>
-                                <div class="dbichart-body">
-                                    <div id="runtimestatistics-piechart" class="amart"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="dbichart-head" style="margin-bottom: 2%;">
-                        <span class="module-header-title">Resource Utilization Analytics</span>
-                    </div>
-                    <div class="row" style="padding-bottom: 5%;">
-                        <div class="col-md-6 p-0">
-                            <div class="dbichart-block block chartinner resources">
-                                <div class="dbichart-head">
-                                    <span class="module-sub-header-title">Project wise</span>
-                                </div><br>
-                                <div class="row">
-                                    <div class="col-md-6 pl-1 dbichart-block" style="margin-left: 1%;">
-                                        <h4>Total Resources</h4>
-                                        <h3 style="color: #00a0e3;">{{expenditureResources}}</h3>
-                                    </div>
-                                    <div class="col-md-5 pl-1 dbichart-block" style="margin-left: 5%;">
-                                        <h4>Total Days</h4>
-                                        <h3 style="color: #00a0e3;">{{expenditureDays}}</h3>
-                                    </div>
-                                </div>
-                                <div class="dbichart-body">
-                                    <div class="dbichart-head">
-                                        <span class="module-header-title">Top Resources</span>
-                                    </div>
-                                    <table class="table table-responsive">
-                                        <thead>
-                                            <tr>
-                                                <th>Resources</th>
-                                                <th>Days Spent</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr *ngFor="let item of effortExpenditureAnalysis | keyvalue  | paginate: {id:'paginator3',itemsPerPage: 4,currentPage: a }">
-                                                <td style="text-transform: lowercase;">{{item.key}}</td>
-                                                <td style="text-transform: lowercase;">{{item.value}} days</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <div class="text-right">
-                                        <pagination-controls id="paginator3" (pageChange)="a = $event"></pagination-controls>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 pl-2">
-                            <div class="dbichart-block block chartinner resources">
-                                <div class="dbichart-head">
-                                    <span class="module-sub-header-title">Process wise</span>
-                                </div><br>
-                                <div class="dbichart-body">
-                                    <div class="dbichart-head">
-                                        <span class="module-header-title">Top Efforts Spent</span>
-                                    </div>
-                                    <table class="table table-responsive">
-                                        <thead>
-                                            <tr>
-                                                <th>Project Name</th>
-                                                <th>Days Spent</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr *ngFor="let item of topEffortsSpent | keyvalue  | paginate: {id:'paginator4' , itemsPerPage: 7,currentPage: a }">
-                                                <td>{{item.key}}</td>
-                                                <td style="text-transform: lowercase;">{{item.value}} days</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <div class="text-right">
-                                        <pagination-controls id="paginator4" (pageChange)="a = $event"></pagination-controls>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 p-0" style="width: 22%;">
+    <div class="wrapper" style="height: 100%;overflow: scroll;overflow-x: hidden;margin: 0;">
+        <mat-drawer-container class="example-container" style="background-color: white;">
+            <mat-drawer #drawer class="example-sidenav" mode="side" position="end" style="width: 22%;height: 92em;">
                 <div class="row">
                     <div class="dbichart-block activitys">
                         <div class="dbichart-head">
-                            <span class="module-header-title">Activity Sream</span>
-                            <!-- <span class="module-header-title">
-                                <select name="Filter by" class="form-control activity"
-                                    (change)="activityList($event.target.value)">
-                                    <option value="" disabled hidden>Recent Approvals</option>
-                                    <option value="recentApprovals">Recent Approvals</option>
-                                    <option value="pendingApprovals">Pending Approvals</option>
-                                </select>
-                            </span> -->
-                        </div><br>
-                        <div class="dbichart-body">
-                            <div class="content" *ngFor="let item of activityStream | paginate: {id:'paginator5',itemsPerPage: 4,currentPage: r }">
-                                <h3 style="font-size: 13px;">Approved By &nbsp;&nbsp;&nbsp; :
-                                    <b>&nbsp;{{item.approverName}}</b></h3>
-                                <h3 style="font-size: 13px;">Process Name : <b style="color: #00a0e3;">&nbsp;{{item.processName}}</b></h3>
-                                <h3 style="font-size: 13px;white-space: nowrap;overflow: hidden !important;text-overflow: ellipsis;">
-                                    Review &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : &nbsp;{{item.reviewComments?item.reviewComments:'No Review Comments'}}
-                                </h3>
-                                <hr>
-                            </div>
-                            <div class="text-right">
-                                <pagination-controls id="paginator5" (pageChange)="r = $event"></pagination-controls>
-                            </div>
-                        </div>
-                    </div><br>
-                    <div class="dbichart-block activitys">
-                        <div class="dbichart-head">
-                            <span class="module-header-title">Upcoming Due Dates</span>
+                            <span class="module-header-title">Due Dates</span>
+                            <span class="module-header-title" (click)="drawer.toggle()">
+                                <i style="font-size: 20px;cursor: pointer;" class="fas fa-times"></i>
+                            </span>
                         </div>
                         <div class="dbichart-body">
                             <h3 style="position: inherit;margin-top: 5%;margin-bottom: 8%;padding: 2px;">
                                 <span class="upcoming">
-                                <img _ngcontent-tcl-c33=""  src="/assets/images/RPA/red-circle.png">
-                                Tasks </span>
+                                    <img _ngcontent-tcl-c33="" src="/assets/images/RPA/red-circle.png">
+                                    Tasks </span>
                                 <span class="upcoming">
-                                    <img _ngcontent-tcl-c33=""  src="/assets/images/RPA/GreenCricle.png">
+                                    <img _ngcontent-tcl-c33="" src="/assets/images/RPA/GreenCricle.png">
                                     Projects </span>
                             </h3>
-                            <div *ngFor="let item of upcomingDueDates | paginate: { itemsPerPage: 4,currentPage: t }">
+                            <div *ngFor="let item of upcomingDueDates | paginate: { itemsPerPage: 10,currentPage: t }">
                                 <div class="timesheet">
-                                    <p [ngClass]="item.Type == 'task' ? 'red' : 'green'"><b>{{item['Task Name'] ? item['Task Name'] : item['Project Name']}}</b></p>
-                                    <p style="font-size: 13px;">Due Date : &nbsp;{{item['End Date'] | date: 'dd/MM/yyyy hh:mm a' }}</p>
-                                    <p style="font-size: 13px;color: #00a0e3;">5 daysago</p>
+                                    <p [ngClass]="item.Type == 'task' ? 'red' : 'green'"><b>{{item['Task Name'] ?
+                                            item['Task Name'] : item['Project Name']}}</b></p>
+                                    <p style="font-size: 13px;">Due Date : &nbsp;{{item['End Date'] | date: 'medium' }}</p>
+                                    <p style="color:#00a0e3;font-weight: bolder;">{{item['dueDate']}}</p>
                                 </div><br>
                             </div>
                             <div class="text-right">
@@ -278,8 +39,253 @@
                         </div>
                     </div>
                 </div>
+            </mat-drawer>
+            <div>
+                <div id="" class="row">
+                    <div class="col-md-12" style="margin-top: 1%;padding-right: 0;">
+                        <div class="row">
+                            <div class="col-md-4" style="margin-left: -15px;">
+                                <div class="chartinner">
+                                    <div class="dbichart-block">
+                                        <div class="dbichart-body">
+                                            <div style="display: flex;justify-content: center;">
+                                                <img style="padding-right: 7%;margin-top: 0%;" src="..\assets\images\Projects\approved.svg" alt="" srcset="">
+                                                <h2 style="margin-left:0%;">{{totalProjects}} <br> <span>Total
+                                                        Projects</span>
+                                                </h2>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="chartinner">
+                                    <div class="dbichart-block">
+                                        <div class="dbichart-body">
+                                            <div style="display: flex;justify-content: center;">
+                                                <img style="padding-right: 7%;margin-top: 0%;" src="..\assets\images\Projects\inprogress.svg" alt="" srcset="">
+                                                <h2 style="margin-left:0%;">{{totalTasks}} <br> <span>Total Tasks</span>
+                                                </h2>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="chartinner">
+                                    <div class="dbichart-block">
+                                        <div class="dbichart-body">
+                                            <div style="display: flex;justify-content: center;">
+                                                <img style="padding-right: 7%;margin-top: 0%;" src="..\assets\images\Projects\inreview.svg" alt="" srcset="">
+                                                <h2 style="margin-left:0%;">{{processes}} <br> <span>Processes</span>
+                                                </h2>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--  -->
+                        <div class="row">
+                            <div class="col-md-5 p-0">
+                                <div class="dbichart-block block chartinner box">
+                                    <div class="dbichart-head">
+                                        <span class="module-header-title">Projects Completion Duration</span>
+                                        <span class="module-header-title">
+                                            <select name="Filter by" class="form-control selectsize"
+                                                (change)="projectDuration($event.target.value)">
+                                                <option value="All" disabled hidden>All</option>
+                                                <option *ngFor="let item of filterByDays" [value]=item>
+                                                    {{item}}&nbsp;Days</option>
+                                            </select>
+                                        </span>
+                                    </div>
+                                    <div class="dbichart-body pt-1">
+                                        <div class="newexecbots_progress" *ngFor="let item of ProjectCompletionDuration | keyvalue | paginate: {id:'paginator1' ,itemsPerPage: 3,currentPage: p }">
+                                            <label style="width: 97%;font-weight: bold;">{{item.key}}
+                                                <span
+                                                    style="float: right;font-weight: bold;font-size: 14px;">{{item.value}}
+                                                    days</span>
+                                            </label>
+                                            <mat-progress-bar [ngClass]="item.value > 20 ? 'progress-bar-red':'progress-bar-green' " mode="determinate" [value]=item.value>
+                                            </mat-progress-bar><br>
+                                        </div>
+                                        <div class="text-right" style="margin-top: 1%;">
+                                            <pagination-controls id="paginator1" (pageChange)="p = $event">
+                                            </pagination-controls>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-7 pl-2">
+                                <div class="dbichart-block block chartinner box">
+                                    <div class="dbichart-head">
+                                        <span class="module-header-title">Pending Approvals</span>
+                                        <span class="module-header-title">
+                                            <select name="Filter by" class="form-control selectsize"
+                                                (change)="projectPending($event.target.value)">
+                                                <option value="All" disabled hidden>All</option>
+                                                <option *ngFor="let item of filterByDays" [value]=item>
+                                                    {{item}}&nbsp;Days</option>
+                                            </select>
+                                        </span>
+                                    </div>
+                                    <div class="dbichart-body">
+                                        <table class="table table-responsive">
+                                            <thead>
+                                                <tr>
+                                                    <th>Process Name</th>
+                                                    <th>Created Date</th>
+                                                    <th>Submitted By</th>
+                                                    <!-- <th>Action</th> -->
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let item of pendingApprovals  | paginate: {id:'paginator2' , itemsPerPage: 4,currentPage: q }">
+                                                    <td>{{item['Process Name'] }}</td>
+                                                    <td>{{item['Created Date'] | date: 'medium' }}</td>
+                                                    <td>{{item['Submitted by'] }}</td>
+                                                    <!-- <td class="Tkt-eyehover" style="text-align: center;">
+                                                        <img src="../../../../assets/images/PI/eye-show.svg" alt="" class="testplus default-img">
+                                                        <img src="../../../../assets/images/Admin/eye-show-blue.svg" alt="" class="testplus hover-img">
+                                                    </td> -->
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="text-right" style="margin-top: 3%;">
+                                            <pagination-controls id="paginator2" (pageChange)="q = $event">
+                                            </pagination-controls>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5 p-0">
+                                    <div class="dbichart-block block chartinner ">
+                                        <div class="dbichart-head">
+                                            <span class="module-header-title">Project Status</span>
+                                            <span class="module-header-title">
+                                                <select name="Filter by" class="form-control selectsize"
+                                                    (change)="projectStatus($event.target.value)">
+                                                    <option value="All" disabled hidden>All</option>
+                                                    <option *ngFor="let item of filterByDays" [value]=item>
+                                                        {{item}}&nbsp;Days</option>
+                                                </select>
+                                            </span>
+                                        </div>
+                                        <div class="dbichart-body">
+                                            <div id="projectstatus-chart" class="amart"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-7 pl-2">
+                                    <div class="dbichart-block block chartinner ">
+                                        <div class="dbichart-head">
+                                            <span class="module-header-title">Project Progress</span>
+                                            <span class="module-header-title">
+                                                <select name="Filter by" class="form-control selectsize"
+                                                    (change)="projectProgress($event.target.value)">
+                                                    <option value="All" disabled hidden>All</option>
+                                                    <option *ngFor="let item of filterByDays" [value]=item>
+                                                        {{item}}&nbsp;Days</option>
+                                                </select>
+                                            </span>
+                                        </div>
+                                        <div class="dbichart-body">
+                                            <div id="runtimestatistics-piechart" class="amart"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dbichart-block block chartinner pl-1" style="width: 99%;">
+                                <div class="dbichart-head" style="margin-bottom: 2%;">
+                                    <span class="module-header-title">Resource Utilization Analytics</span>
+                                </div>
+                                <div class="row" style="padding-bottom: 1%;">
+                                    <div class="col-md-6 p-0">
+                                        <div class="dbichart-block block chartinner resources">
+                                            <div class="dbichart-head">
+                                                <span class="module-sub-header-title">Project wise</span>
+                                            </div><br>
+                                            <div class="row">
+                                                <div class="col-md-6 pl-1 dbichart-block" style="margin-left: 1%;">
+                                                    <h4>Total Resources</h4>
+                                                    <h3 style="color: #00a0e3;font-weight: bolder;">
+                                                        {{expenditureResources}}</h3>
+                                                </div>
+                                                <div class="col-md-5 pl-1 dbichart-block" style="margin-left: 5%;">
+                                                    <h4>Total Days</h4>
+                                                    <h3 style="color: #00a0e3;font-weight: bolder;">
+                                                        {{expenditureDays}}
+                                                    </h3>
+                                                </div>
+                                            </div>
+                                            <div class="dbichart-body">
+                                                <div class="dbichart-head">
+                                                    <span class="module-header-title">Top Resources</span>
+                                                </div>
+                                                <table class="table table-responsive">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Resources</th>
+                                                            <th>Days Spent</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let item of effortExpenditureAnalysis | keyvalue  | paginate: {id:'paginator3',itemsPerPage: 4,currentPage: a }">
+                                                            <td [hidden]="item.value == 0" style="text-transform: lowercase;">{{item.key}}</td>
+                                                            <td [hidden]="item.value == 0" style="text-transform: lowercase;">{{item.value}}
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <div class="text-right" style="margin-top: 1%;">
+                                                    <pagination-controls id="paginator3" (pageChange)="a = $event">
+                                                    </pagination-controls>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 pl-2">
+                                        <div class="dbichart-block block chartinner resources">
+                                            <div class="dbichart-head">
+                                                <span class="module-sub-header-title">Process wise</span>
+                                            </div><br>
+                                            <div class="dbichart-body">
+                                                <div class="dbichart-head">
+                                                    <span class="module-header-title">Top Efforts Spent</span>
+                                                </div>
+                                                <table class="table table-responsive">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Project Name</th>
+                                                            <th>Days Spent</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let item of topEffortsSpent | keyvalue  | paginate: {id:'paginator4' , itemsPerPage: 7,currentPage: a }">
+                                                            <td [hidden]="item.value == 0">{{item.key}}</td>
+                                                            <td [hidden]="item.value == 0" style="text-transform: lowercase;">{{item.value}}
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <div class="text-right" style="margin-top: 3%;">
+                                                    <pagination-controls id="paginator4" (pageChange)="a = $event">
+                                                    </pagination-controls>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
-        </div>
+        </mat-drawer-container>
         <div class="spinoverlay" *ngIf="isLoading">
             <div class="spincenter">
                 <img src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader" />

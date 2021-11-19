@@ -52,10 +52,12 @@ export class RestApiService{
     //nethan.price@guerrillamailblock.com , karthik.peddinti@epsoftinc.com
   //password -Welcome@123
 
-  // sampadha.bharadwaj@epsoftinc.com
+  // sampadha.bharadwaj@epsoftinc.com , Welcome@1234 "Analyst"
+  // edukondalu.chokkapu@epsoftinc.com , Welcome@123 "Architect"
+  //harish.reddi@epsoftinc.com , password: Epsoft@123
 
   getAccessToken(){
-    let data = {"userId":"harish.reddi@epsoftinc.com",//harish.reddi@epsoftinc.com , password: Epsoft@123
+    let data = {"userId":"harish.reddi@epsoftinc.com",
                 "password":"Epsoft@123"};
 
 
@@ -1178,8 +1180,8 @@ getAllProjectProgress(role,email,name,duration){
 getAllProjectStatus(role,email,name,duration){
   return this.http.get(`/platform-service/dashboard/getAllProjectStatus?roles=${role}&email=${email}&name=${name}&duration=${duration}`);
 }
-getActivityStream(role,duration){
-  return this.http.get(`/platform-service/dashboard/getActivityStream?roles=${role}&duration=${duration}`);
+getActivityStream(role,email,name){
+  return this.http.get(`/platform-service/dashboard/getActivityStream?roles=${role}&email=${email}&name=${name}`);
 }
 getUpcomingDueDates(role,email,name){
   return this.http.get(`/platform-service/dashboard/getUpcomingDueDates?roles=${role}&email=${email}&name=${name}`);

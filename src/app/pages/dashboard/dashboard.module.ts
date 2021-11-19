@@ -9,6 +9,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { JwtModule } from '@auth0/angular-jwt';
 import { ProcessAnalystComponent } from './process-analyst/process-analyst.component';
 import { ProcessArchitectComponent } from './process-architect/process-architect.component';
+import {MatSidenavModule} from '@angular/material/sidenav';
+
 
 @NgModule({
   declarations: [
@@ -23,6 +25,7 @@ import { ProcessArchitectComponent } from './process-architect/process-architect
     MatProgressBarModule,
     NgxPaginationModule,
     NgbModule,
+    MatSidenavModule,
     JwtModule.forRoot({
       config: {
         tokenGetter:  () => localStorage.getItem('accesstoken')
