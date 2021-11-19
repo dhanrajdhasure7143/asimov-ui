@@ -61,7 +61,7 @@
                 <div class="form-fields col-md-6 pr-0">
                     <label class="label-control">Project Owner<span
                             class="star">*</span></label>
-                    <select formControlName="owner" class="form-control data"
+                    <select formControlName="owner" [attr.disabled]="loggedInUser!=undefined || loggedInUser !=''" class="form-control data"
                         [ngClass]="insertForm2.get('owner').valid?'enteredfield-color':'inputfield-color'">
                         <option value="">Select Project Owner</option>
                         <option *ngFor="let user of users_list" [value]="user.userId.userId">

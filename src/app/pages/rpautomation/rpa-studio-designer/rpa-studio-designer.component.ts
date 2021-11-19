@@ -27,7 +27,7 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
     this.userRole = this.userRole.split(',');
     if(this.userRole.includes("User"))
     localStorage.setItem("isHeader","true");
- 
+    
   }
 
   ngAfterViewInit()

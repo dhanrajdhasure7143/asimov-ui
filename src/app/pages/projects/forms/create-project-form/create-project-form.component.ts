@@ -23,13 +23,14 @@ export class CreateProjectFormComponent implements OnInit {
   selected_process_names:any=[];
   @Output() oncreate = new EventEmitter<String>();
   date = new Date();
+  loggedInUserId:any;
   ngOnInit(): void {
-    
+    this.loggedInUserId=localStorage.getItem("ProfileuserId")
     this.insertForm2=this.formBuilder.group({
       projectName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       initiatives: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       resource: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      owner: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      owner: [this.loggedInUserId, Validators.compose([Validators.required, Validators.maxLength(50)])],
       mapValueChain: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       endDate: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       startDate: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
