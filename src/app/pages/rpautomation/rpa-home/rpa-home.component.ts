@@ -301,11 +301,7 @@ export class RpaHomeComponent implements OnInit {
         {
           object.botType='Unattended';
         }
-        this.bot_list.push(object)
-        this.assignPagination( this.bot_list);
-      })
-      response.forEach(data=>{ 
-        let object:any=data;
+
       if(this.categaoriesList.find(resp => resp.categoryId==data.department)!=undefined)
       {
         object.department=this.categaoriesList.find(resp => resp.categoryId==data.department).categoryName;
@@ -323,8 +319,9 @@ export class RpaHomeComponent implements OnInit {
           object.department='QA';
         }
         this.bot_list.push(object)
+        this.assignPagination( this.bot_list);
       })
-      this.bot_list=botlist;
+      //this.bot_list=botlist;
       if(this.bot_list.length >0)
       {
         this.respdata1 = false;
@@ -335,7 +332,7 @@ export class RpaHomeComponent implements OnInit {
       //response.sort((a,b) => a.createdAt > b.createdAt ? -1 : 1);
       
       //response=response.reverse();
-      this.dataSource1= new MatTableDataSource(response);
+      this.dataSource1= new MatTableDataSource(this.bot_list);
       this.isDataSource = true;
       this.dataSource1.sort=this.sort1;
       this.dataSource1.paginator=this.paginator1;
