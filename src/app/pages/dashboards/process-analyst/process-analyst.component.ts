@@ -41,7 +41,6 @@ export class ProcessAnalystComponent implements OnInit {
 
   constructor(private apiService: RestApiService, private jwtHelper: JwtHelperService) {
     this.userDetails = this.jwtHelper.decodeToken(localStorage.getItem('accessToken'));;
-    console.log(this.userDetails);
   }
 
   ngOnInit(): void {
@@ -61,7 +60,6 @@ export class ProcessAnalystComponent implements OnInit {
           this.totalProjects = res['Total Projects'];
           this.totalTasks = res['Tasks'];
           this.Processes = res['Processes'];
-          console.log(res);
           this.isLoading = false;
         });
 
@@ -88,7 +86,6 @@ export class ProcessAnalystComponent implements OnInit {
           }
           
         }
-        console.log(this.upcomingDueDates, "UpcomingDueDates");
       });
 
 
@@ -96,17 +93,14 @@ export class ProcessAnalystComponent implements OnInit {
         .subscribe(res => {
           this.expenditureDays = res['Total Days'];
           this.expenditureProjects = res['Total Projects'];
-          console.log(res);
         });
 
       this.apiService.getEffortExpenditureAnalysis(this.userRoles, this.userEmail, this.userName)
         .subscribe(res => {
           this.effortExpenditureAnalysis = res;
-          console.log(res);
         });
 
       this.apiService.gettopEffortsSpent(this.userRoles, this.userEmail, this.userName).subscribe(res => {
-        console.log(res);
         this.topEffortsSpent = res;
         this.isLoading = false;
       })
@@ -118,7 +112,6 @@ export class ProcessAnalystComponent implements OnInit {
   getPendingApprovals(duration) {
     this.apiService.getPendingApprovals(this.userRoles, this.userEmail, this.userName, duration).subscribe((res: any) => {
       this.pendingApprovals = res;
-      console.log(res);
       this.isLoading = false;
     });
   }
@@ -135,7 +128,6 @@ export class ProcessAnalystComponent implements OnInit {
         this.projectStatusArray.push(data);
 
       }
-      console.log(this.projectStatusArray);
       this.allProjectStatusChart(this.projectStatusArray);
       this.isLoading = false;
     });
@@ -152,7 +144,6 @@ export class ProcessAnalystComponent implements OnInit {
         }
         this.runtimestats.push(data);
       }
-      console.log(this.runtimestats);
       this.allProjectProgressChart();
     });
   }
@@ -160,7 +151,6 @@ export class ProcessAnalystComponent implements OnInit {
   // FilterBy
 
   activityList(name) {
-    console.log(name);
     if (name == 'recentApprovals') {
       this.activityStream = this.activityStreamRecent;
     }
@@ -171,7 +161,6 @@ export class ProcessAnalystComponent implements OnInit {
 
 
   projectStatus(name) {
-    console.log(name);
     this.getTasksStatus(name);
   }
 

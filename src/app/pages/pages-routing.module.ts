@@ -15,7 +15,6 @@ const routes: Routes = [
     {path:'projects', loadChildren: './projects/projects.module#ProjectsModule'},
     {path:'admin', loadChildren:'./administration/administration.module#AdministrationModule'},
     {path:'support', loadChildren:'./support/support.module#SupportModule'},
-    {path:'dashboard', loadChildren:'./dashboard/dashboard.module#DashboardModule'},
     {path:'**', redirectTo:'/home', pathMatch:"full"}
   ]}
 ];

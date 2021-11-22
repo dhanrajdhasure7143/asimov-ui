@@ -1,4 +1,4 @@
-<div class="main-content">
+<div class="main-content" *ngIf="_isShow">
     <div class="row content-area">
         <div class="col-sm-12">
             <label class="maintitle">Welcome To EZFlow<sub>Intelligent Automation Platform</sub></label>
@@ -24,8 +24,23 @@
             </div>
         </form> -->
             <!-- <app-programlandingpage></app-programlandingpage> -->
-            <!-- <app-new-so-dashboard></app-new-so-dashboard> -->
+            <app-new-so-dashboard></app-new-so-dashboard>
 
         </div>
+    </div>
+</div>
+
+
+<div class="main-content prjmain" *ngIf='isdivShow'>
+    <div class="content-area" style="overflow: scroll;">
+        <app-process-owner *ngIf="this.userRole.includes('Process Owner')"></app-process-owner>
+        <app-process-architect *ngIf="this.userRole.includes('Process Architect')"></app-process-architect>
+        <app-process-analyst *ngIf="this.userRole.includes('Process Analyst')"></app-process-analyst>
+    </div>
+</div>
+
+<div class="spinoverlay" *ngIf="isLoading">
+    <div class="spincenter">
+        <img src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader" />
     </div>
 </div>

@@ -18,16 +18,23 @@ export class HomeComponent implements OnInit {
   newAccessToken:any;
   customUserRole: any;
   hintsArray:any[]=[];
+  isdivShow:boolean=false;
+  _isShow:boolean=false;
+  isLoading:boolean=true;
+  ProfileuserId:any;
+  lastName:any;
+  firstName:any;
+  tenantName:any;
   
   constructor(private router: Router, private dt:DataTransferService, private rpa: RestApiService, private route: ActivatedRoute, private hints:PagesHints) {
 
     this.route.queryParams.subscribe(params => {
       var acToken=params['accessToken']
       var refToken = params['refreshToken']
-      var firstName=params['firstName']
-      var lastName=params['lastName']
-      var ProfileuserId=params['ProfileuserId']
-      var tenantName=params['tenantName']
+      this.firstName=params['firstName']
+      this.lastName=params['lastName']
+      this.ProfileuserId=params['ProfileuserId']
+      this.tenantName=params['tenantName']
       var authKey = params['authKey']
       var ipadd = params['userIp']
       if(acToken && refToken){
@@ -35,14 +42,14 @@ export class HomeComponent implements OnInit {
         var refreshToken=atob(refToken);
         localStorage.setItem("accessToken", accessToken);
         localStorage.setItem("refreshToken", refreshToken);
-        localStorage.setItem("firstName", firstName);
-        localStorage.setItem("lastName", lastName);
-        localStorage.setItem("ProfileuserId", ProfileuserId);
-        localStorage.setItem("tenantName", tenantName);
+        localStorage.setItem("firstName", this.firstName);
+        localStorage.setItem("lastName", this.lastName);
+        localStorage.setItem("ProfileuserId", this.ProfileuserId);
+        localStorage.setItem("tenantName", this.tenantName);
         localStorage.setItem("authKey", authKey);
         var ipp = atob(ipadd)
         localStorage.setItem('ipAddress', ipp);
-      }
+      }  
     });
     this.rpa.getNewAccessToken().subscribe(resp=>{
       this.newAccessToken=resp;
@@ -57,7 +64,14 @@ export class HomeComponent implements OnInit {
     this.dt.changeChildModule(undefined);
     this.rpa.getUserRole(2).subscribe(res=>{
     this.userRole=res.message;
-
+    let user_obj={"userId":this.ProfileuserId,"tenantName":this.tenantName,"firstName":this.firstName,"lastName":this.lastName,"roles":this.userRole}
+      this.dt.userDetails(user_obj)
+    this.isLoading=false;
+    if(this.userRole.includes('Process Owner') || this.userRole.includes('Process Architect') || this.userRole.includes('Process Analyst')){
+      this.isdivShow=true;
+    }else{
+      this._isShow=true;
+    }
       localStorage.setItem('userRole',this.userRole);
       localStorage.setItem('project_id',null);
       if(this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') || this.userRole.includes('User')){

@@ -38,7 +38,6 @@ export class ProcessArchitectComponent implements OnInit {
 
   constructor(private apiService: RestApiService, private jwtHelper: JwtHelperService) {
     this.userDetails = this.jwtHelper.decodeToken(localStorage.getItem('accessToken'));;
-    console.log(this.userDetails);
   }
 
   ngOnInit(): void {
@@ -59,7 +58,6 @@ export class ProcessArchitectComponent implements OnInit {
           this.totalProjects = res['Total Projects'];
           this.totalTasks = res['Tasks'];
           this.processes = res['Processes'];
-          console.log(res);
           this.isLoading = false;
         });
 
@@ -86,7 +84,6 @@ export class ProcessArchitectComponent implements OnInit {
           }
           
         }
-        console.log(this.upcomingDueDates, "UpcomingDueDates");
       });
 
 
@@ -94,17 +91,14 @@ export class ProcessArchitectComponent implements OnInit {
         .subscribe(res => {
           this.expenditureDays = res['Total Days'];
           this.expenditureResources = res['Total Resources'];
-          console.log(res);
         });
 
       this.apiService.getEffortExpenditureAnalysis(this.userRoles, this.userEmail, this.userName)
         .subscribe(res => {
           this.effortExpenditureAnalysis = res;
-          console.log(res);
         });
 
       this.apiService.gettopEffortsSpent(this.userRoles, this.userEmail, this.userName).subscribe(res => {
-        console.log(res);
         this.topEffortsSpent = res;
       })
     }
@@ -115,7 +109,6 @@ export class ProcessArchitectComponent implements OnInit {
   getProjectDuration(duration) {
     this.apiService.getProjectCompletionDuration(this.userRoles, this.userEmail, this.userName, duration)
       .subscribe(res => {
-        console.log(res);
         this.ProjectCompletionDuration = res;
       });
   }
@@ -123,7 +116,6 @@ export class ProcessArchitectComponent implements OnInit {
   getPendingApprovals(duration) {
     this.apiService.getPendingApprovals(this.userRoles, this.userEmail, this.userName, duration).subscribe((res: any) => {
       this.pendingApprovals = res;
-      console.log(res);
     });
   }
 
@@ -139,7 +131,6 @@ export class ProcessArchitectComponent implements OnInit {
         this.projectStatusArray.push(data);
 
       }
-      console.log(this.projectStatusArray);
       this.allProjectStatusChart(this.projectStatusArray);
       this.isLoading = false;
     });
@@ -156,7 +147,6 @@ export class ProcessArchitectComponent implements OnInit {
         }
         this.runtimestats.push(data);
       }
-      console.log(this.runtimestats);
       this.allProjectProgressChart();
     });
   }
@@ -164,7 +154,6 @@ export class ProcessArchitectComponent implements OnInit {
   // FilterBy
 
   activityList(name) {
-    console.log(name);
     if (name == 'recentApprovals') {
       this.activityStream = this.activityStreamRecent;
     }
@@ -174,12 +163,10 @@ export class ProcessArchitectComponent implements OnInit {
   }
 
   projectDuration(name) {
-    console.log(name);
     this.getProjectDuration(name);
   }
 
   projectStatus(name) {
-    console.log(name);
     this.getProjectStatus(name);
   }
 
