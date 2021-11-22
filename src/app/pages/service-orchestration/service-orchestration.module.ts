@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerModule } from "ngx-spinner";
+import { NgSelectModule } from '@ng-select/ng-select';
 import { SharedModule } from '../../shared/shared.module';
 import { ServiceOrchestrationRoutingModule } from './service-orchestration-routing.module';
 import { ServiceOrchestrationComponent } from './service-orchestration.component';
@@ -117,6 +118,7 @@ import { CheckResourcePipe } from './orchestration/new-so-automated-tasks/check-
     MatDialogModule,
     NgxPaginationModule,
     ModalModule.forRoot(),
+    NgSelectModule
 
   ],
   bootstrap: [SoDashboardComponent],
