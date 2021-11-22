@@ -1157,4 +1157,17 @@ getProjectIntitiatives():Observable<any>{
   return this.http.get<any>('/platform-service/project/get-initiatives')
  }
 
+deleteTaskInProcess(id):Observable<any>{
+  return this.http.get('/rpa-service/delete-task/'+id)
+}
+
+tasksListInProcess(id):Observable<any>{
+  return this.http.get('/rpa-service/get-tasks/'+id)
+
+}
+
+addtaskInProcess(id):Observable<any>{
+  return this.http.get('/rpa-service/add-task/'+id)
+}
+
 }

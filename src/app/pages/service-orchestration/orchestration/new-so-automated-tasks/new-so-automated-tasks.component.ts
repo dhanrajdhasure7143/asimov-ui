@@ -73,6 +73,7 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
   public uipath_bots:any=[];
   public blueprism_configs:any=[];
   public checkedsource:String="UiPath";
+  addTaskForm:FormGroup;
   @ViewChild("paginator10",{static:false}) paginator10: MatPaginator;
  //@ViewChild(SoProcesslogComponent, { static: false }) processlogs_instance: SoProcesslogComponent;
   @ViewChild("sort10",{static:false}) sort10: MatSort;
@@ -82,6 +83,7 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
   public BluePrismFlag:Boolean=false;
   public timer:any;
   public logs_modal:BsModalRef;
+  taskslist: any;
   constructor(
     private route: ActivatedRoute,
     private rest:RestApiService,
@@ -125,6 +127,9 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
       thresholdLimit: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       totalRetries: ["", Validators.compose([Validators.maxLength(2)])],
     });
+    this.addTaskForm=this.formBuilder.group({
+      tasks: [[], Validators.compose([Validators.required, Validators.maxLength(50)])]
+    })
   }
 
   ngOnInit() {
@@ -490,10 +495,10 @@ resetsla(){
 
   getautomatedtasks(process)
   {
+    this.spinner.show();
     let response:any=[];
     this.rest.getautomatedtasks(process).subscribe(automatedtasks=>{
       response=automatedtasks;
-
       if(response.automationTasks != undefined)
       {
         this.rest.getAllActiveBots().subscribe(bots=>{
@@ -1100,7 +1105,59 @@ resetsla(){
     },5000)
   }
 
+  delete(taskid, processId){
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
+      this.spinner.show();
+      this.rest.deleteTaskInProcess(taskid).subscribe(resp => {
+          let value: any = resp
+        if (value.message === "Task Deleted Successfully!!") {
+          this.getautomatedtasks(this.selectedvalue);
+          Swal.fire("Success", "Task Deleted Sucessfully!!", "success")
+        }
+        else {
+          Swal.fire("Error", "Failed to delete task", "error");
+        }
+        this.spinner.hide();
+      })
+    }
+    })
 
+  }
+
+  addtasks(template){
+    this.rest.tasksListInProcess(this.selectedvalue).subscribe(resp => {
+      this.taskslist = resp.tasks;
+    })
+    this.logs_modal = this.modalService.show(template,{class:"logs-modal"});
+  }
+
+  addexistingtasks(){
+    this.spinner.show();
+    this.rest.addtaskInProcess(this.addTaskForm.get('tasks').value).subscribe(resp => {
+      let value: any = resp
+      console.log(value)
+    if (value.message === "Task Added Successfully!!") {
+      this.getautomatedtasks(this.selectedvalue);
+      Swal.fire("Success", "Task Added Successfully!!", "success")
+    }
+    else {
+      Swal.fire("Error", "Failed to add task", "error");
+    }
+    this.spinner.hide();
+    this.logs_modal.hide();
+    this.addTaskForm.reset();
+  })
+  }
+  
 }
 
 
