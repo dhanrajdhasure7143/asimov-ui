@@ -1,5 +1,5 @@
 <div class="module-body">
-  <div class="container-fluid new-bps-layout h-100" *ngIf="bpmnVisible" >
+  <div class="container-fluid new-bps-layout h-100">
     <div class="header_addon row approval_workflow_properties">
       <div class="col-md-8"></div>
       <!-- <div class="col-md-4 new-cockpit module-heading-buttons">
@@ -10,7 +10,7 @@
     </div>
     <div class="row">
       <div class="col-md-12 offset-1 new-bps-sample">
-        <app-upload-create-drop-bpmn isConfirmance="false"></app-upload-create-drop-bpmn>
+        <app-upload-create-drop-bpmn [bpmn_list]="savedDiagrams_list" isConfirmance="false"></app-upload-create-drop-bpmn>
       </div>
       <div class="col-md-12 box-border myworkspace-style">
         <div class="row">
@@ -159,67 +159,6 @@
         </div>
       </div>
     </div>
-  </div>
-
-  <div class="col-md-12 box-border myworkspace-style" *ngIf="!(bpmnVisible)">
-   
-    <div class="row col-md-12 text-bold workspace-title" matSort>
-        <!-- <div class="header" matSort> -->
-        <div class="expan-icon"></div>
-        <div class="cell cell2" mat-sort-header="bpmnProcessName">Process Name
-          <!-- <div class="cell cell2" mat-sort-header="bpmnProcessName" (click)="sort('bpmnProcessName',0)">Process Name -->
-          <!-- <span class="asc" *ngIf="orderAsc && sortIndex==0">&#8595;</span> -->
-          <!-- <span class="desc" *ngIf="!orderAsc && sortIndex==0">&#8593;</span> -->
-        </div>
-        <div class="cell cell3"  mat-sort-header="ntype">Type
-          <!-- <div class="cell cell3"  mat-sort-header="ntype" (click)="sort('ntype',6)">Type -->
-          <!-- <span class="asc" *ngIf="orderAsc && sortIndex==6">&#8595;</span> -->
-          <!-- <span class="desc" *ngIf="!orderAsc && sortIndex==6">&#8593;</span> -->
-        </div>
-        <div class="cell cell4" mat-sort-header="category">Category
-          <!-- <div class="cell cell4" mat-sort-header="category" (click)="sort('category',7)">Category -->
-          <!-- <span class="asc" *ngIf="orderAsc && sortIndex==7">&#8595;</span> -->
-          <!-- <span class="desc" *ngIf="!orderAsc && sortIndex==7">&#8593;</span> -->
-        </div>
-        <div class="cell cell5" mat-sort-header="version">Version
-          <!-- <div class="cell cell5" mat-sort-header="version" (click)="sort('version',1)">Version -->
-          <!-- <span class="asc" *ngIf="orderAsc && sortIndex==1">&#8595;</span> -->
-          <!-- <span class="desc" *ngIf="!orderAsc && sortIndex==1">&#8593;</span> -->
-        </div>
-        <div class="cell cell6" mat-sort-header="convertedModifiedTime">Last Modified
-          <!-- <div class="cell cell6" mat-sort-header="convertedModifiedTime" (click)="sort('modifiedTimestamp',2)">Last Modified -->
-              <!-- <span class="asc" *ngIf="orderAsc && sortIndex==2">&#8595;</span> -->
-              <!-- <span class="desc" *ngIf="!orderAsc && sortIndex==2">&#8593;</span> -->
-        </div>
-        <div class="cell cell7" mat-sort-header="approverName">Approver
-          <!-- <div class="cell cell7" mat-sort-header="approverName" (click)="sort('approverName',3)">Approver -->
-              <!-- <span class="asc" *ngIf="orderAsc && sortIndex==3">&#8595;</span> -->
-              <!-- <span class="desc" *ngIf="!orderAsc && sortIndex==3">&#8593;</span> -->
-        </div>
-        <div class="cell cell8" mat-sort-header="bpmnProcessStatus" >Status
-          <!-- <div class="cell cell8" mat-sort-header="bpmnProcessStatus" (click)="sort('bpmnProcessStatus',4)">Status -->
-              <!-- <span class="asc" *ngIf="orderAsc && sortIndex==4">&#8595;</span> -->
-              <!-- <span class="desc" *ngIf="!orderAsc && sortIndex==4">&#8593;</span> -->
-        </div>
-        <div class="cell cell9" mat-sort-header="reviewComments">Message
-          <!-- <div class="cell cell9" mat-sort-header="reviewComments" (click)="sort('reviewComments',5)">Message -->
-              <!-- <span class="asc" *ngIf="orderAsc && sortIndex==5">&#8595;</span> -->
-              <!-- <span class="desc" *ngIf="!orderAsc && sortIndex==5">&#8593;</span> -->
-        </div>
-        <div class="cell cell10">Actions</div>
-      <!-- </div> -->
-      
-    </div>
-    <div class="row col-md-12 new-bps-grid-data" id="bpmn_list">
-      <div  class="text-center">
-        <img  src="../../../../../assets/images/RPA/No-Items.svg" class="no-item-img">
-        <h3 class="text-center">No Items to display</h3>
-      </div>
-    </div>
-    <!-- <div *ngIf='saved_diagrams.length>0'>
-      <pagination-controls class="pagination" (pageChange)="p = $event"></pagination-controls>
-    </div> -->
-   
   </div>
 
 </div>

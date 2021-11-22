@@ -52,6 +52,7 @@ export class ProgramDetailsComponent implements OnInit {
     email: any;
     public userRole:any = [];
     public userName:any;
+    initiatives: any;
   ngOnInit() {
     this.getprojects_and_programs();
     this.mindate= moment().format("YYYY-MM-DD");
@@ -85,6 +86,8 @@ export class ProgramDetailsComponent implements OnInit {
     
     })
     this.userName=localStorage.getItem("firstName")+" "+localStorage.getItem("lastName");
+
+    this.getInitiatives();
   }
 
   getprojects_and_programs()
@@ -396,8 +399,30 @@ export class ProgramDetailsComponent implements OnInit {
 
   createproject(template)
   {
-    this.resetcreateproject()
-    this.modalref = this.modalservice.show(template,{class:"modal-lg"});
+    this.userRoles = localStorage.getItem("userRole")
+    if (this.userRoles == "User") {
+      if (this.linked_projects.length == 1) {
+        Swal.fire({
+          title: 'Error',
+          text: "You have limited access to this product. Please contact EZFlow support team for more details.",
+          position: 'center',
+          icon: 'error',
+          showCancelButton: false,
+          confirmButtonColor: '#007bff',
+          cancelButtonColor: '#d33',
+          heightAuto: false,
+          confirmButtonText: 'Ok'
+        })
+      }
+      else {
+        this.resetcreateproject()
+        this.modalref = this.modalservice.show(template, { class: "modal-lg" });
+      }
+    }
+    else {
+      this.resetcreateproject()
+      this.modalref = this.modalservice.show(template, { class: "modal-lg" });
+    }
   }
 
 
@@ -411,7 +436,7 @@ export class ProgramDetailsComponent implements OnInit {
       this.modalref.hide();
       if(response.errorMessage==undefined)
       {
-        Swal.fire("Success",response.status,"success");
+        Swal.fire("Success",response.message,"success");
         this.get_linked_projects(this.program_detials.id);
       }
       else
@@ -522,7 +547,7 @@ export class ProgramDetailsComponent implements OnInit {
       this.spinner.hide()
       let response:any=res;
       if(response.errorMessage == undefined)
-        Swal.fire("Success","Project Updated Successfully !!","success")
+        Swal.fire("Success","Program Updated Successfully !!","success")
       else
         Swal.fire("Error",response.errorMessage,"error");
       this.getprogramdetails();
@@ -555,4 +580,18 @@ export class ProgramDetailsComponent implements OnInit {
       this.get_linked_projects(this.selectedProgram_id);
     })
   }
+
+  getInitiatives(){
+    this.rest.getProjectIntitiatives().subscribe(res=>{
+      let response:any=res;
+      this.initiatives=response;
+    })
+  }
+
+  getreducedValue(value) {​​​​​​​​
+    if (value.length > 15)
+    return value.substring(0,16) + '...';
+    else
+    return value;
+  }​​​​​​​​
 }

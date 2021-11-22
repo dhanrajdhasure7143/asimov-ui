@@ -5,7 +5,7 @@ import { RestApiService } from '../../services/rest-api.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import Swal from 'sweetalert2';
 import { Base64 } from 'js-base64';
-import { Router } from '@angular/router';
+import { Router,ActivatedRoute } from '@angular/router';
 import moment from 'moment';
 
 @Component({
@@ -41,16 +41,25 @@ export class CreateProjectsComponent implements OnInit {
   public name: any;
    email: any;
    initiatives: any;
+   projectsdata:any;
+
+   loggedInUserId:any;
   constructor(
     private formBuilder: FormBuilder,
     private api:RestApiService, 
     private spinner:NgxSpinnerService,
     private modalService: BsModalService,
-    private router: Router
-    ) { }
+     private router: Router,
+    private route:ActivatedRoute
+    ) {
+      this.route.queryParams.subscribe(data=>{
+        this.projectsdata=data.id;
+      })
+     }
 
   ngOnInit() {
     
+    this.loggedInUserId=localStorage.getItem("ProfileuserId");
     this.updateForm=this.formBuilder.group({
       type: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
       initiatives: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
@@ -68,9 +77,9 @@ export class CreateProjectsComponent implements OnInit {
     measurableMetrics: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     //programHealth: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     programValueChain: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-    
+    process: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
    // project: ["", Validators.compose([Validators.maxLength(50)])],
-    owner: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+    owner: [this.loggedInUserId, Validators.compose([Validators.required, Validators.maxLength(50)])],
    // process: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
    // access: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     description: ["", Validators.compose([Validators.maxLength(200)])],
@@ -144,7 +153,7 @@ createproject(event)
         let status: any= response;
         Swal.fire({
           title: 'Success',
-          text: "Project Created Successfully !!",
+          text:response.message,
           position: 'center',
           icon: 'success',
           showCancelButton: false,
@@ -218,7 +227,7 @@ createproject(event)
       this.api.saveProgram(data).subscribe( res=>{​​​​​​​​
         this.spinner.hide();
         let response:any=res
-        if(response.errormessage==undefined)
+        if(response.errorMessage==undefined)
         {
           let status: any= response;
         Swal.fire({
@@ -240,7 +249,7 @@ createproject(event)
         }
         else
         {
-          Swal.fire("error",response.errormessage,"error");
+          Swal.fire("error",response.errorMessage,"error");
         }
       }​​​​​​​​);
     }​​​​​​​​

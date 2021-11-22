@@ -89,6 +89,7 @@ export class RpaHomeComponent implements OnInit {
   userName:any="";
   displayedRows$: Observable<any[]>;
   rpaVisible:boolean=false;
+  userCheck:boolean=false;
   @ViewChild(MatSort,{static:false}) sort: MatSort;
   totalRows$: Observable<number>;
   @ViewChild(MatPaginator,{static:false}) paginator301: MatPaginator;
@@ -126,10 +127,33 @@ export class RpaHomeComponent implements OnInit {
   }
 
   openModal(template: TemplateRef<any>) {
-    this.importfile="";
-    this.file_error="";
-    this.importcat="";
-    this.modalRef = this.modalService.show(template,{class: 'modal-lr'});
+    if (this.userRole == "User") {
+      if (this.bot_list.length == 1) {
+        Swal.fire({
+          title: 'Error',
+          text: "You have limited access to this product. Please contact EZFlow support team for more details.",
+          position: 'center',
+          icon: 'error',
+          showCancelButton: false,
+          confirmButtonColor: '#007bff',
+          cancelButtonColor: '#d33',
+          heightAuto: false,
+          confirmButtonText: 'Ok'
+        })
+      }
+      else {
+        this.importfile = "";
+        this.file_error = "";
+        this.importcat = "";
+        this.modalRef = this.modalService.show(template, { class: 'modal-lr' });
+      }
+    }
+    else {
+      this.importfile = "";
+      this.file_error = "";
+      this.importcat = "";
+      this.modalRef = this.modalService.show(template, { class: 'modal-lr' });
+    }
   }
 
   ngOnInit() {
@@ -141,9 +165,10 @@ export class RpaHomeComponent implements OnInit {
     localStorage.setItem("isHeader","false");
     //this.isButtonVisible = this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') || this.userRole.includes('RPA Admin')||this.userRole.includes("Process Owner")||this.userRole.includes("System Admin")||;
     this.isButtonVisible=this.userRole.includes("Process Analyst")
-    this.rpaVisible= this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') || this.userRole.includes('Process Owner') || this.userRole.includes('Process Architect')  || this.userRole.includes('Process Analyst')  || this.userRole.includes('RPA Developer')  || this.userRole.includes('Process Architect') || this.userRole.includes("System Admin") ;
+    this.rpaVisible= this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') || this.userRole.includes('Process Owner') || this.userRole.includes('Process Architect')  || this.userRole.includes('Process Analyst')  || this.userRole.includes('RPA Developer')  || this.userRole.includes('Process Architect') || this.userRole.includes("System Admin")  || this.userRole.includes("User") ;
     this.userName=localStorage.getItem("firstName")+" "+localStorage.getItem("lastName");
     let processId=undefined;
+    this.userCheck=this.userRole.includes("User")
     //this.dataSource1.filterPredicate = this.createFilter();
     this.dt.changeParentModule({"route":"/pages/rpautomation/home", "title":"RPA Studio"});
     this.dt.changeChildModule({"route":"/pages/rpautomation/home","title":"RPA Home"});
@@ -276,6 +301,7 @@ export class RpaHomeComponent implements OnInit {
 
   getallbots()
   {
+    this.bot_list=[];
     let response:any=[];
     this.spinner.show();
     this.loadflag=true;
@@ -477,7 +503,27 @@ export class RpaHomeComponent implements OnInit {
 
   createoverlay()
   {
-    document.getElementById("create-bot").style.display ="block";
+    if (this.userRole == "User") {
+      if (this.bot_list.length == 1) {
+        Swal.fire({
+          title: 'Error',
+          text: "You have limited access to this product. Please contact EZFlow support team for more details.",
+          position: 'center',
+          icon: 'error',
+          showCancelButton: false,
+          confirmButtonColor: '#007bff',
+          cancelButtonColor: '#d33',
+          heightAuto: false,
+          confirmButtonText: 'Ok'
+      })
+      }
+      else {
+        document.getElementById("create-bot").style.display = "block";
+      }
+    }
+    else{
+      document.getElementById("create-bot").style.display = "block";
+    }
   }
 
 

@@ -55,7 +55,8 @@ export class NewSoDashboardComponent implements OnInit {
     bots:"",
     humans:""
   }
-
+  config: any;
+  collection = { count: this.processtable.length, data: [] };
   ngOnInit() {
     localStorage.setItem('project_id',null);
     this.spinner.show();
@@ -79,9 +80,24 @@ export class NewSoDashboardComponent implements OnInit {
     // $('.botsbyprocess-sec2').hide();
     //   }
     // })
+    for (var i = 0; i < this.collection.count; i++) {
+      this.collection.data.push(
+        {
+          id: i + 1,
+          value: "items number " + (i + 1)
+        }
+      );
+    }
 
+    this.config = {
+      itemsPerPage: 5,
+      currentPage: 1,
+      totalItems: this.collection.count
+    };
   }
-
+  pageChanged(event){
+    this.config.currentPage = event;
+  }
 
   getautomatedtasks()
   {

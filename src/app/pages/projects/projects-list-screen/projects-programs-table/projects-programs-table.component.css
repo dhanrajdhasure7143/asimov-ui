@@ -1,7 +1,7 @@
 .prj-prg-tablelist {
   width:100%;
   overflow-x: auto;
-  height: calc(100% - 40px);
+  height: calc(100% - 50px);
   /* margin-top: 5px; */
 }
 .types2{
