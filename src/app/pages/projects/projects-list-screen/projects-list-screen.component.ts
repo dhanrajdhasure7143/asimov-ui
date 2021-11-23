@@ -5,6 +5,9 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { RestApiService } from '../../services/rest-api.service';
 import {ProjectsProgramsTableComponent} from './projects-programs-table/projects-programs-table.component'
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
+import { query } from '@angular/animations';
+
 @Component({
   selector: 'app-projects-list-screen',
   templateUrl: './projects-list-screen.component.html',
@@ -20,6 +23,7 @@ export class ProjectsListScreenComponent implements OnInit {
   count:any={
     New:0,
     Inprogress:0,
+    Pipeline:0,
     Rejected:0,
     Inreview:0,
     Approved:0,
@@ -37,8 +41,9 @@ export class ProjectsListScreenComponent implements OnInit {
   public userRoles: any;
  public name: any;
  email:any;
-
-  constructor(private dt:DataTransferService, private api:RestApiService, private spinner:NgxSpinnerService){}
+ create_Tabs:any;
+ projectsresponse:any=[];
+  constructor(private dt:DataTransferService, private api:RestApiService, private spinner:NgxSpinnerService,private router:Router){}
 
   ngOnInit() {
     localStorage.setItem('project_id',null);
@@ -76,6 +81,7 @@ export class ProjectsListScreenComponent implements OnInit {
     this.spinner.show();
     this.api.getAllProjects(roles,name,email).subscribe(res=>{
       let response:any=res;
+      this.projectsresponse=response
       this.projects_list=[...response[0].map(data=>{
       return {
         id:data.id,
@@ -115,8 +121,8 @@ export class ProjectsListScreenComponent implements OnInit {
     this.spinner.hide();
     this.count.New=this.projects_list.filter(item=>item.status=="New").length
     this.count.Inprogress=this.projects_list.filter(item=>item.status=="In Progress").length
-    this.count.Rejected=this.projects_list.filter(item=>item.status=="Rejected").length
-    
+    this.count.Pipeline=this.projects_list.filter(item=>item.status=="Pipeline").length
+    this.count.Rejected=this.projects_list.filter(item=>item.status=="Rejected").length    
     this.count.Inreview=this.projects_list.filter(item=>item.status=="In Review").length
     this.count.Approved=this.projects_list.filter(item=>item.status=="Approved").length
     this.count.Closed=this.projects_list.filter(item=>item.status=="Closed").length
@@ -148,6 +154,38 @@ export class ProjectsListScreenComponent implements OnInit {
     })
   }
   
+  createNew(){
+    console.log("list",this.projectsresponse)
+    if(this.userRoles=="User"){
+     if(this.projectsresponse[0].length==0 && this.projectsresponse[1].length==0){
+      this.create_Tabs="projects&programs"
+    }else if(this.projectsresponse[0].length==1 && this.projectsresponse[1].length>=1){
+      Swal.fire({
+        title: 'Error',
+        text: "You have limited access to this product. Please contact EZFlow support team for more details.",
+        position: 'center',
+        icon: 'error',
+        showCancelButton: false,
+        confirmButtonColor: '#007bff',
+        cancelButtonColor: '#d33',
+        heightAuto: false,
+        confirmButtonText: 'Ok'
+    })
+     return 
+    }else if(this.projectsresponse[0].length==1){
+      this.create_Tabs="projects"
+    }else if(this.projectsresponse[1].length==1){
+      this.create_Tabs="programs"
+    }
+  }else{
+    this.create_Tabs="projects&programs"
+  }
+    this.router.navigate(["/pages/projects/create-projects"],{queryParams:{id:this.create_Tabs}})
+  }
 
+  getprojectsList(event){
+    console.log(event)
+   this.projectsresponse=event
+  }
 
 }

@@ -26,13 +26,13 @@
                 <div class="create-heading">Create New</div>
                 <mat-tab-group mat-align-tabs="end">
 
-                    <mat-tab label="Project">
+                    <mat-tab label="Project" *ngIf="projectsdata=='projects' || projectsdata=='projects&programs'">
                         <div class="container">
                             <app-create-project-form [users_list]="userslist" [initiatives_list]="initiatives" (oncreate)="createproject($event)" [processes]="selected_process_names"></app-create-project-form>
                         </div>
                     </mat-tab>
                     
-                    <mat-tab label="Program">
+                    <mat-tab label="Program" *ngIf="projectsdata!='projects' || projectsdata=='projects&programs'">
                         <div class="container">
 
                             <form [formGroup]="createprogram" (ngSubmit)="saveProgram()">
@@ -97,10 +97,10 @@
                                         <div class="form-fields col-md-6 pr-0">
                                             <label class="label-control" for="owner">Owner<span
                                                     class="star">*</span></label>
-                                            <select formControlName="owner" class="form-control data"
+                                            <select formControlName="owner" class="form-control data"  [attr.disabled]="loggedInUser!=undefined || loggedInUser !=''" 
                                                 [ngClass]="createprogram.get('owner').valid?'enteredfield-color':'inputfield-color'">
-                                                <option [value]="null" disabled hidden>Select Owner</option>
-                                                <option value="" [selected]="true">Select Owner</option>
+                                                <option [value]="" disabled hidden>Select Owner</option>
+                                                <option value="" >Select Owner</option>
                                                 <option *ngFor="let user of userslist" [value]="user.userId.userId">
                                                     {{user.userId.firstName|titlecase}} {{user.userId.lastName|titlecase}}</option>
                                             </select>
@@ -291,10 +291,29 @@
                                             *ngIf="createprogram.get('process').invalid && createprogram.get('process').touched"
                                             class="errspan required">Process Required*</span>
                                             </div>
+
+
+
+                                            <div class="form-fields col-md-6 pr-0">
+                                                <label class="label-control" for="processOwner">Process Owner<span
+                                                        class="star">*</span></label>
+                                                <select formControlName="processOwner" class="form-control data" 
+                                                    [ngClass]="createprogram.get('processOwner').valid?'enteredfield-color':'inputfield-color'">
+                                                    <option [value]="" disabled hidden>Select Process Owner</option>
+                                                    <option value="" >Select Process Owner</option>
+                                                    <option *ngFor="let user of userslist" [value]="user.userId.userId">
+                                                        {{user.userId.firstName|titlecase}} {{user.userId.lastName|titlecase}}</option>
+                                                </select>
+                                                <span
+                                                    *ngIf="createprogram.get('processOwner').invalid && createprogram.get('processOwner').touched"
+                                                    class="errspan required">Owner Required*</span>
+                                            </div>
                                         </div>
-                                    <div class="col-md-6">
+
+
+
                                        
-                                    </div>
+                                
                                     <div class="col-md-12 martsascl">
                                         <!-- <label  class="label-control"  for="description">Description<span style="color:rgb(90, 92, 212)">*</span></label> -->
                                         <!-- <textarea maxlength="250" class="form-control data" formControlName="description" value="" 

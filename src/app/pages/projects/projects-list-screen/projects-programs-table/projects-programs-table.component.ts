@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef,Input, ViewChild } from '@angular/core';
+import { Component, OnInit, TemplateRef,Input, ViewChild, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import {MatTableDataSource} from '@angular/material/table';
@@ -55,6 +55,7 @@ export class ProjectsProgramsTableComponent implements OnInit {
   email: any;
   userName: string;
   initiatives: any;
+  @Output() projectslistdata = new EventEmitter<any[]>();
   //   public createprogram:FormGroup;
   // updateddata: any;
   // public updateflag: boolean;
@@ -217,6 +218,8 @@ export class ProjectsProgramsTableComponent implements OnInit {
       this.projects_list = this.projects_list.filter(item=>item.status=="In Progress")
       else if(this.status_data=="In Review")
       this.projects_list = this.projects_list.filter(item=>item.status=="In Review")
+      else if(this.status_data=="Pipeline")
+      this.projects_list = this.projects_list.filter(item=>item.status=="Pipeline")
       else if(this.status_data=="Approved")
       this.projects_list = this.projects_list.filter(item=>item.status=="Approved")
       else if(this.status_data=="Rejected")
@@ -318,6 +321,7 @@ export class ProjectsProgramsTableComponent implements OnInit {
     this.spinner.show();
     this.api.getAllProjects(roles,name,email).subscribe(res=>{
       let response:any=res;
+      this.projectslistdata.emit(response)
       this.projects_list=[];
       this.projects_list=[...response[0].map(data=>{
       return {

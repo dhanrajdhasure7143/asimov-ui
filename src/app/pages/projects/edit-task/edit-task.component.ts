@@ -372,7 +372,7 @@ else
           let status:any = res;
           if(status.errorMessage==undefined)
           {
-          Swal.fire("Success",status.status,"success") 
+          Swal.fire("Success",status.message,"success") 
           this.getTaskAttachments();
           this.removeallchecks();
           this.checktodelete();
@@ -467,7 +467,7 @@ else
               this.spinner.hide();
               if(status.errorMessage==undefined)
               {
-                Swal.fire("Success",status.status,"success");
+                Swal.fire("Success",status.message,"success");
                 this.getTaskAttachments();
                 this.removeallchecks();
               } 

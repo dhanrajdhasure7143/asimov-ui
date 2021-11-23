@@ -1,5 +1,5 @@
 
-<div class="row new-PI-layout " *ngIf="isButtonVisible">
+<div class="row new-PI-layout ">
                 <div class='col-md-12 PI-uploadgrid p-0'>
                   <div class="row">
                    <div class="PI-heading">
@@ -27,7 +27,7 @@
                            </div>
                         </ngx-dropzone>
                    </div>
-                   <div class="col-md-3 p-0 upload_zone" id="upload_xes">
+                   <div class="col-md-3 p-0 upload_zone" id="upload_xes" *ngIf="isButtonVisible">
                         <ngx-dropzone (change)="onUpload($event,3)" [multiple]=false accept=".xes, .gzip, .gz" >
                            <div class="model-img">
                                 <ngx-dropzone-label>
@@ -43,7 +43,7 @@
                            </div>                        
                         </ngx-dropzone>
                    </div>
-                   <div class="col-md-3 p-0 upload_zone" id="upload_db" (click)="onDbSelect()" >
+                   <div class="col-md-3 p-0 upload_zone" id="upload_db" (click)="onDbSelect()" *ngIf="isButtonVisible">
                         <ngx-dropzone [multiple]=false [accept]="db_mime" [disableClick]=true >
                            <div class="model-img">
                                 <ngx-dropzone-label>
@@ -146,45 +146,6 @@
                 </div>
 </div>
 
-<div class="row new-PI-layout no-items-content " *ngIf="!(isButtonVisible)">
-        <div class="col-sm-12 graph_table">
-                <table mat-table [dataSource]="dataSource" matSort class="PI table w-100">
-                        <ng-container matColumnDef="piId">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="table_header">Process ID </th>
-                                
-                        </ng-container>
-                        <ng-container matColumnDef="createdTime">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="table_header">Created Date</th>
-                               
-                        </ng-container>
-                        <ng-container matColumnDef="piName">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="table_header">Process Name</th>
-                                
-                        </ng-container>
-                        <ng-container matColumnDef="categoryName">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="table_header">Category</th>
-                             
-                        </ng-container>
-                        <ng-container matColumnDef="status">
-                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="table_header">Status</th>
-                             
-                        </ng-container>
-                        <ng-container matColumnDef="action">
-                                <th mat-header-cell *matHeaderCellDef class="table_header">Action</th>
-                               
-                        </ng-container>                                  
-                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                                <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="pList"></tr>
-
-                                
-                </table>
-                <div  class="text-center">
-                        <img  src="../../../../../assets/images/RPA/No-Items.svg" class="no-item-img">
-                        <h3 class="text-center">No Items to display</h3>
-                      </div>
-            </div>
-       
-</div>
 <div class="bpmnCreate">
      <div id="myModal1" class="modal">
         <div class="modal-content">

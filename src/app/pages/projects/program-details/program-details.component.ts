@@ -399,8 +399,30 @@ export class ProgramDetailsComponent implements OnInit {
 
   createproject(template)
   {
-    this.resetcreateproject()
-    this.modalref = this.modalservice.show(template,{class:"modal-lg"});
+    this.userRoles = localStorage.getItem("userRole")
+    if (this.userRoles == "User") {
+      if (this.linked_projects.length == 1) {
+        Swal.fire({
+          title: 'Error',
+          text: "You have limited access to this product. Please contact EZFlow support team for more details.",
+          position: 'center',
+          icon: 'error',
+          showCancelButton: false,
+          confirmButtonColor: '#007bff',
+          cancelButtonColor: '#d33',
+          heightAuto: false,
+          confirmButtonText: 'Ok'
+        })
+      }
+      else {
+        this.resetcreateproject()
+        this.modalref = this.modalservice.show(template, { class: "modal-lg" });
+      }
+    }
+    else {
+      this.resetcreateproject()
+      this.modalref = this.modalservice.show(template, { class: "modal-lg" });
+    }
   }
 
 
@@ -414,7 +436,7 @@ export class ProgramDetailsComponent implements OnInit {
       this.modalref.hide();
       if(response.errorMessage==undefined)
       {
-        Swal.fire("Success",response.status,"success");
+        Swal.fire("Success",response.message,"success");
         this.get_linked_projects(this.program_detials.id);
       }
       else
@@ -533,7 +555,28 @@ export class ProgramDetailsComponent implements OnInit {
     });
   }
   linkproject(template){
-    this.modalref = this.modalservice.show(template);
+    this.userRoles = localStorage.getItem("userRole")
+    if (this.userRoles == "User") {
+      if (this.linked_projects.length == 1) {
+        Swal.fire({
+          title: 'Error',
+          text: "You have limited access to this product. Please contact EZFlow support team for more details.",
+          position: 'center',
+          icon: 'error',
+          showCancelButton: false,
+          confirmButtonColor: '#007bff',
+          cancelButtonColor: '#d33',
+          heightAuto: false,
+          confirmButtonText: 'Ok'
+        })
+      }
+      else {
+        this.modalref = this.modalservice.show(template);
+      }
+    }
+    else {
+      this.modalref = this.modalservice.show(template);
+    }
 
   }
   getunassignedprojectslist()

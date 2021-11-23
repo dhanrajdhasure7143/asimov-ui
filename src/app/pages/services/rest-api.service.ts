@@ -49,12 +49,16 @@ export class RestApiService{
    }
 
   public ipAddress:string;
-    //nethan.price@guerrillamailblock.com
+    //nethan.price@guerrillamailblock.com , karthik.peddinti@epsoftinc.com
   //password -Welcome@123
 
+  // sampadha.bharadwaj@epsoftinc.com , Welcome@1234 "Analyst"
+  // edukondalu.chokkapu@epsoftinc.com , Welcome@123 "Architect"
+  //harish.reddi@epsoftinc.com , password: Epsoft@123
+
   getAccessToken(){
-    let data = {"userId":"karthik.peddinti@epsoftinc.com",//"raghavendra.basavaraju@epsoftinc.com",
-                "password":"Welcome@123"};
+    let data = {"userId":"harish.reddi@epsoftinc.com",
+                "password":"Epsoft@123"};
 
 
 
@@ -1156,5 +1160,64 @@ updateUserRoleDepartment(data):Observable<any>{
 getProjectIntitiatives():Observable<any>{
   return this.http.get<any>('/platform-service/project/get-initiatives')
  }
+
+// Process Owner && Process Architect Dashboard 
+
+getProjectsTasksProcessChanged(email,name,role){
+  return this.http.get
+  (`/platform-service/dashboard/getProjectsTasksProcessChanged?email=${email}&name=${name}&roles=${role}`);
+}
+getProjectCompletionDuration(role,email,name,duration){
+  return this.http.get
+  (`/platform-service/dashboard/getProjectCompletionDuration?roles=${role}&email=${email}&name=${name}&duration=${duration}`);
+}
+getPendingApprovals(role,email,name,duration){
+  return this.http.get(`/platform-service/dashboard/getPendingApprovals?roles=${role}&email=${email}&name=${name}&duration=${duration}`);
+}
+getAllProjectProgress(role,email,name,duration){
+  return this.http.get(`/platform-service/dashboard/getAllProjectProgress?roles=${role}&email=${email}&name=${name}&duration=${duration}`);
+}
+getAllProjectStatus(role,email,name,duration){
+  return this.http.get(`/platform-service/dashboard/getAllProjectStatus?roles=${role}&email=${email}&name=${name}&duration=${duration}`);
+}
+getActivityStream(role,email,name){
+  return this.http.get(`/platform-service/dashboard/getActivityStream?roles=${role}&email=${email}&name=${name}`);
+}
+getUpcomingDueDates(role,email,name){
+  return this.http.get(`/platform-service/dashboard/getUpcomingDueDates?roles=${role}&email=${email}&name=${name}`);
+}
+gettotalEffortExpenditure(role,email,name){
+  return this.http.get(`/platform-service/dashboard/gettotalEffortExpenditure?roles=${role}&email=${email}&name=${name}`);
+}
+getEffortExpenditureAnalysis(role,email,name){
+  return this.http.get(`/platform-service/dashboard/getEffortExpenditureAnalysis?roles=${role}&email=${email}&name=${name}`);
+}
+gettopEffortsSpent(role,email,name){
+  return this.http.get(`/platform-service/dashboard/gettopEffortsSpent?roles=${role}&email=${email}&name=${name}`);
+}
+
+// Process Analyst
+
+getAllTaskStatus(role,email,name,duration){
+  return this.http.get(`/platform-service/dashboard/getAllTaskStatus?roles=${role}&email=${email}&name=${name}&duration=${duration}`);
+}
+getAllTasksProgress(role,email,name,duration){
+  return this.http.get(`/platform-service/dashboard/getAllTasksProgress?roles=${role}&email=${email}&name=${name}&duration=${duration}`);
+}
+
+
+
+deleteTaskInProcess(id):Observable<any>{
+  return this.http.get('/rpa-service/delete-task/'+id)
+}
+
+tasksListInProcess(id):Observable<any>{
+  return this.http.get('/rpa-service/get-tasks/'+id)
+
+}
+
+addtaskInProcess(id):Observable<any>{
+  return this.http.get('/rpa-service/add-task/'+id)
+}
 
 }

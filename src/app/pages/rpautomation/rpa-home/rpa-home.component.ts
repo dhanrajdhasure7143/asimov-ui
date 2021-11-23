@@ -1,4 +1,4 @@
-import {Component, OnInit, TemplateRef,ViewChild} from '@angular/core';
+import {Component, OnInit, TemplateRef,ViewChild, Output, EventEmitter} from '@angular/core';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
@@ -58,6 +58,7 @@ export class RpaHomeComponent implements OnInit {
   loadflag:Boolean=false;
   customUserRole: any;
   term:any;
+  pageSize:any=10;
   userFilter:any = { botName:'',department:'' };
   globalfilter:any;
   enableConfiguration: boolean=false;
@@ -66,6 +67,8 @@ export class RpaHomeComponent implements OnInit {
  modalRef: BsModalRef;
  exportid:any;
  allbots:any=[];
+ @Output() pageChange: EventEmitter<number>;
+@Output() pageBoundsCorrection: EventEmitter<number>;
 
   importenv:any="";
   importcat:any="";
@@ -86,9 +89,11 @@ export class RpaHomeComponent implements OnInit {
   insertbot:FormGroup;
   rpaCategory: any="";
   newRpaCategory: any;
+  config:any;
   userName:any="";
   displayedRows$: Observable<any[]>;
   rpaVisible:boolean=false;
+  userCheck:boolean=false;
   @ViewChild(MatSort,{static:false}) sort: MatSort;
   totalRows$: Observable<number>;
   @ViewChild(MatPaginator,{static:false}) paginator301: MatPaginator;
@@ -126,24 +131,53 @@ export class RpaHomeComponent implements OnInit {
   }
 
   openModal(template: TemplateRef<any>) {
-    this.importfile="";
-    this.file_error="";
-    this.importcat="";
-    this.modalRef = this.modalService.show(template,{class: 'modal-lr'});
+    if (this.userRole == "User") {
+      if (this.bot_list.length == 1) {
+        Swal.fire({
+          title: 'Error',
+          text: "You have limited access to this product. Please contact EZFlow support team for more details.",
+          position: 'center',
+          icon: 'error',
+          showCancelButton: false,
+          confirmButtonColor: '#007bff',
+          cancelButtonColor: '#d33',
+          heightAuto: false,
+          confirmButtonText: 'Ok'
+        })
+      }
+      else {
+        this.importfile = "";
+        this.file_error = "";
+        this.importcat = "";
+        this.modalRef = this.modalService.show(template, { class: 'modal-lr' });
+      }
+    }
+    else {
+      this.importfile = "";
+      this.file_error = "";
+      this.importcat = "";
+      this.modalRef = this.modalService.show(template, { class: 'modal-lr' });
+    }
   }
 
   ngOnInit() {
     $('.link').removeClass('active');
     $('#rpa').addClass("active"); 
     $('#expand_menu').addClass("active");   
+
+//     @Input() id: string;
+// @Input() maxSize: number;
+// @Output() pageChange: EventEmitter<number>;
+// @Output() pageBoundsCorrection: EventEmitter<number>;
     this.userRole = localStorage.getItem("userRole")
     this.userRole = this.userRole.split(',');
     localStorage.setItem("isHeader","false");
     //this.isButtonVisible = this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') || this.userRole.includes('RPA Admin')||this.userRole.includes("Process Owner")||this.userRole.includes("System Admin")||;
     this.isButtonVisible=this.userRole.includes("Process Analyst")
-    this.rpaVisible= this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') || this.userRole.includes('Process Owner') || this.userRole.includes('Process Architect')  || this.userRole.includes('Process Analyst')  || this.userRole.includes('RPA Developer')  || this.userRole.includes('Process Architect') || this.userRole.includes("System Admin") ;
+    this.rpaVisible= this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') || this.userRole.includes('Process Owner') || this.userRole.includes('Process Architect')  || this.userRole.includes('Process Analyst')  || this.userRole.includes('RPA Developer')  || this.userRole.includes('Process Architect') || this.userRole.includes("System Admin")  || this.userRole.includes("User") ;
     this.userName=localStorage.getItem("firstName")+" "+localStorage.getItem("lastName");
     let processId=undefined;
+    this.userCheck=this.userRole.includes("User")
     //this.dataSource1.filterPredicate = this.createFilter();
     this.dt.changeParentModule({"route":"/pages/rpautomation/home", "title":"RPA Studio"});
     this.dt.changeChildModule({"route":"/pages/rpautomation/home","title":"RPA Home"});
@@ -326,7 +360,7 @@ export class RpaHomeComponent implements OnInit {
           object.department='QA';
         }
         this.bot_list.push(object)
-        this.assignPagination( this.bot_list);
+        //  this.assignPagination( this.bot_list);
       })
       this.bot_list=botlist;
       if(this.bot_list.length >0)
@@ -339,11 +373,11 @@ export class RpaHomeComponent implements OnInit {
       //response.sort((a,b) => a.createdAt > b.createdAt ? -1 : 1);
       
       //response=response.reverse();
-      this.dataSource1= new MatTableDataSource(response);
-      this.isDataSource = true;
-      this.dataSource1.sort=this.sort1;
-      this.dataSource1.paginator=this.paginator1;
-     this.dataSource1.data = response;
+    //   this.dataSource1= new MatTableDataSource(response);
+    //   this.isDataSource = true;
+    //   this.dataSource1.sort=this.sort1;
+    //   this.dataSource1.paginator=this.paginator1;
+    //  this.dataSource1.data = response;
      this.allbots=response;
     //  this.departmentFilter.valueChanges.subscribe((departmentFilterValue) => {
     //   if(departmentFilterValue != ""){
@@ -459,6 +493,26 @@ export class RpaHomeComponent implements OnInit {
   }
 
 
+
+
+
+  getStartIndex(currentPage: number, lastPage: number): string {
+    let firstIndex = 1;
+    if((currentPage !== lastPage) || (currentPage > 0 && lastPage > 0)) {
+      firstIndex = (Number(this.pageSize) * (Number(currentPage) -1) + 1);
+    }
+    return firstIndex.toString();
+  }
+
+  getLastIndex(currentPage: number, lastPage: number): string {
+    let lastIndex = this.bot_list ? this.bot_list.length : null;
+    if((currentPage !== lastPage)) {
+      lastIndex = (Number(this.pageSize) * (Number(currentPage)));
+    }
+    return lastIndex.toString();
+  }
+
+
   applyFilter(filterValue:any) {
     let processnamebyid=this.process_names.find(data=>filterValue==data.processId);
     this.selectedvalue=filterValue;
@@ -478,7 +532,27 @@ export class RpaHomeComponent implements OnInit {
 
   createoverlay()
   {
-    document.getElementById("create-bot").style.display ="block";
+    if (this.userRole == "User") {
+      if (this.bot_list.length == 1) {
+        Swal.fire({
+          title: 'Error',
+          text: "You have limited access to this product. Please contact EZFlow support team for more details.",
+          position: 'center',
+          icon: 'error',
+          showCancelButton: false,
+          confirmButtonColor: '#007bff',
+          cancelButtonColor: '#d33',
+          heightAuto: false,
+          confirmButtonText: 'Ok'
+      })
+      }
+      else {
+        document.getElementById("create-bot").style.display = "block";
+      }
+    }
+    else{
+      document.getElementById("create-bot").style.display = "block";
+    }
   }
 
 

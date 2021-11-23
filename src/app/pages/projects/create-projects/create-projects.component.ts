@@ -5,7 +5,7 @@ import { RestApiService } from '../../services/rest-api.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import Swal from 'sweetalert2';
 import { Base64 } from 'js-base64';
-import { Router } from '@angular/router';
+import { Router,ActivatedRoute } from '@angular/router';
 import moment from 'moment';
 
 @Component({
@@ -41,16 +41,25 @@ export class CreateProjectsComponent implements OnInit {
   public name: any;
    email: any;
    initiatives: any;
+   projectsdata:any;
+
+   loggedInUserId:any;
   constructor(
     private formBuilder: FormBuilder,
     private api:RestApiService, 
     private spinner:NgxSpinnerService,
     private modalService: BsModalService,
-    private router: Router
-    ) { }
+     private router: Router,
+    private route:ActivatedRoute
+    ) {
+      this.route.queryParams.subscribe(data=>{
+        this.projectsdata=data.id;
+      })
+     }
 
   ngOnInit() {
     
+    this.loggedInUserId=localStorage.getItem("ProfileuserId");
     this.updateForm=this.formBuilder.group({
       type: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
       initiatives: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
@@ -69,8 +78,9 @@ export class CreateProjectsComponent implements OnInit {
     //programHealth: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     programValueChain: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     process: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+    processOwner: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
    // project: ["", Validators.compose([Validators.maxLength(50)])],
-    owner: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+    owner: [this.loggedInUserId, Validators.compose([Validators.required, Validators.maxLength(50)])],
    // process: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
    // access: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     description: ["", Validators.compose([Validators.maxLength(200)])],
@@ -88,6 +98,7 @@ export class CreateProjectsComponent implements OnInit {
     priority: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     measurableMetrics: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     process: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+    processOwner: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     description: ["", Validators.compose([Validators.maxLength(200)])],
     access: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
    // status: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],

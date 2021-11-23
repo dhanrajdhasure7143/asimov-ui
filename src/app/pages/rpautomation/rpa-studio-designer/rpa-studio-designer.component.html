@@ -179,15 +179,15 @@
               </button>
             </div>
         </ng-template>
-        <app-rpa-toolset [bot]="tab" #rpa_bot_instance ></app-rpa-toolset>
+        <app-rpa-toolset [bot]="tab" [toolset]="templateNodes" #rpa_bot_instance ></app-rpa-toolset>
       </mat-tab>
       <mat-tab [disabled]="true">
         <ng-template mat-tab-label>
-          <span  [matMenuTriggerFor]="menu" class="clickable text-primary">
+          <span  [matMenuTriggerFor]="menu" class="clickable text-primary" *ngIf="userRole!='User'">
             <img src="../../../../assets/images/RPA/icon_latest/add.svg" class="add-new"/>
           </span>
           <mat-menu #menu="matMenu">
-              <button mat-menu-item (click)="rpa_studio.onCreate(0)">
+              <button mat-menu-item  (click)="rpa_studio.onCreate(0)">
                 <img src="../../../../assets/images/RPA/icon_latest/add-fill.svg" class="menu-icon"/> &nbsp;Create New</button>
                 <hr>
               <button mat-menu-item  (click)="rpa_studio.onLoad()">

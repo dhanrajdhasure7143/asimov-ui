@@ -68,7 +68,7 @@ this.getEnvironments();
         "color": "#00a0e3"
       }, {
         "country": "Stopped",
-        "litres":  this.allbots.filter(bot=>bot.botStatus=="Stopped"  || bot.botStatus=="Stop").length,
+        "litres":  this.allbots.filter(bot=>bot.botStatus=="Stopped" || bot.botStatus=="Stop").length,
         "color": "#FF0000"
       },
       {
