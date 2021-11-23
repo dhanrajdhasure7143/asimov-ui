@@ -37,7 +37,9 @@ export class CreateProjectFormComponent implements OnInit {
       priority: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       measurableMetrics: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       process: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-     // description: ["", Validators.compose([Validators.maxLength(200)])],
+      processOwner: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+     
+      // description: ["", Validators.compose([Validators.maxLength(200)])],
      // access: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       
       projectPurpose: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
@@ -90,6 +92,8 @@ export class CreateProjectFormComponent implements OnInit {
         this.insertForm2.get("resource").setValue("");
         this.insertForm2.get("mapValueChain").setValue("");
         this.insertForm2.get("owner").setValue("");
+        
+        this.insertForm2.get("processOwner").setValue("");
         this.insertForm2.get("initiatives").setValue("");
         this.insertForm2.get("priority").setValue("");
         this.insertForm2.get("process").setValue("");

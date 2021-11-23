@@ -23,6 +23,7 @@ export class ProjectsListScreenComponent implements OnInit {
   count:any={
     New:0,
     Inprogress:0,
+    Pipeline:0,
     Rejected:0,
     Inreview:0,
     Approved:0,
@@ -120,8 +121,8 @@ export class ProjectsListScreenComponent implements OnInit {
     this.spinner.hide();
     this.count.New=this.projects_list.filter(item=>item.status=="New").length
     this.count.Inprogress=this.projects_list.filter(item=>item.status=="In Progress").length
-    this.count.Rejected=this.projects_list.filter(item=>item.status=="Rejected").length
-    
+    this.count.Pipeline=this.projects_list.filter(item=>item.status=="Pipeline").length
+    this.count.Rejected=this.projects_list.filter(item=>item.status=="Rejected").length    
     this.count.Inreview=this.projects_list.filter(item=>item.status=="In Review").length
     this.count.Approved=this.projects_list.filter(item=>item.status=="Approved").length
     this.count.Closed=this.projects_list.filter(item=>item.status=="Closed").length

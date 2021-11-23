@@ -218,6 +218,8 @@ export class ProjectsProgramsTableComponent implements OnInit {
       this.projects_list = this.projects_list.filter(item=>item.status=="In Progress")
       else if(this.status_data=="In Review")
       this.projects_list = this.projects_list.filter(item=>item.status=="In Review")
+      else if(this.status_data=="Pipeline")
+      this.projects_list = this.projects_list.filter(item=>item.status=="Pipeline")
       else if(this.status_data=="Approved")
       this.projects_list = this.projects_list.filter(item=>item.status=="Approved")
       else if(this.status_data=="Rejected")
