@@ -33,7 +33,7 @@ isBackbutton:boolean=false;
 insights_header:boolean=false;
 isTimefeed:boolean=true;
 btn_obj:any;
-
+userRole: any;
   constructor(private changeDetectorRef:ChangeDetectorRef,
     private router:Router,
     private route: ActivatedRoute,
@@ -46,6 +46,7 @@ btn_obj:any;
     $('.link').removeClass('active');
     $('#pi').addClass("active"); 
     $('#expand_menu').addClass("active");  
+    this.userRole = localStorage.getItem("userRole")
   }
 
  ngAfterViewChecked(){

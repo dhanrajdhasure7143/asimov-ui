@@ -183,7 +183,7 @@
       </mat-tab>
       <mat-tab [disabled]="true">
         <ng-template mat-tab-label>
-          <span  [matMenuTriggerFor]="menu" class="clickable text-primary">
+          <span  [matMenuTriggerFor]="menu" class="clickable text-primary" *ngIf="userRole!='User'">
             <img src="../../../../assets/images/RPA/icon_latest/add.svg" class="add-new"/>
           </span>
           <mat-menu #menu="matMenu">
