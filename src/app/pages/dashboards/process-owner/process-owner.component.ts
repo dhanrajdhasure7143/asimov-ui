@@ -269,6 +269,10 @@ export class ProcessOwnerComponent implements OnInit {
       label1.maxWidth = 100;
       // label1.disabled = false;
       categoryAxis.renderer.minGridDistance = 70;
+      categoryAxis.renderer.labels.template.wrap = true;
+      // categoryAxis.renderer.grid.template.location = 0;
+      categoryAxis.renderer.labels.template.fontSize = 12;
+      categoryAxis.renderer.labels.template.rotation=290;
       var valueAxis = this.runtimestatschart.yAxes.push(new am4charts.ValueAxis());
       valueAxis.renderer.inside = false;
       valueAxis.min = 0;
