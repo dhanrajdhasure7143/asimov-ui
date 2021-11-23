@@ -37,7 +37,7 @@ export class ProcessAnalystComponent implements OnInit {
   userRoles: any;
   userEmail: any;
   userName: any;
-  topEffortsSpent: Object;
+  topEffortsSpent: any[]=[];
 
   constructor(private apiService: RestApiService, private jwtHelper: JwtHelperService) {
     this.userDetails = this.jwtHelper.decodeToken(localStorage.getItem('accessToken'));;
@@ -49,7 +49,7 @@ export class ProcessAnalystComponent implements OnInit {
     this.userEmail = this.userDetails.userDetails.userId;
     this.userName = this.userDetails.userDetails.userName;
 
-    if (this.userRoles === 'Process Analyst') {
+    if (this.userRoles === 'Process Analyst' || this.userRoles === "RPA Developer") {
       this.getTasksStatus('All');
       this.getProjectProgress('All');
       this.getPendingApprovals('All');
@@ -99,9 +99,15 @@ export class ProcessAnalystComponent implements OnInit {
         .subscribe(res => {
           this.effortExpenditureAnalysis = res;
         });
-
+        let res_data;
       this.apiService.gettopEffortsSpent(this.userRoles, this.userEmail, this.userName).subscribe(res => {
-        this.topEffortsSpent = res;
+            res_data = res;
+        for (let [key, value] of Object.entries(res_data)) {
+          if(value != 0){
+          var obj={'prj_name':key,'days':value}
+          this.topEffortsSpent.push(obj)
+          }
+        }
         this.isLoading = false;
       })
     }

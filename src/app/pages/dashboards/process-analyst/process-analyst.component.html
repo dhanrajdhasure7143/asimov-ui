@@ -1,6 +1,6 @@
 <div class="row content-area ">
     <div class="module-heading title">
-        <span class="module-header-title">Process Analyst Dashboard</span>
+        <span class="module-header-title">{{userRoles}} Dashboard</span>
         <h4 class="module-header-title" style="position: absolute;left:95%;cursor:pointer" (click)="drawer.toggle()">
             <img style="height: 30px;width: 30px;" src="../../../assets/images/menu-line.svg" alt="">
         </h4>
@@ -196,9 +196,9 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr *ngFor="let item of topEffortsSpent | keyvalue  | paginate: {id:'paginator4' , itemsPerPage: 7,currentPage: a }">
-                                                        <td [hidden]="item.value == 0">{{item.key}}</td>
-                                                        <td [hidden]="item.value == 0" style="text-transform: lowercase;">{{item.value}}</td>
+                                                    <tr *ngFor="let item of topEffortsSpent  | paginate: {id:'paginator4' , itemsPerPage: 5,currentPage: a }">
+                                                        <td>{{item.prj_name}}</td>
+                                                        <td style="text-transform: lowercase;">{{item.days}}</td>
                                                     </tr>
                                                 </tbody>
                                             </table>
