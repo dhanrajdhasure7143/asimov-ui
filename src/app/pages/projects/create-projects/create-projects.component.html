@@ -291,10 +291,29 @@
                                             *ngIf="createprogram.get('process').invalid && createprogram.get('process').touched"
                                             class="errspan required">Process Required*</span>
                                             </div>
+
+
+
+                                            <div class="form-fields col-md-6 pr-0">
+                                                <label class="label-control" for="processOwner">Process Owner<span
+                                                        class="star">*</span></label>
+                                                <select formControlName="processOwner" class="form-control data" 
+                                                    [ngClass]="createprogram.get('processOwner').valid?'enteredfield-color':'inputfield-color'">
+                                                    <option [value]="" disabled hidden>Select Process Owner</option>
+                                                    <option value="" >Select Process Owner</option>
+                                                    <option *ngFor="let user of userslist" [value]="user.userId.userId">
+                                                        {{user.userId.firstName|titlecase}} {{user.userId.lastName|titlecase}}</option>
+                                                </select>
+                                                <span
+                                                    *ngIf="createprogram.get('processOwner').invalid && createprogram.get('processOwner').touched"
+                                                    class="errspan required">Owner Required*</span>
+                                            </div>
                                         </div>
-                                    <div class="col-md-6">
+
+
+
                                        
-                                    </div>
+                                
                                     <div class="col-md-12 martsascl">
                                         <!-- <label  class="label-control"  for="description">Description<span style="color:rgb(90, 92, 212)">*</span></label> -->
                                         <!-- <textarea maxlength="250" class="form-control data" formControlName="description" value="" 
