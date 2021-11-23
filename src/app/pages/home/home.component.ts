@@ -67,7 +67,7 @@ export class HomeComponent implements OnInit {
     let user_obj={"userId":this.ProfileuserId,"tenantName":this.tenantName,"firstName":this.firstName,"lastName":this.lastName,"roles":this.userRole}
       this.dt.userDetails(user_obj)
     this.isLoading=false;
-    if(this.userRole.includes('Process Owner') || this.userRole.includes('Process Architect') || this.userRole.includes('Process Analyst')){
+    if(this.userRole.includes('Process Owner') || this.userRole.includes('Process Architect') || this.userRole.includes('Process Analyst') || this.userRole.includes('RPA Developer')){
       this.isdivShow=true;
     }else{
       this._isShow=true;

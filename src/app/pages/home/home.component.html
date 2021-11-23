@@ -33,9 +33,9 @@
 
 <div class="main-content prjmain" *ngIf='isdivShow'>
     <div class="content-area" style="overflow: scroll;">
-        <app-process-owner *ngIf="this.userRole.includes('Process Owner')"></app-process-owner>
-        <app-process-architect *ngIf="this.userRole.includes('Process Architect')"></app-process-architect>
-        <app-process-analyst *ngIf="this.userRole.includes('Process Analyst')"></app-process-analyst>
+        <app-process-owner *ngIf="userRole.includes('Process Owner')"></app-process-owner>
+        <app-process-architect *ngIf="userRole.includes('Process Architect') || userRole.includes('RPA Developer')"></app-process-architect>
+        <app-process-analyst *ngIf="userRole.includes('Process Analyst')"></app-process-analyst>
     </div>
 </div>
 
