@@ -66,7 +66,7 @@
               <span class="tab-text">{{program_detials.programName}}</span>
             </div>
             <div class="prg-title" *ngIf="editdata==true">
-              <input type="text" (change)="program_detials.programName=$event.target.value"
+              <input type="text" maxlength="50" (change)="program_detials.programName=$event.target.value"
                 [value]="(program_detials.programName==undefined||program_detials.programName==null)?'':program_detials.programName"
                 class="small-input" placeholder="Enter Program Name">
             </div>
@@ -78,7 +78,7 @@
             </div>
 
             <div *ngIf="editdata==true">
-              <textarea (change)="program_detials.description=$event.target.value" style=" resize: none;" maxlength="151"
+              <textarea maxlength="150" (change)="program_detials.description=$event.target.value" style=" resize: none;"
               [value]="(program_detials.description==undefined||program_detials.description==null)?'':program_detials.description"
               class="small-input" placeholder="Enter Program Description"></textarea>
                   
@@ -239,7 +239,7 @@
                       <span class="labeltit">Program Purpose</span>
     
                       <div *ngIf="editdata==false">
-                        <span class="labelcont">{{program_detials.purpose}}</span>
+                        <span class="labelcont" [matTooltip]="program_detials.purpose">{{getreducedValue(program_detials.purpose)}}</span>
                         <span
                           *ngIf="program_detials.purpose == null || program_detials.purpose == undefined || program_detials.purpose =='' "
                           class="labelcont">-</span>
@@ -402,7 +402,7 @@
           </td>
 
       </ng-container>
-      <ng-container matColumnDef="new">
+      <ng-container matColumnDef="status">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
         <td mat-cell   *matCellDef="let project">
          
