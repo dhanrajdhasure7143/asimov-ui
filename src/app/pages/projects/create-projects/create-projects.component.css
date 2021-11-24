@@ -212,3 +212,8 @@ span.removeallprjcts:hover {
 .add_projects{
   cursor: not-allowed;
 }
+
+.h-scroll-1 {
+  height: calc(100vh - 130px);
+  overflow: auto;
+}
