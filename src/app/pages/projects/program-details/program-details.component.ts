@@ -42,7 +42,7 @@ export class ProgramDetailsComponent implements OnInit {
     mindate:any;
     selected_process_names:any=[];
     editdata:Boolean=false;
-    displayedColumns8: string[] = ["initiatives","projectName","owner","new","projectPercentage","lastModifiedTimestamp","lastModifiedBy", "createdBy","action"];
+    displayedColumns8: string[] = ["initiatives","projectName","owner","status","projectPercentage","lastModifiedTimestamp","lastModifiedBy", "createdBy","action"];
     dataSource8:MatTableDataSource<any>;
     selectedProgram_id:any
     @ViewChild("sort104",{static:false}) sort104: MatSort;
@@ -75,7 +75,7 @@ export class ProgramDetailsComponent implements OnInit {
       priority: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       measurableMetrics: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       process: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      description: ["", Validators.compose([Validators.maxLength(200)])],
+      description: ["", Validators.compose([Validators.maxLength(150)])],
       access: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
      // status: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
   

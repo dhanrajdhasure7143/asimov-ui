@@ -82,7 +82,7 @@
                                 <div class="col-md-6 pr-0">
                                     <div class="col-md-12 p-0 form-fields">
                                         <label class="label-control">Reporter<span class="star">*</span></label>
-                                        <select formControlName="reporter" class="form-control data" placeholder="Select Reporter">
+                                        <select formControlName="reporter" disabled class="form-control data" placeholder="Select Reporter">
                                             <option [value]=userName>{{userName}}</option>
                                         </select>
                                         <span *ngIf="createTicket.get('reporter').invalid && createTicket.get('reporter').touched" class="errspan required">Reporter Required*</span>

@@ -159,7 +159,7 @@ percentageComplete: number;
      endDate: ['', Validators.compose([Validators.maxLength(200)])],
      approvers: ['', Validators.compose([Validators.maxLength(200)])],
      status:["",Validators.compose([Validators.required, Validators.maxLength(50)])],
-     description: ["", Validators.compose([Validators.maxLength(200)])],
+     description: ["", Validators.compose([Validators.maxLength(150)])],
      comments: ['',Validators.compose([Validators.maxLength(200)])],
      summary: ['', Validators.compose([Validators.maxLength(200)])],
      percentageComplete: ['', Validators.compose([Validators.maxLength(200)])],
@@ -348,7 +348,12 @@ percentageComplete: number;
     })
     this.spinner.hide();
   }
-
+  getreducedValue(value) {​​​​​​​​
+    if (value.length > 15)
+    return value.substring(0,16) + '...';
+    else
+    return value;
+  }​​​​​​​​
   downloadExcel(){
     this.spinner.show();
     this.rpa.exportproject(this.project_id).subscribe(data=>{

@@ -324,7 +324,7 @@
                                                         </span> -->
                                         <label class="label-control">Description</label>
                                         <textarea class="form-control" formControlName="description" row="3"
-                                            placeholder="Enter Description" style=" resize: none;" maxlength="151"
+                                            placeholder="Enter Description" style=" resize: none;" maxlength="150"
                                             [ngClass]="createprogram.get('description').valid?'enteredfield-color':'inputfield-color'">></textarea>
                                 
                                     </div>
@@ -420,8 +420,9 @@
                 <span aria-hidden="true"><img src="../../../../assets/images/Projects/circle-close.svg" alt=""></span>
             </button>
         </div>
-        <div class="h-scroll">
+        <div class="h-scroll-1">
             <app-create-project-form [users_list]="userslist" [initiatives_list]="initiatives" (oncreate)="linkcreateproject($event)" [processes]="selected_process_names"></app-create-project-form>
         </div>
+        
     </ng-template>
 </mat-card>
