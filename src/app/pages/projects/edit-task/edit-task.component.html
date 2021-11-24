@@ -50,10 +50,11 @@
     </div>
     <div class="edit-task-body">
         <div class="edit-task-body-content">
+          <form [formGroup]="updatetaskForm" (ngSubmit)="updatetask()">
             <div class="row">
               <div class="col-md-5 pl-0">
                 
-                <form [formGroup]="updatetaskForm" (ngSubmit)="updatetask()">
+               
                 <div class="form-fields col-md-6 pl-0">
                   <label class="h6 label-control" id="assignee" for="assignee">Assignee</label>
                   <!-- <span class="labelcont">{{taskresource| userPipe : users_list}}</span> -->
@@ -124,15 +125,17 @@
                 
                 <div class="form-fields col-md-12 p-0">
                     <label class="h6 label-control" id="summary" class="label-control">Summary</label>
-                    <textarea class="form-control" formControlName="summary" rows="3" placeholder="Enter Summary">
+                    <textarea class="form-control" formControlName="summary" rows="3" 
+                    style=" resize: none;" placeholder="Enter Summary">
                               </textarea>
                 </div>
                 <div class="form-fields col-md-12 p-0">
                     <label class="h6" id="description" class="label-control">Description</label>
-                    <textarea class="form-control" formControlName="description" rows="3" placeholder="Enter Description">
+                    <textarea class="form-control" formControlName="description" rows="3"
+                    style=" resize: none;" placeholder="Enter Description">
                               </textarea>
                 </div>
-              </form>                              
+                                     
               </div>      
               <div class="col-md-7 pr-0">
                 <h4 class="module-sub-header-title">Activity</h4>
@@ -402,8 +405,8 @@
               </mat-tab-group>
               </div>
             </div>
-    x
-          
+    
+          </form>      
         </div>
     </div>
    
