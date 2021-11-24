@@ -261,7 +261,7 @@ export class ProjectsProgramsTableComponent implements OnInit {
     }).then((result) => {
       let value:any=result.value
       if(value!=undefined)
-      if(projectdata.projectName==value)
+      if(projectdata.projectName.trim()==value.trim())
       {
         this.spinner.show();
         this.api.delete_Project(delete_data).subscribe( res =>{ 
