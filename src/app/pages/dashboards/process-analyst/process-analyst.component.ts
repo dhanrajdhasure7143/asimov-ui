@@ -178,9 +178,8 @@ export class ProcessAnalystComponent implements OnInit {
   }
 
   allProjectStatusChart(data) {
-    console.log(data)
     setTimeout(() => {
-    this.ActivityTimeChart(data);
+    this.status_donutChart(data);
       
     }, 500);
     // setTimeout(() => {
@@ -247,10 +246,10 @@ export class ProcessAnalystComponent implements OnInit {
 
   }
 
-  ActivityTimeChart(data){
-    // this.activitytime_data.sort(function (a, b) {
-    //   return b.totalDuration - a.totalDuration;
-    // });
+  status_donutChart(data){
+    data.sort(function (a, b) {
+      return b.value - a.value;
+    });
 
       am4core.useTheme(am4themes_animated);
       // Themes end

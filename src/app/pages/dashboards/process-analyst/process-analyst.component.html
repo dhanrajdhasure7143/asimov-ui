@@ -29,7 +29,7 @@
                                 <div class="timesheet">
                                     <p [ngClass]="item.Type == 'task' ? 'red' : 'green'"><b>{{item['Task Name'] ?
                                             item['Task Name'] : item['Project Name']}}</b></p>
-                                    <p style="font-size: 13px;">Due Date : &nbsp;{{item['End Date'] | date: 'medium' }}</p>
+                                    <p style="font-size: 13px;">Due Date : &nbsp;{{item['End Date'] | date }}</p>
                                     <p style="color:#00a0e3;font-weight: bolder;">{{item['dueDate']}}</p>
                                 </div><br>
                             </div>
@@ -108,7 +108,7 @@
                                                 <tr>
                                                     <th>Process Name</th>
                                                     <th>Created Date</th>
-                                                    <th>Submitted By</th>
+                                                    <th>Submitted To</th>
                                                     <!-- <th>Action</th> -->
                                                 </tr>
                                             </thead>

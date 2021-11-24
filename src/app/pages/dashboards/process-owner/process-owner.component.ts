@@ -26,7 +26,7 @@ export class ProcessOwnerComponent implements OnInit {
   upcomingDueDates: Object;
   expenditureDays: any;
   expenditureResources: any;
-  effortExpenditureAnalysis: any;
+  effortExpenditureAnalysis: any=[];
   activityStreamRecent: any;
   activityStreamPending: any;
   filterByDays = ['All', '30', '60', '90'];
@@ -36,6 +36,7 @@ export class ProcessOwnerComponent implements OnInit {
   userRoles: any;
   userEmail: any;
   userName: any;
+  p1=0;
 
   constructor(private apiService: RestApiService, private jwtHelper: JwtHelperService) {
     this.userDetails = this.jwtHelper.decodeToken(localStorage.getItem('accessToken'));;
@@ -91,10 +92,20 @@ export class ProcessOwnerComponent implements OnInit {
           this.expenditureDays = res['Total Days'];
           this.expenditureResources = res['Total Resources'];
         });
-
+        let res_data;
       this.apiService.getEffortExpenditureAnalysis(this.userRoles, this.userEmail, this.userName)
         .subscribe((res:any) => {
-          this.effortExpenditureAnalysis = res;
+          res_data = res;
+
+          for (let [key, value] of Object.entries(res_data)) {
+            if(value != 0){
+            var obj={'resource_name':key,'days':value}
+            this.effortExpenditureAnalysis.push(obj)
+            }
+          }
+          this.effortExpenditureAnalysis.sort(function (a, b) {
+            return b.days - a.days;
+          });
         });
 
       this.apiService.gettopEffortsSpent(this.userRoles, this.userEmail, this.userName).subscribe(res => {
@@ -178,68 +189,137 @@ export class ProcessOwnerComponent implements OnInit {
   }
 
   allProjectStatusChart(data) {
+    // setTimeout(() => {
+    //   var chart = am4core.create("projectstatus-chart", am4charts.PieChart);
+    //   chart.innerRadius = am4core.percent(30);
+    //   chart.logo.__disabled = true;
+    //   var pieSeries = chart.series.push(new am4charts.PieSeries());
+    //   var colorSet = new am4core.ColorSet();
+    //   colorSet.list = ["#ce3779", "#575fcd", "#d89f59", "#ff5b4f", "#74c7b8"
+    //   ].map(function (color: any) {
+    //     return am4core.color(color);
+    //   });
+    //   pieSeries.colors = colorSet;
+    //   pieSeries.dataFields.value = "value";
+    //   pieSeries.dataFields.category = "project";
+    //   pieSeries.slices.template.propertyFields.fill = "color";
+    //   pieSeries.slices.template.stroke = am4core.color("#fff");
+    //   pieSeries.slices.template.strokeWidth = 2;
+    //   pieSeries.slices.template.strokeOpacity = 1;
+    //   pieSeries.slices.template
+    //     // change the cursor on hover to make it apparent the object can be interacted with
+    //     .cursorOverStyle = [
+    //       {
+    //         "property": "cursor",
+    //         "value": "pointer"
+    //       }
+    //     ];
+    //   pieSeries.labels.template.maxWidth = 130;
+    //   pieSeries.labels.template.wrap = true;
+    //   pieSeries.labels.template.fontSize = 18;
+    //   pieSeries.labels.template.bent = false;
+    //   pieSeries.labels.template.padding(0, 0, 0, 0);
+    //   pieSeries.ticks.template.disabled = true;
+    //   pieSeries.alignLabels = false;
+    //   pieSeries.labels.template.text = "{value}";
+    //   pieSeries.labels.template.radius = am4core.percent(-40);
+    //   pieSeries.labels.template.fill = am4core.color("white");
+    //   // Create a base filter effect (as if it's not there) for the hover to return to
+    //   //var shadow = pieSeries.slices.template.filters.push(new am4core.DropShadowFilter);
+    //   //shadow.opacity = 0;
+
+    //   // Create hover state
+    //   var hoverState = pieSeries.slices.template.states.getKey("hover"); // normally we have to create the hover state, in this case it already exists
+
+    //   // Slightly shift the shadow and make it more prominent on hover
+    //   var hoverShadow = hoverState.filters.push(new am4core.DropShadowFilter);
+    //   hoverShadow.opacity = 0.7;
+    //   hoverShadow.blur = 5;
+
+    //   // Add a legend
+
+    //   chart.legend = new am4charts.Legend();
+    //   chart.legend.fontSize = 13;
+    //   let markerTemplate = chart.legend.markers.template;
+    //   markerTemplate.width = 10;
+    //   markerTemplate.height = 10;
+    //   chart.innerRadius = am4core.percent(0);
+    //   chart.data = data;
+
+    //   chart.legend = new am4charts.Legend();
+    //   chart.legend.fontSize = 13;
+    //   chart.legend.labels.template.text = "{category} - {value}";
+    // }, 50);
     setTimeout(() => {
+      this.status_donutChart(data)
+    }, 100);
+  }
+
+  status_donutChart(data){
+    data.sort(function (a, b) {
+      return b.value - a.value;
+    });
+
+      am4core.useTheme(am4themes_animated);
+      // Themes end
+      
       var chart = am4core.create("projectstatus-chart", am4charts.PieChart);
-      chart.innerRadius = am4core.percent(30);
-      chart.logo.__disabled = true;
-      var pieSeries = chart.series.push(new am4charts.PieSeries());
-      var colorSet = new am4core.ColorSet();
-      colorSet.list = ["#ce3779", "#575fcd", "#d89f59", "#ff5b4f", "#74c7b8"
-      ].map(function (color: any) {
-        return am4core.color(color);
+      chart.hiddenState.properties.opacity = 0; // this creates initial fade-in
+      chart.legend = new am4charts.Legend();
+      chart.legend.useDefaultMarker = true;
+      var marker = chart.legend.markers.template.children.getIndex(0);
+      marker.strokeWidth = 2;
+      marker.strokeOpacity = 1;
+      marker.stroke = am4core.color("#ccc");
+      chart.legend.scrollable = true;
+      chart.legend.fontSize = 12;
+      chart.legend.reverseOrder = false;
+      // chart.data=data;
+      chart.data=data;
+
+      chart.legend.position = "right";
+      chart.legend.valign = "middle";
+      chart.innerRadius = 70;
+      // chart.tooltip="test";
+      var label = chart.seriesContainer.createChild(am4core.Label);
+        // label.text = "230,900 Sales";
+      label.horizontalCenter = "middle";
+      label.verticalCenter = "middle";
+      label.fontSize = 18;
+      var series = chart.series.push(new am4charts.PieSeries());
+      series.dataFields.value = "value";
+      series.dataFields.category = "project";
+      series.labels.template.disabled = true;
+      var _self=this;
+      series.slices.template.adapter.add("tooltipText", function(text, target) {
+        // var text=_self.getTimeConversion('{_dataContext.totalDuration}');
+        //return "{_dataContext.activity} \n {_dataContext.convertedDuration}";
+        return "Projects: {value} \n {project} : {value.percent.formatNumber('#.#')}% [/]"
       });
-      pieSeries.colors = colorSet;
-      pieSeries.dataFields.value = "value";
-      pieSeries.dataFields.category = "project";
-      pieSeries.slices.template.propertyFields.fill = "color";
-      pieSeries.slices.template.stroke = am4core.color("#fff");
-      pieSeries.slices.template.strokeWidth = 2;
-      pieSeries.slices.template.strokeOpacity = 1;
-      pieSeries.slices.template
-        // change the cursor on hover to make it apparent the object can be interacted with
-        .cursorOverStyle = [
-          {
-            "property": "cursor",
-            "value": "pointer"
-          }
-        ];
-      pieSeries.labels.template.maxWidth = 130;
-      pieSeries.labels.template.wrap = true;
-      pieSeries.labels.template.fontSize = 18;
-      pieSeries.labels.template.bent = false;
-      pieSeries.labels.template.padding(0, 0, 0, 0);
-      pieSeries.ticks.template.disabled = true;
-      pieSeries.alignLabels = false;
-      pieSeries.labels.template.text = "{value}";
-      pieSeries.labels.template.radius = am4core.percent(-40);
-      pieSeries.labels.template.fill = am4core.color("white");
-      // Create a base filter effect (as if it's not there) for the hover to return to
-      //var shadow = pieSeries.slices.template.filters.push(new am4core.DropShadowFilter);
-      //shadow.opacity = 0;
-
-      // Create hover state
-      var hoverState = pieSeries.slices.template.states.getKey("hover"); // normally we have to create the hover state, in this case it already exists
-
-      // Slightly shift the shadow and make it more prominent on hover
-      var hoverShadow = hoverState.filters.push(new am4core.DropShadowFilter);
-      hoverShadow.opacity = 0.7;
-      hoverShadow.blur = 5;
-
-      // Add a legend
-
-      chart.legend = new am4charts.Legend();
-      chart.legend.fontSize = 13;
-      let markerTemplate = chart.legend.markers.template;
-      markerTemplate.width = 10;
-      markerTemplate.height = 10;
-      chart.innerRadius = am4core.percent(0);
-      chart.data = data;
-
-      chart.legend = new am4charts.Legend();
-      chart.legend.fontSize = 13;
-      chart.legend.labels.template.text = "{category} - {value}";
-    }, 50);
-
+      $('g:has(> g[stroke="#3cabff"])').hide();
+      series.colors.list = [
+          am4core.color("rgba(85, 216, 254, 0.9)"),
+          am4core.color("rgba(255, 131, 115, 0.9)"),
+          am4core.color("rgba(255, 218, 131, 0.9)"),
+          am4core.color("rgba(163, 160, 251, 0.9)"),
+          am4core.color("rgba(156, 39, 176, 0.9)"),
+          am4core.color("rgba(103, 58, 183, 0.9)"),
+          am4core.color("rgba(63, 81, 181, 0.9)"),
+          am4core.color("rgba(33, 150, 243, 0.9)"),
+          am4core.color("rgba(3, 169, 244, 0.9)"),
+          am4core.color("rgba(0, 188, 212, 0.9)"),
+          am4core.color("rgba(244, 67, 54, 0.9)"),
+          am4core.color("rgba(233, 33, 97, 0.9)"),
+          am4core.color("rgba(220, 103, 171, 0.9)"),
+          am4core.color("rgba(220, 103, 206, 0.9)"),
+          am4core.color("rgba(199, 103, 220, 0.9)"),
+          am4core.color("rgba(163, 103, 220, 0.9)"),
+          am4core.color("rgba(103, 113, 220, 0.9)"),
+          am4core.color("rgba(0, 136, 86, 0.9)"),
+          am4core.color("rgba(243, 195, 0, 0.9)"),
+          am4core.color("rgba(243, 132, 0, 0.9)"),
+          am4core.color("rgba(143, 13, 20, 0.9)"),
+      ];
   }
 
   allProjectProgressChart() {
@@ -269,6 +349,10 @@ export class ProcessOwnerComponent implements OnInit {
       label1.maxWidth = 100;
       // label1.disabled = false;
       categoryAxis.renderer.minGridDistance = 70;
+      categoryAxis.renderer.labels.template.wrap = true;
+      // categoryAxis.renderer.grid.template.location = 0;
+      categoryAxis.renderer.labels.template.fontSize = 12;
+      categoryAxis.renderer.labels.template.rotation=290;
       var valueAxis = this.runtimestatschart.yAxes.push(new am4charts.ValueAxis());
       valueAxis.renderer.inside = false;
       valueAxis.min = 0;
