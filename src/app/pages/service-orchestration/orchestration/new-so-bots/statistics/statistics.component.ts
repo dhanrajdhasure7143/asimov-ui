@@ -1094,7 +1094,7 @@ pieSeries.labels.template.fontSize = 18;
   getprocessstatistics(){
     let data=[
              {
-               "country":"Processes",
+               "country":"Approved Processes",
                "litres":this.approved_processes.length,
                "color": "#ce3779"
 
