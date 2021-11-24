@@ -29,7 +29,7 @@
                                 <div class="timesheet">
                                     <p [ngClass]="item.Type == 'task' ? 'red' : 'green'"><b>{{item['Task Name'] ?
                                             item['Task Name'] : item['Project Name']}}</b></p>
-                                    <p style="font-size: 13px;">Due Date : &nbsp;{{item['End Date'] | date: 'medium' }}</p>
+                                    <p style="font-size: 13px;">Due Date : &nbsp;{{item['End Date'] | date }}</p>
                                     <p style="color:#00a0e3;font-weight: bolder;">{{item['dueDate']}}</p>
                                 </div><br>
                             </div>
@@ -102,6 +102,7 @@
                                         </span>
                                     </div>
                                     <div class="dbichart-body pt-1">
+                                        <div class="arch-table-div1">
                                         <div class="newexecbots_progress" *ngFor="let item of ProjectCompletionDuration | keyvalue | paginate: {id:'paginator1' ,itemsPerPage: 3,currentPage: p }">
                                             <label style="width: 97%;font-weight: bold;">{{item.key}}
                                                 <span
@@ -111,6 +112,7 @@
                                             <mat-progress-bar [ngClass]="item.value > 20 ? 'progress-bar-red':'progress-bar-green' " mode="determinate" [value]=item.value>
                                             </mat-progress-bar><br>
                                         </div>
+                                    </div>
                                         <div class="text-right" style="margin-top: 1%;">
                                             <pagination-controls id="paginator1" (pageChange)="p = $event">
                                             </pagination-controls>
@@ -131,13 +133,13 @@
                                             </select>
                                         </span>
                                     </div>
-                                    <div class="dbichart-body">
+                                    <div class="arch-table-div2">
                                         <table class="table table-responsive">
                                             <thead>
                                                 <tr>
                                                     <th>Process Name</th>
                                                     <th>Created Date</th>
-                                                    <th>Submitted By</th>
+                                                    <th>Submitted To</th>
                                                     <!-- <th>Action</th> -->
                                                 </tr>
                                             </thead>
@@ -153,10 +155,11 @@
                                                 </tr>
                                             </tbody>
                                         </table>
-                                        <div class="text-right" style="margin-top: 3%;">
-                                            <pagination-controls id="paginator2" (pageChange)="q = $event">
-                                            </pagination-controls>
-                                        </div>
+                                        
+                                    </div>
+                                    <div class="text-right" style="margin-top: 3%;">
+                                        <pagination-controls id="paginator2" (pageChange)="q = $event">
+                                        </pagination-controls>
                                     </div>
                                 </div>
                             </div>
@@ -225,6 +228,7 @@
                                                 <div class="dbichart-head">
                                                     <span class="module-header-title">Top Resources</span>
                                                 </div>
+                                                <div class="arch-table-div1">
                                                 <table class="table table-responsive">
                                                     <thead>
                                                         <tr>
@@ -233,15 +237,16 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr *ngFor="let item of effortExpenditureAnalysis | keyvalue  | paginate: {id:'paginator3',itemsPerPage: 4,currentPage: a }">
-                                                            <td [hidden]="item.value == 0" style="text-transform: lowercase;">{{item.key}}</td>
-                                                            <td [hidden]="item.value == 0" style="text-transform: lowercase;">{{item.value}}
+                                                        <tr *ngFor="let item of effortExpenditureAnalysis | paginate: {id:'paginator3',itemsPerPage: 4,currentPage: p1 }">
+                                                            <td  style="text-transform: lowercase;">{{item.resource_name}}</td>
+                                                            <td  style="text-transform: lowercase;">{{item.days}}
                                                             </td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
-                                                <div class="text-right" style="margin-top: 1%;">
-                                                    <pagination-controls id="paginator3" (pageChange)="a = $event">
+                                                </div>
+                                                <div class="text-right">
+                                                    <pagination-controls id="paginator3" (pageChange)="p1 = $event">
                                                     </pagination-controls>
                                                 </div>
                                             </div>
@@ -256,21 +261,23 @@
                                                 <div class="dbichart-head">
                                                     <span class="module-header-title">Top Efforts Spent</span>
                                                 </div>
-                                                <table class="table table-responsive">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Project Name</th>
-                                                            <th>Days Spent</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr *ngFor="let item of topEffortsSpent | keyvalue  | paginate: {id:'paginator4' , itemsPerPage: 7,currentPage: a }">
-                                                            <td [hidden]="item.value == 0">{{item.key}}</td>
-                                                            <td [hidden]="item.value == 0" style="text-transform: lowercase;">{{item.value}}
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
+                                                <div class="arch-table-div">
+                                                    <table class="table table-responsive">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Project Name</th>
+                                                                <th>Days Spent</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr *ngFor="let item of topEffortsSpent | keyvalue  | paginate: {id:'paginator4' , itemsPerPage: 7,currentPage: a }">
+                                                                <td [hidden]="item.value == 0">{{item.key}}</td>
+                                                                <td [hidden]="item.value == 0" style="text-transform: lowercase;">{{item.value}}
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                                 <div class="text-right" style="margin-top: 3%;">
                                                     <pagination-controls id="paginator4" (pageChange)="a = $event">
                                                     </pagination-controls>

@@ -38,11 +38,11 @@ import { MatPaginatorIntl } from '@angular/material';
     MatPaginatorModule,
     MatProgressBarModule,
     ReactiveFormsModule,
-    JwtModule.forRoot({
-      config: {
-        tokenGetter:  () => localStorage.getItem('accesstoken')
-      }
-    }),
+    // JwtModule.forRoot({
+    //   config: {
+    //     tokenGetter:  () => localStorage.getItem('accesstoken')
+    //   }
+    // }),
     MatTooltipModule
   ],
   providers:[
