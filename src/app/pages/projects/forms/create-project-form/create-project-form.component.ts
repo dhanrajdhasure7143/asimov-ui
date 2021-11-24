@@ -42,7 +42,7 @@ export class CreateProjectFormComponent implements OnInit {
       // description: ["", Validators.compose([Validators.maxLength(200)])],
      // access: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       
-      projectPurpose: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      projectPurpose: ["", Validators.compose([Validators.required, Validators.maxLength(150)])],
       // status: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
 
     })
