@@ -20,6 +20,7 @@ export class ProjectsListScreenComponent implements OnInit {
   users_list:any=[];
   processes:any=[];
   selected_tab:any;
+  search:any="";
   count:any={
     New:0,
     Inprogress:0,

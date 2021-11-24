@@ -14,7 +14,8 @@ declare var $:any;
 import { NgxSpinnerService } from "ngx-spinner";
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { SoProcesslogComponent } from '../so-processlog/so-processlog.component';
-
+import {MatTable} from '@angular/material/table';
+import {CdkDragDrop, moveItemInArray, transferArrayItem, CdkDragHandle} from '@angular/cdk/drag-drop';
 @Component({
   selector: 'app-new-so-automated-tasks',
   templateUrl: './new-so-automated-tasks.component.html',
@@ -74,10 +75,13 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
   public blueprism_configs:any=[];
   public checkedsource:String="UiPath";
   addTaskForm:FormGroup;
+  checkAssignTasks:Boolean=false;
+  public tasksArray:any=[];
   @ViewChild("paginator10",{static:false}) paginator10: MatPaginator;
  //@ViewChild(SoProcesslogComponent, { static: false }) processlogs_instance: SoProcesslogComponent;
   @ViewChild("sort10",{static:false}) sort10: MatSort;
   @Input('processid') public processId: any;
+  @ViewChild('automatedtable',{static:false}) automatedtable;
   public insertslaForm_so_bot:FormGroup;
   public BluePrismConfigForm:FormGroup;
   public BluePrismFlag:Boolean=false;
@@ -516,7 +520,7 @@ resetsla(){
 
         });
         this.automatedtask= response.automationTasks;
-        this.dataSource2= new MatTableDataSource(response.automationTasks);
+        this.dataSource2= new MatTableDataSource(this.automatedtask);
         this.dataSource2.sort=this.sort10;
         this.dataSource2.paginator=this.paginator10;
         if(process==0)
@@ -559,7 +563,17 @@ resetsla(){
       this.spinner.hide();
     })
   }
-
+  dropTable(event) {
+    console.log("---------------------------",event)
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(event.previousContainer.data.data, event.container.data.data, event.previousIndex, event.currentIndex);
+    }
+    //const prevIndex = this.automatedtask.findIndex((d) => d === event.item.data);
+    // moveItemInArray(this.automatedtask, prevIndex, event.currentIndex);
+    // this.automatedtable.renderRows();
+  }
 
   applyFilter(filterValue:any) {
     let processnamebyid=this.process_names.find(data=>filterValue==data.processId);
@@ -568,7 +582,14 @@ resetsla(){
     this.selectedvalue=processnamebyid.processId;
     filterValue = processnamebyid.processName.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    
     this.dataSource2.filter = filterValue;
+    
+    this.checkAssignTasks=false;
+    this.responsedata.filter(item=>item.processId==this.selectedvalue).forEach(item2=>{
+      if(item2.botId==""||item2.botId==undefined || item2.botId==null || item2.botId=='null')    
+        this.checkAssignTasks=true;
+    })
   }
 
   applyFilter1(value)
@@ -867,6 +888,7 @@ resetsla(){
   {
     this.responsedata.find(item=>item.taskId==id).sourceType=botsource;
     console.log(this.responsedata.find(item=>item.taskId==id).sourceType)
+    
     this.dataSource2= new MatTableDataSource(this.responsedata);
     this.dataSource2.sort=this.sort10;
     this.dataSource2.paginator=this.paginator10;
