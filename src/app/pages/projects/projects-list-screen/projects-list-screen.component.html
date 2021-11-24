@@ -8,10 +8,10 @@
       
         <div class="ml-auto d-flex">
           <div class="prj-lstscr-btn py-5"> 
-            <input type="search" class="form-control" (keyup)="projecttable.applyfilter($event)" placeholder="Search Projects/Programs" >
+            <input type="search" class="form-control" [(ngModel)]="search" (keyup)="projecttable.applyfilter($event)"  id="search-project-or-program" placeholder="Search Projects/Programs" >
           </div>
           <div class=" prj-lstscr-btn py-5">
-            <a _ngcontent-svr-c17="" (click)="createNew()" *ngIf="enablecreateproject" class="btn btn-primary" type="button">
+            <a _ngcontent-svr-c17="" (click)="createNew()"  *ngIf="enablecreateproject" class="btn btn-primary" type="button">
               <img  src="../../../../assets/images/Projects/White-plus.svg" class="testplus"/>
               Create New
             </a>
@@ -23,7 +23,7 @@
           <span class="projects-menu-item"><i class="ri-more-2-line"></i></span>
         </span> -->
       </div>
-        <mat-tab-group mat-stretch-tabs (selectedTabChange)="selected_tab=$event.index">
+        <mat-tab-group mat-stretch-tabs (selectedTabChange)="selected_tab=$event.index;search=''">
           <mat-tab>
             <ng-template mat-tab-label>
               <div class="status-tabs newstatu">
