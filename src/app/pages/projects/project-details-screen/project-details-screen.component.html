@@ -70,7 +70,7 @@
               <div class="prj-title" *ngIf="editdata==false">
                 <span class="tab-text"
                   *ngIf="projectDetails.projectName==null || projectDetails.projectName==undefined">-</span>
-                <span class="tab-text">{{projectDetails.projectName}}</span>
+                <span class="tab-text">{{projectDetails.projectName | titlecase}}</span>
               </div>
               <div class="prj-title" *ngIf="editdata==true">
                 <input type="text"  maxlength="50" (change)="projectDetails.projectName=$event.target.value"
@@ -86,7 +86,7 @@
               <div *ngIf="editdata==true">
                 <textarea  maxlength="150" (change)="projectDetails.projectPurpose=$event.target.value"
                 [value]="(projectDetails.projectPurpose==undefined||projectDetails.projectPurpose==null)?'':projectDetails.projectPurpose"
-                class="small-input" placeholder="Enter Project Description"></textarea>                    
+                class="small-input" placeholder="Enter Project Description" maxlength="150"></textarea>                    
               </div> 
             </div>
           </div>

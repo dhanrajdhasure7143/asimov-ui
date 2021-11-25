@@ -25,7 +25,7 @@ export class ProjectRepoScreenComponent implements OnInit {
   uploadFileForm:FormGroup;
   fileUploadData: any;
   projectid: any;
-  uploadedFiledata: any;
+  uploadedFiledata: any=[];
   requestedFiledata: any;
   userslist: any[] = [];
   isDeny: boolean = false;
@@ -50,7 +50,7 @@ export class ProjectRepoScreenComponent implements OnInit {
   fileId: any;
   filedeleteflag:Boolean;
   filecheckeddisabled:boolean =false;
-  filecheckflag:boolean = false;
+  filecheckflag:boolean = true;
   selectedFiles: any=[];
   fileList: File[] = [];
   listOfFiles: any[] = [];
@@ -460,30 +460,39 @@ this.getFileDetails();
   }
 
   filecheckAll(ev) {
-    this.uploadedFiledata.forEach(x =>
-       x.checked = ev.target.checked);
+    // this.uploadedFiledata.forEach(x =>
+    //    x.checked = ev.target.checked);
+    
+    if(this.filecheckeddisabled==false)
+      this.uploadedFiledata=this.uploadedFiledata.map(item=>{item.checked=true; return item});
+    if(this.filecheckeddisabled==true)
+      this.uploadedFiledata=this.uploadedFiledata.map(item=>{item.checked=false; return item});
     this.checktodelete();
   }
 
   checktodelete()
   {
-    const selectedresourcedata = this.uploadedFiledata.filter(product => product.checked).map(p => p.id);
-    if(selectedresourcedata.length>0)
-    {
-      this.filedeleteflag=true;
-    }else
-    {
-      this.filedeleteflag=false;
-    }
+    // const selectedresourcedata = this.uploadedFiledata.filter(product => product.checked).map(p => p.id);
+    // if(selectedresourcedata.length>0)
+    // {
+    //   this.filedeleteflag=true;
+    // }else
+    // {
+    //   this.filedeleteflag=false;
+    // }
+    this.uploadedFiledata.filter(item=>item.checked==true).length>0?(this.filecheckflag=false):(this.filecheckflag=true);
+    this.uploadedFiledata.filter(item=>item.checked==true).length==this.uploadedFiledata.length?(this.filecheckeddisabled=true):(this.filecheckeddisabled=false);
   }
 
   removeallchecks()
   {
-    for(let i=0;i<this.uploadedFiledata.length;i++)
-    {
-      this.uploadedFiledata[i].checked= false;
-    }
-    this.filecheckflag=false;
+    // for(let i=0;i<this.uploadedFiledata.length;i++)
+    // {
+    //   this.uploadedFiledata[i].checked= false;
+    // }
+    // this.filecheckflag=false;
+    this.uploadedFiledata=this.uploadedFiledata.map(item=>{item.checked=false;return item});
+    this.checktodelete();
   }
 
   filechecktoggle(id, event)

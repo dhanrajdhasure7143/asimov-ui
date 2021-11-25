@@ -63,7 +63,7 @@
             <div class="prg-title" *ngIf="editdata==false">
               <span class="tab-text"
                 *ngIf="program_detials.programName==null || program_detials.programName==undefined">-</span>
-              <span class="tab-text">{{program_detials.programName}}</span>
+              <span class="tab-text">{{program_detials.programName  | titlecase}}</span>
             </div>
             <div class="prg-title" *ngIf="editdata==true">
               <input type="text" maxlength="50" (change)="program_detials.programName=$event.target.value"
