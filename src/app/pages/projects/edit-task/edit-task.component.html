@@ -66,7 +66,7 @@
                 <div class="form-fields col-md-6 pr-0">
                   <label  class="h6 label-control"  id="enddate" for="endDate">Task Completion Date</label><br>
                   <!-- <span class="labelcont">{{endDate  | date}}</span> -->
-                  <input type="date" class="form-control rpa-control" (change)="endDate=$event.target.value" [value]="endDate" formControlName="endDate">
+                  <input type="date" class="form-control rpa-control" [min]="mindate" max="9999-12-31" (change)="endDate=$event.target.value" [value]="endDate" formControlName="endDate">
                 </div>
                 <div class="form-fields col-md-6 pl-0">
                   <label id="status" class="h6 label-control" for="status">Status<span class="star">*</span></label>
