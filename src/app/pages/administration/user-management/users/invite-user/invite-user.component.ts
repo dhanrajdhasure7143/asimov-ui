@@ -96,8 +96,7 @@ getAllCategories(){
    }
    this.api.inviteUserwithoutReg(body).subscribe(resp => {
      if(resp.message==="User invited Successfully !!"){
-      this.spinner.hide();
-      Swal.fire({
+        Swal.fire({
         title: 'Success',
         text: "User Invited Successfully !!",
         position: 'center',
@@ -112,8 +111,9 @@ getAllCategories(){
       this.router.navigate(['/pages/admin/user-management'])
     }) 
     }else {
-      Swal.fire("Error",resp.message,"error");
+      Swal.fire("Error","Failed to invite! Check if user already exists!!","error");
     }
+    this.spinner.hide();
    });
   }
 }
