@@ -571,10 +571,12 @@ export class ProgramDetailsComponent implements OnInit {
         })
       }
       else {
+        this.resetprojects();
         this.modalref = this.modalservice.show(template);
       }
     }
     else {
+      this.resetprojects();
       this.modalref = this.modalservice.show(template);
     }
 
