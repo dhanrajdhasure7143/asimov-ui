@@ -226,6 +226,8 @@ export class ProjectsProgramsTableComponent implements OnInit {
         this.projects_list = this.projects_list.filter(item=>item.status=="Rejected")
       else if(this.status_data=="Deployed")
         this.projects_list = this.projects_list.filter(item=>item.status=="Deployed")
+      else if(this.status_data=="On Hold")
+        this.projects_list = this.projects_list.filter(item=>item.status=="On Hold")
       else if(this.status_data=="Closed")
         this.projects_list = this.projects_list.filter(item=>item.status=="Closed")
       this.dataSource2 = new MatTableDataSource(this.projects_list);
