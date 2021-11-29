@@ -230,7 +230,39 @@ export class ProjectsProgramsTableComponent implements OnInit {
         this.projects_list = this.projects_list.filter(item=>item.status=="On Hold")
       else if(this.status_data=="Closed")
         this.projects_list = this.projects_list.filter(item=>item.status=="Closed")
-      this.dataSource2 = new MatTableDataSource(this.projects_list);
+
+      var projects_or_programs=this.projects_list.map((item:any)=>{
+          if(item.type=="Program")
+            return {
+              "id":item.id,
+              "programName": item.programName,
+              "initiatives": item.initiatives,
+              "priority": item.priority,
+              "process":item.process,
+              "owner": item.owner,
+              "status": item.status,
+              "createdBy": item.createdBy,
+              "lastModifiedBy": item.lastModifiedBy,
+              "type": item.type
+            }
+          else if(item.type=="Project")
+            return {
+            
+                "id":item.id,
+                "projectName": item.projectName,
+                "initiatives": item.initiatives,
+                "priority": item.priority,
+                "process":item.process,
+                "owner": item.owner,
+                "status": item.status,
+                "createdBy": item.createdBy,
+                "lastModifiedBy": item.lastModifiedBy,
+                "type": item.type
+
+            }
+        
+      })
+      this.dataSource2 = new MatTableDataSource(projects_or_programs);
       console.log("data",this.dataSource2)
       this.dataSource2.paginator=this.paginator2;
       this.dataSource2.sort = this.sort2;    
