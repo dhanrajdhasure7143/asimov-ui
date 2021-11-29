@@ -26,7 +26,7 @@ export class ProcessOwnerComponent implements OnInit {
   upcomingDueDates: Object;
   expenditureDays: any;
   expenditureResources: any;
-  effortExpenditureAnalysis: any=[];
+  effortExpenditureAnalysis: any = [];
   activityStreamRecent: any;
   activityStreamPending: any;
   filterByDays = ['All', '30', '60', '90'];
@@ -36,7 +36,7 @@ export class ProcessOwnerComponent implements OnInit {
   userRoles: any;
   userEmail: any;
   userName: any;
-  p1=0;
+  p1 = 0;
 
   constructor(private apiService: RestApiService, private jwtHelper: JwtHelperService) {
     this.userDetails = this.jwtHelper.decodeToken(localStorage.getItem('accessToken'));;
@@ -77,13 +77,13 @@ export class ProcessOwnerComponent implements OnInit {
           for (var i = 0; i < Object.keys(res).length; i++) {
             var dueDate = (new Date(res[i]['End Date']).getTime() - currentDate);
             var result = Math.round(dueDate / (1000 * 3600 * 24));
-            if(result > 0){
-              this.upcomingDueDates[i]['dueDate']  = `Due in  ${result}  days` ;
+            if (result > 0) {
+              this.upcomingDueDates[i]['dueDate'] = `Due in  ${result}  days`;
             }
-            else{
-              this.upcomingDueDates[i]['dueDate']  = `${- + result} days ago` ;
+            else {
+              this.upcomingDueDates[i]['dueDate'] = `${- + result} days ago`;
             }
-            
+
           }
         });
 
@@ -92,15 +92,15 @@ export class ProcessOwnerComponent implements OnInit {
           this.expenditureDays = res['Total Days'];
           this.expenditureResources = res['Total Resources'];
         });
-        let res_data;
+      let res_data;
       this.apiService.getEffortExpenditureAnalysis(this.userRoles, this.userEmail, this.userName)
-        .subscribe((res:any) => {
+        .subscribe((res: any) => {
           res_data = res;
 
           for (let [key, value] of Object.entries(res_data)) {
-            if(value != 0){
-            var obj={'resource_name':key,'days':value}
-            this.effortExpenditureAnalysis.push(obj)
+            if (value != 0) {
+              var obj = { 'resource_name': key, 'days': value }
+              this.effortExpenditureAnalysis.push(obj)
             }
           }
           this.effortExpenditureAnalysis.sort(function (a, b) {
@@ -120,6 +120,16 @@ export class ProcessOwnerComponent implements OnInit {
     this.apiService.getProjectCompletionDuration(this.userRoles, this.userEmail, this.userName, duration)
       .subscribe(res => {
         this.ProjectCompletionDuration = res;
+        let projectCompletionArray = [];
+        for (var i = 0; i < Object.keys(res).length; i++) {
+          var data = {
+            "projects": Object.keys(res)[i],
+            "days": Object.values(res)[i],
+          }
+          projectCompletionArray.push(data);
+        }
+        this.projectDurationChart(projectCompletionArray);
+        this.isLoading = false;
       });
   }
 
@@ -255,71 +265,71 @@ export class ProcessOwnerComponent implements OnInit {
     }, 100);
   }
 
-  status_donutChart(data){
+  status_donutChart(data) {
     data.sort(function (a, b) {
       return b.value - a.value;
     });
 
-      am4core.useTheme(am4themes_animated);
-      // Themes end
-      
-      var chart = am4core.create("projectstatus-chart", am4charts.PieChart);
-      chart.hiddenState.properties.opacity = 0; // this creates initial fade-in
-      chart.legend = new am4charts.Legend();
-      chart.legend.useDefaultMarker = true;
-      var marker = chart.legend.markers.template.children.getIndex(0);
-      marker.strokeWidth = 2;
-      marker.strokeOpacity = 1;
-      marker.stroke = am4core.color("#ccc");
-      chart.legend.scrollable = true;
-      chart.legend.fontSize = 12;
-      chart.legend.reverseOrder = false;
-      // chart.data=data;
-      chart.data=data;
+    am4core.useTheme(am4themes_animated);
+    // Themes end
 
-      chart.legend.position = "right";
-      chart.legend.valign = "middle";
-      chart.innerRadius = 70;
-      // chart.tooltip="test";
-      var label = chart.seriesContainer.createChild(am4core.Label);
-        // label.text = "230,900 Sales";
-      label.horizontalCenter = "middle";
-      label.verticalCenter = "middle";
-      label.fontSize = 18;
-      var series = chart.series.push(new am4charts.PieSeries());
-      series.dataFields.value = "value";
-      series.dataFields.category = "project";
-      series.labels.template.disabled = true;
-      var _self=this;
-      series.slices.template.adapter.add("tooltipText", function(text, target) {
-        // var text=_self.getTimeConversion('{_dataContext.totalDuration}');
-        //return "{_dataContext.activity} \n {_dataContext.convertedDuration}";
-        return "Projects: {value} \n {project} : {value.percent.formatNumber('#.#')}% [/]"
-      });
-      $('g:has(> g[stroke="#3cabff"])').hide();
-      series.colors.list = [
-          am4core.color("rgba(85, 216, 254, 0.9)"),
-          am4core.color("rgba(255, 131, 115, 0.9)"),
-          am4core.color("rgba(255, 218, 131, 0.9)"),
-          am4core.color("rgba(163, 160, 251, 0.9)"),
-          am4core.color("rgba(156, 39, 176, 0.9)"),
-          am4core.color("rgba(103, 58, 183, 0.9)"),
-          am4core.color("rgba(63, 81, 181, 0.9)"),
-          am4core.color("rgba(33, 150, 243, 0.9)"),
-          am4core.color("rgba(3, 169, 244, 0.9)"),
-          am4core.color("rgba(0, 188, 212, 0.9)"),
-          am4core.color("rgba(244, 67, 54, 0.9)"),
-          am4core.color("rgba(233, 33, 97, 0.9)"),
-          am4core.color("rgba(220, 103, 171, 0.9)"),
-          am4core.color("rgba(220, 103, 206, 0.9)"),
-          am4core.color("rgba(199, 103, 220, 0.9)"),
-          am4core.color("rgba(163, 103, 220, 0.9)"),
-          am4core.color("rgba(103, 113, 220, 0.9)"),
-          am4core.color("rgba(0, 136, 86, 0.9)"),
-          am4core.color("rgba(243, 195, 0, 0.9)"),
-          am4core.color("rgba(243, 132, 0, 0.9)"),
-          am4core.color("rgba(143, 13, 20, 0.9)"),
-      ];
+    var chart = am4core.create("projectstatus-chart", am4charts.PieChart);
+    chart.hiddenState.properties.opacity = 0; // this creates initial fade-in
+    chart.legend = new am4charts.Legend();
+    chart.legend.useDefaultMarker = true;
+    var marker = chart.legend.markers.template.children.getIndex(0);
+    marker.strokeWidth = 2;
+    marker.strokeOpacity = 1;
+    marker.stroke = am4core.color("#ccc");
+    chart.legend.scrollable = true;
+    chart.legend.fontSize = 12;
+    chart.legend.reverseOrder = false;
+    // chart.data=data;
+    chart.data = data;
+
+    chart.legend.position = "right";
+    chart.legend.valign = "middle";
+    chart.innerRadius = 70;
+    // chart.tooltip="test";
+    var label = chart.seriesContainer.createChild(am4core.Label);
+    // label.text = "230,900 Sales";
+    label.horizontalCenter = "middle";
+    label.verticalCenter = "middle";
+    label.fontSize = 18;
+    var series = chart.series.push(new am4charts.PieSeries());
+    series.dataFields.value = "value";
+    series.dataFields.category = "project";
+    series.labels.template.disabled = true;
+    var _self = this;
+    series.slices.template.adapter.add("tooltipText", function (text, target) {
+      // var text=_self.getTimeConversion('{_dataContext.totalDuration}');
+      //return "{_dataContext.activity} \n {_dataContext.convertedDuration}";
+      return "Projects: {value} \n {project} : {value.percent.formatNumber('#.#')}% [/]"
+    });
+    $('g:has(> g[stroke="#3cabff"])').hide();
+    series.colors.list = [
+      am4core.color("rgba(85, 216, 254, 0.9)"),
+      am4core.color("rgba(255, 131, 115, 0.9)"),
+      am4core.color("rgba(255, 218, 131, 0.9)"),
+      am4core.color("rgba(163, 160, 251, 0.9)"),
+      am4core.color("rgba(156, 39, 176, 0.9)"),
+      am4core.color("rgba(103, 58, 183, 0.9)"),
+      am4core.color("rgba(63, 81, 181, 0.9)"),
+      am4core.color("rgba(33, 150, 243, 0.9)"),
+      am4core.color("rgba(3, 169, 244, 0.9)"),
+      am4core.color("rgba(0, 188, 212, 0.9)"),
+      am4core.color("rgba(244, 67, 54, 0.9)"),
+      am4core.color("rgba(233, 33, 97, 0.9)"),
+      am4core.color("rgba(220, 103, 171, 0.9)"),
+      am4core.color("rgba(220, 103, 206, 0.9)"),
+      am4core.color("rgba(199, 103, 220, 0.9)"),
+      am4core.color("rgba(163, 103, 220, 0.9)"),
+      am4core.color("rgba(103, 113, 220, 0.9)"),
+      am4core.color("rgba(0, 136, 86, 0.9)"),
+      am4core.color("rgba(243, 195, 0, 0.9)"),
+      am4core.color("rgba(243, 132, 0, 0.9)"),
+      am4core.color("rgba(143, 13, 20, 0.9)"),
+    ];
   }
 
   allProjectProgressChart() {
@@ -352,7 +362,7 @@ export class ProcessOwnerComponent implements OnInit {
       categoryAxis.renderer.labels.template.wrap = true;
       // categoryAxis.renderer.grid.template.location = 0;
       categoryAxis.renderer.labels.template.fontSize = 12;
-      categoryAxis.renderer.labels.template.rotation=290;
+      categoryAxis.renderer.labels.template.rotation = 290;
       var valueAxis = this.runtimestatschart.yAxes.push(new am4charts.ValueAxis());
       valueAxis.renderer.inside = false;
       valueAxis.min = 0;
@@ -399,6 +409,64 @@ export class ProcessOwnerComponent implements OnInit {
       // $("#runtimestatistics-piechart > div > svg > g > g:nth-child(2) > g:nth-child(2)").hide();
     }, 30)
 
+  }
+
+  projectDurationChart(data) {
+    am4core.useTheme(am4themes_animated);
+
+    setTimeout(() => {
+      var chart = am4core.create("project-completion-duration", am4charts.XYChart);
+      chart.scrollbarX = new am4core.Scrollbar();
+      chart.logo.disabled = true;
+
+      // Add data
+      chart.data = data
+
+      // Create axes
+      var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+      categoryAxis.dataFields.category = "projects";
+      categoryAxis.renderer.grid.template.location = 0;
+      categoryAxis.renderer.minGridDistance = 30;
+      categoryAxis.renderer.labels.template.horizontalCenter = "right";
+      categoryAxis.renderer.labels.template.verticalCenter = "middle";
+      categoryAxis.renderer.labels.template.rotation = 270;
+      categoryAxis.tooltip.disabled = true;
+      categoryAxis.renderer.minHeight = 110;
+      categoryAxis.title.text = "Projects";
+
+
+      var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+      valueAxis.renderer.minWidth = 50;
+      valueAxis.title.text = "Project Completion Days";
+
+      // Create series
+      var series = chart.series.push(new am4charts.ColumnSeries());
+      series.sequencedInterpolation = true;
+      series.dataFields.valueY = "days";
+      series.dataFields.categoryX = "projects";
+      series.tooltipText = "[{categoryX}: bold]{valueY}[/] days";
+      series.columns.template.strokeWidth = 0;
+
+      series.tooltip.pointerOrientation = "vertical";
+
+      series.columns.template.column.cornerRadiusTopLeft = 10;
+      series.columns.template.column.cornerRadiusTopRight = 10;
+      series.columns.template.column.fillOpacity = 0.8;
+
+      // on hover, make corner radiuses bigger
+      var hoverState = series.columns.template.column.states.create("hover");
+      hoverState.properties.cornerRadiusTopLeft = 0;
+      hoverState.properties.cornerRadiusTopRight = 0;
+      hoverState.properties.fillOpacity = 1;
+
+      series.columns.template.adapter.add("fill", function (fill, target) {
+        return chart.colors.getIndex(target.dataItem.index);
+      });
+
+      // Cursor
+      chart.cursor = new am4charts.XYCursor();
+
+    }, 50);
   }
 }
 

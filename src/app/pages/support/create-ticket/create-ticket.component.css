@@ -460,3 +460,6 @@ span.testtooltip:after {
 .attached-filedet {
     margin-bottom: 5px;
 }
+textarea{
+    resize: none !important;
+  }
