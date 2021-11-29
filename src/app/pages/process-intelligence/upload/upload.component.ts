@@ -920,7 +920,7 @@ getDBTables(){      //get DB tables list
 
   }
 
-  onDeleteSelectedProcess(id,status){
+  onDeleteSelectedProcess(id,ele){   
     let req_body={
       "piId":id
     }
@@ -943,7 +943,7 @@ getDBTables(){      //get DB tables list
           let status:any = res;
           Swal.fire({
             title: 'Success',
-            text: ""+status.data,
+            text: ele.piName+" Deleted Successfully !!",
             position: 'center',
             icon: 'success',
             showCancelButton: false,
