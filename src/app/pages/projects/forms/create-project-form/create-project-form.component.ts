@@ -91,7 +91,7 @@ export class CreateProjectFormComponent implements OnInit {
         
         this.insertForm2.get("resource").setValue("");
         this.insertForm2.get("mapValueChain").setValue("");
-        this.insertForm2.get("owner").setValue("");
+        this.insertForm2.get("owner").setValue(this.loggedInUserId);
         
         this.insertForm2.get("processOwner").setValue("");
         this.insertForm2.get("initiatives").setValue("");

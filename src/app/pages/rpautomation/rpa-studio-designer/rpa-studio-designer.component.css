@@ -327,3 +327,37 @@ button:disabled{
   opacity: 0.5 !important;
   cursor: not-allowed !important;
 }
+
+button.tsttooltipbtn:hover span.testtooltip {
+
+  display: block;
+  }
+
+  span.testtooltip {
+
+    position: absolute;
+    top: 42px;
+    right: -2px;
+    background-color: #001c47;
+    color: #fff;
+    width: -moz-max-content;
+    width: max-content;
+    padding: 3px 10px;
+    border-radius: 4px;
+    display: none;
+    }
+    
+    
+    
+    span.testtooltip::before {
+    
+    content: '';
+    border: 2px solid #001c47;
+    border-width: 0px 0px 2px 2px;
+    position: absolute;
+    padding: 4px;
+    right: 13px;
+    top: -5px;
+    background: #001c47;
+    transform: rotate( 45deg);
+    }
