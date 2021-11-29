@@ -240,7 +240,7 @@ import { NgxSpinnerService } from "ngx-spinner";
      await this.api.testenvironment(formdata.value).subscribe( res =>
       {
         this.spinner.hide();
-        if(res.errorCode==undefined){
+        if(res.errorMessage==undefined){
         // Swal.fire({
         //   position: 'center',
         //   icon: 'success',
@@ -433,14 +433,16 @@ import { NgxSpinnerService } from "ngx-spinner";
       }).then((result) => {
         if (result.value) {
           this.spinner.show();
-          this.api.deleteenvironment(selectedEnvironments).subscribe( res =>{ 
+          this.api.deleteenvironment(selectedEnvironments).subscribe( (res:any) =>{ 
             // Swal.fire({
             //   position: 'center',
             //   icon: 'success',
             //   title: res.status,
             //   showConfirmButton: false,
             //   timer: 2000    
-            // })
+            //( })
+            if(res.errorMessage==undefined)
+            {
             Swal.fire("Success",res.status,"success")
             
             this.removeallchecks();
@@ -448,6 +450,10 @@ import { NgxSpinnerService } from "ngx-spinner";
             this.spinner.hide();
             this.checktoupdate();
             this.checktodelete();
+            }else
+            {
+              Swal.fire("Error",res.errorMessage,"error")
+            }
           })
         }
       }) 
