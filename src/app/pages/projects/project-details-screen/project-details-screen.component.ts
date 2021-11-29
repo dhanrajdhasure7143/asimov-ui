@@ -45,7 +45,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   selected_process_names: any;
   displayedColumns: string[] = ["taskCategory","taskName","resources","status","percentage","lastModifiedTimestamp","lastModifiedBy", "createdBy","action"];
   dataSource6:MatTableDataSource<any>;
-  displayedColumns6: string[] = ["check","userId.firstName","roleID.displayName","userId.userId","uploadedDate"];
+  displayedColumns6: string[] = ["check","firstName","displayName","user_Id","last_active"];
   @ViewChild("sort14",{static:false}) sort14: MatSort;
   @ViewChild("sort11",{static:false}) sort11: MatSort;
   @ViewChild("paginator104",{static:false}) paginator104: MatPaginator;
@@ -215,7 +215,7 @@ percentageComplete: number;
         },1000);
        
       
-        this.getallusers();
+      //  this.getallusers();
         this.getInitiatives();
         this.Resourcedeleteflag=false;
   }
@@ -555,8 +555,15 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
         {
           this.Resourcecheckeddisabled = true;
         }
+        let users_updateddata=users
          this.resourceslength=users.length
-          this.dataSource6= new MatTableDataSource(users);
+         users_updateddata.forEach(element => {
+           element["firstName"]=element.userId.firstName
+           element["lastName"]=element.userId.lastName
+           element["displayName"]=element.roleID.displayName
+           element["user_Id"]=element.userId.userId
+         });
+          this.dataSource6= new MatTableDataSource(users_updateddata);
           this.dataSource6.sort=this.sort14;
           this.dataSource6.paginator=this.paginator104;
           this.getTaskandCommentsData();

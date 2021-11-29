@@ -4,12 +4,12 @@
 
 .box {
     width: 100%;
-    height: 300px;
+    height: 425px;
 }
 
-#chartdiv {
+#project-completion-duration {
     width: 100%;
-    height: 351px;
+    height: 375px;
 }
 
 .mat-progress-bar {
@@ -52,7 +52,6 @@ table td {
     font-weight: 600;
     color: #001c47;
 }
-
 
 .timesheet {
     background: rgb(245, 241, 241);
@@ -99,12 +98,15 @@ mat-drawer {
     border: none;
     height: 95%;
 }
-.arch-table-div{
+
+.arch-table-div {
     height: 307px;
 }
-.arch-table-div1{
+
+.arch-table-div1 {
     height: 200px;
 }
-.arch-table-div2{
-    height: 190px;
+
+.arch-table-div2 {
+    height: 310px;
 }

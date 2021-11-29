@@ -532,3 +532,9 @@ span.userimg {
 .removeallattachment button {
     margin-right: 5px;
 }
+.comment-span{
+    word-wrap: break-word;
+}
+textarea{
+    resize: none !important;
+  }
