@@ -566,7 +566,7 @@ export class ViewTicketComponent implements OnInit {
         this.getAttachmentsForCustomerRequest(this.requestKey);
         Swal.fire({
           title: 'Success',
-          text: 'Attachment added Successfully !',
+          text: 'Attachment Added Successfully !',
           icon: 'success',
           heightAuto: false,
         });
