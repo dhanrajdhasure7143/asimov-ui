@@ -522,7 +522,7 @@ export class ViewTicketComponent implements OnInit {
           if (res == 'removed attachments sucessfully') {
             Swal.fire({
               title: 'Success',
-              text: 'Attachment Removed Sucessfully !',
+              text: 'Attachment Deleted Successfully !',
               icon: 'success',
               heightAuto: false
             });
@@ -566,7 +566,7 @@ export class ViewTicketComponent implements OnInit {
         this.getAttachmentsForCustomerRequest(this.requestKey);
         Swal.fire({
           title: 'Success',
-          text: 'Attachment added Sucessfully !',
+          text: 'Attachment added Successfully !',
           icon: 'success',
           heightAuto: false,
         });
