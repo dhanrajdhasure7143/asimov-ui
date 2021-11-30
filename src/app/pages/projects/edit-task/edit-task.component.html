@@ -32,7 +32,7 @@
         <div class="col-md-11 p-0">
           <div class="d-flex">
             <div class="task-name">{{taskcategory}} / &nbsp;</div>
-            <div><input type="text" class="form-control rpa-control task-name-input"
+            <div><input type="text" maxlength="50" class="form-control rpa-control task-name-input"
               (change)="taskname=$event.target.value" [value]="taskname" ></div>
           </div>
           <div class="value">
@@ -125,13 +125,13 @@
                 
                 <div class="form-fields col-md-12 p-0">
                     <label class="h6 label-control" id="summary" class="label-control">Summary</label>
-                    <textarea class="form-control" formControlName="summary" rows="3" 
+                    <textarea class="form-control" maxlength="150" formControlName="summary" rows="3" 
                     style=" resize: none;" placeholder="Enter Summary">
                               </textarea>
                 </div>
                 <div class="form-fields col-md-12 p-0">
                     <label class="h6" id="description" class="label-control">Description</label>
-                    <textarea class="form-control" formControlName="description" rows="3"
+                    <textarea class="form-control" maxlength="150" formControlName="description" rows="3"
                     style=" resize: none;" placeholder="Enter Description">
                               </textarea>
                 </div>
@@ -150,7 +150,7 @@
                       <div>
                       </div>
                       <div class="col-md-12 pr-0 comment-input">
-                        <input class=" form-control" type="text" #commentInput id="addcomment"
+                        <input class=" form-control" maxlength="150" type="text" #commentInput id="addcomment"
                           placeholder="Add a comment.." />
                         <div class="comment-send" id="sendcomment"  matTooltip="Send"  (click)="postcomments(commentInput.value)">
                           <a class="newinntalx">
@@ -198,7 +198,7 @@
 
                         <div class="updatecomments" *ngIf="(showeditcomment && i==commentnumber)">
                           <div class="form-fields col-md-12 p-0">
-                            <input type="text" name="comment" class="form-control" formControlName="editcomment"
+                            <input type="text" name="comment" maxlength="150" class="form-control" formControlName="editcomment"
                               placeholder="Add Comment..." />
                           </div>
                           <div class="modal-footer modelprfooter">

@@ -39,7 +39,7 @@
                             
                             <div class="form-fields col-md-6 pr-0">
                                 <label class="label-control" for="taskName">Task Name<span class="star">*</span></label>
-                                <input type="text" formControlName="taskName" class="form-control data enteredfield-color"
+                                <input type="text"  maxlength="51" formControlName="taskName" class="form-control data enteredfield-color"
                                     placeholder="Enter Task Name">
                                 <span *ngIf="createtaskForm.get('taskName').invalid && createtaskForm.get('taskName').touched"
                                     class="errspan required">Task Name Required*</span>
@@ -162,7 +162,7 @@
                     </div>
                         <div class="col-md-12">
                             <label class="label-control">Task Description</label>
-                            <textarea rows="4" class="form-control enteredfield-color" formControlName="description" placeholder="Enter Task Description..."
+                            <textarea rows="4" maxlength="150" class="form-control enteredfield-color" formControlName="description" placeholder="Enter Task Description..."
                             style=" resize: none;">
                             </textarea>
                         </div> 

@@ -660,4 +660,5 @@ input.small-input[type="date"]::-webkit-calendar-picker-indicator {
 span.projectdesc {
   font-size: 13px;
   opacity: 0.6;
+  word-wrap: break-word;
 }

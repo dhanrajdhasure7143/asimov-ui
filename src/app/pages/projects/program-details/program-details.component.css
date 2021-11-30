@@ -170,6 +170,7 @@ span.labelcont {
 span.programdesc {
   font-size: 13px;
   opacity: 0.6;
+  word-wrap: break-word;
 }
 .status-tabs{
   display: flex;
