@@ -171,10 +171,7 @@
                                         <div class="comments-box col-md-12 p-0">
                                             <div>
                                             <textarea type="text" id="text_new1" (keyup)="autoGrowcommentsBox()" (click)="addCommentClick()" name="comment_field" [(ngModel)]="newComment_data" placeholder="Enter Comment" class="form-control"></textarea>
-
-                                                
                                                 <span *ngIf="isAddInputenable" class="comments-box-icons" >    
-                                                    
                                                     <button class="btn btn-default" (click)="cancelCreateComment()">Cancel</button>
                                                     <button class="btn btn-primary" (click)="addNewComment(newComment_data)" id="actn_div">Save</button>
                                                 </span>
@@ -194,7 +191,7 @@
                                                     </div>
 
                                                     <div class="Content-comment">
-                                                        <span class="" *ngIf='isCommentEditable != i'> {{each_comment.comment}} </span>
+                                                        <span class="comment-span" *ngIf='isCommentEditable != i'> {{each_comment.comment}} </span>
 
                                                         <div class="col-md-12 p-0 text-right" *ngIf='!(isCommentEditable == i)'>
                                                             <span class="comment-date-icons firsticon-edit" *ngIf="each_comment.createdBy != 'EPSoft IT Admin'">

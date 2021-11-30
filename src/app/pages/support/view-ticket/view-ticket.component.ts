@@ -191,7 +191,7 @@ export class ViewTicketComponent implements OnInit {
           if (res == 'removed attachments sucessfully') {
             Swal.fire({
               title: 'Success',
-              text: 'Attachments Removed Sucessfully !',
+              text: 'Attachments Deleted Successfully !',
               icon: 'success',
               heightAuto: false,
             });
@@ -266,7 +266,7 @@ export class ViewTicketComponent implements OnInit {
       if (res == 'comment created sucessfully') {
         Swal.fire({
           title: 'Success',
-          text: 'Comment Created Sucessfully !',
+          text: 'Comment Created Successfully !',
           icon: 'success',
           heightAuto: false,
         });
@@ -306,7 +306,7 @@ export class ViewTicketComponent implements OnInit {
       if (res == 'comment Edited sucessfully') {
         Swal.fire({
           title: 'Success',
-          text: 'Comment Updated Sucessfully !',
+          text: 'Comment Updated Successfully !',
           icon: 'success',
           heightAuto: false
         });
@@ -355,7 +355,7 @@ export class ViewTicketComponent implements OnInit {
           let status: any = res;
           Swal.fire({
             title: 'Success',
-            text: "" + status,
+            text: 'Comment Deleted Succefully !',
             position: 'center',
             icon: 'success',
             showCancelButton: false,
@@ -432,7 +432,7 @@ export class ViewTicketComponent implements OnInit {
       if (res == 'Summary updated Sucessfully!') {
         Swal.fire({
           title: 'Success',
-          text: 'Summary Updated Sucessfully !',
+          text: 'Summary Updated Successfully !',
           icon: 'success',
           heightAuto: false
         });
@@ -480,7 +480,7 @@ export class ViewTicketComponent implements OnInit {
       if (res == 'Description updated Sucessfully!') {
         Swal.fire({
           title: 'Success',
-          text: 'Description Updated Sucessfully !',
+          text: 'Description Updated Successfully !',
           icon: 'success',
           heightAuto: false
         });
@@ -522,7 +522,7 @@ export class ViewTicketComponent implements OnInit {
           if (res == 'removed attachments sucessfully') {
             Swal.fire({
               title: 'Success',
-              text: 'Attachment Removed Sucessfully !',
+              text: 'Attachment Deleted Successfully !',
               icon: 'success',
               heightAuto: false
             });
@@ -566,7 +566,7 @@ export class ViewTicketComponent implements OnInit {
         this.getAttachmentsForCustomerRequest(this.requestKey);
         Swal.fire({
           title: 'Success',
-          text: 'Attachment added Sucessfully !',
+          text: 'Attachment Added Successfully !',
           icon: 'success',
           heightAuto: false,
         });

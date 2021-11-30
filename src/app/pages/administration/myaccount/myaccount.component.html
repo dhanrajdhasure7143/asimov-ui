@@ -104,16 +104,24 @@
                                     <div *ngIf ="!isRefresh" style=" padding-left: 0px !important" class="form-fields col-md-6 pr-0 Admin-countrylist">
                                       <label class="label-control" for="phoneumber">Phone<span class="star">*</span></label>
                                       <input type="text" (keydown)="onKeydown($event)"  id="phoneNumber" name="phoneumber" style="margin-left:50px;" class="form-control data phonenumber" ng2TelInput [ng2TelInputOptions]="{initialCountry: phnCountryCode}"
-                                        #phoneumber="ngModel" [(ngModel)]="formOne.phoneNumber" onKeyPress="if(this.value.length==10) return false;" required/>
-                                      <span *ngIf="((phoneumber.invalid && updateUser.submitted) || (phoneumber.errors && phoneumber.touched) )" 
+                                        #phoneumber="ngModel" [(ngModel)]="formOne.phoneNumber" onKeyPress="if(this.value.length==10) return false;"
+                                        pattern="^((\\+91-?)|0)?[0-9]{10}$" maxlength="10" required/>
+                                      <span *ngIf="((phoneumber.invalid && updateUser.submitted) || (phoneumber.errors && phoneumber.touched) && !(phoneumber.errors.pattern) )"
                                         class='errspan required'> Phone Number is required </span>
+                                        <span *ngIf="phoneumber.errors  && phoneumber.invalid">
+                                        <span *ngIf="phoneumber.errors.pattern"  class="errspan required">Phone number should be 10 digits</span>
+                                      </span>
                                     </div>                                              
                                     <div *ngIf ="isRefresh" style=" padding-left: 0px !important" class="form-fields col-md-6 pr-0 Admin-countrylist">
                                       <label class="label-control" for="phoneumber">Phone<span class="star">*</span></label>
-                                      <input type="text" (keydown)="onKeydown($event)"  id="phoneNumber" name="phoneumber" style="margin-left:50px;" class="form-control data phonenumber" ng2TelInput [ng2TelInputOptions]="{initialCountry: phnCountryCode}"
-                                        #phoneumber="ngModel" [(ngModel)]="formOne.phoneNumber" onKeyPress="if(this.value.length==10) return false;" required/>
-                                      <span *ngIf="((phoneumber.invalid && updateUser.submitted) || (phoneumber.errors && phoneumber.touched) )" 
+                                      <input type="text" (keydown)="onKeydown($event)" id="phoneNumber" name="phoneumber" style="margin-left:50px;" class="form-control data phonenumber" ng2TelInput [ng2TelInputOptions]="{initialCountry: phnCountryCode}"
+                                        #phoneumber="ngModel" [(ngModel)]="formOne.phoneNumber" onKeyPress="if(this.value.length==10) return false;"
+                                        pattern="^((\\+91-?)|0)?[0-9]{10}$" maxlength="10" required/>
+                                        <span *ngIf="((phoneumber.invalid && updateUser.submitted) || (phoneumber.errors && phoneumber.touched) && !(phoneumber.errors.pattern))"
                                         class='errspan required'> Phone Number is required </span>
+                                        <span *ngIf="phoneumber.errors && phoneumber.invalid">
+                                        <span *ngIf="phoneumber.errors.pattern" class="errspan required">Phone number should be 10 digits</span>
+                                        </span>
                                     </div>
                                   </div>                           
                                 </div>

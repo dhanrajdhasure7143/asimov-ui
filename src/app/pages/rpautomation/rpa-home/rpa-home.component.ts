@@ -547,10 +547,14 @@ export class RpaHomeComponent implements OnInit {
       })
       }
       else {
+        this.insertbot.reset();
+        this.insertbot.get("botDepartment").setValue("");
         document.getElementById("create-bot").style.display = "block";
       }
     }
     else{
+      this.insertbot.reset();
+      this.insertbot.get("botDepartment").setValue("");
       document.getElementById("create-bot").style.display = "block";
     }
   }

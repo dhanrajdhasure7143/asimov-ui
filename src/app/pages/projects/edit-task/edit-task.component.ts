@@ -74,6 +74,7 @@ export class EditTaskComponent implements OnInit {
   pi_process_list: any;
   bpm_process_list: any;
   bot_list: any;
+  mindate= moment().format("YYYY-MM-DD");
   constructor(private formBuilder:FormBuilder,
     private router:ActivatedRoute,
     private route:Router,
@@ -130,6 +131,7 @@ export class EditTaskComponent implements OnInit {
         this.taskresource=task.resources
         this.startDate=task.startDate
         this.endDate=moment(task.endDate).format("YYYY-MM-DD")
+        this.mindate=moment(this.startDate).format("YYYY-MM-DD")
         console.log(this.endDate)
         this.updatetaskdata(task);
       })

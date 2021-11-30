@@ -142,7 +142,7 @@ export class CreateTicketComponent implements OnInit {
       if (res == 'created request sucessfully') {
         Swal.fire({
           title: 'Success',
-          text: 'Ticket Created Successfully',
+          text: 'Ticket Created Successfully !',
           icon: 'success',
           heightAuto: false
         }).then((result) => {

@@ -81,6 +81,10 @@
   background-color: rgb(0, 161, 228) !important;
 }
 
+::ng-deep .project-programs-list .mat-tab-header{
+  width:"100%" !important;
+}
+
 
 span.projects-menu-item.vreatbu {
   background-color: #00a0e4;
@@ -120,6 +124,7 @@ span.tab-text {
 
 mat-tab-group.mat-tab-group.mat-primary {
   height: calc(100% - 49px);
+  
 }
 
 

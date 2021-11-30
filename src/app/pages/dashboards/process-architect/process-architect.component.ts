@@ -120,6 +120,16 @@ export class ProcessArchitectComponent implements OnInit {
     this.apiService.getProjectCompletionDuration(this.userRoles, this.userEmail, this.userName, duration)
       .subscribe(res => {
         this.ProjectCompletionDuration = res;
+        let projectCompletionArray = [];
+        for (var i = 0; i < Object.keys(res).length; i++) {
+          var data = {
+            "projects": Object.keys(res)[i],
+            "days": Object.values(res)[i],
+          }
+          projectCompletionArray.push(data);
+        }
+        this.projectDurationChart(projectCompletionArray);
+        this.isLoading = false;
       });
   }
 
@@ -397,5 +407,63 @@ export class ProcessArchitectComponent implements OnInit {
     }, 30)
 
 
+  }
+
+  projectDurationChart(data) {
+    am4core.useTheme(am4themes_animated);
+
+    setTimeout(() => {
+      var chart = am4core.create("project-completion-duration", am4charts.XYChart);
+      chart.scrollbarX = new am4core.Scrollbar();
+      chart.logo.disabled = true;
+
+      // Add data
+      chart.data = data
+
+      // Create axes
+      var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+      categoryAxis.dataFields.category = "projects";
+      categoryAxis.renderer.grid.template.location = 0;
+      categoryAxis.renderer.minGridDistance = 30;
+      categoryAxis.renderer.labels.template.horizontalCenter = "right";
+      categoryAxis.renderer.labels.template.verticalCenter = "middle";
+      categoryAxis.renderer.labels.template.rotation = 270;
+      categoryAxis.tooltip.disabled = true;
+      categoryAxis.renderer.minHeight = 110;
+      categoryAxis.title.text = "Projects";
+
+
+      var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+      valueAxis.renderer.minWidth = 50;
+      valueAxis.title.text = "Project Completion Days";
+
+      // Create series
+      var series = chart.series.push(new am4charts.ColumnSeries());
+      series.sequencedInterpolation = true;
+      series.dataFields.valueY = "days";
+      series.dataFields.categoryX = "projects";
+      series.tooltipText = "[{categoryX}: bold]{valueY}[/] days";
+      series.columns.template.strokeWidth = 0;
+
+      series.tooltip.pointerOrientation = "vertical";
+
+      series.columns.template.column.cornerRadiusTopLeft = 10;
+      series.columns.template.column.cornerRadiusTopRight = 10;
+      series.columns.template.column.fillOpacity = 0.8;
+
+      // on hover, make corner radiuses bigger
+      var hoverState = series.columns.template.column.states.create("hover");
+      hoverState.properties.cornerRadiusTopLeft = 0;
+      hoverState.properties.cornerRadiusTopRight = 0;
+      hoverState.properties.fillOpacity = 1;
+
+      series.columns.template.adapter.add("fill", function (fill, target) {
+        return chart.colors.getIndex(target.dataItem.index);
+      });
+
+      // Cursor
+      chart.cursor = new am4charts.XYCursor();
+
+    }, 50);
   }
 }

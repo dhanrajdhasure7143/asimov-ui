@@ -181,7 +181,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
      await this.api.testdbconnections(formdata.value).subscribe( res =>
       {
         this.spinner.hide();
-        if(res.errorCode==undefined){
+        if(res.errorMessage==undefined){
         // Swal.fire({
         //   position: 'center',
         //   icon: 'success',
