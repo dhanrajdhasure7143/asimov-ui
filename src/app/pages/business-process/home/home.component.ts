@@ -132,7 +132,7 @@ export class BpsHomeComponent implements OnInit {
       }else{
         this.categoryName=selected_category?selected_category:'allcategories';
       }
-    //  this.searchByCategory(this.categoryName);
+     this.searchByCategory(this.categoryName);
     },
     
     (err) => {

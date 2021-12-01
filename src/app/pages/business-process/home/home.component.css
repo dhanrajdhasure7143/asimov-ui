@@ -264,7 +264,11 @@ div#bpmn_list {
     button:disabled {
         background-color: none !important;
     } */
-
+    .pag-font1 button:disabled {
+        background: none;
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
     .pag-font1{
         padding-top: 10px;
     }
