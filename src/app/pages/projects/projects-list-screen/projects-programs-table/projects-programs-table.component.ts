@@ -234,7 +234,7 @@ export class ProjectsProgramsTableComponent implements OnInit {
       var projects_or_programs=this.projects_list.map((item:any)=>{
           if(item.type=="Program")
             return {
-              
+
               "id":item.id,
               "projectName": item.programName,
               "initiatives": item.initiatives,
@@ -245,6 +245,7 @@ export class ProjectsProgramsTableComponent implements OnInit {
               "createdBy": item.createdBy,
               "lastModifiedBy": item.lastModifiedBy,
               "type": item.type
+              
             }
           else if(item.type=="Project")
             return {
