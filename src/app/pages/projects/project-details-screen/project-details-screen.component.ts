@@ -138,6 +138,7 @@ percentageComplete: number;
   enabledeletetask: boolean=false;
   mindate= moment().format("YYYY-MM-DD");
   projectenddate:any;
+  projectStartDate:any;
   initiatives: any;
   loginresourcecheck: boolean=false;
   constructor(private dt:DataTransferService,private route:ActivatedRoute, private rpa:RestApiService,
@@ -213,7 +214,7 @@ percentageComplete: number;
     setTimeout(() => {
       this.getImage();
       this.profileName();
-        },1000);
+        },2000);
        
       
       //  this.getallusers();
@@ -356,6 +357,7 @@ percentageComplete: number;
     return value;
   }​​​​​​​​
   downloadExcel(){
+    console.log(this.projectDetails);
     this.spinner.show();
     this.rpa.exportproject(this.project_id).subscribe(data=>{
       let response:any=data;
@@ -472,6 +474,7 @@ this.rpa.getProjectDetailsById(paramsdata.id).subscribe( res=>{​​​​​�
 this.spinner.hide();
 this.projectDetails=res
 this.projectenddate=moment(this.projectDetails.endDate).format("YYYY-MM-DD");
+this.projectStartDate = moment(this.projectDetails.startDate).format("YYYY-MM-DD");
 console.log(this.projectDetails);
 
 if(this.projectDetails){​​​​​​
@@ -511,7 +514,7 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
       var firstnameFirstLetter=this.firstname.charAt(0)
       var lastnameFirstLetter=this.lastname.charAt(0)
       this.firstletter=firstnameFirstLetter+lastnameFirstLetter
-    }, 1000);
+    }, 2000);
   }
 
   getImage() {
@@ -546,6 +549,7 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
       {
         let tenantid=localStorage.getItem("tenantName")
         this.rpa.getuserslist(tenantid).subscribe(response=>{
+        console.log(response);
         
           this.users_list=response;
           let users:any=[]
@@ -967,7 +971,10 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
         this.spinner.show()
         this.projectDetails["type"]="Project";
         this.projectDetails.endDate=this.projectenddate;
+        this.projectDetails.startDate=this.projectStartDate;
         this.projectDetails.effortsSpent=parseInt(this.projectDetails.effortsSpent)
+        console.log(this.projectDetails);
+        
         this.rpa.update_project(this.projectDetails).subscribe(res=>{
           this.spinner.hide()
           let response:any=res;
