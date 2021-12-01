@@ -235,7 +235,7 @@ export class ProjectsProgramsTableComponent implements OnInit {
           if(item.type=="Program")
             return {
               "id":item.id,
-              "programName": item.programName,
+              "projectName": item.programName,
               "initiatives": item.initiatives,
               "priority": item.priority,
               "process":item.process,
