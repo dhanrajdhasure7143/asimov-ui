@@ -85,7 +85,7 @@
                   <span class="projectdesc">{{projectDetails.projectPurpose}}</span>
               </div>  
               <div *ngIf="editdata==true">
-                <textarea  maxlength="150" (change)="projectDetails.projectPurpose=$event.target.value"
+                <textarea (change)="projectDetails.projectPurpose=$event.target.value"
                 [value]="(projectDetails.projectPurpose==undefined||projectDetails.projectPurpose==null)?'':projectDetails.projectPurpose"
                 class="small-input" placeholder="Enter Project Description" maxlength="150"></textarea>                    
               </div> 
@@ -269,7 +269,7 @@
                       class="tab-text labelcont">-</span>
                   </div>
                   <div *ngIf="editdata==true">
-                    <input type="date" class="small-input" (change)="projectDetails.startDate=$event.target.value" [value]="projectDetails.startDate">
+                    <input type="date" class="small-input" (change)="projectStartDate=$event.target.value" [value]="projectStartDate">
                   </div>
                 </div>
                 </div>
