@@ -271,8 +271,11 @@ createproject(event)
   resetcreateprogram()
   {
         this.createprogram.reset();
+        this.createprogram.get("owner").setValue(this.loggedInUserId);
+        this.createprogram.get("processOwner").setValue("");
         this.createprogram.get("priority").setValue("");
         this.createprogram.get("initiatives").setValue("");
+        $('#selectprojects').prop('selectedIndex',0);
   }
   getallusers()
   {

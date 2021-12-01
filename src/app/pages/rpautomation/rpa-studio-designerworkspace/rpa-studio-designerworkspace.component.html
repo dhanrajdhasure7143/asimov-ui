@@ -324,7 +324,16 @@
                                 Maximum of 50 characters
                             </div> 
                         </div>
-              
+                        
+                        <div class="formelement">
+                            <label class="label-control" for="categoryId">Category<span class="star">*</span></label>
+                            <select type="text" class="form-control" formControlName="categoryId"  [value]="categoryList.length==1?categoryList[0].categoryId:'0'">
+                                <option value="0" disabled>Select Category</option>
+                                <option [value]="category.categoryId" *ngFor="let category of categoryList">{{category.categoryName}}</option>
+                            </select>   
+                             <span *ngIf="(insertForm.get('categoryId').invalid && insertForm.get('categoryId').touched)"  class="errspan required">Category Required*</span>
+                        </div>
+
                         <div class=" formelement">
                             <label for="serverName">Mail Server<span class="star">*</span></label>
                             <select class="form-control" formControlName="serverName">
