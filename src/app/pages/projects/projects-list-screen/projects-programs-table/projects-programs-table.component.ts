@@ -236,6 +236,7 @@ export class ProjectsProgramsTableComponent implements OnInit {
             return {
 
               "id":item.id,
+              
               "projectName": item.programName,
               "initiatives": item.initiatives,
               "priority": item.priority,
@@ -245,7 +246,6 @@ export class ProjectsProgramsTableComponent implements OnInit {
               "createdBy": item.createdBy,
               "lastModifiedBy": item.lastModifiedBy,
               "type": item.type
-              
             }
           else if(item.type=="Project")
             return {
