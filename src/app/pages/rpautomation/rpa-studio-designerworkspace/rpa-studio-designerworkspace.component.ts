@@ -84,7 +84,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   public form_change:Boolean=false;
   @ViewChild('template', { static: false }) template: TemplateRef<any>;
   public nodedata: any;
-
+  categoryList:any;
   constructor(private rest: RestApiService,
     private notifier: NotifierService,
     private hints: Rpa_Hints,
@@ -100,6 +100,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       this.insertForm=this.formBuilder.group({
         userName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         password: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        categoryId:["0", Validators.compose([Validators.required])],
         serverName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         inBoundAddress: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         inBoundAddressPort: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
@@ -133,6 +134,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     }
     this.dragareaid = "dragarea__" + this.finalbot.botName;
     this.outputboxid = "outputbox__" + this.finalbot.botName;
+    this.getCategories();
   }
 
 
@@ -1371,6 +1373,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
   resetCredForm(){
     this.insertForm.reset();
+    this.insertForm.get("categoryId").setValue(this.categoryList.length==1?this.categoryList[0].categoryId:'0')
+    this.insertForm.get("serverName").setValue("")
     this.passwordtype1=false;
   }
 
@@ -1382,6 +1386,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   {
    // this.modalRef = this.modalService.show(this.template);
     document.getElementById("createcredentials").style.display='block';
+    this.insertForm.get("categoryId").setValue(this.categoryList.length==1?this.categoryList[0].categoryId:"0")
   }
 
   saveCredentials(){
@@ -1421,7 +1426,16 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
    } 
   }
 
-
+  getCategories()
+  {
+    this.rest.getCategoriesList().subscribe(data=>{
+      let response:any=data;
+      if(response.errorMessage==undefined)
+      {
+        this.categoryList=response.data;
+      }
+    })
+  }
 }
 
 

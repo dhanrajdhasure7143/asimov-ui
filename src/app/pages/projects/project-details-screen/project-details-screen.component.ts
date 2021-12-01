@@ -43,7 +43,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   dataSource9:MatTableDataSource<any>;
   categaoriesList: any;
   selected_process_names: any;
-  displayedColumns: string[] = ["taskCategory","taskName","resources","status","percentage","lastModifiedTimestamp","lastModifiedBy", "createdBy","action"];
+  displayedColumns: string[] = ["taskCategory","taskName","resources","status","percentageComplete","lastModifiedTimestamp","lastModifiedBy", "createdBy","action"];
   dataSource6:MatTableDataSource<any>;
   displayedColumns6: string[] = ["check","firstName","displayName","user_Id","last_active"];
   @ViewChild("sort14",{static:false}) sort14: MatSort;
@@ -139,6 +139,7 @@ percentageComplete: number;
   mindate= moment().format("YYYY-MM-DD");
   projectenddate:any;
   initiatives: any;
+  loginresourcecheck: boolean=false;
   constructor(private dt:DataTransferService,private route:ActivatedRoute, private rpa:RestApiService,
     private modalService: BsModalService,private formBuilder: FormBuilder,private router: Router,
     private spinner:NgxSpinnerService) { }
@@ -461,7 +462,7 @@ percentageComplete: number;
 
  
 projectdetails(){​​​​​​
-
+  const userid=localStorage.getItem('ProfileuserId');
 this.spinner.show()
 this.route.queryParams.subscribe(data=>{​​​​​​
 let paramsdata:any=data
@@ -486,11 +487,16 @@ this.projectDetails.resource.forEach(item=>{​​​​​​
 users.push(item.resource)
  }​​​​​​)
 this.resources=users
+console.log(this.resources)
+this.loginresourcecheck=this.resources.find(item2=>item2==userid);
+console.log(this.loginresourcecheck)
  }​​​​​​
 else{​​​​​​
 this.resources=this.users_list
+console.log(this.resources)
  }​​​​​​ 
  }​​​​​​)
+ 
 this.getTaskandCommentsData();
 this.getLatestFiveAttachments(this.project_id)
 paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsdata.programId;
