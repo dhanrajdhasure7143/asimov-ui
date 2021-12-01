@@ -57,6 +57,8 @@ export class BpsHomeComponent implements OnInit {
   @ViewChild(MatSort,{static:false}) sort: MatSort;
   @ViewChild(MatPaginator,{static:false}) paginator: MatPaginator;
   categories_list:any[]=[];
+  page:any;
+  pageSize:number=25;
 
   constructor(private router:Router, private bpmnservice:SharebpmndiagramService, private dt:DataTransferService,
      private rest:RestApiService, private hints:BpsHints, private global:GlobalScript,
@@ -96,7 +98,7 @@ export class BpsHomeComponent implements OnInit {
       this.bkp_saved_diagrams = res; 
       this.isLoading = false;
       this.savedDiagrams_list=this.saved_diagrams;
-      this.assignPagenation(this.saved_diagrams);
+     // this.assignPagenation(this.saved_diagrams);
 
       let selected_category=localStorage.getItem("bps_search_category");
       if(this.categories_list.length == 1){
@@ -104,7 +106,7 @@ export class BpsHomeComponent implements OnInit {
       }else{
         this.categoryName=selected_category?selected_category:'allcategories';
       }
-      this.searchByCategory(this.categoryName);
+    //  this.searchByCategory(this.categoryName);
     },
     
     (err) => {
@@ -249,7 +251,7 @@ this.dt.bpsHeaderValues('');
           this.saved_diagrams.push(e)
         }
       });
-      this.assignPagenation(this.saved_diagrams);
+     // this.assignPagenation(this.saved_diagrams);
     }
   }
   sort1(colKey,ind) { // if not asc, desc
@@ -270,7 +272,7 @@ this.dt.bpsHeaderValues('');
       }
       
     });
-    this.assignPagenation(this.saved_diagrams);
+   // this.assignPagenation(this.saved_diagrams);
   }
 
   sendReminderMail(e, bpmNotation){
@@ -296,6 +298,27 @@ this.dt.bpsHeaderValues('');
         })
       }
     })
+  }
+
+
+  
+
+
+
+  getStartIndex(currentPage: number, lastPage: number): string {
+    let firstIndex = 1;
+    if((currentPage !== lastPage) || (currentPage > 0 && lastPage > 0)) {
+      firstIndex = (Number(this.pageSize) * (Number(currentPage) -1) + 1);
+    }
+    return firstIndex.toString();
+  }
+
+  getLastIndex(currentPage: number, lastPage: number): string {
+    let lastIndex = this.saved_diagrams ? this.saved_diagrams.length : null;
+    if((currentPage !== lastPage)) {
+      lastIndex = (Number(this.pageSize) * (Number(currentPage)));
+    }
+    return lastIndex.toString();
   }
 
   fitNotationView(e){    //Fit notation to canvas
