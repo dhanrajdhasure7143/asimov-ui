@@ -236,8 +236,7 @@ export class ProjectsProgramsTableComponent implements OnInit {
             return {
 
               "id":item.id,
-              
-              "projectName": item.programName,
+              "projectName": item.projectName,
               "initiatives": item.initiatives,
               "priority": item.priority,
               "process":item.process,
@@ -264,6 +263,7 @@ export class ProjectsProgramsTableComponent implements OnInit {
             }
         
       })
+      console.log("--------------check---------------------",projects_or_programs)
       this.dataSource2 = new MatTableDataSource(projects_or_programs);
       console.log("data",this.dataSource2)
       this.dataSource2.paginator=this.paginator2;
