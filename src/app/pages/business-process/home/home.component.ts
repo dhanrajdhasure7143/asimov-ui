@@ -19,6 +19,7 @@ import { of  } from 'rxjs/observable/of';
 import { map } from 'rxjs/operators';
 import { MatSort, Sort } from '@angular/material';;
 import { fromMatSort, sortRows } from './../model/datasource-utils';
+import {FilterPipe} from './../custom_filter.pipe';
 @Component({
   selector: 'app-bpshome',
   templateUrl: './home.component.html',
@@ -57,8 +58,6 @@ export class BpsHomeComponent implements OnInit {
   @ViewChild(MatSort,{static:false}) sort: MatSort;
   @ViewChild(MatPaginator,{static:false}) paginator: MatPaginator;
   categories_list:any[]=[];
-  page:any;
-  pageSize:number=25;
 
   constructor(private router:Router, private bpmnservice:SharebpmndiagramService, private dt:DataTransferService,
      private rest:RestApiService, private hints:BpsHints, private global:GlobalScript,
@@ -95,9 +94,6 @@ export class BpsHomeComponent implements OnInit {
     await this.rest.getUserBpmnsList().subscribe( (res:any[]) =>  {
       this.saved_diagrams = res; 
       this.saved_diagrams.map(item => {item.xpandStatus = false;return item;})
-      this.bkp_saved_diagrams = res; 
-      this.isLoading = false;
-      this.savedDiagrams_list=this.saved_diagrams;
       this.saved_diagrams.forEach(ele => {
         ele['eachObj']={
           "bpmnXmlNotation":ele.bpmnXmlNotation,
@@ -124,7 +120,11 @@ export class BpsHomeComponent implements OnInit {
         ele["userName"]=''
         ele['modifiedTimestamp']=''
       });
-     // this.assignPagenation(this.saved_diagrams);
+
+      this.bkp_saved_diagrams = res; 
+      this.isLoading = false;
+      this.savedDiagrams_list=this.saved_diagrams;
+      this.assignPagenation(this.saved_diagrams);
 
       let selected_category=localStorage.getItem("bps_search_category");
       if(this.categories_list.length == 1){
@@ -132,7 +132,7 @@ export class BpsHomeComponent implements OnInit {
       }else{
         this.categoryName=selected_category?selected_category:'allcategories';
       }
-     this.searchByCategory(this.categoryName);
+      this.searchByCategory(this.categoryName);
     },
     
     (err) => {
@@ -266,7 +266,7 @@ this.dt.bpsHeaderValues('');
     this.saved_diagrams=[]
     if (category == "allcategories") {
      this.saved_diagrams=this.savedDiagrams_list;
-    //  this.assignPagenation(this.saved_diagrams);
+     this.assignPagenation(this.saved_diagrams);
       // this.dataSource.filter = fulldata;
     }
     else{  
@@ -277,7 +277,7 @@ this.dt.bpsHeaderValues('');
           this.saved_diagrams.push(e)
         }
       });
-     // this.assignPagenation(this.saved_diagrams);
+      this.assignPagenation(this.saved_diagrams);
     }
   }
   sort1(colKey,ind) { // if not asc, desc
@@ -298,7 +298,7 @@ this.dt.bpsHeaderValues('');
       }
       
     });
-   // this.assignPagenation(this.saved_diagrams);
+    this.assignPagenation(this.saved_diagrams);
   }
 
   sendReminderMail(e, bpmNotation){
@@ -324,27 +324,6 @@ this.dt.bpsHeaderValues('');
         })
       }
     })
-  }
-
-
-  
-
-
-
-  getStartIndex(currentPage: number, lastPage: number): string {
-    let firstIndex = 1;
-    if((currentPage !== lastPage) || (currentPage > 0 && lastPage > 0)) {
-      firstIndex = (Number(this.pageSize) * (Number(currentPage) -1) + 1);
-    }
-    return firstIndex.toString();
-  }
-
-  getLastIndex(currentPage: number, lastPage: number): string {
-    let lastIndex = this.saved_diagrams ? this.saved_diagrams.length : null;
-    if((currentPage !== lastPage)) {
-      lastIndex = (Number(this.pageSize) * (Number(currentPage)));
-    }
-    return lastIndex.toString();
   }
 
   fitNotationView(e){    //Fit notation to canvas
@@ -444,6 +423,12 @@ this.assignPagenation(filtered)
     }else {
       return value;
     }
+  }
+
+  applySearchFilter(v){
+    const filterPipe = new FilterPipe();
+  const fiteredArr = filterPipe.transform(this.saved_diagrams,v);
+  this.assignPagenation(fiteredArr)
   }
  
 }
