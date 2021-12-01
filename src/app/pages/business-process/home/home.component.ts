@@ -98,6 +98,32 @@ export class BpsHomeComponent implements OnInit {
       this.bkp_saved_diagrams = res; 
       this.isLoading = false;
       this.savedDiagrams_list=this.saved_diagrams;
+      this.saved_diagrams.forEach(ele => {
+        ele['eachObj']={
+          "bpmnXmlNotation":ele.bpmnXmlNotation,
+          "bpmnConfProcessMeta":ele.bpmnConfProcessMeta,
+          "bpmnProcessApproved":ele.bpmnProcessApproved,
+          "convertedCreatedTime":ele.convertedCreatedTime,
+          "createdTimestamp":ele.createdTimestamp,
+          "hasConformance":ele.hasConformance,
+          "id":ele.id,
+          "notationFromPI":ele.notationFromPI,
+          "tenantId":ele.tenantId,
+          "userName":ele.userName,
+          "modifiedTimestamp":ele.modifiedTimestamp
+        }
+        ele["bpmnXmlNotation"]=''
+        ele["bpmnConfProcessMeta"]=''
+        ele["bpmnProcessApproved"]=''
+        ele["convertedCreatedTime"]=''
+        ele["createdTimestamp"]=''
+        ele["hasConformance"]=''
+        ele["id"]=''
+        ele["notationFromPI"]=''
+        ele["tenantId"]=''
+        ele["userName"]=''
+        ele['modifiedTimestamp']=''
+      });
      // this.assignPagenation(this.saved_diagrams);
 
       let selected_category=localStorage.getItem("bps_search_category");
@@ -122,13 +148,13 @@ export class BpsHomeComponent implements OnInit {
 
   openDiagram(bpmnDiagram){
     // if(bpmnDiagram.bpmnProcessStatus && bpmnDiagram.bpmnProcessStatus =="PENDING" ) return;
-    let binaryXMLContent = bpmnDiagram.bpmnXmlNotation; 
+    let binaryXMLContent = bpmnDiagram.eachObj.bpmnXmlNotation; 
     let bpmnModelId = bpmnDiagram.bpmnModelId;
     let bpmnVersion = bpmnDiagram.version;
     let bpmnType = bpmnDiagram.ntype;
     this.bpmnservice.uploadBpmn(atob(binaryXMLContent));
     let push_Obj={"rejectedOrApproved":bpmnDiagram.bpmnProcessStatus,"isfromApprover":false,
-    "isShowConformance":false,"isStartProcessBtn":false,"autosaveTime":bpmnDiagram.modifiedTimestamp,
+    "isShowConformance":false,"isStartProcessBtn":false,"autosaveTime":bpmnDiagram.eachObj.modifiedTimestamp,
     "isFromcreateScreen":false,'process_name':bpmnDiagram.bpmnProcessName,'isEditbtn':false,'isSavebtn':true}
 this.dt.bpsNotationaScreenValues(push_Obj);
 this.dt.bpsHeaderValues('');
@@ -187,7 +213,7 @@ this.dt.bpsHeaderValues('');
   getDiagram(eachBPMN,i){
       var element = document.getElementById('_diagram'+i);
     element.scrollIntoView({behavior: "auto",block: "center", inline: "nearest"});
-    let byteBpmn = atob(eachBPMN.bpmnXmlNotation);
+    let byteBpmn = atob(eachBPMN.eachObj.bpmnXmlNotation);
     this.index=i;
     if(document.getElementsByClassName('diagram_container'+i)[0].innerHTML.trim() != "") return;
     let notationJson = {
@@ -240,7 +266,7 @@ this.dt.bpsHeaderValues('');
     this.saved_diagrams=[]
     if (category == "allcategories") {
      this.saved_diagrams=this.savedDiagrams_list;
-     this.assignPagenation(this.saved_diagrams);
+    //  this.assignPagenation(this.saved_diagrams);
       // this.dataSource.filter = fulldata;
     }
     else{  

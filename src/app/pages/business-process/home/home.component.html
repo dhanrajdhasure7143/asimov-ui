@@ -43,15 +43,15 @@
                 <div class="row col-md-12 text-bold workspace-title" matSort>
                     <!-- <div class="header" matSort> -->
                     <div class="expan-icon"></div>
-                    <div class="cell cell2">Process Name
+                    <div class="cell cell2" (click)="sort1('bpmnProcessName',0)">Process Name
                         <!-- <div class="cell cell2" mat-sort-header="bpmnProcessName" (click)="sort('bpmnProcessName',0)">Process Name -->
-                        <!-- <span class="asc" *ngIf="orderAsc && sortIndex==0">&#8595;</span> -->
-                        <!-- <span class="desc" *ngIf="!orderAsc && sortIndex==0">&#8593;</span> -->
+                        <span class="asc" *ngIf="orderAsc && sortIndex==0">&#8595;</span>
+                        <span class="desc" *ngIf="!orderAsc && sortIndex==0">&#8593;</span>
                     </div>
-                    <div class="cell cell3">Type
+                    <div class="cell cell3" (click)="sort1('ntype',6)">Type
                         <!-- <div class="cell cell3"  mat-sort-header="ntype" (click)="sort('ntype',6)">Type -->
-                        <!-- <span class="asc" *ngIf="orderAsc && sortIndex==6">&#8595;</span> -->
-                        <!-- <span class="desc" *ngIf="!orderAsc && sortIndex==6">&#8593;</span> -->
+                        <span class="asc" *ngIf="orderAsc && sortIndex==6">&#8595;</span>
+                        <span class="desc" *ngIf="!orderAsc && sortIndex==6">&#8593;</span>
                     </div>
                     <div class="cell cell4">Category
                         <!-- <div class="cell cell4" mat-sort-header="category" (click)="sort('category',7)">Category -->
@@ -89,7 +89,8 @@
                 </div>
                 <div class="row col-md-12 new-bps-grid-data" id="bpmn_list">
                     <mat-accordion>
-                        <mat-expansion-panel [(expanded)]="each_diag.xpandStatus" *ngFor="let each_diag of saved_diagrams |    paginate: {itemsPerPage: pageSize, currentPage: page }   | filter: term;let i=index;trackBy:loopTrackBy" [id]="'bpmn_list_item'+i" (afterExpand)="getDiagram(each_diag,i)"
+                      <!-- <mat-expansion-panel [(expanded)]="each_diag.xpandStatus" *ngFor="let each_diag of displayedRows$ | async | filter: term | paginate: {itemsPerPage: pageSize, currentPage: page }   | filter: term;let i=index;trackBy:loopTrackBy" [id]="'bpmn_list_item'+i" (afterExpand)="getDiagram(each_diag,i)" -->
+                        <mat-expansion-panel [(expanded)]="each_diag.xpandStatus" *ngFor="let each_diag of saved_diagrams | filter: term | paginate: {itemsPerPage: pageSize, currentPage: page };let i=index;trackBy:loopTrackBy" [id]="'bpmn_list_item'+i" (afterExpand)="getDiagram(each_diag,i)"
                             hideToggle>
                             <mat-expansion-panel-header class="dropdown_icon">
                                 <mat-panel-title>
@@ -145,37 +146,37 @@
 
                 <div class="newpaginationdiv">
                     <!-- <pagination-controls class="pagination " (pageChange)="p = $event"></pagination-controls> -->
-
-                    <pagination-template #p="paginationApi" (pageChange)="page= ($event)">
-                        <div class="container-fluid">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    Showing {{getStartIndex(p.getCurrent(), p.getLastPage())}}-{{getLastIndex(p.getCurrent(), p.getLastPage())}} of {{saved_diagrams.length}}
-                                </div>
-                                <div class="col-md-6 text-right">
-                                    <span class="py-5">
-                      Records Per Page :  
-                      <select (change)="pageSize=$event.target.value">
-                        <option value=25>25</option>
-                        <option value=30>30</option>
-                        <option value=50>50</option>
-                        <option value=75>75</option>
-                      </select>
-                    </span>
-                                    <button [disabled]="p.isFirstPage()" (click)="p.setCurrent(1)">
-                      <mat-icon> first_page </mat-icon> 
-                    </button>
-                                    <button [disabled]="p.isFirstPage()" (click)="p.previous()">
-                      <mat-icon> keyboard_arrow_left </mat-icon> 
-                    </button>
-                                    <button [disabled]="p.isLastPage()" (click)="p.next()"> 
-                      <mat-icon> keyboard_arrow_right </mat-icon>  
-                    </button>
-                                    <button [disabled]="p.isLastPage()" (click)="p.setCurrent(p.getLastPage())">
-                      <mat-icon> last_page </mat-icon> 
-                    </button>
-                                </div>
-                                <!-- 
+<pagination-template #p="paginationApi" (pageChange)="page= ($event)">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6 pag-font pag-font1">
+        Showing {{getStartIndex(p.getCurrent(), p.getLastPage())}} to {{getLastIndex(p.getCurrent(), p.getLastPage())}} of
+        {{saved_diagrams.length}} entries
+      </div>
+      <div class="col-md-6 text-right pag-font1">
+        <span class="py-5">
+         <span class="pag-font"> Records Per Page : </span>
+          <select (change)="pageSize=$event.target.value">
+            <option value=25>25</option>
+            <option value=30>30</option>
+            <option value=50>50</option>
+            <option value=75>75</option>
+          </select>
+        </span>
+        <button [disabled]="p.isFirstPage()" (click)="p.setCurrent(1)" class="next_butns">
+          <mat-icon> first_page </mat-icon>
+        </button>
+        <button [disabled]="p.isFirstPage()" (click)="p.previous()" class="next_butns">
+          <mat-icon> keyboard_arrow_left </mat-icon>
+        </button>
+        <button [disabled]="p.isLastPage()" (click)="p.next()">
+          <mat-icon> keyboard_arrow_right </mat-icon>
+        </button>
+        <button [disabled]="p.isLastPage()" (click)="p.setCurrent(p.getLastPage())">
+          <mat-icon> last_page </mat-icon>
+        </button>
+      </div>
+      <!-- 
                 <div *ngFor="let page of p.pages" [class.current]="p.getCurrent() === page.value">
                     <button (click)="p.setCurrent(page.value)" *ngIf="p.getCurrent() !== page.value">
                         <span>{{ page.label }}</span>
@@ -184,13 +185,9 @@
                         <span>{{ page.label }}</span>
                     </div>
                 </div> -->
-
-
-                            </div>
-                        </div>
-
-
-                    </pagination-template>
+    </div>
+  </div>
+  </pagination-template>
                     <!-- <mat-paginator #paginator301 
                           [length]="totalRows$ | async"
                           [pageIndex]="0"
