@@ -154,8 +154,8 @@
                         <div class="form-footer">
                             <button class="btn btn-default" (click)="reset_createUiPath()" tooltip="Reset">Reset
                             </button>
-                            <button class="btn btn-primary btn-test" (click)="testUiPath()" [disabled]="UipathForm.invalid" tooltip="Test Connection">Test Connection
-                            </button>
+                            <!-- <button class="btn btn-primary btn-test" (click)="testUiPath()" [disabled]="UipathForm.invalid" tooltip="Test Connection">Test Connection
+                            </button> -->
                             <button class='btn btn-primary' (click)="saveUiPath()" tooltip="Save" [disabled]="UipathForm.invalid || submitted">Save</button>
                         </div>
                 </form>
@@ -177,7 +177,7 @@
         <div class="modal-body">
       
             <div class="container m-contanier form-body">
-                <form [formGroup]="UpdateUipathForm" (ngSubmit)="Update_UiPath()">
+                <form [formGroup]="UpdateUipathForm">
                     
                         <div class="col-md-12 p-0 form-group">
                             <label class="label-control" for="accountName">Account Name<span class="star">*</span></label>
@@ -220,8 +220,8 @@
                             <button class="btn btn-default" (click)="reset_UpdateUiPath()" tooltip="Reset">Reset
                             </button>
                             
-                            <button class="btn btn-primary btn-test"  (click)="testUiPath()" [disabled]="UpdateUipathForm.invalid " >Test Connection
-                            </button>
+                            <!-- <button class="btn btn-primary btn-test"  (click)="testUiPath()" [disabled]="UpdateUipathForm.invalid " >Test Connection
+                            </button> -->
                             <button class='btn btn-primary' (click)="Update_UiPath()" tooltip="Save" [disabled]="UpdateUipathForm.invalid || updatesubmitted ">Update</button>
                         </div>
                     
