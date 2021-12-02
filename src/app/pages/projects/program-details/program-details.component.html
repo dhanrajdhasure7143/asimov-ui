@@ -245,7 +245,7 @@
                           class="labelcont">-</span>
                       </div>
                       <div *ngIf="editdata==true">
-                        <input type="text" (change)="program_detials.purpose=$event.target.value"
+                        <input type="text" maxlength="50" (change)="program_detials.purpose=$event.target.value"
                           [value]="(program_detials.purpose==undefined||program_detials.purpose==null)?'':program_detials.purpose"
                           class="small-input" placeholder="Enter Program Purpose">
                       </div>
@@ -333,7 +333,7 @@
                         <!-- <input class="small-input" type="text"  [value]="program_detials.effortsSpent==undefined?'-':program_detials.effortsSpent" disabled> -->
                       </div>
                       <div *ngIf="editdata==true">
-                        <input type="text" (change)="program_detials.effortsSpent=$event.target.value" (keydown)="inputNumberOnly($event)" maxlength="6"
+                        <input type="text" maxlength="20" (change)="program_detials.effortsSpent=$event.target.value" (keydown)="inputNumberOnly($event)" maxlength="6"
                           [value]="(program_detials.effortsSpent==undefined||program_detials.effortsSpent==null)?'':program_detials.effortsSpent"
                           class="small-input" placeholder="Enter Efforts Spent">
                       </div>
@@ -570,7 +570,7 @@
                 <span class="tab-text labelcont">{{program_detials.programName}}</span>
               </div>
               <div *ngIf="editdata==true">
-                <input type="text" (change)="program_detials.programName=$event.target.value"
+                <input type="text" maxlength="50" (change)="program_detials.programName=$event.target.value"
                   [value]="(program_detials.programName==undefined||program_detials.programName==null)?'':program_detials.programName"
                   class="small-input" placeholder="Enter Program Name">
               </div>
@@ -691,7 +691,7 @@
                   <div *ngIf="program_detials.purpose==undefined || program_detials.purpose==null || program_detials.purpose=='' " class="h6">-</div>
                 </div>
                 <div *ngIf="editdata==true">
-                  <input type="text" (change)="program_detials.purpose=$event.target.value"
+                  <input type="text" maxlength="50" (change)="program_detials.purpose=$event.target.value"
                     [value]="(program_detials.purpose==undefined||program_detials.purpose==null)?'':program_detials.purpose"
                     class="small-input" placeholder="Enter Program Purpose">
                 </div>
@@ -745,7 +745,7 @@
                   <!-- <input class="small-input" type="text"  [value]="program_detials.effortsSpent==undefined?'-':program_detials.effortsSpent" disabled> -->
                 </div>
                 <div *ngIf="editdata==true">
-                  <input type="text" (change)="program_detials.effortsSpent=$event.target.value" (keydown)="inputNumberOnly($event)" maxlength="6"
+                  <input type="text" maxlength="20" (change)="program_detials.effortsSpent=$event.target.value" (keydown)="inputNumberOnly($event)" maxlength="6"
                     [value]="(program_detials.effortsSpent==undefined||program_detials.effortsSpent==null)?'':program_detials.effortsSpent"
                     class="small-input" placeholder="Enter Efforts Spent">
                 </div>
@@ -801,7 +801,7 @@
                 <tbody>
                   <tr class="py-10" *ngFor="let project of linked_projects  | paginate: { itemsPerPage: 5, currentPage: p } ">
                     <td>{{project.initiatives}}</td>
-                    <td>{{project.projectName}}</td>
+                    <td>{{getreducedValue(project.projectName)}}</td>
                     <td>{{project.owner  | userPipe : users_list}}</td>
                     <td>New</td>
 

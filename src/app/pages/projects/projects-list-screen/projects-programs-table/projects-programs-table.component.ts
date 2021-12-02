@@ -234,8 +234,9 @@ export class ProjectsProgramsTableComponent implements OnInit {
       var projects_or_programs=this.projects_list.map((item:any)=>{
           if(item.type=="Program")
             return {
+
               "id":item.id,
-              "programName": item.programName,
+              "projectName": item.projectName,
               "initiatives": item.initiatives,
               "priority": item.priority,
               "process":item.process,
@@ -262,6 +263,7 @@ export class ProjectsProgramsTableComponent implements OnInit {
             }
         
       })
+      console.log("--------------check---------------------",projects_or_programs)
       this.dataSource2 = new MatTableDataSource(projects_or_programs);
       console.log("data",this.dataSource2)
       this.dataSource2.paginator=this.paginator2;

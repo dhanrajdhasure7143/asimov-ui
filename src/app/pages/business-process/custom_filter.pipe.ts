@@ -19,10 +19,11 @@ transform(items, term) {
                 continue;
             }
             if (typeof item[property] === 'object') {
-                console.log(item[property]);
-                if (checkInside(item[property], term)) {
-                    return true;
-                }
+                // console.log(item[property]);
+                return false;
+                // if (checkInside(item[property], term)) {
+                //     return false;
+                // }
             }
             if(k =="modifiedTimestamp"){
                 var arr = item[property].slice(0,10).split("-");
