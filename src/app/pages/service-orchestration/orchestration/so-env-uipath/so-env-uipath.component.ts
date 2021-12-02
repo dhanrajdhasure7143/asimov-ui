@@ -313,4 +313,14 @@ getCategoryList()
     this.getUiPath();
   });
 }
+
+reset_createUiPath(){
+this.UipathForm.reset();
+this.UipathForm.get("categoryId").setValue("")
+}
+
+reset_UpdateUiPath(){
+  this.UpdateUipathForm.reset();
+  this.UpdateUipathForm.get("categoryId").setValue("")
+}
 }

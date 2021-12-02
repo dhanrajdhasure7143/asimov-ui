@@ -23,6 +23,7 @@ export class ProgramDetailsComponent implements OnInit {
   unassigned_projects: any=[];
   addprojectsForm:FormGroup;
   owner_letters: any;
+  program_id: any;
 
   constructor(
     private rest:RestApiService,
@@ -54,11 +55,17 @@ export class ProgramDetailsComponent implements OnInit {
     public userName:any;
     initiatives: any;
   ngOnInit() {
-    this.getprojects_and_programs();
+   // this.getprojects_and_programs();
+   this.userRoles = localStorage.getItem("userRole")
+   this.userRoles = this.userRoles.split(',');
+   this.userName=localStorage.getItem("firstName")+" "+localStorage.getItem("lastName");
+   this.email=localStorage.getItem('ProfileuserId');
+
     this.mindate= moment().format("YYYY-MM-DD");
     this.getallusers();
     this.getprocessnames();
-    this.getunassignedprojectslist();
+    this.getunassignedprojectslist(this.userRoles,this.userName,this.email);
+    
     setTimeout(()=>{
       this.getpiechart();
       this.get_project_duration_chart();
@@ -85,24 +92,25 @@ export class ProgramDetailsComponent implements OnInit {
     projects: [null, Validators.compose([Validators.required, Validators.maxLength(50)])],
     
     })
-    this.userName=localStorage.getItem("firstName")+" "+localStorage.getItem("lastName");
-
+    
     this.getInitiatives();
+    this.getprogramdetails();
   }
+  
 
-  getprojects_and_programs()
-  {
-    this.spinner.show()
-    this.userRoles = localStorage.getItem("userRole")
-    this.userRoles = this.userRoles.split(',');
-    this.name=localStorage.getItem("firstName")+" "+localStorage.getItem("lastName")
-    this.email=localStorage.getItem('ProfileuserId');
-    this.rest.getAllProjects(this.userRoles,this.name,this.email).subscribe(data=>{
-      this.spinner.hide()
-      this.projects_and_programs_list=data;
-      this.getprogramdetails();
-    })
-  }
+  // getprojects_and_programs()
+  // {
+  //   this.spinner.show()
+  //   this.userRoles = localStorage.getItem("userRole")
+  //   this.userRoles = this.userRoles.split(',');
+  //   this.name=localStorage.getItem("firstName")+" "+localStorage.getItem("lastName")
+  //   this.email=localStorage.getItem('ProfileuserId');
+  //   this.rest.getAllProjects(this.userRoles,this.name,this.email).subscribe(data=>{
+  //     this.spinner.hide()
+  //     this.projects_and_programs_list=data;
+  //     this.getprogramdetails();
+  //   })
+  // }
 
 
 
@@ -117,19 +125,34 @@ export class ProgramDetailsComponent implements OnInit {
 
 
   getprogramdetails(){
-    
+   
+    this.spinner.show()
+    // this.route.queryParams.subscribe(data=>{
+    //   let program_id=data.id;
+    //   this.selectedProgram_id=program_id
+    //   this.get_linked_projects(program_id);
+    //   this.program_detials=this.projects_and_programs_list[0].find(item=>item.id==program_id);
+    //   console.log("pgrmdata: ", this.program_detials)
+    //   if(this.program_detials){
+    //     let usr_name=this.program_detials.owner.split('@')[0].split('.');
+    //     this.owner_letters=usr_name[0].charAt(0)+usr_name[1].charAt(0);
+    //     console.log(this.owner_letters)
+    //     }
+    //   this.editdata=false;
+    // });
     this.route.queryParams.subscribe(data=>{
-      let program_id=data.id;
-      this.selectedProgram_id=program_id
-      this.get_linked_projects(program_id);
-      this.program_detials=this.projects_and_programs_list[0].find(item=>item.id==program_id);
-      console.log("pgrmdata: ", this.program_detials)
+      this.program_id=data.id;
+    this.rest.getProgrmaDetailsById(this.program_id).subscribe(data=>{
+      this.program_detials=data;
       if(this.program_detials){
         let usr_name=this.program_detials.owner.split('@')[0].split('.');
         this.owner_letters=usr_name[0].charAt(0)+usr_name[1].charAt(0);
         console.log(this.owner_letters)
         }
-      this.editdata=false;
+        this.editdata=false;
+      this.get_linked_projects(this.program_id);
+      this.spinner.hide()
+    })
     });
   }
 
@@ -139,7 +162,7 @@ export class ProgramDetailsComponent implements OnInit {
     this.rest.getProjectsByProgramId(id).subscribe(list=>{
       this.linked_projects=list;
       console.log(this.linked_projects);
-      this.dataSource8= new MatTableDataSource(this.linked_projects);
+      this.dataSource8= new MatTableDataSource(this.program_detials.project);
       this.dataSource8.sort=this.sort104;
       this.dataSource8.paginator=this.paginator104;
     })
@@ -437,7 +460,7 @@ export class ProgramDetailsComponent implements OnInit {
       if(response.errorMessage==undefined)
       {
         Swal.fire("Success",response.message,"success");
-        this.get_linked_projects(this.program_detials.id);
+        this.getprogramdetails();
       }
       else
         Swal.fire("Error",response.errorMessage,"error");
@@ -471,13 +494,13 @@ export class ProgramDetailsComponent implements OnInit {
           let response:any=res
           if(response.warningMessage ==="Project can't be deleted with status In Progress"){
             Swal.fire("Error","Project can't be deleted with status InProgress","error")
-            this.get_linked_projects(this.program_detials.id);
+            this.getprogramdetails();
           }else
           if(response.errorMessage==undefined)
           {
             
             Swal.fire("Success","Project Deleted Successfully !!","success")
-            this.get_linked_projects(this.program_detials.id);
+            this.getprogramdetails();
           }
           else
           {
@@ -543,6 +566,7 @@ export class ProgramDetailsComponent implements OnInit {
   {
     this.spinner.show()
     this.program_detials["type"]="Program";
+    this.program_detials["programPurpose"]=this.program_detials.purpose
     this.rest.update_project(this.program_detials).subscribe(res=>{
       this.spinner.hide()
       let response:any=res;
@@ -581,9 +605,9 @@ export class ProgramDetailsComponent implements OnInit {
     }
 
   }
-  getunassignedprojectslist()
+  getunassignedprojectslist(roles,name,email)
   {
-    this.rest.getunassignedprojects().subscribe(data=>{
+    this.rest.getunassignedprojects(roles,name,email).subscribe(data=>{
       this.unassigned_projects=data;
     })
   }
@@ -593,14 +617,14 @@ export class ProgramDetailsComponent implements OnInit {
   }
   save(){
     let req_body:any=this.addprojectsForm.get("projects").value;
-    this.rest.savedata(this.selectedProgram_id,req_body).subscribe(res=>{
+    this.rest.savedata(this.program_id,req_body).subscribe(res=>{
       this.modalref.hide();
       if(res.message==="Project Added Successfully"){
         Swal.fire("Success","Project Added Successfully !!","success")
       }else
       Swal.fire("Error","Unable to add the Project","error");
       console.log(res)
-      this.get_linked_projects(this.selectedProgram_id);
+      this.getprogramdetails();
     })
   }
 
