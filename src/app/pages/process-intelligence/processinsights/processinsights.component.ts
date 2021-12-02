@@ -2148,7 +2148,7 @@ svg
         series.dataFields.category = "name";
         series.labels.template.disabled = true;
         // series.slices.template.cornerRadius = 0;
-        series.tooltip.horizontalCenter = "middle";
+       // series.tooltip.horizontalCenter = "middle";
         // series.tooltip.verticalCenter = "middle";
         // series.tooltip.fontSize=18;
         // series.tooltipText = ' {name} ({_dataContext.totalDuration1})';

@@ -13,14 +13,15 @@
     </div>
     </div>
     <div class="col-md-12 box-border myworkspace-style">
-  <div class="row col-md-12 text-bold aprwkfl_bpmn_list_header">
+ 
+  <div class="row col-md-12 text-bold aprwkfl_bpmn_list_header" matSort>
     <div class="expan-icon"></div>
-    <div class="list_header" (click)="sort('processIntelligenceId',0)">Process ID<span class="asc" *ngIf="orderAsc && sortIndex==0">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==0">&#8593;</span></div>
-    <div class="list_header" (click)="sort('bpmnProcessName',1)">Process Name<span class="asc" *ngIf="orderAsc && sortIndex==1">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==1">&#8593;</span></div>
-    <div class="list_header" (click)="sort('createdTimestamp',2)">Modified Time<span class="asc" *ngIf="orderAsc && sortIndex==2">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==2">&#8593;</span></div>
-    <div class="list_header" (click)="sort('userName',3)">Resource<span class="asc" *ngIf="orderAsc && sortIndex==3">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==3">&#8593;</span></div>
-    <div class="list_header" (click)="sort('role',4)">Role<span class="asc" *ngIf="orderAsc && sortIndex==4">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==4">&#8593;</span></div>
-    <div class="list_header" (click)="sort('approvalStatus',5)">Status<span class="asc" *ngIf="orderAsc && sortIndex==5">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==5">&#8593;</span></div>
+    <div class="list_header" mat-sort-header="processIntelligenceId">Process ID</div>
+    <div class="list_header" mat-sort-header="bpmnProcessName">Process Name</div>
+    <div class="list_header" mat-sort-header="convertedModifiedTime">Modified Time</div>
+    <div class="list_header" mat-sort-header="userName">Resource</div>
+    <div class="list_header" mat-sort-header="role">Role</div>
+    <div class="list_header" mat-sort-header="approvalStatus">Status</div>
   </div>
   <div class="row col-md-12 p-0 aprwkfl-grid-data"  id="bpmn_list">
     <mat-accordion>
@@ -37,8 +38,8 @@
               <i class="material-icons expand-open">chevron_right</i>
               <i class="material-icons expand-close">expand_less</i>
             </div>
-            <div class="text-cell" *ngIf="each_diag.bpmnProcessInfo">{{each_diag.bpmnProcessInfo[0].processIntelligenceId ? each_diag.bpmnProcessInfo[0].processIntelligenceId : '-' }}</div>
-            <div class="text-cell" *ngIf="each_diag.bpmnProcessInfo">{{each_diag.bpmnProcessInfo[0].bpmnProcessName ? each_diag.bpmnProcessInfo[0].bpmnProcessName : '-'}}</div>
+            <div class="text-cell" *ngIf="each_diag.bpmnProcessInfo">{{each_diag.bpmnProcessInfo[0].processIntelligenceId ? each_diag.processIntelligenceId : '-' }}</div>
+            <div class="text-cell" *ngIf="each_diag.bpmnProcessInfo">{{each_diag.bpmnProcessInfo[0].bpmnProcessName ? each_diag.bpmnProcessName : '-'}}</div>
             <div class="text-cell" *ngIf="each_diag.bpmnProcessInfo">{{each_diag.bpmnProcessInfo[0].convertedModifiedTime*1000 | date:'medium'}}</div>
             <div class="text-cell" *ngIf="each_diag.bpmnProcessInfo">{{each_diag.bpmnProcessInfo[0].userName  ? formatApproverName(each_diag.bpmnProcessInfo[0].userName) : '-'}}</div>
             <div class="text-cell">{{each_diag.role ? each_diag.role : '-'}}</div>
