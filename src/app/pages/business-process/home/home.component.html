@@ -1,26 +1,27 @@
 <div class="module-body">
-    <div class="container-fluid new-bps-layout h-100">
-        <div class="header_addon row approval_workflow_properties">
-            <div class="col-md-8"></div>
-            <!-- <div class="col-md-4 new-cockpit module-heading-buttons">
+  <div class="container-fluid new-bps-layout h-100">
+    <div class="header_addon row approval_workflow_properties">
+      <div class="col-md-8"></div>
+      <!-- <div class="col-md-4 new-cockpit module-heading-buttons">
         <a class="btn btn-primary" *ngIf="isApproverUser" routerLink="/pages/approvalWorkflow/home">Approval
             Workflow</a>
         <a class="btn btn-primary" href="javascript:void(0);" (click)="gotoBPMNPlatform()">View Cockpit</a>
       </div> -->
-        </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 offset-1 new-bps-sample">
+        <app-upload-create-drop-bpmn [bpmn_list]="savedDiagrams_list" isConfirmance="false"></app-upload-create-drop-bpmn>
+      </div>
+      <div class="col-md-12 box-border myworkspace-style">
         <div class="row">
-            <div class="col-md-12 offset-1 new-bps-sample">
-                <app-upload-create-drop-bpmn [bpmn_list]="savedDiagrams_list" isConfirmance="false"></app-upload-create-drop-bpmn>
-            </div>
-            <div class="col-md-12 box-border myworkspace-style">
-                <div class="row">
-                    <div class="col-md-6 pl-0">
-                        <h4 class="box-heading">My Workspace</h4>
-                    </div>
-                    <div class="col-md-6 p-0">
-                        <div class="col-md-6 form-group pr-0 bps-labcls">
-                            <!-- <label class="label-control">Select Category</label> -->
-                            <select name="category" (change)="searchByCategory(categoryName)" [disabled]="categories_list.length == 1" #category="ngModel" [(ngModel)]="categoryName" class="form-control bps-home-fileds">
+          <div class="col-md-6 pl-0">
+            <h4 class="box-heading">My Workspace</h4>
+          </div>
+          <div class="col-md-6 p-0">
+            <div class="col-md-6 form-group pr-0 bps-labcls">
+                <!-- <label class="label-control">Select Category</label> -->
+                <select name="category" (change)="searchByCategory(categoryName)" [disabled]="categories_list.length == 1" #category="ngModel"
+                  [(ngModel)]="categoryName" class="form-control bps-home-fileds">
                   <option value="" disabled hidden >Select Category</option>
                   <option value="null" disabled hidden >Select Category</option>
                   <option value="undefined" disabled hidden >Select Category</option>
@@ -29,185 +30,125 @@
                     [value]="each_diag.categoryName">
                     {{each_diag.categoryName}}</option>
                 </select>
-
-                        </div>
-                        <div class="col-md-6 form-group pr-0 bps-serwksp">
-
-                            <!-- <label class="label-control">Search Workspace</label> -->
-                            <input class="form-control toolbar-search bps-home-fileds" placeholder="Search Workspace" type="text" [(ngModel)]="term">
-                            <img src="../../../../assets/images/search.svg" alt="" class="testplus1">
-
-                        </div>
-                    </div>
-                </div>
-                <div class="row col-md-12 text-bold workspace-title" matSort>
-                    <!-- <div class="header" matSort> -->
-                    <div class="expan-icon"></div>
-                    <div class="cell cell2">Process Name
-                        <!-- <div class="cell cell2" mat-sort-header="bpmnProcessName" (click)="sort('bpmnProcessName',0)">Process Name -->
-                        <!-- <span class="asc" *ngIf="orderAsc && sortIndex==0">&#8595;</span> -->
-                        <!-- <span class="desc" *ngIf="!orderAsc && sortIndex==0">&#8593;</span> -->
-                    </div>
-                    <div class="cell cell3">Type
-                        <!-- <div class="cell cell3"  mat-sort-header="ntype" (click)="sort('ntype',6)">Type -->
-                        <!-- <span class="asc" *ngIf="orderAsc && sortIndex==6">&#8595;</span> -->
-                        <!-- <span class="desc" *ngIf="!orderAsc && sortIndex==6">&#8593;</span> -->
-                    </div>
-                    <div class="cell cell4">Category
-                        <!-- <div class="cell cell4" mat-sort-header="category" (click)="sort('category',7)">Category -->
-                        <!-- <span class="asc" *ngIf="orderAsc && sortIndex==7">&#8595;</span> -->
-                        <!-- <span class="desc" *ngIf="!orderAsc && sortIndex==7">&#8593;</span> -->
-                    </div>
-                    <div class="cell cell5">Version
-                        <!-- <div class="cell cell5" mat-sort-header="version" (click)="sort('version',1)">Version -->
-                        <!-- <span class="asc" *ngIf="orderAsc && sortIndex==1">&#8595;</span> -->
-                        <!-- <span class="desc" *ngIf="!orderAsc && sortIndex==1">&#8593;</span> -->
-                    </div>
-                    <div class="cell cell6">Last Modified
-                        <!-- <div class="cell cell6" mat-sort-header="convertedModifiedTime" (click)="sort('modifiedTimestamp',2)">Last Modified -->
-                        <!-- <span class="asc" *ngIf="orderAsc && sortIndex==2">&#8595;</span> -->
-                        <!-- <span class="desc" *ngIf="!orderAsc && sortIndex==2">&#8593;</span> -->
-                    </div>
-                    <div class="cell cell7">Approver
-                        <!-- <div class="cell cell7" mat-sort-header="approverName" (click)="sort('approverName',3)">Approver -->
-                        <!-- <span class="asc" *ngIf="orderAsc && sortIndex==3">&#8595;</span> -->
-                        <!-- <span class="desc" *ngIf="!orderAsc && sortIndex==3">&#8593;</span> -->
-                    </div>
-                    <div class="cell cell8">Status
-                        <!-- <div class="cell cell8" mat-sort-header="bpmnProcessStatus" (click)="sort('bpmnProcessStatus',4)">Status -->
-                        <!-- <span class="asc" *ngIf="orderAsc && sortIndex==4">&#8595;</span> -->
-                        <!-- <span class="desc" *ngIf="!orderAsc && sortIndex==4">&#8593;</span> -->
-                    </div>
-                    <div class="cell cell9">Message
-                        <!-- <div class="cell cell9" mat-sort-header="reviewComments" (click)="sort('reviewComments',5)">Message -->
-                        <!-- <span class="asc" *ngIf="orderAsc && sortIndex==5">&#8595;</span> -->
-                        <!-- <span class="desc" *ngIf="!orderAsc && sortIndex==5">&#8593;</span> -->
-                    </div>
-                    <div class="cell cell10">Actions</div>
-                    <!-- </div> -->
-
-                </div>
-                <div class="row col-md-12 new-bps-grid-data" id="bpmn_list">
-                    <mat-accordion>
-                        <mat-expansion-panel [(expanded)]="each_diag.xpandStatus" *ngFor="let each_diag of saved_diagrams |    paginate: {itemsPerPage: pageSize, currentPage: page }   | filter: term;let i=index;trackBy:loopTrackBy" [id]="'bpmn_list_item'+i" (afterExpand)="getDiagram(each_diag,i)"
-                            hideToggle>
-                            <mat-expansion-panel-header class="dropdown_icon">
-                                <mat-panel-title>
-                                    <!-- id="bpmn_list_row" -->
-                                    <!-- <div class="table">
+              
+            </div>
+            <div class="col-md-6 form-group pr-0 bps-serwksp">
+             
+                <!-- <label class="label-control">Search Workspace</label> -->
+                <input class="form-control toolbar-search bps-home-fileds" (keyup)="applySearchFilter(term)" placeholder="Search Workspace" type="text" [(ngModel)]="term">
+                <img src="../../../../assets/images/search.svg" alt="" class="testplus1">
+              
+            </div>
+          </div>
+        </div>
+        <div class="row col-md-12 text-bold workspace-title" matSort>
+            <!-- <div class="header" matSort> -->
+            <div class="expan-icon"></div>
+            <div class="cell cell2" mat-sort-header="bpmnProcessName">Process Name
+              <!-- <div class="cell cell2" mat-sort-header="bpmnProcessName" (click)="sort('bpmnProcessName',0)">Process Name -->
+              <!-- <span class="asc" *ngIf="orderAsc && sortIndex==0">&#8595;</span> -->
+              <!-- <span class="desc" *ngIf="!orderAsc && sortIndex==0">&#8593;</span> -->
+            </div>
+            <div class="cell cell3"  mat-sort-header="ntype">Type
+              <!-- <div class="cell cell3"  mat-sort-header="ntype" (click)="sort('ntype',6)">Type -->
+              <!-- <span class="asc" *ngIf="orderAsc && sortIndex==6">&#8595;</span> -->
+              <!-- <span class="desc" *ngIf="!orderAsc && sortIndex==6">&#8593;</span> -->
+            </div>
+            <div class="cell cell4" mat-sort-header="category">Category
+              <!-- <div class="cell cell4" mat-sort-header="category" (click)="sort('category',7)">Category -->
+              <!-- <span class="asc" *ngIf="orderAsc && sortIndex==7">&#8595;</span> -->
+              <!-- <span class="desc" *ngIf="!orderAsc && sortIndex==7">&#8593;</span> -->
+            </div>
+            <div class="cell cell5" mat-sort-header="version">Version
+              <!-- <div class="cell cell5" mat-sort-header="version" (click)="sort('version',1)">Version -->
+              <!-- <span class="asc" *ngIf="orderAsc && sortIndex==1">&#8595;</span> -->
+              <!-- <span class="desc" *ngIf="!orderAsc && sortIndex==1">&#8593;</span> -->
+            </div>
+            <div class="cell cell6" mat-sort-header="convertedModifiedTime">Last Modified
+              <!-- <div class="cell cell6" mat-sort-header="convertedModifiedTime" (click)="sort('modifiedTimestamp',2)">Last Modified -->
+                  <!-- <span class="asc" *ngIf="orderAsc && sortIndex==2">&#8595;</span> -->
+                  <!-- <span class="desc" *ngIf="!orderAsc && sortIndex==2">&#8593;</span> -->
+            </div>
+            <div class="cell cell7" mat-sort-header="approverName">Approver
+              <!-- <div class="cell cell7" mat-sort-header="approverName" (click)="sort('approverName',3)">Approver -->
+                  <!-- <span class="asc" *ngIf="orderAsc && sortIndex==3">&#8595;</span> -->
+                  <!-- <span class="desc" *ngIf="!orderAsc && sortIndex==3">&#8593;</span> -->
+            </div>
+            <div class="cell cell8" mat-sort-header="bpmnProcessStatus" >Status
+              <!-- <div class="cell cell8" mat-sort-header="bpmnProcessStatus" (click)="sort('bpmnProcessStatus',4)">Status -->
+                  <!-- <span class="asc" *ngIf="orderAsc && sortIndex==4">&#8595;</span> -->
+                  <!-- <span class="desc" *ngIf="!orderAsc && sortIndex==4">&#8593;</span> -->
+            </div>
+            <div class="cell cell9" mat-sort-header="reviewComments">Message
+              <!-- <div class="cell cell9" mat-sort-header="reviewComments" (click)="sort('reviewComments',5)">Message -->
+                  <!-- <span class="asc" *ngIf="orderAsc && sortIndex==5">&#8595;</span> -->
+                  <!-- <span class="desc" *ngIf="!orderAsc && sortIndex==5">&#8593;</span> -->
+            </div>
+            <div class="cell cell10">Actions</div>
+          <!-- </div> -->
+          
+        </div>
+        <div class="row col-md-12 new-bps-grid-data" id="bpmn_list">
+          <mat-accordion>
+            <mat-expansion-panel [(expanded)]="each_diag.xpandStatus"
+              *ngFor="let each_diag of displayedRows$ | async ;let i=index;trackBy:loopTrackBy"
+              [id]="'bpmn_list_item'+i" (afterExpand)="getDiagram(each_diag,i)" hideToggle>
+              <mat-expansion-panel-header class="dropdown_icon">
+                <mat-panel-title>
+                        <!-- id="bpmn_list_row" -->
+                  <!-- <div class="table">
                     <div class="rowGroup"> -->
-                                    <div class="row col-md-12">
-                                        <div class="expan-icon">
-                                            <i class="material-icons expand-open">chevron_right</i>
-                                            <i class="material-icons expand-close">expand_less</i>
-                                        </div>
-                                        <div class="cell cell2" [matTooltip]=each_diag.bpmnProcessName matTooltipClass="bpsHeaderTooltip">{{each_diag.bpmnProcessName ?fitTableView(each_diag.bpmnProcessName |titlecase): '-'}}</div>
-                                        <div class="cell cell3">{{each_diag.ntype ? each_diag.ntype.toUpperCase(): '-' }}</div>
-                                        <div class="cell cell4">{{each_diag.category}}</div>
-                                        <div class="cell cell5">{{each_diag.bpmnProcessName ? " V1."+each_diag.version+" ": '-'}}</div>
-                                        <div class="cell cell6">{{each_diag.convertedModifiedTime*1000 | date:'medium'}}</div>
-                                        <div class="cell cell7">{{each_diag.approverName ? formatApproverName(each_diag.approverName): '-'}}</div>
-                                        <!-- <div class="cell cell8" [ngStyle]="{'color':getColor(each_diag.bpmnProcessStatus)}"
+                      <div class="row col-md-12">
+                        <div class="expan-icon">
+                          <i class="material-icons expand-open">chevron_right</i>
+                          <i class="material-icons expand-close">expand_less</i>
+                        </div>
+                        <div class="cell cell2"  [matTooltip]=each_diag.bpmnProcessName
+                        matTooltipClass="bpsHeaderTooltip">{{each_diag.bpmnProcessName ?fitTableView(each_diag.bpmnProcessName |titlecase): '-'}}</div>
+                        <div class="cell cell3">{{each_diag.ntype ? each_diag.ntype.toUpperCase(): '-' }}</div>
+                        <div class="cell cell4">{{each_diag.category}}</div>
+                        <div class="cell cell5">{{each_diag.bpmnProcessName ? " V1."+each_diag.version+" ": '-'}}</div>
+                        <div class="cell cell6" >{{each_diag.convertedModifiedTime*1000 | date:'medium'}}</div>
+                        <div class="cell cell7">{{each_diag.approverName ? formatApproverName(each_diag.approverName): '-'}}</div>
+                        <!-- <div class="cell cell8" [ngStyle]="{'color':getColor(each_diag.bpmnProcessStatus)}"
                         [class.pending_value_properties]="each_diag.bpmnProcessStatus=='PENDING'">{{each_diag.bpmnProcessStatus=='PENDING'?pendingStatus:each_diag.bpmnProcessStatus}}</div> -->
-                                        <div class="cell cell8" [ngStyle]="{'color':getColor(each_diag.bpmnProcessStatus)}" [class.pending_value_properties]="each_diag.bpmnProcessStatus=='PENDING'">{{getNotationStatus(each_diag.bpmnProcessStatus)}}</div>
-
-                                        <div class="cell cell9"><img src="../../../../assets/images/BPMS/Msg.svg" class="testplus" [matTooltip]=each_diag.reviewComments matTooltipClass="bpsHeaderTooltip" matTooltipPosition="right"></div>
-                                        <div class="cell cell10">
-                                            <img src="../../../../assets/images/BPMS/Envelop.svg" (click)="sendReminderMail($event, each_diag)" *ngIf="isAdminUser && each_diag.bpmnProcessStatus=='PENDING'" matTooltip="Click to send reminder mail to Approver" matTooltipPosition="left" class="testplus1">
-                                            <!-- <i (click)="sendReminderMail($event, each_diag)"
+                        <div class="cell cell8" [ngStyle]="{'color':getColor(each_diag.bpmnProcessStatus)}" [class.pending_value_properties]="each_diag.bpmnProcessStatus=='PENDING'">{{getNotationStatus(each_diag.bpmnProcessStatus)}}</div>
+                        
+                        <div class="cell cell9"><img src="../../../../assets/images/BPMS/Msg.svg" class="testplus" [matTooltip]=each_diag.reviewComments matTooltipClass="bpsHeaderTooltip" matTooltipPosition="right"></div>
+                        <div class="cell cell10">
+                          <img src="../../../../assets/images/BPMS/Envelop.svg" (click)="sendReminderMail($event, each_diag)" *ngIf="isAdminUser && each_diag.bpmnProcessStatus=='PENDING'" matTooltip="Click to send reminder mail to Approver" matTooltipPosition="left" class="testplus1">
+                          <!-- <i (click)="sendReminderMail($event, each_diag)"
                             *ngIf="isAdminUser && each_diag.bpmnProcessStatus=='PENDING'"
                             title="Click to send reminder mail to Approver" class="fa fa-envelope"></i> -->
-                                            <!-- <i (click)="deleteProcess($event, each_diag)" *ngIf="each_diag.bpmnProcessStatus=='INPROGRESS'"
+                          <!-- <i (click)="deleteProcess($event, each_diag)" *ngIf="each_diag.bpmnProcessStatus=='INPROGRESS'"
                             title="Delete BPMNotation" class="glyphicon glyphicon-trash"></i> -->
-                                            <img (click)="deleteProcess($event, each_diag)" *ngIf="(each_diag.bpmnProcessStatus=='INPROGRESS') && ((systemAdmin==true) || ((systemAdmin==false) && (each_diag.userEmail==userEmail) ))" matTooltip="Delete BPMNotation" matTooltipPosition="left" src="../../../../assets/images/BPMS/delete-red.svg"
-                                                class="testplus1">
-                                            <i *ngIf="each_diag.bpmnProcessStatus!='INPROGRESS' && (each_diag.bpmnProcessStatus=='APPROVED' || each_diag.bpmnProcessStatus=='REJECTED' || !isAdminUser)">-</i>
-                                        </div>
-                                    </div>
-                                    <!-- </div>
-                  </div> -->
-
-                                </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            <div class="bps_overlay">
-                                <span class="info" *ngIf="(each_diag.bpmnProcessStatus && each_diag.bpmnProcessStatus != 'PENDING')||(!each_diag.bpmnProcessStatus) ">Click
-                  to open</span>
-                                <span><button title="Fit to the view port" class="right header_btn fit_button"
-                    (click)="fitNotationView(each_diag.ntype)"><img src="..\assets\fillView.svg"></button></span>
-                                <span class="info" *ngIf="each_diag.bpmnProcessStatus && each_diag.bpmnProcessStatus == 'PENDING'">Business Process
-                  Notation has been submitted for approval. Cannot be edited till it is reviewed </span>
-                                <div [class]="'diagram_container'+i" (click)="openDiagram(each_diag)" [id]="'_diagram'+i"></div>
-                            </div>
-                        </mat-expansion-panel>
-                    </mat-accordion>
-                </div>
-
-
-                <div class="newpaginationdiv">
-                    <!-- <pagination-controls class="pagination " (pageChange)="p = $event"></pagination-controls> -->
-
-                    <pagination-template #p="paginationApi" (pageChange)="page= ($event)">
-                        <div class="container-fluid">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    Showing {{getStartIndex(p.getCurrent(), p.getLastPage())}}-{{getLastIndex(p.getCurrent(), p.getLastPage())}} of {{saved_diagrams.length}}
-                                </div>
-                                <div class="col-md-6 text-right">
-                                    <span class="py-5">
-                      Records Per Page :  
-                      <select (change)="pageSize=$event.target.value">
-                        <option value=25>25</option>
-                        <option value=30>30</option>
-                        <option value=50>50</option>
-                        <option value=75>75</option>
-                      </select>
-                    </span>
-                                    <button [disabled]="p.isFirstPage()" (click)="p.setCurrent(1)">
-                      <mat-icon> first_page </mat-icon> 
-                    </button>
-                                    <button [disabled]="p.isFirstPage()" (click)="p.previous()">
-                      <mat-icon> keyboard_arrow_left </mat-icon> 
-                    </button>
-                                    <button [disabled]="p.isLastPage()" (click)="p.next()"> 
-                      <mat-icon> keyboard_arrow_right </mat-icon>  
-                    </button>
-                                    <button [disabled]="p.isLastPage()" (click)="p.setCurrent(p.getLastPage())">
-                      <mat-icon> last_page </mat-icon> 
-                    </button>
-                                </div>
-                                <!-- 
-                <div *ngFor="let page of p.pages" [class.current]="p.getCurrent() === page.value">
-                    <button (click)="p.setCurrent(page.value)" *ngIf="p.getCurrent() !== page.value">
-                        <span>{{ page.label }}</span>
-                    </button>
-                    <div *ngIf="p.getCurrent() === page.value">
-                        <span>{{ page.label }}</span>
-                    </div>
-                </div> -->
-
-
-                            </div>
+                          <img (click)="deleteProcess($event, each_diag)" *ngIf="(each_diag.bpmnProcessStatus=='INPROGRESS') && ((systemAdmin==true) || ((systemAdmin==false) && (each_diag.userEmail==userEmail) ))" matTooltip="Delete BPMNotation" matTooltipPosition="left" src="../../../../assets/images/BPMS/delete-red.svg" class="testplus1">
+                          <i *ngIf="each_diag.bpmnProcessStatus!='INPROGRESS' && (each_diag.bpmnProcessStatus=='APPROVED' || each_diag.bpmnProcessStatus=='REJECTED' || !isAdminUser)">-</i>
                         </div>
-
-
-                    </pagination-template>
-                    <!-- <mat-paginator #paginator301 
-                          [length]="totalRows$ | async"
-                          [pageIndex]="0"
-                          [pageSize]="10"
-                          [showFirstLastButtons]="true"
-                          [pageSizeOptions]="[5, 10, 25, 50]"
-                        ></mat-paginator> -->
-                </div>
-
-
-
-
-
-                <!-- <div *ngIf='saved_diagrams.length>0'>
+                      </div>
+                    <!-- </div>
+                  </div> -->
+                 
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <div class="bps_overlay">
+                <span class="info"
+                  *ngIf="(each_diag.bpmnProcessStatus && each_diag.bpmnProcessStatus != 'PENDING')||(!each_diag.bpmnProcessStatus) ">Click
+                  to open</span>
+                <span><button title="Fit to the view port" class="right header_btn fit_button"
+                    (click)="fitNotationView(each_diag.ntype)"><img src="..\assets\fillView.svg"></button></span>
+                <span class="info"
+                  *ngIf="each_diag.bpmnProcessStatus && each_diag.bpmnProcessStatus == 'PENDING'">Business Process
+                  Notation has been submitted for approval. Cannot be edited till it is reviewed </span>
+                <div [class]="'diagram_container'+i" (click)="openDiagram(each_diag)" [id]="'_diagram'+i"></div>
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+        <!-- <div *ngIf='saved_diagrams.length>0'>
           <pagination-controls class="pagination" (pageChange)="p = $event"></pagination-controls>
         </div> -->
-                <!-- <div class="bpspaginationdiv">
+        <div class="bpspaginationdiv">
           <mat-paginator #paginator
             [length]="totalRows$ | async"
             [pageIndex]="0"
@@ -215,16 +156,16 @@
             [showFirstLastButtons]="true"
             [pageSizeOptions]="[5, 10, 25, 50]"
           ></mat-paginator>
-        </div> -->
-            </div>
         </div>
+      </div>
     </div>
+  </div>
 
 </div>
 
 <div class="spinoverlay" *ngIf="isLoading">
-    <div class="spincenter">
-        <!-- <mat-progress-spinner diameter=50 mode="indeterminate"></mat-progress-spinner> -->
-        <img src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader" />
-    </div>
+  <div class="spincenter">
+    <!-- <mat-progress-spinner diameter=50 mode="indeterminate"></mat-progress-spinner> -->
+    <img  src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader"/>
+  </div>
 </div>
