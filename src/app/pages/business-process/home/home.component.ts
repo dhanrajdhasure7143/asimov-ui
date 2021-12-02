@@ -19,6 +19,7 @@ import { of  } from 'rxjs/observable/of';
 import { map } from 'rxjs/operators';
 import { MatSort, Sort } from '@angular/material';;
 import { fromMatSort, sortRows } from './../model/datasource-utils';
+import {FilterPipe} from './../custom_filter.pipe';
 @Component({
   selector: 'app-bpshome',
   templateUrl: './home.component.html',
@@ -57,8 +58,6 @@ export class BpsHomeComponent implements OnInit {
   @ViewChild(MatSort,{static:false}) sort: MatSort;
   @ViewChild(MatPaginator,{static:false}) paginator: MatPaginator;
   categories_list:any[]=[];
-  page:any;
-  pageSize:number=25;
 
   constructor(private router:Router, private bpmnservice:SharebpmndiagramService, private dt:DataTransferService,
      private rest:RestApiService, private hints:BpsHints, private global:GlobalScript,
@@ -95,10 +94,37 @@ export class BpsHomeComponent implements OnInit {
     await this.rest.getUserBpmnsList().subscribe( (res:any[]) =>  {
       this.saved_diagrams = res; 
       this.saved_diagrams.map(item => {item.xpandStatus = false;return item;})
+      this.saved_diagrams.forEach(ele => {
+        ele['eachObj']={
+          "bpmnXmlNotation":ele.bpmnXmlNotation,
+          "bpmnConfProcessMeta":ele.bpmnConfProcessMeta,
+          "bpmnProcessApproved":ele.bpmnProcessApproved,
+          "convertedCreatedTime":ele.convertedCreatedTime,
+          "createdTimestamp":ele.createdTimestamp,
+          "hasConformance":ele.hasConformance,
+          "id":ele.id,
+          "notationFromPI":ele.notationFromPI,
+          "tenantId":ele.tenantId,
+          "userName":ele.userName,
+          "modifiedTimestamp":ele.modifiedTimestamp
+        }
+        ele["bpmnXmlNotation"]=''
+        ele["bpmnConfProcessMeta"]=''
+        ele["bpmnProcessApproved"]=''
+        ele["convertedCreatedTime"]=''
+        ele["createdTimestamp"]=''
+        ele["hasConformance"]=''
+        ele["id"]=''
+        ele["notationFromPI"]=''
+        ele["tenantId"]=''
+        ele["userName"]=''
+        ele['modifiedTimestamp']=''
+      });
+
       this.bkp_saved_diagrams = res; 
       this.isLoading = false;
       this.savedDiagrams_list=this.saved_diagrams;
-     // this.assignPagenation(this.saved_diagrams);
+      this.assignPagenation(this.saved_diagrams);
 
       let selected_category=localStorage.getItem("bps_search_category");
       if(this.categories_list.length == 1){
@@ -106,7 +132,7 @@ export class BpsHomeComponent implements OnInit {
       }else{
         this.categoryName=selected_category?selected_category:'allcategories';
       }
-    //  this.searchByCategory(this.categoryName);
+      this.searchByCategory(this.categoryName);
     },
     
     (err) => {
@@ -122,13 +148,13 @@ export class BpsHomeComponent implements OnInit {
 
   openDiagram(bpmnDiagram){
     // if(bpmnDiagram.bpmnProcessStatus && bpmnDiagram.bpmnProcessStatus =="PENDING" ) return;
-    let binaryXMLContent = bpmnDiagram.bpmnXmlNotation; 
+    let binaryXMLContent = bpmnDiagram.eachObj.bpmnXmlNotation; 
     let bpmnModelId = bpmnDiagram.bpmnModelId;
     let bpmnVersion = bpmnDiagram.version;
     let bpmnType = bpmnDiagram.ntype;
     this.bpmnservice.uploadBpmn(atob(binaryXMLContent));
     let push_Obj={"rejectedOrApproved":bpmnDiagram.bpmnProcessStatus,"isfromApprover":false,
-    "isShowConformance":false,"isStartProcessBtn":false,"autosaveTime":bpmnDiagram.modifiedTimestamp,
+    "isShowConformance":false,"isStartProcessBtn":false,"autosaveTime":bpmnDiagram.eachObj.modifiedTimestamp,
     "isFromcreateScreen":false,'process_name':bpmnDiagram.bpmnProcessName,'isEditbtn':false,'isSavebtn':true}
 this.dt.bpsNotationaScreenValues(push_Obj);
 this.dt.bpsHeaderValues('');
@@ -187,7 +213,7 @@ this.dt.bpsHeaderValues('');
   getDiagram(eachBPMN,i){
       var element = document.getElementById('_diagram'+i);
     element.scrollIntoView({behavior: "auto",block: "center", inline: "nearest"});
-    let byteBpmn = atob(eachBPMN.bpmnXmlNotation);
+    let byteBpmn = atob(eachBPMN.eachObj.bpmnXmlNotation);
     this.index=i;
     if(document.getElementsByClassName('diagram_container'+i)[0].innerHTML.trim() != "") return;
     let notationJson = {
@@ -251,7 +277,7 @@ this.dt.bpsHeaderValues('');
           this.saved_diagrams.push(e)
         }
       });
-     // this.assignPagenation(this.saved_diagrams);
+      this.assignPagenation(this.saved_diagrams);
     }
   }
   sort1(colKey,ind) { // if not asc, desc
@@ -272,7 +298,7 @@ this.dt.bpsHeaderValues('');
       }
       
     });
-   // this.assignPagenation(this.saved_diagrams);
+    this.assignPagenation(this.saved_diagrams);
   }
 
   sendReminderMail(e, bpmNotation){
@@ -298,27 +324,6 @@ this.dt.bpsHeaderValues('');
         })
       }
     })
-  }
-
-
-  
-
-
-
-  getStartIndex(currentPage: number, lastPage: number): string {
-    let firstIndex = 1;
-    if((currentPage !== lastPage) || (currentPage > 0 && lastPage > 0)) {
-      firstIndex = (Number(this.pageSize) * (Number(currentPage) -1) + 1);
-    }
-    return firstIndex.toString();
-  }
-
-  getLastIndex(currentPage: number, lastPage: number): string {
-    let lastIndex = this.saved_diagrams ? this.saved_diagrams.length : null;
-    if((currentPage !== lastPage)) {
-      lastIndex = (Number(this.pageSize) * (Number(currentPage)));
-    }
-    return lastIndex.toString();
   }
 
   fitNotationView(e){    //Fit notation to canvas
@@ -418,6 +423,12 @@ this.assignPagenation(filtered)
     }else {
       return value;
     }
+  }
+
+  applySearchFilter(v){
+    const filterPipe = new FilterPipe();
+  const fiteredArr = filterPipe.transform(this.saved_diagrams,v);
+  this.assignPagenation(fiteredArr)
   }
  
 }
