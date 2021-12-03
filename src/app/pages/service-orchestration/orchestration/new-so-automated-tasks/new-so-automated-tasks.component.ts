@@ -49,7 +49,7 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
   blueprismbots:any=[];
   configurations_data:any=[];
   configurations:any=[];
-  displayedColumns: string[] = ["processName","taskName","processOwner","taskOwner","taskType", "category","sourceType","Assign","status","Operations"];
+  displayedColumns: string[] = ["processFilterId","processName","taskName","processOwner","taskOwner","taskType", "category","sourceType","Assign","status","Operations"];
   dataSource2:MatTableDataSource<any>;
   public isDataSource: boolean;
   public userRole:any = [];
@@ -75,12 +75,14 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
   public blueprism_configs:any=[];
   public checkedsource:String="UiPath";
   addTaskForm:FormGroup;
+  queryParam:Boolean=false;
   checkAssignTasks:Boolean=false;
   public tasksArray:any=[];
   @ViewChild("paginator10",{static:false}) paginator10: MatPaginator;
  //@ViewChild(SoProcesslogComponent, { static: false }) processlogs_instance: SoProcesslogComponent;
   @ViewChild("sort10",{static:false}) sort10: MatSort;
-  @Input('processid') public processId: any;
+  // @Input('processid') public processId: any;
+   public processId:any;
   @ViewChild('automatedtable',{static:false}) automatedtable;
   public insertslaForm_so_bot:FormGroup;
   public BluePrismConfigForm:FormGroup;
@@ -150,14 +152,25 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
     }else{
       this.isButtonVisible = false;
     }
+    this.route.queryParams.subscribe(params => {
+      if(params.processid!=undefined)
+        this.processId = params['processid'];
+      else
+       this.processId=0
+       let url = new URL(window.location.href);
+      if (url.hash.split("?")[1]==undefined) {
+        this.processId=0;
+      }
+      setTimeout(()=>{
+        this.getCategoryList(this.processId);
+      },400)
+      this.getallbots();
+      this.gethumanslist();
+      this.getuipathbots();
+      this.getblueprismbots();
+    });
     //this.getCategoryList(this.processId);
-    setTimeout(()=>{
-      this.getCategoryList(this.processId);
-    },400)
-    this.getallbots();
-    this.gethumanslist();
-    this.getuipathbots();
-    this.getblueprismbots();
+   
  }
 
  sla_bot:any;
@@ -196,9 +209,7 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
    }
    else if(taskdata.sourceType=="BluePrism")
     {
-      console.log(this.blueprismbots)
       this.sla_bot=this.blueprismbots.find(item=>item.botName==this.sla_selected_task.botId);
-      console.log(this.sla_bot);
       this.insertslaForm_so_bot.get("botName").setValue(this.sla_bot.botName);
     }
     else if(this.sla_selected_task.sourceType=="UiPath")
@@ -508,6 +519,7 @@ resetsla(){
         this.rest.getAllActiveBots().subscribe(bots=>{
           this.Active_bots_list=bots;
           this.responsedata=response.automationTasks.map(item=>{
+              item["processFilterId"]="processId_"+item.processId+"_"+item.processName
               if(item.sourceType=="UiPath")
                 item["taskOwner"]="Karthik Peddinti";
               else if(item.sourceType=="EPSoft")
@@ -517,21 +529,22 @@ resetsla(){
               }
               return item;
           });
+          this.automatedtask= response.automationTasks;
+          this.dataSource2= new MatTableDataSource(this.responsedata);
+          this.dataSource2.sort=this.sort10;
+          this.dataSource2.paginator=this.paginator10;
+          if(process==0)
+          {
+            this.getprocessnames(undefined);
+  
+          }else
+          {
+            this.getprocessnames(process);
+          }
+          this.update_task_status();
 
         });
-        this.automatedtask= response.automationTasks;
-        this.dataSource2= new MatTableDataSource(this.automatedtask);
-        this.dataSource2.sort=this.sort10;
-        this.dataSource2.paginator=this.paginator10;
-        if(process==0)
-        {
-          this.getprocessnames(undefined);
-
-        }else
-        {
-          this.getprocessnames(process);
-        }
-        this.update_task_status();
+       
       }
       this.spinner.hide();
     },(err)=>{
@@ -564,7 +577,6 @@ resetsla(){
     })
   }
   dropTable(event) {
-    console.log("---------------------------",event)
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data.data, event.previousIndex, event.currentIndex);
     } else {
@@ -576,20 +588,13 @@ resetsla(){
   }
 
   applyFilter(filterValue:any) {
+    console.log(filterValue)
     let processnamebyid=this.process_names.find(data=>filterValue==data.processId);
     this.selectedcategory=parseInt(processnamebyid.categoryId);
     this.applyFilter1(this.selectedcategory);
     this.selectedvalue=processnamebyid.processId;
-    filterValue = processnamebyid.processName.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-    
-    this.dataSource2.filter = filterValue;
-    
-    this.checkAssignTasks=false;
-    this.responsedata.filter(item=>item.processId==this.selectedvalue).forEach(item2=>{
-      if(item2.botId==""||item2.botId==undefined || item2.botId==null || item2.botId=='null')    
-        this.checkAssignTasks=true;
-    })
+    this.dataSource2.filter = "processId_"+filterValue+"_"+processnamebyid.processName;
+    this.checkTaskAssigned();
   }
 
   applyFilter1(value)
@@ -601,6 +606,21 @@ resetsla(){
     this.selectedvalue="";
   }
 
+
+  
+    checkTaskAssigned()
+    {
+      
+      this.checkAssignTasks=false;
+      
+      if( this.responsedata.filter(item=>item.processId==this.selectedvalue).length==0)
+        this.checkAssignTasks=true;
+      else
+        this.responsedata.filter(item=>item.processId==this.selectedvalue).forEach(item2=>{
+          if(item2.botId==""||item2.botId==undefined || item2.botId==null || item2.botId=='null')    
+            this.checkAssignTasks=true;
+        })
+    }
 
   close()
   {
@@ -638,6 +658,7 @@ resetsla(){
         if(response.status!=undefined)
         {
           Swal.fire("Success","Resource Assigned Successfully","success");
+          this.checkTaskAssigned();
         }else
         {
           Swal.fire("Error","Failed to Assign Resource","error");
@@ -659,6 +680,7 @@ resetsla(){
         if(response.status!=undefined)
         {
           Swal.fire("Success",response.status,"success");
+          this.checkTaskAssigned()
         }else
         {
           Swal.fire("Error",response.errorMessage,"warning");
@@ -799,6 +821,8 @@ resetsla(){
 
   ngOnDestroy() { 
      clearInterval(this.timer)
+     let url=window.location.hash;
+    window.history.pushState("", "", url.split("?")[0]);
   }
 
   getenvironments()

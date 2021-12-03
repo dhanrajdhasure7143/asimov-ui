@@ -5,10 +5,12 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class CheckResourcePipe implements PipeTransform {
 
-  transform(id: any, resourceList: any[], sourceType:any, taskType:any ) {
-      if(taskType=="Automated")
+  transform(id: any, resourceList: any[], sourceType:any, taskType:any, categoryId:any ) {
+    var val=""  
+    if(taskType=="Automated")
       {
-        var val=""
+        console.log(sourceType)
+        console.log(id)
         if(sourceType=="EPSoft")
           val= (resourceList.find(item=>parseInt(item.botId)==parseInt(id))!=undefined)?(resourceList.find(item=>parseInt(item.botId)==parseInt(id)).botId):"0";
         else if(sourceType=='UiPath')
@@ -17,11 +19,14 @@ export class CheckResourcePipe implements PipeTransform {
           val= (resourceList.find(item=>item.botName==id)!=undefined)?resourceList.find(item=>item.botName==id).botName:"0";
         return val;
       }
-      else if(sourceType=="Human")
+      else if(taskType=="Human")
       {
-        console.log("------------",resourceList) 
+
+        val= (resourceList.find(item=>parseInt(item.userId.id)==parseInt(id))!=undefined)?(resourceList.find(item=>parseInt(item.userId.id)==parseInt(id)).userId.id):"0";
+      
       }
-      return id
+      console.log(val)
+      return val
   }
 
 }
