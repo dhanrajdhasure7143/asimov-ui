@@ -49,7 +49,7 @@
       <img src="../../../../assets/images/RPA/icon_latest/play.svg" alt="" class="testplus">
       <span *ngIf="!(selectedvalue=='' || selectedEnvironment=='')" class="testtooltip">Run Process</span>
     </button>
-                <button *ngIf="selectedvalue!='' && selectedEnvironment!='' && checkAssignTasks==false" id="autoStartProcess" class="tsttooltipbtn" (click)="startprocess()">
+                <button *ngIf="selectedvalue!='' && selectedEnvironment!='' " id="autoStartProcess" class="tsttooltipbtn" (click)="startprocess()">
       <img src="../../../../../assets/images/SO/play blue.svg" alt="" class="testplus">
       <span  class="testtooltip">Run Process</span>
     </button>
@@ -91,10 +91,6 @@
         <div *ngIf="responsedata!=undefined" class="orchestration-table-container">
 
             <table mat-table #sort10="matSort" #automatedtable [dataSource]="dataSource2" cdkDropList [cdkDropListData]="automatedtask" (cdkDropListDropped)="dropTable($event)" matSort class="RPA table" id="autotable">
-                <ng-container matColumnDef="processFilterId">
-                    <th *matHeaderCellDef mat-sort-header></th>
-                    <td [matTooltip]="element.processName" *matCellDef="let element"></td>
-                </ng-container>
 
                 <ng-container matColumnDef="processName">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Process Name</th>
@@ -185,7 +181,7 @@
                       </span>
                         </span>
                         <span *ngIf="element.taskType=='Human'">
-                        <select class="form-control" style="width:200px;padding:0px;"  [value]="element.assignedUserId | checkResource : humans_list : 'humans' : 'Human'"  [id]="element.taskId+'__select'">
+                        <select class="form-control" style="width:200px;padding:0px;"  [value]="element.assignedUserId | checkResource : humans_list :'humans' : 'Human'"  [id]="element.taskId+'__select'">
                             <option value="0" >Select Resource</option>
                             <option *ngFor="let human of (humans_list | HumanlistbycatPipe : element.category )" [value]="human.userId.id">{{human.userId.firstName}} {{human.userId.lastName}} </option>
                         </select>
