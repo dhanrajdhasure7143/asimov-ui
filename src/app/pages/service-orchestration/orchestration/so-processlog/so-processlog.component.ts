@@ -5,6 +5,7 @@ import {MatPaginator} from '@angular/material/paginator';
 import {RestApiService} from '../../../services/rest-api.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NewSoAutomatedTasksComponent } from '../new-so-automated-tasks/new-so-automated-tasks.component';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-so-processlog',
   templateUrl: './so-processlog.component.html',
@@ -33,7 +34,7 @@ export class SoProcesslogComponent implements OnInit {
   displayedColumnsp1: string[] = ["processRunId","Environment","processStartDate","processEndDate","runStatus"];
   displayedColumnsp2: string[] = ['bot_name','version','run_id','start_date','end_date', "bot_status"]; //,'log_statement'
   displayedColumnsp3: string[] = ['task_name','start_date','end_date', 'status','error_info' ];
-  constructor( private rest:RestApiService, private automated:NewSoAutomatedTasksComponent) { }
+  constructor( private rest:RestApiService, private automated:NewSoAutomatedTasksComponent, private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
     document.getElementById("viewlogid1").style.display="none";
@@ -50,7 +51,9 @@ export class SoProcesslogComponent implements OnInit {
     if(this.processId != '' && this.processId != undefined)
     {
     this.logresponse=[];
+    this.spinner.show()
     this.rest.getProcesslogsdata(this.processId).subscribe(data =>{
+      this.spinner.hide();
         this.logresponse = data;
         if(this.logresponse.length >0)
         {
@@ -107,7 +110,9 @@ export class SoProcesslogComponent implements OnInit {
     let logbyrunidresp: any;
     let resplogbyrun = [];
     let processId = this.logresponse.find(data =>data.processRunId == processRunId).processId;
+    this.spinner.show();
     this.rest.getprocessruniddata(processId,processRunId).subscribe(data =>{
+      this.spinner.hide();
       this.runidresponse = data;
       if(this.runidresponse.length >0)
         {
@@ -143,7 +148,9 @@ export class SoProcesslogComponent implements OnInit {
     let resplogbyrun1:any=[];
     let PbotId = this.runidresponse.find(data =>data.run_id == runid).bot_id;
     let pversion = this.runidresponse.find(data =>data.run_id == runid).version;
+    this.spinner.show()
     this.rest.getViewlogbyrunid(PbotId,pversion,runid).subscribe((data)=>{
+      this.spinner.hide();
       responsedata = data;
       if(responsedata.length >0)
       {
