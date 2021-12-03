@@ -190,7 +190,7 @@
                       </div> -->
                       <div class="mainset">
                         <span class="labeltit">Projects</span>
-                        <span class="labelcont">{{linked_projects.length}}</span>
+                        <span class="labelcont">{{program_detials.project.length}}</span>
                       </div>
                     </div>
                 </div>    
@@ -239,7 +239,7 @@
                       <span class="labeltit">Program Purpose</span>
     
                       <div *ngIf="editdata==false">
-                        <span class="labelcont" [matTooltip]="program_detials.purpose">{{getreducedValue(program_detials.purpose)}}</span>
+                        <span class="labelcont" [matTooltip]="program_detials.purpose">{{program_detials.purpose}}</span>
                         <span
                           *ngIf="program_detials.purpose == null || program_detials.purpose == undefined || program_detials.purpose =='' "
                           class="labelcont">-</span>
@@ -380,7 +380,7 @@
             <ng-container matColumnDef="initiatives">
               <th mat-header-cell *matHeaderCellDef mat-sort-header>Initiative</th>
               <td mat-cell   *matCellDef="let project">
-                <span *ngIf="project.initiatives!=null" [matTooltip]="project.initiatives|initiativePipe : initiatives|titlecase">{{getreducedValue(project.initiatives|initiativePipe : initiatives|titlecase)}}</span>
+                <span *ngIf="project.initiatives!=null" [matTooltip]="project.initiatives|initiativePipe : initiatives|titlecase">{{project.initiatives|initiativePipe : initiatives|titlecase}}</span>
                 <span *ngIf="project.initiatives==null">---</span>
               </td>
     
@@ -471,7 +471,7 @@
             <ng-container matColumnDef="noData">
                 <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
                     <!-- No Records Found -->
-                    <div *ngIf="linked_projects.length==0" class="text-center">
+                    <div *ngIf="program_detials.project.length==0" class="text-center">
                       <img  src="../../../../assets/images/RPA/No-Items.svg" class="no-item-img">
                       <h3 class="text-center">No Items to display</h3>
                   </div>
@@ -704,7 +704,7 @@
               </div>
               <div class="value py-5">
                 <p>Projects</p>
-                <span class="tab-text labelcont">{{linked_projects.length}}</span>
+                <span class="tab-text labelcont">{{program_detials.project.length}}</span>
               </div>
             </div>
             <div class="item1 d-flex w-100  py-10">
@@ -799,9 +799,9 @@
                   <th class="py-10">Actions</th>
                 </thead>
                 <tbody>
-                  <tr class="py-10" *ngFor="let project of linked_projects  | paginate: { itemsPerPage: 5, currentPage: p } ">
+                  <tr class="py-10" *ngFor="let project of program_detials.project  | paginate: { itemsPerPage: 5, currentPage: p } ">
                     <td>{{project.initiatives}}</td>
-                    <td>{{getreducedValue(project.projectName)}}</td>
+                    <td>{{project.projectName}}</td>
                     <td>{{project.owner  | userPipe : users_list}}</td>
                     <td>New</td>
 
@@ -845,7 +845,7 @@
                   </tr>
                 </tbody>
               </table>
-              <div *ngIf="linked_projects.length==0" class="text-center">
+              <div *ngIf="program_detials.project.length==0" class="text-center">
                   <img  src="../../../../assets/images/RPA/No-Items.svg" class="no-item-img">
                   <h3 class="text-center">No Items to display</h3>
               </div>
