@@ -84,7 +84,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   public form_change:Boolean=false;
   @ViewChild('template', { static: false }) template: TemplateRef<any>;
   public nodedata: any;
-  categoryList:any;
+  categoryList:any=[];
   constructor(private rest: RestApiService,
     private notifier: NotifierService,
     private hints: Rpa_Hints,
@@ -220,9 +220,12 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
   public loadnodes() {
     this.finaldataobjects.forEach(element => {
-      if (element.inSeqId == "START_" + this.finalbot.botName) {
+      let inseq=String(element.inSeqId);
+      let outseq=String(element.outSeqId);
+      // if (element.inSeqId == "START_" + this.finalbot.botName) {
+        if(inseq.split("_")[0]=="START"){
         let startnode = {
-          id: "START_" + this.finalbot.botName,
+          id: inseq,
           name: "START",
           selectedNodeTask: "",
           selectedNodeId: "",
@@ -238,10 +241,10 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           }, 240);
         }
       }
-      if (element.outSeqId == "STOP_" + this.finalbot.botName) {
-
+      // if (element.outSeqId == "STOP_" + this.finalbot.botName) {
+        if(outseq.split("_")[0]=="STOP"){
         let stopnode = {
-          id: "STOP_" + this.finalbot.botName,
+          id: outseq,
           name: "STOP",
           selectedNodeTask: "",
           selectedNodeId: "",
