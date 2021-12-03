@@ -92,6 +92,11 @@
 
             <table mat-table #sort10="matSort" #automatedtable [dataSource]="dataSource2" cdkDropList [cdkDropListData]="automatedtask" (cdkDropListDropped)="dropTable($event)" matSort class="RPA table" id="autotable">
 
+                <ng-container matColumnDef="processFilterId">
+                    <th *matHeaderCellDef mat-sort-header></th>
+                    <td [matTooltip]="element.processName" *matCellDef="let element"></td>
+                </ng-container>
+
                 <ng-container matColumnDef="processName">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Process Name</th>
                     <td mat-cell [matTooltip]="element.processName" *matCellDef="let element">
