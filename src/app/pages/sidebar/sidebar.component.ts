@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {PagesComponent} from '../pages.component'
 import * as $ from 'jquery';
+import { DataTransferService } from "./../../pages/services/data-transfer.service";
+import { RestApiService } from "./../services/rest-api.service"
+
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -14,10 +17,14 @@ export class SidebarComponent implements OnInit {
   showSubSubMenu: boolean = false;
   showadminSubSubMenu: boolean = false;
   public userRoles:any = [];
-  constructor(private obj:PagesComponent) { }
+  constructor(private obj:PagesComponent, private dt:DataTransferService,
+    private rest_service: RestApiService) { }
 
   ngOnInit() {
     //this.disable();
+    this.rest_service.getUserRole(2).subscribe(res=>{
+      this.userRoles=res.message
+    });
     let active_module=localStorage.getItem('selectedModule')
     if(active_module){
     let selected_module=active_module.split('&')
@@ -32,7 +39,7 @@ export class SidebarComponent implements OnInit {
     }
 
     setTimeout(() => {
-      this.userRoles = localStorage.getItem("userRole")
+      // this.userRoles = localStorage.getItem("userRole")
     }, 1000);
    
   }

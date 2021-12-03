@@ -1,10 +1,10 @@
 <div class="row col-md-12 header_addon">
-    <div class="col-md-6"></div>
-    <div class="col-md-1">
+    <!-- <div class="col-md-6"></div> -->
+    <!-- <div class="col-md-1">
         <div *ngIf="rejectedOrApproved" class="label_icon" [class.bg-red]="rejectedOrApproved=='REJECTED'" [class.bg-orange]="rejectedOrApproved=='INPROGRESS'" [class.bg-green]="rejectedOrApproved=='APPROVED'">
             {{rejectedOrApproved}}</div>
-    </div>
-    <div class="col-md-2">
+    </div> -->
+    <!-- <div class="col-md-2">
         <mat-form-field id="bpmnNotationList">
             <mat-label>BPMN Notation</mat-label>
             <mat-select [(ngModel)]="selected_notation" (selectionChange)="displayBPMN()" panelClass="myPanelDownClass" disableOptionCentering>
@@ -12,8 +12,8 @@
                     {{each_bpmn.bpmnProcessName+" ( V1."+each_bpmn.version+" )"}}</mat-option>
             </mat-select>
         </mat-form-field>
-    </div>
-    <div class="col-md-2">
+    </div> -->
+    <!-- <div class="col-md-2">
         <mat-form-field id="approversList">
             <mat-label>Approver List</mat-label>
             <mat-select [(ngModel)]="selected_approver" panelClass="myPanelDownClass" disableOptionCentering>
@@ -21,7 +21,7 @@
                     {{each_approver.firstName+" "+each_approver.lastName}}</mat-option>
             </mat-select>
         </mat-form-field>
-    </div>
+    </div> -->
     <!-- <div class="functionality-icons">
         <span class="fa fa-upload" (click)="openDeployDialog()" *ngIf="rejectedOrApproved == 'APPROVED'"></span>&nbsp;&nbsp;
         <span class="start-instance">
@@ -38,7 +38,7 @@
         <mat-tab-group class="h-100 canvas-container" headerPosition="below" (selectedTabChange)="displayXML($event)" #notationXMLTab>
             <mat-tab label="Notation">
                 <div class="row h-100">
-                    <div id="canvas" class="col-md-12 h-100 p-0"></div>
+                    <div id="canvas" [class.bps_overlay]="rejectedOrApproved == 'PENDING'" class="col-md-12 h-100 p-0"></div>
 
                     <div [ngClass]="{propertiesContainerClosed: !propertiesContainer, propertiesContainerOpened: propertiesContainer}" class="propertiesContainer" id="propertiesContainer">
                         <div *ngIf="!menuToggleTitle" [ngClass]="{hideTitle: !menuToggleTitle, showTitle: menuToggleTitle}" class="propertiesTitle" (click)="toggleOpen()">

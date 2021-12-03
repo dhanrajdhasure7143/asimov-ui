@@ -113,7 +113,7 @@ this.email=localStorage.getItem('ProfileuserId');
     this.getallusers();
     this.getallProjects(this.userRoles,this.name,this.email);
     this.getprocessnames();
-    this.getunassignedprojectslist();
+    this.getunassignedprojectslist(this.userRoles,this.name,this.email);
     this.getvalchain();
     this.mindate= moment().format("YYYY-MM-DD");
     this.getInitiatives();
@@ -136,9 +136,9 @@ this.email=localStorage.getItem('ProfileuserId');
 
 
 
-getunassignedprojectslist()
+getunassignedprojectslist(roles,name,email)
 {
-  this.api.getunassignedprojects().subscribe(data=>{
+  this.api.getunassignedprojects(roles,name,email).subscribe(data=>{
     this.unassigned_projects=data;
   })
 }
@@ -271,8 +271,11 @@ createproject(event)
   resetcreateprogram()
   {
         this.createprogram.reset();
+        this.createprogram.get("owner").setValue(this.loggedInUserId);
+        this.createprogram.get("processOwner").setValue("");
         this.createprogram.get("priority").setValue("");
         this.createprogram.get("initiatives").setValue("");
+        $('#selectprojects').prop('selectedIndex',0);
   }
   getallusers()
   {

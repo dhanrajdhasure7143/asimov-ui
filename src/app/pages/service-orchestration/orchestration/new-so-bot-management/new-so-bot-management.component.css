@@ -47,8 +47,9 @@ select {
 }
 .botmanagement-tablelist {
   width:100%;
-  overflow-x: auto;
-  height: calc(100% - 40px);
+  overflow: auto;
+  /* height: calc(100% - 40px); */
+  height: 59vh;
   /* margin-top: 5px; */
 }
 

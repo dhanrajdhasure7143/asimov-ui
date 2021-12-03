@@ -259,7 +259,7 @@ export class RestApiService{
 
     getviewlogdata(botid,botverid)
     {
-      return this.http.get("/rpa-service/logs/"+botid+"/"+botverid);
+      return this.http.get("/rpa-service/logs/"+botid);
     }
 
     getViewlogbyrunid(botid,botverid,runid){
@@ -907,9 +907,9 @@ save_blueprism_config(data)
       return this.http.post("/platform-service/project/addProjectbyProgramId?programId="+programid,data);
     }
 
-    getunassignedprojects()
+    getunassignedprojects(roles,name,email)
     {
-      return this.http.get("/platform-service/project/getUnassignedProjects");
+      return this.http.get("/platform-service/project/getUnassignedProjects?roles="+roles+"&name="+name+"&email="+email+"");
     }
 
     getRole(userid){
@@ -1219,5 +1219,7 @@ tasksListInProcess(id):Observable<any>{
 addtaskInProcess(id):Observable<any>{
   return this.http.get('/rpa-service/add-task/'+id)
 }
-
+getProgrmaDetailsById(programid){
+  return this.http.get('/platform-service/project/getProgramDetailsById?programId='+programid)
+}
 }

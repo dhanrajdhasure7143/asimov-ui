@@ -16,6 +16,7 @@ import {CustomMatPaginatorIntl} from './../../shared/custom-mat-paginator-int';
 import {MatPaginatorIntl} from '@angular/material';
 
 import {MatPaginatorModule} from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material';
 
 
 
@@ -32,7 +33,7 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     ApprovalWorkflowRoutingModule,
     MatProgressSpinnerModule,
     MatInputModule, MatIconModule, MatFormFieldModule,
-    MatOptionModule, MatSelectModule,MatTooltipModule,MatPaginatorModule
+    MatOptionModule, MatSelectModule,MatTooltipModule,MatPaginatorModule,MatSortModule
   ],
   providers: [ApprovalHomeHints,
     {

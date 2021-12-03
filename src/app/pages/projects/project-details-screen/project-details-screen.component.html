@@ -39,8 +39,9 @@
             <button mat-menu-item (click)="downloadExcel()">Download as Excel</button>
           </mat-menu>        
         </span>
-        <span  *ngIf="(!(this.userRole.includes('System Admin')) && userName==projectDetails.createdBy)
-        || (this.userRole.includes('System Admin'))">
+        <span  *ngIf="(!(this.userRole.includes('System Admin')) && userName==projectDetails.createdBy
+        )
+        || (this.userRole.includes('System Admin') ||  loginresourcecheck)">
         <span class="prjdetails-headerbuttons" *ngIf="editdata==true" (click)="projectdetails()">
           <button class="btn btn-default">Cancel</button>
         </span>
@@ -70,7 +71,7 @@
               <div class="prj-title" *ngIf="editdata==false">
                 <span class="tab-text"
                   *ngIf="projectDetails.projectName==null || projectDetails.projectName==undefined">-</span>
-                <span class="tab-text">{{projectDetails.projectName | titlecase}}</span>
+                <span class="tab-text">{{projectDetails.projectName}}</span>
               </div>
               <div class="prj-title" *ngIf="editdata==true">
                 <input type="text"  maxlength="50" (change)="projectDetails.projectName=$event.target.value"
@@ -84,7 +85,7 @@
                   <span class="projectdesc">{{projectDetails.projectPurpose}}</span>
               </div>  
               <div *ngIf="editdata==true">
-                <textarea  maxlength="150" (change)="projectDetails.projectPurpose=$event.target.value"
+                <textarea (change)="projectDetails.projectPurpose=$event.target.value"
                 [value]="(projectDetails.projectPurpose==undefined||projectDetails.projectPurpose==null)?'':projectDetails.projectPurpose"
                 class="small-input" placeholder="Enter Project Description" maxlength="150"></textarea>                    
               </div> 
@@ -268,7 +269,7 @@
                       class="tab-text labelcont">-</span>
                   </div>
                   <div *ngIf="editdata==true">
-                    <input type="date" class="small-input" (change)="projectDetails.startDate=$event.target.value" [value]="projectDetails.startDate">
+                    <input type="date" class="small-input" (change)="projectStartDate=$event.target.value" [value]="projectStartDate">
                   </div>
                 </div>
                 </div>
@@ -629,7 +630,7 @@
 
               </div>
               <div *ngIf="editdata==true">
-                <input type="text" (keypress)="projectDetails.effortsSpent=$event.target.value" class="small-input"
+                <input type="text" maxlength="20" (keypress)="projectDetails.effortsSpent=$event.target.value" class="small-input"
                   placeholder="Efforts Spent"
                   [value]="(projectDetails.effortsSpent == null || projectDetails.effortsSpent == undefined || projectDetails.effortsSpent =='')?'':projectDetails.effortsSpent">
               </div>
@@ -675,7 +676,7 @@
               <div *ngIf="editdata==true">
                 <input type="text"
                   [value]="(projectDetails.projectPurpose==undefined||projectDetails.projectPurpose==null)?'':projectDetails.projectPurpose"
-                  class="small-input" placeholder="Enter Project Purpose">
+                  class="small-input" maxlength="50" placeholder="Enter Project Purpose">
               </div>
             </div>
           </div>
@@ -709,7 +710,7 @@
             <div class="py-5">
               <span class="labeltit">Burnt Rate</span>
 
-              <span><input type="text" class="small-input" placeholder="Enter Burnt Rate Value" /></span>
+              <span><input type="text" class="small-input" maxlength="50" placeholder="Enter Burnt Rate Value" /></span>
             </div>
           </div>
         </div>
@@ -778,7 +779,7 @@
         </td>
     </ng-container>
      
-      <ng-container matColumnDef="percentage">
+      <ng-container matColumnDef="percentageComplete">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Percentage Complete</th>
         <td mat-cell *matCellDef="let element" >
           <span class="tab-text labelcont" >{{element.percentageComplete}}%
@@ -986,8 +987,8 @@
             <ng-container matColumnDef="user_Id">
               <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
               <td mat-cell *matCellDef="let user">
-                <span *ngIf="user.userId!=null" [matTooltip]="user.userId">{{user.user_Id}}</span>
-                <span *ngIf="user.userId==null">---</span>
+                <span *ngIf="user.user_Id!=null" [matTooltip]="user.user_Id">{{user.user_Id}}</span>
+                <span *ngIf="user.user_Id==null">---</span>
               </td>
             </ng-container>
         
@@ -1225,12 +1226,12 @@
             </div>
             <div class="form-fields col-md-12">
               <label id="summary" class="label-control">Summary</label>
-              <textarea class="form-control" formControlName="summary" rows="3" placeholder="Enter Summary">
+              <textarea class="form-control" maxlength="150" formControlName="summary" rows="3" placeholder="Enter Summary">
                         </textarea>
             </div>
             <div class="form-fields col-md-12">
               <label id="description" class="label-control">Description</label>
-              <textarea class="form-control" formControlName="description" rows="3" placeholder="Enter Description">
+              <textarea class="form-control" maxlength="150" formControlName="description" rows="3" placeholder="Enter Description">
                         </textarea>
             </div>
             <div class="col-md-12">
@@ -1245,7 +1246,7 @@
                       <div>
                       </div>
                       <div class="form-fields col-md-12 pr-0 comment-input">
-                        <input class=" form-control" type="text" #commentInput id="addcomment"
+                        <input class=" form-control" maxlength="150" type="text" #commentInput id="addcomment"
                           placeholder="Add a comment.." />
                         <div class="comment-send" id="sendcomment" (click)="postcomments(commentInput.value)">
                           <img src="../../../../assets/images/Projects/send.svg" class="default-img" />
@@ -1286,7 +1287,7 @@
 
                         <div class="updatecomments" *ngIf="(showeditcomment && i==commentnumber)">
                           <div class="form-fields col-md-12 p-0">
-                            <input type="text" name="comment" class="form-control" formControlName="editcomment"
+                            <input type="text" name="comment" maxlength="150" class="form-control" formControlName="editcomment"
                               placeholder="Add Comment..." />
                           </div>
                           <div class="modal-footer modelprfooter">
@@ -1551,7 +1552,7 @@
               <div class="form-fields col-md-12">
                   
                   <label>Description<span class="star">*</span></label>
-                  <textarea name= "desc" class="form-control" rows="2" formControlName="description" placeholder="Enter Description...">
+                  <textarea name= "desc" class="form-control" maxlength="150" rows="2" formControlName="description" placeholder="Enter Description...">
   
                   </textarea>
                   <span *ngIf="uploadFileFormDetails.get('description').invalid && uploadFileFormDetails.get('description').touched"
