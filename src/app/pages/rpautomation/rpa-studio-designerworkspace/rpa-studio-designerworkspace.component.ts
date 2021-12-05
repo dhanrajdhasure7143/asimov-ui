@@ -1105,7 +1105,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   reset(e) {
     this.indexofArr = 5;
     this.dagvalue = this.zoomArr[this.indexofArr];
-    this.dragelement.style['transform'] = `scale(${this.dagvalue})`
+    document.getElementById(this.dragareaid).style.transform = `scale(${this.dagvalue})`
     this.jsPlumbInstance.repaintEverything()
 
   }
@@ -1114,7 +1114,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     if (this.indexofArr < this.zoomArr.length - 1) {
       this.indexofArr += 1;
       this.dagvalue = this.zoomArr[this.indexofArr];
-      this.dragelement.style['transform'] = `scale(${this.dagvalue})`
+      document.getElementById(this.dragareaid).style.transform = `scale(${this.dagvalue})`
       this.jsPlumbInstance.repaintEverything()
     }
   }
@@ -1124,7 +1124,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     if (this.indexofArr > 0) {
       this.indexofArr -= 1;
       this.dagvalue = this.zoomArr[this.indexofArr];
-      this.dragelement.style['transform'] = `scale(${this.dagvalue})`
+      document.getElementById(this.dragareaid).style.transform = `scale(${this.dagvalue})`
     }
   }
 
@@ -1140,6 +1140,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   downloadPng()
   {
     var element=document.getElementById(this.dragareaid)
+    
     var botName=this.finalbot.botName;
     domtoimage.toPng(element)
       .then(function (dataUrl) {
