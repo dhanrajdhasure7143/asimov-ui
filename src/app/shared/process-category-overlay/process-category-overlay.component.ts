@@ -30,7 +30,9 @@ export class ProcessCategoryOverlayComponent implements OnInit {
   uploadedFileSplit:any=[];
   uploadedFileExtension:string;
   count:number=0;
-  categories_list:any[]=[]
+  categories_list:any[]=[];
+  approver_list:any[]=[];
+  process_owner:any;
 
   @ViewChild('processCategoryForm', {static: true}) processForm: NgForm;
   constructor( private rest:RestApiService, private activatedRoute: ActivatedRoute, private global:GlobalScript,
@@ -52,6 +54,7 @@ export class ProcessCategoryOverlayComponent implements OnInit {
       this.categoryName=this.categories_list[0].categoryName
     }
     this.cdRef.detectChanges();
+    this.getApproverList();
   }
 
   ngOnInit() {
@@ -70,6 +73,7 @@ export class ProcessCategoryOverlayComponent implements OnInit {
         this.categoryName=this.categories_list[0].categoryName
       }
     });
+    this.getApproverList();
   }
 
   loopTrackBy(index, term){
@@ -118,7 +122,8 @@ export class ProcessCategoryOverlayComponent implements OnInit {
       data = {
         "processName": this.processName,
         "categoryName": this.categoryName == 'other' ? this.othercategory : this.categoryName,
-        "ntype": this.notationType
+        "ntype": this.notationType,
+        "processOwner":this.process_owner
       }
       this.slideDown(null);
       this.proceed.emit(data);
@@ -163,5 +168,15 @@ export class ProcessCategoryOverlayComponent implements OnInit {
     // console.log("othercategory",this.othercategory);
     // console.log(str.replace(/\s\s/g, " "))
 
+  }
+  async getApproverList(){
+    let roles={
+      "roleNames": ["Process Owner"]
+    }
+    await this.rest.getmultipleApproverforusers(roles).subscribe( res =>  {//Process Architect
+     if(Array.isArray(res))
+       this.approver_list = res;
+       console.log(res)
+   });
   }
 }

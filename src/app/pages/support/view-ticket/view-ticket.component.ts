@@ -355,7 +355,7 @@ export class ViewTicketComponent implements OnInit {
           let status: any = res;
           Swal.fire({
             title: 'Success',
-            text: 'Comment Deleted Succefully !',
+            text: 'Comment Deleted Successfully !',
             position: 'center',
             icon: 'success',
             showCancelButton: false,

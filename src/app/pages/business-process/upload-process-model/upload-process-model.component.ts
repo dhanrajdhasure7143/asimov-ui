@@ -1437,7 +1437,8 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
     if(fileName.trim().length == 0 ) fileName = "newDiagram";
     var dd = fileName+"."+this.selectedNotationType;
      this.dialog.open(DeployNotationComponent, {disableClose: true,data: {
-      dataKey: data, fileNme: dd
+      dataKey: data, fileNme: dd,
+      category:this.saved_bpmn_list[this.selected_notation]['category']
     }});
     
     let deployResponse;
