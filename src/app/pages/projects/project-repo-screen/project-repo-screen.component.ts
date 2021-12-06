@@ -520,6 +520,7 @@ this.getFileDetails();
       }).then((result) => {
         if (result.value) {
           this.spinner.show();
+          this.filecheckflag = true;
           this.api.deleteFiles(selectedFiles).subscribe( res =>{ 
             let status:any = res;
             Swal.fire({
