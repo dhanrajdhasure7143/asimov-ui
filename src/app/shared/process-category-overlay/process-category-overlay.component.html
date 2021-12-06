@@ -65,11 +65,12 @@
                     </div>
                     <div class="col-md-12 p-0 form-group">
                         <label class="label-control">Enter Process Name<span class="star">*</span></label>
-                        <input type="text"  maxlength="50" name="process_name" [(ngModel)]="processName" #process_name="ngModel" pattern="^[a-zA-Z0-9 _-]{4,25}$" class="form-control" placeholder="Enter Process Name" required>
+                        <input type="text"  maxlength="50" name="process_name" [(ngModel)]="processName" #process_name="ngModel" pattern="^[a-zA-Z0-9_-].{3,25}$" (keyup)="lettersOnly($event)" class="form-control" placeholder="Enter Process Name" required>
                         <span *ngIf="((process_name.invalid && processCategoryForm.submitted) || (process_name.errors && process_name.touched) )">
                             <span class='errspan required' *ngIf="process_name.errors.required"> Please Enter process name</span>
-                            <span class='errspan required' *ngIf="process_name.errors.pattern"> Alphanumerics with _- are allowed having 4 - 25 characters</span>
+                            <!-- <span class='errspan required' *ngIf="process_name.errors.pattern"> Alphanumerics with _- are allowed having 4 - 25 characters</span> -->
                         </span>
+                        <span class='errspan required' *ngIf="process_name_error"> Alphanumerics with _- are allowed having 4 - 25 characters</span>
                     </div>
 <!-- previous Code -->
                     <!-- <mat-form-field class="col-md-12 p-0">
@@ -107,7 +108,7 @@
 <!-- previous Code -->
                 </div>
                 <div class="form-footer">
-                    <button class="btn btn-primary eiap-btn" type="submit" (click)="proceedChanges(processCategoryForm);" [disabled]="!data && !processCategoryForm.valid">{{buttonName}}</button>
+                    <button class="btn btn-primary eiap-btn" type="submit" (click)="proceedChanges(processCategoryForm);" [disabled]="(!data && !processCategoryForm.valid ) || process_name_error">{{buttonName}}</button>
                 </div>
                 <!-- <div class="container m-contanier" *ngIf="isRpa=='true'">
                     <div class="row">

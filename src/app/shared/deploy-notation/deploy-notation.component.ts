@@ -67,11 +67,12 @@ export class DeployNotationComponent implements OnInit {
         }
         
         } else{
-          Swal.fire(
-            'Oops!',
-            response.message,
-            'error'
-          )
+          Swal.fire({
+            title: 'Oops!',
+            text: response.message,
+            icon: 'error',
+            heightAuto: false,
+          })
         }
       })
   }

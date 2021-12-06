@@ -86,9 +86,6 @@ export class BusinessProcessComponent implements AfterViewChecked {
         console.log(this.iscreate_notation)
       }
     });
-    this.dt.current_startProcessValues.subscribe(res=>{
-      console.log(res)
-    })
   }
   //  async getApproverList(){
   //   await this.rest.getApproverforuser('Process Architect').subscribe( res =>  {
