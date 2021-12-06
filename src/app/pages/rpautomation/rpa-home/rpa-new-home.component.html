@@ -441,7 +441,7 @@
                                 <div *ngIf="botNamespace" class="errspan required">Spaces are not allowed</div>
 
                                 <div *ngIf="editbot.controls['botName'].hasError('maxlength')" class="errspan required">
-                                    Maximum of 30 characters
+                                    Maximum of 30 characters exceeded.
                                 </div>
 
                             </div>
@@ -465,10 +465,10 @@
 
                             <div class="col-md-12 p-0 form-group">
                                 <label class="label-control" for="botDescription">Bot Description</label>
-                                <textarea type="text" autocomplete="off" formControlName="description" placeholder="Enter Bot Description" ngModel maxlength="501" rows="3" class="form-control" name="botDescription"></textarea>
+                                <textarea type="text" autocomplete="off" formControlName="description" placeholder="Enter Bot Description" ngModel maxlength="151" rows="3" class="form-control" name="botDescription"></textarea>
 
                                 <div *ngIf="editbot.controls['description'].hasError('maxlength')" class="errspan required">
-                                    Maximum of 500 characters
+                                    Maximum of 150 characters exceeded.
                                 </div>
 
                             </div>
@@ -510,7 +510,7 @@
                                 <div *ngIf="botNamespace" class="errspan required">Spaces are not allowed</div>
 
                                 <div *ngIf="insertbot.controls['botName'].hasError('maxlength')" class="errspan required">
-                                    Maximum of 30 characters
+                                    Maximum of 30 characters exceeded
                                 </div>
                             </div>
 
@@ -547,12 +547,12 @@
                             </div>
                             <div class="col-md-12 p-0 form-group">
                                 <label class="label-control" for="botDescription">Bot Description</label>
-                                <textarea type="text" autocomplete="off" formControlName="botDescription" placeholder="Enter Bot Description" ngModel maxlength="501" rows="3" class="form-control" name="botDescription"></textarea>
+                                <textarea type="text" autocomplete="off" formControlName="botDescription" placeholder="Enter Bot Description" ngModel maxlength="151" rows="3" class="form-control" name="botDescription"></textarea>
                                 <!--<div *ngIf="(insertbot.get('botDescription').invalid && insertbot.get('botDescription').touched) && !insertbot.controls['botDescription'].hasError('maxlength')"  class="errspan required">
                 Bot Description Required*
               </div>-->
                                 <div *ngIf="insertbot.controls['botDescription'].hasError('maxlength')" class="errspan required">
-                                    Maximum of 500 characters
+                                    Maximum of 150 characters exceeded
                                 </div>
                             </div>
 

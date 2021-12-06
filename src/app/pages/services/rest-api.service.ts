@@ -259,7 +259,7 @@ export class RestApiService{
 
     getviewlogdata(botid,botverid)
     {
-      return this.http.get("/rpa-service/logs/"+botid+"/"+botverid);
+      return this.http.get("/rpa-service/logs/"+botid);
     }
 
     getViewlogbyrunid(botid,botverid,runid){

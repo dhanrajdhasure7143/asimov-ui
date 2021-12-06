@@ -126,6 +126,8 @@ getblueprismconnections()
 createBlueprism(){
   this.createblueprism = true;
   this.updateblueprims = false;
+  
+  this.reset_createblueprism()
   document.getElementById("createbprism").style.display = "block";
   this.BluePrismConfigForm.get("categoryId").setValue(this.categoryList.length==1?this.categoryList[0].categoryId:"0")
   document.getElementById("updatebprism").style.display='none';

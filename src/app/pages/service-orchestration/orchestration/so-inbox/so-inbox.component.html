@@ -1,11 +1,11 @@
 <div class="so-sub-tab-content">
     <div class="container-fluid">
         <div class="row">
-              <div class="col-md-3 form-group pl-0 example-full-width sosearchfield" id="inboxsearch">
+            <div class="col-md-3 form-group pl-0 example-full-width sosearchfield" id="inboxsearch">
                 <input class="form-control" placeholder="Search" [(ngModel)]="searchinbox" (keyup)="applyFilter($event.target.value)">
                 <img src="../../../../assets/images/search.svg" alt="" class="testplus">
-              </div>
-              <div class="col-md-9 p-0 env-data-tool text-right">
+            </div>
+            <div class="col-md-9 p-0 env-data-tool text-right">
                 <button (click)="reset()" id="inboxreset" class="tsttooltipbtn">
                   <img src="../../../../../assets/images/RPA/icon_latest/reset-blue.svg" class="testplus">
                   <span class="testtooltip">Reset</span>
@@ -69,31 +69,31 @@
                         <button [disabled]="element.status=='Approved' || element.status=='Rejected'" [class]="(element.status=='Approved' || element.status=='Rejected')?'undobtn':''" (click)="getapproved(element.processId,'Approved', element.taskId,element.processRunId,element.envId)"  matTooltip="Approve">
                           <i  class="fas fa-check text-success"></i>
                         </button>
-                        
-                      </span>&nbsp;&nbsp;&nbsp;
-                      <span>
+
+                </span>&nbsp;&nbsp;&nbsp;
+                <span>
                         <button [disabled]="element.status=='Approved' || element.status=='Rejected'" [class]="(element.status=='Approved' || element.status=='Rejected')?'undobtn':''" (click)="getapproved(element.processId,'Rejected', element.taskId,element.processRunId,element.envId)"  matTooltip="Reject">
                           <i  class="fas fa-times text-danger"></i>
                         </button>
                        
                       </span>
-                    </td>
+                </td>
                 </ng-container>
                 <ng-container matColumnDef="status">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Status </th>
-                  <td mat-cell *matCellDef="let element">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Status </th>
+                    <td mat-cell *matCellDef="let element">
 
-                    <span *ngIf="element.status=='Approved'" class="text-success"><span><li class="verticalalignmiddle fa fa-check-circle"style="font-size:19px"></span>&nbsp;<span>{{element.status}}</span></span>
+                        <span *ngIf="element.status=='Approved'" class="text-success"><span><li class="verticalalignmiddle fa fa-check-circle"style="font-size:19px"></span>&nbsp;<span>{{element.status}}</span></span>
 
-                    <span *ngIf="element.status=='Rejected'" class="text-danger"><span><li class="verticalalignmiddle fa fa-times-circle" style="font-size:19px"></span>&nbsp;<span>{{element.status}}</span></span>
-					  
-                    <span *ngIf="element.status=='Pending'" ><span class="verticalalignmiddle text-warning" style="font-size:19px;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><i class="fa fa-clock"></i></span>&nbsp;<span>{{element.status}}</span></span>
-                    
-                    <span *ngIf="element.status==null">---</span>
-                     
-                  </td>
-              </ng-container>
-                    <!--<ng-container matColumnDef="Action">
+                        <span *ngIf="element.status=='Rejected'" class="text-danger"><span><li class="verticalalignmiddle fa fa-times-circle" style="font-size:19px"></span>&nbsp;<span>{{element.status}}</span></span>
+
+                        <span *ngIf="element.status=='Pending'"><span class="verticalalignmiddle text-warning" style="font-size:19px;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><i class="fa fa-clock"></i></span>&nbsp;<span>{{element.status}}</span></span>
+
+                        <span *ngIf="element.status==null">---</span>
+
+                    </td>
+                </ng-container>
+                <!--<ng-container matColumnDef="Action">
                         <th mat-header-cell *matHeaderCellDef >Actions </th>
                         <td mat-cell *matCellDef="let element">
                             <span (click)="botidshowaction(10)"  matTooltip="Start Bot">
@@ -104,22 +104,22 @@
                             </span>
                         </td>
                     </ng-container>-->
-                    <ng-container matColumnDef="noData">
-                        <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="8">
-                            No Records Found
-                        </td>
-                    </ng-container>
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                    <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                    <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': !respdata1}"></tr>
+                <ng-container matColumnDef="noData">
+                    <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="8">
+                        No Records Found
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': !respdata1}"></tr>
                 </table>
-              </div>
-
-              <mat-paginator #paginator1 [pageSize]="10" [showFirstLastButtons]="true"></mat-paginator>
             </div>
-        
-      </div>
-     
+
+            <mat-paginator #paginator1 [pageSize]="10" [pageSizeOptions]="[5, 10,25,50]" [showFirstLastButtons]="true"></mat-paginator>
+        </div>
+
+    </div>
+
 </div>
 <!--<div id="showaction" class="rpa-modal">
     <div class="rpa-modal-content">
@@ -132,4 +132,3 @@
         </div>
     </div>
 </div>-->
-

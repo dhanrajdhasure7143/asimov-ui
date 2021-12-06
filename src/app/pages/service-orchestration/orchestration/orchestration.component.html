@@ -15,20 +15,20 @@
     </ngb-tab>
 </ngb-tabset>-->
 <ngx-spinner bdColor="rgba(255,255,255,0.7)">
-  <img  src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader"/>
-  <!-- <img  src='\assets\images\RPA\rpa-loader.gif' /> -->
+    <img src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader" />
+    <!-- <img  src='\assets\images\RPA\rpa-loader.gif' /> -->
 </ngx-spinner>
 <div class="main-content orches_new">
-  <div class="row content-area">
-    <div class="row module-heading title">
-      <span *ngIf="back_button==true" class="module-back-button" (click)="routeToProjectDetails()">
+    <div class="row content-area">
+        <div class="row module-heading title">
+            <span *ngIf="back_button==true" class="module-back-button" (click)="routeToProjectDetails()">
         <i aria-hidden="true" class="fas fa-arrow-left"></i>
       </span>
-      <span class="module-header-title">Service Orchestration</span>
-    </div>
-    <div class="module-body">
-      <mat-tab-group class="h-100" [selectedIndex]="selectedTab" id="Orchestration-tabs" (selectedTabChange)="onTabChanged($event)">
-        <!-- <mat-tab>
+            <span class="module-header-title">Service Orchestration</span>
+        </div>
+        <div class="module-body">
+            <mat-tab-group class="h-100" [selectedIndex]="selectedTab" id="Orchestration-tabs" (selectedTabChange)="onTabChanged($event)">
+                <!-- <mat-tab>
           <ng-template mat-tab-label>
               <mat-icon class="text-primary">pie_chart</mat-icon>&nbsp;&nbsp;
               Dashboard
@@ -70,9 +70,9 @@
             <app-so-inbox></app-so-inbox>
           </div>
         </mat-tab> -->
-    
-    
-        <!-- <mat-tab>
+
+
+                <!-- <mat-tab>
           <ng-template mat-tab-label>
               <mat-icon>pie_chart</mat-icon>&nbsp;&nbsp;
               Dashboard
@@ -81,74 +81,66 @@
             <app-new-so-dashboard></app-new-so-dashboard>
           </div>
         </mat-tab> -->
-        
-        <mat-tab label="Bots">
-    
-          <ng-template mat-tab-label>
-            <mat-icon >android</mat-icon>
-              &nbsp;&nbsp;
-              Bots
-            </ng-template>
-          <div class="h-100" *ngIf="check_tab==0">
-            <app-new-so-bots></app-new-so-bots>
-          </div>
-        </mat-tab>
-        <mat-tab label="Bot Management">
-    
-          <ng-template mat-tab-label>
-            <mat-icon  >desktop_windows</mat-icon>
-              &nbsp;&nbsp;
-              Environments Management
-            </ng-template>
-          <div class="h-100" *ngIf="check_tab==1">
-            <app-so-environments></app-so-environments>
-          </div>
-        </mat-tab>
-    
-        <mat-tab label="Bot Management">
-    
-          <ng-template mat-tab-label>
-            <i class="material-icons">inbox</i>
-              &nbsp;&nbsp;
-              Incident Management
-          </ng-template>
-          <div class="h-100" *ngIf="check_tab==2">
-            <app-new-so-management></app-new-so-management>
-          </div>
-        </mat-tab>
-    
-        <mat-tab label="Orchestrator">
-          <ng-template mat-tab-label>
-            <mat-icon >control_camera</mat-icon>
-              &nbsp;&nbsp;
-              Orchestration
-          </ng-template>
-          <div class="h-100" *ngIf="check_tab==3">
-            <app-new-so-automated-tasks [processid]="param"></app-new-so-automated-tasks>
-          </div>
-        </mat-tab>
-        <mat-tab label="Bot Management">
-    
-          <ng-template mat-tab-label>
-            <mat-icon>android</mat-icon>
-              &nbsp;&nbsp;
-              Bot Management
-          </ng-template>
-          <div class="h-100" *ngIf="check_tab==4">
-            <app-new-so-bot-management></app-new-so-bot-management>
-          </div>
-        </mat-tab>
-    
-        <mat-tab label="Monitoring">
-          <ng-template mat-tab-label  >
-           <!-- <button (mouseover)="createPlanmenuTrigger.openMenu()" (mouseout)="$event.stopPropagation();createPlanmenuTrigger.openMenu()"   #createPlanmenuTrigger="matMenuTrigger"  [matMenuTriggerFor]="Menu" > -->
-              <i class="fa fa-chart-area"  style="font-size:20px"></i>
-                &nbsp;&nbsp;
-                Monitoring
-          
-            <!-- </button> -->
-          
-            <!-- <mat-menu #Menu="matMenu">
+
+                <mat-tab label="Bots">
+
+                    <ng-template mat-tab-label>
+                        <mat-icon>android</mat-icon>
+                        &nbsp;&nbsp; Bots
+                    </ng-template>
+                    <div class="h-100" *ngIf="check_tab==0">
+                        <app-new-so-bots></app-new-so-bots>
+                    </div>
+                </mat-tab>
+                <mat-tab label="Bot Management">
+
+                    <ng-template mat-tab-label>
+                        <mat-icon>desktop_windows</mat-icon>
+                        &nbsp;&nbsp; Environments Management
+                    </ng-template>
+                    <div class="h-100" *ngIf="check_tab==1">
+                        <app-so-environments></app-so-environments>
+                    </div>
+                </mat-tab>
+
+                <mat-tab label="Bot Management">
+
+                    <ng-template mat-tab-label>
+                        <i class="material-icons">inbox</i> &nbsp;&nbsp; Incident Management
+                    </ng-template>
+                    <div class="h-100" *ngIf="check_tab==2">
+                        <app-new-so-management></app-new-so-management>
+                    </div>
+                </mat-tab>
+
+                <mat-tab label="Orchestrator">
+                    <ng-template mat-tab-label>
+                        <mat-icon>control_camera</mat-icon>
+                        &nbsp;&nbsp; Orchestration
+                    </ng-template>
+                    <div class="h-100" *ngIf="check_tab==3">
+                        <app-new-so-automated-tasks></app-new-so-automated-tasks>
+                    </div>
+                </mat-tab>
+                <mat-tab label="Bot Management">
+
+                    <ng-template mat-tab-label>
+                        <mat-icon>android</mat-icon>
+                        &nbsp;&nbsp; Bot Management
+                    </ng-template>
+                    <div class="h-100" *ngIf="check_tab==4">
+                        <app-new-so-bot-management></app-new-so-bot-management>
+                    </div>
+                </mat-tab>
+
+                <mat-tab label="Monitoring">
+                    <ng-template mat-tab-label>
+                        <!-- <button (mouseover)="createPlanmenuTrigger.openMenu()" (mouseout)="$event.stopPropagation();createPlanmenuTrigger.openMenu()"   #createPlanmenuTrigger="matMenuTrigger"  [matMenuTriggerFor]="Menu" > -->
+                        <i class="fa fa-chart-area" style="font-size:20px"></i> &nbsp;&nbsp; Monitoring
+
+                        <!-- </button> -->
+
+                        <!-- <mat-menu #Menu="matMenu">
               <button mat-menu-item (click)="option(0);selectedTab=6;check_tab=6">Health Status</button>
               <button mat-menu-item>
                 <a style="color:black;text-decoration: none;"
@@ -156,11 +148,11 @@
               </button>
               <button mat-menu-item (click)="option(1);selectedTab=6;check_Tab=6">Metrics</button>
             </mat-menu> -->
-          </ng-template>
-          <div class="h-100" *ngIf="check_tab==5">
-            <app-so-monitoring></app-so-monitoring>
-          </div>
-          <!-- <div *ngIf="options==0">
+                    </ng-template>
+                    <div class="h-100" *ngIf="check_tab==5">
+                        <app-so-monitoring></app-so-monitoring>
+                    </div>
+                    <!-- <div *ngIf="options==0">
             <br>
             <app-so-health-status></app-so-health-status>
           </div>
@@ -168,39 +160,37 @@
             <iframe src='https://www.site24x7.in/public/dashboard/pKHl5Tx2Kb8SZoqcmJDaF3ziM9MyghE1VrBRTQQpOj9Ryc96EyKu/oDHVjt8ZTmMvy2blPi5kZ4kSBRbVULvP0csw2a0rmiewwe3Qt39Ur/dqnq0NXu6kw==' (load)="spinner.hide()" scrolling='yes'  height='600' style="width:100%"  (load)="spinner.hide()" border='0' frameborder='0'></iframe>
     
           </div>-->
-    
-        </mat-tab>
-    
-    
-        <mat-tab label="Inbox">
-    
-          <ng-template mat-tab-label>
-            <mat-icon >inbox</mat-icon>
-              &nbsp;&nbsp;
-              Inbox
-            </ng-template>
-          <div class="h-100" *ngIf="check_tab==6">
-            <app-so-inbox></app-so-inbox>
-          </div>
-        </mat-tab>
-    
-        <!-- Scheduled Bots -->
-        <mat-tab label="Scheduled-Info">
-    
-          <ng-template mat-tab-label>
-            <mat-icon  >event_note</mat-icon>
-              &nbsp;&nbsp;
-              Scheduled Info
-          </ng-template>
-          <div class="h-100" *ngIf="check_tab==7">
-            <app-scheduled-bots></app-scheduled-bots>
-          </div>
-        </mat-tab> 
-    
-      </mat-tab-group>
-    </div>
 
-  </div>
+                </mat-tab>
+
+
+                <mat-tab label="Inbox">
+
+                    <ng-template mat-tab-label>
+                        <mat-icon>inbox</mat-icon>
+                        &nbsp;&nbsp; Inbox
+                    </ng-template>
+                    <div class="h-100" *ngIf="check_tab==6">
+                        <app-so-inbox></app-so-inbox>
+                    </div>
+                </mat-tab>
+
+                <!-- Scheduled Bots -->
+                <mat-tab label="Scheduled-Info">
+
+                    <ng-template mat-tab-label>
+                        <mat-icon>event_note</mat-icon>
+                        &nbsp;&nbsp; Scheduled Info
+                    </ng-template>
+                    <div class="h-100" *ngIf="check_tab==7">
+                        <app-scheduled-bots></app-scheduled-bots>
+                    </div>
+                </mat-tab>
+
+            </mat-tab-group>
+        </div>
+
+    </div>
 </div>
 <!--
 <mat-tab-group [selectedIndex]="selectedTab" class="secondary-tab-group has-header" [dynamicHeight]="true" mat-stretch-tabs>
