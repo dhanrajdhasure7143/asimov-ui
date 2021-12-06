@@ -15,7 +15,7 @@
                         class="errspan required">Project Name Required*</span>
                     <span *ngIf="insertForm2.controls['projectName'].hasError('maxlength')"
                         class="errspan required">
-                        Maximum of 50 characters
+                        Maximum of 50 characters exceeded
                     </span>
                 </div>
                 <div class="form-fields col-md-6 pr-0">
@@ -85,7 +85,7 @@
                         && !insertForm2.controls['measurableMetrics'].hasError('maxlength')"
                         class="errspan required">Metrics To Be Measured Required*</span>
                         <span *ngIf="insertForm2.controls['measurableMetrics'].hasError('maxlength')" class="errspan required">
-                            Maximum of 50 characters
+                            Maximum of 50 characters exceeded
                         </span>
                 </div>
                 <div class="form-fields col-md-6 pr-0">
@@ -102,7 +102,7 @@
                         && !insertForm2.controls['mapValueChain'].hasError('maxlength')"
                         class="errspan required">Value Chain Required*</span>
                         <span *ngIf="insertForm2.controls['mapValueChain'].hasError('maxlength')" class="errspan required">
-                            Maximum of 50 characters
+                            Maximum of 50 characters exceeded
                         </span>
                 </div>
             </div>
@@ -205,7 +205,7 @@
                         [ngClass]="insertForm2.get('projectPurpose').valid?'enteredfield-color':'inputfield-color'"> -->
                    
                         <textarea class="form-control data" formControlName="projectPurpose" row="3"
-                        placeholder="Enter Project Description" style=" resize: none;" maxlength="150"
+                        placeholder="Enter Project Description" style=" resize: none;" maxlength="151"
                         [ngClass]="insertForm2.get('projectPurpose').valid?'enteredfield-color':'inputfield-color'">
                             </textarea>
                     <span
@@ -213,7 +213,7 @@
                         && !insertForm2.controls['projectPurpose'].hasError('maxlength')"
                         class="errspan required">Project Description Required*</span>
                         <span *ngIf="insertForm2.controls['projectPurpose'].hasError('maxlength')" class="errspan required">
-                            Maximum of 150 characters
+                            Maximum of 150 characters exceeded
                         </span>
                 </div>
             </div>
