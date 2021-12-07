@@ -89,10 +89,7 @@
               <button class='icon-disabled' *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && isSave_disabled && !iscreate_notation" >
                 <img src="../../../assets/images/BPMS/Savedisabled.svg" alt="" class="defaultimg">
               </button>
-              <button class="clr-hvr tsttooltipbtn" (click)="orchestartion()" *ngIf="rejectedOrApproved=='APPROVED'">
-                <img src="../../../assets/images/BPMS/orchestration.svg">
-                <span class="testtooltip">Orchestration</span>
-              </button>
+              
               <!-- <button class="clr-hvr tsttooltipbtn" (click)="saveandSubmitApproval()" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && !isSave_disabled && !iscreate_notation">
                 <img src="../../../assets/images/BPMS/submit-for-approval.svg">
                 <span class="testtooltip">Save & Submit for approval</span>
@@ -123,14 +120,18 @@
               <button class="icon-disabled" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && isSave_disabled && !iscreate_notation">
                 <img src="../../../assets/images/BPMS/submit-for-approvaldisabled.svg">
               </button>
-              <!-- <button class="clr-hvr tsttooltipbtn" *ngIf="rejectedOrApproved == 'APPROVED'"  (click)="deployNotation()">
+              <button class="clr-hvr tsttooltipbtn" (click)="orchestartion()" *ngIf="rejectedOrApproved=='APPROVED'">
+                <img src="../../../assets/images/BPMS/orchestration.svg">
+                <span class="testtooltip">Orchestration</span>
+              </button>
+              <button class="clr-hvr tsttooltipbtn" *ngIf="rejectedOrApproved == 'APPROVED'"  (click)="deployNotation()">
                 <img src="../../../assets/images/BPMS/Deploy.svg">
                 <span class="testtooltip">Deploy Notation</span>
               </button>
               <button class="clr-hvr tsttooltipbtn" *ngIf="isStartProcessBtn" (click)="startProcess()"  >
                 <img src="../../../assets/images/BPMS/Play.svg">
                 <span class="testtooltip">Start Process</span>
-              </button> -->
+              </button>
               <button class="tsttooltipbtn" (click)="showConformance()" *ngIf="isShowConformance && !reSize && !hasConformance" [disabled]="disableShowConformance||rejectedOrApproved=='PENDING'">
                   <img src="../../../assets/images/BPMS/show-differences.svg">
                   <span class="testtooltip">Show Conformance</span>
