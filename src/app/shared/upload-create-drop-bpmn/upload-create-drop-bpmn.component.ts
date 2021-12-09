@@ -103,6 +103,7 @@ export class UploadCreateDropBpmnComponent implements OnInit {
     this.bpmnModel.bpmnProcessName=e.processName;
     this.bpmnModel.ntype=e.ntype;
     this.bpmnModel.bpmnModelId=this.randomId;
+    this.bpmnModel['processOwner']=e.processOwner;
     if(this.data){
       let dataarr = this.data.split("@");
       this.bpmnModel.bpmnModelId= dataarr[2];
