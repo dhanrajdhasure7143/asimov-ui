@@ -4,6 +4,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import moment from 'moment';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
 import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
+import { NotifierService } from 'angular-notifier';
 @Component({
   selector: 'app-create-project-form',
   templateUrl: './create-project-form.component.html',
@@ -11,7 +12,7 @@ import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 })
 export class CreateProjectFormComponent implements OnInit {
 
-  constructor(private formBuilder:FormBuilder, private spinner:NgxSpinnerService, private rest:RestApiService ) { }
+  constructor(private formBuilder:FormBuilder,private notifier:NotifierService, private spinner:NgxSpinnerService, private rest:RestApiService ) { }
   insertForm2:FormGroup;
   selectedresources:any=[];
   valuechain:any=[];
@@ -51,15 +52,15 @@ export class CreateProjectFormComponent implements OnInit {
   }
 
   getprocessnames()
-{
-  this.rest.getprocessnames().subscribe(processnames=>{
-    let response:any=processnames;
-    let resp:any=[]
-    //resp=processnames
-    //this.selected_process_names=resp.filter(item=>item.status=="APPROVED");
-     resp=response.filter(item=>item.status=="APPROVED");
-    this.selected_process_names=resp.sort((a,b) => (a.processName.toLowerCase() > b.processName.toLowerCase() ) ? 1 : ((b.processName.toLowerCase() > a.processName.toLowerCase() ) ? -1 : 0));
-  })
+  {
+    this.rest.getprocessnames().subscribe(processnames=>{
+      let response:any=processnames;
+      let resp:any=[]
+      //resp=processnames
+      //this.selected_process_names=resp.filter(item=>item.status=="APPROVED");
+      resp=response.filter(item=>item.status=="APPROVED");
+      this.selected_process_names=resp.sort((a,b) => (a.processName.toLowerCase() > b.processName.toLowerCase() ) ? 1 : ((b.processName.toLowerCase() > a.processName.toLowerCase() ) ? -1 : 0));
+    })
   }
 
  
@@ -82,7 +83,21 @@ export class CreateProjectFormComponent implements OnInit {
       this.oncreate.emit(project);
     }
   }
-
+  onProcessChange(processId:number)
+  {
+    let process=this.selected_process_names.find(process=>process.processId==processId);
+    if(process!=undefined)
+    {
+      let processOwner:any=this.users_list.find(item=>(`${item.userId.firstName} ${item.userId.lastName}`==process.createdBy))
+      if(processOwner!=undefined)
+      {
+        this.insertForm2.get("processOwner").setValue(processOwner.userId.userId)
+      }else
+      {
+        this.notifier.notify("error","Unable to find process owner for selected process")
+      }
+    }
+  }
 
   
   resetcreateproject()
