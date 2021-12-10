@@ -142,22 +142,48 @@ export class ProcessCategoryOverlayComponent implements OnInit {
     }
   }
 
-  lettersOnly(event): boolean {
-    if(event.target.value.length==0 && event.code=="Space"){
-      event.preventDefault();
-      return false;
-    }
+  lettersOnly(event) {
+    var regex = new RegExp("^[a-zA-Z0-9-_]+$");
+    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+      if (!regex.test(key)) {
+        event.preventDefault();
+        return false;
+      }
+
+    // this.process_name_error = false;
+    // if (event.target.value.length == 0) {
+    //   this.process_name_error = false;
+    // }
+    // if (event.target.value.includes(' ')) {
+    //   this.process_name_error = true;
+    //   return;
+    // }
+    // if ((event.target.value.length != 0 && event.target.value.length < 4) || (event.target.value.length > 25) ) {
+    //   this.process_name_error = true;
+    // }
+
+
+
+
+    // this.process_name_error=false;
+    // if(event.target.value.length==0 && event.code=="Space"){
+    //   event.preventDefault();
+    //   return false;
+    // }
+    // console.log(event.code)
     
-    let count1;
-    if(event.code=="Space"){
-      count1=this.count++;
-    }else{
-      this.count=0;
-    }
-    if(count1>=1){
-      event.preventDefault();
-      return false;
-    }
+    // let count1;
+    // if(event.code=="Space"){
+    //   count1=this.count++;
+    //   this.process_name_error=true;
+    // }else{
+    //   this.count=0;
+    // }
+    // console.log(count1)
+    // if(count1>=1){
+    //   event.preventDefault();
+    //   return false;
+    // }
 
     // var str=event.target.value
     // console.log("othercategory",this.othercategory);
