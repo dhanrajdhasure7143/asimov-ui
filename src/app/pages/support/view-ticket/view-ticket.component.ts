@@ -37,7 +37,7 @@ export class ViewTicketComponent implements OnInit {
   createRequestData: any;
   requestKey: any = undefined;
   // ngModels
-  comment: any;
+  comment: any=[];
   summary: any;
   description: any;
   component: any[] = [];
@@ -145,9 +145,7 @@ export class ViewTicketComponent implements OnInit {
   getRequestComments(id) {
     this.api.getRequestComments(id).subscribe((res: any) => {
       this.commentRequest = res;
-      if (this.commentRequest.length > 0) {
         this.comment = this.commentRequest;
-      }
     });
   }
 
@@ -355,7 +353,7 @@ export class ViewTicketComponent implements OnInit {
           let status: any = res;
           Swal.fire({
             title: 'Success',
-            text: 'Comment Deleted Succefully !',
+            text: 'Comment Deleted Successfully !',
             position: 'center',
             icon: 'success',
             showCancelButton: false,
