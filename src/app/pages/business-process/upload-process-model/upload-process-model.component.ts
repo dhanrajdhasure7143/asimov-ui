@@ -774,6 +774,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
       if(_self.oldXml != _self.newXml){
         _self.spinner.show();
         bpmnModel["bpmnProcessMeta"] = btoa(unescape(encodeURIComponent(_self.newXml)));
+        bpmnModel["processOwner"] = _self.saved_bpmn_list[_self.selected_notation]['processOwner'];
         _self.autoSaveDiagram(bpmnModel);
       }
     });
