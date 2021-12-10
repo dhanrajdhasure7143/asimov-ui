@@ -432,7 +432,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
     "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
     "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize,isUploaded:this.isUploaded}
       setTimeout(() => {
-        this.dt.bpsNotationaScreenValues(this.push_Obj);
+        // this.dt.bpsNotationaScreenValues(this.push_Obj);
       }, 2000);
    }
 
@@ -562,13 +562,17 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
           console.error('could not import BPMN EZFlow notation', err);
         }
       }
-    }
-    this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
+      this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
     "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
     "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize,isUploaded:this.isUploaded}
-    setTimeout(() => {
       this.dt.bpsNotationaScreenValues(this.push_Obj);
-    }, 3000);
+    }
+    // this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
+    // "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
+    // "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize,isUploaded:this.isUploaded}
+    // setTimeout(() => {
+    //   this.dt.bpsNotationaScreenValues(this.push_Obj);
+    // }, 3000);
   }
 
   setUrlParam(name, value) {
