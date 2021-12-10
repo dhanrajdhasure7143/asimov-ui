@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxSpinnerModule } from "ngx-spinner";
+import { NgSelectModule } from '@ng-select/ng-select';
 import { SharedModule } from '../../shared/shared.module';
 import { ServiceOrchestrationRoutingModule } from './service-orchestration-routing.module';
 import { ServiceOrchestrationComponent } from './service-orchestration.component';
@@ -33,11 +34,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import {MatDialogModule} from '@angular/material/dialog';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { SoProcesslogComponent } from './orchestration/so-processlog/so-processlog.component';
-
 import {sohints} from './orchestration/model/new-so-hints';
 import { SoInboxComponent } from './orchestration/so-inbox/so-inbox.component'
-
-
 import { NewSoDashboardComponent } from './orchestration/new-so-dashboard/new-so-dashboard.component'
 import { NewSoBotsComponent } from './orchestration/new-so-bots/new-so-bots.component';
 import { NewSoManagementComponent } from './orchestration/new-so-management/new-so-management.component';
@@ -47,7 +45,7 @@ import { SoEnvBlueprismComponent } from './orchestration/so-env-blueprism/so-env
 import { SoEnvUipathComponent } from './orchestration/so-env-uipath/so-env-uipath.component';
 import { SoEnvEpsoftComponent ,ipcustompipecreation } from './orchestration/so-env-epsoft/so-env-epsoft.component';
 import { ReactiveFormsModule } from '@angular/forms';
-
+import {DragDropModule} from '@angular/cdk/drag-drop';
 import { ModalModule, BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { SlicedateUpdate, SoUpdatedDashboardComponent,CategoryUpdate } from './orchestration/so-updated-dashboard/so-updated-dashboard.component';
 import { Checkbotslist, Checkhumanslist, NewSoAutomatedTasksComponent } from './orchestration/new-so-automated-tasks/new-so-automated-tasks.component';
@@ -61,6 +59,7 @@ import { SoMonitoringComponent } from './orchestration/so-monitoring/so-monitori
 import { ScheduledBotsComponent } from './orchestration/scheduled-bots/scheduled-bots.component';
 import { BotsComponent } from './orchestration/scheduled-bots/bots/bots.component';
 import { ProcessesComponent } from './orchestration/scheduled-bots/processes/processes.component';
+import { CheckResourcePipe } from './orchestration/new-so-automated-tasks/check-resource.pipe';
 @NgModule({
   declarations: [OrchestrationComponent,ipcustompipecreation,
     BotStatusComponent,
@@ -87,10 +86,12 @@ import { ProcessesComponent } from './orchestration/scheduled-bots/processes/pro
     SoMonitoringComponent,
     BotsComponent,
     ProcessesComponent,
-    ScheduledBotsComponent],
+    ScheduledBotsComponent,
+    CheckResourcePipe],
   imports: [
     CommonModule,
     FormsModule,
+    DragDropModule,
     ReactiveFormsModule,
     NgbModule,
     ServiceOrchestrationRoutingModule,
@@ -115,6 +116,7 @@ import { ProcessesComponent } from './orchestration/scheduled-bots/processes/pro
     MatDialogModule,
     NgxPaginationModule,
     ModalModule.forRoot(),
+    NgSelectModule
 
   ],
   bootstrap: [SoDashboardComponent],

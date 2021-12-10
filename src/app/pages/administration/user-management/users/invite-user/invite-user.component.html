@@ -1,0 +1,77 @@
+<div class="h-100">
+    <mat-card class="h-100">
+        <div class="module-heading title">
+            <span class="module-back-button" routerLink="/pages/admin/user-management">
+                <i class="fas fa-arrow-left" aria-hidden="true"></i>
+            </span>
+            <span class="module-header-title">
+                <span class="module-parent-title">Invite User</span>
+            </span>
+            <div class="ml-auto pull-right">
+                <button (click)="resetUserInvite()" class="btn btn-default">Reset</button>
+                <button  [disabled]="inviteUserForm.invalid" (click)="inviteUser()" class="btn btn-primary btn-update">Invite</button>
+            </div>
+        </div>
+        <div class="container-fluid  h-scroll">
+            <div class="maindivfoprm">
+                <!-- <div class="create-heading">Invite User</div> -->
+                <form [formGroup]="inviteUserForm" #adduser="ngForm" (ngSubmit)="inviteUser()">
+                    <!-- <div class="row fcont"> -->
+                        
+                        <div class="col-md-12 p-0 form-fields">
+                            <label class="label-control">Email<span class="star">*</span></label>
+                            <input type="text" formControlName="inviteeMail" (change)="onEmailChange()" class="form-control data" 
+                              [ngClass]="inviteUserForm.get('inviteeMail').valid?'enteredfield-color':'inputfield-color'"
+                              (keyup)="myemailFunction()" pattern="^\S*[@]\S*[.]\S*$"  email placeholder="Enter Emails Separated By Comma(,)" />
+                            <span *ngIf="((inviteUserForm.get('inviteeMail').invalid && inviteUserForm.submitted)|| (inviteUserForm.get('inviteeMail').errors && inviteUserForm.get('inviteeMail').touched))"> 
+                                <span class='errspan required' *ngIf="inviteUserForm.get('inviteeMail').errors.required">Email is required</span>
+                                <span class='errspan required' *ngIf="inviteUserForm.get('inviteeMail').errors.pattern">Enter valid email address</span>
+                            </span>
+                            <span class='errspan required' *ngIf="inviteeMail"> Email is required</span>
+                                       
+                                        </div>
+                                    <!-- </div> -->
+                                        <div class="col-md-12 p-0 form-fields">
+                                          <label class="label-control">Department(s)<span class="star">*</span></label>
+                                          <ng-select  formControlName="departments"  [multiple]="true"  placeholder="Select departments"
+                                          [(ngModel)]="departments"  required>
+                                          <ng-option *ngFor="let category of categories" [value]="category.categoryId">{{category.categoryName}}</ng-option>
+                                         </ng-select>
+
+                                         <span *ngIf="inviteUserForm.get('departments').invalid && inviteUserForm.get('departments').touched" class="errspan required">Departments Required*</span>
+                                        </div>
+
+                                        <div class="col-md-12 p-0 form-fields">
+                                            <label class="label-control">Role<span class="star">*</span></label>
+                                            <select formControlName="role" class="form-control data"
+                                                [ngClass]="inviteUserForm.get('role').valid?'enteredfield-color':'inputfield-color'">
+                                                <option [value]="null" disabled hidden>Select Role</option>
+                                                <option value="" [selected]="true">Select Role</option>
+                                                <option *ngFor="let role of allRoles" [value]="role.id">
+                                                    {{role.name}}</option>
+                                            </select>
+                                            <!-- <ng-select  formControlName="role" placeholder="Select Role"
+                                            [(ngModel)]="role"  required>
+                                            <ng-option *ngFor="let category of categories" [value]="category.categoryId">{{category.categoryName}}</ng-option>
+                                           </ng-select> -->
+  
+                            <span *ngIf="inviteUserForm.get('role').invalid && inviteUserForm.get('role').touched" class="errspan required">Role Required*</span>
+                        </div>
+                                                
+                    <!-- </div> -->
+                </form>
+                <!-- <div class="pull-right">
+                    <button (click)="resetUserInvite()" class="btn btn-default">Cancel</button>
+                    <button  (click)="inviteUser()" class="btn btn-primary btn-update">Send</button>
+                </div> -->
+                
+            </div>
+        </div>
+    </mat-card>
+</div>
+
+<div class="spinoverlay" *ngIf="isLoading">
+    <div class="spincenter">
+        <img src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader" />
+    </div>
+</div>

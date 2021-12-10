@@ -7,13 +7,13 @@
         </div>
         <div class="env-data-tool environment-tools">
             <div class="env-btn environment-btntool">
-                <button class="tsttooltipbtn" value="Create" title="Create Environment" id="addenvbtn" (click)="create()">
+                <button class="tsttooltipbtn"  id="addenvbtn" (click)="create()">
                     <img src='../../../../assets/images/RPA/icon_latest/new-blue.svg'> 
                     <span class="testtooltip">New</span>
                 </button>
             </div>
             <div *ngIf="deleteflag==true" class="env-btn environment-btntool">
-                <button class="tsttooltipbtn" title="Delete Environment tsttooltipbtn" value="Delete" id="deleteenvbtn" (click)="deleteEnvironments()">
+                <button class="tsttooltipbtn"  id="deleteenvbtn" (click)="deleteEnvironments()">
                     <img src='../../../../assets/images/RPA/icon_latest/delete-blue.svg'> 
                     <span class="testtooltip">Delete</span>      
                 </button>
@@ -25,25 +25,25 @@
                 </button>
             </div>
             <div *ngIf="updateflag==true" class="env-btn environment-btntool">
-                <button class="tsttooltipbtn" id="updateenvbtn" data-toggle="tooltip" data-placement="bottom" title="Modify Environment" (click)="updatedata()">    
+                <button class="tsttooltipbtn" id="updateenvbtn"  (click)="updatedata()">    
                     <img src='../../../../assets/images/RPA/icon_latest/edit-blue.svg'> 
                     <span class="testtooltip">Modify</span>        
                 </button>
             </div>
             <div *ngIf="updateflag==false" class="env-btn environment-btntool">
-                <button  id="updateenvbtn" data-placement="top"  disabled>       
+                <button  id="updateenvbtn"   disabled>       
                     <img src='../../../../assets/images/RPA/icon_latest/edit-dis.svg'>        
                     <span class="testtooltip">Modify</span>      
                 </button>
             </div>
             <div *ngIf="deleteflag==true" class="env-btn environment-btntool">
-                <button class="tsttooltipbtn" data-toggle="tooltip" data-placement="top" id="deleteenvbtn" (click)="deploybotenvironment()" title="Deploy Bot Agent"> 
+                <button class="tsttooltipbtn"  id="deleteenvbtn" (click)="deploybotenvironment()"> 
                     <img src='../../../../assets/images/RPA/icon_latest/deploy-blue.svg'> 
                     <span class="testtooltip">Deploy</span>
                 </button>
             </div>
             <div *ngIf="deleteflag==false" class="env-btn environment-btntool">
-                <button id="deployenvbtn" [disabled]="!(deleteflag==true)" title="Deploy Bot Agent" disabled> 
+                <button id="deployenvbtn" [disabled]="!(deleteflag==true)"  disabled> 
                     <img src='../../../../assets/images/RPA/icon_latest/deploy-dis.svg'> 
                     <span class="testtooltip">Deploy</span>
                 </button>
@@ -130,6 +130,13 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
             <td mat-cell *matCellDef="let element"> <span *ngIf="element.environmentName!=null">{{element.environmentName}}</span> <span *ngIf="element.environmentName==''">-</span> </td>
         </ng-container>
+        
+        <ng-container matColumnDef="category">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
+            <td mat-cell *matCellDef="let element"> <span *ngIf="element.categoryName!=null">{{element.categoryName}}</span> 
+                <span *ngIf="element.environmentName==''">-</span> 
+            </td>
+        </ng-container>
         <ng-container matColumnDef="hostAddress">
             <th mat-header-cell *matHeaderCellDef>IP Address / Host</th>
             <td mat-cell *matCellDef="let element"> 
@@ -174,8 +181,8 @@
         <ng-container matColumnDef="activeStatus">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
             <td mat-cell *matCellDef="let element">
-                <span *ngIf="element.activeStatus == 7"><span><img class="rpa-image1" src="/assets/images/RPA/GreenCricle.png"></span>&nbsp;Active</span>
-                <span *ngIf="element.activeStatus == 8 || element.activeStatus == 0"><span><img class="rpa-image1" src="/assets/images/RPA/red-circle.png"></span>&nbsp;Inactive</span>
+                <span *ngIf="element.activeStatus == 7"><span class='green'>Active</span></span>
+                <span *ngIf="element.activeStatus == 8 || element.activeStatus == 0"><span class='red'>Inactive</span></span>
                 <!--<span *ngIf="element.activeStatus == 0"><span><img class="rpa-image1" src="/assets/images/RPA/red-circle.png"></span>&nbsp;Undefined</span>-->
             </td>
         </ng-container>
@@ -183,8 +190,9 @@
         <ng-container matColumnDef="deployStatus">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Deployed</th>
             <td mat-cell *matCellDef="let element">
-                <span *ngIf="element.deployStatus == true"><span style="color:darkgreen">Yes</span></span>
-                <span *ngIf="element.deployStatus == false"><span >No</span></span>
+                
+                <span *ngIf="element.deployStatus == true"><span class='green'>Yes</span></span>
+                <span *ngIf="element.deployStatus == false"><span class='red'>No</span></span>
             </td>
         </ng-container>
 
@@ -192,6 +200,12 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
         <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
+            <div>
+                <div *ngIf="environments.length==0" class="text-center">
+                  <img  src="../../../../../assets/images/RPA/No-Items.svg" class="no-item-img">
+                  <h3 class="text-center">No Items to display</h3>
+                </div>
+              </div>
         </div>
         <mat-paginator #paginator1 [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons]="true" class="newpaginationdiv"></mat-paginator> 
     </div>    
@@ -232,12 +246,12 @@
 
 placeholder="Enter Environment Type" >-->
                             <select class="form-control" formControlName="environmentType" (change)="EnvType1()">
-          <option value="" [selected]="true">--Select Type--</option>
-          <option value="Windows">Windows</option>
-          <option value="Mac">Mac</option>
-          <option value="Linux">Linux</option>
+                                <option value="" [selected]="true">--Select Type--</option>
+                                <option value="Windows">Windows</option>
+                                <option value="Mac">Mac</option>
+                                <option value="Linux">Linux</option>
 
-        </select>
+                                </select>
                             <span *ngIf="insertForm.get('environmentType').invalid && insertForm.get
 
 ('environmentType').touched"  class="errspan required">Type Required*</span>
@@ -268,7 +282,17 @@ placeholder="Enter Environment Type" >-->
                             </div>
                         </div>
                     
-                    
+                        <div class="col-md-12 p-0 form-group">
+                            <label class="label-control" for="categoryId">Category<span class="star">*</span></label>
+                            <select type="text" class="form-control" formControlName="categoryId"  [value]="categoryList.length==1?categoryList[0].categoryId:'0'">
+                                <option value="0" disabled>Select Category</option>
+                                <option [value]="category.categoryId" *ngFor="let category of categoryList">{{category.categoryName}}</option>
+                            </select>   
+                             <span *ngIf="(insertForm.get('categoryId').invalid && insertForm.get('categoryId').touched)"  class="errspan required"> Category Required*</span>
+
+                           
+
+                        </div>
                         <div class="col-md-12 p-0 form-group">
                             <label class="label-control" for="userName">Username<span class="star">*</span></label>
                             <input type="text" maxlength="51" class="form-control" formControlName="username" value="" placeholder="Enter Username">
@@ -410,7 +434,17 @@ placeholder="Enter Environment Type" >-->
                                 Invalid IP Address format
                             </div>
                         </div>
-                    
+                        <div class="col-md-12 p-0 form-group">
+                            <label class="label-control" for="categoryId">Category<span class="star">*</span></label>
+                            <select  class="form-control"  formControlName="categoryId" >
+                                <option value="0" disabled>Select Category</option>
+                                <option [value]="category.categoryId" *ngFor="let category of categoryList">{{category.categoryName}}</option>
+                            </select>   
+                             <span *ngIf="(updateForm.get('categoryId').invalid && updateForm.get('categoryId').touched)"  class="errspan required"> Category Required*</span>
+
+                           
+
+                        </div>
                    
                         <div class="col-md-12 p-0 form-group">
                             <label class="label-control" for="userName">Username<span class="star">*</span></label>

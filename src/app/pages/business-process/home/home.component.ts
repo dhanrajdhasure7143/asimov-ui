@@ -19,6 +19,7 @@ import { of  } from 'rxjs/observable/of';
 import { map } from 'rxjs/operators';
 import { MatSort, Sort } from '@angular/material';;
 import { fromMatSort, sortRows } from './../model/datasource-utils';
+import {FilterPipe} from './../custom_filter.pipe';
 @Component({
   selector: 'app-bpshome',
   templateUrl: './home.component.html',
@@ -51,11 +52,13 @@ export class BpsHomeComponent implements OnInit {
   userEmail:any="";
   savedDiagrams_list:any[]=[];
   isButtonVisible:boolean = false;
-
+  bpmnVisible:Boolean=false;
   displayedRows$: Observable<any[]>;
   totalRows$: Observable<number>;
   @ViewChild(MatSort,{static:false}) sort: MatSort;
   @ViewChild(MatPaginator,{static:false}) paginator: MatPaginator;
+  categories_list:any[]=[];
+
   constructor(private router:Router, private bpmnservice:SharebpmndiagramService, private dt:DataTransferService,
      private rest:RestApiService, private hints:BpsHints, private global:GlobalScript,
     ) { }
@@ -64,6 +67,7 @@ export class BpsHomeComponent implements OnInit {
     localStorage.setItem("isheader","false")
     this.userRole = localStorage.getItem("userRole")
     this.userRole = this.userRole.split(',');
+    this.bpmnVisible=this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') || this.userRole.includes('Process Owner') || this.userRole.includes('Process Architect')  || this.userRole.includes('Process Analyst')  || this.userRole.includes('RPA Developer')  || this.userRole.includes('Process Architect') || this.userRole.includes("System Admin") ;
     if(this.userRole.includes('SuperAdmin')){
       this.isButtonVisible = true;
     }else if(this.userRole.includes('Admin') || this.userRole.includes('Process Architect')){
@@ -90,14 +94,44 @@ export class BpsHomeComponent implements OnInit {
     await this.rest.getUserBpmnsList().subscribe( (res:any[]) =>  {
       this.saved_diagrams = res; 
       this.saved_diagrams.map(item => {item.xpandStatus = false;return item;})
+      this.saved_diagrams.forEach(ele => {
+        ele['eachObj']={
+          "bpmnXmlNotation":ele.bpmnXmlNotation,
+          "bpmnConfProcessMeta":ele.bpmnConfProcessMeta,
+          "bpmnProcessApproved":ele.bpmnProcessApproved,
+          "convertedCreatedTime":ele.convertedCreatedTime,
+          "createdTimestamp":ele.createdTimestamp,
+          "hasConformance":ele.hasConformance,
+          "id":ele.id,
+          "notationFromPI":ele.notationFromPI,
+          "tenantId":ele.tenantId,
+          "userName":ele.userName,
+          "modifiedTimestamp":ele.modifiedTimestamp
+        }
+        ele["bpmnXmlNotation"]=''
+        ele["bpmnConfProcessMeta"]=''
+        ele["bpmnProcessApproved"]=''
+        ele["convertedCreatedTime"]=''
+        ele["createdTimestamp"]=''
+        ele["hasConformance"]=''
+        ele["id"]=''
+        ele["notationFromPI"]=''
+        ele["tenantId"]=''
+        ele["userName"]=''
+        ele['modifiedTimestamp']=''
+      });
+
       this.bkp_saved_diagrams = res; 
       this.isLoading = false;
-      console.log(this.saved_diagrams);
       this.savedDiagrams_list=this.saved_diagrams;
       this.assignPagenation(this.saved_diagrams);
 
       let selected_category=localStorage.getItem("bps_search_category");
-      this.categoryName=selected_category?selected_category:'allcategories';
+      if(this.categories_list.length == 1){
+        this.categoryName=this.categories_list[0].categoryName;
+      }else{
+        this.categoryName=selected_category?selected_category:'allcategories';
+      }
       this.searchByCategory(this.categoryName);
     },
     
@@ -114,13 +148,13 @@ export class BpsHomeComponent implements OnInit {
 
   openDiagram(bpmnDiagram){
     // if(bpmnDiagram.bpmnProcessStatus && bpmnDiagram.bpmnProcessStatus =="PENDING" ) return;
-    let binaryXMLContent = bpmnDiagram.bpmnXmlNotation; 
+    let binaryXMLContent = bpmnDiagram.eachObj.bpmnXmlNotation; 
     let bpmnModelId = bpmnDiagram.bpmnModelId;
     let bpmnVersion = bpmnDiagram.version;
     let bpmnType = bpmnDiagram.ntype;
     this.bpmnservice.uploadBpmn(atob(binaryXMLContent));
     let push_Obj={"rejectedOrApproved":bpmnDiagram.bpmnProcessStatus,"isfromApprover":false,
-    "isShowConformance":false,"isStartProcessBtn":false,"autosaveTime":bpmnDiagram.modifiedTimestamp,
+    "isShowConformance":false,"isStartProcessBtn":false,"autosaveTime":bpmnDiagram.eachObj.modifiedTimestamp,
     "isFromcreateScreen":false,'process_name':bpmnDiagram.bpmnProcessName,'isEditbtn':false,'isSavebtn':true}
 this.dt.bpsNotationaScreenValues(push_Obj);
 this.dt.bpsHeaderValues('');
@@ -179,7 +213,7 @@ this.dt.bpsHeaderValues('');
   getDiagram(eachBPMN,i){
       var element = document.getElementById('_diagram'+i);
     element.scrollIntoView({behavior: "auto",block: "center", inline: "nearest"});
-    let byteBpmn = atob(eachBPMN.bpmnXmlNotation);
+    let byteBpmn = atob(eachBPMN.eachObj.bpmnXmlNotation);
     this.index=i;
     if(document.getElementsByClassName('diagram_container'+i)[0].innerHTML.trim() != "") return;
     let notationJson = {
@@ -222,8 +256,8 @@ this.dt.bpsHeaderValues('');
   }
   getAllCategories() {    // get all categories list for dropdown
     this.rest.getCategoriesList().subscribe(res => {
-    this.categoryList = res
-    console.log(this.categoryList);
+    this.categoryList = res;
+    this.categories_list=this.categoryList.data
     })
   }
   searchByCategory(category) {      // Filter table data based on selected categories
@@ -236,7 +270,6 @@ this.dt.bpsHeaderValues('');
       // this.dataSource.filter = fulldata;
     }
     else{  
-      console.log(this.saved_diagrams);
       filter_saved_diagrams=this.savedDiagrams_list;
       
       filter_saved_diagrams.forEach(e=>{
@@ -275,6 +308,7 @@ this.dt.bpsHeaderValues('');
       text: bpmNotation.bpmnProcessName+' V1.'+bpmNotation.version+' reminder mail to '+bpmNotation.approverName,
       icon: 'info',
       showCancelButton: true,
+      heightAuto: false,
       confirmButtonText: 'Send',
       cancelButtonText: 'Cancel'
     }).then((res) => {
@@ -286,7 +320,6 @@ this.dt.bpsHeaderValues('');
         this.rest.sendReminderMailToApprover(data).subscribe(res => {
           this.global.notify('Sent reminder successfully','success')
         }, err => {
-          console.log(err)
           this.global.notify('Oops! Something went wrong','error')
         })
       }
@@ -313,6 +346,7 @@ this.dt.bpsHeaderValues('');
       text: bpmNotation.bpmnProcessName+' V1.'+bpmNotation.version+' in '+status+' status will be deleted',
       icon: 'warning',
       showCancelButton: true,
+      heightAuto: false,
       confirmButtonText: 'Delete',
       cancelButtonText: 'Cancel'
     }).then((res) => {
@@ -326,7 +360,6 @@ this.dt.bpsHeaderValues('');
           this.getBPMNList();
           this.global.notify(bpmNotation.bpmnProcessName+' V1.'+bpmNotation.version+' deleted','success')
         }, err => {
-          console.log(err)
           this.global.notify('Oops! Something went wrong','error')
         })
       }
@@ -390,6 +423,12 @@ this.assignPagenation(filtered)
     }else {
       return value;
     }
+  }
+
+  applySearchFilter(v){
+    const filterPipe = new FilterPipe();
+  const fiteredArr = filterPipe.transform(this.saved_diagrams,v);
+  this.assignPagenation(fiteredArr)
   }
  
 }

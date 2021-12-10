@@ -1,7 +1,7 @@
-<div class="my-new-div wrapper">
+<div class="my-new-div dashboard-scroll">
     <!-- Tab panes -->
     <br>
-    <div class="">
+    <div class="container-fluid">
       <div >
             <div class="row">
                 <!-- <div class="col-sm-4">
@@ -105,8 +105,8 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr  *ngFor="let process of processtable  | paginate: { itemsPerPage: 4,currentPage: r } ;let i=index">
-                                    <td>{{i+1}}</td>
+                                <tr  *ngFor="let process of processtable  | paginate: config;let i=index">
+                                    <td>{{(config.currentPage - 1) * config.itemsPerPage + i +1}}</td>
                                     <td>{{process.processName}}</td>
                                     <td>{{process.bots}}</td>
                                     <td>{{process.incidents}}</td>
@@ -117,7 +117,7 @@
                                
                             </tbody>
                         </table>
-                        <pagination-controls (pageChange)="r = $event"></pagination-controls>
+                        <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
                     </div>
                 </div>
 

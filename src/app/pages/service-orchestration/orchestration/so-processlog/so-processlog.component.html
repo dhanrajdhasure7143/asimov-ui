@@ -1,6 +1,6 @@
-<div id="viewlogid1">
-    <div class="text-right">
-        <button (click)="getprocesslog()" matTooltip="Refresh"><i class="fas fa-sync-alt"></i>&nbsp; Refresh</button>
+<div id="viewlogid1" class="newmodelcla">
+    <div class="text-left">
+        <button class="refecls" (click)="getprocesslog()" matTooltip="Refresh"><i class="fas fa-sync-alt"></i>&nbsp; Refresh</button>
     </div>
     <div class="logs-container">
         <table mat-table [dataSource]="dataSourcep1" #sortp1="matSort" matSort class="logs-table">
@@ -13,10 +13,10 @@
 
             </ng-container>
             <!--<ng-container matColumnDef="processId">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>ProcessId</th>
-              <td mat-cell *matCellDef="let element"> {{element.processId}}</td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>ProcessId</th>
+            <td mat-cell *matCellDef="let element"> {{element.processId}}</td>
 
-             </ng-container>-->
+           </ng-container>-->
 
             <ng-container matColumnDef="Environment">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Environment</th>
@@ -42,42 +42,42 @@
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
                 <td mat-cell *matCellDef="let element">
                     <!--<span *ngIf="element.runStatus!=null">
-                <span *ngIf="element.runStatus=='Running'" class="text-primary" ><span class="fa fa-spinner fa-spin"></span>&nbsp;<span>{{element.runStatus}}</span></span>
+              <span *ngIf="element.runStatus=='Running'" class="text-primary" ><span class="fa fa-spinner fa-spin"></span>&nbsp;<span>{{element.runStatus}}</span></span>
 
-              <span *ngIf="element.runStatus=='Success'" class="text-success"><span><li class="fa fa-check"></span>&nbsp;<span>{{element.runStatus}}</span></span>
+            <span *ngIf="element.runStatus=='Success'" class="text-success"><span><li class="fa fa-check"></span>&nbsp;<span>{{element.runStatus}}</span></span>
 
-              <span *ngIf="element.runStatus=='New'" class="text-primary"><span><img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;"></span>&nbsp;<span>{{element.runStatus}}</span></span>
+            <span *ngIf="element.runStatus=='New'" class="text-primary"><span><img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;"></span>&nbsp;<span>{{element.runStatus}}</span></span>
 
-              <span *ngIf="element.runStatus=='Failure'" class="text-danger"><span><li class="fa fa-times"></span>&nbsp;<span>{{element.runStatus}}</span></span>
-              </span>-->
+            <span *ngIf="element.runStatus=='Failure'" class="text-danger"><span><li class="fa fa-times"></span>&nbsp;<span>{{element.runStatus}}</span></span>
+            </span>-->
                     <span *ngIf="element.runStatus=='Running'" class="text-primary">
-                <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus">{{element.runStatus}}&nbsp;&nbsp;
-                <span class="clickable btn btn-xs btn-primary" (click)="kill_process_run(element.processId,element.processRunId)">Kill</span>
+              <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus">{{element.runStatus}}&nbsp;&nbsp;
+              <span class="clickable btn btn-xs btn-primary" (click)="kill_process_run(element.processId,element.processRunId)">Kill</span>
                     </span>
 
                     <span *ngIf="element.runStatus=='Success'">
-                <img src="../../../../assets/images/RPA/icon_latest/Success.svg" alt="" class="testplus">
-                <span>{{element.runStatus}}</span>
+              <img src="../../../../assets/images/RPA/icon_latest/Success.svg" alt="" class="testplus">
+              <span>{{element.runStatus}}</span>
                     </span>
 
                     <span *ngIf="element.runStatus=='Failure'">
-                <img src="../../../../assets/images/RPA/icon_latest/close-red.svg" alt="" class="testplus">
-                <span>{{element.runStatus}}</span>
+              <img src="../../../../assets/images/RPA/icon_latest/close-red.svg" alt="" class="testplus">
+              <span>{{element.runStatus}}</span>
                     </span>
                     <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
                     <!--<span *ngIf="element.runStatus=='New'" class="text-primary"><span><img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;"></span>&nbsp;<span>{{element.runStatus}}</span></span>-->
                     <span *ngIf="element.runStatus=='New'" class="text-primary">
-                <img src="../../../../assets/images/RPA/userobot.png" class="testplus">
-                <span>{{element.runStatus}}</span>
+              <img src="../../../../assets/images/RPA/userobot.png" class="testplus">
+              <span>{{element.runStatus}}</span>
                     </span>
                     <span *ngIf="element.runStatus=='Pending'" class="text-warning">
-                <i class="fa fa-clock"></i>&nbsp;
-                <span>{{element.runStatus}}</span>
+              <i class="fa fa-clock"></i>&nbsp;
+              <span>{{element.runStatus}}</span>
                     </span>
 
                     <span *ngIf="element.runStatus=='Stop' || element.runStatus=='Stopped'" class="text-danger">
-                <img src="../../../../assets/images/RPA/icon_latest/stop.svg" class="testplus">
-                <span>{{element.runStatus}}</span>
+              <img src="../../../../assets/images/RPA/icon_latest/stop.svg" class="testplus">
+              <span>{{element.runStatus}}</span>
                     </span>
 
                     <span *ngIf="element.runStatus == undefined">-</span>
@@ -97,10 +97,10 @@
     <!-- <mat-paginator #paginatorp1 [pageSize]="5" [showFirstLastButtons]="true"></mat-paginator>   -->
 </div>
 
-<div id="plogrunid">
-    <div class="text-right">
-        <button (click)="backplogrid()" matTooltip="Back"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp; Back</button> &nbsp;&nbsp;
-        <button (click)="getprocessrunid(selected_processRunId)" matTooltip="Refresh"><i class="fas fa-sync-alt"></i>&nbsp; Refresh</button>
+<div id="plogrunid" class="newmodelcla">
+    <div class="text-left">
+        <button (click)="backplogrid()" class="refecls" matTooltip="Back"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp; Back</button> &nbsp;&nbsp;
+        <button (click)="getprocessrunid(selected_processRunId)" class="refecls" matTooltip="Refresh"><i class="fas fa-sync-alt"></i>&nbsp; Refresh</button>
     </div>
     <div class="logs-container">
 
@@ -131,12 +131,12 @@
                 </td>
             </ng-container>
             <!--<ng-container matColumnDef="log_statement">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Log Message</th>
-                <td mat-cell *matCellDef="let element" >
-                    <span *ngIf="element.log_statement != null">{{element.log_statement}}</span>
-                    <span *ngIf="element.log_statement == null">-</span>
-                </td>
-            </ng-container>-->
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Log Message</th>
+              <td mat-cell *matCellDef="let element" >
+                  <span *ngIf="element.log_statement != null">{{element.log_statement}}</span>
+                  <span *ngIf="element.log_statement == null">-</span>
+              </td>
+          </ng-container>-->
             <ng-container matColumnDef="start_date">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Start Date</th>
                 <td mat-cell *matCellDef="let element">
@@ -156,42 +156,42 @@
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
                 <td mat-cell *matCellDef="let element">
                     <!--<span *ngIf="element.bot_status!=null">
-                        <span *ngIf="element.bot_status=='Running'" class="text-primary" ><span class="fa fa-spinner fa-spin"></span>&nbsp;<span>{{element.bot_status}}</span></span>
+                      <span *ngIf="element.bot_status=='Running'" class="text-primary" ><span class="fa fa-spinner fa-spin"></span>&nbsp;<span>{{element.bot_status}}</span></span>
 
-                      <span *ngIf="element.bot_status=='Success'" class="text-success"><span><li class="fa fa-check"></span>&nbsp;<span>{{element.bot_status}}</span></span>
+                    <span *ngIf="element.bot_status=='Success'" class="text-success"><span><li class="fa fa-check"></span>&nbsp;<span>{{element.bot_status}}</span></span>
 
-                      <span *ngIf="element.bot_status=='New'" class="text-primary"><span><img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;"></span>&nbsp;<span>{{element.bot_status}}</span></span>
+                    <span *ngIf="element.bot_status=='New'" class="text-primary"><span><img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;"></span>&nbsp;<span>{{element.bot_status}}</span></span>
 
-                      <span *ngIf="element.bot_status=='Failure'" class="text-danger"><span><li class="fa fa-times"></span>&nbsp;<span>{{element.bot_status}}</span></span>
-                      </span>-->
+                    <span *ngIf="element.bot_status=='Failure'" class="text-danger"><span><li class="fa fa-times"></span>&nbsp;<span>{{element.bot_status}}</span></span>
+                    </span>-->
                     <span *ngIf="element.bot_status=='Running'" class="text-primary">
-                        <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus">{{element.bot_status}}&nbsp;&nbsp;
-                        <span class="clickable btn btn-xs btn-primary" (click)="kill_bot_run(element)">Kill</span>
+                      <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus">{{element.bot_status}}&nbsp;&nbsp;
+                      <span class="clickable btn btn-xs btn-primary" (click)="kill_bot_run(element)">Kill</span>
                     </span>
 
                     <span *ngIf="element.bot_status=='Success'">
-                          <img src="../../../../assets/images/RPA/icon_latest/Success.svg" alt="" class="testplus">
-                          <span>{{element.bot_status}}</span>
+                        <img src="../../../../assets/images/RPA/icon_latest/Success.svg" alt="" class="testplus">
+                        <span>{{element.bot_status}}</span>
                     </span>
 
                     <span *ngIf="element.bot_status=='Failure'">
-                          <img src="../../../../assets/images/RPA/icon_latest/close-red.svg" alt="" class="testplus">
-                          <span>{{element.bot_status}}</span>
+                        <img src="../../../../assets/images/RPA/icon_latest/close-red.svg" alt="" class="testplus">
+                        <span>{{element.bot_status}}</span>
                     </span>
                     <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
                     <!--<span *ngIf="element.bot_status=='New'" class="text-primary"><span><img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;"></span>&nbsp;<span>{{element.bot_status}}</span></span>-->
                     <span *ngIf="element.bot_status=='New'" class="text-primary">
-                          <img src="../../../../assets/images/RPA/userobot.png" class="testplus">
-                          <span>{{element.bot_status}}</span>
+                        <img src="../../../../assets/images/RPA/userobot.png" class="testplus">
+                        <span>{{element.bot_status}}</span>
                     </span>
                     <span *ngIf="element.bot_status=='Pending'" class="text-warning">
-                          <i class="fa fa-clock"></i>&nbsp;
-                          <span>{{element.runStatus}}</span>
+                        <i class="fa fa-clock"></i>&nbsp;
+                        <span>{{element.runStatus}}</span>
                     </span>
 
                     <span *ngIf="element.bot_status=='Stop' || element.bot_status=='Stopped'" class="text-danger">
-                          <img src="../../../../assets/images/RPA/icon_latest/stop.svg" class="testplus">
-                          <span>{{element.bot_status}}</span>
+                        <img src="../../../../assets/images/RPA/icon_latest/stop.svg" class="testplus">
+                        <span>{{element.bot_status}}</span>
                     </span>
 
                     <span *ngIf="element.bot_status == undefined">-</span>
@@ -212,10 +212,10 @@
     </div>
     <!-- <mat-paginator #paginatorp2 [pageSize]="5" [showFirstLastButtons]="true"></mat-paginator> -->
 </div>
-<div id="pbotrunid">
-    <div class="text-right">
-        <button (click)="backpbotrunid()" matTooltip="Back"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp; Back</button>&nbsp;&nbsp;
-        <button (click)="ViewlogByrunid(selected_runid)" matTooltip="Refresh"><i class="fas fa-sync-alt"></i>&nbsp; Refresh</button>
+<div id="pbotrunid" class="newmodelcla">
+    <div class="text-left">
+        <button (click)="backpbotrunid()" class="refecls" matTooltip="Back"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp; Back</button>&nbsp;&nbsp;
+        <button (click)="ViewlogByrunid(selected_runid)" class="refecls" matTooltip="Refresh"><i class="fas fa-sync-alt"></i>&nbsp; Refresh</button>
 
     </div>
     <div class="logs-container">
@@ -249,9 +249,9 @@
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Info</th>
                 <td mat-cell *matCellDef="let element">
                     <button *ngIf="element.error_info!=null" class="tsttooltipbtn">
-                    {{(element.error_info.length > 30) ? ((element.error_info).slice(0, 30) + '...') : element.error_info}}
-                    <span class="testtooltip">{{element.error_info}}</span>
-                  </button>
+                  {{(element.error_info.length > 30) ? ((element.error_info).slice(0, 30) + '...') : element.error_info}}
+                  <span class="testtooltip">{{element.error_info}}</span>
+                </button>
                     <span *ngIf="element.error_info == undefined">-</span>
                 </td>
             </ng-container>
@@ -260,7 +260,7 @@
                 <th mat-header-cell *matHeaderCellDef mat-sort-header style="width:15%">Status</th>
                 <td mat-cell *matCellDef="let element" style="width:15%">
                     <span *ngIf="element.status!=null">
-                    <!--<span *ngIf="element.status=='Running'" class="text-primary" ><span class="fa fa-spinner fa-spin"></span>&nbsp;<span>{{element.status}}</span></span>
+                  <!--<span *ngIf="element.status=='Running'" class="text-primary" ><span class="fa fa-spinner fa-spin"></span>&nbsp;<span>{{element.status}}</span></span>
 
                     <span *ngIf="element.status=='Success'" class="text-success"><span><li class="fa fa-check"></span>&nbsp;<span>{{element.status}}</span></span>
 
@@ -269,32 +269,32 @@
                     <span *ngIf="element.status=='Failure'" class="text-danger"><span><li class="fa fa-times"></span>&nbsp;<span>{{element.status}}</span></span>
                     </span>-->
                     <span *ngIf="element.status=='Running'" class="text-primary">
-                      <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus">{{element.status}}
-                    </span>
+                    <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus">{{element.status}}
+                  </span>
 
                     <span *ngIf="element.status=='Success'">
-                      <img src="../../../../assets/images/RPA/icon_latest/Success.svg" alt="" class="testplus">
-                      <span>{{element.status}}</span>
+                    <img src="../../../../assets/images/RPA/icon_latest/Success.svg" alt="" class="testplus">
+                    <span>{{element.status}}</span>
                     </span>
 
                     <span *ngIf="element.status=='Failure'">
-                      <img src="../../../../assets/images/RPA/icon_latest/close-red.svg" alt="" class="testplus">
-                      <span>{{element.status}}</span>
+                    <img src="../../../../assets/images/RPA/icon_latest/close-red.svg" alt="" class="testplus">
+                    <span>{{element.status}}</span>
                     </span>
                     <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
                     <!--<span *ngIf="element.status=='New'" class="text-primary"><span><img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;"></span>&nbsp;<span>{{element.status}}</span></span>-->
                     <span *ngIf="element.status=='New'" class="text-primary">
-                      <img src="../../../../assets/images/RPA/userobot.png" class="testplus">
-                      <span>{{element.status}}</span>
+                    <img src="../../../../assets/images/RPA/userobot.png" class="testplus">
+                    <span>{{element.status}}</span>
                     </span>
                     <span *ngIf="element.status=='Pending'" class="text-warning">
-                      <i class="fa fa-clock"></i>&nbsp;
-                      <span>{{element.runStatus}}</span>
+                    <i class="fa fa-clock"></i>&nbsp;
+                    <span>{{element.runStatus}}</span>
                     </span>
 
                     <span *ngIf="element.status=='Stop' || element.status=='Stopped'" class="text-danger">
-                      <img src="../../../../assets/images/RPA/icon_latest/stop.svg" class="testplus">
-                      <span>{{element.bot_status}}</span>
+                    <img src="../../../../assets/images/RPA/icon_latest/stop.svg" class="testplus">
+                    <span>{{element.bot_status}}</span>
                     </span>
                     </span>
                     <span *ngIf="element.status == undefined">-</span>

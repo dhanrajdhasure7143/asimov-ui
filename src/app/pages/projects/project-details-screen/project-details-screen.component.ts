@@ -14,6 +14,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { MatMenuModule, MatButtonModule } from '@angular/material'; 
 import moment from 'moment';
 
+
 @Component({
   selector: 'app-project-details-screen',
   templateUrl: './project-details-screen.component.html',
@@ -42,9 +43,9 @@ export class ProjectDetailsScreenComponent implements OnInit {
   dataSource9:MatTableDataSource<any>;
   categaoriesList: any;
   selected_process_names: any;
-  displayedColumns: string[] = ["taskCategory","taskName","resources","status","percentage","lastModifiedTimestamp","lastModifiedBy", "createdBy","action"];
+  displayedColumns: string[] = ["taskCategory","taskName","resources","status","percentageComplete","lastModifiedTimestamp","lastModifiedBy", "createdBy","action"];
   dataSource6:MatTableDataSource<any>;
-  displayedColumns6: string[] = ["check","userId.firstName","roleID.displayName","userId.userId","uploadedDate"];
+  displayedColumns6: string[] = ["check","firstName","displayName","user_Id","last_active"];
   @ViewChild("sort14",{static:false}) sort14: MatSort;
   @ViewChild("sort11",{static:false}) sort11: MatSort;
   @ViewChild("paginator104",{static:false}) paginator104: MatPaginator;
@@ -127,8 +128,19 @@ percentageComplete: number;
   fileList: File[] = [];
   listOfFiles: any[] = [];
   owner_letters: any;
+  public isButtonVisible = false;
+  public userRole:any = [];
+  public userName:any;
+  customUserRole: any;
+  enableeditproject: boolean=false;
+  enablecreatetask: boolean=false;
+  enableedittask: boolean=false;
+  enabledeletetask: boolean=false;
   mindate= moment().format("YYYY-MM-DD");
   projectenddate:any;
+  projectStartDate:any;
+  initiatives: any;
+  loginresourcecheck: boolean=false;
   constructor(private dt:DataTransferService,private route:ActivatedRoute, private rpa:RestApiService,
     private modalService: BsModalService,private formBuilder: FormBuilder,private router: Router,
     private spinner:NgxSpinnerService) { }
@@ -149,7 +161,7 @@ percentageComplete: number;
      endDate: ['', Validators.compose([Validators.maxLength(200)])],
      approvers: ['', Validators.compose([Validators.maxLength(200)])],
      status:["",Validators.compose([Validators.required, Validators.maxLength(50)])],
-     description: ["", Validators.compose([Validators.maxLength(200)])],
+     description: ["", Validators.compose([Validators.maxLength(150)])],
      comments: ['',Validators.compose([Validators.maxLength(200)])],
      summary: ['', Validators.compose([Validators.maxLength(200)])],
      percentageComplete: ['', Validators.compose([Validators.maxLength(200)])],
@@ -168,16 +180,45 @@ percentageComplete: number;
        })
     this.dt.changeParentModule({"route":"/pages/projects/projects-list-screen", "title":"Projects"});
     this.dt.changeChildModule(undefined);
+
+    this.userRole = localStorage.getItem("userRole");
+    this.userName=localStorage.getItem("firstName")+" "+localStorage.getItem("lastName");
+    // this.userRole = this.userRole.split(',');
+    // this.isButtonVisible = this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') || this.userRole.includes('Process Owner')
+    // || this.userRole.includes('Process Architect') || this.userRole.includes('System Admin') 
+    // || this.userRole.includes('Process Analyst')|| this.userRole.includes('RPA Developer');
+    
+    this.rpa.getCustomUserRole(2).subscribe(role=>{
+      this.customUserRole=role;
+      let element=[]
+      for (let index = 0; index < this.customUserRole.message.length; index++) {
+       element = this.customUserRole.message[index].permission;
+        element.forEach(element1 => {
+         if(element1.permissionName.includes('Project_Edit')){
+           this.enableeditproject=true;
+         }else if(element1.permissionName.includes('Task_Create')){
+          this.enablecreatetask=true;
+         }else if(element1.permissionName.includes('Task_Edit')){
+          this.enableedittask=true;
+         }else if(element1.permissionName=='Task_Delete'){
+          this.enabledeletetask=true;
+         }
+        });
+      }
+        })
+
+        
     this.getallusers();
     this.projectdetails();
     this.getallprocesses();
     setTimeout(() => {
       this.getImage();
       this.profileName();
-        },1000);
+        },2000);
        
       
-        this.getallusers();
+      //  this.getallusers();
+        this.getInitiatives();
         this.Resourcedeleteflag=false;
   }
 
@@ -309,8 +350,14 @@ percentageComplete: number;
     })
     this.spinner.hide();
   }
-
+  getreducedValue(value) {​​​​​​​​
+    if (value.length > 15)
+    return value.substring(0,16) + '...';
+    else
+    return value;
+  }​​​​​​​​
   downloadExcel(){
+    console.log(this.projectDetails);
     this.spinner.show();
     this.rpa.exportproject(this.project_id).subscribe(data=>{
       let response:any=data;
@@ -417,7 +464,7 @@ percentageComplete: number;
 
  
 projectdetails(){​​​​​​
-
+  const userid=localStorage.getItem('ProfileuserId');
 this.spinner.show()
 this.route.queryParams.subscribe(data=>{​​​​​​
 let paramsdata:any=data
@@ -427,6 +474,7 @@ this.rpa.getProjectDetailsById(paramsdata.id).subscribe( res=>{​​​​​�
 this.spinner.hide();
 this.projectDetails=res
 this.projectenddate=moment(this.projectDetails.endDate).format("YYYY-MM-DD");
+this.projectStartDate = moment(this.projectDetails.startDate).format("YYYY-MM-DD");
 console.log(this.projectDetails);
 
 if(this.projectDetails){​​​​​​
@@ -442,11 +490,16 @@ this.projectDetails.resource.forEach(item=>{​​​​​​
 users.push(item.resource)
  }​​​​​​)
 this.resources=users
+console.log(this.resources)
+this.loginresourcecheck=this.resources.find(item2=>item2==userid);
+console.log(this.loginresourcecheck)
  }​​​​​​
 else{​​​​​​
 this.resources=this.users_list
+console.log(this.resources)
  }​​​​​​ 
  }​​​​​​)
+ 
 this.getTaskandCommentsData();
 this.getLatestFiveAttachments(this.project_id)
 paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsdata.programId;
@@ -461,7 +514,7 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
       var firstnameFirstLetter=this.firstname.charAt(0)
       var lastnameFirstLetter=this.lastname.charAt(0)
       this.firstletter=firstnameFirstLetter+lastnameFirstLetter
-    }, 1000);
+    }, 2000);
   }
 
   getImage() {
@@ -496,6 +549,7 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
       {
         let tenantid=localStorage.getItem("tenantName")
         this.rpa.getuserslist(tenantid).subscribe(response=>{
+        console.log(response);
         
           this.users_list=response;
           let users:any=[]
@@ -511,8 +565,15 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
         {
           this.Resourcecheckeddisabled = true;
         }
+        let users_updateddata=users
          this.resourceslength=users.length
-          this.dataSource6= new MatTableDataSource(users);
+         users_updateddata.forEach(element => {
+           element["firstName"]=element.userId.firstName
+           element["lastName"]=element.userId.lastName
+           element["displayName"]=element.roleID.displayName
+           element["user_Id"]=element.userId.userId
+         });
+          this.dataSource6= new MatTableDataSource(users_updateddata);
           this.dataSource6.sort=this.sort14;
           this.dataSource6.paginator=this.paginator104;
           this.getTaskandCommentsData();
@@ -546,7 +607,8 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
         this.updatetaskForm.get("resources").setValue(data["resources"]);
        //  this.updatetaskForm.get("taskName").setValue(data["taskName"]);
       //  this.updatetaskForm.get("timeEstimate").setValue(data["timeEstimate"]);
-      this.updatetaskForm.get("endDate").setValue(this.projectenddate);
+      
+        this.updatetaskForm.get("endDate").setValue(this.projectenddate);
         this.updatetaskForm.get("approvers").setValue(data["approvers"]);
         this.updatetaskForm.get("status").setValue(data["status"]);
         this.updatetaskForm.get("description").setValue(data["description"]);
@@ -909,7 +971,10 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
         this.spinner.show()
         this.projectDetails["type"]="Project";
         this.projectDetails.endDate=this.projectenddate;
+        this.projectDetails.startDate=this.projectStartDate;
         this.projectDetails.effortsSpent=parseInt(this.projectDetails.effortsSpent)
+        console.log(this.projectDetails);
+        
         this.rpa.update_project(this.projectDetails).subscribe(res=>{
           this.spinner.hide()
           let response:any=res;
@@ -949,6 +1014,19 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
 
       }
 
-      
+      endDateMethod(){
+        return false;
+       }
 
+       onchangeDate(){
+        if(this.projectDetails.endDate)
+        this.projectDetails.endDate="0000-00-00";
+      }
+
+      getInitiatives(){
+        this.rpa.getProjectIntitiatives().subscribe(res=>{
+          let response:any=res;
+          this.initiatives=response;
+        })
+      }
 }

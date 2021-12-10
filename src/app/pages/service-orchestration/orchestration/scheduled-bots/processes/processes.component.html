@@ -16,6 +16,13 @@
                   <span *ngIf="element.processName == null">-</span>
                 </td>
             </ng-container>
+            <ng-container matColumnDef="category">
+                <th mat-header-cell *matHeaderCellDef>Category</th>
+                <td mat-cell *matCellDef="let element">
+                    <span *ngIf="element.category != null">{{element.category}}</span>
+                    <span *ngIf="element.category == null">-</span>
+                </td>
+            </ng-container>
 
             <ng-container matColumnDef="environment">
                 <th mat-header-cell *matHeaderCellDef>Environment</th>
@@ -28,7 +35,7 @@
              <ng-container matColumnDef="lastRunTS">
                 <th mat-header-cell *matHeaderCellDef>Previous Run</th>
                 <td mat-cell *matCellDef="let element">
-                    <span *ngIf="element.lastRunTS != null">{{element.lastRunTS}}</span>
+                    <span *ngIf="element.lastRunTS != null">{{element.lastRunTS |date: 'MMM d, y, H:mm:ss' }}</span>
                     <span *ngIf="element.lastRunTS == null">-</span>
                 </td>
             </ng-container>
@@ -36,7 +43,7 @@
             <ng-container matColumnDef="nextRunTS">
                 <th mat-header-cell *matHeaderCellDef>Next Run</th>
                 <td mat-cell *matCellDef="let element">
-                    <span *ngIf="element.nextRunTS != null">{{element.nextRunTS}}</span>
+                    <span *ngIf="element.nextRunTS != null">{{element.nextRunTS |date: 'MMM d, y, H:mm:ss' }}</span>
                     <span *ngIf="element.nextRunTS == null">-</span>
                 </td>
             </ng-container>
@@ -60,7 +67,7 @@
                     </span>
 
                     <span *ngIf="element.status=='Paused'" [matTooltip]="element.status">
-                        <img src="../../../../assets/images/RPA/icon_latest/pause-circle-fill.svg" class="testplus">Paused
+                        <img src="../../../../assets/images/RPA/icon_latest/pause-circle-fill.svg" class="testpause">Paused
                     </span>
                     
                     <span *ngIf="element.status=='Failure'|| element.status=='Failed'"  [matTooltip]="element.status">
@@ -77,7 +84,7 @@
                         <span>{{element.status}}</span>
                     </span>
             
-                    <span *ngIf="element.status=='Stop' || element.status=='Resume'" [matTooltip]="element.status">
+                    <span *ngIf="element.status=='Stop' || element.status=='Resume' || element.status=='Resumed'" [matTooltip]="element.status">
                               <!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">-->
                         <img src="../../../../../assets/images/RPA/icon_latest/stop.svg" class="testplus">Stopped
                     </span>
@@ -102,6 +109,6 @@
             <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': tabledata}"></tr>
        </table>
        </div>
-        <mat-paginator #paginator4 [pageSize]="10" [pageSizeOptions]="[5, 10,25,50]" [showFirstLastButtons]="true"></mat-paginator>
+       <mat-paginator class="newpaginationdiv" #paginator4 [pageSize]="10" [pageSizeOptions]="[5, 10,25,50]" [showFirstLastButtons]="true"></mat-paginator>
     </div>
     </div>

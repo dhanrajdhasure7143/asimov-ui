@@ -133,18 +133,21 @@ export class RpaSchedulerComponent implements OnInit {
     {
       let starttime=this.starttime.split(":")
       let starttimeparse=parseInt(starttime[0])
-      let endtime=this.endtime.split(":")
-      let endtimeparse=parseInt(endtime[0])
-      let data:any;
-      let startdate=new Date(this.startdate);
-      let enddate=new Date(this.enddate)
+       let endtime=this.endtime.split(":")
+       let endtimeparse=parseInt(endtime[0]);
+        let startdate=this.startdate.split("-");
+        let enddate=this.enddate.split("-");
+         let data:any;
       if(this.botid!="" && this.botid!=undefined )
       {
         data={
           intervalId:this.generateid(),
           scheduleInterval:this.cronExpression,
-          startDate:startdate.getFullYear()+","+(startdate.getMonth()+1)+","+startdate.getDate()+","+starttimeparse+","+starttime[1],
-          endDate:enddate.getFullYear()+","+(enddate.getMonth()+1)+","+enddate.getDate()+","+ endtimeparse+","+ endtime[1],
+          startDate:parseInt(startdate[0])+","+parseInt(startdate[1])+","+parseInt(startdate[2])+","+starttimeparse+","+starttime[1],
+          endDate:parseInt(enddate[0])+","+parseInt(enddate[1])+","+parseInt(enddate[2])+","+ endtimeparse+","+ endtime[1],
+          // startDate:this.startdate.getFullYear()+","+(this.startdate.getMonth()+1)+","+this.startdate.getDate()+","+starttime[0]+","+starttime[1],
+          // endDate:this.enddate.getFullYear()+","+(this.enddate.getMonth()+1)+","+this.enddate.getDate()+","+ endtime[0]+","+ endtime[1],
+        
           timeZone:this.timezone,
           save_status:"unsaved",
           check:false,
@@ -195,17 +198,16 @@ export class RpaSchedulerComponent implements OnInit {
       this.rest.start_schedule(schedule).subscribe(data=>{
         let resp:any=data;
         console.log(resp)
-        if(resp.errorMessgae==undefined)
+        if(resp.errorMessage==undefined)
         {
-          alert(resp.errorMessgae)
+         
           this.notifier.notify("success",resp.status)
           this.schedule_list.find(data=>data.check==true).run_status="started";
           this.updateflags();
         }
         else
         {
-          
-          this.notifier.notify("error", resp.errorMessgae);
+          this.notifier.notify("error", resp.errorMessage);
          
         }
 
@@ -226,7 +228,7 @@ export class RpaSchedulerComponent implements OnInit {
       }
       this.rest.pause_schedule(schedule).subscribe(data=>{
         let resp:any=data
-        if(resp.errorMessgae==undefined)
+        if(resp.errorMessage==undefined)
         {
           this.notifier.notify("success",resp.status)
           this.schedule_list.find(data=>data.check==true).run_status="pause";
@@ -235,7 +237,7 @@ export class RpaSchedulerComponent implements OnInit {
         else
         {
         
-          this.notifier.notify("error",resp.errorMessgae)
+          this.notifier.notify("error",resp.errorMessage)
         }
       })
     }
@@ -252,7 +254,7 @@ export class RpaSchedulerComponent implements OnInit {
     }
     this.rest.resume_schedule(schedule).subscribe(data=>{
       let resp:any=data
-      if(resp.errorMessgae==undefined)
+      if(resp.errorMessage==undefined)
       {
         this.notifier.notify("success", resp.status);
         this.schedule_list.find(data=>data.check==true).run_status="resume";
@@ -260,7 +262,7 @@ export class RpaSchedulerComponent implements OnInit {
       }
       else
       {
-        this.notifier.notify("error", resp.errorMessgae);
+        this.notifier.notify("error", resp.errorMessage);
       }
     })
 
@@ -277,6 +279,7 @@ export class RpaSchedulerComponent implements OnInit {
         this.schedule_list.splice(index2,1);
       })
       this.updateflags();
+      this.notifier.notify("success", "Schedules Deleted Sucessfully");
     }
   }
 

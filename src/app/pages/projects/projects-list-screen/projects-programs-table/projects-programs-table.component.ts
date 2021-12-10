@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef,Input, ViewChild } from '@angular/core';
+import { Component, OnInit, TemplateRef,Input, ViewChild, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import {MatTableDataSource} from '@angular/material/table';
@@ -21,7 +21,7 @@ export class ProjectsProgramsTableComponent implements OnInit {
 
 
   public updateForm:FormGroup;
-  displayedColumns1: string[] = ["id","type","initiatives","process","projectName","owner","priority","status","lastupdatedby","action"];
+  displayedColumns1: string[] = ["id","type","initiatives","process","projectName","owner","priority","status","createdBy","action"];
   @ViewChild("paginator2",{static:false}) paginator2: MatPaginator;
   @ViewChild("sort2",{static:false}) sort2: MatSort;
   
@@ -48,6 +48,14 @@ export class ProjectsProgramsTableComponent implements OnInit {
    userslist:any;
    updateprogramForm: FormGroup;
    mindate: any;
+   customUserRole: any;
+  viewallprojects: boolean = false;
+  public userRoles: any;
+  public name: any;
+  email: any;
+  userName: string;
+  initiatives: any;
+  @Output() projectslistdata = new EventEmitter<any[]>();
   //   public createprogram:FormGroup;
   // updateddata: any;
   // public updateflag: boolean;
@@ -149,11 +157,30 @@ export class ProjectsProgramsTableComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.api.getCustomUserRole(2).subscribe(role=>{
+      this.customUserRole=role;
+      let element=[]
+     for (let index = 0; index < this.customUserRole.message.length; index++) {
+      element = this.customUserRole.message[index].permission;
+       element.forEach(element1 => {
+      if(element1.permissionName=='View_All_Projects') {
+      this.viewallprojects=true
+    }
+  });
+}
+
+   })
+   this.userName=localStorage.getItem("firstName")+" "+localStorage.getItem("lastName");
     setTimeout(()=>{
       this.getallProjects();
     },500)
+    this.userRoles = localStorage.getItem("userRole")
+    this.userRoles = this.userRoles.split(',');
+    this.name=localStorage.getItem("firstName")+" "+localStorage.getItem("lastName")
+    this.email=localStorage.getItem('ProfileuserId');
 
     this.mindate= moment().format("YYYY-MM-DD");
+    this.getInitiatives();
   }
 
   
@@ -191,18 +218,67 @@ export class ProjectsProgramsTableComponent implements OnInit {
       this.projects_list = this.projects_list.filter(item=>item.status=="In Progress")
       else if(this.status_data=="In Review")
       this.projects_list = this.projects_list.filter(item=>item.status=="In Review")
+      else if(this.status_data=="Pipeline")
+      this.projects_list = this.projects_list.filter(item=>item.status=="Pipeline")
       else if(this.status_data=="Approved")
       this.projects_list = this.projects_list.filter(item=>item.status=="Approved")
       else if(this.status_data=="Rejected")
         this.projects_list = this.projects_list.filter(item=>item.status=="Rejected")
-      this.dataSource2 = new MatTableDataSource(this.projects_list);
+      else if(this.status_data=="Deployed")
+        this.projects_list = this.projects_list.filter(item=>item.status=="Deployed")
+      else if(this.status_data=="On Hold")
+        this.projects_list = this.projects_list.filter(item=>item.status=="On Hold")
+      else if(this.status_data=="Closed")
+        this.projects_list = this.projects_list.filter(item=>item.status=="Closed")
+
+      var projects_or_programs=this.projects_list.map((item:any)=>{
+          if(item.type=="Program")
+            return {
+
+              "id":item.id,
+              "projectName": item.projectName,
+              "initiatives": item.initiatives,
+              "priority": item.priority,
+              "process":item.process,
+              "owner": item.owner,
+              "status": item.status,
+              "createdBy": item.createdBy,
+              "lastModifiedBy": item.lastModifiedBy,
+              "type": item.type
+            }
+          else if(item.type=="Project")
+            return {
+            
+                "id":item.id,
+                "projectName": item.projectName,
+                "initiatives": item.initiatives,
+                "priority": item.priority,
+                "process":item.process,
+                "owner": item.owner,
+                "status": item.status,
+                "createdBy": item.createdBy,
+                "lastModifiedBy": item.lastModifiedBy,
+                "type": item.type
+
+            }
+        
+      })
+      console.log("--------------check---------------------",projects_or_programs)
+      this.dataSource2 = new MatTableDataSource(projects_or_programs);
       console.log("data",this.dataSource2)
       this.dataSource2.paginator=this.paginator2;
       this.dataSource2.sort = this.sort2;    
   }
 
 
-
+  applyfilter(event)
+  {
+    let value1 = event.target.value.toLowerCase();
+    this.dataSource2.filter = value1;
+    this.dataSource2.sort=this.sort2;
+    this.dataSource2.paginator=this.paginator2;
+    this.dataSource2.filter
+  }
   deleteproject(project)
   {
     var projectdata:any=project;
@@ -221,7 +297,7 @@ export class ProjectsProgramsTableComponent implements OnInit {
     }).then((result) => {
       let value:any=result.value
       if(value!=undefined)
-      if(projectdata.projectName==value)
+      if(projectdata.projectName.trim()==value.trim())
       {
         this.spinner.show();
         this.api.delete_Project(delete_data).subscribe( res =>{ 
@@ -232,7 +308,7 @@ export class ProjectsProgramsTableComponent implements OnInit {
           {
             this.projects_list=[];
             Swal.fire("Success","Project Deleted Successfully !!","success")
-            this.getallProjectsdata();
+            this.getallProjectsdata(this.userRoles,this.name,this.email);
           }
           else if(response.errorMessage==undefined && response.message==undefined)
           {
@@ -277,10 +353,11 @@ export class ProjectsProgramsTableComponent implements OnInit {
   
 
 
-  getallProjectsdata(){
+  getallProjectsdata(roles,name,email){
     this.spinner.show();
-    this.api.getAllProjects().subscribe(res=>{
+    this.api.getAllProjects(roles,name,email).subscribe(res=>{
       let response:any=res;
+      this.projectslistdata.emit(response)
       this.projects_list=[];
       this.projects_list=[...response[0].map(data=>{
       return {
@@ -325,6 +402,9 @@ export class ProjectsProgramsTableComponent implements OnInit {
     this.project_main.count.Rejected=this.projects_list.filter(item=>item.status=="Rejected").length
     this.project_main.count.Approved=this.projects_list.filter(item=>item.status=="Approved").length
     this.project_main.count.Inreview=this.projects_list.filter(item=>item.status=="In Review").length
+    this.project_main.count.Deployed=this.projects_list.filter(item=>item.status=="Deployed").length
+    this.project_main.count.Closed=this.projects_list.filter(item=>item.status=="Closed").length
+   
     this.spinner.hide();
     this.getallProjects();
 
@@ -485,7 +565,7 @@ export class ProjectsProgramsTableComponent implements OnInit {
         if(status.errorMessage==undefined)
         {
           Swal.fire("Success","Project Updated Successfully !!","success");
-          this.getallProjectsdata();
+          this.getallProjectsdata(this.userRoles,this.name,this.email);
           this.spinner.hide();
         }
         else
@@ -517,7 +597,7 @@ programupdate(){
       {
         //this.projects_list=[];
         Swal.fire("Success","Project Updated Successfully !!","success");
-        this.getallProjectsdata();
+        this.getallProjectsdata(this.userRoles,this.name,this.email);
         this.spinner.hide();
       }
       else
@@ -730,5 +810,10 @@ getreducedValue(value) {​​​​​​​​
   return value;
 }​​​​​​​​
 
-  
+getInitiatives(){
+  this.api.getProjectIntitiatives().subscribe(res=>{
+    let response:any=res;
+    this.initiatives=response;
+  })
+}
 }

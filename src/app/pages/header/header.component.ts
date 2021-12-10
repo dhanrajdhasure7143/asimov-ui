@@ -172,8 +172,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.child_subscription.unsubscribe();
   }
   myAccount(){
-    var input = btoa("myAccount")
-    window.location.href=this.config.logoutRedirectionURL+'?input='+input;
+    // var input = btoa("myAccount")
+    // window.location.href=this.config.logoutRedirectionURL+'?input='+input;
+    this.router.navigate(['/pages/admin/myaccount'])
+  }
+  changepassword(){
+    this.router.navigate(['/pages/admin/changepassword'])
   }
   userManagement(){
     var input = btoa("userManagement")

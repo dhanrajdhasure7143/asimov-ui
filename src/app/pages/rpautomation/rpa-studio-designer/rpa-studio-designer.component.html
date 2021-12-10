@@ -5,9 +5,8 @@
                 <div class="col-md-6 rpa-header-data p-0">
                     <div>
                         <span *ngIf="current_instance != undefined">
-                          <a class="clickable module-back-button rpa-header-back-button" (click)="navigateToBack()">
-                            <i class="fas fa-arrow-left"></i>
-                          </a>
+            <span class="clickable module-back-button rpa-header-back-button"  (click)="removenodes()">
+              <i class="fas fa-arrow-left"></i></span>
                         </span>
                         <span class="rpa-main-title">RPA Studio</span>
                         <span class="rpatitsep">/</span>
@@ -59,46 +58,53 @@
                             </ul>
                         </div>
                         <span class="bpsbtnsep">|</span>
-                        <div class="action-item hovericon" *ngIf="current_instance != undefined" placement="bottom" tooltip="Save Bot">
-                            <button (click)="current_instance.saveBotFunAct()" [disabled]="current_instance.selectedEnvironments.length==0">
+                        <div class="action-item hovericon" *ngIf="current_instance != undefined ">
+                            <!-- <button   (click)="current_instance.saveBotFunAct()"  [disabled]="current_instance.selectedEnvironments.length==0 || !((current_instance.savebotrespose!=undefined && isButtonVisible==true && userName==current_instance.savebotrespose.createdBy) || (current_instance.savebotrespose ==undefined) || (isButtonVisible==false))"> -->
+                            <button class="tsttooltipbtn" (click)="current_instance.saveBotFunAct()" [disabled]="current_instance.selectedEnvironments.length==0 ">
                       <img src="../../../../assets/images/RPA/icon_latest/save.svg" class="testplus1">
                       <!-- <i class="ri-save-line"></i> -->
+                      <span class="testtooltip">Save Bot</span>
                       </button>
                         </div>
                         <!-- <div class="action-item" >
                       <i class="ri-play-line"></i>
                   </div> -->
-                        <div class="action-item hovericon" *ngIf="current_instance != undefined" placement="bottom" tooltip="Start Bot">
-                            <button [disabled]="current_instance.savebotrespose==undefined" (click)=" current_instance.executionAct()">
+                        <div class="action-item hovericon" *ngIf="current_instance != undefined">
+                            <button class="tsttooltipbtn" [disabled]="current_instance.savebotrespose==undefined" (click)=" current_instance.executionAct()">
                       <img src="../../../../assets/images/RPA/icon_latest/play.svg" class="testplus1">
                         <!-- <i class="ri-play-circle-line"></i> -->
+                        <span class="testtooltip">Start Bot</span>
                     </button>
                         </div>
-                        <div class="action-item hovericon" *ngIf="current_instance != undefined" placement="bottom" tooltip="Stop Bot">
-                            <button [disabled]="current_instance.savebotrespose==undefined" (click)=" current_instance.stopBot()">
+                        <div class="action-item hovericon" *ngIf="current_instance != undefined">
+                            <button class="tsttooltipbtn" [disabled]="current_instance.savebotrespose==undefined" (click)=" current_instance.stopBot()">
                       <img src="../../../../assets/images/RPA/icon_latest/Stop Bot.svg"class="testplus1">
+                      <span class="testtooltip">Stop Bot</span>
                     </button>
                             <!-- <i class="ri-stop-circle-line"></i> -->
                         </div>
-                        <div class="action-item hovericon" *ngIf="current_instance != undefined" placement="bottom" tooltip="Predefined Bots">
-                            <img src="../../../../assets/images/RPA/icon_latest/Predefined Bots.svg" class="testplus1">
-                            <!-- <i class="ri-file-copy-line"></i> -->
-                        </div>
-                        <div class="action-item hovericon" *ngIf="current_instance != undefined" placement="bottom" tooltip="View Logs">
-                            <button [disabled]="current_instance.savebotrespose==undefined" (click)=" current_instance.viewlogdata( current_instance.logspopup,'open')">
+                        <!-- <div class="action-item hovericon" *ngIf="current_instance != undefined" placement="bottom" tooltip="Predefined Bots">
+                    <img src="../../../../assets/images/RPA/icon_latest/Predefined Bots.svg" class="testplus1">
+                     
+                  </div> -->
+                        <div class="action-item hovericon" *ngIf="current_instance != undefined">
+                            <button class="tsttooltipbtn" [disabled]="current_instance.savebotrespose==undefined" (click)=" current_instance.viewlogdata( current_instance.logspopup,'open')">
                     <img src="../../../../assets/images/RPA/icon_latest/View Logs.svg" class="testplus1">
                       <!-- <i class="ri-clipboard-line"></i> -->
+                      <span class="testtooltip">View Logs</span>
                     </button>
                         </div>
-                        <div class="action-item hovericon" *ngIf="current_instance != undefined" placement="bottom" tooltip="Scheduler">
-                            <button [disabled]="current_instance.savebotrespose==undefined" (click)=" current_instance.openschedule()">
+                        <div class="action-item hovericon" *ngIf="current_instance != undefined">
+                            <button class="tsttooltipbtn" [disabled]="current_instance.savebotrespose==undefined" (click)=" current_instance.openschedule()">
                     <img src="../../../../assets/images/RPA/icon_latest/schedule.svg" class="testplus1">
                       <!-- <i class="ri-history-line"></i> -->
+                      <span class="testtooltip">Scheduler</span>
                     </button>
                         </div>
-                        <div class="action-item hovericon" *ngIf="current_instance != undefined" placement="bottom" tooltip="Download">
-                            <button type="button" [disabled]="current_instance.savebotrespose==undefined" id="dropdownMenuButton" class="downloadBtn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <div class="action-item hovericon" *ngIf="current_instance != undefined">
+                            <button class="tsttooltipbtn" type="button" [disabled]="current_instance.savebotrespose==undefined" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <img src="../../../../assets/images/RPA/icon_latest/download.svg" class="testplus1">
+                      <span class="testtooltip">Download</span>
                     </button>
                             <div class="rpa-dropdown dropdown-menu RPA-download" aria-labelledby="dropdownMenuButton">
                                 <div class="d-format"><a class="dropdown-item clickable" (click)=" current_instance.childBotWorkspace.downloadJpeg()">&nbsp;<span>JPEG</span></a></div>
@@ -118,19 +124,22 @@
                     </button>
                   </div> -->
 
-                        <div class="action-item hovericon" *ngIf="current_instance != undefined" placement="bottom" tooltip="Delete">
-                            <button [disabled]="current_instance.savebotrespose == undefined" (click)=" current_instance.delete()">
+                        <div class="action-item hovericon" *ngIf="current_instance != undefined ">
+                            <button class="tsttooltipbtn" [disabled]="current_instance.savebotrespose == undefined || isButtonVisible==true" (click)=" current_instance.delete()">
                             <img src="../../../../assets/images/RPA/icon_latest/delete.svg" class="testplus1">
+                            <span class="testtooltip">Delete</span>
                           </button>
                         </div>
-                        <div class="action-item hovericon" *ngIf="current_instance != undefined" tooltip="Reset Bot" placement="bottom">
-                            <button (click)=" current_instance.reset()">
-                             <img src="../../../../assets/images/RPA/icon_latest/reset.svg" class="testplus1">
+                        <div class="action-item hovericon" *ngIf="current_instance != undefined">
+                            <button class="tsttooltipbtn" (click)=" current_instance.reset()">
+                            <img src="../../../../assets/images/RPA/icon_latest/reset.svg" class="testplus1">
+                            <span class="testtooltip">Reset Bot</span>
                           </button>
                         </div>
-                        <div class="action-item hovericon" *ngIf="current_instance != undefined" placement="bottom" tooltip="Export">
-                            <button [disabled]="current_instance.savebotrespose==undefined" (click)=" current_instance.exportbot(current_instance.botState)">
+                        <div class="action-item hovericon" *ngIf="current_instance != undefined">
+                            <button class="tsttooltipbtn" [disabled]="current_instance.savebotrespose==undefined" (click)=" current_instance.exportbot(current_instance.botState)">
                             <img src="../../../../assets/images/RPA/icon_latest/export.svg" class="testplus1"> 
+                            <span class="testtooltip">Export</span>
                           </button>
                         </div>
                     </div>
@@ -177,11 +186,11 @@
               </button>
                         </div>
                     </ng-template>
-                    <app-rpa-toolset [bot]="tab" #rpa_bot_instance></app-rpa-toolset>
+                    <app-rpa-toolset [bot]="tab" [toolset]="templateNodes" #rpa_bot_instance></app-rpa-toolset>
                 </mat-tab>
                 <mat-tab [disabled]="true">
                     <ng-template mat-tab-label>
-                        <span [matMenuTriggerFor]="menu" class="clickable text-primary">
+                        <span [matMenuTriggerFor]="menu" class="clickable text-primary" *ngIf="userRole!='User'">
             <img src="../../../../assets/images/RPA/icon_latest/add.svg" class="add-new"/>
           </span>
                         <mat-menu #menu="matMenu">

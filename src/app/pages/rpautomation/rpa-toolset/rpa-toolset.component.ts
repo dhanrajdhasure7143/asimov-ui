@@ -22,9 +22,9 @@ export class RpaToolsetComponent implements OnInit {
   @ViewChild('section', {static: false}) section: ElementRef<any>;
   @ViewChild('rpa_actions',{static:false}) rpa_actions_menu:RpaStudioActionsComponent
   @Input('bot') public botState: any;
+  @Input("toolset") public templateNodes:any=[];
   toolSetData:any=[];
   userRole:any;
-  templateNodes:any=[];
   search:any=false;
   sidenavbutton:Boolean=false;
   ngOnInit() {
@@ -51,34 +51,34 @@ export class RpaToolsetComponent implements OnInit {
 
         this.userRole = localStorage.getItem("userRole")
         this.userRole = this.userRole.split(',');
-        this.rest.toolSet().subscribe(data => {
-          data1 = data
-          data1.General.forEach(element => {
-            let temp:any = {
-              name : element.name,
-              path : 'data:' + 'image/png' + ';base64,' + element.icon,
-              tasks: element.taskList,
-              expanded:false,
-            };
-            if((this.userRole.includes('User') &&
-                  (temp.name === 'Email' || temp.name === 'Excel' || temp.name === 'Database' || temp.name === 'Developer'))
-                || !this.userRole.includes('User')){
-              this.templateNodes.push(temp)
-            }
-          })
-          if(!this.userRole.includes('User')){
-            data1.Advanced.forEach(element => {
-              let temp:any = {
-                name : element.name,
-                path : 'data:' + 'image/png' + ';base64,' + element.icon,
-                tasks: element.taskList,
-                expanded:false,
-              };
-              this.templateNodes.push(temp)
-            })
-          }
+        // this.rest.toolSet().subscribe(data => {
+        //   data1 = data
+        //   data1.General.forEach(element => {
+        //     let temp:any = {
+        //       name : element.name,
+        //       path : 'data:' + 'image/png' + ';base64,' + element.icon,
+        //       tasks: element.taskList,
+        //       expanded:false,
+        //     };
+        //     if((this.userRole.includes('User') &&
+        //           (temp.name === 'Email' || temp.name === 'Excel' || temp.name === 'Database' || temp.name === 'Developer'))
+        //         || !this.userRole.includes('User')){
+        //       this.templateNodes.push(temp)
+        //     }
+        //   })
+        //   if(!this.userRole.includes('User')){
+        //     data1.Advanced.forEach(element => {
+        //       let temp:any = {
+        //         name : element.name,
+        //         path : 'data:' + 'image/png' + ';base64,' + element.icon,
+        //         tasks: element.taskList,
+        //         expanded:false,
+        //       };
+        //       this.templateNodes.push(temp)
+        //     })
+        //   }
 
-        })
+        // })
     }
 
     searchclear(){

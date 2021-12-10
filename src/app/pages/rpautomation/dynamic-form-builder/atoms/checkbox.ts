@@ -100,6 +100,7 @@ export class CheckBoxComponent implements OnInit  {
       let value=check.checked;
       if(value==true)
       {
+        
         $("#"+dependency1[0]+"_form_data").show();
         $("#"+dependency2[0]+"_form_data").hide();
         
@@ -120,8 +121,6 @@ export class CheckBoxComponent implements OnInit  {
         $("#"+dependency2[0]+"_form_data").show();
         $("#"+dependency1[0]+"_form_data").hide();
         this.dynamic_forms.fields.find(data=>parseInt(data.id)==parseInt(dependency1[0])).value="";
-        
-    
         //let disablefield:any= this.dynamic_forms.fields.find(data=>parseInt(data.id)==parseInt(dependency1[0]));
         //this.form.removeControl(disablefield.name+"_"+disablefield.id)
         // this.dynamic_forms.fields.find(data=>parseInt(data.id)==parseInt(dependency1[0])).value="";

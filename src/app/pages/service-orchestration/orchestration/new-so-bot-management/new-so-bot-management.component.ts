@@ -884,6 +884,7 @@ public slaupdate : boolean = false;
       let catResponse : any;
       catResponse=data
       this.categaoriesList=catResponse.data;
+      (this.categaoriesList.length==1?this.selectedcat=this.categaoriesList[0].categoryId:"")
     });
   }
   getusersList()
@@ -1036,6 +1037,21 @@ public slaupdate : boolean = false;
           showConfirmButton:true
         });
       },5000)
+    }
+  }
+
+
+  getCheckbotList()
+  {
+    if((["UiPath","EPSoft","BluePrism"]).includes(this.selected_source))
+    {
+      if(this.bot_list.filter(item=>item.sourceType==this.selected_source).length==0)
+        return true;
+      else
+        return false;
+    }
+    else{
+        return false;
     }
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, QueryList } from '@angular/core';
 import { Router,ActivatedRoute } from '@angular/router';
 import { DataTransferService } from "../../services/data-transfer.service";
 import { RestApiService } from '../../services/rest-api.service';
@@ -100,7 +100,7 @@ export class RpaStudioComponent implements OnInit {
 
 
     
-    let data1:any = [];
+    var data1:any = [];
     this.dt.changeParentModule({"route":"/pages/rpautomation/home", "title":"RPA"});
     this.dt.changeChildModule("");
     this.spinner.show();
@@ -114,13 +114,14 @@ export class RpaStudioComponent implements OnInit {
           path : 'data:' + 'image/png' + ';base64,' + element.icon,
           tasks: element.taskList
         };
-        if((this.userRole.includes('User') &&
-              (temp.name === 'Email' || temp.name === 'Excel' || temp.name === 'Database' || temp.name === 'Developer'))
-            || !this.userRole.includes('User')){
+        // if((this.userRole.includes('User') && 
+        // (temp.name === 'Email' || temp.name === 'Excel' || temp.name === 'Database' || temp.name === 'Developer')) || 
+        // !this.userRole.includes('User')){
           this.templateNodes.push(temp)
-        }
+        //}
       })
-      if(!this.userRole.includes('User')){
+      if(!this.userRole.includes('User'))
+      {
         data1.Advanced.forEach(element => {
           let temp:any = {
             name : element.name,
@@ -138,38 +139,44 @@ export class RpaStudioComponent implements OnInit {
           //   localStorage.removeItem("tabsArray");
           // }
           //this.spinner.hide();
-        })
-        this.activatedRoute.queryParams.subscribe(data=>{
-          let params:any=data;
-          if(params==undefined)
-          {
-            this.router.navigate(["home"])
-          }
-          else
-          {
-            let botId=params.botId;
-            if(!(isNaN(botId)))
-              this.getloadbotdata(botId)
+        });
+      }
+          this.activatedRoute.queryParams.subscribe(data=>{
+            let params:any=data;
+            if(params==undefined)
+            {
+              this.router.navigate(["home"])
+            }
             else
             {
-              let BotData=JSON.parse(Base64.decode(botId));
-              console.log(BotData)
-              this.tabsArray.push(BotData)
-              setTimeout(()=>{
-                this.designerInstance.bot_instances.forEach(item=>{
-                  if(item.botState.botName==BotData.botName)
-                  {
-                    this.designerInstance.current_instance=item.rpa_actions_menu;
-                    this.designerInstance.toolset_instance=item;
-                    this.designerInstance.selected_tab_instance=item;
-                  } 
-                  this.spinner.hide();
-                });
-              },2000)
+              let botId=params.botId;
+              if(!(isNaN(botId)))
+                this.getloadbotdata(botId)
+              else
+              {
+                let BotData=JSON.parse(Base64.decode(botId));
+                console.log(BotData)
+                this.tabsArray.push(BotData)
+                setTimeout(()=>{
+                  this.designerInstance.bot_instances.forEach(item=>{
+              
+                      if(item.botState.botName==BotData.botName)
+                      {
+                        this.designerInstance.current_instance=item.rpa_actions_menu;
+                        this.designerInstance.toolset_instance=item;
+                        this.designerInstance.selected_tab_instance=item;
+                        this.spinner.hide();
+                      } 
+                      
+                   
+                  });
+                },2500)
+              }
             }
-          }
-        })
-      }
+          })
+      
+     
+
     })
   }
 
@@ -355,9 +362,11 @@ export class RpaStudioComponent implements OnInit {
             //   this.designerInstance.current_instance=item.
             // }
             
-            this.spinner.hide();
+            //
           });
-        },2000)
+        },2500)
+
+        this.spinner.hide();
       }
       else
       {

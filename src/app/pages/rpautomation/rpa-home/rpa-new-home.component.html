@@ -1,7 +1,3 @@
-<ngx-spinner bdColor="#bebcbc66" type="">
-    <img src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader" />
-
-</ngx-spinner>
 <div class="main-content ">
     <div class="row content-area">
         <div class="module-heading title">
@@ -9,7 +5,7 @@
 
             <span class="module-header-title">Robotic Process Automation</span>
             <button type="button" class="btn btn-primary import-btn ml-auto" (click)="openModal(template)">
-              <img src="../../../../assets/images/RPA/import-white.svg" class="testplus" *ngIf="rpaVisible">
+              <img src="../../../../assets/images/RPA/import-white.svg" class="testplus" >
               Import
             </button>
         </div>
@@ -70,7 +66,7 @@
 </div> -->
 
 
-        <div class="row rpa-content-home" *ngIf="(rpaVisible)">
+        <div class="row rpa-content-home">
 
             <div class="main-subheader">
                 <div class="main-subheaderTitle">
@@ -140,17 +136,25 @@
             <div class="col-md-12 p-0">
                 <div>
                     <div class="row">
-                        <div class="col-md-6 pl-0">
+                        <div class="col-md-8 pl-0">
                             <h4 class="gridHeader">My Workspace</h4>
                         </div>
-                        <div class="col-md-6 p-0">
+                        <div class="col-md-4 p-0">
                             <div class="col-md-6 form-group pr-0 rpa-searchip">
                                 <input class="form-control toolbar-search" type="text" [(ngModel)]="userFilter.botName" placeholder="Search Bot">
                                 <img src="../../../../assets/images/search.svg" alt="" class="testplus1">
                             </div>
+                            <!-- <div class="col-md-12 form-group pr-0 rpa-searchip">
+                  <input class="form-control toolbar-search" type="text" (change)="applyFilter2($event.target.value)" placeholder="Search Bot" >
+                  <img src="../../../../assets/images/search.svg" alt="" class="testplus1">
+                </div> -->
                             <div class="col-md-6 form-group pr-0 rpa-searchip">
-                                <input class="form-control toolbar-search" type="text" [(ngModel)]="userFilter.department" placeholder="Search Category">
-                                <img src="../../../../assets/images/search.svg" alt="" class="testplus1">
+                                <!-- <input class="form-control toolbar-search" type="text" [(ngModel)]="userFilter.department" placeholder="Search Category" > -->
+                                <select class="form-control" [(ngModel)]="userFilter.department">
+                    <option value="" >Select Category</option>
+                    <option [value]="category.categoryName" *ngFor="let category of categaoriesList">{{category.categoryName}}</option>
+                  </select>
+                                <!-- <img src="../../../../assets/images/search.svg" alt="" class="testplus1"> -->
                             </div>
                             <!-- <mat-form-field>
                   <mat-label>Search Department</mat-label>
@@ -168,30 +172,30 @@
                                     <div class="cell cell1"></div>
                                 </div>
                                 <div class="flex-col header gridheader-th">
-                                    <!-- <button  (click)="sortasc('botName','asc')"> -->
-                                    <button mat-sort-header="botName">
+                                    <button (click)="sortasc('botName','asc')">
+                          <!-- <button  mat-sort-header="botName"> -->
                          <span >Bot Name</span>
-                         <!-- <i *ngIf="sortkey.botName==false" class="fa fa-arrow-up"></i>
-                         <i *ngIf="sortkey.botName==true" class="fa fa-arrow-down"></i> -->
+                         <i *ngIf="sortkey.botName==false" class="fa fa-arrow-up"></i>
+                         <i *ngIf="sortkey.botName==true" class="fa fa-arrow-down"></i>
                         </button>
                                 </div>
 
                                 <div class="flex-col header gridheader-th">
-                                    <!-- <button  (click)="sortasc('description','asc')"> -->
-                                    <button mat-sort-header="description">
+                                    <button (click)="sortasc('description','asc')">
+                          <!-- <button   mat-sort-header="description"> -->
                           <span >Description</span>
-                          <!-- <i *ngIf="sortkey.description==false" class="fa fa-arrow-up"></i>
-                          <i *ngIf="sortkey.description==true" class="fa fa-arrow-down"></i> -->
+                          <i *ngIf="sortkey.description==false" class="fa fa-arrow-up"></i>
+                          <i *ngIf="sortkey.description==true" class="fa fa-arrow-down"></i>
                         </button>
                                 </div>
 
                                 <div class="flex-col header gridheader-th">
-                                    <!-- <button  (click)="sortasc('department','asc')"> -->
-                                    <button mat-sort-header="department">
-                          <span >Category</span>
-                          <!-- <i *ngIf="sortkey.department==false" class="fa fa-arrow-up"></i>
-                          <i *ngIf="sortkey.department==true" class="fa fa-arrow-down"></i> -->
-                        </button>
+                                    <button (click)="sortasc('department','asc')">
+                                      <!-- <button  mat-sort-header="department"> -->
+                                      <span >Category</span>
+                                      <i *ngIf="sortkey.department==false" class="fa fa-arrow-up"></i>
+                                      <i *ngIf="sortkey.department==true" class="fa fa-arrow-down"></i>
+                                    </button>
                                 </div>
 
                                 <!-- <div class="flex-col header gridheader-th"> -->
@@ -204,26 +208,27 @@
                                 <!-- </div> -->
 
                                 <div class="flex-col header gridheader-th">
-                                    <!-- <button  (click)="sortasc('version','asc')"> -->
-                                    <button mat-sort-header="version">
+                                    <button (click)="sortasc('version','asc')">
+                          <!-- <button  mat-sort-header="version"> -->
                           <span>Version</span> 
-                          <!-- <i *ngIf="sortkey.version==false" class="fa fa-arrow-up"></i>
-                          <i *ngIf="sortkey.version==true" class="fa fa-arrow-down"></i> -->
+                          <i *ngIf="sortkey.version==false" class="fa fa-arrow-up"></i>
+                          <i *ngIf="sortkey.version==true" class="fa fa-arrow-down"></i>
                         </button>
                                 </div>
 
                                 <div class="flex-col header gridheader-th">
-                                    <!-- <button  (click)="sortasc('botStatus','asc')"> -->
-                                    <button mat-sort-header="botStatus">
+                                    <button (click)="sortasc('botStatus','asc')">
+                          <!-- <button  mat-sort-header="botStatus"> -->
                           <span>Status</span>
-                          <!-- <i *ngIf="sortkey.botStatus==false" class="fa fa-arrow-up"></i>
-                          <i *ngIf="sortkey.botStatus==true" class="fa fa-arrow-down"></i> -->
+                          <i *ngIf="sortkey.botStatus==false" class="fa fa-arrow-up"></i>
+                          <i *ngIf="sortkey.botStatus==true" class="fa fa-arrow-down"></i>
                         </button>
                                 </div>
                                 <div class="flex-col header gridheader-th">
-                                    <!-- <button  (click)="sortasc('botStatus','asc')"> -->
-                                    <button mat-sort-header="actions">
-                            <span>Actions</span>
+                                    <button>
+                            <!-- <button  mat-sort-header="actions"> -->
+                   
+                              <span>Actions</span>
                             <!-- <i *ngIf="sortkey.botStatus==false" class="fa fa-arrow-up"></i>
                             <i *ngIf="sortkey.botStatus==true" class="fa fa-arrow-down"></i> -->
                           </button>
@@ -231,8 +236,9 @@
                             </div>
                         </div>
                         <div class="rpa-home-table">
-                            <mat-expansion-panel hideToggle *ngFor="let bot of displayedRows$ | async | filterBy:userFilter ;let i=index;">
-
+                            <!-- <mat-expansion-panel hideToggle (opened)="getBotImage(bot.botId,bot.version,$event)"  *ngFor="let bot of displayedRows$ | filterBy:userFilter | async  ;let i=index;">
+                -->
+                            <mat-expansion-panel [hideToggle]="true" #botpanel1 (opened)="getBotImage(bot.botId,bot.version,$event)" *ngFor="let bot of bot_list | filterBy:userFilter  |  paginate: {itemsPerPage: pageSize, currentPage: page } ">
 
                                 <mat-expansion-panel-header>
 
@@ -253,7 +259,7 @@
                                                 <span *ngIf="bot.description!=null" placement="bottom" [tooltip]="bot.description" class="btndes"> {{(bot.description.length > 20) ? ((bot.description).slice(0, 20) + '...') : bot.description}}</span>
                                                 <span *ngIf="bot.description==null">-</span>
                                             </div>
-                                            <div class="flex-col">{{bot.department}}</div>
+                                            <div class="flex-col">{{bot.categoryName}}</div>
                                             <!-- <div class="flex-col">{{bot.botType}}</div> -->
                                             <div class="flex-col">V{{bot.version}}</div>
                                             <div class="flex-col">
@@ -266,24 +272,24 @@
                                                 </span>
 
                                                 <span *ngIf="bot.botStatus=='Success'">
-                          <img src="../../../../assets/images/RPA/icon_latest/Success.svg" alt="" class="testplus1">
+                          <img src="../../../../assets/images/RPA/icon_latest/Success.svg" tooltip="Success" placement="right"class="testplus1">
                           <!-- &nbsp;<span>{{bot.botStatus}}</span> -->
                                                 </span>
 
                                                 <span *ngIf="bot.botStatus=='Failure'">
-                          <img src="../../../../assets/images/RPA/icon_latest/close-red.svg" alt="" class="testplus1">
+                          <img src="../../../../assets/images/RPA/icon_latest/close-red.svg" tooltip="Failed" placement="right" class="testplus1">
                             <!-- &nbsp;<span>{{bot.botStatus}}</span> -->
                                                 </span>
                                                 <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
                                                 <span *ngIf="bot.botStatus=='New'" class="text-primary">
-                          <img src="../../../../assets/images/RPA/userobot.png" class="testplus1">
+                          <img src="../../../../assets/images/RPA/userobot.png"  tooltip="New" placement="right" class="testplus1">
                           <!-- <i class="fas fa-robot text-light"></i> -->
                           <!-- &nbsp;<span>{{bot.botStatus}}</span> -->
                                                 </span>
 
                                                 <span *ngIf="bot.botStatus=='Stop' || bot.botStatus=='Stopped'">
                           <!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">-->
-                            <img src="../../../../assets/images/RPA/icon_latest/stop.svg" class="testplus1">
+                            <img src="../../../../assets/images/RPA/icon_latest/stop.svg" tooltip="Stopped" placement="right"class="testplus1">
                             <!-- &nbsp;<span>{{bot.botStatus}}</span> -->
                                                 </span>
 
@@ -305,9 +311,9 @@
                         </span> -->
                                             </div>
                                             <div class="flex-col">
-                                                <button (click)="editbotoverlay(bot)"><img src="../../../../assets/images/RPA/icon_latest/edit.svg" alt="" class="testplus">&nbsp;</button>
-                                                <button (click)="botdelete(bot.botId)"><img src="../../../../assets/images/RPA/icon_latest/delete.svg" alt="" class="testplus">&nbsp;</button>
-                                                <button (click)="exportbot(bot)"><img src="../../../../assets/images/RPA/icon_latest/export.svg" alt="" class="testplus">&nbsp;</button>
+                                                <button tooltip="Edit Bot" placement="bottom" [disabled]="!((isButtonVisible==true && userName==bot.createdBy)||(isButtonVisible==false))" (click)="editbotoverlay(bot);botpanel1.toggle()"><img src="../../../../assets/images/RPA/icon_latest/edit.svg" alt="" class="testplus">&nbsp;</button>
+                                                <button tooltip="Delete Bot" placement="bottom" [disabled]="isButtonVisible==true" (click)="botdelete(bot.botId);botpanel1.toggle()"><img src="../../../../assets/images/RPA/icon_latest/delete.svg" alt="" class="testplus">&nbsp;</button>
+                                                <button tooltip="Export Bot" placement="bottom" (click)="exportbot(bot);botpanel1.toggle()"><img src="../../../../assets/images/RPA/icon_latest/export.svg" alt="" class="testplus">&nbsp;</button>
 
                                             </div>
 
@@ -316,13 +322,25 @@
                                 </mat-expansion-panel-header>
                                 <div class="diagram_container">
 
+
                                     <a class="btn open-btn-click btn-xs" routerLink="/pages/rpautomation/designer" [queryParams]="{botId:bot.botId }">
                     Click to open
-                                    </a>
-
-                                    <a (click)="loadbotdata(bot.botId)" class="rpa_botdiv">
-                                        <img [src]="bot.svg" style="width:100%">
-                                    </a>
+                   </a>
+                                    <div *ngIf="botImage !=undefined">
+                                        <div class="rpa_botdiv" *ngIf="botImage.errorMessage==undefined">
+                                            <img [src]="botImage.svg" style="width:100%">
+                                        </div>
+                                        <div *ngIf="botImage.errorMessage != undefined" style="width:100%" class=" text-center">
+                                            <img src="../../../../assets/images/RPA/No-Items.svg" class="no-item-img">
+                                            <br>
+                                            <span>{{botImage.errorMessage}}</span>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="botImage ==undefined">
+                                        <div class="text-center">
+                                            Loading
+                                        </div>
+                                    </div>
                                 </div>
 
                             </mat-expansion-panel>
@@ -339,20 +357,69 @@
                 <!-- <mat-paginator #paginator2 [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons]="true" class="newpaginationdiv"></mat-paginator> -->
                 <div class="newpaginationdiv">
                     <!-- <pagination-controls class="pagination " (pageChange)="p = $event"></pagination-controls> -->
-                    <mat-paginator #paginator301 [length]="totalRows$ | async" [pageIndex]="0" [pageSize]="10" [showFirstLastButtons]="true" [pageSizeOptions]="[5, 10, 25, 50]"></mat-paginator>
+
+                    <pagination-template #p="paginationApi" (pageChange)="page= ($event)">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    Showing {{getStartIndex(p.getCurrent(), p.getLastPage())}}-{{getLastIndex(p.getCurrent(), p.getLastPage())}} of {{bot_list.length}}
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <span class="py-5">
+                  Records Per Page :  
+                  <select (change)="pageSize=$event.target.value">
+                    <option value=10>10</option>
+                    <option value=20>20</option>
+                    <option value=30>30</option>
+                    <option value=40>40</option>
+                  </select>
+                </span>
+                                    <button [disabled]="p.isFirstPage()" (click)="p.setCurrent(1)">
+                  <mat-icon> first_page </mat-icon> 
+                </button>
+                                    <button [disabled]="p.isFirstPage()" (click)="p.previous()">
+                  <mat-icon> keyboard_arrow_left </mat-icon> 
+                </button>
+                                    <button [disabled]="p.isLastPage()" (click)="p.next()"> 
+                  <mat-icon> keyboard_arrow_right </mat-icon>  
+                </button>
+                                    <button [disabled]="p.isLastPage()" (click)="p.setCurrent(p.getLastPage())">
+                  <mat-icon> last_page </mat-icon> 
+                </button>
+                                </div>
+                                <!-- 
+            <div *ngFor="let page of p.pages" [class.current]="p.getCurrent() === page.value">
+                <button (click)="p.setCurrent(page.value)" *ngIf="p.getCurrent() !== page.value">
+                    <span>{{ page.label }}</span>
+                </button>
+                <div *ngIf="p.getCurrent() === page.value">
+                    <span>{{ page.label }}</span>
+                </div>
+            </div> -->
+
+
+                            </div>
+                        </div>
+
+
+                    </pagination-template>
+                    <!-- <mat-paginator #paginator301 
+                      [length]="totalRows$ | async"
+                      [pageIndex]="0"
+                      [pageSize]="10"
+                      [showFirstLastButtons]="true"
+                      [pageSizeOptions]="[5, 10, 25, 50]"
+                    ></mat-paginator> -->
                 </div>
 
             </div>
 
         </div>
-        <div class="row rpa-content-home no-items-content" *ngIf="!(rpaVisible)">
-            <img class="no-items-img" src="../../../../assets/images/RPA/No-Items.svg">
-            <h4>No items to display</h4>
-        </div>
+
         <div id="edit-bot" class="modal rpa-modal">
             <div class="rpa-modal-content">
                 <div class="rpa-modal-header">
-                    <span class="rpa-modal-close" (click)="close()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
+                    <span class="rpa-modal-close" (click)="editclose()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
                     <h4>Edit Bot Details</h4>
                 </div>
                 <div class="modal-body">
@@ -382,11 +449,11 @@
                             <div class="col-md-12 p-0 form-group">
                                 <label class="label-control" for="botDepartment">Category<span class="star">*</span></label>
 
-                                <select [(ngModel)]="rpaCategory" class="form-control" formControlName="department" name="botDepartment">
-                                  <option  value="" selected>--Select Category--</option>
-                                  <option *ngFor ="let category of categaoriesList" [value]="category.categoryId">{{category.categoryName}}</option>
-                                  <option  value='others'>Others</option>
-                                </select>
+                                <select [(ngModel)]="rpaCategory" class="form-control" formControlName="department" name="botDepartment" [disabled]="categaoriesList.length==1" [value]="categaoriesList.length==1?categaoriesList[0].categoryId:''">
+                      <option  value="">--Select Category--</option>
+                      <option *ngFor ="let category of categaoriesList" [value]="category.categoryId">{{category.categoryName}}</option>
+                      <!-- <option  value='others'>Others</option> -->
+                    </select>
                                 <div *ngIf="rpaCategory==='others'">
                                     <input type="text" class="form-control" formControlName="newCategoryName" onkeypress="return (event.charCode !== 32)" placeholder="Enter Category Name" [(ngModel)]="newRpaCategory">
                                 </div>
@@ -417,92 +484,95 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
 
 
-<div id="create-bot" class="rpa-modal">
-    <div class="rpa-modal-content">
-        <div class="rpa-modal-header">
-            <span class="rpa-modal-close" (click)="close()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
-            <h4>Create Bot</h4>
-        </div>
-        <div class="modal-body">
+        <div id="create-bot" class="rpa-modal">
+            <div class="rpa-modal-content">
+                <div class="rpa-modal-header">
+                    <span class="rpa-modal-close" (click)="close()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
+                    <h4>Create Bot</h4>
+                </div>
+                <div class="modal-body">
 
-            <form [formGroup]="insertbot" (ngSubmit)="onCreateSubmit()">
+                    <form [formGroup]="insertbot" (ngSubmit)="onCreateSubmit()">
 
-                <div class="container m-contanier form-body">
-                    <div class="col-md-12 p-0 form-group">
+                        <div class="container m-contanier form-body">
+                            <div class="col-md-12 p-0 form-group">
 
-                        <label class="label-control" for="botName">Bot Name<span class="star">*</span></label>
-                        <input type="text" formControlName="botName" autocomplete="off" placeholder="Enter Bot Name" [(ngModel)]="botName" ngModel maxlength="31" (input)="validate(botName)" class="form-control" name="botName" (change)="checkBotnamevalidation()" required/>
-                        <div *ngIf="(insertbot.get('botName').invalid && insertbot.get('botName').touched) && !insertbot.controls['botName'].hasError('maxlength')" class="errspan required">
-                            Bot Name Required*
+                                <label class="label-control" for="botName">Bot Name<span class="star">*</span></label>
+                                <input type="text" formControlName="botName" autocomplete="off" placeholder="Enter Bot Name" [(ngModel)]="botName" ngModel maxlength="31" (input)="validate(botName)" class="form-control" name="botName" (change)="checkBotnamevalidation()" required/>
+                                <div *ngIf="(insertbot.get('botName').invalid && insertbot.get('botName').touched) && !insertbot.controls['botName'].hasError('maxlength')" class="errspan required">
+                                    Bot Name Required*
+                                </div>
+                                <div *ngIf="checkbotname " class="errspan required">
+                                    Bot Name is already exists*
+                                </div>
+                                <div *ngIf="botNamespace" class="errspan required">Spaces are not allowed</div>
+
+                                <div *ngIf="insertbot.controls['botName'].hasError('maxlength')" class="errspan required">
+                                    Maximum of 30 characters
+                                </div>
+                            </div>
+
+
+                            <!-- <div class="col-md-12 p-0 form-group">
+              <label class="label-control" for="botType">Bot Type<span class="star">*</span></label>
+  
+              <select  class="form-control" formControlName="botType" name="botType" >
+                <option value="" selected>Select Bot Type</option>
+                <option  value=0>Attended</option>
+                <option  value=1>Unattended</option>
+              </select>
+              <div *ngIf="insertbot.get('botType').invalid && insertbot.get('botType').touched"  class="errspan required">
+                Bot Type Required*
+              </div>
+  
+            </div> -->
+
+                            <div class="col-md-12 p-0 form-group">
+                                <label class="label-control" for="botDepartment">Category<span class="star">*</span></label>
+
+                                <select [(ngModel)]="rpaCategory" class="form-control" [disabled]="categaoriesList.length==1" [value]="categaoriesList.length==1?categaoriesList[0].categoryId:''" formControlName="botDepartment" name="botDepartment">
+                <option  value="">Select Category</option>
+                <option *ngFor ="let category of categaoriesList" [value]="category.categoryId">{{category.categoryName}}</option>
+                <!-- <option  value='others'>Others</option> -->
+              </select>
+                                <!-- <div *ngIf="rpaCategory=='others'">
+                            <input type="text" class="form-control" formControlName="newCategoryName" onkeypress="return (event.charCode !== 32)" placeholder="Enter Category Name" [(ngModel)]="newRpaCategory">
+                        </div> -->
+                                <div *ngIf="insertbot.get('botDepartment').invalid && insertbot.get('botDepartment').touched" class="errspan required">
+                                    Category Required*
+                                </div>
+
+                            </div>
+                            <div class="col-md-12 p-0 form-group">
+                                <label class="label-control" for="botDescription">Bot Description</label>
+                                <textarea type="text" autocomplete="off" formControlName="botDescription" placeholder="Enter Bot Description" ngModel maxlength="501" rows="3" class="form-control" name="botDescription"></textarea>
+                                <!--<div *ngIf="(insertbot.get('botDescription').invalid && insertbot.get('botDescription').touched) && !insertbot.controls['botDescription'].hasError('maxlength')"  class="errspan required">
+                Bot Description Required*
+              </div>-->
+                                <div *ngIf="insertbot.controls['botDescription'].hasError('maxlength')" class="errspan required">
+                                    Maximum of 500 characters
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 p-0 form-group">
+                                <input type="checkbox" formControlName="predefinedBot" (click)="predefined($event)" name="predefinedBot">&nbsp; <span>Predefined Bot</span>
+                            </div>
                         </div>
-                        <div *ngIf="checkbotname " class="errspan required">
-                            Bot Name is already exists*
+                        <div class="form-footer">
+                            <button class="btn btn-primary" [disabled]="insertbot.invalid || botNamespace || checkbotname">Submit</button>
                         </div>
-                        <div *ngIf="botNamespace" class="errspan required">Spaces are not allowed</div>
 
-                        <div *ngIf="insertbot.controls['botName'].hasError('maxlength')" class="errspan required">
-                            Maximum of 30 characters
-                        </div>
-                    </div>
+                    </form>
 
-
-                    <!-- <div class="col-md-12 p-0 form-group">
-            <label class="label-control" for="botType">Bot Type<span class="star">*</span></label>
-
-            <select  class="form-control" formControlName="botType" name="botType" >
-              <option value="" selected>Select Bot Type</option>
-              <option  value=0>Attended</option>
-              <option  value=1>Unattended</option>
-            </select>
-            <div *ngIf="insertbot.get('botType').invalid && insertbot.get('botType').touched"  class="errspan required">
-              Bot Type Required*
+                </div>
             </div>
-
-          </div> -->
-
-                    <div class="col-md-12 p-0 form-group">
-                        <label class="label-control" for="botDepartment">Category<span class="star">*</span></label>
-                        <select [(ngModel)]="rpaCategory" class="form-control" formControlName="botDepartment" name="botDepartment">
-                          <option  value="" selected>Select Category</option>
-                          <option *ngFor ="let category of categaoriesList" [value]="category.categoryId">{{category.categoryName}}</option>
-                          <option  value='others'>Others</option>
-                        </select>
-                        <div *ngIf="insertbot.get('botDepartment').invalid && insertbot.get('botDepartment').touched" class="errspan required">
-                            Category Required*
-                        </div>
-
-                    </div>
-                    <div *ngIf="rpaCategory=='others'" class="col-md-12 p-0 form-group">
-                        <label class="label-control" for="botDepartment">New Category Name<span class="star">*</span></label>
-                        <input type="text" class="form-control" formControlName="newCategoryName" onkeypress="return (event.charCode !== 32)" placeholder="Enter Category Name" [(ngModel)]="newRpaCategory">
-                    </div>
-
-                    <div class="col-md-12 p-0 form-group">
-                        <label class="label-control" for="botDescription">Bot Description</label>
-                        <textarea type="text" autocomplete="off" formControlName="botDescription" placeholder="Enter Bot Description" ngModel maxlength="501" rows="3" class="form-control" name="botDescription"></textarea>
-
-                        <div *ngIf="insertbot.controls['botDescription'].hasError('maxlength')" class="errspan required">
-                            Maximum of 500 characters
-                        </div>
-                    </div>
-
-                    <div class="col-md-6 p-0 form-group">
-                        <input type="checkbox" formControlName="predefinedBot" value="true" (click)="predefined($event)" name="predefinedBot">&nbsp; <span>Predefined Bot</span>
-                    </div>
-                </div>
-                <div class="form-footer">
-                    <button class="btn btn-primary" [disabled]="insertbot.invalid || botNamespace || checkbotname">Submit</button>
-                </div>
-
-            </form>
-
         </div>
     </div>
 </div>
+
+
 
 <ng-template #template>
     <div class="modal-header modelprhead">

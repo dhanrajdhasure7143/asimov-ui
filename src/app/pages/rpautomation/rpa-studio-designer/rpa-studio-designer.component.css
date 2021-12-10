@@ -101,12 +101,11 @@ span.tab-botname {
 .toolset-mainheader {
   background-color: #f3f3f3 !important;
 }
-
 .actionsheaderdiv img.testplus1 {
   width: 12px;
   height: 12px;
 }
-.toolsetmenuicon img.testplus{ 
+.toolsetmenuicon img.testplus {
   /* margin-right: 12px !important;
   opacity: 0.5; */
   vertical-align: sub;
@@ -180,13 +179,11 @@ span.bpsbtnsep {
   font-size: 20px;
   padding: 0px !important;
 }
-
 span.rpatitsep {
   color: #333;
   font-size: 20px;
   padding: 0px 5px !important;
 }
-
 ul#other_actions {
   
   max-height: 250px;
@@ -292,30 +289,26 @@ ul#versions li.clickable:hover {
   line-height: 1cm
 }
 
-/*.rpa-header-back-button{
+/* .rpa-header-back-button{
   border: none !important;
   margin: 0px !important;
   font-size: 16px !important;
-}*/
+} */
 
 
 ::ng-deep .rpa-bottom-tab .mat-tab-header{
   background: white !important;
- 
 }
 
 ::ng-deep .rpa-bottom-tab 
 {
   background: white !important;
-  /*height: 40px !important;
-  color:black !important;
-  padding: 2px;*/
+  /* height: 40px !important;
+  color:black !important; */
+  padding:10px !important; 
   border-top: 1px solid lightgray;
   text-align : end !important;
-  padding:10px !important; 
-
   
-
 }
 
 
@@ -329,10 +322,42 @@ ul#versions li.clickable:hover {
 }
 
 
-
-
 button:disabled{
-  background: none;
-  opacity: 0.5;
-  cursor: not-allowed;
+  background: none !important;
+  opacity: 0.5 !important;
+  cursor: not-allowed !important;
 }
+
+button.tsttooltipbtn:hover span.testtooltip {
+
+  display: block;
+  }
+
+  span.testtooltip {
+
+    position: absolute;
+    top: 42px;
+    right: -2px;
+    background-color: #001c47;
+    color: #fff;
+    width: -moz-max-content;
+    width: max-content;
+    padding: 3px 10px;
+    border-radius: 4px;
+    display: none;
+    }
+    
+    
+    
+    span.testtooltip::before {
+    
+    content: '';
+    border: 2px solid #001c47;
+    border-width: 0px 0px 2px 2px;
+    position: absolute;
+    padding: 4px;
+    right: 13px;
+    top: -5px;
+    background: #001c47;
+    transform: rotate( 45deg);
+    }

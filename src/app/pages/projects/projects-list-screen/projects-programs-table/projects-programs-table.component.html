@@ -505,7 +505,7 @@
           <ng-container matColumnDef="initiatives">
               <th mat-header-cell *matHeaderCellDef mat-sort-header>Initiative</th>
               <td mat-cell *matCellDef="let element"> 
-                <span *ngIf="element.initiatives!=null" [matTooltip]="element.initiatives" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below">{{getreducedValue(element.initiatives)}}</span>
+                <span *ngIf="element.initiatives!=null" [matTooltip]="element.initiatives|initiativePipe : initiatives|titlecase" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below">{{getreducedValue(element.initiatives|initiativePipe : initiatives|titlecase)}}</span>
                   <span *ngIf="element.initiatives==''">-</span>
                   <span *ngIf="element.initiatives==null">-</span>
           </ng-container>
@@ -522,7 +522,7 @@
           <ng-container matColumnDef="projectName">
               <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
               <td mat-cell *matCellDef="let element"> 
-                  <span *ngIf="element.projectName!=null">{{element.projectName}}</span> 
+                  <span *ngIf="element.projectName!=null" [matTooltip]="element.projectName | processName : processes" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below" >{{getreducedValue(element.projectName)}}</span> 
                   <span *ngIf="element.projectName==''">-</span> 
                   <span *ngIf=" element.projectName==null">-</span> 
               </td>
@@ -557,7 +557,7 @@
           </td>
           </ng-container> -->
 
-          <ng-container matColumnDef="lastupdatedby">
+          <ng-container matColumnDef="createdBy">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Last Updated By</th>
           <td mat-cell *matCellDef="let element"> 
               <span *ngIf="element.createdBy!=null">{{element.createdBy}}</span> 
@@ -584,7 +584,7 @@
           </ng-container>
 
           <ng-container matColumnDef="action">
-          <th mat-header-cell *matHeaderCellDef> Actions</th>
+          <th mat-header-cell *matHeaderCellDef style="font-weight:normal"> Actions</th>
           <td mat-cell *matCellDef="let element" class="action-link tablacs"> 
             <div class="newinntalx">
               <a class="clickable text-dark"  *ngIf="element.type=='Project'"  (click)="projectDetailsbyId(element)" matTooltip="Go To Project Details">
@@ -601,11 +601,13 @@
               <a *ngIf="element.type=='Program'" (click)="updatedata(updateprogrammodal,element)" >
                 <img src="../../../../../assets/images/Projects/edit.svg" />
               </a> -->
-              <a (click)="deleteproject(element)"  *ngIf="element.type=='Project'" matTooltip="Delete Project" >
+              <a (click)="deleteproject(element)"  *ngIf="element.type=='Project' && (!(this.userRoles.includes('System Admin')) && userName==element.createdBy)
+               || (this.userRoles.includes('System Admin'))&& element.type=='Project'" matTooltip="Delete Project">
                 <img src="../../../../../assets/images/Projects/delete-black.svg" class="default-img">
                 <img src="../../../../../assets/images/Projects/delete-red.svg" class="hover-img">
               </a> 
-              <a (click)="deleteproject(element)"  *ngIf="element.type=='Program'" matTooltip="Delete Program" >
+              <a (click)="deleteproject(element)"  *ngIf="element.type=='Program' && (!(this.userRoles.includes('System Admin')) && userName==element.createdBy)
+              || (this.userRoles.includes('System Admin'))&& element.type=='Program'" matTooltip="Delete Program" >
                 <img src="../../../../../assets/images/Projects/delete-black.svg" class="default-img">
                 <img src="../../../../../assets/images/Projects/delete-red.svg" class="hover-img">
               </a> 

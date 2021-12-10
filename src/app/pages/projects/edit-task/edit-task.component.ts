@@ -58,7 +58,7 @@ export class EditTaskComponent implements OnInit {
   requestedFiledata: any;
   filedeleteflag:Boolean;
   filecheckeddisabled:boolean =false;
-  filecheckflag:boolean = false;
+  filecheckflag:boolean = true;
   selectedFiles: any=[];
   fileList: File[] = [];
   listOfFiles: any[] = [];
@@ -71,6 +71,10 @@ export class EditTaskComponent implements OnInit {
   startDate: any;
   endDate: any;
   public hidetaskdeletedownload: boolean;
+  pi_process_list: any;
+  bpm_process_list: any;
+  bot_list: any;
+  mindate= moment().format("YYYY-MM-DD");
   constructor(private formBuilder:FormBuilder,
     private router:ActivatedRoute,
     private route:Router,
@@ -94,6 +98,7 @@ export class EditTaskComponent implements OnInit {
       summary: ['', Validators.compose([Validators.maxLength(200)])],
       percentageComplete: ['', Validators.compose([Validators.maxLength(200)])],
       editcomment: ['', Validators.compose([Validators.maxLength(200)])],
+      correlationID: [""],
        })
 
 
@@ -105,6 +110,9 @@ export class EditTaskComponent implements OnInit {
         this.profileName();
           },500);
 
+        this.getallpiprocess();
+        this.getallbpmprocess();
+        this.getallbots();
   }
 
 
@@ -123,6 +131,7 @@ export class EditTaskComponent implements OnInit {
         this.taskresource=task.resources
         this.startDate=task.startDate
         this.endDate=moment(task.endDate).format("YYYY-MM-DD")
+        this.mindate=moment(this.startDate).format("YYYY-MM-DD")
         console.log(this.endDate)
         this.updatetaskdata(task);
       })
@@ -147,6 +156,7 @@ export class EditTaskComponent implements OnInit {
     this.updatetaskForm.get("description").setValue(data["description"]);
     this.updatetaskForm.get("summary").setValue(data["summary"]);
     this.slider=data["percentageComplete"];
+    this.updatetaskForm.get("correlationID").setValue(data.correlationID);
     this.updatetaskForm.get("percentageComplete").setValue(this.slider);
     this.updatetaskForm.get("comments").setValue(data["comments"]);
     
@@ -175,6 +185,7 @@ export class EditTaskComponent implements OnInit {
       taskupdatFormValue["history"]=this.taskhistory
       taskupdatFormValue["endDate"]=this.endDate
       taskupdatFormValue["taskName"]=this.taskname
+      taskupdatFormValue["taskCategory"]=this.taskcategory
       this.spinner.show();
       this.rest.updateTask(taskupdatFormValue).subscribe( res =>{
         this.spinner.hide();
@@ -363,7 +374,7 @@ else
           let status:any = res;
           if(status.errorMessage==undefined)
           {
-          Swal.fire("Success",status.status,"success") 
+          Swal.fire("Success",status.message,"success") 
           this.getTaskAttachments();
           this.removeallchecks();
           this.checktodelete();
@@ -389,30 +400,23 @@ else
 
 
   filecheckAll(ev) {
-    this.taskattacments.forEach(x =>
-       x.checked = ev.target.checked);
+    if(this.filecheckeddisabled==false)
+      this.taskattacments=this.taskattacments.map(item=>{item.checked=true; return item});
+    if(this.filecheckeddisabled==true)
+      this.taskattacments=this.taskattacments.map(item=>{item.checked=false; return item});
     this.checktodelete();
   }
 
   checktodelete()
   {
-    const selectedresourcedata = this.taskattacments.filter(product => product.checked).map(p => p.id);
-    if(selectedresourcedata.length>0)
-    {
-      this.filedeleteflag=true;
-    }else
-    {
-      this.filedeleteflag=false;
-    }
+    this.taskattacments.filter(item=>item.checked==true).length>0?(this.filecheckflag=false):(this.filecheckflag=true);
+    this.taskattacments.filter(item=>item.checked==true).length==this.taskattacments.length?(this.filecheckeddisabled=true):(this.filecheckeddisabled=false);
   }
 
   removeallchecks()
   {
-    for(let i=0;i<this.taskattacments.length;i++)
-    {
-      this.taskattacments[i].checked= false;
-    }
-    this.filecheckflag=false;
+    this.taskattacments=this.taskattacments.map(item=>{item.checked=false;return item});
+    this.checktodelete();
   }
 
   filechecktoggle(id, event)
@@ -442,7 +446,7 @@ else
 
   onDeleteSelectedItems(event){
     const selectedFiles = [];
-    this.taskattacments.filter(product => product.checked==true).map(p=>{
+    this.taskattacments.filter(product => product.checked==true).forEach(p=>{
       let obj={
         "id": p.id,
         "fileName": p.fileName
@@ -458,23 +462,21 @@ else
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes, delete it!'
       }).then((result) => {
-        if (result.value) {
+        if (result.isConfirmed) {
           this.spinner.show();
           this.rest.deleteFiles(selectedFiles).subscribe( res =>{ 
-            let status:any = res;
-            Swal.fire({
-              title: 'Success',
-              text: ""+status.message,
-              position: 'center',
-              icon: 'success',
-              showCancelButton: false,
-              confirmButtonColor: '#007bff',
-              cancelButtonColor: '#d33',
-              confirmButtonText: 'Ok'
-            }) 
-            this.getTaskAttachments();
-            this.removeallchecks();
-            this.spinner.hide();
+              let status:any = res;
+              this.spinner.hide();
+              if(status.errorMessage==undefined)
+              {
+                Swal.fire("Success",status.message,"success");
+                this.getTaskAttachments();
+                this.removeallchecks();
+              } 
+              else
+              {
+                Swal.fire("Error",status.errorMessage,"error");
+              }
             },err => {
               Swal.fire({
                 icon: 'error',
@@ -487,6 +489,29 @@ else
         }
       });
       
+  }
+
+  getallbpmprocess(){
+    this.rest.getprocessnames().subscribe(data =>{
+      let response:any=data;
+      let resp:any="";
+    resp=response.filter(item=>item.status=="APPROVED");
+    this.bpm_process_list=resp.sort((a,b) => (a.processName.toLowerCase() > b.processName.toLowerCase() ) ? 1 : ((b.processName.toLowerCase() > a.processName.toLowerCase() ) ? -1 : 0));
+    })
+  }
+
+  getallpiprocess(){
+    this.rest.getAlluserProcessPiIds().subscribe(data =>{
+      let response:any=data;
+      this.pi_process_list=response.data.sort((a,b) => (a.piName.toLowerCase() > b.piName.toLowerCase() ) ? 1 : ((b.piName.toLowerCase() > a.piName.toLowerCase() ) ? -1 : 0));
+    })
+  }
+
+  getallbots(){
+    this.rest.getAllActiveBots().subscribe(data =>{
+      let response:any=data;
+     this.bot_list=response.sort((a,b) => (a.botName.toLowerCase() > b.botName.toLowerCase() ) ? 1 : ((b.botName.toLowerCase() > a.botName.toLowerCase() ) ? -1 : 0));
+    })
   }
 
 }

@@ -1,0 +1,158 @@
+<div class="h-100">
+    <mat-card class="h-100">
+        <div class="module-heading title">
+            <span class="module-back-button" routerLink="/pages/support/ticket-list">
+                <i class="fas fa-arrow-left" aria-hidden="true"></i>
+            </span>
+            <div class="col-md-12 p-0">
+                <div class="col-md-9 p-0">
+                    <span class="module-header-title innertitle">Create Ticket
+                    </span>
+                </div>
+                <div class="col-md-3 p-0 pull-right CreateTkt-footer">
+                    <button class="btn btn-default" (click)="reset()">Reset</button>
+                    <button class="btn btn-primary" [disabled]="createTicket.invalid" (click)="CreateNewTicket()">Create</button>
+                </div>
+                
+            </div>
+        </div>
+        <div class="container-fluid CreateTkt h-scroll">
+            <div class="maindivfoprm">
+                    <form [formGroup]="createTicket" novalidate>
+                        <div class="row">
+                            <div class="col-md-12 p-0 form-fields">
+                                <label class="label-control">Summary<span class="star">*</span></label>
+                                <textarea id="text-summary" type="text" formControlName="summary" [(ngModel)]="summary" placeholder="Enter Summary" maxlength="256" class="form-control" (keyup)="autoGrowTextZone1($event)"></textarea>
+                                  
+                                <span *ngIf="createTicket.get('summary').invalid && createTicket.get('summary').touched" class="errspan required">Summary Required*</span>
+                            </div>
+                            <div class="col-md-12 p-0 form-fields">
+                                
+                                <label class="label-control">Description<span class="star">*</span></label>
+                                <textarea id="text-description" type="text" (keyup)="autoGrowTextZone($event)" formControlName="description" [(ngModel)]="description" placeholder="Enter Description" class="form-control"></textarea>
+                                <span *ngIf="createTicket.get('description').invalid && createTicket.get('description').touched" class="errspan required">Description Required*</span>
+                            </div>
+                            <div class="col-md-12 p-0">
+                                <div class="col-md-6 pl-0">
+                                    <div class="Component-filed">
+                                        <label class="label-control">Component<span class="star">*</span></label>
+                                        <mat-form-field class="issue-type">
+                                            <mat-label><span *ngIf="component.length==0" style="margin-left: 10px;"> Select Component </span></mat-label>
+                                            <mat-select multiple formControlName="component" [(ngModel)]="component" #toppings class="form-control data">
+                                                <mat-option *ngFor="let each of component_list" [value]='each'>{{each}}</mat-option>
+                                                <button class="component-button" (click)="toppings.close()">OK</button>
+                                            </mat-select>
+                                        </mat-form-field>
+                                        <span *ngIf="createTicket.get('component').invalid && createTicket.get('component').touched" class="errspan required">Component Required*</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 pr-0">
+                                    <div class="col-md-12 p-0 form-fields">
+                                        <label class="label-control">Impact<span class="star">*</span></label>
+                                        <select formControlName="impact" [(ngModel)]='impact' class="form-control data" placeholder="Select Impact">
+                                            <option value="undefined" hidden disabled>Select Impact</option>
+                                            <option value="null" hidden disabled>Select Impact</option>
+                                            <option *ngFor="let item of impactArray" [value]=item.impact>{{item.impact}}</option>
+                                        </select>
+                                        <span *ngIf="createTicket.get('impact').invalid && createTicket.get('impact').touched" class="errspan required">Impact Required*</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 p-0">                               
+                                <div class="col-md-6 pl-0">
+                                    <div class="col-md-6 pl-0 form-fields">
+                                        <label class="label-control">Select Priority<span class="star">*</span></label>
+                                        <select formControlName="priority" [(ngModel)]='priority' class="form-control data" placeholder="Select Priority">
+                                            <option [value]="undefined" disabled hidden>Select Priority</option>
+                                            <option value="null" disabled hidden>Select Priority</option>
+                                            <option *ngFor="let each of Priority_list;let i=index" [value]="each">{{each}}</option>
+                                        </select>
+                                        <span *ngIf="createTicket.get('priority').invalid && createTicket.get('priority').touched" class="errspan required">Priority Required*</span>
+                                    </div>
+                                    <div class="col-md-6 pr-0 form-fields">
+                                        <label class="label-control">Severity<span class="star">*</span></label>
+                                        <select formControlName="severity" [(ngModel)]='severity' class="form-control data" placeholder="Select Severity">
+                                            <option value="undefined" hidden disabled>Select Severity</option>
+                                            <option value="null" hidden disabled>Select Severity</option>
+                                            <option *ngFor="let item of severityLevelsArray" [value]=item.severity>{{item.severity}}</option>
+                                        </select>
+                                        <span *ngIf="createTicket.get('severity').invalid && createTicket.get('severity').touched" class="errspan required">Severity Required*</span>
+                                    </div>
+                                </div> 
+                                <div class="col-md-6 pr-0">
+                                    <div class="col-md-12 p-0 form-fields">
+                                        <label class="label-control">Reporter<span class="star">*</span></label>
+                                        <select formControlName="reporter" class="form-control data" placeholder="Select Reporter">
+                                            <option [value]=userName>{{userName}}</option>
+                                        </select>
+                                        <span *ngIf="createTicket.get('reporter').invalid && createTicket.get('reporter').touched" class="errspan required">Reporter Required*</span>
+                                    </div>
+                                </div>                               
+                            </div>                
+                                                        
+                            <div class="col-md-12 p-0 form-fields">
+                                <div class="row">
+                                    <div class="col-md-6 p-0">
+                                        <label class="label-control">Attachments</label>
+                                    </div>
+                                    <div class="col-md-6 p-0 removeallattachment" *ngIf="fileName.length >= 1"> 
+                                        <button class="tsttooltipbtn" (click)="fileInput.click()">
+                                            <input multiple #fileInput type="file" (change)="file($event)" style="display:none;" />
+                                            <img src="../../../../assets/images/Admin/attach-black.svg" class="testplus default-img" >
+                                            <img src="../../../../assets/images/BPMS/attach.svg" class="testplus hover-img" >
+                                            <span class="testtooltip">Attach More Files</span>
+                                        </button>                                        
+                                    </div>
+                                </div>
+                                <div class="CreateTkt-Attachmentbox">
+                                    <div (click)="fileInput.click()" *ngIf="fileName.length < 1">
+                                        <div><img src="../../../../assets/images/Admin/cloud.svg" alt=""></div>
+                                        <p>Find files to attach, or</p>
+                                        <button class="btn">Browse Files</button>
+                                        <input multiple #fileInput type="file" (change)="file($event)" style="display:none;" />
+                                    </div>
+                                    <div>
+                                        <span *ngIf="!fileError && requestKey == undefined || null">
+                                            <div class="Attached-contents" *ngFor="let item of fileName; index as i">
+                                                <div class="attached-image">
+                                                    <img src="../../../../assets/images/Admin/fle.svg" class="">
+                                                </div>
+                                                <div class="attached-name">
+                                                    <div class="attached-filedet">
+                                                        <span class="filenameoverflow">{{item.name}}</span>
+                                                        <span>{{item.convertedsize}}</span>
+                                                    </div>
+                                                        <mat-progress-bar mode="determinate" [value]=progress></mat-progress-bar>                                                    
+                                                </div>
+                                                <div class="attached-close">
+                                                    <span class="closefile" (click)="DeleteFile(item , i)">
+                                                        <img src="../../../../assets/images/RPA/icon_latest/close.svg" >
+                                                    </span>
+                                                </div>                                                
+                                            </div>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="fileerror" *ngIf="fileError && requestKey == undefined || null">
+                                    <p>This file or image don't support or empty , Please try again later.</p>
+                                </div>
+                                
+                            </div>
+                        </div>    
+                        
+                            <!--<div class="CreateTkt-footer col-md-12 p-0">
+                                <button class="btn btn-default" (click)="reset()">Reset</button>
+                                <button class="btn btn-primary" [disabled]="createTicket.invalid" (click)="CreateNewTicket()">Create</button>
+                            </div> -->
+                        
+                    </form>
+            </div>
+        </div>
+    </mat-card>
+</div>
+
+<div class="spinoverlay" *ngIf="isLoading">
+    <div class="spincenter">
+        <img src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader" />
+    </div>
+</div>

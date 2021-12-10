@@ -33,11 +33,13 @@
 
                   </button>
                   <span *ngIf="rejectedOrApproved!='PENDING'">
-                    <button *ngIf='!isfromApprover && !iscreate_notation' class="editprimary tsttooltipbtn" [disabled]="isEditMode" (click)="editNotation()">
+                    <span *ngIf="!(userRole=='User' && rejectedOrApproved=='APPROVED')">
+                    <button *ngIf='!iscreate_notation' class="editprimary tsttooltipbtn" [disabled]="isEditMode " (click)="editNotation()">
                       <img class="defaul-img" src="../../../assets/images/BPMS/Edit-blue.svg">
                       <span class="testtooltip">Edit</span>
                     </button>
                 </span>
+              </span>
               <button mat-button [matMenuTriggerFor]="download" class="tsttooltipbtn">
                 <img src="../../../assets/images/BPMS/download.svg">
                 <span class="testtooltip">Download</span>
@@ -160,7 +162,7 @@
               <!-- <button (click)="gotoBPMNPlatform()" class="btn btn-primary">
                 <img class="testplus" src="../../../assets/images/BPMS/White-eye.svg">
                 View Cockpit
-              </button> -->
+              </button>  -->
             </span>
           </div>
       </div>    

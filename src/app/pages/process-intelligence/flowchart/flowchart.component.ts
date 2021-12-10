@@ -186,7 +186,7 @@ isGraph_changed:boolean=false;
     this.isplay=false;
     let res_data
     this.Pi_header_functions=this.dt.pi_headerChanges.subscribe(res=>{res_data=res
-      //console.log(res);
+      // console.log(res);
       if(res){
         let element=document.getElementById("tipsy_div");
         if(element){
@@ -307,7 +307,7 @@ isGraph_changed:boolean=false;
        } 
     this.rest.getAllVaraintList(variantListbody).subscribe(data=>{this.varaint_data=data // variant List call
       this.performanceFilterInput = data;
-      //console.log(this.performanceFilterInput);
+      // console.log(this.performanceFilterInput);
       for(var i=0; i<this.varaint_data.data.length; i++){
           this.varaint_data.data[i].selected= "inactive";
       }
@@ -330,6 +330,7 @@ isGraph_changed:boolean=false;
               text: ""+this.fullgraph.display_msg.info,
               icon: 'error',
               showCancelButton: false,
+              heightAuto: false,
               confirmButtonColor: '#007bff',
               cancelButtonColor: '#d33',
               confirmButtonText: 'Okay'
@@ -340,6 +341,7 @@ isGraph_changed:boolean=false;
                   icon: 'info',
                   title: 'Please wait, Redirecting to workspace',
                   showConfirmButton: false,
+                  heightAuto: false,
                   timer: 1500
                 })
                 setTimeout(() => {
@@ -360,6 +362,7 @@ isGraph_changed:boolean=false;
             text: "It is Not You it is Us, Please try again after some time",
             icon: 'error',
             showCancelButton: false,
+            heightAuto: false,
             confirmButtonColor: '#007bff',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Okay'
@@ -370,6 +373,7 @@ isGraph_changed:boolean=false;
                 icon: 'info',
                 title: 'Please wait, Redirecting to workspace',
                 showConfirmButton: false,
+                heightAuto: false,
                 timer: 1500
               })
               setTimeout(() => {
@@ -470,7 +474,7 @@ isGraph_changed:boolean=false;
        } 
     this.rest.getAllVaraintList(variantListbody).subscribe(data=>{this.varaint_data=data // variant List call
       this.performanceFilterInput = data;
-      //console.log(this.performanceFilterInput);
+      // console.log(this.performanceFilterInput);
       if(this.varaint_data.data){ 
       for(var i=0; i<this.varaint_data.data.length; i++){
           this.varaint_data.data[i].selected= "inactive";
@@ -495,6 +499,7 @@ isGraph_changed:boolean=false;
               text: ""+this.fullgraph.display_msg.info,
               icon: 'error',
               showCancelButton: false,
+              heightAuto: false,
               confirmButtonColor: '#007bff',
               cancelButtonColor: '#d33',
               confirmButtonText: 'Okay'
@@ -505,6 +510,7 @@ isGraph_changed:boolean=false;
                   icon: 'info',
                   title: 'Please wait, Redirecting to workspace',
                   showConfirmButton: false,
+                  heightAuto: false,
                   timer: 1500
                 })
                 setTimeout(() => {
@@ -789,7 +795,7 @@ isGraph_changed:boolean=false;
 
   playAnimation() {   // Process graph animation
     this.isplay = !this.isplay
-    //console.log(this.isplay)
+    // console.log(this.isplay)
   }
 
   downloadSvg() { // Process graph download as SVG
@@ -975,19 +981,21 @@ isGraph_changed:boolean=false;
           if(res.data != null){
           this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true,pid:this.graphIds,category:categoryName, processName:reqObj.pname}})
           } else{
-            Swal.fire(
-              'Oops!',
-              'Failed to generate BPM Notation, Please try again later.',
-              'error'
-            );
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: "Failed to generate BPM Notation, Please try again later. !",
+              heightAuto: false,
+            })
           }
         },
         (err =>{
-          Swal.fire(
-            '',
-            'Meaningful BPM notation cannot be derived from the 100% graph as this may result in duplication of activities, Please try generating BPM notation with the combination of cases under variants ',
-            'info'
-          );
+          Swal.fire({
+              icon: 'info',
+              title: '',
+              text: 'Meaningful BPM notation cannot be derived from the 100% graph as this may result in duplication of activities, Please try generating BPM notation with the combination of cases under variants ',
+              heightAuto: false,
+            });
         }))
 
     } else if (this.isSingleTraceBPMN == true) {
@@ -1001,19 +1009,21 @@ isGraph_changed:boolean=false;
           if(res.data != null){
             this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true,pid:this.graphIds,category:categoryName, processName:reqObj1.pname}})
             } else{
-              Swal.fire(
-                'Oops!',
-                'Failed to generate BPM Notation, Please try again later.',
-                'error'
-              );
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops!',
+                text: 'Failed to generate BPM Notation, Please try again later !',
+                heightAuto: false,
+              });
             }
         },
         (err =>{
-          Swal.fire(
-            '',
-            'Internal server error, Please try again later.',
-            'error'
-          );
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Internal server error, Please try again later !',
+            heightAuto: false,
+          });
         }))
 
     } else if (this.isMultiTraceBPMN == true) {
@@ -1027,19 +1037,21 @@ isGraph_changed:boolean=false;
           if(res.data != null){
             this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true,pid:this.graphIds,category:categoryName, processName:reqObj2.pname}})
             } else{
-              Swal.fire(
-                'Oops!',
-                'Failed to generate BPM Notation, Please try again later.',
-                'error'
-              );
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Failed to generate BPM Notation, Please try again later !',
+                heightAuto: false,
+              });
             }
         },
         (err =>{
-          Swal.fire(
-            '',
-            'Internal server error, Please try again later.',
-            'error'
-          );
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Internal server error, Please try again later !',
+            heightAuto: false,
+          });
         }))
 
     } else if (this.isSliderBPMN == true) {
@@ -1054,19 +1066,21 @@ isGraph_changed:boolean=false;
           if(res.data != null){
             this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true,pid:this.graphIds,category:categoryName, processName:reqObj3.pname}})
             } else{
-              Swal.fire(
-                'Oops!',
-                'Failed to generate BPM Notation, Please try again later.',
-                'error'
-              );
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Failed to generate BPM Notation, Please try again later !',
+                heightAuto: false,
+              });
             }
         },
         (err =>{
-          Swal.fire(
-            '',
-            'Internal server error, Please try again later.',
-            'error'
-          );
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Internal server error, Please try again later !',
+            heightAuto: false,
+          });
         }))
     }
   } 
@@ -1815,6 +1829,7 @@ addWorkingHours(){
           text: "It is Not You it is Us, Please try again after some time",
           icon: 'error',
           showCancelButton: false,
+          heightAuto: false,
           confirmButtonColor: '#007bff',
           cancelButtonColor: '#d33',
           confirmButtonText: 'Okay'
@@ -1825,6 +1840,7 @@ addWorkingHours(){
               icon: 'info',
               title: 'Please wait, Redirecting to workspace',
               showConfirmButton: false,
+              heightAuto: false,
               timer: 1500
             })
             setTimeout(() => {
@@ -1908,6 +1924,7 @@ addWorkingHours(){
       html: 'I will close in <b></b> milliseconds.',
       timer: 2000,
       timerProgressBar: true,
+      heightAuto: false,
     }).then((result) => {
       /* Read more about handling dismissals below */
       if (result.dismiss === Swal.DismissReason.timer) {
@@ -2016,6 +2033,7 @@ addWorkingHours(){
           text: "It is Not You it is Us, Please try again after some time",
           icon: 'error',
           showCancelButton: false,
+          heightAuto: false,
           confirmButtonColor: '#007bff',
           cancelButtonColor: '#d33',
           confirmButtonText: 'Okay'
@@ -2026,6 +2044,7 @@ addWorkingHours(){
               icon: 'info',
               title: 'Please wait, Redirecting to workspace',
               showConfirmButton: false,
+              heightAuto: false,
               timer: 1500
             })
             setTimeout(() => {
@@ -2067,7 +2086,7 @@ addWorkingHours(){
     }
      ,(err=>{
       this.spinner.hide();
-       //console.log(err);
+      //  console.log(err);
      }));
   }
    

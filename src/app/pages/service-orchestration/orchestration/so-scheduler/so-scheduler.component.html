@@ -93,7 +93,7 @@
                             <td>{{ schedule.timeZone}}</td>
                             <td *ngIf="schedule.lastRunTime!='null' && schedule.nextRunTime!=undefined">{{schedule.lastRunTime}}</td>
                             <td *ngIf="schedule.lastRunTime=='null' || schedule.nextRunTime==undefined">--</td>
-                            <td *ngIf="schedule.nextRunTime!='null' && schedule.nextRunTime!=undefined">{{schedule.nextRunTime}}</td>
+                            <td *ngIf="schedule.nextRunTime!='null' && schedule.nextRunTime!=undefined">{{schedule.nextRunTime }}</td>
                             <td *ngIf="schedule.nextRunTime=='null' || schedule.nextRunTime==undefined">--</td>
                             <td *ngIf="schedule.botActionStatus!=undefined">{{schedule.botActionStatus}}</td>
                             <td *ngIf="schedule.botActionStatus==undefined"><span *ngIf="schedule.save_status=='unsaved'">--</span></td>

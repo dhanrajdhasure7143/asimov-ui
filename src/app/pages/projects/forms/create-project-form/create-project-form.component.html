@@ -1,12 +1,13 @@
 <div class="container-fluid h-scroll">
-<div class="container createform">
+<div class="createform">
+    
 
     <form [formGroup]="insertForm2" (ngSubmit)="createproject()" class="prj-crt-form">
         <div class="row">
             <div class="col-md-12">
                 <div class="form-fields col-md-6 pl-0">
                     <label class="label-control">Project Name<span class="star">*</span></label>
-                    <input type="text" formControlName="projectName" class="form-control data"
+                    <input type="text"  maxlength="51" formControlName="projectName" class="form-control data"
                         placeholder="Enter Project Name"
                         [ngClass]="insertForm2.get('projectName').valid?'enteredfield-color':'inputfield-color'">
                     <span
@@ -19,11 +20,18 @@
                 </div>
                 <div class="form-fields col-md-6 pr-0">
                     <label class="label-control">Initiatives<span class="star">*</span></label>
-                    <select formControlName="initiatives" class="form-control data"
+                    <!-- <select formControlName="initiatives" class="form-control data"
                         [ngClass]="insertForm2.get('initiatives').valid?'enteredfield-color':'inputfield-color'">
                         <option value="">Select Initiatives</option>
                         <option value="Process Improvement">Process Improvement</option>
                         <option value="Business Improvement">Business Improvement</option>
+                    </select> -->
+                    <select formControlName="initiatives" class="form-control data"
+                        [ngClass]="insertForm2.get('initiatives').valid?'enteredfield-color':'inputfield-color'">
+                        <option [value]="null" disabled hidden>Select Initiative</option>
+                        <option value="" [selected]="true">Select Initiative</option>
+                        <option *ngFor="let initiativedata of initiatives_list" [value]="initiativedata.id">
+                            {{initiativedata.initiative|titlecase}}</option>
                     </select>
                     <span
                         *ngIf="insertForm2.get('initiatives').invalid && insertForm2.get('initiatives').touched"
@@ -53,7 +61,7 @@
                 <div class="form-fields col-md-6 pr-0">
                     <label class="label-control">Project Owner<span
                             class="star">*</span></label>
-                    <select formControlName="owner" class="form-control data"
+                    <select formControlName="owner" [attr.disabled]="loggedInUser!=undefined || loggedInUser !=''" class="form-control data"
                         [ngClass]="insertForm2.get('owner').valid?'enteredfield-color':'inputfield-color'">
                         <option value="">Select Project Owner</option>
                         <option *ngFor="let user of users_list" [value]="user.userId.userId">
@@ -68,13 +76,17 @@
                 <div class="form-fields col-md-6 pl-0">
                     <label class="label-control">Metrics To Be Measured<span
                             class="star">*</span></label>
-                    <input type="text" formControlName="measurableMetrics" maxlength="50"
+                    <input type="text" formControlName="measurableMetrics" maxlength="51"
                         placeholder="Enter Metrics To Be Measured"
                         class="form-control data"
                         [ngClass]="insertForm2.get('measurableMetrics').valid?'enteredfield-color':'inputfield-color'">
                     <span
-                        *ngIf="insertForm2.get('measurableMetrics').invalid && insertForm2.get('measurableMetrics').touched"
+                        *ngIf="(insertForm2.get('measurableMetrics').invalid && insertForm2.get('measurableMetrics').touched)
+                        && !insertForm2.controls['measurableMetrics'].hasError('maxlength')"
                         class="errspan required">Metrics To Be Measured Required*</span>
+                        <span *ngIf="insertForm2.controls['measurableMetrics'].hasError('maxlength')" class="errspan required">
+                            Maximum of 50 characters
+                        </span>
                 </div>
                 <div class="form-fields col-md-6 pr-0">
                     <label class="label-control">Value Chain<span
@@ -84,10 +96,14 @@
                         <option value="">Select Map Value Chain</option>
                         <option *ngFor="let value of valuechain" [value]="value.processGrpMasterId">{{value.processName}}</option>
                     </select> -->
-                    <input type="text" class="form-control data"  placeholder="Enter Value Chain" maxlength="50"  formControlName="mapValueChain" [ngClass]="insertForm2.get('mapValueChain').valid?'enteredfield-color':'inputfield-color'" >
+                    <input type="text" class="form-control data"  placeholder="Enter Value Chain" maxlength="51"  formControlName="mapValueChain" [ngClass]="insertForm2.get('mapValueChain').valid?'enteredfield-color':'inputfield-color'" >
                     <span
-                        *ngIf="insertForm2.get('mapValueChain').invalid && insertForm2.get('mapValueChain').touched"
+                        *ngIf="(insertForm2.get('mapValueChain').invalid && insertForm2.get('mapValueChain').touched)
+                        && !insertForm2.controls['mapValueChain'].hasError('maxlength')"
                         class="errspan required">Value Chain Required*</span>
+                        <span *ngIf="insertForm2.controls['mapValueChain'].hasError('maxlength')" class="errspan required">
+                            Maximum of 50 characters
+                        </span>
                 </div>
             </div>
             <div class="col-md-12">
@@ -105,6 +121,7 @@
                         *ngIf="insertForm2.get('process').invalid && insertForm2.get('process').touched"
                         class="errspan required">Process Required*</span>
                 </div>
+              
                 <div class="form-fields col-md-6 pr-0">
                     <!-- <label class="label-control">Access<span class="star">*</span></label>
                     <select formControlName="access" class="form-control data"
@@ -146,7 +163,7 @@
                             -->
             </div>
             <div class="col-md-12">
-                <div class="form-fields col-md-3 pl-0">
+                <div class="form-fields col-md-6 pl-0">
                     <label class="label-control">Start Date<span class="star">*</span></label>
                     <!-- <input type="date"  formControlName="startDate" class="form-control"> -->
                     <input class="form-control" type="date" name="daytime"  [min]="mindate" max="9999-12-31" (change)="onchangeDate()" (keydown)="DateMethod()"
@@ -156,7 +173,7 @@
                         *ngIf="insertForm2.get('startDate').invalid && insertForm2.get('startDate').touched"
                         class="errspan required">Start Date Required*</span>
                 </div>
-                <div class="form-fields col-md-3 pl-0">
+                <div class="form-fields col-md-6 pr-0">
                     <label class="label-control">End Date<span class="star">*</span></label>
                     <input class="form-control" type="date" name="daytime" max="9999-12-31" [min]="mindate" (keydown)="endDateMethod()"
                         formControlName="endDate" class="form-control data"
@@ -164,6 +181,19 @@
                     <span
                         *ngIf="insertForm2.get('endDate').invalid && insertForm2.get('endDate').touched"
                         class="errspan required">End Date Required*</span>
+                </div>
+                <div class="form-fields col-md-6 pl-0">
+                    <label class="label-control">Process Owner<span
+                            class="star">*</span></label>
+                    <select formControlName="processOwner" class="form-control"
+                        [ngClass]="insertForm2.get('processOwner').valid?'enteredfield-color':'inputfield-color'">
+                        <option value="">Select Process Owner</option>
+                        <option *ngFor="let user of users_list" [value]="user.userId.userId">
+                            {{user.userId.firstName|titlecase}} {{user.userId.lastName|titlecase}}</option>
+                    </select>
+                    <span
+                        *ngIf="insertForm2.get('processOwner').invalid && insertForm2.get('processOwner').touched"
+                        class="errspan required">Process Owner Required*</span>
                 </div>
                
             </div>
@@ -175,12 +205,16 @@
                         [ngClass]="insertForm2.get('projectPurpose').valid?'enteredfield-color':'inputfield-color'"> -->
                    
                         <textarea class="form-control data" formControlName="projectPurpose" row="3"
-                        placeholder="Enter Project Description"
+                        placeholder="Enter Project Description" style=" resize: none;" maxlength="150"
                         [ngClass]="insertForm2.get('projectPurpose').valid?'enteredfield-color':'inputfield-color'">
                             </textarea>
                     <span
-                        *ngIf="insertForm2.get('projectPurpose').invalid && insertForm2.get('projectPurpose').touched"
+                        *ngIf="(insertForm2.get('projectPurpose').invalid && insertForm2.get('projectPurpose').touched)
+                        && !insertForm2.controls['projectPurpose'].hasError('maxlength')"
                         class="errspan required">Project Description Required*</span>
+                        <span *ngIf="insertForm2.controls['projectPurpose'].hasError('maxlength')" class="errspan required">
+                            Maximum of 150 characters
+                        </span>
                 </div>
             </div>
             <!-- <div class="col-md-12">

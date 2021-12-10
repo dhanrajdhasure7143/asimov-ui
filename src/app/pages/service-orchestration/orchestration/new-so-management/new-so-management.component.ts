@@ -84,11 +84,9 @@ export class NewSoManagementComponent implements OnInit {
     $('.chart_div_Medium_4').hide();
     $('.chart_div_Low_4').hide();
     this.getIncidents();
-   
   
     //this.gettickets();
   }
-
   getIncidents()
   {
     this.spinner.show();
@@ -122,6 +120,7 @@ export class NewSoManagementComponent implements OnInit {
   
     });
   }
+
   selectchart1(){
     this.spinner.show();
     this.chart1();

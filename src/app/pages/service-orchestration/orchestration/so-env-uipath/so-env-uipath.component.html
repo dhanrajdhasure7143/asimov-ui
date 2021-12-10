@@ -37,17 +37,23 @@
     </div>  
   
     <!--foms  -->
-    <div style="width:100%;height:52vh;overflow: scroll;">
+    <div class="soenvuipathgrid">
     <table mat-table #sort1="matSort" [dataSource]="dataSource1" matSort class=" RPA table" id="listofenv">
   
         <ng-container matColumnDef="check">
             <th mat-header-cell id="matheader" *matHeaderCellDef mat-sort-header><input [disabled]="checkeddisabled" type="checkbox" id="checkall" [checked]="checkflag" (change)="checkAllCheckBox($event)"></th>
-            <td mat-cell *matCellDef="let element; let i = index"><input type="checkbox" [checked]="element.checked" (change)="checkEnableDisableBtn(element.userKey, $event)"> </td>
+            <td mat-cell *matCellDef="let element; let i = index"><input type="checkbox" [checked]="element.checked" (change)="checkEnableDisableBtn(element.sourceAccId, $event)"> </td>
         </ng-container>
         
         <ng-container matColumnDef="accountName">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Account</th>
             <td mat-cell *matCellDef="let element"> <span *ngIf="element.accountName!=null">{{element.accountName}}</span> <span *ngIf="element.accountName==''">-</span> </td>
+        </ng-container>
+
+        
+        <ng-container matColumnDef="category">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
+            <td mat-cell *matCellDef="let element"> <span *ngIf="element.categoryName!=null">{{element.categoryName}}</span> <span *ngIf="element.categoryName==''">-</span> </td>
         </ng-container>
 
         <ng-container matColumnDef="tenantName">
@@ -113,6 +119,14 @@
                             <input type="text" maxlength="50" class="form-control data" formControlName="accountName" #accountName value="" placeholder="Enter Account Name">
                             <span *ngIf="UipathForm.get('accountName').invalid && UipathForm.get('accountName').touched" class="errspan required">Account Name Required*</span>
                         </div>
+                        <div class="col-md-12 p-0 form-group">
+                            <label class="label-control" for="categoryId">Category<span class="star">*</span></label>
+                            <select class="form-control data"  formControlName="categoryId" value="">
+                                <option value="">Select Category</option>
+                                <option *ngFor="let category of categoryList" [value]="category.categoryId">{{category.categoryName}}</option>      
+                            </select>
+                            <span *ngIf="UipathForm.get('accountName').invalid && UipathForm.get('accountName').touched" class="errspan required">Category Required*</span>
+                        </div>
                         
                         <div class="col-md-12 p-0 form-group">
                             <label class="label-control" for="tenantName">Tenant Name<span class="star">*</span></label>
@@ -140,8 +154,8 @@
                         <div class="form-footer">
                             <button class="btn btn-default" (click)="reset_createUiPath()" tooltip="Reset">Reset
                             </button>
-                            <button class="btn btn-primary btn-test" (click)="testUiPath()" [disabled]="UipathForm.invalid" tooltip="Test Connection">Test Connection
-                            </button>
+                            <!-- <button class="btn btn-primary btn-test" (click)="testUiPath()" [disabled]="UipathForm.invalid" tooltip="Test Connection">Test Connection
+                            </button> -->
                             <button class='btn btn-primary' (click)="saveUiPath()" tooltip="Save" [disabled]="UipathForm.invalid || submitted">Save</button>
                         </div>
                 </form>
@@ -163,14 +177,21 @@
         <div class="modal-body">
       
             <div class="container m-contanier form-body">
-                <form [formGroup]="UpdateUipathForm" (ngSubmit)="updateBlueprism()">
+                <form [formGroup]="UpdateUipathForm">
                     
                         <div class="col-md-12 p-0 form-group">
                             <label class="label-control" for="accountName">Account Name<span class="star">*</span></label>
                             <input type="text" maxlength="50" class="form-control data" formControlName="accountName" #accountName value="" placeholder="Enter Account Name">
                             <span *ngIf="UpdateUipathForm.get('accountName').invalid && UpdateUipathForm.get('accountName').touched" class="errspan required">Account Name Required*</span>
                         </div>
-                        
+                        <div class="col-md-12 p-0 form-group">
+                            <label class="label-control" for="categoryId">Category<span class="star">*</span></label>
+                            <select class="form-control data"  formControlName="categoryId" value="">
+                                <option value="">Select Category</option>
+                                <option *ngFor="let category of categoryList" [value]="category.categoryId">{{category.categoryName}}</option>      
+                            </select>
+                            <span *ngIf="UpdateUipathForm.get('accountName').invalid && UpdateUipathForm.get('accountName').touched" class="errspan required">Category Required*</span>
+                        </div>
                         <div class="col-md-12 p-0 form-group">
                             <label class="label-control" for="tenantName">Tenant Name<span class="star">*</span></label>
                             <input type="text" maxlength="50" class="form-control" formControlName="tenantName" #tenantName value="" placeholder="Enter Tenant Name">
@@ -199,9 +220,9 @@
                             <button class="btn btn-default" (click)="reset_UpdateUiPath()" tooltip="Reset">Reset
                             </button>
                             
-                            <button class="btn btn-primary btn-test"  (click)="testUiPath()" [disabled]="UpdateUipathForm.invalid " >Test Connection
-                            </button>
-                            <button class='btn btn-primary' (click)="Update_UiPath()" tooltip="Save" [disabled]="UipathForm.invalid ||updatesubmitted">Update</button>
+                            <!-- <button class="btn btn-primary btn-test"  (click)="testUiPath()" [disabled]="UpdateUipathForm.invalid " >Test Connection
+                            </button> -->
+                            <button class='btn btn-primary' (click)="Update_UiPath()" tooltip="Save" [disabled]="UpdateUipathForm.invalid || updatesubmitted ">Update</button>
                         </div>
                     
                     

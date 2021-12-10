@@ -5,9 +5,17 @@
           <!-- <span class="module-back-button" routerLink="/pages/projects/projectdashboard"><i class="fas fa-arrow-left" aria-hidden="true"></i></span> -->
           <span class="module-header-title"><span>Projects</span> <span class="backslash">/</span> Programs</span>
         </div>
-        <div class="ml-auto prj-lstscr-btn" routerLink="/pages/projects/create-projects">
-          <button _ngcontent-svr-c17="" class="btn btn-primary" type="button">
-            <img  src="../../../../assets/images/Projects/White-plus.svg" class="testplus"/>Create New</button>
+      
+        <div class="ml-auto d-flex">
+          <div class="prj-lstscr-btn py-5"> 
+            <input type="search" class="form-control" [(ngModel)]="search" (keyup)="projecttable.applyfilter($event)"  id="search-project-or-program" placeholder="Search Projects/Programs" >
+          </div>
+          <div class=" prj-lstscr-btn py-5">
+            <a _ngcontent-svr-c17="" (click)="createNew()"  *ngIf="enablecreateproject" class="btn btn-primary" type="button">
+              <img  src="../../../../assets/images/Projects/White-plus.svg" class="testplus"/>
+              Create New
+            </a>
+          </div>
         </div>    
         <!-- <span class="pull-right" style="font-size:20px;">
           <span class="projects-menu-item" routerLink="/pages/projects/create-projects" ><i class="ri-file-add-line"></i></span>
@@ -15,7 +23,7 @@
           <span class="projects-menu-item"><i class="ri-more-2-line"></i></span>
         </span> -->
       </div>
-        <mat-tab-group mat-stretch-tabs (selectedTabChange)="selected_tab=$event.index">
+        <mat-tab-group class="projects-programs-list"  mat-stretch-tabs (selectedTabChange)="selected_tab=$event.index;search=''">
           <mat-tab>
             <ng-template mat-tab-label>
               <div class="status-tabs newstatu">
@@ -29,7 +37,7 @@
               </div>
             </ng-template>
             <div class="projects-table-body h-100" *ngIf="selected_tab==0">
-              <app-projects-programs-table [users_list]="users_list"  [processes]="processes"   status="All" [projects_list]="projects_list"></app-projects-programs-table>
+              <app-projects-programs-table [users_list]="users_list" (projectslistdata)="getprojectsList($event)"  [processes]="processes"   status="All" [projects_list]="projects_list"></app-projects-programs-table>
             </div>
           </mat-tab>
           <mat-tab>
@@ -64,6 +72,31 @@
                 <app-projects-programs-table  [users_list]="users_list" [processes]="processes"  status="In Progress" [projects_list]="projects_list"></app-projects-programs-table>
               </div>
           </mat-tab>
+   
+
+
+          <mat-tab>
+
+          <ng-template mat-tab-label>
+            <div class="status-tabs newstatu">
+                <div class="status-img">
+                  <img src="..\assets\images\Projects\inprogress.svg" alt="" >
+                </div>
+                <div class="status-data">
+                  <span class="tab-count"><span *ngIf="count.Pipeline<10">0</span>{{count.Pipeline}}</span>
+                  <span class="tab-text" >Pipeline</span>
+                </div>
+              </div>
+        </ng-template>
+        <div class="projects-table-body h-100"  *ngIf="selected_tab==3">
+            <app-projects-programs-table  [users_list]="users_list" [processes]="processes"  status="Pipeline" [projects_list]="projects_list"></app-projects-programs-table>
+          </div>
+      </mat-tab>
+
+
+
+
+
           <mat-tab>
             <ng-template mat-tab-label>
                 <div class="status-tabs newstatu">
@@ -77,11 +110,11 @@
                   </div>
             
             </ng-template>
-            <div class="projects-table-body h-100"  *ngIf="selected_tab==3">
+            <div class="projects-table-body h-100"  *ngIf="selected_tab==4">
                 <app-projects-programs-table [users_list]="users_list" [processes]="processes"  status="In Review" [projects_list]="projects_list"></app-projects-programs-table>
               </div>
           </mat-tab>
-          <mat-tab>
+          <!-- <mat-tab>
             <ng-template mat-tab-label>
                 <div class="status-tabs newstatu">
                     <div class="status-img">
@@ -114,8 +147,62 @@
                 <app-projects-programs-table [users_list]="users_list" [processes]="processes"  status="Rejected" [projects_list]="projects_list"></app-projects-programs-table>
               </div>
             
+          </mat-tab>  -->
+          
+          <mat-tab>
+            <ng-template mat-tab-label>
+                <div class="status-tabs newstatu">
+                    <div class="status-img">
+                      <img src="..\assets\images\Projects\inreview.svg" alt="" >
+                    </div>
+                    <div class="status-data">
+                      <span class="tab-count"><span *ngIf="count.OnHold<10">0</span>{{count.OnHold}}</span>
+                      <span class="tab-text" >On Hold</span>
+                    </div>
+                  </div>
+            
+            </ng-template>
+            <div class="projects-table-body h-100"  *ngIf="selected_tab==5">
+                <app-projects-programs-table [users_list]="users_list" [processes]="processes"  status="On Hold" [projects_list]="projects_list"></app-projects-programs-table>
+              </div>
+          </mat-tab>
+          <mat-tab>
+            <ng-template mat-tab-label>
+                <div class="status-tabs newstatu">
+                    <div class="status-img">
+                      <img src="..\assets\images\Projects\rejected.svg" alt="" >
+                    </div>
+                    <div class="status-data">
+                      <span class="tab-count"><span *ngIf="count.Rejected<10">0</span>{{count.Closed}}</span>
+                      <span class="tab-text" >Closed</span>
+                    </div>
+                  </div>
+            </ng-template>
+            <div class="projects-table-body h-100"  *ngIf="selected_tab==6">
+                <app-projects-programs-table [users_list]="users_list" [processes]="processes"  status="Closed" [projects_list]="projects_list"></app-projects-programs-table>
+              </div>
+            
+          </mat-tab>    
+
+          <mat-tab>
+            <ng-template mat-tab-label>
+                <div class="status-tabs newstatu">
+                    <div class="status-img">
+                      <img src="..\assets\images\Projects\rejected.svg" alt="" >
+                    </div>
+                    <div class="status-data">
+                      <span class="tab-count"><span *ngIf="count.Rejected<10">0</span>{{count.Deployed}}</span>
+                      <span class="tab-text" >Deployed</span>
+                    </div>
+                  </div>
+            </ng-template>
+            <div class="projects-table-body h-100"  *ngIf="selected_tab==7">
+                <app-projects-programs-table [users_list]="users_list" [processes]="processes"  status="Deployed" [projects_list]="projects_list"></app-projects-programs-table>
+              </div>
+            
           </mat-tab>    
         </mat-tab-group>
+     
     </mat-card>
   
     <mat-card *ngIf="projects_toggle==true">
