@@ -505,6 +505,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
   }
 
   autoSaveDiagram(model){
+    model["processOwner"] = this.saved_bpmn_list[this.selected_notation]['processOwner'];
     this.rest.autoSaveBPMNFileContent(model).subscribe(
       data=>{
         this.getAutoSavedDiagrams();
@@ -746,6 +747,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
       let final_notation = btoa(unescape(encodeURIComponent(xml)));
       bpmnModel.bpmnXmlNotation = final_notation;
       _self.saved_bpmn_list[_self.selected_notation]['bpmnXmlNotation'] = final_notation;
+      bpmnModel["processOwner"] = _self.saved_bpmn_list[_self.selected_notation]['processOwner'];
       _self.rest.saveBPMNprocessinfofromtemp(bpmnModel).subscribe(
         data=>{
           if(status == "APPROVED" || status == "REJECTED"){
