@@ -273,11 +273,14 @@ export class CreateBpmnDiagramComponent implements OnInit {
   }
 
   getApproverList(){
-     this.rest.getApproverforuser('Process Architect').subscribe( res =>  {//Process Architect
-      if(Array.isArray(res))
-        this.approver_list = res;
-    });
-   }
+    let roles={
+      "roleNames": ["Process Owner","Process Architect"]
+    }
+   this.rest.getmultipleApproverforusers(roles).subscribe( res =>  {//Process Architect
+     if(Array.isArray(res))
+       this.approver_list = res;
+   });
+  }
 
   getSelectedApprover(){
     let current_bpmn_info = this.saved_bpmn_list[this.selected_notation];
@@ -290,7 +293,8 @@ export class CreateBpmnDiagramComponent implements OnInit {
     this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":false,
                     "isShowConformance":false,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
                     "isFromcreateScreen":true,'process_name':this.currentNotation_name}
-      this.dt.bpsNotationaScreenValues(this.push_Obj);
+  
+                    this.dt.bpsNotationaScreenValues(this.push_Obj);
     if(['APPROVED','REJECTED'].indexOf(this.rejectedOrApproved) != -1){
       for(var s=0; s<this.approver_list.length; s++){
         let each = this.approver_list[s];
