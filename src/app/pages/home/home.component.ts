@@ -25,6 +25,9 @@ export class HomeComponent implements OnInit {
   lastName:any;
   firstName:any;
   tenantName:any;
+  tenantId: string;
+  plansList: any;
+  freetrail: boolean;
   
   constructor(private router: Router, private dt:DataTransferService, private rpa: RestApiService, private route: ActivatedRoute, private hints:PagesHints) {
 
@@ -191,6 +194,7 @@ export class HomeComponent implements OnInit {
     })
 
     //  this.dt.changeHints(this.hints.homeHints);
+    this.getAllPlans();
   }
 
   navigateToModule(){
@@ -200,5 +204,27 @@ export class HomeComponent implements OnInit {
   loopTrackBy(index, term){
     return index;
   }
+
+  getAllPlans() {
+    this.tenantId = localStorage.getItem('tenantName');
+    this.rpa.getProductPlanes("EZFlow", this.tenantId).subscribe(data => {
+      this.plansList = data
+      if(this.plansList.length > 1){
+     this.plansList.forEach(element => {
+       if(element.subscribed==true){
+        this.plansList=element
+       }
+     });
+     if(this.plansList.nickName=='Standard'){
+       this.freetrail=true
+       localStorage.setItem('freetrail',JSON.stringify(this.freetrail))
+     }
+     else{
+      this.freetrail=false
+      localStorage.setItem('freetrail',JSON.stringify(this.freetrail))
+     }
+    }
+  })
+}
 
 }

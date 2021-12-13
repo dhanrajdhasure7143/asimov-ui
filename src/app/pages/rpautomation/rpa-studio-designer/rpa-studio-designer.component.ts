@@ -18,6 +18,7 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   selected_tab_instance:any;
   userRole:any;
   checkCreate:Boolean=false;
+  freetrail: string;
   constructor(private rpa_studio:RpaStudioComponent, 
     private router:Router,
     private activeRoute:ActivatedRoute) { }
@@ -27,7 +28,7 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
     this.userRole = this.userRole.split(',');
     if(this.userRole.includes("User"))
     localStorage.setItem("isHeader","true");
-    
+    this.freetrail=localStorage.getItem('freetrail')
   }
 
   ngAfterViewInit()

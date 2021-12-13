@@ -1,0 +1,44 @@
+
+<div class="container">
+    <div class="row">
+        <!-- <div class="col-md-12">
+                <h3 id="planHeading">Features will be enabled based on the selected plan</h3>
+                <h4 id="ctr">Choose the right one for your valuable business</h4>
+        </div> -->
+        <div class="col-md-12 errordiv" *ngIf='error'>
+                <h2>{{error}}</h2>
+            </div>
+        <span *ngIf='!error' class="col-md-12 row">
+        <div  *ngFor="let planlist of plansList; let i=index ;trackBy:loopTrackBy">
+            <div class="col-md-3 plansBox" *ngIf="planlist.subscribed">
+            <h4>
+                <span id="planName" *ngIf="planlist.nickName =='Standard'"><b>Free Tier</b>
+                </span> 
+                <span id="planName" *ngIf="planlist.nickName !='Standard'"><b>{{planlist.nickName}}</b>
+                </span> 
+                <span *ngIf="planlist.subscribed" class="current-plan">Current Plan</span>
+                <span *ngIf="planlist.enterpriseSubscribed&&planlist.nickName =='Enterprise'" class="requested-plan">Requested</span></h4>
+            <h6 class="processes" *ngFor='let value of planlist.features'><i *ngIf="value.active" class="fa fa-check-circle" aria-hidden="true"></i><i *ngIf="!value.active"  class="fa fa-times-circle" aria-hidden="true"></i><span>{{value.name}}
+                    <label *ngIf="value.limited">Limited</label></span>
+                </h6>
+
+            <h5 *ngIf="planlist.nickName !='Enterprise'" style="font-weight:800;text-align: center;">$ {{planlist.amount}}.00 <span  style="font-size: 13px;font-weight: 500">/ user per {{planlist.term}}</span></h5>
+            <button *ngIf="planlist.nickName !='Enterprise' && planlist.nickName!='Free Tier'" [disabled]="planlist.subscribed" class="btn btn-primary selectplanbtn" (click)="selectedPlan(planlist)">Select</button>
+            <button *ngIf="planlist.nickName =='Free Tier'" [disabled]="planlist.freeSubscribed||planlist.subscribed" class="btn btn-primary selectplanbtn" (click)="selectedPlan(planlist)">Activate</button>
+
+            <h5 *ngIf="planlist.nickName =='Enterprise'" class="enterprice">Enterprise Solution</h5>
+            <button *ngIf="planlist.nickName =='Enterprise'" [disabled]="(planlist.enterpriseSubscribed)"class="btn btn-primary selectplanbtn" (click)="contactUsSwal()">Contact Us</button>
+        </div>
+        </div>
+        </span>
+
+            <!-- <div class="col-md-12 row conditions">
+            <div class="col-md-8"></div>
+            <div class="col-md-4 tc-privacy">
+                    <span class='pull-right'> <a class='terms' (click)='termsConditionsOpen(template)'>Terms & Conditions</a>
+                        <a class="policy" (click)='privacyOpen(privacyTemplate)'>Privacy Policy</a> </span>
+                 </div>
+            </div> -->
+            <div class="col-md-3" style="display: block;height: 50px" ></div>
+    </div>
+</div>
