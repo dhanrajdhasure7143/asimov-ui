@@ -1217,7 +1217,7 @@ tasksListInProcess(id):Observable<any>{
 }
 
 addtaskInProcess(id):Observable<any>{
-  return this.http.get('/rpa-service/add-task/'+id)
+  return this.http.post('/rpa-service/add-task',id)
 }
 getProgrmaDetailsById(programid){
   return this.http.get('/platform-service/project/getProgramDetailsById?programId='+programid)
