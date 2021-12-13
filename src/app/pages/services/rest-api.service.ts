@@ -1222,4 +1222,23 @@ addtaskInProcess(id):Observable<any>{
 getProgrmaDetailsById(programid){
   return this.http.get('/platform-service/project/getProgramDetailsById?programId='+programid)
 }
+
+  getProductPlans(productId, tenantID): Observable<any[]> {
+    return this.http.get<any[]>('/subscriptionservice/v1/products/' + productId + '/plans', { responseType: 'json' });
+  }
+  listofsubscriptions(): Observable<any> {
+    return this.http.get<any>('/subscriptionservice/v1/subscriptions');
+  }
+  cancelSubscription(data): Observable<any> {
+    return this.http.post<any>('/subscriptionservice/v1/subscriptions/' + data.id + '/cancel?isImmediateCancel=' + true, { responseType: 'json' });
+  }
+  invoicedownload(invoiceId): Observable<any> {
+    return this.http.get<any>('/subscriptionservice/v1/invoices/' + invoiceId + '/pdf', { responseType: 'blob' as 'json' })
+  }
+  listofinvoices(): Observable<any> {
+    return this.http.get<any>('/subscriptionservice/v1/invoices')
+  }
+  listofPaymentModes():Observable<any>{
+    return this.http.get<any>('/subscriptionservice/v1/paymentmethods')
+  }
 }
