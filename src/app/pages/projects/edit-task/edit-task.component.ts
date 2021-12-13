@@ -8,6 +8,9 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
+import * as JSZip from 'jszip';
+import { saveAs } from "file-saver";
+import * as FileSaver from 'file-saver';
 import  * as moment from 'moment'
 @Component({
   selector: 'app-edit-task',
@@ -427,31 +430,52 @@ else
 
   onDownloadSelectedItems(){
     let downloadSelectedfiles=[];
-    this.taskattacments.filter(product => product.checked==true).map(p=>{
-     downloadSelectedfiles.push(p.fileName);
-    });
-    this.rest.downloadTaskAttachment(downloadSelectedfiles).subscribe(data=>{
-      let response:any=data
-      // downloadSelectedfiles.forEach(fileName=>{
-      for(let i=0;i<response.length;i++){
-      var link = document.createElement('a');
-      let extension=((((downloadSelectedfiles[i].toString()).split("")).reverse()).join("")).split(".")[0].split("").reverse().join("")
-      link.download = downloadSelectedfiles[i];
-      link.href =((extension=='png' ||extension=='jpg' ||extension=='svg' ||extension=='gif')?`data:image/${extension};base64,${response[i]}`:`data:application/${extension};base64,${response[i]}`) ;
-      link.click();
+    downloadSelectedfiles=this.taskattacments.filter(product => product.checked==true).map(p=>{return (p.fileName)});
+    this.spinner.show();
+    this.rest.downloadTaskAttachment(downloadSelectedfiles).subscribe((response:any)=>{
+      this.spinner.hide();
+      if(response.errorMessage==undefined)
+      {
+        var zip = new JSZip();
+        response.forEach((value,i) => {
+          let extension=((((downloadSelectedfiles[i].toString()).split("")).reverse()).join("")).split(".")[0].split("").reverse().join("")
+          if(extension=='jpg'|| 'PNG' || 'svg' || 'jpeg' || 'png')
+            zip.file(downloadSelectedfiles[i],value,{base64:true});
+          else
+            zip.file(downloadSelectedfiles[i],value);    
+        });
+        zip.generateAsync({ type: "blob" }).then(function (content) {
+          FileSaver.saveAs(content, `Attachments.zip`);
+          Swal.fire("Success","Attachments downloaded successfully","success")
+        });
       }
+      else
+      {
+        Swal.fire("Error",response.errorMessage,"error");
+      }
+      // for(let i=0;i<response.length;i++){
+      // var link = document.createElement('a');
+      // let extension=((((downloadSelectedfiles[i].toString()).split("")).reverse()).join("")).split(".")[0].split("").reverse().join("")
+      // link.download = downloadSelectedfiles[i];
+      // link.href =((extension=='png' ||extension=='jpg' ||extension=='svg' ||extension=='gif')?`data:image/${extension};base64,${response[i]}`:`data:application/${extension};base64,${response[i]}`) ;
+      // link.click();
+      // }
+    },(err:any)=>{
+      console.log(err);
+      this.spinner.hide();
+      
+      Swal.fire("Error","Unable to task attachments","error");
     })
    // this.getTaskAttachments();
   }
 
   onDeleteSelectedItems(event){
-    const selectedFiles = [];
-    this.taskattacments.filter(product => product.checked==true).forEach(p=>{
+    var selectedFiles = [];
+    selectedFiles=this.taskattacments.filter(product => product.checked==true).map(p=>{
       let obj={
         "id": p.id,
         "fileName": p.fileName
       }
-      selectedFiles.push(obj);
       });
       Swal.fire({
         title: 'Are you sure?',
