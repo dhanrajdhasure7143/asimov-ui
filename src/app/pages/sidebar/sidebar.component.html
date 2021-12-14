@@ -71,7 +71,7 @@
     <span class="side-menu-font">Processes</span>
   </a> -->
 
-            <a mat-list-item class="link" id='so' (click)="hightlight('so',null)" routerLink="/pages/serviceOrchestration/home" [matTooltip]=" !obj.sideBarOpen ? 'Orchestration' : ''" matTooltip="Orchestration" matTooltipClass="sidebarTooltip" matTooltipPosition="right">
+            <a mat-list-item class="link" id='so' *ngIf="freetrail!='true'" (click)="hightlight('so',null)" routerLink="/pages/serviceOrchestration/home" [matTooltip]=" !obj.sideBarOpen ? 'Orchestration' : ''" matTooltip="Orchestration" matTooltipClass="sidebarTooltip" matTooltipPosition="right">
                 <span class="side-icon">
       <span class="active-img" id="eiap-home-icon-active">
           <img src="../../../assets/images/dashboard_icons/active-icons/Orchestration.svg">
@@ -219,7 +219,20 @@
     </div> -->
 
 
-
+    <a mat-list-item class="link" id='subscriptions' (click)="hightlight('subscriptions',null)" routerLink="/pages/subscriptions" [matTooltip]=" !obj.sideBarOpen ? 'Subscriptions' : ''" matTooltip="Subscriptions" matTooltipClass="sidebarTooltip" matTooltipPosition="right">
+      <span class="side-icon">
+<span class="active-img" id="eiap-home-icon-active">
+<img src="../../../assets/images/subscription/BillingAdresses1.svg">
+</span>
+      <span class="hover-img" id="eiap-home-icon-white">
+        <img src="../../../assets/images/subscription/BillingAdresses1.svg">
+</span>
+      <span class="default-img" id="eiap-home-icon-gray">
+        <img src="../../../assets/images/subscription/BillingAdresses1.svg">
+</span>
+      </span>
+      <span class="side-menu-font">Mange Subscriptions</span>
+  </a>
 
             <!-- <a mat-list-item class="link active" id="eiap-home" (click)="hightlight('eiap-home')"  routerLink="/pages/home"  >
     <span class="side-icon">

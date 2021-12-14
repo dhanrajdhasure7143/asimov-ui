@@ -156,17 +156,28 @@ export class ProcessCategoryOverlayComponent implements OnInit {
   }
 
   lettersOnly(event) {
-    this.process_name_error = false;
-    if (event.target.value.length == 0) {
-      this.process_name_error = false;
-    }
-    if (event.target.value.includes(' ')) {
-      this.process_name_error = true;
-      return;
-    }
-    if ((event.target.value.length != 0 && event.target.value.length < 4) || (event.target.value.length > 25) ) {
-      this.process_name_error = true;
-    }
+    var regex = new RegExp("^[a-zA-Z0-9-_]+$");
+    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+      if (!regex.test(key)) {
+        event.preventDefault();
+        return false;
+      }
+
+    // this.process_name_error = false;
+    // if (event.target.value.length == 0) {
+    //   this.process_name_error = false;
+    // }
+    // if (event.target.value.includes(' ')) {
+    //   this.process_name_error = true;
+    //   return;
+    // }
+    // if ((event.target.value.length != 0 && event.target.value.length < 4) || (event.target.value.length > 25) ) {
+    //   this.process_name_error = true;
+    // }
+
+
+
+
     // this.process_name_error=false;
     // if(event.target.value.length==0 && event.code=="Space"){
     //   event.preventDefault();

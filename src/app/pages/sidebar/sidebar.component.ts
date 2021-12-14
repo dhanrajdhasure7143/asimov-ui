@@ -17,6 +17,7 @@ export class SidebarComponent implements OnInit {
   showSubSubMenu: boolean = false;
   showadminSubSubMenu: boolean = false;
   public userRoles:any = [];
+  freetrail: string;
   constructor(private obj:PagesComponent, private dt:DataTransferService,
     private rest_service: RestApiService) { }
 
@@ -40,8 +41,9 @@ export class SidebarComponent implements OnInit {
 
     setTimeout(() => {
       // this.userRoles = localStorage.getItem("userRole")
-    }, 1000);
-   
+      this.freetrail=localStorage.getItem('freetrail')
+    }, 200);
+  
   }
 
   hightlight(element,name){

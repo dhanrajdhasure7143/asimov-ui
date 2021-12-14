@@ -178,7 +178,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-12 p-0 cmntslist">
-                                            <div *ngFor="let each_comment of comment;let i=index" class="col-md-12 p-0 Add-comments">
+                                            <div *ngFor="let each_comment of comment;let i=index;trackBy:loopTrackBy" class="col-md-12 p-0 Add-comments">
                                                 <div class="Inner-comments">
                                                     <div class="col-md-12 p-0">
                                                         <span class="userimg">{{getletters(each_comment.createdBy)}}</span>

@@ -95,7 +95,7 @@
                     </button>
                         </div>
                         <div class="action-item hovericon" *ngIf="current_instance != undefined">
-                            <button class="tsttooltipbtn" [disabled]="current_instance.savebotrespose==undefined" (click)=" current_instance.openschedule()">
+                            <button class="tsttooltipbtn" [disabled]="current_instance.savebotrespose==undefined || freetrail" (click)=" current_instance.openschedule()">
                     <img src="../../../../assets/images/RPA/icon_latest/schedule.svg" class="testplus1">
                       <!-- <i class="ri-history-line"></i> -->
                       <span class="testtooltip">Scheduler</span>
@@ -194,10 +194,10 @@
             <img src="../../../../assets/images/RPA/icon_latest/add.svg" class="add-new"/>
           </span>
                         <mat-menu #menu="matMenu">
-                            <button mat-menu-item (click)="rpa_studio.onCreate(0)">
+                            <button mat-menu-item (click)="rpa_studio.onCreate(0)" [disabled]="freetrail">
                 <img src="../../../../assets/images/RPA/icon_latest/add-fill.svg" class="menu-icon"/> &nbsp;Create New</button>
                             <hr>
-                            <button mat-menu-item (click)="rpa_studio.onLoad()">
+                            <button mat-menu-item (click)="rpa_studio.onLoad()" [disabled]="freetrail">
                 <img src="../../../../assets/images/RPA/icon_latest/load-bot-fill.svg" class="menu-icon"/> &nbsp;Load</button>
                         </mat-menu>
 
