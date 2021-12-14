@@ -774,7 +774,6 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
       if(_self.oldXml != _self.newXml){
         _self.spinner.show();
         bpmnModel["bpmnProcessMeta"] = btoa(unescape(encodeURIComponent(_self.newXml)));
-        bpmnModel["processOwner"] = _self.saved_bpmn_list[_self.selected_notation]['processOwner'];
         _self.autoSaveDiagram(bpmnModel);
       }
     });
@@ -801,6 +800,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
   }
 
   autoSaveDiagram(model){
+    model["processOwner"] = this.saved_bpmn_list[this.selected_notation]['processOwner'];
     this.rest.autoSaveBPMNFileContent(model).subscribe(
       data=>{
         this.getAutoSavedDiagrams();
@@ -1127,6 +1127,8 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
   }
 
   saveprocess(newVal){
+    console.log(this.saved_bpmn_list[this.selected_notation])
+    console.log(newVal)
     let yesProceed = true;
     this.isStartProcessBtn=false;
     if(this.isShowConformance && this.isUploaded){
@@ -1182,11 +1184,13 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
         _self.confBpmnModeler.saveXML({ format: true }, function(err, xml2) {
           bpmnModel.bpmnConfProcessMeta = btoa(unescape(encodeURIComponent(xml2)));;
         })
-        this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
-        "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
-        "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize,isUploaded:this.isUploaded}
-    this.dt.bpsNotationaScreenValues(this.push_Obj)
+        _self.push_Obj={"rejectedOrApproved":_self.rejectedOrApproved,"isfromApprover":_self.isfromApprover,
+        "isShowConformance":_self.isShowConformance,"isStartProcessBtn":_self.isStartProcessBtn,"autosaveTime":_self.updated_date_time,
+        "isFromcreateScreen":false,'process_name':_self.currentNotation_name,'isSavebtn':true,"hasConformance":_self.hasConformance,"resize":_self.reSize,isUploaded:this.isUploaded}
+        _self.dt.bpsNotationaScreenValues(this.push_Obj)
       }
+      console.log(_self.saved_bpmn_list[_self.selected_notation])
+      bpmnModel["processOwner"] = _self.saved_bpmn_list[_self.selected_notation]['processOwner'];
       _self.rest.saveBPMNprocessinfofromtemp(bpmnModel).subscribe(
         data=>{
           _self.isLoading = false;

@@ -37,7 +37,7 @@ export class ViewTicketComponent implements OnInit {
   createRequestData: any;
   requestKey: any = undefined;
   // ngModels
-  comment: any;
+  comment: any=[];
   summary: any;
   description: any;
   component: any[] = [];
@@ -145,9 +145,7 @@ export class ViewTicketComponent implements OnInit {
   getRequestComments(id) {
     this.api.getRequestComments(id).subscribe((res: any) => {
       this.commentRequest = res;
-      if (this.commentRequest.length > 0) {
         this.comment = this.commentRequest;
-      }
     });
   }
 
@@ -708,5 +706,8 @@ autoGrowSummaryTextZone() {
   return user_letters
   }
 
+  loopTrackBy(index, term) {
+    return index;
+  }
 
 }
