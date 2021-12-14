@@ -186,5 +186,5 @@ span.logrefresh {
 }
 
 .process-logs.modal-body {
-    height: calc(100vh - 300px)
+    height: calc(100vh - 300px);
 }
