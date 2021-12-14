@@ -25,6 +25,7 @@ import { fromMatPaginator, fromMatSort, paginateRows, sortRows } from '../model/
 import { NgxSpinnerService } from 'ngx-spinner';
 import {Base64} from 'js-base64';
 import { APP_CONFIG } from 'src/app/app.config';
+import {SearchRpaPipe} from './Search.pipe';
 declare var $:any;
 
 @Component({
@@ -363,7 +364,7 @@ export class RpaHomeComponent implements OnInit {
           object.department='QA';
         }
         this.bot_list.push(object)
-        //  this.assignPagination( this.bot_list);
+         this.assignPagination( this.bot_list);
       })
       this.bot_list=botlist;
       if(this.bot_list.length >0)
@@ -1011,12 +1012,23 @@ export class RpaHomeComponent implements OnInit {
       }
 
       assignPagination(data){
+        console.log(data)
         const sortEvents$: Observable<Sort> = fromMatSort(this.sort);
         const pageEvents$: Observable<PageEvent> = fromMatPaginator(this.paginator301);
         const rows$ = of(data);
         this.totalRows$ = rows$.pipe(map(rows => rows.length));
         this.displayedRows$ = rows$.pipe(sortRows(sortEvents$), paginateRows(pageEvents$));
+        console.log(this.displayedRows$)
       }
+
+      applySearchFilter(v){      
+    const filterPipe = new SearchRpaPipe();   
+     const fiteredArr = filterPipe.transform(this.bot_list,v);   
+     console.log(fiteredArr)     
+      //this.assignPagination(fiteredArr)    
+  }
+
+
       
 }
 

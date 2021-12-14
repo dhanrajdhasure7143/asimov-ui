@@ -20,6 +20,7 @@ export class SoProcesslogComponent implements OnInit {
   public runidresponse:any;
   public respdata2: boolean = false;
   public respdata3: boolean = false;
+  public loadLogsFlag:Boolean=false;
   @ViewChild("paginatorp1",{static:false}) paginatorp1: MatPaginator;
   @ViewChild("paginatorp2",{static:false}) paginatorp2: MatPaginator;
   @ViewChild("paginatorp3",{static:false}) paginatorp3: MatPaginator;
@@ -46,14 +47,20 @@ export class SoProcesslogComponent implements OnInit {
   }
 
   getprocesslog(){
+    
     let logbyrunidresp1:any;
     let resplogbyrun1: any = [];
+
     if(this.processId != '' && this.processId != undefined)
     {
     this.logresponse=[];
     this.spinner.show()
+    
+    document.getElementById("viewlogid1").style.display = "block";
+    this.loadLogsFlag=true;
     this.rest.getProcesslogsdata(this.processId).subscribe(data =>{
       this.spinner.hide();
+      this.loadLogsFlag=false
         this.logresponse = data;
         if(this.logresponse.length >0)
         {
@@ -77,7 +84,6 @@ export class SoProcesslogComponent implements OnInit {
         this.dataSourcep1 =  new MatTableDataSource(this.runidresponse);
         this.dataSourcep1.sort=this.sortp1;
         this.dataSourcep1.paginator=this.paginatorp1;
-        document.getElementById("viewlogid1").style.display = "block";
 
     });
     }
@@ -111,8 +117,14 @@ export class SoProcesslogComponent implements OnInit {
     let resplogbyrun = [];
     let processId = this.logresponse.find(data =>data.processRunId == processRunId).processId;
     this.spinner.show();
+    
+    document.getElementById("viewlogid1").style.display="none";
+    document.getElementById("plogrunid").style.display="block";
+    this.loadLogsFlag=true
+
     this.rest.getprocessruniddata(processId,processRunId).subscribe(data =>{
       this.spinner.hide();
+      this.loadLogsFlag=false;
       this.runidresponse = data;
       if(this.runidresponse.length >0)
         {
@@ -134,8 +146,6 @@ export class SoProcesslogComponent implements OnInit {
       this.dataSourcep2 = new MatTableDataSource(this.runidresponse);
       this.dataSourcep2.sort=this.sortp2;
       this.dataSourcep2.paginator=this.paginatorp2;
-      document.getElementById("viewlogid1").style.display="none";
-      document.getElementById("plogrunid").style.display="block";
     });
     //console.log(processRunId);
   }
@@ -149,8 +159,12 @@ export class SoProcesslogComponent implements OnInit {
     let PbotId = this.runidresponse.find(data =>data.run_id == runid).bot_id;
     let pversion = this.runidresponse.find(data =>data.run_id == runid).version;
     this.spinner.show()
+    document.getElementById("plogrunid").style.display="none";
+    document.getElementById("pbotrunid").style.display="block";
+    this.loadLogsFlag=true
     this.rest.getViewlogbyrunid(PbotId,pversion,runid).subscribe((data)=>{
       this.spinner.hide();
+      this.loadLogsFlag=false;
       responsedata = data;
       if(responsedata.length >0)
       {
@@ -172,8 +186,7 @@ export class SoProcesslogComponent implements OnInit {
       this.dataSourcep3 = new MatTableDataSource(resplogbyrun1);
       this.dataSourcep3.sort=this.sortp3;
       this.dataSourcep3.paginator=this.paginatorp3;
-      document.getElementById("plogrunid").style.display="none";
-      document.getElementById("pbotrunid").style.display="block";
+
         })
     }
 

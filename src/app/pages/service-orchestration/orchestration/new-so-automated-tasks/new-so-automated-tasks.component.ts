@@ -58,7 +58,7 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
   public humans_list:any=[];
   public process_names:any=[];
   public selected_process_names:any=[];
-  public selectedvalue:any;
+  public selectedvalue:any=0;
   public selectedTab:number;
   public responsedata;
   public selectedEnvironment:any='';
@@ -1166,7 +1166,7 @@ resetsla(){
       this.rest.deleteTaskInProcess(taskid).subscribe(resp => {
           let value: any = resp
         if (value.message === "Task Deleted Successfully!!") {
-          this.getautomatedtasks(this.selectedvalue);
+          this.getautomatedtasks(0);
           Swal.fire("Success", "Task Deleted Sucessfully!!", "success")
         }
         else {
