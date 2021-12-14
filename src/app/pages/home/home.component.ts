@@ -207,7 +207,7 @@ export class HomeComponent implements OnInit {
 
   getAllPlans() {
     this.tenantId = localStorage.getItem('tenantName');
-    this.rpa.getProductPlanes("EZFlow", this.tenantId).subscribe(data => {
+    this.rpa.getProductPlans("EZFlow", this.tenantId).subscribe(data => {
       this.plansList = data
       if(this.plansList.length > 1){
      this.plansList.forEach(element => {
