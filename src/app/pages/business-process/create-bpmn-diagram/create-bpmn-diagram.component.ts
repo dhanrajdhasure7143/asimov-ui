@@ -273,11 +273,14 @@ export class CreateBpmnDiagramComponent implements OnInit {
   }
 
   getApproverList(){
-     this.rest.getApproverforuser('Process Architect').subscribe( res =>  {//Process Architect
-      if(Array.isArray(res))
-        this.approver_list = res;
-    });
-   }
+    let roles={
+      "roleNames": ["Process Owner","Process Architect"]
+    }
+    this.rest.getmultipleApproverforusers(roles).subscribe( res =>  {//Process Architect
+     if(Array.isArray(res))
+       this.approver_list = res;
+   });
+  }
 
   getSelectedApprover(){
     let current_bpmn_info = this.saved_bpmn_list[this.selected_notation];
