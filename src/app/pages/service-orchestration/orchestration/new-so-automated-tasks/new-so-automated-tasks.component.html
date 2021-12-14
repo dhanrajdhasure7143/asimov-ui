@@ -37,7 +37,7 @@
                 <!--<span style="padding:5px" id="autoStartProcess">
       <button  matTooltip="View Configuration"   mat-mini-fab color="basic" (click)="configuration()"  ><i  class="fas fa-cog" style="margin-right: -5px !important;"></i></button>
     </span>-->
-                <button (click)="addtasks(addTask)" class="tsttooltipbtn" >
+                <button (click)="addtasks(addTask)" class="tsttooltipbtn">
       <img src="../../../../../assets/images/RPA/icon_latest/pluse-blue.svg" class="testplus"/>
       <span class="testtooltip">Add Task</span>
     </button>
@@ -399,7 +399,7 @@
 
             <!-- <span class="pull-right clickable" (click)="logs_modal.hide()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span> -->
         </div>
-        <div class="modal-body">
+        <div class="process-logs modal-body">
             <app-so-processlog [processId]="processId1"></app-so-processlog>
         </div>
 
@@ -678,7 +678,7 @@
 
                     <div class="col-md-12 p-0 form-group">
                         <label class="label-control" for="processName">Process Name<span class="star">*</span></label>
-                        <input type="text" class="form-control data"  maxlength="50" formControlName="processName" #processName value="" placeholder="Enter Process Name">
+                        <input type="text" class="form-control data" maxlength="50" formControlName="processName" #processName value="" placeholder="Enter Process Name">
                         <span *ngIf="(insertslaForm_so_bot.get('processName').invalid && insertslaForm_so_bot.get('processName').touched) && !insertslaForm_so_bot.controls['processName'].hasError('maxlength')" class="errspan required">Required Process Name*</span>
                         <div *ngIf="insertslaForm_so_bot.controls['processName'].hasError('maxlength')" class="errspan required">
                             Maximum of 50 characters
@@ -696,7 +696,7 @@
 
                     <div class="col-md-12 p-0 form-group">
                         <label class="label-control" for="taskName">Task Name<span class="star">*</span></label>
-                        <input type="text" class="form-control data"  maxlength="50" formControlName="taskName" #processName value="" placeholder="Enter Process Name">
+                        <input type="text" class="form-control data" maxlength="50" formControlName="taskName" #processName value="" placeholder="Enter Process Name">
                         <span *ngIf="(insertslaForm_so_bot.get('taskName').invalid && insertslaForm_so_bot.get('taskName').touched) && !insertslaForm_so_bot.controls['taskName'].hasError('maxlength')" class="errspan required">Required Process Name*</span>
                         <div *ngIf="insertslaForm_so_bot.controls['taskName'].hasError('maxlength')" class="errspan required">
                             Maximum of 50 characters
