@@ -1241,4 +1241,12 @@ getProgrmaDetailsById(programid){
   listofPaymentModes():Observable<any>{
     return this.http.get<any>('/subscriptionservice/v1/paymentmethods')
   }
+
+  getSubscriptionPaymentToken(cardData,){
+    return this.http.post('/subscriptionservice/v1/paymentmethods/cardToken?tab=subs',cardData,{ responseType:'json'})
+  }
+
+  subscribePlan(token,planData){
+    return this.http.post<any>('/subscriptionservice/v1/orders?paymentToken='+token,planData,{responseType:'json'})
+  }
 }
