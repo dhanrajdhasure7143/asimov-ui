@@ -71,7 +71,17 @@ export class DepartmentsComponent implements OnInit {
       this.api.deleteDepartments(delbody).subscribe(resp => {
         let value: any = resp
         if (value.message === "Successfully deleted the category") {
-          Swal.fire("Success", "Department Deleted Sucessfully!!", "success")
+          Swal.fire({
+            title: 'Success',
+            text: "Department Deleted Successfully!!",
+            position: 'center',
+            icon: 'success',
+            showCancelButton: false,
+            confirmButtonColor: '#007bff',
+            cancelButtonColor: '#d33',
+            heightAuto: false,
+            confirmButtonText: 'Ok'
+        })
           this.getAllDepartments();
           this.removeallchecks();
           this.checktodelete();

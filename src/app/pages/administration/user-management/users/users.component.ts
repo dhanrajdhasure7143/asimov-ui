@@ -72,6 +72,7 @@ export class UsersComponent implements OnInit {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
+      heightAuto: false,
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.value) {
@@ -80,7 +81,18 @@ export class UsersComponent implements OnInit {
           let value: any = resp
         if (value.message === "User Deleted Successfully") {
           this.getUsers();
-          Swal.fire("Success", "User Deleted Sucessfully!!", "success")
+          // Swal.fire("Success", "User Deleted Successfully!!", "success")
+          Swal.fire({
+            title: 'Success',
+            text: "User Deleted Successfully!!",
+            position: 'center',
+            icon: 'success',
+            showCancelButton: false,
+            confirmButtonColor: '#007bff',
+            cancelButtonColor: '#d33',
+            heightAuto: false,
+            confirmButtonText: 'Ok'
+        })
         }
         else {
           Swal.fire("Error", "Failed to delete user", "error");
