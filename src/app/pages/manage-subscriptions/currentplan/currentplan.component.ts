@@ -48,6 +48,7 @@ export class CurrentplanComponent implements OnInit {
   name: any;
   freetrail: any;
   listofplans: any[];
+  tableData: any;
  
   constructor(
     private api: RestApiService, private spinner: NgxSpinnerService,private modalService: BsModalService,
@@ -63,14 +64,39 @@ export class CurrentplanComponent implements OnInit {
 
   getCurrentPlan() {
     this.spinner.show();
+
     this.tenantId = localStorage.getItem('tenantName');
     this.api.getProductPlans("EZFlow", this.tenantId).subscribe(data => {
       this.plansList = data
       // this.plansList=null;
       this.spinner.hide();
+      var plans:any=[];
+      var allplans:any
+       allplans=this.plansList
+      allplans.forEach(element => {
+        if(element.subscribed==true){
+          plans=element;
+        }
+      });
+      
       if (this.plansList == undefined || this.plansList == null) {
         this.error = 'Sorry for inconvenience we will get back to you shortly'
       }
+      if(plans.subscribed==undefined){
+        this.error = "Sorry for inconvenience you don't have any active plans"
+      }
+
+      // this.api.listofsubscriptions().subscribe(response => { 
+      //   this.tableData = response 
+      //   this.tableData.forEach(element => {
+      //     allplans.forEach(element1 => {
+      //       if(element.status!='Active' &&  element1.subscribed==undefined){
+      //       this.error = "Sorry for inconvenience you don't have any active plans"
+      //     }
+      //   });
+          
+      //   });
+
       if(this.plansList.length > 1){
         this.plansList=this.plansList.reverse();
       }
@@ -97,7 +123,7 @@ export class CurrentplanComponent implements OnInit {
       },error=>{
         this.error='Sorry for inconvenience we will get back to you shortly'
       });
-
+    //});
   }
 
   getAllPlans(){
@@ -218,11 +244,17 @@ export class CurrentplanComponent implements OnInit {
   
   close_modal(){
     this.modalRef.hide();
-    this.router.navigate(['/pages/home'])
+    this.router.navigate(['/pages/home']).then(() => {
+      window.location.reload();
+    });
   }
   currentplan(){
     this.allplans=[]
     this.getallplans=false;
+  }
+  chooseplan(){
+    this.getallplans=true;
+    this.revieworder=false;
   }
 
   contactUs(){

@@ -9,7 +9,7 @@
                 <h2>{{error}}</h2>
             </div>
         <span *ngIf='!error' class="col-md-12 row">
-        <div class="col-md-3 cardsBox" *ngFor="let cardData of paymentMode; let i=index ;trackBy:loopTrackBy">
+        <div class="col-md-3 cardsBox" style="margin: 1%;" *ngFor="let cardData of paymentMode; let i=index ;trackBy:loopTrackBy">
                
                 <img src="../../../assets/images/subscription/card.svg"><br><br>
                 <span id=""><b> XXXX-XXXX-XXXX-{{cardData.cardLast4}}</b>
@@ -18,6 +18,9 @@
                 <span id="cardName"><b>Card Holder's Name : {{cardData.name}}</b></span><br><br>
                 <span id=""><b>Expires : {{cardData.cardExpMonth}}/{{cardData.cardExpYear}}</b></span>
             </div>
+            <!-- <div class="col-md-3 cardsBox">
+            <img src="../../../assets/images/subscription/AddCard.svg">
+        </div> -->
         </span>
 
            

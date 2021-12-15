@@ -87,15 +87,39 @@ export class OrderDetailsComponent implements OnInit {
 
   subscriptionCancelModalSubmit(template)
   {
+    this.spinner.show();
     this.rest.cancelSubscription(this.subscribeddata).subscribe(data => {
+    
       this.getAllSubscrptions();
+      this.spinner.hide();
       this.modalRef.hide();
-      this.router.navigate(['/activation/payment/chooseplan']);
+      //this.router.navigate(['/activation/payment/chooseplan']);
          if(data==null){
-      Swal.fire("Success","Subscription cancelled successfully !!","success");
+      Swal.fire({
+        title: 'Success',
+        text: "Subscription cancelled successfully !!",
+        position: 'center',
+        icon: 'success',
+        showCancelButton: false,
+        confirmButtonColor: '#007bff',
+        cancelButtonColor: '#d33',
+        heightAuto: false,
+        confirmButtonText: 'Ok'
+    })
     }
     else if(data.message=='Cancellation Abrupted!!'){
-      Swal.fire("Warning","Subscription cancelled in progress!","success");
+      //Swal.fire("Warning","Subscription cancelled in progress!","success");
+      Swal.fire({
+        title: 'Warning',
+        text: "Subscription cancelled in progress!",
+        position: 'center',
+        icon: 'warning',
+        showCancelButton: false,
+        confirmButtonColor: '#007bff',
+        cancelButtonColor: '#d33',
+        heightAuto: false,
+        confirmButtonText: 'Ok'
+    })
     }
     }, err => {
     });
