@@ -52,6 +52,7 @@ import { CreateProjectFormComponent } from './forms/create-project-form/create-p
 import { EditTaskComponent } from './edit-task/edit-task.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { IntitiativePipe } from './pipes/initiatives-pipe.pipe';
+import { NotifierService } from 'angular-notifier';
 
 const materialModules: any[] = [
     
@@ -85,7 +86,7 @@ const materialModules: any[] = [
     
   ],
   providers:[
-    BsModalRef, 
+    BsModalRef, NotifierService,
   {
       provide: MatPaginatorIntl, 
       useClass: CustomMatPaginatorIntl

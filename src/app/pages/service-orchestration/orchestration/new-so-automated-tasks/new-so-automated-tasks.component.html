@@ -37,7 +37,7 @@
                 <!--<span style="padding:5px" id="autoStartProcess">
       <button  matTooltip="View Configuration"   mat-mini-fab color="basic" (click)="configuration()"  ><i  class="fas fa-cog" style="margin-right: -5px !important;"></i></button>
     </span>-->
-                <button (click)="addtasks(addTask)">
+                <button (click)="addtasks(addTask)" class="tsttooltipbtn">
       <img src="../../../../../assets/images/RPA/icon_latest/pluse-blue.svg" class="testplus"/>
       <span class="testtooltip">Add Task</span>
     </button>
@@ -93,8 +93,8 @@
             <table mat-table #sort10="matSort" #automatedtable [dataSource]="dataSource2" cdkDropList [cdkDropListData]="automatedtask" (cdkDropListDropped)="dropTable($event)" matSort class="RPA table" id="autotable">
 
                 <ng-container matColumnDef="processFilterId">
-                    <th *matHeaderCellDef mat-sort-header></th>
-                    <td [matTooltip]="element.processName" *matCellDef="let element"></td>
+                    <th *matHeaderCellDef></th>
+                    <td *matCellDef="let element"></td>
                 </ng-container>
 
                 <ng-container matColumnDef="processName">
@@ -105,14 +105,14 @@
                 </ng-container>
 
                 <ng-container matColumnDef="taskName">
-                    <th mat-header-cell *matHeaderCellDef>Task</th>
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>Task</th>
                     <td mat-cell *matCellDef="let element">
                         <span *ngIf="element.taskName!=null" [matTooltip]="element.taskName">{{(element.taskName.length > 15) ? ((element.taskName).slice(0, 15) + '...') : element.taskName}}</span>
                         <span *ngIf="element.taskName==null">---</span>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="taskType">
-                    <th mat-header-cell *matHeaderCellDef>Task Type </th>
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>Task Type </th>
                     <td mat-cell *matCellDef="let element">
                         <span *ngIf="element.taskType!=null">{{element.taskType}}</span>
                         <span *ngIf="element.taskType==null">---</span>
@@ -120,7 +120,7 @@
                 </ng-container>
 
                 <ng-container matColumnDef="category">
-                    <th mat-header-cell *matHeaderCellDef>Category </th>
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>Category </th>
                     <td mat-cell *matCellDef="let element">
                         <span *ngIf="element.category!=null">{{element.category}}</span>
                         <span *ngIf="element.category==null">---</span>
@@ -307,14 +307,12 @@
                   <img src="../../../../../assets/images/Projects/eye-hide.svg" class="testplus1" />
 
                 </button>
-              </span>
+
+              </span> &nbsp;
                             <span>
-                            <button  tooltip="Delete Task" (click)="delete(element.taskId, element.processId)">
-                              <img src="../../../../../assets/images/Projects/delete-black.svg" class="testplus"/>
-                            </button>
-          
-                <!-- <button (click)="SLACon(element.botId)" matTooltip="SLA Configuration"><i class="fa fa-cog" aria-hidden="true"></i></button> -->
-                <!-- <button (click)="SLACon(element)" matTooltip="SLA Configuration"><i class="fa fa-cog" aria-hidden="true"></i></button> -->
+                    <button  matTooltip="Delete Task" class="undobtn" (click)="delete(element.taskId, element.processId)">
+                        <img src="../../../../../assets/images/Projects/delete-black.svg" class="testplus1"/>
+                    </button>
               </span>
                         </div>
                         <div *ngIf="element.taskType=='Human'">
@@ -401,7 +399,7 @@
 
             <!-- <span class="pull-right clickable" (click)="logs_modal.hide()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span> -->
         </div>
-        <div class="modal-body">
+        <div class="process-logs modal-body">
             <app-so-processlog [processId]="processId1"></app-so-processlog>
         </div>
 
@@ -680,7 +678,7 @@
 
                     <div class="col-md-12 p-0 form-group">
                         <label class="label-control" for="processName">Process Name<span class="star">*</span></label>
-                        <input type="text" class="form-control data" formControlName="processName" #processName value="" placeholder="Enter Process Name">
+                        <input type="text" class="form-control data" maxlength="50" formControlName="processName" #processName value="" placeholder="Enter Process Name">
                         <span *ngIf="(insertslaForm_so_bot.get('processName').invalid && insertslaForm_so_bot.get('processName').touched) && !insertslaForm_so_bot.controls['processName'].hasError('maxlength')" class="errspan required">Required Process Name*</span>
                         <div *ngIf="insertslaForm_so_bot.controls['processName'].hasError('maxlength')" class="errspan required">
                             Maximum of 50 characters
@@ -698,7 +696,7 @@
 
                     <div class="col-md-12 p-0 form-group">
                         <label class="label-control" for="taskName">Task Name<span class="star">*</span></label>
-                        <input type="text" class="form-control data" formControlName="taskName" #processName value="" placeholder="Enter Process Name">
+                        <input type="text" class="form-control data" maxlength="50" formControlName="taskName" #processName value="" placeholder="Enter Process Name">
                         <span *ngIf="(insertslaForm_so_bot.get('taskName').invalid && insertslaForm_so_bot.get('taskName').touched) && !insertslaForm_so_bot.controls['taskName'].hasError('maxlength')" class="errspan required">Required Process Name*</span>
                         <div *ngIf="insertslaForm_so_bot.controls['taskName'].hasError('maxlength')" class="errspan required">
                             Maximum of 50 characters

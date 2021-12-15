@@ -48,6 +48,21 @@
                             class='errspan required'> Please select notation type </span>
                         </div>
                     </div>
+                    <div *ngIf='isBpmnModule'>
+                        <div class="col-md-12 p-0 form-group">
+                            <label class="label-control">Process Owner<span class="star">*</span></label>
+                            <select name="powner" #powner="ngModel" [(ngModel)]="process_owner" required class="form-control">
+                                <option value="" disabled hidden>Select Process Owner</option>
+                                <option value="null" disabled hidden>Select Process Owner</option>
+                                <option value="undefined" disabled hidden>Select Process Owner</option>
+                                <option value="" disabled hidden>Select Process Owner</option>
+                                <option *ngFor="let each_approver of approver_list;let i=index" [value]=i>
+                                    {{each_approver.firstName+" "+each_approver.lastName}}</option>
+                            </select>
+                            <span *ngIf="((powner.invalid && processCategoryForm.submitted) || (powner.errors && powner.touched) )" 
+                            class='errspan required'> Please Select Process Owner </span>
+                        </div>
+                    </div>
                     <div class="col-md-12 p-0 form-group">
                         <label class="label-control">Enter Process Name<span class="star">*</span></label>
                         <input type="text"  maxlength="50" name="process_name" [(ngModel)]="processName" #process_name="ngModel" pattern="^[a-zA-Z0-9_-].{3,25}$" (keypress)="lettersOnly($event)" class="form-control" placeholder="Enter Process Name" required>
@@ -93,7 +108,7 @@
 <!-- previous Code -->
                 </div>
                 <div class="form-footer">
-                    <button class="btn btn-primary eiap-btn" type="submit" (click)="proceedChanges(processCategoryForm);" [disabled]="!data && !processCategoryForm.valid">{{buttonName}}</button>
+                    <button class="btn btn-primary eiap-btn" type="submit" (click)="proceedChanges(processCategoryForm);" [disabled]="(!data && !processCategoryForm.valid )">{{buttonName}}</button>
                 </div>
                 <!-- <div class="container m-contanier" *ngIf="isRpa=='true'">
                     <div class="row">

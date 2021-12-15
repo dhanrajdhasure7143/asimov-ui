@@ -77,6 +77,7 @@ export class UploadComponent implements OnInit {
   isUploadFileName:string;
   isLoading:boolean=false;
   categories_list:any[]=[];
+  freetrail: string;
 
   constructor(private router: Router,
     private dt: DataTransferService,
@@ -117,14 +118,14 @@ export class UploadComponent implements OnInit {
       }
           );
         })
-    
+    this.freetrail=localStorage.getItem('freetrail')
   }
   ngOnDestroy() {
     this.dtTrigger.unsubscribe();
   }
   onUpload(event, id) {     //for Upload csv/xls/xes/xes.gz file
-    if (this.userRole == "User") {
-      if (this.process_graph_list.length == 1) {
+    if (this.freetrail == 'true') {
+      if (this.process_graph_list.length == this.config.pigraphfreetraillimit) {
         Swal.fire({
           title: 'Error',
           text: "You have limited access to this product. Please contact EZFlow support team for more details.",
@@ -233,7 +234,16 @@ export class UploadComponent implements OnInit {
       this.readExcelFile(event);
     }
     if (upload_id == 2){
+      if(this.freetrail == 'true'){
+        Swal.fire({
+          title: 'Error',
+          text: 'You have access to upload only excel file',
+          icon: 'error',
+          heightAuto: false
+        })
+      }else{
       this.readCSVFile(event);
+      }
     }
     if (upload_id == 3){
       let file: File = event.addedFiles[0];
@@ -277,8 +287,8 @@ export class UploadComponent implements OnInit {
       this.dt.changePiData(this.data);
       let excelfile = [];
       excelfile = this.data;
-      if(this.userRole=="User"){
-        if(excelfile.length>50){
+      if(this.freetrail== 'true'){
+        if(excelfile.length>100){
          Swal.fire({
            title: 'Error',
            text: "Data limit exceeded for user",

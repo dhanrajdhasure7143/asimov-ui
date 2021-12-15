@@ -99,7 +99,7 @@ export class RpaStudioComponent implements OnInit {
 
 
 
-    
+    let freeTrial=localStorage.getItem("freetrail")
     var data1:any = [];
     this.dt.changeParentModule({"route":"/pages/rpautomation/home", "title":"RPA"});
     this.dt.changeChildModule("");
@@ -141,6 +141,8 @@ export class RpaStudioComponent implements OnInit {
           //this.spinner.hide();
         });
       }
+          if(freeTrial=='true')
+            this.templateNodes=this.templateNodes.filter(item=>item.name=="Email");
           this.activatedRoute.queryParams.subscribe(data=>{
             let params:any=data;
             if(params==undefined)

@@ -706,5 +706,8 @@ autoGrowSummaryTextZone() {
   return user_letters
   }
 
+  loopTrackBy(index, term) {
+    return index;
+  }
 
 }

@@ -28,6 +28,11 @@ export interface AsimovAppConfig {
     platform_home_url:string;
     projectendpoint_url:string;
     camundaUrl:string;
+    subscriptionendpoint_url:string;
+    pigraphfreetraillimit:number;
+    rpabotfreetraillimit:number;
+    bpsprocessfreetraillimit:number;
+    projectfreetraillimit:number;
 }
 
 export const AppConfig: AsimovAppConfig = {
@@ -54,5 +59,10 @@ export const AppConfig: AsimovAppConfig = {
     piNodeJobsURL: environment.pi_node_jobs,
     platform_home_url:environment.platform_home_url,
     projectendpoint_url:environment.projectendpoint_url,
-    camundaUrl:environment.camunda_url
+    camundaUrl:environment.camunda_url,
+    subscriptionendpoint_url:environment.subscriptionendpoint_url,
+    pigraphfreetraillimit:1,
+    rpabotfreetraillimit:1,
+    bpsprocessfreetraillimit:1,
+    projectfreetraillimit:1,
 };

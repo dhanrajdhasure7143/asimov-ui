@@ -141,7 +141,7 @@
                         </div>
                         <div class="col-md-4 p-0">
                             <div class="col-md-6 form-group pr-0 rpa-searchip">
-                                <input class="form-control toolbar-search" type="text" [(ngModel)]="userFilter.botName" placeholder="Search Bot">
+                                <input class="form-control toolbar-search" type="text" [(ngModel)]="userFilter.botName" (keyup)="applySearchFilter($event.target.value)" placeholder="Search Bot">
                                 <img src="../../../../assets/images/search.svg" alt="" class="testplus1">
                             </div>
                             <!-- <div class="col-md-12 form-group pr-0 rpa-searchip">
@@ -172,29 +172,29 @@
                                     <div class="cell cell1"></div>
                                 </div>
                                 <div class="flex-col header gridheader-th">
-                                    <button (click)="sortasc('botName','asc')">
-                          <!-- <button  mat-sort-header="botName"> -->
+                                    <!-- <button (click)="sortasc('botName','asc')"> -->
+                                    <button mat-sort-header="botName">
                          <span >Bot Name</span>
-                         <i *ngIf="sortkey.botName==false" class="fa fa-arrow-up"></i>
-                         <i *ngIf="sortkey.botName==true" class="fa fa-arrow-down"></i>
+                         <!-- <i *ngIf="sortkey.botName==false" class="fa fa-arrow-up"></i>
+                         <i *ngIf="sortkey.botName==true" class="fa fa-arrow-down"></i> -->
                         </button>
                                 </div>
 
                                 <div class="flex-col header gridheader-th">
-                                    <button (click)="sortasc('description','asc')">
-                          <!-- <button   mat-sort-header="description"> -->
+                                    <!-- <button (click)="sortasc('description','asc')"> -->
+                                    <button mat-sort-header="description">
                           <span >Description</span>
-                          <i *ngIf="sortkey.description==false" class="fa fa-arrow-up"></i>
-                          <i *ngIf="sortkey.description==true" class="fa fa-arrow-down"></i>
+                          <!-- <i *ngIf="sortkey.description==false" class="fa fa-arrow-up"></i>
+                          <i *ngIf="sortkey.description==true" class="fa fa-arrow-down"></i> -->
                         </button>
                                 </div>
 
                                 <div class="flex-col header gridheader-th">
-                                    <button (click)="sortasc('department','asc')">
-                                      <!-- <button  mat-sort-header="department"> -->
+                                    <!-- <button (click)="sortasc('department','asc')"> -->
+                                    <button mat-sort-header="department">
                                       <span >Category</span>
-                                      <i *ngIf="sortkey.department==false" class="fa fa-arrow-up"></i>
-                                      <i *ngIf="sortkey.department==true" class="fa fa-arrow-down"></i>
+                                      <!-- <i *ngIf="sortkey.department==false" class="fa fa-arrow-up"></i>
+                                      <i *ngIf="sortkey.department==true" class="fa fa-arrow-down"></i> -->
                                     </button>
                                 </div>
 
@@ -208,25 +208,25 @@
                                 <!-- </div> -->
 
                                 <div class="flex-col header gridheader-th">
-                                    <button (click)="sortasc('version','asc')">
-                          <!-- <button  mat-sort-header="version"> -->
+                                    <!-- <button (click)="sortasc('version','asc')"> -->
+                                    <button mat-sort-header="version">
                           <span>Version</span> 
-                          <i *ngIf="sortkey.version==false" class="fa fa-arrow-up"></i>
-                          <i *ngIf="sortkey.version==true" class="fa fa-arrow-down"></i>
+                          <!-- <i *ngIf="sortkey.version==false" class="fa fa-arrow-up"></i>
+                          <i *ngIf="sortkey.version==true" class="fa fa-arrow-down"></i> -->
                         </button>
                                 </div>
 
                                 <div class="flex-col header gridheader-th">
-                                    <button (click)="sortasc('botStatus','asc')">
-                          <!-- <button  mat-sort-header="botStatus"> -->
+                                    <!-- <button (click)="sortasc('botStatus','asc')"> -->
+                                    <button mat-sort-header="botStatus">
                           <span>Status</span>
-                          <i *ngIf="sortkey.botStatus==false" class="fa fa-arrow-up"></i>
-                          <i *ngIf="sortkey.botStatus==true" class="fa fa-arrow-down"></i>
+                          <!-- <i *ngIf="sortkey.botStatus==false" class="fa fa-arrow-up"></i>
+                          <i *ngIf="sortkey.botStatus==true" class="fa fa-arrow-down"></i> -->
                         </button>
                                 </div>
                                 <div class="flex-col header gridheader-th">
-                                    <button>
-                            <!-- <button  mat-sort-header="actions"> -->
+                                    <!-- <button> -->
+                                    <button mat-sort-header="actions">
                    
                               <span>Actions</span>
                             <!-- <i *ngIf="sortkey.botStatus==false" class="fa fa-arrow-up"></i>
@@ -236,9 +236,9 @@
                             </div>
                         </div>
                         <div class="rpa-home-table">
-                            <!-- <mat-expansion-panel hideToggle (opened)="getBotImage(bot.botId,bot.version,$event)"  *ngFor="let bot of displayedRows$ | filterBy:userFilter | async  ;let i=index;">
-                -->
-                            <mat-expansion-panel [hideToggle]="true" #botpanel1 (opened)="getBotImage(bot.botId,bot.version,$event)" *ngFor="let bot of bot_list | filterBy:userFilter  |  paginate: {itemsPerPage: pageSize, currentPage: page } ">
+                            <mat-expansion-panel hideToggle (opened)="getBotImage(bot.botId,bot.version,$event)" *ngFor="let bot of (displayedRows$  | async) | filterBy:userFilter  ;let i=index;">
+
+                                <!-- <mat-expansion-panel [hideToggle]="true" #botpanel1 (opened)="getBotImage(bot.botId,bot.version,$event)" *ngFor="let bot of bot_list | filterBy:userFilter  |  paginate: {itemsPerPage: pageSize, currentPage: page } "> -->
 
                                 <mat-expansion-panel-header>
 
@@ -356,9 +356,8 @@
                 </div>
                 <!-- <mat-paginator #paginator2 [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons]="true" class="newpaginationdiv"></mat-paginator> -->
                 <div class="newpaginationdiv">
-                    <!-- <pagination-controls class="pagination " (pageChange)="p = $event"></pagination-controls> -->
 
-                    <pagination-template #p="paginationApi" (pageChange)="page= ($event)">
+                    <!-- <pagination-template #p="paginationApi" (pageChange)="page= ($event)">
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-md-6">
@@ -387,29 +386,14 @@
                   <mat-icon> last_page </mat-icon> 
                 </button>
                                 </div>
-                                <!-- 
-            <div *ngFor="let page of p.pages" [class.current]="p.getCurrent() === page.value">
-                <button (click)="p.setCurrent(page.value)" *ngIf="p.getCurrent() !== page.value">
-                    <span>{{ page.label }}</span>
-                </button>
-                <div *ngIf="p.getCurrent() === page.value">
-                    <span>{{ page.label }}</span>
-                </div>
-            </div> -->
-
+           
 
                             </div>
                         </div>
 
 
-                    </pagination-template>
-                    <!-- <mat-paginator #paginator301 
-                      [length]="totalRows$ | async"
-                      [pageIndex]="0"
-                      [pageSize]="10"
-                      [showFirstLastButtons]="true"
-                      [pageSizeOptions]="[5, 10, 25, 50]"
-                    ></mat-paginator> -->
+                    </pagination-template> -->
+                    <mat-paginator #paginator301 [length]="totalRows$ | async" [pageIndex]="0" [pageSize]="10" [showFirstLastButtons]="true" [pageSizeOptions]="[5, 10, 25, 50]"></mat-paginator>
                 </div>
 
             </div>
@@ -441,7 +425,7 @@
                                 <div *ngIf="botNamespace" class="errspan required">Spaces are not allowed</div>
 
                                 <div *ngIf="editbot.controls['botName'].hasError('maxlength')" class="errspan required">
-                                    Maximum of 30 characters
+                                    Maximum of 30 characters exceeded.
                                 </div>
 
                             </div>
@@ -465,10 +449,10 @@
 
                             <div class="col-md-12 p-0 form-group">
                                 <label class="label-control" for="botDescription">Bot Description</label>
-                                <textarea type="text" autocomplete="off" formControlName="description" placeholder="Enter Bot Description" ngModel maxlength="501" rows="3" class="form-control" name="botDescription"></textarea>
+                                <textarea type="text" autocomplete="off" formControlName="description" placeholder="Enter Bot Description" ngModel maxlength="151" rows="3" class="form-control" name="botDescription"></textarea>
 
                                 <div *ngIf="editbot.controls['description'].hasError('maxlength')" class="errspan required">
-                                    Maximum of 500 characters
+                                    Maximum of 150 characters exceeded.
                                 </div>
 
                             </div>
@@ -510,7 +494,7 @@
                                 <div *ngIf="botNamespace" class="errspan required">Spaces are not allowed</div>
 
                                 <div *ngIf="insertbot.controls['botName'].hasError('maxlength')" class="errspan required">
-                                    Maximum of 30 characters
+                                    Maximum of 30 characters exceeded
                                 </div>
                             </div>
 
@@ -547,12 +531,12 @@
                             </div>
                             <div class="col-md-12 p-0 form-group">
                                 <label class="label-control" for="botDescription">Bot Description</label>
-                                <textarea type="text" autocomplete="off" formControlName="botDescription" placeholder="Enter Bot Description" ngModel maxlength="501" rows="3" class="form-control" name="botDescription"></textarea>
+                                <textarea type="text" autocomplete="off" formControlName="botDescription" placeholder="Enter Bot Description" ngModel maxlength="151" rows="3" class="form-control" name="botDescription"></textarea>
                                 <!--<div *ngIf="(insertbot.get('botDescription').invalid && insertbot.get('botDescription').touched) && !insertbot.controls['botDescription'].hasError('maxlength')"  class="errspan required">
                 Bot Description Required*
               </div>-->
                                 <div *ngIf="insertbot.controls['botDescription'].hasError('maxlength')" class="errspan required">
-                                    Maximum of 500 characters
+                                    Maximum of 150 characters exceeded
                                 </div>
                             </div>
 

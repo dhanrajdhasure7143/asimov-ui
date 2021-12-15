@@ -82,6 +82,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   public passwordtype1:Boolean;
   public passwordtype2:Boolean;
   public form_change:Boolean=false;
+  startNodeId:any=""
+  stopNodeId:any=""
   @ViewChild('template', { static: false }) template: TemplateRef<any>;
   public nodedata: any;
   categoryList:any=[];
@@ -233,6 +235,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           x: "10px",
           y: "9px",
         }
+        this.startNodeId=startnode.id
         if(this.nodes.find(item=>item.id==startnode.id)==undefined)
         {
           this.nodes.push(startnode);
@@ -243,6 +246,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       }
       // if (element.outSeqId == "STOP_" + this.finalbot.botName) {
         if(outseq.split("_")[0]=="STOP"){
+        
         let stopnode = {
           id: outseq,
           name: "STOP",
@@ -252,6 +256,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           x: "900px",
           y: "396px",
         }
+        this.stopNodeId=stopnode.id
         if(this.nodes.find(item=>item.id==stopnode.id)==undefined)
         {
           this.nodes.push(stopnode);
@@ -421,6 +426,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         x: "2px",
         y: "9px",
       }
+      this.startNodeId=node.id
       this.nodes.push(node);
       setTimeout(() => {
         this.populateNodes(node);
@@ -436,6 +442,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         x: "941px",
         y: "396px",
       }
+      this.stopNodeId=stopnode.id
       this.nodes.push(stopnode);
       setTimeout(() => {
         this.populateNodes(stopnode);
@@ -935,7 +942,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     this.checkorderflag=true;
     this.addsquences();
     this.get_coordinates();
-    this.arrange_task_order("START_" + this.finalbot.botName);
+    this.arrange_task_order(this.startNodeId);
     await this.getsvg();
       this.saveBotdata = {
         "botName": botProperties.botName,
@@ -1021,7 +1028,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     this.checkorderflag=true;
     this.addsquences();
     this.get_coordinates();
-    this.arrange_task_order("START_" + this.finalbot.botName);
+    this.arrange_task_order(this.startNodeId);
     await this.getsvg();
     this.saveBotdata = {
       "version": botProperties.version,
@@ -1098,7 +1105,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   reset(e) {
     this.indexofArr = 5;
     this.dagvalue = this.zoomArr[this.indexofArr];
-    this.dragelement.style['transform'] = `scale(${this.dagvalue})`
+    document.getElementById(this.dragareaid).style.transform = `scale(${this.dagvalue})`
     this.jsPlumbInstance.repaintEverything()
 
   }
@@ -1107,7 +1114,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     if (this.indexofArr < this.zoomArr.length - 1) {
       this.indexofArr += 1;
       this.dagvalue = this.zoomArr[this.indexofArr];
-      this.dragelement.style['transform'] = `scale(${this.dagvalue})`
+      document.getElementById(this.dragareaid).style.transform = `scale(${this.dagvalue})`
       this.jsPlumbInstance.repaintEverything()
     }
   }
@@ -1117,7 +1124,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     if (this.indexofArr > 0) {
       this.indexofArr -= 1;
       this.dagvalue = this.zoomArr[this.indexofArr];
-      this.dragelement.style['transform'] = `scale(${this.dagvalue})`
+      document.getElementById(this.dragareaid).style.transform = `scale(${this.dagvalue})`
     }
   }
 
@@ -1133,6 +1140,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   downloadPng()
   {
     var element=document.getElementById(this.dragareaid)
+    
     var botName=this.finalbot.botName;
     domtoimage.toPng(element)
       .then(function (dataUrl) {
@@ -1324,7 +1332,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
   add_order(object) {
 
-    let end = "STOP_" + this.finalbot.botName;
+    let end = this.stopNodeId;
     this.final_tasks.push(object);
     if(object==undefined)
     {

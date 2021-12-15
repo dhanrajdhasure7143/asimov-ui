@@ -17,6 +17,9 @@ export class SidebarComponent implements OnInit {
   showSubSubMenu: boolean = false;
   showadminSubSubMenu: boolean = false;
   public userRoles:any = [];
+  freetrail: boolean;
+  tenantId: string;
+  plansList: any;
   constructor(private obj:PagesComponent, private dt:DataTransferService,
     private rest_service: RestApiService) { }
 
@@ -40,8 +43,8 @@ export class SidebarComponent implements OnInit {
 
     setTimeout(() => {
       // this.userRoles = localStorage.getItem("userRole")
-    }, 1000);
-   
+    }, 200);
+  this.getAllPlans();
   }
 
   hightlight(element,name){
@@ -62,4 +65,23 @@ export class SidebarComponent implements OnInit {
      this.obj.contentMargin=260;
    }
 
+   getAllPlans() {
+    this.tenantId = localStorage.getItem('tenantName');
+    this.rest_service.getProductPlans("EZFlow", this.tenantId).subscribe(data => {
+      this.plansList = data
+      if(this.plansList.length > 1){
+     this.plansList.forEach(element => {
+       if(element.subscribed==true){
+        this.plansList=element
+       }
+     });
+     if(this.plansList.nickName=='Standard'){
+       this.freetrail=true
+     }
+     else{
+      this.freetrail=false
+     }
+    }
+  })
+}
 }
