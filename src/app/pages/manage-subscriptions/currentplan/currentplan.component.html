@@ -17,7 +17,8 @@
                 <span id="planName" *ngIf="planlist.nickName !='Standard'"><b>{{planlist.nickName}}</b>
                 </span> 
                 <span *ngIf="planlist.subscribed" class="current-plan">Current Plan</span>
-                <span *ngIf="planlist.enterpriseSubscribed&&planlist.nickName =='Enterprise'" class="requested-plan">Requested</span></h4>
+                <!-- <span *ngIf="planlist.enterpriseSubscribed&&planlist.nickName =='Enterprise'" class="requested-plan">Requested</span> -->
+              </h4>
             <h6 class="processes" *ngFor='let value of planlist.features'><i *ngIf="value.active" class="fa fa-check-circle" aria-hidden="true"></i><i *ngIf="!value.active"  class="fa fa-times-circle" aria-hidden="true"></i><span>{{value.name}}
                     <label *ngIf="value.limited">Limited</label></span>
                 </h6>
@@ -55,14 +56,15 @@
                 <h4 id="ctr">Choose the right one for your valuable business</h4>
         </div>
         <div class="col-md-4">
-        <button *ngIf='!error' class="btn btn-primary selectplanbtn" style="float: right;margin-top: 14px;" (click)="currentplan()">Current Plan</button>
+        <button *ngIf='!error' class="btn btn-primary selectplanbtn" style="float: right;margin-top: 14px;" (click)="currentplan()">Back</button>
       </div>
     </div>
         <div class="col-md-12 errordiv" *ngIf='error'>
                 <h2>{{error}}</h2>
             </div>
         <span *ngIf='!error' class="col-md-12 row">
-        <div class="col-md-3 plansBox" style="margin: 1%;" *ngFor="let planlist of plansList; let i=index ;trackBy:loopTrackBy">
+        <div  *ngFor="let planlist of plansList; let i=index ;trackBy:loopTrackBy">
+          <div class="col-md-3 plansBox" style="margin: 1%;" *ngIf="planlist.subscribed || (planlist.nickName=='Professional' || planlist.nickName=='Enterprise')">
                 <h4><span id="planName" *ngIf="planlist.nickName =='Standard'"><b>Free Tier</b>
                 </span> 
                 <span id="planName" *ngIf="planlist.nickName !='Standard'"><b>{{planlist.nickName}}</b>
@@ -79,6 +81,7 @@
                 <h5 *ngIf="planlist.nickName =='Enterprise'" class="enterprice">Enterprise Solution</h5>
                 <button *ngIf="planlist.nickName =='Enterprise'" [disabled]="(planlist.enterpriseSubscribed)"class="btn btn-primary selectplanbtn" (click)="contactUs()">Contact Us</button>
             </div>
+          </div>
         </span>
         
             <!-- <div class="col-md-12 row conditions">

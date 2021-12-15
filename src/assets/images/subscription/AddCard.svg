@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="238" height="192" viewBox="0 0 238 192">
+  <g id="Add_New" data-name="Add New" transform="translate(-7753 -5699)">
+    <g id="Rectangle_2310" data-name="Rectangle 2310" transform="translate(7753 5699)" fill="#fff" stroke="#d3d3d3" stroke-width="1" stroke-dasharray="3 3">
+      <rect width="238" height="192" rx="3" stroke="none"/>
+      <rect x="0.5" y="0.5" width="237" height="191" rx="2.5" fill="none"/>
+    </g>
+    <g id="Group_2797" data-name="Group 2797" transform="translate(25 -7)">
+      <g id="Black-plus" transform="translate(7835 5777.276)">
+        <path id="Path_823" data-name="Path 823" d="M0,0H23.553V23.724H0Z" fill="none"/>
+        <g id="plus" transform="translate(0.269 -0.276)">
+          <line id="Line_86" data-name="Line 86" y2="23.902" transform="translate(11.483)" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+          <line id="Line_87" data-name="Line 87" x2="23.731" transform="translate(0 12.337)" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+        </g>
+      </g>
+      <text id="Add_New-2" data-name="Add New" transform="translate(7816 5823.634)" fill="#3d3d3d" font-size="15" font-family="OpenSans-Regular, Open Sans"><tspan x="0" y="0">Add New</tspan></text>
+    </g>
+  </g>
+</svg>

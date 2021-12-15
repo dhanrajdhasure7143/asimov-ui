@@ -28,3 +28,9 @@
   .icon-disabled{
     cursor: no-drop !important;
   }
+  .subsc
+{
+    background: none !important;
+    border: none !important;
+    cursor: pointer;
+}
