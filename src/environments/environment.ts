@@ -33,6 +33,7 @@ export const environment = {
 //   redirectout_url: 'http://eiapclouddev.epsoftinc.in/#/signout',
 //   platform_home_url: 'http://eiapclouddev.epsoftinc.in/#/',
 //   projectendpoint_url:'http://10.11.0.107:8282',
+// subscriptionendpoint_url:'http://subscriptiondev.epsoftinc.in',
 
 // // PI Connectors
 //   connector_topic: 'nodeDev',
@@ -66,6 +67,7 @@ export const environment = {
   redirectout_url: 'http://eiapcloudqa.epsoftinc.in/#/signout',
   platform_home_url: 'http://eiapcloudqa.epsoftinc.in/#/',
    projectendpoint_url:'http://10.11.0.108:8282',
+   subscriptionendpoint_url:'http://subscriptionqa.epsoftinc.in',
 
   // PI Connectors
    connector_topic: 'nodeq',
