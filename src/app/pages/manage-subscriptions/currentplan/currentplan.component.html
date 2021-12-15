@@ -49,10 +49,15 @@
 
 <div class="container" *ngIf="getallplans && revieworder==false">
     <div class="row">
-        <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-8">
                 <h3 id="planHeading">Features will be enabled based on the selected plan</h3>
                 <h4 id="ctr">Choose the right one for your valuable business</h4>
         </div>
+        <div class="col-md-4">
+        <button *ngIf='!error' class="btn btn-primary selectplanbtn" style="float: right;margin-top: 14px;" (click)="currentplan()">Current Plan</button>
+      </div>
+    </div>
         <div class="col-md-12 errordiv" *ngIf='error'>
                 <h2>{{error}}</h2>
             </div>
@@ -75,7 +80,7 @@
                 <button *ngIf="planlist.nickName =='Enterprise'" [disabled]="(planlist.enterpriseSubscribed)"class="btn btn-primary selectplanbtn" (click)="contactUs()">Contact Us</button>
             </div>
         </span>
-        <button *ngIf='!error' class="btn btn-primary selectplanbtn" style="float:right;margin-bottom: 200px;" (click)="currentplan()">Previous</button>
+        
             <!-- <div class="col-md-12 row conditions">
             <div class="col-md-8"></div>
             <div class="col-md-4 tc-privacy">
@@ -157,7 +162,7 @@
                     <div class=" ">
                       <div class=" ">
                         <h6 class="plan_label">Plan   <span class="plan">  {{name}}</span>
-                             <!-- <button class="backbtn" (click)="currentplan()">Change plan</button> -->
+                             <button class="backbtn" (click)="chooseplan()">Change plan</button>
                              </h6>
                       </div>
                       <div class="period">
@@ -196,6 +201,7 @@
             <div class="row">
               <div class="col-sm-6"></div>
                 <div class="col-sm-6">
+                  <!-- <button class="btn buybtn"  (click)="chooseplan()">Choose Plan</button> -->
                   <button class="btn buybtn"  (click)="buyProductPlan(template)">Buy Now</button>
                   </div>
                   <div class="col-md-3" style="display: block;height: 13px" ></div>

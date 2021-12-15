@@ -218,11 +218,17 @@ export class CurrentplanComponent implements OnInit {
   
   close_modal(){
     this.modalRef.hide();
-    this.router.navigate(['/pages/home'])
+    this.router.navigate(['/pages/home']).then(() => {
+      window.location.reload();
+    });
   }
   currentplan(){
     this.allplans=[]
     this.getallplans=false;
+  }
+  chooseplan(){
+    this.getallplans=true;
+    this.revieworder=false;
   }
 
   contactUs(){
