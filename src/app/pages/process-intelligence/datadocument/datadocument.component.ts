@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { formatDate } from '@angular/common';
 import { Router } from '@angular/router';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
@@ -53,8 +53,10 @@ export class DatadocumentComponent implements OnInit {
   modalRef: BsModalRef;
   displayedRows$: Observable<any[]>;
   totalRows$: Observable<number>;
+  errorsList:any=[];
 
   @ViewChild(MatPaginator,{static:false}) paginator: MatPaginator;
+  @ViewChild('template1',{ static: true }) template1: TemplateRef<any>;
 
   constructor(private router:Router, private dt:DataTransferService, private hints:PiHints, private global:GlobalScript,private modalService: BsModalService,
               private spinner: NgxSpinnerService)    { }
@@ -201,7 +203,8 @@ export class DatadocumentComponent implements OnInit {
           isInvalid = true;
           if (this.invalidCells['row' + x].indexOf('cell' + index) == -1)
             this.invalidCells['row' + x].push('cell' + index);
-          this.global.notify("Empty data at header " + this.headerName + " cell No- " + (x + 1), "error");
+            this.errorsList.push({header:this.headerName,cell:x+1,emptydata:true})
+          // this.global.notify("Empty data at header " + this.headerName + " cell No- " + (x + 1), "error");
           // break;
         }
         if ((reg_expression && reg_expression.test(each_cell)) || isDateCheck) {
@@ -225,7 +228,9 @@ export class DatadocumentComponent implements OnInit {
               isInvalid = true;
               if (this.invalidCells['row' + x].indexOf('cell' + index) == -1)
                 this.invalidCells['row' + x].push('cell' + index);
-              this.global.notify("Incorrect value for header " + this.headerName + " at cell - " + (x + 1), "error");
+            this.errorsList.push({header:this.headerName,cell:x+1,wrongdata:true})
+
+              // this.global.notify("Incorrect value for header " + this.headerName + " at cell - " + (x + 1), "error");
               // break;
             }
           } else {
@@ -260,6 +265,9 @@ export class DatadocumentComponent implements OnInit {
     }
     if(this.headerData.length==index+1){
       this.spinner.hide();
+      setTimeout(() => {
+        this.openModal(this.template1);
+      }, 400);
     }
   }
 
