@@ -228,9 +228,9 @@ export class DatadocumentComponent implements OnInit {
               isInvalid = true;
               if (this.invalidCells['row' + x].indexOf('cell' + index) == -1)
                 this.invalidCells['row' + x].push('cell' + index);
-            this.errorsList.push({header:this.headerName,cell:x+1,wrongdata:true})
-
-              // this.global.notify("Incorrect value for header " + this.headerName + " at cell - " + (x + 1), "error");
+                this.errorsList.push({header:this.headerName,cell:x+1,wrongdata:true})
+              
+                // this.global.notify("Incorrect value for header " + this.headerName + " at cell - " + (x + 1), "error");
               // break;
             }
           } else {
@@ -265,9 +265,11 @@ export class DatadocumentComponent implements OnInit {
     }
     if(this.headerData.length==index+1){
       this.spinner.hide();
-      setTimeout(() => {
-        this.openModal(this.template1);
-      }, 400);
+      if(this.errorsList.length>1){
+        setTimeout(() => {
+          this.openModal(this.template1);
+        }, 400);
+      }
     }
   }
 

@@ -199,9 +199,15 @@
       </button>
     </div>
     <div class="modal-body">
-      <div *ngFor="let each of errorsList">
+      <div *ngFor="let each of errorsList;let i=index">
+        <span>{{i+1}}. </span>
         <span *ngIf="each.emptydata">Empty data at header {{each.header}}  cell No- {{each.cell}} </span>
         <span *ngIf="each.wrongdata">Incorrect value for header {{each.header}}  cell No- {{each.cell}} </span>
       </div>
+      </div>
+      <div class="modal-footer modelprfooter">
+        <div class="col-md-12 confirmationmsg">
+            <button class="btn btn-primary" (click)='close_modal()'>Ok</button>
+          </div>
       </div>
   </ng-template>
