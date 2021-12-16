@@ -268,7 +268,7 @@ export class DatadocumentComponent implements OnInit {
       if(this.errorsList.length>1){
         setTimeout(() => {
           this.openModal(this.template1);
-        }, 400);
+        }, 50);
       }
     }
   }
@@ -544,5 +544,9 @@ export class DatadocumentComponent implements OnInit {
       this.assignPagenation(this.fileData)
 
     }
+  }
+
+  close_modal(){
+    this.modalRef.hide();
   }
 }
