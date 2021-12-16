@@ -53,3 +53,7 @@ input[type="text"]{
 .PI.table th {
     border-bottom: unset !important;
 }
+
+.modal-body.modelprbody.datadocmodal {
+    height: calc(100vh - 280px);
+}
