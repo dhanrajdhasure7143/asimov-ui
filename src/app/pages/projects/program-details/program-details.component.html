@@ -239,7 +239,7 @@
                       <span class="labeltit">Program Purpose</span>
     
                       <div *ngIf="editdata==false">
-                        <span class="labelcont" [matTooltip]="program_detials.purpose">{{program_detials.purpose}}</span>
+                        <span class="labelcont" [matTooltip]="program_detials.purpose">{{getreducedValue(program_detials.purpose)}}</span>
                         <span
                           *ngIf="program_detials.purpose == null || program_detials.purpose == undefined || program_detials.purpose =='' "
                           class="labelcont">-</span>
@@ -687,7 +687,7 @@
 
                 <div *ngIf="editdata==false">
                   
-                  <span class="tab-text labelcont">{{program_detials.purpose}}</span>
+                  <span class="tab-text labelcont">{{getreducedValue(program_detials.purpose)}}</span>
                   <div *ngIf="program_detials.purpose==undefined || program_detials.purpose==null || program_detials.purpose=='' " class="h6">-</div>
                 </div>
                 <div *ngIf="editdata==true">
