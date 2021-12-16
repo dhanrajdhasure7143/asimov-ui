@@ -304,7 +304,7 @@
 
                                     </div>
                                     <div *ngIf="editdata==true">
-                                        <input type="text" (change)="projectDetails.effortsSpent=$event.target.value" class="small-input" placeholder="Efforts Spent" [value]="(projectDetails.effortsSpent == null || projectDetails.effortsSpent == undefined || projectDetails.effortsSpent =='')?'':projectDetails.effortsSpent">
+                                        <input type="text" (change)="projectDetails.effortsSpent=$event.target.value" (keydown)="inputNumberOnly($event)" maxlength="6" class="small-input"  placeholder="Efforts Spent" [value]="(projectDetails.effortsSpent == null || projectDetails.effortsSpent == undefined || projectDetails.effortsSpent =='')?'':projectDetails.effortsSpent">
                                     </div>
                                 </div>
                             </div>
