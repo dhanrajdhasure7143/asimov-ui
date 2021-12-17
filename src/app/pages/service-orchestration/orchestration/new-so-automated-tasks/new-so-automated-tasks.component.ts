@@ -1167,7 +1167,7 @@ resetsla(){
           let value: any = resp
         if (value.message === "Task Deleted Successfully!!") {
           this.getautomatedtasks(0);
-          Swal.fire("Success", "Task Deleted Sucessfully!!", "success")
+          Swal.fire("Success", "Task Deleted Successfully!!", "success")
         }
         else {
           Swal.fire("Error", "Failed to delete task", "error");
