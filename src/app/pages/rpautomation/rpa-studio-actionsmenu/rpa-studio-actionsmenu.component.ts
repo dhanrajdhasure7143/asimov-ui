@@ -558,13 +558,15 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
 
 
  public botrunid:any;
- ViewlogByrunid(runid){
+ public selectedLogVersion:any;
+ ViewlogByrunid(runid,version){
    this.botrunid=runid;
+   this.selectedLogVersion=version
    let responsedata:any=[];
    let logbyrunidresp:any;
    let resplogbyrun:any=[];
    this.rpa_studio.spinner.show();
-   this.rest.getViewlogbyrunid(this.savebotrespose.botId,this.savebotrespose.version,runid).subscribe((data)=>{
+   this.rest.getViewlogbyrunid(this.savebotrespose.botId,version,runid).subscribe((data)=>{
      responsedata = data;
      this.rpa_studio.spinner.hide();
      if(responsedata.length >0)
