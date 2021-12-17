@@ -730,6 +730,14 @@
             </div>            
           </div>
           <div class="col-md-12 p-0 form-group">
+            <label class="label-control" for="categoryId">Category<span class="star">*</span></label>
+            <select type="text" class="form-control" formControlName="categoryId"  [value]="categoryList.length==1?categoryList[0].categoryId:'0'">
+                <option value="0" disabled>Select Category</option>
+                <option [value]="category.categoryId" *ngFor="let category of categoryList">{{category.categoryName}}</option>
+            </select>   
+             <span *ngIf="(insertForm.get('categoryId').invalid && insertForm.get('categoryId').touched)"  class="errspan required"> Category Required*</span>
+        </div>
+          <div class="col-md-12 p-0 form-group">
             <label class="label-control" for="hostAddress"> IP Address/Host<span class="star">*</span></label>
             <input type="text" maxlength="51" class="form-control" formControlName="hostAddress" value="" placeholder="Enter IP Address/Host">
             <span *ngIf="(insertForm.get('hostAddress').invalid && insertForm.get('hostAddress').touched) && !insertForm.controls['hostAddress'].hasError('maxlength') && !insertForm.controls['hostAddress'].hasError('pattern')" class="errspan required"> IP Address/Host Required*</span>
