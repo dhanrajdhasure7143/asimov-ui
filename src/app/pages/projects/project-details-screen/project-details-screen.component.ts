@@ -141,6 +141,7 @@ percentageComplete: number;
   projectStartDate:any;
   initiatives: any;
   loginresourcecheck: boolean=false;
+  freetrail: string;
   constructor(private dt:DataTransferService,private route:ActivatedRoute, private rpa:RestApiService,
     private modalService: BsModalService,private formBuilder: FormBuilder,private router: Router,
     private spinner:NgxSpinnerService) { }
@@ -220,6 +221,7 @@ percentageComplete: number;
       //  this.getallusers();
         this.getInitiatives();
         this.Resourcedeleteflag=false;
+        this.freetrail=localStorage.getItem("freetrail")
   }
 
   onTabChanged(event)

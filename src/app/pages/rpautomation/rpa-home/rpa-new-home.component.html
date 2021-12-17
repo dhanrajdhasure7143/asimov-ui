@@ -236,7 +236,7 @@
                             </div>
                         </div>
                         <div class="rpa-home-table">
-                            <mat-expansion-panel hideToggle (opened)="getBotImage(bot.botId,bot.version,$event)" *ngFor="let bot of (displayedRows$  | async) | filterBy:userFilter  ;let i=index;">
+                            <mat-expansion-panel [hideToggle]="true" #botpanel1 (opened)="getBotImage(bot.botId,bot.version,$event)" *ngFor="let bot of (displayedRows$  | async) | filterBy:userFilter  ;let i=index;">
 
                                 <!-- <mat-expansion-panel [hideToggle]="true" #botpanel1 (opened)="getBotImage(bot.botId,bot.version,$event)" *ngFor="let bot of bot_list | filterBy:userFilter  |  paginate: {itemsPerPage: pageSize, currentPage: page } "> -->
 

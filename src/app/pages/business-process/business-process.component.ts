@@ -32,6 +32,7 @@ export class BusinessProcessComponent implements AfterViewChecked {
   process_id:any;
   systemAdmin:Boolean=false;
   isUploaded:boolean=false;
+  freetrail: string;
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private cdRef: ChangeDetectorRef, private dt: DataTransferService,private rest:RestApiService,
               @Inject(APP_CONFIG) private config, ) { }
 
@@ -46,6 +47,7 @@ export class BusinessProcessComponent implements AfterViewChecked {
     this.isApproverUser = this.userRole.includes('Process Architect')||this.userRole.includes('Process Owner');
     this.systemAdmin=this.userRole.includes("System Admin")
     this.getApproverList();
+    this.freetrail=localStorage.getItem("freetrail")
   }
 
   ngAfterViewChecked() {
