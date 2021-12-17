@@ -33,11 +33,11 @@ export class UsersComponent implements OnInit {
       this.users = resp
       this.userslist = [];
       this.users.forEach(element => {
-        let roles=[];
-        let roleslist=[];
+        let roles:any;
+        let roleslist:any;
         roles = element.rolesEntityList;
         roles.forEach(element1 => {
-          roleslist.push(element1.name);
+          roles=element1.name;
         })
         let name = null;
         if(element.userId.firstName!=null&&element.userId.lastName!=null){
@@ -49,7 +49,7 @@ export class UsersComponent implements OnInit {
           "designation":element.userId.designation,
           "department":element.departmentsList,
           // "product": "EZFlow",
-          "roles": roleslist,
+          "roles": roles,
           // "roles": "Admin",
           "created_at": element.created_at,
           "status":element.user_role_status
@@ -108,7 +108,7 @@ export class UsersComponent implements OnInit {
     console.log("userdata====",data)
     let depts=[];
     depts=data.department;
-     let userroles=[];
+     let userroles:any;
      userroles=data.roles
     this.router.navigate(['/pages/admin/modify-user'], { queryParams: {id:data.email,role:userroles, dept:depts} });
 

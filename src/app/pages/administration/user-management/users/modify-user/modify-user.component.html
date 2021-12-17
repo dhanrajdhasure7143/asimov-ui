@@ -43,9 +43,10 @@
                                               <option *ngFor="let role of allRoles" [value]="role.id">
                                                   {{role.name}}</option>
                                           </select> -->
-                            <ng-select  formControlName="role" placeholder="Select Role" [multiple]="true" required>
-                                <ng-option *ngFor="let role of allRoles" [value]="role.id">{{role.name}}</ng-option>
-                            </ng-select>
+                            <select  formControlName="role" class="form-control data"
+                            [ngClass]="editUserForm.get('role').valid?'enteredfield-color':'inputfield-color'" placeholder="Select Role" required>
+                                <option *ngFor="let role of allRoles" [value]="role.id">{{role.name}}</option>
+                            </select>
                             <span *ngIf="editUserForm.get('role').invalid && editUserForm.get('role').touched" class="errspan required">Role Required*</span>
                         </div>
                         
