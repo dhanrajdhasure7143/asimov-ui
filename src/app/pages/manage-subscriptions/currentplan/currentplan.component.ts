@@ -159,15 +159,17 @@ export class CurrentplanComponent implements OnInit {
         this.tenantId=localStorage.getItem("tenantName");
         this.api.getProductPlans("EZFlow",this.tenantId).subscribe(data=> {this.listofplans =data
         this.listofplans.forEach(obj => {
+          if(obj.active==true || obj.active=='true'){
           if(obj.nickName == this.plantype){
             this.selected_plans=obj
-            if(this.selected_plans.term =="12month"){
+            if(this.selected_plans.term =="1year"){
               this.selected_plans.term= 'Annual'
             }else{
               this.selected_plans.term= 'One Month'
             }
             this.name=this.selected_plans.nickName;
           }
+         } 
           
         }
         );

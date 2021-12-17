@@ -64,7 +64,7 @@
             </div>
         <span *ngIf='!error' class="col-md-12 row">
         <div  *ngFor="let planlist of plansList; let i=index ;trackBy:loopTrackBy">
-          <div class="col-md-3 plansBox" style="margin: 1%;" *ngIf="planlist.subscribed || (planlist.nickName=='Professional' || planlist.nickName=='Enterprise')">
+          <div class="col-md-3 plansBox" style="margin: 1%;" *ngIf="(planlist.subscribed ||  planlist.active) && (planlist.nickName=='Standard' || planlist.nickName=='Professional' || planlist.nickName=='Enterprise')">
                 <h4><span id="planName" *ngIf="planlist.nickName =='Standard'"><b>Free Tier</b>
                 </span> 
                 <span id="planName" *ngIf="planlist.nickName !='Standard'"><b>{{planlist.nickName}}</b>
@@ -75,7 +75,7 @@
                     </h6>
 
                 <h5 *ngIf="planlist.nickName !='Enterprise'" style="font-weight:800;text-align: center;">$ {{planlist.amount}}.00 <span  style="font-size: 13px;font-weight: 500">/ user per {{planlist.term}}</span></h5>
-                <button *ngIf="planlist.nickName !='Enterprise' && planlist.nickName!='Free Tier'" [disabled]="planlist.subscribed" class="btn btn-primary selectplanbtn" (click)="selectedPlan(planlist)">Select</button>
+                <button *ngIf="planlist.nickName !='Enterprise' && planlist.nickName!='Free Tier'" [disabled]="planlist.subscribed || planlist.nickName=='Standard'" class="btn btn-primary selectplanbtn" (click)="selectedPlan(planlist)">Select</button>
                 <button *ngIf="planlist.nickName =='Free Tier'" [disabled]="planlist.freeSubscribed||planlist.subscribed" class="btn btn-primary selectplanbtn" (click)="selectedPlan(planlist)">Activate</button>
 
                 <h5 *ngIf="planlist.nickName =='Enterprise'" class="enterprice">Enterprise Solution</h5>
