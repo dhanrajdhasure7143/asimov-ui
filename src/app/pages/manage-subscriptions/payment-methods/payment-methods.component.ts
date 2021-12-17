@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
+import Swal from 'sweetalert2';
 import { RestApiService } from '../../services/rest-api.service';
 
 @Component({
@@ -9,6 +10,7 @@ import { RestApiService } from '../../services/rest-api.service';
 })
 export class PaymentMethodsComponent implements OnInit {
   paymentMode: any;
+  error: string;
 
   constructor(private api:RestApiService,private spinner:NgxSpinnerService) { }
 
@@ -22,9 +24,26 @@ export class PaymentMethodsComponent implements OnInit {
     this.api.listofPaymentModes().subscribe(response => {
      
        this.paymentMode = response 
+       if(this.paymentMode.message=='Billing account not found'){
+         this.error="Billing Account Not Found"
+      //   Swal.fire({
+      //     title: 'Error',
+      //     text: "Billing Account Not Found",
+      //     position: 'center',
+      //     icon: 'error',
+      //     showCancelButton: false,
+      //     confirmButtonColor: '#007bff',
+      //     cancelButtonColor: '#d33',
+      //     heightAuto: false,
+      //     confirmButtonText: 'Ok'
+      // })
+      }
+      else{
         let result = this.paymentMode.filter(obj => {
          return obj.defaultSource === true
         })
+
+      }
       //   localStorage.setItem('cardId',result[0].id)
       //  localStorage.setItem('cardExpMonth',result[0].cardExpMonth)
       //  localStorage.setItem('cardExpYear',result[0].cardExpYear)
