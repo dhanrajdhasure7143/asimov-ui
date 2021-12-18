@@ -57,3 +57,11 @@ input[type="text"]{
 .modal-body.modelprbody.datadocmodal {
     height: calc(100vh - 280px);
 }
+.vewmore-btn{
+    margin-left: 15px;
+    color: black;
+    margin-top: 65px;
+}
+.vewmore-btn:hover{
+    font-weight: bold;
+}

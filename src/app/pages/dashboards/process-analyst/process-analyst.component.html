@@ -103,13 +103,45 @@
                                     </div>
                                     <div class="dbichart-body">
                                         <div class='table-div1'>
-                                        <table class="table table-responsive">
+                                            <table mat-table #sort1="matSort" [dataSource]="pendingApprovalsdataSource" matSort class="projecttable table" id="autotable">
+                                                <ng-container matColumnDef="Process Name">
+                                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Process Name</th>
+                                                    <td mat-cell *matCellDef="let element; let i = index">{{element['Process Name']}}</td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="Created Date">
+                                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Created Date</th>
+                                                    <td mat-cell *matCellDef="let element; let i = index">{{element['Created Date'] | date: 'medium'}}</td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="Submitted by">
+                                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Submitted By</th>
+                                                    <td mat-cell *matCellDef="let element; let i = index">{{element['Submitted by']}}</td>
+                                                </ng-container>
+                    
+                                                <ng-container matColumnDef="Loading">
+                                                    <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
+                                                        Loading
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="noData">
+                                                    <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
+                                                        No Records Found
+                                                    </td>
+                                                </ng-container>
+                                                <tr mat-header-row *matHeaderRowDef="displayedColumns1; sticky: true"></tr>
+                                                <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+                                                <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['Loading']" [ngClass]="{'hide':pendingApprovalsdataSource!=null}"></tr>
+                                                <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(pendingApprovalsdataSource!=null && pendingApprovalsdataSource.data.length==0)}"></tr>
+                                            
+                                            </table>
+                                            <div class="paginationdiv1">
+                                                <mat-paginator class="newpaginationdiv" #paginator1 [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons]="true"></mat-paginator>
+                                           </div>
+                                        <!-- <table class="table table-responsive">
                                             <thead>
                                                 <tr>
                                                     <th>Process Name</th>
                                                     <th>Created Date</th>
                                                     <th>Submitted To</th>
-                                                    <!-- <th>Action</th> -->
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -117,18 +149,15 @@
                                                     <td>{{item['Process Name'] }}</td>
                                                     <td>{{item['Created Date'] | date: 'medium' }}</td>
                                                     <td>{{item['Submitted by'] }}</td>
-                                                    <!-- <td class="Tkt-eyehover" style="text-align: center;">
-                                                        <img src="../../../../assets/images/PI/eye-show.svg" alt="" class="testplus default-img">
-                                                        <img src="../../../../assets/images/Admin/eye-show-blue.svg" alt="" class="testplus hover-img">
-                                                    </td> -->
                                                 </tr>
                                             </tbody>
                                         </table>
+                                        <div class="no-item" *ngIf="pendingApprovals.length==0">No items to display</div>-->
                                         </div>
-                                        <div class="text-right" style="margin-top: 3%;">
+                                        <!-- <div class="text-right" style="margin-top: 3%;">
                                             <pagination-controls id="paginator2" (pageChange)="q = $event">
                                             </pagination-controls>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                             </div>
@@ -191,7 +220,35 @@
                                                 </div>
                                             </div>
                                             <div class='table-div'>
-                                            <table class="table table-responsive">
+                                                <table mat-table #sort3="matSort" [dataSource]="topEffortsSpentdataSource" matSort class="projecttable table" id="autotable">
+                                                    <ng-container matColumnDef="projectName">
+                                                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Project Name</th>
+                                                        <td mat-cell *matCellDef="let element; let i = index">{{element.projectName}}</td>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="daysSpent">
+                                                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Days Spent</th>
+                                                        <td mat-cell *matCellDef="let element; let i = index">{{element.daysSpent}}</td>
+                                                    </ng-container>
+                        
+                                                    <ng-container matColumnDef="Loading">
+                                                        <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="2">
+                                                            Loading
+                                                        </td>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="noData">
+                                                        <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="2">
+                                                            No Records Found
+                                                        </td>
+                                                    </ng-container>
+                                                    <tr mat-header-row *matHeaderRowDef="displayedColumns3; sticky: true"></tr>
+                                                    <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
+                                                    <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['Loading']" [ngClass]="{'hide':topEffortsSpentdataSource!=null}"></tr>
+                                                    <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(topEffortsSpentdataSource!=null && topEffortsSpentdataSource.data.length==0)}"></tr>
+                                                </table>
+                                                <div class="paginationdiv1">
+                                                    <mat-paginator class="newpaginationdiv" #paginator3 [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons]="true"></mat-paginator>
+                                               </div>
+                                            <!-- <table class="table table-responsive">
                                                 <thead>
                                                     <tr>
                                                         <th>Project Name</th>
@@ -205,10 +262,11 @@
                                                     </tr>
                                                 </tbody>
                                             </table>
+                                            <div class="no-item" *ngIf="topEffortsSpent.length==0">No items to display</div> -->
                                             </div>
                                             <div class="text-right" style="margin-top: 3%;">
-                                                <pagination-controls id="paginator4" (pageChange)="a = $event">
-                                                </pagination-controls>
+                                                <!-- <pagination-controls id="paginator4" (pageChange)="a = $event">
+                                                </pagination-controls> -->
                                             </div>
                                         </div>
                                     </div>

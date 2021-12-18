@@ -211,3 +211,12 @@
           </div>
       </div>
   </ng-template>
+
+  <ng-template #notification let-notificationData="notification">
+    <div>
+    <span [innerHTML]="notificationData.message"></span>
+  </div>
+    <br>
+    <div *ngIf="errorsList.length > 3" (click)="viewMore()" class="vewmore-btn">View More..</div>
+    
+</ng-template>

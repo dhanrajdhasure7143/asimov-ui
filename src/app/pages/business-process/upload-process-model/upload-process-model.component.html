@@ -513,3 +513,37 @@
 </div>
 </div>
   </ng-template>
+
+  
+<ng-template #processowner_template>
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Modal</h4>
+      <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="closeprocessOwnerModal()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div>
+          <form action="" #processOwner="ngForm">
+            <div class="col-md-12 p-0 form-group">
+                <label class="label-control">Process Owner<span class="star">*</span></label>
+                <select name="powner" #powner="ngModel" [(ngModel)]="process_owner" required class="form-control">
+                    <option value="" disabled hidden>Select Process Owner</option>
+                    <option value="null" disabled hidden>Select Process Owner</option>
+                    <option value="undefined" disabled hidden>Select Process Owner</option>
+                    <option value="" disabled hidden>Select Process Owner</option>
+                    <option *ngFor="let each_approver of processowner_list;let i=index" [value]=i>
+                        {{each_approver.firstName|titlecase}}  {{each_approver.lastName?each_approver.lastName:''}}</option>
+                </select>
+                <span *ngIf="((powner.invalid && processOwner.submitted) || (powner.errors && powner.touched) )" 
+                class='errspan required'> Please Select Process Owner </span>
+            </div>
+          </form>
+      </div>
+    </div>
+    <div class="modal-footer modelprfooter">
+        <div class="col-md-12 confirmationmsg">
+            <button class="btn btn-primary" [disabled]='!process_owner' (click)='saveprocess()'>Save</button>
+        </div>
+    </div>
+  </ng-template>
