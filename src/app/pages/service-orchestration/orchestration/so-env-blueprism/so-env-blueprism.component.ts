@@ -22,7 +22,7 @@ import {ActivatedRoute} from "@angular/router";
 export class SoEnvBlueprismComponent implements OnInit {
 
   
-  displayedColumns: string[] = ["check","configName","category","bluePrismUsername","bluPrismPassword","hostAddress","username","password","port","status","createdTimeStamp","createdBy"];
+  displayedColumns: string[] = ["check","configName","categoryName","bluePrismUsername","bluPrismPassword","hostAddress","username","password","port","status","createdTimeStamp","createdBy"];
   dataSource1:MatTableDataSource<any>;
   public isDataSource: boolean;
   public createblueprism : boolean = false;
