@@ -49,7 +49,7 @@
                                     <input type="checkbox" [checked]="env.checked==true" (change)=" current_instance.checkuncheckenv(env.environmentId)"> &nbsp; {{env.environmentName}}
                                 </li>
                                 <li role="menuitem" class="clickable">
-                                    <span class="clickable" (click)=" current_instance.create_env();">
+                                    <span class="clickable" (click)="dropdown.isOpen=false; current_instance.create_env();">
                           <img src="../../../../assets/images/RPA/icon_latest/pluse-blue.svg" class="testplus"/>
                           New
                         
@@ -95,7 +95,7 @@
                     </button>
                         </div>
                         <div class="action-item hovericon" *ngIf="current_instance != undefined">
-                            <button class="tsttooltipbtn" [disabled]="current_instance.savebotrespose==undefined || freetrail" (click)=" current_instance.openschedule()">
+                            <button class="tsttooltipbtn" [disabled]="current_instance.savebotrespose==undefined || freetrail=='true'" (click)=" current_instance.openschedule()">
                     <img src="../../../../assets/images/RPA/icon_latest/schedule.svg" class="testplus1">
                       <!-- <i class="ri-history-line"></i> -->
                       <span class="testtooltip">Scheduler</span>

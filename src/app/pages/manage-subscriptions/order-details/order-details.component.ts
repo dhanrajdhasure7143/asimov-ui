@@ -91,10 +91,10 @@ export class OrderDetailsComponent implements OnInit {
     this.rest.cancelSubscription(this.subscribeddata).subscribe(data => {
     
       this.getAllSubscrptions();
-      this.spinner.hide();
       this.modalRef.hide();
       //this.router.navigate(['/activation/payment/chooseplan']);
          if(data==null){
+           this.spinner.hide();
       Swal.fire({
         title: 'Success',
         text: "Subscription cancelled successfully !!",
@@ -105,7 +105,13 @@ export class OrderDetailsComponent implements OnInit {
         cancelButtonColor: '#d33',
         heightAuto: false,
         confirmButtonText: 'Ok'
-    })
+    }).then((result) => {
+      if (result.value) {
+        this.router.navigate(['/pages/home']).then(() => {
+          window.location.reload();
+        });
+      }
+    });
     }
     else if(data.message=='Cancellation Abrupted!!'){
       //Swal.fire("Warning","Subscription cancelled in progress!","success");
@@ -119,7 +125,13 @@ export class OrderDetailsComponent implements OnInit {
         cancelButtonColor: '#d33',
         heightAuto: false,
         confirmButtonText: 'Ok'
-    })
+    }).then((result) => {
+      if (result.value) {
+        this.router.navigate(['/pages/home']).then(() => {
+          window.location.reload();
+        });
+      }
+    });
     }
     }, err => {
     });
