@@ -191,3 +191,32 @@
     <p style="color: white">Validating Uploaded data...</p>
   </ngx-spinner>
   
+  <ng-template #template1>
+    <div class="modal-header modelprhead">
+      <h4 class="modal-title pull-left">Data Error</h4>
+      <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body modelprbody datadocmodal">
+      <div *ngFor="let each of errorsList;let i=index">
+        <span>{{i+1}}. </span>
+        <span *ngIf="each.emptydata">Empty data at header {{each.header}}  cell No- {{each.cell}} </span>
+        <span *ngIf="each.wrongdata">Incorrect value for header {{each.header}}  cell No- {{each.cell}} </span>
+      </div>
+      </div>
+      <div class="modal-footer modelprfooter">
+        <div class="col-md-12 confirmationmsg">
+            <button class="btn btn-primary" (click)='close_modal()'>Ok</button>
+          </div>
+      </div>
+  </ng-template>
+
+  <ng-template #notification let-notificationData="notification">
+    <div>
+    <span [innerHTML]="notificationData.message"></span>
+  </div>
+    <br>
+    <div *ngIf="errorsList.length > 3" (click)="viewMore()" class="vewmore-btn">View More..</div>
+    
+</ng-template>

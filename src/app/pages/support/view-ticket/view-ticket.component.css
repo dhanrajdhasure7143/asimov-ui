@@ -501,10 +501,10 @@ span.testtooltip:after {
     overflow: auto;
 }
 .noneditdiv {
-    position: fixed;
+    /* position: fixed;
     float: right;
     right: 28px;
-    width: 29%;
+    width: 29%; */
 }
 .cmntuserdet img {
     width: 16px;
@@ -537,4 +537,14 @@ span.userimg {
 }
 textarea{
     resize: none !important;
-  }
+}
+
+.editable_fieldsdiv {
+    overflow: hidden auto;
+}
+.editable_fieldsdiv::-webkit-scrollbar {
+    display: none;
+}
+.editable_fieldsdiv:hover::-webkit-scrollbar {
+    display: block;
+}
