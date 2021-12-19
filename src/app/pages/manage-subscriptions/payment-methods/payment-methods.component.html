@@ -12,7 +12,7 @@
         <div class="col-md-3 cardsBox" style="margin: 1%;" *ngFor="let cardData of paymentMode; let i=index ;trackBy:loopTrackBy">
                
                 <img src="../../../assets/images/subscription/card.svg"><br><br>
-                <span id=""><b> XXXX-XXXX-XXXX-{{cardData.cardLast4}}</b>
+                <span id=""><b> XXXX-XXXX-XXXX-{{cardData.cardLast4.slice(-3)}}</b>
                 <h4> <span *ngIf='cardData.defaultSource' class="active-card">Active</span></h4>
             </span>
                 <span id="cardName"><b>Card Holder's Name : {{cardData.name}}</b></span><br><br>

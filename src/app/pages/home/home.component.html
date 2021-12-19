@@ -1,4 +1,4 @@
-<div class="main-content" *ngIf="_isShow">
+<div class="main-content" *ngIf="_isShow && !freetrail">
     <div class="row content-area">
         <div class="col-sm-12">
             <label class="maintitle">Welcome To EZFlow<sub>Intelligent Automation Platform</sub></label>
@@ -31,12 +31,16 @@
 </div>
 
 
-<div class="main-content prjmain" *ngIf='isdivShow'>
+<div class="main-content prjmain" *ngIf='isdivShow && !freetrail'>
     <div class="content-area" style="overflow: scroll;">
         <app-process-owner *ngIf="userRole.includes('Process Owner')"></app-process-owner>
         <app-process-architect *ngIf="userRole.includes('Process Architect')"></app-process-architect>
         <app-process-analyst *ngIf="userRole.includes('Process Analyst') || userRole.includes('RPA Developer')"></app-process-analyst>
     </div>
+</div>
+<div class="main-content prjmain" *ngIf='freetrail'>
+    <div class="content-area" style="overflow: scroll;">
+        </div>
 </div>
 
 <div class="spinoverlay" *ngIf="isLoading">

@@ -49,7 +49,7 @@
                                     <input type="checkbox" [checked]="env.checked==true" (change)=" current_instance.checkuncheckenv(env.environmentId)"> &nbsp; {{env.environmentName}}
                                 </li>
                                 <li role="menuitem" class="clickable">
-                                    <span class="clickable" (click)=" current_instance.create_env();">
+                                    <span class="clickable" (click)="dropdown.isOpen=false; current_instance.create_env();">
                           <img src="../../../../assets/images/RPA/icon_latest/pluse-blue.svg" class="testplus"/>
                           New
                         

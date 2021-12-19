@@ -141,6 +141,7 @@ percentageComplete: number;
   projectStartDate:any;
   initiatives: any;
   loginresourcecheck: boolean=false;
+  freetrail: string;
   constructor(private dt:DataTransferService,private route:ActivatedRoute, private rpa:RestApiService,
     private modalService: BsModalService,private formBuilder: FormBuilder,private router: Router,
     private spinner:NgxSpinnerService) { }
@@ -220,6 +221,7 @@ percentageComplete: number;
       //  this.getallusers();
         this.getInitiatives();
         this.Resourcedeleteflag=false;
+        this.freetrail=localStorage.getItem("freetrail")
   }
 
   onTabChanged(event)
@@ -403,7 +405,13 @@ percentageComplete: number;
     this.resources_list.find(data=>data.id==id).checked=event.target.checked;
     this.checktodelete();
   }
-
+  inputNumberOnly(event){
+    let numArray= ["0","1","2","3","4","5","6","7","8","9","Backspace","Tab"]
+    let temp =numArray.includes(event.key); //gives true or false
+   if(!temp){
+    event.preventDefault();
+   } 
+  }
   getTaskandCommentsData(){
     this.rpa.gettaskandComments(this.project_id).subscribe(data =>{
       this.tasks=data;

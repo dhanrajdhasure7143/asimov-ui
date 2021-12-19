@@ -61,6 +61,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getAllPlans();
     // document.getElementById("filters").style.display = "block";
     var tkn = localStorage.getItem("accessToken")
     this.dt.changeParentModule(undefined);
@@ -69,7 +70,7 @@ export class HomeComponent implements OnInit {
     this.userRole=res.message;
     let user_obj={"userId":this.ProfileuserId,"tenantName":this.tenantName,"firstName":this.firstName,"lastName":this.lastName,"roles":this.userRole}
       this.dt.userDetails(user_obj)
-    this.isLoading=false;
+    // this.isLoading=false;
     if(this.userRole.includes('Process Owner') || this.userRole.includes('Process Architect') || this.userRole.includes('Process Analyst') || this.userRole.includes('RPA Developer')){
       this.isdivShow=true;
     }else{
@@ -194,7 +195,6 @@ export class HomeComponent implements OnInit {
     })
 
     //  this.dt.changeHints(this.hints.homeHints);
-    this.getAllPlans();
   }
 
   navigateToModule(){
@@ -216,11 +216,14 @@ export class HomeComponent implements OnInit {
        }
      });
      if(this.plansList.nickName=='Standard'){
-       this.freetrail=true
+       this.freetrail=true;
+      this.isLoading=false;
+       this.router.navigate(['/pages/projects/listOfProjects'])
        localStorage.setItem('freetrail',JSON.stringify(this.freetrail))
      }
      else{
-      this.freetrail=false
+      this.freetrail=false;
+      this.isLoading=false;
       localStorage.setItem('freetrail',JSON.stringify(this.freetrail))
      }
     }

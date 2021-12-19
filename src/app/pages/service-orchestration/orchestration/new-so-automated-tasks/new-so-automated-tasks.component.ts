@@ -58,7 +58,7 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
   public humans_list:any=[];
   public process_names:any=[];
   public selected_process_names:any=[];
-  public selectedvalue:any=0;
+  public selectedvalue:any="";
   public selectedTab:number;
   public responsedata;
   public selectedEnvironment:any='';
@@ -99,7 +99,7 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
     private http:HttpClient,
     private hints: sohints,
     private dt : DataTransferService,
-    private modalService:BsModalService
+    private modalService:BsModalService,
    )
 
   {
@@ -577,24 +577,22 @@ resetsla(){
     })
   }
   dropTable(event) {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data.data, event.previousIndex, event.currentIndex);
-    } else {
-      transferArrayItem(event.previousContainer.data.data, event.container.data.data, event.previousIndex, event.currentIndex);
-    }
+    // if (event.previousContainer === event.container) {
+    //   moveItemInArray(event.container.data.data, event.previousIndex, event.currentIndex);
+    // } else {
+    //   transferArrayItem(event.previousContainer.data.data, event.container.data.data, event.previousIndex, event.currentIndex);
+    // }
     //const prevIndex = this.automatedtask.findIndex((d) => d === event.item.data);
     // moveItemInArray(this.automatedtask, prevIndex, event.currentIndex);
     // this.automatedtable.renderRows();
   }
 
   applyFilter(filterValue:any) {
-    console.log(filterValue)
-    let processnamebyid=this.process_names.find(data=>filterValue==data.processId);
+    let processnamebyid=this.process_names.find(data=>parseInt(filterValue)==data.processId);
     this.selectedcategory=parseInt(processnamebyid.categoryId);
-    this.applyFilter1(this.selectedcategory);
-    this.selectedvalue=processnamebyid.processId;
+    this.selectedvalue=parseInt(processnamebyid.processId);
     this.dataSource2.filter = "processId_"+filterValue+"_"+processnamebyid.processName;
-    this.checkTaskAssigned();
+    this.checkTaskAssigned(processnamebyid.processId);
   }
 
   applyFilter1(value)
@@ -603,23 +601,87 @@ resetsla(){
     this.environments=this.environmentsData.filter(item=>item.categoryId==value);
     this.dataSource2.filter = this.categaoriesList.find(data=>this.selectedcategory==data.categoryId).categoryName.toLowerCase();
     this.selected_process_names=this.process_names.filter(item=>item.categoryId==this.selectedcategory)
-    this.selectedvalue="";
+    this.selectedvalue=""
   }
 
 
   
-    checkTaskAssigned()
+    checkTaskAssigned(id)
     {
-      
-      this.checkAssignTasks=false;
-      
-      if( this.responsedata.filter(item=>item.processId==this.selectedvalue).length==0)
-        this.checkAssignTasks=true;
+      var processId=id;
+      if( this.automatedtask.filter(item=>item.processId==processId).length==0)
+      {
+        this.checkAssignTasks=false;
+        return;
+      }
       else
-        this.responsedata.filter(item=>item.processId==this.selectedvalue).forEach(item2=>{
-          if(item2.botId==""||item2.botId==undefined || item2.botId==null || item2.botId=='null')    
-            this.checkAssignTasks=true;
-        })
+      {
+        let taskslist=this.automatedtask.filter(item=>item.processId==processId)
+        for(let i=0; i<taskslist.length;i++)
+        {
+          let item=taskslist[i]
+          if(item.taskType=="Automated")
+          { 
+            if(item.botId==""||item.botId==undefined || item.botId==null || item.botId=='null')    
+            {
+              this.checkAssignTasks=false
+              return true;
+            }
+            else
+            {
+              if(this.checkResource(item.botId,item.sourceType,item.taskType)!="0")
+              {
+                this.checkAssignTasks=true
+              }
+              else
+              {
+                this.checkAssignTasks=false;
+                return true;
+              }
+            }
+          }else if(item.taskType="Human")
+          {
+            if(item.assignedUserId==""||item.assignedUserId==undefined || item.assignedUserId==null || item.assignedUserId=='null')    
+            {
+              this.checkAssignTasks=false
+              return true;
+            }
+            else
+            {
+                if(this.checkResource(item.assignedUserId,item.sourceType,item.taskType)!="0")
+                {
+                  this.checkAssignTasks=true
+                }
+                else
+                {
+                  this.checkAssignTasks=false; 
+                  return true;
+                }
+            }
+          }
+        }
+
+      }
+    }
+    checkResource(id: any,  sourceType:any, taskType:any ) {
+      var val=""  
+      if(taskType=="Automated")
+      {
+        console.log(sourceType)
+        console.log(id)
+        if(sourceType=="EPSoft")
+          val= (this.bot_list.find(item=>parseInt(item.botId)==parseInt(id))!=undefined)?(this.bot_list.find(item=>parseInt(item.botId)==parseInt(id)).botId):"0";
+        else if(sourceType=='UiPath')
+          val= (this.uipath_bots.find(item=>item.Key==id)!=undefined)?this.uipath_bots.find(item=>item.Key==id).Key:"0";
+        else if(sourceType=='BluePrism')
+          val= (this.blueprismbots.find(item=>item.botName==id)!=undefined)?this.blueprismbots.find(item=>item.botName==id).botName:"0";
+        //return val;
+      }
+      else if(taskType=="Human")
+      {
+        val= (this.humans_list.find(item=>parseInt(item.userId.id)==parseInt(id))!=undefined)?(this.humans_list.find(item=>parseInt(item.userId.id)==parseInt(id)).userId.id):"0";
+      }
+      return val
     }
 
   close()
@@ -629,7 +691,7 @@ resetsla(){
     document.getElementById("load-bot").style.display ="none";
   }
 
-  assignbot(id)
+  assignbot(id, processId)
   {
     let botId=$("#"+id+"__select").val();
     let source=this.responsedata.find(item=>item.taskId==id).sourceType;
@@ -658,7 +720,7 @@ resetsla(){
         if(response.status!=undefined)
         {
           Swal.fire("Success","Resource Assigned Successfully","success");
-          this.checkTaskAssigned();
+          this.checkTaskAssigned(processId);
         }else
         {
           Swal.fire("Error","Failed to Assign Resource","error");
@@ -668,7 +730,7 @@ resetsla(){
   }
 
 
-  assignhuman(taskid)
+  assignhuman(taskid, processId)
   {
     let botId=$("#"+taskid+"__select").val();
     if(botId!=0)
@@ -680,7 +742,7 @@ resetsla(){
         if(response.status!=undefined)
         {
           Swal.fire("Success",response.status,"success");
-          this.checkTaskAssigned()
+          this.checkTaskAssigned(processId)
         }else
         {
           Swal.fire("Error",response.errorMessage,"warning");
@@ -1167,7 +1229,7 @@ resetsla(){
           let value: any = resp
         if (value.message === "Task Deleted Successfully!!") {
           this.getautomatedtasks(0);
-          Swal.fire("Success", "Task Deleted Sucessfully!!", "success")
+          Swal.fire("Success", "Task Deleted Successfully!!", "success")
         }
         else {
           Swal.fire("Error", "Failed to delete task", "error");

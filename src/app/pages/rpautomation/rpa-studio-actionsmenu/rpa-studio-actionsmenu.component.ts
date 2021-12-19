@@ -94,6 +94,7 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
     ceil: 8,
     vertical: true
   };
+  categoryList: any;
   constructor(
     private fb : FormBuilder,
     private rest : RestApiService,
@@ -117,6 +118,7 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
     this.pausebot=false;
     this.resumebot=false;
     this.logflag=false;
+    this.getCategories();
     this.getEnvironmentlist();
     this.getpredefinedbotlist();
     this.viewlogid="viewlog-"+this.botState.botName;
@@ -134,6 +136,7 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
         environmentType: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         agentPath: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         hostAddress: ["", Validators.compose([Validators.required, Validators.pattern(ipPattern), Validators.maxLength(50)])],
+        categoryId:["0", Validators.compose([Validators.required])],
         username: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         password: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
         connectionType: ["SSH",Validators.compose([Validators.required,, Validators.maxLength(50), Validators.pattern("[A-Za-z]*")])],
@@ -555,13 +558,15 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
 
 
  public botrunid:any;
- ViewlogByrunid(runid){
+ public selectedLogVersion:any;
+ ViewlogByrunid(runid,version){
    this.botrunid=runid;
+   this.selectedLogVersion=version
    let responsedata:any=[];
    let logbyrunidresp:any;
    let resplogbyrun:any=[];
    this.rpa_studio.spinner.show();
-   this.rest.getViewlogbyrunid(this.savebotrespose.botId,this.savebotrespose.version,runid).subscribe((data)=>{
+   this.rest.getViewlogbyrunid(this.savebotrespose.botId,version,runid).subscribe((data)=>{
      responsedata = data;
      this.rpa_studio.spinner.hide();
      if(responsedata.length >0)
@@ -766,6 +771,7 @@ loadpredefinedbot(botId)
   create_env()
   {
         document.getElementById("rpa_createenvironment"+"_"+this.botState.botName).style.display="block";
+        this.insertForm.get("categoryId").setValue(this.categoryList.length==1?this.categoryList[0].categoryId:"0")
         document.getElementById("filters").style.display = "none";
   }
 
@@ -789,13 +795,14 @@ loadpredefinedbot(botId)
         this.rpa_studio.spinner.hide();
         if(resp.status !=undefined)
         {
-            this.close_c_env();
-            Swal.fire("Success","Environment added successfully","success");
+            
+            Swal.fire("Success","Environment Added Successfully!!","success");
             //document.getElementById("rpa_createenvironment"+"_"+this.botState.botName).style.display='none';
             this.insertForm.reset();
             this.insertForm.get("portNumber").setValue("22");
             this.insertForm.get("connectionType").setValue("SSH");
             this.getEnvironmentlist()
+            this.close_c_env();
         }else if(resp.errorMessage!=undefined)
         {
           Swal.fire("Error",resp.errorMessage,"error");
@@ -871,6 +878,28 @@ loadpredefinedbot(botId)
       document.getElementById("filters").style.display = "block";
     }
 
+    getCategories()
+    {
+      this.rest.getCategoriesList().subscribe(data=>{
+        let response:any=data;
+        if(response.errorMessage==undefined)
+        {
+          this.categoryList=response.data;
+          this.getEnvironmentlist();
+      
+        }
+      })
+    }
+
+    EnvType1(){
+      if(this.insertForm.value.environmentType == "Windows"){
+        //this.updateForm.value.portNumber="44";
+        this.insertForm.get("portNumber").setValue("44");
+      }else if(this.insertForm.value.environmentType == "Linux"){
+        this.insertForm.get("portNumber").setValue("22");
+      }
+    }
+  
 }
 
 

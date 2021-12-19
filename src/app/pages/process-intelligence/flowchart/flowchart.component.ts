@@ -1261,6 +1261,10 @@ flowchartDataOne(dataArray,index) {   //Links generate from responce for perform
     this.isClearFilter=true;
     this.checkboxValue=false;
     this.model1 = this.fullgraph_model;
+    console.log(this.selectedCaseArry);
+    if(this.selectedCaseArry.length>=1){
+      this.generatevarientFilterGraph();
+    }else{
     this.filterPerformData = this.fullgraph_model;
     this.model2 = this.flowchartData(this.model1)
     // end points update in filter overlay
@@ -1276,14 +1280,14 @@ flowchartDataOne(dataArray,index) {   //Links generate from responce for perform
         this.endArray.push(element.from)
       }
     });
-
+  }
     this.spinMetrics0="";
     this.spinMetrics0="absoluteFrequency";
     this.activityValue=1;
     this.pathvalue=1;
-    for (var i = 0; i < this.varaint_data.data.length; i++) {
-      this.varaint_data.data[i].selected = "inactive";
-    }
+    // for (var i = 0; i < this.varaint_data.data.length; i++) {
+    //   this.varaint_data.data[i].selected = "inactive";
+    // }
     this.isPerformance=false;
       //  BPMN Boolean Variables
       this.isFullGraphBPMN = true;
@@ -2090,5 +2094,62 @@ addWorkingHours(){
   }
    viewbusinessinsights(){
     this.router.navigate(["/pages/processIntelligence/business-insights"],{queryParams:{wpid:this.graphIds}})
+  }
+
+  generatevarientFilterGraph(){
+  if (this.selectedCaseArry.length == 1) {
+    this.isvariantSelectedOne=true;
+    this.issliderDisabled=true;
+    this.isDefaultData = false;
+    if (this.keyExists(this.selectedCaseArry[0], this.varaint_GraphData.data) == true) {
+      var modalData = this.varaint_GraphData.data[0][this.selectedCaseArry[0]] 
+      this.model1 = modalData.nodeDataArraycase
+              
+            this.model2 = this.flowchartData(this.model1)
+    }
+         /**
+     * BPMN Boolean Variables
+     */
+    this.isFullGraphBPMN = false;
+    this.isSingleTraceBPMN = true;
+    this.isMultiTraceBPMN = false;
+    this.isSliderBPMN = false;
+    this.isWorkingHrsBtn=false;
+    this.dt.pi_buttonValues({"isPlaybtn":false,"isTimefeed_btn":this.isWorkingHrsBtn});
+  }else{
+    this.issliderDisabled=true;
+    this.isvariantSelectedOne=false;
+    let endTime:any
+    if(this.workingHours.shiftEndTime=='23:59'){
+      endTime="24:00"
+    }else{
+      endTime=this.workingHours.shiftEndTime
+    }
+    this.loaderImgSrc = "/assets/images/PI/Loader_Retrieving-Generated-Graph.gif";
+    this.spinner.show();;
+    const variantComboBody={
+      "data_type":"variant_combo",
+      "pid":this.graphIds,
+      "cases" : this.selectedCaseArry,
+      'timeChange':this.isTimeChange,
+      "workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+endTime+":00"
+        }
+  this.rest.getVariantGraphCombo(variantComboBody).subscribe(res=>{this.variantCombo=res
+    this.model1=this.variantCombo.data[0].nodeDataArraycase;
+    this.filterPerformData = this.variantCombo.data[0].nodeDataArraycase;
+               
+          this.model2 = this.flowchartData(this.model1);
+        this.spinner.hide();
+  })
+       /**
+     * BPMN Boolean Variables
+     */
+    this.isFullGraphBPMN = false;
+    this.isSingleTraceBPMN = false;
+    this.isMultiTraceBPMN = true;
+    this.isSliderBPMN = false;
+    this.isWorkingHrsBtn=false;
+    this.dt.pi_buttonValues({"isPlaybtn":false,"isTimefeed_btn":this.isWorkingHrsBtn});
+  }
   }
 }

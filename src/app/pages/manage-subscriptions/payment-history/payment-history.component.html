@@ -78,7 +78,7 @@
         </ng-container>
         <ng-container matColumnDef="noData">
             <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
-                <!-- No Records Found -->
+                No Records Found 
                 <!-- <div *ngIf="program_detials.invoice.length==0" class="text-center">
                   <img  src="../../../../assets/images/RPA/No-Items.svg" class="no-item-img">
                   <h3 class="text-center">No Items to display</h3>
@@ -88,7 +88,7 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns8; sticky: true"></tr>
         <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns8;"></tr>
         <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['Loading']" [ngClass]="{'hide':dataSource8!=null}"></tr>
-        <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(dataSource8!=null && dataSource8.data.length==0)}"></tr>
+        <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(dataSource8!=null && dataSource8.data.length==0 && dataSource8.errorMessage=='Customer not found')}"></tr>
     </table>
     <mat-paginator class="newpaginationdiv" #paginator104 [pageSize]="3" [pageSizeOptions]="[3, 5, 10, 25, 50]" [showFirstLastButtons]="true">
     </mat-paginator>

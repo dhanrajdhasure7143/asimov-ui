@@ -8,7 +8,7 @@
   </div> -->
 
             <!-- <a mat-list-item ><i class="fa fa-area-chart"></i> &nbsp; &nbsp; Dashboard</a> -->
-            <a mat-list-item class="link" id="eiap-home" (click)="hightlight('eiap-home',null)" routerLink="/pages/home" [matTooltip]=" !obj.sideBarOpen ? 'Dashboard' : ''" matTooltipClass="sidebarTooltip" matTooltipPosition="right">
+            <a mat-list-item *ngIf="!freetrail" class="link" id="eiap-home" (click)="hightlight('eiap-home',null)" routerLink="/pages/home" [matTooltip]=" !obj.sideBarOpen ? 'Dashboard' : ''" matTooltipClass="sidebarTooltip" matTooltipPosition="right">
                 <span class="side-icon">
       <span class="active-img" id="eiap-home-icon-active">
           <img src="../../../assets/images/dashboard_icons/active-icons/Dashboard.svg">

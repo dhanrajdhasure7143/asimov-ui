@@ -1025,7 +1025,7 @@ export class RpaHomeComponent implements OnInit {
     const filterPipe = new SearchRpaPipe();   
      const fiteredArr = filterPipe.transform(this.bot_list,v);   
      console.log(fiteredArr)     
-      //this.assignPagination(fiteredArr)    
+      this.assignPagination(fiteredArr)    
   }
 
 

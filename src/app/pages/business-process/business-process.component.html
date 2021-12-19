@@ -33,7 +33,7 @@
 
                   </button>
                   <span *ngIf="rejectedOrApproved!='PENDING'">
-                    <span *ngIf="!(userRole=='User' && rejectedOrApproved=='APPROVED')">
+                    <span *ngIf="!(freetrail=='true' && rejectedOrApproved=='APPROVED')">
                     <button *ngIf='!iscreate_notation' class="editprimary tsttooltipbtn" [disabled]="isEditMode " (click)="editNotation()">
                       <img class="defaul-img" src="../../../assets/images/BPMS/Edit-blue.svg">
                       <span class="testtooltip">Edit</span>
@@ -120,7 +120,7 @@
               <button class="icon-disabled" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && isSave_disabled && !iscreate_notation">
                 <img src="../../../assets/images/BPMS/submit-for-approvaldisabled.svg">
               </button>
-              <button class="clr-hvr tsttooltipbtn" (click)="orchestartion()" *ngIf="rejectedOrApproved=='APPROVED'">
+              <button class="clr-hvr tsttooltipbtn" (click)="orchestartion()" *ngIf="rejectedOrApproved=='APPROVED' && freetrail!='true'">
                 <img src="../../../assets/images/BPMS/orchestration.svg">
                 <span class="testtooltip">Orchestration</span>
               </button>
@@ -178,7 +178,7 @@
         <option value="undefined" disabled hidden>Select Approver</option>
         <option value="null" disabled hidden>Select Approver</option>
         <option *ngFor="let each_approver of approver_list;let i=index" [value]=i>
-            {{each_approver.firstName+" "+each_approver.lastName}}</option>
+            {{(each_approver.firstName| titlecase)+" "+(each_approver.lastName==undefined?"":each_approver.lastName)}}</option>
     </select>
     </div>
     <div class="custom-footer-content">

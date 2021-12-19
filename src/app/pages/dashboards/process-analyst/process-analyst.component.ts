@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import * as am4core from '@amcharts/amcharts4/core';
 import * as am4charts from '@amcharts/amcharts4/charts';
 import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 import { RestApiService } from '../../services/rest-api.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 
 @Component({
@@ -38,6 +41,14 @@ export class ProcessAnalystComponent implements OnInit {
   userEmail: any;
   userName: any;
   topEffortsSpent: any[]=[];
+  displayedColumns1=['Process Name','Created Date','Submitted by'];
+  displayedColumns3=['projectName','daysSpent'];
+  @ViewChild("sort1",{static:false}) sort1: MatSort;
+  @ViewChild("paginator1",{static:false}) paginator1: MatPaginator;
+  pendingApprovalsdataSource:MatTableDataSource<any>;
+  @ViewChild("sort3",{static:false}) sort3: MatSort;
+  @ViewChild("paginator3",{static:false}) paginator3: MatPaginator;
+  topEffortsSpentdataSource:MatTableDataSource<any>;
 
   constructor(private apiService: RestApiService, private jwtHelper: JwtHelperService) {
     this.userDetails = this.jwtHelper.decodeToken(localStorage.getItem('accessToken'));;
@@ -102,11 +113,17 @@ export class ProcessAnalystComponent implements OnInit {
       this.apiService.gettopEffortsSpent(this.userRoles, this.userEmail, this.userName).subscribe(res => {
             res_data = res;
         for (let [key, value] of Object.entries(res_data)) {
-          if(value != 0){
-          var obj={'prj_name':key,'days':value}
-          this.topEffortsSpent.push(obj)
+          if (value != 0) {
+            var obj = { 'projectName': key, 'daysSpent': value }
+            this.topEffortsSpent.push(obj);
           }
         }
+        this.topEffortsSpent.sort(function (a, b) {
+          return b.days - a.days;
+        });
+        this.topEffortsSpentdataSource= new MatTableDataSource(this.topEffortsSpent);
+        this.topEffortsSpentdataSource.sort=this.sort3;
+        this.topEffortsSpentdataSource.paginator=this.paginator3;
         this.isLoading = false;
       })
     }
@@ -118,6 +135,9 @@ export class ProcessAnalystComponent implements OnInit {
     this.apiService.getPendingApprovals(this.userRoles, this.userEmail, this.userName, duration).subscribe((res: any) => {
       this.pendingApprovals = res;
       this.isLoading = false;
+      this.pendingApprovalsdataSource= new MatTableDataSource(this.pendingApprovals);
+      this.pendingApprovalsdataSource.sort=this.sort1;
+      this.pendingApprovalsdataSource.paginator=this.paginator1;
     });
   }
 
@@ -324,14 +344,6 @@ export class ProcessAnalystComponent implements OnInit {
       this.runtimestatschart.zoomOutButton.disabled = true;
       this.runtimestatschart.logo.disabled = true;
 
-      this.runtimestatschart.colors.list = [
-        am4core.color("#ff5b4f"),
-        am4core.color("#575fcd"),
-        am4core.color("#d89f59"),
-        am4core.color("#f2dfa7"),
-        am4core.color("#ff5b4f"),
-        am4core.color("#74c7b8")
-      ]
       var categoryAxis = this.runtimestatschart.xAxes.push(new am4charts.CategoryAxis());
 
       categoryAxis.dataFields.category = "name";
@@ -366,6 +378,26 @@ export class ProcessAnalystComponent implements OnInit {
       columnTemplate.events.once("inited", function (event) {
         event.target.fill = runtimeref.colors.getIndex(event.target.dataItem.index);
       });
+      categoryAxis.renderer.labels.template.disabled = true;
+            var legend = new am4charts.Legend();
+            legend.parent = this.runtimestatschart.chartContainer;
+            legend.itemContainers.template.togglable = false;
+            legend.marginTop = 20;
+            legend.fontSize = 12;
+            let markerTemplate = legend.markers.template;
+            markerTemplate.width = 10;
+            markerTemplate.height = 10;
+          series.events.on("ready", function(ev) {
+            let legenddata = [];
+            series.columns.each(function(column) {
+              legenddata.push({
+                name: column.dataItem.categoryX,
+                fill: column.fill
+              })
+            });
+            legend.data = legenddata;
+          });
+
       var cursor = new am4charts.XYCursor();
       cursor.behavior = "panX";
       this.runtimestatschart.cursor = cursor;

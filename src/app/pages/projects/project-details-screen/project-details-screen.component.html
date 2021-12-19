@@ -18,7 +18,7 @@
             <img src="../../../../assets/images/Projects/Project-Repo.svg" class="testplus1" >
             <span class="testtooltip">Project Repo</span>
             </button>
-            <button class="tsttooltipbtn" (click)="navigateToOrchestration()">
+            <button class="tsttooltipbtn" (click)="navigateToOrchestration()" *ngIf="freetrail!='true'">
                 <img height="20" width="20" src="../../../assets/images/BPMS/orchestration.svg">
                 <span class="testtooltip">Orchestration</span>
               </button>
@@ -80,7 +80,7 @@
                                 <span class="projectdesc">{{projectDetails.projectPurpose}}</span>
                             </div>
                             <div *ngIf="editdata==true">
-                                <textarea (change)="projectDetails.projectPurpose=$event.target.value" [value]="(projectDetails.projectPurpose==undefined||projectDetails.projectPurpose==null)?'':projectDetails.projectPurpose" class="small-input" placeholder="Enter Project Description"
+                                <textarea style="resize: none;" (change)="projectDetails.projectPurpose=$event.target.value" [value]="(projectDetails.projectPurpose==undefined||projectDetails.projectPurpose==null)?'':projectDetails.projectPurpose" class="small-input" placeholder="Enter Project Description"
                                     maxlength="150"></textarea>
                             </div>
                         </div>
@@ -304,7 +304,7 @@
 
                                     </div>
                                     <div *ngIf="editdata==true">
-                                        <input type="text" (change)="projectDetails.effortsSpent=$event.target.value" class="small-input" placeholder="Efforts Spent" [value]="(projectDetails.effortsSpent == null || projectDetails.effortsSpent == undefined || projectDetails.effortsSpent =='')?'':projectDetails.effortsSpent">
+                                        <input type="text" (change)="projectDetails.effortsSpent=$event.target.value" (keydown)="inputNumberOnly($event)" maxlength="6" class="small-input"  placeholder="Efforts Spent" [value]="(projectDetails.effortsSpent == null || projectDetails.effortsSpent == undefined || projectDetails.effortsSpent =='')?'':projectDetails.effortsSpent">
                                     </div>
                                 </div>
                             </div>

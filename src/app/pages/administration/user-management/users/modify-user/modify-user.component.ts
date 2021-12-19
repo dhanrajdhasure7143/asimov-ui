@@ -47,15 +47,15 @@ getAllCategories(){
       console.log("data=",data)
       this.userId=data.id;
       // this.roles=["3"];
-      data.role.forEach(element => {
+     // data.role.forEach(element => {
         this.allRoles.forEach(x => {
-          if(x.displayName === element){
+          if(x.displayName === data.role){
             roles1.push(x.id)
           }
           
         });
         // this.roleIds.push(this.roleObj.id);
-        });
+     //   });
       data.dept.forEach(element => {
         this.categories.forEach(x => {
           if(x.categoryName === element){
