@@ -881,8 +881,10 @@ getDBTables(){      //get DB tables list
     this.dataSource= new MatTableDataSource(this.process_graph_list);
     this.dataSource.filter = filterValue.trim().toString();
     this.dataSource.paginator=this.paginator;
+    this.dataSource.sort=this.sort;
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
+      
     }
   }
 

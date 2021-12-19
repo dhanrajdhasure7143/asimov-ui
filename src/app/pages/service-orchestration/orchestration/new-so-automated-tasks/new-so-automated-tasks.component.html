@@ -13,7 +13,7 @@
                 </div>
 
                 <div *ngIf="process_names!=undefined" id="autoprocesssearch" class="col-md-3 pl-0">
-                    <select class="rpa-control form-control" [(ngModel)]="selectedvalue" (change)="applyFilter($event.target.value)">
+                    <select class="rpa-control form-control" [value]="selectedvalue" (change)="applyFilter($event.target.value)">
             <option value="" disabled>Select Process</option>  
             <option *ngFor="let process of selected_process_names" [value]="process.processId">{{process.processName}}
               </option>
@@ -45,11 +45,11 @@
       <img src="../../../../../assets/images/RPA/icon_latest/reset-blue.svg" class="testplus">
       <span class="testtooltip">Reset</span>
     </button>
-                <button disabled *ngIf="selectedvalue=='' || selectedEnvironment==''" id="autoStartProcess" class="tsttooltipbtn" (click)="startprocess()">
+                <button disabled *ngIf="selectedvalue=='' || selectedEnvironment=='' || !(checkAssignTasks)" id="autoStartProcess" class="tsttooltipbtn" (click)="startprocess()">
       <img src="../../../../assets/images/RPA/icon_latest/play.svg" alt="" class="testplus">
       <span *ngIf="!(selectedvalue=='' || selectedEnvironment=='')" class="testtooltip">Run Process</span>
     </button>
-                <button *ngIf="selectedvalue!='' && selectedEnvironment!='' " id="autoStartProcess" class="tsttooltipbtn" (click)="startprocess()">
+                <button *ngIf="selectedvalue!='' && selectedEnvironment!='' && checkAssignTasks " id="autoStartProcess" class="tsttooltipbtn" (click)="startprocess()">
       <img src="../../../../../assets/images/SO/play blue.svg" alt="" class="testplus">
       <span  class="testtooltip">Run Process</span>
     </button>
@@ -284,11 +284,11 @@
                 </button>
               </span>
                             <span>
-                <button  (click)="assignbot(element.taskId)" *ngIf="element.taskType == 'Automated'" matTooltip="Assign Bot">
+                <button  (click)="assignbot(element.taskId, element.processId)" *ngIf="element.taskType == 'Automated'" matTooltip="Assign Bot">
                   <!-- <i  class="fas fa-check text-success"></i> -->
                   <img src="../../../../../assets/images/SO/check-success.svg" class="testplus"/>
                 </button>
-                <button (click)="assignbot(element.taskId)" *ngIf="element.taskType == 'Human'" matTooltip="Assign Resource">
+                <button (click)="assignbot(element.taskId, element.processId)" *ngIf="element.taskType == 'Human'" matTooltip="Assign Resource">
                   <!-- <i  class="fas fa-check text-success"></i> -->
                   <img src="../../../../../assets/images/SO/check-success.svg" class="testplus"/>
                 </button>
