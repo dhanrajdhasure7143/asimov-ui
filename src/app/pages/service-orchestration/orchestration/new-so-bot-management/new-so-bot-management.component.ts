@@ -432,8 +432,18 @@ public slaupdate : boolean = false;
           let object:any=item;
           (this.categaoriesList.find(resp => resp.categoryId==item.department)!=undefined)?
           object.department=this.categaoriesList.find(resp => resp.categoryId==object.department).categoryName:object.department="-";
-          return object;
+          return {
+            botId:object.botId,
+            botName:object.botName,
+            botStatus:object.botStatus,
+            description:object.description,
+            department:object.department,
+            sourceType:object.sourceType,
+            categoryName:object.categoryName,
+            version:object.version
+          };
         });
+
         this.bot_list=botlist;
         this.datasourcelist = this.bot_list;
         this.dataSource1= new MatTableDataSource(botlist);
@@ -441,7 +451,6 @@ public slaupdate : boolean = false;
         this.dataSource1.sort=this.sort1;
         this.dataSource1.paginator=this.paginator1;
         this.spinner.hide();
-        console.log(this.dataSource1)
     }
     },(err)=>{
       console.log(err)
