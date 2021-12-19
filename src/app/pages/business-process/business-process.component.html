@@ -178,7 +178,7 @@
         <option value="undefined" disabled hidden>Select Approver</option>
         <option value="null" disabled hidden>Select Approver</option>
         <option *ngFor="let each_approver of approver_list;let i=index" [value]=i>
-            {{each_approver.firstName+" "+each_approver.lastName}}</option>
+            {{(each_approver.firstName| titlecase)+" "+(each_approver.lastName==undefined?"":each_approver.lastName)}}</option>
     </select>
     </div>
     <div class="custom-footer-content">

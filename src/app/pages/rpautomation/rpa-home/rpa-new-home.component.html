@@ -141,7 +141,7 @@
                         </div>
                         <div class="col-md-4 p-0">
                             <div class="col-md-6 form-group pr-0 rpa-searchip">
-                                <input class="form-control toolbar-search" type="text" [(ngModel)]="userFilter.botName" (keyup)="applySearchFilter($event.target.value)" placeholder="Search Bot">
+                                <input class="form-control toolbar-search" type="text"  (keyup)="applySearchFilter($event.target.value)" placeholder="Search Bot">
                                 <img src="../../../../assets/images/search.svg" alt="" class="testplus1">
                             </div>
                             <!-- <div class="col-md-12 form-group pr-0 rpa-searchip">
@@ -150,7 +150,7 @@
                 </div> -->
                             <div class="col-md-6 form-group pr-0 rpa-searchip">
                                 <!-- <input class="form-control toolbar-search" type="text" [(ngModel)]="userFilter.department" placeholder="Search Category" > -->
-                                <select class="form-control" [(ngModel)]="userFilter.department">
+                                <select class="form-control" (change)="applySearchFilter($event.target.value)">
                     <option value="" >Select Category</option>
                     <option [value]="category.categoryName" *ngFor="let category of categaoriesList">{{category.categoryName}}</option>
                   </select>
@@ -236,7 +236,7 @@
                             </div>
                         </div>
                         <div class="rpa-home-table">
-                            <mat-expansion-panel [hideToggle]="true" #botpanel1 (opened)="getBotImage(bot.botId,bot.version,$event)" *ngFor="let bot of (displayedRows$  | async) | filterBy:userFilter  ;let i=index;">
+                            <mat-expansion-panel [hideToggle]="true" #botpanel1 (opened)="getBotImage(bot.botId,bot.version,$event)" *ngFor="let bot of (displayedRows$  | async ) ;let i=index;">
 
                                 <!-- <mat-expansion-panel [hideToggle]="true" #botpanel1 (opened)="getBotImage(bot.botId,bot.version,$event)" *ngFor="let bot of bot_list | filterBy:userFilter  |  paginate: {itemsPerPage: pageSize, currentPage: page } "> -->
 

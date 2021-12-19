@@ -57,7 +57,7 @@
                                 <option value="undefined" disabled hidden>Select Process Owner</option>
                                 <option value="" disabled hidden>Select Process Owner</option>
                                 <option *ngFor="let each_approver of approver_list;let i=index" [value]=i>
-                                    {{each_approver.firstName+" "+each_approver.lastName}}</option>
+                                    {{(each_approver.firstName | titlecase) +" "+(each_approver.lastName==undefined?"":each_approver.lastName)}}</option>
                             </select>
                             <span *ngIf="((powner.invalid && processCategoryForm.submitted) || (powner.errors && powner.touched) )" 
                             class='errspan required'> Please Select Process Owner </span>
