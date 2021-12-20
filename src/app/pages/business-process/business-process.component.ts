@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { DataTransferService } from '../services/data-transfer.service';
 import { RestApiService } from '../services/rest-api.service';
 import { APP_CONFIG } from 'src/app/app.config';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-bussiness-process',
   templateUrl: './business-process.component.html' ,
@@ -33,6 +34,8 @@ export class BusinessProcessComponent implements AfterViewChecked {
   systemAdmin:Boolean=false;
   isUploaded:boolean=false;
   freetrail: string;
+  processowner_list:any[]=[];
+  process_owner:any;
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private cdRef: ChangeDetectorRef, private dt: DataTransferService,private rest:RestApiService,
               @Inject(APP_CONFIG) private config, ) { }
 
@@ -102,9 +105,17 @@ export class BusinessProcessComponent implements AfterViewChecked {
     
     }
     await this.rest.getmultipleApproverforusers(roles).subscribe( res =>  {//Process Architect
-     if(Array.isArray(res))
+      if(Array.isArray(res))
        this.approver_list = res;
    });
+
+   let roles1={
+    "roleNames": ["Process Owner"]
+  }
+  await this.rest.getmultipleApproverforusers(roles1).subscribe( res =>  {//Process Architect
+    if(Array.isArray(res))
+     this.processowner_list = res;
+ });
   }
   route() {
     this.router.navigate(['/pages/home']);
@@ -194,8 +205,21 @@ export class BusinessProcessComponent implements AfterViewChecked {
     window.location.href = this.config.camundaUrl+"/camunda/app/welcome/"+splitTenant+"/#!/login?accessToken=" + token + "&userID="+userId+"&tenentID="+selecetedTenant+"&navigate_back="+navigateBackTo;
   }
 
-  onchange(){
-    let obj={id:"submit",selectedApprovar:this.selected_approver}
+  saveandSubmit(){
+    let obj
+    if(this.isShowConformance){
+      if(!this.process_owner){
+        Swal.fire({
+          icon: 'error',
+          text: 'Please select process owner !',
+          heightAuto: false,
+        });
+        return;
+      }
+      obj={id:"submit",selectedApprovar:this.selected_approver,processOwner:this.process_owner}
+    }else{
+      obj={id:"submit",selectedApprovar:this.selected_approver}
+    }
     this.dt.submitForApproval(obj)
   }
 

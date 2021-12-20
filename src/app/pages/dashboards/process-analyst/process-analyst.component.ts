@@ -41,7 +41,7 @@ export class ProcessAnalystComponent implements OnInit {
   userEmail: any;
   userName: any;
   topEffortsSpent: any[]=[];
-  displayedColumns1=['Process Name','Created Date','Submitted by'];
+  displayedColumns1=['Process Name','Created Date','Submitted by','Approver Name'];
   displayedColumns3=['projectName','daysSpent'];
   @ViewChild("sort1",{static:false}) sort1: MatSort;
   @ViewChild("paginator1",{static:false}) paginator1: MatPaginator;

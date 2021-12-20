@@ -517,7 +517,7 @@
   
 <ng-template #processowner_template>
     <div class="modal-header">
-      <h4 class="modal-title pull-left">Modal</h4>
+      <h4 class="modal-title pull-left">Process</h4>
       <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="closeprocessOwnerModal()">
         <span aria-hidden="true" class="visually-hidden">&times;</span>
       </button>
@@ -532,7 +532,7 @@
                     <option value="null" disabled hidden>Select Process Owner</option>
                     <option value="undefined" disabled hidden>Select Process Owner</option>
                     <option value="" disabled hidden>Select Process Owner</option>
-                    <option *ngFor="let each_approver of processowner_list;let i=index" [value]=i>
+                    <option *ngFor="let each_approver of processowner_list;let i=index" [value]=each_approver.userId>
                         {{each_approver.firstName|titlecase}}  {{each_approver.lastName?each_approver.lastName:''}}</option>
                 </select>
                 <span *ngIf="((powner.invalid && processOwner.submitted) || (powner.errors && powner.touched) )" 
