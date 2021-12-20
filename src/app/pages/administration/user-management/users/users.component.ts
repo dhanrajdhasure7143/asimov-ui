@@ -128,7 +128,9 @@ export class UsersComponent implements OnInit {
         this.router.navigate(["/pages/admin/invite-user"])
       }
     }
+    else{
     this.router.navigate(["/pages/admin/invite-user"])
+  }
   }
 
   modifyUser(data){
