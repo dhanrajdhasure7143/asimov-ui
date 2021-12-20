@@ -18,12 +18,13 @@ import { DataTablesModule } from 'angular-datatables';
 import { Ng5SliderModule } from 'ng5-slider';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
+import { OrderByPipe } from './pipes/orderby-pipe.pipe';
 
 
 @NgModule({
   declarations: [ManageSubscriptionsComponent, CurrentplanComponent, 
     PaymentMethodsComponent, BillingAddressComponent, PaymentHistoryComponent,
-     OrderDetailsComponent,],
+     OrderDetailsComponent,OrderByPipe],
   imports: [
     CommonModule,  
     ManageSubscriptionsRoutingModule,
