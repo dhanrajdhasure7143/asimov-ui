@@ -305,7 +305,7 @@ export class ProcessAnalystComponent implements OnInit {
       series.slices.template.adapter.add("tooltipText", function(text, target) {
         // var text=_self.getTimeConversion('{_dataContext.totalDuration}');
         //return "{_dataContext.activity} \n {_dataContext.convertedDuration}";
-        return "Projects: {value} \n {project} : {value.percent.formatNumber('#.#')}% [/]"
+        return "Tasks: {value} \n {project} : {value.percent.formatNumber('#.#')}% [/]"
       });
       $('g:has(> g[stroke="#3cabff"])').hide();
       series.colors.list = [
