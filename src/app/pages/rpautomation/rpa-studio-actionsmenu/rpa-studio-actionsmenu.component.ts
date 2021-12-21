@@ -256,6 +256,11 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
           this.childBotWorkspace.disable=true;
           let bottask:any=this.botState;
           this.getVersionlist();
+          let coordinates=(this.childBotWorkspace.finaldataobjects[0].x.split("|")!=undefined)?this.childBotWorkspace.finaldataobjects[0].nodeId.split("|"):undefined;
+          if(coordinates!=undefined)
+          {
+            this.childBotWorkspace.finaldataobjects[0].nodeId=coordinates[0];
+          }
           this.childBotWorkspace.uploadfile(this.finalenv);
 
           if(bottask.taskId!=0 && bottask.taskId!=undefined)
@@ -267,6 +272,11 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
         {
           Swal.fire("Error","Bot failed to save","error");
           this.childBotWorkspace.disable=false;
+          let coordinates=(this.childBotWorkspace.finaldataobjects[0].x.split("|")!=undefined)?this.childBotWorkspace.finaldataobjects[0].nodeId.split("|"):undefined;
+          if(coordinates!=undefined)
+          {
+            this.childBotWorkspace.finaldataobjects[0].nodeId=coordinates[0];
+          }
         }
       });
       }
@@ -291,12 +301,24 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
             this.rpa_studio.spinner.hide();
             this.getVersionlist();
             Swal.fire("Success","Bot updated successfully","success")
+            let coordinates=(this.childBotWorkspace.finaldataobjects[0].x.split("|")!=undefined)?this.childBotWorkspace.finaldataobjects[0].nodeId.split("|"):undefined;
+            if(coordinates!=undefined)
+            {
+              this.childBotWorkspace.finaldataobjects[0].nodeId=coordinates[0];
+            }
+            
             this.childBotWorkspace.uploadfile(this.finalenv);
           }
           else
           {
             this.rpa_studio.spinner.hide();
             Swal.fire("Error",response.errorMessage,"error");
+            let coordinates=(this.childBotWorkspace.finaldataobjects[0].x.split("|")!=undefined)?this.childBotWorkspace.finaldataobjects[0].nodeId.split("|"):undefined;
+            if(coordinates!=undefined)
+            {
+              this.childBotWorkspace.finaldataobjects[0].nodeId=coordinates[0];
+            }
+            console.log(this.childBotWorkspace.finaldataobjects)
           }
         });
       }
