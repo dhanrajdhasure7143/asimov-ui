@@ -55,7 +55,7 @@ export class FlowchartComponent implements OnInit {
   isselected: number;
   activityValue: number = 1;
   public checkboxValue: boolean = false;
-  public selectedCaseArry: any[];
+  public selectedCaseArry: any[]=[];
   // public isfrequency: boolean = false;
   public caselength: number;
   public isdownloadsvg: boolean = false;
@@ -158,6 +158,10 @@ performanceFilterInput:any ={};
 isLoading:boolean=false;
 Pi_header_functions:Subscription;
 isGraph_changed:boolean=false;
+model3:any[]=[];
+selectedActivities1:any[]=[];
+combofilterObject:any;
+
 
   constructor(private dt: DataTransferService,
     private router: Router,
@@ -1258,13 +1262,22 @@ flowchartDataOne(dataArray,index) {   //Links generate from responce for perform
 
   resetspinnermetrics(){        //process graph reset in leftside  spinner metrics
     this.resetFilter=true;
-    this.isClearFilter=true;
+    // this.isClearFilter=true;
     this.checkboxValue=false;
-    this.model1 = this.fullgraph_model;
-    console.log(this.selectedCaseArry);
+    if(this.selectedCaseArry.length==0){
+      this.varaint_data.data.forEach(element => {
+        if(element.selected=="active"){
+          this.selectedCaseArry.push(element.case)
+        }
+      });
+    }
+    // if(this.selectedActivities1.length>1){
+    //   this.readSelectedFilterValues(this.combofilterObject);
+    // }
     if(this.selectedCaseArry.length>=1){
       this.generatevarientFilterGraph();
     }else{
+    this.model1 = this.fullgraph_model;
     this.filterPerformData = this.fullgraph_model;
     this.model2 = this.flowchartData(this.model1)
     // end points update in filter overlay
@@ -1608,10 +1621,13 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
 
   readSelectedFilterValues(object){     // apply filter from overlay
     this.isFilterApplied=true;
+    console.log(object)
+    this.combofilterObject=object
     if(object.startPoint==null && object.endPoint==null && object.activity==null && object.variants.length==this.varaint_data.data.length){
       this.isWorkingHrsBtn=true;
       this.dt.pi_buttonValues({"isPlaybtn":false,"isTimefeed_btn":this.isWorkingHrsBtn});
       this.model1 = this.fullgraph_model;
+      this.model3 = this.fullgraph_model;
       this.model2 = this.flowchartData(this.model1); 
             this.startArray=[];
             this.endArray=[];
@@ -1635,7 +1651,8 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
         }
         this.loaderImgSrc = "/assets/images/PI/Loader_Retrieving-Generated-Graph.gif";
         this.spinner.show();;
-
+        this.selectedActivities1=object.activity;
+        // console.log(this.selectedActivities1);
           var reqObj={
             "data_type":"endpoint_activity_filter",
             "pid":this.graphIds,
@@ -1649,6 +1666,7 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
           this.rest.getVariantGraphCombo(reqObj).subscribe(res => {
           this.variantCombo = res
             this.model1 = this.variantCombo.data[0].nodeDataArraycase;
+            this.model3 = this.variantCombo.data[0].nodeDataArraycase;
             this.filterPerformData = this.variantCombo.data[0].nodeDataArraycase;
             this.model2 = this.flowchartData(this.model1);
             this.startArray=[];
@@ -2097,15 +2115,15 @@ addWorkingHours(){
   }
 
   generatevarientFilterGraph(){
+    this.model1=[];
   if (this.selectedCaseArry.length == 1) {
     this.isvariantSelectedOne=true;
     this.issliderDisabled=true;
     this.isDefaultData = false;
     if (this.keyExists(this.selectedCaseArry[0], this.varaint_GraphData.data) == true) {
       var modalData = this.varaint_GraphData.data[0][this.selectedCaseArry[0]] 
-      this.model1 = modalData.nodeDataArraycase
-              
-            this.model2 = this.flowchartData(this.model1)
+      this.model1 = modalData.nodeDataArraycase;
+      this.model2 = this.flowchartData(this.model1);
     }
          /**
      * BPMN Boolean Variables
@@ -2119,28 +2137,30 @@ addWorkingHours(){
   }else{
     this.issliderDisabled=true;
     this.isvariantSelectedOne=false;
-    let endTime:any
-    if(this.workingHours.shiftEndTime=='23:59'){
-      endTime="24:00"
-    }else{
-      endTime=this.workingHours.shiftEndTime
-    }
-    this.loaderImgSrc = "/assets/images/PI/Loader_Retrieving-Generated-Graph.gif";
-    this.spinner.show();;
-    const variantComboBody={
-      "data_type":"variant_combo",
-      "pid":this.graphIds,
-      "cases" : this.selectedCaseArry,
-      'timeChange':this.isTimeChange,
-      "workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+endTime+":00"
-        }
-  this.rest.getVariantGraphCombo(variantComboBody).subscribe(res=>{this.variantCombo=res
-    this.model1=this.variantCombo.data[0].nodeDataArraycase;
-    this.filterPerformData = this.variantCombo.data[0].nodeDataArraycase;
+  //   let endTime:any
+  //   if(this.workingHours.shiftEndTime=='23:59'){
+  //     endTime="24:00"
+  //   }else{
+  //     endTime=this.workingHours.shiftEndTime
+  //   }
+  //   this.loaderImgSrc = "/assets/images/PI/Loader_Retrieving-Generated-Graph.gif";
+  //   this.spinner.show();;
+  //   const variantComboBody={
+  //     "data_type":"variant_combo",
+  //     "pid":this.graphIds,
+  //     "cases" : this.selectedCaseArry,
+  //     'timeChange':this.isTimeChange,
+  //     "workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+endTime+":00"
+  //       }
+  // this.rest.getVariantGraphCombo(variantComboBody).subscribe(res=>{this.variantCombo=res
+  //   this.model1=this.variantCombo.data[0].nodeDataArraycase;
+    this.model1=this.model3;
+  //   this.filterPerformData = this.variantCombo.data[0].nodeDataArraycase;
                
           this.model2 = this.flowchartData(this.model1);
-        this.spinner.hide();
-  })
+  //         this.model2 = this.flowchartData(this.model1);
+  //       this.spinner.hide();
+  // })
        /**
      * BPMN Boolean Variables
      */
