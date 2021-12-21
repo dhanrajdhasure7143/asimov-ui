@@ -4,10 +4,10 @@
 
 
             <span class="module-header-title">Robotic Process Automation</span>
-            <button type="button" class="btn btn-primary import-btn ml-auto" (click)="openModal(template)">
+            <!-- <button type="button" class="btn btn-primary import-btn ml-auto" (click)="openModal(template)">
               <img src="../../../../assets/images/RPA/import-white.svg" class="testplus" >
               Import
-            </button>
+            </button> -->
         </div>
 
         <!-- <div class="header_addon header-btn1">
@@ -141,7 +141,7 @@
                         </div>
                         <div class="col-md-4 p-0">
                             <div class="col-md-6 form-group pr-0 rpa-searchip">
-                                <input class="form-control toolbar-search" type="text" [(ngModel)]="userFilter.botName" (keyup)="applySearchFilter($event.target.value)" placeholder="Search Bot">
+                                <input class="form-control toolbar-search" type="text"  (keyup)="applySearchFilter($event.target.value)" placeholder="Search Bot">
                                 <img src="../../../../assets/images/search.svg" alt="" class="testplus1">
                             </div>
                             <!-- <div class="col-md-12 form-group pr-0 rpa-searchip">
@@ -150,7 +150,7 @@
                 </div> -->
                             <div class="col-md-6 form-group pr-0 rpa-searchip">
                                 <!-- <input class="form-control toolbar-search" type="text" [(ngModel)]="userFilter.department" placeholder="Search Category" > -->
-                                <select class="form-control" [(ngModel)]="userFilter.department">
+                                <select class="form-control" (change)="applySearchFilter($event.target.value)">
                     <option value="" >Select Category</option>
                     <option [value]="category.categoryName" *ngFor="let category of categaoriesList">{{category.categoryName}}</option>
                   </select>
@@ -236,7 +236,7 @@
                             </div>
                         </div>
                         <div class="rpa-home-table">
-                            <mat-expansion-panel [hideToggle]="true" #botpanel1 (opened)="getBotImage(bot.botId,bot.version,$event)" *ngFor="let bot of (displayedRows$  | async) | filterBy:userFilter  ;let i=index;">
+                            <mat-expansion-panel [hideToggle]="true" #botpanel1 (opened)="getBotImage(bot.botId,bot.version,$event)" *ngFor="let bot of (displayedRows$  | async ) ;let i=index;">
 
                                 <!-- <mat-expansion-panel [hideToggle]="true" #botpanel1 (opened)="getBotImage(bot.botId,bot.version,$event)" *ngFor="let bot of bot_list | filterBy:userFilter  |  paginate: {itemsPerPage: pageSize, currentPage: page } "> -->
 
@@ -313,7 +313,7 @@
                                             <div class="flex-col">
                                                 <button tooltip="Edit Bot" placement="bottom" [disabled]="!((isButtonVisible==true && userName==bot.createdBy)||(isButtonVisible==false))" (click)="editbotoverlay(bot);botpanel1.toggle()"><img src="../../../../assets/images/RPA/icon_latest/edit.svg" alt="" class="testplus">&nbsp;</button>
                                                 <button tooltip="Delete Bot" placement="bottom" [disabled]="isButtonVisible==true" (click)="botdelete(bot.botId);botpanel1.toggle()"><img src="../../../../assets/images/RPA/icon_latest/delete.svg" alt="" class="testplus">&nbsp;</button>
-                                                <button tooltip="Export Bot" placement="bottom" (click)="exportbot(bot);botpanel1.toggle()"><img src="../../../../assets/images/RPA/icon_latest/export.svg" alt="" class="testplus">&nbsp;</button>
+                                                <!-- <button tooltip="Export Bot" placement="bottom" (click)="exportbot(bot);botpanel1.toggle()"><img src="../../../../assets/images/RPA/icon_latest/export.svg" alt="" class="testplus">&nbsp;</button> -->
 
                                             </div>
 

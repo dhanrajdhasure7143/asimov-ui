@@ -1,9 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import * as am4core from '@amcharts/amcharts4/core';
 import * as am4charts from '@amcharts/amcharts4/charts';
 import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 import { RestApiService } from '../../services/rest-api.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+
 @Component({
   selector: 'app-process-architect',
   templateUrl: './process-architect.component.html',
@@ -17,7 +21,7 @@ export class ProcessArchitectComponent implements OnInit {
   totalProjects: any;
   processes: any;
   ProjectCompletionDuration: Object;
-  pendingApprovals: any[];
+  pendingApprovals: any[]=[];
   allProjectProgress: Object;
   allProjectStatus: Object;
   projectStatusArray: any[] = [];
@@ -31,11 +35,24 @@ export class ProcessArchitectComponent implements OnInit {
   filterByDays = ['All', '30', '60', '90'];
   isLoading = true;
   userDetails: any;
-  topEffortsSpent: Object;
+  topEffortsSpent: any=[];
   userRoles: any;
   userEmail: any;
   userName: any;
   p1=0;
+
+  displayedColumns1=['Process Name','Created Date','Submitted by'];
+  displayedColumns2=['resource_name','days'];
+  displayedColumns3=['projectName','daysSpent'];
+  @ViewChild("sort1",{static:false}) sort1: MatSort;
+  @ViewChild("paginator1",{static:false}) paginator1: MatPaginator;
+  pendingApprovalsdataSource:MatTableDataSource<any>;
+  @ViewChild("sort2",{static:false}) sort2: MatSort;
+  @ViewChild("paginator2",{static:false}) paginator2: MatPaginator;
+  effortExpenditureAnalysisDatasource:MatTableDataSource<any>;
+  @ViewChild("sort3",{static:false}) sort3: MatSort;
+  @ViewChild("paginator3",{static:false}) paginator3: MatPaginator;
+  topEffortsSpentdataSource:MatTableDataSource<any>;
 
   constructor(private apiService: RestApiService, private jwtHelper: JwtHelperService) {
     this.userDetails = this.jwtHelper.decodeToken(localStorage.getItem('accessToken'));;
@@ -106,10 +123,25 @@ export class ProcessArchitectComponent implements OnInit {
           this.effortExpenditureAnalysis.sort(function (a, b) {
             return b.days - a.days;
           });
+          this.effortExpenditureAnalysisDatasource= new MatTableDataSource(this.effortExpenditureAnalysis);
+          this.effortExpenditureAnalysisDatasource.sort=this.sort2;
+          this.effortExpenditureAnalysisDatasource.paginator=this.paginator2;
         });
-
+        let res_data1:any;
       this.apiService.gettopEffortsSpent(this.userRoles, this.userEmail, this.userName).subscribe(res => {
-        this.topEffortsSpent = res;
+        res_data1 = res;
+        for (let [key, value] of Object.entries(res_data1)) {
+          if (value != 0) {
+            var obj = { 'projectName': key, 'daysSpent': value }
+            this.topEffortsSpent.push(obj);
+          }
+        }
+        this.topEffortsSpent.sort(function (a, b) {
+          return b.days - a.days;
+        });
+        this.topEffortsSpentdataSource= new MatTableDataSource(this.topEffortsSpent);
+        this.topEffortsSpentdataSource.sort=this.sort3;
+        this.topEffortsSpentdataSource.paginator=this.paginator3;
       })
     }
   }
@@ -136,6 +168,9 @@ export class ProcessArchitectComponent implements OnInit {
   getPendingApprovals(duration) {
     this.apiService.getPendingApprovals(this.userRoles, this.userEmail, this.userName, duration).subscribe((res: any) => {
       this.pendingApprovals = res;
+      this.pendingApprovalsdataSource= new MatTableDataSource(res);
+      this.pendingApprovalsdataSource.sort=this.sort1;
+      this.pendingApprovalsdataSource.paginator=this.paginator1;
     });
   }
 
@@ -385,6 +420,25 @@ export class ProcessArchitectComponent implements OnInit {
       columnTemplate.events.once("inited", function (event) {
         event.target.fill = runtimeref.colors.getIndex(event.target.dataItem.index);
       });
+      categoryAxis.renderer.labels.template.disabled = true;
+      var legend = new am4charts.Legend();
+      legend.parent = this.runtimestatschart.chartContainer;
+      legend.itemContainers.template.togglable = false;
+      legend.marginTop = 20;
+      legend.fontSize = 12;
+      let markerTemplate = legend.markers.template;
+      markerTemplate.width = 10;
+      markerTemplate.height = 10;
+      series.events.on("ready", function (ev) {
+        let legenddata = [];
+        series.columns.each(function (column) {
+          legenddata.push({
+            name: column.dataItem.categoryX,
+            fill: column.fill
+          })
+        });
+        legend.data = legenddata;
+      });
       var cursor = new am4charts.XYCursor();
       cursor.behavior = "panX";
       this.runtimestatschart.cursor = cursor;
@@ -427,9 +481,9 @@ export class ProcessArchitectComponent implements OnInit {
       categoryAxis.renderer.minGridDistance = 30;
       categoryAxis.renderer.labels.template.horizontalCenter = "right";
       categoryAxis.renderer.labels.template.verticalCenter = "middle";
-      categoryAxis.renderer.labels.template.rotation = 270;
+      // categoryAxis.renderer.labels.template.rotation = 270;
       categoryAxis.tooltip.disabled = true;
-      categoryAxis.renderer.minHeight = 110;
+      // categoryAxis.renderer.minHeight = 110;
       categoryAxis.title.text = "Projects";
 
 
@@ -460,7 +514,25 @@ export class ProcessArchitectComponent implements OnInit {
       series.columns.template.adapter.add("fill", function (fill, target) {
         return chart.colors.getIndex(target.dataItem.index);
       });
-
+      categoryAxis.renderer.labels.template.disabled = true;
+      var legend = new am4charts.Legend();
+      legend.parent = chart.chartContainer;
+      legend.itemContainers.template.togglable = false;
+      legend.marginTop = 20;
+      legend.fontSize = 12;
+      let markerTemplate = legend.markers.template;
+      markerTemplate.width = 10;
+      markerTemplate.height = 10;
+      series.events.on("ready", function (ev) {
+        let legenddata = [];
+        series.columns.each(function (column) {
+          legenddata.push({
+            name: column.dataItem.categories.categoryX,
+            fill: column.fill
+          })
+        });
+        legend.data = legenddata;
+      });
       // Cursor
       chart.cursor = new am4charts.XYCursor();
 

@@ -23,7 +23,10 @@
                     <label *ngIf="value.limited">Limited</label></span>
                 </h6>
 
-            <h5 *ngIf="planlist.nickName !='Enterprise'" style="font-weight:800;text-align: center;">$ {{planlist.amount}}.00 <span  style="font-size: 13px;font-weight: 500">/ user per {{planlist.term}}</span></h5>
+            <h5 *ngIf="planlist.nickName !='Enterprise'" style="font-weight:800;text-align: center;">${{planlist.amount}}.00 
+              <span  style="font-size: 13px;font-weight: 500" *ngIf="planlist.nickName=='Standard'">/ per month</span>
+              <span  style="font-size: 13px;font-weight: 500" *ngIf="planlist.nickName=='Professional'">/ per year</span>
+            </h5>
             <!-- <button *ngIf="planlist.nickName !='Enterprise' && planlist.nickName!='Free Tier'" [disabled]="planlist.subscribed" class="btn btn-primary selectplanbtn" (click)="selectedPlan(planlist)">Select</button> -->
             <button *ngIf="planlist.nickName =='Free Tier'" [disabled]="planlist.freeSubscribed||planlist.subscribed" class="btn btn-primary selectplanbtn" (click)="selectedPlan(planlist)">Activate</button>
 
@@ -56,14 +59,14 @@
                 <h4 id="ctr">Choose the right one for your valuable business</h4>
         </div>
         <div class="col-md-4">
-        <button *ngIf='!error' class="btn btn-primary selectplanbtn" style="float: right;margin-top: 14px;" (click)="currentplan()">Back</button>
+        <button *ngIf='!error' class="btn btn-primary selectplanbtn" style="margin-top: 14px;" (click)="currentplan()">Back</button>
       </div>
     </div>
         <div class="col-md-12 errordiv" *ngIf='error'>
                 <h2>{{error}}</h2>
             </div>
         <span *ngIf='!error' class="col-md-12 row">
-        <div  *ngFor="let planlist of plansList; let i=index ;trackBy:loopTrackBy">
+        <div  *ngFor="let planlist of plansList | orderBy:'amount'; let i=index ;trackBy:loopTrackBy">
           <div class="col-md-3 plansBox" style="margin: 1%;" *ngIf="(planlist.subscribed ||  planlist.active) && (planlist.nickName=='Standard' || planlist.nickName=='Professional' || planlist.nickName=='Enterprise')">
                 <h4><span id="planName" *ngIf="planlist.nickName =='Standard'"><b>Free Tier</b>
                 </span> 
@@ -74,7 +77,10 @@
                         <label *ngIf="value.limited">Limited</label></span>
                     </h6>
 
-                <h5 *ngIf="planlist.nickName !='Enterprise'" style="font-weight:800;text-align: center;">$ {{planlist.amount}}.00 <span  style="font-size: 13px;font-weight: 500">/ user per {{planlist.term}}</span></h5>
+                <h5 *ngIf="planlist.nickName !='Enterprise'" style="font-weight:800;text-align: center;">${{planlist.amount}}.00 
+                  <span  style="font-size: 13px;font-weight: 500" *ngIf="planlist.nickName=='Standard'">/ per month</span>
+                  <span  style="font-size: 13px;font-weight: 500" *ngIf="planlist.nickName=='Professional'">/ per year</span>
+                </h5>
                 <button *ngIf="planlist.nickName !='Enterprise' && planlist.nickName!='Free Tier'" [disabled]="planlist.subscribed || planlist.nickName=='Standard'" class="btn btn-primary selectplanbtn" (click)="selectedPlan(planlist)">Select</button>
                 <button *ngIf="planlist.nickName =='Free Tier'" [disabled]="planlist.freeSubscribed||planlist.subscribed" class="btn btn-primary selectplanbtn" (click)="selectedPlan(planlist)">Activate</button>
 
@@ -234,7 +240,8 @@
             <tr>
               <td>Plan</td>
               <td> :  </td>
-              <td>{{selected_plans.nickName}}</td>
+              <td *ngIf="selected_plans.nickName=='Standard'">Free Tier</td>
+              <td *ngIf="selected_plans.nickName=='Professional'">{{selected_plans.nickName}}</td>
             </tr>
             <tr>
               <td>Order Id</td>
