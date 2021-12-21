@@ -69,7 +69,7 @@ export class BusinessProcessComponent implements AfterViewChecked {
   }
   ngAfterViewInit(){
     this.dt.notation_ScreenValues.subscribe(res=>{
-      console.log(res);
+      // console.log(res);
       let notationValues_obj={}
       notationValues_obj=res;
       if(notationValues_obj){
@@ -88,7 +88,7 @@ export class BusinessProcessComponent implements AfterViewChecked {
         if(this.isUploaded){
           this.selectedNotationType='bpmn'
         }
-        console.log(this.iscreate_notation)
+        // console.log(this.iscreate_notation)
       }
     });
   }
