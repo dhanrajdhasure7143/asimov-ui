@@ -29,7 +29,7 @@ export class SoEnvironmentsComponent implements OnInit {
       this.selectedTab=1;
       this.param=this.processId.processid;
       this.check_tab=1;
-      console.log(this.param)
+      
     }
   });
    

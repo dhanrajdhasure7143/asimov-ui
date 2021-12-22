@@ -56,7 +56,7 @@ export class RequestFileComponent implements OnInit {
   saveRequestedfile()
   {
     
-    console.log(this.requestFileForm.get("resources").value);
+  
     
     var body={
       "category": this.requestFileForm.get("fileCategory").value,
@@ -98,7 +98,7 @@ export class RequestFileComponent implements OnInit {
 
     this.api.getProjectDetailsById(id).subscribe( res =>{
     this.projectdetails=res;
-    console.log("project details",this.projectdetails)
+    
     this.navigatetodetailspage(this.projectdetails)
     })
   }

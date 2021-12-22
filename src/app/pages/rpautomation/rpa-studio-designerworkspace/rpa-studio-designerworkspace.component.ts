@@ -970,7 +970,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         "svg":this.svg,
         "sequences": this.getsequences(),
       }
-      console.log(this.saveBotdata)
+     
       if(this.checkorderflag==false)
       {
         return  false;
@@ -1058,7 +1058,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       "svg":this.svg,
       "sequences": this.getsequences()
     }
-    console.log(this.saveBotdata)
+   
     if(this.checkorderflag==false)
      return false;
     else
@@ -1271,7 +1271,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         }
       }
     })
-    console.log(this.finaldataobjects)
+   
     if(this.finaldataobjects[0].inSeqId.split("_")[0]=="START")
     {
       let p1:any = $("#" + this.finaldataobjects[0].inSeqId).first();

@@ -619,7 +619,7 @@ export class RestApiService{
         "sourceType":""
         }
     }
-    console.log(data);
+ 
     return this.http.post("/rpa-service/assign-bot",data);
   }
 
@@ -793,7 +793,7 @@ save_blueprism_config(data)
 
     runsmoketestBluePrism(data){
       let value = data;
-      console.log(value);
+   
       return this.http.post("/rpa-service/management/blueprism-smoketest?botName="+value,"", {responseType: "text" });
     }
 	

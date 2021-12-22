@@ -330,7 +330,7 @@ combofilterObject:any;
       this.rest.getfullGraph(fullGraphbody).subscribe(data=>{this.fullgraph=data //process graph full data call
         if(this.fullgraph.hasOwnProperty('is_kafka_failure')){
           if(this.fullgraph.is_kafka_failure == 'Y'){
-            console.log("kafka fail");
+           
             Swal.fire({
               title: 'Oops!',
               text: ""+this.fullgraph.display_msg.info,
@@ -500,7 +500,7 @@ combofilterObject:any;
       this.rest.getfullGraph(fullGraphbody).subscribe(data=>{this.fullgraph=data //process graph full data call
         if(this.fullgraph.hasOwnProperty('is_kafka_failure')){
           if(this.fullgraph.is_kafka_failure == 'Y'){
-            console.log("kafka fail");
+         
             Swal.fire({
               title: 'Oops!',
               text: ""+this.fullgraph.display_msg.info,

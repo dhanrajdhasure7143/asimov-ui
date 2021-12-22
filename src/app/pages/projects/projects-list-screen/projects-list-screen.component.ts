@@ -163,7 +163,7 @@ export class ProjectsListScreenComponent implements OnInit {
   }
   
   createNew(){
-    console.log("list",this.projectsresponse[1].length)
+
     if(this.freetrail=='true'){
      if(this.projectsresponse[1].length==0){
       this.create_Tabs="projects"
@@ -190,7 +190,7 @@ export class ProjectsListScreenComponent implements OnInit {
   }
 
   getprojectsList(event){
-    console.log(event)
+   
    this.projectsresponse=event
   }
 

@@ -203,7 +203,7 @@ export class RpaSchedulerComponent implements OnInit {
       }
       this.rest.start_schedule(schedule).subscribe(data=>{
         let resp:any=data;
-        console.log(resp)
+      
         if(resp.errorMessage==undefined)
         {
          

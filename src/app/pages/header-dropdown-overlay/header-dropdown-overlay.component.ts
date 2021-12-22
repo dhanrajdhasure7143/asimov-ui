@@ -97,7 +97,7 @@ close(){
         this.dataid = '';
       }
        deleteNotification(data,index){
-        console.log(data)
+       
         this.rpa.deleteNotification(data).subscribe(resp=>{
           // console.log(resp)
        this.getAllNotifications();
@@ -131,7 +131,7 @@ close(){
          this.notificationbody ={
             "tenantId":this.tenantId
          }
-         console.log("notification id",id)
+      
          if(this.notificationList.find(ntf=>ntf.id==id).status!='read'){
           this.rpa.getReadNotificaionCount(this.role,userId,id,this.notificationbody).subscribe(data => {
             this.notificationreadlist = data
@@ -139,7 +139,7 @@ close(){
           // document.getElementById('ntf_'+id).style.color="grey"
            //document.getElementById('date_'+id).style.color="grey"
            //document.getElementById(id).style.cursor="none"
-            console.log(this.notificationreadlist)
+         
           })
          
         }

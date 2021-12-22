@@ -9,8 +9,7 @@ export class CheckResourcePipe implements PipeTransform {
     var val=""  
     if(taskType=="Automated")
       {
-        console.log(sourceType)
-        console.log(id)
+        
         if(sourceType=="EPSoft")
           val= (resourceList.find(item=>parseInt(item.botId)==parseInt(id))!=undefined)?(resourceList.find(item=>parseInt(item.botId)==parseInt(id)).botId):"0";
         else if(sourceType=='UiPath')
@@ -25,7 +24,7 @@ export class CheckResourcePipe implements PipeTransform {
         val= (resourceList.find(item=>parseInt(item.userId.id)==parseInt(id))!=undefined)?(resourceList.find(item=>parseInt(item.userId.id)==parseInt(id)).userId.id):"0";
       
       }
-      console.log(val)
+     
       return val
   }
 

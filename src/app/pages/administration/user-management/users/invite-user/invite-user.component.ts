@@ -71,7 +71,7 @@ getAllCategories(){
  getRoles(){
   this.api.getAllRoles(2).subscribe(resp => {
     this.allRoles = resp;
-  console.log("roles====",this.allRoles)})
+ })
 
  }
 
