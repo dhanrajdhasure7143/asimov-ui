@@ -831,11 +831,17 @@
                   <img src="../../../../assets/images/Projects/White-plus.svg" class="testplus" />Add New
                 </button>
                 <span>
-                  <div *ngIf="Resourcedeleteflag==true" class="env-btn">
-                    <button title="Delete Resource" value="Delete" id="deletebtn" class="btn btn-primary" (click)="deleteresource()">Delete</button>
-                </div>       
+                <div *ngIf="Resourcedeleteflag==true" class="env-btn">
+                    <button title="Delete Resource"
+                        *ngIf="this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') ||
+                                    this.userRole.includes('System Admin') || this.userRole.includes('Process Owner') || this.userRole.includes('Process Architect')"
+                        value="Delete" id="deletebtn" class="btn btn-primary" (click)="deleteresource()">Delete</button>
+                </div>
                 <div *ngIf="Resourcedeleteflag==false" class="env-btn">
-                    <button data-toggle="tooltip" data-placement="top" id="deletebtn" class="btn btn-primary" title="Delete Resource" disabled>Delete</button>
+                    <button data-toggle="tooltip"
+                        *ngIf="this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') ||
+                                    this.userRole.includes('System Admin') || this.userRole.includes('Process Owner') || this.userRole.includes('Process Architect')"
+                        data-placement="top" id="deletebtn" class="btn btn-primary" title="Delete Resource" disabled>Delete</button>
                 </div>
                 </span>
                             </span>
