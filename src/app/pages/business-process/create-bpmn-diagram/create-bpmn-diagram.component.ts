@@ -125,7 +125,6 @@ export class CreateBpmnDiagramComponent implements OnInit {
     this.setRPAData();
     this.getApproverList();
     this.getUserBpmnList();
-    console.log(this.rejectedOrApproved)
     this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":false,
                     "isShowConformance":false,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
                     "isFromcreateScreen":true,'process_name':this.currentNotation_name}

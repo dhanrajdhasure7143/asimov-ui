@@ -398,6 +398,7 @@ combofilterObject:any;
           this.fullgraph_model=fullgraphOne.allSelectData.nodeDataArraycase
           this.fullgraph_model1=this.fullgraph_model
         this.model1 = fullgraphOne.allSelectData.nodeDataArraycase;
+        this.model3 = fullgraphOne.allSelectData.nodeDataArraycase;
         this.filterPerformData = this.fullgraph_model;
         this.model2 = this.flowchartData(this.model1)
         let fullModel2=this.model2
@@ -544,6 +545,7 @@ combofilterObject:any;
           this.fullgraph_model=fullgraphOne.allSelectData.nodeDataArraycase
           this.fullgraph_model1=this.fullgraph_model
         this.model1 = fullgraphOne.allSelectData.nodeDataArraycase;
+        this.model3 = fullgraphOne.allSelectData.nodeDataArraycase;
         this.filterPerformData = this.fullgraph_model;
         this.model2 = this.flowchartData(this.model1)
         this.startArray=[];
@@ -670,6 +672,7 @@ combofilterObject:any;
       this.issliderDisabled=false;
         let fullgraphOne=this.fullgraph.data;
             this.model1 = fullgraphOne.allSelectData.nodeDataArraycase;
+            this.model3 = fullgraphOne.allSelectData.nodeDataArraycase;
             this.model2 = this.flowchartData(this.model1);
                 this.isvariantSelectedOne=false;
                 this.spinMetrics0="";
@@ -691,6 +694,7 @@ combofilterObject:any;
       if (this.keyExists(this.selectedCaseArry[0], this.varaint_GraphData.data) == true) {
         var modalData = this.varaint_GraphData.data[0][this.selectedCaseArry[0]] 
         this.model1 = modalData.nodeDataArraycase
+        this.model3 = modalData.nodeDataArraycase
         if(this.isPerformance==true){
           if(this.selectedPerformancevalue==5||this.selectedPerformancevalue==6||this.selectedPerformancevalue==7||this.selectedPerformancevalue==8||this.selectedPerformancevalue==9){
           var modelArray3=[]
@@ -734,6 +738,7 @@ combofilterObject:any;
           }
     this.rest.getVariantGraphCombo(variantComboBody).subscribe(res=>{this.variantCombo=res
       this.model1=this.variantCombo.data[0].nodeDataArraycase;
+      this.model3=this.variantCombo.data[0].nodeDataArraycase;
       this.filterPerformData = this.variantCombo.data[0].nodeDataArraycase;
       if(this.isPerformance==true){
         if(this.selectedPerformancevalue==5||this.selectedPerformancevalue==6||this.selectedPerformancevalue==7||this.selectedPerformancevalue==8||this.selectedPerformancevalue==9){
@@ -860,6 +865,7 @@ combofilterObject:any;
       }
       let fullgraphOne=this.fullgraph.data;
       this.model1 = fullgraphOne.allSelectData.nodeDataArraycase;
+      this.model3 = fullgraphOne.allSelectData.nodeDataArraycase;
       if(this.isPerformance==true){
         if(this.selectedPerformancevalue==5||this.selectedPerformancevalue==6||this.selectedPerformancevalue==7||this.selectedPerformancevalue==8||this.selectedPerformancevalue==9){
           var modelArray3=[]
@@ -1263,6 +1269,7 @@ flowchartDataOne(dataArray,index) {   //Links generate from responce for perform
   resetspinnermetrics(){        //process graph reset in leftside  spinner metrics
     this.resetFilter=true;
     // this.isClearFilter=true;
+    this.model1=[];
     this.checkboxValue=false;
     if(this.selectedCaseArry.length==0){
       this.varaint_data.data.forEach(element => {
@@ -1274,10 +1281,10 @@ flowchartDataOne(dataArray,index) {   //Links generate from responce for perform
     // if(this.selectedActivities1.length>1){
     //   this.readSelectedFilterValues(this.combofilterObject);
     // }
-    if(this.selectedCaseArry.length>=1){
-      this.generatevarientFilterGraph();
-    }else{
-    this.model1 = this.fullgraph_model;
+    // if(this.selectedCaseArry.length>=1){
+      // this.generatevarientFilterGraph();
+    // }else{
+    this.model1 = this.model3;
     this.filterPerformData = this.fullgraph_model;
     this.model2 = this.flowchartData(this.model1)
     // end points update in filter overlay
@@ -1293,7 +1300,7 @@ flowchartDataOne(dataArray,index) {   //Links generate from responce for perform
         this.endArray.push(element.from)
       }
     });
-  }
+  // }
     this.spinMetrics0="";
     this.spinMetrics0="absoluteFrequency";
     this.activityValue=1;
@@ -1477,6 +1484,7 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
       .subscribe(data => {
         let activityFilterGraph:any = data;
         this.model1 = activityFilterGraph.data[0].nodeDataArraycase;
+        this.model3 = activityFilterGraph.data[0].nodeDataArraycase;
         this.model2 = this.flowchartData(this.model1);
         this.spinner.hide();
       },(err =>{
@@ -1621,13 +1629,15 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
 
   readSelectedFilterValues(object){     // apply filter from overlay
     this.isFilterApplied=true;
-    console.log(object)
     this.combofilterObject=object
     if(object.startPoint==null && object.endPoint==null && object.activity==null && object.variants.length==this.varaint_data.data.length){
       this.isWorkingHrsBtn=true;
       this.dt.pi_buttonValues({"isPlaybtn":false,"isTimefeed_btn":this.isWorkingHrsBtn});
-      this.model1 = this.fullgraph_model;
-      this.model3 = this.fullgraph_model;
+      let fullgraphOne=this.fullgraph.data;
+      this.model1 = fullgraphOne.allSelectData.nodeDataArraycase;
+      this.model3 = fullgraphOne.allSelectData.nodeDataArraycase;
+      // this.model1 = this.fullgraph_model;
+      // this.model3 = this.fullgraph_model;
       this.model2 = this.flowchartData(this.model1); 
             this.startArray=[];
             this.endArray=[];
