@@ -24,7 +24,7 @@ export class ProcessAnalystComponent implements OnInit {
   Processes: any;
   ProjectCompletionDuration: Object;
   pendingApprovals: any[];
-  allProjectProgress: Object;
+  allProjectProgress: any;
   allProjectStatus: Object;
   projectStatusArray: any[] = [];
   activityStream: any;
@@ -161,14 +161,14 @@ export class ProcessAnalystComponent implements OnInit {
   getProjectProgress(duration) {
     this.apiService.getAllTasksProgress(this.userRoles, this.userEmail, this.userName, duration).subscribe(res => {
       this.allProjectProgress = res;
-      this.runtimestats = [];
-      for (var i = 0; i < Object.keys(res).length; i++) {
-        var data = {
-          "name": Object.keys(res)[i],
-          "value": Object.values(res)[i],
-        }
-        this.runtimestats.push(data);
-      }
+      this.runtimestats = this.allProjectProgress;
+      // for (var i = 0; i < Object.keys(res).length; i++) {
+      //   var data = {
+      //     "name": Object.keys(res)[i],
+      //     "value": Object.values(res)[i],
+      //   }
+      //   this.runtimestats.push(data);
+      // }
       this.allProjectProgressChart();
     });
   }

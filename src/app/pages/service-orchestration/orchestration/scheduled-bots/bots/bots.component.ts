@@ -39,8 +39,7 @@ export class BotsComponent implements OnInit {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
     this.scheduledbots.filter = filterValue;
-    console.log(this.scheduledbots.filter);
-    console.log(this.scheduledbots.filteredData.length);
+   
     this.tabledata = this.scheduledbots.filteredData.length <= '0'  ? false: true;
   }
 

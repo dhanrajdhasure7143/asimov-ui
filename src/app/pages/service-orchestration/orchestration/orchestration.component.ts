@@ -48,7 +48,7 @@ export class OrchestrationComponent implements OnInit {
         this.param=processId.processid;
        // this.check_tab=1;
         this.check_tab=3;
-        console.log(this.param)
+       
       }
     });
     if(localStorage.getItem("orc_tab")){

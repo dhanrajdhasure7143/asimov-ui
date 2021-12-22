@@ -318,7 +318,7 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
             {
               this.childBotWorkspace.finaldataobjects[0].nodeId=coordinates[0];
             }
-            console.log(this.childBotWorkspace.finaldataobjects)
+           
           }
         });
       }
@@ -775,7 +775,7 @@ loadpredefinedbot(botId)
     this.rest.bot_export(bot.botId).subscribe((data)=>{
       
         this.rpa_studio.spinner.hide();
-        console.log(data)
+      
         const linkSource = `data:application/txt;base64,${data}`;
         const downloadLink = document.createElement('a');
         document.body.appendChild(downloadLink);

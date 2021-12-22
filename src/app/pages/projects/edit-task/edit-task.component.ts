@@ -314,7 +314,7 @@ else
             this.rolelist.push(this.rolename.name)
             this.roles=this.rolelist.join(',')
           }
-          console.log("role", this.rolelist)
+        
         }
         //this.rolename=this.userrole.message[0].name
        
@@ -332,7 +332,7 @@ else
       }
       }
 
-      console.log("taskc",this.taskcomments)
+    
     }
     resetupdatetaskproject(){
       this.updatetaskForm.reset();
@@ -356,7 +356,7 @@ else
 
 
   onDeleteItem(id,fileName){
-    console.log("came to onDelete");
+  
     let input=[{
       "id": id,
       "fileName":fileName
@@ -461,7 +461,7 @@ else
       // link.click();
       // }
     },(err:any)=>{
-      console.log(err);
+    
       this.spinner.hide();
       
       Swal.fire("Error","Unable to task attachments","error");

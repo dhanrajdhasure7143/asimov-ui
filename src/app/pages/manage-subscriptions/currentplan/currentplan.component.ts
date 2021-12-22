@@ -137,7 +137,7 @@ export class CurrentplanComponent implements OnInit {
   }
 
   selectedPlan(plans){
-    console.log(plans)
+   
     this.plantype=plans.nickName
     this.spinner.show();
     this.freetrail=localStorage.getItem('freetrail')
