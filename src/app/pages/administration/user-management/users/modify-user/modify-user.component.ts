@@ -74,12 +74,10 @@ getAllCategories(){
 
 updateUser(){
  
-  let roles = [];
-  roles.push(this.editUserForm.get("role").value);
   let body={
       "userId":this.userId,
       "department":this.editUserForm.get("departments").value.toString(),
-      "rolesList": roles
+      "rolesList": this.editUserForm.get("role").value
   }
 
   this.api.updateUserRoleDepartment(body).subscribe(resp=> {
