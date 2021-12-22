@@ -401,6 +401,7 @@ combofilterObject:any;
         this.model3 = fullgraphOne.allSelectData.nodeDataArraycase;
         this.filterPerformData = this.fullgraph_model;
         this.model2 = this.flowchartData(this.model1)
+        console.log(this.model1,this.model2)
         let fullModel2=this.model2
         this.startArray=[]
         this.endArray=[]
@@ -930,6 +931,7 @@ combofilterObject:any;
           var obj = {};
           this.nodeArray[i].count = this.nodeArray[i].toolCount[0];
           if(this.nodeArray[i].toolCount[3]!=0){
+            console.log(this.nodeArray[i])
             obj['from'] = "Start";
             obj['to'] = this.nodeArray[i].name;
             obj['text'] = this.nodeArray[i].toolCount[3];
@@ -1629,6 +1631,8 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
 
   readSelectedFilterValues(object){     // apply filter from overlay
     this.isFilterApplied=true;
+    this.spinMetrics0="";
+    this.spinMetrics0="absoluteFrequency";
     this.combofilterObject=object
     if(object.startPoint==null && object.endPoint==null && object.activity==null && object.variants.length==this.varaint_data.data.length){
       this.isWorkingHrsBtn=true;
@@ -1779,7 +1783,7 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
       if(decryptedVariants.data.length == filtered_Variants.length){
         this.varaint_data.data[i].selected = "inactive";
       } else { 
-      this.varaint_data.data[i].selected = "active";
+      // this.varaint_data.data[i].selected = "active";
       }
       }
     }
