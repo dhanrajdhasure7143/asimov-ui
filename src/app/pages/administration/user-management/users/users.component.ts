@@ -134,7 +134,7 @@ export class UsersComponent implements OnInit {
   }
 
   modifyUser(data){
-    console.log("userdata====",data)
+  
     let depts=[];
     depts=data.department;
      let userroles:any;

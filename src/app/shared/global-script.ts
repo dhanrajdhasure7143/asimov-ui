@@ -16,6 +16,6 @@ export class GlobalScript {
         this.notifier.hideNewest()
     this.notifier.hideAll()
     this.notifier.hideOldest();
-    console.log("hide All")
+    
     }
 }
