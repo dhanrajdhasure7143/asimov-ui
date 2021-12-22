@@ -41,10 +41,10 @@ getAllCategories(){
    var depts:any=[];
   this.api.getAllRoles(2).subscribe(resp => {
     this.allRoles = resp;
-    console.log("allroles======",this.allRoles)
+
     
     this.route.queryParams.subscribe(data=>{​​​​​​
-      console.log("data=",data)
+   
       this.userId=data.id;
       // this.roles=["3"];
      // data.role.forEach(element => {
@@ -74,14 +74,12 @@ getAllCategories(){
 
 updateUser(){
  
-  let roles = [];
-  roles.push(this.editUserForm.get("role").value);
   let body={
       "userId":this.userId,
       "department":this.editUserForm.get("departments").value.toString(),
-      "rolesList": roles
+      "rolesList": this.editUserForm.get("role").value
   }
-  console.log("body=====",body)
+
   this.api.updateUserRoleDepartment(body).subscribe(resp=> {
     if(resp.message === "Successfuly updated role of an user for particular application"){
       Swal.fire({

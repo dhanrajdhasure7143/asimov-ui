@@ -134,7 +134,7 @@ createBlueprism(){
 }
 
 savedata(){
-  console.log(this.BluePrismConfigForm);
+  
 }
 
 close(){
@@ -153,9 +153,7 @@ closeUBP(){
 
 checkEnableDisableBtn(id, event)
 {
-  console.log(event);
-  console.log(id);
-  console.log(event.target.checked);
+  
   this.blueprism_configs.find(data=>data.bluePrismId==id).checked=event.target.checked;
   if(this.blueprism_configs.filter(data=>data.checked==true).length==this.blueprism_configs.length)
   {
@@ -185,7 +183,7 @@ checktoupdate()
 
 checktodelete()
 {
-  console.log(this.blueprism_configs.filter(product => product.checked).map(p => p.bluePrismId));
+ 
   const selectedBluePrism = this.blueprism_configs.filter(product => product.checked).map(p => p.bluePrismId);
   if(selectedBluePrism.length>0)
   {
@@ -198,7 +196,7 @@ checktodelete()
 
 
  delete_blueprism_config(){
-    console.log("delete_blueprism_config");
+   
     const selectedEnvironments = this.blueprism_configs.filter(product => product.checked==true).map(p => p.bluePrismId);
     if(selectedEnvironments.length!=0)
     {
@@ -240,9 +238,9 @@ checktodelete()
 {
   for(let i=0;i<this.blueprism_configs.length;i++)
   {
-    console.log(this.blueprism_configs[i]);
+   
     this.blueprism_configs[i].checked= false;
-    console.log(this.blueprism_configs[i]);
+    
   }
   this.checkflag=false;
 }
@@ -317,10 +315,10 @@ Update_BluePrism()
  {
   let response:any;
       response=this.UpdateBluePrismConfigForm.value;
-      console.log(response);
+     
       (response.status==true)?response.status=1:response.status=0;
       response.port=parseInt(response.port);
-      console.log(response);
+     
       response["bluePrismId"]=this.bpid;
       this.updatesubmitted = true;
       this.api.edit_blueprism_config(response).subscribe(resp=>{
@@ -345,7 +343,7 @@ Update_BluePrism()
           Swal.fire("Error",response.errorMessage,"error")
         }
       },(err)=>{
-        console.log(err);
+     
         Swal.fire("Error","Failed to update environment","error");
       });
     }
@@ -356,7 +354,7 @@ Update_BluePrism()
 }
 
 updateBluePrism(){
-  console.log("Hello updatecall");
+ 
 }
 
 
@@ -367,7 +365,7 @@ updatedata()
   this.createblueprism = false;
   this.updateblueprims = true;
   let data:any;
-  console.log("this.blueprism_configs.value",this.blueprism_configs);
+ 
   for(data of this.blueprism_configs)
   {
     if(data.bluePrismId==this.updateid)
@@ -390,7 +388,7 @@ updatedata()
       break;
     }
   }
-  console.log(this.UpdateBluePrismConfigForm.value);
+  
 }
 
 testBluePrismconnection()
@@ -442,7 +440,7 @@ testBluePrismconnection()
     }
     else
     {
-      console.log("Invalid Form");
+      
 
     }
   }
@@ -494,7 +492,7 @@ testBluePrismconnection()
     }
     else
     {
-      console.log("Invalid Form");
+     
       Swal.fire({
         position: 'center',
         icon: 'warning',
@@ -541,7 +539,7 @@ testBluePrismconnection()
     }
     else
     {
-      console.log("Invalid Form");
+    
       Swal.fire({
         position: 'center',
         icon: 'warning',

@@ -309,7 +309,7 @@ export class NewSoManagementComponent implements OnInit {
         this.obj.push(this.datasource[i].incidentStatus);
     }
     this.obj = [...new Set(this.obj)];
-    console.log(this.obj);
+  
     let seriesName =this.obj;
     for(let i=0 ; i< this.obj.length ;i++){
       for(let j = 0; j < this.datasource.length; j++){
@@ -483,8 +483,7 @@ for(let i = 0; i< this.datasource.length ; i++ )
     this.objincidentId.push(this.datasource[i].incidentId);
 }
 this.objincidentId = [...new Set(this.objincidentId)];
-console.log("this.objincidentId",this.objincidentId);
-console.log(this.datasource[0].incidentId);
+
 for(let i = 0 ; i < this.objincidentId.length ; i++ )
 {
   arra = [];
@@ -494,23 +493,22 @@ for(let i = 0 ; i < this.objincidentId.length ; i++ )
     
     if(this.objincidentId[i] == this.datasource[j].incidentId)
       {
-        console.log(this.objincidentId[i],this.datasource[j].incidentId);
+       
         value++;
-        console.log(value);
+       
       }      
   }
-  console.log(value);
-  console.log(this.objincidentId[i]);
+ 
   if(value >= 2){
    arra =  {
       incidentId : this.objincidentId[i],
       value : value,
     };
   }
-    console.log(arra);
+ 
   incidentarra.push(arra);  
 }
-console.log(incidentarra)
+
 chart.data = incidentarra;
 /*
 // Create axes
@@ -648,12 +646,7 @@ for( data1 of this.datasource){
     this.priorityLow.push(data1);
    }
 }
-console.log(this.PriHigh);
-console.log(this.PriMedium);
-console.log(this.PriLow);
-console.log(this.priorityHigh);
-console.log(this.priorityMedium);
-console.log(this.priorityLow);
+
 
 
 // Add data
@@ -701,7 +694,7 @@ series.columns.template.events.on(
   let a = ev.target;
   // alert(ev.target._dataItem.dataContext["country"]);
   var idOfPie = ev.target._dataItem.dataContext["category"];
-  console.log(idOfPie,"test1");
+
   switch(idOfPie) {
           case 'High':
               $(".left_arrow_chart4").show();

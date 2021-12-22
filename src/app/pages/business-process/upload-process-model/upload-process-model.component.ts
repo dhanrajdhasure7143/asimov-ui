@@ -218,7 +218,6 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
           }else if(headerValue == 'zoom_out'){
             this.zoomOut();
           }else if(headerValue == 'save_process'){
-            console.log(this.isShowConformance)
             if(this.isShowConformance){
               this.processOwner_modal();
             }else{

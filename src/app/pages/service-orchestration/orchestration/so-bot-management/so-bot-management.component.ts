@@ -102,20 +102,20 @@ export class SoBotManagementComponent implements OnInit {
     this.selectedAreas = result;*/
     if(query != '')
    {
-    console.log('query', query);
+   
     let result = this.select(query);
-    console.log("Categoryresult:",result.length);
+  
     if(result.length == 0){
       this.NorecordFound = true;
-      console.log("true");
+    
       this.selectedAreas = result;
     }
     else
     {
-      console.log("false");
+     
       this.NorecordFound = false;
       this.selectedAreas = result;
-      console.log("else categorysearch",result);
+     
     }
   }
   else

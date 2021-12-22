@@ -210,7 +210,6 @@ export class ProcessCategoryOverlayComponent implements OnInit {
     await this.rest.getmultipleApproverforusers(roles).subscribe( res =>  {//Process Architect
      if(Array.isArray(res))
        this.approver_list = res;
-       console.log(res)
    });
   }
 }

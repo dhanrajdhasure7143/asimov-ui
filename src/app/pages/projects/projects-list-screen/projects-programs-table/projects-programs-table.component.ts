@@ -263,9 +263,9 @@ export class ProjectsProgramsTableComponent implements OnInit {
             }
         
       })
-      console.log("--------------check---------------------",projects_or_programs)
+    
       this.dataSource2 = new MatTableDataSource(projects_or_programs);
-      console.log("data",this.dataSource2)
+     
       this.dataSource2.paginator=this.paginator2;
       this.dataSource2.sort = this.sort2;    
   }
@@ -395,7 +395,7 @@ export class ProjectsProgramsTableComponent implements OnInit {
           endDate:data.endDate
         }
     })];
-    console.log("data",this.projects_list)
+   
     this.project_main.projects_list=this.projects_list;
     this.project_main.count.New=this.projects_list.filter(item=>item.status=="New").length
     this.project_main.count.Inprogress=this.projects_list.filter(item=>item.status=="In Progress").length
