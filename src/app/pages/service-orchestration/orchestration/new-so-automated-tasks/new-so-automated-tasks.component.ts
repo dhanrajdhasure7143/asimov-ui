@@ -577,6 +577,21 @@ resetsla(){
     })
   }
   dropTable(event) {
+    if(this.selectedvalue!="" && this.selectedvalue != 0 && this.selectedvalue!="0" && this.selectedvalue != undefined) 
+    {
+      this.spinner.show();
+      let filteredTasks:any=this.automatedtask.filter(item=>item.processId==this.selectedvalue)
+      moveItemInArray(filteredTasks,event.previousIndex,event.currentIndex)
+      let array:any= filteredTasks;
+      this.dataSource2=new MatTableDataSource(array);
+      this.dataSource2.paginator=this.paginator10;
+      this.dataSource2.sort=this.sort10;
+      setTimeout(()=>this.spinner.hide(),1000)
+    }
+    else
+    {
+      Swal.fire("Alert","Please select process to re-order tasks","warning")
+    }
     // if (event.previousContainer === event.container) {
     //   moveItemInArray(event.container.data.data, event.previousIndex, event.currentIndex);
     // } else {
@@ -591,7 +606,11 @@ resetsla(){
     let processnamebyid=this.process_names.find(data=>parseInt(filterValue)==data.processId);
     this.selectedcategory=parseInt(processnamebyid.categoryId);
     this.selectedvalue=parseInt(processnamebyid.processId);
-    this.dataSource2.filter = "processId_"+filterValue+"_"+processnamebyid.processName;
+    let processes=this.automatedtask.filter(item=>item.processId==this.selectedvalue);
+    this.dataSource2=new MatTableDataSource(processes);
+    this.dataSource2.paginator=this.paginator10;
+    this.dataSource2.sort=this.sort10
+    //this.dataSource2.filter = "processId_"+filterValue+"_"+processnamebyid.processName;
     this.checkTaskAssigned(processnamebyid.processId);
   }
 
@@ -599,9 +618,12 @@ resetsla(){
   {
     this.selectedcategory=parseInt(value);
     this.environments=this.environmentsData.filter(item=>item.categoryId==value);
-    this.dataSource2.filter = this.categaoriesList.find(data=>this.selectedcategory==data.categoryId).categoryName.toLowerCase();
     this.selected_process_names=this.process_names.filter(item=>item.categoryId==this.selectedcategory)
-    this.selectedvalue=""
+    let automatedTasks=this.automatedtask.filter(item=>item.categoryId==value);
+    this.dataSource2=new MatTableDataSource(automatedTasks);
+    this.dataSource2.paginator=this.paginator10;
+    this.dataSource2.sort=this.sort10;
+    this.selectedvalue="";
   }
 
 

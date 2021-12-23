@@ -239,8 +239,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           selectedNodeTask: "",
           selectedNodeId: "",
           path: "/assets/images/RPA/Start.png",
-          x: (this.coordinates!=undefined)?(this.coordinates[1]+"px"):"10px",
-          y: (this.coordinates!=undefined)?(this.coordinates[2]+"px"):"9px",
+          x: (this.coordinates[1]!=undefined)?(this.coordinates[1]+"px"):"10px",
+          y: (this.coordinates[2]!=undefined)?(this.coordinates[2]+"px"):"9px",
         }
         this.startNodeId=startnode.id
         if(this.nodes.find(item=>item.id==startnode.id)==undefined)
@@ -252,6 +252,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         }
       }
       // if (element.outSeqId == "STOP_" + this.finalbot.botName) {
+        console.log(this.coordinates)
         if(outseq.split("_")[0]=="STOP"){
           //let coordinates=(this.finaldataobjects[0].nodeId.split("|")!=undefined)?this.finaldataobjects[0].nodeId.split("|"):undefined;
        
@@ -263,8 +264,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           path: "/assets/images/RPA/Stop.png",
           // x: "900px",
           // y: "396px",
-          x: (this.coordinates!=undefined)?(this.coordinates[3]+"px"):"1000px",
-          y: (this.coordinates!=undefined)?(this.coordinates[4]+"px"):"300px",
+          x: (this.coordinates[3]!=undefined)?(this.coordinates[3]+"px"):"900px",
+          y: (this.coordinates[4]!=undefined)?(this.coordinates[4]+"px"):"300px",
 
         }
         this.stopNodeId=stopnode.id
