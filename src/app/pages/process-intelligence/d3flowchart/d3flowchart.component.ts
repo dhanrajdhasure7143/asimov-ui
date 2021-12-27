@@ -387,9 +387,14 @@ export class D3flowchartComponent {
               }
             }
           }
-          let maxCount = linkCountArr.reduce(function (prev, current) {
-            return (prev > current) ? prev : current
-          })
+
+          let maxCount = 0;
+          if(linkCountArr.length > 0) {
+            maxCount = linkCountArr.reduce(function (prev, current) {
+              return (prev > current) ? prev : current
+            })
+          }
+          
           let maxCount2 = linkCountArr1.reduce(function (prev, current) {
             return (prev > current) ? prev : current
           })
