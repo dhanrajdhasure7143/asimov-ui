@@ -25,7 +25,7 @@ export class ModifyUserComponent implements OnInit {
     this.editUserForm=this.formBuilder.group({
       email: ["", Validators.compose([Validators.required])],
       departments: ["", Validators.compose([Validators.required])],
-      role: [[], Validators.compose([Validators.required])]
+      role: ["", Validators.compose([Validators.required])]
       })
     this.getAllCategories();
     this.getRoles();
@@ -73,11 +73,12 @@ getAllCategories(){
 }
 
 updateUser(){
- 
+ let roles_list = [];
+ roles_list.push(this.editUserForm.get("role").value);
   let body={
       "userId":this.userId,
       "department":this.editUserForm.get("departments").value.toString(),
-      "rolesList": this.editUserForm.get("role").value
+      "rolesList": roles_list
   }
 
   this.api.updateUserRoleDepartment(body).subscribe(resp=> {
