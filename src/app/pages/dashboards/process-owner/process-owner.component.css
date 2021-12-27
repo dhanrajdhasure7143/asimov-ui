@@ -160,3 +160,23 @@ overflow: auto !important;
     bottom: 23px;
     width: 90%;
 }
+
+#prjchartdiv {
+    width: 100%;
+    height: 250px;
+  }
+  #legendwrapper {
+    width: 100%;
+    height: 100px;
+    border: 1px dotted #c99;
+  }
+  
+  #legenddiv {
+    height: 150px !important;
+  }
+  
+  #legendwrapper {
+    max-height: 120px;
+    overflow-x: none;
+    overflow-y: auto;
+  }
