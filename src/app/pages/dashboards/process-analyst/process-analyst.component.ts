@@ -334,33 +334,6 @@ export class ProcessAnalystComponent implements OnInit {
   }
 
   allProjectProgressChart() {
-    this.runtimestats=[
-      {name:"xyz12344ewwee1",value:20,},
-      {name:"xyz2wbrttehe",value:20,},
-      {name:"xyz3rthrhrh",value:20,},
-      {name:"xyz4hrhrrtht",value:20,},
-      {name:"xyz5rtteegwwe",value:20,},
-      {name:"xyz6",value:20,},
-      {name:"xyz7",value:20,},
-      {name:"xyz8",value:20,},
-      {name:"xyz9",value:20,},
-      {name:"xyz0",value:20,},
-      {name:"xyz11",value:20,},
-      {name:"xyz838gqif",value:20,},
-      {name:"xyz9jaw,ef",value:20,},
-      {name:"xyzwg0",value:20,},
-      {name:"Ranjith",value:25,},
-      {name:"xyz4hrtlhrrtht",value:20,},
-      {name:"xyzrh5rtteegwwe",value:20,},
-      {name:"xy6rj7z6",value:20,},
-      {name:"xyjejz7",value:20,},
-      {name:"xywf4z8",value:20,},
-      {name:"xyewfvewfz9",value:20,},
-      {name:"xyffz0",value:20,},
-      {name:"xyz2311",value:20,},
-      {name:"xyz838gqif",value:20,},
-      {name:"Rnji,ef",value:20,},
-    ]
     var chart = am4core.create("prjchartdiv", am4charts.XYChart);
     // Add data
     chart.data = this.runtimestats
@@ -392,11 +365,10 @@ export class ProcessAnalystComponent implements OnInit {
     columnTemplate.events.once("inited", function (event) {
       event.target.fill = runtimeref.colors.getIndex(event.target.dataItem.index);
     });
+    categoryAxis.renderer.labels.template.disabled = true;
 
-    // series.stacked = true;
     chart.legend = new am4charts.Legend();
     /* Create a separate container to put legend in */
-    categoryAxis.renderer.labels.template.disabled = true;
     var legendContainer = am4core.create("legenddiv", am4core.Container);
     legendContainer.width = am4core.percent(100);
     legendContainer.height = am4core.percent(100);
@@ -415,12 +387,8 @@ export class ProcessAnalystComponent implements OnInit {
       });
       chart.legend.data = legenddata;
     });
-    chart.events.on("datavalidated", resizeLegend);
-    chart.events.on("maxsizechanged", resizeLegend);
-
-    function resizeLegend(ev) {
-      document.getElementById("legenddiv").style.height = chart.legend.contentHeight + "px";
-    }
+    chart.legend.scrollable = true;
+    
     chart.cursor = new am4charts.XYCursor();
   }
 

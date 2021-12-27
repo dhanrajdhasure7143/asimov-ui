@@ -365,8 +365,7 @@ export class ProcessOwnerComponent implements OnInit {
     ];
   }
 
-  allProjectProgressChart(){
-    /* Create legend */
+  allProjectProgressChart() {
     var chart = am4core.create("prjchartdiv", am4charts.XYChart);
     // Add data
     chart.data = this.runtimestats
@@ -379,8 +378,8 @@ export class ProcessOwnerComponent implements OnInit {
 
     var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
     valueAxis.title.text = "Percentage Completed";
-valueAxis.min = 0;
-      valueAxis.max = 100;
+    valueAxis.min = 0;
+    valueAxis.max = 100;
     // Create series
     var series = chart.series.push(new am4charts.ColumnSeries());
     series.dataFields.valueY = "value";
@@ -398,14 +397,10 @@ valueAxis.min = 0;
     columnTemplate.events.once("inited", function (event) {
       event.target.fill = runtimeref.colors.getIndex(event.target.dataItem.index);
     });
-
-
-    // series.stacked = true;
+    categoryAxis.renderer.labels.template.disabled = true;
 
     chart.legend = new am4charts.Legend();
-
     /* Create a separate container to put legend in */
-    categoryAxis.renderer.labels.template.disabled = true;
     var legendContainer = am4core.create("legenddiv", am4core.Container);
     legendContainer.width = am4core.percent(100);
     legendContainer.height = am4core.percent(100);
@@ -423,19 +418,11 @@ valueAxis.min = 0;
         })
       });
       chart.legend.data = legenddata;
-
     });
+    chart.legend.scrollable = true;
 
-
-    chart.events.on("datavalidated", resizeLegend);
-    chart.events.on("maxsizechanged", resizeLegend);
-
-    function resizeLegend(ev) {
-      document.getElementById("legenddiv").style.height = chart.legend.contentHeight + "px";
-    }
     chart.cursor = new am4charts.XYCursor();
-
-           }
+  }
 
   projectDurationChart(data) {
     am4core.useTheme(am4themes_animated);
