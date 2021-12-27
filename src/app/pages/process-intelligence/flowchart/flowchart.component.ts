@@ -401,7 +401,6 @@ combofilterObject:any;
         this.model3 = fullgraphOne.allSelectData.nodeDataArraycase;
         this.filterPerformData = this.fullgraph_model;
         this.model2 = this.flowchartData(this.model1)
-        console.log(this.model1,this.model2)
         let fullModel2=this.model2
         this.startArray=[]
         this.endArray=[]
@@ -931,7 +930,6 @@ combofilterObject:any;
           var obj = {};
           this.nodeArray[i].count = this.nodeArray[i].toolCount[0];
           if(this.nodeArray[i].toolCount[3]!=0){
-            console.log(this.nodeArray[i])
             obj['from'] = "Start";
             obj['to'] = this.nodeArray[i].name;
             obj['text'] = this.nodeArray[i].toolCount[3];
