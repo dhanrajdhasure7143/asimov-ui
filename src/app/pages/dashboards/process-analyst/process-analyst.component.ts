@@ -339,10 +339,11 @@ export class ProcessAnalystComponent implements OnInit {
     chart.data = this.runtimestats
     // Create axes
     var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
-    categoryAxis.dataFields.category = "name";
+    categoryAxis.dataFields.category = "id";
     categoryAxis.title.text = "Tasks";
     categoryAxis.renderer.grid.template.location = 0;
     categoryAxis.renderer.minGridDistance = 20;
+    categoryAxis.tooltipText = "{_dataContext.name}";
 
     var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
     valueAxis.title.text = "Percentage Completed";
@@ -351,7 +352,7 @@ export class ProcessAnalystComponent implements OnInit {
     // Create series
     var series = chart.series.push(new am4charts.ColumnSeries());
     series.dataFields.valueY = "value";
-    series.dataFields.categoryX = "name";
+    series.dataFields.categoryX = "id";
     series.tooltipText = "{valueY.value}%";
     valueAxis.renderer.labels.template.adapter.add("text", function (text) {
       return text + "%";
@@ -381,7 +382,7 @@ export class ProcessAnalystComponent implements OnInit {
       let legenddata = [];
       series.columns.each(function (column) {
         legenddata.push({
-          name: column.dataItem.categories.categoryX,
+          name: column.dataItem['_dataContext']['name'],
           fill: column.fill
         })
       });
