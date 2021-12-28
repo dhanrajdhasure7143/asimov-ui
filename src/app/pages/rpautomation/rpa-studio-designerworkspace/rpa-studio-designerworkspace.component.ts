@@ -311,7 +311,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     setTimeout(() => {
       this.loadflag = false;
       sequences.forEach(element => {
-
         this.jsPlumbInstance.connect(
           {
             endpoint: ['Dot', {
