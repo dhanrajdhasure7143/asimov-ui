@@ -146,7 +146,12 @@ export class ProgramDetailsComponent implements OnInit {
       this.program_detials=data;
       if(this.program_detials){
         let usr_name=this.program_detials.owner.split('@')[0].split('.');
-        this.owner_letters=usr_name[0].charAt(0)+usr_name[1].charAt(0);
+        // this.owner_letters=usr_name[0].charAt(0)+usr_name[1].charAt(0);
+        if(usr_name.length > 1){
+          this.owner_letters=usr_name[0].charAt(0)+usr_name[1].charAt(0);
+          }else{
+            this.owner_letters=usr_name[0].charAt(0);
+          }
        
         }
         this.editdata=false;

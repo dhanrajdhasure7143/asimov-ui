@@ -2686,3 +2686,7 @@ span.pdicon {
 .ng-select .ng-select-container {
   min-height: 34px !important;
 }
+.update_department .ng-select .ng-select-container{
+  max-height: 65px !important;
+  overflow: auto !important;
+}
