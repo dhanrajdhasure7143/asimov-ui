@@ -90,7 +90,7 @@
         <!-- <mat-card> -->
         <div *ngIf="responsedata!=undefined" class="orchestration-table-container">
 
-            <table mat-table #sort10="matSort" #automatedtable [dataSource]="dataSource2" cdkDropList [cdkDropListData]="automatedtask" (cdkDropListDropped)="dropTable($event)" matSort class="RPA table" id="autotable">
+            <table mat-table #sort10="matSort" #automatedtable [dataSource]="dataSource2" cdkDropList [cdkDropListData]="dataSource2" (cdkDropListDropped)="dropTable($event)" matSort class="RPA table" id="autotable">
 
                 <ng-container matColumnDef="processFilterId">
                     <th *matHeaderCellDef></th>
@@ -357,7 +357,7 @@
           <button [disabled]="element.taskType!='Automated'" class='btn btn-xs btn-primary' (click)="runsmoketest(element.taskId)">Run Test</button>
         </td>
       </ng-container> -->
-                <ng-container matColumnDef="Loading">
+                <!-- <ng-container matColumnDef="Loading">
                     <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
                         Loading
                     </td>
@@ -366,12 +366,16 @@
                     <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
                         No Records Found
                     </td>
-                </ng-container>
+                </ng-container> -->
                 <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                 <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns;" cdkDrag [cdkDragData]="row"></tr>
-                <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['Loading']" [ngClass]="{'hide':dataSource2!=null}"></tr>
-                <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(dataSource2!=null && dataSource2.data.length==0)}"></tr>
+                <!-- <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['Loading']" [ngClass]="{'hide':dataSource2!=null}"></tr>
+                <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(dataSource2!=null && dataSource2.data.length==0)}"></tr> -->
             </table>
+            <div class="text-center" *ngIf="dataSource2.data.length==0">
+                <img src="../../../../../assets/images/RPA/No-Items.svg" style="height:calc(100vh - 400px)">
+                <br/> No items to display
+            </div>
         </div>
 
         <!--</div>-->
