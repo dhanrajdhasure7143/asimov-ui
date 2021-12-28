@@ -1,4 +1,4 @@
-<div class="bg-color so-sub-tab-content">
+<div class="so-sub-tab-content">
 
     <div class="container-fluid">
         <div class="form-inline mainformco row">
@@ -38,7 +38,7 @@
       <button  matTooltip="View Configuration"   mat-mini-fab color="basic" (click)="configuration()"  ><i  class="fas fa-cog" style="margin-right: -5px !important;"></i></button>
     </span>-->
                 <button (click)="addtasks(addTask)" class="tsttooltipbtn">
-      <img src="../../../../../assets/images/RPA/icon_latest/pluse-blue.svg" class="testplus"/>
+      <img src="../../../../../assets/images/RPA/icon_latest/new-blue.svg" class="testplus"/>
       <span class="testtooltip">Add Task</span>
     </button>
                 <button (click)="reset_all()" id="autoreset" class="tsttooltipbtn">
@@ -280,7 +280,7 @@
                         <div *ngIf="element.taskType=='Automated'">
                             <span>
                 <button [disabled]="element.taskType=='Human' || element.taskType==null" [class]="(element.taskType=='Human' || element.taskType==null)?'undobtn':''" (click)="createtaskbotoverlay(element.taskId)" matTooltip="Create and Assign Resource">
-                  <img src="../../../../../assets/images/RPA/icon_latest/pluse-blue.svg" class="testplus"/>
+                  <img src="../../../../../assets/images/RPA/icon_latest/new-blue.svg" class="testplus"/>
                 </button>
               </span>
                             <span>
@@ -375,7 +375,9 @@
         </div>
 
         <!--</div>-->
-        <mat-paginator class="newpaginationdiv" #paginator10 [pageSize]="10" [pageSizeOptions]="[5, 10,25,50]" [showFirstLastButtons]="true"></mat-paginator>
+        <div class="newpaginationdiv">
+            <mat-paginator class="newpaginationdiv" #paginator10 [pageSize]="10" [pageSizeOptions]="[5, 10,25,50]" [showFirstLastButtons]="true"></mat-paginator>
+        </div>
         <!-- </mat-card> -->
 
 

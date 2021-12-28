@@ -284,7 +284,7 @@ body .leftfporm select {
   background-color: #e8f7fd;
 }
 .so-sub-tab-content {
-  padding-top: 10px;
+  padding-top: 8px;
 }
 
 .newexecbots_progress {
@@ -299,4 +299,10 @@ body .leftfporm select {
 
 .leftfporm .col-md-3 {
   margin-bottom: 8px !important;
+}
+
+.schedule-table-container{
+  height: calc(100vh - 320px);
+  overflow: auto;
+  width: 100%;
 }

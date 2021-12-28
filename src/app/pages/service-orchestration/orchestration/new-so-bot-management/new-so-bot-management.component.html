@@ -1,7 +1,7 @@
-<div class="bg-color so-sub-tab-content">
+<div class="so-sub-tab-content">
   <div class="container-fluid">
 
-      <div class="row pt-5">
+      <div class="row">
           <div class="col-md-10 p-0">
               <div class="col-md-3 form-group pl-0 sosearchfield">
                   <input type="search" class="form-control rpa-control" placeholder="Search" [(ngModel)]="search" (input)="method()">
@@ -175,7 +175,10 @@
               <h4>No items to display</h4>
               
           </div>
-          <mat-paginator class="newpaginationdiv" #paginator1 [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons]="true"></mat-paginator>
+          <div class="newpaginationdiv">
+            <mat-paginator class="newpaginationdiv" #paginator1 [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]"
+                 [showFirstLastButtons]="true"></mat-paginator>
+          </div>
       </div>
   </div>
 

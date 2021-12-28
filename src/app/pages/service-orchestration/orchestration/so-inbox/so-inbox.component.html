@@ -18,7 +18,7 @@
               </div>          
         </div>
       
-            <div class="col-md-12 p-0">
+            <!-- <div class="col-md-12 p-0"> -->
               <div  class="inbox-tablegrid">
                 <table mat-table  [dataSource]="dataSource1" #sort1="matSort" matSort class="RPA table" id="inboxtable">
 
@@ -114,9 +114,10 @@
                 <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': !respdata1}"></tr>
                 </table>
             </div>
-
-            <mat-paginator #paginator1 [pageSize]="10" [pageSizeOptions]="[5, 10,25,50]" [showFirstLastButtons]="true"></mat-paginator>
-        </div>
+            <div class="newpaginationdiv">
+              <mat-paginator #paginator1 [pageSize]="10" [pageSizeOptions]="[5, 10,25,50]" [showFirstLastButtons]="true"></mat-paginator>
+            </div>
+        <!-- </div> -->
 
     </div>
 
