@@ -487,7 +487,12 @@ this.projectStartDate = moment(this.projectDetails.startDate).format("YYYY-MM-DD
 
 if(this.projectDetails){​​​​​​
 let usr_name=this.projectDetails.owner.split('@')[0].split('.');
-this.owner_letters=usr_name[0].charAt(0)+usr_name[1].charAt(0);
+// this.owner_letters=usr_name[0].charAt(0)+usr_name[1].charAt(0);
+if(usr_name.length > 1){
+  this.owner_letters=usr_name[0].charAt(0)+usr_name[1].charAt(0);
+  }else{
+    this.owner_letters=usr_name[0].charAt(0);
+  }
 
 }​​​​​​
 

@@ -13,17 +13,16 @@ import Swal from 'sweetalert2';
 export class InviteUserComponent implements OnInit {
   emailRequired: boolean = false;
   inviteUserForm:FormGroup;
-  categories: Object;
+  categories: any=[];
   allRoles: any;
+  inviteeMail:any;
+  departments:any[]=[];
+  role:any;
+  isdprtDisabled:boolean=false;
 
   constructor(private formBuilder: FormBuilder,private api:RestApiService, private router: Router,private spinner:NgxSpinnerService ) { }
 
   ngOnInit(): void {
-    this.inviteUserForm=this.formBuilder.group({
-      inviteeMail: ["", Validators.compose([Validators.required])],
-      departments: ["", Validators.compose([Validators.required])],
-      role: ["", Validators.compose([Validators.required])]
-      })
     this.getAllCategories();
     this.getRoles();
   }
@@ -66,6 +65,7 @@ export class InviteUserComponent implements OnInit {
 getAllCategories(){
   this.api.getDepartmentsList().subscribe(resp => {
     this.categories = resp.data; 
+    console.log()
   })
  }
  getRoles(){
@@ -76,21 +76,24 @@ getAllCategories(){
  }
 
  resetUserInvite(){
-  this.inviteUserForm.reset();
-  this.inviteUserForm.get("departments").setValue("");
-  this.inviteUserForm.get("inviteeMail").setValue("");
-  this.inviteUserForm.get("role").setValue("");
+   this.inviteeMail='';
+   this.role=undefined;
+   this.departments=[];
+  // this.inviteUserForm.reset();
+  // this.inviteUserForm.get("departments").setValue("");
+  // this.inviteUserForm.get("inviteeMail").setValue("");
+  // this.inviteUserForm.get("role").setValue("");
  }
 
  inviteUser(){
   this.spinner.show();
    let body = {
     "inviterMailId": localStorage.getItem('ProfileuserId'),
-    "inviteeMailId": this.inviteUserForm.value.inviteeMail,
-    "departmentId": this.inviteUserForm.value.departments.toString(),
+    "inviteeMailId": this.inviteeMail,
+    "departmentId": this.departments.toString(),
     "userRoles":[
         {
-            "id":this.inviteUserForm.value.role
+            "id":this.role
         }
     ]
    }
@@ -116,4 +119,18 @@ getAllCategories(){
     this.spinner.hide();
    });
   }
+
+  onchangeRole(value){
+    console.log(value)
+    this.departments=[];
+    if(value== '8'){
+      this.categories.forEach(element => {
+        this.departments.push(element.categoryId)
+      });
+      this.isdprtDisabled=true;
+    }else{
+      this.isdprtDisabled=false;
+    }
+  }
+
 }
