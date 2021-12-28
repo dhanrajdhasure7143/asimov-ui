@@ -219,21 +219,28 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
 
 
-
+  public coordinates:any;
   public loadnodes() {
-    this.finaldataobjects.forEach(element => {
+    this.finaldataobjects.forEach((element,index )=> {
       let inseq=String(element.inSeqId);
       let outseq=String(element.outSeqId);
-      // if (element.inSeqId == "START_" + this.finalbot.botName) {
+     
         if(inseq.split("_")[0]=="START"){
+      
+        this.coordinates=(this.finaldataobjects[0].x.split("|")!=undefined)?this.finaldataobjects[0].nodeId.split("|"):undefined;
+        
+        if(this.coordinates!=undefined)
+        {
+          this.finaldataobjects[0].nodeId=this.coordinates[0];
+        }
         let startnode = {
           id: inseq,
           name: "START",
           selectedNodeTask: "",
           selectedNodeId: "",
           path: "/assets/images/RPA/Start.png",
-          x: "10px",
-          y: "9px",
+          x: (this.coordinates[1]!=undefined)?(this.coordinates[1]+"px"):"10px",
+          y: (this.coordinates[2]!=undefined)?(this.coordinates[2]+"px"):"9px",
         }
         this.startNodeId=startnode.id
         if(this.nodes.find(item=>item.id==startnode.id)==undefined)
@@ -245,16 +252,21 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         }
       }
       // if (element.outSeqId == "STOP_" + this.finalbot.botName) {
+        console.log(this.coordinates)
         if(outseq.split("_")[0]=="STOP"){
-        
+          //let coordinates=(this.finaldataobjects[0].nodeId.split("|")!=undefined)?this.finaldataobjects[0].nodeId.split("|"):undefined;
+       
         let stopnode = {
           id: outseq,
           name: "STOP",
           selectedNodeTask: "",
           selectedNodeId: "",
           path: "/assets/images/RPA/Stop.png",
-          x: "900px",
-          y: "396px",
+          // x: "900px",
+          // y: "396px",
+          x: (this.coordinates[3]!=undefined)?(this.coordinates[3]+"px"):"900px",
+          y: (this.coordinates[4]!=undefined)?(this.coordinates[4]+"px"):"300px",
+
         }
         this.stopNodeId=stopnode.id
         if(this.nodes.find(item=>item.id==stopnode.id)==undefined)
@@ -959,7 +971,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         "svg":this.svg,
         "sequences": this.getsequences(),
       }
-
+     
       if(this.checkorderflag==false)
       {
         return  false;
@@ -1047,10 +1059,12 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       "svg":this.svg,
       "sequences": this.getsequences()
     }
+   
     if(this.checkorderflag==false)
      return false;
     else
       return this.rest.updateBot(this.saveBotdata)
+      
 
   }
 
@@ -1248,8 +1262,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
   get_coordinates() {
     this.nodes.forEach(data => {
-      var p = $("#" + data.id).first();
-      var position = p.position();
+      let p:any = $("#" + data.id).first();
+      let position:any = p.position();
       for (let i = 0; i < this.finaldataobjects.length; i++) {
         let nodeid = this.finaldataobjects[i].nodeId.split("__");
         if (nodeid[1] == data.id) {
@@ -1258,6 +1272,19 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         }
       }
     })
+   
+    if(this.finaldataobjects[0].inSeqId.split("_")[0]=="START")
+    {
+      let p1:any = $("#" + this.finaldataobjects[0].inSeqId).first();
+      let position1:any = p1.position();
+      this.finaldataobjects[0].nodeId=this.finaldataobjects[0].nodeId+"|"+position1.left+"|"+position1.top
+    }
+    if(this.finaldataobjects[this.finaldataobjects.length-1].outSeqId.split("_")[0]=="STOP")
+    {
+      let pn:any=$("#"+this.finaldataobjects[this.finaldataobjects.length-1].outSeqId).first();
+      let positionn:any = pn.position();
+      this.finaldataobjects[0].nodeId=this.finaldataobjects[0].nodeId+"|"+positionn.left+"|"+positionn.top;  
+    }
   }
 
 

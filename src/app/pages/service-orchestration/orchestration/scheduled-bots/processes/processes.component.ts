@@ -44,8 +44,7 @@ export class ProcessesComponent implements OnInit {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
     this.processschedule.filter = filterValue;
-    console.log(this.processschedule.filter);
-    console.log(this.processschedule.filteredData.length);
+   
     this.tabledata = this.processschedule.filteredData.length <= '0'  ? false: true;
   }
 

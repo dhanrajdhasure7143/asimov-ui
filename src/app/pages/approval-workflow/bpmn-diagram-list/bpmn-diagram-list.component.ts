@@ -179,7 +179,7 @@ this.selectedrow =i;
      this.rest_Api.bpmnlist().subscribe(data => {
       this.isLoading = false;
       this.griddata = data;
-      console.log(this.griddata);
+     
       this.griddata.forEach(ele=>{
         ele["processIntelligenceId"]=ele.bpmnProcessInfo[0].processIntelligenceId;
         ele["bpmnProcessName"]=ele.bpmnProcessInfo[0].bpmnProcessName;

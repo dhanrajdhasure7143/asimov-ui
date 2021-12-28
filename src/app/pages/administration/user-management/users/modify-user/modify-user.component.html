@@ -9,51 +9,58 @@
             </span>
             <div class="ml-auto pull-right">
                 <!-- <button (click)="reseteditdepartment()" class="btn btn-default">Reset</button> -->
-                <button [disabled]="editUserForm.invalid" (click)="updateUser()" class="btn btn-primary btn-update">Save</button>
+                <button (click)="updateUser()" class="btn btn-primary btn-update">Save</button>
             </div>
         </div>
         <div class="container-fluid  h-scroll">
             <div class="maindivfoprm">
-                  
-                <form [formGroup]="editUserForm"  (ngSubmit)="updateUser()">
+                <form #update_form="ngForm">
                     <div class="row fcont">
-                        
                         <div class="col-md-12 p-0 form-fields">
                             <label class="label-control">Username<span class="star">*</span></label>
-                            <input type="text" disabled formControlName="email"  placeholder="Enter Email" maxlength="256" class="form-control data"  [ngClass]="editUserForm.get('email').valid?'enteredfield-color':'inputfield-color'">
+                            <input type="text" name="email_id" disabled [(ngModel)]="email" placeholder="Enter Email"
+                                maxlength="256" class="form-control data">
                         </div>
-                        <div class="col-md-12 p-0 form-fields">
-                            <label class="label-control">Add Department(s)<span class="star">*</span></label>
-                            <ng-select  formControlName="departments"  [multiple]="true"  placeholder="Select departments" required>
-                                <ng-option *ngFor="let category of categories" [value]="category.categoryId">{{category.categoryName}}</ng-option>
-                            </ng-select>
-                            <span *ngIf="editUserForm.get('departments').invalid && editUserForm.get('departments').touched" class="errspan required">Departments Required*</span>
-                        </div>
+
                         <div class="col-md-12 p-0 form-fields">
                             <label class="label-control">Add Role<span class="star">*</span></label>
-                                          <!-- <ng-select name = "multiroles" [multiple]="true" [items] =  "allRoles" [(ngModel)] = "roles"
+                            <!-- <ng-select name = "multiroles" [multiple]="true" [items] =  "allRoles" [(ngModel)] = "roles"
                                           bindValue = "name"
                                           bindLabel = "name" required>
                                           </ng-select>  -->
-               
-                                          <!-- <select formControlName="role" class="form-control data"
+
+                            <!-- <select formControlName="role" class="form-control data"
                                               [ngClass]="editUserForm.get('role').valid?'enteredfield-color':'inputfield-color'">
                                               <option [value]="null" disabled hidden>Select Role</option>
                                               <option value="" [selected]="true">Select Role</option>
                                               <option *ngFor="let role of allRoles" [value]="role.id">
                                                   {{role.name}}</option>
                                           </select> -->
-                            <select  formControlName="role" class="form-control data"
-                            [ngClass]="editUserForm.get('role').valid?'enteredfield-color':'inputfield-color'" placeholder="Select Role" required>
+                            <select name="roles" #roles="ngModel" [(ngModel)]="role" class="form-control data"
+                                (change)="onchangeRole($event.target.value)" placeholder="Select Role" required>
                                 <option *ngFor="let role of allRoles" [value]="role.id">{{role.name}}</option>
                             </select>
-                            <span *ngIf="editUserForm.get('role').invalid && editUserForm.get('role').touched" class="errspan required">Role Required*</span>
+                            <!-- <span *ngIf="editUserForm.get('role').invalid && editUserForm.get('role').touched" class="errspan required">Role Required*</span> -->
                         </div>
-                        
+                        <div class="col-md-12 p-0 form-fields update_department">
+                            <label class="label-control">Add Department(s)<span class="star">*</span></label>
+                            <!-- <ng-select [disabled]="isdprtDisabled"  formControlName="departments"  [multiple]="true"  placeholder="Select departments" required>
+                                <ng-option *ngFor="let category of categories" [value]="category.categoryId">{{category.categoryName}}</ng-option>
+                            </ng-select> -->
+                            <ng-select [items]="categories" bindLabel="categoryName" bindValue="categoryId"
+                                name="depart" #depart="ngModel" [multiple]="true" placeholder="Select departments"
+                                [(ngModel)]="departments" [disabled]="isdprtDisabled">
+                            </ng-select>
+                            <span *ngIf="((depart.invalid && update_form.submitted) || (depart.errors && depart.touched) )" 
+                                                class='errspan required'>Departments is required </span>
+                                                <span *ngIf="errShow" class='errspan required'> Departments is required </span>
+                            <!-- <span *ngIf="editUserForm.get('departments').invalid && editUserForm.get('departments').touched" class="errspan required">Departments Required*</span> -->
+                        </div>
+
                     </div>
-                    
+
                 </form>
-               
+
             </div>
         </div>
     </mat-card>

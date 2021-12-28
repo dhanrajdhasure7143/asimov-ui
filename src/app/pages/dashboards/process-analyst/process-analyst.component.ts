@@ -24,7 +24,7 @@ export class ProcessAnalystComponent implements OnInit {
   Processes: any;
   ProjectCompletionDuration: Object;
   pendingApprovals: any[];
-  allProjectProgress: Object;
+  allProjectProgress: any;
   allProjectStatus: Object;
   projectStatusArray: any[] = [];
   activityStream: any;
@@ -161,14 +161,14 @@ export class ProcessAnalystComponent implements OnInit {
   getProjectProgress(duration) {
     this.apiService.getAllTasksProgress(this.userRoles, this.userEmail, this.userName, duration).subscribe(res => {
       this.allProjectProgress = res;
-      this.runtimestats = [];
-      for (var i = 0; i < Object.keys(res).length; i++) {
-        var data = {
-          "name": Object.keys(res)[i],
-          "value": Object.values(res)[i],
-        }
-        this.runtimestats.push(data);
-      }
+      this.runtimestats = this.allProjectProgress;
+      // for (var i = 0; i < Object.keys(res).length; i++) {
+      //   var data = {
+      //     "name": Object.keys(res)[i],
+      //     "value": Object.values(res)[i],
+      //   }
+      //   this.runtimestats.push(data);
+      // }
       this.allProjectProgressChart();
     });
   }
@@ -333,91 +333,64 @@ export class ProcessAnalystComponent implements OnInit {
       ];
   }
 
-
   allProjectProgressChart() {
-    am4core.useTheme(am4themes_animated);
+    var chart = am4core.create("prjchartdiv", am4charts.XYChart);
+    // Add data
+    chart.data = this.runtimestats
+    // Create axes
+    var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+    categoryAxis.dataFields.category = "id";
+    categoryAxis.title.text = "Tasks";
+    categoryAxis.renderer.grid.template.location = 0;
+    categoryAxis.renderer.minGridDistance = 20;
+    categoryAxis.tooltipText = "{_dataContext.name}";
 
-    setTimeout(() => {
-      this.runtimestatschart = am4core.create("runtimestatistics-piechart", am4charts.XYChart);
-      this.runtimestatschart.hiddenState.properties.opacity = 0; // this creates initial fade-in
-      this.runtimestatschart.data = this.runtimestats;
-      this.runtimestatschart.zoomOutButton.disabled = true;
-      this.runtimestatschart.logo.disabled = true;
+    var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+    valueAxis.title.text = "Percentage Completed";
+    valueAxis.min = 0;
+    valueAxis.max = 100;
+    // Create series
+    var series = chart.series.push(new am4charts.ColumnSeries());
+    series.dataFields.valueY = "value";
+    series.dataFields.categoryX = "id";
+    series.tooltipText = "{valueY.value}%";
+    valueAxis.renderer.labels.template.adapter.add("text", function (text) {
+      return text + "%";
+    });
+    var columnTemplate = series.columns.template;
+    // columnTemplate.width = 45;
+    columnTemplate.column.cornerRadiusTopLeft = 10;
+    columnTemplate.column.cornerRadiusTopRight = 10;
+    columnTemplate.strokeOpacity = 0;
+    let runtimeref = chart;
+    columnTemplate.events.once("inited", function (event) {
+      event.target.fill = runtimeref.colors.getIndex(event.target.dataItem.index);
+    });
+    categoryAxis.renderer.labels.template.disabled = true;
 
-      var categoryAxis = this.runtimestatschart.xAxes.push(new am4charts.CategoryAxis());
-
-      categoryAxis.dataFields.category = "name";
-      categoryAxis.title.text = "Tasks";
-      let label1 = categoryAxis.renderer.labels.template;
-      // label1.truncate = true;
-      label1.maxWidth = 100;
-      // label1.disabled = false;
-      categoryAxis.renderer.minGridDistance = 70;
-      var valueAxis = this.runtimestatschart.yAxes.push(new am4charts.ValueAxis());
-      valueAxis.renderer.inside = false;
-      valueAxis.min = 0;
-      valueAxis.max = 100;
-      valueAxis.renderer.labels.template.fillOpacity = 1;
-      valueAxis.renderer.grid.template.strokeOpacity = 0;
-      valueAxis.cursorTooltipEnabled = false;
-      valueAxis.renderer.gridContainer.zIndex = 1;
-      valueAxis.title.text = "Percentage Completed";
-      var series = this.runtimestatschart.series.push(new am4charts.ColumnSeries);
-      series.dataFields.valueY = "value";
-      series.dataFields.categoryX = "name";
-      series.tooltipText = "{valueY.value}%";
-      valueAxis.renderer.labels.template.adapter.add("text", function (text) {
-        return text + "%";
+    chart.legend = new am4charts.Legend();
+    /* Create a separate container to put legend in */
+    var legendContainer = am4core.create("legenddiv", am4core.Container);
+    legendContainer.width = am4core.percent(100);
+    legendContainer.height = am4core.percent(100);
+    chart.legend.parent = legendContainer;
+    chart.legend.fontSize = 12;
+    let markerTemplate = chart.legend.markers.template;
+    markerTemplate.width = 10;
+    markerTemplate.height = 10;
+    series.events.on("ready", function (ev) {
+      let legenddata = [];
+      series.columns.each(function (column) {
+        legenddata.push({
+          name: column.dataItem['_dataContext']['name'],
+          fill: column.fill
+        })
       });
-      var columnTemplate = series.columns.template;
-      columnTemplate.width = 45;
-      columnTemplate.column.cornerRadiusTopLeft = 10;
-      columnTemplate.column.cornerRadiusTopRight = 10;
-      columnTemplate.strokeOpacity = 0;
-      let runtimeref = this.runtimestatschart;
-      columnTemplate.events.once("inited", function (event) {
-        event.target.fill = runtimeref.colors.getIndex(event.target.dataItem.index);
-      });
-      categoryAxis.renderer.labels.template.disabled = true;
-            var legend = new am4charts.Legend();
-            legend.parent = this.runtimestatschart.chartContainer;
-            legend.itemContainers.template.togglable = false;
-            legend.marginTop = 20;
-            legend.fontSize = 12;
-            let markerTemplate = legend.markers.template;
-            markerTemplate.width = 10;
-            markerTemplate.height = 10;
-          series.events.on("ready", function(ev) {
-            let legenddata = [];
-            series.columns.each(function(column) {
-              legenddata.push({
-                name: column.dataItem.categoryX,
-                fill: column.fill
-              })
-            });
-            legend.data = legenddata;
-          });
-
-      var cursor = new am4charts.XYCursor();
-      cursor.behavior = "panX";
-      this.runtimestatschart.cursor = cursor;
-      this.runtimestatschart.events.on("datavalidated", function () {
-        if (this.runtimestats.length > 5)
-          categoryAxis.zoomToIndexes(0, 7, false, true);
-        else
-          categoryAxis.zoomToIndexes(0, this.runtimestats.length, false, true);
-      }, this);
-      series.columns.template.events.on("hit", function (ev) {
-        let getdata: any = ev.target.dataItem.categories.categoryX
-        let data = { name: getdata };
-        this.getruns(data);
-
-      }, this);
-      var label = this.runtimestatschart.plotContainer.createChild(am4core.Label);
-      label.x = 150;
-      label.y = 50;
-      // $("#runtimestatistics-piechart > div > svg > g > g:nth-child(2) > g:nth-child(2)").hide();
-    }, 30)
-
+      chart.legend.data = legenddata;
+    });
+    chart.legend.scrollable = true;
+    
+    chart.cursor = new am4charts.XYCursor();
   }
+
 }

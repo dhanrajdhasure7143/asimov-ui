@@ -78,7 +78,7 @@ constructor() {
   }
 
 ngOnChange(){
-console.log(this.field.value);
+
 
 // this.field.value.
   }

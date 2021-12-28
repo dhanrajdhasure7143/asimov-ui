@@ -592,7 +592,7 @@ export class RpaHomeComponent implements OnInit {
     }else{
 
       let botId=Base64.encode(JSON.stringify(createBotFormValue));
-      console.log(botId)
+   
       this.router.navigate(["/pages/rpautomation/designer"],{queryParams:{botId:botId}})
        
     }
@@ -758,7 +758,7 @@ export class RpaHomeComponent implements OnInit {
   exportbot(bot)
   {
     this.rest.bot_export(bot.botId).subscribe((data)=>{
-      console.log(data)
+     
         const linkSource = `data:application/txt;base64,${data}`;
         const downloadLink = document.createElement('a');
         document.body.appendChild(downloadLink);
@@ -907,8 +907,8 @@ export class RpaHomeComponent implements OnInit {
     this.bot_list=this.bot_list.sort(function(a,b){
       let check_a=isNaN(a[colKey])?a[colKey].toUpperCase():a[colKey];
       let check_b=isNaN(b[colKey])?b[colKey].toUpperCase():b[colKey];
-      console.log(sortdes)
-      console.log(colKey)
+     
+     
       if (sortdes==true)
         return (check_a > check_b) ? 1 : -1;
       else
@@ -1012,19 +1012,19 @@ export class RpaHomeComponent implements OnInit {
       }
 
       assignPagination(data){
-        console.log(data)
+      
         const sortEvents$: Observable<Sort> = fromMatSort(this.sort);
         const pageEvents$: Observable<PageEvent> = fromMatPaginator(this.paginator301);
         const rows$ = of(data);
         this.totalRows$ = rows$.pipe(map(rows => rows.length));
         this.displayedRows$ = rows$.pipe(sortRows(sortEvents$), paginateRows(pageEvents$));
-        console.log(this.displayedRows$)
+      
       }
 
       applySearchFilter(v){      
     const filterPipe = new SearchRpaPipe();   
      const fiteredArr = filterPipe.transform(this.bot_list,v);   
-     console.log(fiteredArr)     
+          
       this.assignPagination(fiteredArr)    
   }
 

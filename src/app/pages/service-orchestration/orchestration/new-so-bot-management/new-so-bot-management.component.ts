@@ -169,7 +169,7 @@ public slaupdate : boolean = false;
     else if(this.search != '' && this.selected_source !="")
     {
       for(let a of this.bot_list){
-        console.log(a.sourceType);
+      
         if(this.selected_source == a.sourceType){
           result.push(a);
         }
@@ -186,7 +186,7 @@ public slaupdate : boolean = false;
     {
       let category =this.categaoriesList.find(val=>this.selectedcat==val.categoryId).categoryName;
       for(let a of this.bot_list){
-        console.log(a.department);
+     
         if( category == a.department){
           result.push(a);
         }
@@ -195,9 +195,9 @@ public slaupdate : boolean = false;
       this.respdata1=(result.length>0)?false:true;
       this.dataSource1 = new MatTableDataSource(result);
       let value1 = this.search.toLowerCase();
-       console.log(value1);
+      
        this.dataSource1.filter = value1;
-       console.log(this.dataSource1.filteredData);
+     
        this.dataSource1.sort=this.sort1;
        this.dataSource1.paginator=this.paginator1;
     }
@@ -212,7 +212,7 @@ public slaupdate : boolean = false;
           {
             let value1 = this.search.toLowerCase();
             result.filter = value1;
-            console.log(result);
+           
           }
         }
         }
@@ -236,7 +236,7 @@ public slaupdate : boolean = false;
     else if(this.selected_source!="")
     {
       for(let a of this.bot_list){
-        console.log(a.sourceType);
+      
         if(this.selected_source == a.sourceType){
           result.push(a);
         }
@@ -251,7 +251,7 @@ public slaupdate : boolean = false;
     {
       let category =this.categaoriesList.find(val=>this.selectedcat==val.categoryId).categoryName;
       for(let a of this.bot_list){
-        console.log(a.department);
+       
         if( category == a.department){
           result.push(a);
         }
@@ -408,7 +408,7 @@ public slaupdate : boolean = false;
 
   loadbotdatadesign(botId)
   {
-    console.log(botId);
+    
     localStorage.setItem("botId",botId);
     this.router.navigate(["/pages/rpautomation/home"]);
   }
@@ -453,7 +453,7 @@ public slaupdate : boolean = false;
         this.spinner.hide();
     }
     },(err)=>{
-      console.log(err)
+     
       this.spinner.hide();
     })
   }
@@ -514,13 +514,13 @@ public slaupdate : boolean = false;
        if(this.logresponse.length >0)
        {
          this.respdata1 = false;
-         console.log(this.respdata1)
+        
        }else
        {
          this.respdata1 = true;
-         console.log(this.respdata1);
+         
        }
-       console.log(this.logresponse)
+       
        if(this.logresponse.length>0)
        this.logresponse.forEach(data=>{
        response=data;
@@ -550,10 +550,10 @@ public slaupdate : boolean = false;
        }
        log.push(response)
      });
-     console.log(log);
+    
      log.sort((a,b) => a.run_id > b.run_id ? -1 : 1);
      this.Viewloglist = new MatTableDataSource(log);
-     console.log(this.Viewloglist);
+    
 
      this.Viewloglist.paginator=this.paginator4;
      this.Viewloglist.sort=this.sort4;
@@ -565,7 +565,7 @@ public slaupdate : boolean = false;
       this.logs_modal=this.modalService.show(template,{class:"logs-modal"});
 
    },(err)=>{
-      console.log(err)
+    
       this.spinner.hide();
       Swal.fire("Error","Failed to get runs","error");
    });
@@ -604,7 +604,7 @@ public slaupdate : boolean = false;
      this.viewlogid1=runid;
        },(err)=>{
          this.spinner.hide();
-         console.log(err);
+       
          Swal.fire("Error","Failed to get bot logs","error");
        })
    }
@@ -623,7 +623,7 @@ public slaupdate : boolean = false;
 
    executionAct(botid,source) {
     this.spinner.show();
-      console.log(source);
+   
       if(source=="EPSoft")
       this.rest.execution(botid).subscribe(res =>{
         let response:any;
@@ -647,7 +647,7 @@ public slaupdate : boolean = false;
           Swal.fire("Error",response.errorMessage,"error");
         }
       },(err)=>{
-        console.log(err)
+        
         this.spinner.hide();
         Swal.fire("Error","Failed to start bot","error")
       })
@@ -680,7 +680,7 @@ public slaupdate : boolean = false;
           else
            this.notify.notify("error",response.errorMessage);
         },(err)=>{
-          console.log(err);
+       
           this.spinner.hide();
           Swal.fire("Error","Failed to start bot","error");
         });
@@ -722,7 +722,7 @@ public slaupdate : boolean = false;
             this.spinner.hide();
             response.errorMessage==undefined?Swal.fire("Success",response.status,"success"):Swal.fire("Error",response.errorMessage,"error"); 
           },(err)=>{
-            console.log(err);
+        
             this.spinner.hide();
             Swal.fire("Error","Bot failed to stop","error");
           })
@@ -731,13 +731,13 @@ public slaupdate : boolean = false;
     getBluePrismlogs(botname){
       $(".tour_guide").hide()
       this.blueprismbotname = botname;
-      console.log("this.blueprismbotname",this.blueprismbotname)
+     
       document.getElementById("divblueprismlogs").style.display = "block";
       let blueprismlogs:any=[]
       this.spinner.show();
       this.rest.get_blue_prism_logs(botname).subscribe(logsdataresp=>{
       let response:any=logsdataresp;
-      console.log(response.length);
+     
       if(response.length > 0)
        {
         this.blueplogsdata = true;
@@ -756,7 +756,7 @@ public slaupdate : boolean = false;
           //   item["endTimeStamp"]=moment(item.endTimeStamp).format("MMM D ,yyyy, HH:MM");
           //   return item;
           // })
-          console.log("logs---------------->",blueprismlogs)
+         
           this.blueprimslogs = new MatTableDataSource(blueprismlogs);
           this.blueprimslogs.sort=this.sort7;
           this.blueprimslogs.paginator=this.paginator7;

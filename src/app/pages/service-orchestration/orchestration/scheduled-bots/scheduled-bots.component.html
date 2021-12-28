@@ -1,4 +1,4 @@
-<mat-tab-group  (selectedTabChange)="onTabChanged($event)" class="so-subtab-header">
+<mat-tab-group  (selectedTabChange)="onTabChanged($event)" class="h-100 so-subtab-header">
     <mat-tab label="Bots">
   
      <ng-template mat-tab-label>
@@ -6,7 +6,7 @@
          <!-- &nbsp;&nbsp; -->
           Bots
        </ng-template>
-     <div *ngIf="check_tab==0" class="so-sub-tab-content">
+     <div *ngIf="check_tab==0" class="h-100 so-sub-tab-content">
        <app-bots></app-bots>
      </div>
    </mat-tab>
@@ -18,7 +18,7 @@
          <!-- &nbsp;&nbsp; -->
          Processes
      </ng-template>
-     <div *ngIf="check_tab==1" class="so-sub-tab-content">
+     <div *ngIf="check_tab==1" class="h-100 so-sub-tab-content">
       <app-processes></app-processes>
      </div>
    </mat-tab>
