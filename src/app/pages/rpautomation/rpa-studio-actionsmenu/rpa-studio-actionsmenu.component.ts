@@ -270,6 +270,7 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
         }
         else
         {
+          
           Swal.fire("Error","Bot failed to save","error");
           this.childBotWorkspace.disable=false;
           let coordinates=(this.childBotWorkspace.finaldataobjects[0].x.split("|")!=undefined)?this.childBotWorkspace.finaldataobjects[0].nodeId.split("|"):undefined;
@@ -318,7 +319,7 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
             {
               this.childBotWorkspace.finaldataobjects[0].nodeId=coordinates[0];
             }
-            console.log(this.childBotWorkspace.finaldataobjects)
+           
           }
         });
       }
@@ -629,38 +630,49 @@ loadpredefinedbot(botId)
       {
         this.childBotWorkspace.finaldataobjects.push(element)
         let nodename=  element.nodeId.split("__")[0];
-        let nodeid=element.nodeId.split("__")[1];
+        let nodeid=(element.nodeId.split("__")[1]).split("|")[0];
         j=j+100;
         let node={
-          id:this.childBotWorkspace.idGenerator(),
-          name:nodename,
+          id:nodename+"__"+this.childBotWorkspace.idGenerator(),
           selectedNodeTask:element.taskName,
           path:this.rpa_toolset.templateNodes.find(data=>data.name==nodename).path,
+          selectedNodeId: element.tMetaId,
           tasks:this.rpa_toolset.templateNodes.find(data=>data.name==nodename).tasks,
           x:j+'px',
-          y:"10px",
+          y:j+"px",
       }
-
-
-      for(var i=0; i<responsedata.sequences.length; i++)
+      if(responsedata.sequences.find(item=>item.sourceTaskId==nodeid)!=undefined)
       {
-        if(responsedata.sequences[i].sourceTaskId!=undefined )
-        {
-          if(responsedata.sequences[i].sourceTaskId==nodeid)
-          {
-            responsedata.sequences[i].sourceTaskId=node.id;
-          }
-        }
-        if(responsedata.sequences[i].targetTaskId!=undefined )
-        {
-
-          if( responsedata.sequences[i].targetTaskId==nodeid)
-          {
-            responsedata.sequences[i].targetTaskId=node.id;
-          }
-        }
+        responsedata.sequences.find(item=>item.sourceTaskId==nodeid).sourceTaskId=node.id
       }
-      element.nodeId=nodename+"__"+node.id;
+
+      if(responsedata.sequences.find(item=>item.targetTaskId==nodeid)!=undefined)
+      {
+        responsedata.sequences.find(item=>item.targetTaskId==nodeid).targetTaskId=node.id
+      }
+
+
+
+
+      // for(var i=0; i<responsedata.sequences.length; i++)
+      // {
+      //   if(responsedata.sequences[i].sourceTaskId!=undefined )
+      //   {
+      //     if(responsedata.sequences[i].sourceTaskId==nodeid)
+      //     {
+      //       responsedata.sequences[i].sourceTaskId=node.id;
+      //     }
+      //   }
+      //   if(responsedata.sequences[i].targetTaskId!=undefined )
+      //   {
+
+      //     if( responsedata.sequences[i].targetTaskId==nodeid)
+      //     {
+      //       responsedata.sequences[i].targetTaskId=node.id;
+      //     }
+      //   }
+      // }
+      // element.nodeId=nodename+"__"+node.id;
       this.childBotWorkspace.nodes.push(node);
       this.childBotWorkspace.finaldataobjects.push(element);
       setTimeout(() => {
@@ -669,8 +681,17 @@ loadpredefinedbot(botId)
 
 
       })
-      this.childBotWorkspace.addconnections(responsedata.sequences);
-      this.rpa_studio.spinner.hide();
+     
+      // console.log(this.childBotWorkspace.nodes);
+      // console.log(responsedata.sequences)
+      responsedata.sequences.splice((responsedata.sequences.length-1),1)
+      responsedata.sequences.splice(0,1)
+      // setTimeout(()=>{
+
+      // },(responsedata.sequences.length*240))
+     
+        this.childBotWorkspace.addconnections(responsedata.sequences);
+        this.rpa_studio.spinner.hide();
     }else
     {
       this.rpa_studio.spinner.hide();
@@ -775,7 +796,7 @@ loadpredefinedbot(botId)
     this.rest.bot_export(bot.botId).subscribe((data)=>{
       
         this.rpa_studio.spinner.hide();
-        console.log(data)
+      
         const linkSource = `data:application/txt;base64,${data}`;
         const downloadLink = document.createElement('a');
         document.body.appendChild(downloadLink);

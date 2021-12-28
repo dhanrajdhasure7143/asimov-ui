@@ -127,7 +127,7 @@ async getallData()
           }
         this.environments.push(Object.assign({}, response[i], checks));
       }
-      console.log(this.environments)
+     
       if(this.environments.length > 0)
      {
       this.isTableHasData = false;
@@ -138,7 +138,7 @@ async getallData()
      }
       this.environments.sort((a,b) => a.activeTimeStamp > b.activeTimeStamp ? -1 : 1);
       let envchange = this.environments;
-      console.log(envchange);
+    
  
       for(let i = 0; i< envchange.length;i++)
       {
@@ -146,7 +146,7 @@ async getallData()
        envchange[i].deployStatus = envchange[i].deployStatus == true ? 'Yes': envchange[i].deployStatus ==  false ? 'No': ''; 
       }
  
-      console.log(envchange);
+   
       this.dataSource1= new MatTableDataSource(envchange.filter(item=>item.activeStatus=="Active"));
       this.isDataSource = true;
       this.dataSource1.sort=this.sort1;
@@ -156,7 +156,7 @@ async getallData()
 }
 
 EnvType1(){
-  console.log(this.insertForm.value.environmentType)
+
   if(this.insertForm.value.environmentType == "Windows"){
     //this.updateForm.value.portNumber="44";
     this.insertForm.get("portNumber").setValue("44");
@@ -166,7 +166,7 @@ EnvType1(){
 }
 
 EnvType(){
-  console.log(this.updateForm.value.environmentType)
+ 
   if(this.updateForm.value.environmentType == "Windows"){
     //this.updateForm.value.portNumber="44";
     this.updateForm.get("portNumber").setValue("44");
@@ -260,15 +260,14 @@ async saveEnvironment()
   this.spinner.show();
  if(this.insertForm.valid)
  {
-   console.log(this.insertForm.value.activeStatus)
+  
    if(this.insertForm.value.activeStatus==true)
     {
       this.insertForm.value.activeStatus=7
     }else{
       this.insertForm.value.activeStatus=8
     }
-    console.log(this.insertForm.value.activeStatus)
-
+  
     this.insertForm.value.createdBy="admin";
    this.submitted=true;
    let environment=this.insertForm.value;
@@ -302,7 +301,7 @@ else
 async updateEnvironment()
 {
   this.spinner.show();
-  console.log(this.updateForm.value);
+ 
   if(this.updateForm.valid)
   {
     if(this.updateForm.value.activeStatus==true)
@@ -311,15 +310,14 @@ async updateEnvironment()
     }else{
       this.updateForm.value.activeStatus=8
     }
-    console.log(this.updateForm.value.environmentName);
-    console.log(this.updateForm.value);
+   
     let updatFormValue =  this.updateForm.value;
     updatFormValue["environmentId"]= this.updateenvdata.environmentId;
-    console.log(this.updateenvdata.createdBy);
+   
     updatFormValue["createdBy"]= this.updateenvdata.createdBy;
     this.updateenvdata.deployStatus = this.updateenvdata.deployStatus == 'Yes'? true: this.updateenvdata.deployStatus == 'No'? false: '';
     updatFormValue["deployStatus"]= this.updateenvdata.deployStatus;
-          console.log(updatFormValue);
+        
           this.updatesubmitted = true;
     await this.api.updateenvironment(updatFormValue).subscribe( res => {
       Swal.fire({
@@ -329,7 +327,7 @@ async updateEnvironment()
         showConfirmButton: false,
         timer: 2000
       })
-      console.log(res);
+     
     this.removeallchecks();
     this.getallData();
     this.checktoupdate();
@@ -369,9 +367,7 @@ updatedata()
         this.toggle=false;
       }
       this.updateenvdata=data;
-      console.log(this.updateenvdata);
-    console.log(this.updateForm.value);
-    console.log(this.updateenvdata.environmentId);
+    
       this.updateForm.get("environmentName").setValue(this.updateenvdata["environmentName"]);
       this.updateForm.get("environmentType").setValue(this.updateenvdata["environmentType"]);
       this.updateForm.get("agentPath").setValue(this.updateenvdata["agentPath"]);
@@ -464,7 +460,7 @@ checktodelete()
 
 checkEnableDisableBtn(id, event)
 {
-  console.log(event.target.checked);
+ 
   this.environments.find(data=>data.environmentId==id).checked=event.target.checked;
   if(this.environments.filter(data=>data.checked==true).length==this.environments.length)
   {
@@ -521,7 +517,7 @@ removeallchecks()
   for(let i=0;i<this.environments.length;i++)
   {
     this.environments[i].checked= false;
-    console.log(this.environments[i]);
+   
   }
   this.checkflag=false;
   //console.log(this.environments);

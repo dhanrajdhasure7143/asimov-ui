@@ -177,7 +177,7 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
  sla_data:any;
  sla_selected_task:any;
  SLACon(taskdata){
-   console.log(taskdata)
+  
    this.sla_selected_task=taskdata;
    this.insertslaForm_so_bot.get("processName").setValue(this.sla_selected_task.processName);
    this.insertslaForm_so_bot.get("processOwner").setValue(this.sla_selected_task.createdBy);
@@ -577,6 +577,21 @@ resetsla(){
     })
   }
   dropTable(event) {
+    if(this.selectedvalue!="" && this.selectedvalue != 0 && this.selectedvalue!="0" && this.selectedvalue != undefined) 
+    {
+      this.spinner.show();
+      let filteredTasks:any=this.automatedtask.filter(item=>item.processId==this.selectedvalue)
+      moveItemInArray(filteredTasks,event.previousIndex,event.currentIndex)
+      let array:any= filteredTasks;
+      this.dataSource2=new MatTableDataSource(array);
+      this.dataSource2.paginator=this.paginator10;
+      this.dataSource2.sort=this.sort10;
+      setTimeout(()=>this.spinner.hide(),1000)
+    }
+    else
+    {
+      Swal.fire("Alert","Please select process to re-order tasks","warning")
+    }
     // if (event.previousContainer === event.container) {
     //   moveItemInArray(event.container.data.data, event.previousIndex, event.currentIndex);
     // } else {
@@ -591,7 +606,11 @@ resetsla(){
     let processnamebyid=this.process_names.find(data=>parseInt(filterValue)==data.processId);
     this.selectedcategory=parseInt(processnamebyid.categoryId);
     this.selectedvalue=parseInt(processnamebyid.processId);
-    this.dataSource2.filter = "processId_"+filterValue+"_"+processnamebyid.processName;
+    let processes=this.automatedtask.filter(item=>item.processId==this.selectedvalue);
+    this.dataSource2=new MatTableDataSource(processes);
+    this.dataSource2.paginator=this.paginator10;
+    this.dataSource2.sort=this.sort10
+    //this.dataSource2.filter = "processId_"+filterValue+"_"+processnamebyid.processName;
     this.checkTaskAssigned(processnamebyid.processId);
   }
 
@@ -599,9 +618,12 @@ resetsla(){
   {
     this.selectedcategory=parseInt(value);
     this.environments=this.environmentsData.filter(item=>item.categoryId==value);
-    this.dataSource2.filter = this.categaoriesList.find(data=>this.selectedcategory==data.categoryId).categoryName.toLowerCase();
     this.selected_process_names=this.process_names.filter(item=>item.categoryId==this.selectedcategory)
-    this.selectedvalue=""
+    let automatedTasks=this.automatedtask.filter(item=>item.categoryId==value);
+    this.dataSource2=new MatTableDataSource(automatedTasks);
+    this.dataSource2.paginator=this.paginator10;
+    this.dataSource2.sort=this.sort10;
+    this.selectedvalue="";
   }
 
 
@@ -667,8 +689,7 @@ resetsla(){
       var val=""  
       if(taskType=="Automated")
       {
-        console.log(sourceType)
-        console.log(id)
+        
         if(sourceType=="EPSoft")
           val= (this.bot_list.find(item=>parseInt(item.botId)==parseInt(id))!=undefined)?(this.bot_list.find(item=>parseInt(item.botId)==parseInt(id)).botId):"0";
         else if(sourceType=='UiPath')
@@ -793,7 +814,7 @@ resetsla(){
       //this.rpa_studio.spinner.hide();
       this.update_task_status();
     },(err)=>{
-      console.log(err)
+      
       //this.rpa_studio.spinner.hide();
     })
   }
@@ -973,7 +994,7 @@ resetsla(){
   changesource(botsource,id)
   {
     this.responsedata.find(item=>item.taskId==id).sourceType=botsource;
-    console.log(this.responsedata.find(item=>item.taskId==id).sourceType)
+   
     
     this.dataSource2= new MatTableDataSource(this.responsedata);
     this.dataSource2.sort=this.sort10;
@@ -1047,13 +1068,13 @@ resetsla(){
     }
     else
     {
-      console.log("Invalid Form");
+    
     }
   }
 
   save_blue_prism_config()
   {
-    console.log(this.BluePrismConfigForm.value)
+   
     if(this.BluePrismConfigForm.valid)
     {
       let response:any;
@@ -1081,7 +1102,7 @@ resetsla(){
       }
     }else
     {
-      console.log("invalud",this.BluePrismConfigForm.value)
+     
     }
   }
 
@@ -1106,7 +1127,7 @@ resetsla(){
     this.BluePrismConfigForm.get("password").setValue(data.password);
     this.BluePrismConfigForm.get("port").setValue(data.port);
     this.BluePrismConfigForm.get("status").setValue(data.status==0?false:true);
-    console.log(this.blueprism_configs)
+  
     this.BluePrismFlag=true;
     this.addBPconfigstatus=false;
     this.blueprismconfigoverlay = true;
@@ -1139,7 +1160,7 @@ resetsla(){
   {
     let checkdata:Boolean;
     checkdata=!(check);
-    console.log(checkdata)
+    
     if(checkdata==true)
     {
       this.configurations=this.configurations_data.filter(item=>item.sourceType==source).reverse();
@@ -1252,7 +1273,7 @@ resetsla(){
     this.spinner.show();
     this.rest.addtaskInProcess(this.addTaskForm.get('tasks').value).subscribe(resp => {
       let value: any = resp
-      console.log(value)
+   
     if (value.message === "Task Added Successfully!!") {
       this.getautomatedtasks(this.selectedvalue);
       Swal.fire("Success", "Task Added Successfully!!", "success")

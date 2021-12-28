@@ -60,7 +60,7 @@ export class PagesComponent{
   constructor( ) { }
 
   onToolbarMenuToggle() {
-    console.log('On toolbar toggled', this.sideBarOpen);
+  
     this.sideBarOpen = !this.sideBarOpen;
 
     if(!this.sideBarOpen) {

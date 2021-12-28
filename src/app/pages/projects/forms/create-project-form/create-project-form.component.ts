@@ -25,6 +25,7 @@ export class CreateProjectFormComponent implements OnInit {
   @Output() oncreate = new EventEmitter<String>();
   date = new Date();
   loggedInUserId:any;
+  freetrail: string;
   ngOnInit(): void {
     this.loggedInUserId=localStorage.getItem("ProfileuserId")
     this.insertForm2=this.formBuilder.group({
@@ -37,8 +38,8 @@ export class CreateProjectFormComponent implements OnInit {
       startDate: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       priority: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       measurableMetrics: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      process: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      processOwner: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      process: ["", Validators.compose([Validators.maxLength(50)])],
+      processOwner: ["", Validators.compose([ Validators.maxLength(50)])],
      
       // description: ["", Validators.compose([Validators.maxLength(200)])],
      // access: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
@@ -49,6 +50,7 @@ export class CreateProjectFormComponent implements OnInit {
     })
     this.getvalchain();
     this.getprocessnames();
+    this.freetrail=localStorage.getItem('freetrail')
   }
 
   getprocessnames()

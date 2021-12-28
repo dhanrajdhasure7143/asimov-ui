@@ -83,10 +83,18 @@
                     </button>
                             <!-- <i class="ri-stop-circle-line"></i> -->
                         </div>
-                        <!-- <div class="action-item hovericon" *ngIf="current_instance != undefined" placement="bottom" tooltip="Predefined Bots">
-                    <img src="../../../../assets/images/RPA/icon_latest/Predefined Bots.svg" class="testplus1">
-                     
-                  </div> -->
+                        <div class="action-item hovericon" *ngIf="current_instance != undefined" dropdown id="predefinedBotsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <button class="dropdown-action-item clickable dropdown-toggle" id="predefinedBots" dropdownToggle placement="bottom" tooltip="Predefined Bots" type="button" aria-controls="predefinedBotDropdown">
+                              <img src="../../../../assets/images/RPA/icon_latest/Predefined Bots.svg" class="testplus1">
+                              &nbsp;<span class="caret"></span>
+                            </button>
+                            <ul id="predefinedBotDropdown" *dropdownMenu class="dropdown-menu action-menu-dropdown" role="menu" aria-labelledby="button-basic">
+                                <li role="menuitem" class="clickable" *ngFor="let predefinedBot of  current_instance.predefinedbotsData" style="white-space: nowrap;">
+                                    <button (click)="current_instance.loadpredefinedbot(predefinedBot.botId)"> {{predefinedBot.botName}}</button>
+                                </li>
+                            </ul>
+
+                        </div>
                         <div class="action-item hovericon" *ngIf="current_instance != undefined">
                             <button class="tsttooltipbtn" [disabled]="current_instance.savebotrespose==undefined" (click)=" current_instance.viewlogdata( current_instance.logspopup,'open')">
                     <img src="../../../../assets/images/RPA/icon_latest/View Logs.svg" class="testplus1">

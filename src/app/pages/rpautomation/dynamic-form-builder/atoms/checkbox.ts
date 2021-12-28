@@ -45,7 +45,7 @@ export class CheckBoxComponent implements OnInit  {
     }
     ngOnInit() {
       this.fields=this.dynamic_forms.fields;
-      console.log(this.fields)
+     
       let dependencydata:any=this.field.dependency;
       let dependency1=dependencydata.split(",")[0].split(":");
       let dependency2=dependencydata.split(",")[1].split(":");

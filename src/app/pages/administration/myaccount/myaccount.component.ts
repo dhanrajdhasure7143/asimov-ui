@@ -55,7 +55,7 @@ export class MyAccountComponent implements OnInit {
     }
     let encrypt = this.spacialSymbolEncryption + this.cryptoService.encrypt(JSON.stringify(this.formOne));
     let reqObj = {"enc": encrypt};
-    console.log(reqObj);
+ 
     
     this.api.updateUser(reqObj).subscribe(data => {
     Swal.fire({

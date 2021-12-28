@@ -175,7 +175,7 @@ export class CreateTasksComponent implements OnInit {
     this.api.getProjectDetailsById(this.project_id).subscribe(response=>{
       // this.maxdate=response.endDate;
       this.maxdate = moment(response.endDate).format("YYYY-MM-DD")
-      console.log("date==========",this.maxdate)
+     
   })
 }
 
