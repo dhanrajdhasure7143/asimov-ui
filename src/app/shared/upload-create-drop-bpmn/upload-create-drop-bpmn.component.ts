@@ -168,4 +168,27 @@ export class UploadCreateDropBpmnComponent implements OnInit {
     });
   }
 
+  onUploadClick() {
+    if (this.freetrail == 'true') {
+      if (this.bpmn_list.length == this.config.bpsprocessfreetraillimit) {
+        Swal.fire({
+          title: 'Error',
+          text: "You have limited access to this product. Please contact EZFlow support team for more details.",
+          position: 'center',
+          icon: 'error',
+          showCancelButton: false,
+          confirmButtonColor: '#007bff',
+          cancelButtonColor: '#d33',
+          heightAuto: false,
+          confirmButtonText: 'Ok'
+        });
+        return false;
+      } else {
+        return true;
+      }
+    } else {
+      return true;
+    }
+  }
+
 }
