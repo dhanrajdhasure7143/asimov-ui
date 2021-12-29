@@ -136,26 +136,26 @@
             <div class="col-md-12 p-0">
                 <div>
                     <div class="row">
-                        <div class="col-md-8 pl-0">
+                        <div class="col-md-6 pl-0">
                             <h4 class="gridHeader">My Workspace</h4>
                         </div>
-                        <div class="col-md-4 p-0">
+                        
+                        <div class="col-md-6 p-0">
                             <div class="col-md-6 form-group pr-0 rpa-searchip">
-                                <input class="form-control toolbar-search" type="text"  (keyup)="applySearchFilter($event.target.value)" placeholder="Search Bot">
+                                <select class="form-control" (change)="applySearchFilter($event.target.value)">
+                                    <option value="" >All Categories</option>
+                                    <option [value]="category.categoryName" *ngFor="let category of categaoriesList">{{category.categoryName | titlecase}}</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 form-group pr-0 rpa-searchip">
+                                <input class="form-control toolbar-search" type="text"  (keyup)="applySearchFilter($event.target.value)" placeholder="Search Workspace">
                                 <img src="../../../../assets/images/search.svg" alt="" class="testplus1">
                             </div>
                             <!-- <div class="col-md-12 form-group pr-0 rpa-searchip">
                   <input class="form-control toolbar-search" type="text" (change)="applyFilter2($event.target.value)" placeholder="Search Bot" >
                   <img src="../../../../assets/images/search.svg" alt="" class="testplus1">
                 </div> -->
-                            <div class="col-md-6 form-group pr-0 rpa-searchip">
-                                <!-- <input class="form-control toolbar-search" type="text" [(ngModel)]="userFilter.department" placeholder="Search Category" > -->
-                                <select class="form-control" (change)="applySearchFilter($event.target.value)">
-                    <option value="" >Select Category</option>
-                    <option [value]="category.categoryName" *ngFor="let category of categaoriesList">{{category.categoryName}}</option>
-                  </select>
-                                <!-- <img src="../../../../assets/images/search.svg" alt="" class="testplus1"> -->
-                            </div>
+
                             <!-- <mat-form-field>
                   <mat-label>Search Department</mat-label>
                   <input class="toolbar-search" type="text" [(ngModel)]="userFilter.department" matInput >
