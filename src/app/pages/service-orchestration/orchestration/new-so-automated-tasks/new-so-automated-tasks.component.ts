@@ -583,10 +583,20 @@ resetsla(){
       let filteredTasks:any=this.automatedtask.filter(item=>item.processId==this.selectedvalue)
       moveItemInArray(filteredTasks,event.previousIndex,event.currentIndex)
       let array:any= filteredTasks;
-      this.dataSource2=new MatTableDataSource(array);
-      this.dataSource2.paginator=this.paginator10;
-      this.dataSource2.sort=this.sort10;
-      setTimeout(()=>this.spinner.hide(),1000)
+      let tasksOrder=array.map(item=>{
+        return {
+          "taskId":String(item.taskId)
+        }
+      })
+      this.rest.saveTasksOrder(tasksOrder).subscribe((data:any)=>{
+        this.spinner.hide();
+        this.dataSource2=new MatTableDataSource(array);
+        this.dataSource2.paginator=this.paginator10;
+        this.dataSource2.sort=this.sort10;
+      },(err=>{
+        this.spinner.hide();
+        Swal.fire("Error","Unable to reorder tasks","error")
+      }))
     }
     else
     {
