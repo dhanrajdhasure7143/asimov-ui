@@ -339,6 +339,14 @@ export class RestApiService{
       return this.http.get('/rpa-service/load-process-info/processid='+id);
     }
   }
+
+
+
+
+  saveTasksOrder(orderData)
+  {
+    return this.http.post("/rpa-service/save-tasks-order",orderData);
+  }
   getAllOrcRpaWorkSpaces()
   {
       return this.http.get('/rpa-service/process-name');
