@@ -1804,6 +1804,11 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
   }
 
   ngOnDestroy(){
+    let element=document.getElementById("tipsy_div");
+    if(element){
+      element.style.display = "none";
+      element.style.visibility = "hidden";
+    }
     if(this.graphgenetaionInterval){
       clearInterval(this.graphgenetaionInterval);
     }

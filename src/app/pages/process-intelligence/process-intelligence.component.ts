@@ -211,6 +211,11 @@ addWorkingHours(){
 
    ngOnDestroy(){
     // localStorage.setItem("pi_search_category",'allcategories')
+    let element=document.getElementById("tipsy_div");
+    if(element){
+      element.style.display = "none";
+      element.style.visibility = "hidden";
+    }
    }
 
 }
