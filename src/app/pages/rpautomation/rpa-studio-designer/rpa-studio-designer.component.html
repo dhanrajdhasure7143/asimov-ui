@@ -134,7 +134,7 @@
                   </div> -->
 
                         <div class="action-item hovericon" *ngIf="current_instance != undefined ">
-                            <button class="tsttooltipbtn" [disabled]="current_instance.savebotrespose == undefined || isButtonVisible==true" (click)=" current_instance.delete()">
+                            <button class="tsttooltipbtn" [disabled]="current_instance.savebotrespose == undefined || isButtonVisible==true || isProcessAnalyst == true" (click)=" current_instance.delete()">
                             <img src="../../../../assets/images/RPA/icon_latest/delete.svg" class="testplus1">
                             <span class="testtooltip">Delete</span>
                           </button>

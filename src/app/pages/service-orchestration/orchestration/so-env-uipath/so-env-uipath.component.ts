@@ -23,7 +23,7 @@ import {ActivatedRoute} from "@angular/router";
 export class SoEnvUipathComponent implements OnInit {
 
   
-  displayedColumns: string[] = ["check","accountName","category","tenantName","clientId","userKey","active","createdTimeStamp","createdBy"];
+  displayedColumns: string[] = ["check","accountName","categoryName","tenantName","clientId","userKey","active","createdTimeStamp","createdBy"];
   dataSource1:MatTableDataSource<any>;
   public isDataSource: boolean;
   @ViewChild("paginator1",{static:false}) paginator1: MatPaginator;
