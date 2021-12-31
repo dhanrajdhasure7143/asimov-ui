@@ -19,6 +19,7 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   userRole:any;
   checkCreate:Boolean=false;
   freetrail: string;
+  isProcessAnalyst:Boolean=false;
   constructor(private rpa_studio:RpaStudioComponent, 
     private router:Router,
     private activeRoute:ActivatedRoute) { }
@@ -27,7 +28,9 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
     this.userRole = localStorage.getItem("userRole")
     this.userRole = this.userRole.split(',');
     if(this.userRole.includes("User"))
-    localStorage.setItem("isHeader","true");
+      localStorage.setItem("isHeader","true");
+    if(this.userRole.includes("Process Analyst"))
+      this.isProcessAnalyst=true;
     this.freetrail=localStorage.getItem('freetrail')
   }
 
