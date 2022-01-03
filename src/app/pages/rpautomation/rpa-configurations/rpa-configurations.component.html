@@ -2,83 +2,52 @@
 <ngx-spinner bdColor="rgba(255,255,255,0.7)">
     <img  src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader"/>
   </ngx-spinner>
-<div class="main-content"   >
+<div class="main-content">
     <div class="row content-area">
-        <!-- <div class="row module-heading title">
-          
-
-            <span class="module-header-title">Robotic Process Automation</span>
-        </div> -->
-
-
-
-  <!-- src='\assets\images\RPA\rpa-loader.gif' -->
-
-<!--
-<div class="rpaenv_header_addon" style="padding-right:40px;padding-top:7px;">
-
-    
-    <button  type="button" class="btn btn-primary" style="float:right;" aria-hidden="true" placement="bottom" id="Load_Bot" [routerLink]="['/pages/rpautomation/home']">
-      <i class="fa fa-reply"></i>&nbsp;&nbsp;Bot Studio
-    </button>
-    </div> 
-
-</div>
--->
-
-<div class="module-heading title ">
-  <span class="module-back-button" routerLink="/pages/rpautomation/home">
-      <i class="fas fa-arrow-left" aria-hidden="true"></i>
-  </span>
-  <span class="module-header-title">
-      <span class="module-parent-title">Configurations</span>
-      <!-- <span class="backslash">/</span>
-      <span class="module-parent-title">Configurations</span> -->
-  </span>
-</div>
-<!-- <div class="rpaenv_header_addon" style=" z-index: 2;">
-  <button  type="button" class="btn btn-primary" aria-hidden="true" placement="bottom" id="Load_Bot" [routerLink]="['/pages/rpautomation/home']">
-    <i class="fa fa-reply"></i>&nbsp;&nbsp;Bot Studio
-  </button>
-  
-
-</div> -->
-
-<mat-tab-group [selectedIndex]="selectedTab" (selectedTabChange)="onTabChanged($event)">
-    <mat-tab label="Environments">
-
-        <ng-template mat-tab-label>
-          <mat-icon  class="text-primary">desktop_windows</mat-icon>
-            &nbsp;&nbsp;
-            Environments
-        </ng-template>
-        <div *ngIf="check_tab==0">
-    <app-environments></app-environments>
+        <div class="module-heading title ">
+          <span class="module-back-button" routerLink="/pages/rpautomation/home">
+              <i class="fas fa-arrow-left" aria-hidden="true"></i>
+          </span>
+          <span class="module-header-title">
+              <span class="module-parent-title">Configurations</span>
+          </span>
         </div>
-</mat-tab>
-<mat-tab label="Database Connections">
 
-    <ng-template mat-tab-label>
-      <mat-icon  class="text-primary">dns</mat-icon>
-        &nbsp;&nbsp;
-        Database Connections
-    </ng-template>
-    <div *ngIf="check_tab==1">
-    <app-rpa-database-connections></app-rpa-database-connections>
-  </div>
-</mat-tab>
+      <mat-tab-group [selectedIndex]="selectedTab" (selectedTabChange)="onTabChanged($event)">
+          <mat-tab label="Environments">
 
-<mat-tab label="Email">
- 
-  <ng-template mat-tab-label>
-    <mat-icon  class="text-primary">mail_outline</mat-icon>
-      &nbsp;&nbsp;
-      Email
-  </ng-template>
-  <div *ngIf="check_tab==2">
-  <app-rpa-credentials></app-rpa-credentials>
-</div>
-</mat-tab>
-</mat-tab-group>
-</div>
+              <ng-template mat-tab-label>
+                <mat-icon  class="text-primary">desktop_windows</mat-icon>
+                  &nbsp;&nbsp;
+                  Environments
+              </ng-template>
+              <div *ngIf="check_tab==0">
+          <app-environments></app-environments>
+              </div>
+      </mat-tab>
+      <mat-tab label="Database Connections">
+
+          <ng-template mat-tab-label>
+            <mat-icon  class="text-primary">dns</mat-icon>
+              &nbsp;&nbsp;
+              Database Connections
+          </ng-template>
+          <div *ngIf="check_tab==1">
+          <app-rpa-database-connections></app-rpa-database-connections>
+        </div>
+      </mat-tab>
+
+      <mat-tab label="Email">
+      
+        <ng-template mat-tab-label>
+          <mat-icon  class="text-primary">mail_outline</mat-icon>
+            &nbsp;&nbsp;
+            Email
+        </ng-template>
+        <div *ngIf="check_tab==2">
+        <app-rpa-credentials></app-rpa-credentials>
+      </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>  
 </div>

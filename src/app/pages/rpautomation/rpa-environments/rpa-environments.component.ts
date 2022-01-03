@@ -18,7 +18,7 @@ import { NgxSpinnerService } from "ngx-spinner";
   styleUrls: ['./rpa-environments.component.css']
 })
   export class RpaenvironmentsComponent implements  OnInit{
-    displayedColumns: string[] = ["check","environmentName","environmentType","agentPath","category","hostAddress","portNumber","username","password","activeStatus","deployStatus","createdTimeStamp","createdBy"]; //,"connectionType"
+    displayedColumns: string[] = ["check","environmentName","environmentType","agentPath","categoryName","hostAddress","portNumber","username","password","activeStatus","deployStatus","createdTimeStamp","createdBy"]; //,"connectionType"
     dataSource1:MatTableDataSource<any>;
     public isDataSource: boolean;  
     @ViewChild("paginator1",{static:false}) paginator1: MatPaginator;

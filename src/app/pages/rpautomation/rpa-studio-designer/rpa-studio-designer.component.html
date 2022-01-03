@@ -84,9 +84,10 @@
                             <!-- <i class="ri-stop-circle-line"></i> -->
                         </div>
                         <div class="action-item hovericon" *ngIf="current_instance != undefined" dropdown id="predefinedBotsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <button class="dropdown-action-item clickable dropdown-toggle" id="predefinedBots" dropdownToggle placement="bottom" tooltip="Predefined Bots" type="button" aria-controls="predefinedBotDropdown">
+                            <button class="dropdown-action-item clickable dropdown-toggle tsttooltipbtn" id="predefinedBots" dropdownToggle  type="button" aria-controls="predefinedBotDropdown">
                               <img src="../../../../assets/images/RPA/icon_latest/Predefined Bots.svg" class="testplus1">
                               &nbsp;<span class="caret"></span>
+                              <span class="testtooltip">Predefined Bots</span>
                             </button>
                             <ul id="predefinedBotDropdown" *dropdownMenu class="dropdown-menu action-menu-dropdown" role="menu" aria-labelledby="button-basic">
                                 <li role="menuitem" class="clickable" *ngFor="let predefinedBot of  current_instance.predefinedbotsData" style="white-space: nowrap;">
@@ -133,7 +134,7 @@
                   </div> -->
 
                         <div class="action-item hovericon" *ngIf="current_instance != undefined ">
-                            <button class="tsttooltipbtn" [disabled]="current_instance.savebotrespose == undefined || isButtonVisible==true" (click)=" current_instance.delete()">
+                            <button class="tsttooltipbtn" [disabled]="current_instance.savebotrespose == undefined || isButtonVisible==true || isProcessAnalyst == true" (click)=" current_instance.delete()">
                             <img src="../../../../assets/images/RPA/icon_latest/delete.svg" class="testplus1">
                             <span class="testtooltip">Delete</span>
                           </button>
