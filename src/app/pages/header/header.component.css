@@ -427,10 +427,6 @@ button.ep-pad:hover img.header_icon {
 .notificatnmsgs{
   margin-top: 5px;
 }
-.isRead
-{
-  color: grey;
-}
 
 .deletefrm{
   /* margin-top: 5px; */
@@ -561,7 +557,7 @@ margin:5px 0;
 .item-title {
 
 font-size:1.3rem;
-color:#000;
+color:#0ba4ee;
 font-weight: bold;
 }
 .notification-created
@@ -570,13 +566,13 @@ font-weight: bold;
   color: #4fc306;
   margin-top: -32px;
   font-weight: bold;
-  padding-left: 133px;
+  padding-left: 141px;
 }
 
 .item-info{
   white-space: pre-line;
   font-weight: bold;
-  color: blue;
+  /* color: rgb(9, 26, 9); */
 }
 
 .notifications a.content {
