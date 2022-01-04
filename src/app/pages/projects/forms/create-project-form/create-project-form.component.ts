@@ -48,9 +48,18 @@ export class CreateProjectFormComponent implements OnInit {
       // status: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
 
     })
+
     this.getvalchain();
     this.getprocessnames();
     this.freetrail=localStorage.getItem('freetrail')
+
+    if(this.freetrail!='true') {
+      this.insertForm2.get('process').setValidators(Validators.required)
+      this.insertForm2.get('processOwner').setValidators(Validators.required)
+    } else {
+      this.insertForm2.get('process').clearValidators();
+      this.insertForm2.get('processOwner').clearValidators();
+    }
   }
 
   getprocessnames()

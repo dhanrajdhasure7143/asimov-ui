@@ -112,7 +112,7 @@
       <div class="divider"></div>
      <div class="notifications-wrapper" *ngIf="!error ">
       
-         <div class="notification-item" [id]="'ntf_'+messageList.id" [ngClass]="messageList.status == 'read'?'isRead':'unread'" 
+         <div class="notification-item" [id]="'ntf_'+messageList.id" [ngClass]="messageList.status === 'read'?'isRead':'unread'" 
              *ngFor="let messageList of notificationsList">
           <h4 class="item-title">Notification Message</h4>
           <p class="notification-created" [id]="'date_'+messageList.id">{{messageList.createdAt | date}} {{messageList.createdAt.split("T")[1].split(".")[0]}}</p>

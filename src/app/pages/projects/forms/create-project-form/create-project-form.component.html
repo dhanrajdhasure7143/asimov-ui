@@ -87,7 +87,7 @@
                 </div>
                 <div class="col-md-12">
                     <div class="form-fields col-md-6 pl-0" *ngIf="freetrail!='true'">
-                        <label class="label-control">Select Process</label>
+                        <label class="label-control">Select Process<span class="star">*</span></label>
                         <select class="form-control data" formControlName="process" (change)="onProcessChange($event.target.value)" [ngClass]="insertForm2.get('process').valid?'enteredfield-color':'inputfield-color'">
                         <option [value]="null" disabled hidden>Select Process</option>
                         <option value="" [selected]="true">Select Process</option>
@@ -156,7 +156,7 @@
                         <span *ngIf="insertForm2.get('endDate').invalid && insertForm2.get('endDate').touched" class="errspan required">End Date Required*</span>
                     </div>
                     <div class="form-fields col-md-6 pl-0" *ngIf="freetrail!='true'">
-                        <label class="label-control">Process Owner</label>
+                        <label class="label-control">Process Owner<span class="star">*</span></label>
                         <select formControlName="processOwner" class="form-control" [ngClass]="insertForm2.get('processOwner').valid?'enteredfield-color':'inputfield-color'">
                         <option value="">Select Process Owner</option>
                         <option *ngFor="let user of users_list" [value]="user.userId.userId">
