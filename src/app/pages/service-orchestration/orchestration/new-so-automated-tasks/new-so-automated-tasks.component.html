@@ -62,11 +62,11 @@
       </span>
       -->
 
-                <button disabled *ngIf="selectedvalue==''" id="openScheduler" class="tsttooltipbtn">
+                <button disabled *ngIf="selectedvalue=='' || !(checkAssignTasks)" id="openScheduler" class="tsttooltipbtn">
       <img src="../../../../../assets/images/RPA/icon_latest/calendar.svg" alt="" class="testplus">
     
     </button>
-                <button *ngIf="selectedvalue!=''" id="openScheduler" class="tsttooltipbtn" (click)="startscheduler()">
+                <button *ngIf="selectedvalue!='' && checkAssignTasks" id="openScheduler" class="tsttooltipbtn" (click)="startscheduler()">
      <img src="../../../../../assets/images/RPA/icon_latest/calendar-blue.svg" alt="" class="testplus">
       <span class="testtooltip">Open Scheduler</span>
     </button>
