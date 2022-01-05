@@ -975,10 +975,15 @@ resetsla(){
   {
     this.selectedEnvironment="";
     this.selectedvalue="";
+    console.log(this.categaoriesList.length)
     if(this.categaoriesList.length==1)
+    {
       this.selectedcategory=(this.categaoriesList[0].categoryId)
+    }else
+    {
+      this.selectedcategory="";
+    }
     this.getautomatedtasks(0)
-
   }
 
 
