@@ -634,6 +634,7 @@ loadpredefinedbot(botId)
         j=j+100;
         let node={
           id:nodename+"__"+this.childBotWorkspace.idGenerator(),
+          name:nodename,
           selectedNodeTask:element.taskName,
           path:this.rpa_toolset.templateNodes.find(data=>data.name==nodename).path,
           selectedNodeId: element.tMetaId,

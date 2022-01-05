@@ -78,6 +78,8 @@ export class EditTaskComponent implements OnInit {
   bpm_process_list: any;
   bot_list: any;
   mindate= moment().format("YYYY-MM-DD");
+  taskSummaryFlag: boolean = false;
+  taskDescriptionFlag: boolean = false;
   constructor(private formBuilder:FormBuilder,
     private router:ActivatedRoute,
     private route:Router,
@@ -537,5 +539,18 @@ else
      this.bot_list=response.sort((a,b) => (a.botName.toLowerCase() > b.botName.toLowerCase() ) ? 1 : ((b.botName.toLowerCase() > a.botName.toLowerCase() ) ? -1 : 0));
     })
   }
-
+  taskSummaryMaxLength(value){
+    if(value.length > 150){
+    this.taskSummaryFlag = true;
+    }else{
+      this.taskSummaryFlag = false;
+    }
+     }
+     taskDescriptionMaxLength(value){
+      if(value.length > 150){
+      this.taskDescriptionFlag = true;
+      }else{
+        this.taskDescriptionFlag = false;
+      }
+       }
 }

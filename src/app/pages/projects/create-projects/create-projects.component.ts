@@ -44,6 +44,7 @@ export class CreateProjectsComponent implements OnInit {
    projectsdata:any;
 
    loggedInUserId:any;
+   descptionFlag: boolean = false;
   constructor(
     private formBuilder: FormBuilder,
     private api:RestApiService, 
@@ -353,6 +354,15 @@ createproject(event)
       let response:any=res;
       this.initiatives=response;
     })
+  }
+
+  descriptionMaxLength(value){
+    console.log(value)
+ if(value.length > 150){
+ this.descptionFlag = true;
+ }else{
+   this.descptionFlag = false;
+ }
   }
   
 }

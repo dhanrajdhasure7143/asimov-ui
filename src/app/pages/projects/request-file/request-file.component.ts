@@ -24,6 +24,7 @@ export class RequestFileComponent implements OnInit {
   onupdate: any;
   @Output() onrequest=new EventEmitter<boolean>();
   filecategories: any;
+  uploadFileDescriptionFlag: boolean = false;
   constructor(private formBuilder: FormBuilder,private spinner:NgxSpinnerService,private api:RestApiService,
     private router: Router,) { }
 
@@ -131,6 +132,13 @@ export class RequestFileComponent implements OnInit {
       this.filecategories=data;
   })
   }
+  uploadFileDescriptionMaxLength(value){
+    if(value.length > 150){
+    this.uploadFileDescriptionFlag = true;
+    }else{
+      this.uploadFileDescriptionFlag = false;
+    }
+     }
    }
 
 

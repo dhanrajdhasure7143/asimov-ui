@@ -49,7 +49,7 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
   blueprismbots:any=[];
   configurations_data:any=[];
   configurations:any=[];
-  displayedColumns: string[] = ["processFilterId","processName","taskName","processOwner","taskOwner","taskType", "category","sourceType","Assign","status","Operations"];
+  displayedColumns: string[] = ["processName","taskName","processOwner","taskOwner","taskType", "category","sourceType","Assign","status","Operations"];
   dataSource2:MatTableDataSource<any>;
   public isDataSource: boolean;
   public userRole:any = [];
@@ -78,12 +78,11 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
   queryParam:Boolean=false;
   checkAssignTasks:Boolean=false;
   public tasksArray:any=[];
+  public processId:any;
   @ViewChild("paginator10",{static:false}) paginator10: MatPaginator;
  //@ViewChild(SoProcesslogComponent, { static: false }) processlogs_instance: SoProcesslogComponent;
-  @ViewChild("sort10",{static:false}) sort10: MatSort;
+  @ViewChild("automatedSort",{static:false}) automatedSort: MatSort;
   // @Input('processid') public processId: any;
-   public processId:any;
-  @ViewChild('automatedtable',{static:false}) automatedtable;
   public insertslaForm_so_bot:FormGroup;
   public BluePrismConfigForm:FormGroup;
   public BluePrismFlag:Boolean=false;
@@ -511,8 +510,8 @@ resetsla(){
   getautomatedtasks(process)
   {
     this.spinner.show();
-    let response:any=[];
     this.rest.getautomatedtasks(process).subscribe(automatedtasks=>{
+      let response:any=[];
       response=automatedtasks;
       if(response.automationTasks != undefined)
       {
@@ -531,8 +530,11 @@ resetsla(){
           });
           this.automatedtask= response.automationTasks;
           this.dataSource2= new MatTableDataSource(this.responsedata);
-          this.dataSource2.sort=this.sort10;
-          this.dataSource2.paginator=this.paginator10;
+            this.dataSource2.paginator=this.paginator10;
+            setTimeout(()=>{
+              this.dataSource2.sort=this.automatedSort;
+            },300)
+            
           if(process==0)
           {
             this.getprocessnames(undefined);
@@ -541,7 +543,7 @@ resetsla(){
           {
             this.getprocessnames(process);
           }
-          this.update_task_status();
+            this.update_task_status();
 
         });
        
@@ -592,7 +594,7 @@ resetsla(){
         this.spinner.hide();
         this.dataSource2=new MatTableDataSource(array);
         this.dataSource2.paginator=this.paginator10;
-        this.dataSource2.sort=this.sort10;
+        this.dataSource2.sort=this.automatedSort;
       },(err=>{
         this.spinner.hide();
         Swal.fire("Error","Unable to reorder tasks","error")
@@ -619,7 +621,7 @@ resetsla(){
     let processes=this.automatedtask.filter(item=>item.processId==this.selectedvalue);
     this.dataSource2=new MatTableDataSource(processes);
     this.dataSource2.paginator=this.paginator10;
-    this.dataSource2.sort=this.sort10
+    this.dataSource2.sort=this.automatedSort
     //this.dataSource2.filter = "processId_"+filterValue+"_"+processnamebyid.processName;
     this.checkTaskAssigned(processnamebyid.processId);
   }
@@ -632,7 +634,7 @@ resetsla(){
     let automatedTasks=this.automatedtask.filter(item=>item.categoryId==value);
     this.dataSource2=new MatTableDataSource(automatedTasks);
     this.dataSource2.paginator=this.paginator10;
-    this.dataSource2.sort=this.sort10;
+    this.dataSource2.sort=this.automatedSort;
     this.selectedvalue="";
   }
 
@@ -736,7 +738,7 @@ resetsla(){
       this.responsedata.find(item=>item.taskId==id).taskOwner="---"
     }
     this.dataSource2= new MatTableDataSource(this.responsedata);
-    this.dataSource2.sort=this.sort10;
+    this.dataSource2.sort=this.automatedSort;
     this.dataSource2.paginator=this.paginator10;
     if(this.selectedvalue!=undefined && this.selectedvalue!="")
     {
@@ -840,7 +842,7 @@ resetsla(){
       this.spinner.hide();
       let data:any=response;
       this.dataSource2= new MatTableDataSource(data.automationTasks);
-      this.dataSource2.sort=this.sort10;
+      this.dataSource2.sort=this.automatedSort;
       this.dataSource2.paginator=this.paginator10;
       if(this.selectedvalue==undefined)
       {
@@ -973,12 +975,15 @@ resetsla(){
   {
     this.selectedEnvironment="";
     this.selectedvalue="";
-    if(this.categaoriesList.length!=0)
+    console.log(this.categaoriesList.length)
+    if(this.categaoriesList.length==1)
+    {
+      this.selectedcategory=(this.categaoriesList[0].categoryId)
+    }else
+    {
       this.selectedcategory="";
-    else
-      this.selectedcategory=this.categaoriesList[0].catgeoryId
+    }
     this.getautomatedtasks(0)
-
   }
 
 
@@ -1007,7 +1012,7 @@ resetsla(){
    
     
     this.dataSource2= new MatTableDataSource(this.responsedata);
-    this.dataSource2.sort=this.sort10;
+    this.dataSource2.sort=this.automatedSort;
     this.dataSource2.paginator=this.paginator10;
     if(this.selectedvalue!=undefined)
     {

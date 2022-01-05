@@ -62,11 +62,11 @@
       </span>
       -->
 
-                <button disabled *ngIf="selectedvalue==''" id="openScheduler" class="tsttooltipbtn">
+                <button disabled *ngIf="selectedvalue=='' || !(checkAssignTasks)" id="openScheduler" class="tsttooltipbtn">
       <img src="../../../../../assets/images/RPA/icon_latest/calendar.svg" alt="" class="testplus">
     
     </button>
-                <button *ngIf="selectedvalue!=''" id="openScheduler" class="tsttooltipbtn" (click)="startscheduler()">
+                <button *ngIf="selectedvalue!='' && checkAssignTasks" id="openScheduler" class="tsttooltipbtn" (click)="startscheduler()">
      <img src="../../../../../assets/images/RPA/icon_latest/calendar-blue.svg" alt="" class="testplus">
       <span class="testtooltip">Open Scheduler</span>
     </button>
@@ -90,12 +90,10 @@
         <!-- <mat-card> -->
         <div *ngIf="responsedata!=undefined" class="orchestration-table-container">
 
-            <table mat-table #sort10="matSort" #automatedtable [dataSource]="dataSource2" cdkDropList [cdkDropListData]="dataSource2" (cdkDropListDropped)="dropTable($event)" matSort class="RPA table" id="autotable">
+            <!-- <table mat-table #sort1="matSort"  [dataSource]="dataSource2" cdkDropList [cdkDropListData]="dataSource2" (cdkDropListDropped)="dropTable($event)" matSort class="RPA table" id="autotable"> -->
+            <table mat-table #automatedSort="matSort" matSort [dataSource]="dataSource2"   cdkDropList [cdkDropListData]="dataSource2" (cdkDropListDropped)="dropTable($event)" class=" RPA table" id="bmtable"  id="autotable">
 
-                <ng-container matColumnDef="processFilterId">
-                    <th *matHeaderCellDef></th>
-                    <td *matCellDef="let element"></td>
-                </ng-container>
+                
 
                 <ng-container matColumnDef="processName">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Process Name</th>
@@ -127,7 +125,7 @@
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="sourceType">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Bot Source</th>
+                    <th mat-header-cell *matHeaderCellDef >Bot Source</th>
                     <td mat-cell *matCellDef="let element" class="text-center">
                         <span *ngIf="element.taskType=='Bot' || element.taskType=='Automated'">
             <select class="form-control" style="width:140px;padding:0px" [value]="element.sourceType" (change)="changesource($event.target.value,element.taskId)">
@@ -195,7 +193,7 @@
                 </ng-container>
 
                 <ng-container matColumnDef="status">
-                    <th mat-header-cell *matHeaderCellDef>Status</th>
+                    <th mat-header-cell  mat-sort-header *matHeaderCellDef>Status</th>
                     <td mat-cell *matCellDef="let element">
                         <span  [matTooltip]="element.status">
                         <span *ngIf="element.status!='null'" [id]="element.taskId+'__status'">
@@ -310,7 +308,7 @@
 
                 </button>
 
-              </span> &nbsp;
+              </span>
                             <span>
                     <button  matTooltip="Delete Task" class="undobtn" (click)="delete(element.taskId, element.processId)">
                         <img src="../../../../../assets/images/Projects/delete-black.svg" class="testplus1"/>

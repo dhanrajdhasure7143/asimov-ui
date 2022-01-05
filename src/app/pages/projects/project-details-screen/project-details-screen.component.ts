@@ -142,6 +142,9 @@ percentageComplete: number;
   initiatives: any;
   loginresourcecheck: boolean=false;
   freetrail: string;
+  projectNameFlag: boolean = false;
+  projectPurposeFlag: boolean = false;
+  uploadFileDescriptionFlag: boolean = false;
   constructor(private dt:DataTransferService,private route:ActivatedRoute, private rpa:RestApiService,
     private modalService: BsModalService,private formBuilder: FormBuilder,private router: Router,
     private spinner:NgxSpinnerService) { }
@@ -1041,4 +1044,25 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
           this.initiatives=response;
         })
       }
+      projectNameMaxLength(value){
+     if(value.length > 50){
+     this.projectNameFlag = true;
+     }else{
+       this.projectNameFlag = false;
+     }
+      }
+      projectPurposeMaxLength(value){
+     if(value.length > 150){
+     this.projectPurposeFlag = true;
+     }else{
+       this.projectPurposeFlag = false;
+     }
+      }
+      uploadFileDescriptionMaxLength(value){
+        if(value.length > 150){
+        this.uploadFileDescriptionFlag = true;
+        }else{
+          this.uploadFileDescriptionFlag = false;
+        }
+         }
 }

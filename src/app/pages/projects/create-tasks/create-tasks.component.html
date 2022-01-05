@@ -162,16 +162,19 @@
                     </div>
                         <div class="col-md-12">
                             <label class="label-control">Task Description</label>
-                            <textarea rows="4" maxlength="150" class="form-control enteredfield-color" formControlName="description" placeholder="Enter Task Description..."
-                            style=" resize: none;">
+                            <textarea rows="4" maxlength="151" class="form-control enteredfield-color" formControlName="description" placeholder="Enter Task Description..."
+                            (keyup)="taskDescriptionMaxLength($event.target.value)" style=" resize: none;">
                             </textarea>
+                            <span *ngIf="taskDescriptionFlag" class="errspan required">
+                                Maximum of 150 characters
+                              </span>
                         </div> 
                     </div>
                 </form>
                 <br>
                 <div class="pull-right">
                     <button (click)="resettask()" class="btn btn-default">Reset</button>
-                    <button [disabled]="createtaskForm.invalid" (click)="savetasks()" class="btn btn-primary btn-update">Save</button>
+                    <button [disabled]="createtaskForm.invalid || taskDescriptionFlag" (click)="savetasks()" class="btn btn-primary btn-update">Save</button>
                 </div>
                 </div>
            

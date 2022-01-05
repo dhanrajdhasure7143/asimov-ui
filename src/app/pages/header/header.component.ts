@@ -132,11 +132,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     })
     this.spinner.show();
-    this.getNotifications();
+    
     setTimeout(() => {
       this.getImage();
       this.profileName();
       this.getAllNotifications();
+      this.getNotifications();
     }, 1000);
     setTimeout(() => {
       this.spinner.hide();

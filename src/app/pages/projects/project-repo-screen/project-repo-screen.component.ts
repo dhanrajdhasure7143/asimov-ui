@@ -54,6 +54,7 @@ export class ProjectRepoScreenComponent implements OnInit {
   selectedFiles: any=[];
   fileList: File[] = [];
   listOfFiles: any[] = [];
+  uploadFileDescriptionFlag: boolean = false;
   // resources_list: any=[];
 
   constructor(private modalService: BsModalService, private formBuilder: FormBuilder, private api:RestApiService, private route: ActivatedRoute, private spinner:NgxSpinnerService) { 
@@ -561,5 +562,12 @@ this.getFileDetails();
      this.uploadFilemodalref.hide();
      
    }
+   uploadFileDescriptionMaxLength(value){
+    if(value.length > 150){
+    this.uploadFileDescriptionFlag = true;
+    }else{
+      this.uploadFileDescriptionFlag = false;
+    }
+     }
 
 }
