@@ -24,6 +24,8 @@ export class ProgramDetailsComponent implements OnInit {
   addprojectsForm:FormGroup;
   owner_letters: any;
   program_id: any;
+  programeNameFlag: boolean = false;
+  programePurposeFlag: boolean = false;
 
   constructor(
     private rest:RestApiService,
@@ -646,4 +648,18 @@ export class ProgramDetailsComponent implements OnInit {
     else
     return value;
   }​​​​​​​​
+  programeNameMaxLength(value){
+    if(value.length > 50){
+    this.programeNameFlag = true;
+    }else{
+      this.programeNameFlag = false;
+    }
+     }
+     programePurposeMaxLength(value){
+    if(value.length > 150){
+    this.programePurposeFlag = true;
+    }else{
+      this.programePurposeFlag = false;
+    }
+     }
 }

@@ -27,6 +27,7 @@ export class CreateTasksComponent implements OnInit {
   taskcategories: Object;
   approverslist: any=[];
   project_id:number;
+  taskDescriptionFlag: boolean = false;
   constructor(private formBuilder: FormBuilder,private spinner:NgxSpinnerService,private api:RestApiService,
     private router: Router, private route:ActivatedRoute) { }
 
@@ -178,5 +179,12 @@ export class CreateTasksComponent implements OnInit {
      
   })
 }
+taskDescriptionMaxLength(value){
+  if(value.length > 150){
+  this.taskDescriptionFlag = true;
+  }else{
+    this.taskDescriptionFlag = false;
+  }
+   }
 
 }

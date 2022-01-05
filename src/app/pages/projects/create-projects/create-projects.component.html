@@ -323,11 +323,11 @@
                                                           Maximum of 200 characters
                                                         </span> -->
                                         <label class="label-control">Description</label>
-                                        <textarea class="form-control" formControlName="description" row="3"
+                                        <textarea class="form-control" formControlName="description" row="3" (keyup)="descriptionMaxLength($event.target.value)"
                                             placeholder="Enter Description" style=" resize: none;" maxlength="151"
                                             [ngClass]="createprogram.get('description').valid?'enteredfield-color':'inputfield-color'">></textarea>
-                                            <span *ngIf="createprogram.controls['description'].hasError('maxlength')" class="errspan required">
-                                                Maximum of 200 characters
+                                            <span *ngIf="descptionFlag" class="errspan required">
+                                                Maximum of 150 characters
                                               </span>
                                 
                                     </div>
@@ -342,7 +342,7 @@
                                     <span class="pull-right">
                                         <button (click)="resetcreateprogram()"
                                             class="btn btn-default">Reset</button>
-                                        <button [disabled]="createprogram.invalid" (click)="saveProgram()"
+                                        <button [disabled]="createprogram.invalid || descptionFlag" (click)="saveProgram()"
                                             class="btn btn-primary">Save</button>
                                     </span>
                                 </div>
