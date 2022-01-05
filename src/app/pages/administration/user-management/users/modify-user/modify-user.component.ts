@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
 import Swal from 'sweetalert2';
 
@@ -25,23 +26,27 @@ export class ModifyUserComponent implements OnInit {
   depts:any=[];
   errShow:boolean=false;
   constructor(private formBuilder: FormBuilder,private api:RestApiService,
-    private router:Router, private route:ActivatedRoute) { 
+    private router:Router, private route:ActivatedRoute,private spinner:NgxSpinnerService) { 
       this.route.queryParams.subscribe(data=>{​​​​​​
         this.userData=data;
       })
     }
 
   ngOnInit(): void {
+    
         this.getAllCategories();
         this.getRoles();
     
 }
 getAllCategories(){
+  this.spinner.show();
   this.api.getDepartmentsList().subscribe(resp => {
     this.categories = resp.data; 
+    this.spinner.hide();
   })
  }
  getRoles(){
+  this.spinner.show();
    var roles1:any=[];
    this.depts=[];
   this.api.getAllRoles(2).subscribe(resp => {
@@ -66,6 +71,7 @@ getAllCategories(){
       this.email=this.userData.id;
       this.departments=this.depts;
       this.role=roles1[0];
+      this.spinner.hide();
   })
 //  })
 }
