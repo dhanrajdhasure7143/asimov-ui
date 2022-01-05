@@ -16,7 +16,7 @@
         <div class="Edittask-btns ml-auto">
             <button [disabled]="updatetaskForm.invalid" routerLink="/pages/projects/projectdetails" [queryParams]="{id:project_id}" class="btn btn-default">Cancel</button>
             <!-- <button disabled (click)="canceltaskform()" class="btn btn-primary">Cancel</button> -->
-            <button [disabled]="updatetaskForm.invalid" (click)="updatetask()" class="btn btn-primary">Update</button>
+            <button [disabled]="updatetaskForm.invalid || taskSummaryFlag || taskDescriptionFlag" (click)="updatetask()" class="btn btn-primary">Update</button>
         </div>
 
         <!-- <span class="pull-right" style="font-size:20px;">
@@ -121,13 +121,20 @@
 
                     <div class="form-fields col-md-12 p-0">
                         <label class="h6 label-control" id="summary" class="label-control">Summary</label>
-                        <textarea class="form-control" maxlength="150" formControlName="summary" rows="3" style=" resize: none;" placeholder="Enter Summary">
+                        <textarea class="form-control" maxlength="151" formControlName="summary" rows="3" (keyup)="taskSummaryMaxLength($event.target.value)" style=" resize: none;" placeholder="Enter Summary">
                               </textarea>
+                              <span *ngIf="taskSummaryFlag" class="errspan required">
+                                Maximum of 150 characters
+                              </span>
+                        
                     </div>
                     <div class="form-fields col-md-12 p-0">
                         <label class="h6" id="description" class="label-control">Description</label>
-                        <textarea class="form-control" maxlength="150" formControlName="description" rows="3" style=" resize: none;" placeholder="Enter Description">
+                        <textarea class="form-control" maxlength="151" formControlName="description" rows="3" (keyup)="taskDescriptionMaxLength($event.target.value)" style=" resize: none;" placeholder="Enter Description">
                               </textarea>
+                              <span *ngIf="taskDescriptionFlag" class="errspan required">
+                                Maximum of 150 characters
+                              </span>
                     </div>
 
 

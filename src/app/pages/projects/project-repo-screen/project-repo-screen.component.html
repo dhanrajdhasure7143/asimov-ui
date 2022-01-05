@@ -559,12 +559,14 @@
                     <div class="form-fields col-md-12">
 
                         <label>Description<span class="star">*</span></label>
-                        <textarea name= "desc" class="form-control" formControlName="description" placeholder="Enter Description..." rows="3" required>
+                        <textarea name= "desc" class="form-control" formControlName="description" maxlength="151" (keyup)="uploadFileDescriptionMaxLength($event.target.value)" placeholder="Enter Description..." rows="3" required>
                         
                         </textarea>
                         <span *ngIf="uploadFileForm.get('description').invalid && uploadFileForm.get('description').touched"
                              class="errspan required">Description Required*</span>
-                      
+                             <span *ngIf="uploadFileDescriptionFlag" class="errspan required">
+                              Maximum of 150 characters
+                            </span>
                     </div>
                     <div class="form-fields col-md-12">
                       <label>Upload<span class="star">*</span></label>
@@ -620,7 +622,7 @@
         <div class="modal-footer modelprfooter">
           <div class="pull-right">
               <button (click)="uploadFilemodalCancel()" class="btn btn-default">Cancel</button>
-              <button [disabled]="uploadFileForm.invalid" (click)="submitUploadFileForm()" class="btn btn-primary btn-update">Submit</button>
+              <button [disabled]="uploadFileForm.invalid || uploadFileDescriptionFlag" (click)="submitUploadFileForm()" class="btn btn-primary btn-update">Submit</button>
               </div>
         </div>
       </ng-template>
