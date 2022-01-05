@@ -99,7 +99,7 @@
                                     <td>{{ schedule.timeZone}}</td>
                                     <td class="text-nowrap">{{schedule.startDate.split(",")[2]}}-{{schedule.startDate.split(",")[1]}}-{{schedule.startDate.split(",")[0]}}</td>
                                     <td class="text-nowrap">{{schedule.endDate.split(",")[2]}}-{{schedule.endDate.split(",")[1]}}-{{schedule.endDate.split(",")[0]}}</td>
-                                    <td>{{schedule.startDate.split(",")[3]}}:{{schedule.endDate.split(",")[4]}}</td>
+                                    <td>{{schedule.startDate.split(",")[3]}}:{{schedule.startDate.split(",")[4]}}</td>
                                     <td>{{schedule.endDate.split(",")[3]}}:{{schedule.endDate.split(",")[4]}}</td>
 
                                     <td *ngIf="schedule.lastRunTime!='null' && schedule.nextRunTime!=undefined">{{schedule.lastRunTime}}</td>
@@ -144,7 +144,7 @@
                                     <td>{{schedule.envId | Envname : Environments}}</td>
                                     <td class="text-nowrap">{{schedule.startDate.split(",")[2]}}-{{schedule.startDate.split(",")[1]}}-{{schedule.startDate.split(",")[0]}}</td>
                                     <td class="text-nowrap">{{schedule.endDate.split(",")[2]}}-{{schedule.endDate.split(",")[1]}}-{{schedule.endDate.split(",")[0]}}</td>
-                                    <td>{{schedule.startDate.split(",")[3]}}:{{schedule.endDate.split(",")[4]}}</td>
+                                    <td>{{schedule.startDate.split(",")[3]}}:{{schedule.startDate.split(",")[4]}}</td>
                                     <td>{{schedule.endDate.split(",")[3]}}:{{schedule.endDate.split(",")[4]}}</td>
                                     <td *ngIf="schedule.lastRunTime!='null' && schedule.nextRunTime!=undefined">{{schedule.lastRunTime}}</td>
                                     <td *ngIf="schedule.lastRunTime=='null' || schedule.nextRunTime==undefined">--</td>
