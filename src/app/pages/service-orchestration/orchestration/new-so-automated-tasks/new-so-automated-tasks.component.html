@@ -869,11 +869,13 @@
                     <span *ngIf="addTaskForm.get('tasks').invalid && addTaskForm.get('tasks').touched" class="errspan required">Tasks Required*</span>
                 </div>
             </form>
+           
+        </div>
+        <div class="modal-footer modelprfooter">
             <div class="pull-right">
-                <button (click)="resetUserInvite()" class="btn btn-default">Cancel</button>
+                <button (click)="logs_modal.hide()" class="btn btn-default">Cancel</button>
                 <button (click)="addexistingtasks()" class="btn btn-primary btn-update">Submit</button>
             </div>
         </div>
-
     </div>
 </ng-template>
