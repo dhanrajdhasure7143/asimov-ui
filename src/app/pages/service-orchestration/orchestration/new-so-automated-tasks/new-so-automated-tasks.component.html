@@ -161,27 +161,35 @@
                     <td mat-cell *matCellDef="let element">
                         <span *ngIf="element.taskType=='Bot' || element.taskType=='Automated'">
                       
-                        <span *ngIf="element.sourceType==''||element.sourceType==undefined ||element.sourceType=='null'">---</span>
+                            <span *ngIf="isbotloading=='loading'">
+                                   Loading.........
+                            </span>
+                            <span *ngIf="isbotloading=='Success'">
+                                    <span *ngIf="element.sourceType==''||element.sourceType==undefined ||element.sourceType=='null'">---</span>
 
-                        <span *ngIf="element.sourceType=='EPSoft'">
-                          <select class="form-control" style="width:200px;padding:0px"  [value]="element.botId | checkResource : bot_list : element.sourceType : element.taskType " [id]="element.taskId+'__select'">
-                              <option  value="0" disabled hidden  >Select Resource</option>
-                              <!-- <option *ngFor="let bot of (bot_list | botlistbycat : element.categoryId)" [value]="bot.botId"  [selected]="bot.botId == element.botId">{{bot.botName}}</option> -->
-                              <option *ngFor="let bot of (bot_list | BotlistbycatPipe : element.categoryId)" [value]="bot.botId"  [selected]="bot.botId == element.botId">{{bot.botName}}</option>
-                            </select>
-                        </span>
-                        <span *ngIf="element.sourceType=='UiPath'">
-                        <select class="form-control" style="width:200px;padding:0px"  [value]="element.botId | checkResource : uipath_bots : element.sourceType : element.taskType " [id]="element.taskId+'__select'">
-                            <option [selected]="'0'" value="'0'" disabled hidden>Select Resource</option>
-                            <option *ngFor="let bot of uipath_bots" [value]="bot.Key" [selected]="bot.Key==element.botId" >{{bot.ProcessKey}}</option>
-                        </select>
-                      </span>
-                        <span *ngIf="element.sourceType=='BluePrism'">
-                        <select class="form-control" style="width:200px;padding:0px"  [value]="element.botId" [id]="element.taskId+'__select'">
-                            <option [selected]="'0'" value="'0'" disabled hidden  >Select Resource</option>
-                            <option *ngFor="let bot of blueprismbots" [value]="bot.botName" [selected]="bot.botName==element.botId" >{{bot.botName}}</option>
-                        </select>
-                      </span>
+                                    <span *ngIf="element.sourceType=='EPSoft'">
+                                            <select class="form-control" style="width:200px;padding:0px"  [value]="element.botId | checkResource : bot_list : element.sourceType : element.taskType " [id]="element.taskId+'__select'">
+                                                <option  value="0" disabled hidden  >Select Resource</option>
+                                                <!-- <option *ngFor="let bot of (bot_list | botlistbycat : element.categoryId)" [value]="bot.botId"  [selected]="bot.botId == element.botId">{{bot.botName}}</option> -->
+                                                <option *ngFor="let bot of (bot_list | BotlistbycatPipe : element.categoryId)" [value]="bot.botId"  [selected]="bot.botId == element.botId">{{bot.botName}}</option>
+                                              </select>
+                                          </span>
+                                          <span *ngIf="element.sourceType=='UiPath'">
+                                          <select class="form-control" style="width:200px;padding:0px"  [value]="element.botId | checkResource : uipath_bots : element.sourceType : element.taskType " [id]="element.taskId+'__select'">
+                                              <option [selected]="'0'" value="'0'" disabled hidden>Select Resource</option>
+                                              <option *ngFor="let bot of uipath_bots" [value]="bot.Key" [selected]="bot.Key==element.botId" >{{bot.ProcessKey}}</option>
+                                          </select>
+                                        </span>
+                                          <span *ngIf="element.sourceType=='BluePrism'">
+                                          <select class="form-control" style="width:200px;padding:0px"  [value]="element.botId" [id]="element.taskId+'__select'">
+                                              <option [selected]="'0'" value="'0'" disabled hidden  >Select Resource</option>
+                                              <option *ngFor="let bot of blueprismbots" [value]="bot.botName" [selected]="bot.botName==element.botId" >{{bot.botName}}</option>
+                                          </select>
+                                        </span>
+                            </span>
+                       <span *ngIf="isbotloading=='Error'">
+                             Error......
+                       </span>
                         </span>
                         <span *ngIf="element.taskType=='Human'">
                         <select class="form-control" style="width:200px;padding:0px;"  [value]="element.assignedUserId | checkResource : humans_list :'humans' : 'Human'"  [id]="element.taskId+'__select'">
