@@ -88,6 +88,7 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
   public BluePrismFlag:Boolean=false;
   public timer:any;
   public logs_modal:BsModalRef;
+  isbotloading:any="loading"
   taskslist: any;
   constructor(
     private route: ActivatedRoute,
@@ -501,9 +502,25 @@ resetsla(){
   {
     this.rest.getallsobots().subscribe(botlist =>
     {
-      this.bot_list=botlist;
+      if(botlist){
+        this.bot_list=botlist;
+        this.isbotloading='Success'
+        if(this.selectedvalue!=null){
+       
+          this.checkTaskAssigned(this.selectedvalue)
+        }
+      }
+
+     
+    },(error)=>{
+      this.isbotloading='Error'
     });
   }
+
+
+
+
+
 
 
 
