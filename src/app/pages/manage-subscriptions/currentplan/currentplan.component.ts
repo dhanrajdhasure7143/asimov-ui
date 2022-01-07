@@ -49,6 +49,7 @@ export class CurrentplanComponent implements OnInit {
   freetrail: any;
   listofplans: any[];
   tableData: any;
+  expiry: any;
  
   constructor(
     private api: RestApiService, private spinner: NgxSpinnerService,private modalService: BsModalService,
@@ -59,6 +60,7 @@ export class CurrentplanComponent implements OnInit {
     this.currentplanname=localStorage.getItem('currentplan')
     this.getCurrentPlan()
     //this.getAllPlans();
+    this.expiryInfo();
   }
 
 
@@ -257,6 +259,12 @@ export class CurrentplanComponent implements OnInit {
   chooseplan(){
     this.getallplans=true;
     this.revieworder=false;
+  }
+  expiryInfo(){
+    this.api.expiryInfo().subscribe(data => {
+      this.expiry = data.Expiresin;
+      console.log("left over days ----",this.expiry)
+    })
   }
 
   contactUs(){
