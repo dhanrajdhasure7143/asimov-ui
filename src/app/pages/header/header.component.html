@@ -209,8 +209,8 @@
   <span class="txt-wh header-seperator">|</span>
  
   <div style="line-height: 7px;margin-right: 13px;margin-top:6px;">
-    <span class="txt-u header-rgttext" *ngIf="firstname!='null'">{{firstname}} {{lastname}}</span><br>
-    <span class="txt-u header-rgttext" *ngIf="firstname=='null'">- -</span><br>
+    <span class="txt-u header-rgttext" *ngIf="user_fName != null">{{user_fName | titlecase}} {{user_lName |titlecase}}</span><br>
+    <span class="txt-u header-rgttext" *ngIf="user_fName == null">- -</span><br>
     <span class="txt-u header-userrole">{{userRole}}</span>
   </div>
   
@@ -218,13 +218,13 @@
   
   <span>
   
-    <div   *ngIf="profilePicture==true && firstname!='null'">
+    <div   *ngIf="profilePicture==true && user_fName!='null'">
        <img class="res-circle-img" [src]="retrievedImage" >
      </div>
-     <div  class="res-circle" *ngIf="profilePicture==false && firstname!='null'">
-       <span>{{firstletter|uppercase}}</span>
+     <div  class="res-circle" *ngIf="profilePicture==false && user_fName!='null'">
+       <span>{{user_firstletter|uppercase}}</span>
      </div>
-     <div  *ngIf=" firstname=='null'">
+     <div  *ngIf=" user_fName =='null'">
       <span><img class="res-circle-img" src="../../../../assets/images/pro1.png" /></span>
     </div>
   </span>

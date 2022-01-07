@@ -94,14 +94,14 @@
                 <img src="../../../assets/images/BPMS/submit-for-approval.svg">
                 <span class="testtooltip">Save & Submit for approval</span>
               </button> -->
-              <button class="clr-hvr tsttooltipbtn" [outsideClick]="true" *ngIf="iscreate_notation" (click)="onsaveOverlayOpen()" [popover]="popTemplate" placement="bottom">
+              <button class="clr-hvr tsttooltipbtn" [outsideClick]="true" *ngIf="iscreate_notation && (freetrail != 'true')" (click)="onsaveOverlayOpen()" [popover]="popTemplate" placement="bottom">
                 <img src="../../../assets/images/BPMS/submit-for-approval.svg">
                 <span class="testtooltip">Save & Submit for approval</span>
               </button>
               <!-- <button mat-button [matMenuTriggerFor]="menu" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && !isSave_disabled && !iscreate_notation" class="clr-hvr tsttooltipbtn"><img alt=""
                 src="../../../assets/images/BPMS/submit-for-approval.svg"><span class="testtooltip">Save & Submit for
                 approval</span></button> -->
-                <button type="button" [outsideClick]="true" (click)="onsaveOverlayOpen()" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && !isSave_disabled && !iscreate_notation" class="clr-hvr tsttooltipbtn"
+                <button type="button" [outsideClick]="true" (click)="onsaveOverlayOpen()" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && !isSave_disabled && !iscreate_notation && (freetrail != 'true')" class="clr-hvr tsttooltipbtn"
         [popover]="popTemplate" placement="bottom">
         <img alt="" src="../../../assets/images/BPMS/submit-for-approval.svg">
         <span class="testtooltip">Save & Submit for approval</span>
@@ -117,7 +117,7 @@
               </div>
               <button class="btn btn-primary" (click)="onchange()">Save & Submit for Approval</button>
             </mat-menu> -->
-              <button class="icon-disabled" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && isSave_disabled && !iscreate_notation">
+              <button class="icon-disabled" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && isSave_disabled && !iscreate_notation && (freetrail != 'true')">
                 <img src="../../../assets/images/BPMS/submit-for-approvaldisabled.svg">
               </button>
               <button class="clr-hvr tsttooltipbtn" (click)="orchestartion()" *ngIf="rejectedOrApproved=='APPROVED' && freetrail!='true'">
@@ -160,7 +160,7 @@
                 <img class="testplus hover-img" src="../../../assets/images/BPMS/White-Workflow.svg">
                 Approvals
               </button>
-              <button (click)="gotoBPMNPlatform()" class="btn btn-primary">
+              <button *ngIf="freetrail != 'true'" (click)="gotoBPMNPlatform()" class="btn btn-primary">
                 <img class="testplus" src="../../../assets/images/BPMS/White-eye.svg">
                 View Cockpit
               </button> 
