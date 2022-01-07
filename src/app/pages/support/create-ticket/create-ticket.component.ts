@@ -147,10 +147,10 @@ export class CreateTicketComponent implements OnInit {
           heightAuto: false
         }).then((result) => {
           if (result.value) {
-            this.router.navigate(['/pages/support/ticket-list'])
+            this.router.navigate(['/pages/support/ticket-list']);
+            this.reset();
           }
-        })
-        this.reset();
+        });
         this.isLoading = false;
         this.fileName = [];
       }
