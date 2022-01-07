@@ -189,3 +189,10 @@ span.logrefresh {
 .process-logs.modal-body {
     height: calc(100vh - 300px);
 }
+
+
+.Actions-column button:disabled{
+    background-color: white !important;
+    opacity: 0.4 !important;
+    cursor: not-allowed;
+}

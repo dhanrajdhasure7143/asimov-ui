@@ -254,6 +254,7 @@ checkAllCheckBox(ev) {
 reset_createblueprism(){
   
   this.BluePrismConfigForm.reset();
+  this.submitted=false;
   this.BluePrismConfigForm.get("categoryId").setValue(this.categoryList.lenght==1?this.categoryList[0].categoryId:"0")
 }
 
@@ -276,18 +277,11 @@ saveBluePrism()
       this.submitted=true;
       this.api.save_blueprism_config(response).subscribe(resp=>{
         let response:any=resp;
+        this.submitted=false;
         this.spinner.hide();
         if(response.errorMessage==undefined)
         {
-          // Swal.fire({
-          //   position: 'center',
-          //   icon: 'success',
-          //   title: response.status,
-          //   showConfirmButton: false,
-          //   timer: 2000
-          // })
           Swal.fire("Success",response.status,"success")
-        //this.getallData();
           this.checktoupdate();
           this.checktodelete();
           document.getElementById("createbprism").style.display='none';        
@@ -295,7 +289,7 @@ saveBluePrism()
           this.updateblueprims = false;
           this.BluePrismConfigForm.reset();
           this.getblueprismconnections();
-          this.submitted=true;
+         
         }
         else
         {
@@ -365,7 +359,7 @@ updatedata()
   this.createblueprism = false;
   this.updateblueprims = true;
   let data:any;
- 
+
   for(data of this.blueprism_configs)
   {
     if(data.bluePrismId==this.updateid)
@@ -379,12 +373,18 @@ updatedata()
       this.UpdateBluePrismConfigForm.get("configName").setValue(data["configName"]);
       this.UpdateBluePrismConfigForm.get("bluePrismUsername").setValue(data["bluePrismUsername"]);
       this.UpdateBluePrismConfigForm.get("bluPrismPassword").setValue(data["bluPrismPassword"]);
-      this.UpdateBluePrismConfigForm.get("categoryId").setValue(data["categoryId"]);
       this.UpdateBluePrismConfigForm.get("hostAddress").setValue(data["hostAddress"]);
       this.UpdateBluePrismConfigForm.get("username").setValue(data["username"]);
       this.UpdateBluePrismConfigForm.get("password").setValue(data["password"]);
       this.UpdateBluePrismConfigForm.get("port").setValue(data["port"]);
-      //this.UpdateBluePrismConfigForm.get("status").setValue(data["status"]);
+      if(this.categoryList.length==1)
+      {
+        this.UpdateBluePrismConfigForm.get("categoryId").setValue(this.categoryList[0].categoryId);
+      }
+      else
+      {
+        this.UpdateBluePrismConfigForm.get("categoryId").setValue(data["categoryId"]);
+      }
       break;
     }
   }
@@ -436,6 +436,10 @@ testBluePrismconnection()
             
             Swal.fire("Error",response.errorMessage,"error");
           }
+      },
+      err=>{
+        this.spinner.hide();
+        Swal.fire("Error","Unable to load blue prism bots","error");
       })
     }
     else

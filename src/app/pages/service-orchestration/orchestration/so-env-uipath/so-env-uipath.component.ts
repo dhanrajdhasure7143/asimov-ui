@@ -136,9 +136,14 @@ getUiPath()
 createUiPath(){
   
   this.UipathForm.reset();
-  this.UipathForm.get("categoryId").setValue(((this.categoryList.lenght==1)?this.categoryList[0].categoryId:""))
   document.getElementById("createUipath").style.display = "block";
   document.getElementById("updateUipath").style.display = "none";
+  if(this.categoryList.length==1)
+    this.UipathForm.get("categoryId").setValue(this.categoryList[0].categoryId)
+  else
+    this.UipathForm.get("categoryId").setValue("")
+
+  
 }
 
 savedata(){
@@ -254,13 +259,23 @@ updatedata()
   {
     if(data.sourceAccId==this.updateid)
     {
-      (data.active==true)?data.active=1:data.active=0;
+      if(data.active==true)
+        data.active=1
+      else
+        data.active=0;
       this.UpdateUipathForm.get("accountName").setValue(data["accountName"]);
       this.UpdateUipathForm.get("tenantName").setValue(data["tenantName"]);
       this.UpdateUipathForm.get("categoryId").setValue(data["categoryId"]);
       this.UpdateUipathForm.get("userKey").setValue(data["userKey"]);
       this.UpdateUipathForm.get("clientId").setValue(data["clientId"]);
       this.UpdateUipathForm.get("active").setValue(data["active"]);
+      if(this.categoryList.length==1)
+      {
+        this.UpdateUipathForm.get("categoryId").setValue(this.categoryList[0].categoryId);
+      }else
+      {
+        this.UpdateUipathForm.get("categoryId").setValue(data["categoryId"]);
+      }
       break;
     }
   }
