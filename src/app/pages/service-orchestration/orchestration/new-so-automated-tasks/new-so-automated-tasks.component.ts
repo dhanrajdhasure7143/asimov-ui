@@ -49,7 +49,7 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
   blueprismbots:any=[];
   configurations_data:any=[];
   configurations:any=[];
-  displayedColumns: string[] = ["processName","taskName","processOwner","taskOwner","taskType", "category","sourceType","Assign","status","Operations"];
+  displayedColumns: string[] = ["processName","taskName","createdBy","taskOwner","taskType", "category","sourceType","Assign","status","Operations"];
   dataSource2:MatTableDataSource<any>;
   public isDataSource: boolean;
   public userRole:any = [];
@@ -88,6 +88,8 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
   public BluePrismFlag:Boolean=false;
   public timer:any;
   public logs_modal:BsModalRef;
+  isbotloading:any="loading";
+  isHumanLoading:any="Loading"
   taskslist: any;
   constructor(
     private route: ActivatedRoute,
@@ -501,9 +503,25 @@ resetsla(){
   {
     this.rest.getallsobots().subscribe(botlist =>
     {
-      this.bot_list=botlist;
+      if(botlist){
+        this.bot_list=botlist;
+        this.isbotloading='Success'
+        if(this.selectedvalue!=null){
+       
+          this.checkTaskAssigned(this.selectedvalue)
+        }
+      }
+
+     
+    },(error)=>{
+      this.isbotloading='Error'
     });
   }
+
+
+
+
+
 
 
 
@@ -775,7 +793,10 @@ resetsla(){
         if(response.status!=undefined)
         {
           Swal.fire("Success",response.status,"success");
-          this.checkTaskAssigned(processId)
+          if(this.selectedvalue!="")
+          {
+            this.checkTaskAssigned(processId)
+          }
         }else
         {
           Swal.fire("Error",response.errorMessage,"warning");
@@ -949,10 +970,16 @@ resetsla(){
   gethumanslist()
   {
     let tenant=localStorage.getItem("tenantName");
-    this.rest.getuserslist(tenant).subscribe(data=>
-    //this.rest.getAllUsersByDept().subscribe(data=>
-    {
+    this.rest.getuserslist(tenant).subscribe(data=>{
+        this.isHumanLoading="Success"
         this.humans_list=data;
+        if(this.isbotloading=="Success" && this.isHumanLoading=="Success")
+        {
+          if(this.selectedvalue!="")
+            this.checkTaskAssigned(this.selectedvalue)
+        }
+    },err=>{
+      this.isHumanLoading="Failure"
     })
   }
 
@@ -1008,9 +1035,7 @@ resetsla(){
 
   changesource(botsource,id)
   {
-    this.responsedata.find(item=>item.taskId==id).sourceType=botsource;
-   
-    
+    this.responsedata.find(item=>item.taskId==id).sourceType=botsource; 
     this.dataSource2= new MatTableDataSource(this.responsedata);
     this.dataSource2.sort=this.automatedSort;
     this.dataSource2.paginator=this.paginator10;
@@ -1278,10 +1303,11 @@ resetsla(){
   }
 
   addtasks(template){
+    this.addTaskForm.reset();
     this.rest.tasksListInProcess(this.selectedvalue).subscribe(resp => {
       this.taskslist = resp.tasks;
     })
-    this.logs_modal = this.modalService.show(template,{class:"logs-modal"});
+    this.logs_modal = this.modalService.show(template);
   }
 
   addexistingtasks(){

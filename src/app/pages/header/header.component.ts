@@ -7,6 +7,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { PagesComponent } from '../pages.component'
 import Swal from 'sweetalert2';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-header',
@@ -48,6 +49,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   notificationbody: { tenantId: string; };
   notificationreadlist: any;
   notificationsList: any;
+  user_details:any;
+  user_firstletter:any;
+  user_lName:any
+  user_fName:any
 
   constructor(
     private router: Router,
@@ -55,6 +60,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private dataTransfer: DataTransferService,
     private rpa: RestApiService,
     private spinner: NgxSpinnerService,
+    private jwtHelper: JwtHelperService,
     @Inject(APP_CONFIG) private config) { }
 
   ngOnInit() {
@@ -131,11 +137,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
       //this.error = "Please complete your registration process";
 
     })
-    this.spinner.show();
-    
+    this.spinner.show();    
     setTimeout(() => {
-      this.getImage();
-      this.profileName();
+      this.userDetails();
       this.getAllNotifications();
       this.getNotifications();
     }, 1000);
@@ -215,27 +219,28 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.router.navigate(['/redirect']);
   }
 
-  profileName() {
-    setTimeout(() => {
-      this.firstname = localStorage.getItem('firstName');
-      this.lastname = localStorage.getItem('lastName');
-      var firstnameFirstLetter = this.firstname.charAt(0)
-      var lastnameFirstLetter = this.lastname.charAt(0)
-      this.firstletter = firstnameFirstLetter + lastnameFirstLetter
-    }, 1000);
-  }
+  userDetails() {
+    var userDetails = localStorage.getItem('accessToken');
+    var deCryptUserDetails = this.jwtHelper.decodeToken(userDetails);
+    let userid = deCryptUserDetails.userDetails.userId;
 
-  getImage() {
-    // console.log("inside image")
-    const userid = localStorage.getItem('ProfileuserId');
     this.rpa.getUserDetails(userid).subscribe(res => {
       this.retrieveResonse = res;
-      setTimeout(() => {
+      
         this.user_name = this.retrieveResonse.firstName
         this.user_designation = this.retrieveResonse.designation
-      }, 500);
+        
+        this.user_details=this.retrieveResonse;
+      this.dataTransfer.userDetails(this.user_details);
+
+        this.user_fName=this.user_details.firstName;
+        this.user_lName=this.user_details.lastName;
+
+        var fname_fLetter = this.user_details.firstName.charAt(0);
+        var lname_fLetter = this.user_details.lastName.charAt(0);
+        this.user_firstletter = fname_fLetter + lname_fLetter;
+
       if (this.retrieveResonse.image == null || this.retrieveResonse.image == "") {
-        this.profileName();
         this.profilePicture = false;
       }
       else {

@@ -140,7 +140,10 @@ export class MonitoringComponent implements OnInit {
 
       var  valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
       valueAxis.title.text = "No.of Bots";
-
+      // valueAxis.renderer.labels.template.fontSize = 11;
+      // valueAxis.renderer.labels.template.fillOpacity = 1;
+      // valueAxis.renderer.grid.template.location = 0;
+      // valueAxis.renderer.minGridDistance = 30;
       // Create series
       var series1 = chart.series.push(new am4charts.ColumnSeries());
       series1.dataFields.valueY = "success";
@@ -148,7 +151,7 @@ export class MonitoringComponent implements OnInit {
       series1.name = "success";
       series1.tooltipText = "{name}: [bold]{valueY}[/]";
       series1.stacked = true;
-      series1.columns.template.width = am4core.percent(20);
+      series1.columns.template.width =40;
       series1.columns.template.fill = am4core.color("green");
       series1.columns.template.strokeWidth = 0;
 
@@ -159,7 +162,7 @@ export class MonitoringComponent implements OnInit {
       series2.name = "failed";
       series2.tooltipText = "{name}: [bold]{valueY}[/]";
       series2.stacked = true;
-      series2.columns.template.width = am4core.percent(20);
+      series2.columns.template.width =40;
       series2.columns.template.fill = am4core.color("red");
       series2.columns.template.strokeWidth = 0;
 
@@ -169,7 +172,7 @@ export class MonitoringComponent implements OnInit {
       series3.name = "stopped";
       series3.tooltipText = "{name}: [bold]{valueY}[/]";
       series3.stacked = true;
-      series3.columns.template.width = am4core.percent(20);
+      series3.columns.template.width =40;
       series3.columns.template.fill = am4core.color("yellow");
       series3.columns.template.strokeWidth = 0;
 
@@ -180,7 +183,7 @@ export class MonitoringComponent implements OnInit {
 
       series4.tooltipText = "{name}: [bold]{valueY}[/]";
       series4.stacked = true;
-      series4.columns.template.width = am4core.percent(20);
+      series4.columns.template.width = 40;
       series4.columns.template.fill = am4core.color("blue");
       series4.columns.template.strokeWidth = 0;
       // Legend
@@ -195,7 +198,9 @@ export class MonitoringComponent implements OnInit {
       chart.cursor = new am4charts.XYCursor();
       
 
-  
+      var label = this.runtimestatschart.plotContainer.createChild(am4core.Label);
+      label.x = 90;
+      label.y = 50;
   }
 
  
@@ -446,14 +451,12 @@ export class MonitoringComponent implements OnInit {
       let label1 = categoryAxis.renderer.labels.template;
       label1.wrap = true;
       label1.maxWidth = 120;
-      categoryAxis.renderer.minGridDistance = 40;
+      categoryAxis.renderer.minGridDistance = 30;
       var valueAxis = this.runtimestatschart.yAxes.push(new am4charts.ValueAxis());
-      valueAxis.renderer.inside = true;
+      valueAxis.renderer.labels.template.fontSize = 11;
       valueAxis.renderer.labels.template.fillOpacity = 1;
-      valueAxis.renderer.grid.template.strokeOpacity = 0;
-      valueAxis.min = 0;
-      valueAxis.cursorTooltipEnabled = false;
-      valueAxis.renderer.gridContainer.zIndex = 1;
+      valueAxis.renderer.grid.template.location = 0;
+      valueAxis.renderer.minGridDistance = 30;
       valueAxis.title.text = "Total Execution Time (ms)";
       var series = this.runtimestatschart.series.push(new am4charts.ColumnSeries);
       series.dataFields.valueY = "value";
