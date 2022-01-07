@@ -793,7 +793,10 @@ resetsla(){
         if(response.status!=undefined)
         {
           Swal.fire("Success",response.status,"success");
-          this.checkTaskAssigned(processId)
+          if(this.selectedvalue!="")
+          {
+            this.checkTaskAssigned(processId)
+          }
         }else
         {
           Swal.fire("Error",response.errorMessage,"warning");
@@ -970,6 +973,11 @@ resetsla(){
     this.rest.getuserslist(tenant).subscribe(data=>{
         this.isHumanLoading="Success"
         this.humans_list=data;
+        if(this.isbotloading=="Success" && this.isHumanLoading=="Success")
+        {
+          if(this.selectedvalue!="")
+            this.checkTaskAssigned(this.selectedvalue)
+        }
     },err=>{
       this.isHumanLoading="Failure"
     })

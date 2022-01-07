@@ -1331,7 +1331,21 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           {
             let data: any = outdata
             setTimeout(()=>{
-              $("#text_"+this.outputboxid).val((this.outputboxresult[0].Value));
+
+              let check=this.outputboxresult[0];
+              if(check=="" || check==undefined)
+              {
+                $("#text_"+this.outputboxid).val("No Items To Display");
+              }else
+              {
+                if(check.Value=="" || check.Value==undefined)            
+                { 
+                  $("#text_"+this.outputboxid).val("No Items To Display");
+                }else
+                {
+                  $("#text_"+this.outputboxid).val(String(this.outputboxresult[0].Value));
+                }
+              }
             },1000)
           }
           if(this.SelectedOutputType=="Image")
