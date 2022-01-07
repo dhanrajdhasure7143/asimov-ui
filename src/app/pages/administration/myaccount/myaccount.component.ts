@@ -43,8 +43,12 @@ export class MyAccountComponent implements OnInit {
     ) { }
 
   ngOnInit() {
+    this.spinner.show();
     this.countryInfo = countries.Countries;
-    this.userDetails();
+    setTimeout(() => {
+      this.userDetails();
+    }, 500);
+
    
   }
 
@@ -98,6 +102,7 @@ export class MyAccountComponent implements OnInit {
         
         }
       }
+      this.spinner.hide();
     })
    
   }
