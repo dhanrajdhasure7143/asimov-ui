@@ -28,6 +28,7 @@ export class HomeComponent implements OnInit {
   tenantId: string;
   plansList: any;
   freetrail: boolean;
+  expiry: any;
   
   constructor(private router: Router, private dt:DataTransferService, private rpa: RestApiService, private route: ActivatedRoute, private hints:PagesHints) {
 
@@ -61,6 +62,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getexpiryInfo();
     this.getAllPlans();
     // document.getElementById("filters").style.display = "block";
     var tkn = localStorage.getItem("accessToken")
@@ -207,6 +209,15 @@ export class HomeComponent implements OnInit {
 
   getAllPlans() {
     this.tenantId = localStorage.getItem('tenantName');
+    this.rpa.expiryInfo().subscribe(data => {
+      this.expiry = data.Expiresin;
+      console.log("left over days ----",this.expiry)
+      localStorage.setItem('expiresIn',this.expiry)
+      if(this.expiry<0){
+        this.router.navigate(['/pages/subscriptions'])
+      }
+  
+  
     this.rpa.getProductPlans("EZFlow", this.tenantId).subscribe(data => {
       this.plansList = data
       if(this.plansList.length > 1){
@@ -218,7 +229,9 @@ export class HomeComponent implements OnInit {
      if(this.plansList.nickName=='Standard'){
        this.freetrail=true;
       this.isLoading=false;
-       this.router.navigate(['/pages/projects/listOfProjects'])
+      console.log("expiry-----",this.expiry)
+      if(this.expiry>0){
+       this.router.navigate(['/pages/projects/listOfProjects'])}
        localStorage.setItem('freetrail',JSON.stringify(this.freetrail))
      }
      else{
@@ -228,6 +241,9 @@ export class HomeComponent implements OnInit {
      }
     }
   })
+})
 }
-
+getexpiryInfo(){
+  
+}
 }

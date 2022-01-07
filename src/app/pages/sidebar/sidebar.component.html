@@ -1,4 +1,4 @@
-<div class="nav-main">
+<div *ngIf="expiry>=0" class="nav-main">
     <section class="sidebar-main">
 
         <mat-nav-list class="ep-nav-font">
@@ -301,5 +301,40 @@
       <label class="epsoft-label">EPSoft<sup>R</sup></label>
   </span>
     </div>
+
+</div>
+
+
+<div *ngIf="expiry<0" class="nav-main">
+  <section class="sidebar-main">
+
+      <mat-nav-list class="ep-nav-font">
+
+  <a mat-list-item class="link" id='subscriptions' (click)="hightlight('subscriptions',null)" routerLink="/pages/subscriptions" [matTooltip]=" !obj.sideBarOpen ? 'Subscriptions' : ''" matTooltip="Subscriptions" matTooltipClass="sidebarTooltip" matTooltipPosition="right">
+    <span class="side-icon">
+<span class="active-img" id="eiap-home-icon-active">
+<img src="../../../assets/images/subscription/BillingAdresses1.svg">
+</span>
+    <span class="hover-img" id="eiap-home-icon-white">
+      <img src="../../../assets/images/subscription/BillingAdresses1.svg">
+</span>
+    <span class="default-img" id="eiap-home-icon-gray">
+      <img src="../../../assets/images/subscription/BillingAdresses1.svg">
+</span>
+    </span>
+    <span class="side-menu-font">Manage Subscriptions</span>
+</a>
+
+ 
+      </mat-nav-list>
+
+  </section>
+  <div class="epslogo">
+      <img src="..\assets\images\footerlogo.png" alt="" height="54">
+      <span class="poweredby">
+    <label class="poweredby-label">Powered By</label>
+    <label class="epsoft-label">EPSoft<sup>R</sup></label>
+</span>
+  </div>
 
 </div>

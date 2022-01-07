@@ -12,6 +12,9 @@
         <div  *ngFor="let planlist of plansList; let i=index ;trackBy:loopTrackBy">
             <div class="col-md-3 plansBox" *ngIf="planlist.subscribed">
             <h4>
+              <span *ngIf="expiry>=0">
+                <h6 style="color:red">Current plan expires in {{expiry}} days</h6></span>
+                <span *ngIf="expiry<0"><h6 style="color:red">Current plan has expired. Please Upgrade</h6></span>
                 <span id="planName" *ngIf="planlist.nickName =='Standard'"><b>Free Tier</b>
                 </span> 
                 <span id="planName" *ngIf="planlist.nickName !='Standard'"><b>{{planlist.nickName}}</b>

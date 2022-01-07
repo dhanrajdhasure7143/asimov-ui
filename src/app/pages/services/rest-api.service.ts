@@ -1257,4 +1257,8 @@ getProgrmaDetailsById(programid){
   subscribePlan(token,planData){
     return this.http.post<any>('/subscriptionservice/v1/orders?paymentToken='+token,planData,{responseType:'json'})
   }
+
+  expiryInfo():Observable<any>{
+     return this.http.get<any>('/subscriptionservice/v1/freetrials/planExpiryInfo')
+  }
 }
