@@ -50,7 +50,8 @@ export class SoEnvBlueprismComponent implements OnInit {
   public addBPconfigstatus:boolean=false;
   public bpid : any;
   public toggle: boolean = false;
-  public categoryList:any=[]
+  public categoryList:any=[];
+  public categoryLengthCheck:Boolean=false;
 constructor(private api:RestApiService,
   private router:Router,
   private formBuilder: FormBuilder,
@@ -560,7 +561,18 @@ getCategoryList()
   this.api.getCategoriesList().subscribe(data=>{
     let catResponse : any;
     catResponse=data
-    this.categoryList=catResponse.data;
+    if(catResponse.errorMessage==undefined)
+    {
+      this.categoryList=catResponse.data;
+      if(this.categoryList.length==1)
+      {
+        this.categoryLengthCheck=true;
+      }
+      else
+      {
+        this.categoryLengthCheck=false;
+      }
+    }
     this.getblueprismconnections();
   });
 }

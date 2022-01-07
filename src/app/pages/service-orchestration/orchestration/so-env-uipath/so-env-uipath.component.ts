@@ -37,6 +37,7 @@ export class SoEnvUipathComponent implements OnInit {
   public param:any=0;
   public processId : any;
   public checkeddisabled:boolean =false;
+  public categoryLengthCheck:Boolean=false;
   public createpopup=document.getElementById('createevironment');
   public button:string;
   //public updatepopup=document.getElementById('env_updatepopup');
@@ -326,7 +327,18 @@ getCategoryList()
   this.api.getCategoriesList().subscribe(data=>{
     let catResponse : any;
     catResponse=data
-    this.categoryList=catResponse.data;
+    if(catResponse.errorMessage==undefined)
+    {
+      this.categoryList=catResponse.data;
+      if(this.categoryList.length==1)
+      {
+        this.categoryLengthCheck=true;
+      }
+      else
+      {
+        this.categoryLengthCheck=false;
+      }
+    }
     this.getUiPath();
   });
 }
