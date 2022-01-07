@@ -1295,10 +1295,11 @@ resetsla(){
   }
 
   addtasks(template){
+    this.addTaskForm.reset();
     this.rest.tasksListInProcess(this.selectedvalue).subscribe(resp => {
       this.taskslist = resp.tasks;
     })
-    this.logs_modal = this.modalService.show(template,{class:"logs-modal"});
+    this.logs_modal = this.modalService.show(template);
   }
 
   addexistingtasks(){
