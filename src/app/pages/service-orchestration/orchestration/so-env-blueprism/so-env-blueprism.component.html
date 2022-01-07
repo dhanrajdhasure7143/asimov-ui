@@ -135,7 +135,7 @@
 
                     <div class="col-md-12 p-0 form-group">
                         <label class="label-control" for="categoryId">Select Category<span class="star">*</span></label>
-                        <select class="form-control data" formControlName="categoryId" [value]="categoryList.length==1?categoryList[0].categoryId:'0'">
+                        <select class="form-control data" formControlName="categoryId" [value]="categoryList.length==1?categoryList[0].categoryId:'0'" [attr.disabled]="categoryList.length==1">
                                 <option value="0">Select Category</option>
                                 <option [value]="category.categoryId" *ngFor="let category of categoryList">{{category.categoryName}}</option>
                             </select>
@@ -203,7 +203,7 @@
                         <!-- <button class="btn btn-primary" (click)="testBluePrismconnection()" tooltip="Test Connection" [disabled]="BluePrismConfigForm.invalid">Test Connection -->
                         <button class="btn btn-primary btn-test" (click)="BluePrismCreatetestconnection()" tooltip="Test Connection" [disabled]="BluePrismConfigForm.invalid">Test Connection
                             </button>
-                        <button class='btn btn-primary' (click)="saveBluePrism()" tooltip="Save" [disabled]="BluePrismConfigForm.invalid || submitted">Save</button>
+                        <button class='btn btn-primary' (click)="saveBluePrism()" tooltip="Save" [disabled]="BluePrismConfigForm.invalid">Save</button>
                     </div>
                 </form>
             </div>
@@ -250,7 +250,7 @@
                     </div>
                     <div class="col-md-12 p-0 form-group">
                         <label class="label-control" for="categoryId">Select Category<span class="star">*</span></label>
-                        <select class="form-control data" formControlName="categoryId">
+                        <select class="form-control data" [attr.disabled]="categoryList.length==1"  [value]="categoryList.length==1?categoryList[0].categoryId:'0'" formControlName="categoryId">
                                 <option value="0">Select Category</option>
                                 <option [value]="category.categoryId" *ngFor="let category of categoryList">{{category.categoryName}}</option>
                             </select>
