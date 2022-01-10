@@ -141,7 +141,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       this.userDetails();
       this.getAllNotifications();
-      this.getNotifications();
     }, 1000);
     setTimeout(() => {
       this.spinner.hide();
@@ -291,10 +290,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.dataid = '';
   }
   deleteNotification(data, index) {
-    console.log(data)
-
-    // console.log(resp)
-    this.getNotifications();
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -318,7 +313,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
             confirmButtonText: 'Ok'
           }).then((result) => {
             if (result.value) {
-              window.location.reload();
+              // window.location.reload();
+              this.getNotifications();
             }
           })
         });
@@ -348,7 +344,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.notificationbody = {
       "tenantId": this.tenantId
     }
-    console.log("notification id", id)
     if (this.notificationsList.find(ntf => ntf.id == id).status != 'read') {
       this.rpa.getReadNotificaionCount(this.role, userId, id, this.notificationbody).subscribe(data => {
         this.notificationreadlist = data
@@ -356,11 +351,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
         // document.getElementById('ntf_'+id).style.color="grey"
         //document.getElementById('date_'+id).style.color="grey"
         //document.getElementById(id).style.cursor="none"
-        window.location.reload();
+        // window.location.reload();
         // console.log(this.notificationreadlist)
+        this.getNotifications();
       })
 
     }
   }
-
 }
