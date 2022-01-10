@@ -2692,6 +2692,7 @@ span.pdicon {
 }
 .custom-content-notification{
   min-width: 330px ;
-  height: 330px;
+  /* height: 330px; */
+  height: 310px;
   overflow: auto;
 }
