@@ -118,9 +118,10 @@
                             title="Click to send reminder mail to Approver" class="fa fa-envelope"></i> -->
                                             <!-- <i (click)="deleteProcess($event, each_diag)" *ngIf="each_diag.bpmnProcessStatus=='INPROGRESS'"
                             title="Delete BPMNotation" class="glyphicon glyphicon-trash"></i> -->
-                                            <img (click)="deleteProcess($event, each_diag)" *ngIf="(each_diag.bpmnProcessStatus=='INPROGRESS') && ((systemAdmin==true) || ((this.userRole.includes('Process Analyst') && this.userRole.includes('RPA Developer') && this.userRole.includes('Process Owner') && this.userRole.includes('Process Architect')) && (each_diag.userEmail==userEmail) ))" matTooltip="Delete Notation" matTooltipPosition="left" src="../../../../assets/images/BPMS/delete-red.svg"
+                                            <img (click)="deleteProcess($event, each_diag)" *ngIf="(each_diag.bpmnProcessStatus!='PENDING') && ((systemAdmin==true) || ((this.userRole.includes('Process Analyst') && this.userRole.includes('RPA Developer') && this.userRole.includes('Process Owner') && this.userRole.includes('Process Architect')) && (each_diag.userEmail==userEmail) ))" matTooltip="Delete Notation" matTooltipPosition="left" src="../../../../assets/images/BPMS/delete-red.svg"
                                                 class="testplus1">
-                                            <i *ngIf="each_diag.bpmnProcessStatus!='INPROGRESS' && (each_diag.bpmnProcessStatus=='APPROVED' || each_diag.bpmnProcessStatus=='REJECTED' || !isAdminUser)">-</i>
+                                            <!-- <i *ngIf="each_diag.bpmnProcessStatus!='INPROGRESS' && (each_diag.bpmnProcessStatus=='APPROVED' || each_diag.bpmnProcessStatus=='REJECTED' || !isAdminUser)">-</i> -->
+                                            <i *ngIf="each_diag.bpmnProcessStatus=='PENDING' && (!isAdminUser)">-</i>
                                         </div>
                                     </div>
                                     <!-- </div>
