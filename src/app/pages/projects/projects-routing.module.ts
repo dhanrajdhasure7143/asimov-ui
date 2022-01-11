@@ -11,7 +11,7 @@ import { ProgramDetailsComponent } from './program-details/program-details.compo
 import { CreateTasksComponent } from './create-tasks/create-tasks.component';
 import { EditTaskComponent } from './edit-task/edit-task.component';
 import { BacklogsListComponent } from './backlogs-list/backlogs-list.component';
-import { CreateBacklogComponent } from './create-backlog/create-backlog.component';
+import { BacklogsCreateComponent } from './backlogs-create/backlogs-create.component';
 
 
 const routes: Routes = [
@@ -27,7 +27,7 @@ const routes: Routes = [
     {path:'create-task', component:CreateTasksComponent},
     {path:'edit-task', component:EditTaskComponent},
     {path:'backlogsList', component:BacklogsListComponent},
-    {path:'createBacklog', component:CreateBacklogComponent},
+    {path:'createBacklog', component:BacklogsCreateComponent},
     {path:"", component:ProjectsProgramsTableComponent},
     {path:'**', redirectTo:'/listOfProjects', pathMatch: 'full'}
     
