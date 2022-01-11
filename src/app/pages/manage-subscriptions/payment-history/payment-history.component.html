@@ -1,0 +1,97 @@
+<br>
+<div style=" border: 1px solid #d1c8c8;">
+<h4><b style="margin-left: 20px;">Payment History</b></h4>
+<div class="prgmgrid-body" style="padding: 20px;">
+    <table mat-table #sort104="matSort" [dataSource]="dataSource8" matSort class="projecttable table" id="autotable">
+
+        <ng-container matColumnDef="invoiceNumber">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Invoice Number</th>
+          <td mat-cell   *matCellDef="let invoice">
+            <span *ngIf="invoice.invoiceNumber!=null" [matTooltip]="invoice.invoiceNumber|titlecase">{{invoice.invoiceNumber}}</span>
+            <span *ngIf="invoice.invoiceNumber==null">---</span>
+          </td>
+
+      </ng-container>
+
+      <ng-container matColumnDef="subscriptionId">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Subscription ID</th>
+        <td mat-cell   *matCellDef="let invoice">
+          <span *ngIf="invoice.subscriptionId!=null" [matTooltip]="invoice.subscriptionId">{{invoice.subscriptionId}}</span>
+          <span *ngIf="invoice.subscriptionId==null">---</span>
+        </td>
+
+    </ng-container>
+    <ng-container matColumnDef="amount">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Amount</th>
+      <td mat-cell   *matCellDef="let invoice">
+        <span *ngIf="invoice.amount!=null" [matTooltip]="invoice.amount">${{invoice.amount }}.00</span>
+        <span *ngIf="invoice.amount==null">---</span>
+      </td>
+
+  </ng-container>
+  <ng-container matColumnDef="createDate">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Paid On</th>
+    <td mat-cell   *matCellDef="let invoice">
+     
+      <span *ngIf="invoice.createDate!=null" [matTooltip]="invoice.createDate">{{invoice.createDate| date:'MM/dd/yyyy'}}</span>
+      <span *ngIf="invoice.createDate==null">---</span>
+    </td>
+
+</ng-container>
+
+<ng-container matColumnDef="nextdue">
+  <th mat-header-cell *matHeaderCellDef mat-sort-header>Next Due</th>
+  <td mat-cell   *matCellDef="let invoice">
+   
+    <span *ngIf="invoice.createDate!=null" [matTooltip]="invoice.createDate">{{getinvoiceDate(invoice.createDate) |date:'MM/dd/yyyy'}}</span>
+    <span *ngIf="invoice.createDate==null">---</span>
+  </td>
+
+</ng-container>
+
+  
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+      <td mat-cell *matCellDef="let invoice">
+          <span *ngIf="invoice.status!=null">{{invoice.status|titlecase}}</span>
+          <span *ngIf="invoice.status==null || invoice.status==undefined || invoice.status=='' ">---</span>
+         
+      </td>
+  </ng-container>
+
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let invoice" class="action-link tablacs"> 
+          <div class="newinntalx">
+            <!-- <span  (click) = "invoicedownload(invoice)"><img class="download" src="../../../../assets/images/download_icon.svg"></span> -->
+            <a  (click) = "invoicedownload(invoice)"   matTooltip="Download Invoice" >
+              <img src="../../../../assets/images/download_icon.svg">
+            </a> 
+        </div>
+        </td>
+      </ng-container>
+
+        <ng-container matColumnDef="Loading">
+          <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
+              Loading
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="noData">
+            <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
+                No Records Found 
+                <!-- <div *ngIf="program_detials.invoice.length==0" class="text-center">
+                  <img  src="../../../../assets/images/RPA/No-Items.svg" class="no-item-img">
+                  <h3 class="text-center">No Items to display</h3>
+              </div> -->
+            </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns8; sticky: true"></tr>
+        <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns8;"></tr>
+        <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['Loading']" [ngClass]="{'hide':dataSource8!=null}"></tr>
+        <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(dataSource8!=null && dataSource8.data.length==0 && dataSource8.errorMessage=='Customer not found')}"></tr>
+    </table>
+    <mat-paginator class="newpaginationdiv" #paginator104 [pageSize]="3" [pageSizeOptions]="[3, 5, 10, 25, 50]" [showFirstLastButtons]="true">
+    </mat-paginator>
+  
+  </div>
+</div>

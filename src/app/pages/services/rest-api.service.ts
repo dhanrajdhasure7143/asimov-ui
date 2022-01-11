@@ -339,6 +339,14 @@ export class RestApiService{
       return this.http.get('/rpa-service/load-process-info/processid='+id);
     }
   }
+
+
+
+
+  saveTasksOrder(orderData)
+  {
+    return this.http.post("/rpa-service/save-tasks-order",orderData);
+  }
   getAllOrcRpaWorkSpaces()
   {
       return this.http.get('/rpa-service/process-name');
@@ -619,7 +627,7 @@ export class RestApiService{
         "sourceType":""
         }
     }
-    console.log(data);
+ 
     return this.http.post("/rpa-service/assign-bot",data);
   }
 
@@ -793,7 +801,7 @@ save_blueprism_config(data)
 
     runsmoketestBluePrism(data){
       let value = data;
-      console.log(value);
+   
       return this.http.post("/rpa-service/management/blueprism-smoketest?botName="+value,"", {responseType: "text" });
     }
 	
@@ -1217,9 +1225,40 @@ tasksListInProcess(id):Observable<any>{
 }
 
 addtaskInProcess(id):Observable<any>{
-  return this.http.get('/rpa-service/add-task/'+id)
+  return this.http.post('/rpa-service/add-task',id)
 }
 getProgrmaDetailsById(programid){
   return this.http.get('/platform-service/project/getProgramDetailsById?programId='+programid)
 }
+
+  getProductPlans(productId, tenantID): Observable<any[]> {
+    return this.http.get<any[]>('/subscriptionservice/v1/products/' + productId + '/plans', { responseType: 'json' });
+  }
+  listofsubscriptions(): Observable<any> {
+    return this.http.get<any>('/subscriptionservice/v1/subscriptions');
+  }
+  cancelSubscription(data): Observable<any> {
+    return this.http.post<any>('/subscriptionservice/v1/subscriptions/' + data.id + '/cancel?isImmediateCancel=' + true, { responseType: 'json' });
+  }
+  invoicedownload(invoiceId): Observable<any> {
+    return this.http.get<any>('/subscriptionservice/v1/invoices/' + invoiceId + '/pdf', { responseType: 'blob' as 'json' })
+  }
+  listofinvoices(): Observable<any> {
+    return this.http.get<any>('/subscriptionservice/v1/invoices')
+  }
+  listofPaymentModes():Observable<any>{
+    return this.http.get<any>('/subscriptionservice/v1/paymentmethods')
+  }
+
+  getSubscriptionPaymentToken(cardData,){
+    return this.http.post('/subscriptionservice/v1/paymentmethods/cardToken?tab=subs',cardData,{ responseType:'json'})
+  }
+
+  subscribePlan(token,planData){
+    return this.http.post<any>('/subscriptionservice/v1/orders?paymentToken='+token,planData,{responseType:'json'})
+  }
+
+  expiryInfo():Observable<any>{
+     return this.http.get<any>('/subscriptionservice/v1/freetrials/planExpiryInfo')
+  }
 }

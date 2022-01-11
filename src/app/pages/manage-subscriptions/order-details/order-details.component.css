@@ -1,0 +1,36 @@
+
+
+.modelprbody, .modelprfooter {
+    background-color: #FFF !important;
+  }
+  .modelprhead {
+    border: none;
+  }
+  .modal-header.modelprhead h4 {
+    font-size: 18px;    
+    font-weight: normal;
+    /* padding: 0px 0px 0px 15px !important; */
+  }
+  .modal-header.modelprhead {
+    padding: 15px 25px 10px 25px!important;
+    background-color: #f0f8ff!important;
+  }
+  
+  .modal-body.modelprbody {
+    height: calc(100% - 106px);
+    overflow: auto;
+  }
+  
+  .modal-footer.modelprfooter {
+    padding: 10px 0px;
+    border: none !important;
+  }
+  .icon-disabled{
+    cursor: no-drop !important;
+  }
+  .subsc
+{
+    background: none !important;
+    border: none !important;
+    cursor: pointer;
+}

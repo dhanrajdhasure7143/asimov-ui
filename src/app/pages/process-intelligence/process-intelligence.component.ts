@@ -34,6 +34,7 @@ insights_header:boolean=false;
 isTimefeed:boolean=true;
 btn_obj:any;
 userRole: any;
+freetrail: string;
   constructor(private changeDetectorRef:ChangeDetectorRef,
     private router:Router,
     private route: ActivatedRoute,
@@ -47,6 +48,7 @@ userRole: any;
     $('#pi').addClass("active"); 
     $('#expand_menu').addClass("active");  
     this.userRole = localStorage.getItem("userRole")
+    this.freetrail=localStorage.getItem("freetrail")
   }
 
  ngAfterViewChecked(){
@@ -209,6 +211,11 @@ addWorkingHours(){
 
    ngOnDestroy(){
     // localStorage.setItem("pi_search_category",'allcategories')
+    let element=document.getElementById("tipsy_div");
+    if(element){
+      element.style.display = "none";
+      element.style.visibility = "hidden";
+    }
    }
 
 }

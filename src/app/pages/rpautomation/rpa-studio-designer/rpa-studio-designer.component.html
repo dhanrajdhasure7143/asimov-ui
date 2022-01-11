@@ -49,7 +49,7 @@
                                     <input type="checkbox" [checked]="env.checked==true" (change)=" current_instance.checkuncheckenv(env.environmentId)"> &nbsp; {{env.environmentName}}
                                 </li>
                                 <li role="menuitem" class="clickable">
-                                    <span class="clickable" (click)=" current_instance.create_env();">
+                                    <span class="clickable" (click)="dropdown.isOpen=false; current_instance.create_env();">
                           <img src="../../../../assets/images/RPA/icon_latest/pluse-blue.svg" class="testplus"/>
                           New
                         
@@ -83,10 +83,19 @@
                     </button>
                             <!-- <i class="ri-stop-circle-line"></i> -->
                         </div>
-                        <!-- <div class="action-item hovericon" *ngIf="current_instance != undefined" placement="bottom" tooltip="Predefined Bots">
-                    <img src="../../../../assets/images/RPA/icon_latest/Predefined Bots.svg" class="testplus1">
-                     
-                  </div> -->
+                        <div class="action-item hovericon" *ngIf="current_instance != undefined" dropdown id="predefinedBotsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <button class="dropdown-action-item clickable dropdown-toggle tsttooltipbtn" id="predefinedBots" dropdownToggle  type="button" aria-controls="predefinedBotDropdown">
+                              <img src="../../../../assets/images/RPA/icon_latest/Predefined Bots.svg" class="testplus1">
+                              &nbsp;<span class="caret"></span>
+                              <span class="testtooltip">Predefined Bots</span>
+                            </button>
+                            <ul id="predefinedBotDropdown" *dropdownMenu class="dropdown-menu action-menu-dropdown" role="menu" aria-labelledby="button-basic">
+                                <li role="menuitem" class="clickable" *ngFor="let predefinedBot of  current_instance.predefinedbotsData" style="white-space: nowrap;">
+                                    <button (click)="current_instance.loadpredefinedbot(predefinedBot.botId)"> {{predefinedBot.botName}}</button>
+                                </li>
+                            </ul>
+
+                        </div>
                         <div class="action-item hovericon" *ngIf="current_instance != undefined">
                             <button class="tsttooltipbtn" [disabled]="current_instance.savebotrespose==undefined" (click)=" current_instance.viewlogdata( current_instance.logspopup,'open')">
                     <img src="../../../../assets/images/RPA/icon_latest/View Logs.svg" class="testplus1">
@@ -95,7 +104,7 @@
                     </button>
                         </div>
                         <div class="action-item hovericon" *ngIf="current_instance != undefined">
-                            <button class="tsttooltipbtn" [disabled]="current_instance.savebotrespose==undefined" (click)=" current_instance.openschedule()">
+                            <button class="tsttooltipbtn" [disabled]="current_instance.savebotrespose==undefined || freetrail=='true'" (click)=" current_instance.openschedule()">
                     <img src="../../../../assets/images/RPA/icon_latest/schedule.svg" class="testplus1">
                       <!-- <i class="ri-history-line"></i> -->
                       <span class="testtooltip">Scheduler</span>
@@ -125,7 +134,7 @@
                   </div> -->
 
                         <div class="action-item hovericon" *ngIf="current_instance != undefined ">
-                            <button class="tsttooltipbtn" [disabled]="current_instance.savebotrespose == undefined || isButtonVisible==true" (click)=" current_instance.delete()">
+                            <button class="tsttooltipbtn" [disabled]="current_instance.savebotrespose == undefined || isButtonVisible==true || isProcessAnalyst == true" (click)=" current_instance.delete()">
                             <img src="../../../../assets/images/RPA/icon_latest/delete.svg" class="testplus1">
                             <span class="testtooltip">Delete</span>
                           </button>
@@ -136,12 +145,12 @@
                             <span class="testtooltip">Reset Bot</span>
                           </button>
                         </div>
-                        <div class="action-item hovericon" *ngIf="current_instance != undefined">
+                        <!-- <div class="action-item hovericon" *ngIf="current_instance != undefined">
                             <button class="tsttooltipbtn" [disabled]="current_instance.savebotrespose==undefined" (click)=" current_instance.exportbot(current_instance.botState)">
                             <img src="../../../../assets/images/RPA/icon_latest/export.svg" class="testplus1"> 
                             <span class="testtooltip">Export</span>
                           </button>
-                        </div>
+                        </div> -->
                     </div>
 
 
@@ -194,10 +203,10 @@
             <img src="../../../../assets/images/RPA/icon_latest/add.svg" class="add-new"/>
           </span>
                         <mat-menu #menu="matMenu">
-                            <button mat-menu-item (click)="rpa_studio.onCreate(0)">
+                            <button mat-menu-item (click)="rpa_studio.onCreate(0)" [disabled]="freetrail">
                 <img src="../../../../assets/images/RPA/icon_latest/add-fill.svg" class="menu-icon"/> &nbsp;Create New</button>
                             <hr>
-                            <button mat-menu-item (click)="rpa_studio.onLoad()">
+                            <button mat-menu-item (click)="rpa_studio.onLoad()" [disabled]="freetrail">
                 <img src="../../../../assets/images/RPA/icon_latest/load-bot-fill.svg" class="menu-icon"/> &nbsp;Load</button>
                         </mat-menu>
 

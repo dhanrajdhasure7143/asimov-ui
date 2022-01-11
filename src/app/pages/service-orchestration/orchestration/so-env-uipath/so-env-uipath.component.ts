@@ -23,7 +23,7 @@ import {ActivatedRoute} from "@angular/router";
 export class SoEnvUipathComponent implements OnInit {
 
   
-  displayedColumns: string[] = ["check","accountName","category","tenantName","clientId","userKey","active","createdTimeStamp","createdBy"];
+  displayedColumns: string[] = ["check","accountName","categoryName","tenantName","clientId","userKey","active","createdTimeStamp","createdBy"];
   dataSource1:MatTableDataSource<any>;
   public isDataSource: boolean;
   @ViewChild("paginator1",{static:false}) paginator1: MatPaginator;
@@ -37,6 +37,7 @@ export class SoEnvUipathComponent implements OnInit {
   public param:any=0;
   public processId : any;
   public checkeddisabled:boolean =false;
+  public categoryLengthCheck:Boolean=false;
   public createpopup=document.getElementById('createevironment');
   public button:string;
   //public updatepopup=document.getElementById('env_updatepopup');
@@ -118,13 +119,13 @@ getUiPath()
       this.isTableHasData = true;
      }
    this.Uipath_configs= this.Uipath_configs.value;
-   console.log("this.Uipath_configs",this.Uipath_configs);
+  
    this.Uipath_configs=this.Uipath_configs.map(item=>{
      item["categoryName"]=this.categoryList.find(item2=>item2.categoryId==item.categoryId).categoryName;
      return item;
    })
    this.dataSource1= new MatTableDataSource(this.Uipath_configs);
-   console.log("this.dataSource1",this.dataSource1);
+  
    this.isDataSource = true;
    this.dataSource1.sort=this.sort1;
    this.dataSource1.paginator=this.paginator1;
@@ -134,13 +135,20 @@ getUiPath()
 }
 
 createUiPath(){
-  this.UipathForm.get("categoryId").setValue(((this.categoryList.lenght==1)?this.categoryList[0].categoryId:""))
+  
+  this.UipathForm.reset();
   document.getElementById("createUipath").style.display = "block";
   document.getElementById("updateUipath").style.display = "none";
+  if(this.categoryList.length==1)
+    this.UipathForm.get("categoryId").setValue(this.categoryList[0].categoryId)
+  else
+    this.UipathForm.get("categoryId").setValue("")
+
+  
 }
 
 savedata(){
-  console.log(this.UipathForm);
+ 
 }
 
 close(){
@@ -161,7 +169,7 @@ UpdateUipath(){
 
 checkEnableDisableBtn(id, event)
 {
-  console.log(event.target.checked);
+  
   this.Uipath_configs.find(data=>data.sourceAccId==id).checked=event.target.checked;
   if(this.Uipath_configs.filter(data=>data.checked==true).length==this.Uipath_configs.length)
   {
@@ -191,7 +199,7 @@ checktoupdate()
 
 checktodelete()
 {
-  console.log(this.Uipath_configs.filter(product => product.checked).map(p => p.userKey));
+ 
   const selectedBluePrism = this.Uipath_configs.filter(product => product.checked).map(p => p.userKey);
   if(selectedBluePrism.length>0)
   {
@@ -207,9 +215,9 @@ removeallchecks()
 {
   for(let i=0;i<this.Uipath_configs.length;i++)
   {
-    console.log(this.Uipath_configs[i]);
+  
     this.Uipath_configs[i].checked= false;
-    console.log(this.Uipath_configs[i]);
+    
   }
   this.checkflag=false;
 }
@@ -247,23 +255,33 @@ updatedata()
   document.getElementById("createUipath").style.display='none';
   document.getElementById('updateUipath').style.display='block';
   let data:any;
-  console.log("this.blueprism_configs.value",this.Uipath_configs);
+  
   for(data of this.Uipath_configs)
   {
     if(data.sourceAccId==this.updateid)
     {
-      (data.active==true)?data.active=1:data.active=0;
+      if(data.active==true)
+        data.active=1
+      else
+        data.active=0;
       this.UpdateUipathForm.get("accountName").setValue(data["accountName"]);
       this.UpdateUipathForm.get("tenantName").setValue(data["tenantName"]);
       this.UpdateUipathForm.get("categoryId").setValue(data["categoryId"]);
       this.UpdateUipathForm.get("userKey").setValue(data["userKey"]);
       this.UpdateUipathForm.get("clientId").setValue(data["clientId"]);
       this.UpdateUipathForm.get("active").setValue(data["active"]);
+      if(this.categoryList.length==1)
+      {
+        this.UpdateUipathForm.get("categoryId").setValue(this.categoryList[0].categoryId);
+      }else
+      {
+        this.UpdateUipathForm.get("categoryId").setValue(data["categoryId"]);
+      }
       break;
     }
   }
   this.updatesubmitted=false;
-  console.log(this.UpdateUipathForm.value);
+  
 }
 
 Update_UiPath(){
@@ -271,7 +289,7 @@ Update_UiPath(){
     let updatedData=this.UpdateUipathForm.value;
     updatedData["sourceAccId"]=this.updateid,
     updatedData["sourceType"]="UiPath"
-    console.log(updatedData)
+   
     this.api.update_uipath_env(updatedData).subscribe(res=>{
       this.spinner.hide();
       let response:any=res;
@@ -309,7 +327,18 @@ getCategoryList()
   this.api.getCategoriesList().subscribe(data=>{
     let catResponse : any;
     catResponse=data
-    this.categoryList=catResponse.data;
+    if(catResponse.errorMessage==undefined)
+    {
+      this.categoryList=catResponse.data;
+      if(this.categoryList.length==1)
+      {
+        this.categoryLengthCheck=true;
+      }
+      else
+      {
+        this.categoryLengthCheck=false;
+      }
+    }
     this.getUiPath();
   });
 }

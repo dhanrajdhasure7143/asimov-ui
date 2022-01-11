@@ -18,7 +18,7 @@ import { NgxSpinnerService } from "ngx-spinner";
   styleUrls: ['./rpa-environments.component.css']
 })
   export class RpaenvironmentsComponent implements  OnInit{
-    displayedColumns: string[] = ["check","environmentName","environmentType","agentPath","category","hostAddress","portNumber","username","password","activeStatus","deployStatus","createdTimeStamp","createdBy"]; //,"connectionType"
+    displayedColumns: string[] = ["check","environmentName","environmentType","agentPath","categoryName","hostAddress","portNumber","username","password","activeStatus","deployStatus","createdTimeStamp","createdBy"]; //,"connectionType"
     dataSource1:MatTableDataSource<any>;
     public isDataSource: boolean;  
     @ViewChild("paginator1",{static:false}) paginator1: MatPaginator;
@@ -394,7 +394,7 @@ import { NgxSpinnerService } from "ngx-spinner";
           this.updateForm.get("activeStatus").setValue(false);
         }
         this.updateenvdata=data;
-        console.log(this.updateenvdata);
+        
         this.updateForm.get("environmentName").setValue(this.updateenvdata["environmentName"]);
         this.updateForm.get("environmentType").setValue(this.updateenvdata["environmentType"]);
         this.updateForm.get("agentPath").setValue(this.updateenvdata["agentPath"]);
@@ -519,7 +519,7 @@ import { NgxSpinnerService } from "ngx-spinner";
       this.spinner.show();
       this.api.deployenvironment(selectedEnvironments).subscribe( res =>{ 
         let data:any=res
-        console.log(data)
+     
         if(data[0].errorMessage==undefined){
           Swal.fire("Success",data[0].status,"success")
 

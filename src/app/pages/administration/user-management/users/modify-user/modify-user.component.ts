@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
 import Swal from 'sweetalert2';
 
@@ -10,76 +11,85 @@ import Swal from 'sweetalert2';
   styleUrls: ['./modify-user.component.css']
 })
 export class ModifyUserComponent implements OnInit {
-
-  editUserForm:FormGroup;
-  userId: any;
+  userData: any;
   categories: any;
   allRoles: any[];
   roles =[];
   roleObj: any;
   roleIds:any[]=[];
+  isdprtDisabled:boolean=false;
+  people=[{name:"test",id:"01"}];
+  isdisabled:boolean=true;
+  departments = [];
+  email:any;
+  role:any;
+  depts:any=[];
+  errShow:boolean=false;
   constructor(private formBuilder: FormBuilder,private api:RestApiService,
-    private router:Router, private route:ActivatedRoute) { }
+    private router:Router, private route:ActivatedRoute,private spinner:NgxSpinnerService) { 
+      this.route.queryParams.subscribe(data=>{​​​​​​
+        this.userData=data;
+      })
+    }
 
   ngOnInit(): void {
-    this.editUserForm=this.formBuilder.group({
-      email: ["", Validators.compose([Validators.required])],
-      departments: ["", Validators.compose([Validators.required])],
-      role: [[], Validators.compose([Validators.required])]
-      })
-    this.getAllCategories();
-    this.getRoles();
- 
+    
+        this.getAllCategories();
+        this.getRoles();
+    
 }
 getAllCategories(){
+  this.spinner.show();
   this.api.getDepartmentsList().subscribe(resp => {
     this.categories = resp.data; 
+    this.spinner.hide();
   })
  }
  getRoles(){
+  this.spinner.show();
    var roles1:any=[];
-   var depts:any=[];
+   this.depts=[];
   this.api.getAllRoles(2).subscribe(resp => {
     this.allRoles = resp;
-    console.log("allroles======",this.allRoles)
-    
-    this.route.queryParams.subscribe(data=>{​​​​​​
-      console.log("data=",data)
-      this.userId=data.id;
-      // this.roles=["3"];
-      data.role.forEach(element => {
         this.allRoles.forEach(x => {
-          if(x.displayName === element){
+          if(x.displayName === this.userData.role){
             roles1.push(x.id)
           }
-          
         });
-        // this.roleIds.push(this.roleObj.id);
-        });
-      data.dept.forEach(element => {
+      this.userData.dept.forEach(element => {
         this.categories.forEach(x => {
           if(x.categoryName === element){
-             depts.push(x.categoryId)
+             this.depts.push(x.categoryId)
           }
           
         });
         
       });
-      this.editUserForm.get("email").setValue(this.userId);
-      this.editUserForm.get("role").setValue(roles1);
-      this.editUserForm.get("departments").setValue(depts);
+      if(roles1[0]== '8'){
+        this.isdprtDisabled=true;
+      }
+      this.email=this.userData.id;
+      this.departments=this.depts;
+      this.role=roles1[0];
+      this.spinner.hide();
   })
- })
+//  })
 }
 
 updateUser(){
- 
-  let body={
-      "userId":this.userId,
-      "department":this.editUserForm.get("departments").value.toString(),
-      "rolesList": this.editUserForm.get("role").value
+ let roles_list = [];
+ this.errShow=false;
+ roles_list.push(this.role);
+  if(this.departments.length==0){
+    this.errShow=true;
+    return;
   }
-  console.log("body=====",body)
+  let body={
+      "userId":this.email,
+      "department":this.departments.toString(),
+      "rolesList": roles_list
+  }
+
   this.api.updateUserRoleDepartment(body).subscribe(resp=> {
     if(resp.message === "Successfuly updated role of an user for particular application"){
       Swal.fire({
@@ -101,4 +111,19 @@ updateUser(){
 
   })
 }
+
+onchangeRole(value){
+  this.departments=[];
+  if(value== '8'){
+    this.categories.forEach(element => {
+      this.departments.push(element.categoryId)
+    });
+    this.isdprtDisabled=true;
+  }else{
+    this.departments=[];
+   // this.departments=this.depts;
+    this.isdprtDisabled=false;
+  }
+}
+
 }

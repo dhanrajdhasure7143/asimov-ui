@@ -40,6 +40,9 @@ import { MatProgressBarModule } from '@angular/material';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { JwtModule } from '@auth0/angular-jwt';
 import { ProcessAnalystComponent } from './dashboards/process-analyst/process-analyst.component';
+import { MatTableModule } from '@angular/material/table';  
+import {MatSortModule} from '@angular/material/sort';
+import {MatPaginatorModule} from '@angular/material/paginator';
 @NgModule({
   declarations: [
     PagesComponent,
@@ -76,7 +79,10 @@ import { ProcessAnalystComponent } from './dashboards/process-analyst/process-an
       }
     }),
     NgbModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatTableModule,
+    MatSortModule,
+    MatPaginatorModule
   ],
   providers: [SharebpmndiagramService, PagesHints,sohints
   //  LoaderService,

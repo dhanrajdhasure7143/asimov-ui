@@ -109,13 +109,69 @@ mat-drawer {
 }
 
 .arch-table-div {
-    height: 307px;
+    /* height: 307px; */
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    height: 55vh;
+    overflow: hidden auto;
 }
 
 .arch-table-div1 {
-    height: 200px;
+    /* height: 200px; */
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    height: 32vh;
+    overflow: hidden auto;
 }
 
 .arch-table-div2 {
-    height: 310px;
+    /* height: 310px; */
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+    height: 55vh;
+    overflow: hidden auto;
+}
+.no-item{
+    text-align: center;
+    margin-top: 10px;
+    font-size: 13px;
+    color: #6c757d;
+}
+/* .projecttable{
+height: 300px !important;
+overflow: auto !important;
+} */
+::ng-deep .mat-paginator-range-label{
+    display: none !important;
+}
+.pipaginationdiv1{
+    position: absolute;
+    /* bottom: 0px; */
+    bottom: 22px;
+    width: 93%;
+}
+.paginationdiv2{
+    position: absolute;
+    bottom: 23px;
+    width: 95%;
+}
+.paginationdiv3{
+    position: absolute;
+    bottom: 23px;
+    width: 90%;
+}
+
+#prjchartdiv {
+    width: 100%;
+    height: 270px;
+}
+#legenddiv {
+    width: 100%;
+    height: 80px;
+    border: 1px dotted #e1e7ec;
+    border-radius: 4px;
+    /* margin: 1em 0; */
+}
+#legenddiv {
+    max-height: 100px;
 }

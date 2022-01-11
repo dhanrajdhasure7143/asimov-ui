@@ -1,12 +1,12 @@
 <div id="" class="container-fluid tests">
-    <div class="so-sub-tab-content">
+    <!-- <div class="so-sub-tab-content"> -->
         <div class="row">
             <div class="col-md-3 form-group pl-0 example-full-width sosearchfield" id="bmsearch">
                 <input class="form-control" placeholder="Search" autocomplete="off" [(ngModel)]="search" (keyup)="applyFilter2($event.target.value)">
                 <img src="../../../../assets/images/search.svg" class="testplus">
             </div>
         </div>
-        <div class="projecttable"  style="width:100%;height:52vh;overflow: scroll;">
+        <div class="schedule-table-container">
         <table class="table projecttable" mat-table [dataSource]="processschedule" #sort4="matSort" matSort>
             <ng-container matColumnDef="processName">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header  style="width:200px;">Process Name </th>
@@ -17,7 +17,7 @@
                 </td>
             </ng-container>
             <ng-container matColumnDef="category">
-                <th mat-header-cell *matHeaderCellDef>Category</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
                 <td mat-cell *matCellDef="let element">
                     <span *ngIf="element.category != null">{{element.category}}</span>
                     <span *ngIf="element.category == null">-</span>
@@ -25,7 +25,7 @@
             </ng-container>
 
             <ng-container matColumnDef="environment">
-                <th mat-header-cell *matHeaderCellDef>Environment</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Environment</th>
                 <td mat-cell *matCellDef="let element">
                     <span *ngIf="element.environmentName != null">{{element.environmentName}}</span>
                     <span *ngIf="element.environmentName == null">-</span>
@@ -33,7 +33,7 @@
             </ng-container>
 
              <ng-container matColumnDef="lastRunTS">
-                <th mat-header-cell *matHeaderCellDef>Previous Run</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Previous Run</th>
                 <td mat-cell *matCellDef="let element">
                     <span *ngIf="element.lastRunTS != null">{{element.lastRunTS |date: 'MMM d, y, H:mm:ss' }}</span>
                     <span *ngIf="element.lastRunTS == null">-</span>
@@ -41,7 +41,7 @@
             </ng-container>
 
             <ng-container matColumnDef="nextRunTS">
-                <th mat-header-cell *matHeaderCellDef>Next Run</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Next Run</th>
                 <td mat-cell *matCellDef="let element">
                     <span *ngIf="element.nextRunTS != null">{{element.nextRunTS |date: 'MMM d, y, H:mm:ss' }}</span>
                     <span *ngIf="element.nextRunTS == null">-</span>
@@ -49,14 +49,14 @@
             </ng-container>
 
             <ng-container matColumnDef="scheduleInterval">
-                <th mat-header-cell *matHeaderCellDef>Schedule Interval</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Schedule Interval</th>
                 <td mat-cell *matCellDef="let element">
                     <span *ngIf="element.scheduleInterval != null">{{element.scheduleInterval}}</span>
                     <span *ngIf="element.scheduleInterval == null">-</span>
                 </td>
             </ng-container>
             <ng-container matColumnDef="status">
-                <th mat-header-cell *matHeaderCellDef>Status</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
                 <td class="" mat-cell *matCellDef="let element">
                     <span *ngIf="element.status=='Running'" class="text-primary" >
                         <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus">{{element.status}}
@@ -93,7 +93,7 @@
             </ng-container>
 
             <ng-container matColumnDef="timezone">
-                <th mat-header-cell *matHeaderCellDef>Time Zone</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Time Zone</th>
                 <td mat-cell *matCellDef="let element">
                     <span *ngIf="element.timezone != null">{{element.timezone}}</span>
                     <span *ngIf="element.timezone == null">-</span>
@@ -109,6 +109,9 @@
             <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': tabledata}"></tr>
        </table>
        </div>
-       <mat-paginator class="newpaginationdiv" #paginator4 [pageSize]="10" [pageSizeOptions]="[5, 10,25,50]" [showFirstLastButtons]="true"></mat-paginator>
-    </div>
+        <div class="newpaginationdiv">
+            <mat-paginator class="newpaginationdiv" #paginator4 [pageSize]="10" [pageSizeOptions]="[5, 10,25,50]" 
+                [showFirstLastButtons]="true"></mat-paginator>
+        </div>
+    <!-- </div> -->
     </div>

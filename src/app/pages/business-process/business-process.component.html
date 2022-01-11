@@ -33,7 +33,7 @@
 
                   </button>
                   <span *ngIf="rejectedOrApproved!='PENDING'">
-                    <span *ngIf="!(userRole=='User' && rejectedOrApproved=='APPROVED')">
+                    <span *ngIf="!(freetrail=='true' && rejectedOrApproved=='APPROVED')">
                     <button *ngIf='!iscreate_notation' class="editprimary tsttooltipbtn" [disabled]="isEditMode " (click)="editNotation()">
                       <img class="defaul-img" src="../../../assets/images/BPMS/Edit-blue.svg">
                       <span class="testtooltip">Edit</span>
@@ -89,22 +89,19 @@
               <button class='icon-disabled' *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && isSave_disabled && !iscreate_notation" >
                 <img src="../../../assets/images/BPMS/Savedisabled.svg" alt="" class="defaultimg">
               </button>
-              <button class="clr-hvr tsttooltipbtn" (click)="orchestartion()" *ngIf="rejectedOrApproved=='APPROVED'">
-                <img src="../../../assets/images/BPMS/orchestration.svg">
-                <span class="testtooltip">Orchestration</span>
-              </button>
+              
               <!-- <button class="clr-hvr tsttooltipbtn" (click)="saveandSubmitApproval()" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && !isSave_disabled && !iscreate_notation">
                 <img src="../../../assets/images/BPMS/submit-for-approval.svg">
                 <span class="testtooltip">Save & Submit for approval</span>
               </button> -->
-              <button class="clr-hvr tsttooltipbtn" [outsideClick]="true" *ngIf="iscreate_notation" (click)="onsaveOverlayOpen()" [popover]="popTemplate" placement="bottom">
+              <button class="clr-hvr tsttooltipbtn" [outsideClick]="true" *ngIf="iscreate_notation && (freetrail != 'true')" (click)="onsaveOverlayOpen()" [popover]="popTemplate" placement="bottom">
                 <img src="../../../assets/images/BPMS/submit-for-approval.svg">
                 <span class="testtooltip">Save & Submit for approval</span>
               </button>
               <!-- <button mat-button [matMenuTriggerFor]="menu" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && !isSave_disabled && !iscreate_notation" class="clr-hvr tsttooltipbtn"><img alt=""
                 src="../../../assets/images/BPMS/submit-for-approval.svg"><span class="testtooltip">Save & Submit for
                 approval</span></button> -->
-                <button type="button" [outsideClick]="true" (click)="onsaveOverlayOpen()" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && !isSave_disabled && !iscreate_notation" class="clr-hvr tsttooltipbtn"
+                <button type="button" [outsideClick]="true" (click)="onsaveOverlayOpen()" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && !isSave_disabled && !iscreate_notation && (freetrail != 'true')" class="clr-hvr tsttooltipbtn"
         [popover]="popTemplate" placement="bottom">
         <img alt="" src="../../../assets/images/BPMS/submit-for-approval.svg">
         <span class="testtooltip">Save & Submit for approval</span>
@@ -120,17 +117,21 @@
               </div>
               <button class="btn btn-primary" (click)="onchange()">Save & Submit for Approval</button>
             </mat-menu> -->
-              <button class="icon-disabled" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && isSave_disabled && !iscreate_notation">
+              <button class="icon-disabled" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && isSave_disabled && !iscreate_notation && (freetrail != 'true')">
                 <img src="../../../assets/images/BPMS/submit-for-approvaldisabled.svg">
               </button>
-              <!-- <button class="clr-hvr tsttooltipbtn" *ngIf="rejectedOrApproved == 'APPROVED'"  (click)="deployNotation()">
+              <button class="clr-hvr tsttooltipbtn" (click)="orchestartion()" *ngIf="rejectedOrApproved=='APPROVED' && freetrail!='true'">
+                <img src="../../../assets/images/BPMS/orchestration.svg">
+                <span class="testtooltip">Orchestration</span>
+              </button>
+              <button class="clr-hvr tsttooltipbtn" *ngIf="rejectedOrApproved == 'APPROVED'"  (click)="deployNotation()">
                 <img src="../../../assets/images/BPMS/Deploy.svg">
                 <span class="testtooltip">Deploy Notation</span>
               </button>
               <button class="clr-hvr tsttooltipbtn" *ngIf="isStartProcessBtn" (click)="startProcess()"  >
                 <img src="../../../assets/images/BPMS/Play.svg">
                 <span class="testtooltip">Start Process</span>
-              </button> -->
+              </button>
               <button class="tsttooltipbtn" (click)="showConformance()" *ngIf="isShowConformance && !reSize && !hasConformance" [disabled]="disableShowConformance||rejectedOrApproved=='PENDING'">
                   <img src="../../../assets/images/BPMS/show-differences.svg">
                   <span class="testtooltip">Show Conformance</span>
@@ -159,10 +160,10 @@
                 <img class="testplus hover-img" src="../../../assets/images/BPMS/White-Workflow.svg">
                 Approvals
               </button>
-              <!-- <button (click)="gotoBPMNPlatform()" class="btn btn-primary">
+              <button *ngIf="freetrail != 'true'" (click)="gotoBPMNPlatform()" class="btn btn-primary">
                 <img class="testplus" src="../../../assets/images/BPMS/White-eye.svg">
                 View Cockpit
-              </button>  -->
+              </button> 
             </span>
           </div>
       </div>    
@@ -171,18 +172,32 @@
 </div>
 <ng-template #popTemplate>
   <div class="custom-content Apr-cnt">
+    <div class="col-md-12 p-0 form-group" *ngIf="isShowConformance">
+      <label class="label-control">Process Owner</label>
+      <select name="powner" #powner="ngModel" [(ngModel)]="process_owner" required class="form-control">
+          <option value="" disabled hidden>Select Process Owner</option>
+          <option value="null" disabled hidden>Select Process Owner</option>
+          <option value="undefined" disabled hidden>Select Process Owner</option>
+          <option value="" disabled hidden>Select Process Owner</option>
+          <option *ngFor="let each_approver of processowner_list;let i=index" [value]=each_approver.userId>
+              {{each_approver.firstName|titlecase}}  {{each_approver.lastName?each_approver.lastName:''}}</option>
+      </select>
+      <!-- <span *ngIf="((powner.invalid && processOwner.submitted) || (powner.errors && powner.touched) )" 
+      class='errspan required'> Please Select Process Owner </span> -->
+  </div>
+  
     <div class="form-group">
       <label for="" class="label-control">Approval</label>
       <select [(ngModel)]="selected_approver" [disabled]="rejectedOrApproved=='PENDING'" class="form-control">
         <option value="undefined" disabled hidden>Select Approver</option>
         <option value="null" disabled hidden>Select Approver</option>
         <option *ngFor="let each_approver of approver_list;let i=index" [value]=i>
-            {{each_approver.firstName+" "+each_approver.lastName}}</option>
+            {{(each_approver.firstName| titlecase)+" "+(each_approver.lastName==undefined?"":each_approver.lastName)}}</option>
     </select>
     </div>
     <div class="custom-footer-content">
       <!-- <button class="btn btn-default">Cancel</button> -->
-      <button class="btn btn-primary" (click)="onchange()">Save & Submit for Approval</button>
+      <button class="btn btn-primary" (click)="saveandSubmit()">Save & Submit for Approval</button>
     </div>  
   </div>
 </ng-template>

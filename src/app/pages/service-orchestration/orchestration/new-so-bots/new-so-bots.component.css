@@ -1,58 +1,70 @@
 /* @import "../../../../../assets/css/new-so-styles.css"; */
+
 div#editparent {
     margin-top: 20px;
     border: 1px solid #ddd;
-    }
-    
-    div#editparent div#editControls {
+}
+
+div#editparent div#editControls {
     border-bottom: 1px solid #ddd;
-    }
-    
-    div#editparent div#richeditor {
+}
+
+div#editparent div#richeditor {
     height: 200px;
     padding: 10px;
-    }
-    
-    div#editparent div#richeditor:focus {
-    outline: none;
-    }
+}
 
-.commcl, .commcl1{
+div#editparent div#richeditor:focus {
+    outline: none;
+}
+
+.commcl,
+.commcl1 {
     color: #007bff !important;
 }
-.footerbtns{
+
+.footerbtns {
     display: flex !important;
     float: right !important;
     padding: 0px 20px 20px !important;
     margin-top: 5px;
 }
+
 .modal-header .close {
     margin-top: -44px;
 }
+
 .modal-header {
     padding: 25px !important;
-    
 }
+
 .modalpopup a.nav-link {
     color: black !important;
     padding: 0.25rem 0.75rem !important;
 }
-.dbichart-block label{
+
+.dbichart-block label {
     font-size: 15px;
     font-weight: 600;
 }
-.botactive a{
-    color:  rgb(0, 98, 207) !important;
-}
-th{
-    background-color:#ffffff  !important;
-    vertical-align: middle !important;
-    color:rgb(0, 0, 0) !important;
-    font-size: 16px !important;
-  }
 
-.backgr{
-    background:white;
+.botactive a {
+    color: rgb(0, 98, 207) !important;
+}
+
+th {
+    background-color: #ffffff !important;
+    vertical-align: middle !important;
+    color: rgb(0, 0, 0) !important;
+    font-size: 16px !important;
+}
+
+.backgr {
+    background: white;
     border-radius: 3px;
     height: 2000px;
-    }
+}
+
+ ::ng-deep .so-bots-graph .mat-tab-body-content {
+    overflow: auto !important;
+}

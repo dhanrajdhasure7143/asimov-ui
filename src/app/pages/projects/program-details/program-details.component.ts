@@ -24,6 +24,8 @@ export class ProgramDetailsComponent implements OnInit {
   addprojectsForm:FormGroup;
   owner_letters: any;
   program_id: any;
+  programeNameFlag: boolean = false;
+  programePurposeFlag: boolean = false;
 
   constructor(
     private rest:RestApiService,
@@ -146,8 +148,13 @@ export class ProgramDetailsComponent implements OnInit {
       this.program_detials=data;
       if(this.program_detials){
         let usr_name=this.program_detials.owner.split('@')[0].split('.');
-        this.owner_letters=usr_name[0].charAt(0)+usr_name[1].charAt(0);
-        console.log(this.owner_letters)
+        // this.owner_letters=usr_name[0].charAt(0)+usr_name[1].charAt(0);
+        if(usr_name.length > 1){
+          this.owner_letters=usr_name[0].charAt(0)+usr_name[1].charAt(0);
+          }else{
+            this.owner_letters=usr_name[0].charAt(0);
+          }
+       
         }
         this.editdata=false;
       this.get_linked_projects(this.program_id);
@@ -161,7 +168,7 @@ export class ProgramDetailsComponent implements OnInit {
   {
     this.rest.getProjectsByProgramId(id).subscribe(list=>{
       this.linked_projects=list;
-      console.log(this.linked_projects);
+     
       this.dataSource8= new MatTableDataSource(this.program_detials.project);
       this.dataSource8.sort=this.sort104;
       this.dataSource8.paginator=this.paginator104;
@@ -623,7 +630,7 @@ export class ProgramDetailsComponent implements OnInit {
         Swal.fire("Success","Project Added Successfully !!","success")
       }else
       Swal.fire("Error","Unable to add the Project","error");
-      console.log(res)
+     
       this.getprogramdetails();
     })
   }
@@ -641,4 +648,18 @@ export class ProgramDetailsComponent implements OnInit {
     else
     return value;
   }​​​​​​​​
+  programeNameMaxLength(value){
+    if(value.length > 50){
+    this.programeNameFlag = true;
+    }else{
+      this.programeNameFlag = false;
+    }
+     }
+     programePurposeMaxLength(value){
+    if(value.length > 150){
+    this.programePurposeFlag = true;
+    }else{
+      this.programePurposeFlag = false;
+    }
+     }
 }

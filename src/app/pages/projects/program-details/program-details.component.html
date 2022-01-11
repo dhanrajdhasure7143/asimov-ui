@@ -37,7 +37,7 @@
              </button>
            </span>
            <span *ngIf="editdata==true" (click)="updateprogramDetails()">
-             <button class="btn btn-primary">
+             <button class="btn btn-primary" [disabled]="programeNameFlag || programePurposeFlag">
                <!-- <img src="../../../../assets/images/Projects/Project-Repo.svg" class="testplus default-img">
                <img src="../../../../assets/images/Projects/project-repo-white.svg" class="testplus hover-img"> -->
                Save
@@ -66,9 +66,12 @@
               <span class="tab-text">{{program_detials.programName  | titlecase}}</span>
             </div>
             <div class="prg-title" *ngIf="editdata==true">
-              <input type="text" maxlength="50" (change)="program_detials.programName=$event.target.value"
+              <input type="text" maxlength="51" (change)="program_detials.programName=$event.target.value"
                 [value]="(program_detials.programName==undefined||program_detials.programName==null)?'':program_detials.programName"
-                class="small-input" placeholder="Enter Program Name">
+                class="small-input" (keyup)="programeNameMaxLength($event.target.value)" placeholder="Enter Program Name">
+                <span *ngIf="programeNameFlag" class="errspan required">
+                  Maximum of 50 characters
+                </span>
             </div>
 
             <div *ngIf="editdata==false">
@@ -78,10 +81,12 @@
             </div>
 
             <div *ngIf="editdata==true">
-              <textarea maxlength="150" (change)="program_detials.description=$event.target.value" style=" resize: none;"
+              <textarea maxlength="151" (change)="program_detials.description=$event.target.value" style=" resize: none;"
               [value]="(program_detials.description==undefined||program_detials.description==null)?'':program_detials.description"
-              class="small-input" placeholder="Enter Program Description"></textarea>
-                  
+              class="small-input" (keyup)="programePurposeMaxLength($event.target.value)" placeholder="Enter Program Description"></textarea>
+              <span *ngIf="programePurposeFlag" class="errspan required">
+                Maximum of 150 characters
+              </span>
             </div>
   
             
@@ -239,7 +244,7 @@
                       <span class="labeltit">Program Purpose</span>
     
                       <div *ngIf="editdata==false">
-                        <span class="labelcont" [matTooltip]="program_detials.purpose">{{program_detials.purpose}}</span>
+                        <span class="labelcont" [matTooltip]="program_detials.purpose">{{getreducedValue(program_detials.purpose)}}</span>
                         <span
                           *ngIf="program_detials.purpose == null || program_detials.purpose == undefined || program_detials.purpose =='' "
                           class="labelcont">-</span>
@@ -687,7 +692,7 @@
 
                 <div *ngIf="editdata==false">
                   
-                  <span class="tab-text labelcont">{{program_detials.purpose}}</span>
+                  <span class="tab-text labelcont">{{getreducedValue(program_detials.purpose)}}</span>
                   <div *ngIf="program_detials.purpose==undefined || program_detials.purpose==null || program_detials.purpose=='' " class="h6">-</div>
                 </div>
                 <div *ngIf="editdata==true">

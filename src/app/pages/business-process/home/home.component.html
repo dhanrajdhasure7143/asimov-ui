@@ -105,7 +105,7 @@
                                         <div class="cell cell4">{{each_diag.category}}</div>
                                         <div class="cell cell5">{{each_diag.bpmnProcessName ? " V1."+each_diag.version+" ": '-'}}</div>
                                         <div class="cell cell6">{{each_diag.convertedModifiedTime*1000 | date:'medium'}}</div>
-                                        <div class="cell cell7">{{each_diag.approverName ? formatApproverName(each_diag.approverName): '-'}}</div>
+                                        <div class="cell cell7" [matTooltip]=each_diag.approverName matTooltipClass="bpsHeaderTooltip">{{each_diag.approverName ? formatApproverName(each_diag.approverName): '-'}}</div>
                                         <!-- <div class="cell cell8" [ngStyle]="{'color':getColor(each_diag.bpmnProcessStatus)}"
                         [class.pending_value_properties]="each_diag.bpmnProcessStatus=='PENDING'">{{each_diag.bpmnProcessStatus=='PENDING'?pendingStatus:each_diag.bpmnProcessStatus}}</div> -->
                                         <div class="cell cell8" [ngStyle]="{'color':getColor(each_diag.bpmnProcessStatus)}" [class.pending_value_properties]="each_diag.bpmnProcessStatus=='PENDING'">{{getNotationStatus(each_diag.bpmnProcessStatus)}}</div>
@@ -118,7 +118,7 @@
                             title="Click to send reminder mail to Approver" class="fa fa-envelope"></i> -->
                                             <!-- <i (click)="deleteProcess($event, each_diag)" *ngIf="each_diag.bpmnProcessStatus=='INPROGRESS'"
                             title="Delete BPMNotation" class="glyphicon glyphicon-trash"></i> -->
-                                            <img (click)="deleteProcess($event, each_diag)" *ngIf="(each_diag.bpmnProcessStatus=='INPROGRESS') && ((systemAdmin==true) || ((systemAdmin==false) && (each_diag.userEmail==userEmail) ))" matTooltip="Delete Notation" matTooltipPosition="left" src="../../../../assets/images/BPMS/delete-red.svg"
+                                            <img (click)="deleteProcess($event, each_diag)" *ngIf="(each_diag.bpmnProcessStatus=='INPROGRESS') && ((systemAdmin==true) || ((this.userRole.includes('Process Analyst') && this.userRole.includes('RPA Developer') && this.userRole.includes('Process Owner') && this.userRole.includes('Process Architect')) && (each_diag.userEmail==userEmail) ))" matTooltip="Delete Notation" matTooltipPosition="left" src="../../../../assets/images/BPMS/delete-red.svg"
                                                 class="testplus1">
                                             <i *ngIf="each_diag.bpmnProcessStatus!='INPROGRESS' && (each_diag.bpmnProcessStatus=='APPROVED' || each_diag.bpmnProcessStatus=='REJECTED' || !isAdminUser)">-</i>
                                         </div>

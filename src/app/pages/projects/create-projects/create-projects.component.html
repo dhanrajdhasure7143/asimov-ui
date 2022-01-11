@@ -49,7 +49,7 @@
                                                 class="errspan required">Program Name Required*</span>
                                             <span *ngIf="createprogram.controls['programName'].hasError('maxlength')"
                                                 class="errspan required">
-                                                Maximum of 50 characters
+                                                Maximum of 50 characters exceeded
                                             </span>
                                         </div>
                                         <div class="form-fields col-md-6 pr-0">
@@ -75,7 +75,7 @@
                                                 class="errspan required">Initiative Required*</span>
                                             <span *ngIf="createprogram.controls['initiatives'].hasError('maxlength')"
                                                 class="errspan required">
-                                                Maximum of 50 characters
+                                                Maximum of 50 characters exceeded
                                             </span>
                                         </div>
                                     </div>
@@ -91,7 +91,7 @@
                                                 class="errspan required">Program Purpose Required*</span>
                                             <span *ngIf="createprogram.controls['purpose'].hasError('maxlength')"
                                                 class="errspan required">
-                                                Maximum of 50 characters
+                                                Maximum of 50 characters exceeded
                                             </span>
                                         </div>
                                         <div class="form-fields col-md-6 pr-0">
@@ -139,7 +139,7 @@
                                                     <span
                                                     *ngIf="createprogram.controls['programValueChain'].hasError('maxlength')"
                                                     class="errspan required">
-                                                    Maximum of 50 characters
+                                                    Maximum of 50 characters exceeded
                                                 </span>
                                                 </div>
                                         
@@ -155,7 +155,7 @@
                                                 <span
                                                     *ngIf="createprogram.controls['measurableMetrics'].hasError('maxlength')"
                                                     class="errspan required">
-                                                    Maximum of 50 characters
+                                                    Maximum of 50 characters exceeded
                                                 </span>
                                             </div>
                                         <!-- <div class="form-fields col-md-6 pr-0">
@@ -194,7 +194,7 @@
                                                 class="errspan required">Program Priority Required*</span>
                                             <span *ngIf="createprogram.controls['priority'].hasError('maxlength')"
                                                 class="errspan required">
-                                                Maximum of 50 characters
+                                                Maximum of 50 characters exceeded
                                             </span>
                                         </div>
                                         <!-- <div class="form-fields col-md-3">
@@ -323,9 +323,12 @@
                                                           Maximum of 200 characters
                                                         </span> -->
                                         <label class="label-control">Description</label>
-                                        <textarea class="form-control" formControlName="description" row="3"
-                                            placeholder="Enter Description" style=" resize: none;" maxlength="150"
+                                        <textarea class="form-control" formControlName="description" row="3" (keyup)="descriptionMaxLength($event.target.value)"
+                                            placeholder="Enter Description" style=" resize: none;" maxlength="151"
                                             [ngClass]="createprogram.get('description').valid?'enteredfield-color':'inputfield-color'">></textarea>
+                                            <span *ngIf="descptionFlag" class="errspan required">
+                                                Maximum of 150 characters
+                                              </span>
                                 
                                     </div>
                                 </div>
@@ -339,7 +342,7 @@
                                     <span class="pull-right">
                                         <button (click)="resetcreateprogram()"
                                             class="btn btn-default">Reset</button>
-                                        <button [disabled]="createprogram.invalid" (click)="saveProgram()"
+                                        <button [disabled]="createprogram.invalid || descptionFlag" (click)="saveProgram()"
                                             class="btn btn-primary">Save</button>
                                     </span>
                                 </div>

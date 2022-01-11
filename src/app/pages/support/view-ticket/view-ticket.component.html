@@ -23,7 +23,7 @@
                         <div class="col-md-12 p-0 h-100">
                            
                                 
-                            <div class="col-md-8 h-100">
+                            <div class="col-md-8 h-100 editable_fieldsdiv">
                                     <div class="row">
                                         <div class="col-md-12 p-0 form-fields">
                                             <label class="label-control">Summary<span class="star">*</span></label>
@@ -178,7 +178,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-12 p-0 cmntslist">
-                                            <div *ngFor="let each_comment of comment;let i=index" class="col-md-12 p-0 Add-comments">
+                                            <div *ngFor="let each_comment of comment;let i=index;trackBy:loopTrackBy" class="col-md-12 p-0 Add-comments">
                                                 <div class="Inner-comments">
                                                     <div class="col-md-12 p-0">
                                                         <span class="userimg">{{getletters(each_comment.createdBy)}}</span>
@@ -226,7 +226,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-4 pl-0 noneditdiv">
+                            <div class="col-md-4  noneditdiv">
                                 <div class="col-md-12 p-0 form-fields">
                                     <label class="label-control">Status</label>
                                     <select class="form-control data" name="status_field" [ngClass]="requestKey != undefined || null ? 'disabled' : ''" placeholder="Select Status">

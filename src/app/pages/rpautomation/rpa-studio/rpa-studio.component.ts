@@ -99,7 +99,7 @@ export class RpaStudioComponent implements OnInit {
 
 
 
-    
+    let freeTrial=localStorage.getItem("freetrail")
     var data1:any = [];
     this.dt.changeParentModule({"route":"/pages/rpautomation/home", "title":"RPA"});
     this.dt.changeChildModule("");
@@ -141,6 +141,8 @@ export class RpaStudioComponent implements OnInit {
           //this.spinner.hide();
         });
       }
+          if(freeTrial=='true')
+            this.templateNodes=this.templateNodes.filter(item=>item.name=="Email");
           this.activatedRoute.queryParams.subscribe(data=>{
             let params:any=data;
             if(params==undefined)
@@ -155,7 +157,7 @@ export class RpaStudioComponent implements OnInit {
               else
               {
                 let BotData=JSON.parse(Base64.decode(botId));
-                console.log(BotData)
+            
                 this.tabsArray.push(BotData)
                 setTimeout(()=>{
                   this.designerInstance.bot_instances.forEach(item=>{
@@ -322,8 +324,7 @@ export class RpaStudioComponent implements OnInit {
   {
 
     //console.log(event)
-    console.log("data")
-    console.log(this.insertbot.get("predefinedBot").value)
+    
 
     /*if(this.insertbot.get("predefinedBot").value=="true")
     {

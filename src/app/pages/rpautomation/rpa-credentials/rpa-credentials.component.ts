@@ -16,7 +16,7 @@ import { NgxSpinnerService } from "ngx-spinner";
   styleUrls: ['./rpa-credentials.component.css']
 })
 export class RpaCredentialsComponent implements OnInit {
-  displayedColumns1: string[] = ["check","userName","password","serverName","category","createdTimeStamp","createdBy"];
+  displayedColumns1: string[] = ["check","userName","password","serverName","categoryName","createdTimeStamp","createdBy"];
   public toggle:boolean;
   dataSource2:MatTableDataSource<any>;
   public updateflag: boolean;

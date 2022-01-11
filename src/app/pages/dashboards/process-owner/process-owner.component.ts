@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild } from '@angular/core';
 import * as am4core from '@amcharts/amcharts4/core';
 import * as am4charts from '@amcharts/amcharts4/charts';
 import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 import { RestApiService } from '../../services/rest-api.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-process-owner',
@@ -32,11 +35,23 @@ export class ProcessOwnerComponent implements OnInit {
   filterByDays = ['All', '30', '60', '90'];
   isLoading = true;
   userDetails: any;
-  topEffortsSpent: Object;
+  topEffortsSpent: any=[];
   userRoles: any;
   userEmail: any;
   userName: any;
   p1 = 0;
+  displayedColumns1=['Process Name','Created Date','Submitted by'];
+  displayedColumns2=['resource_name','days'];
+  displayedColumns3=['projectName','daysSpent'];
+  @ViewChild("sort1",{static:false}) sort1: MatSort;
+  @ViewChild("paginator1",{static:false}) paginator1: MatPaginator;
+  pendingApprovalsdataSource:MatTableDataSource<any>;
+  @ViewChild("sort2",{static:false}) sort2: MatSort;
+  @ViewChild("paginator2",{static:false}) paginator2: MatPaginator;
+  effortExpenditureAnalysisDatasource:MatTableDataSource<any>;
+  @ViewChild("sort3",{static:false}) sort3: MatSort;
+  @ViewChild("paginator3",{static:false}) paginator3: MatPaginator;
+  topEffortsSpentdataSource:MatTableDataSource<any>;
 
   constructor(private apiService: RestApiService, private jwtHelper: JwtHelperService) {
     this.userDetails = this.jwtHelper.decodeToken(localStorage.getItem('accessToken'));;
@@ -106,10 +121,25 @@ export class ProcessOwnerComponent implements OnInit {
           this.effortExpenditureAnalysis.sort(function (a, b) {
             return b.days - a.days;
           });
+          this.effortExpenditureAnalysisDatasource= new MatTableDataSource(this.effortExpenditureAnalysis);
+          this.effortExpenditureAnalysisDatasource.sort=this.sort2;
+          this.effortExpenditureAnalysisDatasource.paginator=this.paginator2;
         });
-
+        let res_data1:any
       this.apiService.gettopEffortsSpent(this.userRoles, this.userEmail, this.userName).subscribe(res => {
-        this.topEffortsSpent = res;
+        res_data1 = res;
+        for (let [key, value] of Object.entries(res_data1)) {
+          if (value != 0) {
+            var obj = { 'projectName': key, 'daysSpent': value }
+            this.topEffortsSpent.push(obj);
+          }
+        }
+        this.topEffortsSpent.sort(function (a, b) {
+          return b.days - a.days;
+        });
+        this.topEffortsSpentdataSource= new MatTableDataSource(this.topEffortsSpent);
+      this.topEffortsSpentdataSource.sort=this.sort3;
+      this.topEffortsSpentdataSource.paginator=this.paginator3;
       })
     }
   }
@@ -136,6 +166,9 @@ export class ProcessOwnerComponent implements OnInit {
   getPendingApprovals(duration) {
     this.apiService.getPendingApprovals(this.userRoles, this.userEmail, this.userName, duration).subscribe((res: any) => {
       this.pendingApprovals = res;
+      this.pendingApprovalsdataSource= new MatTableDataSource(res);
+      this.pendingApprovalsdataSource.sort=this.sort1;
+      this.pendingApprovalsdataSource.paginator=this.paginator1;
     });
   }
 
@@ -333,82 +366,62 @@ export class ProcessOwnerComponent implements OnInit {
   }
 
   allProjectProgressChart() {
-    am4core.useTheme(am4themes_animated);
+    var chart = am4core.create("prjchartdiv", am4charts.XYChart);
+    // Add data
+    chart.data = this.runtimestats
+    // Create axes
+    var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+    categoryAxis.dataFields.category = "name";
+    categoryAxis.title.text = "Projects";
+    categoryAxis.renderer.grid.template.location = 0;
+    categoryAxis.renderer.minGridDistance = 20;
 
-    setTimeout(() => {
-      this.runtimestatschart = am4core.create("runtimestatistics-piechart", am4charts.XYChart);
-      this.runtimestatschart.hiddenState.properties.opacity = 0; // this creates initial fade-in
-      this.runtimestatschart.data = this.runtimestats;
-      this.runtimestatschart.zoomOutButton.disabled = true;
-      this.runtimestatschart.logo.disabled = true;
+    var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+    valueAxis.title.text = "Percentage Completed";
+    valueAxis.min = 0;
+    valueAxis.max = 100;
+    // Create series
+    var series = chart.series.push(new am4charts.ColumnSeries());
+    series.dataFields.valueY = "value";
+    series.dataFields.categoryX = "name";
+    series.tooltipText = "{valueY.value}%";
+    valueAxis.renderer.labels.template.adapter.add("text", function (text) {
+      return text + "%";
+    });
+    var columnTemplate = series.columns.template;
+    // columnTemplate.width = 45;
+    columnTemplate.column.cornerRadiusTopLeft = 10;
+    columnTemplate.column.cornerRadiusTopRight = 10;
+    columnTemplate.strokeOpacity = 0;
+    let runtimeref = chart;
+    columnTemplate.events.once("inited", function (event) {
+      event.target.fill = runtimeref.colors.getIndex(event.target.dataItem.index);
+    });
+    categoryAxis.renderer.labels.template.disabled = true;
 
-      this.runtimestatschart.colors.list = [
-        am4core.color("#ff5b4f"),
-        am4core.color("#575fcd"),
-        am4core.color("#d89f59"),
-        am4core.color("#f2dfa7"),
-        am4core.color("#ff5b4f"),
-        am4core.color("#74c7b8")
-      ]
-      var categoryAxis = this.runtimestatschart.xAxes.push(new am4charts.CategoryAxis());
-
-      categoryAxis.dataFields.category = "name";
-      categoryAxis.title.text = "Projects";
-      let label1 = categoryAxis.renderer.labels.template;
-      // label1.truncate = true;
-      label1.maxWidth = 100;
-      // label1.disabled = false;
-      categoryAxis.renderer.minGridDistance = 70;
-      categoryAxis.renderer.labels.template.wrap = true;
-      // categoryAxis.renderer.grid.template.location = 0;
-      categoryAxis.renderer.labels.template.fontSize = 12;
-      categoryAxis.renderer.labels.template.rotation = 290;
-      var valueAxis = this.runtimestatschart.yAxes.push(new am4charts.ValueAxis());
-      valueAxis.renderer.inside = false;
-      valueAxis.min = 0;
-      valueAxis.max = 100;
-      valueAxis.renderer.labels.template.fillOpacity = 1;
-      valueAxis.renderer.grid.template.strokeOpacity = 0;
-      valueAxis.cursorTooltipEnabled = false;
-      valueAxis.renderer.gridContainer.zIndex = 1;
-      valueAxis.title.text = "Percentage Completed";
-      var series = this.runtimestatschart.series.push(new am4charts.ColumnSeries);
-      series.dataFields.valueY = "value";
-      series.dataFields.categoryX = "name";
-      series.tooltipText = "{valueY.value}%";
-      valueAxis.renderer.labels.template.adapter.add("text", function (text) {
-        return text + "%";
+    chart.legend = new am4charts.Legend();
+    /* Create a separate container to put legend in */
+    var legendContainer = am4core.create("legenddiv", am4core.Container);
+    legendContainer.width = am4core.percent(100);
+    legendContainer.height = am4core.percent(100);
+    chart.legend.parent = legendContainer;
+    chart.legend.fontSize = 12;
+    let markerTemplate = chart.legend.markers.template;
+    markerTemplate.width = 10;
+    markerTemplate.height = 10;
+    series.events.on("ready", function (ev) {
+      let legenddata = [];
+      series.columns.each(function (column) {
+        legenddata.push({
+          name: column.dataItem.categories.categoryX,
+          fill: column.fill
+        })
       });
-      var columnTemplate = series.columns.template;
-      columnTemplate.width = 45;
-      columnTemplate.column.cornerRadiusTopLeft = 10;
-      columnTemplate.column.cornerRadiusTopRight = 10;
-      columnTemplate.strokeOpacity = 0;
-      let runtimeref = this.runtimestatschart;
-      columnTemplate.events.once("inited", function (event) {
-        event.target.fill = runtimeref.colors.getIndex(event.target.dataItem.index);
-      });
-      var cursor = new am4charts.XYCursor();
-      cursor.behavior = "panX";
-      this.runtimestatschart.cursor = cursor;
-      this.runtimestatschart.events.on("datavalidated", function () {
-        if (this.runtimestats.length > 5)
-          categoryAxis.zoomToIndexes(0, 7, false, true);
-        else
-          categoryAxis.zoomToIndexes(0, this.runtimestats.length, false, true);
-      }, this);
-      series.columns.template.events.on("hit", function (ev) {
-        let getdata: any = ev.target.dataItem.categories.categoryX
-        let data = { name: getdata };
-        this.getruns(data);
+      chart.legend.data = legenddata;
+    });
+    chart.legend.scrollable = true;
 
-      }, this);
-      var label = this.runtimestatschart.plotContainer.createChild(am4core.Label);
-      label.x = 150;
-      label.y = 50;
-      // $("#runtimestatistics-piechart > div > svg > g > g:nth-child(2) > g:nth-child(2)").hide();
-    }, 30)
-
+    chart.cursor = new am4charts.XYCursor();
   }
 
   projectDurationChart(data) {
@@ -429,9 +442,9 @@ export class ProcessOwnerComponent implements OnInit {
       categoryAxis.renderer.minGridDistance = 30;
       categoryAxis.renderer.labels.template.horizontalCenter = "right";
       categoryAxis.renderer.labels.template.verticalCenter = "middle";
-      categoryAxis.renderer.labels.template.rotation = 270;
+      // categoryAxis.renderer.labels.template.rotation = 270;
       categoryAxis.tooltip.disabled = true;
-      categoryAxis.renderer.minHeight = 110;
+      // categoryAxis.renderer.minHeight = 110;
       categoryAxis.title.text = "Projects";
 
 
@@ -462,10 +475,27 @@ export class ProcessOwnerComponent implements OnInit {
       series.columns.template.adapter.add("fill", function (fill, target) {
         return chart.colors.getIndex(target.dataItem.index);
       });
-
+      categoryAxis.renderer.labels.template.disabled = true;
+      var legend = new am4charts.Legend();
+      legend.parent = chart.chartContainer;
+      legend.itemContainers.template.togglable = false;
+      legend.marginTop = 20;
+      legend.fontSize = 12;
+      let markerTemplate = legend.markers.template;
+      markerTemplate.width = 10;
+      markerTemplate.height = 10;
+      series.events.on("ready", function (ev) {
+        let legenddata = [];
+        series.columns.each(function (column) {
+          legenddata.push({
+            name: column.dataItem.categories.categoryX,
+            fill: column.fill
+          })
+        });
+        legend.data = legenddata;
+      });
       // Cursor
       chart.cursor = new am4charts.XYCursor();
-
     }, 50);
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 
 import { DataTransferService } from '../../services/data-transfer.service';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -7,6 +7,7 @@ import {ProjectsProgramsTableComponent} from './projects-programs-table/projects
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { query } from '@angular/animations';
+import { APP_CONFIG } from 'src/app/app.config';
 
 @Component({
   selector: 'app-projects-list-screen',
@@ -45,7 +46,10 @@ export class ProjectsListScreenComponent implements OnInit {
  email:any;
  create_Tabs:any;
  projectsresponse:any=[];
-  constructor(private dt:DataTransferService, private api:RestApiService, private spinner:NgxSpinnerService,private router:Router){}
+  freetrail: string;
+  constructor(private dt:DataTransferService, private api:RestApiService, 
+    private spinner:NgxSpinnerService,private router:Router,
+    @Inject(APP_CONFIG) private config){}
 
   ngOnInit() {
     localStorage.setItem('project_id',null);
@@ -75,6 +79,7 @@ export class ProjectsListScreenComponent implements OnInit {
 
     this.getallusers();
     this.getallprocesses();
+    this.freetrail=localStorage.getItem('freetrail')
   }
 
 
@@ -158,11 +163,11 @@ export class ProjectsListScreenComponent implements OnInit {
   }
   
   createNew(){
-    console.log("list",this.projectsresponse)
-    if(this.userRoles=="User"){
-     if(this.projectsresponse[0].length==0 && this.projectsresponse[1].length==0){
-      this.create_Tabs="projects&programs"
-    }else if(this.projectsresponse[0].length==1 && this.projectsresponse[1].length>=1){
+
+    if(this.freetrail=='true'){
+     if(this.projectsresponse[1].length==0){
+      this.create_Tabs="projects"
+    }else if(this.projectsresponse[1].length==this.config.projectfreetraillimit){
       Swal.fire({
         title: 'Error',
         text: "You have limited access to this product. Please contact EZFlow support team for more details.",
@@ -175,10 +180,8 @@ export class ProjectsListScreenComponent implements OnInit {
         confirmButtonText: 'Ok'
     })
      return 
-    }else if(this.projectsresponse[0].length==1){
+    }else if(this.projectsresponse[1].length>=1){
       this.create_Tabs="projects"
-    }else if(this.projectsresponse[1].length==1){
-      this.create_Tabs="programs"
     }
   }else{
     this.create_Tabs="projects&programs"
@@ -187,7 +190,7 @@ export class ProjectsListScreenComponent implements OnInit {
   }
 
   getprojectsList(event){
-    console.log(event)
+   
    this.projectsresponse=event
   }
 

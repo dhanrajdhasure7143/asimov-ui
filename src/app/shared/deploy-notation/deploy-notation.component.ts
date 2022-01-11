@@ -50,6 +50,7 @@ export class DeployNotationComponent implements OnInit {
     formData.append('fileName', this.data.fileNme)
     formData.append('fieldName', this.data.fileNme)
     formData.append('engine',  splitTenant);
+    formData.append('department',  this.data.category);
     // formData.append('engine', '424d2067');
     
     this.rest.deployBPMNNotation('/deployprocess/notation', formData)
@@ -66,11 +67,12 @@ export class DeployNotationComponent implements OnInit {
         }
         
         } else{
-          Swal.fire(
-            'Oops!',
-            response.message,
-            'error'
-          )
+          Swal.fire({
+            title: 'Oops!',
+            text: response.message,
+            icon: 'error',
+            heightAuto: false,
+          })
         }
       })
   }

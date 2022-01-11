@@ -30,8 +30,11 @@ export class ProcessCategoryOverlayComponent implements OnInit {
   uploadedFileSplit:any=[];
   uploadedFileExtension:string;
   count:number=0;
-  categories_list:any[]=[]
-
+  categories_list:any[]=[];
+  approver_list:any[]=[];
+  process_owner:any;
+  process_name_error:boolean=false;
+  freetrail: string;
   @ViewChild('processCategoryForm', {static: true}) processForm: NgForm;
   constructor( private rest:RestApiService, private activatedRoute: ActivatedRoute, private global:GlobalScript,
     private cdRef: ChangeDetectorRef) { }
@@ -70,6 +73,8 @@ export class ProcessCategoryOverlayComponent implements OnInit {
         this.categoryName=this.categories_list[0].categoryName
       }
     });
+    this.getApproverList();
+    this.freetrail=localStorage.getItem('freetrail')
   }
 
   loopTrackBy(index, term){
@@ -115,10 +120,34 @@ export class ProcessCategoryOverlayComponent implements OnInit {
     if (found == false) {
       this.saveCategory();
       let data;
-      data = {
-        "processName": this.processName,
-        "categoryName": this.categoryName == 'other' ? this.othercategory : this.categoryName,
-        "ntype": this.notationType
+      if (this.freetrail == 'true') {
+        if (this.isBpmnModule) {
+          data = {
+            "processName": this.processName,
+            "categoryName": this.categoryName == 'other' ? this.othercategory : this.categoryName,
+            "ntype": this.notationType,
+          }
+        } else {
+          data = {
+            "processName": this.processName,
+            "categoryName": this.categoryName == 'other' ? this.othercategory : this.categoryName,
+          }
+        }
+      } else {
+        if (this.isBpmnModule) {
+          let approverobj = this.approver_list[this.process_owner]
+          data = {
+            "processName": this.processName,
+            "categoryName": this.categoryName == 'other' ? this.othercategory : this.categoryName,
+            "ntype": this.notationType,
+            "processOwner": approverobj.userId
+          }
+        } else {
+          data = {
+            "processName": this.processName,
+            "categoryName": this.categoryName == 'other' ? this.othercategory : this.categoryName,
+          }
+        }
       }
       this.slideDown(null);
       this.proceed.emit(data);
@@ -189,5 +218,14 @@ export class ProcessCategoryOverlayComponent implements OnInit {
     // console.log("othercategory",this.othercategory);
     // console.log(str.replace(/\s\s/g, " "))
 
+  }
+  async getApproverList(){
+    let roles={
+      "roleNames": ["Process Owner"]
+    }
+    await this.rest.getmultipleApproverforusers(roles).subscribe( res =>  {//Process Architect
+     if(Array.isArray(res))
+       this.approver_list = res;
+   });
   }
 }

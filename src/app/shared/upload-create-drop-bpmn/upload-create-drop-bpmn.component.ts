@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input, AfterViewChecked, ChangeDetectorRef, } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, AfterViewChecked, ChangeDetectorRef, Inject, } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RestApiService } from '../../pages/services/rest-api.service';
 import { SharebpmndiagramService } from '../../pages/services/sharebpmndiagram.service';
@@ -6,6 +6,7 @@ import { GlobalScript } from '../global-script';
 import { UUID } from 'angular2-uuid';
 import { BpmnModel } from '../../pages/business-process/model/bpmn-autosave-model';
 import Swal from 'sweetalert2';
+import { APP_CONFIG } from 'src/app/app.config';
 
 @Component({
   selector: 'app-upload-create-drop-bpmn',
@@ -35,9 +36,11 @@ export class UploadCreateDropBpmnComponent implements OnInit {
   @Input() data;
   @Input('bpmn_list') public bpmn_list: any=[];
   userRoles: any;
+  freetrail: string;
 
   constructor(private router:Router,private bpmnservice:SharebpmndiagramService, private route:ActivatedRoute,
-    private global: GlobalScript, private rest:RestApiService, private activatedRoute: ActivatedRoute, private cdRef: ChangeDetectorRef) { }
+    private global: GlobalScript, private rest:RestApiService, private activatedRoute: ActivatedRoute, private cdRef: ChangeDetectorRef,
+    @Inject(APP_CONFIG) private config) { }
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
@@ -46,6 +49,7 @@ export class UploadCreateDropBpmnComponent implements OnInit {
         this.validNotationTypes += ', .cmmn, .dmn';
     });
     this.userRoles = localStorage.getItem("userRole")
+    this.freetrail=localStorage.getItem('freetrail')
   }
   ngAfterViewChecked() {
     this.activatedRoute.queryParams.subscribe(params => {
@@ -69,8 +73,8 @@ export class UploadCreateDropBpmnComponent implements OnInit {
   }
 
   slideUp(){
-    if (this.userRoles == "User") {
-      if (this.bpmn_list.length == 1) {
+    if (this.freetrail == 'true') {
+      if (this.bpmn_list.length == this.config.bpsprocessfreetraillimit) {
         // Swal.fire("Error","You have limited access to this product. Please contact EZFlow support team for more details.","error");
         Swal.fire({
           title: 'Error',
@@ -103,6 +107,7 @@ export class UploadCreateDropBpmnComponent implements OnInit {
     this.bpmnModel.bpmnProcessName=e.processName;
     this.bpmnModel.ntype=e.ntype;
     this.bpmnModel.bpmnModelId=this.randomId;
+    this.bpmnModel['processOwner']=e.processOwner;
     if(this.data){
       let dataarr = this.data.split("@");
       this.bpmnModel.bpmnModelId= dataarr[2];
@@ -161,6 +166,29 @@ export class UploadCreateDropBpmnComponent implements OnInit {
         this.global.notify(message,"error");
       }
     });
+  }
+
+  onUploadClick() {
+    if (this.freetrail == 'true') {
+      if (this.bpmn_list.length == this.config.bpsprocessfreetraillimit) {
+        Swal.fire({
+          title: 'Error',
+          text: "You have limited access to this product. Please contact EZFlow support team for more details.",
+          position: 'center',
+          icon: 'error',
+          showCancelButton: false,
+          confirmButtonColor: '#007bff',
+          cancelButtonColor: '#d33',
+          heightAuto: false,
+          confirmButtonText: 'Ok'
+        });
+        return false;
+      } else {
+        return true;
+      }
+    } else {
+      return true;
+    }
   }
 
 }

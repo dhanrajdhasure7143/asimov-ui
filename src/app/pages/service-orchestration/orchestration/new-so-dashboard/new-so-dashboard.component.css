@@ -23,7 +23,7 @@ th{
     }
 
     .dashboard-scroll {
-        overflow-y: scroll;
+        overflow-y: auto;
         height: 77vh;
         width: 100%;
         background-color: #fff;

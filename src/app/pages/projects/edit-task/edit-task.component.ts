@@ -8,6 +8,9 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
+import * as JSZip from 'jszip';
+import { saveAs } from "file-saver";
+import * as FileSaver from 'file-saver';
 import  * as moment from 'moment'
 @Component({
   selector: 'app-edit-task',
@@ -75,6 +78,8 @@ export class EditTaskComponent implements OnInit {
   bpm_process_list: any;
   bot_list: any;
   mindate= moment().format("YYYY-MM-DD");
+  taskSummaryFlag: boolean = false;
+  taskDescriptionFlag: boolean = false;
   constructor(private formBuilder:FormBuilder,
     private router:ActivatedRoute,
     private route:Router,
@@ -311,7 +316,7 @@ else
             this.rolelist.push(this.rolename.name)
             this.roles=this.rolelist.join(',')
           }
-          console.log("role", this.rolelist)
+        
         }
         //this.rolename=this.userrole.message[0].name
        
@@ -329,7 +334,7 @@ else
       }
       }
 
-      console.log("taskc",this.taskcomments)
+    
     }
     resetupdatetaskproject(){
       this.updatetaskForm.reset();
@@ -353,7 +358,7 @@ else
 
 
   onDeleteItem(id,fileName){
-    console.log("came to onDelete");
+  
     let input=[{
       "id": id,
       "fileName":fileName
@@ -427,31 +432,52 @@ else
 
   onDownloadSelectedItems(){
     let downloadSelectedfiles=[];
-    this.taskattacments.filter(product => product.checked==true).map(p=>{
-     downloadSelectedfiles.push(p.fileName);
-    });
-    this.rest.downloadTaskAttachment(downloadSelectedfiles).subscribe(data=>{
-      let response:any=data
-      // downloadSelectedfiles.forEach(fileName=>{
-      for(let i=0;i<response.length;i++){
-      var link = document.createElement('a');
-      let extension=((((downloadSelectedfiles[i].toString()).split("")).reverse()).join("")).split(".")[0].split("").reverse().join("")
-      link.download = downloadSelectedfiles[i];
-      link.href =((extension=='png' ||extension=='jpg' ||extension=='svg' ||extension=='gif')?`data:image/${extension};base64,${response[i]}`:`data:application/${extension};base64,${response[i]}`) ;
-      link.click();
+    downloadSelectedfiles=this.taskattacments.filter(product => product.checked==true).map(p=>{return (p.fileName)});
+    this.spinner.show();
+    this.rest.downloadTaskAttachment(downloadSelectedfiles).subscribe((response:any)=>{
+      this.spinner.hide();
+      if(response.errorMessage==undefined)
+      {
+        var zip = new JSZip();
+        response.forEach((value,i) => {
+          let extension=((((downloadSelectedfiles[i].toString()).split("")).reverse()).join("")).split(".")[0].split("").reverse().join("")
+          if(extension=='jpg'|| 'PNG' || 'svg' || 'jpeg' || 'png')
+            zip.file(downloadSelectedfiles[i],value,{base64:true});
+          else
+            zip.file(downloadSelectedfiles[i],value);    
+        });
+        zip.generateAsync({ type: "blob" }).then(function (content) {
+          FileSaver.saveAs(content, `Attachments.zip`);
+          Swal.fire("Success","Attachments downloaded successfully","success")
+        });
       }
+      else
+      {
+        Swal.fire("Error",response.errorMessage,"error");
+      }
+      // for(let i=0;i<response.length;i++){
+      // var link = document.createElement('a');
+      // let extension=((((downloadSelectedfiles[i].toString()).split("")).reverse()).join("")).split(".")[0].split("").reverse().join("")
+      // link.download = downloadSelectedfiles[i];
+      // link.href =((extension=='png' ||extension=='jpg' ||extension=='svg' ||extension=='gif')?`data:image/${extension};base64,${response[i]}`:`data:application/${extension};base64,${response[i]}`) ;
+      // link.click();
+      // }
+    },(err:any)=>{
+    
+      this.spinner.hide();
+      
+      Swal.fire("Error","Unable to task attachments","error");
     })
    // this.getTaskAttachments();
   }
 
   onDeleteSelectedItems(event){
-    const selectedFiles = [];
-    this.taskattacments.filter(product => product.checked==true).forEach(p=>{
+    var selectedFiles = [];
+    selectedFiles=this.taskattacments.filter(product => product.checked==true).map(p=>{
       let obj={
         "id": p.id,
         "fileName": p.fileName
       }
-      selectedFiles.push(obj);
       });
       Swal.fire({
         title: 'Are you sure?',
@@ -513,5 +539,18 @@ else
      this.bot_list=response.sort((a,b) => (a.botName.toLowerCase() > b.botName.toLowerCase() ) ? 1 : ((b.botName.toLowerCase() > a.botName.toLowerCase() ) ? -1 : 0));
     })
   }
-
+  taskSummaryMaxLength(value){
+    if(value.length > 150){
+    this.taskSummaryFlag = true;
+    }else{
+      this.taskSummaryFlag = false;
+    }
+     }
+     taskDescriptionMaxLength(value){
+      if(value.length > 150){
+      this.taskDescriptionFlag = true;
+      }else{
+        this.taskDescriptionFlag = false;
+      }
+       }
 }

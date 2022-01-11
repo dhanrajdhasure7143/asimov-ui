@@ -144,12 +144,16 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
   downloadFileformate:Subscription;
   header_btn_functions:Subscription;
   header_approvalBtn:Subscription;
+  processowner_list:any=[];
+  process_owner:any;
+  showconsfromanceModal:any;
   @ViewChild('variabletemplate',{ static: true }) variabletemplate: TemplateRef<any>;
   @ViewChild('keyboardShortcut',{ static: true }) keyboardShortcut: TemplateRef<any>;
   @ViewChild('dmnTabs',{ static: true }) dmnTabs: ElementRef<any>;
   @ViewChild("notationXMLTab", { static: false }) notationXmlTab: MatTabGroup;
   @ViewChild('wrongXMLcontent', { static: true}) wrongXMLcontent: TemplateRef<any>;
   @ViewChild('canvasopt',{ static: false }) canvasopt: ElementRef;
+  @ViewChild('processowner_template',{ static: true }) processowner_template: TemplateRef<any>;
    constructor(private rest:RestApiService, private bpmnservice:SharebpmndiagramService,private router:Router, private spinner:NgxSpinnerService, private modalService: BsModalService,
       private dt:DataTransferService, private route:ActivatedRoute, private global:GlobalScript, private hints:BpsHints,public dialog:MatDialog,private shortcut:BpmnShortcut) { }
 
@@ -191,6 +195,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
       this.dt.changeChildModule({"route":"/pages/businessProcess/uploadProcessModel", "title":"Show Conformance"});
     }
     this.getApproverList();
+    this.getprocessOwners();
    }
 
 
@@ -213,7 +218,11 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
           }else if(headerValue == 'zoom_out'){
             this.zoomOut();
           }else if(headerValue == 'save_process'){
-            this.saveprocess(null);
+            if(this.isShowConformance){
+              this.processOwner_modal();
+            }else{
+              this.saveprocess(null);
+            }
             this.isEdit=false;
           }else if(headerValue=='edit'){
             this.isEdit=true;
@@ -239,7 +248,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
         })
         this.header_approvalBtn=this.dt.subMitApprovalValues.subscribe(res=>{
           if(res){
-            this.submitDiagramForApproval(res.selectedApprovar);
+            this.submitDiagramForApproval(res);
           }
         })
       }
@@ -563,9 +572,9 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
         }
       }
       this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
-    "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
-    "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize,isUploaded:this.isUploaded}
-      this.dt.bpsNotationaScreenValues(this.push_Obj);
+      "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
+      "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize,isUploaded:this.isUploaded}
+        this.dt.bpsNotationaScreenValues(this.push_Obj);
     }
     // this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
     // "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
@@ -772,9 +781,18 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
       _self.oldXml = _self.newXml;
       _self.newXml = xml;
       if(_self.oldXml != _self.newXml){
+        if(!_self.isShowConformance){
         _self.spinner.show();
+        }
         bpmnModel["bpmnProcessMeta"] = btoa(unescape(encodeURIComponent(_self.newXml)));
+      if(_self.isShowConformance){
+        // _self.autoSaveProcessowner_modal();
+        // _self.showconsfromanceModal=bpmnModel
+        // console.log(_self.saved_bpmn_list[_self.selected_notation])
+
+      }else{
         _self.autoSaveDiagram(bpmnModel);
+      }
       }
     });
   }
@@ -800,6 +818,8 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
   }
 
   autoSaveDiagram(model){
+      model.processOwner = this.saved_bpmn_list[this.selected_notation]['processOwner'];
+    // model["processOwner"] = this.saved_bpmn_list[this.selected_notation]['processOwner'];
     this.rest.autoSaveBPMNFileContent(model).subscribe(
       data=>{
         this.getAutoSavedDiagrams();
@@ -1037,7 +1057,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
     }
     if(!yesProceed) return;
     let bpmnModel:BpmnModel = new BpmnModel();
-    this.selected_approver=e
+    this.selected_approver=e.selectedApprovar
     if((!this.selected_approver && this.selected_approver != 0) || this.selected_approver <= -1){
       // Swal.fire("No approver", "Please select approver from the list given above", "error");
       Swal.fire({
@@ -1062,6 +1082,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
     }
   if(this.isShowConformance){
     bpmnModel.notationFromPI = true;
+    bpmnModel.processOwner=e.processOwner;
     bpmnModel.bpmnProcessName = this.processName;
     bpmnModel.ntype = this.ntype;
     bpmnModel.category = this.category;
@@ -1077,6 +1098,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
       bpmnModel.bpmnModelId = this.randomNumber;
     }
   }else{
+    bpmnModel.processOwner = _self.saved_bpmn_list[_self.selected_notation]['processOwner'];
     bpmnModel.bpmnModelId = sel_List['bpmnModelId'];
     bpmnModel.bpmnProcessName = sel_List['bpmnProcessName'];
     bpmnModel.category = sel_List['category'];
@@ -1181,10 +1203,15 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
         _self.confBpmnModeler.saveXML({ format: true }, function(err, xml2) {
           bpmnModel.bpmnConfProcessMeta = btoa(unescape(encodeURIComponent(xml2)));;
         })
-        this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
-        "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
-        "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize,isUploaded:this.isUploaded}
-    this.dt.bpsNotationaScreenValues(this.push_Obj)
+        _self.push_Obj={"rejectedOrApproved":_self.rejectedOrApproved,"isfromApprover":_self.isfromApprover,
+        "isShowConformance":_self.isShowConformance,"isStartProcessBtn":_self.isStartProcessBtn,"autosaveTime":_self.updated_date_time,
+        "isFromcreateScreen":false,'process_name':_self.currentNotation_name,'isSavebtn':true,"hasConformance":_self.hasConformance,"resize":_self.reSize,isUploaded:this.isUploaded}
+        _self.dt.bpsNotationaScreenValues(this.push_Obj)
+      }
+      if(_self.isShowConformance){
+        bpmnModel.processOwner=_self.process_owner;
+      }else{
+      bpmnModel.processOwner = _self.saved_bpmn_list[_self.selected_notation]['processOwner'];
       }
       _self.rest.saveBPMNprocessinfofromtemp(bpmnModel).subscribe(
         data=>{
@@ -1207,15 +1234,17 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
               let params:Params = {'bpsId':sel_List["bpmnModelId"], 'ver': inprogress_version, 'ntype': sel_List["ntype"]}
               _self.router.navigate([],{ relativeTo:_self.route, queryParams:params });
             }
+            if(_self.isShowConformance)
+            _self.modalRef.hide();
             if(_self.isUploaded) _self.getUserBpmnList(true);
             else _self.getUserBpmnList(null);
-            
             Swal.fire({
               icon: 'success',
               title: 'Saved!',
               text: 'Your changes has been saved successfully !',
               heightAuto: false,
             });
+            _self.process_owner='';
             if(newVal){
               _self.selected_notation = newVal;
               let current_bpmn_info = _self.saved_bpmn_list[_self.selected_notation];
@@ -1441,7 +1470,8 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
     if(fileName.trim().length == 0 ) fileName = "newDiagram";
     var dd = fileName+"."+this.selectedNotationType;
      this.dialog.open(DeployNotationComponent, {disableClose: true,data: {
-      dataKey: data, fileNme: dd
+      dataKey: data, fileNme: dd,
+      category:this.saved_bpmn_list[this.selected_notation]['category']
     }});
     
     let deployResponse;
@@ -1574,4 +1604,23 @@ getBpmnById(){
   this.rest.getBpmnNotationById(this.selected_modelId).subscribe(res=>{
   })
 }
+
+processOwner_modal(){
+  this.modalRef = this.modalService.show(this.processowner_template);
+}
+
+async getprocessOwners(){
+  let roles={
+    "roleNames": ["Process Owner"]
+  }
+  await this.rest.getmultipleApproverforusers(roles).subscribe( res =>  {//Process Architect
+   if(Array.isArray(res))
+     this.processowner_list = res;
+ });
+}
+closeprocessOwnerModal(){
+  this.modalRef.hide();
+  this.process_owner='';
+}
+
 }

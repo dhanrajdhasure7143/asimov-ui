@@ -44,6 +44,7 @@ export class CreateProjectsComponent implements OnInit {
    projectsdata:any;
 
    loggedInUserId:any;
+   descptionFlag: boolean = false;
   constructor(
     private formBuilder: FormBuilder,
     private api:RestApiService, 
@@ -122,7 +123,7 @@ this.email=localStorage.getItem('ProfileuserId');
 
   linkcreateproject(event){
   this.newproject.push(JSON.parse(event))
-  console.log("link",this.newproject)
+ 
   this.modalRef.hide();
   }
    
@@ -144,7 +145,7 @@ getunassignedprojectslist(roles,name,email)
 }
 createproject(event)
   {
-    console.log(event)
+  
     this.spinner.show();
     let data=JSON.parse(event);
     this.api.createProject(data).subscribe(data=>{
@@ -224,7 +225,7 @@ createproject(event)
    id:item.id
  }
     })
-    console.log("data",data)
+  
       this.spinner.show()
       this.api.saveProgram(data).subscribe( res=>{​​​​​​​​
         this.spinner.hide();
@@ -298,7 +299,7 @@ createproject(event)
   add_to_selected_projects()
   {
     let project_id=this.selected_project;
-    console.log(this.selected_project)
+   
     let project=this.projects_list.find(item=>item.id==project_id);
     if(project!=undefined)
     if(this.selected_projects.length==0)
@@ -353,6 +354,15 @@ createproject(event)
       let response:any=res;
       this.initiatives=response;
     })
+  }
+
+  descriptionMaxLength(value){
+    console.log(value)
+ if(value.length > 150){
+ this.descptionFlag = true;
+ }else{
+   this.descptionFlag = false;
+ }
   }
   
 }

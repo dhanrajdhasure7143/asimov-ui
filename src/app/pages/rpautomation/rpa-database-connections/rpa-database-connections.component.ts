@@ -17,7 +17,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 })
 
 export class RpaDatabaseConnectionsComponent implements OnInit {
-  displayedColumns1: string[] = ["check","connectiontName","category","dataBaseType","hostAddress","portNumber","username","password","databasename","schemaName","activeStatus","createdTimeStamp","createdBy"];
+  displayedColumns1: string[] = ["check","connectiontName","categoryName","dataBaseType","hostAddress","portNumber","username","password","databasename","schemaName","activeStatus","createdTimeStamp","createdBy"];
   public toggle:boolean;
   dataSource2:MatTableDataSource<any>;
   public dbupdateflag: boolean;

@@ -125,6 +125,13 @@ export class SoSchedulerComponent implements OnInit {
     document.getElementById("sch").style.display="none";
   }
 
+  onTimeZoneChange(timezone)
+  {
+    let d:any = new Date(new Date().toLocaleString("en-US", {timeZone: timezone}));
+    this.startdate=  d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+    this.enddate=this.startdate;
+    this.starttime=d.getHours()+":"+d.getMinutes();
+  }
 
 
 

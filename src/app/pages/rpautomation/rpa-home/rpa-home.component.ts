@@ -1,4 +1,4 @@
-import {Component, OnInit, TemplateRef,ViewChild, Output, EventEmitter} from '@angular/core';
+import {Component, OnInit, TemplateRef,ViewChild, Output, EventEmitter, Inject} from '@angular/core';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
@@ -24,6 +24,8 @@ import { map } from 'rxjs/operators';
 import { fromMatPaginator, fromMatSort, paginateRows, sortRows } from '../model/datasource-utils';
 import { NgxSpinnerService } from 'ngx-spinner';
 import {Base64} from 'js-base64';
+import { APP_CONFIG } from 'src/app/app.config';
+import {SearchRpaPipe} from './Search.pipe';
 declare var $:any;
 
 @Component({
@@ -97,6 +99,7 @@ export class RpaHomeComponent implements OnInit {
   @ViewChild(MatSort,{static:false}) sort: MatSort;
   totalRows$: Observable<number>;
   @ViewChild(MatPaginator,{static:false}) paginator301: MatPaginator;
+  freetrail: string;
 
   constructor(
     private route: ActivatedRoute, 
@@ -107,7 +110,8 @@ export class RpaHomeComponent implements OnInit {
     private modalService: BsModalService,
     private formBuilder:FormBuilder,
     private router:Router,
-    private spinner:NgxSpinnerService
+    private spinner:NgxSpinnerService,
+    @Inject(APP_CONFIG) private appconfig
     )
   {
 
@@ -131,8 +135,8 @@ export class RpaHomeComponent implements OnInit {
   }
 
   openModal(template: TemplateRef<any>) {
-    if (this.userRole == "User") {
-      if (this.bot_list.length == 1) {
+    if (this.freetrail == 'true') {
+      if (this.bot_list.length == this.appconfig.rpabotfreetraillimit) {
         Swal.fire({
           title: 'Error',
           text: "You have limited access to this product. Please contact EZFlow support team for more details.",
@@ -236,7 +240,7 @@ export class RpaHomeComponent implements OnInit {
           if(localStorage.getItem('project_id')!="null" && localStorage.getItem('bot_id')!="null"){
             this.loadbotdata(localStorage.getItem('bot_id'));
           }
-
+          this.freetrail=localStorage.getItem('freetrail')
      }
 
   ngAfterViewInit() {
@@ -360,7 +364,7 @@ export class RpaHomeComponent implements OnInit {
           object.department='QA';
         }
         this.bot_list.push(object)
-        //  this.assignPagination( this.bot_list);
+         this.assignPagination( this.bot_list);
       })
       this.bot_list=botlist;
       if(this.bot_list.length >0)
@@ -532,8 +536,8 @@ export class RpaHomeComponent implements OnInit {
 
   createoverlay()
   {
-    if (this.userRole == "User") {
-      if (this.bot_list.length == 1) {
+    if (this.freetrail == 'true') {
+      if (this.bot_list.length == this.appconfig.rpabotfreetraillimit) {
         Swal.fire({
           title: 'Error',
           text: "You have limited access to this product. Please contact EZFlow support team for more details.",
@@ -588,7 +592,7 @@ export class RpaHomeComponent implements OnInit {
     }else{
 
       let botId=Base64.encode(JSON.stringify(createBotFormValue));
-      console.log(botId)
+   
       this.router.navigate(["/pages/rpautomation/designer"],{queryParams:{botId:botId}})
        
     }
@@ -754,7 +758,7 @@ export class RpaHomeComponent implements OnInit {
   exportbot(bot)
   {
     this.rest.bot_export(bot.botId).subscribe((data)=>{
-      console.log(data)
+     
         const linkSource = `data:application/txt;base64,${data}`;
         const downloadLink = document.createElement('a');
         document.body.appendChild(downloadLink);
@@ -903,8 +907,8 @@ export class RpaHomeComponent implements OnInit {
     this.bot_list=this.bot_list.sort(function(a,b){
       let check_a=isNaN(a[colKey])?a[colKey].toUpperCase():a[colKey];
       let check_b=isNaN(b[colKey])?b[colKey].toUpperCase():b[colKey];
-      console.log(sortdes)
-      console.log(colKey)
+     
+     
       if (sortdes==true)
         return (check_a > check_b) ? 1 : -1;
       else
@@ -1008,12 +1012,23 @@ export class RpaHomeComponent implements OnInit {
       }
 
       assignPagination(data){
+      
         const sortEvents$: Observable<Sort> = fromMatSort(this.sort);
         const pageEvents$: Observable<PageEvent> = fromMatPaginator(this.paginator301);
         const rows$ = of(data);
         this.totalRows$ = rows$.pipe(map(rows => rows.length));
         this.displayedRows$ = rows$.pipe(sortRows(sortEvents$), paginateRows(pageEvents$));
+      
       }
+
+      applySearchFilter(v){      
+    const filterPipe = new SearchRpaPipe();   
+     const fiteredArr = filterPipe.transform(this.bot_list,v);   
+          
+      this.assignPagination(fiteredArr)    
+  }
+
+
       
 }
 

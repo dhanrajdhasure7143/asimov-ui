@@ -12,4 +12,10 @@ export class GlobalScript {
             message: msg
         });
     }
+    notifyClose(){
+        this.notifier.hideNewest()
+    this.notifier.hideAll()
+    this.notifier.hideOldest();
+    
+    }
 }

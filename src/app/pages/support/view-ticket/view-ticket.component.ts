@@ -145,6 +145,7 @@ export class ViewTicketComponent implements OnInit {
   getRequestComments(id) {
     this.api.getRequestComments(id).subscribe((res: any) => {
       this.commentRequest = res;
+      if (Array.isArray(res))
         this.comment = this.commentRequest;
     });
   }
@@ -706,5 +707,8 @@ autoGrowSummaryTextZone() {
   return user_letters
   }
 
+  loopTrackBy(index, term) {
+    return index;
+  }
 
 }

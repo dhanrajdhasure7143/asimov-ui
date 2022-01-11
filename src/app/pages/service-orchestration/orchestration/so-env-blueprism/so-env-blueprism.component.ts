@@ -22,7 +22,7 @@ import {ActivatedRoute} from "@angular/router";
 export class SoEnvBlueprismComponent implements OnInit {
 
   
-  displayedColumns: string[] = ["check","configName","category","bluePrismUsername","bluPrismPassword","hostAddress","username","password","port","status","createdTimeStamp","createdBy"];
+  displayedColumns: string[] = ["check","configName","categoryName","bluePrismUsername","bluPrismPassword","hostAddress","username","password","port","status","createdTimeStamp","createdBy"];
   dataSource1:MatTableDataSource<any>;
   public isDataSource: boolean;
   public createblueprism : boolean = false;
@@ -50,7 +50,8 @@ export class SoEnvBlueprismComponent implements OnInit {
   public addBPconfigstatus:boolean=false;
   public bpid : any;
   public toggle: boolean = false;
-  public categoryList:any=[]
+  public categoryList:any=[];
+  public categoryLengthCheck:Boolean=false;
 constructor(private api:RestApiService,
   private router:Router,
   private formBuilder: FormBuilder,
@@ -126,13 +127,15 @@ getblueprismconnections()
 createBlueprism(){
   this.createblueprism = true;
   this.updateblueprims = false;
+  
+  this.reset_createblueprism()
   document.getElementById("createbprism").style.display = "block";
   this.BluePrismConfigForm.get("categoryId").setValue(this.categoryList.length==1?this.categoryList[0].categoryId:"0")
   document.getElementById("updatebprism").style.display='none';
 }
 
 savedata(){
-  console.log(this.BluePrismConfigForm);
+  
 }
 
 close(){
@@ -151,9 +154,7 @@ closeUBP(){
 
 checkEnableDisableBtn(id, event)
 {
-  console.log(event);
-  console.log(id);
-  console.log(event.target.checked);
+  
   this.blueprism_configs.find(data=>data.bluePrismId==id).checked=event.target.checked;
   if(this.blueprism_configs.filter(data=>data.checked==true).length==this.blueprism_configs.length)
   {
@@ -183,7 +184,7 @@ checktoupdate()
 
 checktodelete()
 {
-  console.log(this.blueprism_configs.filter(product => product.checked).map(p => p.bluePrismId));
+ 
   const selectedBluePrism = this.blueprism_configs.filter(product => product.checked).map(p => p.bluePrismId);
   if(selectedBluePrism.length>0)
   {
@@ -196,7 +197,7 @@ checktodelete()
 
 
  delete_blueprism_config(){
-    console.log("delete_blueprism_config");
+   
     const selectedEnvironments = this.blueprism_configs.filter(product => product.checked==true).map(p => p.bluePrismId);
     if(selectedEnvironments.length!=0)
     {
@@ -238,9 +239,9 @@ checktodelete()
 {
   for(let i=0;i<this.blueprism_configs.length;i++)
   {
-    console.log(this.blueprism_configs[i]);
+   
     this.blueprism_configs[i].checked= false;
-    console.log(this.blueprism_configs[i]);
+    
   }
   this.checkflag=false;
 }
@@ -254,6 +255,7 @@ checkAllCheckBox(ev) {
 reset_createblueprism(){
   
   this.BluePrismConfigForm.reset();
+  this.submitted=false;
   this.BluePrismConfigForm.get("categoryId").setValue(this.categoryList.lenght==1?this.categoryList[0].categoryId:"0")
 }
 
@@ -276,18 +278,11 @@ saveBluePrism()
       this.submitted=true;
       this.api.save_blueprism_config(response).subscribe(resp=>{
         let response:any=resp;
+        this.submitted=false;
         this.spinner.hide();
         if(response.errorMessage==undefined)
         {
-          // Swal.fire({
-          //   position: 'center',
-          //   icon: 'success',
-          //   title: response.status,
-          //   showConfirmButton: false,
-          //   timer: 2000
-          // })
           Swal.fire("Success",response.status,"success")
-        //this.getallData();
           this.checktoupdate();
           this.checktodelete();
           document.getElementById("createbprism").style.display='none';        
@@ -295,7 +290,7 @@ saveBluePrism()
           this.updateblueprims = false;
           this.BluePrismConfigForm.reset();
           this.getblueprismconnections();
-          this.submitted=true;
+         
         }
         else
         {
@@ -315,10 +310,10 @@ Update_BluePrism()
  {
   let response:any;
       response=this.UpdateBluePrismConfigForm.value;
-      console.log(response);
+     
       (response.status==true)?response.status=1:response.status=0;
       response.port=parseInt(response.port);
-      console.log(response);
+     
       response["bluePrismId"]=this.bpid;
       this.updatesubmitted = true;
       this.api.edit_blueprism_config(response).subscribe(resp=>{
@@ -343,7 +338,7 @@ Update_BluePrism()
           Swal.fire("Error",response.errorMessage,"error")
         }
       },(err)=>{
-        console.log(err);
+     
         Swal.fire("Error","Failed to update environment","error");
       });
     }
@@ -354,7 +349,7 @@ Update_BluePrism()
 }
 
 updateBluePrism(){
-  console.log("Hello updatecall");
+ 
 }
 
 
@@ -365,7 +360,7 @@ updatedata()
   this.createblueprism = false;
   this.updateblueprims = true;
   let data:any;
-  console.log("this.blueprism_configs.value",this.blueprism_configs);
+
   for(data of this.blueprism_configs)
   {
     if(data.bluePrismId==this.updateid)
@@ -379,16 +374,22 @@ updatedata()
       this.UpdateBluePrismConfigForm.get("configName").setValue(data["configName"]);
       this.UpdateBluePrismConfigForm.get("bluePrismUsername").setValue(data["bluePrismUsername"]);
       this.UpdateBluePrismConfigForm.get("bluPrismPassword").setValue(data["bluPrismPassword"]);
-      this.UpdateBluePrismConfigForm.get("categoryId").setValue(data["categoryId"]);
       this.UpdateBluePrismConfigForm.get("hostAddress").setValue(data["hostAddress"]);
       this.UpdateBluePrismConfigForm.get("username").setValue(data["username"]);
       this.UpdateBluePrismConfigForm.get("password").setValue(data["password"]);
       this.UpdateBluePrismConfigForm.get("port").setValue(data["port"]);
-      //this.UpdateBluePrismConfigForm.get("status").setValue(data["status"]);
+      if(this.categoryList.length==1)
+      {
+        this.UpdateBluePrismConfigForm.get("categoryId").setValue(this.categoryList[0].categoryId);
+      }
+      else
+      {
+        this.UpdateBluePrismConfigForm.get("categoryId").setValue(data["categoryId"]);
+      }
       break;
     }
   }
-  console.log(this.UpdateBluePrismConfigForm.value);
+  
 }
 
 testBluePrismconnection()
@@ -436,11 +437,15 @@ testBluePrismconnection()
             
             Swal.fire("Error",response.errorMessage,"error");
           }
+      },
+      err=>{
+        this.spinner.hide();
+        Swal.fire("Error","Unable to load blue prism bots","error");
       })
     }
     else
     {
-      console.log("Invalid Form");
+      
 
     }
   }
@@ -492,7 +497,7 @@ testBluePrismconnection()
     }
     else
     {
-      console.log("Invalid Form");
+     
       Swal.fire({
         position: 'center',
         icon: 'warning',
@@ -539,7 +544,7 @@ testBluePrismconnection()
     }
     else
     {
-      console.log("Invalid Form");
+    
       Swal.fire({
         position: 'center',
         icon: 'warning',
@@ -556,7 +561,18 @@ getCategoryList()
   this.api.getCategoriesList().subscribe(data=>{
     let catResponse : any;
     catResponse=data
-    this.categoryList=catResponse.data;
+    if(catResponse.errorMessage==undefined)
+    {
+      this.categoryList=catResponse.data;
+      if(this.categoryList.length==1)
+      {
+        this.categoryLengthCheck=true;
+      }
+      else
+      {
+        this.categoryLengthCheck=false;
+      }
+    }
     this.getblueprismconnections();
   });
 }
