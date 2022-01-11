@@ -94,7 +94,7 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
     ceil: 8,
     vertical: true
   };
-  categoryList: any;
+  categoryList: any=[];
   constructor(
     private fb : FormBuilder,
     private rest : RestApiService,
@@ -346,6 +346,9 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
         {
           Swal.fire("Error",response.errorMessage,"error");
         }
+      },err=>{
+        this.spinner.hide();
+        Swal.fire("Error","Unable to initiate bot execution")
       })
     }
   }
@@ -368,6 +371,10 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
         {
           Swal.fire("Error",response.errorMessage,"error");
         }
+      },
+      err=>{
+        this.spinner.hide();
+        Swal.fire("Error","Unable to pause bot")
       });
     }
   }
@@ -386,6 +393,10 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
           this.resumebot=false;
           Swal.fire("Success",response.status,"success");
         }
+      },err=>{
+        this.spinner.hide()
+        Swal.fire("Error","Unable to resume bot")
+   
       })
     }
   }
@@ -409,6 +420,10 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
           {
             Swal.fire("Error",response.errorMessage,"error");
           }
+        },err=>{
+          this.spinner.hide();
+          Swal.fire("Error","Unable to stop bot")
+   
         })
     }
   }

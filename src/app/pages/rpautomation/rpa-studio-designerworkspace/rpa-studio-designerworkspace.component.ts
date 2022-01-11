@@ -72,7 +72,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   fileobj:any;
   options:any=[];
   restapiresponse:any;
-  public rp_url:any;
+  public rp_url:any="";
   recordedcode:any;
   finalcode:any;
   svg:any;
@@ -211,7 +211,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       this.addconnections(this.finalbot.sequences)
       this.child_rpa_studio.spinner.hide()
       this.dragelement = document.querySelector('#' + this.dragareaid);
-      this.dagvalue = this.dragelement.getBoundingClientRect().width / this.dragelement.offsetWidth;
 
     }
 
@@ -224,8 +223,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     this.finaldataobjects.forEach((element,index )=> {
       let inseq=String(element.inSeqId);
       let outseq=String(element.outSeqId);
-     
-        if(inseq.split("_")[0]=="START"){
+      if(inseq.split("_")[0]=="START"){
       
         this.coordinates=(this.finaldataobjects[0].x.split("|")!=undefined)?this.finaldataobjects[0].nodeId.split("|"):undefined;
         
@@ -251,9 +249,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           }, 240);
         }
       }
-      // if (element.outSeqId == "STOP_" + this.finalbot.botName) {
-        console.log(this.coordinates)
-        if(outseq.split("_")[0]=="STOP"){
+      if(outseq.split("_")[0]=="STOP"){
           //let coordinates=(this.finaldataobjects[0].nodeId.split("|")!=undefined)?this.finaldataobjects[0].nodeId.split("|"):undefined;
        
         let stopnode = {
@@ -278,7 +274,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         }
 
       }
-
       let templatenodes:any=[]
       let nodename = element.nodeId.split("__")[0];
       let nodeid = element.nodeId.split("__")[1];

@@ -105,7 +105,7 @@
                                 <span *ngIf="createtaskForm.get('resources').invalid && createtaskForm.get('resources').touched"
                                     class="errspan required">Resources Required*</span>
                             </div>
-                            <div class="form-fields col-md-6 pr-0">
+                            <div class="form-fields col-md-6 pr-0" *ngIf="freetrail!='true'">
                                 <label class="label-control" for="approvers">Approver<span class="star">*</span></label>
                                 <select class="form-control enteredfield-color"  formControlName="approvers">
                                     <option value="">Select Approver</option>
@@ -119,6 +119,14 @@
                                 </ng-select>  -->
                                 <span *ngIf="createtaskForm.get('approvers').invalid && createtaskForm.get('approvers').touched"
                                 class="errspan required">Approvers Required*</span>
+                            </div>
+                            <div class="form-fields col-md-6 pr-0" *ngIf="freetrail=='true'">
+                                <label class="label-control" for="approvers">Approver</label>
+                                <select class="form-control enteredfield-color"  [attr.disabled]="true" formControlName="approvers">
+                                    <option value="">Select Approver</option>
+                                    <option *ngFor="let user of approverslist" [value]="user.userId.id">
+                                        {{user.userId.firstName|titlecase}} {{user.userId.lastName|titlecase}}</option>    
+                                </select>
                             </div>
                         </div>
                     

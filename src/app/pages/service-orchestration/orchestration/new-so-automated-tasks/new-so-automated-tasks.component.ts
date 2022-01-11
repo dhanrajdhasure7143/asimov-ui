@@ -747,7 +747,7 @@ resetsla(){
     let botId=$("#"+id+"__select").val();
     let source=this.responsedata.find(item=>item.taskId==id).sourceType;
     if(source=="UiPath")
-    this.responsedata.find(item=>item.taskId==id).taskOwner="Karthik Peddinti";
+      this.responsedata.find(item=>item.taskId==id).taskOwner="Karthik Peddinti";
     else if(source=="EPSoft")
     {
       this.responsedata.find(item=>item.taskId==id).taskOwner=this.bot_list.find(bot=>bot.botId==botId).createdBy;
@@ -770,6 +770,10 @@ resetsla(){
         this.spinner.hide();
         if(response.status!=undefined)
         {
+          if(this.automatedtask.find(item=>item.id==id)!=undefined)
+          {
+            this.automatedtask.find(item=>item.id==id).botId=id;
+          }
           Swal.fire("Success","Resource Assigned Successfully","success");
           this.checkTaskAssigned(processId);
         }else
@@ -781,13 +785,13 @@ resetsla(){
   }
 
 
-  assignhuman(taskid, processId)
+  assignhuman(task)
   {
-    let botId=$("#"+taskid+"__select").val();
+    let botId=$("#"+task.taskId+"__select").val();
     if(botId!=0)
     {
       this.spinner.show();
-      this.rest.assign_bot_and_task(botId,taskid,"","Human").subscribe(data=>{
+      this.rest.assign_bot_and_task(botId,task.taskId,"","Human").subscribe(data=>{
         let response:any=data;
         this.spinner.hide();
         if(response.status!=undefined)
@@ -795,7 +799,7 @@ resetsla(){
           Swal.fire("Success",response.status,"success");
           if(this.selectedvalue!="")
           {
-            this.checkTaskAssigned(processId)
+            this.checkTaskAssigned(task.processId)
           }
         }else
         {
