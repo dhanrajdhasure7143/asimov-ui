@@ -1,0 +1,102 @@
+.module-header-title.innertitle {
+    line-height: 35px;
+}
+.CreateTkt-footer {
+    display: flex;
+    justify-content: flex-end;
+    /* margin-top: 10px; */
+}
+
+.CreateTkt-footer .btn-primary{
+    margin-right: 0px !important;
+}
+  .radiosecsinew {
+    position: relative;
+    width: 100%;
+    margin-right: 10px;
+    text-align: left;
+    padding: 3px 4px 3px 6px;
+    border: 1px solid #d6ddf2;
+    border-radius: 3px;
+    display: flex;
+  }
+  .radiosecsinew input.form-control {
+    width: 17px;
+    margin-right: 10px;
+    margin-top: 0px;
+    height: 22px;
+  }
+  .checkbutnew:first-child {
+    margin: 0px;
+  }
+  .checkbutnew {
+    position: relative;
+    width: 100%;
+    border: 1px solid #d6ddf2;
+    margin-left: 7px;
+  }
+  .checkbutnew input.form-control {
+    appearance: none;
+    position: absolute;
+    background-color: unset;
+    width: 100%;
+    border-radius: 0px;
+    height: 24px;
+    border: medium none !important;
+    cursor: pointer;
+  }
+.checkbutnew input.form-control:focus {
+    background-color: transparent !important;
+}
+  .checkbutnew {
+    position: relative;
+    width: 100%;
+    border: 1px solid #d6ddf2;
+    margin-left: 7px;
+    padding: 3px 5px 3px 7px;
+    border-radius: 3px;
+  }
+  img.hideictest {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 10px;
+    display: none;
+  }
+  .checkbutnew input.form-control:checked ~ img.hideictest {
+    display: block;
+  }
+ 
+  .mainbacklogform input[type="file"] {
+    opacity: 0;
+    cursor: pointer;
+  }
+  .fileupsec {
+    position: relative;
+  }
+  
+  .mainbacklogform input[type="file"] {
+    opacity: 0;
+    cursor: pointer;
+    width: 125px;
+    z-index: 1;
+    position: relative;
+  }
+  .fileupsec span {
+    position: absolute;
+    background-color: #00a1e3;
+    border-color: #00a1e3;
+    color: #fff;
+    padding: 4px 20px;
+    top: 0px;
+    border-radius: 4px;
+    left: 0px;
+    cursor: pointer;
+    z-index: 0;
+  }
+  .fileupsec span:hover {
+    border-color: #00a1e3;
+    background-color: #fff;
+    color:#00a1e3;
+  }
+ 

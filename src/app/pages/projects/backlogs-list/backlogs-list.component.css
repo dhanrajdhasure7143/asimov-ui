@@ -1,0 +1,14 @@
+.backlogsdiv-body {
+    padding: 10px;
+}
+.backlogsdiv-body tbody td {
+    padding: 5px 10px;
+}
+
+.backlogsdiv-body tbody tr {
+    border-bottom: 1px solid #dee2e6;
+}
+
+.backlogsdiv-body tbody tr:hover {
+    background-color: #f2d12b33;
+}
