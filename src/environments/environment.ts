@@ -26,6 +26,7 @@ export const environment = {
   platform_home_url: 'https://eiapclouddemo.epsoftinc.com:86/#/',
   pi_node_jobs: "http://172.16.0.67:5000",
   projectendpoint_url:'https://eiapdemoapi.epsoftinc.com:96/pcs',
+  subscriptionendpoint_url:'https://eiapdemoapi.epsoftinc.com:96/subscriptions',
 
 //BPMN Platform URL
  // bpmnplatformUrl : "http://10.11.0.127:8080",
