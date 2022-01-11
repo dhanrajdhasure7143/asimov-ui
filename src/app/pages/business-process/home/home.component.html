@@ -2,7 +2,7 @@
     <div class="container-fluid new-bps-layout h-100">
         <div class="header_addon row approval_workflow_properties">
             <div class="col-md-8"></div>
-            <!-- <div class="col-md-4 new-cockpit module-heading-buttons">
+                        <!-- <div class="col-md-4 new-cockpit module-heading-buttons">
         <a class="btn btn-primary" *ngIf="isApproverUser" routerLink="/pages/approvalWorkflow/home">Approval
             Workflow</a>
         <a class="btn btn-primary" href="javascript:void(0);" (click)="gotoBPMNPlatform()">View Cockpit</a>
@@ -41,7 +41,7 @@
                     </div>
                 </div>
                 <div class="row col-md-12 text-bold workspace-title" matSort>
-                    <!-- <div class="header" matSort> -->
+                                        <!-- <div class="header" matSort> -->
                     <div class="expan-icon"></div>
                     <div class="cell cell2" mat-sort-header="bpmnProcessName">Process Name
                         <!-- <div class="cell cell2" mat-sort-header="bpmnProcessName" (click)="sort('bpmnProcessName',0)">Process Name -->
@@ -92,7 +92,7 @@
                         <mat-expansion-panel [(expanded)]="each_diag.xpandStatus" *ngFor="let each_diag of displayedRows$ | async ;let i=index;trackBy:loopTrackBy" [id]="'bpmn_list_item'+i" (afterExpand)="getDiagram(each_diag,i)" hideToggle>
                             <mat-expansion-panel-header class="dropdown_icon">
                                 <mat-panel-title>
-                                    <!-- id="bpmn_list_row" -->
+                                     <!-- id="bpmn_list_row" -->
                                     <!-- <div class="table">
                     <div class="rowGroup"> -->
                                     <div class="row col-md-12">
@@ -112,16 +112,24 @@
 
                                         <div class="cell cell9"><img src="../../../../assets/images/BPMS/Msg.svg" class="testplus" [matTooltip]=each_diag.reviewComments matTooltipClass="bpsHeaderTooltip" matTooltipPosition="right"></div>
                                         <div class="cell cell10">
-                                            <img src="../../../../assets/images/BPMS/Envelop.svg" (click)="sendReminderMail($event, each_diag)" *ngIf="isAdminUser && each_diag.bpmnProcessStatus=='PENDING'" matTooltip="Click to send reminder mail to Approver" matTooltipPosition="left" class="testplus1">
+                                            <img src="../../../../assets/images/BPMS/Envelop.svg" (click)="sendReminderMail($event, each_diag)" *ngIf="(isAdminUser && each_diag.bpmnProcessStatus=='PENDING') || (each_diag.bpmnProcessStatus=='PENDING' && (each_diag.userEmail == userEmail))" matTooltip="Click to send reminder mail to Approver" matTooltipPosition="left" class="testplus1">
                                             <!-- <i (click)="sendReminderMail($event, each_diag)"
                             *ngIf="isAdminUser && each_diag.bpmnProcessStatus=='PENDING'"
                             title="Click to send reminder mail to Approver" class="fa fa-envelope"></i> -->
                                             <!-- <i (click)="deleteProcess($event, each_diag)" *ngIf="each_diag.bpmnProcessStatus=='INPROGRESS'"
                             title="Delete BPMNotation" class="glyphicon glyphicon-trash"></i> -->
-                                            <img (click)="deleteProcess($event, each_diag)" *ngIf="(each_diag.bpmnProcessStatus!='PENDING') && ((systemAdmin==true) || ((this.userRole.includes('Process Analyst') && this.userRole.includes('RPA Developer') && this.userRole.includes('Process Owner') && this.userRole.includes('Process Architect')) && (each_diag.userEmail==userEmail) ))" matTooltip="Delete Notation" matTooltipPosition="left" src="../../../../assets/images/BPMS/delete-red.svg"
-                                                class="testplus1">
+                                <span (click)="deleteProcess($event, each_diag)"
+                                    *ngIf="(each_diag.bpmnProcessStatus!='PENDING') && ((systemAdmin==true) || ((userRole.includes('Process Analyst') || userRole.includes('RPA Developer') || userRole.includes('Process Owner') || userRole.includes('Process Architect')) && (each_diag.userEmail==userEmail) ))"
+                                    class="delete-icon">
+                                    <img src="../../../../assets/images/Projects/delete-black.svg" matTooltip="Delete Notation"
+                                        matTooltipPosition="left" class="default-img">
+                                    <img src="../../../../assets/images/Projects/delete-red.svg" matTooltip="Delete Notation" matTooltipPosition="left"
+                                        class="hover-img">
+                                </span>
+                                            <!-- <img (click)="deleteProcess($event, each_diag)" *ngIf="(each_diag.bpmnProcessStatus!='PENDING') && ((systemAdmin==true) || ((this.userRole.includes('Process Analyst') && this.userRole.includes('RPA Developer') && this.userRole.includes('Process Owner') && this.userRole.includes('Process Architect')) && (each_diag.userEmail==userEmail) ))" matTooltip="Delete Notation" matTooltipPosition="left" src="../../../../assets/images/BPMS/delete-red.svg"
+                                                class="testplus1"> -->
                                             <!-- <i *ngIf="each_diag.bpmnProcessStatus!='INPROGRESS' && (each_diag.bpmnProcessStatus=='APPROVED' || each_diag.bpmnProcessStatus=='REJECTED' || !isAdminUser)">-</i> -->
-                                            <i *ngIf="each_diag.bpmnProcessStatus=='PENDING' && (!isAdminUser)">-</i>
+                                            <i *ngIf=" !userRole.includes('System Admin') && (each_diag.userEmail != userEmail)">-</i>
                                         </div>
                                     </div>
                                     <!-- </div>
@@ -141,7 +149,7 @@
                         </mat-expansion-panel>
                     </mat-accordion>
                 </div>
-                <!-- <div *ngIf='saved_diagrams.length>0'>
+                                <!-- <div *ngIf='saved_diagrams.length>0'>
           <pagination-controls class="pagination" (pageChange)="p = $event"></pagination-controls>
         </div> -->
                 <div class="bpspaginationdiv">
@@ -155,7 +163,7 @@
 
 <div class="spinoverlay" *ngIf="isLoading">
     <div class="spincenter">
-        <!-- <mat-progress-spinner diameter=50 mode="indeterminate"></mat-progress-spinner> -->
+         <!-- <mat-progress-spinner diameter=50 mode="indeterminate"></mat-progress-spinner> -->
         <img src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader" />
     </div>
 </div>

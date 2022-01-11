@@ -608,3 +608,7 @@ border-radius:4px;
 .notif-close img {
   opacity: 0.2;
 }
+.notification-footer h4{
+  text-align: center;
+  color: #b3b3b3;
+}

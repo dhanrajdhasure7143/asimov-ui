@@ -246,3 +246,13 @@ div#bpmn_list {
        font-size: 14px !important;
        width: 98%;
     }
+    .delete-icon img{
+        width: 16px;
+        height: 16px;
+    }
+    .delete-icon:hover img.default-img {
+        display: none;
+    }
+    .delete-icon:hover img.hover-img {
+        display: initial;
+    }
