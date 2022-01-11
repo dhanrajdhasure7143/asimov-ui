@@ -28,6 +28,7 @@ export class CreateTasksComponent implements OnInit {
   approverslist: any=[];
   project_id:number;
   taskDescriptionFlag: boolean = false;
+  freetrail: string;
   constructor(private formBuilder: FormBuilder,private spinner:NgxSpinnerService,private api:RestApiService,
     private router: Router, private route:ActivatedRoute) { }
 
@@ -42,7 +43,7 @@ export class CreateTasksComponent implements OnInit {
       taskName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       timeEstimate: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       endDate: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      approvers: ["",Validators.compose([Validators.required, Validators.maxLength(50)])],
+      approvers: ["",Validators.compose([Validators.maxLength(50)])],
       description: ["", Validators.compose([Validators.maxLength(200)])],
       })
 
@@ -58,6 +59,12 @@ export class CreateTasksComponent implements OnInit {
         this.getallbots();
       })
       this.getProjectDetails();
+      this.freetrail=localStorage.getItem('freetrail')
+      if(this.freetrail!='true') {
+        this.createtaskForm.get('approvers').setValidators(Validators.required)
+      } else {
+        this.createtaskForm.get('approvers').clearValidators();
+      }
 
   }
 
