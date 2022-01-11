@@ -53,6 +53,8 @@ import { EditTaskComponent } from './edit-task/edit-task.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { IntitiativePipe } from './pipes/initiatives-pipe.pipe';
 import { NotifierService } from 'angular-notifier';
+import { BacklogsListComponent } from './backlogs-list/backlogs-list.component';
+import { CreateBacklogComponent } from './create-backlog/create-backlog.component';
 
 const materialModules: any[] = [
     
@@ -61,7 +63,7 @@ const materialModules: any[] = [
 
 @NgModule({
   declarations: [ProjectsComponent, ProjectsListScreenComponent, ProjectsProgramsTableComponent, CreateProjectsComponent, FileSizePipe,UserImagePipe,
-    ProjectDetailsScreenComponent,ProjectDetailsHeaderComponent, ProjectsDashboardComponent, ProcessNamePipe,IntitiativePipe, UserPipePipe, ProjectRepoScreenComponent,CreateTasksComponent, AddResourcesComponent,ProgramDetailsComponent, UserDetialsPipe,RequestFileComponent, CreateProjectFormComponent, EditTaskComponent],
+    ProjectDetailsScreenComponent,ProjectDetailsHeaderComponent, ProjectsDashboardComponent, ProcessNamePipe,IntitiativePipe, UserPipePipe, ProjectRepoScreenComponent,CreateTasksComponent, AddResourcesComponent,ProgramDetailsComponent, UserDetialsPipe,RequestFileComponent, CreateProjectFormComponent, EditTaskComponent, BacklogsListComponent, CreateBacklogComponent],
   imports: [
     CommonModule,
     ProjectsRoutingModule,

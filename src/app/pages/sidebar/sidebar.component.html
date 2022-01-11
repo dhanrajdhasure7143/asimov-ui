@@ -39,7 +39,7 @@
   </a> -->
 
 
-            <a mat-list-item class="link" id="projects" (click)="hightlight('projects',null)" routerLink="/pages/projects/listOfProjects" [matTooltip]=" !obj.sideBarOpen ? 'Projects' : ''" matTooltipClass="sidebarTooltip" matTooltipPosition="right">
+            <!-- <a mat-list-item class="link" id="projects" (click)="hightlight('projects',null)" routerLink="/pages/projects/listOfProjects" [matTooltip]=" !obj.sideBarOpen ? 'Projects' : ''" matTooltipClass="sidebarTooltip" matTooltipPosition="right">
                 <span class="side-icon">
     <span class="active-img" id="eiap-home-icon-active">
         <img src="../../../assets/images/dashboard_icons/active-icons/Projects.svg">
@@ -53,7 +53,36 @@
                 </span>
 
                 <span class="side-menu-font" (click)="hightlight('listOfProjects','null')">Projects</span>
-            </a>
+            </a> -->
+
+            <mat-list-item (click)="showProjectsSubmenu = !showProjectsSubmenu; selection()"
+              [ngClass]="{'activeMenu' : showProjectsSubmenu}" id='expand_projects' class="link"
+              [matTooltip]=" !obj.sideBarOpen ? 'Projects' : ''" matTooltipClass="sidebarTooltip" matTooltipPosition="right">
+              <span class="side-icon">
+                <span class="active-img" id="eiap-home-icon-active">
+                  <img src="../../../assets/images/dashboard_icons/active-icons/Projects.svg">
+                </span>
+                <span class="hover-img" id="eiap-home-icon-white">
+                  <img src="../../../assets/images/dashboard_icons/white-icons/Projects.svg">
+                </span>
+                <span class="default-img" id="eiap-home-icon-gray">
+                  <img src="../../../assets/images/dashboard_icons/grey-icons/Projects.svg">
+                </span>
+              </span>
+              <span class="side-menu-font">Projects</span>
+              <mat-icon class="menu-button" [ngClass]="{'rotated' : showProjectsSubmenu}">&#xe5cf;
+              </mat-icon>
+            </mat-list-item>
+            <div class="submenus" [ngClass]="{'expanded' : showProjectsSubmenu}">
+              <a mat-list-item class="link" id='backlogs' (click)="hightlight('backlogs','expand_projects')"
+                routerLink="/pages/projects/backlogsList">
+                <span class="side-menu-font">Backlogs</span>
+              </a>
+              <a mat-list-item class="link" id='projectsList' (click)="hightlight('projectsList','expand_projects')"
+                routerLink="/pages/projects/listOfProjects">
+                <span class="side-menu-font">Projects List</span>
+              </a>
+            </div>
 
             <!-- <a mat-list-item class="link" id="process" (click)="hightlight('process',null)" [matTooltip]=" !obj.sideBarOpen ? 'Processes' : ''" matTooltipClass="sidebarTooltip" matTooltipPosition="right">
     <span class="side-icon">
