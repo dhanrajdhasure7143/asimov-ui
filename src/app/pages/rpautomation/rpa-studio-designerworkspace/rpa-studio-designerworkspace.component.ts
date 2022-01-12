@@ -224,9 +224,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       let inseq=String(element.inSeqId);
       let outseq=String(element.outSeqId);
       if(inseq.split("_")[0]=="START"){
-        console.log((this.finaldataobjects[index].nodeId.split("|").length))
         this.coordinates=(this.finaldataobjects[index].nodeId.split("|")!=undefined)?this.finaldataobjects[index].nodeId.split("|"):undefined;
-        
         if(this.coordinates!=undefined)
         {
           this.finaldataobjects[index].nodeId=this.coordinates[0];
