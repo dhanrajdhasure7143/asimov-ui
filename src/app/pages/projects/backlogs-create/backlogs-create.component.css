@@ -1,6 +1,11 @@
 .module-header-title.innertitle {
     line-height: 36px;
 }
+h1.create-heading {
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+}
 .CreateTkt-footer {
     display: flex;
     justify-content: flex-end;
