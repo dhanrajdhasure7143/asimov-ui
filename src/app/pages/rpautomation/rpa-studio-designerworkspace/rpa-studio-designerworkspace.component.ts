@@ -224,12 +224,10 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       let inseq=String(element.inSeqId);
       let outseq=String(element.outSeqId);
       if(inseq.split("_")[0]=="START"){
-      
-        this.coordinates=(this.finaldataobjects[0].x.split("|")!=undefined)?this.finaldataobjects[0].nodeId.split("|"):undefined;
-        
+        this.coordinates=(this.finaldataobjects[index].nodeId.split("|")!=undefined)?this.finaldataobjects[index].nodeId.split("|"):undefined;
         if(this.coordinates!=undefined)
         {
-          this.finaldataobjects[0].nodeId=this.coordinates[0];
+          this.finaldataobjects[index].nodeId=this.coordinates[0];
         }
         let startnode = {
           id: inseq,
