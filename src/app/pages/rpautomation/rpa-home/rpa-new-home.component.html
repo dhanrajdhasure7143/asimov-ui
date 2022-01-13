@@ -211,7 +211,7 @@
                                 <div *ngIf="checkbotname && editbot.get('botName').touched" class="errspan required">
                                     Bot Name is already exists*
                                 </div>
-                                <div *ngIf="botNamespace" class="errspan required">Spaces are not allowed</div>
+                                <div *ngIf="botNamespace" class="errspan required">dots are not allowed</div>
 
                                 <div *ngIf="editbot.controls['botName'].hasError('maxlength')" class="errspan required">
                                     Maximum of 30 characters exceeded.
@@ -279,7 +279,7 @@
                                 <div *ngIf="checkbotname " class="errspan required">
                                     Bot Name is already exists*
                                 </div>
-                                <div *ngIf="botNamespace" class="errspan required">Spaces are not allowed</div>
+                                <div *ngIf="botNamespace" class="errspan required">spaces and dots are not allowed</div>
 
                                 <div *ngIf="insertbot.controls['botName'].hasError('maxlength')" class="errspan required">
                                     Maximum of 30 characters exceeded

@@ -118,7 +118,7 @@ Workspace
                       <div *ngIf="checkbotname " class="errspan required">
                           Bot Name is already exists*
                       </div>
-                      <div *ngIf="botNamespace" class="errspan required">Spaces are not allowed</div>
+                      <div *ngIf="botNamespace" class="errspan required">Spaces and dots are not allowed</div>
 
                       <div *ngIf="insertbot.controls['botName'].hasError('maxlength')" class="errspan required">
                           Maximum of 30 characters
