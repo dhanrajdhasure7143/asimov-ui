@@ -146,6 +146,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.spinner.hide();
     }, 900);
 
+    this.dataTransfer.logged_userData.subscribe(res=>{
+      if(res){
+        this.addUserName(res);
+      }
+    });
 
   }
 
@@ -361,5 +366,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
       })
 
     }
+  }
+
+  addUserName(data){
+    this.user_fName=data.firstName;
+        this.user_lName=data.lastName;
+
+        var fname_fLetter = data.firstName.charAt(0);
+        var lname_fLetter = data.lastName.charAt(0);
+        this.user_firstletter = fname_fLetter + lname_fLetter;
   }
 }
