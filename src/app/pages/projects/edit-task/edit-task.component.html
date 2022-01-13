@@ -48,10 +48,11 @@
 </div>
 <div class="edit-task-body">
     <div class="edit-task-body-content">
+        <form [formGroup]="updatetaskForm" (ngSubmit)="updatetask()">
         <div class="row">
             <div class="col-md-5 pl-0">
 
-                <form [formGroup]="updatetaskForm" (ngSubmit)="updatetask()">
+               
 
                     <div class="form-fields col-md-6 pl-0">
                         <label class="h6 label-control" id="assignee" for="assignee">Assignee</label>
@@ -138,7 +139,7 @@
                     </div>
 
 
-                </form>
+               
             </div>
             <div class="col-md-7 pr-0">
                 <h4 class="module-sub-header-title">Activity</h4>
@@ -271,12 +272,12 @@
                     <mat-tab label="Attachments">
                         <div class="row attachmentdiv">
                             <span class="Attachmentsicons" *ngIf="hidetaskdeletedownload">
-                      <button [disabled]="filecheckflag" class="projects-menu-item gridicon"  (click)="onDeleteSelectedItems($event)"   matTooltip="Delete" >
+                      <button type="button" [disabled]="filecheckflag" class="projects-menu-item gridicon"  (click)="onDeleteSelectedItems($event)"   matTooltip="Delete" >
                         <img src="../../../../assets/images/Projects/delete-black.svg" class="default-img">
                         <img src="../../../../assets/images/Projects/delete-red.svg" class="hover-img">
                       </button> 
                       
-                      <button [disabled]="filecheckflag" class="projects-menu-item gridicon" (click)="onDownloadSelectedItems($event)"   matTooltip="Download" >
+                      <button type="button" [disabled]="filecheckflag" class="projects-menu-item gridicon" (click)="onDownloadSelectedItems($event)"   matTooltip="Download" >
                         <img src="../../../assets/images/BPMS/download.svg"  class="default-img">
                         <img src="../../../../assets/images/Projects/Download.svg" class="hover-img">
                       </button>
@@ -402,6 +403,6 @@
                 </mat-tab-group>
             </div>
         </div>
-
+    </form>
     </div>
 </div>
