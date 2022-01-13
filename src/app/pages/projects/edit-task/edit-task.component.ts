@@ -472,13 +472,16 @@ else
   }
 
   onDeleteSelectedItems(event){
-    var selectedFiles = [];
-    selectedFiles=this.taskattacments.filter(product => product.checked==true).map(p=>{
+    const selectedFiles = [];
+    this.taskattacments.filter(product => product.checked==true).map(p=>{
       let obj={
         "id": p.id,
         "fileName": p.fileName
       }
+      console.log(obj)
+      selectedFiles.push(obj);
       });
+      
       Swal.fire({
         title: 'Are you sure?',
         text: "You won't be able to revert this!",
