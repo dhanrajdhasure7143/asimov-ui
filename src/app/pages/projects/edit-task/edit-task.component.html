@@ -58,6 +58,7 @@
                         <!-- <span class="labelcont">{{taskresource| userPipe : users_list}}</span> -->
                         <select [value]="taskresource" formControlName="resources" class="form-control rpa-control">
                     <option >Select Assignee</option>
+
                     <option *ngFor="let user of users_list" [value]="user.userId.userId">{{user.userId.firstName}} {{user.userId.lastName}}</option>
                   </select>
                     </div>
