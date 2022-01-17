@@ -555,23 +555,30 @@ margin:5px 0;
 }
 
 .item-title {
-
+/* 
 font-size:1.3rem;
 color:#0ba4ee;
-font-weight: bold;
+font-weight: bold; */
+  font-size: 14px;
+  font-weight: 500;
+  color: #00a0e3;
+  display: inline-block;
 }
 .notification-created
 {
-  font-size: 1.0rem;
-  color: #4fc306;
+  /* font-size: 1.0rem;
   margin-top: -32px;
   font-weight: bold;
-  padding-left: 141px;
+  padding-left: 141px; */
+  font-size: 12px;
+  padding-left: 10px;
+  color: #4fc306;
 }
 
 .item-info{
   white-space: pre-line;
-  font-weight: bold;
+  font-weight: 400;
+  font-size: 14px;
   /* color: rgb(9, 26, 9); */
 }
 
@@ -584,10 +591,24 @@ background:#ccc;
 .notification-item {
 padding:10px;
 margin:5px;
-background:#f2ebeb;
+/* background:#f2ebeb; */
+background:#f5f5f5;
 border-radius:4px;
 }
 
 .notification_action_cell{
-  margin-top: -46px;
+  /* margin-top: -46px; */
+  margin-top: 3px;
+}
+
+.notif-close {
+  float: right;
+  line-height: 30px;
+}
+.notif-close img {
+  opacity: 0.2;
+}
+.notification-footer h4{
+  text-align: center;
+  color: #b3b3b3;
 }

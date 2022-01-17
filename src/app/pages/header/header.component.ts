@@ -52,7 +52,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   user_details:any;
   user_firstletter:any;
   user_lName:any
-  user_fName:any
+  user_fName:any;
 
   constructor(
     private router: Router,
@@ -140,13 +140,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.spinner.show();    
     setTimeout(() => {
       this.userDetails();
-      this.getAllNotifications();
-      this.getNotifications();
+      // this.getAllNotifications();
     }, 1000);
     setTimeout(() => {
       this.spinner.hide();
     }, 900);
 
+    this.dataTransfer.logged_userData.subscribe(res=>{
+      if(res){
+        this.addUserName(res);
+      }
+    });
 
   }
 
@@ -226,11 +230,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     this.rpa.getUserDetails(userid).subscribe(res => {
       this.retrieveResonse = res;
-      
+      this.user_details=this.retrieveResonse;
+      this.getAllNotifications();
         this.user_name = this.retrieveResonse.firstName
         this.user_designation = this.retrieveResonse.designation
         
-        this.user_details=this.retrieveResonse;
       this.dataTransfer.userDetails(this.user_details);
 
         this.user_fName=this.user_details.firstName;
@@ -263,10 +267,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
       }
     }, 10000);
   }
+
   getAllNotifications() {
-    let userId = localStorage.getItem("ProfileuserId")
-    this.tenantId = localStorage.getItem('tenantName');
-    this.role = localStorage.getItem('userRole')
+    let userId = this.user_details.userId;
+    this.tenantId = this.user_details.tenantID;
+    this.role = this.userRole[0];
     let notificationbody = {
       "tenantId": this.tenantId
     }
@@ -274,27 +279,22 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.rpa.getNotificationaInitialCount(this.role, userId, notificationbody).subscribe(data => {
       this.notificationList = data
       this.notificationscount = this.notificationList
-      // console.log(this.notificationscount)
       if (this.notificationscount == undefined || this.notificationscount == null) {
         this.notificationscount = 0;
       }
-      // console.log("count",this.notificationList.length)
     })
     this.getCount();
-
   }
 
   deletnotification(id) {
     this.dataid = id
   }
+
   canceldeleteNotification(index) {
     this.dataid = '';
   }
-  deleteNotification(data, index) {
-    console.log(data)
 
-    // console.log(resp)
-    this.getNotifications();
+  deleteNotification(data, index) {
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -318,7 +318,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
             confirmButtonText: 'Ok'
           }).then((result) => {
             if (result.value) {
-              window.location.reload();
+              // window.location.reload();
+              this.getNotificationsList();
             }
           })
         });
@@ -326,29 +327,32 @@ export class HeaderComponent implements OnInit, OnDestroy {
     });
   }
 
-  getNotifications() {
-    let userId = localStorage.getItem("ProfileuserId")
-    this.tenantId = localStorage.getItem('tenantName');
-    this.role = localStorage.getItem('userRole')
+  getNotificationsList() {
+    let userId = this.user_details.userId
+    this.tenantId = this.user_details.tenantID;
+    this.role = this.userRole[0];
     let notificationbody = {
       "tenantId": this.tenantId
     }
+    let resp_data:any;
     this.rpa.getNotifications(this.role, userId, notificationbody).subscribe(data => {
-      this.notificationsList = data
-      if (this.notificationsList.errorMessage == 'No records found') {
+      resp_data = data
+      if(Array.isArray(resp_data)){
+        this.notificationsList=resp_data
+      }
+      if (resp_data.errorMessage == 'No records found') {
         this.error = "No Records Found"
       }
     })
   }
 
   notificationclick(id) {
-    let userId = localStorage.getItem("ProfileuserId")
-    this.tenantId = localStorage.getItem('tenantName');
-    this.role = localStorage.getItem('userRole')
+    let userId = this.user_details.userId;
+    this.tenantId = this.user_details.tenantID;
+    this.role = this.userRole[0];
     this.notificationbody = {
       "tenantId": this.tenantId
     }
-    console.log("notification id", id)
     if (this.notificationsList.find(ntf => ntf.id == id).status != 'read') {
       this.rpa.getReadNotificaionCount(this.role, userId, id, this.notificationbody).subscribe(data => {
         this.notificationreadlist = data
@@ -356,11 +360,20 @@ export class HeaderComponent implements OnInit, OnDestroy {
         // document.getElementById('ntf_'+id).style.color="grey"
         //document.getElementById('date_'+id).style.color="grey"
         //document.getElementById(id).style.cursor="none"
-        window.location.reload();
+        // window.location.reload();
         // console.log(this.notificationreadlist)
+        this.getNotificationsList();
       })
 
     }
   }
 
+  addUserName(data){
+    this.user_fName=data.firstName;
+        this.user_lName=data.lastName;
+
+        var fname_fLetter = data.firstName.charAt(0);
+        var lname_fLetter = data.lastName.charAt(0);
+        this.user_firstletter = fname_fLetter + lname_fLetter;
+  }
 }
