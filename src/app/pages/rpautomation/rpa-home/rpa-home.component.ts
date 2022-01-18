@@ -947,7 +947,7 @@ export class RpaHomeComponent implements OnInit {
         this.count= this.count+1;
       }
     }
-    if(this.count !== 0)
+    if(this.count !== 0) 
     {
       this.botNamespace = true;
     }
