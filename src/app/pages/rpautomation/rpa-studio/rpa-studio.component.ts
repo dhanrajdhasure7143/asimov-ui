@@ -189,7 +189,7 @@ export class RpaStudioComponent implements OnInit {
   validate(code){
     let validate = code;
     this.count = 0;
-    for(let i=0;i < validate.length -1; i++){
+    for(let i=0;i < validate.length; i++){
       if(validate.charAt(i) == String.fromCharCode(32)||validate.charAt(i) == String.fromCharCode(46)){
         this.count= this.count+1;
       }

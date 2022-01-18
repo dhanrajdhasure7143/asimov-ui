@@ -97,27 +97,41 @@ getAllCategories(){
         }
     ]
    }
-   this.api.inviteUserwithoutReg(body).subscribe(resp => {
-     if(resp.message==="User invited Successfully !!"){
-        Swal.fire({
-        title: 'Success',
-        text: "User Invited Successfully !!",
-        position: 'center',
-        icon: 'success',
-        showCancelButton: false,
-        confirmButtonColor: '#007bff',
-        heightAuto: false,
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Ok'
-    }).then((result) => {
-      this.resetUserInvite();
-      this.router.navigate(['/pages/admin/user-management'])
-    }) 
-    }else {
+   var domianArr = this.inviteeMail.split('@');
+   console.log(domianArr[1]);
+   this.api.getWhiteListedDomain(domianArr[1]).subscribe(res => {
+     if(res.Message && res.Message === "White listed domain.. Please proceed with invite"){
+      this.api.inviteUserwithoutReg(body).subscribe(resp => {
+        if(resp.message==="User invited Successfully !!"){
+           Swal.fire({
+           title: 'Success',
+           text: "User Invited Successfully !!",
+           position: 'center',
+           icon: 'success',
+           showCancelButton: false,
+           confirmButtonColor: '#007bff',
+           heightAuto: false,
+           cancelButtonColor: '#d33',
+           confirmButtonText: 'Ok'
+       }).then((result) => {
+         this.resetUserInvite();
+         this.router.navigate(['/pages/admin/user-management'])
+       }) 
+       }else {
+         Swal.fire("Error","Failed to invite! Check if user already exists!!","error");
+       }
+       this.spinner.hide();
+      });
+     }else if(res.errorMessage){
+      Swal.fire("Error",res.errorMessage,"error");
+      this.spinner.hide();
+      return;
+     }else{
+      this.spinner.hide();
       Swal.fire("Error","Failed to invite! Check if user already exists!!","error");
-    }
-    this.spinner.hide();
-   });
+     }
+   })
+   
   }
 
   onchangeRole(value){

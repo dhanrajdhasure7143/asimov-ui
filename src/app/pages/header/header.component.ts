@@ -227,36 +227,26 @@ export class HeaderComponent implements OnInit, OnDestroy {
     var userDetails = localStorage.getItem('accessToken');
     var deCryptUserDetails = this.jwtHelper.decodeToken(userDetails);
     let userid = deCryptUserDetails.userDetails.userId;
-
     this.rpa.getUserDetails(userid).subscribe(res => {
       this.retrieveResonse = res;
-      this.user_details=this.retrieveResonse;
-      this.getAllNotifications();
-        this.user_name = this.retrieveResonse.firstName
-        this.user_designation = this.retrieveResonse.designation
-        
-      this.dataTransfer.userDetails(this.user_details);
-
-        this.user_fName=this.user_details.firstName;
-        this.user_lName=this.user_details.lastName;
-
-        var fname_fLetter = this.user_details.firstName.charAt(0);
-        var lname_fLetter = this.user_details.lastName.charAt(0);
-        this.user_firstletter = fname_fLetter + lname_fLetter;
-
-      if (this.retrieveResonse.image == null || this.retrieveResonse.image == "") {
-        this.profilePicture = false;
+      if (res) {
+        this.user_details = this.retrieveResonse;
+        this.getAllNotifications();
+        this.getNotificationsList();
+        this.user_name = this.retrieveResonse.firstName;
+        this.user_designation = this.retrieveResonse.designation;
+        this.dataTransfer.userDetails(this.user_details);
+        this.addUserName(this.user_details);
+        if (this.retrieveResonse.image == null || this.retrieveResonse.image == "") {
+          this.profilePicture = false;
+        }
+        else {
+          this.profilePicture = true;
+        }
+        this.base64Data = this.retrieveResonse.image;
+        this.retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;
       }
-      else {
-        this.profilePicture = true;
-      }
-      this.base64Data = this.retrieveResonse.image;
-      // console.log("image",this.base64Data);
-      // localStorage.setItem('image', this.base64Data);
-      this.retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;
-      // console.log(this.retrievedImage);
-    }
-    );
+    });
   }
 
   getCount() {

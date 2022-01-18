@@ -1,0 +1,80 @@
+<div class="addNewBacklogsmaindiv h-100">
+    <mat-card class="h-100">
+        <div class="module-heading title">
+            <span class="module-back-button" routerLink="/pages/projects/backlogsList">
+                <i class="fas fa-arrow-left" aria-hidden="true"></i>
+            </span>
+            <div class="col-md-12 p-0">
+                <div class="col-md-9 p-0">
+                    <span class="module-header-title innertitle">Add New Backlog
+                    </span>
+                </div>
+                <div class="col-md-3 p-0 pull-right CreateTkt-footer">
+                    <button class="btn btn-default">Cancel</button>
+                    <button class="btn btn-primary">Save</button>
+                </div>
+                
+            </div>
+        </div>
+        <div class="container-fluid CreateTkt h-scroll">
+            <div class="maindivfoprm mainbacklogform">
+                    <h1 class="create-heading">Create New Backlog</h1>
+                    <form >
+                        <div class="row">
+                            <div class="col-md-12 p-0 form-fields">
+                                <label class="label-control">Requester</label>
+                                <select id="" class="form-control">
+                                    <option selected>Peter James</option>
+                                    <option>Katie Olivia</option>
+                                    <option>David Wade</option>
+                                    <option>John Sick</option>
+                                </select>
+                            </div>
+                         
+                            <div class="row">
+                                <div class="col-md-6 pl-0 form-group">
+                                    <label class="label-control" for="">Process</label>
+                                    <div class="d-flex">
+                                        <div class="radiosecsinew"><input type="radio" name="process" id="new" value="newvalue" class="form-control"><span>New</span></div>
+                                        <div class="radiosecsinew"><input type="radio" name="process" id="existing" value="existingvalue" class="form-control"><span>Existing</span></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 pr-0 form-group">
+                                    <label class="label-control" for="">Choose Process Level</label>
+                                    <div class="d-flex">
+                                        <div class="checkbutnew"><input type="checkbox" name="" id="" class="form-control">Level 1 <img src="../../../../assets/images/Projects/Tick.svg" alt="" class="hideictest"></div>
+                                        <div class="checkbutnew"><input type="checkbox" name="" id="" class="form-control">Level 2 <img src="../../../../assets/images/Projects/Tick.svg" alt="" class="hideictest"></div>
+                                        <div class="checkbutnew"><input type="checkbox" name="" id="" class="form-control">Level 3 <img src="../../../../assets/images/Projects/Tick.svg" alt="" class="hideictest"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 p-0 form-group">
+                                    <label class="label-control" for="">Change Suggestions</label>
+                                    <input type="text" name="" id="" class="form-control" placeholder="Enter Suggestions" >
+                                </div>
+                                <div class="col-md-12 p-0 form-group">
+                                    <label class="label-control" for="">Benifits</label>
+                                    <textarea name="" id="" rows="3" placeholder="Enter Benifits" class="form-control"></textarea>
+                                </div>
+                                <div class="col-md-12 p-0">
+                                    <div class="col-md-6 form-group  pl-0">
+                                       <div class="fileupsec"><input type="file" name="myfile" multiple id=""> <span>Attachments</span></div>
+                                    </div>
+                                    <!-- <div class="col-md-6 pr-0 form-group text-right">
+                                        <button type="button" class="btn btn-default" >Cancel</button>
+                                        <button type="button" class="btn btn-primary" >Save</button>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </form>
+            </div>
+        </div>
+    </mat-card>
+</div>
+
+<div class="spinoverlay" *ngIf="isLoading">
+    <div class="spincenter">
+        <img src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader" />
+    </div>
+</div>
