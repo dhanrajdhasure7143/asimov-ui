@@ -328,7 +328,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
 
   public addconnections(sequences) {
-
     setTimeout(() => {
       this.loadflag = false;
       sequences.forEach(element => {
