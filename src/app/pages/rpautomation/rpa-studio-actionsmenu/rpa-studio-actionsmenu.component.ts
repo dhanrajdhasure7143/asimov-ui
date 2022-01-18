@@ -256,17 +256,17 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
           this.childBotWorkspace.disable=true;
           let bottask:any=this.botState;
           this.getVersionlist();
-          let coordinates=(this.childBotWorkspace.finaldataobjects[0].x.split("|")!=undefined)?this.childBotWorkspace.finaldataobjects[0].nodeId.split("|"):undefined;
-          if(coordinates!=undefined)
-          {
-            this.childBotWorkspace.finaldataobjects[0].nodeId=coordinates[0];
-          }
-          this.childBotWorkspace.uploadfile(this.finalenv);
+          // let coordinates=(this.childBotWorkspace.finaldataobjects[0].x.split("|")!=undefined)?this.childBotWorkspace.finaldataobjects[0].nodeId.split("|"):undefined;
+          // if(coordinates!=undefined)
+          // {
+          //   this.childBotWorkspace.finaldataobjects[0].nodeId=coordinates[0];
+          // }
+          // this.childBotWorkspace.uploadfile(this.finalenv);
 
-          if(bottask.taskId!=0 && bottask.taskId!=undefined)
-          {
-            this.rpa_assignbot(this.savebotrespose.botId, bottask.taskId);
-          }
+          // if(bottask.taskId!=0 && bottask.taskId!=undefined)
+          // {
+          //   this.rpa_assignbot(this.savebotrespose.botId, bottask.taskId);
+          // }
         }
         else
         {
@@ -302,13 +302,17 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
             this.rpa_studio.spinner.hide();
             this.getVersionlist();
             Swal.fire("Success","Bot updated successfully","success")
-            let coordinates=(this.childBotWorkspace.finaldataobjects[0].x.split("|")!=undefined)?this.childBotWorkspace.finaldataobjects[0].nodeId.split("|"):undefined;
-            if(coordinates!=undefined)
-            {
-              this.childBotWorkspace.finaldataobjects[0].nodeId=coordinates[0];
-            }
-            
-            this.childBotWorkspace.uploadfile(this.finalenv);
+            // if(this.childBotWorkspace.finaldataobjects.find(item=>item.inSeqId.split("_")=="START")!=undefined)
+            // {
+            //   let firstTask=this.childBotWorkspace.finaldataobjects.find(item=>item.inSeqId.split("_")=="START")
+            //   let coordinates=(firstTask.nodeId.split("|")!=undefined)?firstTask.nodeId.split("|"):undefined;
+            //   if(coordinates!=undefined)
+            //   {
+            //     this.childBotWorkspace.finaldataobjects.find(item=>item.inSeqId.split("_")=="START").nodeId=coordinates[0];
+            //   }
+            // }
+              this.childBotWorkspace.uploadfile(this.finalenv);
+          
           }
           else
           {
@@ -648,7 +652,7 @@ loadpredefinedbot(botId)
         let nodeid=(element.nodeId.split("__")[1]).split("|")[0];
         j=j+100;
         let node={
-          id:nodename+"__"+this.childBotWorkspace.idGenerator(),
+          id:this.childBotWorkspace.idGenerator(),
           name:nodename,
           selectedNodeTask:element.taskName,
           path:this.rpa_toolset.templateNodes.find(data=>data.name==nodename).path,
@@ -688,9 +692,9 @@ loadpredefinedbot(botId)
       //     }
       //   }
       // }
-      // element.nodeId=nodename+"__"+node.id;
+      element.nodeId=nodename+"__"+node.id;
       this.childBotWorkspace.nodes.push(node);
-      this.childBotWorkspace.finaldataobjects.push(element);
+     // this.childBotWorkspace.finaldataobjects.push(element);
       setTimeout(() => {
         this.childBotWorkspace.populateNodes(node);
       }, 240);
