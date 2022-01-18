@@ -519,7 +519,7 @@ import { NgxSpinnerService } from "ngx-spinner";
       this.spinner.show();
       this.api.deployenvironment(selectedEnvironments).subscribe( res =>{ 
         let data:any=res
-     
+        this.spinner.hide();   
         if(data[0].errorMessage==undefined){
           Swal.fire("Success",data[0].status,"success")
 
@@ -530,10 +530,11 @@ import { NgxSpinnerService } from "ngx-spinner";
         this.getallData(); 
         this.checktoupdate();
         this.checktodelete();  
-        this.spinner.hide();   
+      },err=>{
+        
+          this.spinner.hide(); 
       })
     }
-    this.spinner.hide(); 
   }
   
   applyFilter(filterValue: string) {
