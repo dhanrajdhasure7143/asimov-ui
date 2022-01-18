@@ -422,6 +422,7 @@ export class ProcessOwnerComponent implements OnInit {
     chart.legend.scrollable = true;
 
     chart.cursor = new am4charts.XYCursor();
+    $('g:has(> g[stroke="#3cabff"])').hide();
   }
 
   projectDurationChart(data) {

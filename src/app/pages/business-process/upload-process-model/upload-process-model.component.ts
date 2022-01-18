@@ -1111,6 +1111,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
     this[modeler_obj].saveXML({ format: true }, function(err, xml) {
       let final_notation = btoa(unescape(encodeURIComponent(xml)));
       bpmnModel.bpmnXmlNotation = final_notation;
+      bpmnModel.role=localStorage.getItem("userRole");
       _self.rest.submitBPMNforApproval(bpmnModel).subscribe(
         data=>{
           _self.isLoading = false;

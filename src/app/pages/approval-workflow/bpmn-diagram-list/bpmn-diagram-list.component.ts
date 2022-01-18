@@ -235,7 +235,8 @@ this.selectedrow =i;
       "tenantId": data.tenantId,
       "userName": data.userName,
       "version": data.version,
-      "ntype": data.ntype
+      "ntype": data.ntype,
+      "processOwner":data.processOwner
     };
     this.rest_Api.approve_producemessage(this.approver_info).subscribe(
       data =>{
