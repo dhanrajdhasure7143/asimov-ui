@@ -70,7 +70,7 @@ export class BpsHomeComponent implements OnInit {
     this.bpmnVisible=this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') || this.userRole.includes('Process Owner') || this.userRole.includes('Process Architect')  || this.userRole.includes('Process Analyst')  || this.userRole.includes('RPA Developer')  || this.userRole.includes('Process Architect') || this.userRole.includes("System Admin") ;
     if(this.userRole.includes('SuperAdmin')){
       this.isButtonVisible = true;
-    }else if(this.userRole.includes('Admin') || this.userRole.includes('Process Architect')){
+    }else if(this.userRole.includes('System Admin') ){
       this.isButtonVisible = true;
       this.isAdminUser = true;
     }
@@ -359,11 +359,33 @@ this.dt.bpsHeaderValues('');
           "version": bpmNotation.version
         }
         this.rest.deleteBPMNProcess(data).subscribe(res => {
+          // console.log(res)
+          if(res == "It is an ongoing project.Please contact Project Owner(s)"){
+            Swal.fire({
+              icon: 'info',
+              title: 'Info',
+              text: res,
+              heightAuto: false
+            })
+          }else{
+            Swal.fire({
+              icon: 'success',
+              title: 'Success',
+              text: bpmNotation.bpmnProcessName+' V1.'+bpmNotation.version+' deleted',
+              heightAuto: false
+            });
           this.isLoading = true;
           this.getBPMNList();
-          this.global.notify(bpmNotation.bpmnProcessName+' V1.'+bpmNotation.version+' deleted','success')
+          }
+          // this.global.notify(bpmNotation.bpmnProcessName+' V1.'+bpmNotation.version+' deleted','success')
         }, err => {
-          this.global.notify('Oops! Something went wrong','error')
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!',
+            heightAuto: false,
+          });
+          // this.global.notify('Oops! Something went wrong','error')
         })
       }
     })
