@@ -2693,3 +2693,9 @@ span.pdicon {
   max-height: 65px !important;
   overflow: auto !important;
 }
+.custom-content-notification{
+  min-width: 330px ;
+  /* height: 330px; */
+  height: 310px;
+  overflow: auto;
+}

@@ -701,6 +701,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
     this.bpmnModeler.saveXML({ format: true }, function(err, xml) {
       let final_notation = btoa(unescape(encodeURIComponent(xml)));
       bpmnModel.bpmnXmlNotation = final_notation;
+      bpmnModel.role=localStorage.getItem("userRole");
       _self.rest.submitBPMNforApproval(bpmnModel).subscribe(
         data=>{
           _self.isDiagramChanged = false;
@@ -750,6 +751,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
       bpmnModel.bpmnXmlNotation = final_notation;
       _self.saved_bpmn_list[_self.selected_notation]['bpmnXmlNotation'] = final_notation;
       bpmnModel["processOwner"] = _self.saved_bpmn_list[_self.selected_notation]['processOwner'];
+      bpmnModel.role=localStorage.getItem("userRole");
       _self.rest.saveBPMNprocessinfofromtemp(bpmnModel).subscribe(
         data=>{
           if(status == "APPROVED" || status == "REJECTED"){

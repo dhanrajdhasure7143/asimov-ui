@@ -1111,6 +1111,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
     this[modeler_obj].saveXML({ format: true }, function(err, xml) {
       let final_notation = btoa(unescape(encodeURIComponent(xml)));
       bpmnModel.bpmnXmlNotation = final_notation;
+      bpmnModel.role=localStorage.getItem("userRole");
       _self.rest.submitBPMNforApproval(bpmnModel).subscribe(
         data=>{
           _self.isLoading = false;
@@ -1213,6 +1214,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
       }else{
       bpmnModel.processOwner = _self.saved_bpmn_list[_self.selected_notation]['processOwner'];
       }
+      bpmnModel.role=localStorage.getItem("userRole");
       _self.rest.saveBPMNprocessinfofromtemp(bpmnModel).subscribe(
         data=>{
           _self.isLoading = false;
