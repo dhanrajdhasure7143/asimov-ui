@@ -21,6 +21,7 @@ export class SidebarComponent implements OnInit {
   tenantId: string;
   plansList: any;
   expiry: any;
+  showProjectsSubmenu: boolean = false;
   constructor(private obj:PagesComponent, private dt:DataTransferService,
     private rest_service: RestApiService) { }
 
@@ -59,6 +60,7 @@ export class SidebarComponent implements OnInit {
      this.obj.sideBarOpen=false;
      this.obj.sidebar.showSubmenu=false;
       this.obj.sidebar.showadminSubmenu=false;
+      this.obj.sidebar.showProjectsSubmenu=false;
       this.obj.contentMargin = 60;
   }
   

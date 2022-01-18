@@ -375,6 +375,9 @@ th {
   font-size: 14px !important;
   vertical-align: middle !important;
 }
+thead  tr,tbody tr {
+  height: 40px;
+}
 
 ul.nav.nav-tabs.justify-content-start li {
   height: 38px !important;
