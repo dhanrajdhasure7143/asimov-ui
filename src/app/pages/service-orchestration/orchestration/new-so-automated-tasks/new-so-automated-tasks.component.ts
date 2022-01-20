@@ -507,7 +507,6 @@ resetsla(){
       if(botlist){
         this.bot_list=botlist;
         this.isbotloading='Success'
-        console.log(this.bot_list)
         if(this.selectedvalue!=null){
        
           this.checkTaskAssigned(this.selectedvalue)
@@ -672,7 +671,6 @@ resetsla(){
       else
       {
         let taskslist=this.automatedtask.filter(item=>item.processId==processId)
-        console.log(taskslist)
         for(let i=0; i<taskslist.length;i++)
         {
           let item=taskslist[i]
@@ -697,10 +695,8 @@ resetsla(){
             }
           }else if(item.taskType="Human")
           {
-            console.log("Human")
             if(item.assignedUserId==""||item.assignedUserId==undefined || item.assignedUserId==null || item.assignedUserId=='null')    
             {
-              console.log("human 2");
               this.checkAssignTasks=false
               return true;
             }
@@ -708,12 +704,10 @@ resetsla(){
             {
                 if(this.checkResource(item.assignedUserId,item.sourceType,item.taskType)!="0")
                 {
-                  console.log("Human 3")
                   this.checkAssignTasks=true
                 }
                 else
                 {
-                  console.log("Human 4")
                   this.checkAssignTasks=false; 
                   return true;
                 }

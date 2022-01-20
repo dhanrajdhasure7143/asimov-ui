@@ -175,10 +175,14 @@
                                               </select>
                                           </span>
                                           <span *ngIf="element.sourceType=='UiPath'">
-                                          <select class="form-control" style="width:200px;padding:0px"  [value]="element.botId | checkResource : uipath_bots : element.sourceType : element.taskType " [id]="element.taskId+'__select'">
-                                              <option [selected]="'0'" value="'0'" disabled hidden>Select Resource</option>
+                                              <span *ngIf="uiPathBotFlag==true">
+                                          <select class="form-control" style="width:200px;padding:0px"   [value]="(element.botId | checkResource : uipath_bots : element.sourceType : element.taskType) " [id]="element.taskId+'__select'">
+                                              <option  value="'0'" disabled hidden>Select Resource</option>
                                               <option *ngFor="let bot of uipath_bots" [value]="bot.Key" [selected]="bot.Key==element.botId" >{{bot.ProcessKey}}</option>
                                           </select>
+                                          </span>
+                                          <span *ngIf="uiPathBotFlag==false">Loading...</span>
+
                                         </span>
                                           <span *ngIf="element.sourceType=='BluePrism'">
                                           <select class="form-control" style="width:200px;padding:0px"  [value]="element.botId" [id]="element.taskId+'__select'">
@@ -861,7 +865,7 @@
           <span aria-hidden="true"><img src="../../../../assets/images/Projects/circle-close.svg" alt=""></span>
       </button>
     </div>
-        <div class="modal-body">
+        <div class="modal-body addTasksBlock">
             <form [formGroup]="addTaskForm" #addtask="ngForm" (ngSubmit)="addexistingtasks()">
                 <div class="col-md-12 p-0 form-fields">
                     <label class="label-control">Task(s)<span class="star">*</span></label>
