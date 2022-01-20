@@ -77,6 +77,7 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
   addTaskForm:FormGroup;
   queryParam:Boolean=false;
   checkAssignTasks:Boolean=false;
+  uiPathBotFlag:Boolean=false;
   public tasksArray:any=[];
   public processId:any;
   @ViewChild("paginator10",{static:false}) paginator10: MatPaginator;
@@ -506,6 +507,7 @@ resetsla(){
       if(botlist){
         this.bot_list=botlist;
         this.isbotloading='Success'
+        console.log(this.bot_list)
         if(this.selectedvalue!=null){
        
           this.checkTaskAssigned(this.selectedvalue)
@@ -535,7 +537,7 @@ resetsla(){
       {
         this.rest.getAllActiveBots().subscribe(bots=>{
           this.Active_bots_list=bots;
-          this.responsedata=response.automationTasks.map(item=>{
+          let responsedata=response.automationTasks.map(item=>{
               item["processFilterId"]="processId_"+item.processId+"_"+item.processName
               if(item.sourceType=="UiPath")
                 item["taskOwner"]="Karthik Peddinti";
@@ -546,7 +548,8 @@ resetsla(){
               }
               return item;
           });
-          this.automatedtask= response.automationTasks;
+          this.responsedata=responsedata;
+          this.automatedtask=responsedata;
           this.dataSource2= new MatTableDataSource(this.responsedata);
             this.dataSource2.paginator=this.paginator10;
             setTimeout(()=>{
@@ -636,7 +639,7 @@ resetsla(){
     let processnamebyid=this.process_names.find(data=>parseInt(filterValue)==data.processId);
     this.selectedcategory=parseInt(processnamebyid.categoryId);
     this.selectedvalue=parseInt(processnamebyid.processId);
-    let processes=this.automatedtask.filter(item=>item.processId==this.selectedvalue);
+    let processes=this.responsedata.filter(item=>item.processId==this.selectedvalue);
     this.dataSource2=new MatTableDataSource(processes);
     this.dataSource2.paginator=this.paginator10;
     this.dataSource2.sort=this.automatedSort
@@ -669,6 +672,7 @@ resetsla(){
       else
       {
         let taskslist=this.automatedtask.filter(item=>item.processId==processId)
+        console.log(taskslist)
         for(let i=0; i<taskslist.length;i++)
         {
           let item=taskslist[i]
@@ -693,8 +697,10 @@ resetsla(){
             }
           }else if(item.taskType="Human")
           {
+            console.log("Human")
             if(item.assignedUserId==""||item.assignedUserId==undefined || item.assignedUserId==null || item.assignedUserId=='null')    
             {
+              console.log("human 2");
               this.checkAssignTasks=false
               return true;
             }
@@ -702,10 +708,12 @@ resetsla(){
             {
                 if(this.checkResource(item.assignedUserId,item.sourceType,item.taskType)!="0")
                 {
+                  console.log("Human 3")
                   this.checkAssignTasks=true
                 }
                 else
                 {
+                  console.log("Human 4")
                   this.checkAssignTasks=false; 
                   return true;
                 }
@@ -770,9 +778,10 @@ resetsla(){
         this.spinner.hide();
         if(response.status!=undefined)
         {
-          if(this.automatedtask.find(item=>item.id==id)!=undefined)
+          if(this.automatedtask.find(item=>item.taskId==id)!=undefined)
           {
-            this.automatedtask.find(item=>item.id==id).botId=id;
+            this.automatedtask.find(item=>item.taskId==id).botId=botId;
+            this.responsedata.find(item=>item.taskId=id).botId=botId;
           }
           Swal.fire("Success","Resource Assigned Successfully","success");
           this.checkTaskAssigned(processId);
@@ -796,6 +805,8 @@ resetsla(){
         this.spinner.hide();
         if(response.status!=undefined)
         {
+          this.responsedata.find(item=>item.taskId==task.taskId).assignedUserId=String(botId);
+          this.automatedtask.find(item=>item.taskId==task.taskId).assignedUserId=String(botId);
           Swal.fire("Success",response.status,"success");
           if(this.selectedvalue!="")
           {
@@ -1006,7 +1017,6 @@ resetsla(){
   {
     this.selectedEnvironment="";
     this.selectedvalue="";
-    console.log(this.categaoriesList.length)
     if(this.categaoriesList.length==1)
     {
       this.selectedcategory=(this.categaoriesList[0].categoryId)
@@ -1252,9 +1262,14 @@ resetsla(){
 
   getuipathbots()
   {
+    this.uiPathBotFlag=false;
     this.rest.get_uipath_bots().subscribe((bots)=>{
       let response:any=bots
+      
       this.uipath_bots=response.value;
+      this.uiPathBotFlag=true;
+      if(this.selectedvalue!='')
+        this.checkTaskAssigned(this.selectedvalue)
     });
   }
 
