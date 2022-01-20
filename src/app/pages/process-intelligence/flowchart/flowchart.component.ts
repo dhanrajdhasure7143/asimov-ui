@@ -4,7 +4,6 @@
 import { Component, OnInit, AfterViewInit,ViewChild,EventEmitter,ElementRef, Renderer2,Output ,HostListener} from '@angular/core';
 import { Options } from 'ng5-slider';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ZoomSlider } from '../../../zoomSlider';
 import { ProcessGraphModel } from '../model/process-graph-flowchart-model';
 import { DataTransferService } from '../../services/data-transfer.service';
 import { SharebpmndiagramService } from '../../services/sharebpmndiagram.service';
