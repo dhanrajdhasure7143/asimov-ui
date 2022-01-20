@@ -202,6 +202,9 @@ inputNumberOnly(event){
       Swal.fire("Error",status.errorMessage,"error");
 
   
+    },err=>{
+      this.spinner.hide();
+      Swal.fire("Error","Unable to save credentials","error");
     });
    
   }
@@ -245,6 +248,9 @@ inputNumberOnly(event){
         Swal.fire("Error",status.errorMessage,"error");
       }
      
+  },err=>{
+      this.spinner.hide();
+      Swal.fire("Error","Unable to update credentials","error")
   });
 }
 else
@@ -314,6 +320,9 @@ updatecreddata()
           {
             Swal.fire("Error",status.errorMessage,"error")
           }              
+        },err=>{
+          this.spinner.hide();
+          Swal.fire("Error","Unable to delete credentails","error");
         });
       }
     });

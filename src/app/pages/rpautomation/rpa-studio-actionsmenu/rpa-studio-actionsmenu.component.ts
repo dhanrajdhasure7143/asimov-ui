@@ -647,7 +647,7 @@ loadpredefinedbot(botId)
       let j=200;
       responsedata.tasks.forEach(element=>
       {
-        this.childBotWorkspace.finaldataobjects.push(element)
+        //this.childBotWorkspace.finaldataobjects.push(element)
         let nodename=  element.nodeId.split("__")[0];
         let nodeid=(element.nodeId.split("__")[1]).split("|")[0];
         j=j+100;

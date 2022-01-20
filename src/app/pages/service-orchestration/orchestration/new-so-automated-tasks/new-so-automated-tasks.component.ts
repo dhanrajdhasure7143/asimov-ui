@@ -1,4 +1,4 @@
-import {ViewChild,Input, Component, OnInit,OnDestroy,Pipe, PipeTransform } from '@angular/core';
+import {ViewChild,Input, Component, OnInit,OnDestroy,Pipe, ChangeDetectorRef ,PipeTransform } from '@angular/core';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
@@ -77,6 +77,7 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
   addTaskForm:FormGroup;
   queryParam:Boolean=false;
   checkAssignTasks:Boolean=false;
+  uiPathBotFlag:Boolean=false;
   public tasksArray:any=[];
   public processId:any;
   @ViewChild("paginator10",{static:false}) paginator10: MatPaginator;
@@ -101,6 +102,7 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
     private hints: sohints,
     private dt : DataTransferService,
     private modalService:BsModalService,
+    private cd:ChangeDetectorRef,
    )
 
   {
@@ -535,7 +537,7 @@ resetsla(){
       {
         this.rest.getAllActiveBots().subscribe(bots=>{
           this.Active_bots_list=bots;
-          this.responsedata=response.automationTasks.map(item=>{
+          let responsedata=response.automationTasks.map(item=>{
               item["processFilterId"]="processId_"+item.processId+"_"+item.processName
               if(item.sourceType=="UiPath")
                 item["taskOwner"]="Karthik Peddinti";
@@ -546,7 +548,8 @@ resetsla(){
               }
               return item;
           });
-          this.automatedtask= response.automationTasks;
+          this.responsedata=responsedata;
+          this.automatedtask=responsedata;
           this.dataSource2= new MatTableDataSource(this.responsedata);
             this.dataSource2.paginator=this.paginator10;
             setTimeout(()=>{
@@ -636,7 +639,7 @@ resetsla(){
     let processnamebyid=this.process_names.find(data=>parseInt(filterValue)==data.processId);
     this.selectedcategory=parseInt(processnamebyid.categoryId);
     this.selectedvalue=parseInt(processnamebyid.processId);
-    let processes=this.automatedtask.filter(item=>item.processId==this.selectedvalue);
+    let processes=this.responsedata.filter(item=>item.processId==this.selectedvalue);
     this.dataSource2=new MatTableDataSource(processes);
     this.dataSource2.paginator=this.paginator10;
     this.dataSource2.sort=this.automatedSort
@@ -755,13 +758,10 @@ resetsla(){
     else{
       this.responsedata.find(item=>item.taskId==id).taskOwner="---"
     }
-    this.dataSource2= new MatTableDataSource(this.responsedata);
-    this.dataSource2.sort=this.automatedSort;
-    this.dataSource2.paginator=this.paginator10;
-    if(this.selectedvalue!=undefined && this.selectedvalue!="")
-    {
-      this.applyFilter(this.selectedvalue);
-    }
+    // this.dataSource2= new MatTableDataSource(this.responsedata);
+    // this.dataSource2.sort=this.automatedSort;
+    // this.dataSource2.paginator=this.paginator10;
+   
     if(botId!=0)
     {
       this.spinner.show();
@@ -770,9 +770,17 @@ resetsla(){
         this.spinner.hide();
         if(response.status!=undefined)
         {
-          if(this.automatedtask.find(item=>item.id==id)!=undefined)
+          if(this.automatedtask.find(item=>item.taskId==id)!=undefined)
           {
-            this.automatedtask.find(item=>item.id==id).botId=id;
+            this.automatedtask.find(item=>item.taskId==id).botId=(botId);
+            this.responsedata.find(item=>item.taskId==id).botId=(botId);
+            this.dataSource2= new MatTableDataSource(this.responsedata);
+            this.dataSource2.sort=this.automatedSort;
+            this.dataSource2.paginator=this.paginator10;
+            if(this.selectedvalue!=undefined && this.selectedvalue!="")
+            {
+              this.applyFilter(this.selectedvalue);
+            }
           }
           Swal.fire("Success","Resource Assigned Successfully","success");
           this.checkTaskAssigned(processId);
@@ -796,6 +804,8 @@ resetsla(){
         this.spinner.hide();
         if(response.status!=undefined)
         {
+          this.responsedata.find(item=>item.taskId==task.taskId).assignedUserId=String(botId);
+          this.automatedtask.find(item=>item.taskId==task.taskId).assignedUserId=String(botId);
           Swal.fire("Success",response.status,"success");
           if(this.selectedvalue!="")
           {
@@ -1006,7 +1016,6 @@ resetsla(){
   {
     this.selectedEnvironment="";
     this.selectedvalue="";
-    console.log(this.categaoriesList.length)
     if(this.categaoriesList.length==1)
     {
       this.selectedcategory=(this.categaoriesList[0].categoryId)
@@ -1039,13 +1048,16 @@ resetsla(){
 
   changesource(botsource,id)
   {
-    this.responsedata.find(item=>item.taskId==id).sourceType=botsource; 
+    
+    this.responsedata.find(item=>item.taskId==id).sourceType=botsource;
+    this.automatedtask.find(item=>item.taskId==id).sourceType=botsource; 
     this.dataSource2= new MatTableDataSource(this.responsedata);
     this.dataSource2.sort=this.automatedSort;
     this.dataSource2.paginator=this.paginator10;
     if(this.selectedvalue!=undefined)
     {
       this.applyFilter(this.selectedvalue);
+      this.cd.detectChanges();
     }
   }
 
@@ -1252,9 +1264,14 @@ resetsla(){
 
   getuipathbots()
   {
+    this.uiPathBotFlag=false;
     this.rest.get_uipath_bots().subscribe((bots)=>{
       let response:any=bots
+      
       this.uipath_bots=response.value;
+      this.uiPathBotFlag=true;
+      if(this.selectedvalue!='')
+        this.checkTaskAssigned(this.selectedvalue)
     });
   }
 
