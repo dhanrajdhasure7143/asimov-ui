@@ -1,4 +1,4 @@
-import {ViewChild,Input, Component, OnInit,OnDestroy,Pipe, PipeTransform } from '@angular/core';
+import {ViewChild,Input, Component, OnInit,OnDestroy,Pipe, ChangeDetectorRef ,PipeTransform } from '@angular/core';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
@@ -102,6 +102,7 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
     private hints: sohints,
     private dt : DataTransferService,
     private modalService:BsModalService,
+    private cd:ChangeDetectorRef,
    )
 
   {
@@ -757,13 +758,10 @@ resetsla(){
     else{
       this.responsedata.find(item=>item.taskId==id).taskOwner="---"
     }
-    this.dataSource2= new MatTableDataSource(this.responsedata);
-    this.dataSource2.sort=this.automatedSort;
-    this.dataSource2.paginator=this.paginator10;
-    if(this.selectedvalue!=undefined && this.selectedvalue!="")
-    {
-      this.applyFilter(this.selectedvalue);
-    }
+    // this.dataSource2= new MatTableDataSource(this.responsedata);
+    // this.dataSource2.sort=this.automatedSort;
+    // this.dataSource2.paginator=this.paginator10;
+   
     if(botId!=0)
     {
       this.spinner.show();
@@ -774,8 +772,15 @@ resetsla(){
         {
           if(this.automatedtask.find(item=>item.taskId==id)!=undefined)
           {
-            this.automatedtask.find(item=>item.taskId==id).botId=botId;
-            this.responsedata.find(item=>item.taskId=id).botId=botId;
+            this.automatedtask.find(item=>item.taskId==id).botId=(botId);
+            this.responsedata.find(item=>item.taskId==id).botId=(botId);
+            this.dataSource2= new MatTableDataSource(this.responsedata);
+            this.dataSource2.sort=this.automatedSort;
+            this.dataSource2.paginator=this.paginator10;
+            if(this.selectedvalue!=undefined && this.selectedvalue!="")
+            {
+              this.applyFilter(this.selectedvalue);
+            }
           }
           Swal.fire("Success","Resource Assigned Successfully","success");
           this.checkTaskAssigned(processId);
@@ -1052,6 +1057,7 @@ resetsla(){
     if(this.selectedvalue!=undefined)
     {
       this.applyFilter(this.selectedvalue);
+      this.cd.detectChanges();
     }
   }
 
