@@ -1043,7 +1043,9 @@ resetsla(){
 
   changesource(botsource,id)
   {
-    this.responsedata.find(item=>item.taskId==id).sourceType=botsource; 
+    
+    this.responsedata.find(item=>item.taskId==id).sourceType=botsource;
+    this.automatedtask.find(item=>item.taskId==id).sourceType=botsource; 
     this.dataSource2= new MatTableDataSource(this.responsedata);
     this.dataSource2.sort=this.automatedSort;
     this.dataSource2.paginator=this.paginator10;
