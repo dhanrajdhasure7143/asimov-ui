@@ -1,6 +1,6 @@
 
 <div class="container">
-    <div class="row">
+    <div class="row" *ngIf="!showcarddetails">
         <!-- <div class="col-md-12">
                 <h3 id="planHeading">Features will be enabled based on the selected plan</h3>
                 <h4 id="ctr">Choose the right one for your valuable business</h4>
@@ -13,17 +13,28 @@
                
                 <img src="../../../assets/images/subscription/card.svg"><br><br>
                 <span id=""><b> XXXX-XXXX-XXXX-{{cardData.cardLast4.slice(-3)}}</b>
-                <h4> <span *ngIf='cardData.defaultSource' class="active-card">Active</span></h4>
+                    <!-- <span *ngIf='cardData.defaultSource'><button class="btn default_btn">Default</button></span>  -->
+               
             </span>
                 <span id="cardName"><b>Card Holder's Name : {{cardData.name}}</b></span><br><br>
                 <span id=""><b>Expires : {{cardData.cardExpMonth}}/{{cardData.cardExpYear}}</b></span>
+                <h4> <span *ngIf='cardData.defaultSource === true' class="active-card">Default</span></h4>
+                <h4> <span *ngIf='!cardData.defaultSource' class="inactive-card"  (click)="setAsDefaultCard(cardData)">set Default</span></h4>
+                <h4> <span *ngIf='!cardData.defaultSource' class="delete-card" (click)="confrmDeleteCard(cardData)">Remove</span></h4>
             </div>
-            <!-- <div class="col-md-3 cardsBox">
-            <img src="../../../assets/images/subscription/AddCard.svg">
-        </div> -->
+        <div class="col-md-3 cardsBox " style="margin: 1%;height: 290px;">
+            <img src="../../../assets/images/subscription/AddCard.svg" style="height: 202px;margin-left: 1%;margin-top: 17%" (click)="addNew()">
+        </div> 
         </span>
-
+        
+        
            
             <div class="col-md-3" style="display: block;height: 50px" ></div>
+    </div>
+    <div class="row" *ngIf="showcarddetails">
+       
+            <app-addcard (onBack)="onBack()"></app-addcard>
+       
+
     </div>
 </div>

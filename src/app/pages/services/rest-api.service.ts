@@ -1265,4 +1265,17 @@ getProgrmaDetailsById(programid){
     return this.http.get<any>('/api/tenant/whiteListedDomain?domain='+domain)
      
  }
+ getMyAccountPaymentToken(cardData){
+  return this.http.post('/subscriptionservice/v1/paymentmethods/cardToken?tab=myaccount',cardData,{responseType:'json'})
+}
+addNewCard(token,isdefault) :Observable<any>{
+  return this.http.post<any>('/subscriptionservice/v1/paymentmethods?paymentToken='+token+'&markAsDeafult='+isdefault,httpOptions)
+}
+deletePaymentMode(paymentMethodId):Observable<any>{
+  return this.http.post<any>('/subscriptionservice/v1/paymentmethods/'+paymentMethodId,httpOptions);
+}
+setasDefaultCard(paymentModeId){
+  return this.http.post('/subscriptionservice/v1/paymentmethods/set-default/'+paymentModeId,{responseType:'json'});
+}
+
 }
