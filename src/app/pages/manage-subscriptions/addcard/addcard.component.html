@@ -23,7 +23,7 @@
           <div class="card-form">
             <form autocomplete="off" #paymentform="ngForm" (ngSubmit)="addNewCard()" class="col-md-12 row">
           
-              <div class="col-md-5">
+              <div class="col-md-5"> 
                     <div class="form-group col-sm-10">
                       <label for="cardHolder">Cardholder Name</label>
                       <input type="text"[disabled]="cardname" name="cardHolder" #cardHolder="ngModel" maxlength="30" [(ngModel)]="cardHoldername" class="form-control" id="cardHolder" placeholder="Enter Cardholder Name" required/>
