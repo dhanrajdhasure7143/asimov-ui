@@ -1,0 +1,113 @@
+<!-- <topheader class="first_login_header">
+
+
+</topheader> -->
+
+
+    <div class="">
+        <!-- <div id="particles-js"></div> -->
+      
+      <div class="row">
+        <mat-card class="mat2-card">
+          <div class="row">
+              
+            <div class="col-md-12">         
+              <div class="brand">
+               
+                  <h5 id="paymnt-subheding" style="margin-left:4%">Complete the below card details</h5>
+              </div>
+             
+            </div>
+         
+          </div>          
+          <div class="card-form">
+            <form autocomplete="off" #paymentform="ngForm" (ngSubmit)="addNewCard()" class="col-md-12 row">
+          
+              <div class="col-md-5"> 
+                    <div class="form-group col-sm-10">
+                      <label for="cardHolder">Cardholder Name</label>
+                      <input type="text"[disabled]="cardname" name="cardHolder" #cardHolder="ngModel" maxlength="30" [(ngModel)]="cardHoldername" class="form-control" id="cardHolder" placeholder="Enter Cardholder Name" required/>
+                      <!-- [ngClass]="{ 'is-invalid': ((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) ) }" -->
+                      <span *ngIf="((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) )" 
+                      class='fa fa-info-circle errspan'> Cardholder Name is required </span> 
+                    </div>
+      
+                        <div class="form-group col-sm-10">
+                          <label for="month">Month (MM)</label>
+                          <select id="month" [disabled]="expmonth" name="month" class="form-control" #month="ngModel"  [(ngModel)]="cardmonth" required>
+                            <option  [value]="undefined" disabled hidden>Select Month</option>
+                            <option *ngFor="let obj of monthlist; let j=index" [value]="0+(j+1)">{{0+(j+1)}}</option>
+                        
+                          </select>
+                        </div>
+                        <div class="form-group col-sm-10">
+                          <label for="cvv">CVV</label>
+                          <input type="password" class="form-control" (keypress)="numberOnly($event)" minlength="3" maxlength="3" required name="cvv" #cvv="ngModel" [(ngModel)]="cvvNumber" id="cvv" placeholder="Enter CVV" required/>
+                        <span *ngIf="((cvv.invalid && paymentform.submitted) || (cvv.errors && cvv.touched) )" 
+                        class='fa fa-info-circle errspan'> CVV is required</span>                
+                      </div>
+                        <div class="col-sm-4"></div>
+              </div>
+      
+              <div class="col-md-4">
+                    <div class="row">
+      
+                     
+      
+                    <div class="form-group col-sm-5">
+                      <label for="cardNumber">Card Number</label>
+                      
+                   
+                        <div >
+                          <input  type="text" class="cc-number1 form-control " (keypress)="numberOnly($event)" minlength="4" maxlength="4" required name="cardNumber1" #cardNumber1="ngModel" [(ngModel)]="cardnumber1" id="cardNumber1" 
+                      required/>
+                      <input  type="text" class="cc-number2 form-control " (keypress)="numberOnly($event)" minlength="4" maxlength="4" required name="cardNumber2" #cardNumber2="ngModel" [(ngModel)]="cardnumber2" id="cardNumber2"  required/>
+                      <input  type="text" class="cc-number3 form-control " (keypress)="numberOnly($event)" minlength="4" maxlength="4" required name="cardNumber3" #cardNumber3="ngModel" [(ngModel)]="cardnumber3" id="cardNumber3"  required/>
+                          <input  type="text"  class="cc-number4 form-control" (keypress)="numberOnly($event)" minlength="3" maxlength="4"  name="cardNumber4" #cardNumber4="ngModel" [(ngModel)]="cardnumber4" id="cardNumber4"  required/>
+                          <span *ngIf= "cards && cards[0].type =='visa' && cardNumber1.value >= 4 "><img class="card" src="assets/images/CardLogo/visa.png"></span>
+                          <span *ngIf= "cards && cards[0].type =='mastercard' && cardNumber1.value >= 4 "><img class="card" src="assets/images/CardLogo/master.png"></span>  
+                        </div>
+                      
+                    </div>
+                    <div class="form-group col-sm-10">
+                      <label for="year">Year (YYYY)</label>
+                      <select id="year" [disabled]="expyear" class="form-control" name="year" #year="ngModel" [(ngModel)]="cardyear" required>
+                        <option  [value]="undefined" disabled hidden>Select Year</option>
+                        <option *ngFor="let obj of yearList; let i=index" [value]="2021+(i+1)">{{2021+(i+1)}}</option>
+                        <!-- *ngFor='let count of userscount; let c = index' [value]="25*(c+1)" >{{25*(c+1)}}</option> -->
+                        </select>
+                    </div>
+                  
+                        
+                  </div>
+                </div>
+                
+                  <!-- <div class="col-md-1"></div> -->
+               
+                  <div class="col-sm-10 btn-continue">
+                      <div class='form-group set_default'>
+                          <input type="checkbox" class=""  #setdefault='ngModel' [(ngModel)]='isdefault' name="isdefault" > <span> Set As Default</span>
+                      </div>
+                       <!-- <button class="btn btn-primary" (click)="Back()" style="margin-left: 32%">Back</button> -->
+                    <button type="button" class="btn btn-primary" (click)="resetForm(paymentform)" style='margin-left:66%;height:38px !important'>Reset</button>
+                   
+                    <button class="btn btn-success pull-right " type="submit" [disabled] = "paymentform.invalid || showErr" >Save</button>
+                    <button class="btn btn-primary pull-right" (click)="Back()">Back</button>
+                   
+                  </div>
+                  </form>
+                  
+        </div>
+        <div class="col-sm-12">
+          <div class="row">
+              <div class="col-sm-6">
+                  <!-- <button class="btn btn-submit pull-right" [routerLink]="['/activation/payment/review']">Continue</button> -->
+                </div>
+          </div>
+        </div>
+      </mat-card>
+      </div>
+    </div>
+
+  <!-- </common-body> -->
+  
