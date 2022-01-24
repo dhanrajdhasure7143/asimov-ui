@@ -32,6 +32,7 @@ export class CurrentplanComponent implements OnInit {
   features: any
   currentplanname: string;
   getallplans: boolean=false;
+  public isdiable: boolean = false;
   public allplans: any=[];
   paymentMode: any;
   paymentToken: any;
@@ -184,6 +185,7 @@ export class CurrentplanComponent implements OnInit {
      
   }
   buyProductPlan(template){
+    this.isdiable=true;
     const cardValue = {
       "name":  this.cardDetails[0].name,
       "number": "3782 8224 6310 005",
@@ -231,6 +233,7 @@ export class CurrentplanComponent implements OnInit {
           confirmButtonText: 'Ok'
       })
         this.spinner.hide();
+        this.isdiable=false;
       }
       else {
 
@@ -239,6 +242,7 @@ export class CurrentplanComponent implements OnInit {
           this.spinner.hide();
           this.finalAmount = this.subscriptionDetails.amountPaid;
           this.productId = "EZFlow";
+          this.isdiable=false;
           this.modalRef = this.modalService.show(template);
         })
       }

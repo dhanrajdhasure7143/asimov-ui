@@ -186,14 +186,24 @@ export class RpaStudioComponent implements OnInit {
 
 
 
-  validate(code){
+  validate(code,event){
     let validate = code;
+    let botname = event.target.value;
     this.count = 0;
-    for(let i=0;i < validate.length -1; i++){
-      if(validate.charAt(i) == String.fromCharCode(32)){
-        this.count= this.count+1;
+    // for(let i=0;i < validate.length; i++){
+    //   if(validate.charAt(i) == String.fromCharCode(32)||validate.charAt(i) == String.fromCharCode(46)){
+    //     this.count= this.count+1;
+    //   }
+    // }
+    var regex = new RegExp("^[a-zA-Z0-9_-]*$");
+
+   
+
+      if(!(regex.test(botname))){
+
+        this.count=1;
+
       }
-    }
     if(this.count !== 0)
     {
       this.botNamespace = true;
@@ -203,6 +213,9 @@ export class RpaStudioComponent implements OnInit {
       this.checkbotname=false;
     }
   }
+
+
+
 
   checkBotnamevalidation()
   {

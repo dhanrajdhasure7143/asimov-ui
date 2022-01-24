@@ -1,0 +1,109 @@
+.module-header-title.innertitle {
+    line-height: 36px;
+}
+h1.create-heading {
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+}
+.CreateTkt-footer {
+    display: flex;
+    justify-content: flex-end;
+    /* margin-top: 10px; */
+}
+
+.CreateTkt-footer .btn-primary{
+    margin-right: 0px !important;
+}
+.radiosecsinew {
+  position: relative;
+  width: 100%;
+  margin-right: 10px;
+  text-align: left;
+  padding: 5px 10px;
+  border: 1px solid #d1d1d1;
+  border-radius: 3px;
+  display: flex;
+}
+.radiosecsinew input.form-control {
+  width: 17px;
+  margin-right: 10px;
+  margin-top: 0px;
+  height: 22px;
+}
+.checkbutnew:first-child {
+  margin: 0px;
+  -webkit-clip-path: polygon(0% 0%, 75% 0%, 90% 50%, 75% 100%, 0% 100%);
+  clip-path: polygon(0% 0%, 75% 0%, 90% 50%, 75% 100%, 0% 100%);
+  padding-left: 15px;
+}
+
+.checkbutnew input.form-control {
+  appearance: none;
+  position: absolute;
+  background-color: unset;
+  width: 60%;
+  border-radius: 0px;
+  height: 24px;
+  border: medium none !important;
+  cursor: pointer;
+  margin: -2px 0px;
+  padding: 0px !important;
+}
+.checkbutnew {
+  position: relative;
+  width: 100%;
+  margin-left: 0px !important;
+  padding: 6px 5px 6px 25px;
+  border-radius: 3px;
+  -webkit-clip-path:polygon(75% 0%, 90% 50%, 75% 100%, 0% 100%, 10% 50%, 0% 0%);
+  clip-path: polygon(75% 0%, 90% 50%, 75% 100%, 0% 100%, 10% 50%, 0% 0%);
+  background-color: #ede8e8;
+  border: medium none !important;
+}
+  img.hideictest {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 25%;
+    display: none;
+  }
+  .checkbutnew input.form-control:checked ~ img.hideictest {
+    display: block;
+  }
+ 
+  .mainbacklogform input[type="file"] {
+    opacity: 0;
+    cursor: pointer;
+  }
+  .fileupsec {
+    position: relative;
+  }
+  
+  .mainbacklogform input[type="file"] {
+    opacity: 0;
+    cursor: pointer;
+    width: 125px;
+    z-index: 1;
+    position: relative;
+  }
+  .fileupsec span {
+    position: absolute;
+    background-color: #00a1e3;
+    border-color: #00a1e3;
+    color: #fff;
+    padding: 4px 20px;
+    top: 0px;
+    border-radius: 4px;
+    left: 0px;
+    cursor: pointer;
+    z-index: 0;
+  }
+  .fileupsec span:hover {
+    border-color: #00a1e3;
+    background-color: #fff;
+    color:#00a1e3;
+  }
+  .checkbutnew input.form-control:focus {
+    background-color: transparent !important;
+}

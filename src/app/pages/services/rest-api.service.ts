@@ -1261,4 +1261,8 @@ getProgrmaDetailsById(programid){
   expiryInfo():Observable<any>{
      return this.http.get<any>('/subscriptionservice/v1/freetrials/planExpiryInfo')
   }
+  getWhiteListedDomain(domain):Observable<any>{
+    return this.http.get<any>('/api/tenant/whiteListedDomain?domain='+domain)
+     
+ }
 }

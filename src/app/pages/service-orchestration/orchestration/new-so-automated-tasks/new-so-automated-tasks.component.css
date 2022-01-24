@@ -196,3 +196,13 @@ span.logrefresh {
     opacity: 0.4 !important;
     cursor: not-allowed;
 }
+
+
+::ng-deep .addTasksBlock .ng-dropdown-panel .ng-dropdown-panel-items {
+    display: block;
+    height: auto;
+    box-sizing: border-box;
+    max-height: 60px !important;
+    z-index: 99999 !important;
+    overflow-y: auto;
+}
