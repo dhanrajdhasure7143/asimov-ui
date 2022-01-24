@@ -464,6 +464,17 @@ span.PI-frpr-spin:hover {
   display: inline-block;
   overflow: hidden auto;
 }
+::-webkit-scrollbar:hover {
+  width: 18px !important;
+  height: 18px !important;
+  cursor: pointer;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(73, 88, 145);
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+}
 /* @media only screen and (min-width: 1600px) {
   .variant-body {
     height: 495px;

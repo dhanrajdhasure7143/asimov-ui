@@ -37,7 +37,18 @@
     margin-top: 10px;
     overflow: hidden auto;
     /* height: 325px;    */
-    height: calc(100vh - 330px);
+    height: calc(100vh - 310px);
+}
+::-webkit-scrollbar:hover {
+  width: 18px !important;
+  height: 18px !important;
+  cursor: pointer;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(73, 88, 145);
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
 }
 /* ::-webkit-scrollbar{
     width:10px !important;
@@ -50,7 +61,7 @@
     font-weight: normal;
     cursor:pointer;
     padding: 8px 10px;
-    margin-bottom: 8px;
+    margin-bottom: 7px;
 }
 .data_values:hover{
     /* background-color: #00a0e3 !important;
