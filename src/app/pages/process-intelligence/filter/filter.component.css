@@ -35,8 +35,9 @@
   }
 .dataValues{
     margin-top: 10px;
-    overflow: scroll;
-    height: 325px;   
+    overflow: hidden auto;
+    /* height: 325px;    */
+    height: calc(100vh - 330px);
 }
 /* ::-webkit-scrollbar{
     width:10px !important;
