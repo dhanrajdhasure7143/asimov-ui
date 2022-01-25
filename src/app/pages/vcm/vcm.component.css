@@ -1,0 +1,18 @@
+.main-content {
+    height: 100%;
+    padding: 16px;
+    padding-bottom: 6px;
+    overflow: hidden;
+    position: relative;
+    background-color: #e3eaef;
+    box-shadow: 0px 0px 13px 0px rgb(236 236 241 / 44%);
+}
+
+.content-area {
+    background: #ffffff;
+    /* padding: 15px 15px; */
+    border-radius: 4px;
+    box-shadow: 0px 0px 13px 0px #ececf170;
+    height: 100%;
+    overflow: hidden;
+}

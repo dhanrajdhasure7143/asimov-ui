@@ -1,0 +1,203 @@
+<div class="h-100">
+    <div class="row module-heading title">
+        <span class="module-back-button" routerLink="/pages/vcm/view-vcm">
+            <i aria-hidden="true" class="fas fa-arrow-left"></i>
+        </span>
+        <span class="module-header-title">Value Chain Mapping</span>
+    </div>
+
+    <div class="module-body">
+        <!-- <mat-drawer-container class="example-container" style="background-color: white;height: 80vh;"> -->
+        <!-- <mat-drawer #drawer class="example-sidenav" mode="side" position="end" style="width: 22%;background: #f6f6f6;">
+                <h4 style="margin-left: 5%;color: gray;">Preview</h4>
+                <h3 style="margin-left: 5%;">{{vcmProcess[3]['vcmname']}}</h3> <br>
+                <div style="margin-left: 5%;">
+                    <mat-tree [dataSource]="dataSource" #tree [treeControl]="treeControl" class="example-tree">
+                        <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
+                            {{node.name}}
+                        </mat-tree-node>
+                        <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
+                            <div class="mat-tree-node">
+                                <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
+                    <mat-icon class="mat-icon-rtl-mirror">
+                      {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                    </mat-icon>
+                  </button>
+                                <h4>{{node.name}}</h4>
+                            </div>
+                            <div [class.example-tree-invisible]="!treeControl.isExpanded(node)" role="group">
+                                <ng-container matTreeNodeOutlet></ng-container>
+                            </div>
+                        </mat-nested-tree-node>
+                    </mat-tree>
+                </div>
+            </mat-drawer> -->
+        <div class="row maincontent">
+            <div class="col-md-12 col-lg-12" style="margin-top: 1%;">
+                <div class="vcmName">
+                    <h4>Value Chain Name</h4>
+                    <input type="text" [(ngModel)]="vcmName" placeholder="Enter Value Chain Mapping">
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-6" style="margin-top: 2%;">
+                <div class="dbichart-block">
+                    <div class="dbichart-body">
+                        <h4 style="margin-left: 2%;font-weight: bold;">Level 1 Process
+                            <img style="height: 30px;width: 30px;position: absolute;right: 0;margin-right: 5%;" src="../../../assets/images/menu-line.svg" alt="">
+                        </h4> <br>
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    <h5>Management Process</h5>
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="row">
+                                <ul *ngFor="let item of vcmProcess">
+                                    <ul *ngIf="item.name == 'Management Process'">
+                                        <li *ngFor="let name of item.children;let i = index" style="padding: 2%;width: max-content;" class="childHover">
+                                            <span>{{i + 1}}.</span> &nbsp; {{name.name}} &nbsp;&nbsp;
+                                            <i class="fa fa-times-circle" aria-hidden="true" (click)="removeChild(name)"></i>
+                                        </li>
+                                    </ul>
+                                </ul>
+                                <div class="content" style="display: flex;text-align: start;">
+                                    <h3 style="width: 100%;">
+                                        <input [(ngModel)]="manageinput" type="text" placeholder="Enter Management process name" style="width: 50%;font-size: medium;margin-left: 8px;"> &nbsp;
+                                        <i style="position: relative;top: 6%;" (click)="addManageProcess()" [hidden]="manageinput == '' " class="fa fa-check-circle" aria-hidden="true"></i>
+                                    </h3>
+                                </div>
+                            </div>
+                        </mat-expansion-panel> <br>
+
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    <h5>Core Process</h5>
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="row">
+                                <ul *ngFor="let item of vcmProcess">
+                                    <ul *ngIf="item.name == 'Core Process'">
+                                        <li *ngFor="let name of item.children;let i = index" style="padding: 2%;width: max-content;" class="childHover">
+                                            <span>{{i+1}}.</span> &nbsp; {{name.name}} &nbsp;&nbsp;
+                                            <i class="fa fa-times-circle" aria-hidden="true" (click)="removeChild(name)"></i>
+                                        </li>
+                                    </ul>
+                                </ul>
+                                <div class="content" style="display: flex;text-align: start;">
+                                    <h3 style="width: 100%;">
+                                        <input [(ngModel)]="coreinput" style="width: 50%;font-size: medium;margin-left: 8px;" type="text" placeholder="Enter Core process name"> &nbsp;
+                                        <i style="position: relative;top: 6%;" (click)="addCoreProcess()" [hidden]="coreinput == '' " class="fa fa-check-circle" aria-hidden="true"></i>
+                                    </h3>
+                                </div>
+                            </div>
+                        </mat-expansion-panel> <br>
+
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    <h5>Support Process</h5>
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="row">
+                                <ul *ngFor="let item of vcmProcess">
+                                    <ul *ngIf="item.name == 'Support Process'">
+                                        <li *ngFor="let name of item.children;let i = index" style="padding: 2%;width: max-content;" class="childHover">
+                                            <span>{{i+1}}.</span> &nbsp; {{name.name}} &nbsp;&nbsp;
+                                            <i class="fa fa-times-circle" aria-hidden="true" (click)="removeChild(name)"></i>
+                                        </li>
+                                    </ul>
+                                </ul>
+                                <div class="content" style="display: flex;text-align: start;">
+                                    <h3 style="width: 100%;">
+                                        <input [(ngModel)]="supportinput" style="width: 50%;font-size: medium;margin-left: 8px;" type="text" placeholder="Enter Support process name"> &nbsp;
+                                        <i style="position: relative;top: 6%;" (click)="addSupportProcess()" [hidden]="supportinput == '' " class="fa fa-check-circle" aria-hidden="true"></i>
+                                    </h3>
+                                </div>
+                            </div>
+                        </mat-expansion-panel>
+
+                        <!-- <div class="submit">
+                                <button class="btn btn-default" (click)="resetLevel1()">Reset</button>
+                                <button class="btn btn-primary" [disabled]="vcmName == '' " (click)="saveLevel1()">Save</button>
+                            </div> -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-6" style="margin-top: 2%;">
+                <div class="dbichart-block">
+                    <div class="dbichart-body">
+                        <h4 style="margin-left: 2%;font-weight: bold">Level 2 Process
+                            <img style="height: 30px;width: 30px;position: absolute;right: 0;margin-right: 5%;" src="../../../assets/images/menu-line.svg" alt="">
+                        </h4> <br>
+                        <select style="margin: 0;" id="level1" name="Level1" [(ngModel)]="level1process" [ngModelOptions]="{standalone: true}">
+                                <option value="undefined" hidden disabled>Select L1 Process</option>
+                                <ng-container *ngFor="let item of vcmProcess">
+                                <option *ngFor="let name of item.children" [ngValue]=name>{{name.name}}</option>
+                            </ng-container>
+                        </select>
+                        <div class="level1process" style="margin-top: 3px;">
+                            <input style="width: 80%;" placeholder="Enter Process Folder Name" type="text" name="levelName" [(ngModel)]="addLevel2"> &nbsp;&nbsp;&nbsp;
+                            <button [disabled]="addLevel2 == '' || !level1process" type="submit" class="btn btn-primary" (click)="addNewLevel2()">Add</button>
+                            <hr>
+                        </div>
+                        <div class="management" style="margin-left: 3%;" *ngIf="vcmProcess[0].children.length != 0">
+                            <h4 style="color: #5eace2;">Management Process</h4>
+                            <ng-container *ngFor="let item of vcmProcess">
+                                <ng-container *ngFor="let name of item.children">
+                                    <p *ngIf="name.processname == 'Management Process'">
+                                        <i class="fa fa-angle-down" aria-hidden="true"></i> &nbsp; {{name.name}}</p>
+                                    <ul *ngFor="let level2 of name.children" style="margin-left: 5%;">
+                                        <li class="overflowcontent" *ngIf="level2.processname == 'Management Process'" style="color: green;display: flex;">
+                                            <i style="margin-top: 4px;" class="fa fa-angle-right" aria-hidden="true"></i> &nbsp; <span>{{level2.name}}</span> &nbsp;&nbsp;
+                                            <i style="margin-top: 1%;" class="fa fa-times-circle" aria-hidden="true" (click)="level2removeChild(level2)"></i>
+                                        </li>
+                                    </ul>
+                                </ng-container>
+                            </ng-container><br>
+                        </div>
+                        <div class="core" style="margin-left: 3%;" *ngIf="vcmProcess[1].children.length != 0">
+                            <h4 style="color: #5eace2;">Core Process</h4>
+                            <ng-container *ngFor="let item of vcmProcess">
+                                <ng-container *ngFor="let name of item.children">
+                                    <p *ngIf="name.processname == 'Core Process'">
+                                        <i class="fa fa-angle-down" aria-hidden="true"></i> &nbsp; {{name.name}}</p>
+                                    <ul *ngFor="let level2 of name.children" style="margin-left: 5%;">
+                                        <li class="overflowcontent" *ngIf="level2.processname == 'Core Process'" style="color: green;" style="display: flex;">
+                                            <i style="margin-top: 4px;" class="fa fa-angle-right" aria-hidden="true"></i> &nbsp; <span>{{level2.name}}</span> &nbsp;&nbsp;
+                                            <i style="margin-top: 1%;" class="fa fa-times-circle" aria-hidden="true" (click)="level2removeChild(level2)"></i></li>
+                                    </ul>
+                                </ng-container>
+                            </ng-container><br>
+                        </div>
+                        <div class="support" style="margin-left: 3%;" *ngIf="vcmProcess[2].children.length != 0">
+                            <h4 style="color: #5eace2;">Support Process</h4>
+                            <ng-container *ngFor="let item of vcmProcess">
+                                <ng-container *ngFor="let name of item.children">
+                                    <p *ngIf="name.processname == 'Support Process'">
+                                        <i class="fa fa-angle-down" aria-hidden="true"></i> &nbsp; {{name.name}}</p>
+                                    <ul *ngFor="let level2 of name.children" style="margin-left: 5%;">
+                                        <li class="overflowcontent" *ngIf="level2.processname == 'Support Process'" style="color: green;" style="display: flex;">
+                                            <i style="margin-top: 4px;" class="fa fa-angle-right" aria-hidden="true"></i> &nbsp; <span>{{level2.name}}</span> &nbsp;&nbsp;
+                                            <i style="margin-top: 1%;" class="fa fa-times-circle" aria-hidden="true" (click)="level2removeChild(level2)"></i></li>
+                                    </ul>
+                                </ng-container>
+                            </ng-container>
+                        </div>
+                    </div>
+                    <!-- <div class="save">
+                            <button class="btn btn-primary" [disabled]="vcmName == '' " (click)="saveLevel1()">Save</button>
+                        </div> -->
+                </div>
+            </div>
+
+            <div class="col-md-12 col-lg-12 submit">
+                <button class="btn btn-default" (click)="resetLevel1()">Reset</button>
+                <button class="btn btn-primary" [disabled]="vcmName == '' " (click)="saveLevel1()">Save</button>
+            </div>
+        </div>
+        <!-- </mat-drawer-container> -->
+    </div>
+</div>

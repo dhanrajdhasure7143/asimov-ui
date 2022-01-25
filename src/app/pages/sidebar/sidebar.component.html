@@ -71,7 +71,8 @@
     <span class="side-menu-font">Processes</span>
   </a> -->
 
-            <a mat-list-item class="link" id='so' *ngIf="freetrail!=true" (click)="hightlight('so',null)" routerLink="/pages/serviceOrchestration/home" [matTooltip]=" !obj.sideBarOpen ? 'Orchestration' : ''" matTooltip="Orchestration" matTooltipClass="sidebarTooltip" matTooltipPosition="right">
+            <a mat-list-item class="link" id='so' *ngIf="freetrail!=true" (click)="hightlight('so',null)" routerLink="/pages/serviceOrchestration/home" [matTooltip]=" !obj.sideBarOpen ? 'Orchestration' : ''" matTooltip="Orchestration" matTooltipClass="sidebarTooltip"
+                matTooltipPosition="right">
                 <span class="side-icon">
       <span class="active-img" id="eiap-home-icon-active">
           <img src="../../../assets/images/dashboard_icons/active-icons/Orchestration.svg">
@@ -84,6 +85,21 @@
       </span>
                 </span>
                 <span class="side-menu-font">Orchestration</span>
+            </a>
+
+            <a mat-list-item class="link" id='so' *ngIf="freetrail!=true" (click)="hightlight('so',null)" routerLink="/pages/vcm/view-vcm" [matTooltip]=" !obj.sideBarOpen ? 'VCM' : ''" matTooltip="VCM" matTooltipClass="sidebarTooltip" matTooltipPosition="right">
+                <span class="side-icon">
+    <span class="active-img" id="eiap-home-icon-active">
+        <img src="../../../assets/images/dashboard_icons/active-icons/Orchestration.svg">
+    </span>
+                <span class="hover-img" id="eiap-home-icon-white">
+      <img src="../../../assets/images/dashboard_icons/white-icons/Orchestration.svg">
+  </span>
+                <span class="default-img" id="eiap-home-icon-gray">
+        <img src="../../../assets/images/dashboard_icons/grey-icons/Orchestration.svg">
+    </span>
+                </span>
+                <span class="side-menu-font">VCM</span>
             </a>
 
 
@@ -166,7 +182,8 @@
       <mat-icon>more_vert</mat-icon>
    </button>
   </a> -->
-            <mat-list-item *ngIf="freetrail!=true" (click)="showadminSubmenu = !showadminSubmenu; selection()" [ngClass]="{'activeMenu' : showadminSubmenu}" id="expand_admin" class="link" [matTooltip]=" !obj.sideBarOpen ? 'Administration' : ''" matTooltipClass="sidebarTooltip" matTooltipPosition="right">
+            <mat-list-item *ngIf="freetrail!=true" (click)="showadminSubmenu = !showadminSubmenu; selection()" [ngClass]="{'activeMenu' : showadminSubmenu}" id="expand_admin" class="link" [matTooltip]=" !obj.sideBarOpen ? 'Administration' : ''" matTooltipClass="sidebarTooltip"
+                matTooltipPosition="right">
                 <!-- <span class="full-width" >Workspace</span>
     <mat-icon mat-list-icon>work</mat-icon> -->
                 <span class="side-icon">
@@ -219,20 +236,20 @@
     </div> -->
 
 
-    <a mat-list-item class="link" id='subscriptions' (click)="hightlight('subscriptions',null)" routerLink="/pages/subscriptions" [matTooltip]=" !obj.sideBarOpen ? 'Subscriptions' : ''" matTooltip="Subscriptions" matTooltipClass="sidebarTooltip" matTooltipPosition="right">
-      <span class="side-icon">
+            <a mat-list-item class="link" id='subscriptions' (click)="hightlight('subscriptions',null)" routerLink="/pages/subscriptions" [matTooltip]=" !obj.sideBarOpen ? 'Subscriptions' : ''" matTooltip="Subscriptions" matTooltipClass="sidebarTooltip" matTooltipPosition="right">
+                <span class="side-icon">
 <span class="active-img" id="eiap-home-icon-active">
 <img src="../../../assets/images/subscription/BillingAdresses1.svg">
 </span>
-      <span class="hover-img" id="eiap-home-icon-white">
+                <span class="hover-img" id="eiap-home-icon-white">
         <img src="../../../assets/images/subscription/BillingAdresses1.svg">
 </span>
-      <span class="default-img" id="eiap-home-icon-gray">
+                <span class="default-img" id="eiap-home-icon-gray">
         <img src="../../../assets/images/subscription/BillingAdresses1.svg">
 </span>
-      </span>
-      <span class="side-menu-font">Manage Subscriptions</span>
-  </a>
+                </span>
+                <span class="side-menu-font">Manage Subscriptions</span>
+            </a>
 
             <!-- <a mat-list-item class="link active" id="eiap-home" (click)="hightlight('eiap-home')"  routerLink="/pages/home"  >
     <span class="side-icon">

@@ -1,0 +1,94 @@
+.vcmName>input[type=text] {
+    width: 100%;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 0%;
+    /* padding: 1% 2%; */
+    font-size: medium;
+    background: #f6f6f6;
+}
+
+input[type=text],
+select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    height: 80%;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.maincontent {
+    padding: 0 2% 0 2%;
+}
+
+.dbichart-block {
+    background: #f6f6f6;
+    min-height: 55vh;
+}
+
+::ng-deep .mat-expansion-panel {
+    border: solid 1px #ebebeb;
+    padding: 3%;
+}
+
+.fa-check-circle:before {
+    content: "\f058";
+    color: green;
+    cursor: pointer;
+}
+
+.fa-times-circle:before {
+    color: red;
+    cursor: pointer;
+}
+
+.example-tree-invisible {
+    display: none;
+}
+
+.example-tree ul,
+.example-tree li {
+    margin-top: 0;
+    margin-bottom: 0;
+    list-style-type: none;
+}
+
+.example-tree .mat-nested-tree-node div[role=group] {
+    padding-left: 40px;
+}
+
+.example-tree div[role=group]>.mat-tree-node {
+    padding-left: 40px;
+    display: inline-block;
+    width: 200px;
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+}
+
+mat-tree {
+    background: #f6f6f6;
+}
+
+select {
+    cursor: pointer;
+}
+
+.submit {
+    display: flex;
+    justify-content: end;
+    margin-right: 5%;
+}
+
+.save {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin-right: 9%;
+    margin-bottom: 5%;
+}
