@@ -818,7 +818,7 @@ export class D3flowchartComponent {
           .style('font-size', '14')
 
         d3.selectAll("g.edgeLabel g.label")
-          .attr("transform", "translate(-50,-10)")
+          .attr("transform", "translate(-60,-15)")
         d3.selectAll("g.circl g.label").attr("transform", "translate(0,5)")
 
         if (me.isplay == true) {
