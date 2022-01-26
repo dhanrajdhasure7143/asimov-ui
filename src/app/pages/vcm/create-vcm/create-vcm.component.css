@@ -10,6 +10,10 @@
     background: #f6f6f6;
 }
 
+img {
+    cursor: pointer;
+}
+
 input[type=text],
 select {
     width: 100%;

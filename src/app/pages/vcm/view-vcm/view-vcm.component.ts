@@ -8,9 +8,15 @@ import { Router } from '@angular/router';
 })
 export class ViewVcmComponent implements OnInit {
 
+  vcmProcess:any[];
+
   constructor(private router: Router) { }
 
   ngOnInit(): void {
+    this.vcmProcess = [
+      {vcmname:'Value Chain Mapping 1'},{vcmname:'Value Chain Mapping 2'},{vcmname:'Value Chain Mapping 3'},
+      {vcmname:'Value Chain Mapping 4'}
+    ]
   }
 
   createVcm(){
