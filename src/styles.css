@@ -375,6 +375,9 @@ th {
   font-size: 14px !important;
   vertical-align: middle !important;
 }
+thead  tr,tbody tr {
+  height: 40px;
+}
 
 ul.nav.nav-tabs.justify-content-start li {
   height: 38px !important;
@@ -1217,7 +1220,7 @@ div#propertiesPanelBody .bpp-properties-panel {
 }
 
 .mat-form-field-wrapper {
-  padding-bottom: 15px !important;
+  padding-bottom: 10px !important;
 }
 
 .mat-form-field.mat-focused .mat-form-field-label {
@@ -1402,10 +1405,12 @@ img.testplus1 {
 }
 
 .maindivfoprm {
-  width: 800px;
+  /* width: 800px;
   margin: 0px auto;
   margin-top: 15px;
-  margin-bottom: 15px;
+  margin-bottom: 15px; */
+  width: 65%;
+  margin: 15px auto 0px auto;
 }
 
 .maindivfoprm .mat-tab-label-active {
@@ -1622,7 +1627,8 @@ select.form-control {
 /* Modal popup New Styles */
 
 
-.bpspaginationdiv {
+.bpspaginationdiv ,
+.pipaginationdiv {
   position: absolute;
   /* bottom: 0px; */
   bottom: -28px;
@@ -1768,7 +1774,8 @@ select.small-input {
   background-position: center right 12px;
 }
 
-.mat-paginator-page-size {
+/* .mat-paginator-page-size */
+.mat-paginator-range-label { 
   left: 15px !important;
   position: absolute;
 }
@@ -2024,7 +2031,9 @@ span.star {
   top: -3px;
 }
 
-.bpspaginationdiv .mat-paginator-page-size {
+/* .bpspaginationdiv .mat-paginator-page-size  */
+.bpspaginationdiv .mat-paginator-range-label,
+.rpa-content-home .mat-paginator-range-label {
   left: 5px !important;
 }
 
@@ -2267,7 +2276,7 @@ button.btn.btn-primary:first-child {
   margin-right: 0px !important;
 }
 
-.projecttable.table th, .PI.table th, .RPA.table th {
+.projecttable.table th, .PI.table th, .RPA.table th, .Admin.table th {
   background-color: #e8f7fd !important;
   vertical-align: middle !important;
   font-size: 14px !important;
@@ -2277,10 +2286,11 @@ button.btn.btn-primary:first-child {
   color: #00a0e3 !important;
 }
 
-.projects-table-body td, .PI.table tbody td, .RPA.table tbody td {
+.projects-table-body td, .PI.table tbody td, .RPA.table tbody td, .Admin.table td {
   padding: 5px 10px !important;
   vertical-align: middle !important;
   font-size: 13px !important;
+  text-align: left;
 }
 
 td.mat-cell,
@@ -2429,7 +2439,7 @@ th.mat-header-cell {
 }
 .rpa-actioncontent .mat-drawer-inner-container {
   /* padding: 0px 0px 10px 10px!important; */
-  overflow:hidden;
+  overflow: hidden;
 }
 .section .mat-expansion-indicator::after {
   opacity: 0.5 !important;
@@ -2620,28 +2630,72 @@ span.pdicon {
   background: none;
 }
 
-/*@media (max-width: 1600px) {
+/* @media (max-width: 1920px) {
   .cell10 {
     width: 3% !important;
   }
   .cell2, .cell3, .cell4, .cell5, .cell6, .cell7, .cell8, .cell10  {
     font-size: 14px !important;
   }
-  }*/
+  } */
 
-
-@media (min-width: 1800px) {
-  .cell10 {
-    width: 8% !important;
-  }
-}
-
-@media (min-width: 1920px) {
-.cell10 {
-    width: 22% !important;
-  }
-}
- 
 .mat-tab-body-wrapper {
    overflow: auto !important;
+}
+/* .supportpaginationdiv .mat-paginator-page-size */
+.supportpaginationdiv .mat-paginator-range-label {
+  /* margin-left: 15px; */
+    left: 30px !important;
+}
+
+.Component-filed .mat-form-field-flex {
+  border: medium none !important;
+  padding: 0px !important;
+  border-radius: none !important;
+  height: 0px !important;
+}
+.Admin-amyaccount .mat-tab-body-wrapper {
+  overflow: hidden !important;
+}
+.Component-filed .mat-select-arrow {
+  border-left: 0px solid transparent !important;
+  border-right: 0px solid transparent !important;
+}
+
+/* @media (max-width: 1300px) {
+  .CreateTkt.h-scroll {
+    height: 480px !important;
+  }
+ }
+ @media (min-width: 1600px) {
+  .CreateTkt.h-scroll {
+    height: 640px !important;    
+  }
+ } */
+
+.no-items-img{
+  height:calc(100vh - 250px)!important ;
+}
+
+
+.no-items-content
+{
+  text-align: center !important;
+}
+
+.Attached-contents .mat-progress-bar-fill::after {
+  background: #4FA908  !important;
+}
+.ng-select .ng-select-container {
+  min-height: 34px !important;
+}
+.update_department .ng-select .ng-select-container{
+  max-height: 65px !important;
+  overflow: auto !important;
+}
+.custom-content-notification{
+  min-width: 330px ;
+  /* height: 330px; */
+  height: 310px;
+  overflow: auto;
 }

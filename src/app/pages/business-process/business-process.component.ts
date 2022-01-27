@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { DataTransferService } from '../services/data-transfer.service';
 import { RestApiService } from '../services/rest-api.service';
 import { APP_CONFIG } from 'src/app/app.config';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-bussiness-process',
   templateUrl: './business-process.component.html' ,
@@ -30,8 +31,11 @@ export class BusinessProcessComponent implements AfterViewChecked {
   hasConformance:boolean = false;
   reSize:boolean=false;
   process_id:any;
+  systemAdmin:Boolean=false;
   isUploaded:boolean=false;
-
+  freetrail: string;
+  processowner_list:any[]=[];
+  process_owner:any;
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private cdRef: ChangeDetectorRef, private dt: DataTransferService,private rest:RestApiService,
               @Inject(APP_CONFIG) private config, ) { }
 
@@ -43,8 +47,10 @@ export class BusinessProcessComponent implements AfterViewChecked {
     this.logged_User=localStorage.getItem("firstName")+' '+localStorage.getItem("lastName")
     this.userRole = localStorage.getItem("userRole")
     this.userRole = this.userRole.split(',');
-    this.isApproverUser = this.userRole.includes('Process Architect');
+    this.isApproverUser = this.userRole.includes('Process Architect')||this.userRole.includes('Process Owner');
+    this.systemAdmin=this.userRole.includes("System Admin")
     this.getApproverList();
+    this.freetrail=localStorage.getItem("freetrail")
   }
 
   ngAfterViewChecked() {
@@ -63,7 +69,7 @@ export class BusinessProcessComponent implements AfterViewChecked {
   }
   ngAfterViewInit(){
     this.dt.notation_ScreenValues.subscribe(res=>{
-      console.log(res);
+      // console.log(res);
       let notationValues_obj={}
       notationValues_obj=res;
       if(notationValues_obj){
@@ -82,14 +88,34 @@ export class BusinessProcessComponent implements AfterViewChecked {
         if(this.isUploaded){
           this.selectedNotationType='bpmn'
         }
+        // console.log(this.iscreate_notation)
       }
     });
   }
-   async getApproverList(){
-    await this.rest.getApproverforuser('Process Architect').subscribe( res =>  {//Process Architect
-     if(Array.isArray(res))
+  //  async getApproverList(){
+  //   await this.rest.getApproverforuser('Process Architect').subscribe( res =>  {
+  //    if(Array.isArray(res))
+  //      this.approver_list = res;
+  //  });
+  // }
+
+  async getApproverList(){
+    let roles={
+      "roleNames": ["Process Owner","Process Architect"]
+    
+    }
+    await this.rest.getmultipleApproverforusers(roles).subscribe( res =>  {//Process Architect
+      if(Array.isArray(res))
        this.approver_list = res;
    });
+
+   let roles1={
+    "roleNames": ["Process Owner"]
+  }
+  await this.rest.getmultipleApproverforusers(roles1).subscribe( res =>  {//Process Architect
+    if(Array.isArray(res))
+     this.processowner_list = res;
+ });
   }
   route() {
     this.router.navigate(['/pages/home']);
@@ -172,12 +198,28 @@ export class BusinessProcessComponent implements AfterViewChecked {
     if(selecetedTenant){
        splitTenant = selecetedTenant.split('-')[0];
     }
-    window.location.href = this.config.camundaUrl+"/camunda/app/welcome/"+splitTenant+"/#!/login?accessToken=" + token + "&userID="+userId+"&tenentID="+selecetedTenant;
-    // window.location.href = "http://10.11.0.127:8080/camunda/app/welcome/"+splitTenant+"/#!/login?accessToken=" + token + "&userID="+userId+"&tenentID="+selecetedTenant;
+    let navigateBackTo=this.router.url;
+    //   window.location.href = this.config.camundaUrl+"/camunda/app/welcome/"+splitTenant+"/#!/login?accessToken=" + token + "&userID="+userId+"&tenentID="+selecetedTenant;
+    //   // window.location.href = "http://10.11.0.127:8080/camunda/app/welcome/"+splitTenant+"/#!/login?accessToken=" + token + "&userID="+userId+"&tenentID="+selecetedTenant;
+    // }
+    window.location.href = this.config.camundaUrl+"/camunda/app/welcome/"+splitTenant+"/#!/login?accessToken=" + token + "&userID="+userId+"&tenentID="+selecetedTenant+"&navigate_back="+navigateBackTo;
   }
 
-  onchange(){
-    let obj={id:"submit",selectedApprovar:this.selected_approver}
+  saveandSubmit(){
+    let obj
+    if(this.isShowConformance){
+      if(!this.process_owner){
+        Swal.fire({
+          icon: 'error',
+          text: 'Please select process owner !',
+          heightAuto: false,
+        });
+        return;
+      }
+      obj={id:"submit",selectedApprovar:this.selected_approver,processOwner:this.process_owner}
+    }else{
+      obj={id:"submit",selectedApprovar:this.selected_approver}
+    }
     this.dt.submitForApproval(obj)
   }
 

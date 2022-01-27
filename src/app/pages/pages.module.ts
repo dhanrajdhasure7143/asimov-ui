@@ -34,7 +34,16 @@ import { sohints } from './service-orchestration/orchestration/model/new-so-hint
 import { ProgramComponent } from './program/programlandingpage.component';
 import { ProgramcreationComponent } from './programcreation/programcreation.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
-
+import { ProcessArchitectComponent } from './dashboards/process-architect/process-architect.component';
+import { ProcessOwnerComponent } from './dashboards/process-owner/process-owner.component';
+import { MatProgressBarModule } from '@angular/material';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { JwtModule } from '@auth0/angular-jwt';
+import { ProcessAnalystComponent } from './dashboards/process-analyst/process-analyst.component';
+import { MatTableModule } from '@angular/material/table';  
+import {MatSortModule} from '@angular/material/sort';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import { PopoverModule } from 'ngx-bootstrap/popover'
 @NgModule({
   declarations: [
     PagesComponent,
@@ -47,6 +56,9 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     NewSoDashboardComponent,
     ProgramComponent,
     ProgramcreationComponent,
+    ProcessArchitectComponent,
+    ProcessOwnerComponent,
+    ProcessAnalystComponent,
     
   ],
   imports: [
@@ -61,7 +73,18 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     NgxSpinnerModule,
     NgxPaginationModule,
     MatExpansionModule,
-    MatListModule,MatMenuModule,MatButtonModule,MatIconModule,MatToolbarModule,MatSidenavModule,MatTooltipModule
+    MatListModule,MatMenuModule,MatButtonModule,MatIconModule,MatToolbarModule,MatSidenavModule,MatTooltipModule,
+     JwtModule.forRoot({
+      config: {
+        tokenGetter:  () => localStorage.getItem('accesstoken')
+      }
+    }),
+    NgbModule,
+    MatProgressBarModule,
+    MatTableModule,
+    MatSortModule,
+    MatPaginatorModule,
+    PopoverModule.forRoot()
   ],
   providers: [SharebpmndiagramService, PagesHints,sohints
   //  LoaderService,

@@ -1,5 +1,5 @@
 
-<div class="row new-PI-layout">
+<div class="row new-PI-layout ">
                 <div class='col-md-12 PI-uploadgrid p-0'>
                   <div class="row">
                    <div class="PI-heading">
@@ -11,7 +11,7 @@
                         </h4>
                         
                    </div>     
-                   <div class="col-md-3 p-0 upload_zone" id="upload_xl" *ngIf="this.isButtonVisible || enableuploadbuttons">
+                   <div class="col-md-3 p-0 upload_zone" id="upload_xl" >
                         <ngx-dropzone (change)="onUpload($event,0)" [multiple]=false [accept]="xlsx_csv_mime" >
                            <div class="model-img">       
                                 <ngx-dropzone-label>
@@ -27,7 +27,7 @@
                            </div>
                         </ngx-dropzone>
                    </div>
-                   <div class="col-md-3 p-0 upload_zone" id="upload_xes" *ngIf="this.isButtonVisible || enableuploadbuttons">
+                   <div class="col-md-3 p-0 upload_zone" id="upload_xes" *ngIf="freetrail!='true'">
                         <ngx-dropzone (change)="onUpload($event,3)" [multiple]=false accept=".xes, .gzip, .gz" >
                            <div class="model-img">
                                 <ngx-dropzone-label>
@@ -43,7 +43,7 @@
                            </div>                        
                         </ngx-dropzone>
                    </div>
-                   <div class="col-md-3 p-0 upload_zone" id="upload_db" (click)="onDbSelect()" *ngIf="this.isButtonVisible || enableuploadbuttons">
+                   <div class="col-md-3 p-0 upload_zone" id="upload_db" (click)="onDbSelect()" *ngIf="freetrail!='true'">
                         <ngx-dropzone [multiple]=false [accept]="db_mime" [disableClick]=true >
                            <div class="model-img">
                                 <ngx-dropzone-label>
@@ -72,13 +72,13 @@
                         <form action="" class="col-md-6 p-0 tableControls">
                                         <div class="col-md-6 form-group pr-0 offset-4">
                                                 <!-- <label>Select Category</label> -->
-                                                <select  name="category" (change)="searchByCategory(categoryName)" #category="ngModel" [(ngModel)]="categoryName" panelClass="overlayMatSelect" class="form-control bps-home-fileds">
+                                                <select  name="category" (change)="searchByCategory(categoryName)" [disabled]="categories_list.length == 1" #category="ngModel" [(ngModel)]="categoryName" panelClass="overlayMatSelect" class="form-control bps-home-fileds">
                                                         <option value="" disabled hidden >Select Category</option>
                                                         <option value="null" disabled hidden >Select Category</option>
                                                         <option value="undefined" disabled hidden >Select Category</option>
-                                                        <option value="allcategories">All Categories</option>
-                                                        <option *ngFor="let eachcat of categoryList.data;let i=index;trackBy:loopTrackBy" [value]="eachcat.categoryName">
-                                                        {{eachcat.categoryName| titlecase}}</option>
+                                                        <option value="allcategories" *ngIf="categories_list.length > 1">All Categories</option>
+                                                        <option *ngFor="let eachcat of categories_list;let i=index;trackBy:loopTrackBy" [value]="eachcat.categoryName">
+                                                        {{eachcat.categoryName}}</option>
                                                 </select>
                                         </div>
                                         <div class="col-md-6 form-group pr-0 PI-serwksp">
@@ -89,8 +89,9 @@
                                         
                         </form>
                     </div>
-                    <div class="col-sm-12 graph_table">
-                        <table mat-table [dataSource]="dataSource" matSort class="PI table w-100">
+                    <div class="test1">
+                        <div class="col-sm-12 graph_table">
+                           <table mat-table [dataSource]="dataSource" matSort class="PI table w-100">
                                 <ng-container matColumnDef="piId">
                                         <th mat-header-cell *matHeaderCellDef mat-sort-header class="table_header">Process ID </th>
                                         <td mat-cell *matCellDef="let element"> {{element.piId}} </td>
@@ -123,7 +124,7 @@
                                                         <img src="../../../../assets/images/PI/refresh-blue.svg" alt="" class="testplus hover-img" matTooltip="Retry Process Graph" matTooltipPosition="left">
                                                 </span>
                                                 <span>
-                                                        <span *ngIf="element.status !='Inprogress'" (click)="onDeleteSelectedProcess(element.piId,element.status)" class="delete-icon">
+                                                        <span *ngIf="element.status !='Inprogress'" (click)="onDeleteSelectedProcess(element.piId,element)" class="delete-icon">
                                                                 <!-- <img matTooltip="Delete Process" matTooltipPosition="left" src="../../../../assets/images/BPMS/delete-red.svg"  > -->
                                                                 <img src="../../../../assets/images/Projects/delete-black.svg" matTooltip="Delete Process" matTooltipPosition="left" class="default-img">
                                                                 <img src="../../../../assets/images/Projects/delete-red.svg" matTooltip="Delete Process" matTooltipPosition="left" class="hover-img">
@@ -136,9 +137,10 @@
                                 </ng-container>                                  
                                         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                                         <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="pList"></tr>
-                        </table>
-                        <div class="">
-                                <mat-paginator class="newpaginationdiv" #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons]="true"></mat-paginator>
+                           </table>
+                        </div>
+                        <div class="pipaginationdiv">
+                             <mat-paginator class="newpaginationdiv" #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons]="true"></mat-paginator>
                         </div>        
                     </div>
                 </div>
@@ -283,8 +285,12 @@
      </div>
 </div>
 
+
 <process-category-overlay headerTitle="Save Process" buttonName="Save & Generate" (proceed)="generateGraph($event)" class="bpmnCreate"></process-category-overlay>
 <!-- <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "ball-spin-clockwise-fade-rotating" [fullScreen] = "true"><p style="color: white" ></p></ngx-spinner> -->
+
+
+
 <div class="spinoverlay" *ngIf="isLoading">
         <div class="spincenter">
             <img  src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader"/>

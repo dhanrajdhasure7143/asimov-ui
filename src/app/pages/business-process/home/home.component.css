@@ -235,6 +235,24 @@ div#bpmn_list {
     .cell.cell6 {
         padding-right: 10px;
     }
-    .cell.cell9, .cell.cell10 {
+    .cell.cell9, .cell.cell10, .cell.cell5, .cell.cell3 {
         width: 50% !important;
+    }
+
+    .no-item-img{
+        height: calc(100vh - 500px)
+    } 
+    .workspace-title .cell, .workspace-title button {
+       font-size: 14px !important;
+       width: 98%;
+    }
+    .delete-icon img{
+        width: 16px;
+        height: 16px;
+    }
+    .delete-icon:hover img.default-img {
+        display: none;
+    }
+    .delete-icon:hover img.hover-img {
+        display: initial;
     }

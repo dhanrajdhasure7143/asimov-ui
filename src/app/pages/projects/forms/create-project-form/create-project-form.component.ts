@@ -4,6 +4,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import moment from 'moment';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
 import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
+import { NotifierService } from 'angular-notifier';
 @Component({
   selector: 'app-create-project-form',
   templateUrl: './create-project-form.component.html',
@@ -11,7 +12,7 @@ import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 })
 export class CreateProjectFormComponent implements OnInit {
 
-  constructor(private formBuilder:FormBuilder, private spinner:NgxSpinnerService, private rest:RestApiService ) { }
+  constructor(private formBuilder:FormBuilder,private notifier:NotifierService, private spinner:NgxSpinnerService, private rest:RestApiService ) { }
   insertForm2:FormGroup;
   selectedresources:any=[];
   valuechain:any=[];
@@ -19,43 +20,58 @@ export class CreateProjectFormComponent implements OnInit {
   mindate= moment().format("YYYY-MM-DD");
   @Input('users_list') public users_list: any[];
   @Input('processes') public processes:any[];
+  @Input('initiatives_list') public initiatives_list:any[];
   selected_process_names:any=[];
   @Output() oncreate = new EventEmitter<String>();
   date = new Date();
+  loggedInUserId:any;
+  freetrail: string;
   ngOnInit(): void {
-    
+    this.loggedInUserId=localStorage.getItem("ProfileuserId")
     this.insertForm2=this.formBuilder.group({
       projectName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       initiatives: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       resource: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      owner: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      owner: [this.loggedInUserId, Validators.compose([Validators.required, Validators.maxLength(50)])],
       mapValueChain: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       endDate: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       startDate: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       priority: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       measurableMetrics: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      process: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-     // description: ["", Validators.compose([Validators.maxLength(200)])],
+      process: ["", Validators.compose([Validators.maxLength(50)])],
+      processOwner: ["", Validators.compose([ Validators.maxLength(50)])],
+     
+      // description: ["", Validators.compose([Validators.maxLength(200)])],
      // access: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       
-      projectPurpose: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      projectPurpose: ["", Validators.compose([Validators.required, Validators.maxLength(150)])],
       // status: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
 
     })
-    //this.getvalchain();
+
+    this.getvalchain();
     this.getprocessnames();
+    this.freetrail=localStorage.getItem('freetrail')
+
+    if(this.freetrail!='true') {
+      this.insertForm2.get('process').setValidators(Validators.required)
+      this.insertForm2.get('processOwner').setValidators(Validators.required)
+    } else {
+      this.insertForm2.get('process').clearValidators();
+      this.insertForm2.get('processOwner').clearValidators();
+    }
   }
 
   getprocessnames()
-{
-  this.rest.getprocessnames().subscribe(processnames=>{
-    let response:any=processnames;
-    let resp:any=[]
-    //resp=processnames
-    //this.selected_process_names=resp.filter(item=>item.status=="APPROVED");
-     resp=response.filter(item=>item.status=="APPROVED");
-    this.selected_process_names=resp.sort((a,b) => (a.processName.toLowerCase() > b.processName.toLowerCase() ) ? 1 : ((b.processName.toLowerCase() > a.processName.toLowerCase() ) ? -1 : 0));
-  })
+  {
+    this.rest.getprocessnames().subscribe(processnames=>{
+      let response:any=processnames;
+      let resp:any=[]
+      //resp=processnames
+      //this.selected_process_names=resp.filter(item=>item.status=="APPROVED");
+      resp=response.filter(item=>item.status=="APPROVED");
+      this.selected_process_names=resp.sort((a,b) => (a.processName.toLowerCase() > b.processName.toLowerCase() ) ? 1 : ((b.processName.toLowerCase() > a.processName.toLowerCase() ) ? -1 : 0));
+    })
   }
 
  
@@ -78,7 +94,21 @@ export class CreateProjectFormComponent implements OnInit {
       this.oncreate.emit(project);
     }
   }
-
+  onProcessChange(processId:number)
+  {
+    let process=this.selected_process_names.find(process=>process.processId==processId);
+    if(process!=undefined)
+    {
+      let processOwner:any=this.users_list.find(item=>(`${item.userId.firstName} ${item.userId.lastName}`==process.createdBy))
+      if(processOwner!=undefined)
+      {
+        this.insertForm2.get("processOwner").setValue(processOwner.userId.userId)
+      }else
+      {
+        this.notifier.notify("error","Unable to find process owner for selected process")
+      }
+    }
+  }
 
   
   resetcreateproject()
@@ -87,7 +117,9 @@ export class CreateProjectFormComponent implements OnInit {
         
         this.insertForm2.get("resource").setValue("");
         this.insertForm2.get("mapValueChain").setValue("");
-        this.insertForm2.get("owner").setValue("");
+        this.insertForm2.get("owner").setValue(this.loggedInUserId);
+        
+        this.insertForm2.get("processOwner").setValue("");
         this.insertForm2.get("initiatives").setValue("");
         this.insertForm2.get("priority").setValue("");
         this.insertForm2.get("process").setValue("");

@@ -35,6 +35,15 @@ import {CustomMatPaginatorIntl} from './../../shared/custom-mat-paginator-int';
 import {MatPaginatorIntl} from '@angular/material';
 import {Ng2TelInputModule} from 'ng2-tel-input';
 import { CompareValidatorDirective } from './comparepsw-validator.directive';
+import { DepartmentsComponent } from './departments/departments.component';
+import { CreateDepartmentComponent } from './departments/create-department/create-department.component';
+import { EditDepartmentComponent } from './departments/edit-department/edit-department.component';
+import { UserManagementComponent } from './user-management/user-management.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
+import { UserPipePipe } from './pipes/user-pipe.pipe';
+import { UsersComponent } from './user-management/users/users.component';
+import { InviteUserComponent } from './user-management/users/invite-user/invite-user.component';
+import { ModifyUserComponent } from './user-management/users/modify-user/modify-user.component';
 
 const materialModules: any[] = [
     
@@ -42,7 +51,7 @@ const materialModules: any[] = [
   ];
 
 @NgModule({
-  declarations: [AdministrationComponent, MyAccountComponent,CompareValidatorDirective],
+  declarations: [AdministrationComponent, MyAccountComponent,CompareValidatorDirective, DepartmentsComponent, CreateDepartmentComponent, EditDepartmentComponent, UserManagementComponent, ChangePasswordComponent, UserPipePipe, UsersComponent, InviteUserComponent, ModifyUserComponent],
   imports: [
     Ng2TelInputModule,
     CommonModule,

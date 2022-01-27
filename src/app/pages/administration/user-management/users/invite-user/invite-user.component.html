@@ -1,0 +1,92 @@
+<div class="h-100">
+    <mat-card class="h-100">
+        <form #inviteUser_form="ngForm" autocomplete="off">
+        <div class="module-heading title">
+            <span class="module-back-button" routerLink="/pages/admin/user-management">
+                <i class="fas fa-arrow-left" aria-hidden="true"></i>
+            </span>
+            <span class="module-header-title">
+                <span class="module-parent-title">Invite User</span>
+            </span>
+            <div class="ml-auto pull-right">
+                <button class="btn btn-default" (click)="resetUserInvite();inviteUser_form.reset()">Reset</button>
+                <button (click)="inviteUser()" [disabled]="inviteUser_form.invalid" class="btn btn-primary btn-update">Invite</button>
+            </div>
+        </div>
+        <div class="container-fluid  h-scroll">
+            <div class="maindivfoprm">
+                <!-- <div class="create-heading">Invite User</div> -->
+                <!-- <form #inviteUser_form="ngForm" autocomplete="off"> -->
+                    <!-- <div class="row fcont"> -->
+
+                    <div class="col-md-12 p-0 form-fields">
+                        <label class="label-control">Email<span class="star">*</span></label>
+                        <input type="text" [(ngModel)]="inviteeMail" name="mail_id" #mail_id="ngModel"
+                            (change)="onEmailChange()" class="form-control data" (keyup)="myemailFunction()"
+                            pattern="^\S*[@]\S*[.]\S*$" email placeholder="Enter Emails Separated By Comma(,)" required/>
+
+                        <span *ngIf="((mail_id.invalid && inviteUser_form.submitted) || (mail_id.errors && mail_id.touched) )"> 
+                                <span class='errspan required' *ngIf="mail_id.errors.required">Email is required</span>
+                                <span class='errspan required' *ngIf="mail_id.errors.pattern">Enter valid email address</span>
+                            </span>
+                        <!-- <span class='errspan required' *ngIf="!inviteeMail"> Email is required</span> -->
+                    </div>
+                    <!-- </div> -->
+                    <div class="col-md-12 p-0 form-fields">
+                        <label class="label-control">Role<span class="star">*</span></label>
+                        <select [(ngModel)]="role" class="form-control data" (change)="onchangeRole($event.target.value)" name="user_role" #user_role="ngModel" required>
+                            <option [value]="null" disabled hidden>Select Role</option>
+                            <option value="" disabled hidden>Select Role</option>
+                            <option [value]="" disabled hidden>Select Role</option>
+                            <option value="null" disabled hidden>Select Role</option>
+                            <option [value]="undefined" disabled hidden>Select Role</option>
+                            <option value="undefined" disabled hidden>Select Role</option>
+                            <option *ngFor="let role of allRoles" [value]="role.id">{{role.name}}</option>
+                        </select>
+                        
+                        <span *ngIf="((user_role.invalid && inviteUser_form.submitted) || (user_role.errors && user_role.touched) )" class='errspan required'> Role is required </span>
+
+                        <!-- <ng-select  formControlName="role" placeholder="Select Role"
+                                            [(ngModel)]="role"  required>
+                                            <ng-option *ngFor="let category of categories" [value]="category.categoryId">{{category.categoryName}}</ng-option>
+                                           </ng-select> -->
+
+                        <!-- <span *ngIf="inviteUserForm.get('role').invalid && inviteUserForm.get('role').touched" class="errspan required">Role Required*</span> -->
+                    </div>
+
+                    <div class="col-md-12 p-0 form-fields">
+                        <label class="label-control">Department(s)<span class="star">*</span></label>
+                        <!-- <ng-select  formControlName="departments"  [multiple]="true"  placeholder="Select departments"
+                                          [(ngModel)]="departments"  required>
+                                          <ng-option *ngFor="let category of categories" [value]="category.categoryId">{{category.categoryName}}</ng-option>
+                                         </ng-select> -->
+
+                        <ng-select [items]="categories" bindLabel="categoryName" bindValue="categoryId" name="depart"
+                            #depart="ngModel" [multiple]="true" placeholder="Select departments"
+                            [(ngModel)]="departments" [disabled]="isdprtDisabled" required>
+                        </ng-select>
+                        <span *ngIf="((depart.invalid && inviteUser_form.submitted) || (depart.errors && depart.touched) )" class='errspan required'> Departments is required </span>
+
+                        <!-- <span *ngIf="inviteUserForm.get('departments').invalid && inviteUserForm.get('departments').touched" class="errspan required">Departments Required*</span> -->
+                    </div>
+
+                    
+
+                    <!-- </div> -->
+                <!-- </form> -->
+                <!-- <div class="pull-right">
+                    <button (click)="resetUserInvite()" class="btn btn-default">Cancel</button>
+                    <button  (click)="inviteUser()" class="btn btn-primary btn-update">Send</button>
+                </div> -->
+
+            </div>
+        </div>
+    </form>
+    </mat-card>
+</div>
+
+<div class="spinoverlay" *ngIf="isLoading">
+    <div class="spincenter">
+        <img src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader" />
+    </div>
+</div>

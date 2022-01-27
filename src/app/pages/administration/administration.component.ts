@@ -20,4 +20,8 @@ export class AdministrationComponent implements OnInit {
 
   ngOnInit() {
   }
+
+  ngOnDestroy(){
+       localStorage.removeItem("department_tab");
+  }
 }

@@ -266,6 +266,6 @@ img.hover-img {
   margin-top: 10px;
   margin-bottom: 10px;
 }
-::ng-deep .popover-content{
+/* ::ng-deep .popover-content{
   padding: 9px 0px !important;
-}
+} */

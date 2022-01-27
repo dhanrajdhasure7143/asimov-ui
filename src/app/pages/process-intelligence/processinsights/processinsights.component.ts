@@ -204,7 +204,6 @@ yScaleMin_duration: number = 0;
      ngAfterViewInit(){
          let res_data
          this.dt.processInsights_headerChanges.subscribe(res=>{
-             console.log(res)
              res_data=res
              if(res_data instanceof Object){
                  this.workingHours=res_data
@@ -343,9 +342,7 @@ yScaleMin_duration: number = 0;
             if (each.Duration_range > 10 * 60 * 1000) tmp.push(each)
         })
         this.top10_activityData = tmp.slice(0, 5);
-         console.log(this.top10_activityData);
         var dd = this.timeConversion(7187760000);
-        // console.log(dd);
 
     }
 
@@ -378,7 +375,6 @@ yScaleMin_duration: number = 0;
         this.rest.getPIInsightMeanMedianDuration(reqObj)
             .subscribe((res: any) => {
                 this.insight_human_robot_cost = res.data;
-                // console.log(this.insight_human_robot_cost);
                 this.getHumanvsBotCost(this.insight_human_robot_cost);
                 if (from == 'fullgraph') {
                     this.getResources(this.insight_human_robot_cost);
@@ -402,6 +398,11 @@ yScaleMin_duration: number = 0;
                 tmp.push(each.Resource_Name)
             }
         });
+        resources.sort(function(a, b){
+            if(a.item_text < b.item_text) { return -1; }
+            if(a.item_text > b.item_text) { return 1; }
+            return 0;
+        })
         this.resourcesList = resources;
         // this.selectedResources.forEach(each_sel => {
         //     if(tmp.indexOf(each_sel) != -1) tmp2.push(each_sel)
@@ -410,7 +411,6 @@ yScaleMin_duration: number = 0;
     }
 
     onResourceSelect(isAllSelect?: boolean) {
-        //   console.log("in resource")
         var r_flag = 'SINGLE';
         let selected_resources = [];
         let aResources = this.selectedResources;
@@ -419,7 +419,6 @@ yScaleMin_duration: number = 0;
          aResources = this.resourcesList;
         } 
         if (aResources.length == 0 || isAllSelect == false) {
-            //   console.log("in shs");
 
             this.totalMedianDuration = this.bkp_totalMedianDuration;
             this.getActivityMetrics('fullgraph');
@@ -441,7 +440,6 @@ yScaleMin_duration: number = 0;
            // this.spinner.show();
             this.rest.getPIInsightResourceSelection(reqObj)
                 .subscribe((res: any) => {
-                    // console.log(res)
                     //dashboard metrics
                     //this.totalMedianDuration = res.data.total.totalDuration / 3;
                     this.totalMedianDuration = res.data.total.totalDuration;
@@ -503,7 +501,6 @@ yScaleMin_duration: number = 0;
                         this.dChart1 = activityDuration;
                         this.dChart2 = activityCost;
                         //this.addchart2();
-                        console.log(this.dChart2)
                         this.ActivityTimeChart();
                         this.resourceCostByActivity();
                         this.getActivityWiseHumanvsBotCost(this.activity_Metrics);
@@ -546,7 +543,6 @@ yScaleMin_duration: number = 0;
             return dateA - dateB;
         });
 
-        //    console.log(vData.dates_data);
        
         vData.dates_data.forEach(e => {
 
@@ -666,7 +662,6 @@ series2.stroke = am4core.color("#fc8d45");
     }
 
     getPointX(cases) {
-        //   console.log(cases);
 
         this.variant_Duration_list.data.forEach(e => {
             if (e.Cases == cases) {
@@ -699,7 +694,6 @@ series2.stroke = am4core.color("#fc8d45");
       //  this.spinner.show();
         this.rest.getPIVariantActivity(reqObj)
             .subscribe((res: any) => {
-                // console.log(JSON.stringify(res));
                 var aData = res.data;
                 this.activity_Metrics = aData.data;
                 let activityDuration = [];
@@ -746,7 +740,6 @@ series2.stroke = am4core.color("#fc8d45");
 
                 this.dChart1 = activityDuration;
                 this.dChart2 = activityCost;
-                console.log(this.dChart2)
                 this.ActivityTimeChart();
                 this.resourceCostByActivity();
                 //this.addchart2();
@@ -778,7 +771,6 @@ series2.stroke = am4core.color("#fc8d45");
     }
 
     getActivityWiseHumanvsBotCost(activityMetrics) {
-        // console.log(activityMetrics);
         var hCost = [];
         var rCost = [];
         var ac_list = [];
@@ -867,10 +859,8 @@ series2.stroke = am4core.color("#fc8d45");
         } else {
             noofcases = 0;
             this.totalCases = 0;
-            //   console.log(this.totalVariantList);
 
             this.totalVariantList.forEach(e => {
-                //   console.log(e);
                 noofcases = noofcases + e.case_value;
             });
             this.totalCases = noofcases;
@@ -1268,7 +1258,6 @@ series2.stroke = am4core.color("#fc8d45");
     getAllVariantList() {
         let variantData = localStorage.getItem("variants")
         this.varaint_data = JSON.parse(atob(variantData));
-        console.log(this.varaint_data);
         this.finalVariants = JSON.parse(atob(localStorage.getItem("variants")))
         this.onchangeVaraint('0');
         this.updatePartialVariantData();
@@ -1300,7 +1289,6 @@ series2.stroke = am4core.color("#fc8d45");
         }
     }
     onchangeVaraint(datavariant) {      // Variant List sorting 
-        // console.log(datavariant);
         switch (datavariant) {
             case "0":
                 this.varaint_data.data.sort(function (a, b) {
@@ -1343,11 +1331,9 @@ series2.stroke = am4core.color("#fc8d45");
             pVData.push(vdata[i])
         }
         this.partialVariants = pVData.slice(0, 10);
-        // console.log(this.partialVariants);
     }
 
     getVariantMedianDuration(selectedVariants) {
-        // console.log(selectedVariants)
         if (selectedVariants.length == 0) {
             this.totalMedianDuration = this.bkp_totalMedianDuration;
         }
@@ -1414,16 +1400,12 @@ series2.stroke = am4core.color("#fc8d45");
                 this.s_variants.push('Variant ' +index_v2);
                 this.selectedCaseArry.push('Variant ' + index_v);
                 // this.selectedTraceNumbers.push(this.varaint_data.data[i].trace_number)
-                // console.log(this.varaint_data.data[i]);
 
                 selectedVariantIds.push(this.varaint_data.data[i]);
             }
         };
-        // console.log(selectedVariantIds)
         this.getVariantMedianDuration(selectedVariantIds);
         this.caselength = this.selectedCaseArry.length;
-
-        // console.log(this.varaint_data.data.length);
 
         if (this.selectedCaseArry.length == this.varaint_data.data.length) {
             this.checkboxValue = true
@@ -1555,13 +1537,11 @@ series2.stroke = am4core.color("#fc8d45");
         Highcharts.chart('barGraph', this.piechart3);
     }
     switchTostackedBar(value) {
-        //   console.log(value);
         if (value == "stackedbar") {
             this.isstackedbarChart = true
             this.scatterBarchart()
         } else {
             this.isstackedbarChart = false
-            // this.addpiechart1([])
         }
     }
 
@@ -1763,8 +1743,6 @@ series2.stroke = am4core.color("#fc8d45");
     }
 
     loadPeiChart1(data1,colorValues){
-        console.log(data1, colorValues);
-        
         var width = 450
         var height = 350
         var margin = 80
@@ -1817,7 +1795,6 @@ series2.stroke = am4core.color("#fc8d45");
       .style("stroke-width", "2px")
       .style("opacity", 0.7)
       .on("mouseover", function (d) {
-        console.log(d);
         
     d3.select("#pietooltip")
         .style("left", (d3.event.pageX) + "px")
@@ -1859,7 +1836,7 @@ series2.stroke = am4core.color("#fc8d45");
       .data(data_ready)
       .enter()
       .append('text')
-        .text( function(d) { console.log(d.data.key) ; return d.data.key } )
+        .text( function(d) { return d.data.key } )
         .attr('transform', function(d) {
             var pos = outerArc.centroid(d);
             var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
@@ -1870,7 +1847,6 @@ series2.stroke = am4core.color("#fc8d45");
             var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
             return (midangle < Math.PI ? 'start' : 'end')
         }).on("mouseover", function (d) {
-            console.log(d3.event);
             
         d3.select("#pietooltip")
             .style("left", (d3.event.pageX) + "px")
@@ -1891,8 +1867,6 @@ series2.stroke = am4core.color("#fc8d45");
             }
 
 loadPeiChart2(data1,colorValues){
-    console.log(data1);
-    
     var width = 450
     var height = 340
     var margin = 80
@@ -1945,7 +1919,6 @@ svg
   .style("stroke-width", "2px")
   .style("opacity", 0.7)
   .on("mouseover", function (d) {
-    console.log(d);  
     d3.select("#pietooltip1")
     .style("left", (d3.event.pageX) + "px")
     .style("top", (d3.event.pageY) + "px")
@@ -1986,7 +1959,7 @@ svg
   .data(data_ready)
   .enter()
   .append('text')
-    .text( function(d) { console.log(d.data.key) ; return d.data.key } )
+    .text( function(d) { return d.data.key } )
     .attr('transform', function(d) {
         var pos = outerArc.centroid(d);
         var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
@@ -1998,7 +1971,6 @@ svg
         return (midangle < Math.PI ? 'start' : 'end')
     })
     .on("mouseover", function (d) {
-        console.log(d);  
         d3.select("#pietooltip1")
         .style("left", (d3.event.pageX) + "px")
         .style("top", (d3.event.pageY) + "px")
@@ -2061,7 +2033,6 @@ svg
     //     return index;
     //   }
     ActivityTimeChart(){
-        // console.log(this.dChart1)
         this.dChart1.sort(function (a,b){
             return b.value - a.value
         })
@@ -2106,7 +2077,6 @@ svg
         // series.columns.template.tooltipText = " caseId : {categoryX} \n  Duration : {valueY}[/] ";
         // series.tooltip.text = " caseId";
         // series.adapter.add("tooltipText", function(text, target) {
-        //   console.log(text,target.dataItem)
         //   return "{_dataContext.activity} \n {_dataContext.totalDuration1}";
         // });
         var _self=this;
@@ -2142,9 +2112,9 @@ svg
     }
 
     resourceCostByActivity(){
-        this.dChart2.sort(function (a,b){
-            return b.value - a.value
-        });
+        this.dChart2.sort(function(a,b){
+            return b.value-a.value
+        })
         am4core.useTheme(am4themes_animated);
         // Themes end
         
@@ -2178,7 +2148,7 @@ svg
         series.dataFields.category = "name";
         series.labels.template.disabled = true;
         // series.slices.template.cornerRadius = 0;
-        series.tooltip.horizontalCenter = "middle";
+       // series.tooltip.horizontalCenter = "middle";
         // series.tooltip.verticalCenter = "middle";
         // series.tooltip.fontSize=18;
         // series.tooltipText = ' {name} ({_dataContext.totalDuration1})';
@@ -2186,7 +2156,6 @@ svg
         // series.columns.template.tooltipText = " caseId : {categoryX} \n  Duration : {valueY}[/] ";
         // series.tooltip.text = " caseId";
         // series.adapter.add("tooltipText", function(text, target) {
-        //   console.log(text,target.dataItem)
         //   return "{_dataContext.activity} \n {_dataContext.totalDuration1}";
         // });
         var _self=this;

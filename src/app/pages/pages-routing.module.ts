@@ -14,6 +14,8 @@ const routes: Routes = [
     {path:'serviceOrchestration', loadChildren: './service-orchestration/service-orchestration.module#ServiceOrchestrationModule'},
     {path:'projects', loadChildren: './projects/projects.module#ProjectsModule'},
     {path:'admin', loadChildren:'./administration/administration.module#AdministrationModule'},
+    {path:'subscriptions', loadChildren:'./manage-subscriptions/manage-subscriptions.module#ManageSubscriptionsModule'},
+    {path:'support', loadChildren:'./support/support.module#SupportModule'},
     {path:'**', redirectTo:'/home', pathMatch:"full"}
   ]}
 ];

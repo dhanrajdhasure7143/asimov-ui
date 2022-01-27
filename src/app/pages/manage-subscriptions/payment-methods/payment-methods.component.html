@@ -1,0 +1,29 @@
+
+<div class="container">
+    <div class="row">
+        <!-- <div class="col-md-12">
+                <h3 id="planHeading">Features will be enabled based on the selected plan</h3>
+                <h4 id="ctr">Choose the right one for your valuable business</h4>
+        </div> -->
+        <div class="col-md-12 errordiv" *ngIf='error'>
+                <h2>{{error}}</h2>
+            </div>
+        <span *ngIf='!error' class="col-md-12 row">
+        <div class="col-md-3 cardsBox" style="margin: 1%;" *ngFor="let cardData of paymentMode; let i=index ;trackBy:loopTrackBy">
+               
+                <img src="../../../assets/images/subscription/card.svg"><br><br>
+                <span id=""><b> XXXX-XXXX-XXXX-{{cardData.cardLast4.slice(-3)}}</b>
+                <h4> <span *ngIf='cardData.defaultSource' class="active-card">Active</span></h4>
+            </span>
+                <span id="cardName"><b>Card Holder's Name : {{cardData.name}}</b></span><br><br>
+                <span id=""><b>Expires : {{cardData.cardExpMonth}}/{{cardData.cardExpYear}}</b></span>
+            </div>
+            <!-- <div class="col-md-3 cardsBox">
+            <img src="../../../assets/images/subscription/AddCard.svg">
+        </div> -->
+        </span>
+
+           
+            <div class="col-md-3" style="display: block;height: 50px" ></div>
+    </div>
+</div>

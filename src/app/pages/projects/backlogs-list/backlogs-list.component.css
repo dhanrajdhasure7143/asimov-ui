@@ -1,0 +1,19 @@
+.backlogsdiv-body {
+    padding: 10px 12px;
+    height: calc(100% - 50px);
+}
+.backlogsdiv-body .table_responsive.graph_table {
+    height: calc(100% - 35px);
+    overflow: auto;
+}
+.backlogsdiv-body tbody td {
+    padding: 5px 10px;
+}
+
+.backlogsdiv-body tbody tr {
+    border-top: 1px solid #dee2e6;
+}
+
+.backlogsdiv-body tbody tr:hover {
+    background-color: #f2d12b33;
+}

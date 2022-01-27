@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input, HostListener, ViewChild, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, HostListener, ViewChild, SimpleChanges, ChangeDetectorRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
 import { ActivatedRoute } from '@angular/router';
@@ -30,9 +30,14 @@ export class ProcessCategoryOverlayComponent implements OnInit {
   uploadedFileSplit:any=[];
   uploadedFileExtension:string;
   count:number=0;
-
+  categories_list:any[]=[];
+  approver_list:any[]=[];
+  process_owner:any;
+  process_name_error:boolean=false;
+  freetrail: string;
   @ViewChild('processCategoryForm', {static: true}) processForm: NgForm;
-  constructor( private rest:RestApiService, private activatedRoute: ActivatedRoute, private global:GlobalScript) { }
+  constructor( private rest:RestApiService, private activatedRoute: ActivatedRoute, private global:GlobalScript,
+    private cdRef: ChangeDetectorRef) { }
 
   ngOnChanges(changes: SimpleChanges) {
   if(changes['uploadedFileName']){
@@ -45,6 +50,13 @@ export class ProcessCategoryOverlayComponent implements OnInit {
     }
   }
   }
+  ngAfterViewChecked(){
+    if(this.categories_list.length==1){
+      this.categoryName=this.categories_list[0].categoryName
+    }
+    this.cdRef.detectChanges();
+  }
+
   ngOnInit() {
     if(this.data){
       let data_arr = this.data.split("@");
@@ -54,7 +66,15 @@ export class ProcessCategoryOverlayComponent implements OnInit {
     if(this.activatedRoute.snapshot['_routerState'].url.includes('businessProcess')){
       this.isBpmnModule = true;
     }
-    this.rest.getCategoriesList().subscribe(res=> this.categoriesList=res );
+    this.rest.getCategoriesList().subscribe(res=> {
+      this.categoriesList=res
+      this.categories_list=this.categoriesList.data
+      if(this.categories_list.length==1){
+        this.categoryName=this.categories_list[0].categoryName
+      }
+    });
+    this.getApproverList();
+    this.freetrail=localStorage.getItem('freetrail')
   }
 
   loopTrackBy(index, term){
@@ -62,7 +82,7 @@ export class ProcessCategoryOverlayComponent implements OnInit {
   }
 
   onchangeCategories(categoryName){
-    this.isotherCategory = categoryName =='other';
+    // this.isotherCategory = categoryName =='other';
   }
 
   saveCategory(){
@@ -100,10 +120,34 @@ export class ProcessCategoryOverlayComponent implements OnInit {
     if (found == false) {
       this.saveCategory();
       let data;
-      data = {
-        "processName": this.processName,
-        "categoryName": this.categoryName == 'other' ? this.othercategory : this.categoryName,
-        "ntype": this.notationType
+      if (this.freetrail == 'true') {
+        if (this.isBpmnModule) {
+          data = {
+            "processName": this.processName,
+            "categoryName": this.categoryName == 'other' ? this.othercategory : this.categoryName,
+            "ntype": this.notationType,
+          }
+        } else {
+          data = {
+            "processName": this.processName,
+            "categoryName": this.categoryName == 'other' ? this.othercategory : this.categoryName,
+          }
+        }
+      } else {
+        if (this.isBpmnModule) {
+          let approverobj = this.approver_list[this.process_owner]
+          data = {
+            "processName": this.processName,
+            "categoryName": this.categoryName == 'other' ? this.othercategory : this.categoryName,
+            "ntype": this.notationType,
+            "processOwner": approverobj.userId
+          }
+        } else {
+          data = {
+            "processName": this.processName,
+            "categoryName": this.categoryName == 'other' ? this.othercategory : this.categoryName,
+          }
+        }
       }
       this.slideDown(null);
       this.proceed.emit(data);
@@ -127,27 +171,61 @@ export class ProcessCategoryOverlayComponent implements OnInit {
     }
   }
 
-  lettersOnly(event): boolean {
-    if(event.target.value.length==0 && event.code=="Space"){
-      event.preventDefault();
-      return false;
-    }
+  lettersOnly(event) {
+    var regex = new RegExp("^[a-zA-Z0-9-_]+$");
+    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+      if (!regex.test(key)) {
+        event.preventDefault();
+        return false;
+      }
+
+    // this.process_name_error = false;
+    // if (event.target.value.length == 0) {
+    //   this.process_name_error = false;
+    // }
+    // if (event.target.value.includes(' ')) {
+    //   this.process_name_error = true;
+    //   return;
+    // }
+    // if ((event.target.value.length != 0 && event.target.value.length < 4) || (event.target.value.length > 25) ) {
+    //   this.process_name_error = true;
+    // }
+
+
+
+
+    // this.process_name_error=false;
+    // if(event.target.value.length==0 && event.code=="Space"){
+    //   event.preventDefault();
+    //   return false;
+    // }
+    // console.log(event.code)
     
-    let count1;
-    if(event.code=="Space"){
-      console.log('test')
-      count1=this.count++;
-    }else{
-      this.count=0;
-    }
-    if(count1>=1){
-      event.preventDefault();
-      return false;
-    }
+    // let count1;
+    // if(event.code=="Space"){
+    //   count1=this.count++;
+    //   this.process_name_error=true;
+    // }else{
+    //   this.count=0;
+    // }
+    // console.log(count1)
+    // if(count1>=1){
+    //   event.preventDefault();
+    //   return false;
+    // }
 
     // var str=event.target.value
     // console.log("othercategory",this.othercategory);
     // console.log(str.replace(/\s\s/g, " "))
 
+  }
+  async getApproverList(){
+    let roles={
+      "roleNames": ["Process Owner"]
+    }
+    await this.rest.getmultipleApproverforusers(roles).subscribe( res =>  {//Process Architect
+     if(Array.isArray(res))
+       this.approver_list = res;
+   });
   }
 }

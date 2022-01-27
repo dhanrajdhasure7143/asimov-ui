@@ -4,7 +4,7 @@ import { Component,Input, OnInit } from '@angular/core';
 @Component({
 selector:'form-builder',
 template:`
-  <div  [formGroup]="form">
+  <div [formGroup]="form">
     <div *ngIf ="field.visibility">
       <label *ngIf="field.type!='checkbox'" class="label-control" [attr.for]="field.label">
         {{field.label}}

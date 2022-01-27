@@ -6,6 +6,7 @@ import { MatDialog, MatDialogRef } from '@angular/material';
 import { APP_CONFIG } from 'src/app/app.config';
 import Swal from 'sweetalert2';
 import { DataTransferService } from 'src/app/pages/services/data-transfer.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-deploy-notation',
@@ -22,6 +23,7 @@ export class DeployNotationComponent implements OnInit {
     private rest: RestApiService,
     public dialogRef: MatDialogRef<DeployNotationComponent>,
     private dt:DataTransferService,
+    private router: Router,
     @Inject(APP_CONFIG) private config
   ) { 
     dialogRef.disableClose = true;
@@ -48,6 +50,7 @@ export class DeployNotationComponent implements OnInit {
     formData.append('fileName', this.data.fileNme)
     formData.append('fieldName', this.data.fileNme)
     formData.append('engine',  splitTenant);
+    formData.append('department',  this.data.category);
     // formData.append('engine', '424d2067');
     
     this.rest.deployBPMNNotation('/deployprocess/notation', formData)
@@ -64,11 +67,12 @@ export class DeployNotationComponent implements OnInit {
         }
         
         } else{
-          Swal.fire(
-            'Oops!',
-            response.message,
-            'error'
-          )
+          Swal.fire({
+            title: 'Oops!',
+            text: response.message,
+            icon: 'error',
+            heightAuto: false,
+          })
         }
       })
   }
@@ -84,9 +88,13 @@ export class DeployNotationComponent implements OnInit {
     if(selecetedTenant){
        splitTenant = selecetedTenant.split('-')[0];
     }
-    window.location.href = this.config.bpmPlatfromUrl+"/camunda/app/welcome/"+splitTenant+"/#!/login?accessToken=" + token + "&userID="+userId+"&tenentID="+selecetedTenant;
+    // window.location.href = this.config.bpmPlatfromUrl+"/camunda/app/welcome/"+splitTenant+"/#!/login?accessToken=" + token + "&userID="+userId+"&tenentID="+selecetedTenant;
    //var token=localStorage.getItem('accessToken');
     // window.location.href=this.config.bpmPlatfromUrl+"/camunda/app/welcome/424d2067/#!/login?accessToken="+token+"&userID=karthik.peddinti@epsoftinc.com&tenentID=424d2067-41dc-44c1-b9a3-221efda06681"
+    let navigateBackTo=this.router.url;
+    
+    window.location.href = this.config.camundaUrl+"/camunda/app/welcome/"+splitTenant+"/#!/login?accessToken=" + token + "&userID="+userId+"&tenentID="+selecetedTenant+"&navigate_back="+navigateBackTo;
+  
   }
 
   closedeplyNonation() {

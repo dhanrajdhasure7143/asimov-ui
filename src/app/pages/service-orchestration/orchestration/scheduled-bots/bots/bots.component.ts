@@ -12,7 +12,7 @@ import { RestApiService } from 'src/app/pages/services/rest-api.service';
   styleUrls: ['./bots.component.css']
 })
 export class BotsComponent implements OnInit {
-  displayecolumns: string[] = ['botName','botSource','scheduleInterval','timezone','lastRunTS','nextRunTS','status'];
+  displayecolumns: string[] = ['botName','botSource','category','scheduleInterval','timezone','lastRunTS','nextRunTS','status'];
   dataSource5:MatTableDataSource<any>;
   public log:any=[];
   public tabledata: boolean = false;
@@ -39,8 +39,7 @@ export class BotsComponent implements OnInit {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
     this.scheduledbots.filter = filterValue;
-    console.log(this.scheduledbots.filter);
-    console.log(this.scheduledbots.filteredData.length);
+   
     this.tabledata = this.scheduledbots.filteredData.length <= '0'  ? false: true;
   }
 

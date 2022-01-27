@@ -1,15 +1,15 @@
 <div class="container m-contanier form-body">
-  <div class="row">
-      <div class="RPA-scheduletimer">
-        <div class="RPA-scheduletimer-header">
-          <div class="col-md-11 p-0">
-            <span>
-              <select class="rpa-control form-control" [(ngModel)]="timezone">
+    <div class="row">
+        <div class="RPA-scheduletimer">
+            <div class="RPA-scheduletimer-header">
+                <div class="col-md-11 p-0">
+                    <span>
+              <select class="rpa-control form-control" (change)="onTimeZoneChange($event.target.value)" [(ngModel)]="timezone">
                 <option value="" disabled>Select Timezone</option>
                 <option *ngFor="let timeZone of timesZones" [value]="timeZone">{{timeZone}}</option>
               </select>
             </span>&nbsp;&nbsp;
-            <span  *ngIf="processid!='' && processid !=undefined">
+                    <span *ngIf="processid!='' && processid !=undefined">
               <mat-form-field>
                   <mat-label>Select Environemt</mat-label>
                   <mat-select [(ngModel)]="selectedEnvironment">
@@ -19,86 +19,101 @@
                   </mat-select>
               </mat-form-field>
             </span>
-          </div>
-          <div class="col-md-1 p-0 scheduletimer-loadicon">
-            <span>
+                </div>
+                <div class="col-md-1 p-0 scheduletimer-loadicon">
+                    <span>
               <button (click)="reset()" tooltip="Reset"><img src="../../../../assets/images/RPA/icon_latest/load-blue.svg" alt="" class="testplus"></button>
             </span>
-          </div>
-        </div>  
-        <div class="col-md-12 p-0 form-group">
-          <cron-editor #cronEditorDemo [(cron)]="cronExpression" [disabled]="isCronDisabled" [(options)]="cronOptions">Cron here...
-          </cron-editor>
-        </div>
-        <div class="RPA-scheduletimer-body">
-          <div class="col-md-6 pl-0">
-            <input type="date" class="rpa-control form-control form-group" [(ngModel)]="startdate" [min]="startdate"  (change)="enddate=startdate">          
-            <ngx-timepicker-field [controlOnly]="true" [defaultTime]="'23:11'" [format]="24" [(ngModel)]="starttime"></ngx-timepicker-field>
-          </div>
-          <div class="col-md-6 pr-0">
-            <input type="date" class="rpa-control form-control form-group" [(ngModel)]="enddate" [min]="startdate" >
-            <ngx-timepicker-field [controlOnly]="true" [defaultTime]="'23:11'" [format]="24" [(ngModel)]="endtime"></ngx-timepicker-field>
-          </div>
-        </div>
-        <div class="RPA-scheduletimer-footer">
-          <button class="btn btn-primary" (click)="add_sch()">Add</button>
-          <div class="scheduletimer-actionbtns">
-                <button [disabled]="!(flags.startflag)"  tooltip="Start" mat-mini-fab color="basic"   (click)="start_schedule()" >
+                </div>
+            </div>
+            <div class="col-md-12 p-0 form-group">
+                <cron-editor #cronEditorDemo [(cron)]="cronExpression" [disabled]="isCronDisabled" [(options)]="cronOptions">Cron here...
+                </cron-editor>
+            </div>
+            <div class="RPA-scheduletimer-body">
+                <div class="col-md-6 pl-0">
+                    <input type="date" class="rpa-control form-control form-group" [(ngModel)]="startdate" [min]="startdate" (change)="enddate=startdate">
+                    <ngx-timepicker-field [controlOnly]="true" [defaultTime]="'23:11'" [format]="24" [(ngModel)]="starttime"></ngx-timepicker-field>
+                </div>
+                <div class="col-md-6 pr-0">
+                    <input type="date" class="rpa-control form-control form-group" [(ngModel)]="enddate" [min]="startdate">
+                    <ngx-timepicker-field [controlOnly]="true" [defaultTime]="'23:11'" [format]="24" [(ngModel)]="endtime"></ngx-timepicker-field>
+                </div>
+            </div>
+            <div class="RPA-scheduletimer-footer">
+                <button class="btn btn-primary" (click)="add_sch()">Add</button>
+                <div class="scheduletimer-actionbtns">
+                    <button [disabled]="!(flags.startflag)" tooltip="Start" mat-mini-fab color="basic" (click)="start_schedule()">
                     <i class="ri-play-line testplus"></i>
                   <!-- <img src="../../../../assets/images/RPA/icon_latest/play.svg" alt="" class="testplus"> -->
                 </button>
-                <button [disabled]="!(flags.pauseflag)"  tooltip="Pause"   mat-mini-fab color="basic"   (click)="pause_schedule()">
+                    <button [disabled]="!(flags.pauseflag)" tooltip="Pause" mat-mini-fab color="basic" (click)="pause_schedule()">
                     <i class="ri-pause-line testplus"></i>
                   <!-- <img src="../../../../assets/images/RPA/icon_latest/pause.svg" alt="" class="testplus"> -->
                 </button>
-                <button  [disabled]="!(flags.resumeflag)"  tooltip="Resume"  mat-mini-fab color="basic"   (click)="resume_schedule()">
+                    <button [disabled]="!(flags.resumeflag)" tooltip="Resume" mat-mini-fab color="basic" (click)="resume_schedule()">
                   <!-- <img src="../../../../assets/images/RPA/icon_latest/pause.svg" alt="" class="testplus"> -->
                   <i class="ri-skip-forward-line testplus"></i>
                 </button>
-                <button [disabled]="!(flags.deleteflag)" tooltip="Delete"  mat-mini-fab color="basic"   (click)="delete_schedule()">
+                    <button [disabled]="!(flags.deleteflag)" tooltip="Delete" mat-mini-fab color="basic" (click)="delete_schedule()">
                   <!-- <img src="../../../../assets/images/RPA/icon_latest/delete.svg" alt="" class="testplus"> -->
                   <i class="ri-delete-bin-line testplus"></i>
                 </button>
-                <button   mat-mini-fab color="basic"   tooltip="Refresh"  (click)="get_schedule()">
+                    <button mat-mini-fab color="basic" tooltip="Refresh" (click)="get_schedule()">
                     <i class="ri-refresh-line testplus"></i>
                   <!-- <img src="../../../../assets/images/RPA/icon_latest/reset.svg" alt="" class="testplus"> -->
                 </button>
-          </div>      
+                </div>
+            </div>
         </div>
-      </div>  
-      <div class="RPA-scheduletable">
-          <div class="maintabdiv">
-              <!--For Bot Schedule-->
-              <div  *ngIf="botid!='' && botid !=undefined">
-              <div class="tablmacl"><div class="innertabld"><table class="table">
-                  <thead>
-                      <th class="text-center"><input type="checkbox" (click)="check_all($event)"></th>
-                      <th>Schedule Interval</th>
-                      <th>Timezone</th>
-                      <th>Last Run</th>
-                      <th>Next Run</th>
-                      <th>Status</th>
-                  </thead>
-                  <tbody>
-                      <tr *ngFor="let schedule of schedule_list  | paginate: { itemsPerPage: 4,currentPage: q }">
-                          <td class="text-center"><input type="checkbox" (click)="check_schedule($event,schedule.intervalId)" [checked]="schedule.check"></td>
-                          <td>{{convertcron(schedule.scheduleInterval)}}</td>
-                          <td>{{ schedule.timeZone}}</td>
-                          <td *ngIf="schedule.lastRunTime!='null' && schedule.nextRunTime!=undefined">{{schedule.lastRunTime}}</td>
-                          <td *ngIf="schedule.lastRunTime=='null' || schedule.nextRunTime==undefined">--</td>
-                          <td *ngIf="schedule.nextRunTime!='null' && schedule.nextRunTime!=undefined">{{schedule.lastRunTime}}</td>
-                          <td *ngIf="schedule.nextRunTime=='null' || schedule.nextRunTime==undefined">--</td>
-                          <td *ngIf="schedule.botActionStatus!=undefined">{{schedule.botActionStatus}}</td>
-                          <td *ngIf="schedule.botActionStatus==undefined"><span *ngIf="schedule.save_status=='unsaved'">--</span></td>
-                      </tr>
-                  </tbody>
-              </table></div></div>
-              <div class="pagicl float-right"><pagination-controls (pageChange)="q = $event"></pagination-controls></div>
-              </div>
-              <div class="text-right">
-                  <button class="btn btn-primary eiap-btn" (click)="saveschedule()">Save</button>
-              </div>
-          </div>    
-      </div>
-  </div>
+        <div class="RPA-scheduletable">
+            <div class="maintabdiv">
+                <!--For Bot Schedule-->
+                <div *ngIf="botid!='' && botid !=undefined">
+                    <div class="tablmacl">
+                        <div class="innertabld">
+                            <table class="table">
+                                <thead>
+                                    <th class="text-center"><input type="checkbox" (click)="check_all($event)"></th>
+                                    <th>Schedule Interval</th>
+                                    <th>Timezone</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th>Start Time</th>
+                                    <th>End Time</th>
+                                    <th>Last Run</th>
+                                    <th>Next Run</th>
+                                    <th>Status</th>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let schedule of schedule_list  | paginate: { itemsPerPage: 4,currentPage: q }">
+                                        <td class="text-center">
+                                            <input type="checkbox" (click)="check_schedule($event,schedule.intervalId)" [checked]="schedule.check"></td>
+                                        <td>{{convertcron(schedule.scheduleInterval)}}</td>
+                                        <td>{{schedule.timeZone}}</td>
+                                        <td class="text-nowrap">{{schedule.startDate.split(",")[2]}}-{{schedule.startDate.split(",")[1]}}-{{schedule.startDate.split(",")[0]}}</td>
+                                        <td class="text-nowrap">{{schedule.endDate.split(",")[2]}}-{{schedule.endDate.split(",")[1]}}-{{schedule.endDate.split(",")[0]}}</td>
+                                        <td>{{schedule.startDate.split(",")[3]}}:{{schedule.startDate.split(",")[4]}}</td>
+                                        <td>{{schedule.endDate.split(",")[3]}}:{{schedule.endDate.split(",")[4]}}</td>
+                                        <td *ngIf="schedule.lastRunTime!='null' && schedule.lastRunTime!=undefined">{{schedule.lastRunTime }}</td>
+                                        <td *ngIf="schedule.lastRunTime=='null' || schedule.lastRunTime==undefined">--</td>
+                                        <td *ngIf="schedule.nextRunTime!='null' && schedule.nextRunTime!=undefined">{{schedule.nextRunTime }}</td>
+                                        <td *ngIf="schedule.nextRunTime=='null' || schedule.nextRunTime==undefined">--</td>
+                                        <td *ngIf="schedule.botActionStatus!=undefined">{{schedule.botActionStatus}}</td>
+                                        <td *ngIf="schedule.botActionStatus==undefined"><span *ngIf="schedule.save_status=='unsaved'">--</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="pagicl float-right">
+                        <pagination-controls (pageChange)="q = $event"></pagination-controls>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <button class="btn btn-primary eiap-btn" (click)="saveschedule()">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

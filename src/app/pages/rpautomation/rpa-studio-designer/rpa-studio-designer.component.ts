@@ -11,19 +11,27 @@ import { Base64 } from 'js-base64';
 export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
 
   @Input('tabsArray') public tabsArray: any[];
+  @Input('toolset') public templateNodes:any[];
   @ViewChildren("rpa_bot_instance") bot_instances:QueryList<any>;
   current_instance:any;
   toolset_instance:any;
   selected_tab_instance:any;
-
+  userRole:any;
+  checkCreate:Boolean=false;
+  freetrail: string;
+  isProcessAnalyst:Boolean=false;
   constructor(private rpa_studio:RpaStudioComponent, 
     private router:Router,
     private activeRoute:ActivatedRoute) { }
 
   ngOnInit() {
-    
-    localStorage.setItem("isHeader","true");
- 
+    this.userRole = localStorage.getItem("userRole")
+    this.userRole = this.userRole.split(',');
+    if(this.userRole.includes("User"))
+      localStorage.setItem("isHeader","true");
+    if(this.userRole.includes("Process Analyst"))
+      this.isProcessAnalyst=true;
+    this.freetrail=localStorage.getItem('freetrail')
   }
 
   ngAfterViewInit()

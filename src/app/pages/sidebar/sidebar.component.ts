@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {PagesComponent} from '../pages.component'
 import * as $ from 'jquery';
+import { DataTransferService } from "./../../pages/services/data-transfer.service";
+import { RestApiService } from "./../services/rest-api.service"
+
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -13,10 +16,21 @@ export class SidebarComponent implements OnInit {
   isShowing = false;
   showSubSubMenu: boolean = false;
   showadminSubSubMenu: boolean = false;
-  constructor(private obj:PagesComponent) { }
+  public userRoles:any = [];
+  freetrail: boolean;
+  tenantId: string;
+  plansList: any;
+  expiry: any;
+  showProjectsSubmenu: boolean = false;
+  constructor(private obj:PagesComponent, private dt:DataTransferService,
+    private rest_service: RestApiService) { }
 
   ngOnInit() {
     //this.disable();
+    this.getexpiryInfo();
+    this.rest_service.getUserRole(2).subscribe(res=>{
+      this.userRoles=res.message
+    });
     let active_module=localStorage.getItem('selectedModule')
     if(active_module){
     let selected_module=active_module.split('&')
@@ -29,6 +43,11 @@ export class SidebarComponent implements OnInit {
       localStorage.setItem('selectedModule','eiap-home&'+ null);
       $('#eiap-home').addClass("active");
     }
+
+    setTimeout(() => {
+      // this.userRoles = localStorage.getItem("userRole")
+    }, 200);
+  this.getAllPlans();
   }
 
   hightlight(element,name){
@@ -41,6 +60,7 @@ export class SidebarComponent implements OnInit {
      this.obj.sideBarOpen=false;
      this.obj.sidebar.showSubmenu=false;
       this.obj.sidebar.showadminSubmenu=false;
+      this.obj.sidebar.showProjectsSubmenu=false;
       this.obj.contentMargin = 60;
   }
   
@@ -49,4 +69,31 @@ export class SidebarComponent implements OnInit {
      this.obj.contentMargin=260;
    }
 
+   getAllPlans() {
+    this.tenantId = localStorage.getItem('tenantName');
+    this.rest_service.getProductPlans("EZFlow", this.tenantId).subscribe(data => {
+      this.plansList = data
+      if(this.plansList.length > 1){
+     this.plansList.forEach(element => {
+       if(element.subscribed==true){
+        this.plansList=element
+       }
+     });
+     if(this.plansList.nickName=='Standard'){
+       this.freetrail=true
+     }
+     else{
+      this.freetrail=false
+     }
+    }
+  })
+}
+
+getexpiryInfo(){
+  this.rest_service.expiryInfo().subscribe(data => {
+    this.expiry = data.Expiresin;
+    console.log("left over days ----",this.expiry)
+
+  })
+}
 }

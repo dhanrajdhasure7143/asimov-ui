@@ -29,6 +29,8 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import minimapModule from "diagram-js-minimap";
 declare var require:any;
 import BpmnColorPickerModule from 'bpmn-js-color-picker';
+import { Subscription } from 'rxjs';
+
 
 @Component({
   selector: 'app-create-bpmn-diagram',
@@ -98,6 +100,9 @@ export class CreateBpmnDiagramComponent implements OnInit {
   isStartProcessBtn:boolean=false;
   definationId:any;
   businessKey:any;
+  downloadFileformate:Subscription;
+  header_btn_functions:Subscription;
+  header_approvalBtn:Subscription;
   @ViewChild('variabletemplate',{ static: true }) variabletemplate: TemplateRef<any>;
   @ViewChild('keyboardShortcut',{ static: true }) keyboardShortcut: TemplateRef<any>;
   @ViewChild('dmnTabs',{ static: true }) dmnTabs: ElementRef<any>;
@@ -126,15 +131,14 @@ export class CreateBpmnDiagramComponent implements OnInit {
         this.dt.bpsNotationaScreenValues(this.push_Obj);
   }
   ngAfterViewInit(){
-    this.dt.download_notation.subscribe(res=>{
+    this.downloadFileformate=this.dt.download_notation.subscribe(res=>{
       this.fileType=res
       if(this.fileType != null){
         this.downloadBpmn(false);
       }
     })
-    this.dt.header_value.subscribe(res=>{
+    this.header_btn_functions=this.dt.header_value.subscribe(res=>{
       let headerValue=res
-      console.log(res);
       let result = headerValue instanceof Object;
       if(!result){
       if(headerValue == 'zoom_in'){
@@ -144,7 +148,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
       }else if(headerValue == 'save_process'){
         this.saveprocess(null)
       }else if(headerValue == 'save&approval'){
-        this.submitDiagramForApproval()
+        // this.submitDiagramForApproval()
       }else if(headerValue == 'orchestartion'){
         this.orchestrate()
       }else if(headerValue == 'deploy'){
@@ -159,6 +163,20 @@ export class CreateBpmnDiagramComponent implements OnInit {
       this.slideUp(headerValue)
     }
     })
+    this.header_approvalBtn=this.dt.subMitApprovalValues.subscribe(res=>{
+      if(res){
+        this.submitDiagramForApproval(res.selectedApprovar);
+      }
+    })
+  }
+  ngOnDestroy() {
+    this.downloadFileformate.unsubscribe();
+    this.header_btn_functions.unsubscribe();
+    this.header_approvalBtn.unsubscribe();
+    this.dt.bpsNotationaScreenValues(null);
+    this.dt.downloadNotationValue(null);
+    this.dt.bpsHeaderValues(null);
+    this.dt.submitForApproval(null)
   }
 
   getUserBpmnList(){
@@ -254,11 +272,14 @@ export class CreateBpmnDiagramComponent implements OnInit {
   }
 
   getApproverList(){
-     this.rest.getApproverforuser('Process Architect').subscribe( res =>  {//Process Architect
-      if(Array.isArray(res))
-        this.approver_list = res;
-    });
-   }
+    let roles={
+      "roleNames": ["Process Owner","Process Architect"]
+    }
+    this.rest.getmultipleApproverforusers(roles).subscribe( res =>  {//Process Architect
+     if(Array.isArray(res))
+       this.approver_list = res;
+   });
+  }
 
   getSelectedApprover(){
     let current_bpmn_info = this.saved_bpmn_list[this.selected_notation];
@@ -486,6 +507,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
   }
 
   autoSaveDiagram(model){
+    model["processOwner"] = this.saved_bpmn_list[this.selected_notation]['processOwner'];
     this.rest.autoSaveBPMNFileContent(model).subscribe(
       data=>{
         this.getAutoSavedDiagrams();
@@ -651,7 +673,8 @@ export class CreateBpmnDiagramComponent implements OnInit {
     })
   }
 
-  submitDiagramForApproval(){
+  submitDiagramForApproval(e){
+    this.selected_approver=e
     if((!this.selected_approver && this.selected_approver != 0) || this.selected_approver <= -1){
       Swal.fire("No approver", "Please select approver from the list given above", "error");
       return;
@@ -678,10 +701,16 @@ export class CreateBpmnDiagramComponent implements OnInit {
     this.bpmnModeler.saveXML({ format: true }, function(err, xml) {
       let final_notation = btoa(unescape(encodeURIComponent(xml)));
       bpmnModel.bpmnXmlNotation = final_notation;
+      bpmnModel.role=localStorage.getItem("userRole");
       _self.rest.submitBPMNforApproval(bpmnModel).subscribe(
         data=>{
           _self.isDiagramChanged = false;
           _self.isLoading = false;
+          _self.rejectedOrApproved="PENDING";
+            _self.push_Obj={"rejectedOrApproved":"PENDING","isfromApprover":false,
+            "isShowConformance":false,"isStartProcessBtn":_self.isStartProcessBtn,"autosaveTime":_self.updated_date_time,
+            "isFromcreateScreen":false,'process_name':_self.currentNotation_name,'isSavebtn':true}
+            _self.dt.bpsNotationaScreenValues(_self.push_Obj);
           Swal.fire(
             'Saved!',
             'Your changes has been saved and submitted for approval successfully.',
@@ -721,6 +750,8 @@ export class CreateBpmnDiagramComponent implements OnInit {
       let final_notation = btoa(unescape(encodeURIComponent(xml)));
       bpmnModel.bpmnXmlNotation = final_notation;
       _self.saved_bpmn_list[_self.selected_notation]['bpmnXmlNotation'] = final_notation;
+      bpmnModel["processOwner"] = _self.saved_bpmn_list[_self.selected_notation]['processOwner'];
+      bpmnModel.role=localStorage.getItem("userRole");
       _self.rest.saveBPMNprocessinfofromtemp(bpmnModel).subscribe(
         data=>{
           if(status == "APPROVED" || status == "REJECTED"){
@@ -845,7 +876,6 @@ export class CreateBpmnDiagramComponent implements OnInit {
       "variableList":this.variables
     };
     this.rest.startBpmnProcess(reqBody).subscribe(res=>{
-      console.log(res);
       Swal.fire(
         'Success!',
         'Process started successfully',

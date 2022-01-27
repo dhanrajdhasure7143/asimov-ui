@@ -341,7 +341,8 @@ i.fas.fa-chevron-down {
 
 .module-body {
   /* height: calc(100% - 46px); */
-  height: calc(100% - 49px);
+  /* height: calc(100% - 49px); */
+  height: calc(100% - 55px);
   overflow: auto;
   padding: 15px 0px;
 }

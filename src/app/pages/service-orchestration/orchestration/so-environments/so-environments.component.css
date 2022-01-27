@@ -80,9 +80,9 @@ width: 10px;
 height:4px
 } */
 
-:host ::ng-deep .mat-sort-header-arrow {
+/* :host ::ng-deep .mat-sort-header-arrow {
   color: white;
-}
+} */
 
 
 :host ::ng-deep td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type, th.mat-header-cell:first-of-type {

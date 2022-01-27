@@ -1,4 +1,4 @@
-import {ViewChild,Input, Component, OnInit,OnDestroy,Pipe, PipeTransform } from '@angular/core';
+import {ViewChild,Input, Component, OnInit,OnDestroy,Pipe, ChangeDetectorRef ,PipeTransform } from '@angular/core';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
@@ -14,7 +14,8 @@ declare var $:any;
 import { NgxSpinnerService } from "ngx-spinner";
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { SoProcesslogComponent } from '../so-processlog/so-processlog.component';
-
+import {MatTable} from '@angular/material/table';
+import {CdkDragDrop, moveItemInArray, transferArrayItem, CdkDragHandle} from '@angular/cdk/drag-drop';
 @Component({
   selector: 'app-new-so-automated-tasks',
   templateUrl: './new-so-automated-tasks.component.html',
@@ -48,7 +49,7 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
   blueprismbots:any=[];
   configurations_data:any=[];
   configurations:any=[];
-  displayedColumns: string[] = ["processName","taskName","processOwner","taskOwner","taskType", "category","sourceType","Assign","status","Operations"];
+  displayedColumns: string[] = ["processName","taskName","createdBy","taskOwner","taskType", "category","sourceType","Assign","status","Operations"];
   dataSource2:MatTableDataSource<any>;
   public isDataSource: boolean;
   public userRole:any = [];
@@ -57,11 +58,12 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
   public humans_list:any=[];
   public process_names:any=[];
   public selected_process_names:any=[];
-  public selectedvalue:any;
+  public selectedvalue:any="";
   public selectedTab:number;
   public responsedata;
   public selectedEnvironment:any='';
   public environments:any=[];
+  public environmentsData:any=[];
   public accountName:any="";
   public tenantId:any="";
   public userKey:any="";
@@ -72,15 +74,24 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
   public uipath_bots:any=[];
   public blueprism_configs:any=[];
   public checkedsource:String="UiPath";
+  addTaskForm:FormGroup;
+  queryParam:Boolean=false;
+  checkAssignTasks:Boolean=false;
+  uiPathBotFlag:Boolean=false;
+  public tasksArray:any=[];
+  public processId:any;
   @ViewChild("paginator10",{static:false}) paginator10: MatPaginator;
  //@ViewChild(SoProcesslogComponent, { static: false }) processlogs_instance: SoProcesslogComponent;
-  @ViewChild("sort10",{static:false}) sort10: MatSort;
-  @Input('processid') public processId: any;
+  @ViewChild("automatedSort",{static:false}) automatedSort: MatSort;
+  // @Input('processid') public processId: any;
   public insertslaForm_so_bot:FormGroup;
   public BluePrismConfigForm:FormGroup;
   public BluePrismFlag:Boolean=false;
   public timer:any;
   public logs_modal:BsModalRef;
+  isbotloading:any="loading";
+  isHumanLoading:any="Loading"
+  taskslist: any;
   constructor(
     private route: ActivatedRoute,
     private rest:RestApiService,
@@ -90,7 +101,8 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
     private http:HttpClient,
     private hints: sohints,
     private dt : DataTransferService,
-    private modalService:BsModalService
+    private modalService:BsModalService,
+    private cd:ChangeDetectorRef,
    )
 
   {
@@ -124,6 +136,9 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
       thresholdLimit: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       totalRetries: ["", Validators.compose([Validators.maxLength(2)])],
     });
+    this.addTaskForm=this.formBuilder.group({
+      tasks: [[], Validators.compose([Validators.required, Validators.maxLength(50)])]
+    })
   }
 
   ngOnInit() {
@@ -140,22 +155,32 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
     }else{
       this.isButtonVisible = false;
     }
-    this.getenvironments();
+    this.route.queryParams.subscribe(params => {
+      if(params.processid!=undefined)
+        this.processId = params['processid'];
+      else
+       this.processId=0
+       let url = new URL(window.location.href);
+      if (url.hash.split("?")[1]==undefined) {
+        this.processId=0;
+      }
+      setTimeout(()=>{
+        this.getCategoryList(this.processId);
+      },400)
+      this.getallbots();
+      this.gethumanslist();
+      this.getuipathbots();
+      this.getblueprismbots();
+    });
     //this.getCategoryList(this.processId);
-    setTimeout(()=>{
-      this.getCategoryList(this.processId);
-    },400)
-    this.getallbots();
-    this.gethumanslist();
-    this.getuipathbots();
-    this.getblueprismbots();
+   
  }
 
  sla_bot:any;
  sla_data:any;
  sla_selected_task:any;
  SLACon(taskdata){
-   console.log(taskdata)
+  
    this.sla_selected_task=taskdata;
    this.insertslaForm_so_bot.get("processName").setValue(this.sla_selected_task.processName);
    this.insertslaForm_so_bot.get("processOwner").setValue(this.sla_selected_task.createdBy);
@@ -187,9 +212,7 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
    }
    else if(taskdata.sourceType=="BluePrism")
     {
-      console.log(this.blueprismbots)
       this.sla_bot=this.blueprismbots.find(item=>item.botName==this.sla_selected_task.botId);
-      console.log(this.sla_bot);
       this.insertslaForm_so_bot.get("botName").setValue(this.sla_bot.botName);
     }
     else if(this.sla_selected_task.sourceType=="UiPath")
@@ -482,23 +505,40 @@ resetsla(){
   {
     this.rest.getallsobots().subscribe(botlist =>
     {
-      this.bot_list=botlist;
+      if(botlist){
+        this.bot_list=botlist;
+        this.isbotloading='Success'
+        if(this.selectedvalue!=null){
+       
+          this.checkTaskAssigned(this.selectedvalue)
+        }
+      }
+
+     
+    },(error)=>{
+      this.isbotloading='Error'
     });
   }
 
 
 
+
+
+
+
+
   getautomatedtasks(process)
   {
-    let response:any=[];
+    this.spinner.show();
     this.rest.getautomatedtasks(process).subscribe(automatedtasks=>{
+      let response:any=[];
       response=automatedtasks;
-
       if(response.automationTasks != undefined)
       {
         this.rest.getAllActiveBots().subscribe(bots=>{
           this.Active_bots_list=bots;
-          this.responsedata=response.automationTasks.map(item=>{
+          let responsedata=response.automationTasks.map(item=>{
+              item["processFilterId"]="processId_"+item.processId+"_"+item.processName
               if(item.sourceType=="UiPath")
                 item["taskOwner"]="Karthik Peddinti";
               else if(item.sourceType=="EPSoft")
@@ -508,21 +548,26 @@ resetsla(){
               }
               return item;
           });
+          this.responsedata=responsedata;
+          this.automatedtask=responsedata;
+          this.dataSource2= new MatTableDataSource(this.responsedata);
+            this.dataSource2.paginator=this.paginator10;
+            setTimeout(()=>{
+              this.dataSource2.sort=this.automatedSort;
+            },300)
+            
+          if(process==0)
+          {
+            this.getprocessnames(undefined);
+  
+          }else
+          {
+            this.getprocessnames(process);
+          }
+            this.update_task_status();
 
         });
-        this.automatedtask= response.automationTasks;
-        this.dataSource2= new MatTableDataSource(response.automationTasks);
-        this.dataSource2.sort=this.sort10;
-        this.dataSource2.paginator=this.paginator10;
-        if(process==0)
-        {
-          this.getprocessnames(undefined);
-
-        }else
-        {
-          this.getprocessnames(process);
-        }
-        this.update_task_status();
+       
       }
       this.spinner.hide();
     },(err)=>{
@@ -554,26 +599,144 @@ resetsla(){
       this.spinner.hide();
     })
   }
-
+  dropTable(event) {
+    if(this.selectedvalue!="" && this.selectedvalue != 0 && this.selectedvalue!="0" && this.selectedvalue != undefined) 
+    {
+      this.spinner.show();
+      let filteredTasks:any=this.automatedtask.filter(item=>item.processId==this.selectedvalue)
+      moveItemInArray(filteredTasks,event.previousIndex,event.currentIndex)
+      let array:any= filteredTasks;
+      let tasksOrder=array.map(item=>{
+        return {
+          "taskId":String(item.taskId)
+        }
+      })
+      this.rest.saveTasksOrder(tasksOrder).subscribe((data:any)=>{
+        this.spinner.hide();
+        this.dataSource2=new MatTableDataSource(array);
+        this.dataSource2.paginator=this.paginator10;
+        this.dataSource2.sort=this.automatedSort;
+      },(err=>{
+        this.spinner.hide();
+        Swal.fire("Error","Unable to reorder tasks","error")
+      }))
+    }
+    else
+    {
+      Swal.fire("Alert","Please select process to re-order tasks","warning")
+    }
+    // if (event.previousContainer === event.container) {
+    //   moveItemInArray(event.container.data.data, event.previousIndex, event.currentIndex);
+    // } else {
+    //   transferArrayItem(event.previousContainer.data.data, event.container.data.data, event.previousIndex, event.currentIndex);
+    // }
+    //const prevIndex = this.automatedtask.findIndex((d) => d === event.item.data);
+    // moveItemInArray(this.automatedtask, prevIndex, event.currentIndex);
+    // this.automatedtable.renderRows();
+  }
 
   applyFilter(filterValue:any) {
-    let processnamebyid=this.process_names.find(data=>filterValue==data.processId);
+    let processnamebyid=this.process_names.find(data=>parseInt(filterValue)==data.processId);
     this.selectedcategory=parseInt(processnamebyid.categoryId);
-    this.applyFilter1(this.selectedcategory);
-    this.selectedvalue=processnamebyid.processId;
-    filterValue = processnamebyid.processName.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-    this.dataSource2.filter = filterValue;
+    this.selectedvalue=parseInt(processnamebyid.processId);
+    let processes=this.responsedata.filter(item=>item.processId==this.selectedvalue);
+    this.dataSource2=new MatTableDataSource(processes);
+    this.dataSource2.paginator=this.paginator10;
+    this.dataSource2.sort=this.automatedSort
+    //this.dataSource2.filter = "processId_"+filterValue+"_"+processnamebyid.processName;
+    this.checkTaskAssigned(processnamebyid.processId);
   }
 
   applyFilter1(value)
   {
     this.selectedcategory=parseInt(value);
-    this.dataSource2.filter = this.categaoriesList.find(data=>this.selectedcategory==data.categoryId).categoryName.toLowerCase();
+    this.environments=this.environmentsData.filter(item=>item.categoryId==value);
     this.selected_process_names=this.process_names.filter(item=>item.categoryId==this.selectedcategory)
+    let automatedTasks=this.automatedtask.filter(item=>item.categoryId==value);
+    this.dataSource2=new MatTableDataSource(automatedTasks);
+    this.dataSource2.paginator=this.paginator10;
+    this.dataSource2.sort=this.automatedSort;
     this.selectedvalue="";
   }
 
+
+  
+    checkTaskAssigned(id)
+    {
+      var processId=id;
+      if( this.automatedtask.filter(item=>item.processId==processId).length==0)
+      {
+        this.checkAssignTasks=false;
+        return;
+      }
+      else
+      {
+        let taskslist=this.automatedtask.filter(item=>item.processId==processId)
+        for(let i=0; i<taskslist.length;i++)
+        {
+          let item=taskslist[i]
+          if(item.taskType=="Automated")
+          { 
+            if(item.botId==""||item.botId==undefined || item.botId==null || item.botId=='null')    
+            {
+              this.checkAssignTasks=false
+              return true;
+            }
+            else
+            {
+              if(this.checkResource(item.botId,item.sourceType,item.taskType)!="0")
+              {
+                this.checkAssignTasks=true
+              }
+              else
+              {
+                this.checkAssignTasks=false;
+                return true;
+              }
+            }
+          }else if(item.taskType="Human")
+          {
+            if(item.assignedUserId==""||item.assignedUserId==undefined || item.assignedUserId==null || item.assignedUserId=='null')    
+            {
+              this.checkAssignTasks=false
+              return true;
+            }
+            else
+            {
+                if(this.checkResource(item.assignedUserId,item.sourceType,item.taskType)!="0")
+                {
+                  this.checkAssignTasks=true
+                }
+                else
+                {
+                  this.checkAssignTasks=false; 
+                  return true;
+                }
+            }
+          }
+        }
+
+      }
+    }
+    checkResource(id: any,  sourceType:any, taskType:any ) {
+      var val=""  
+      if(taskType=="Automated")
+      {
+        
+        if(sourceType=="EPSoft")
+          val= (this.bot_list.find(item=>parseInt(item.botId)==parseInt(id))!=undefined)?(this.bot_list.find(item=>parseInt(item.botId)==parseInt(id)).botId):"0";
+        else if(sourceType=='UiPath')
+          val= (this.uipath_bots.find(item=>item.Key==id)!=undefined)?this.uipath_bots.find(item=>item.Key==id).Key:"0";
+        else if(sourceType=='BluePrism')
+          val= (this.blueprismbots.find(item=>item.botName==id)!=undefined)?this.blueprismbots.find(item=>item.botName==id).botName:"0";
+        //return val;
+      }
+      else if(taskType=="Human")
+      {
+        val= (this.humans_list.find(item=>parseInt(item.userId.id)==parseInt(id))!=undefined)?(this.humans_list.find(item=>parseInt(item.userId.id)==parseInt(id)).userId.id):"0";
+      }
+      return val
+    }
 
   close()
   {
@@ -582,12 +745,12 @@ resetsla(){
     document.getElementById("load-bot").style.display ="none";
   }
 
-  assignbot(id)
+  assignbot(id, processId)
   {
     let botId=$("#"+id+"__select").val();
     let source=this.responsedata.find(item=>item.taskId==id).sourceType;
     if(source=="UiPath")
-    this.responsedata.find(item=>item.taskId==id).taskOwner="Karthik Peddinti";
+      this.responsedata.find(item=>item.taskId==id).taskOwner="Karthik Peddinti";
     else if(source=="EPSoft")
     {
       this.responsedata.find(item=>item.taskId==id).taskOwner=this.bot_list.find(bot=>bot.botId==botId).createdBy;
@@ -595,13 +758,10 @@ resetsla(){
     else{
       this.responsedata.find(item=>item.taskId==id).taskOwner="---"
     }
-    this.dataSource2= new MatTableDataSource(this.responsedata);
-    this.dataSource2.sort=this.sort10;
-    this.dataSource2.paginator=this.paginator10;
-    if(this.selectedvalue!=undefined && this.selectedvalue!="")
-    {
-      this.applyFilter(this.selectedvalue);
-    }
+    // this.dataSource2= new MatTableDataSource(this.responsedata);
+    // this.dataSource2.sort=this.automatedSort;
+    // this.dataSource2.paginator=this.paginator10;
+   
     if(botId!=0)
     {
       this.spinner.show();
@@ -610,7 +770,20 @@ resetsla(){
         this.spinner.hide();
         if(response.status!=undefined)
         {
+          if(this.automatedtask.find(item=>item.taskId==id)!=undefined)
+          {
+            this.automatedtask.find(item=>item.taskId==id).botId=(botId);
+            this.responsedata.find(item=>item.taskId==id).botId=(botId);
+            this.dataSource2= new MatTableDataSource(this.responsedata);
+            this.dataSource2.sort=this.automatedSort;
+            this.dataSource2.paginator=this.paginator10;
+            if(this.selectedvalue!=undefined && this.selectedvalue!="")
+            {
+              this.applyFilter(this.selectedvalue);
+            }
+          }
           Swal.fire("Success","Resource Assigned Successfully","success");
+          this.checkTaskAssigned(processId);
         }else
         {
           Swal.fire("Error","Failed to Assign Resource","error");
@@ -620,18 +793,24 @@ resetsla(){
   }
 
 
-  assignhuman(taskid)
+  assignhuman(task)
   {
-    let botId=$("#"+taskid+"__select").val();
+    let botId=$("#"+task.taskId+"__select").val();
     if(botId!=0)
     {
       this.spinner.show();
-      this.rest.assign_bot_and_task(botId,taskid,"","Human").subscribe(data=>{
+      this.rest.assign_bot_and_task(botId,task.taskId,"","Human").subscribe(data=>{
         let response:any=data;
-        this.spinner.show();
+        this.spinner.hide();
         if(response.status!=undefined)
         {
+          this.responsedata.find(item=>item.taskId==task.taskId).assignedUserId=String(botId);
+          this.automatedtask.find(item=>item.taskId==task.taskId).assignedUserId=String(botId);
           Swal.fire("Success",response.status,"success");
+          if(this.selectedvalue!="")
+          {
+            this.checkTaskAssigned(task.processId)
+          }
         }else
         {
           Swal.fire("Error",response.errorMessage,"warning");
@@ -682,7 +861,7 @@ resetsla(){
       //this.rpa_studio.spinner.hide();
       this.update_task_status();
     },(err)=>{
-      console.log(err)
+      
       //this.rpa_studio.spinner.hide();
     })
   }
@@ -698,7 +877,7 @@ resetsla(){
       this.spinner.hide();
       let data:any=response;
       this.dataSource2= new MatTableDataSource(data.automationTasks);
-      this.dataSource2.sort=this.sort10;
+      this.dataSource2.sort=this.automatedSort;
       this.dataSource2.paginator=this.paginator10;
       if(this.selectedvalue==undefined)
       {
@@ -772,6 +951,8 @@ resetsla(){
 
   ngOnDestroy() { 
      clearInterval(this.timer)
+     let url=window.location.hash;
+    window.history.pushState("", "", url.split("?")[0]);
   }
 
   getenvironments()
@@ -781,6 +962,10 @@ resetsla(){
       if(resp.errorCode == undefined)
       {
         this.environments=response;
+        this.environmentsData=response;
+        if(this.categaoriesList.length==1)
+          this.environments=this.environmentsData.filter(item=>this.categaoriesList[0].categoryId==item.categoryId)
+
       }
     })
   }
@@ -791,6 +976,7 @@ resetsla(){
       let catResponse : any;
       catResponse=data
       this.categaoriesList=catResponse.data;
+      this.getenvironments();
       this.getautomatedtasks(processid);
     });
   }
@@ -798,9 +984,16 @@ resetsla(){
   gethumanslist()
   {
     let tenant=localStorage.getItem("tenantName");
-    this.rest.getuserslist(tenant).subscribe(data=>
-    {
+    this.rest.getuserslist(tenant).subscribe(data=>{
+        this.isHumanLoading="Success"
         this.humans_list=data;
+        if(this.isbotloading=="Success" && this.isHumanLoading=="Success")
+        {
+          if(this.selectedvalue!="")
+            this.checkTaskAssigned(this.selectedvalue)
+        }
+    },err=>{
+      this.isHumanLoading="Failure"
     })
   }
 
@@ -823,9 +1016,14 @@ resetsla(){
   {
     this.selectedEnvironment="";
     this.selectedvalue="";
-    this.selectedcategory="";
+    if(this.categaoriesList.length==1)
+    {
+      this.selectedcategory=(this.categaoriesList[0].categoryId)
+    }else
+    {
+      this.selectedcategory="";
+    }
     this.getautomatedtasks(0)
-
   }
 
 
@@ -850,14 +1048,16 @@ resetsla(){
 
   changesource(botsource,id)
   {
+    
     this.responsedata.find(item=>item.taskId==id).sourceType=botsource;
-    console.log(this.responsedata.find(item=>item.taskId==id).sourceType)
+    this.automatedtask.find(item=>item.taskId==id).sourceType=botsource; 
     this.dataSource2= new MatTableDataSource(this.responsedata);
-    this.dataSource2.sort=this.sort10;
+    this.dataSource2.sort=this.automatedSort;
     this.dataSource2.paginator=this.paginator10;
     if(this.selectedvalue!=undefined)
     {
       this.applyFilter(this.selectedvalue);
+      this.cd.detectChanges();
     }
   }
 
@@ -924,14 +1124,13 @@ resetsla(){
     }
     else
     {
-      console.log("Invalid Form");
-
+    
     }
   }
 
   save_blue_prism_config()
   {
-    console.log(this.BluePrismConfigForm.value)
+   
     if(this.BluePrismConfigForm.valid)
     {
       let response:any;
@@ -959,7 +1158,7 @@ resetsla(){
       }
     }else
     {
-      console.log("invalud",this.BluePrismConfigForm.value)
+     
     }
   }
 
@@ -984,7 +1183,7 @@ resetsla(){
     this.BluePrismConfigForm.get("password").setValue(data.password);
     this.BluePrismConfigForm.get("port").setValue(data.port);
     this.BluePrismConfigForm.get("status").setValue(data.status==0?false:true);
-    console.log(this.blueprism_configs)
+  
     this.BluePrismFlag=true;
     this.addBPconfigstatus=false;
     this.blueprismconfigoverlay = true;
@@ -1017,7 +1216,7 @@ resetsla(){
   {
     let checkdata:Boolean;
     checkdata=!(check);
-    console.log(checkdata)
+    
     if(checkdata==true)
     {
       this.configurations=this.configurations_data.filter(item=>item.sourceType==source).reverse();
@@ -1065,9 +1264,14 @@ resetsla(){
 
   getuipathbots()
   {
+    this.uiPathBotFlag=false;
     this.rest.get_uipath_bots().subscribe((bots)=>{
       let response:any=bots
+      
       this.uipath_bots=response.value;
+      this.uiPathBotFlag=true;
+      if(this.selectedvalue!='')
+        this.checkTaskAssigned(this.selectedvalue)
     });
   }
 
@@ -1091,7 +1295,60 @@ resetsla(){
     },5000)
   }
 
+  delete(taskid, processId){
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
+      this.spinner.show();
+      this.rest.deleteTaskInProcess(taskid).subscribe(resp => {
+          let value: any = resp
+        if (value.message === "Task Deleted Successfully!!") {
+          this.getautomatedtasks(0);
+          Swal.fire("Success", "Task Deleted Successfully!!", "success")
+        }
+        else {
+          Swal.fire("Error", "Failed to delete task", "error");
+        }
+        this.spinner.hide();
+      })
+    }
+    })
 
+  }
+
+  addtasks(template){
+    this.addTaskForm.reset();
+    this.rest.tasksListInProcess(this.selectedvalue).subscribe(resp => {
+      this.taskslist = resp.tasks;
+    })
+    this.logs_modal = this.modalService.show(template);
+  }
+
+  addexistingtasks(){
+    this.spinner.show();
+    this.rest.addtaskInProcess(this.addTaskForm.get('tasks').value).subscribe(resp => {
+      let value: any = resp
+   
+    if (value.message === "Task Added Successfully!!") {
+      this.getautomatedtasks(this.selectedvalue);
+      Swal.fire("Success", "Task Added Successfully!!", "success")
+    }
+    else {
+      Swal.fire("Error", "Failed to add task", "error");
+    }
+    this.spinner.hide();
+    this.logs_modal.hide();
+    this.addTaskForm.reset();
+  })
+  }
+  
 }
 
 

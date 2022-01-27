@@ -343,10 +343,8 @@ export class DataselectionComponent implements OnInit {
     }
     }else if(this.id.length == 2){
       if(v.includes('Time')){
-        console.log(v);
         Swal.fire("Oops!", "Activity must be string!", "warning");
         this.id.pop();
-        console.log(this.id);
         
       }else{
       this.selected=v;

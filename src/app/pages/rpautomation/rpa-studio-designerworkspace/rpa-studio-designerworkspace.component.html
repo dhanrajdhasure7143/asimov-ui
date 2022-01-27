@@ -8,8 +8,8 @@
                 <span *ngIf="node.name!='START' && node.name !='STOP'" class="node-delete" (click)="deletenode(node)"><img src="../../../../assets/images/RPA/close-circle-fill.svg"></span>
                 <div class="connector-name" *ngIf="node.selectedNodeTask==''">{{node.name}} </div>
                 <div class="connector-name" *ngIf="node.selectedNodeTask!=''">{{node.selectedNodeTask}}</div>
-
-                <div *ngIf="selectedNode.id==node.id && optionsVisible" class="node_tooltip">
+                <!--This is task menu which is disabled for now, If we get any requirment we can enable it-->
+                <!-- <div *ngIf="selectedNode.id==node.id && optionsVisible" class="node_tooltip">
                     <nav id="context-menu" class="context-menu contextmenu">
                         <div class="context-menu1">
                             <div class="context-menu__item" *ngFor="let menu of stud">
@@ -17,7 +17,7 @@
                             </div>
                         </div>
                     </nav>
-                </div>
+                </div> -->
                 <div [id]="'output_'+node.id" *ngIf="finalbot.botId!=undefined && node.selectedNodeTask=='Output Box' && (node | Checkoutputbox : finalbot) " style="display:none" class="node_tooltip">
                     <nav id="context-menu" class="context-menu contextmenu">
                         <div class="context-menu1">
@@ -150,7 +150,7 @@
               <h4>Web Automation - Record and Play</h4>
           </div>
           <div class="modal-body">
-            <form>
+           
                 <div class="container m-contanier form-body" *ngIf="recordedcode==undefined">
                     <div class="col-md-12 p-0 form-group">
                         <label class="label-control">Url</label>
@@ -162,11 +162,11 @@
                     </div>
                 </div>
                 <div class="form-footer" style="right:0px;">
-                    <button class='btn btn-default' [disabled]="rp_url == undefined" (click)="recording('start')">Start Recording</button>
+                    <button class='btn btn-default' [disabled]="rp_url == ''" (click)="recording('start')">Start Recording</button>
                     <button class='btn btn-primary' (click)="recording('stop')">Stop Recording</button>
                     <button class="btn btn-primary" (click)="submitcode()">Save code</button>
                 </div>
-            </form>
+           
               <!-- <div class="container" *ngIf="recordedcode==undefined">
                   <br>
                   <b>Url</b>
@@ -324,7 +324,16 @@
                                 Maximum of 50 characters
                             </div> 
                         </div>
-              
+                        
+                        <div class="formelement">
+                            <label class="label-control" for="categoryId">Category<span class="star">*</span></label>
+                            <select type="text" class="form-control" formControlName="categoryId"  [value]="categoryList.length==1?categoryList[0].categoryId:'0'">
+                                <option value="0" disabled>Select Category</option>
+                                <option [value]="category.categoryId" *ngFor="let category of categoryList">{{category.categoryName}}</option>
+                            </select>   
+                             <span *ngIf="(insertForm.get('categoryId').invalid && insertForm.get('categoryId').touched)"  class="errspan required">Category Required*</span>
+                        </div>
+
                         <div class=" formelement">
                             <label for="serverName">Mail Server<span class="star">*</span></label>
                             <select class="form-control" formControlName="serverName">

@@ -1,9 +1,8 @@
-import {Component, OnInit, TemplateRef,ViewChild} from '@angular/core';
+import {Component, OnInit, TemplateRef,ViewChild, Output, EventEmitter, Inject} from '@angular/core';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {RestApiService} from '../../services/rest-api.service';
-import {RpaStudioComponent} from '../rpa-studio/rpa-studio.component';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import 'rxjs/add/operator/filter';
@@ -25,6 +24,8 @@ import { map } from 'rxjs/operators';
 import { fromMatPaginator, fromMatSort, paginateRows, sortRows } from '../model/datasource-utils';
 import { NgxSpinnerService } from 'ngx-spinner';
 import {Base64} from 'js-base64';
+import { APP_CONFIG } from 'src/app/app.config';
+import {SearchRpaPipe} from './Search.pipe';
 declare var $:any;
 
 @Component({
@@ -59,6 +60,7 @@ export class RpaHomeComponent implements OnInit {
   loadflag:Boolean=false;
   customUserRole: any;
   term:any;
+  pageSize:any=10;
   userFilter:any = { botName:'',department:'' };
   globalfilter:any;
   enableConfiguration: boolean=false;
@@ -67,11 +69,13 @@ export class RpaHomeComponent implements OnInit {
  modalRef: BsModalRef;
  exportid:any;
  allbots:any=[];
+ @Output() pageChange: EventEmitter<number>;
+@Output() pageBoundsCorrection: EventEmitter<number>;
 
- importenv:any="";
- importcat:any="";
- importfile:any="";
-
+  importenv:any="";
+  importcat:any="";
+  importfile:any="";
+  botImage:any=undefined;
   file_error:any="";
   @ViewChild("paginator1",{static:false}) paginator1: MatPaginator;
   @ViewChild("paginator2",{static:false}) paginator2: MatPaginator;
@@ -85,27 +89,42 @@ export class RpaHomeComponent implements OnInit {
   checkbotname: boolean;
   public editbot:FormGroup;
   insertbot:FormGroup;
-  rpaCategory: any;
+  rpaCategory: any="";
   newRpaCategory: any;
-  rpaVisible:boolean=true;
+  config:any;
+  userName:any="";
   displayedRows$: Observable<any[]>;
+  rpaVisible:boolean=false;
+  userCheck:boolean=false;
   @ViewChild(MatSort,{static:false}) sort: MatSort;
   totalRows$: Observable<number>;
   @ViewChild(MatPaginator,{static:false}) paginator301: MatPaginator;
+  freetrail: string;
 
   constructor(
     private route: ActivatedRoute, 
     private rest:RestApiService, 
-    //private rpa_studio:RpaStudioComponent,
     private http:HttpClient, 
     private dt:DataTransferService, 
     private datahints:Rpa_Hints,
     private modalService: BsModalService,
     private formBuilder:FormBuilder,
     private router:Router,
-    private spinner:NgxSpinnerService
+    private spinner:NgxSpinnerService,
+    @Inject(APP_CONFIG) private appconfig
     )
   {
+
+
+    this.insertbot=this.formBuilder.group({
+      botName: ["", Validators.compose([Validators.required, Validators.maxLength(30)])],
+      botDepartment:["", Validators.required],
+      botDescription:["", Validators.compose([Validators.maxLength(500)])],
+      //botType:["", Validators.required],
+      taskId:[""],
+      predefinedBot:[false],
+      newCategoryName:[""]
+  });
     this.editbot=this.formBuilder.group({
       botId: ["", Validators.required],
       botName: ["", Validators.compose([Validators.required, Validators.maxLength(30)])],
@@ -113,35 +132,56 @@ export class RpaHomeComponent implements OnInit {
       description:["", Validators.compose([Validators.maxLength(500)])],
       newCategoryName:[""]
      });
-     this.insertbot=this.formBuilder.group({
-      botName: ["", Validators.compose([Validators.required, Validators.maxLength(30)])],
-      botDepartment:["", Validators.required],
-      botDescription:["", Validators.compose([Validators.maxLength(500)])],
-      //botType:["", Validators.required],
-      taskId:[""],
-      predefinedBot:["false"],
-      newCategoryName:[""]
-  });
   }
 
   openModal(template: TemplateRef<any>) {
-    this.importfile="";
-    this.file_error="";
-    this.importcat="";
-    this.modalRef = this.modalService.show(template,{class: 'modal-lr'});
+    if (this.freetrail == 'true') {
+      if (this.bot_list.length == this.appconfig.rpabotfreetraillimit) {
+        Swal.fire({
+          title: 'Error',
+          text: "You have limited access to this product. Please contact EZFlow support team for more details.",
+          position: 'center',
+          icon: 'error',
+          showCancelButton: false,
+          confirmButtonColor: '#007bff',
+          cancelButtonColor: '#d33',
+          heightAuto: false,
+          confirmButtonText: 'Ok'
+        })
+      }
+      else {
+        this.importfile = "";
+        this.file_error = "";
+        this.importcat = "";
+        this.modalRef = this.modalService.show(template, { class: 'modal-lr' });
+      }
+    }
+    else {
+      this.importfile = "";
+      this.file_error = "";
+      this.importcat = "";
+      this.modalRef = this.modalService.show(template, { class: 'modal-lr' });
+    }
   }
 
   ngOnInit() {
     $('.link').removeClass('active');
     $('#rpa').addClass("active"); 
     $('#expand_menu').addClass("active");   
+
+//     @Input() id: string;
+// @Input() maxSize: number;
+// @Output() pageChange: EventEmitter<number>;
+// @Output() pageBoundsCorrection: EventEmitter<number>;
     this.userRole = localStorage.getItem("userRole")
     this.userRole = this.userRole.split(',');
     localStorage.setItem("isHeader","false");
-    this.isButtonVisible = this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') || this.userRole.includes('RPA Admin');
-
+    //this.isButtonVisible = this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') || this.userRole.includes('RPA Admin')||this.userRole.includes("Process Owner")||this.userRole.includes("System Admin")||;
+    this.isButtonVisible=this.userRole.includes("Process Analyst")
+    this.rpaVisible= this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') || this.userRole.includes('Process Owner') || this.userRole.includes('Process Architect')  || this.userRole.includes('Process Analyst')  || this.userRole.includes('RPA Developer')  || this.userRole.includes('Process Architect') || this.userRole.includes("System Admin")  || this.userRole.includes("User") ;
+    this.userName=localStorage.getItem("firstName")+" "+localStorage.getItem("lastName");
     let processId=undefined;
-    
+    this.userCheck=this.userRole.includes("User")
     //this.dataSource1.filterPredicate = this.createFilter();
     this.dt.changeParentModule({"route":"/pages/rpautomation/home", "title":"RPA Studio"});
     this.dt.changeChildModule({"route":"/pages/rpautomation/home","title":"RPA Home"});
@@ -200,7 +240,7 @@ export class RpaHomeComponent implements OnInit {
           if(localStorage.getItem('project_id')!="null" && localStorage.getItem('bot_id')!="null"){
             this.loadbotdata(localStorage.getItem('bot_id'));
           }
-
+          this.freetrail=localStorage.getItem('freetrail')
      }
 
   ngAfterViewInit() {
@@ -274,6 +314,7 @@ export class RpaHomeComponent implements OnInit {
 
   getallbots()
   {
+    this.bot_list=[];
     let response:any=[];
     this.spinner.show();
     this.loadflag=true;
@@ -286,22 +327,26 @@ export class RpaHomeComponent implements OnInit {
         this.loadflag=false;
       },1000)
       response=botlist;
-      response=response.reverse();
-      if(response.length==0)
-      {
-        //this.rpa_studio.spinner.hide();
-      }
-      response.forEach(data=>{
+     // response=response.reverse();
+      // if(response.length==0)
+      // {
+      //   //this.rpa_studio.spinner.hide();
+      // }
+      // response.forEach(data=>{
+      //   let object:any=data;
+      //   if(data.botType==0)
+      //   {
+      //     object.botType='Attended'
+      //   }
+      //   else if(data.botType==1)
+      //   {
+      //     object.botType='Unattended';
+      //   }
+      //   this.bot_list.push(object)
+      //   this.assignPagination( this.bot_list);
+      // })
+      response.forEach(data=>{ 
         let object:any=data;
-        if(data.botType==0)
-        {
-          object.botType='Attended'
-        }
-        else if(data.botType==1)
-        {
-          object.botType='Unattended';
-        }
-
       if(this.categaoriesList.find(resp => resp.categoryId==data.department)!=undefined)
       {
         object.department=this.categaoriesList.find(resp => resp.categoryId==data.department).categoryName;
@@ -319,9 +364,9 @@ export class RpaHomeComponent implements OnInit {
           object.department='QA';
         }
         this.bot_list.push(object)
-        this.assignPagination( this.bot_list);
+         this.assignPagination( this.bot_list);
       })
-      //this.bot_list=botlist;
+      this.bot_list=botlist;
       if(this.bot_list.length >0)
       {
         this.respdata1 = false;
@@ -332,62 +377,71 @@ export class RpaHomeComponent implements OnInit {
       //response.sort((a,b) => a.createdAt > b.createdAt ? -1 : 1);
       
       //response=response.reverse();
-      this.dataSource1= new MatTableDataSource(this.bot_list);
-      this.isDataSource = true;
-      this.dataSource1.sort=this.sort1;
-      this.dataSource1.paginator=this.paginator1;
-     this.dataSource1.data = response;
+    //   this.dataSource1= new MatTableDataSource(response);
+    //   this.isDataSource = true;
+    //   this.dataSource1.sort=this.sort1;
+    //   this.dataSource1.paginator=this.paginator1;
+    //  this.dataSource1.data = response;
      this.allbots=response;
-     this.departmentFilter.valueChanges.subscribe((departmentFilterValue) => {
-      if(departmentFilterValue != ""){
-    let category=this.categaoriesList.find(val=>departmentFilterValue ==val.categoryId);
-      this.filteredValues['department'] = category;
-      }
-      else{
-        this.filteredValues['department'] = departmentFilterValue;
-      }
-      this.dataSource1.filter = JSON.stringify(this.filteredValues);
-      if(this.dataSource1.filteredData.length > 0){
-        this.isTableHasData = true;
-      } else {
-        this.isTableHasData = false;
-      }
+    //  this.departmentFilter.valueChanges.subscribe((departmentFilterValue) => {
+    //   if(departmentFilterValue != ""){
+    // let category=this.categaoriesList.find(val=>departmentFilterValue ==val.categoryId);
+    //   this.filteredValues['department'] = category;
+    //   }
+    //   else{
+    //     this.filteredValues['department'] = departmentFilterValue;
+    //   }
+    //   this.dataSource1.filter = JSON.stringify(this.filteredValues);
+    //   if(this.dataSource1.filteredData.length > 0){
+    //     this.isTableHasData = true;
+    //   } else {
+    //     this.isTableHasData = false;
+    //   }
    
-      },(err)=>{
+    //   },(err)=>{
 
-        this.spinner.hide();
-      });
+    //     this.spinner.hide();
+    //   });
 
-        this.botNameFilter.valueChanges.subscribe((botNameFilterValue) => {
-          this.filteredValues['botName'] = botNameFilterValue;
-          this.dataSource1.filter = JSON.stringify(this.filteredValues);
-          if(this.dataSource1.filteredData.length > 0){
-            this.isTableHasData = true;
-          } else {
-            this.isTableHasData = false;
-          }
-        });
+    //     this.botNameFilter.valueChanges.subscribe((botNameFilterValue) => {
+    //       this.filteredValues['botName'] = botNameFilterValue;
+    //       this.dataSource1.filter = JSON.stringify(this.filteredValues);
+    //       if(this.dataSource1.filteredData.length > 0){
+    //         this.isTableHasData = true;
+    //       } else {
+    //         this.isTableHasData = false;
+    //       }
+    //     });
 
-      this.dataSource1.filterPredicate = this.customFilterPredicate();
+    //   this.dataSource1.filterPredicate = this.customFilterPredicate();
     },(err)=>{
       this.spinner.hide();
     })
   }
 
-  customFilterPredicate() {
-    const myFilterPredicate = (data: dataSource1, filter: string): boolean => {
-      let searchString = JSON.parse(filter);
-      if(searchString.department != ''){
-      return data.department.toString().trim().indexOf(searchString.department.categoryName) !== -1 &&
-        data.botName.toString().trim().toLowerCase().indexOf(searchString.botName.toLowerCase()) !== -1;
-    }
-    else
-    {
-      return true &&
-        data.botName.toString().trim().toLowerCase().indexOf(searchString.botName.toLowerCase()) !== -1;
-    }
-  }
-    return myFilterPredicate;
+  // customFilterPredicate() {
+  //   const myFilterPredicate = (data: dataSource1, filter: string): boolean => {
+  //     let searchString = JSON.parse(filter);
+  //     if(searchString.department != ''){
+  //     return data.department.toString().trim().indexOf(searchString.department.categoryName) !== -1 &&
+  //       data.botName.toString().trim().toLowerCase().indexOf(searchString.botName.toLowerCase()) !== -1;
+  //   }
+  //   else
+  //   {
+  //     return true &&
+  //       data.botName.toString().trim().toLowerCase().indexOf(searchString.botName.toLowerCase()) !== -1;
+  //   }
+  // }
+  //   return myFilterPredicate;
+  // }
+
+
+
+  applyFilter2(filterValue: string) {
+    alert(filterValue)
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.dataSource1.filter = filterValue;
   }
 
   getautomatedtasks(process)
@@ -443,6 +497,26 @@ export class RpaHomeComponent implements OnInit {
   }
 
 
+
+
+
+  getStartIndex(currentPage: number, lastPage: number): string {
+    let firstIndex = 1;
+    if((currentPage !== lastPage) || (currentPage > 0 && lastPage > 0)) {
+      firstIndex = (Number(this.pageSize) * (Number(currentPage) -1) + 1);
+    }
+    return firstIndex.toString();
+  }
+
+  getLastIndex(currentPage: number, lastPage: number): string {
+    let lastIndex = this.bot_list ? this.bot_list.length : null;
+    if((currentPage !== lastPage)) {
+      lastIndex = (Number(this.pageSize) * (Number(currentPage)));
+    }
+    return lastIndex.toString();
+  }
+
+
   applyFilter(filterValue:any) {
     let processnamebyid=this.process_names.find(data=>filterValue==data.processId);
     this.selectedvalue=filterValue;
@@ -462,7 +536,32 @@ export class RpaHomeComponent implements OnInit {
 
   createoverlay()
   {
-    document.getElementById("create-bot").style.display ="block";
+    this.botNamespace=false;
+    if (this.freetrail == 'true') {
+      if (this.bot_list.length == this.appconfig.rpabotfreetraillimit) {
+        Swal.fire({
+          title: 'Error',
+          text: "You have limited access to this product. Please contact EZFlow support team for more details.",
+          position: 'center',
+          icon: 'error',
+          showCancelButton: false,
+          confirmButtonColor: '#007bff',
+          cancelButtonColor: '#d33',
+          heightAuto: false,
+          confirmButtonText: 'Ok'
+      })
+      }
+      else {
+        this.insertbot.reset();
+        this.insertbot.get("botDepartment").setValue("");
+        document.getElementById("create-bot").style.display = "block";
+      }
+    }
+    else{
+      this.insertbot.reset();
+      this.insertbot.get("botDepartment").setValue("");
+      document.getElementById("create-bot").style.display = "block";
+    }
   }
 
 
@@ -471,6 +570,7 @@ export class RpaHomeComponent implements OnInit {
 
   onCreateSubmit() {
     this.userFilter.name = "";
+   
     document.getElementById("create-bot").style.display ="none";
     var createBotFormValue=this.insertbot.value;
     
@@ -494,7 +594,7 @@ export class RpaHomeComponent implements OnInit {
     }else{
 
       let botId=Base64.encode(JSON.stringify(createBotFormValue));
-      console.log(botId)
+   
       this.router.navigate(["/pages/rpautomation/designer"],{queryParams:{botId:botId}})
        
     }
@@ -511,12 +611,13 @@ export class RpaHomeComponent implements OnInit {
   close()
   {
     document.getElementById("create-bot").style.display ="none";
-    
-    document.getElementById("load-bot").style.display ="none";
-
     document.getElementById("edit-bot").style.display="none";
-
+    document.getElementById("load-bot").style.display ="none";
   }
+  editclose(){
+    document.getElementById("edit-bot").style.display="none";
+  }
+  
 
   assignbot(id)
   {
@@ -659,7 +760,7 @@ export class RpaHomeComponent implements OnInit {
   exportbot(bot)
   {
     this.rest.bot_export(bot.botId).subscribe((data)=>{
-      console.log(data)
+     
         const linkSource = `data:application/txt;base64,${data}`;
         const downloadLink = document.createElement('a');
         document.body.appendChild(downloadLink);
@@ -693,6 +794,26 @@ export class RpaHomeComponent implements OnInit {
     return blob;
   }
 
+
+  getBotImage(botId,version,event)
+  {
+    this.botImage=undefined
+    this.rest.getBotImage(botId,version).subscribe(data=>{
+      let response:any=data;
+      if(response.errorMessage)
+      {
+        this.botImage={
+          errorMessage:"No Preview"
+        }
+      }
+      else
+      {
+        this.botImage={
+          svg:response.status
+        }
+      }
+    })
+  }
 
   update_task_status()
   {
@@ -767,7 +888,9 @@ export class RpaHomeComponent implements OnInit {
       let catResponse : any;
       catResponse=data
       this.categaoriesList=catResponse.data;
-      console.log(this.categaoriesList)
+      //console.log(this.categaoriesList)
+      if(this.categaoriesList.length==1)
+        this.rpaCategory=this.categaoriesList[0].categoryId;
     });
   }
 
@@ -786,8 +909,8 @@ export class RpaHomeComponent implements OnInit {
     this.bot_list=this.bot_list.sort(function(a,b){
       let check_a=isNaN(a[colKey])?a[colKey].toUpperCase():a[colKey];
       let check_b=isNaN(b[colKey])?b[colKey].toUpperCase():b[colKey];
-      console.log(sortdes)
-      console.log(colKey)
+     
+     
       if (sortdes==true)
         return (check_a > check_b) ? 1 : -1;
       else
@@ -796,6 +919,7 @@ export class RpaHomeComponent implements OnInit {
    this.sortkey[colKey]=!sortdes;
   }
   editbotoverlay(botdetails){
+    this.botNamespace=false
     document.getElementById("edit-bot").style.display="block";
    let category=botdetails.department;
    let selectedcategory=this.categaoriesList.find(item=>item.categoryName==category)
@@ -817,22 +941,36 @@ export class RpaHomeComponent implements OnInit {
     }
   }
 
-  validate(code){
+  validate(code,event){
     let validate = code;
+    let botname = event.target.value;
     this.count = 0;
-    for(let i=0;i < validate.length -1; i++){
-      if(validate.charAt(i) == String.fromCharCode(32)){
-        this.count= this.count+1;
+    // for(let i=0;i < validate.length; i++){
+    //   if(validate.charAt(i) == String.fromCharCode(32)||validate.charAt(i) == String.fromCharCode(46)){
+    //     this.count= this.count+1;
+    //   }
+    // }
+    var regex = new RegExp("^[a-zA-Z0-9_-]*$");
+
+   
+
+      if(!(regex.test(botname))){
+
+        this.count=1;
+
       }
-    }
     if(this.count !== 0)
     {
       this.botNamespace = true;
     }
     else{
       this.botNamespace = false;
+      
     }
   }
+
+
+
 
   checkBotnamevalidation()
   {
@@ -891,12 +1029,24 @@ export class RpaHomeComponent implements OnInit {
       }
 
       assignPagination(data){
+      
         const sortEvents$: Observable<Sort> = fromMatSort(this.sort);
         const pageEvents$: Observable<PageEvent> = fromMatPaginator(this.paginator301);
         const rows$ = of(data);
         this.totalRows$ = rows$.pipe(map(rows => rows.length));
         this.displayedRows$ = rows$.pipe(sortRows(sortEvents$), paginateRows(pageEvents$));
+      
       }
+
+      applySearchFilter(v){      
+    const filterPipe = new SearchRpaPipe();   
+     const fiteredArr = filterPipe.transform(this.bot_list,v);   
+          
+      this.assignPagination(fiteredArr)    
+  }
+
+
+      
 }
 
 export interface dataSource1 {

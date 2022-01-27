@@ -12,177 +12,137 @@ select {
     border-left: none;
 }
 
-
 /*
 .bg-color {
     background-color: rgb(241, 240, 240);
 }
 */
 
-.rpa-modal-content {
+.rpa-modal-content{
     padding-bottom: 25px !important;
 }
 
-.verticalalignmiddle {
+.verticalalignmiddle{
     vertical-align: middle !important;
 }
 
-.myInput {
-    padding: 10px;
+.myInput{
+    padding:10px;
     padding-bottom: 0px !important;
     width: 90% !important;
-}
+  }
 
-.lbl_chk_cls {
+  .lbl_chk_cls{
     font-size: 15px;
     font-weight: 400;
-    margin-left: 3px
-}
+    margin-left:3px
+  }
 
-.swal-wide {
-    width: 1000px !important;
+  .swal-wide{
+    width:1000px !important;
     height: 500px !important;
+  }
+.margin-25>span{
+  margin-left:14px!important;
 }
-
-.margin-25>span {
-    margin-left: 14px!important;
-}
-
 .botmanagement-tablelist {
-    width: 100%;
-    overflow-x: auto;
-    height: calc(100% - 40px);
-    /* margin-top: 5px; */
-}
-
-.botmanagement-tablelist table td span {
-    font-size: 13px !important;
-}
-
-.search-fields-width {
-    width: 200px;
+  width:100%;
+  overflow: auto;
+  /* height: calc(100% - 40px); */
+  height: calc(100vh - 265px);
+  /* margin-top: 5px; */
 }
 
 
+.botmanagement-tablelist table td span{
+  font-size: 13px !important;
+}
+
+
+.search-fields-width{
+  width:200px;
+}
 /* .tableActionsIcons img {
   height: 18px;
   width: auto;
   margin-right: 4px;
 } */
 
+
 .tableActionsIcons span {
-    font-size: 16px;
-    padding-top: 5px;
+  font-size: 16px;
+  padding-top: 5px;
 }
-
 .newmodelcla {
-    padding: 15px !important;
+  padding: 15px !important;
 }
-
 .newmodelbodycl {
-    padding-top: 0px;
+  padding-top: 0px;
 }
 
 .newmodelcla .refecls {
-    cursor: pointer;
-    font-size: 10px;
-    background-color: #00a0e3 !important;
-    color: #fff;
-    padding: 2px 9px;
-    border-radius: 10px;
-    margin-left: 8px;
+  cursor: pointer;
+  font-size: 10px;
+  background-color: #00a0e3 !important;
+  color: #fff;
+  padding: 2px 9px;
+  border-radius: 10px;
+  margin-left: 8px;
 }
-
 .newmodelcla .refecls:hover {
-    background-color: #001c47 !important;
+  background-color: #001c47 !important;
 }
-
 .backarrcl img {
-    width: 12px;
+  width: 12px;
 }
 
 .env-data-tool {
-    line-height: 30px;
+  line-height: 30px;
 }
-
 .env-data-tool button.tsttooltipbtn {
-    position: relative;
-    padding: 0px 5px;
+  position: relative;
+  padding: 0px 5px;
 }
 
 span.testtooltip {
-    position: absolute;
-    top: 35px;
-    right: 0px;
-    background-color: #001c47;
-    color: #fff;
-    min-width: 300px;
-    padding: 3px 10px;
-    border-radius: 4px;
-    display: none;
-    z-index: 999;
+  position: absolute;
+  top: 35px;
+  right: 0px;
+  background-color: #001c47;
+  color: #fff;
+  width: max-content;
+  padding: 3px 10px;
+  border-radius: 4px;
+  display: none;
+  z-index: 999;
 }
 
 span.testtooltip:before {
-    content: '';
-    border: 2px solid #001c47;
-    border-width: 0px 0px 2px 2px;
-    position: absolute;
-    padding: 4px;
-    right: 13px;
-    top: -5px;
-    background: #001c47;
-    transform: rotate(45deg);
+  content: '';
+  border: 2px solid #001c47;
+  border-width: 0px 0px 2px 2px;
+  position: absolute;
+  padding: 4px;
+  right: 13px;
+  top:  -5px;
+  background: #001c47;
+  transform: rotate(45deg);
 }
 
 .tsttooltipbtn:hover span.testtooltip {
-    display: block;
+  display: block;
 }
 
 .logscol a {
-    font-size: 13px;
+  font-size: 13px;
 }
 
 span.logrefresh {
-    cursor: pointer;
-    font-size: 10px;
-    background-color: #00a0e3 !important;
-    color: #fff;
-    padding: 2px 9px;
-    border-radius: 10px;
-    margin-left: 8px;
-}
-
-span.tsttooltipbtn {
-    position: relative;
-    padding: 0px 5px;
-}
-
-span.testtooltip {
-    position: absolute;
-    top: 35px;
-    right: 0px;
-    background-color: #001c47;
-    color: #fff;
-    min-width: 300px;
-    padding: 3px 10px;
-    border-radius: 4px;
-    display: none;
-    z-index: 999;
-}
-
-span.testtooltip:before {
-    content: '';
-    border: 2px solid #001c47;
-    border-width: 0px 0px 2px 2px;
-    position: absolute;
-    padding: 4px;
-    right: 13px;
-    top: -5px;
-    background: #001c47;
-    transform: rotate(45deg);
-}
-
-.tsttooltipbtn:hover span.testtooltip {
-    display: block;
+  cursor: pointer;
+  font-size: 10px;
+  background-color: #00a0e3 !important;
+  color: #fff;
+  padding: 2px 9px;
+  border-radius: 10px;
+  margin-left: 8px;
 }

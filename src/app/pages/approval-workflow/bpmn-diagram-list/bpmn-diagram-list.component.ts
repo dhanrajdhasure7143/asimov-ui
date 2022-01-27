@@ -10,10 +10,12 @@ import { GlobalScript } from 'src/app/shared/global-script';
 import * as CmmnJS from 'cmmn-js/dist/cmmn-modeler.production.min.js';
 import * as DmnJS from 'dmn-js/dist/dmn-modeler.development.js';
 import { MatPaginator, PageEvent } from '@angular/material';
-import { fromMatPaginator, paginateRows } from './../../business-process/model/datasource-utils';
+import { fromMatPaginator, paginateRows, fromMatSort, sortRows } from './../../business-process/model/datasource-utils';
 import { Observable  } from 'rxjs/Observable';
 import { of  } from 'rxjs/observable/of';
 import { map } from 'rxjs/operators';
+import {MatTableDataSource} from '@angular/material/table';
+import { MatSort, Sort } from '@angular/material';
 
 @Component({
   selector: 'app-bpmn-diagram-list',
@@ -44,6 +46,8 @@ export class BpmnDiagramListComponent implements OnInit {
   displayedRows$: Observable<any[]>;
   totalRows$: Observable<number>;
   @ViewChild(MatPaginator,{static:false}) paginator: MatPaginator;
+  dataSource:MatTableDataSource<any>;
+@ViewChild(MatSort,{static:false}) sort: MatSort;
   constructor(private dt: DataTransferService,private hints:ApprovalHomeHints,private bpmnservice:SharebpmndiagramService,private global:GlobalScript, private model: DiagListData, private rest_Api: RestApiService,private router: Router) { }
 
   ngOnInit() {
@@ -175,6 +179,15 @@ this.selectedrow =i;
      this.rest_Api.bpmnlist().subscribe(data => {
       this.isLoading = false;
       this.griddata = data;
+     
+      this.griddata.forEach(ele=>{
+        ele["processIntelligenceId"]=ele.bpmnProcessInfo[0].processIntelligenceId;
+        ele["bpmnProcessName"]=ele.bpmnProcessInfo[0].bpmnProcessName;
+        ele["convertedModifiedTime"]=ele.bpmnProcessInfo[0].convertedModifiedTime;
+        ele["userName"]=ele.bpmnProcessInfo[0].userName;
+        ele["role"]=ele.role;
+
+      })
       this.assignPagenation(this.griddata);
       this.griddata.map(item => {item.xpandStatus = false;return item;})
       this.disable_panels();
@@ -222,7 +235,8 @@ this.selectedrow =i;
       "tenantId": data.tenantId,
       "userName": data.userName,
       "version": data.version,
-      "ntype": data.ntype
+      "ntype": data.ntype,
+      "processOwner":data.processOwner
     };
     this.rest_Api.approve_producemessage(this.approver_info).subscribe(
       data =>{
@@ -308,7 +322,7 @@ this.selectedrow =i;
         this.global.notify(message,'error');
       });
    }
-   sort(colKey,ind) { // if not asc, desc
+   sort1(colKey,ind) { // if not asc, desc
     this.sortIndex=ind
     let asc=this.orderAsc
     this.orderAsc=!this.orderAsc
@@ -343,11 +357,13 @@ this.selectedrow =i;
     window.location.href = "http://10.11.0.127:8080/camunda/app/welcome/"+splitTenant+"/#!/login?accessToken=" + token + "&userID="+userId+"&tenentID="+selecetedTenant;
   }
   
+  
   assignPagenation(data){
+    const sortEvents$: Observable<Sort> = fromMatSort(this.sort);
     const pageEvents$: Observable<PageEvent> = fromMatPaginator(this.paginator);
     const rows$ = of(data);
     this.totalRows$ = rows$.pipe(map(rows => rows.length));
-    this.displayedRows$ = rows$.pipe(paginateRows(pageEvents$));
+    this.displayedRows$ = rows$.pipe(sortRows(sortEvents$), paginateRows(pageEvents$));
   }
   
   searchList(event: Event) {       // search entered process ids from search input

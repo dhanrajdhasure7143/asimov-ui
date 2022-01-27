@@ -94,6 +94,7 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
     ceil: 8,
     vertical: true
   };
+  categoryList: any=[];
   constructor(
     private fb : FormBuilder,
     private rest : RestApiService,
@@ -117,6 +118,7 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
     this.pausebot=false;
     this.resumebot=false;
     this.logflag=false;
+    this.getCategories();
     this.getEnvironmentlist();
     this.getpredefinedbotlist();
     this.viewlogid="viewlog-"+this.botState.botName;
@@ -134,6 +136,7 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
         environmentType: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         agentPath: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         hostAddress: ["", Validators.compose([Validators.required, Validators.pattern(ipPattern), Validators.maxLength(50)])],
+        categoryId:["0", Validators.compose([Validators.required])],
         username: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         password: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
         connectionType: ["SSH",Validators.compose([Validators.required,, Validators.maxLength(50), Validators.pattern("[A-Za-z]*")])],
@@ -253,17 +256,28 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
           this.childBotWorkspace.disable=true;
           let bottask:any=this.botState;
           this.getVersionlist();
-          this.childBotWorkspace.uploadfile(this.finalenv);
+          // let coordinates=(this.childBotWorkspace.finaldataobjects[0].x.split("|")!=undefined)?this.childBotWorkspace.finaldataobjects[0].nodeId.split("|"):undefined;
+          // if(coordinates!=undefined)
+          // {
+          //   this.childBotWorkspace.finaldataobjects[0].nodeId=coordinates[0];
+          // }
+          // this.childBotWorkspace.uploadfile(this.finalenv);
 
-          if(bottask.taskId!=0 && bottask.taskId!=undefined)
-          {
-            this.rpa_assignbot(this.savebotrespose.botId, bottask.taskId);
-          }
+          // if(bottask.taskId!=0 && bottask.taskId!=undefined)
+          // {
+          //   this.rpa_assignbot(this.savebotrespose.botId, bottask.taskId);
+          // }
         }
         else
         {
+          
           Swal.fire("Error","Bot failed to save","error");
           this.childBotWorkspace.disable=false;
+          let coordinates=(this.childBotWorkspace.finaldataobjects[0].x.split("|")!=undefined)?this.childBotWorkspace.finaldataobjects[0].nodeId.split("|"):undefined;
+          if(coordinates!=undefined)
+          {
+            this.childBotWorkspace.finaldataobjects[0].nodeId=coordinates[0];
+          }
         }
       });
       }
@@ -288,12 +302,28 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
             this.rpa_studio.spinner.hide();
             this.getVersionlist();
             Swal.fire("Success","Bot updated successfully","success")
-            this.childBotWorkspace.uploadfile(this.finalenv);
+            // if(this.childBotWorkspace.finaldataobjects.find(item=>item.inSeqId.split("_")=="START")!=undefined)
+            // {
+            //   let firstTask=this.childBotWorkspace.finaldataobjects.find(item=>item.inSeqId.split("_")=="START")
+            //   let coordinates=(firstTask.nodeId.split("|")!=undefined)?firstTask.nodeId.split("|"):undefined;
+            //   if(coordinates!=undefined)
+            //   {
+            //     this.childBotWorkspace.finaldataobjects.find(item=>item.inSeqId.split("_")=="START").nodeId=coordinates[0];
+            //   }
+            // }
+              this.childBotWorkspace.uploadfile(this.finalenv);
+          
           }
           else
           {
             this.rpa_studio.spinner.hide();
             Swal.fire("Error",response.errorMessage,"error");
+            let coordinates=(this.childBotWorkspace.finaldataobjects[0].x.split("|")!=undefined)?this.childBotWorkspace.finaldataobjects[0].nodeId.split("|"):undefined;
+            if(coordinates!=undefined)
+            {
+              this.childBotWorkspace.finaldataobjects[0].nodeId=coordinates[0];
+            }
+           
           }
         });
       }
@@ -320,6 +350,9 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
         {
           Swal.fire("Error",response.errorMessage,"error");
         }
+      },err=>{
+        this.spinner.hide();
+        Swal.fire("Error","Unable to initiate bot execution")
       })
     }
   }
@@ -342,6 +375,10 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
         {
           Swal.fire("Error",response.errorMessage,"error");
         }
+      },
+      err=>{
+        this.spinner.hide();
+        Swal.fire("Error","Unable to pause bot")
       });
     }
   }
@@ -360,6 +397,10 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
           this.resumebot=false;
           Swal.fire("Success",response.status,"success");
         }
+      },err=>{
+        this.spinner.hide()
+        Swal.fire("Error","Unable to resume bot")
+   
       })
     }
   }
@@ -383,6 +424,10 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
           {
             Swal.fire("Error",response.errorMessage,"error");
           }
+        },err=>{
+          this.spinner.hide();
+          Swal.fire("Error","Unable to stop bot")
+   
         })
     }
   }
@@ -555,13 +600,15 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
 
 
  public botrunid:any;
- ViewlogByrunid(runid){
+ public selectedLogVersion:any;
+ ViewlogByrunid(runid,version){
    this.botrunid=runid;
+   this.selectedLogVersion=version
    let responsedata:any=[];
    let logbyrunidresp:any;
    let resplogbyrun:any=[];
    this.rpa_studio.spinner.show();
-   this.rest.getViewlogbyrunid(this.savebotrespose.botId,this.savebotrespose.version,runid).subscribe((data)=>{
+   this.rest.getViewlogbyrunid(this.savebotrespose.botId,version,runid).subscribe((data)=>{
      responsedata = data;
      this.rpa_studio.spinner.hide();
      if(responsedata.length >0)
@@ -600,50 +647,71 @@ loadpredefinedbot(botId)
       let j=200;
       responsedata.tasks.forEach(element=>
       {
-        this.childBotWorkspace.finaldataobjects.push(element)
+        //this.childBotWorkspace.finaldataobjects.push(element)
         let nodename=  element.nodeId.split("__")[0];
-        let nodeid=element.nodeId.split("__")[1];
+        let nodeid=(element.nodeId.split("__")[1]).split("|")[0];
         j=j+100;
         let node={
           id:this.childBotWorkspace.idGenerator(),
           name:nodename,
           selectedNodeTask:element.taskName,
           path:this.rpa_toolset.templateNodes.find(data=>data.name==nodename).path,
+          selectedNodeId: element.tMetaId,
           tasks:this.rpa_toolset.templateNodes.find(data=>data.name==nodename).tasks,
           x:j+'px',
-          y:"10px",
+          y:j+"px",
       }
-
-
-      for(var i=0; i<responsedata.sequences.length; i++)
+      if(responsedata.sequences.find(item=>item.sourceTaskId==nodeid)!=undefined)
       {
-        if(responsedata.sequences[i].sourceTaskId!=undefined )
-        {
-          if(responsedata.sequences[i].sourceTaskId==nodeid)
-          {
-            responsedata.sequences[i].sourceTaskId=node.id;
-          }
-        }
-        if(responsedata.sequences[i].targetTaskId!=undefined )
-        {
-
-          if( responsedata.sequences[i].targetTaskId==nodeid)
-          {
-            responsedata.sequences[i].targetTaskId=node.id;
-          }
-        }
+        responsedata.sequences.find(item=>item.sourceTaskId==nodeid).sourceTaskId=node.id
       }
+
+      if(responsedata.sequences.find(item=>item.targetTaskId==nodeid)!=undefined)
+      {
+        responsedata.sequences.find(item=>item.targetTaskId==nodeid).targetTaskId=node.id
+      }
+
+
+
+
+      // for(var i=0; i<responsedata.sequences.length; i++)
+      // {
+      //   if(responsedata.sequences[i].sourceTaskId!=undefined )
+      //   {
+      //     if(responsedata.sequences[i].sourceTaskId==nodeid)
+      //     {
+      //       responsedata.sequences[i].sourceTaskId=node.id;
+      //     }
+      //   }
+      //   if(responsedata.sequences[i].targetTaskId!=undefined )
+      //   {
+
+      //     if( responsedata.sequences[i].targetTaskId==nodeid)
+      //     {
+      //       responsedata.sequences[i].targetTaskId=node.id;
+      //     }
+      //   }
+      // }
       element.nodeId=nodename+"__"+node.id;
       this.childBotWorkspace.nodes.push(node);
-      this.childBotWorkspace.finaldataobjects.push(element);
+     // this.childBotWorkspace.finaldataobjects.push(element);
       setTimeout(() => {
         this.childBotWorkspace.populateNodes(node);
       }, 240);
 
 
       })
-      this.childBotWorkspace.addconnections(responsedata.sequences);
-      this.rpa_studio.spinner.hide();
+     
+      // console.log(this.childBotWorkspace.nodes);
+      // console.log(responsedata.sequences)
+      responsedata.sequences.splice((responsedata.sequences.length-1),1)
+      responsedata.sequences.splice(0,1)
+      // setTimeout(()=>{
+
+      // },(responsedata.sequences.length*240))
+     
+        this.childBotWorkspace.addconnections(responsedata.sequences);
+        this.rpa_studio.spinner.hide();
     }else
     {
       this.rpa_studio.spinner.hide();
@@ -748,7 +816,7 @@ loadpredefinedbot(botId)
     this.rest.bot_export(bot.botId).subscribe((data)=>{
       
         this.rpa_studio.spinner.hide();
-        console.log(data)
+      
         const linkSource = `data:application/txt;base64,${data}`;
         const downloadLink = document.createElement('a');
         document.body.appendChild(downloadLink);
@@ -766,6 +834,7 @@ loadpredefinedbot(botId)
   create_env()
   {
         document.getElementById("rpa_createenvironment"+"_"+this.botState.botName).style.display="block";
+        this.insertForm.get("categoryId").setValue(this.categoryList.length==1?this.categoryList[0].categoryId:"0")
         document.getElementById("filters").style.display = "none";
   }
 
@@ -789,13 +858,14 @@ loadpredefinedbot(botId)
         this.rpa_studio.spinner.hide();
         if(resp.status !=undefined)
         {
-            this.close_c_env();
-            Swal.fire("Success","Environment added successfully","success");
+            
+            Swal.fire("Success","Environment Added Successfully!!","success");
             //document.getElementById("rpa_createenvironment"+"_"+this.botState.botName).style.display='none';
             this.insertForm.reset();
             this.insertForm.get("portNumber").setValue("22");
             this.insertForm.get("connectionType").setValue("SSH");
             this.getEnvironmentlist()
+            this.close_c_env();
         }else if(resp.errorMessage!=undefined)
         {
           Swal.fire("Error",resp.errorMessage,"error");
@@ -871,6 +941,28 @@ loadpredefinedbot(botId)
       document.getElementById("filters").style.display = "block";
     }
 
+    getCategories()
+    {
+      this.rest.getCategoriesList().subscribe(data=>{
+        let response:any=data;
+        if(response.errorMessage==undefined)
+        {
+          this.categoryList=response.data;
+          this.getEnvironmentlist();
+      
+        }
+      })
+    }
+
+    EnvType1(){
+      if(this.insertForm.value.environmentType == "Windows"){
+        //this.updateForm.value.portNumber="44";
+        this.insertForm.get("portNumber").setValue("44");
+      }else if(this.insertForm.value.environmentType == "Linux"){
+        this.insertForm.get("portNumber").setValue("22");
+      }
+    }
+  
 }
 
 

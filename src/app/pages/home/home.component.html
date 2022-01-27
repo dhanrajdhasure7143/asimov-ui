@@ -1,10 +1,10 @@
-<div class="main-content">
+<div class="main-content" *ngIf="_isShow && !freetrail">
     <div class="row content-area">
         <div class="col-sm-12">
             <label class="maintitle">Welcome To EZFlow<sub>Intelligent Automation Platform</sub></label>
         </div>
-         <div class="row">
-       <!-- <h3 id="sbtl">Select below service to launch</h3>
+        <div class="row">
+            <!-- <h3 id="sbtl">Select below service to launch</h3>
         <form id="moduleSelectionForm" #moduleSelectionForm="ngForm" (ngSubmit)="navigateToModule()">
             <div class="row">
                 <div class="col-sm-2 dataCardBox" *ngFor="let eachData of dataArr;let i=index;trackBy:loopTrackBy">
@@ -23,9 +23,28 @@
                  </div>
             </div>
         </form> -->
-        <!-- <app-programlandingpage></app-programlandingpage> -->
-        <app-new-so-dashboard></app-new-so-dashboard>
-       
+            <!-- <app-programlandingpage></app-programlandingpage> -->
+            <app-new-so-dashboard></app-new-so-dashboard>
+
+        </div>
     </div>
 </div>
+
+
+<div class="main-content prjmain" *ngIf='isdivShow && !freetrail'>
+    <div class="content-area" style="overflow: scroll;">
+        <app-process-owner *ngIf="userRole.includes('Process Owner')"></app-process-owner>
+        <app-process-architect *ngIf="userRole.includes('Process Architect')"></app-process-architect>
+        <app-process-analyst *ngIf="userRole.includes('Process Analyst') || userRole.includes('RPA Developer')"></app-process-analyst>
+    </div>
+</div>
+<div class="main-content prjmain" *ngIf='freetrail'>
+    <div class="content-area" style="overflow: scroll;">
+        </div>
+</div>
+
+<div class="spinoverlay" *ngIf="isLoading">
+    <div class="spincenter">
+        <img src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader" />
+    </div>
 </div>

@@ -7,7 +7,7 @@ selector:'file',
 template:`
     <div [formGroup]="form">
       <div  class="drop-container dropzone" dropZone (dropped)="field.onUpload($event,field)" >
-        <input class="form-control custom-file-input" type="file" multiple="" [formControlName]="field.name+'_'+field.id" (change)="field.onUpload($event,field)">
+        <input class="form-control custom-file-input" type="file" [id]="field.id" multiple="" [formControlName]="field.name+'_'+field.id" (change)="field.onUpload($event,field)">
       </div>
       <div *ngIf="field.value!=''">
       {{field.value}}
@@ -78,7 +78,7 @@ constructor() {
   }
 
 ngOnChange(){
-console.log(this.field.value);
+
 
 // this.field.value.
   }

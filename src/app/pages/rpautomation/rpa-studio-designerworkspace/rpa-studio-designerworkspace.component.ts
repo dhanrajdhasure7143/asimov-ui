@@ -72,7 +72,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   fileobj:any;
   options:any=[];
   restapiresponse:any;
-  public rp_url:any;
+  public rp_url:any="";
   recordedcode:any;
   finalcode:any;
   svg:any;
@@ -82,9 +82,11 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   public passwordtype1:Boolean;
   public passwordtype2:Boolean;
   public form_change:Boolean=false;
+  startNodeId:any=""
+  stopNodeId:any=""
   @ViewChild('template', { static: false }) template: TemplateRef<any>;
   public nodedata: any;
-
+  categoryList:any=[];
   constructor(private rest: RestApiService,
     private notifier: NotifierService,
     private hints: Rpa_Hints,
@@ -100,6 +102,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       this.insertForm=this.formBuilder.group({
         userName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         password: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        categoryId:["0", Validators.compose([Validators.required])],
         serverName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         inBoundAddress: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         inBoundAddressPort: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
@@ -133,6 +136,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     }
     this.dragareaid = "dragarea__" + this.finalbot.botName;
     this.outputboxid = "outputbox__" + this.finalbot.botName;
+    this.getCategories();
   }
 
 
@@ -207,7 +211,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       this.addconnections(this.finalbot.sequences)
       this.child_rpa_studio.spinner.hide()
       this.dragelement = document.querySelector('#' + this.dragareaid);
-      this.dagvalue = this.dragelement.getBoundingClientRect().width / this.dragelement.offsetWidth;
 
     }
 
@@ -215,19 +218,44 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
 
 
-
+  public coordinates:any;
   public loadnodes() {
-    this.finaldataobjects.forEach(element => {
-      if (element.inSeqId == "START_" + this.finalbot.botName) {
+    this.finaldataobjects.forEach((element,index )=> {
+      let inseq=String(element.inSeqId);
+      let outseq=String(element.outSeqId);
+      if(inseq.split("_")[0]=="START"){
+        console.log(element.x.split("|").length)
+        if(element.x.split("|").length==3)
+        {
+
+          this.coordinates={
+            startTaskX:element.x.split("|")[1],
+            startTaskY:element.y.split("|")[1],
+            stopTaskX:element.x.split("|")[2],
+            stopTaskY:element.y.split("|")[2]
+          }
+          element.x=element.x.split("|")[0];
+          element.y=element.y.split("|")[0];
+        }
         let startnode = {
-          id: "START_" + this.finalbot.botName,
+          id: inseq,
           name: "START",
           selectedNodeTask: "",
           selectedNodeId: "",
           path: "/assets/images/RPA/Start.png",
-          x: "10px",
-          y: "9px",
         }
+        if(this.coordinates!=undefined)
+        {
+          startnode["x"]=this.coordinates.startTaskX==undefined?"10px":this.coordinates.startTaskX;
+          startnode["y"]=this.coordinates.startTaskY==undefined?"10px":this.coordinates.startTaskY;
+        }
+        else
+        {
+          startnode["x"]="10px";
+          startnode["y"]="10px";
+        }
+       
+        this.startNodeId=startnode.id
         if(this.nodes.find(item=>item.id==startnode.id)==undefined)
         {
           this.nodes.push(startnode);
@@ -236,17 +264,33 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           }, 240);
         }
       }
-      if (element.outSeqId == "STOP_" + this.finalbot.botName) {
-
+      if(outseq.split("_")[0]=="STOP"){
+          //let coordinates=(this.finaldataobjects[0].nodeId.split("|")!=undefined)?this.finaldataobjects[0].nodeId.split("|"):undefined;
+       
         let stopnode = {
-          id: "STOP_" + this.finalbot.botName,
+          id: outseq,
           name: "STOP",
           selectedNodeTask: "",
           selectedNodeId: "",
           path: "/assets/images/RPA/Stop.png",
-          x: "900px",
-          y: "396px",
+          // x: "900px",
+          // y: "396px",
+          // x: (this.coordinates[3]!=undefined)?(this.coordinates[3]+"px"):"900px",
+          // y: (this.coordinates[4]!=undefined)?(this.coordinates[4]+"px"):"300px",
+
         }
+        if(this.coordinates!=undefined)
+        {
+          stopnode["x"]=this.coordinates.stopTaskX==undefined?"900px":this.coordinates.stopTaskX;
+          stopnode["y"]=this.coordinates.stopTaskY==undefined?"300px":this.coordinates.stopTaskY;
+         
+        }
+        else
+        {
+          stopnode["x"]="900px";
+          stopnode["y"]="300px";
+        }
+        this.stopNodeId=stopnode.id
         if(this.nodes.find(item=>item.id==stopnode.id)==undefined)
         {
           this.nodes.push(stopnode);
@@ -256,7 +300,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         }
 
       }
-
       let templatenodes:any=[]
       let nodename = element.nodeId.split("__")[0];
       let nodeid = element.nodeId.split("__")[1];
@@ -285,11 +328,9 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
 
   public addconnections(sequences) {
-
     setTimeout(() => {
       this.loadflag = false;
       sequences.forEach(element => {
-
         this.jsPlumbInstance.connect(
           {
             endpoint: ['Dot', {
@@ -416,6 +457,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         x: "2px",
         y: "9px",
       }
+      this.startNodeId=node.id
       this.nodes.push(node);
       setTimeout(() => {
         this.populateNodes(node);
@@ -431,6 +473,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         x: "941px",
         y: "396px",
       }
+      this.stopNodeId=stopnode.id
       this.nodes.push(stopnode);
       setTimeout(() => {
         this.populateNodes(stopnode);
@@ -929,9 +972,10 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   async saveBotFun(botProperties, env) {
     this.checkorderflag=true;
     this.addsquences();
+    this.arrange_task_order(this.startNodeId);
     this.get_coordinates();
-    this.arrange_task_order("START_" + this.finalbot.botName);
     await this.getsvg();
+    console.log("-----------------------------",this.final_tasks)
       this.saveBotdata = {
         "botName": botProperties.botName,
         "botType": botProperties.botType,
@@ -947,7 +991,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         "svg":this.svg,
         "sequences": this.getsequences(),
       }
-
+     
       if(this.checkorderflag==false)
       {
         return  false;
@@ -1015,8 +1059,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   async updateBotFun(botProperties, env) {
     this.checkorderflag=true;
     this.addsquences();
+    this.arrange_task_order(this.startNodeId);
     this.get_coordinates();
-    this.arrange_task_order("START_" + this.finalbot.botName);
     await this.getsvg();
     this.saveBotdata = {
       "version": botProperties.version,
@@ -1035,10 +1079,13 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       "svg":this.svg,
       "sequences": this.getsequences()
     }
+   
     if(this.checkorderflag==false)
      return false;
     else
+    {
       return this.rest.updateBot(this.saveBotdata)
+    } 
 
   }
 
@@ -1093,7 +1140,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   reset(e) {
     this.indexofArr = 5;
     this.dagvalue = this.zoomArr[this.indexofArr];
-    this.dragelement.style['transform'] = `scale(${this.dagvalue})`
+    document.getElementById(this.dragareaid).style.transform = `scale(${this.dagvalue})`
     this.jsPlumbInstance.repaintEverything()
 
   }
@@ -1102,7 +1149,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     if (this.indexofArr < this.zoomArr.length - 1) {
       this.indexofArr += 1;
       this.dagvalue = this.zoomArr[this.indexofArr];
-      this.dragelement.style['transform'] = `scale(${this.dagvalue})`
+      document.getElementById(this.dragareaid).style.transform = `scale(${this.dagvalue})`
       this.jsPlumbInstance.repaintEverything()
     }
   }
@@ -1112,7 +1159,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     if (this.indexofArr > 0) {
       this.indexofArr -= 1;
       this.dagvalue = this.zoomArr[this.indexofArr];
-      this.dragelement.style['transform'] = `scale(${this.dagvalue})`
+      document.getElementById(this.dragareaid).style.transform = `scale(${this.dagvalue})`
     }
   }
 
@@ -1128,6 +1175,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   downloadPng()
   {
     var element=document.getElementById(this.dragareaid)
+    
     var botName=this.finalbot.botName;
     domtoimage.toPng(element)
       .then(function (dataUrl) {
@@ -1235,16 +1283,34 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
   get_coordinates() {
     this.nodes.forEach(data => {
-      var p = $("#" + data.id).first();
-      var position = p.position();
+      let p:any = $("#" + data.id).first();
+      let position:any = p.position();
       for (let i = 0; i < this.finaldataobjects.length; i++) {
-        let nodeid = this.finaldataobjects[i].nodeId.split("__");
+        let nodeid = (this.finaldataobjects[i].nodeId.split("|")[0]).split("__");
         if (nodeid[1] == data.id) {
           this.finaldataobjects[i].x = position.left + "px";
           this.finaldataobjects[i].y = position.top + "px";
         }
+      
       }
     })
+    if(this.finaldataobjects.find(item=>item.inSeqId==this.startNodeId)!=undefined)
+    {
+      let firstTask=this.finaldataobjects.find(item=>item.inSeqId==this.startNodeId)
+      let p1:any = $("#" + firstTask.inSeqId).first();
+      let position1:any = p1.position();
+      this.finaldataobjects.find(item=>item.inSeqId==this.startNodeId).x=(firstTask.x)+"|"+position1.left+"px"
+      this.finaldataobjects.find(item=>item.inSeqId==this.startNodeId).y=(firstTask.y)+"|"+position1.top+"px"
+    }
+  
+    if(this.finaldataobjects.find(item=>item.outSeqId==this.stopNodeId)!=undefined)
+    {
+      let lastTask=this.finaldataobjects.find(item=>item.outSeqId==this.stopNodeId);
+      let pn:any=$("#"+lastTask.outSeqId).first();
+      let positionn:any = pn.position();
+      this.finaldataobjects.find(item=>item.inSeqId==this.startNodeId).x=this.finaldataobjects.find(item=>item.inSeqId==this.startNodeId).x+"|"+positionn.left+"px";  
+      this.finaldataobjects.find(item=>item.inSeqId==this.startNodeId).y=this.finaldataobjects.find(item=>item.inSeqId==this.startNodeId).y+"|"+positionn.top+"px";  
+    }
   }
 
 
@@ -1292,7 +1358,21 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           {
             let data: any = outdata
             setTimeout(()=>{
-              $("#text_"+this.outputboxid).val((this.outputboxresult[0].Value).toString().replace(/\n/g, "<br />"));
+
+              let check=this.outputboxresult[0];
+              if(check=="" || check==undefined)
+              {
+                $("#text_"+this.outputboxid).val("No Items To Display");
+              }else
+              {
+                if(check.Value=="" || check.Value==undefined)            
+                { 
+                  $("#text_"+this.outputboxid).val("No Items To Display");
+                }else
+                {
+                  $("#text_"+this.outputboxid).val(String(this.outputboxresult[0].Value));
+                }
+              }
             },1000)
           }
           if(this.SelectedOutputType=="Image")
@@ -1319,7 +1399,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
   add_order(object) {
 
-    let end = "STOP_" + this.finalbot.botName;
+    let end = this.stopNodeId;
     this.final_tasks.push(object);
     if(object==undefined)
     {
@@ -1371,6 +1451,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
   resetCredForm(){
     this.insertForm.reset();
+    this.insertForm.get("categoryId").setValue(this.categoryList.length==1?this.categoryList[0].categoryId:'0')
+    this.insertForm.get("serverName").setValue("")
     this.passwordtype1=false;
   }
 
@@ -1382,6 +1464,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   {
    // this.modalRef = this.modalService.show(this.template);
     document.getElementById("createcredentials").style.display='block';
+    this.insertForm.get("categoryId").setValue(this.categoryList.length==1?this.categoryList[0].categoryId:"0")
   }
 
   saveCredentials(){
@@ -1421,7 +1504,16 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
    } 
   }
 
-
+  getCategories()
+  {
+    this.rest.getCategoriesList().subscribe(data=>{
+      let response:any=data;
+      if(response.errorMessage==undefined)
+      {
+        this.categoryList=response.data;
+      }
+    })
+  }
 }
 
 
