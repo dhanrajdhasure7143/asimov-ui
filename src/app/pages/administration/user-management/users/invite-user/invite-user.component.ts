@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
@@ -15,9 +15,9 @@ export class InviteUserComponent implements OnInit {
   inviteUserForm:FormGroup;
   categories: any=[];
   allRoles: any;
-  inviteeMail:any;
-  departments:any[]=[];
-  role:any;
+  public inviteeMail:any;
+  public departments:any[]=[];
+  public role:any;
   isdprtDisabled:boolean=false;
 
   constructor(private formBuilder: FormBuilder,private api:RestApiService, private router: Router,private spinner:NgxSpinnerService ) { }
@@ -75,17 +75,21 @@ getAllCategories(){
 
  }
 
- resetUserInvite(){
-   this.inviteeMail='';
-   this.role=undefined;
-   this.departments=[];
+ resetUserInvite(form:NgForm){
+   debugger
+  //  this.inviteeMail='';
+  //  this.role=undefined;
+  //  this.departments=[];
+ form.resetForm();
+ form.form.markAsPristine();
+form.form.markAsUntouched();
   // this.inviteUserForm.reset();
   // this.inviteUserForm.get("departments").setValue("");
   // this.inviteUserForm.get("inviteeMail").setValue("");
   // this.inviteUserForm.get("role").setValue("");
  }
 
- inviteUser(){
+ inviteUser(form){
   this.spinner.show();
    let body = {
     "inviterMailId": localStorage.getItem('ProfileuserId'),
@@ -114,7 +118,7 @@ getAllCategories(){
            cancelButtonColor: '#d33',
            confirmButtonText: 'Ok'
        }).then((result) => {
-         this.resetUserInvite();
+         this.resetUserInvite(form);
          this.router.navigate(['/pages/admin/user-management'])
        }) 
        }else {
