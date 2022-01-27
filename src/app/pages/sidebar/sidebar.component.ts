@@ -12,6 +12,7 @@ import { RestApiService } from "./../services/rest-api.service"
 export class SidebarComponent implements OnInit {
   isExpanded = true;
   showSubmenu: boolean = false;
+  showprocessesSubmenu: boolean = false;
   showadminSubmenu: boolean = false;
   isShowing = false;
   showSubSubMenu: boolean = false;
@@ -56,6 +57,7 @@ export class SidebarComponent implements OnInit {
      }
      this.obj.sideBarOpen=false;
      this.obj.sidebar.showSubmenu=false;
+     this.obj.sidebar.showprocessesSubmenu=false;
       this.obj.sidebar.showadminSubmenu=false;
       this.obj.contentMargin = 60;
   }
