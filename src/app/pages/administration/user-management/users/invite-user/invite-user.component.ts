@@ -76,7 +76,7 @@ getAllCategories(){
  }
 
  resetUserInvite(form:NgForm){
-   debugger
+   
   //  this.inviteeMail='';
   //  this.role=undefined;
   //  this.departments=[];
