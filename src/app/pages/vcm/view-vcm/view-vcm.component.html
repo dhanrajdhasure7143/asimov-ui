@@ -1,20 +1,24 @@
 <div class="h-100">
     <div class="row module-heading title">
-        <span class="module-back-button" routerLink="/pages/home">
-            <i aria-hidden="true" class="fas fa-arrow-left"></i>
-        </span>
-        <span class="module-header-title">Value Chain Mapping</span>
-        <span class="module-header-title" style="position: absolute;right: 0;margin-right: 3%;">
-            <button class="btn btn-primary" (click)="createVcm()">Create VCM</button>
-        </span>
+        <div>
+            <span class="module-back-button" routerLink="/pages/home">
+                <i aria-hidden="true" class="fas fa-arrow-left"></i>
+            </span>
+            <span class="module-header-title">Value Chain Mapping</span>
+        </div>
+        <div class="ml-auto">
+            <button class="btn btn-primary" (click)="createVcm()">
+                <img src="../../../../assets/images/Projects/White-plus.svg" class="testplus" />Create VCM</button>
+        </div>
     </div>
 
-    <div class="module-body" style="margin: 2% 2% 0 2%;">
-        <div class="container row">
+    <div class="module-body view-vcm-body">
+        <div class="container-fluid row">
             <div class="col-md-3 col-lg-3" *ngFor="let vcm of vcmProcess">
                 <div class="dbichart-block" style="cursor: pointer;">
                     <div class="dbichart-body">
-                        <h4 style="text-align: center;color:#5eace2;font-weight: bold;">{{vcm.vcmname}}</h4>
+                        <img src="../../../../assets/images/VCM/VCM.svg" class="vcmproc-img"/>
+                        <h4>{{vcm.vcmname}}</h4>
                     </div>
                 </div>
             </div>

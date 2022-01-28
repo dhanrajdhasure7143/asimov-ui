@@ -1,33 +1,33 @@
-.vcmName>input[type=text] {
-    width: 100%;
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-    margin-top: 0%;
-    /* padding: 1% 2%; */
-    font-size: medium;
-    background: #f6f6f6;
+.vcm-leveldiv {
+    margin-top: 20px;
 }
 
-img {
-    cursor: pointer;
+.vcm-leveldiv h4 {
+    font-size: 16px;
+    color: #001c47;
+    font-weight: 600;
+    margin-bottom: 15px;
 }
 
-input[type=text],
-select {
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    height: 80%;
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
+.vcm-leveldiv h4 img.testplus {
+    float: right;
 }
 
-.maincontent {
-    padding: 0 2% 0 2%;
+.vcm-leveldiv mat-panel-title.mat-expansion-panel-header-title {
+    padding: 0px !important;
+    color: #001c47 !important;
+}
+
+.vcm-leveldiv mat-panel-title h5 {
+    font-size: 16px;
+}
+.vcm-leveldiv ::ng-deep span.mat-expansion-indicator {
+    position: absolute;
+    right: 16px;
+    top: 14px;
+}
+.vcm-leveldiv .mat-expansion-panel-content {
+    border-top: 1px solid #ccc !important;
 }
 
 .dbichart-block {
@@ -37,15 +37,83 @@ select {
 
 ::ng-deep .mat-expansion-panel {
     border: solid 1px #ebebeb;
-    padding: 3%;
+    padding: 10px;
+    margin-bottom: 20px !important;
+    position: relative;
 }
-
-.fa-check-circle:before {
-    content: "\f058";
+.mat-expansion-panel:last-child {
+    margin-bottom: 0px !important;
+}
+.content , .level1process{
+    position: relative;
+}
+/* .content i {
+    position: absolute;
+    top: 10px;
+    right: 12px;
     color: green;
     cursor: pointer;
+} */
+
+.level1process button, .content button {
+    position: absolute;
+    right: 10px;
+    background-color: transparent !important;
+    top: 10px;
+    padding: 0px !important;
+    min-width: auto;
+    margin: 0px !important;
 }
 
+.overflowcontent span {
+    margin: 0px 5px;
+}
+
+.previewdiv {
+    background-color: #f6f6f6;
+    border-radius: 3px;
+    height: 100%;
+}
+.previewdiv h4 {
+   font-size: 16px;
+   color: #7a7a7a;
+   text-transform: uppercase;
+}
+.previewcontdiv {
+    background-color: #fff;
+    border-radius: 3px;
+    height: 90%;
+    padding: 15px;
+}
+img.preview-img {
+    width: 100%;
+    margin-bottom: 20px;
+}
+.previewcontdiv h5 {
+    color: #00a0e3;
+    font-size: 15px;
+    text-align: center;
+}
+.previewcontdiv p {
+    text-align: center;
+    font-weight: 300;
+    color: #001c47;
+    font-size: 14px;
+}
+.submit button.btn.btn-primary {
+    margin-right: 0px !important;
+}
+/* li.childHover {
+    position: relative;
+}
+
+.childHover i.fa.fa-times-circle {
+    position: absolute;
+    right: 2px;
+    top: 4px;
+    color: red;
+    cursor: pointer;
+} */
 .fa-times-circle:before {
     color: red;
     cursor: pointer;
@@ -79,11 +147,8 @@ mat-tree {
     background: #f6f6f6;
 }
 
-select {
-    cursor: pointer;
-}
 
-.submit {
+/* .submit {
     display: flex;
     justify-content: end;
     margin-right: 5%;
@@ -95,4 +160,4 @@ select {
     right: 0;
     margin-right: 9%;
     margin-bottom: 5%;
-}
+} */

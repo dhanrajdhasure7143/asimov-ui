@@ -107,10 +107,10 @@
             </mat-list-item>
             <div class="submenus" [ngClass]="{'expanded' : showprocessesSubmenu}">
               <a mat-list-item class="link" id="prepo" (click)="hightlight('prepo','expand_processes')" >
-                  <span class="side-menu-font">Project Repo</span>
+                  <span class="side-menu-font">Process Repo</span>
               </a>
               <a mat-list-item class="link" id='vcm'  (click)="hightlight('vcm','expand_processes')" routerLink="/pages/vcm/view-vcm">  
-                  <span class="side-menu-font">VCM</span>
+                  <span class="side-menu-font">Value Chain Mapping</span>
               </a>              
             </div>
             <!-- <a mat-list-item class="link" id='so' *ngIf="freetrail!=true" (click)="hightlight('so',null)" routerLink="/pages/vcm/view-vcm" [matTooltip]=" !obj.sideBarOpen ? 'VCM' : ''" matTooltip="VCM" matTooltipClass="sidebarTooltip" matTooltipPosition="right">
