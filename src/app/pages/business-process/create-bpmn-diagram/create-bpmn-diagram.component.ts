@@ -127,7 +127,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
     this.getUserBpmnList();
     this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":false,
                     "isShowConformance":false,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
-                    "isFromcreateScreen":true,'process_name':this.currentNotation_name}
+                    "isFromcreateScreen":true,'process_name':this.currentNotation_name,"selectedNotation":this.saved_bpmn_list[this.selected_notation]}
         this.dt.bpsNotationaScreenValues(this.push_Obj);
   }
   ngAfterViewInit(){
@@ -176,7 +176,12 @@ export class CreateBpmnDiagramComponent implements OnInit {
     this.dt.bpsNotationaScreenValues(null);
     this.dt.downloadNotationValue(null);
     this.dt.bpsHeaderValues(null);
-    this.dt.submitForApproval(null)
+    this.dt.submitForApproval(null);
+      let req_body={
+        "bpmnModelId":this.selected_modelId
+      }
+      this.rest.deleteNotationFromTemp(req_body).subscribe(res=>{
+      })
   }
 
   getUserBpmnList(){
@@ -291,7 +296,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
 
     this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":false,
                     "isShowConformance":false,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
-                    "isFromcreateScreen":true,'process_name':this.currentNotation_name}
+                    "isFromcreateScreen":true,'process_name':this.currentNotation_name,"selectedNotation":this.saved_bpmn_list[this.selected_notation]}
       this.dt.bpsNotationaScreenValues(this.push_Obj);
     if(['APPROVED','REJECTED'].indexOf(this.rejectedOrApproved) != -1){
       for(var s=0; s<this.approver_list.length; s++){
@@ -329,7 +334,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
      this.updated_date_time=sel_not['modifiedTimestamp'];
      this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":false,
                     "isShowConformance":false,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
-                    "isFromcreateScreen":true,'process_name':this.currentNotation_name}
+                    "isFromcreateScreen":true,'process_name':this.currentNotation_name,"selectedNotation":this.saved_bpmn_list[this.selected_notation]}
      this.dt.bpsNotationaScreenValues(this.push_Obj);
 
       this.autosavedDiagramVersion = this.autosavedDiagramList.filter(each_asDiag => {
@@ -413,7 +418,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
             this.updated_date_time = this.autosavedDiagramVersion[0]["bpmnModelModifiedTime"];
             this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":false,
                           "isShowConformance":false,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
-                          "isFromcreateScreen":true,'process_name':this.currentNotation_name}
+                          "isFromcreateScreen":true,'process_name':this.currentNotation_name,"selectedNotation":this.saved_bpmn_list[this.selected_notation]}
             this.dt.bpsNotationaScreenValues(this.push_Obj);
           }
           this.initModeler();
@@ -440,7 +445,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
         this.updated_date_time = this.autosavedDiagramVersion[0]["bpmnModelModifiedTime"];
         this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":false,
                         "isShowConformance":false,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
-                        "isFromcreateScreen":true,'process_name':this.currentNotation_name}
+                        "isFromcreateScreen":true,'process_name':this.currentNotation_name,"selectedNotation":this.saved_bpmn_list[this.selected_notation]}
         this.dt.bpsNotationaScreenValues(this.push_Obj);
       }
       this.initModeler();
@@ -508,6 +513,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
 
   autoSaveDiagram(model){
     model["processOwner"] = this.saved_bpmn_list[this.selected_notation]['processOwner'];
+    model["processOwnerName"] = this.saved_bpmn_list[this.selected_notation]['processOwnerName'];
     this.rest.autoSaveBPMNFileContent(model).subscribe(
       data=>{
         this.getAutoSavedDiagrams();
@@ -751,6 +757,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
       bpmnModel.bpmnXmlNotation = final_notation;
       _self.saved_bpmn_list[_self.selected_notation]['bpmnXmlNotation'] = final_notation;
       bpmnModel["processOwner"] = _self.saved_bpmn_list[_self.selected_notation]['processOwner'];
+      bpmnModel["processOwnerName"] = _self.saved_bpmn_list[_self.selected_notation]['processOwnerName'];
       bpmnModel.role=localStorage.getItem("userRole");
       _self.rest.saveBPMNprocessinfofromtemp(bpmnModel).subscribe(
         data=>{
@@ -799,7 +806,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
     });
     this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":false,
                   "isShowConformance":false,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
-                  "isFromcreateScreen":true,'process_name':this.currentNotation_name}
+                  "isFromcreateScreen":true,'process_name':this.currentNotation_name,"selectedNotation":this.saved_bpmn_list[this.selected_notation]}
     this.dt.bpsNotationaScreenValues(this.push_Obj);
   }
 

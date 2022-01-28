@@ -36,6 +36,7 @@ export class BusinessProcessComponent implements AfterViewChecked {
   freetrail: string;
   processowner_list:any[]=[];
   process_owner:any;
+  lastModified_user:any;
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private cdRef: ChangeDetectorRef, private dt: DataTransferService,private rest:RestApiService,
               @Inject(APP_CONFIG) private config, ) { }
 
@@ -87,6 +88,11 @@ export class BusinessProcessComponent implements AfterViewChecked {
         this.isUploaded=notationValues_obj['isUploaded'];
         if(this.isUploaded){
           this.selectedNotationType='bpmn'
+        }
+        let notationObj=notationValues_obj["selectedNotation"]
+        // console.log("notationObj",notationObj)
+        if(notationObj){
+          this.lastModified_user=notationObj["bpmnModelModifiedBy"];
         }
         // console.log(this.iscreate_notation)
       }
@@ -216,7 +222,7 @@ export class BusinessProcessComponent implements AfterViewChecked {
         });
         return;
       }
-      obj={id:"submit",selectedApprovar:this.selected_approver,processOwner:this.process_owner}
+      obj={id:"submit",selectedApprovar:this.selected_approver,processOwner:this.processowner_list[this.process_owner].userId,processOwnerName:this.processowner_list[this.process_owner].firstName + ' ' + this.processowner_list[this.process_owner].lastName}
     }else{
       obj={id:"submit",selectedApprovar:this.selected_approver}
     }

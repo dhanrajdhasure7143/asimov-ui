@@ -260,7 +260,14 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
         this.dt.bpsNotationaScreenValues(null);
         this.dt.downloadNotationValue(null);
         this.dt.bpsHeaderValues(null);
-        this.dt.submitForApproval(null)
+        this.dt.submitForApproval(null);
+        // if(!this.isShowConformance){
+        //   let req_body={
+        //     "bpmnModelId":this.selected_modelId
+        //   }
+        //   this.rest.deleteNotationFromTemp(req_body).subscribe(res=>{
+        //   })
+        // }
       }
 
    setRPAData(){
@@ -439,7 +446,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
       this.selected_approver = null;
       this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
     "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
-    "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize,isUploaded:this.isUploaded}
+    "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize,isUploaded:this.isUploaded,"selectedNotation":this.saved_bpmn_list[this.selected_notation]}
       setTimeout(() => {
         // this.dt.bpsNotationaScreenValues(this.push_Obj);
       }, 2000);
@@ -534,14 +541,14 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
         let selected_xml = this.pivalues['data'];
         this.push_Obj={"rejectedOrApproved":'',"isfromApprover":this.isfromApprover,
           "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.pivalues.updatedTime,
-          "isFromcreateScreen":false,'process_name':this.pivalues.piName,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize,isUploaded:this.isUploaded}
+          "isFromcreateScreen":false,'process_name':this.pivalues.piName,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize,isUploaded:this.isUploaded,"selectedNotation":this.saved_bpmn_list[this.selected_notation]}
             this.dt.bpsNotationaScreenValues(this.push_Obj);
         if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
           selected_xml = this.autosavedDiagramVersion[0]["bpmnProcessMeta"];
           this.updated_date_time = this.autosavedDiagramVersion[0]["modifiedTimestamp"];
           this.push_Obj={"rejectedOrApproved":this.autosavedDiagramVersion[0]["bpmnModelTempStatus"],"isfromApprover":this.isfromApprover,
           "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
-          "isFromcreateScreen":false,'process_name':this.pivalues.piName,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize,isUploaded:this.isUploaded}
+          "isFromcreateScreen":false,'process_name':this.pivalues.piName,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize,isUploaded:this.isUploaded,"selectedNotation":this.saved_bpmn_list[this.selected_notation]}
             this.dt.bpsNotationaScreenValues(this.push_Obj);
         }
         try{
@@ -573,7 +580,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
       }
       this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
       "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
-      "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize,isUploaded:this.isUploaded}
+      "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize,isUploaded:this.isUploaded,"selectedNotation":this.saved_bpmn_list[this.selected_notation]}
         this.dt.bpsNotationaScreenValues(this.push_Obj);
     }
     // this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
@@ -608,7 +615,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
   this.reSize = false;
   this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
   "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
-  "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize,isUploaded:this.isUploaded}
+  "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize,isUploaded:this.isUploaded,"selectedNotation":this.saved_bpmn_list[this.selected_notation]}
 this.dt.bpsNotationaScreenValues(this.push_Obj)
   if(this.isDiagramChanged){
     Swal.fire({
@@ -644,7 +651,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
           this.updated_date_time = this.autosavedDiagramVersion[0]["modifiedTimestamp"];
           this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
           "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
-          "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize,isUploaded:this.isUploaded}
+          "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize,isUploaded:this.isUploaded,"selectedNotation":this.saved_bpmn_list[this.selected_notation]}
       this.dt.bpsNotationaScreenValues(this.push_Obj)
         }
         this.initModeler();
@@ -703,7 +710,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
         this.updated_date_time = this.autosavedDiagramVersion[0]["modifiedTimestamp"];
         this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
         "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
-        "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize,isUploaded:this.isUploaded}
+        "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize,isUploaded:this.isUploaded,"selectedNotation":this.saved_bpmn_list[this.selected_notation]}
       this.dt.bpsNotationaScreenValues(this.push_Obj)
       }
     this.initModeler();
@@ -806,7 +813,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
     this.isEdit=false;
     this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
     "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
-    "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize,isUploaded:this.isUploaded}
+    "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize,isUploaded:this.isUploaded,"selectedNotation":this.saved_bpmn_list[this.selected_notation]}
 this.dt.bpsNotationaScreenValues(this.push_Obj)
     if(this.isUploaded){
       this.bpmnservice.changeConfNav(true);
@@ -819,7 +826,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
 
   autoSaveDiagram(model){
       model.processOwner = this.saved_bpmn_list[this.selected_notation]['processOwner'];
-    // model["processOwner"] = this.saved_bpmn_list[this.selected_notation]['processOwner'];
+    model.processOwnerName = this.saved_bpmn_list[this.selected_notation]['processOwnerName'];
     this.rest.autoSaveBPMNFileContent(model).subscribe(
       data=>{
         this.getAutoSavedDiagrams();
@@ -829,7 +836,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
         this.spinner.hide();
         this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
         "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
-        "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':false,"hasConformance":this.hasConformance,"resize":this.reSize,"isEditbtn":true,isUploaded:this.isUploaded}
+        "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':false,"hasConformance":this.hasConformance,"resize":this.reSize,"isEditbtn":true,isUploaded:this.isUploaded,"selectedNotation":this.saved_bpmn_list[this.selected_notation]}
       this.dt.bpsNotationaScreenValues(this.push_Obj)
       },
       err => {
@@ -1083,6 +1090,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
   if(this.isShowConformance){
     bpmnModel.notationFromPI = true;
     bpmnModel.processOwner=e.processOwner;
+    bpmnModel.processOwnerName=e.processOwnerName;
     bpmnModel.bpmnProcessName = this.processName;
     bpmnModel.ntype = this.ntype;
     bpmnModel.category = this.category;
@@ -1099,6 +1107,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
     }
   }else{
     bpmnModel.processOwner = _self.saved_bpmn_list[_self.selected_notation]['processOwner'];
+    bpmnModel.processOwnerName = _self.saved_bpmn_list[_self.selected_notation]['processOwnerName'];
     bpmnModel.bpmnModelId = sel_List['bpmnModelId'];
     bpmnModel.bpmnProcessName = sel_List['bpmnProcessName'];
     bpmnModel.category = sel_List['category'];
@@ -1210,9 +1219,11 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
         _self.dt.bpsNotationaScreenValues(this.push_Obj)
       }
       if(_self.isShowConformance){
-        bpmnModel.processOwner=_self.process_owner;
+        bpmnModel.processOwner=_self.processowner_list[_self.process_owner].userId;
+        bpmnModel.processOwnerName=_self.processowner_list[_self.process_owner].firstName + ' ' + _self.processowner_list[_self.process_owner].lastName;
       }else{
-      bpmnModel.processOwner = _self.saved_bpmn_list[_self.selected_notation]['processOwner'];
+        bpmnModel.processOwner = _self.saved_bpmn_list[_self.selected_notation]['processOwner'];
+        bpmnModel.processOwnerName = _self.saved_bpmn_list[_self.selected_notation]['processOwnerName'];
       }
       bpmnModel.role=localStorage.getItem("userRole");
       _self.rest.saveBPMNprocessinfofromtemp(bpmnModel).subscribe(
@@ -1281,7 +1292,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
     })
     this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
     "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
-    "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':false,"hasConformance":this.hasConformance,"resize":this.reSize,isUploaded:this.isUploaded}
+    "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':false,"hasConformance":this.hasConformance,"resize":this.reSize,isUploaded:this.isUploaded,"selectedNotation":this.saved_bpmn_list[this.selected_notation]}
       this.dt.bpsNotationaScreenValues(this.push_Obj);
   }
 
@@ -1432,7 +1443,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
     this.slideUpDifferences();
     this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
     "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
-    "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':false,"hasConformance":this.hasConformance,"resize":this.reSize,isUploaded:this.isUploaded}
+    "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':false,"hasConformance":this.hasConformance,"resize":this.reSize,isUploaded:this.isUploaded,"selectedNotation":this.saved_bpmn_list[this.selected_notation]}
 this.dt.bpsNotationaScreenValues(this.push_Obj)
   }
 
@@ -1484,7 +1495,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
           this.isStartProcessBtn=deployResponse.startprocess
           this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
           "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
-          "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize,isUploaded:this.isUploaded}
+          "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize,isUploaded:this.isUploaded,"selectedNotation":this.saved_bpmn_list[this.selected_notation]}
             this.dt.bpsNotationaScreenValues(this.push_Obj);
       }
     })
@@ -1538,7 +1549,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
       this.isStartProcessBtn=false;
       this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
       "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
-      "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize,isUploaded:this.isUploaded}
+      "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize,isUploaded:this.isUploaded,"selectedNotation":this.saved_bpmn_list[this.selected_notation]}
         this.dt.bpsNotationaScreenValues(this.push_Obj);
     })    
   }
