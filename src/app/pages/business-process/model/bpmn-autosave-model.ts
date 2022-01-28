@@ -24,4 +24,5 @@ export class BpmnModel{
     bpmnConfProcessMeta:string = "";
     processOwner:string;
     role:string;
+    processOwnerName:string;
 }

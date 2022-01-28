@@ -31,10 +31,13 @@ export class UploadCreateDropBpmnComponent implements OnInit {
   validNotationTypes: string;
   uploadedFileName:string;
   isShowConformance:boolean=false;
+  overlay_data={}
 
   @Output() update = new EventEmitter<any>();
   @Input() data;
   @Input('bpmn_list') public bpmn_list: any=[];
+  @Input() isEdit_data:boolean;
+  @Input() selectedObj:any={}
   userRoles: any;
   freetrail: string;
 
@@ -58,7 +61,17 @@ export class UploadCreateDropBpmnComponent implements OnInit {
     this.cdRef.detectChanges();
   }
 
+  ngOnChanges(){
+    if(this.isEdit_data){
+      this.overlay_data={"type":"edit","module":"bps","selectedObj":this.selectedObj};
+      this.uploaded_file = null;
+      var modal = document.getElementById('myModal');
+      modal.style.display = "block";
+    }
+  }
+
   onSelect(e){
+    this.overlay_data={"type":"create","module":"bps"};
     this.slideUp();
     this.hideEditor=false;
     if(e.addedFiles.length == 1 && e.rejectedFiles.length == 0){
@@ -73,6 +86,7 @@ export class UploadCreateDropBpmnComponent implements OnInit {
   }
 
   slideUp(){
+    this.overlay_data={"type":"create","module":"bps"};
     if (this.freetrail == 'true') {
       if (this.bpmn_list.length == this.config.bpsprocessfreetraillimit) {
         // Swal.fire("Error","You have limited access to this product. Please contact EZFlow support team for more details.","error");
@@ -102,12 +116,14 @@ export class UploadCreateDropBpmnComponent implements OnInit {
   }
 
   uploadCreateBpmn(e){
+    console.log(e)
     this.randomId = UUID.UUID();
     this.create_editor=false;
     this.bpmnModel.bpmnProcessName=e.processName;
     this.bpmnModel.ntype=e.ntype;
     this.bpmnModel.bpmnModelId=this.randomId;
     this.bpmnModel['processOwner']=e.processOwner;
+    this.bpmnModel['processOwnerName']=e.processOwnerName;
     if(this.data){
       let dataarr = this.data.split("@");
       this.bpmnModel.bpmnModelId= dataarr[2];

@@ -127,7 +127,8 @@ export class RestApiService{
     return this.http.post("/bpsprocess/submit/bpms/notation/approve", bpmnModel)
   }
   getBPMNTempNotations(){
-    return this.http.get("/bpsprocess/temp/bpmn/all/user");
+    // return this.http.get("/bpsprocess/temp/bpmn/all/user");
+    return this.http.get("/bpsprocess/temp/bpmn/latestModified");
   }
   autoSaveBPMNFileContent(bpmnModel){
     return this.http.post("/bpsprocess/temp/bpms/notation", bpmnModel)
@@ -1276,6 +1277,19 @@ deletePaymentMode(paymentMethodId):Observable<any>{
 }
 setasDefaultCard(paymentModeId){
   return this.http.post('/subscriptionservice/v1/paymentmethods/set-default/'+paymentModeId,{responseType:'json'});
+}
+
+updatePiData(body){
+  return this.http.post('/processintelligence/v1/processgraph/UpdateProcessName',body)
+}
+updateBpsData(body){
+  return this.http.post('/bpsprocess/updateBpmnInfo',body);
+}
+bpmnVersionChecking(bpmnId){
+  return this.http.get('/bpsprocess/checkBpmnVersion?bpmnModelId='+bpmnId);
+}
+deleteNotationFromTemp(body){
+  return this.http.post('/bpsprocess/delete/processTempInfo/data',body); 
 }
 
 }

@@ -123,6 +123,10 @@
                                                         <img src="../../../../assets/images/PI/refresh.svg" alt="" class="testplus default-img" matTooltip="Retry Process Graph" matTooltipPosition="left">
                                                         <img src="../../../../assets/images/PI/refresh-blue.svg" alt="" class="testplus hover-img" matTooltip="Retry Process Graph" matTooltipPosition="left">
                                                 </span>
+                                                <span  (click)="editProcess(element)" matTooltip="Edit" class="newinntalx">
+                                                        <img src="../../../../assets/images/Projects/edit-black.svg" class="default-img">
+                                                        <img src="../../../../../assets/images/Projects/Edit-blue.svg" class="hover-img">
+                                                </span> 
                                                 <span>
                                                         <span *ngIf="element.status !='Inprogress'" (click)="onDeleteSelectedProcess(element.piId,element)" class="delete-icon">
                                                                 <!-- <img matTooltip="Delete Process" matTooltipPosition="left" src="../../../../assets/images/BPMS/delete-red.svg"  > -->
@@ -133,6 +137,7 @@
                                                                 <img matTooltip="Delete Process" matTooltipPosition="left" src="../../../../assets/images/PI/delete_disabled.svg"  >
                                                         </span>
                                                 </span>
+
                                         </td>
                                 </ng-container>                                  
                                         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -286,7 +291,7 @@
 </div>
 
 
-<process-category-overlay headerTitle="Save Process" buttonName="Save & Generate" (proceed)="generateGraph($event)" class="bpmnCreate"></process-category-overlay>
+<process-category-overlay headerTitle="Save Process" [overlay_data]="overlay_data" buttonName="Save & Generate" (proceed)="generateGraph($event)" class="bpmnCreate"></process-category-overlay>
 <!-- <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "ball-spin-clockwise-fade-rotating" [fullScreen] = "true"><p style="color: white" ></p></ngx-spinner> -->
 
 
