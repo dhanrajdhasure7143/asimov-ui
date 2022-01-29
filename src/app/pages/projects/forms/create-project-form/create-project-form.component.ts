@@ -25,6 +25,8 @@ export class CreateProjectFormComponent implements OnInit {
   @Output() oncreate = new EventEmitter<String>();
   date = new Date();
   loggedInUserId:any;
+  categories_list:any[]=[];
+  categoriesList:any=[];
   freetrail: string;
   ngOnInit(): void {
     this.loggedInUserId=localStorage.getItem("ProfileuserId")
@@ -60,6 +62,13 @@ export class CreateProjectFormComponent implements OnInit {
       this.insertForm2.get('process').clearValidators();
       this.insertForm2.get('processOwner').clearValidators();
     }
+    this.rest.getCategoriesList().subscribe(res=> {
+      this.categoriesList=res
+      this.categories_list=this.categoriesList.data
+      // if(this.categories_list.length==1){
+      //   this.categoryName=this.categories_list[0].categoryName
+      // }
+    });
   }
 
   getprocessnames()

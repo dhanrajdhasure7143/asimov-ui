@@ -70,19 +70,34 @@
                         </span>
                     </div>
                     <div class="form-fields col-md-6 pr-0">
-                        <label class="label-control">Value Chain<span
-                            class="star">*</span></label>
-                        <!-- <select formControlName="mapValueChain" (change)="getValueChainProcesses($event.target.value)" class="form-control data"
-                        [ngClass]="insertForm2.get('mapValueChain').valid?'enteredfield-color':'inputfield-color'">
-                        <option value="">Select Map Value Chain</option>
-                        <option *ngFor="let value of valuechain" [value]="value.processGrpMasterId">{{value.processName}}</option>
-                    </select> -->
-                        <input type="text" class="form-control data" placeholder="Enter Value Chain" maxlength="51" formControlName="mapValueChain" [ngClass]="insertForm2.get('mapValueChain').valid?'enteredfield-color':'inputfield-color'">
+                        <!-- <label class="label-control">Value Chain<span
+                            class="star">*</span></label> -->
+
+                     
+                        <!-- <input type="text" class="form-control data" placeholder="Enter Value Chain" maxlength="51" formControlName="mapValueChain" [ngClass]="insertForm2.get('mapValueChain').valid?'enteredfield-color':'inputfield-color'">
                         <span *ngIf="(insertForm2.get('mapValueChain').invalid && insertForm2.get('mapValueChain').touched)
                         && !insertForm2.controls['mapValueChain'].hasError('maxlength')" class="errspan required">Value Chain Required*</span>
                         <span *ngIf="insertForm2.controls['mapValueChain'].hasError('maxlength')" class="errspan required">
                             Maximum of 50 characters exceeded
-                        </span>
+                        </span> -->
+                        <label class="label-control">Select Department<span class="star">*</span></label>
+
+                    <select class="form-control data"
+                        [disabled]="categories_list.length==1"
+                       
+                        formControlName="mapValueChain" name="mapValueChain" [ngClass]="insertForm2.get('mapValueChain').valid?'enteredfield-color':'inputfield-color'">
+                      
+                        <option [value]="null" disabled hidden>Select Department</option>
+                        <option value="" [selected]="true">Select Department</option>
+                        <option *ngFor="let category of categories_list"
+                            [value]="category.categoryId">{{category.categoryName}}</option>
+                    </select>
+
+                    <div *ngIf="insertForm2.get('mapValueChain').invalid && insertForm2.get('mapValueChain').touched"
+                        class="errspan required">
+                        Department Required*
+                    </div>
+                        
                     </div>
                 </div>
                 <div class="col-md-12">
