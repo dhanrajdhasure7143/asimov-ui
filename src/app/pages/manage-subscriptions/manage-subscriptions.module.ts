@@ -19,12 +19,13 @@ import { Ng5SliderModule } from 'ng5-slider';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { OrderByPipe } from './pipes/orderby-pipe.pipe';
+import { AddcardComponent } from './addcard/addcard.component';
 
 
 @NgModule({
   declarations: [ManageSubscriptionsComponent, CurrentplanComponent, 
     PaymentMethodsComponent, BillingAddressComponent, PaymentHistoryComponent,
-     OrderDetailsComponent,OrderByPipe],
+     OrderDetailsComponent,OrderByPipe, AddcardComponent],
   imports: [
     CommonModule,  
     ManageSubscriptionsRoutingModule,

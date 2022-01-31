@@ -5,6 +5,7 @@ import moment from 'moment';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
 import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 import { NotifierService } from 'angular-notifier';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-create-project-form',
   templateUrl: './create-project-form.component.html',
@@ -25,6 +26,8 @@ export class CreateProjectFormComponent implements OnInit {
   @Output() oncreate = new EventEmitter<String>();
   date = new Date();
   loggedInUserId:any;
+  categories_list:any[]=[];
+  categoriesList:any=[];
   freetrail: string;
   ngOnInit(): void {
     this.loggedInUserId=localStorage.getItem("ProfileuserId")
@@ -60,6 +63,13 @@ export class CreateProjectFormComponent implements OnInit {
       this.insertForm2.get('process').clearValidators();
       this.insertForm2.get('processOwner').clearValidators();
     }
+    this.rest.getCategoriesList().subscribe(res=> {
+      this.categoriesList=res
+      this.categories_list=this.categoriesList.data
+      // if(this.categories_list.length==1){
+      //   this.categoryName=this.categories_list[0].categoryName
+      // }
+    });
   }
 
   getprocessnames()
@@ -105,7 +115,8 @@ export class CreateProjectFormComponent implements OnInit {
         this.insertForm2.get("processOwner").setValue(processOwner.userId.userId)
       }else
       {
-        this.notifier.notify("error","Unable to find process owner for selected process")
+        this.insertForm2.get("processOwner").setValue("")
+        Swal.fire("Error","Unable to find process owner for selected process","error")
       }
     }
   }
