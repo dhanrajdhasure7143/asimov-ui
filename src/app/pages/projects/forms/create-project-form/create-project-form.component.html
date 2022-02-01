@@ -32,7 +32,7 @@
                 </div>
                 <div class="col-md-12">
                     <div class="form-fields col-md-6 pl-0 ngselectfield">
-                        <label class="label-control">Add Resources<span
+                        <label class="label-control">Add Resources <span
                             class="star">*</span></label>
                         <!-- <select formControlName="resources" class="form-control data"
                         [ngClass]="insertForm2.get('resources').valid?'enteredfield-color':'inputfield-color'">
@@ -90,7 +90,7 @@
                         <option [value]="null" disabled hidden>Select Department</option>
                         <option value="" [selected]="true">Select Department</option>
                         <option *ngFor="let category of categories_list"
-                            [value]="category.categoryId">{{category.categoryName}}</option>
+                            [value]="category.categoryName">{{category.categoryName}}</option>
                     </select>
 
                     <div *ngIf="insertForm2.get('mapValueChain').invalid && insertForm2.get('mapValueChain').touched"

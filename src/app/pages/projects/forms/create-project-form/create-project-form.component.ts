@@ -70,6 +70,8 @@ export class CreateProjectFormComponent implements OnInit {
       //   this.categoryName=this.categories_list[0].categoryName
       // }
     });
+
+   
   }
 
   getprocessnames()

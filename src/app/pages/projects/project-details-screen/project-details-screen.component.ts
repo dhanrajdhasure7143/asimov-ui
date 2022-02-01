@@ -484,6 +484,7 @@ this.editdata=false;
 this.rpa.getProjectDetailsById(paramsdata.id).subscribe( res=>{​​​​​​
 this.spinner.hide();
 this.projectDetails=res
+console.log("project details",this.projectDetails)
 this.projectenddate=moment(this.projectDetails.endDate).format("YYYY-MM-DD");
 this.projectStartDate = moment(this.projectDetails.startDate).format("YYYY-MM-DD");
 
