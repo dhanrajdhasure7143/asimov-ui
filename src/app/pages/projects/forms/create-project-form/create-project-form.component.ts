@@ -5,6 +5,7 @@ import moment from 'moment';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
 import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 import { NotifierService } from 'angular-notifier';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-create-project-form',
   templateUrl: './create-project-form.component.html',
@@ -116,7 +117,8 @@ export class CreateProjectFormComponent implements OnInit {
         this.insertForm2.get("processOwner").setValue(processOwner.userId.userId)
       }else
       {
-        this.notifier.notify("error","Unable to find process owner for selected process")
+        this.insertForm2.get("processOwner").setValue("")
+        Swal.fire("Error","Unable to find process owner for selected process","error")
       }
     }
   }
