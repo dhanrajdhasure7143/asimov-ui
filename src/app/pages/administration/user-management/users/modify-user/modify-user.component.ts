@@ -35,7 +35,7 @@ export class ModifyUserComponent implements OnInit {
   ngOnInit(): void {
     
         this.getAllCategories();
-        this.getRoles();
+       
     
 }
 getAllCategories(){
@@ -43,6 +43,7 @@ getAllCategories(){
   this.api.getDepartmentsList().subscribe(resp => {
     this.categories = resp.data; 
     this.spinner.hide();
+    this.getRoles();
   })
  }
  getRoles(){
@@ -56,7 +57,7 @@ getAllCategories(){
             roles1.push(x.id)
           }
         });
-        debugger
+        
         if(this.userData.dept.length==1){
           this.categories.forEach(x => {
             if(x.categoryName === this.userData.dept[0]){
