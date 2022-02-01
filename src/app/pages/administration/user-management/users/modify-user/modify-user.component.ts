@@ -56,15 +56,27 @@ getAllCategories(){
             roles1.push(x.id)
           }
         });
-      this.userData.dept.forEach(element => {
-        this.categories.forEach(x => {
-          if(x.categoryName === element){
-             this.depts.push(x.categoryId)
-          }
-          
-        });
-        
-      });
+        debugger
+        if(this.userData.dept.length==1){
+          this.categories.forEach(x => {
+            if(x.categoryName === this.userData.dept[0]){
+               this.depts.push(x.categoryId)
+            }
+            
+          });
+        }
+        else{
+          this.userData.dept.forEach(element => {
+            this.categories.forEach(x => {
+              if(x.categoryName === element){
+                 this.depts.push(x.categoryId)
+              }
+              
+            });
+            
+          });
+        }
+     
       if(roles1[0]== '8'){
         this.isdprtDisabled=true;
       }

@@ -19,6 +19,7 @@ export class CreateProjectsComponent implements OnInit {
   updateForm:FormGroup;
   createprogram:FormGroup;
   userslist:any=[];
+  categories_list:any[]=[];
   selected_projects:any=[];
   projects_list:any;
   selected_project:any;
@@ -38,6 +39,7 @@ export class CreateProjectsComponent implements OnInit {
   valuechain:any=[];
   valuechainprocesses:any=[];
   public userRoles: any;
+  categoriesList:any=[];
   public name: any;
    email: any;
    initiatives: any;
@@ -118,6 +120,13 @@ this.email=localStorage.getItem('ProfileuserId');
     this.getvalchain();
     this.mindate= moment().format("YYYY-MM-DD");
     this.getInitiatives();
+    this.api.getCategoriesList().subscribe(res=> {
+      this.categoriesList=res
+      this.categories_list=this.categoriesList.data
+      // if(this.categories_list.length==1){
+      //   this.categoryName=this.categories_list[0].categoryName
+      // }
+    });
   }
 
 
@@ -284,6 +293,7 @@ createproject(event)
     this.api.getuserslist(tenantid).subscribe(item=>{
       let users:any=item
       this.userslist=users;
+      this.userslist=this.userslist.filter(x=>x.user_role_status=='ACTIVE')
     })
   }
 
