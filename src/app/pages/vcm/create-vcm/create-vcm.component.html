@@ -1,11 +1,17 @@
 <div class="h-100">
     <div class="row module-heading title">
-        <span class="module-back-button" routerLink="/pages/vcm/view-vcm">
-            <i aria-hidden="true" class="fas fa-arrow-left"></i>
-        </span>
-        <span class="module-header-title">Value Chain Mapping</span>
+        <div>
+            <span class="module-back-button" routerLink="/pages/vcm/view-vcm">
+                <i aria-hidden="true" class="fas fa-arrow-left"></i>
+            </span>
+            <span class="module-header-title">Value Chain Mapping</span>
+        </div>
+        <div class="ml-auto submit">
+            <button class="btn btn-default" (click)="resetLevel1()">Reset</button>
+            <button class="btn btn-primary" [disabled]="vcmName == '' " (click)="saveLevel1()">Save</button>
+        </div>
     </div>
-
+    
     <div class="module-body">
         <!-- <mat-drawer-container class="example-container" style="background-color: white;height: 80vh;"> -->
         <!-- <mat-drawer #drawer class="example-sidenav" mode="side" position="end" style="width: 22%;background: #f6f6f6;">
@@ -69,7 +75,8 @@
                                         <ul *ngIf="item.name == 'Management Process'">
                                             <li *ngFor="let name of item.children;let i = index" class="childHover">
                                                 <span>{{i + 1}}.</span> {{name.name}}
-                                                <i class="fa fa-times-circle" aria-hidden="true" (click)="removeChild(name)"></i>
+                                                <!-- <i class="fa fa-times-circle" aria-hidden="true" (click)="removeChild(name)"></i> -->
+                                                <img src="../../../../assets/images/VCM/circle-close-red.svg" class="testplus1" (click)="removeChild(name)" />
                                             </li>
                                         </ul>
                                     </ul>
@@ -99,7 +106,8 @@
                                         <ul *ngIf="item.name == 'Core Process'">
                                             <li *ngFor="let name of item.children;let i = index"  class="childHover">
                                                 <span>{{i+1}}.</span>  {{name.name}} 
-                                                <i class="fa fa-times-circle" aria-hidden="true" (click)="removeChild(name)"></i>
+                                                <!-- <i class="fa fa-times-circle" aria-hidden="true" (click)="removeChild(name)"></i> -->
+                                                <img src="../../../../assets/images/VCM/circle-close-red.svg" class="testplus1" (click)="removeChild(name)" />
                                             </li>
                                         </ul>
                                     </ul>
@@ -129,7 +137,8 @@
                                         <ul *ngIf="item.name == 'Support Process'">
                                             <li *ngFor="let name of item.children;let i = index"  class="childHover">
                                                 <span>{{i+1}}.</span>  {{name.name}} 
-                                                <i class="fa fa-times-circle" aria-hidden="true" (click)="removeChild(name)"></i>
+                                                <!-- <i class="fa fa-times-circle" aria-hidden="true" (click)="removeChild(name)"></i> -->
+                                                <img src="../../../../assets/images/VCM/circle-close-red.svg" class="testplus1" (click)="removeChild(name)" />
                                             </li>
                                         </ul>
                                     </ul>
@@ -173,11 +182,12 @@
                                 <ng-container *ngFor="let item of vcmProcess">
                                     <ng-container *ngFor="let name of item.children">
                                         <p *ngIf="name.processname == 'Management Process'">
-                                            <i class="fa fa-angle-down" aria-hidden="true"></i>  {{name.name}}</p>
-                                        <ul *ngFor="let level2 of name.children" >
-                                            <li class="overflowcontent" *ngIf="level2.processname == 'Management Process'" style="color: green">
+                                            <i class="fa fa-angle-right" aria-hidden="true"></i>  {{name.name}}</p>
+                                        <ul *ngFor="let level2 of name.children" class="subfolders">
+                                            <li class="overflowcontent" *ngIf="level2.processname == 'Management Process'" >
                                                 <i  class="fa fa-angle-right" aria-hidden="true"></i>  <span>{{level2.name}}</span> 
-                                                <i  class="fa fa-times-circle" aria-hidden="true" (click)="level2removeChild(level2)"></i>
+                                                <!-- <i  class="fa fa-times-circle" aria-hidden="true" (click)="level2removeChild(level2)"></i> -->
+                                                <img src="../../../../assets/images/VCM/circle-close-red.svg" class="testplus1" (click)="level2removeChild(level2)" />
                                             </li>
                                         </ul>
                                     </ng-container>
@@ -188,11 +198,13 @@
                                 <ng-container *ngFor="let item of vcmProcess">
                                     <ng-container *ngFor="let name of item.children">
                                         <p *ngIf="name.processname == 'Core Process'">
-                                            <i class="fa fa-angle-down" aria-hidden="true"></i>  {{name.name}}</p>
-                                        <ul *ngFor="let level2 of name.children" >
-                                            <li class="overflowcontent" *ngIf="level2.processname == 'Core Process'" style="color: green;" >
+                                            <i class="fa fa-angle-right" aria-hidden="true"></i>  {{name.name}}</p>
+                                        <ul *ngFor="let level2 of name.children" class="subfolders">
+                                            <li class="overflowcontent" *ngIf="level2.processname == 'Core Process'"  >
                                                 <i  class="fa fa-angle-right" aria-hidden="true"></i>  <span>{{level2.name}}</span> 
-                                                <i  class="fa fa-times-circle" aria-hidden="true" (click)="level2removeChild(level2)"></i></li>
+                                                <!-- <i  class="fa fa-times-circle" aria-hidden="true" (click)="level2removeChild(level2)"></i> -->
+                                                <img src="../../../../assets/images/VCM/circle-close-red.svg" class="testplus1" (click)="level2removeChild(level2)" />
+                                            </li>
                                         </ul>
                                     </ng-container>
                                 </ng-container>
@@ -202,11 +214,13 @@
                                 <ng-container *ngFor="let item of vcmProcess">
                                     <ng-container *ngFor="let name of item.children">
                                         <p *ngIf="name.processname == 'Support Process'">
-                                            <i class="fa fa-angle-down" aria-hidden="true"></i>  {{name.name}}</p>
-                                        <ul *ngFor="let level2 of name.children" >
-                                            <li class="overflowcontent" *ngIf="level2.processname == 'Support Process'" style="color: green;" >
+                                            <i class="fa fa-angle-right" aria-hidden="true"></i>  {{name.name}}</p>
+                                        <ul *ngFor="let level2 of name.children" class="subfolders">
+                                            <li class="overflowcontent" *ngIf="level2.processname == 'Support Process'"  >
                                                 <i  class="fa fa-angle-right" aria-hidden="true"></i>  <span>{{level2.name}}</span> 
-                                                <i  class="fa fa-times-circle" aria-hidden="true" (click)="level2removeChild(level2)"></i></li>
+                                                <!-- <i  class="fa fa-times-circle" aria-hidden="true" (click)="level2removeChild(level2)"></i> -->
+                                                <img src="../../../../assets/images/VCM/circle-close-red.svg" class="testplus1" (click)="level2removeChild(level2)" />
+                                            </li>
                                         </ul>
                                     </ng-container>
                                 </ng-container>
@@ -218,10 +232,10 @@
                     </div>
                 </div>
             
-                <div class="col-md-12 col-lg-12 text-right submit">
+                <!-- <div class="col-md-12 col-lg-12 text-right submit">
                     <button class="btn btn-default" (click)="resetLevel1()">Reset</button>
                     <button class="btn btn-primary" [disabled]="vcmName == '' " (click)="saveLevel1()">Save</button>
-                </div>
+                </div> -->
             </div>
             <div class="col-md-3 previewdiv">
                 <h4>Preview</h4>

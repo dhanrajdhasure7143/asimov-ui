@@ -32,7 +32,9 @@
 
 .dbichart-block {
     background: #f6f6f6;
-    min-height: 55vh;
+    /* min-height: 55vh; */
+    min-height: calc(100vh - 240px);
+    margin-bottom: 0px !important;
 }
 
 ::ng-deep .mat-expansion-panel {
@@ -103,6 +105,27 @@ img.preview-img {
 .submit button.btn.btn-primary {
     margin-right: 0px !important;
 }
+
+.management h4, .core h4, .support h4 {
+    font-size: 14px !important;
+    margin-bottom: 10px !important;
+}
+
+ul.subfolders {
+    margin-left: 3%;
+}
+
+.management, .core, .support {
+    margin-bottom: 20px;
+}
+
+li.childHover {
+    margin-bottom: 8px;
+}
+
+li.overflowcontent {
+    color: #607d8b;
+}
 /* li.childHover {
     position: relative;
 }
@@ -114,10 +137,6 @@ img.preview-img {
     color: red;
     cursor: pointer;
 } */
-.fa-times-circle:before {
-    color: red;
-    cursor: pointer;
-}
 
 .example-tree-invisible {
     display: none;
@@ -146,18 +165,3 @@ img.preview-img {
 mat-tree {
     background: #f6f6f6;
 }
-
-
-/* .submit {
-    display: flex;
-    justify-content: end;
-    margin-right: 5%;
-}
-
-.save {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    margin-right: 9%;
-    margin-bottom: 5%;
-} */
