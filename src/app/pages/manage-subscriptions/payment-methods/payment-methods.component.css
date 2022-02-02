@@ -81,8 +81,35 @@
     font-size: 15px !important;
     padding: 8px;
     float: right;
+    /* height: 49px;
+    width: 25%; */
+  } 
+  .inactive-card{
+    background-color:dimgray;
+    color: white;
+    border-radius: 14px !important;
+    font-size: 15px !important;
+    padding: 8px;
+    float: right;
+    cursor: pointer;
+    /* height: 49px;
+    width: 25%; */
+  }
+  .subsc
+{
+    background: none !important;
+    border: none !important;
+}
+  .delete-card{
+    background-color:red;
+    color: white;
+    border-radius: 14px !important;
+    font-size: 15px !important;
+    padding: 8px;
+    float: left;
     height: 33px;
-    width: 22%;
+    width: 30%;
+    margin-left:32%
   }
   .requested-plan{
     background-color: green;

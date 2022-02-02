@@ -61,6 +61,7 @@ export class DataselectionComponent implements OnInit {
   content_no:number=1;
   displayedRows$: Observable<any[]>;
   totalRows$: Observable<number>;
+  overlay_data={}
 
   @ViewChild(MatPaginator,{static:false}) paginator: MatPaginator;
 
@@ -113,6 +114,7 @@ export class DataselectionComponent implements OnInit {
   }
 
   slideUp(){    //Open bottom overlay for Enter process name and generate graph
+    this.overlay_data={"type":"create","module":"pi"};
     var modal = document.getElementById('myModal');
     modal.style.display="block";
   }

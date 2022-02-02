@@ -35,7 +35,7 @@ export class ModifyUserComponent implements OnInit {
   ngOnInit(): void {
     
         this.getAllCategories();
-        this.getRoles();
+       
     
 }
 getAllCategories(){
@@ -43,6 +43,7 @@ getAllCategories(){
   this.api.getDepartmentsList().subscribe(resp => {
     this.categories = resp.data; 
     this.spinner.hide();
+    this.getRoles();
   })
  }
  getRoles(){
@@ -56,15 +57,27 @@ getAllCategories(){
             roles1.push(x.id)
           }
         });
-      this.userData.dept.forEach(element => {
-        this.categories.forEach(x => {
-          if(x.categoryName === element){
-             this.depts.push(x.categoryId)
-          }
-          
-        });
         
-      });
+        if(this.userData.dept.length==1){
+          this.categories.forEach(x => {
+            if(x.categoryName === this.userData.dept[0]){
+               this.depts.push(x.categoryId)
+            }
+            
+          });
+        }
+        else{
+          this.userData.dept.forEach(element => {
+            this.categories.forEach(x => {
+              if(x.categoryName === element){
+                 this.depts.push(x.categoryId)
+              }
+              
+            });
+            
+          });
+        }
+     
       if(roles1[0]== '8'){
         this.isdprtDisabled=true;
       }
