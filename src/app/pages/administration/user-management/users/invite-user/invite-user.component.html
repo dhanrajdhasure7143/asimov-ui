@@ -1,6 +1,6 @@
 <div class="h-100">
     <mat-card class="h-100">
-        <form #inviteUser_form="ngForm" autocomplete="off">
+        <form #inviteUser_form="ngForm" autocomplete="off" (ngSubmit)="inviteUser(inviteUser_form)">
         <div class="module-heading title">
             <span class="module-back-button" routerLink="/pages/admin/user-management">
                 <i class="fas fa-arrow-left" aria-hidden="true"></i>
@@ -9,8 +9,8 @@
                 <span class="module-parent-title">Invite User</span>
             </span>
             <div class="ml-auto pull-right">
-                <button class="btn btn-default" (click)="resetUserInvite();inviteUser_form.reset()">Reset</button>
-                <button (click)="inviteUser()" [disabled]="inviteUser_form.invalid" class="btn btn-primary btn-update">Invite</button>
+                <button type="button" class="btn btn-default" (click)="resetUserInvite(inviteUser_form)">Reset</button>
+                <button type="submit"  [disabled]="inviteUser_form.invalid" class="btn btn-primary btn-update">Invite</button>
             </div>
         </div>
         <div class="container-fluid  h-scroll">
@@ -19,7 +19,7 @@
                 <!-- <form #inviteUser_form="ngForm" autocomplete="off"> -->
                     <!-- <div class="row fcont"> -->
 
-                    <div class="col-md-12 p-0 form-fields">
+                    <div class="form-group col-md-12 p-0 form-fields">
                         <label class="label-control">Email<span class="star">*</span></label>
                         <input type="text" [(ngModel)]="inviteeMail" name="mail_id" #mail_id="ngModel"
                             (change)="onEmailChange()" class="form-control data" (keyup)="myemailFunction()"
@@ -32,7 +32,7 @@
                         <!-- <span class='errspan required' *ngIf="!inviteeMail"> Email is required</span> -->
                     </div>
                     <!-- </div> -->
-                    <div class="col-md-12 p-0 form-fields">
+                    <div class="form-group col-md-12 p-0 form-fields">
                         <label class="label-control">Role<span class="star">*</span></label>
                         <select [(ngModel)]="role" class="form-control data" (change)="onchangeRole($event.target.value)" name="user_role" #user_role="ngModel" required>
                             <option [value]="null" disabled hidden>Select Role</option>
@@ -54,7 +54,7 @@
                         <!-- <span *ngIf="inviteUserForm.get('role').invalid && inviteUserForm.get('role').touched" class="errspan required">Role Required*</span> -->
                     </div>
 
-                    <div class="col-md-12 p-0 form-fields">
+                    <div class="form-group col-md-12 p-0 form-fields">
                         <label class="label-control">Department(s)<span class="star">*</span></label>
                         <!-- <ng-select  formControlName="departments"  [multiple]="true"  placeholder="Select departments"
                                           [(ngModel)]="departments"  required>

@@ -10,7 +10,7 @@
         </div>
         <div class="row">
             <div class="col-md-12 offset-1 new-bps-sample">
-                <app-upload-create-drop-bpmn [bpmn_list]="savedDiagrams_list" isConfirmance="false"></app-upload-create-drop-bpmn>
+                <app-upload-create-drop-bpmn [bpmn_list]="savedDiagrams_list" [selectedObj]="selectedObj" [isEdit_data]="isEdit" isConfirmance="false"></app-upload-create-drop-bpmn>
             </div>
             <div class="col-md-12 box-border myworkspace-style">
                 <div class="row">
@@ -58,6 +58,7 @@
                         <!-- <span class="asc" *ngIf="orderAsc && sortIndex==7">&#8595;</span> -->
                         <!-- <span class="desc" *ngIf="!orderAsc && sortIndex==7">&#8593;</span> -->
                     </div>
+                    <div class="cell cell4" mat-sort-header="processOwnerName">Process Owner</div>
                     <div class="cell cell5" mat-sort-header="version">Version
                         <!-- <div class="cell cell5" mat-sort-header="version" (click)="sort('version',1)">Version -->
                         <!-- <span class="asc" *ngIf="orderAsc && sortIndex==1">&#8595;</span> -->
@@ -103,6 +104,7 @@
                                         <div class="cell cell2" [matTooltip]=each_diag.bpmnProcessName matTooltipClass="bpsHeaderTooltip">{{each_diag.bpmnProcessName ?fitTableView(each_diag.bpmnProcessName |titlecase): '-'}}</div>
                                         <div class="cell cell3">{{each_diag.ntype ? each_diag.ntype.toUpperCase(): '-' }}</div>
                                         <div class="cell cell4">{{each_diag.category}}</div>
+                                        <div class="cell cell4">{{each_diag.processOwnerName ? each_diag.processOwnerName : '-'}}</div>
                                         <div class="cell cell5">{{each_diag.bpmnProcessName ? " V1."+each_diag.version+" ": '-'}}</div>
                                         <div class="cell cell6">{{each_diag.convertedModifiedTime*1000 | date:'medium'}}</div>
                                         <div class="cell cell7" [matTooltip]=each_diag.approverName matTooltipClass="bpsHeaderTooltip">{{each_diag.approverName ? formatApproverName(each_diag.approverName): '-'}}</div>
@@ -112,6 +114,11 @@
 
                                         <div class="cell cell9"><img src="../../../../assets/images/BPMS/Msg.svg" class="testplus" [matTooltip]=each_diag.reviewComments matTooltipClass="bpsHeaderTooltip" matTooltipPosition="right"></div>
                                         <div class="cell cell10">
+                                            <span (click)="onEdit($event,each_diag)" class="newinntalx">
+                                                <img matTooltip="Edit" matTooltipPosition="left" src="../../../../assets/images/Projects/edit-black.svg" class="default-img">
+                                                <img matTooltip="Edit" matTooltipPosition="left" src="../../../../../assets/images/Projects/Edit-blue.svg" class="hover-img">
+                                            </span>
+
                                             <img src="../../../../assets/images/BPMS/Envelop.svg" (click)="sendReminderMail($event, each_diag)" *ngIf="(isAdminUser && each_diag.bpmnProcessStatus=='PENDING') || (each_diag.bpmnProcessStatus=='PENDING' && (each_diag.userEmail == userEmail))" matTooltip="Click to send reminder mail to Approver" matTooltipPosition="left" class="testplus1">
                                             <!-- <i (click)="sendReminderMail($event, each_diag)"
                             *ngIf="isAdminUser && each_diag.bpmnProcessStatus=='PENDING'"
@@ -129,8 +136,10 @@
                                             <!-- <img (click)="deleteProcess($event, each_diag)" *ngIf="(each_diag.bpmnProcessStatus!='PENDING') && ((systemAdmin==true) || ((this.userRole.includes('Process Analyst') && this.userRole.includes('RPA Developer') && this.userRole.includes('Process Owner') && this.userRole.includes('Process Architect')) && (each_diag.userEmail==userEmail) ))" matTooltip="Delete Notation" matTooltipPosition="left" src="../../../../assets/images/BPMS/delete-red.svg"
                                                 class="testplus1"> -->
                                             <!-- <i *ngIf="each_diag.bpmnProcessStatus!='INPROGRESS' && (each_diag.bpmnProcessStatus=='APPROVED' || each_diag.bpmnProcessStatus=='REJECTED' || !isAdminUser)">-</i> -->
-                                            <i *ngIf=" !userRole.includes('System Admin') && (each_diag.userEmail != userEmail)">-</i>
+                                            <!-- <i *ngIf=" !userRole.includes('System Admin') && (each_diag.userEmail != userEmail)">-</i> -->
+
                                         </div>
+
                                     </div>
                                     <!-- </div>
                   </div> -->
@@ -144,7 +153,7 @@
                     (click)="fitNotationView(each_diag.ntype)"><img src="..\assets\fillView.svg"></button></span>
                                 <span class="info" *ngIf="each_diag.bpmnProcessStatus && each_diag.bpmnProcessStatus == 'PENDING'">Business Process
                   Notation has been submitted for approval. Cannot be edited till it is reviewed </span>
-                                <div [class]="'diagram_container'+i" (click)="openDiagram(each_diag)" [id]="'_diagram'+i"></div>
+                                <div [class]="'diagram_container'+i" (click)="openDiagram(each_diag,i)" [id]="'_diagram'+i"></div>
                             </div>
                         </mat-expansion-panel>
                     </mat-accordion>

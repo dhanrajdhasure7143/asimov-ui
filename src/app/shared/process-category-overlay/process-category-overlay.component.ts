@@ -3,6 +3,8 @@ import { NgForm } from '@angular/forms';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
 import { ActivatedRoute } from '@angular/router';
 import { GlobalScript } from '../global-script';
+import Swal from 'sweetalert2';
+import { DataTransferService } from 'src/app/pages/services/data-transfer.service';
 
 @Component({
   selector: 'process-category-overlay',
@@ -16,6 +18,7 @@ export class ProcessCategoryOverlayComponent implements OnInit {
   @Input() data:string;
   @Output() proceed = new EventEmitter<any>();
   @Input() uploadedFileName?:string;
+  @Input() overlay_data:any={};
 
   processName = "";
   categoryName = "";
@@ -35,11 +38,29 @@ export class ProcessCategoryOverlayComponent implements OnInit {
   process_owner:any;
   process_name_error:boolean=false;
   freetrail: string;
+  isLoading:boolean=false;
   @ViewChild('processCategoryForm', {static: true}) processForm: NgForm;
   constructor( private rest:RestApiService, private activatedRoute: ActivatedRoute, private global:GlobalScript,
-    private cdRef: ChangeDetectorRef) { }
+    private cdRef: ChangeDetectorRef, private dt: DataTransferService) { }
 
   ngOnChanges(changes: SimpleChanges) {
+    // console.log("this.ovrlayData",this.overlay_data)
+    if(this.overlay_data.type=="edit"){
+      if(this.overlay_data.module=="pi"){
+        this.categoryName=this.overlay_data.selectedObj.categoryName;
+        this.processName=this.overlay_data.selectedObj.piName;
+      }else{
+        this.categoryName=this.overlay_data.selectedObj.category;
+        this.notationType=this.overlay_data.selectedObj.ntype;
+        // this.process_owner=this.overlay_data.selectedObj.processOwner;
+        this.processName=this.overlay_data.selectedObj.bpmnProcessName;
+        this.approver_list.forEach((e,i)=>{
+          if(this.overlay_data.selectedObj.processOwner==e.userId){
+            this.process_owner=i;
+          }
+        })
+      }
+    }
   if(changes['uploadedFileName']){
     let change = changes['uploadedFileName'];
     if(!change.firstChange){
@@ -140,7 +161,8 @@ export class ProcessCategoryOverlayComponent implements OnInit {
             "processName": this.processName,
             "categoryName": this.categoryName == 'other' ? this.othercategory : this.categoryName,
             "ntype": this.notationType,
-            "processOwner": approverobj.userId
+            "processOwner": approverobj.userId,
+            "processOwnerName": this.approver_list[this.process_owner].firstName +' ' + this.approver_list[this.process_owner].lastName,
           }
         } else {
           data = {
@@ -223,9 +245,108 @@ export class ProcessCategoryOverlayComponent implements OnInit {
     let roles={
       "roleNames": ["Process Owner"]
     }
+
     await this.rest.getmultipleApproverforusers(roles).subscribe( res =>  {//Process Architect
      if(Array.isArray(res))
        this.approver_list = res;
    });
+  }
+
+  updateChanges() {
+    if (this.overlay_data.module == "pi") {
+      this.isLoading=true;
+      let req_body = {
+        "piId": this.overlay_data.selectedObj.piId,
+        "piName": this.processName
+      }
+      this.rest.updatePiData(req_body).subscribe((res:any) => {
+        this.isLoading=false;
+        Swal.fire({
+          title: 'Success',
+          text: res.message,
+          icon: 'success',
+          heightAuto: false,
+        }).then((result) => {
+          if (result.value) {
+            this.dt.processDetailsUpdateSuccess({"isRfresh":true});
+          }
+        });
+
+        this.slideDown(null);
+      });
+    }else{
+      this.isLoading=true;
+      let req_body={
+        "id":this.overlay_data.selectedObj.id,
+        "bpmnModelId":this.overlay_data.selectedObj.bpmnModelId,
+        "processOwner":this.approver_list[this.process_owner].userId,
+        "processOwnerName": this.approver_list[this.process_owner].firstName +' ' + this.approver_list[this.process_owner].lastName,
+        "bpmnProcessName": this.processName
+    }
+      this.rest.bpmnVersionChecking(req_body.bpmnModelId).subscribe((res:any)=>{
+        this.isLoading=false;
+        if(res.message=="This Bpmn Process has Multiple Versions"){
+          let disply_text;
+          if(this.overlay_data.selectedObj.bpmnProcessName != this.processName && this.overlay_data.selectedObj.processOwner != this.approver_list[this.process_owner].userId){
+            disply_text="Process name & Process owner"
+           }else if(this.overlay_data.selectedObj.bpmnProcessName != this.processName){
+           disply_text="Process name"
+          }else if(this.overlay_data.selectedObj.processOwner != this.approver_list[this.process_owner].userId){
+            disply_text="Process owner"
+          }else{
+            disply_text="Process name & Process owner"
+          }
+          Swal.fire({
+            title: 'Are you sure?',
+            text: disply_text + " will be update all the versions of the bpmn",
+            icon: 'warning',
+            showCancelButton: true,
+            heightAuto: false,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes'
+          }).then((result) => {
+            if (result.value) {
+              this.isLoading=true;
+            this.rest.updateBpsData(req_body).subscribe((res:any)=>{
+              this.isLoading=false;
+              Swal.fire({
+                title: 'Success',
+                text: res.message,
+                icon: 'success',
+                heightAuto: false,
+              }).then((result) => {
+                if (result.value) {
+                  this.dt.processDetailsUpdateSuccess({"isRfresh":true});
+                }
+              });
+              this.slideDown(null);
+            })
+          }
+          });
+        }else{
+          this.isLoading=true;
+          this.rest.updateBpsData(req_body).subscribe((res:any)=>{
+            this.isLoading=false;
+            Swal.fire({
+              title: 'Success',
+              text: res.message,
+              icon: 'success',
+              heightAuto: false,
+            }).then((result) => {
+              if (result.value) {
+                this.dt.processDetailsUpdateSuccess({"isRfresh":true});
+              }
+            });
+            this.slideDown(null);
+          })
+
+        }
+
+      })
+
+    
+
+    }
   }
 }

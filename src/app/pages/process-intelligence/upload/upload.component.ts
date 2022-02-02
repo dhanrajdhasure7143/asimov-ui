@@ -18,6 +18,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
+import { Subscription } from 'rxjs';
 
 declare var target: any;
 @Component({
@@ -78,6 +79,8 @@ export class UploadComponent implements OnInit {
   isLoading:boolean=false;
   categories_list:any[]=[];
   freetrail: string;
+  overlay_data:any={};
+  refreshSubscription:Subscription;
 
   constructor(private router: Router,
     private dt: DataTransferService,
@@ -119,8 +122,16 @@ export class UploadComponent implements OnInit {
           );
         })
     this.freetrail=localStorage.getItem('freetrail')
+    this.refreshSubscription=this.dt.isTableRefresh.subscribe(res => {
+      if (res) {
+        if (res.isRfresh) {
+          this.getAlluserProcessPiIds();
+        }
+      }
+    })
   }
   ngOnDestroy() {
+    this.refreshSubscription.unsubscribe();
     this.dtTrigger.unsubscribe();
   }
   onUpload(event, id) {     //for Upload csv/xls/xes/xes.gz file
@@ -260,6 +271,7 @@ export class UploadComponent implements OnInit {
   }
 
   openXESGZFile(){
+    this.overlay_data={"type":"create","module":"pi"};
     var modal = document.getElementById('myModal');
     modal.style.display="block";
   }
@@ -481,6 +493,7 @@ export class UploadComponent implements OnInit {
 
   getAlluserProcessPiIds() {        // get user process ids list on workspace
     this.isLoading=true;
+    this.dt.processDetailsUpdateSuccess({"isRfresh":false});
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 6,
@@ -704,6 +717,7 @@ testDbConnection(){     // check DB connection with port id and psw
 
   slideUp(){    //Open bottom Overlay
     this.closePopup();
+    this.overlay_data={"type":"create","module":"pi"};
     var modal = document.getElementById('myModal');
     modal.style.display="block";
   }
@@ -1038,6 +1052,10 @@ getDBTables(){      //get DB tables list
       }
     })
   }
-
+  editProcess(obj){
+    this.overlay_data={"type":"edit","module":"pi","selectedObj":obj};
+    var modal = document.getElementById('myModal');
+    modal.style.display="block";
+  }
 
 }

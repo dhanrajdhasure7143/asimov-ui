@@ -149,7 +149,7 @@ export class EditTaskComponent implements OnInit {
   
   updatetaskdata(data)
   {  
-    debugger
+    
     this.taskcomments=[];
     this.taskhistory=[];
     this.rolelist=[];
@@ -187,7 +187,7 @@ export class EditTaskComponent implements OnInit {
   }
   getallusers()
   {
-    debugger
+    
     let tenantid=localStorage.getItem("tenantName")
     this.rest.getuserslist(tenantid).subscribe(response=>{
     
@@ -317,7 +317,7 @@ else
     }
 
     getUserRole(){
-      debugger
+      
       let user=this.users_list.find(item=>item.userId.userId==this.taskresource);
       this.userid=user.userId.userId
       this.rest.getRole(this.userid).subscribe(data =>{

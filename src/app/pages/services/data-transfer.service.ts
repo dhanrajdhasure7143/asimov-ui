@@ -101,4 +101,11 @@ export class DataTransferService {
     this.userData.next(value);
   }
 
+  private workSpacerefresh:BehaviorSubject<any>=new BehaviorSubject<any>(null)
+  isTableRefresh=this.workSpacerefresh.asObservable();
+
+  processDetailsUpdateSuccess(value:any){
+    this.workSpacerefresh.next(value);
+  }
+
 }
