@@ -931,6 +931,9 @@ resetsla(){
               $("#"+statusdata.taskId+"__failed").html(statusdata.failureTask)
 
               $("#"+statusdata.taskId+"__success").html(statusdata.successTask)
+              this.automatedtask.find(item=>item.taskId==statusdata.taskId).status=statusdata.status;
+
+              this.responsedata.find(item=>item.taskId==statusdata.taskId).status=statusdata.status;
               // if(responsedata.automationTasks.filter(prodata=>prodata.status=="InProgress"||prodata.status=="Running").length>0)
               // {
               // }else
