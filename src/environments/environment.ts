@@ -26,6 +26,7 @@ export const environment = {
   platform_home_url: 'https://ezflow.demo.epsoftinc.com/#/',
   pi_node_jobs: "http://pi-node-jobs-demo:5000",
   projectendpoint_url:'https://ezflow.demo.epsoftinc.com/pcs',
+  subscriptionendpoint_url:'https://ezflow.demo.epsoftinc.com/subscriptions',
 
 //BPMN Platform URL
  // bpmnplatformUrl : "http://10.11.0.127:8080",
