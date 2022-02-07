@@ -688,10 +688,26 @@ export class SoSchedulerComponent implements OnInit {
 export class Envname implements PipeTransform {
   transform(value: any,arg:any)
   {
+    debugger
     let environments:any=[];
     environments=arg;
-    return environments.find(item=>item.environmentId==value).environmentName;
+    let environmentName
+   // let environmentName= environments.find(item=>item.environmentId==value).environmentName;
+   for(let i=0;i<environments.length;i++){
+     if(environments[i].environmentId==value){
+       environmentName=environments[i].environmentName;
+       break;
+     }
+     else{
+      environmentName="-"
+     }
+     
+   }
+   return environmentName
   }
+
+
+
 }
 
 
