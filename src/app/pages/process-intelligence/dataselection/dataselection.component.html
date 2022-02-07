@@ -117,7 +117,7 @@
                   </tr>
             </thead>
             <tbody #container>
-                <tr>
+                <tr class="sel-tab">
                     <td *ngFor="let val of headerData;trackBy:loopTrackBy;">
                         <div *ngIf='selected==val' [ngClass]="selected==val?'activetag':''" class='select_tag'>{{headerName}} <button *ngIf="selected==val" class='reset_btn' (click)='resetcaseId()'><img src="../../../../assets/images/PI/x.svg" alt="" class="sltrst-xclose"></button> </div>
                     </td>
