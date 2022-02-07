@@ -1,4 +1,4 @@
-import { Component, OnInit,Input, ViewChild, Pipe, PipeTransform } from '@angular/core';
+import { Component, OnInit,Input, ViewChild, Pipe, PipeTransform, ChangeDetectorRef } from '@angular/core';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
@@ -35,13 +35,13 @@ export class SoProcesslogComponent implements OnInit {
   displayedColumnsp1: string[] = ["processRunId","Environment","processStartDate","processEndDate","runStatus"];
   displayedColumnsp2: string[] = ['bot_name','version','run_id','start_date','end_date', "bot_status"]; //,'log_statement'
   displayedColumnsp3: string[] = ['task_name','start_date','end_date', 'status','error_info' ];
-  constructor( private rest:RestApiService, private automated:NewSoAutomatedTasksComponent, private spinner: NgxSpinnerService) { }
+  constructor( private rest:RestApiService, private changeDetectorRef: ChangeDetectorRef,private automated:NewSoAutomatedTasksComponent, private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
     document.getElementById("viewlogid1").style.display="none";
     document.getElementById("plogrunid").style.display="none";
     document.getElementById("pbotrunid").style.display="none";
-    this.Environments=this.automated.environments
+    this.Environments=this.automated.environments;
     this.getprocesslog();
 
   }
@@ -82,7 +82,9 @@ export class SoProcesslogComponent implements OnInit {
 
         this.runidresponse.sort((a,b) => a.processRunId > b.processRunId ? -1 : 1);
         this.dataSourcep1 =  new MatTableDataSource(this.runidresponse);
+        this.changeDetectorRef.detectChanges();
         this.dataSourcep1.sort=this.sortp1;
+       
         this.dataSourcep1.paginator=this.paginatorp1;
 
     });
@@ -102,11 +104,14 @@ export class SoProcesslogComponent implements OnInit {
   }
 
   backplogrid(){
+    this.getprocesslog()
     document.getElementById("plogrunid").style.display = "none";
     document.getElementById("viewlogid1").style.display = "block";
   }
 
   backpbotrunid(){
+    
+    this.getprocessrunid(this.selected_processRunId)
     document.getElementById("pbotrunid").style.display = "none";
     document.getElementById("plogrunid").style.display = "block";
   }
@@ -143,6 +148,7 @@ export class SoProcesslogComponent implements OnInit {
         resplogbyrun.push(logbyrunidresp)
       });
       this.runidresponse = resplogbyrun;
+      this.changeDetectorRef.detectChanges();
       this.dataSourcep2 = new MatTableDataSource(this.runidresponse);
       this.dataSourcep2.sort=this.sortp2;
       this.dataSourcep2.paginator=this.paginatorp2;
@@ -152,6 +158,7 @@ export class SoProcesslogComponent implements OnInit {
 
   public selected_runid:any;
   ViewlogByrunid(runid){
+    
     this.selected_runid=runid;
     let responsedata:any=[];
     let logbyrunidresp1:any;
@@ -184,6 +191,7 @@ export class SoProcesslogComponent implements OnInit {
       });
       //this.logflag=true;
       this.dataSourcep3 = new MatTableDataSource(resplogbyrun1);
+      this.changeDetectorRef.detectChanges();
       this.dataSourcep3.sort=this.sortp3;
       this.dataSourcep3.paginator=this.paginatorp3;
 
