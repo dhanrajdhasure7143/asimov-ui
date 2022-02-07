@@ -3,7 +3,7 @@
     <!-- div for bpmn-worksapce -->
     <div class="row" *ngIf="!isShowConformance">
         <div class='col-md-6 drop_box' id="upload_bpmn">
-            <ngx-dropzone (change)="onSelect($event)" [multiple]=false [accept]="validNotationTypes" >
+            <ngx-dropzone (click)="onUploadClick()" (change)="onSelect($event)" [multiple]=false [accept]="validNotationTypes" >
                 <div class="model-img">
                     <ngx-dropzone-label> <img src='..\assets\images\BPMS\upload-process-model-image.svg'></ngx-dropzone-label>
                 </div>        
@@ -67,4 +67,4 @@
 
     </div>
 
-<process-category-overlay headerTitle="BPMN Details" (proceed)="uploadCreateBpmn($event)" [data]="data" [uploadedFileName]="uploadedFileName" class="bpmnCreate"></process-category-overlay>
+<process-category-overlay headerTitle="BPMN Details"  [overlay_data]="overlay_data" (proceed)="uploadCreateBpmn($event)" [data]="data" [uploadedFileName]="uploadedFileName" class="bpmnCreate"></process-category-overlay>

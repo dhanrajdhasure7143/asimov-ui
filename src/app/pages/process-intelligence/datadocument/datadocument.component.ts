@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { formatDate } from '@angular/common';
 import { Router } from '@angular/router';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
@@ -13,6 +13,7 @@ import { Observable  } from 'rxjs/Observable';
 import { of  } from 'rxjs/observable/of';
 import { map } from 'rxjs/operators';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { NotifierService } from 'angular-notifier';
 
 @Component({
   selector: 'app-datadocument',
@@ -53,11 +54,15 @@ export class DatadocumentComponent implements OnInit {
   modalRef: BsModalRef;
   displayedRows$: Observable<any[]>;
   totalRows$: Observable<number>;
+  errorsList:any=[];
 
   @ViewChild(MatPaginator,{static:false}) paginator: MatPaginator;
+  @ViewChild('template1',{ static: true }) template1: TemplateRef<any>;
+  @ViewChild('notification',{ static: true }) notificationTemplate;
 
   constructor(private router:Router, private dt:DataTransferService, private hints:PiHints, private global:GlobalScript,private modalService: BsModalService,
-              private spinner: NgxSpinnerService)    { }
+              private spinner: NgxSpinnerService,
+              private notifier:NotifierService,)    { }
 
   ngOnInit() {
     this.resetColMap();
@@ -201,7 +206,8 @@ export class DatadocumentComponent implements OnInit {
           isInvalid = true;
           if (this.invalidCells['row' + x].indexOf('cell' + index) == -1)
             this.invalidCells['row' + x].push('cell' + index);
-          this.global.notify("Empty data at header " + this.headerName + " cell No- " + (x + 1), "error");
+            this.errorsList.push({header:this.headerName,cell:x+1,emptydata:true})
+          // this.global.notify("Empty data at header " + this.headerName + " cell No- " + (x + 1), "error");
           // break;
         }
         if ((reg_expression && reg_expression.test(each_cell)) || isDateCheck) {
@@ -225,7 +231,9 @@ export class DatadocumentComponent implements OnInit {
               isInvalid = true;
               if (this.invalidCells['row' + x].indexOf('cell' + index) == -1)
                 this.invalidCells['row' + x].push('cell' + index);
-              this.global.notify("Incorrect value for header " + this.headerName + " at cell - " + (x + 1), "error");
+                this.errorsList.push({header:this.headerName,cell:x+1,wrongdata:true})
+              
+                // this.global.notify("Incorrect value for header " + this.headerName + " at cell - " + (x + 1), "error");
               // break;
             }
           } else {
@@ -260,6 +268,34 @@ export class DatadocumentComponent implements OnInit {
     }
     if(this.headerData.length==index+1){
       this.spinner.hide();
+      setTimeout(() => { 
+      if(this.errorsList.length==1){
+       this.notifier.getConfig().behaviour.autoHide=5000;
+        this.notifier.show({
+          message: "Empty/Wrong data at header " + this.errorsList[0].header + " cell No- " + (this.errorsList[0].cell + 1),
+          type: 'error',
+          template: this.notificationTemplate,
+       });
+        // this.global.notify("Empty data at header " + this.errorsList[0].header + " cell No- " + (this.errorsList[0].cell + 1)+"\n Empty data at header " + this.errorsList[1].header + " cell No- " + (this.errorsList[1].cell + 1), "error");
+        setTimeout(() => {
+          // this.openModal(this.template1);
+        }, 50);
+      }else  if(this.errorsList.length==2){
+        this.notifier.getConfig().behaviour.autoHide=5000;
+         this.notifier.show({
+           message: "Empty/Wrong data at header " + this.errorsList[0].header + " cell No- " + (this.errorsList[0].cell + 1)+"<br> Empty/Wrong data at header " + this.errorsList[1].header + " cell No- " + (this.errorsList[1].cell + 1),
+           type: 'error',
+           template: this.notificationTemplate,
+        });
+       }else if(this.errorsList.length > 3){
+        this.notifier.getConfig().behaviour.autoHide=5000;
+         this.notifier.show({
+           message: "Empty/Wrong data at header " + this.errorsList[0].header + " cell No- " + (this.errorsList[0].cell + 1)+"<br> Empty/Wrong data at header " + this.errorsList[1].header + " cell No- " + (this.errorsList[1].cell + 1)+"<br> Empty/Wrong data at header " + this.errorsList[2].header + " cell No- " + (this.errorsList[2].cell + 1),
+           type: 'error',
+           template: this.notificationTemplate,
+        });
+       }
+      }, 50);
     }
   }
 
@@ -534,5 +570,18 @@ export class DatadocumentComponent implements OnInit {
       this.assignPagenation(this.fileData)
 
     }
+  }
+
+  close_modal(){
+    this.modalRef.hide();
+  }
+
+  viewMore(){
+    this.openModal(this.template1);
+    this.notifier.hideAll();
+  }
+  
+  ngOnDestroy(){
+    this.notifier.hideAll();
   }
 }

@@ -94,4 +94,18 @@ export class DataTransferService {
     this.piButtons.next(value)
   }
 
+  private userData:BehaviorSubject<any>=new BehaviorSubject<any>(null)
+  logged_userData=this.userData.asObservable();
+
+  userDetails(value:any){
+    this.userData.next(value);
+  }
+
+  private workSpacerefresh:BehaviorSubject<any>=new BehaviorSubject<any>(null)
+  isTableRefresh=this.workSpacerefresh.asObservable();
+
+  processDetailsUpdateSuccess(value:any){
+    this.workSpacerefresh.next(value);
+  }
+
 }

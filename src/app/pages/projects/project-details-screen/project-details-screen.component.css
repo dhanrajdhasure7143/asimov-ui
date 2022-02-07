@@ -35,7 +35,7 @@
   }
 
   .status-data {
-    padding-left: 14px !important;
+    padding-left: 10px !important;
     color:#001c47 !important;
   }
 
@@ -73,7 +73,7 @@
   background-color: #e3eaee;
 }
 .new-prj-details .projects-table-body , .project-details-div{
-  padding: 10px 15px;
+  padding: 10px 15px 0px;
 }
 mat-card#projects_details_screen {
   box-shadow: none !important;
@@ -236,7 +236,7 @@ span.labelcont b {
   font-weight: 400;
 }
 
-  .letter-image{
+  .letter-image,.projectowner-letter-image{
     border-radius: 100%;
     color: #001c47;
     background-color: #ddd;
@@ -391,7 +391,7 @@ img.hover-img {
 
 .mainset{
   /* padding: 0px 10px 0px 5px; */
-  padding-right: 10px;
+  padding-right: 30px;
   margin-bottom: 20px;
   /* min-height: 70px; */
 }
@@ -550,7 +550,6 @@ span.testtooltip:before {
 .tsttooltipbtn:hover span.testtooltip {
   display: block;
 }
-
 .col-sm-6.projinfo {
   padding-top: 8px !important;
 }
@@ -587,8 +586,97 @@ span.testtooltip:before {
     height: 41px;
     margin-top: -10px;
   }
-span.prj-db-btn button {   
-  padding: 6px 8px;   
+
+  span.prj-db-btn button {
+    padding: 6px 8px;
+    position: relative;
+} 
+
+.project-details-set.projinfo {
+  padding-top: 15px !important;
+}
+.project-details-set.projinfo .col-sm-2.p-0 {
+  width: 20%;
+}
+.status-data span.tab-text {
+  font-size: 17px !important;
+  font-weight: 500;
+}
+.status-data span.labeltit {
+  font-size: 13px !important;
+  font-weight: 300;
+  margin-top: -2px;
+}
+.user-owner-div span.letter-image {
+  padding: 10px;
+}
+.profile-table td span.letter-image {
+  margin-right: 20px;
+position: relative;
+background-color: transparent;
+}
+span.projectowner-letter-image{
+  margin-right: 20px;
   position: relative;
+  background-color: transparent;
+  padding: 10px;
+  }
+span.project-owner-letter{
+  width: 41px;
+  height: 40px;
+  position: absolute;
+  color: #001c47;
+  background-color: #ddd;
+  border-radius: 50%;
+  padding: 10px;
+  top: 1px;
+  left: 4px;
 }
 
+.profile-table td span.letter {
+
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  color: #001c47;
+  background-color: #ddd;
+  border-radius: 50%;
+  padding: 6px;
+  top: 2px;
+  left:-3px;
+  }
+.prjdetails-headerbuttons {
+  margin-left: 10px;
+}
+select.small-input:focus-visible, input.small-input:focus-visible, textarea.small-input:focus-visible {
+  outline: 1px solid #00a1e3 !important;
+}
+.project-data span.tab-number:focus-visible {
+  outline: 1px solid #ccc;
+  line-height: 30px;
+  min-width: 210px;
+  border-radius: 2px;
+}
+input.small-input[type="date"] {
+  background-image: url('../../../../assets/images/Projects/calendar.svg');
+  background-position: calc(100% - 10px) center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+input.small-input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0;
+}
+.project-info .project-data {
+  width: 100%;
+}
+.project-data .prj-title {
+  width: 30%;
+}
+.project-data textarea.small-input {
+  margin-top: 12px;
+}
+span.projectdesc {
+  font-size: 13px;
+  opacity: 0.6;
+  word-wrap: break-word;
+}

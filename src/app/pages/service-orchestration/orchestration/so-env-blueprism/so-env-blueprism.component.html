@@ -1,15 +1,15 @@
-<div class="container-fluid mx-3" >
+<div class="container-fluid mx-3">
     <div class="col-md-3 form-group pl-0 sosearchfield">
-        <input class="form-control rpa-control" placeholder="Search" autocomplete="off" *ngIf="!isSearch"  (keyup)="applyFilter($event.target.value)">
+        <input class="form-control rpa-control" placeholder="Search" autocomplete="off" *ngIf="!isSearch" (keyup)="applyFilter($event.target.value)">
         <img src="../../../../assets/images/search.svg" alt="" class="testplus">
     </div>
     <div class="col-md-9 p-0 env-data-tool text-right">
-        <div >
+        <div>
             <button (click)="createBlueprism()" class="tsttooltipbtn">
                 <img src='../../../../assets/images/RPA/icon_latest/new-blue.svg' class="testplus">
                 <span class="testtooltip">Create</span>
             </button>
-        </div>        
+        </div>
         <div *ngIf="updateflag == false">
             <button (click)="updatedata()" class="tsttooltipbtn">
                 <img src='../../../../assets/images/RPA/icon_latest/edit-dis.svg' class="testplus">
@@ -34,255 +34,278 @@
                 <span class="testtooltip">Delete</span>
             </button>
         </div>
-    </div>  
-  
+    </div>
+
     <!--foms  -->
     <div class="soenvbluegrid">
-    <table mat-table #sort1="matSort" [dataSource]="dataSource1" matSort class=" RPA table" id="listofenv">
-  
-        <ng-container matColumnDef="check">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header><input [disabled]="checkeddisabled" type="checkbox" id="checkall" [checked]="checkflag" (change)="checkAllCheckBox($event)"></th>
-            <td mat-cell *matCellDef="let element; let i = index"><input type="checkbox" [checked]="element.checked" (change)="checkEnableDisableBtn(element.bluePrismId, $event)"> </td>
-        </ng-container>
-        
-        <ng-container matColumnDef="bluePrismUsername">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Blue Prism Username</th>
-            <td mat-cell *matCellDef="let element"> <span *ngIf="element.bluePrismUsername!=null">{{(element.bluePrismUsername.length > 15) ? ((element.bluePrismUsername).slice(0, 15) + '...') : element.bluePrismUsername}}</span> <span *ngIf="element.bluePrismUsername==''">-</span> </td>
-        </ng-container>
+        <table mat-table #sort1="matSort" [dataSource]="dataSource1" matSort class=" RPA table" id="listofenv">
 
-        <ng-container matColumnDef="configName">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Connection Name</th>
-            <td mat-cell *matCellDef="let element"> <span *ngIf="element.configName!=null">{{(element.configName.length > 15) ? ((element.configName).slice(0, 15) + '...') : element.configName}}</span> <span *ngIf="element.configName==''">-</span> </td>
-        </ng-container>
-        
-        <ng-container matColumnDef="bluPrismPassword">
-            <th mat-header-cell *matHeaderCellDef >Blue Prism Password</th>
-            <td mat-cell *matCellDef="let element"> <span *ngIf="element.bluPrismPassword!=null">{{element.bluPrismPassword  | ipcustompipe}}</span> <span *ngIf="element.bluPrismPassword==''">-</span> </td>
-        </ng-container>
-        <ng-container matColumnDef="hostAddress">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>IP Address / Host</th>
-            <td mat-cell *matCellDef="let element">
-                <span *ngIf="element.hostAddress!=null">{{element.hostAddress | ipcustompipe}}</span>
-                <span *ngIf="element.hostAddress==''">-</span> </td>
-        </ng-container>
-        <ng-container matColumnDef="username">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Username</th>
-            <td mat-cell *matCellDef="let element"> <span *ngIf="element.username!=null">{{(element.username.length > 10) ? ((element.username).slice(0, 10) + '...') : element.username}}</span> <span *ngIf="element.username==''">-</span> </td>
-        </ng-container>
-        <ng-container matColumnDef="password">
-            <th mat-header-cell *matHeaderCellDef>Password</th>
-            <td mat-cell *matCellDef="let element"> <span *ngIf="element.password!=null">{{element.password  | ipcustompipe}}</span> <span *ngIf="element.password==''">-</span> </td>
-        </ng-container>
-  
-        <ng-container matColumnDef="port">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Port</th>
-            <td mat-cell *matCellDef="let element"> <span *ngIf="element.port!=null">{{element.port}}</span> <span *ngIf="element.port==''">-</span> </td>
-        </ng-container>
-       <ng-container matColumnDef="status">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
-            <td mat-cell *matCellDef="let element">
-                <span *ngIf="element.status == 'Active'">
+            <ng-container matColumnDef="check">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header><input [disabled]="checkeddisabled" type="checkbox" id="checkall" [checked]="checkflag" (change)="checkAllCheckBox($event)"></th>
+                <td mat-cell *matCellDef="let element; let i = index"><input type="checkbox" [checked]="element.checked" (change)="checkEnableDisableBtn(element.bluePrismId, $event)"> </td>
+            </ng-container>
+
+            <ng-container matColumnDef="bluePrismUsername">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Blue Prism Username</th>
+                <td mat-cell *matCellDef="let element"> <span *ngIf="element.bluePrismUsername!=null">{{(element.bluePrismUsername.length > 15) ? ((element.bluePrismUsername).slice(0, 15) + '...') : element.bluePrismUsername}}</span> <span *ngIf="element.bluePrismUsername==''">-</span> </td>
+            </ng-container>
+
+            <ng-container matColumnDef="configName">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Connection Name</th>
+                <td mat-cell *matCellDef="let element"> <span *ngIf="element.configName!=null">{{(element.configName.length > 15) ? ((element.configName).slice(0, 15) + '...') : element.configName}}</span> <span *ngIf="element.configName==''">-</span> </td>
+            </ng-container>
+            <ng-container matColumnDef="categoryName">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
+                <td mat-cell *matCellDef="let element"> <span *ngIf="element.categoryName!=null">{{element.categoryName}}</span> <span *ngIf="element.categoryName==''">-</span> </td>
+            </ng-container>
+
+            <ng-container matColumnDef="bluPrismPassword">
+                <th mat-header-cell *matHeaderCellDef>Blue Prism Password</th>
+                <td mat-cell *matCellDef="let element"> <span *ngIf="element.bluPrismPassword!=null">{{element.bluPrismPassword  | ipcustompipe}}</span> <span *ngIf="element.bluPrismPassword==''">-</span> </td>
+            </ng-container>
+            <ng-container matColumnDef="hostAddress">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>IP Address / Host</th>
+                <td mat-cell *matCellDef="let element">
+                    <span *ngIf="element.hostAddress!=null">{{element.hostAddress | ipcustompipe}}</span>
+                    <span *ngIf="element.hostAddress==''">-</span> </td>
+            </ng-container>
+            <ng-container matColumnDef="username">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Username</th>
+                <td mat-cell *matCellDef="let element"> <span *ngIf="element.username!=null">{{(element.username.length > 10) ? ((element.username).slice(0, 10) + '...') : element.username}}</span> <span *ngIf="element.username==''">-</span> </td>
+            </ng-container>
+            <ng-container matColumnDef="password">
+                <th mat-header-cell *matHeaderCellDef>Password</th>
+                <td mat-cell *matCellDef="let element"> <span *ngIf="element.password!=null">{{element.password  | ipcustompipe}}</span> <span *ngIf="element.password==''">-</span> </td>
+            </ng-container>
+
+            <ng-container matColumnDef="port">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Port</th>
+                <td mat-cell *matCellDef="let element"> <span *ngIf="element.port!=null">{{element.port}}</span> <span *ngIf="element.port==''">-</span> </td>
+            </ng-container>
+            <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+                <td mat-cell *matCellDef="let element">
+                    <span *ngIf="element.status == 'Active'">
                     <img class="rpa-image1" src="/assets/images/RPA/GreenCricle.png">Active
                 </span>
-                <span *ngIf="element.status == 'Inactive'">
+                    <span *ngIf="element.status == 'Inactive'">
                     <img class="rpa-image1" src="/assets/images/RPA/red-circle.png">Inactive
                 </span>
-           </td>
-        </ng-container>
-        <ng-container matColumnDef="createdTimeStamp">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Created Date</th>
-            <td mat-cell *matCellDef="let element"> <span *ngIf="element.createdTimeStamp!=null">{{element.createdTimeStamp | date}} {{element.createdTimeStamp.split("T")[1].split(".")[0]}}</span> <span *ngIf="element.createdTimeStamp==''">-</span> </td>
-        </ng-container>
-        <ng-container matColumnDef="createdBy">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Created By</th>
-            <td mat-cell *matCellDef="let element"> <span *ngIf="element.createdBy!=null" [matTooltip]="element.createdBy">{{(element.createdBy.length > 10) ? ((element.createdBy).slice(0, 10) + '...') : element.createdBy}}</span> <span *ngIf="element.createdBy==''">-</span> <span *ngIf="element.createdBy==null">-</span></td>
-        </ng-container>
-        <ng-container matColumnDef="noData">
-            <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="11">
-                No Records Found 
-            </td>
-        </ng-container>  
-        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-        <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': FilterHasnodata && !isTableHasData }"></tr>
-    </table>
-  
-  </div>
-    <mat-paginator #paginator1 [pageSize]="10" [showFirstLastButtons]="true"></mat-paginator>
-  </div>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="createdTimeStamp">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Created Date</th>
+                <td mat-cell *matCellDef="let element"> <span *ngIf="element.createdTimeStamp!=null">{{element.createdTimeStamp | date}} {{element.createdTimeStamp.split("T")[1].split(".")[0]}}</span> <span *ngIf="element.createdTimeStamp==''">-</span> </td>
+            </ng-container>
+            <ng-container matColumnDef="createdBy">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Created By</th>
+                <td mat-cell *matCellDef="let element"> <span *ngIf="element.createdBy!=null" [matTooltip]="element.createdBy">{{(element.createdBy.length > 10) ? ((element.createdBy).slice(0, 10) + '...') : element.createdBy}}</span> <span *ngIf="element.createdBy==''">-</span> <span *ngIf="element.createdBy==null">-</span></td>
+            </ng-container>
+            <ng-container matColumnDef="noData">
+                <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="11">
+                    No Records Found
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+            <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': FilterHasnodata && !isTableHasData }"></tr>
+        </table>
 
-  <div id="createbprism" class="rpa-modal">
+    </div>
+    <div class="newpaginationdiv">
+        <mat-paginator [pageSizeOptions]="[5, 10,25,50]" #paginator1 [pageSize]="10" [showFirstLastButtons]="true"></mat-paginator>
+    </div>
+</div>
+
+<div id="createbprism" class="rpa-modal">
     <div class="rpa-modal-content">
         <div class="rpa-modal-header">
             <span class="rpa-modal-close" (click)="close()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
-            <h4>Create BluePrism Configuration</h4>
+            <h4>Create Blue Prism Configuration</h4>
         </div>
         <div class="modal-body">
             <div class="container m-contanier form-body">
                 <form [formGroup]="BluePrismConfigForm" (ngSubmit)="savedata()">
-                   
-                        <div class="col-md-12 p-0 form-group">
-                            <label  class="label-control" for="configName">Name<span class="star">*</span></label>
-                            <input type="text" maxlength="50" class="form-control data" formControlName="configName" #configName value="" placeholder="Enter Name">
-                            <span *ngIf="BluePrismConfigForm.get('configName').invalid && BluePrismConfigForm.get('configName').touched" class="errspan required">Name Required*</span>
-                        </div>
-                        
-                        <div class="col-md-12 p-0 form-group">
-                            <label  class="label-control" for="bluePrismUsername">BluePrism Username<span class="star">*</span></label>
-                            <input type="text" maxlength="50" class="form-control" formControlName="bluePrismUsername" #bluePrismUsername value="" placeholder="Enter BluePrism Username">
-                            <span *ngIf="BluePrismConfigForm.get('bluePrismUsername').invalid && BluePrismConfigForm.get('bluePrismUsername').touched" class="errspan required"> BluePrism Username Required*</span>
-                        </div>
 
-                        <div class="col-md-12 p-0 form-group">
-                            <label  class="label-control" for="bluPrismPassword">BluePrism Password<span class="star">*</span></label>
-                            <input [type]="passwordtype2 ? 'text': 'password'" maxlength="50" class="form-control" formControlName="bluPrismPassword" #bluPrismPassword value="" placeholder="Enter BluPrism Password" passwordToggle>
-                            <span *ngIf="passwordtype2==false" (click)="passwordtype2 =!passwordtype2" class="pdicon">
+                    <div class="col-md-12 p-0 form-group">
+                        <label class="label-control" for="configName">Name<span class="star">*</span></label>
+                        <input type="text" maxlength="50" class="form-control data" formControlName="configName" #configName value="" placeholder="Enter Name">
+                        <span *ngIf="BluePrismConfigForm.get('configName').invalid && BluePrismConfigForm.get('configName').touched" class="errspan required">Name Required*</span>
+                    </div>
+
+                    <div class="col-md-12 p-0 form-group">
+                        <label class="label-control" for="categoryId">Select Category<span class="star">*</span></label>
+                        <select class="form-control data" formControlName="categoryId" [value]="categoryList.length==1?categoryList[0].categoryId:'0'">
+                                <option value="0">Select Category</option>
+                                <option [value]="category.categoryId" *ngFor="let category of categoryList">{{category.categoryName}}</option>
+                            </select>
+                        <span *ngIf="BluePrismConfigForm.get('categoryId').invalid && BluePrismConfigForm.get('categoryId').touched" class="errspan required">Name Required*</span>
+                    </div>
+
+
+
+                    <div class="col-md-12 p-0 form-group">
+                        <label class="label-control" for="bluePrismUsername">Blue Prism Username<span class="star">*</span></label>
+                        <input type="text" maxlength="50" class="form-control" formControlName="bluePrismUsername" #bluePrismUsername value="" placeholder="Enter Blue Prism Username">
+                        <span *ngIf="BluePrismConfigForm.get('bluePrismUsername').invalid && BluePrismConfigForm.get('bluePrismUsername').touched" class="errspan required"> Blue Prism Username Required*</span>
+                    </div>
+
+                    <div class="col-md-12 p-0 form-group">
+                        <label class="label-control" for="bluPrismPassword">Blue Prism Password<span class="star">*</span></label>
+                        <input [type]="passwordtype2 ? 'text': 'password'" maxlength="50" class="form-control" formControlName="bluPrismPassword" #bluPrismPassword value="" placeholder="Enter Blue Prism Password" passwordToggle>
+                        <span *ngIf="passwordtype2==false" (click)="passwordtype2 =!passwordtype2" class="pdicon">
                                 <img src="../../../../../assets/images/Projects/eye-show.svg" class="testplus1" />
                             </span>
-                            <span *ngIf="passwordtype2==true" (click)="passwordtype2 =!passwordtype2" class="pdicon">
+                        <span *ngIf="passwordtype2==true" (click)="passwordtype2 =!passwordtype2" class="pdicon">
                                 <img src="../../../../../assets/images/Projects/eye-hide.svg" class="testplus1" />
                             </span>
-                            <span *ngIf="BluePrismConfigForm.get('bluPrismPassword').invalid && BluePrismConfigForm.get('bluPrismPassword').touched" class="errspan required">BluPrism Password Required*</span>
-                        </div>
+                        <span *ngIf="BluePrismConfigForm.get('bluPrismPassword').invalid && BluePrismConfigForm.get('bluPrismPassword').touched" class="errspan required">Blue Prism Password Required*</span>
+                    </div>
 
-                        <div class="col-md-12 p-0 form-group">
-                            <label  class="label-control" for="hostAddress"> IP Address/Host<span class="star">*</span></label>
-                            <input type="text" maxlength="50" class="form-control" formControlName="hostAddress" value="" placeholder="Enter IP Address/Host">
-                            <span *ngIf="BluePrismConfigForm.get('hostAddress').invalid && BluePrismConfigForm.get('hostAddress').touched" class="errspan required"> IP Address/Host Required*</span>
-                        </div>                   
-                   
-                        <div class="col-md-12 p-0 form-group">
-                            <label  class="label-control" for="username">Username<span class="star">*</span></label>
-                            <input type="text" maxlength="50" class="form-control" formControlName="username" #username value="" placeholder="Enter Username">
-                            <span *ngIf="BluePrismConfigForm.get('username').invalid && BluePrismConfigForm.get('username').touched" class="errspan required"> Username Required*</span>
-  
-                        </div>
-  
-                        <div class="col-md-12 p-0 form-group">
-                            <label  class="label-control" for="password">Password<span class="star">*</span></label>
-                            <input [type]="passwordtype1 ? 'text': 'password'" maxlength="50" class="form-control" formControlName="password" #password value="" placeholder="Enter Password" passwordToggle>
-                            <span *ngIf="passwordtype1==false" (click)="passwordtype1 =!passwordtype1" class="pdicon">
+                    <div class="col-md-12 p-0 form-group">
+                        <label class="label-control" for="hostAddress"> IP Address/Host<span class="star">*</span></label>
+                        <input type="text" maxlength="50" class="form-control" formControlName="hostAddress" value="" placeholder="Enter IP Address/Host">
+                        <span *ngIf="BluePrismConfigForm.get('hostAddress').invalid && BluePrismConfigForm.get('hostAddress').touched" class="errspan required"> IP Address/Host Required*</span>
+                    </div>
+
+                    <div class="col-md-12 p-0 form-group">
+                        <label class="label-control" for="username">Username<span class="star">*</span></label>
+                        <input type="text" maxlength="50" class="form-control" formControlName="username" #username value="" placeholder="Enter Username">
+                        <span *ngIf="BluePrismConfigForm.get('username').invalid && BluePrismConfigForm.get('username').touched" class="errspan required"> Username Required*</span>
+
+                    </div>
+
+                    <div class="col-md-12 p-0 form-group">
+                        <label class="label-control" for="password">Password<span class="star">*</span></label>
+                        <input [type]="passwordtype1 ? 'text': 'password'" maxlength="50" class="form-control" formControlName="password" #password value="" placeholder="Enter Password" passwordToggle>
+                        <span *ngIf="passwordtype1==false" (click)="passwordtype1 =!passwordtype1" class="pdicon">
                                 <img src="../../../../../assets/images/Projects/eye-show.svg" class="testplus1" />
                             </span>
-                            <span *ngIf="passwordtype1==true" (click)="passwordtype1 =!passwordtype1" class="pdicon">
+                        <span *ngIf="passwordtype1==true" (click)="passwordtype1 =!passwordtype1" class="pdicon">
                                 <img src="../../../../../assets/images/Projects/eye-hide.svg" class="testplus1" />
                             </span>
-                            <span *ngIf="BluePrismConfigForm.get('password').invalid && BluePrismConfigForm.get('password').touched" class="errspan required"> Password Required*</span>
-                        </div>
-  
-                        <div class="col-md-12 p-0 form-group">
-                            <label  class="label-control" for="port">Port<span class="star">*</span></label>
-                            <input type="text"  maxlength="6" onkeypress="return (event.charCode > 48 && event.charCode < 57)" class="form-control" formControlName="port" value="" placeholder="Enter Port">
-  
-                            <span *ngIf="BluePrismConfigForm.get('port').invalid && BluePrismConfigForm.get('port').touched" class="errspan required"> Port Required*</span>
-                        </div> 
-                        <div class="col-md-12 p-0 form-group">
-                            <input type="checkbox" checked formControlName="status"> Active
-                        </div> 
+                        <span *ngIf="BluePrismConfigForm.get('password').invalid && BluePrismConfigForm.get('password').touched" class="errspan required"> Password Required*</span>
+                    </div>
 
-                        <div class="form-footer">
-                            <button class="btn btn-default" (click)="reset_createblueprism()" tooltip="Reset">Reset</button>
-                            
-                            <!-- <button class="btn btn-primary" (click)="testBluePrismconnection()" tooltip="Test Connection" [disabled]="BluePrismConfigForm.invalid">Test Connection -->
-                            <button class="btn btn-primary btn-test" (click)="BluePrismCreatetestconnection()" tooltip="Test Connection" [disabled]="BluePrismConfigForm.invalid">Test Connection
+                    <div class="col-md-12 p-0 form-group">
+                        <label class="label-control" for="port">Port<span class="star">*</span></label>
+                        <input type="text" maxlength="6" onkeypress="return (event.charCode > 48 && event.charCode < 57)" class="form-control" formControlName="port" value="" placeholder="Enter Port">
+
+                        <span *ngIf="BluePrismConfigForm.get('port').invalid && BluePrismConfigForm.get('port').touched" class="errspan required"> Port Required*</span>
+                    </div>
+                    <div class="col-md-12 p-0 form-group">
+                        <input type="checkbox" checked formControlName="status"> Active
+                    </div>
+
+                    <div class="form-footer">
+                        <button class="btn btn-default" (click)="reset_createblueprism()" tooltip="Reset">Reset</button>
+
+                        <!-- <button class="btn btn-primary" (click)="testBluePrismconnection()" tooltip="Test Connection" [disabled]="BluePrismConfigForm.invalid">Test Connection -->
+                        <button class="btn btn-primary btn-test" (click)="BluePrismCreatetestconnection()" tooltip="Test Connection" [disabled]="BluePrismConfigForm.invalid">Test Connection
                             </button>
-                            <button class='btn btn-primary' (click)="saveBluePrism()" tooltip="Save" [disabled]="BluePrismConfigForm.invalid || submitted">Save</button>
-                        </div>
+                        <button class='btn btn-primary' (click)="saveBluePrism()" tooltip="Save" [disabled]="BluePrismConfigForm.invalid">Save</button>
+                    </div>
                 </form>
             </div>
         </div>
-        
+
     </div>
-  
-  </div>
-  
+
+</div>
+
 
 <div id="updatebprism" class="rpa-modal">
     <div class="rpa-modal-content">
         <div class="rpa-modal-header">
             <span class="rpa-modal-close" (click)="closeUBP()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
-            <h4>Update BluePrism Configuration</h4>
+            <h4>Update Blue Prism Configuration</h4>
         </div>
         <div class="modal-body">
-            
+
             <div class="container m-contanier form-body">
                 <form [formGroup]="UpdateBluePrismConfigForm" (ngSubmit)="updateBlueprism()">
-                    
-                        <div class="col-md-12 p-0 form-group">
-                            <label class="label-control" for="configName">Name<span class="star">*</span></label>
-                            <input type="text" maxlength="50" class="form-control data" formControlName="configName" #configName value="" placeholder="Enter Name">
-                            <span *ngIf="UpdateBluePrismConfigForm.get('configName').invalid && UpdateBluePrismConfigForm.get('configName').touched" class="errspan required">Name Required*</span>
-                        </div>
-                        
-                        <div class="col-md-12 p-0 form-group">
-                            <label class="label-control" for="bluePrismUsername">BluePrism Username<span class="star">*</span></label>
-                            <input type="text" maxlength="50" class="form-control" formControlName="bluePrismUsername" #bluePrismUsername value="" placeholder="Enter BluePrism Username">
-                            <span *ngIf="UpdateBluePrismConfigForm.get('bluePrismUsername').invalid && UpdateBluePrismConfigForm.get('bluePrismUsername').touched" class="errspan required"> BluePrism Username Required*</span>
-                        </div>
 
-                        <div class="col-md-12 p-0 form-group">
-                            <label class="label-control" for="bluPrismPassword">BluPrism Password<span class="star">*</span></label>
-                            <input [type]="passwordtype1 ? 'text': 'password'" maxlength="50" class="form-control" formControlName="bluPrismPassword" #bluPrismPassword value="" placeholder="Enter Password" passwordToggle>
-                            <span *ngIf="passwordtype1==false" (click)="passwordtype1 =!passwordtype1" class="pdicon">
+                    <div class="col-md-12 p-0 form-group">
+                        <label class="label-control" for="configName">Name<span class="star">*</span></label>
+                        <input type="text" maxlength="50" class="form-control data" formControlName="configName" #configName value="" placeholder="Enter Name">
+                        <span *ngIf="UpdateBluePrismConfigForm.get('configName').invalid && UpdateBluePrismConfigForm.get('configName').touched" class="errspan required">Name Required*</span>
+                    </div>
+
+                    <div class="col-md-12 p-0 form-group">
+                        <label class="label-control" for="bluePrismUsername">Blue Prism Username<span class="star">*</span></label>
+                        <input type="text" maxlength="50" class="form-control" formControlName="bluePrismUsername" #bluePrismUsername value="" placeholder="Enter Blue Prism Username">
+                        <span *ngIf="UpdateBluePrismConfigForm.get('bluePrismUsername').invalid && UpdateBluePrismConfigForm.get('bluePrismUsername').touched" class="errspan required"> Blue Prism Username Required*</span>
+                    </div>
+
+                    <div class="col-md-12 p-0 form-group">
+                        <label class="label-control" for="bluPrismPassword">Blue Prism Password<span class="star">*</span></label>
+                        <input [type]="passwordtype1 ? 'text': 'password'" maxlength="50" class="form-control" formControlName="bluPrismPassword" #bluPrismPassword value="" placeholder="Enter Password" passwordToggle>
+                        <span *ngIf="passwordtype1==false" (click)="passwordtype1 =!passwordtype1" class="pdicon">
                                 <img src="../../../../../assets/images/Projects/eye-show.svg" class="testplus1" />
                             </span>
-                            <span *ngIf="passwordtype1==true" (click)="passwordtype1 =!passwordtype1" class="pdicon">
+                        <span *ngIf="passwordtype1==true" (click)="passwordtype1 =!passwordtype1" class="pdicon">
                                 <img src="../../../../../assets/images/Projects/eye-hide.svg" class="testplus1" />
                             </span>
-                            <span *ngIf="UpdateBluePrismConfigForm.get('bluPrismPassword').invalid && UpdateBluePrismConfigForm.get('bluPrismPassword').touched" class="errspan required">BluPrism Password Required*</span>
-                        </div>
+                        <span *ngIf="UpdateBluePrismConfigForm.get('bluPrismPassword').invalid && UpdateBluePrismConfigForm.get('bluPrismPassword').touched" class="errspan required">Blue Prism Password Required*</span>
+                    </div>
+                    <div class="col-md-12 p-0 form-group">
+                        <label class="label-control" for="categoryId">Select Category<span class="star">*</span></label>
+                        <select class="form-control data"   [value]="categoryList.length==1?categoryList[0].categoryId:'0'" formControlName="categoryId">
+                                <option value="0">Select Category</option>
+                                <option [value]="category.categoryId" *ngFor="let category of categoryList">{{category.categoryName}}</option>
+                            </select>
+                        <span *ngIf="BluePrismConfigForm.get('categoryId').invalid && BluePrismConfigForm.get('categoryId').touched" class="errspan required">Name Required*</span>
+                    </div>
 
-                        <div class="col-md-12 p-0 form-group">
-                            <label class="label-control" for="hostAddress"> IP Address/Host<span class="star">*</span></label>
-                            <input type="text" maxlength="50" class="form-control" formControlName="hostAddress" value="" placeholder="Enter IP Address/Host">
-                            <span *ngIf="UpdateBluePrismConfigForm.get('hostAddress').invalid && UpdateBluePrismConfigForm.get('hostAddress').touched" class="errspan required"> IP Address/Host Required*</span>
-                        </div>
-                    
-                   
-                        <div class="col-md-12 p-0 form-group">
-                            <label class="label-control" for="username">Username<span class="star">*</span></label>
-                            <input type="text" maxlength="50" class="form-control" formControlName="username" #username value="" placeholder="Enter Username">
-                            <span *ngIf="UpdateBluePrismConfigForm.get('username').invalid && UpdateBluePrismConfigForm.get('username').touched" class="errspan required"> Username Required*</span>
-  
-                        </div>
-  
-                        <div class="col-md-12 p-0 form-group">
-                            <label class="label-control" for="password">Password<span class="star">*</span></label>
-                            <input [type]="passwordtype2 ? 'text': 'password'" maxlength="50" class="form-control" formControlName="password" #password value="" placeholder="Enter Password" passwordToggle>
-                            <span *ngIf="passwordtype2==false" (click)="passwordtype2 =!passwordtype2" class="pdicon">
+                    <div class="col-md-12 p-0 form-group">
+                        <label class="label-control" for="hostAddress"> IP Address/Host<span class="star">*</span></label>
+                        <input type="text" maxlength="50" class="form-control" formControlName="hostAddress" value="" placeholder="Enter IP Address/Host">
+                        <span *ngIf="UpdateBluePrismConfigForm.get('hostAddress').invalid && UpdateBluePrismConfigForm.get('hostAddress').touched" class="errspan required"> IP Address/Host Required*</span>
+                    </div>
+
+
+                    <div class="col-md-12 p-0 form-group">
+                        <label class="label-control" for="username">Username<span class="star">*</span></label>
+                        <input type="text" maxlength="50" class="form-control" formControlName="username" #username value="" placeholder="Enter Username">
+                        <span *ngIf="UpdateBluePrismConfigForm.get('username').invalid && UpdateBluePrismConfigForm.get('username').touched" class="errspan required"> Username Required*</span>
+
+                    </div>
+
+                    <div class="col-md-12 p-0 form-group">
+                        <label class="label-control" for="password">Password<span class="star">*</span></label>
+                        <input [type]="passwordtype2 ? 'text': 'password'" maxlength="50" class="form-control" formControlName="password" #password value="" placeholder="Enter Password" passwordToggle>
+                        <span *ngIf="passwordtype2==false" (click)="passwordtype2 =!passwordtype2" class="pdicon">
                                 <img src="../../../../../assets/images/Projects/eye-show.svg" class="testplus1" />
                             </span>
-                            <span *ngIf="passwordtype2==true" (click)="passwordtype2 =!passwordtype2" class="pdicon">
+                        <span *ngIf="passwordtype2==true" (click)="passwordtype2 =!passwordtype2" class="pdicon">
                                 <img src="../../../../../assets/images/Projects/eye-hide.svg" class="testplus1" />
                             </span>
-                            <span *ngIf="UpdateBluePrismConfigForm.get('password').invalid && UpdateBluePrismConfigForm.get('password').touched" class="errspan required"> Password Required*</span>
-                        </div>
-  
-                        <div class="col-md-12 p-0 form-group">
-                            <label class="label-control" for="port">Port<span class="star">*</span></label>
-                            <input type="text"  maxlength="6" class="form-control" onkeypress="return (event.charCode > 48 && event.charCode < 57)" formControlName="port" value="" placeholder="Enter Port">
-  
-                            <span *ngIf="UpdateBluePrismConfigForm.get('port').invalid && UpdateBluePrismConfigForm.get('port').touched" class="errspan required"> Port Required*</span>
-                        </div> 
-                        <div class="col-md-12 p-0 form-group">
-                            <input type="checkbox" [checked]="toggle" formControlName="status"> Active
-                        </div> 
+                        <span *ngIf="UpdateBluePrismConfigForm.get('password').invalid && UpdateBluePrismConfigForm.get('password').touched" class="errspan required"> Password Required*</span>
+                    </div>
 
-                        <div class="form-footer">
-                            <button class="btn btn-default" (click)="reset_Updateblueprism()" tooltip="Reset">
+                    <div class="col-md-12 p-0 form-group">
+                        <label class="label-control" for="port">Port<span class="star">*</span></label>
+                        <input type="text" maxlength="6" class="form-control" onkeypress="return (event.charCode > 48 && event.charCode < 57)" formControlName="port" value="" placeholder="Enter Port">
+
+                        <span *ngIf="UpdateBluePrismConfigForm.get('port').invalid && UpdateBluePrismConfigForm.get('port').touched" class="errspan required"> Port Required*</span>
+                    </div>
+                    <div class="col-md-12 p-0 form-group">
+                        <input type="checkbox" [checked]="toggle" formControlName="status"> Active
+                    </div>
+
+                    <div class="form-footer">
+                        <button class="btn btn-default" (click)="reset_Updateblueprism()" tooltip="Reset">
                                 Reset
                             </button>
-                            <button class="btn btn-primary" (click)="BluePrismupdatetestconnection()" [disabled]="UpdateBluePrismConfigForm.invalid" tooltip="Test Connection">Test Connection
+                        <button class="btn btn-primary" (click)="BluePrismupdatetestconnection()" [disabled]="UpdateBluePrismConfigForm.invalid" tooltip="Test Connection">Test Connection
                             </button>
-                            <button class='btn btn-primary' (click)="Update_BluePrism()" tooltip="Save" [disabled]="UpdateBluePrismConfigForm.invalid || updatesubmitted">Save</button>
-                            <!-- <button class="btn btn-primary" (click)="testBluePrismconnection()" [disabled]="UpdateBluePrismConfigForm.invalid" tooltip="Test Connection">Test Connection -->                        
-                            
-                        </div>
-                    
+                        <button class='btn btn-primary' (click)="Update_BluePrism()" tooltip="Save" [disabled]="UpdateBluePrismConfigForm.invalid || updatesubmitted">Save</button>
+                        <!-- <button class="btn btn-primary" (click)="testBluePrismconnection()" [disabled]="UpdateBluePrismConfigForm.invalid" tooltip="Test Connection">Test Connection -->
+
+                    </div>
+
                 </form>
             </div>
-        </div>            
-    </div>  
+        </div>
+    </div>
 </div>
-  
-  

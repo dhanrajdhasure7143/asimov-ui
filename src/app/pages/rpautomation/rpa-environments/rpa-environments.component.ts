@@ -18,7 +18,7 @@ import { NgxSpinnerService } from "ngx-spinner";
   styleUrls: ['./rpa-environments.component.css']
 })
   export class RpaenvironmentsComponent implements  OnInit{
-    displayedColumns: string[] = ["check","environmentName","environmentType","agentPath","hostAddress","portNumber","username","password","activeStatus","deployStatus","createdTimeStamp","createdBy"]; //,"connectionType"
+    displayedColumns: string[] = ["check","environmentName","environmentType","agentPath","categoryName","hostAddress","portNumber","username","password","activeStatus","deployStatus","createdTimeStamp","createdBy"]; //,"connectionType"
     dataSource1:MatTableDataSource<any>;
     public isDataSource: boolean;  
     @ViewChild("paginator1",{static:false}) paginator1: MatPaginator;
@@ -52,7 +52,7 @@ import { NgxSpinnerService } from "ngx-spinner";
     enabledbconnection: boolean=false;
     public isButtonVisible = false;
     public userRole:any = [];
-
+    public categoryList:any=[];
   constructor(private api:RestApiService, 
     private router:Router, 
     private formBuilder: FormBuilder,
@@ -69,6 +69,7 @@ import { NgxSpinnerService } from "ngx-spinner";
         environmentType: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         agentPath: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         hostAddress: ["", Validators.compose([Validators.required, Validators.pattern(ipPattern), Validators.maxLength(50)])],
+        categoryId:["0", Validators.compose([Validators.required])],
         username: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         password: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
         connectionType: ["SSH",Validators.compose([Validators.required,, Validators.maxLength(50), Validators.pattern("[A-Za-z]*")])],
@@ -82,6 +83,7 @@ import { NgxSpinnerService } from "ngx-spinner";
       environmentType: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       agentPath: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       hostAddress: ["", Validators.compose([Validators.required, Validators.pattern(ipPattern), Validators.maxLength(50)])],
+      categoryId:["0", Validators.compose([Validators.required])],
       username: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       password: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
       connectionType: ["SSH",Validators.compose([Validators.required,, Validators.maxLength(50), Validators.pattern("[A-Za-z]*")])],
@@ -99,7 +101,7 @@ import { NgxSpinnerService } from "ngx-spinner";
     this.passwordtype2=false;
     //this.updatepopup=document.getElementById('env_updatepopup');
     this.dt.changeHints(this.hints.rpaenvhints);
-    this.getallData();
+    this.getCategories();
     //document.getElementById("filters").style.display='block';
     //document.getElementById("createenvironment").style.display='none';
     //document.getElementById("update-popup").style.display='none';
@@ -107,7 +109,7 @@ import { NgxSpinnerService } from "ngx-spinner";
     this.userRole = localStorage.getItem("userRole")
     this.userRole = this.userRole.split(',');
     this.isButtonVisible = this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') || this.userRole.includes('RPA Admin') || this.userRole.includes('RPA Designer')
-    || this.userRole.includes('Process Owner') || this.userRole.includes('Process Architect')  || this.userRole.includes('Process Analyst')  || this.userRole.includes('RPA Developer')  || this.userRole.includes('Process Architect') || this.userRole.includes("System Admin") ;
+    || this.userRole.includes('Process Owner') || this.userRole.includes('Process Architect')  || this.userRole.includes('Process Analyst')  || this.userRole.includes('RPA Developer')  || this.userRole.includes('Process Architect') || this.userRole.includes("System Admin")|| this.userRole.includes("User") ;
     this.api.getCustomUserRole(2).subscribe(role=>{
       this.customUserRole=role.message[0].permission;
       this.customUserRole.forEach(element => {
@@ -141,6 +143,10 @@ import { NgxSpinnerService } from "ngx-spinner";
           this.environments.push(Object.assign({}, response[i], checks));
         }
         this.environments.sort((a,b) => a.activeTimeStamp > b.activeTimeStamp ? -1 : 1);
+        this.environments=this.environments.map(item=>{
+           item["categoryName"]=this.categoryList.find(item2=>item2.categoryId==item.categoryId).categoryName;
+           return item;
+        })
         this.dataSource1= new MatTableDataSource(this.environments);
         this.isDataSource = true;
         this.dataSource1.sort=this.sort1;
@@ -191,6 +197,7 @@ import { NgxSpinnerService } from "ngx-spinner";
     
     //document.getElementById("filters").style.display='none';
     document.getElementById("createenvironment").style.display='block';
+    this.insertForm.get("categoryId").setValue(this.categoryList.length==1?this.categoryList[0].categoryId:"0")
     document.getElementById("update-popup").style.display='none';
   
   }
@@ -199,6 +206,7 @@ import { NgxSpinnerService } from "ngx-spinner";
     
     this.insertForm.get("portNumber").setValue("22");
     this.insertForm.get("connectionType").setValue("SSH");
+    this.insertForm.get("categoryId").setValue(this.categoryList.length==1?this.categoryList[0].categoryId:'0');
     this.insertForm.get("environmentType").setValue("");
     this.insertForm.get("activeStatus").setValue(true);
     this.passwordtype1=false;
@@ -232,7 +240,7 @@ import { NgxSpinnerService } from "ngx-spinner";
      await this.api.testenvironment(formdata.value).subscribe( res =>
       {
         this.spinner.hide();
-        if(res.errorCode==undefined){
+        if(res.errorMessage==undefined){
         // Swal.fire({
         //   position: 'center',
         //   icon: 'success',
@@ -313,9 +321,15 @@ import { NgxSpinnerService } from "ngx-spinner";
         }
         else
         {
+          this.submitted=false;
           Swal.fire("Error",response.errorMessage,"error");
+
         }
 
+    },err=>{
+      this.spinner.hide();
+      Swal.fire("Error","Unable to add environment","error");
+      this.submitted=false;
     });
   }
   else
@@ -344,14 +358,25 @@ import { NgxSpinnerService } from "ngx-spinner";
       updatFormValue["createdBy"]= this.updateenvdata.createdBy;
       updatFormValue["deployStatus"]= this.updateenvdata.deployStatus;
       await this.api.updateenvironment(updatFormValue).subscribe( res => {
-        Swal.fire("Success",res.status,"success")
-      this.removeallchecks();
-      this.getallData();
-      this.checktoupdate();
-      this.checktodelete();
-      
-      document.getElementById("update-popup").style.display='none';
+      let response:any=res;
       this.spinner.hide();
+      if(response.errorMessage==undefined)
+      {
+
+        Swal.fire("Success",res.status,"success")
+        this.removeallchecks();
+        this.getallData();
+        this.checktoupdate();
+        this.checktodelete();
+        document.getElementById("update-popup").style.display='none';
+      }else
+      {
+        Swal.fire("Error",response.errorMessage,"error")
+      }
+    
+      },err=>{
+        this.spinner.hide();
+        Swal.fire("Error","Unable to update environment details","error")
       });
     }
     else
@@ -378,10 +403,11 @@ import { NgxSpinnerService } from "ngx-spinner";
           this.updateForm.get("activeStatus").setValue(false);
         }
         this.updateenvdata=data;
-        console.log(this.updateenvdata);
+        
         this.updateForm.get("environmentName").setValue(this.updateenvdata["environmentName"]);
         this.updateForm.get("environmentType").setValue(this.updateenvdata["environmentType"]);
         this.updateForm.get("agentPath").setValue(this.updateenvdata["agentPath"]);
+        this.updateForm.get("categoryId").setValue(this.updateenvdata["categoryId"]);
         this.updateForm.get("hostAddress").setValue(this.updateenvdata["hostAddress"]);
         this.updateForm.get("username").setValue(this.updateenvdata["username"]);
         this.updateForm.get("password").setValue(this.updateenvdata["password"]);
@@ -416,21 +442,30 @@ import { NgxSpinnerService } from "ngx-spinner";
       }).then((result) => {
         if (result.value) {
           this.spinner.show();
-          this.api.deleteenvironment(selectedEnvironments).subscribe( res =>{ 
+          this.api.deleteenvironment(selectedEnvironments).subscribe( (res:any) =>{ 
+            this.spinner.hide();
             // Swal.fire({
             //   position: 'center',
             //   icon: 'success',
             //   title: res.status,
             //   showConfirmButton: false,
             //   timer: 2000    
-            // })
+            //( })
+            if(res.errorMessage==undefined)
+            {
             Swal.fire("Success",res.status,"success")
             
             this.removeallchecks();
             this.getallData(); 
-            this.spinner.hide();
             this.checktoupdate();
             this.checktodelete();
+            }else
+            {
+              Swal.fire("Error",res.errorMessage,"error")
+            }
+          },err=>{
+            this.spinner.hide();
+            Swal.fire("Error","Unable to delete environment","error")
           })
         }
       }) 
@@ -496,7 +531,7 @@ import { NgxSpinnerService } from "ngx-spinner";
       this.spinner.show();
       this.api.deployenvironment(selectedEnvironments).subscribe( res =>{ 
         let data:any=res
-        console.log(data)
+        this.spinner.hide();   
         if(data[0].errorMessage==undefined){
           Swal.fire("Success",data[0].status,"success")
 
@@ -507,14 +542,14 @@ import { NgxSpinnerService } from "ngx-spinner";
         this.getallData(); 
         this.checktoupdate();
         this.checktodelete();  
-        this.spinner.hide();   
+      },err=>{
+          Swal.fire("Error","Failed to deploy bot in selected evironment","error")
+          this.spinner.hide(); 
       })
     }
-    this.spinner.hide(); 
   }
   
   applyFilter(filterValue: string) {
-    
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
     this.dataSource1.filter = filterValue;
@@ -527,6 +562,20 @@ import { NgxSpinnerService } from "ngx-spinner";
       this.environments[i].checked= false;
     }
     this.checkflag=false;
+  }
+
+
+  getCategories()
+  {
+    this.api.getCategoriesList().subscribe(data=>{
+      let response:any=data;
+      if(response.errorMessage==undefined)
+      {
+        this.categoryList=response.data;
+        this.getallData();
+    
+      }
+    })
   }
 
 }

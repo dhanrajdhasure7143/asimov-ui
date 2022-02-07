@@ -65,8 +65,13 @@ this.getEnvironments();
       },{
         "country": "New",
         "litres":  this.allbots.filter(bot=>bot.botStatus=="New").length,
-        "color": "#6E6E6E"
+        "color": "#00a0e3"
       }, {
+        "country": "Stopped",
+        "litres":  this.allbots.filter(bot=>bot.botStatus=="Stopped" || bot.botStatus=="Stop").length,
+        "color": "#FF0000"
+      },
+      {
         "country": "Success",
         "litres":  this.allbots.filter(bot=>bot.botStatus=="Success").length,
         "color":"#62C849"
@@ -170,7 +175,8 @@ this.getEnvironments();
     pieSeries.labels.template.padding(0,0,0,0);
     pieSeries.ticks.template.disabled = true;
     pieSeries.alignLabels = false;
-    pieSeries.labels.template.text = "{value.percent.formatNumber('#.')}";
+    //pieSeries.labels.template.text = "{value.percent.formatNumber('#.')}";
+    pieSeries.labels.template.text = "{value}";
     pieSeries.labels.template.radius = am4core.percent(-40);
     pieSeries.labels.template.fill = am4core.color("white");
     // Create a base filter effect (as if it's not there) for the hover to return to
@@ -189,6 +195,7 @@ this.getEnvironments();
 
     chart.legend = new am4charts.Legend();
     chart.legend.fontSize = 13;
+    chart.legend.labels.template.text = "{category} - {value}";
     let markerTemplate = chart.legend.markers.template;
     markerTemplate.width = 10;
     markerTemplate.height = 10;
@@ -273,8 +280,6 @@ chart.cursor = new am4charts.XYCursor();
   }
   chart3(data, length){
 
-    console.log(data);
-    
     am4core.ready(function() {
         
         // Themes begin
@@ -342,22 +347,6 @@ chart.cursor = new am4charts.XYCursor();
         markerTemplate.height = 10;
         
         chart.data = data
-        // chart.data=[{
-        //   "country": "UiPath",
-        //   "litres": 122,
-        //   "color": "#ffda83"
-        // },{
-        //   "country": "BluePrism",
-        //   "litres":  225,
-        //   "color": "#55d8fe"
-        // },{
-        //   "country": "EPSoft",
-        //   "litres":369,
-        //   "color": "#fa4616"
-        // }];
-
-        //chart.data = data
-        chart.data=data
         });  
 
   }
@@ -551,8 +540,8 @@ pieSeries.labels.template.fontSize = 18;
     
     var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
     dateAxis.renderer.grid.template.strokeOpacity = 0;
-    dateAxis.renderer.minGridDistance = 15;
-    dateAxis.dateFormats.setKey("day", "dd");
+    dateAxis.renderer.minGridDistance = 10;
+    dateAxis.dateFormats.setKey("day", "d");
     dateAxis.tooltip.hiddenState.properties.opacity = 1;
     dateAxis.tooltip.hiddenState.properties.visible = true;
     
@@ -568,7 +557,6 @@ pieSeries.labels.template.fontSize = 18;
     valueAxis.min = 0;
     valueAxis.cursorTooltipEnabled = false;
     valueAxis.renderer.labels.template.fontSize = 11;
-    valueAxis.title.text="Number of Exceptions"
     // goal guides
     var axisRange = valueAxis.axisRanges.create();
     axisRange.value = 3;
@@ -1028,7 +1016,6 @@ pieSeries.labels.template.fontSize = 18;
       label1.wrap = true;
       label1.maxWidth = 120;
       categoryAxis.renderer.minGridDistance = 30;
-
       var valueAxis = this.runtimestatschart.yAxes.push(new am4charts.ValueAxis());
       // valueAxis.renderer.inside = true;
       // valueAxis.renderer.labels.template.fillOpacity = 1;
@@ -1046,6 +1033,7 @@ pieSeries.labels.template.fontSize = 18;
       series.dataFields.valueY = "value";
       series.dataFields.categoryX = "name";
       series.tooltipText = "{valueY.value}";
+
       var columnTemplate = series.columns.template;
       columnTemplate.width = 40;
       columnTemplate.column.cornerRadiusTopLeft = 10;
@@ -1106,7 +1094,7 @@ pieSeries.labels.template.fontSize = 18;
   getprocessstatistics(){
     let data=[
              {
-               "country":"Processes",
+               "country":"Approved Processes",
                "litres":this.approved_processes.length,
                "color": "#ce3779"
 

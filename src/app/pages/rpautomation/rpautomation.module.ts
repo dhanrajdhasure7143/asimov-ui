@@ -59,6 +59,7 @@ import { TaskPipe } from './custom-pipes/task.pipe';
 import { TasksearchPipe } from './custom-pipes/tasksearch.pipe';
 import {MatPaginatorIntl} from '@angular/material';
 import { CustomMatPaginatorIntl } from 'src/app/shared/custom-mat-paginator-int';
+
 @NgModule({
   declarations: [
     RpautomationComponent,

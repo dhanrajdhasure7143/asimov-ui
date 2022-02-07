@@ -33,7 +33,8 @@ isBackbutton:boolean=false;
 insights_header:boolean=false;
 isTimefeed:boolean=true;
 btn_obj:any;
-
+userRole: any;
+freetrail: string;
   constructor(private changeDetectorRef:ChangeDetectorRef,
     private router:Router,
     private route: ActivatedRoute,
@@ -46,6 +47,8 @@ btn_obj:any;
     $('.link').removeClass('active');
     $('#pi').addClass("active"); 
     $('#expand_menu').addClass("active");  
+    this.userRole = localStorage.getItem("userRole")
+    this.freetrail=localStorage.getItem("freetrail")
   }
 
  ngAfterViewChecked(){
@@ -70,7 +73,6 @@ btn_obj:any;
         element.style.display = "none";
         element.style.visibility = "hidden";
       }
-    // console.log('test')
     this.workingHours = {formDay:'Mon',toDay: 'Sun',shiftStartTime:"00:00",shiftEndTime:"23:59"};
   } else{
     this.isPIHeaderShow = true;
@@ -101,7 +103,6 @@ if(windowUrl.indexOf('processIntelligence/insights') != -1){
       if(params['piId']!=undefined){
         this.wpiIdNumber = parseInt(params['piId']);
       }
-      // console.log( this.wpiIdNumber)
     });
     
   this.changeDetectorRef.detectChanges();
@@ -110,7 +111,6 @@ if(windowUrl.indexOf('processIntelligence/insights') != -1){
 
  ngAfterViewInit(){
    this.dt.pi_btnChanges.subscribe(res=>{this.btn_obj=res
-    //  console.log(res)
      if(res){
      this.isplay=this.btn_obj.isPlaybtn;
     //  this.isTimefeed=this.btn_obj.isTimefeed_btn
@@ -211,6 +211,11 @@ addWorkingHours(){
 
    ngOnDestroy(){
     // localStorage.setItem("pi_search_category",'allcategories')
+    let element=document.getElementById("tipsy_div");
+    if(element){
+      element.style.display = "none";
+      element.style.visibility = "hidden";
+    }
    }
 
 }

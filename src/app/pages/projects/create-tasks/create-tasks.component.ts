@@ -27,6 +27,8 @@ export class CreateTasksComponent implements OnInit {
   taskcategories: Object;
   approverslist: any=[];
   project_id:number;
+  taskDescriptionFlag: boolean = false;
+  freetrail: string;
   constructor(private formBuilder: FormBuilder,private spinner:NgxSpinnerService,private api:RestApiService,
     private router: Router, private route:ActivatedRoute) { }
 
@@ -41,11 +43,11 @@ export class CreateTasksComponent implements OnInit {
       taskName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       timeEstimate: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       endDate: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      approvers: ["",Validators.compose([Validators.required, Validators.maxLength(50)])],
+      approvers: ["",Validators.compose([Validators.maxLength(50)])],
       description: ["", Validators.compose([Validators.maxLength(200)])],
       })
 
-
+      this.spinner.show();
 
       this.route.queryParams.subscribe(data=>{
         let response:any=data;
@@ -57,6 +59,12 @@ export class CreateTasksComponent implements OnInit {
         this.getallbots();
       })
       this.getProjectDetails();
+      this.freetrail=localStorage.getItem('freetrail')
+      if(this.freetrail!='true') {
+        this.createtaskForm.get('approvers').setValidators(Validators.required)
+      } else {
+        this.createtaskForm.get('approvers').clearValidators();
+      }
 
   }
 
@@ -139,8 +147,8 @@ export class CreateTasksComponent implements OnInit {
     let tenantid=localStorage.getItem("tenantName")
     this.api.getuserslist(tenantid).subscribe(item=>{
       let users:any=item
-      this.userslist=users.sort((a,b) => (a.userId.firstName.toLowerCase() > b.userId.firstName.toLowerCase() ) ? 1 : ((b.userId.firstName.toLowerCase() > a.userId.firstName.toLowerCase() ) ? -1 : 0));
-
+     // this.userslist=users.sort((a,b) => (a.userId.firstName.toLowerCase() > b.userId.firstName.toLowerCase() ) ? 1 : ((b.userId.firstName.toLowerCase() > a.userId.firstName.toLowerCase() ) ? -1 : 0));
+     this.userslist=users;
       for (let index = 0; index < this.userslist.length; index++) {
         let user=this.userslist[index]
         if(user.roleID.displayName==="Process Architect"){
@@ -148,6 +156,7 @@ export class CreateTasksComponent implements OnInit {
         this.approverslist.push(element)
       }
       }
+      this.spinner.hide();
     })
   }
   
@@ -174,8 +183,15 @@ export class CreateTasksComponent implements OnInit {
     this.api.getProjectDetailsById(this.project_id).subscribe(response=>{
       // this.maxdate=response.endDate;
       this.maxdate = moment(response.endDate).format("YYYY-MM-DD")
-      console.log("date==========",this.maxdate)
+     
   })
 }
+taskDescriptionMaxLength(value){
+  if(value.length > 150){
+  this.taskDescriptionFlag = true;
+  }else{
+    this.taskDescriptionFlag = false;
+  }
+   }
 
 }

@@ -144,12 +144,16 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
   downloadFileformate:Subscription;
   header_btn_functions:Subscription;
   header_approvalBtn:Subscription;
+  processowner_list:any=[];
+  process_owner:any;
+  showconsfromanceModal:any;
   @ViewChild('variabletemplate',{ static: true }) variabletemplate: TemplateRef<any>;
   @ViewChild('keyboardShortcut',{ static: true }) keyboardShortcut: TemplateRef<any>;
   @ViewChild('dmnTabs',{ static: true }) dmnTabs: ElementRef<any>;
   @ViewChild("notationXMLTab", { static: false }) notationXmlTab: MatTabGroup;
   @ViewChild('wrongXMLcontent', { static: true}) wrongXMLcontent: TemplateRef<any>;
   @ViewChild('canvasopt',{ static: false }) canvasopt: ElementRef;
+  @ViewChild('processowner_template',{ static: true }) processowner_template: TemplateRef<any>;
    constructor(private rest:RestApiService, private bpmnservice:SharebpmndiagramService,private router:Router, private spinner:NgxSpinnerService, private modalService: BsModalService,
       private dt:DataTransferService, private route:ActivatedRoute, private global:GlobalScript, private hints:BpsHints,public dialog:MatDialog,private shortcut:BpmnShortcut) { }
 
@@ -191,6 +195,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
       this.dt.changeChildModule({"route":"/pages/businessProcess/uploadProcessModel", "title":"Show Conformance"});
     }
     this.getApproverList();
+    this.getprocessOwners();
    }
 
 
@@ -206,7 +211,6 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
         })
         this.header_btn_functions=this.dt.header_value.subscribe(res=>{
           let headerValue=res
-          console.log(res);
           let result = headerValue instanceof Object;
           if(!result){
           if(headerValue == 'zoom_in'){
@@ -214,7 +218,11 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
           }else if(headerValue == 'zoom_out'){
             this.zoomOut();
           }else if(headerValue == 'save_process'){
-            this.saveprocess(null);
+            if(this.isShowConformance){
+              this.processOwner_modal();
+            }else{
+              this.saveprocess(null);
+            }
             this.isEdit=false;
           }else if(headerValue=='edit'){
             this.isEdit=true;
@@ -239,9 +247,8 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
         }
         })
         this.header_approvalBtn=this.dt.subMitApprovalValues.subscribe(res=>{
-          console.log(res)
           if(res){
-            this.submitDiagramForApproval(res.selectedApprovar);
+            this.submitDiagramForApproval(res);
           }
         })
       }
@@ -253,7 +260,14 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
         this.dt.bpsNotationaScreenValues(null);
         this.dt.downloadNotationValue(null);
         this.dt.bpsHeaderValues(null);
-        this.dt.submitForApproval(null)
+        this.dt.submitForApproval(null);
+        // if(!this.isShowConformance){
+        //   let req_body={
+        //     "bpmnModelId":this.selected_modelId
+        //   }
+        //   this.rest.deleteNotationFromTemp(req_body).subscribe(res=>{
+        //   })
+        // }
       }
 
    setRPAData(){
@@ -315,7 +329,6 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
   fetchBpmnNotationFromPI(){
     this.rest.fetchBpmnNotationFromPI(this.pid).subscribe(res=>{
        this.pivalues=res;
-       console.log("PI",res)
     })
    }
 
@@ -355,7 +368,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
         this.rest.getBPMNProcessArchNotations(this.selected_modelId).subscribe(res=>{
           this.saved_bpmn_list=res
           this.saved_bpmn_list.forEach((each_bpmn,i) => {
-          if(this.selected_version == each_bpmn.version)
+            if(this.selected_version == each_bpmn.version)
                 this.selected_notation = i;
           })
             this.isLoading=false;
@@ -376,8 +389,17 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
     })
   }
    }
-   async getApproverList(){
-    await this.rest.getApproverforuser('Process Architect').subscribe( res =>  {//Process Architect
+  //  async getApproverList(){
+  //   await this.rest.getApproverforuser('Process Architect').subscribe( res =>  {//Process Architect
+  //    if(Array.isArray(res))
+  //      this.approver_list = res;
+  //  });
+  // }
+  async getApproverList(){
+    let roles={
+      "roleNames": ["Process Owner","Process Architect"]
+    }
+    await this.rest.getmultipleApproverforusers(roles).subscribe( res =>  {//Process Architect
      if(Array.isArray(res))
        this.approver_list = res;
    });
@@ -391,7 +413,6 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
       
     }else{
       current_bpmn_info = this.saved_bpmn_list[this.selected_notation];
-      console.log("current_bpmn_info",current_bpmn_info)
     }
 
     if(current_bpmn_info){
@@ -425,9 +446,9 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
       this.selected_approver = null;
       this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
     "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
-    "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize,isUploaded:this.isUploaded}
+    "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize,isUploaded:this.isUploaded,"selectedNotation":this.saved_bpmn_list[this.selected_notation]}
       setTimeout(() => {
-        this.dt.bpsNotationaScreenValues(this.push_Obj);
+        // this.dt.bpsNotationaScreenValues(this.push_Obj);
       }, 2000);
    }
 
@@ -517,19 +538,17 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
     if(this.isShowConformance && !this.reSize){
       this.rest.fetchBpmnNotationFromPI(this.pid).subscribe(res=>{
         this.pivalues=res;
-        console.log("pigraph",res)
         let selected_xml = this.pivalues['data'];
         this.push_Obj={"rejectedOrApproved":'',"isfromApprover":this.isfromApprover,
           "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.pivalues.updatedTime,
-          "isFromcreateScreen":false,'process_name':this.pivalues.piName,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize,isUploaded:this.isUploaded}
+          "isFromcreateScreen":false,'process_name':this.pivalues.piName,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize,isUploaded:this.isUploaded,"selectedNotation":this.saved_bpmn_list[this.selected_notation]}
             this.dt.bpsNotationaScreenValues(this.push_Obj);
         if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
           selected_xml = this.autosavedDiagramVersion[0]["bpmnProcessMeta"];
           this.updated_date_time = this.autosavedDiagramVersion[0]["modifiedTimestamp"];
-          // console.log(this.autosavedDiagramVersion)
           this.push_Obj={"rejectedOrApproved":this.autosavedDiagramVersion[0]["bpmnModelTempStatus"],"isfromApprover":this.isfromApprover,
           "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
-          "isFromcreateScreen":false,'process_name':this.pivalues.piName,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize,isUploaded:this.isUploaded}
+          "isFromcreateScreen":false,'process_name':this.pivalues.piName,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize,isUploaded:this.isUploaded,"selectedNotation":this.saved_bpmn_list[this.selected_notation]}
             this.dt.bpsNotationaScreenValues(this.push_Obj);
         }
         try{
@@ -559,13 +578,17 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
           console.error('could not import BPMN EZFlow notation', err);
         }
       }
+      this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
+      "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
+      "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize,isUploaded:this.isUploaded,"selectedNotation":this.saved_bpmn_list[this.selected_notation]}
+        this.dt.bpsNotationaScreenValues(this.push_Obj);
     }
-    this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
-    "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
-    "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize,isUploaded:this.isUploaded}
-    setTimeout(() => {
-      this.dt.bpsNotationaScreenValues(this.push_Obj);
-    }, 3000);
+    // this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
+    // "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
+    // "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize,isUploaded:this.isUploaded}
+    // setTimeout(() => {
+    //   this.dt.bpsNotationaScreenValues(this.push_Obj);
+    // }, 3000);
   }
 
   setUrlParam(name, value) {
@@ -592,7 +615,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
   this.reSize = false;
   this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
   "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
-  "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize,isUploaded:this.isUploaded}
+  "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize,isUploaded:this.isUploaded,"selectedNotation":this.saved_bpmn_list[this.selected_notation]}
 this.dt.bpsNotationaScreenValues(this.push_Obj)
   if(this.isDiagramChanged){
     Swal.fire({
@@ -600,6 +623,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
       text: 'Your current changes will be lost on changing notation.',
       icon: 'warning',
       showCancelButton: true,
+      heightAuto: false,
       confirmButtonText: 'Save and Continue',
       cancelButtonText: 'Discard'
     }).then((res) => {
@@ -627,7 +651,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
           this.updated_date_time = this.autosavedDiagramVersion[0]["modifiedTimestamp"];
           this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
           "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
-          "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize,isUploaded:this.isUploaded}
+          "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize,isUploaded:this.isUploaded,"selectedNotation":this.saved_bpmn_list[this.selected_notation]}
       this.dt.bpsNotationaScreenValues(this.push_Obj)
         }
         this.initModeler();
@@ -686,7 +710,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
         this.updated_date_time = this.autosavedDiagramVersion[0]["modifiedTimestamp"];
         this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
         "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
-        "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize,isUploaded:this.isUploaded}
+        "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize,isUploaded:this.isUploaded,"selectedNotation":this.saved_bpmn_list[this.selected_notation]}
       this.dt.bpsNotationaScreenValues(this.push_Obj)
       }
     this.initModeler();
@@ -764,9 +788,18 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
       _self.oldXml = _self.newXml;
       _self.newXml = xml;
       if(_self.oldXml != _self.newXml){
+        if(!_self.isShowConformance){
         _self.spinner.show();
+        }
         bpmnModel["bpmnProcessMeta"] = btoa(unescape(encodeURIComponent(_self.newXml)));
+      if(_self.isShowConformance){
+        // _self.autoSaveProcessowner_modal();
+        // _self.showconsfromanceModal=bpmnModel
+        // console.log(_self.saved_bpmn_list[_self.selected_notation])
+
+      }else{
         _self.autoSaveDiagram(bpmnModel);
+      }
       }
     });
   }
@@ -780,7 +813,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
     this.isEdit=false;
     this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
     "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
-    "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize,isUploaded:this.isUploaded}
+    "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize,isUploaded:this.isUploaded,"selectedNotation":this.saved_bpmn_list[this.selected_notation]}
 this.dt.bpsNotationaScreenValues(this.push_Obj)
     if(this.isUploaded){
       this.bpmnservice.changeConfNav(true);
@@ -792,6 +825,8 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
   }
 
   autoSaveDiagram(model){
+      model.processOwner = this.saved_bpmn_list[this.selected_notation]['processOwner'];
+    model.processOwnerName = this.saved_bpmn_list[this.selected_notation]['processOwnerName'];
     this.rest.autoSaveBPMNFileContent(model).subscribe(
       data=>{
         this.getAutoSavedDiagrams();
@@ -801,7 +836,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
         this.spinner.hide();
         this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
         "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
-        "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':false,"hasConformance":this.hasConformance,"resize":this.reSize,"isEditbtn":true,isUploaded:this.isUploaded}
+        "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':false,"hasConformance":this.hasConformance,"resize":this.reSize,"isEditbtn":true,isUploaded:this.isUploaded,"selectedNotation":this.saved_bpmn_list[this.selected_notation]}
       this.dt.bpsNotationaScreenValues(this.push_Obj)
       },
       err => {
@@ -1029,9 +1064,15 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
     }
     if(!yesProceed) return;
     let bpmnModel:BpmnModel = new BpmnModel();
-    this.selected_approver=e
+    this.selected_approver=e.selectedApprovar
     if((!this.selected_approver && this.selected_approver != 0) || this.selected_approver <= -1){
-      Swal.fire("No approver", "Please select approver from the list given above", "error");
+      // Swal.fire("No approver", "Please select approver from the list given above", "error");
+      Swal.fire({
+        icon: 'error',
+        title: 'No approver',
+        text: 'Please select approver from the list given above !',
+        heightAuto: false,
+      });
       return;
     }
     this.isLoading = true;
@@ -1048,6 +1089,8 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
     }
   if(this.isShowConformance){
     bpmnModel.notationFromPI = true;
+    bpmnModel.processOwner=e.processOwner;
+    bpmnModel.processOwnerName=e.processOwnerName;
     bpmnModel.bpmnProcessName = this.processName;
     bpmnModel.ntype = this.ntype;
     bpmnModel.category = this.category;
@@ -1063,6 +1106,8 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
       bpmnModel.bpmnModelId = this.randomNumber;
     }
   }else{
+    bpmnModel.processOwner = _self.saved_bpmn_list[_self.selected_notation]['processOwner'];
+    bpmnModel.processOwnerName = _self.saved_bpmn_list[_self.selected_notation]['processOwnerName'];
     bpmnModel.bpmnModelId = sel_List['bpmnModelId'];
     bpmnModel.bpmnProcessName = sel_List['bpmnProcessName'];
     bpmnModel.category = sel_List['category'];
@@ -1075,35 +1120,39 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
     this[modeler_obj].saveXML({ format: true }, function(err, xml) {
       let final_notation = btoa(unescape(encodeURIComponent(xml)));
       bpmnModel.bpmnXmlNotation = final_notation;
+      bpmnModel.role=localStorage.getItem("userRole");
       _self.rest.submitBPMNforApproval(bpmnModel).subscribe(
         data=>{
           _self.isLoading = false;
           _self.isDiagramChanged = false;
           if(data["errorCode"] == "2005"){
-            Swal.fire(
-              'Already exists!',
-              'The notation is already in "PENDING" status.',
-              'error'
-            );
+            Swal.fire({
+              icon: 'error',
+              title: 'Already exists!',
+              text: 'The notation is already in "PENDING" status !',
+              heightAuto: false,
+            });
           }else{
             _self.rejectedOrApproved="PENDING";
             _self.push_Obj={"rejectedOrApproved":"PENDING","isfromApprover":_self.isfromApprover,
             "isShowConformance":_self.isShowConformance,"isStartProcessBtn":_self.isStartProcessBtn,"autosaveTime":_self.updated_date_time,
             "isFromcreateScreen":false,'process_name':_self.currentNotation_name,'isSavebtn':true}
             _self.dt.bpsNotationaScreenValues(_self.push_Obj);
-            Swal.fire(
-              'Saved!',
-              'Your changes has been saved and submitted for approval successfully.',
-              'success'
-            );
+            Swal.fire({
+              icon: 'success',
+              title: 'Saved!',
+              text: 'Your changes has been saved and submitted for approval successfully !',
+              heightAuto: false,
+            });
           }
         },err => {
           _self.isLoading = false;
-          Swal.fire(
-            'Oops!',
-            'Something went wrong. Please try again',
-            'error'
-          )
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops!',
+            text: 'Something went wrong. Please try again !',
+            heightAuto: false,
+          });
         })
     })
   }
@@ -1164,20 +1213,29 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
         _self.confBpmnModeler.saveXML({ format: true }, function(err, xml2) {
           bpmnModel.bpmnConfProcessMeta = btoa(unescape(encodeURIComponent(xml2)));;
         })
-        this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
-        "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
-        "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize,isUploaded:this.isUploaded}
-    this.dt.bpsNotationaScreenValues(this.push_Obj)
+        _self.push_Obj={"rejectedOrApproved":_self.rejectedOrApproved,"isfromApprover":_self.isfromApprover,
+        "isShowConformance":_self.isShowConformance,"isStartProcessBtn":_self.isStartProcessBtn,"autosaveTime":_self.updated_date_time,
+        "isFromcreateScreen":false,'process_name':_self.currentNotation_name,'isSavebtn':true,"hasConformance":_self.hasConformance,"resize":_self.reSize,isUploaded:this.isUploaded}
+        _self.dt.bpsNotationaScreenValues(this.push_Obj)
       }
+      if(_self.isShowConformance){
+        bpmnModel.processOwner=_self.processowner_list[_self.process_owner].userId;
+        bpmnModel.processOwnerName=_self.processowner_list[_self.process_owner].firstName + ' ' + _self.processowner_list[_self.process_owner].lastName;
+      }else{
+        bpmnModel.processOwner = _self.saved_bpmn_list[_self.selected_notation]['processOwner'];
+        bpmnModel.processOwnerName = _self.saved_bpmn_list[_self.selected_notation]['processOwnerName'];
+      }
+      bpmnModel.role=localStorage.getItem("userRole");
       _self.rest.saveBPMNprocessinfofromtemp(bpmnModel).subscribe(
         data=>{
           _self.isLoading = false;
           if(data["errorCode"] == "2005"){
-            Swal.fire(
-              'Already exists!',
-              'The notation is already in "PENDING" status.',
-              'error'
-            );
+            Swal.fire({
+              icon: 'error',
+              title: 'Already exists!',
+              text: 'The notation is already in "PENDING" status !',
+              heightAuto: false,
+            });
           }else{
             if( !_self.isShowConformance && (status == "APPROVED" || status == "REJECTED")){
               let all_bpmns = _self.saved_bpmn_list.filter(each => { return each.bpmnModelId == sel_List["bpmnModelId"]})
@@ -1189,13 +1247,17 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
               let params:Params = {'bpsId':sel_List["bpmnModelId"], 'ver': inprogress_version, 'ntype': sel_List["ntype"]}
               _self.router.navigate([],{ relativeTo:_self.route, queryParams:params });
             }
+            if(_self.isShowConformance)
+            _self.modalRef.hide();
             if(_self.isUploaded) _self.getUserBpmnList(true);
             else _self.getUserBpmnList(null);
-            Swal.fire(
-              'Saved!',
-              'Your changes has been saved successfully.',
-              'success'
-            );
+            Swal.fire({
+              icon: 'success',
+              title: 'Saved!',
+              text: 'Your changes has been saved successfully !',
+              heightAuto: false,
+            });
+            _self.process_owner='';
             if(newVal){
               _self.selected_notation = newVal;
               let current_bpmn_info = _self.saved_bpmn_list[_self.selected_notation];
@@ -1213,22 +1275,24 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
         err => {
           _self.isLoading = false;
           if(err.error.message == "2002")
-          Swal.fire(
-            'Oops!',
-            'An Inprogress process already exists for the selected process. \nPlease do the changes in existing inprogress notation',
-            'warning'
-          )
+          Swal.fire({
+            icon: 'warning',
+            title: 'Oops!',
+            text: 'An Inprogress process already exists for the selected process. \nPlease do the changes in existing inprogress notation !',
+            heightAuto: false,
+          });
           else
-          Swal.fire(
-            'Oops!',
-            'Something went wrong. Please try again',
-            'error'
-          )
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops!',
+            text: 'Something went wrong. Please try again !',
+            heightAuto: false,
+          });
         })
     })
     this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
     "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
-    "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':false,"hasConformance":this.hasConformance,"resize":this.reSize,isUploaded:this.isUploaded}
+    "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':false,"hasConformance":this.hasConformance,"resize":this.reSize,isUploaded:this.isUploaded,"selectedNotation":this.saved_bpmn_list[this.selected_notation]}
       this.dt.bpsNotationaScreenValues(this.push_Obj);
   }
 
@@ -1379,7 +1443,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
     this.slideUpDifferences();
     this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
     "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
-    "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':false,"hasConformance":this.hasConformance,"resize":this.reSize,isUploaded:this.isUploaded}
+    "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':false,"hasConformance":this.hasConformance,"resize":this.reSize,isUploaded:this.isUploaded,"selectedNotation":this.saved_bpmn_list[this.selected_notation]}
 this.dt.bpsNotationaScreenValues(this.push_Obj)
   }
 
@@ -1419,7 +1483,8 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
     if(fileName.trim().length == 0 ) fileName = "newDiagram";
     var dd = fileName+"."+this.selectedNotationType;
      this.dialog.open(DeployNotationComponent, {disableClose: true,data: {
-      dataKey: data, fileNme: dd
+      dataKey: data, fileNme: dd,
+      category:this.saved_bpmn_list[this.selected_notation]['category']
     }});
     
     let deployResponse;
@@ -1430,7 +1495,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
           this.isStartProcessBtn=deployResponse.startprocess
           this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
           "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
-          "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize,isUploaded:this.isUploaded}
+          "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize,isUploaded:this.isUploaded,"selectedNotation":this.saved_bpmn_list[this.selected_notation]}
             this.dt.bpsNotationaScreenValues(this.push_Obj);
       }
     })
@@ -1484,7 +1549,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
       this.isStartProcessBtn=false;
       this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
       "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
-      "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize,isUploaded:this.isUploaded}
+      "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize,isUploaded:this.isUploaded,"selectedNotation":this.saved_bpmn_list[this.selected_notation]}
         this.dt.bpsNotationaScreenValues(this.push_Obj);
     })    
   }
@@ -1550,7 +1615,25 @@ onExpansionClik(i){
 
 getBpmnById(){
   this.rest.getBpmnNotationById(this.selected_modelId).subscribe(res=>{
-    console.log("get_bpmnById res",res)
   })
 }
+
+processOwner_modal(){
+  this.modalRef = this.modalService.show(this.processowner_template);
+}
+
+async getprocessOwners(){
+  let roles={
+    "roleNames": ["Process Owner"]
+  }
+  await this.rest.getmultipleApproverforusers(roles).subscribe( res =>  {//Process Architect
+   if(Array.isArray(res))
+     this.processowner_list = res;
+ });
+}
+closeprocessOwnerModal(){
+  this.modalRef.hide();
+  this.process_owner='';
+}
+
 }

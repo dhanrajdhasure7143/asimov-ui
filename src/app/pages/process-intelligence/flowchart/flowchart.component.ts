@@ -1,8 +1,9 @@
 
+
+
 import { Component, OnInit, AfterViewInit,ViewChild,EventEmitter,ElementRef, Renderer2,Output ,HostListener} from '@angular/core';
 import { Options } from 'ng5-slider';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ZoomSlider } from '../../../zoomSlider';
 import { ProcessGraphModel } from '../model/process-graph-flowchart-model';
 import { DataTransferService } from '../../services/data-transfer.service';
 import { SharebpmndiagramService } from '../../services/sharebpmndiagram.service';
@@ -53,7 +54,7 @@ export class FlowchartComponent implements OnInit {
   isselected: number;
   activityValue: number = 1;
   public checkboxValue: boolean = false;
-  public selectedCaseArry: any[];
+  public selectedCaseArry: any[]=[];
   // public isfrequency: boolean = false;
   public caselength: number;
   public isdownloadsvg: boolean = false;
@@ -156,6 +157,10 @@ performanceFilterInput:any ={};
 isLoading:boolean=false;
 Pi_header_functions:Subscription;
 isGraph_changed:boolean=false;
+model3:any[]=[];
+selectedActivities1:any[]=[];
+combofilterObject:any;
+
 
   constructor(private dt: DataTransferService,
     private router: Router,
@@ -324,12 +329,13 @@ isGraph_changed:boolean=false;
       this.rest.getfullGraph(fullGraphbody).subscribe(data=>{this.fullgraph=data //process graph full data call
         if(this.fullgraph.hasOwnProperty('is_kafka_failure')){
           if(this.fullgraph.is_kafka_failure == 'Y'){
-            console.log("kafka fail");
+           
             Swal.fire({
               title: 'Oops!',
               text: ""+this.fullgraph.display_msg.info,
               icon: 'error',
               showCancelButton: false,
+              heightAuto: false,
               confirmButtonColor: '#007bff',
               cancelButtonColor: '#d33',
               confirmButtonText: 'Okay'
@@ -340,6 +346,7 @@ isGraph_changed:boolean=false;
                   icon: 'info',
                   title: 'Please wait, Redirecting to workspace',
                   showConfirmButton: false,
+                  heightAuto: false,
                   timer: 1500
                 })
                 setTimeout(() => {
@@ -360,6 +367,7 @@ isGraph_changed:boolean=false;
             text: "It is Not You it is Us, Please try again after some time",
             icon: 'error',
             showCancelButton: false,
+            heightAuto: false,
             confirmButtonColor: '#007bff',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Okay'
@@ -370,6 +378,7 @@ isGraph_changed:boolean=false;
                 icon: 'info',
                 title: 'Please wait, Redirecting to workspace',
                 showConfirmButton: false,
+                heightAuto: false,
                 timer: 1500
               })
               setTimeout(() => {
@@ -388,6 +397,7 @@ isGraph_changed:boolean=false;
           this.fullgraph_model=fullgraphOne.allSelectData.nodeDataArraycase
           this.fullgraph_model1=this.fullgraph_model
         this.model1 = fullgraphOne.allSelectData.nodeDataArraycase;
+        this.model3 = fullgraphOne.allSelectData.nodeDataArraycase;
         this.filterPerformData = this.fullgraph_model;
         this.model2 = this.flowchartData(this.model1)
         let fullModel2=this.model2
@@ -489,12 +499,13 @@ isGraph_changed:boolean=false;
       this.rest.getfullGraph(fullGraphbody).subscribe(data=>{this.fullgraph=data //process graph full data call
         if(this.fullgraph.hasOwnProperty('is_kafka_failure')){
           if(this.fullgraph.is_kafka_failure == 'Y'){
-            console.log("kafka fail");
+         
             Swal.fire({
               title: 'Oops!',
               text: ""+this.fullgraph.display_msg.info,
               icon: 'error',
               showCancelButton: false,
+              heightAuto: false,
               confirmButtonColor: '#007bff',
               cancelButtonColor: '#d33',
               confirmButtonText: 'Okay'
@@ -505,6 +516,7 @@ isGraph_changed:boolean=false;
                   icon: 'info',
                   title: 'Please wait, Redirecting to workspace',
                   showConfirmButton: false,
+                  heightAuto: false,
                   timer: 1500
                 })
                 setTimeout(() => {
@@ -532,6 +544,7 @@ isGraph_changed:boolean=false;
           this.fullgraph_model=fullgraphOne.allSelectData.nodeDataArraycase
           this.fullgraph_model1=this.fullgraph_model
         this.model1 = fullgraphOne.allSelectData.nodeDataArraycase;
+        this.model3 = fullgraphOne.allSelectData.nodeDataArraycase;
         this.filterPerformData = this.fullgraph_model;
         this.model2 = this.flowchartData(this.model1)
         this.startArray=[];
@@ -658,6 +671,7 @@ isGraph_changed:boolean=false;
       this.issliderDisabled=false;
         let fullgraphOne=this.fullgraph.data;
             this.model1 = fullgraphOne.allSelectData.nodeDataArraycase;
+            this.model3 = fullgraphOne.allSelectData.nodeDataArraycase;
             this.model2 = this.flowchartData(this.model1);
                 this.isvariantSelectedOne=false;
                 this.spinMetrics0="";
@@ -679,6 +693,7 @@ isGraph_changed:boolean=false;
       if (this.keyExists(this.selectedCaseArry[0], this.varaint_GraphData.data) == true) {
         var modalData = this.varaint_GraphData.data[0][this.selectedCaseArry[0]] 
         this.model1 = modalData.nodeDataArraycase
+        this.model3 = modalData.nodeDataArraycase
         if(this.isPerformance==true){
           if(this.selectedPerformancevalue==5||this.selectedPerformancevalue==6||this.selectedPerformancevalue==7||this.selectedPerformancevalue==8||this.selectedPerformancevalue==9){
           var modelArray3=[]
@@ -722,6 +737,7 @@ isGraph_changed:boolean=false;
           }
     this.rest.getVariantGraphCombo(variantComboBody).subscribe(res=>{this.variantCombo=res
       this.model1=this.variantCombo.data[0].nodeDataArraycase;
+      this.model3=this.variantCombo.data[0].nodeDataArraycase;
       this.filterPerformData = this.variantCombo.data[0].nodeDataArraycase;
       if(this.isPerformance==true){
         if(this.selectedPerformancevalue==5||this.selectedPerformancevalue==6||this.selectedPerformancevalue==7||this.selectedPerformancevalue==8||this.selectedPerformancevalue==9){
@@ -848,6 +864,7 @@ isGraph_changed:boolean=false;
       }
       let fullgraphOne=this.fullgraph.data;
       this.model1 = fullgraphOne.allSelectData.nodeDataArraycase;
+      this.model3 = fullgraphOne.allSelectData.nodeDataArraycase;
       if(this.isPerformance==true){
         if(this.selectedPerformancevalue==5||this.selectedPerformancevalue==6||this.selectedPerformancevalue==7||this.selectedPerformancevalue==8||this.selectedPerformancevalue==9){
           var modelArray3=[]
@@ -975,19 +992,22 @@ isGraph_changed:boolean=false;
           if(res.data != null){
           this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true,pid:this.graphIds,category:categoryName, processName:reqObj.pname}})
           } else{
-            Swal.fire(
-              'Oops!',
-              'Failed to generate BPM Notation, Please try again later.',
-              'error'
-            );
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: "Failed to generate BPM Notation, Please try again later. !",
+              heightAuto: false,
+            })
           }
         },
         (err =>{
-          Swal.fire(
-            '',
-            'Meaningful BPM notation cannot be derived from the 100% graph as this may result in duplication of activities, Please try generating BPM notation with the combination of cases under variants ',
-            'info'
-          );
+          Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Internal server error, Please try again later !',
+              // text: 'Meaningful BPM notation cannot be derived from the 100% graph as this may result in duplication of activities, Please try generating BPM notation with the combination of cases under variants ',
+              heightAuto: false,
+            });
         }))
 
     } else if (this.isSingleTraceBPMN == true) {
@@ -1001,19 +1021,21 @@ isGraph_changed:boolean=false;
           if(res.data != null){
             this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true,pid:this.graphIds,category:categoryName, processName:reqObj1.pname}})
             } else{
-              Swal.fire(
-                'Oops!',
-                'Failed to generate BPM Notation, Please try again later.',
-                'error'
-              );
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Failed to generate BPM Notation, Please try again later !',
+                heightAuto: false,
+              });
             }
         },
         (err =>{
-          Swal.fire(
-            '',
-            'Internal server error, Please try again later.',
-            'error'
-          );
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Internal server error, Please try again later !',
+            heightAuto: false,
+          });
         }))
 
     } else if (this.isMultiTraceBPMN == true) {
@@ -1027,19 +1049,21 @@ isGraph_changed:boolean=false;
           if(res.data != null){
             this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true,pid:this.graphIds,category:categoryName, processName:reqObj2.pname}})
             } else{
-              Swal.fire(
-                'Oops!',
-                'Failed to generate BPM Notation, Please try again later.',
-                'error'
-              );
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Failed to generate BPM Notation, Please try again later !',
+                heightAuto: false,
+              });
             }
         },
         (err =>{
-          Swal.fire(
-            '',
-            'Internal server error, Please try again later.',
-            'error'
-          );
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Internal server error, Please try again later !',
+            heightAuto: false,
+          });
         }))
 
     } else if (this.isSliderBPMN == true) {
@@ -1054,19 +1078,21 @@ isGraph_changed:boolean=false;
           if(res.data != null){
             this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true,pid:this.graphIds,category:categoryName, processName:reqObj3.pname}})
             } else{
-              Swal.fire(
-                'Oops!',
-                'Failed to generate BPM Notation, Please try again later.',
-                'error'
-              );
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Failed to generate BPM Notation, Please try again later !',
+                heightAuto: false,
+              });
             }
         },
         (err =>{
-          Swal.fire(
-            '',
-            'Internal server error, Please try again later.',
-            'error'
-          );
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Internal server error, Please try again later !',
+            heightAuto: false,
+          });
         }))
     }
   } 
@@ -1242,9 +1268,23 @@ flowchartDataOne(dataArray,index) {   //Links generate from responce for perform
 
   resetspinnermetrics(){        //process graph reset in leftside  spinner metrics
     this.resetFilter=true;
-    this.isClearFilter=true;
+    // this.isClearFilter=true;
+    this.model1=[];
     this.checkboxValue=false;
-    this.model1 = this.fullgraph_model;
+    if(this.selectedCaseArry.length==0){
+      this.varaint_data.data.forEach(element => {
+        if(element.selected=="active"){
+          this.selectedCaseArry.push(element.case)
+        }
+      });
+    }
+    // if(this.selectedActivities1.length>1){
+    //   this.readSelectedFilterValues(this.combofilterObject);
+    // }
+    // if(this.selectedCaseArry.length>=1){
+      // this.generatevarientFilterGraph();
+    // }else{
+    this.model1 = this.model3;
     this.filterPerformData = this.fullgraph_model;
     this.model2 = this.flowchartData(this.model1)
     // end points update in filter overlay
@@ -1260,14 +1300,14 @@ flowchartDataOne(dataArray,index) {   //Links generate from responce for perform
         this.endArray.push(element.from)
       }
     });
-
+  // }
     this.spinMetrics0="";
     this.spinMetrics0="absoluteFrequency";
     this.activityValue=1;
     this.pathvalue=1;
-    for (var i = 0; i < this.varaint_data.data.length; i++) {
-      this.varaint_data.data[i].selected = "inactive";
-    }
+    // for (var i = 0; i < this.varaint_data.data.length; i++) {
+    //   this.varaint_data.data[i].selected = "inactive";
+    // }
     this.isPerformance=false;
       //  BPMN Boolean Variables
       this.isFullGraphBPMN = true;
@@ -1444,6 +1484,7 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
       .subscribe(data => {
         let activityFilterGraph:any = data;
         this.model1 = activityFilterGraph.data[0].nodeDataArraycase;
+        this.model3 = activityFilterGraph.data[0].nodeDataArraycase;
         this.model2 = this.flowchartData(this.model1);
         this.spinner.hide();
       },(err =>{
@@ -1588,10 +1629,17 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
 
   readSelectedFilterValues(object){     // apply filter from overlay
     this.isFilterApplied=true;
+    this.spinMetrics0="";
+    this.spinMetrics0="absoluteFrequency";
+    this.combofilterObject=object
     if(object.startPoint==null && object.endPoint==null && object.activity==null && object.variants.length==this.varaint_data.data.length){
       this.isWorkingHrsBtn=true;
       this.dt.pi_buttonValues({"isPlaybtn":false,"isTimefeed_btn":this.isWorkingHrsBtn});
-      this.model1 = this.fullgraph_model;
+      let fullgraphOne=this.fullgraph.data;
+      this.model1 = fullgraphOne.allSelectData.nodeDataArraycase;
+      this.model3 = fullgraphOne.allSelectData.nodeDataArraycase;
+      // this.model1 = this.fullgraph_model;
+      // this.model3 = this.fullgraph_model;
       this.model2 = this.flowchartData(this.model1); 
             this.startArray=[];
             this.endArray=[];
@@ -1615,7 +1663,8 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
         }
         this.loaderImgSrc = "/assets/images/PI/Loader_Retrieving-Generated-Graph.gif";
         this.spinner.show();;
-
+        this.selectedActivities1=object.activity;
+        // console.log(this.selectedActivities1);
           var reqObj={
             "data_type":"endpoint_activity_filter",
             "pid":this.graphIds,
@@ -1629,6 +1678,7 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
           this.rest.getVariantGraphCombo(reqObj).subscribe(res => {
           this.variantCombo = res
             this.model1 = this.variantCombo.data[0].nodeDataArraycase;
+            this.model3 = this.variantCombo.data[0].nodeDataArraycase;
             this.filterPerformData = this.variantCombo.data[0].nodeDataArraycase;
             this.model2 = this.flowchartData(this.model1);
             this.startArray=[];
@@ -1731,7 +1781,7 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
       if(decryptedVariants.data.length == filtered_Variants.length){
         this.varaint_data.data[i].selected = "inactive";
       } else { 
-      this.varaint_data.data[i].selected = "active";
+      // this.varaint_data.data[i].selected = "active";
       }
       }
     }
@@ -1754,6 +1804,11 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
   }
 
   ngOnDestroy(){
+    let element=document.getElementById("tipsy_div");
+    if(element){
+      element.style.display = "none";
+      element.style.visibility = "hidden";
+    }
     if(this.graphgenetaionInterval){
       clearInterval(this.graphgenetaionInterval);
     }
@@ -1770,10 +1825,7 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
     
   }
 
-  viewbusinessinsights()
-  {
-    this.router.navigate(["/pages/processIntelligence/business-insights"],{queryParams:{wpid:this.graphIds}})
-  }
+ 
 
   readselectedNodes1(activies){    
     this.filterdNodes=[]
@@ -1815,6 +1867,7 @@ addWorkingHours(){
           text: "It is Not You it is Us, Please try again after some time",
           icon: 'error',
           showCancelButton: false,
+          heightAuto: false,
           confirmButtonColor: '#007bff',
           cancelButtonColor: '#d33',
           confirmButtonText: 'Okay'
@@ -1825,6 +1878,7 @@ addWorkingHours(){
               icon: 'info',
               title: 'Please wait, Redirecting to workspace',
               showConfirmButton: false,
+              heightAuto: false,
               timer: 1500
             })
             setTimeout(() => {
@@ -1908,6 +1962,7 @@ addWorkingHours(){
       html: 'I will close in <b></b> milliseconds.',
       timer: 2000,
       timerProgressBar: true,
+      heightAuto: false,
     }).then((result) => {
       /* Read more about handling dismissals below */
       if (result.dismiss === Swal.DismissReason.timer) {
@@ -2016,6 +2071,7 @@ addWorkingHours(){
           text: "It is Not You it is Us, Please try again after some time",
           icon: 'error',
           showCancelButton: false,
+          heightAuto: false,
           confirmButtonColor: '#007bff',
           cancelButtonColor: '#d33',
           confirmButtonText: 'Okay'
@@ -2026,6 +2082,7 @@ addWorkingHours(){
               icon: 'info',
               title: 'Please wait, Redirecting to workspace',
               showConfirmButton: false,
+              heightAuto: false,
               timer: 1500
             })
             setTimeout(() => {
@@ -2070,5 +2127,66 @@ addWorkingHours(){
       //  console.log(err);
      }));
   }
-   
+   viewbusinessinsights(){
+    this.router.navigate(["/pages/processIntelligence/business-insights"],{queryParams:{wpid:this.graphIds}})
+  }
+
+  generatevarientFilterGraph(){
+    this.model1=[];
+  if (this.selectedCaseArry.length == 1) {
+    this.isvariantSelectedOne=true;
+    this.issliderDisabled=true;
+    this.isDefaultData = false;
+    if (this.keyExists(this.selectedCaseArry[0], this.varaint_GraphData.data) == true) {
+      var modalData = this.varaint_GraphData.data[0][this.selectedCaseArry[0]] 
+      this.model1 = modalData.nodeDataArraycase;
+      this.model2 = this.flowchartData(this.model1);
+    }
+         /**
+     * BPMN Boolean Variables
+     */
+    this.isFullGraphBPMN = false;
+    this.isSingleTraceBPMN = true;
+    this.isMultiTraceBPMN = false;
+    this.isSliderBPMN = false;
+    this.isWorkingHrsBtn=false;
+    this.dt.pi_buttonValues({"isPlaybtn":false,"isTimefeed_btn":this.isWorkingHrsBtn});
+  }else{
+    this.issliderDisabled=true;
+    this.isvariantSelectedOne=false;
+  //   let endTime:any
+  //   if(this.workingHours.shiftEndTime=='23:59'){
+  //     endTime="24:00"
+  //   }else{
+  //     endTime=this.workingHours.shiftEndTime
+  //   }
+  //   this.loaderImgSrc = "/assets/images/PI/Loader_Retrieving-Generated-Graph.gif";
+  //   this.spinner.show();;
+  //   const variantComboBody={
+  //     "data_type":"variant_combo",
+  //     "pid":this.graphIds,
+  //     "cases" : this.selectedCaseArry,
+  //     'timeChange':this.isTimeChange,
+  //     "workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+endTime+":00"
+  //       }
+  // this.rest.getVariantGraphCombo(variantComboBody).subscribe(res=>{this.variantCombo=res
+  //   this.model1=this.variantCombo.data[0].nodeDataArraycase;
+    this.model1=this.model3;
+  //   this.filterPerformData = this.variantCombo.data[0].nodeDataArraycase;
+               
+          this.model2 = this.flowchartData(this.model1);
+  //         this.model2 = this.flowchartData(this.model1);
+  //       this.spinner.hide();
+  // })
+       /**
+     * BPMN Boolean Variables
+     */
+    this.isFullGraphBPMN = false;
+    this.isSingleTraceBPMN = false;
+    this.isMultiTraceBPMN = true;
+    this.isSliderBPMN = false;
+    this.isWorkingHrsBtn=false;
+    this.dt.pi_buttonValues({"isPlaybtn":false,"isTimefeed_btn":this.isWorkingHrsBtn});
+  }
+  }
 }

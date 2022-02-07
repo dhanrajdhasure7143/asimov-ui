@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { DataTransferService } from '../services/data-transfer.service';
 import { RestApiService } from '../services/rest-api.service';
 import { APP_CONFIG } from 'src/app/app.config';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-bussiness-process',
   templateUrl: './business-process.component.html' ,
@@ -30,9 +31,12 @@ export class BusinessProcessComponent implements AfterViewChecked {
   hasConformance:boolean = false;
   reSize:boolean=false;
   process_id:any;
-  isUploaded:boolean=false;
   systemAdmin:Boolean=false;
-
+  isUploaded:boolean=false;
+  freetrail: string;
+  processowner_list:any[]=[];
+  process_owner:any;
+  lastModified_user:any;
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private cdRef: ChangeDetectorRef, private dt: DataTransferService,private rest:RestApiService,
               @Inject(APP_CONFIG) private config, ) { }
 
@@ -47,6 +51,7 @@ export class BusinessProcessComponent implements AfterViewChecked {
     this.isApproverUser = this.userRole.includes('Process Architect')||this.userRole.includes('Process Owner');
     this.systemAdmin=this.userRole.includes("System Admin")
     this.getApproverList();
+    this.freetrail=localStorage.getItem("freetrail")
   }
 
   ngAfterViewChecked() {
@@ -65,7 +70,7 @@ export class BusinessProcessComponent implements AfterViewChecked {
   }
   ngAfterViewInit(){
     this.dt.notation_ScreenValues.subscribe(res=>{
-      console.log(res);
+      // console.log(res);
       let notationValues_obj={}
       notationValues_obj=res;
       if(notationValues_obj){
@@ -84,27 +89,40 @@ export class BusinessProcessComponent implements AfterViewChecked {
         if(this.isUploaded){
           this.selectedNotationType='bpmn'
         }
-        console.log(this.iscreate_notation)
+        let notationObj=notationValues_obj["selectedNotation"]
+        // console.log("notationObj",notationObj)
+        if(notationObj){
+          this.lastModified_user=notationObj["bpmnModelModifiedBy"];
+        }
+        // console.log(this.iscreate_notation)
       }
     });
   }
-    async getApproverList(){
-     await this.rest.getApproverforuser('Process Architect').subscribe( res =>  {
-      if(Array.isArray(res))
-        this.approver_list = res;
-    });
-   }
+  //  async getApproverList(){
+  //   await this.rest.getApproverforuser('Process Architect').subscribe( res =>  {
+  //    if(Array.isArray(res))
+  //      this.approver_list = res;
+  //  });
+  // }
 
-//   async getApproverList(){
-//     let roles={
-//       "roleNames": ["Process Owner","Process Architect"]
+  async getApproverList(){
+    let roles={
+      "roleNames": ["Process Owner","Process Architect"]
     
-//     }
-//     await this.rest.getmultipleApproverforusers(roles).subscribe( res =>  {//Process Architect
-//      if(Array.isArray(res))
-//       this.approver_list = res;
-//   });
-//   }
+    }
+    await this.rest.getmultipleApproverforusers(roles).subscribe( res =>  {//Process Architect
+      if(Array.isArray(res))
+       this.approver_list = res;
+   });
+
+   let roles1={
+    "roleNames": ["Process Owner"]
+  }
+  await this.rest.getmultipleApproverforusers(roles1).subscribe( res =>  {//Process Architect
+    if(Array.isArray(res))
+     this.processowner_list = res;
+ });
+  }
   route() {
     this.router.navigate(['/pages/home']);
   }
@@ -186,12 +204,28 @@ export class BusinessProcessComponent implements AfterViewChecked {
     if(selecetedTenant){
        splitTenant = selecetedTenant.split('-')[0];
     }
-    window.location.href = this.config.camundaUrl+"/camunda/app/welcome/"+splitTenant+"/#!/login?accessToken=" + token + "&userID="+userId+"&tenentID="+selecetedTenant;
-    // window.location.href = "http://10.11.0.127:8080/camunda/app/welcome/"+splitTenant+"/#!/login?accessToken=" + token + "&userID="+userId+"&tenentID="+selecetedTenant;
+    let navigateBackTo=this.router.url;
+    //   window.location.href = this.config.camundaUrl+"/camunda/app/welcome/"+splitTenant+"/#!/login?accessToken=" + token + "&userID="+userId+"&tenentID="+selecetedTenant;
+    //   // window.location.href = "http://10.11.0.127:8080/camunda/app/welcome/"+splitTenant+"/#!/login?accessToken=" + token + "&userID="+userId+"&tenentID="+selecetedTenant;
+    // }
+    window.location.href = this.config.camundaUrl+"/camunda/app/welcome/"+splitTenant+"/#!/login?accessToken=" + token + "&userID="+userId+"&tenentID="+selecetedTenant+"&navigate_back="+navigateBackTo;
   }
 
-  onchange(){
-    let obj={id:"submit",selectedApprovar:this.selected_approver}
+  saveandSubmit(){
+    let obj
+    if(this.isShowConformance){
+      if(!this.process_owner){
+        Swal.fire({
+          icon: 'error',
+          text: 'Please select process owner !',
+          heightAuto: false,
+        });
+        return;
+      }
+      obj={id:"submit",selectedApprovar:this.selected_approver,processOwner:this.processowner_list[this.process_owner].userId,processOwnerName:this.processowner_list[this.process_owner].firstName + ' ' + this.processowner_list[this.process_owner].lastName}
+    }else{
+      obj={id:"submit",selectedApprovar:this.selected_approver}
+    }
     this.dt.submitForApproval(obj)
   }
 

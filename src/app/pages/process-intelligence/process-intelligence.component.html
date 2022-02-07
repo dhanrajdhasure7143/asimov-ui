@@ -115,7 +115,7 @@
                       </div>  
                     </form>
                 </div>
-              <button class="tsttooltipbtn" id="generate_btn" (click)="generateBpmn()">
+              <button class="tsttooltipbtn" id="generate_btn" *ngIf="freetrail!='true'" (click)="generateBpmn()">
                 <img src="../../../assets/images/PI/bpmn.svg">
                 <span class="testtooltip">Generate BPMN</span>
               </button>

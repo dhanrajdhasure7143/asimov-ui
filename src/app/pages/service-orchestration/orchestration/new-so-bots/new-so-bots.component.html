@@ -1,26 +1,28 @@
-<mat-tab-group  (selectedTabChange)="onTabChanged($event)" class="so-subtab-header">
-  <mat-tab label="Statistics">
+<div class="so-bot-graph">
+    <mat-tab-group (selectedTabChange)="onTabChanged($event)" class="so-subtab-header">
+        <mat-tab label="Statistics">
 
-   <ng-template mat-tab-label>
-     <!-- <mat-icon  class="text-primary">desktop_windows</mat-icon> -->
-       <!-- &nbsp;&nbsp; -->
-       Statistics
-     </ng-template>
-   <div *ngIf="check_tab==0" class="so-sub-tab-content">
-     <app-statistics></app-statistics>
-   </div>
- </mat-tab>
+            <ng-template mat-tab-label>
+                <!-- <mat-icon  class="text-primary">desktop_windows</mat-icon> -->
+                <!-- &nbsp;&nbsp; -->
+                Statistics
+            </ng-template>
+            <div *ngIf="check_tab==0" class="so-sub-tab-content">
+                <app-statistics></app-statistics>
+            </div>
+        </mat-tab>
 
- <mat-tab label="Monitoring">
+        <mat-tab label="Monitoring">
 
-   <ng-template mat-tab-label>
-     <!-- <i class="text-primary material-icons">inbox</i> -->
-       <!-- &nbsp;&nbsp; -->
-       Monitoring
-   </ng-template>
-   <div *ngIf="check_tab==1" class="so-sub-tab-content">
-    <app-monitoring></app-monitoring>
-   </div>
- </mat-tab>
+            <ng-template mat-tab-label>
+                <!-- <i class="text-primary material-icons">inbox</i> -->
+                <!-- &nbsp;&nbsp; -->
+                Monitoring
+            </ng-template>
+            <div *ngIf="check_tab==1" class="so-sub-tab-content">
+                <app-monitoring></app-monitoring>
+            </div>
+        </mat-tab>
 
-</mat-tab-group>
+    </mat-tab-group>
+</div>

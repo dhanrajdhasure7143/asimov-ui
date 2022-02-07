@@ -23,6 +23,9 @@ export class ProgramDetailsComponent implements OnInit {
   unassigned_projects: any=[];
   addprojectsForm:FormGroup;
   owner_letters: any;
+  program_id: any;
+  programeNameFlag: boolean = false;
+  programePurposeFlag: boolean = false;
 
   constructor(
     private rest:RestApiService,
@@ -42,17 +45,29 @@ export class ProgramDetailsComponent implements OnInit {
     mindate:any;
     selected_process_names:any=[];
     editdata:Boolean=false;
-    displayedColumns8: string[] = ["initiatives","projectName","owner","new","projectPercentage","lastModifiedTimestamp","lastModifiedBy", "createdBy","action"];
+    displayedColumns8: string[] = ["initiatives","projectName","owner","status","projectPercentage","lastModifiedTimestamp","lastModifiedBy", "createdBy","action"];
     dataSource8:MatTableDataSource<any>;
     selectedProgram_id:any
     @ViewChild("sort104",{static:false}) sort104: MatSort;
     @ViewChild("paginator104",{static:false}) paginator104: MatPaginator;
+    public userRoles: any;
+    public name: any;
+    email: any;
+    public userRole:any = [];
+    public userName:any;
+    initiatives: any;
   ngOnInit() {
-    this.getprojects_and_programs();
+   // this.getprojects_and_programs();
+   this.userRoles = localStorage.getItem("userRole")
+   this.userRoles = this.userRoles.split(',');
+   this.userName=localStorage.getItem("firstName")+" "+localStorage.getItem("lastName");
+   this.email=localStorage.getItem('ProfileuserId');
+
     this.mindate= moment().format("YYYY-MM-DD");
     this.getallusers();
     this.getprocessnames();
-    this.getunassignedprojectslist();
+    this.getunassignedprojectslist(this.userRoles,this.userName,this.email);
+    
     setTimeout(()=>{
       this.getpiechart();
       this.get_project_duration_chart();
@@ -69,7 +84,7 @@ export class ProgramDetailsComponent implements OnInit {
       priority: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       measurableMetrics: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       process: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      description: ["", Validators.compose([Validators.maxLength(200)])],
+      description: ["", Validators.compose([Validators.maxLength(150)])],
       access: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
      // status: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
   
@@ -79,17 +94,25 @@ export class ProgramDetailsComponent implements OnInit {
     projects: [null, Validators.compose([Validators.required, Validators.maxLength(50)])],
     
     })
+    
+    this.getInitiatives();
+    this.getprogramdetails();
   }
+  
 
-  getprojects_and_programs()
-  {
-    this.spinner.show()
-    this.rest.getAllProjects().subscribe(data=>{
-      this.spinner.hide()
-      this.projects_and_programs_list=data;
-      this.getprogramdetails();
-    })
-  }
+  // getprojects_and_programs()
+  // {
+  //   this.spinner.show()
+  //   this.userRoles = localStorage.getItem("userRole")
+  //   this.userRoles = this.userRoles.split(',');
+  //   this.name=localStorage.getItem("firstName")+" "+localStorage.getItem("lastName")
+  //   this.email=localStorage.getItem('ProfileuserId');
+  //   this.rest.getAllProjects(this.userRoles,this.name,this.email).subscribe(data=>{
+  //     this.spinner.hide()
+  //     this.projects_and_programs_list=data;
+  //     this.getprogramdetails();
+  //   })
+  // }
 
 
 
@@ -104,19 +127,39 @@ export class ProgramDetailsComponent implements OnInit {
 
 
   getprogramdetails(){
-    
+   
+    this.spinner.show()
+    // this.route.queryParams.subscribe(data=>{
+    //   let program_id=data.id;
+    //   this.selectedProgram_id=program_id
+    //   this.get_linked_projects(program_id);
+    //   this.program_detials=this.projects_and_programs_list[0].find(item=>item.id==program_id);
+    //   console.log("pgrmdata: ", this.program_detials)
+    //   if(this.program_detials){
+    //     let usr_name=this.program_detials.owner.split('@')[0].split('.');
+    //     this.owner_letters=usr_name[0].charAt(0)+usr_name[1].charAt(0);
+    //     console.log(this.owner_letters)
+    //     }
+    //   this.editdata=false;
+    // });
     this.route.queryParams.subscribe(data=>{
-      let program_id=data.id;
-      this.selectedProgram_id=program_id
-      this.get_linked_projects(program_id);
-      this.program_detials=this.projects_and_programs_list[0].find(item=>item.id==program_id);
-      console.log("pgrmdata: ", this.program_detials)
+      this.program_id=data.id;
+    this.rest.getProgrmaDetailsById(this.program_id).subscribe(data=>{
+      this.program_detials=data;
       if(this.program_detials){
         let usr_name=this.program_detials.owner.split('@')[0].split('.');
-        this.owner_letters=usr_name[0].charAt(0)+usr_name[1].charAt(0);
-        console.log(this.owner_letters)
+        // this.owner_letters=usr_name[0].charAt(0)+usr_name[1].charAt(0);
+        if(usr_name.length > 1){
+          this.owner_letters=usr_name[0].charAt(0)+usr_name[1].charAt(0);
+          }else{
+            this.owner_letters=usr_name[0].charAt(0);
+          }
+       
         }
-      this.editdata=false;
+        this.editdata=false;
+      this.get_linked_projects(this.program_id);
+      this.spinner.hide()
+    })
     });
   }
 
@@ -125,8 +168,8 @@ export class ProgramDetailsComponent implements OnInit {
   {
     this.rest.getProjectsByProgramId(id).subscribe(list=>{
       this.linked_projects=list;
-      console.log(this.linked_projects);
-      this.dataSource8= new MatTableDataSource(this.linked_projects);
+     
+      this.dataSource8= new MatTableDataSource(this.program_detials.project);
       this.dataSource8.sort=this.sort104;
       this.dataSource8.paginator=this.paginator104;
     })
@@ -386,8 +429,30 @@ export class ProgramDetailsComponent implements OnInit {
 
   createproject(template)
   {
-    this.resetcreateproject()
-    this.modalref = this.modalservice.show(template,{class:"modal-lg"});
+    this.userRoles = localStorage.getItem("userRole")
+    if (this.userRoles == "User") {
+      if (this.linked_projects.length == 1) {
+        Swal.fire({
+          title: 'Error',
+          text: "You have limited access to this product. Please contact EZFlow support team for more details.",
+          position: 'center',
+          icon: 'error',
+          showCancelButton: false,
+          confirmButtonColor: '#007bff',
+          cancelButtonColor: '#d33',
+          heightAuto: false,
+          confirmButtonText: 'Ok'
+        })
+      }
+      else {
+        this.resetcreateproject()
+        this.modalref = this.modalservice.show(template, { class: "modal-lg" });
+      }
+    }
+    else {
+      this.resetcreateproject()
+      this.modalref = this.modalservice.show(template, { class: "modal-lg" });
+    }
   }
 
 
@@ -401,8 +466,8 @@ export class ProgramDetailsComponent implements OnInit {
       this.modalref.hide();
       if(response.errorMessage==undefined)
       {
-        Swal.fire("Success",response.status,"success");
-        this.get_linked_projects(this.program_detials.id);
+        Swal.fire("Success",response.message,"success");
+        this.getprogramdetails();
       }
       else
         Swal.fire("Error",response.errorMessage,"error");
@@ -436,13 +501,13 @@ export class ProgramDetailsComponent implements OnInit {
           let response:any=res
           if(response.warningMessage ==="Project can't be deleted with status In Progress"){
             Swal.fire("Error","Project can't be deleted with status InProgress","error")
-            this.get_linked_projects(this.program_detials.id);
+            this.getprogramdetails();
           }else
           if(response.errorMessage==undefined)
           {
             
             Swal.fire("Success","Project Deleted Successfully !!","success")
-            this.get_linked_projects(this.program_detials.id);
+            this.getprogramdetails();
           }
           else
           {
@@ -508,11 +573,12 @@ export class ProgramDetailsComponent implements OnInit {
   {
     this.spinner.show()
     this.program_detials["type"]="Program";
+    this.program_detials["programPurpose"]=this.program_detials.purpose
     this.rest.update_project(this.program_detials).subscribe(res=>{
       this.spinner.hide()
       let response:any=res;
       if(response.errorMessage == undefined)
-        Swal.fire("Success","Project Updated Successfully !!","success")
+        Swal.fire("Success","Program Updated Successfully !!","success")
       else
         Swal.fire("Error",response.errorMessage,"error");
       this.getprogramdetails();
@@ -520,12 +586,35 @@ export class ProgramDetailsComponent implements OnInit {
     });
   }
   linkproject(template){
-    this.modalref = this.modalservice.show(template);
+    this.userRoles = localStorage.getItem("userRole")
+    if (this.userRoles == "User") {
+      if (this.linked_projects.length == 1) {
+        Swal.fire({
+          title: 'Error',
+          text: "You have limited access to this product. Please contact EZFlow support team for more details.",
+          position: 'center',
+          icon: 'error',
+          showCancelButton: false,
+          confirmButtonColor: '#007bff',
+          cancelButtonColor: '#d33',
+          heightAuto: false,
+          confirmButtonText: 'Ok'
+        })
+      }
+      else {
+        this.resetprojects();
+        this.modalref = this.modalservice.show(template);
+      }
+    }
+    else {
+      this.resetprojects();
+      this.modalref = this.modalservice.show(template);
+    }
 
   }
-  getunassignedprojectslist()
+  getunassignedprojectslist(roles,name,email)
   {
-    this.rest.getunassignedprojects().subscribe(data=>{
+    this.rest.getunassignedprojects(roles,name,email).subscribe(data=>{
       this.unassigned_projects=data;
     })
   }
@@ -535,14 +624,42 @@ export class ProgramDetailsComponent implements OnInit {
   }
   save(){
     let req_body:any=this.addprojectsForm.get("projects").value;
-    this.rest.savedata(this.selectedProgram_id,req_body).subscribe(res=>{
+    this.rest.savedata(this.program_id,req_body).subscribe(res=>{
       this.modalref.hide();
       if(res.message==="Project Added Successfully"){
         Swal.fire("Success","Project Added Successfully !!","success")
       }else
       Swal.fire("Error","Unable to add the Project","error");
-      console.log(res)
-      this.get_linked_projects(this.selectedProgram_id);
+     
+      this.getprogramdetails();
     })
   }
+
+  getInitiatives(){
+    this.rest.getProjectIntitiatives().subscribe(res=>{
+      let response:any=res;
+      this.initiatives=response;
+    })
+  }
+
+  getreducedValue(value) {​​​​​​​​
+    if (value.length > 15)
+    return value.substring(0,16) + '...';
+    else
+    return value;
+  }​​​​​​​​
+  programeNameMaxLength(value){
+    if(value.length > 50){
+    this.programeNameFlag = true;
+    }else{
+      this.programeNameFlag = false;
+    }
+     }
+     programePurposeMaxLength(value){
+    if(value.length > 150){
+    this.programePurposeFlag = true;
+    }else{
+      this.programePurposeFlag = false;
+    }
+     }
 }

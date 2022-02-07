@@ -103,39 +103,6 @@ mat-select-value {
     display: none;
 }
 
-.mat-progress-bar {
-    display: block;
-    height: 6px;
-    overflow: hidden;
-    position: relative;
-    background-color: whitesmoke;
-    width: 90%;
-    margin-top: 2%;
-}
-
-::ng-deep .mat-progress-bar-fill::after {
-    background-color: green;
-}
-
-::ng-deep .mat-progress-bar-buffer {
-    background: #E4E8EB;
-}
-
-::ng-deep .mat-progress-bar {
-    border-radius: 2px;
-}
-
-.closefile {
-    margin: -3px 0% 0% 4%;
-    font-size: x-large;
-    color: black;
-    cursor: pointer;
-}
-
-.closefile:hover {
-    color: red;
-}
-
 .fa-cloud-upload-alt:before {
     content: "\f382";
     font-size: x-large;
@@ -148,8 +115,7 @@ mat-select-value {
 }
 
 .filenameoverflow {
-    display: inline-block;
-    width: 190px;
+    margin-right: 50%;
     /* white-space: nowrap;
     overflow: hidden !important;
     text-overflow: ellipsis; */
@@ -215,7 +181,8 @@ mat-select-value {
 }
 
 .CreateTkt.h-scroll {
-    height: calc(100% - 70px);
+    /* height: calc(100% - 70px); */
+    height: calc(100% - 60px);
     overflow: auto;
     padding: 0px 0px 5px
 }
@@ -227,12 +194,14 @@ mat-select-value {
 }
 
 .CreateTkt-Heading span {
-    font-size: 20px;
+    font-size: 24px;
     font-weight: 600;
+    color: #001c47;
+    line-height: 35px;
 }
 
 .CreateTkt-Attachmentbox {
-    padding: 20px 0px;
+    padding: 15px 0px;
     background: #f6f6f6;
     border-radius: 5px;
     border: dotted 2px rgb(197, 196, 196);
@@ -243,7 +212,7 @@ mat-select-value {
 .CreateTkt-footer {
     display: flex;
     justify-content: flex-end;
-    margin-top: 10px;
+    /* margin-top: 10px; */
 }
 
 .CreateTkt-footer .btn-primary,
@@ -301,7 +270,7 @@ mat-select-value {
 .removeallattachment {
     display: flex;
     justify-content: flex-end;
-    margin: 15px 0px;
+    margin-bottom: 5px;
 }
 
 /* .removeallattachment button {
@@ -321,9 +290,9 @@ mat-select-value {
     text-overflow: ellipsis;
 } */
 
-.Component-filed {
+/* .Component-filed {
     margin-bottom: 12px;
-}
+} */
 .deleteattachment img, .deleteattachment a, .readfilename a{
     padding: 0px;
 }
@@ -331,22 +300,27 @@ mat-select-value {
 .Attached-contents {
     display: flex;
     align-items: center;
-    margin-top: 15px;
+    margin: 15px 0px;
 }
 .attached-image {
-    width: 14%;
+    width: 8%;    
+    line-height: 30px;
 }
 .attached-name {
-    width: 80%;
+    width: 85%;
+    text-align: left;
 }
 .attached-close {
-    width: 6%;
+    cursor: pointer;
+    text-align: right;
+    width: 5%;    
+    margin-top: 10px;
 }
 .attached-name span {
     font-size: 14px;
 }
 .CreateTkt-Attachmentbox div {
-    margin-bottom: 8px;
+    /* margin-bottom: 8px; */
 }
 .comments-box .comment-date .edit-icon{
     padding-left: 5px;
@@ -383,16 +357,11 @@ mat-select-value {
 span.firsticon-edit {
     margin-right: 6px;
 }
-::ng-deep .mat-paginator-page-size{
-    display: none !important;
-}
+
 .deleteattachment{
     padding-right: 5px;
 }
 
-/* ::ng-deep .mat-paginator-range-label{
-    display: none !important;
-} */
 .tablefile-name{
     padding-left: 3px;
 }
@@ -400,3 +369,97 @@ span.firsticon-edit {
     height: 245px;
     margin-top: 5px;
 }
+.CreateTkt-Attachmentbox:hover {
+    border: 2px dotted #00a1e3;
+    background-color: aliceblue;
+}
+.CreateTkt-Attachmentbox p {
+    margin: 10px 0px;
+}
+.CreateTkt-Attachmentbox button.btn {
+    border: 1px solid #00a1e3 !important;
+    background: transparent !important;
+    color: #00a1e3;
+    margin-right: 0px !important;
+}
+.CreateTkt-Attachmentbox button.btn:hover {
+    border: 1px solid transparent !important;
+    background: #001c47 !important;
+}
+span.module-header-title.innertitle {
+    line-height: 35px;
+}
+
+::ng-deep .mat-select-panel.mat-primary {
+    /* max-height: 300px !important; */
+    min-width: calc(100% + 21px) !important;
+    /* position: absolute; */
+    right: -50px;
+    /* top: 39px; */
+    /* border-radius: 0px !important; */
+    box-shadow: none;
+    border: 1px solid #d1d1d1;
+    margin-left: 29px;
+    min-height: 273px;
+}
+/* ::ng-deep .Component-filed .mat-form-field-label {
+    color: #7B8694 !important;
+    font-size: 14px !important;
+    background: transparent !important;
+    transition: none;
+    position: relative;
+    top: 8px;
+}
+::ng-deep .Component-filed .mat-form-field.mat-focused .mat-form-field-label {
+  position: relative;
+  top: 5px !important;
+  transform: none;
+} */
+#text-description,
+#text-summary {
+    min-height: 60px;
+    max-height: 250px;
+    height: auto;
+    overflow: auto;
+}
+.tsttooltipbtn {
+    position: relative;
+}
+.tsttooltipbtn:hover .default-img{
+    display: none;
+}
+.tsttooltipbtn:hover .hover-img {
+    display: initial;
+}
+.tsttooltipbtn:hover span.testtooltip {
+    display: block;
+}
+span.testtooltip {
+    position: absolute;
+    top: 32px;
+    right: 0px;
+    background-color: #001c47;
+    color: #fff;
+    width: -moz-max-content;
+    width: max-content;
+    padding: 3px 10px;
+    border-radius: 4px;
+    display: none;
+    z-index: 1;
+}
+span.testtooltip:after {
+    content: "";
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    top: -4px;
+    background-color: #001c47;
+    transform: rotate(45deg);
+    right: 10px;
+}
+.attached-filedet {
+    margin-bottom: 5px;
+}
+textarea{
+    resize: none !important;
+  }

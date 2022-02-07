@@ -22,4 +22,7 @@ export class BpmnModel{
     notationFromPI:boolean = false;
     hasConformance:boolean = false;
     bpmnConfProcessMeta:string = "";
+    processOwner:string;
+    role:string;
+    processOwnerName:string;
 }

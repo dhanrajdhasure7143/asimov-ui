@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import moment from 'moment';
 import { CryptoService } from 'src/app/services/crypto.service';
 import countries from 'src/app/../assets/jsons/countries.json';
+import { DataTransferService } from '../../services/data-transfer.service';
 
 @Component({
   selector: 'app-myaccount',
@@ -39,12 +40,17 @@ export class MyAccountComponent implements OnInit {
     private spinner:NgxSpinnerService,
     private modalService: BsModalService,
     private router: Router,
-    private cryptoService: CryptoService
+    private cryptoService: CryptoService,
+    private dt : DataTransferService
     ) { }
 
   ngOnInit() {
+    this.spinner.show();
     this.countryInfo = countries.Countries;
-    this.userDetails();
+    setTimeout(() => {
+      this.userDetails();
+    }, 500);
+
    
   }
 
@@ -55,7 +61,7 @@ export class MyAccountComponent implements OnInit {
     }
     let encrypt = this.spacialSymbolEncryption + this.cryptoService.encrypt(JSON.stringify(this.formOne));
     let reqObj = {"enc": encrypt};
-    console.log(reqObj);
+ 
     
     this.api.updateUser(reqObj).subscribe(data => {
     Swal.fire({
@@ -65,6 +71,7 @@ export class MyAccountComponent implements OnInit {
       icon: 'success',
       showCancelButton: false,
       confirmButtonColor: '#007bff',
+      heightAuto: false,
       cancelButtonColor: '#d33',
       confirmButtonText: 'Ok'
     });
@@ -86,7 +93,8 @@ export class MyAccountComponent implements OnInit {
   }
   userDetails() {
     this.useremail = localStorage.getItem("ProfileuserId");
-    this.api.getUserDetails(this.useremail).subscribe(data => {this.formOne = data     
+    this.api.getUserDetails(this.useremail).subscribe(data => {this.formOne = data
+      this.dt.userDetails(data);     
       this.getAllDepartments()
       this. getAllStates();
       this.gatAllCities();
@@ -97,6 +105,7 @@ export class MyAccountComponent implements OnInit {
         
         }
       }
+      this.spinner.hide();
     })
    
   }
@@ -147,48 +156,9 @@ export class MyAccountComponent implements OnInit {
         return false;
       }
   }
-  passwordChange(form:NgForm){
-    let pswdbody = {
-      "confirmPassword": this.pswdmodel.confirmPassword,
-      "currentPassword": this.pswdmodel.currentPassword,
-      "newPassword":this.pswdmodel.confirmPassword,
-      "userId": localStorage.getItem('ProfileuserId')
-    }
-  this.api.changePassword(pswdbody).subscribe(res => {
-  // this.pswdmodel = {};
-  if(res.errorMessage === undefined){
-    Swal.fire({
-      title: "Success",
-      text: "Password Updated successfully!",
-      position: 'center',
-      icon: 'success',
-      showCancelButton: false,
-      confirmButtonColor: '#007bff',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Ok'
-    });}else if(res.errorMessage === "Your current password was incorrect."){
-      Swal.fire("Error","Please check your current password!","error");
-     
-    }else if(res.errorMessage === "The new password must be different from your previous used passwords"){
-      Swal.fire("Error",res.errorMessage,"error");
-     
-    }
-  }, err => {
-    // console
-    Swal.fire("Error","Please check your current password!","error");})
- form.resetForm();
-  }
+ 
 
-  curreyetoggle() {
-    this.eyeshow = !this.eyeshow;
-  }
-  neweyetoggle() {
-    this.neweyeshow = !this.neweyeshow;
-  }
-  confeyetoggle() {
-    this.confeyeshow = !this.confeyeshow;
-  }
-
+  
 
 
   

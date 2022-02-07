@@ -28,6 +28,7 @@ export class XesdocumentComponent implements OnInit {
   searchTerm: any;
   displayedRows$: Observable<any[]>;
   totalRows$: Observable<number>;
+  overlay_data:any={};
 
   @ViewChild(MatPaginator,{static:false}) paginator: MatPaginator;
 
@@ -64,6 +65,7 @@ export class XesdocumentComponent implements OnInit {
     return index;
   }
   slideUp() { //Bottom Slide Up
+    this.overlay_data={"type":"create","module":"pi"};
     var modal = document.getElementById('myModal');
     modal.style.display = "block";
   }

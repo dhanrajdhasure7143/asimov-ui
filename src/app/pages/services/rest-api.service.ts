@@ -49,12 +49,16 @@ export class RestApiService{
    }
 
   public ipAddress:string;
-    //nethan.price@guerrillamailblock.com
+    //nethan.price@guerrillamailblock.com , karthik.peddinti@epsoftinc.com
   //password -Welcome@123
 
+  // sampadha.bharadwaj@epsoftinc.com , Welcome@1234 "Analyst"
+  // edukondalu.chokkapu@epsoftinc.com , Welcome@123 "Architect"
+  //harish.reddi@epsoftinc.com , password: Epsoft@123
+
   getAccessToken(){
-    let data = {"userId":"karthik.peddinti@epsoftinc.com",//"raghavendra.basavaraju@epsoftinc.com",
-                "password":"Welcome@123"};
+    let data = {"userId":"harish.reddi@epsoftinc.com",
+                "password":"Epsoft@123"};
 
 
 
@@ -123,7 +127,8 @@ export class RestApiService{
     return this.http.post("/bpsprocess/submit/bpms/notation/approve", bpmnModel)
   }
   getBPMNTempNotations(){
-    return this.http.get("/bpsprocess/temp/bpmn/all/user");
+    // return this.http.get("/bpsprocess/temp/bpmn/all/user");
+    return this.http.get("/bpsprocess/temp/bpmn/latestModified");
   }
   autoSaveBPMNFileContent(bpmnModel){
     return this.http.post("/bpsprocess/temp/bpms/notation", bpmnModel)
@@ -255,7 +260,7 @@ export class RestApiService{
 
     getviewlogdata(botid,botverid)
     {
-      return this.http.get("/rpa-service/logs/"+botid+"/"+botverid);
+      return this.http.get("/rpa-service/logs/"+botid);
     }
 
     getViewlogbyrunid(botid,botverid,runid){
@@ -284,6 +289,12 @@ export class RestApiService{
   getbotdata(botid)
   {
     return this.http.get("/rpa-service/get-bot/"+botid);
+  }
+
+
+  getBotImage(botId, version)
+  {
+    return this.http.get(`/rpa-service/get-botImage?bot-id=${botId}&version=${version}`)
   }
 
   scheduleList(botid){
@@ -329,6 +340,14 @@ export class RestApiService{
       return this.http.get('/rpa-service/load-process-info/processid='+id);
     }
   }
+
+
+
+
+  saveTasksOrder(orderData)
+  {
+    return this.http.post("/rpa-service/save-tasks-order",orderData);
+  }
   getAllOrcRpaWorkSpaces()
   {
       return this.http.get('/rpa-service/process-name');
@@ -368,7 +387,7 @@ export class RestApiService{
   fileupload(file){
     return this.http.post('/processintelligence/v1/connectorconfiguration/upload',file)
   }
-  getCategoriesList(){
+  getCategoriesList():Observable<any>{
     return this.http.get('/processintelligence/v1/processgraph/categories')
   }
   addCategory(data){
@@ -609,7 +628,7 @@ export class RestApiService{
         "sourceType":""
         }
     }
-    console.log(data);
+ 
     return this.http.post("/rpa-service/assign-bot",data);
   }
 
@@ -647,6 +666,10 @@ export class RestApiService{
       return this.http.get<any>('/api/user/tenants/'+tenantid +'/users');
     }
 
+    getAllUsersByDept()
+    {
+      return this.http.get("/platform-service/project/getallUsersByDept");
+    }
     getProcesslogsdata(processId)
     {
       return this.http.get("/rpa-service/process-logs/"+processId);
@@ -738,7 +761,10 @@ save_blueprism_config(data)
     {
       return this.http.post("/rpa-service/management/get-uipath-bots","");
     }
-	
+	update_uipath_env(data)
+  {
+     return this.http.put("/rpa-service/management/update-source-details",data)
+  }
 	getslalist()
     {
       return this.http.get("/rpa-service/list-sla-confuguration");
@@ -776,7 +802,7 @@ save_blueprism_config(data)
 
     runsmoketestBluePrism(data){
       let value = data;
-      console.log(value);
+   
       return this.http.post("/rpa-service/management/blueprism-smoketest?botName="+value,"", {responseType: "text" });
     }
 	
@@ -864,11 +890,11 @@ save_blueprism_config(data)
       return this.http.post("/rpa-service/management/save-source-details",data)
     }
 
-    getAllProjects(){
-      return this.http.get("/platform-service/project/fetchAll")
+    getAllProjects(roles,name,email){
+      return this.http.get("/platform-service/project/fetchAllByDept?roles="+roles+"&name="+name+"&email="+email+"")
     }
 
-
+ 
     update_project(data:any){
       return this.http.post("/platform-service/project/updateproject", data)
     }
@@ -890,9 +916,9 @@ save_blueprism_config(data)
       return this.http.post("/platform-service/project/addProjectbyProgramId?programId="+programid,data);
     }
 
-    getunassignedprojects()
+    getunassignedprojects(roles,name,email)
     {
-      return this.http.get("/platform-service/project/getUnassignedProjects");
+      return this.http.get("/platform-service/project/getUnassignedProjects?roles="+roles+"&name="+name+"&email="+email+"");
     }
 
     getRole(userid){
@@ -972,11 +998,9 @@ save_blueprism_config(data)
   getBIActivityTime(processId){
     return this.http.get("/processintelligence/v1/processgraph/getActivityTimeData/"+processId);
   }
-  
   getBIThroughputTime(processId){
-    return this.http.get("/processintelligence/v1/processgraph/getThroughputTimeDataV2/"+processId);
+    return this.http.get("/processintelligence/v1/processgraph/getThroughputTimeDataV2/"+processId);
   }
-
   getBusinessMetrics(processId){
     return this.http.get("/processintelligence/v1/processgraph/getBusinessMetricsData/"+processId);
   }
@@ -1094,5 +1118,178 @@ getvaluechainprocess(id)
   getListOfComponents(){
     return this.http.get('/api/servicedesk/getcomponents')
   }
+  getselectedRequestKey(key){
+   return this.http.get('/api/servicedesk/getCustomerRequestsByRequestKey?requestKey='+key);
+  }
+
+  deleteDepartments(data):Observable<any>{
+    const httpOps = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+            }),
+      body: data
+    }
+    return this.http.delete<any>('/platform-service/department/categories',httpOps)
+     
+  }
+
+  getDepartmentsList(): Observable<any>{
+    return this.http.get('/platform-service/department/categories')
+  }
+
+  createDepartment(body:any): Observable<any>{
+    return this.http.post<any>('/platform-service/department/categories', body,httpOptions)
+  }
+
+  updateDepartment(data:any): Observable<any>{
+    return this.http.put<any>('/platform-service/department/categories', data,httpOptions)
+  }
+
+  getDepartmentDetails(id){
+    return this.http.get('/platform-service/department/'+id+'')
+  }
+
+  deleteSelectedUser(userId):Observable<any>{
+    return this.http.delete<any>('/api/user/deleteSelectedUser?userId='+userId)
+     
+ }
+
+ inviteUserwithoutReg(body):Observable<any>{
+  return this.http.post<any>("/api/user/userInviteRegistration", body)
+ }
+ getAllRoles(appId):Observable<any>{
+  return this.http.get<any>('/authorizationservice/api/v1/application/'+appId+'/roles')
+
+}
+
+updateUserRoleDepartment(data):Observable<any>{
+  return this.http.put<any>('/authorizationservice/api/v1/user/role/userUpdate', data)
+}
+ 
+getProjectIntitiatives():Observable<any>{
+  return this.http.get<any>('/platform-service/project/get-initiatives')
+ }
+
+// Process Owner && Process Architect Dashboard 
+
+getProjectsTasksProcessChanged(email,name,role){
+  return this.http.get
+  (`/platform-service/dashboard/getProjectsTasksProcessChanged?email=${email}&name=${name}&roles=${role}`);
+}
+getProjectCompletionDuration(role,email,name,duration){
+  return this.http.get
+  (`/platform-service/dashboard/getProjectCompletionDuration?roles=${role}&email=${email}&name=${name}&duration=${duration}`);
+}
+getPendingApprovals(role,email,name,duration){
+  return this.http.get(`/platform-service/dashboard/getPendingApprovals?roles=${role}&email=${email}&name=${name}&duration=${duration}`);
+}
+getAllProjectProgress(role,email,name,duration){
+  return this.http.get(`/platform-service/dashboard/getAllProjectProgress?roles=${role}&email=${email}&name=${name}&duration=${duration}`);
+}
+getAllProjectStatus(role,email,name,duration){
+  return this.http.get(`/platform-service/dashboard/getAllProjectStatus?roles=${role}&email=${email}&name=${name}&duration=${duration}`);
+}
+getActivityStream(role,email,name){
+  return this.http.get(`/platform-service/dashboard/getActivityStream?roles=${role}&email=${email}&name=${name}`);
+}
+getUpcomingDueDates(role,email,name){
+  return this.http.get(`/platform-service/dashboard/getUpcomingDueDates?roles=${role}&email=${email}&name=${name}`);
+}
+gettotalEffortExpenditure(role,email,name){
+  return this.http.get(`/platform-service/dashboard/gettotalEffortExpenditure?roles=${role}&email=${email}&name=${name}`);
+}
+getEffortExpenditureAnalysis(role,email,name){
+  return this.http.get(`/platform-service/dashboard/getEffortExpenditureAnalysis?roles=${role}&email=${email}&name=${name}`);
+}
+gettopEffortsSpent(role,email,name){
+  return this.http.get(`/platform-service/dashboard/gettopEffortsSpent?roles=${role}&email=${email}&name=${name}`);
+}
+
+// Process Analyst
+
+getAllTaskStatus(role,email,name,duration){
+  return this.http.get(`/platform-service/dashboard/getAllTaskStatus?roles=${role}&email=${email}&name=${name}&duration=${duration}`);
+}
+getAllTasksProgress(role,email,name,duration){
+  return this.http.get(`/platform-service/dashboard/getAllTasksProgress?roles=${role}&email=${email}&name=${name}&duration=${duration}`);
+}
+
+
+
+deleteTaskInProcess(id):Observable<any>{
+  return this.http.get('/rpa-service/delete-task/'+id)
+}
+
+tasksListInProcess(id):Observable<any>{
+  return this.http.get('/rpa-service/get-tasks/'+id)
+
+}
+
+addtaskInProcess(id):Observable<any>{
+  return this.http.post('/rpa-service/add-task',id)
+}
+getProgrmaDetailsById(programid){
+  return this.http.get('/platform-service/project/getProgramDetailsById?programId='+programid)
+}
+
+  getProductPlans(productId, tenantID): Observable<any[]> {
+    return this.http.get<any[]>('/subscriptionservice/v1/products/' + productId + '/plans', { responseType: 'json' });
+  }
+  listofsubscriptions(): Observable<any> {
+    return this.http.get<any>('/subscriptionservice/v1/subscriptions');
+  }
+  cancelSubscription(data): Observable<any> {
+    return this.http.post<any>('/subscriptionservice/v1/subscriptions/' + data.id + '/cancel?isImmediateCancel=' + true, { responseType: 'json' });
+  }
+  invoicedownload(invoiceId): Observable<any> {
+    return this.http.get<any>('/subscriptionservice/v1/invoices/' + invoiceId + '/pdf', { responseType: 'blob' as 'json' })
+  }
+  listofinvoices(): Observable<any> {
+    return this.http.get<any>('/subscriptionservice/v1/invoices')
+  }
+  listofPaymentModes():Observable<any>{
+    return this.http.get<any>('/subscriptionservice/v1/paymentmethods')
+  }
+
+  getSubscriptionPaymentToken(cardData,){
+    return this.http.post('/subscriptionservice/v1/paymentmethods/cardToken?tab=subs',cardData,{ responseType:'json'})
+  }
+
+  subscribePlan(token,planData){
+    return this.http.post<any>('/subscriptionservice/v1/orders?paymentToken='+token,planData,{responseType:'json'})
+  }
+
+  expiryInfo():Observable<any>{
+     return this.http.get<any>('/subscriptionservice/v1/freetrials/planExpiryInfo')
+  }
+  getWhiteListedDomain(domain):Observable<any>{
+    return this.http.get<any>('/api/tenant/whiteListedDomain?domain='+domain)
+     
+ }
+ getMyAccountPaymentToken(cardData){
+  return this.http.post('/subscriptionservice/v1/paymentmethods/cardToken?tab=myaccount',cardData,{responseType:'json'})
+}
+addNewCard(token,isdefault) :Observable<any>{
+  return this.http.post<any>('/subscriptionservice/v1/paymentmethods?paymentToken='+token+'&markAsDeafult='+isdefault,httpOptions)
+}
+deletePaymentMode(paymentMethodId):Observable<any>{
+  return this.http.post<any>('/subscriptionservice/v1/paymentmethods/'+paymentMethodId,httpOptions);
+}
+setasDefaultCard(paymentModeId){
+  return this.http.post('/subscriptionservice/v1/paymentmethods/set-default/'+paymentModeId,{responseType:'json'});
+}
+
+updatePiData(body){
+  return this.http.post('/processintelligence/v1/processgraph/UpdateProcessName',body)
+}
+updateBpsData(body){
+  return this.http.post('/bpsprocess/updateBpmnInfo',body);
+}
+bpmnVersionChecking(bpmnId){
+  return this.http.get('/bpsprocess/checkBpmnVersion?bpmnModelId='+bpmnId);
+}
+deleteNotationFromTemp(body){
+  return this.http.post('/bpsprocess/delete/processTempInfo/data',body); 
+}
 
 }

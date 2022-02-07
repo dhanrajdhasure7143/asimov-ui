@@ -1,18 +1,34 @@
 <div class="Support-tktlist h-100">
     <div class="h-100" id="my_workspace">
         <div class="module-heading title">
-            <span class="module-header-title">
-                <span class="module-parent-title">Support</span>
-            </span>
-            <div class="ml-auto">
-                <button class="btn btn-primary" routerLink="/pages/support/create-ticket">
-                    <img src="../../../../assets/images/Projects/White-plus.svg" class="testplus">
-                        Create New
-                </button>
+            <div class="col-md-2 p-0">
+                <span class="module-header-title">
+                    <span class="module-parent-title">Support / Issues</span>
+                </span>
+            </div>
+            <div class="col-md-10 p-0">
+                <div class="tktlist-body-header">                    
+                    <div class="tktlist-fields">
+                        <div class="col-md-3 pl-0 tktsearchfield">
+                            <input class="form-control" type="search" name="search_value" [(ngModel)]="searchInput_value" (keyup)="applyFilter($event.target.value)" placeholder="Search Issue...">
+                            <img alt="" class="testplus" src="../../../../assets/images/search.svg">
+                        </div>
+                        <!-- <div class="col-md-3 pl-0">
+                            <select name="Filter by" (change)="categoryFilter($event)" class="form-control" [(ngModel)]="selectedCategory">
+                                <option value="" disabled hidden >Select Category</option>
+                                <option class="selectoptions" style="margin-top: 1%;" [value]="item" *ngFor="let item of categories">{{item}}</option>
+                            </select>
+                        </div>  -->
+                        <button class="btn btn-primary" routerLink="/pages/support/create-ticket">
+                            <img src="../../../../assets/images/Projects/White-plus.svg" class="testplus">
+                                Create New
+                        </button>                       
+                    </div>
+                </div>                
             </div>
         </div>
         <div class="Support-tktlist-body">
-            <div class="tktlist-body-header">
+            <!-- <div class="tktlist-body-header">
                 <div class="tktlist-Heading">Issues</div>
                 <div class="tktlist-fields">
                 <select name="Filter by" (change)="categoryFilter($event)" class="form-control" [(ngModel)]="selectedCategory">
@@ -21,7 +37,7 @@
                     </select> &nbsp;&nbsp;
                     <input class="form-control" type="search" name="search_value" [(ngModel)]="searchInput_value" (keyup)="applyFilter($event.target.value)" placeholder="Search Issue...">
                 </div>
-            </div>
+            </div> -->
             <div class="table_responsive graph_table">
                 <table mat-table [dataSource]="dataSource" matSort class="PI table w-100">
 
@@ -83,21 +99,21 @@
                     <!-- CreatedDate Column -->
                     <ng-container matColumnDef="created_at">
                         <th style="width: 14%;" mat-header-cell *matHeaderCellDef mat-sort-header>Created</th>
-                        <td mat-cell *matCellDef="let element"> {{element.created_at | date:'MMM d, y, HH:mm'}} </td>
+                        <td mat-cell *matCellDef="let element"> {{element.convertedCreatedTime*1000 | date:'medium'}} </td>
                     </ng-container>
 
                     <!-- LastModified Column -->
-                    <ng-container matColumnDef="modified_at">
+                    <!-- <ng-container matColumnDef="modified_at">
                         <th style="width: 14%;" mat-header-cell *matHeaderCellDef mat-sort-header>Updated</th>
                         <td mat-cell *matCellDef="let element"> {{element.modified_at | date:'MMM d, y, HH:mm'}} </td>
-                    </ng-container>
+                    </ng-container> -->
 
                     <!-- Status Action -->
                     <ng-container matColumnDef="Action">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
                         <td mat-cell *matCellDef="let element" (click)="ViewMode(element)" class="Tkt-eyehover">
-                            <img src="../../../../assets/images/PI/eye-show.svg" alt="" class="testplus default-img">
-                            <img src="../../../../assets/images/Admin/eye-show-blue.svg" alt="" class="testplus hover-img">
+                            <img src="../../../../assets/images/PI/eye-show.svg" alt="" title="View Ticket" class="testplus default-img">
+                            <img src="../../../../assets/images/Admin/eye-show-blue.svg" alt="" title="View Ticket" class="testplus hover-img">
                         </td>
                     </ng-container>
 

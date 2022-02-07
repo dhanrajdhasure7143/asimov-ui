@@ -26,7 +26,7 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import{FilterPipe} from './custom_filter.pipe';
 import { ModalModule } from 'ngx-bootstrap/modal';
 // import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
-import 'highlightjs-line-numbers.js';
+// import 'highlightjs-line-numbers.js';
 // import hljs from 'highlight.js/lib/core';
 // import xml from 'highlight.js/lib/languages/xml';
 // hljs.registerLanguage('xml', xml);

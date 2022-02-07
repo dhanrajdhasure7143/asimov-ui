@@ -10,6 +10,8 @@ import { ProjectRepoScreenComponent } from './project-repo-screen/project-repo-s
 import { ProgramDetailsComponent } from './program-details/program-details.component';
 import { CreateTasksComponent } from './create-tasks/create-tasks.component';
 import { EditTaskComponent } from './edit-task/edit-task.component';
+import { BacklogsListComponent } from './backlogs-list/backlogs-list.component';
+import { BacklogsCreateComponent } from './backlogs-create/backlogs-create.component';
 
 
 const routes: Routes = [
@@ -24,6 +26,8 @@ const routes: Routes = [
     {path:'create-projects', component:CreateProjectsComponent},
     {path:'create-task', component:CreateTasksComponent},
     {path:'edit-task', component:EditTaskComponent},
+    {path:'backlogsList', component:BacklogsListComponent},
+    {path:'createBacklog', component:BacklogsCreateComponent},
     {path:"", component:ProjectsProgramsTableComponent},
     {path:'**', redirectTo:'/listOfProjects', pathMatch: 'full'}
     

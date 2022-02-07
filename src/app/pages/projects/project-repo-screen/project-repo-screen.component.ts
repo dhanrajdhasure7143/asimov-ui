@@ -25,7 +25,7 @@ export class ProjectRepoScreenComponent implements OnInit {
   uploadFileForm:FormGroup;
   fileUploadData: any;
   projectid: any;
-  uploadedFiledata: any;
+  uploadedFiledata: any=[];
   requestedFiledata: any;
   userslist: any[] = [];
   isDeny: boolean = false;
@@ -50,16 +50,17 @@ export class ProjectRepoScreenComponent implements OnInit {
   fileId: any;
   filedeleteflag:Boolean;
   filecheckeddisabled:boolean =false;
-  filecheckflag:boolean = false;
+  filecheckflag:boolean = true;
   selectedFiles: any=[];
   fileList: File[] = [];
   listOfFiles: any[] = [];
+  uploadFileDescriptionFlag: boolean = false;
   // resources_list: any=[];
 
   constructor(private modalService: BsModalService, private formBuilder: FormBuilder, private api:RestApiService, private route: ActivatedRoute, private spinner:NgxSpinnerService) { 
     
 this.route.queryParams.subscribe(data=>{​​​​​​​​
-  console.log(data);
+
   
   this.projectid=data.id;}​​​​​​​​)
   }
@@ -70,7 +71,7 @@ this.route.queryParams.subscribe(data=>{​​​​​​​​
     
     this.getallusers();
 
-console.log(this.projectid);
+
 
  this.spinner.show();
 this.getFileDetails();
@@ -121,7 +122,7 @@ this.getFileDetails();
 
   }
   onDeleteItem(id,fileName){
-    console.log("came to onDelete");
+   
     let input=[{
       "id": id,
       "fileName":fileName
@@ -228,7 +229,7 @@ this.getFileDetails();
     //  fileData.append("filePath", this.fileList)
      fileData.append("projectId", this.projectid)
      
-   console.log("fileDattaa--- "+fileData);
+   
 
     
  this.api.uploadProjectFile(fileData).subscribe(res => {
@@ -288,12 +289,12 @@ this.getFileDetails();
   getFileDetails(){
     this.api.getFileDetails(this.projectid).subscribe(data =>{
       this.uploadedFiledata=data.uploadedFiles.reverse();
-      console.log(this.uploadedFiledata);
+     
       this.dataSource3= new MatTableDataSource(this.uploadedFiledata);
       this.dataSource3.sort=this.sort11;
       this.dataSource3.paginator=this.paginator101;
       this.requestedFiledata=data.requestedFiles.reverse();
-      console.log(this.requestedFiledata);
+    
       this.dataSource4= new MatTableDataSource(this.requestedFiledata);
       this.dataSource4.sort=this.sort12;
       this.dataSource4.paginator=this.paginator102;
@@ -309,12 +310,11 @@ this.getFileDetails();
           this.filterdArray.push(e)
           
         }
-        console.log(this.filterdArray);
+    
         this.dataSource5= new MatTableDataSource(this.filterdArray);
         this.dataSource5.sort=this.sort13;
       })
-      console.log("req-Data",this.requestedFiledata);
-      console.log("upload-Data",this.uploadedFiledata);
+   
       
     })
     this.spinner.hide();
@@ -347,12 +347,12 @@ this.getFileDetails();
      fileData.append("id", data.id)
      fileData.append("filePath", evnt.target.files[0])
      fileData.append("projectId", this.projectid)
-   console.log("fileDattaa--- "+fileData);
+  
 
     
  this.api.uploadProjectFile(fileData).subscribe(res => {
    //message: "Resource Added Successfully
-   console.log(res);
+  
    
    this.getFileDetails();
    if(res.message!=undefined)
@@ -381,7 +381,7 @@ this.getFileDetails();
 
   }
   onrequestFileData(en){
-    console.log("came here"+ en);
+
 
     if(en){
             
@@ -437,7 +437,7 @@ this.getFileDetails();
     // }
     // )
 
-    console.log("came to domwload file");
+
     
   }
   onDownloadSelectedItems(){
@@ -460,30 +460,39 @@ this.getFileDetails();
   }
 
   filecheckAll(ev) {
-    this.uploadedFiledata.forEach(x =>
-       x.checked = ev.target.checked);
+    // this.uploadedFiledata.forEach(x =>
+    //    x.checked = ev.target.checked);
+    
+    if(this.filecheckeddisabled==false)
+      this.uploadedFiledata=this.uploadedFiledata.map(item=>{item.checked=true; return item});
+    if(this.filecheckeddisabled==true)
+      this.uploadedFiledata=this.uploadedFiledata.map(item=>{item.checked=false; return item});
     this.checktodelete();
   }
 
   checktodelete()
   {
-    const selectedresourcedata = this.uploadedFiledata.filter(product => product.checked).map(p => p.id);
-    if(selectedresourcedata.length>0)
-    {
-      this.filedeleteflag=true;
-    }else
-    {
-      this.filedeleteflag=false;
-    }
+    // const selectedresourcedata = this.uploadedFiledata.filter(product => product.checked).map(p => p.id);
+    // if(selectedresourcedata.length>0)
+    // {
+    //   this.filedeleteflag=true;
+    // }else
+    // {
+    //   this.filedeleteflag=false;
+    // }
+    this.uploadedFiledata.filter(item=>item.checked==true).length>0?(this.filecheckflag=false):(this.filecheckflag=true);
+    this.uploadedFiledata.filter(item=>item.checked==true).length==this.uploadedFiledata.length?(this.filecheckeddisabled=true):(this.filecheckeddisabled=false);
   }
 
   removeallchecks()
   {
-    for(let i=0;i<this.uploadedFiledata.length;i++)
-    {
-      this.uploadedFiledata[i].checked= false;
-    }
-    this.filecheckflag=false;
+    // for(let i=0;i<this.uploadedFiledata.length;i++)
+    // {
+    //   this.uploadedFiledata[i].checked= false;
+    // }
+    // this.filecheckflag=false;
+    this.uploadedFiledata=this.uploadedFiledata.map(item=>{item.checked=false;return item});
+    this.checktodelete();
   }
 
   filechecktoggle(id, event)
@@ -511,6 +520,7 @@ this.getFileDetails();
       }).then((result) => {
         if (result.value) {
           this.spinner.show();
+          this.filecheckflag = true;
           this.api.deleteFiles(selectedFiles).subscribe( res =>{ 
             let status:any = res;
             Swal.fire({
@@ -552,5 +562,12 @@ this.getFileDetails();
      this.uploadFilemodalref.hide();
     
    }
+   uploadFileDescriptionMaxLength(value){
+    if(value.length > 150){
+    this.uploadFileDescriptionFlag = true;
+    }else{
+      this.uploadFileDescriptionFlag = false;
+    }
+     }
 
 }

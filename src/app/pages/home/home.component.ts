@@ -18,16 +18,27 @@ export class HomeComponent implements OnInit {
   newAccessToken:any;
   customUserRole: any;
   hintsArray:any[]=[];
+  isdivShow:boolean=false;
+  _isShow:boolean=false;
+  isLoading:boolean=true;
+  ProfileuserId:any;
+  lastName:any;
+  firstName:any;
+  tenantName:any;
+  tenantId: string;
+  plansList: any;
+  freetrail: boolean;
+  expiry: any;
   
   constructor(private router: Router, private dt:DataTransferService, private rpa: RestApiService, private route: ActivatedRoute, private hints:PagesHints) {
 
     this.route.queryParams.subscribe(params => {
       var acToken=params['accessToken']
       var refToken = params['refreshToken']
-      var firstName=params['firstName']
-      var lastName=params['lastName']
-      var ProfileuserId=params['ProfileuserId']
-      var tenantName=params['tenantName']
+      this.firstName=params['firstName']
+      this.lastName=params['lastName']
+      this.ProfileuserId=params['ProfileuserId']
+      this.tenantName=params['tenantName']
       var authKey = params['authKey']
       var ipadd = params['userIp']
       if(acToken && refToken){
@@ -35,14 +46,14 @@ export class HomeComponent implements OnInit {
         var refreshToken=atob(refToken);
         localStorage.setItem("accessToken", accessToken);
         localStorage.setItem("refreshToken", refreshToken);
-        localStorage.setItem("firstName", firstName);
-        localStorage.setItem("lastName", lastName);
-        localStorage.setItem("ProfileuserId", ProfileuserId);
-        localStorage.setItem("tenantName", tenantName);
+        localStorage.setItem("firstName", this.firstName);
+        localStorage.setItem("lastName", this.lastName);
+        localStorage.setItem("ProfileuserId", this.ProfileuserId);
+        localStorage.setItem("tenantName", this.tenantName);
         localStorage.setItem("authKey", authKey);
         var ipp = atob(ipadd)
         localStorage.setItem('ipAddress', ipp);
-      }
+      }  
     });
     this.rpa.getNewAccessToken().subscribe(resp=>{
       this.newAccessToken=resp;
@@ -51,13 +62,20 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getexpiryInfo();
+    this.getAllPlans();
     // document.getElementById("filters").style.display = "block";
     var tkn = localStorage.getItem("accessToken")
     this.dt.changeParentModule(undefined);
     this.dt.changeChildModule(undefined);
     this.rpa.getUserRole(2).subscribe(res=>{
     this.userRole=res.message;
-
+    // this.isLoading=false;
+    if(this.userRole.includes('Process Owner') || this.userRole.includes('Process Architect') || this.userRole.includes('Process Analyst') || this.userRole.includes('RPA Developer')){
+      this.isdivShow=true;
+    }else{
+      this._isShow=true;
+    }
       localStorage.setItem('userRole',this.userRole);
       localStorage.setItem('project_id',null);
       if(this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') || this.userRole.includes('User')){
@@ -187,4 +205,43 @@ export class HomeComponent implements OnInit {
     return index;
   }
 
+  getAllPlans() {
+    this.tenantId = localStorage.getItem('tenantName');
+    this.rpa.expiryInfo().subscribe(data => {
+      this.expiry = data.Expiresin;
+      console.log("left over days ----",this.expiry)
+      localStorage.setItem('expiresIn',this.expiry)
+      if(this.expiry<0){
+        this.router.navigate(['/pages/subscriptions'])
+      }
+  
+  
+    this.rpa.getProductPlans("EZFlow", this.tenantId).subscribe(data => {
+      this.plansList = data
+      if(this.plansList.length > 1){
+     this.plansList.forEach(element => {
+       if(element.subscribed==true){
+        this.plansList=element
+       }
+     });
+     if(this.plansList.nickName=='Standard'){
+       this.freetrail=true;
+      this.isLoading=false;
+      console.log("expiry-----",this.expiry)
+      if(this.expiry>0){
+       this.router.navigate(['/pages/projects/listOfProjects'])}
+       localStorage.setItem('freetrail',JSON.stringify(this.freetrail))
+     }
+     else{
+      this.freetrail=false;
+      this.isLoading=false;
+      localStorage.setItem('freetrail',JSON.stringify(this.freetrail))
+     }
+    }
+  })
+})
+}
+getexpiryInfo(){
+  
+}
 }

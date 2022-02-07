@@ -26,13 +26,13 @@
                 <div class="create-heading">Create New</div>
                 <mat-tab-group mat-align-tabs="end">
 
-                    <mat-tab label="Project">
+                    <mat-tab label="Project" *ngIf="projectsdata=='projects' || projectsdata=='projects&programs'">
                         <div class="container">
-                            <app-create-project-form [users_list]="userslist" (oncreate)="createproject($event)" [processes]="selected_process_names"></app-create-project-form>
+                            <app-create-project-form [users_list]="userslist" [initiatives_list]="initiatives" (oncreate)="createproject($event)" [processes]="selected_process_names"></app-create-project-form>
                         </div>
                     </mat-tab>
                     
-                    <mat-tab label="Program">
+                    <mat-tab label="Program" *ngIf="projectsdata!='projects' || projectsdata=='projects&programs'">
                         <div class="container">
 
                             <form [formGroup]="createprogram" (ngSubmit)="saveProgram()">
@@ -49,25 +49,33 @@
                                                 class="errspan required">Program Name Required*</span>
                                             <span *ngIf="createprogram.controls['programName'].hasError('maxlength')"
                                                 class="errspan required">
-                                                Maximum of 50 characters
+                                                Maximum of 50 characters exceeded
                                             </span>
                                         </div>
                                         <div class="form-fields col-md-6 pr-0">
                                             <label class="label-control" for="initiatives">Initiatives<span
                                                     class="star">*</span></label>
-                                            <select class="form-control" formControlName="initiatives"
+                                             <!-- <select class="form-control" formControlName="initiatives"
                                                 [ngClass]="createprogram.get('initiatives').valid?'enteredfield-color':'inputfield-color'">
                                                 <option [value]="null" disabled hidden>Select Initiative</option>
                                                 <option value="">Select Initiative</option>
                                                 <option value="Process Improvement">Process Improvement</option>
                                                 <option value="Business Improvement">Business Improvement</option>
+                                            </select> -->
+
+                                            <select formControlName="initiatives" class="form-control data"
+                                                [ngClass]="createprogram.get('initiatives').valid?'enteredfield-color':'inputfield-color'">
+                                                <option [value]="null" disabled hidden>Select Initiative</option>
+                                                <option value="" [selected]="true">Select Initiative</option>
+                                                <option *ngFor="let initiativedata of initiatives" [value]="initiativedata.id">
+                                                    {{initiativedata.initiative|titlecase}}</option>
                                             </select>
                                             <span
                                                 *ngIf="(createprogram.get('initiatives').invalid && createprogram.get('initiatives').touched) && !createprogram.controls['initiatives'].hasError('maxlength')"
                                                 class="errspan required">Initiative Required*</span>
                                             <span *ngIf="createprogram.controls['initiatives'].hasError('maxlength')"
                                                 class="errspan required">
-                                                Maximum of 50 characters
+                                                Maximum of 50 characters exceeded
                                             </span>
                                         </div>
                                     </div>
@@ -83,16 +91,16 @@
                                                 class="errspan required">Program Purpose Required*</span>
                                             <span *ngIf="createprogram.controls['purpose'].hasError('maxlength')"
                                                 class="errspan required">
-                                                Maximum of 50 characters
+                                                Maximum of 50 characters exceeded
                                             </span>
                                         </div>
                                         <div class="form-fields col-md-6 pr-0">
                                             <label class="label-control" for="owner">Owner<span
                                                     class="star">*</span></label>
-                                            <select formControlName="owner" class="form-control data"
+                                            <select formControlName="owner" class="form-control data"  [attr.disabled]="loggedInUser!=undefined || loggedInUser !=''" 
                                                 [ngClass]="createprogram.get('owner').valid?'enteredfield-color':'inputfield-color'">
-                                                <option [value]="null" disabled hidden>Select Owner</option>
-                                                <option value="" [selected]="true">Select Owner</option>
+                                                <option [value]="" disabled hidden>Select Owner</option>
+                                                <option value="" >Select Owner</option>
                                                 <option *ngFor="let user of userslist" [value]="user.userId.userId">
                                                     {{user.userId.firstName|titlecase}} {{user.userId.lastName|titlecase}}</option>
                                             </select>
@@ -115,14 +123,9 @@
                                     <div class="col-md-12">
                                         
                                             <div class="form-fields col-md-6 pl-0">
-                                                <label class="label-control" for="programValueChain">Value Chain<span
+                                                <!-- <label class="label-control" for="programValueChain">Value Chain<span
                                                         class="star">*</span></label>
-                                                        <!-- <select formControlName="programValueChain" (change)="getValueChainProcesses($event.target.value)" class="form-control data"
-                                                        [ngClass]="createprogram.get('programValueChain').valid?'enteredfield-color':'inputfield-color'">
                                                       
-                                                        <option value=""  >Select Map Value Chain</option>
-                                                        <option *ngFor="let value of valuechain" [value]="value.processGrpMasterId">{{value.processName}}</option>
-                                                    </select> -->
 
                                                     <input type="text" class="form-control data" placeholder="Enter  Value Chain" maxlength="51" formControlName="programValueChain"  [ngClass]="createprogram.get('programValueChain').valid?'enteredfield-color':'inputfield-color'" > 
                                                 <span
@@ -131,8 +134,25 @@
                                                     <span
                                                     *ngIf="createprogram.controls['programValueChain'].hasError('maxlength')"
                                                     class="errspan required">
-                                                    Maximum of 50 characters
-                                                </span>
+                                                    Maximum of 50 characters exceeded
+                                                </span> -->
+                                                <label class="label-control">Select Department<span class="star">*</span></label>
+
+                                                <select class="form-control data"
+                                                    [disabled]="categories_list.length==1"
+                                                   
+                                                    formControlName="programValueChain" name="programValueChain" [ngClass]="createprogram.get('programValueChain').valid?'enteredfield-color':'inputfield-color'">
+                                                  
+                                                    <option [value]="null" disabled hidden>Select Department</option>
+                                                    <option value="" [selected]="true">Select Department</option>
+                                                    <option *ngFor="let category of categories_list"
+                                                        [value]="category.categoryName">{{category.categoryName}}</option>
+                                                </select>
+                            
+                                                <div *ngIf="createprogram.get('programValueChain').invalid && createprogram.get('programValueChain').touched"
+                                                    class="errspan required">
+                                                    Department Required*
+                                                </div>
                                                 </div>
                                         
                                             <div class="form-fields col-md-6 pr-0">
@@ -147,7 +167,7 @@
                                                 <span
                                                     *ngIf="createprogram.controls['measurableMetrics'].hasError('maxlength')"
                                                     class="errspan required">
-                                                    Maximum of 50 characters
+                                                    Maximum of 50 characters exceeded
                                                 </span>
                                             </div>
                                         <!-- <div class="form-fields col-md-6 pr-0">
@@ -186,7 +206,7 @@
                                                 class="errspan required">Program Priority Required*</span>
                                             <span *ngIf="createprogram.controls['priority'].hasError('maxlength')"
                                                 class="errspan required">
-                                                Maximum of 50 characters
+                                                Maximum of 50 characters exceeded
                                             </span>
                                         </div>
                                         <!-- <div class="form-fields col-md-3">
@@ -268,10 +288,44 @@
                                                 class=" errspan required">Access Required*</span>
                                         </div>
                                     </div> -->
-                                   
-                                    <div class="col-md-6">
+                                    <div class="col-md-12">
+                                        <div class="form-fields col-md-6 pl-0">
+                                            <label class="label-control">Select Process<span
+                                                class="star">*</span></label>
+                                        <select class="form-control" formControlName="process"
+                                            [ngClass]="createprogram.get('process').valid?'enteredfield-color':'inputfield-color'">
+                                            <option [value]="null" disabled hidden>Select Process</option>
+                                            <option value="" [selected]="true">Select Process</option>
+                                            <option *ngFor="let process of selected_process_names"
+                                                [value]="process.processId">{{process.processName|titlecase}}</option>
+                                        </select>
+                                        <span
+                                            *ngIf="createprogram.get('process').invalid && createprogram.get('process').touched"
+                                            class="errspan required">Process Required*</span>
+                                            </div>
+
+
+
+                                            <div class="form-fields col-md-6 pr-0">
+                                                <label class="label-control" for="processOwner">Process Owner<span
+                                                        class="star">*</span></label>
+                                                <select formControlName="processOwner" class="form-control data" 
+                                                    [ngClass]="createprogram.get('processOwner').valid?'enteredfield-color':'inputfield-color'">
+                                                    <option [value]="" disabled hidden>Select Process Owner</option>
+                                                    <option value="" >Select Process Owner</option>
+                                                    <option *ngFor="let user of userslist" [value]="user.userId.userId">
+                                                        {{user.userId.firstName|titlecase}} {{user.userId.lastName|titlecase}}</option>
+                                                </select>
+                                                <span
+                                                    *ngIf="createprogram.get('processOwner').invalid && createprogram.get('processOwner').touched"
+                                                    class="errspan required">Owner Required*</span>
+                                            </div>
+                                        </div>
+
+
+
                                        
-                                    </div>
+                                
                                     <div class="col-md-12 martsascl">
                                         <!-- <label  class="label-control"  for="description">Description<span style="color:rgb(90, 92, 212)">*</span></label> -->
                                         <!-- <textarea maxlength="250" class="form-control data" formControlName="description" value="" 
@@ -281,10 +335,13 @@
                                                           Maximum of 200 characters
                                                         </span> -->
                                         <label class="label-control">Description</label>
-                                        <textarea class="form-control" formControlName="description" row="3"
-                                            placeholder="Enter Description"
+                                        <textarea class="form-control" formControlName="description" row="3" (keyup)="descriptionMaxLength($event.target.value)"
+                                            placeholder="Enter Description" style=" resize: none;" maxlength="151"
                                             [ngClass]="createprogram.get('description').valid?'enteredfield-color':'inputfield-color'">></textarea>
-                                            
+                                            <span *ngIf="descptionFlag" class="errspan required">
+                                                Maximum of 150 characters
+                                              </span>
+                                
                                     </div>
                                 </div>
                             </form>
@@ -297,7 +354,7 @@
                                     <span class="pull-right">
                                         <button (click)="resetcreateprogram()"
                                             class="btn btn-default">Reset</button>
-                                        <button [disabled]="createprogram.invalid" (click)="saveProgram()"
+                                        <button [disabled]="createprogram.invalid || descptionFlag" (click)="saveProgram()"
                                             class="btn btn-primary">Save</button>
                                     </span>
                                 </div>
@@ -306,7 +363,7 @@
                             <div *ngIf="selected_projects.length>0 || newproject.length>0" class="prj-slt">
                                 <h4>
                                     Selected Projects
-                                    <span class="removeallprjcts">Remove All</span>
+                                    <span class="removeallprjcts" (click)="selected_projects=[];newproject=[]">Remove All</span>
                                 </h4>
                                 <div class="row">
                                     <div class="col-md-4 pl-0" *ngFor="let project of selected_projects">
@@ -378,8 +435,9 @@
                 <span aria-hidden="true"><img src="../../../../assets/images/Projects/circle-close.svg" alt=""></span>
             </button>
         </div>
-        <div class="h-scroll">
-            <app-create-project-form [users_list]="userslist" (oncreate)="linkcreateproject($event)" [processes]="selected_process_names"></app-create-project-form>
+        <div class="h-scroll-1">
+            <app-create-project-form [users_list]="userslist" [initiatives_list]="initiatives" (oncreate)="linkcreateproject($event)" [processes]="selected_process_names"></app-create-project-form>
         </div>
+        
     </ng-template>
 </mat-card>

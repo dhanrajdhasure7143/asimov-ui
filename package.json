@@ -65,7 +65,7 @@
     "dmn-js-properties-panel": "^0.5.0",
     "dmn-moddle": "^9.1.0",
     "dom-to-image": "^2.6.0",
-    "gojs": "^2.1.10",
+    "file-saver": "^2.0.5",
     "highcharts": "^8.2.0",
     "highlight.js": "^10.3.2",
     "highlightjs-line-numbers.js": "^2.8.0",

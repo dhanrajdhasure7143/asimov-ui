@@ -5,7 +5,7 @@ import { RestApiService } from '../../services/rest-api.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import Swal from 'sweetalert2';
 import { Base64 } from 'js-base64';
-import { Router } from '@angular/router';
+import { Router,ActivatedRoute } from '@angular/router';
 import moment from 'moment';
 
 @Component({
@@ -19,6 +19,7 @@ export class CreateProjectsComponent implements OnInit {
   updateForm:FormGroup;
   createprogram:FormGroup;
   userslist:any=[];
+  categories_list:any[]=[];
   selected_projects:any=[];
   projects_list:any;
   selected_project:any;
@@ -37,16 +38,31 @@ export class CreateProjectsComponent implements OnInit {
   unassigned_projects:any=[];
   valuechain:any=[];
   valuechainprocesses:any=[];
+  public userRoles: any;
+  categoriesList:any=[];
+  public name: any;
+   email: any;
+   initiatives: any;
+   projectsdata:any;
+
+   loggedInUserId:any;
+   descptionFlag: boolean = false;
   constructor(
     private formBuilder: FormBuilder,
     private api:RestApiService, 
     private spinner:NgxSpinnerService,
     private modalService: BsModalService,
-    private router: Router
-    ) { }
+     private router: Router,
+    private route:ActivatedRoute
+    ) {
+      this.route.queryParams.subscribe(data=>{
+        this.projectsdata=data.id;
+      })
+     }
 
   ngOnInit() {
     
+    this.loggedInUserId=localStorage.getItem("ProfileuserId");
     this.updateForm=this.formBuilder.group({
       type: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
       initiatives: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
@@ -64,9 +80,10 @@ export class CreateProjectsComponent implements OnInit {
     measurableMetrics: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     //programHealth: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     programValueChain: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-    
+    process: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+    processOwner: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
    // project: ["", Validators.compose([Validators.maxLength(50)])],
-    owner: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+    owner: [this.loggedInUserId, Validators.compose([Validators.required, Validators.maxLength(50)])],
    // process: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
    // access: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     description: ["", Validators.compose([Validators.maxLength(200)])],
@@ -84,30 +101,44 @@ export class CreateProjectsComponent implements OnInit {
     priority: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     measurableMetrics: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     process: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+    processOwner: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     description: ["", Validators.compose([Validators.maxLength(200)])],
     access: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
    // status: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
 
 })
+this.userRoles = localStorage.getItem("userRole")
+this.userRoles = this.userRoles.split(',');
+this.name=localStorage.getItem("firstName")+" "+localStorage.getItem("lastName")
+this.email=localStorage.getItem('ProfileuserId');
+
     this.resetcreateproject();
     this.getallusers();
-    this.getallProjects();
+    this.getallProjects(this.userRoles,this.name,this.email);
     this.getprocessnames();
-    this.getunassignedprojectslist();
-    //this.getvalchain();
+    this.getunassignedprojectslist(this.userRoles,this.name,this.email);
+    this.getvalchain();
     this.mindate= moment().format("YYYY-MM-DD");
+    this.getInitiatives();
+    this.api.getCategoriesList().subscribe(res=> {
+      this.categoriesList=res
+      this.categories_list=this.categoriesList.data
+      // if(this.categories_list.length==1){
+      //   this.categoryName=this.categories_list[0].categoryName
+      // }
+    });
   }
 
 
   linkcreateproject(event){
   this.newproject.push(JSON.parse(event))
-  console.log("link",this.newproject)
+ 
   this.modalRef.hide();
   }
    
-  getallProjects(){
+  getallProjects(roles,name,email){
     this.spinner.show();
-    this.api.getAllProjects().subscribe(data1 => {
+    this.api.getAllProjects(roles,name,email).subscribe(data1 => {
         this.spinner.hide();
         this.projects_list=data1[1]
       })   
@@ -115,15 +146,15 @@ export class CreateProjectsComponent implements OnInit {
 
 
 
-getunassignedprojectslist()
+getunassignedprojectslist(roles,name,email)
 {
-  this.api.getunassignedprojects().subscribe(data=>{
+  this.api.getunassignedprojects(roles,name,email).subscribe(data=>{
     this.unassigned_projects=data;
   })
 }
 createproject(event)
   {
-    console.log(event)
+  
     this.spinner.show();
     let data=JSON.parse(event);
     this.api.createProject(data).subscribe(data=>{
@@ -134,7 +165,7 @@ createproject(event)
         let status: any= response;
         Swal.fire({
           title: 'Success',
-          text: "Project Created Successfully !!",
+          text:response.message,
           position: 'center',
           icon: 'success',
           showCancelButton: false,
@@ -143,7 +174,7 @@ createproject(event)
           confirmButtonText: 'Ok'
       }).then((result) => {
         this.resetcreateproject();
-        this.getallProjects();
+        this.getallProjects(this.userRoles,this.name,this.email);
         // this.projectDetails={
         //   description: this.projectcreatedata.description,
         //   endDate: this.projectcreatedata.endDate,
@@ -203,12 +234,12 @@ createproject(event)
    id:item.id
  }
     })
-    console.log("data",data)
+  
       this.spinner.show()
       this.api.saveProgram(data).subscribe( res=>{​​​​​​​​
         this.spinner.hide();
         let response:any=res
-        if(response.errormessage==undefined)
+        if(response.errorMessage==undefined)
         {
           let status: any= response;
         Swal.fire({
@@ -222,7 +253,7 @@ createproject(event)
           confirmButtonText: 'Ok'
       }).then((result) => {
           this.resetcreateprogram();
-          this.getallProjects();
+          this.getallProjects(this.userRoles,this.name,this.email);
           
           this.router.navigate(['/pages/projects/programdetails'],{queryParams:{id:response.program.id}})
 
@@ -230,7 +261,7 @@ createproject(event)
         }
         else
         {
-          Swal.fire("error",response.errormessage,"error");
+          Swal.fire("error",response.errorMessage,"error");
         }
       }​​​​​​​​);
     }​​​​​​​​
@@ -250,8 +281,11 @@ createproject(event)
   resetcreateprogram()
   {
         this.createprogram.reset();
+        this.createprogram.get("owner").setValue(this.loggedInUserId);
+        this.createprogram.get("processOwner").setValue("");
         this.createprogram.get("priority").setValue("");
         this.createprogram.get("initiatives").setValue("");
+        $('#selectprojects').prop('selectedIndex',0);
   }
   getallusers()
   {
@@ -259,6 +293,7 @@ createproject(event)
     this.api.getuserslist(tenantid).subscribe(item=>{
       let users:any=item
       this.userslist=users;
+      this.userslist=this.userslist.filter(x=>x.user_role_status=='ACTIVE')
     })
   }
 
@@ -274,7 +309,7 @@ createproject(event)
   add_to_selected_projects()
   {
     let project_id=this.selected_project;
-    console.log(this.selected_project)
+   
     let project=this.projects_list.find(item=>item.id==project_id);
     if(project!=undefined)
     if(this.selected_projects.length==0)
@@ -324,6 +359,20 @@ createproject(event)
     })
   }
 
+  getInitiatives(){
+    this.api.getProjectIntitiatives().subscribe(res=>{
+      let response:any=res;
+      this.initiatives=response;
+    })
+  }
 
+  descriptionMaxLength(value){
+    console.log(value)
+ if(value.length > 150){
+ this.descptionFlag = true;
+ }else{
+   this.descptionFlag = false;
+ }
+  }
   
 }

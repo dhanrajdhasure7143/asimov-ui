@@ -61,6 +61,7 @@ export class DataselectionComponent implements OnInit {
   content_no:number=1;
   displayedRows$: Observable<any[]>;
   totalRows$: Observable<number>;
+  overlay_data={}
 
   @ViewChild(MatPaginator,{static:false}) paginator: MatPaginator;
 
@@ -113,6 +114,7 @@ export class DataselectionComponent implements OnInit {
   }
 
   slideUp(){    //Open bottom overlay for Enter process name and generate graph
+    this.overlay_data={"type":"create","module":"pi"};
     var modal = document.getElementById('myModal');
     modal.style.display="block";
   }
@@ -343,10 +345,8 @@ export class DataselectionComponent implements OnInit {
     }
     }else if(this.id.length == 2){
       if(v.includes('Time')){
-        console.log(v);
         Swal.fire("Oops!", "Activity must be string!", "warning");
         this.id.pop();
-        console.log(this.id);
         
       }else{
       this.selected=v;

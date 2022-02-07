@@ -29,7 +29,6 @@ export class BusinessInsightsComponent implements OnInit {
   constructor(private rest:RestApiService,private route:ActivatedRoute) { 
     let queryParamsResp
     this.route.queryParams.subscribe(res=>{queryParamsResp=res
-      console.log(res)
       this.processId=queryParamsResp.wpid
     })
   }
@@ -51,7 +50,6 @@ export class BusinessInsightsComponent implements OnInit {
                       element['convertedDuration']=this.getTimeConversion(element.totalDuration);
                       this.activitytime_data.push(element);
                     });
-                    // console.log(this.activitytime_data);
                   this.ActivityTimeChart();
                   this.isLoading=false;
                   });
@@ -105,15 +103,13 @@ export class BusinessInsightsComponent implements OnInit {
       chart.legend = new am4charts.Legend();
       chart.legend.useDefaultMarker = true;
       var marker = chart.legend.markers.template.children.getIndex(0);
-      marker.width = 18;
-      marker.height = 18;
       //marker.cornerRadius(12, 12, 12, 12);
       marker.strokeWidth = 2;
       marker.strokeOpacity = 1;
       marker.stroke = am4core.color("#ccc");
       chart.legend.scrollable = true;
       chart.legend.fontSize = 12;
-      // chart.legend.reverseOrder = false;
+      chart.legend.reverseOrder = false;
       // chart.data=data;
       chart.data=this.activitytime_data;
 
@@ -123,8 +119,8 @@ export class BusinessInsightsComponent implements OnInit {
       // chart.tooltip="test";
       var label = chart.seriesContainer.createChild(am4core.Label);
         // label.text = "230,900 Sales";
-      // label.horizontalCenter = "middle";
-      // label.verticalCenter = "middle";
+      label.horizontalCenter = "middle";
+      label.verticalCenter = "middle";
       label.fontSize = 18;
       var series = chart.series.push(new am4charts.PieSeries());
       series.dataFields.value = "totalDuration";
@@ -139,7 +135,6 @@ export class BusinessInsightsComponent implements OnInit {
       // series.columns.template.tooltipText = " caseId : {categoryX} \n  Duration : {valueY}[/] ";
       // series.tooltip.text = " caseId";
       // series.adapter.add("tooltipText", function(text, target) {
-      //   console.log(text,target.dataItem)
       //   return "{_dataContext.activity} \n {_dataContext.totalDuration1}";
       // });
       var _self=this;
@@ -249,7 +244,6 @@ categoryAxis.renderer.grid.template.location = 1;
 // categoryAxis.renderer.grid.template.strokeOpacity = 1;
 // categoryAxis.renderer.grid.template.location = 1;
 categoryAxis.renderer.minGridDistance = 20;
-// categoryAxis.title.text="Throughput Time (Mins)"
 categoryAxis.title.text="Throughput Time ("+_me.valueType+")"
 
 var valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
@@ -266,10 +260,8 @@ series.columns.template.adapter.add("fill", function(fill, target) {
       });
 // valueLabel.label.text = "Hello";
 valueLabel.label.fontSize = 20;
-    
 $('g:has(> g[stroke="#3cabff"])').hide();
-
-  
+    
   }
   parseMillisecondsIntoReadableTime(milliseconds){
     //Get hours from milliseconds

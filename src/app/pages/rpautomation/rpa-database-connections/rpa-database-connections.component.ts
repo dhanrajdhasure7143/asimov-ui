@@ -17,7 +17,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 })
 
 export class RpaDatabaseConnectionsComponent implements OnInit {
-  displayedColumns1: string[] = ["check","connectiontName","dataBaseType","hostAddress","portNumber","username","password","databasename","schemaName","activeStatus","createdTimeStamp","createdBy"];
+  displayedColumns1: string[] = ["check","connectiontName","categoryName","dataBaseType","hostAddress","portNumber","username","password","databasename","schemaName","activeStatus","createdTimeStamp","createdBy"];
   public toggle:boolean;
   dataSource2:MatTableDataSource<any>;
   public dbupdateflag: boolean;
@@ -37,6 +37,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
     public DBdeleteflag:Boolean;
     public passwordtype1:Boolean;
     public passwordtype2:Boolean;
+    public categoryList:any=[];
     customUserRole: any;
     enableDbconnection: boolean=false;
     userRole: any;
@@ -58,6 +59,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
         dataBaseType: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         databasename: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         hostAddress: ["", Validators.compose([Validators.required, Validators.pattern(ipPattern), Validators.maxLength(50)])],
+        categoryId:["0", Validators.compose([Validators.required])],
         password: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
         portNumber: ["",  Validators.compose([Validators.required, Validators.maxLength(6)])],
         schemaName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
@@ -69,6 +71,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
       connectiontName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         dataBaseType: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         databasename: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        categoryId:["0", Validators.compose([Validators.required])],
         hostAddress: ["", Validators.compose([Validators.required, Validators.pattern(ipPattern), Validators.maxLength(50)])],
         password: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
         portNumber: ["",  Validators.compose([Validators.required, Validators.maxLength(6)])],
@@ -85,14 +88,15 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
   ngOnInit() {
   //   //     document.getElementById("filters").style.display='block';
     this.dt.changeHints(this.hints.rpadbchints);
-    this.getallDBConnection();
+    //this.getallDBConnection();
+    this.getCategories()
     this.passwordtype1=false;
     this.passwordtype2=false;
 
     this.userRole = localStorage.getItem("userRole")
     this.userRole = this.userRole.split(',');
     this.isButtonVisible = this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') || this.userRole.includes('RPA Admin') || this.userRole.includes('RPA Designer')
-    || this.userRole.includes('Process Owner') || this.userRole.includes('Process Architect')  || this.userRole.includes('Process Analyst')  || this.userRole.includes('RPA Developer')  || this.userRole.includes('Process Architect') || this.userRole.includes("System Admin") ;
+    || this.userRole.includes('Process Owner') || this.userRole.includes('Process Architect')  || this.userRole.includes('Process Analyst')  || this.userRole.includes('RPA Developer')  || this.userRole.includes('Process Architect') || this.userRole.includes("System Admin")  || this.userRole.includes('User') ;
     
     this.api.getCustomUserRole(2).subscribe(role=>{
       this.customUserRole=role.message[0].permission;
@@ -119,6 +123,10 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
            this.DBcheckeddisabled = true;
          }
         this.dbconnections.sort((a,b) => a.connectionId > b.connectionId ? -1 : 1);
+        this.dbconnections=this.dbconnections.map(item=>{
+          item["categoryName"]=this.categoryList.find(item2=>item2.categoryId==item.categoryId).categoryName;
+          return item;
+        })
         this.dataSource2= new MatTableDataSource(this.dbconnections);
         setTimeout(() => {
           this.sortmethod(); 
@@ -143,6 +151,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
   {
   //     document.getElementById("filters").style.display='none;
     document.getElementById("createdbconnection").style.display='block';
+    this.insertdbForm.get("categoryId").setValue(this.categoryList.length==1?this.categoryList[0].categoryId:"0")
     document.getElementById("Updatedbconnection").style.display='none';
   }
 
@@ -172,7 +181,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
      await this.api.testdbconnections(formdata.value).subscribe( res =>
       {
         this.spinner.hide();
-        if(res.errorCode==undefined){
+        if(res.errorMessage==undefined){
         // Swal.fire({
         //   position: 'center',
         //   icon: 'success',
@@ -192,6 +201,9 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
           
         Swal.fire("Error","Connection Failed","error")
         }
+    },err=>{
+      this.spinner.hide();
+      Swal.fire("Error","Unable to test connection details","error")
     });
     this.activestatus();
   }
@@ -263,8 +275,13 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
           }
           else
           {
+              this.submitted=false
               Swal.fire("Error",status.errorMessage,"error")
           }
+    },err=>{
+      this.spinner.hide();
+      this.submitted=false;
+      Swal.fire("Error","Unable to save database connections","error")
     });
    
   }
@@ -277,6 +294,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
   resetDBForm(){
     this.insertdbForm.reset();
     this.insertdbForm.get("dataBaseType").setValue("");
+    this.insertdbForm.get("categoryId").setValue(this.categoryList.length==1?this.categoryList[0].categoryId:'0')
     this.insertdbForm.get("activeStatus").setValue(true);
     this.passwordtype1=false;
   }
@@ -324,6 +342,9 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
       {
         Swal.fire("Error",status.errorMessage,"error")
       }
+  },err=>{
+    this.spinner.hide();
+    Swal.fire("Error","Unable to update database connection details","error")
   });
 }
 else
@@ -351,9 +372,14 @@ updatedbdata()
       {
         this.dbupdatedata=data;
         this.updatedbForm.get("connectiontName").setValue(this.dbupdatedata["connectiontName"]);
+        this.updatedbForm.get("categoryId").setValue(this.dbupdatedata["categoryId"]);
+        
         this.updatedbForm.get("dataBaseType").setValue(this.dbupdatedata["dataBaseType"]);
+        
         this.updatedbForm.get("databasename").setValue(this.dbupdatedata["databasename"]);
+        
         this.updatedbForm.get("hostAddress").setValue(this.dbupdatedata["hostAddress"]);
+        
         this.updatedbForm.get("password").setValue(this.dbupdatedata["password"]);
         this.updatedbForm.get("portNumber").setValue(this.dbupdatedata["portNumber"]);
         this.updatedbForm.get("schemaName").setValue(this.dbupdatedata["schemaName"]);
@@ -405,6 +431,9 @@ updatedbdata()
           else
           Swal.fire("Error",status.errorMessage,"error")
 
+        },err=>{
+          this.spinner.hide();
+          Swal.fire("Error","Unable to delete database connections","error")
         });
       }
     });
@@ -464,5 +493,18 @@ updatedbdata()
       this.dbconnections[i].checked= false;
     }
     this.DBcheckflag=false;
+  }
+
+
+  getCategories()
+  {
+    this.api.getCategoriesList().subscribe(data=>{
+      let response:any=data;
+      if(response.errorMessage==undefined)
+      {
+        this.categoryList=response.data;
+        this.getallDBConnection();
+      }
+    })
   }
 }

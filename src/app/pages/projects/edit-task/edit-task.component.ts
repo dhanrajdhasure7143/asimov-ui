@@ -8,6 +8,9 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
+import * as JSZip from 'jszip';
+import { saveAs } from "file-saver";
+import * as FileSaver from 'file-saver';
 import  * as moment from 'moment'
 @Component({
   selector: 'app-edit-task',
@@ -58,7 +61,7 @@ export class EditTaskComponent implements OnInit {
   requestedFiledata: any;
   filedeleteflag:Boolean;
   filecheckeddisabled:boolean =false;
-  filecheckflag:boolean = false;
+  filecheckflag:boolean = true;
   selectedFiles: any=[];
   fileList: File[] = [];
   listOfFiles: any[] = [];
@@ -71,6 +74,12 @@ export class EditTaskComponent implements OnInit {
   startDate: any;
   endDate: any;
   public hidetaskdeletedownload: boolean;
+  pi_process_list: any;
+  bpm_process_list: any;
+  bot_list: any;
+  mindate= moment().format("YYYY-MM-DD");
+  taskSummaryFlag: boolean = false;
+  taskDescriptionFlag: boolean = false;
   constructor(private formBuilder:FormBuilder,
     private router:ActivatedRoute,
     private route:Router,
@@ -94,10 +103,11 @@ export class EditTaskComponent implements OnInit {
       summary: ['', Validators.compose([Validators.maxLength(200)])],
       percentageComplete: ['', Validators.compose([Validators.maxLength(200)])],
       editcomment: ['', Validators.compose([Validators.maxLength(200)])],
+      correlationID: [""],
        })
 
 
-       this.getallusers();
+    //  this.getallusers();
        this.gettask();
       
        setTimeout(() => {
@@ -105,6 +115,9 @@ export class EditTaskComponent implements OnInit {
         this.profileName();
           },500);
 
+        this.getallpiprocess();
+        this.getallbpmprocess();
+        this.getallbots();
   }
 
 
@@ -123,8 +136,12 @@ export class EditTaskComponent implements OnInit {
         this.taskresource=task.resources
         this.startDate=task.startDate
         this.endDate=moment(task.endDate).format("YYYY-MM-DD")
+        this.mindate=moment(this.startDate).format("YYYY-MM-DD")
         console.log(this.endDate)
-        this.updatetaskdata(task);
+       
+          this.updatetaskdata(task);
+       
+        
       })
     })
   }
@@ -132,6 +149,7 @@ export class EditTaskComponent implements OnInit {
   
   updatetaskdata(data)
   {  
+    
     this.taskcomments=[];
     this.taskhistory=[];
     this.rolelist=[];
@@ -147,6 +165,7 @@ export class EditTaskComponent implements OnInit {
     this.updatetaskForm.get("description").setValue(data["description"]);
     this.updatetaskForm.get("summary").setValue(data["summary"]);
     this.slider=data["percentageComplete"];
+    this.updatetaskForm.get("correlationID").setValue(data.correlationID);
     this.updatetaskForm.get("percentageComplete").setValue(this.slider);
     this.updatetaskForm.get("comments").setValue(data["comments"]);
     
@@ -157,12 +176,26 @@ export class EditTaskComponent implements OnInit {
     console.log("taskhistory",this.taskhistory)
     console.log("taskcomment",this.taskcomments,this.taskcomments_list)
     this.getTaskAttachments();
-    setTimeout(() => {
-      let user=this.users_list.find(item=>item.userId.userId==this.selectedtask.resources);
-      this.taskresourceemail=user.userId.userId
-      this.getUserRole();
-    }, 500);
+    // setTimeout(() => {
+    //   let user=this.users_list.find(item=>item.userId.userId==this.selectedtask.resources);
+    //   this.taskresourceemail=user.userId.userId
+    //   this.getUserRole();
+    // }, 200);
+    this.getallusers()
+   
     // this.updatetaskmodalref=this.modalService.show(updatetaskmodal,{class:"modal-lg"})
+  }
+  getallusers()
+  {
+    
+    let tenantid=localStorage.getItem("tenantName")
+    this.rest.getuserslist(tenantid).subscribe(response=>{
+    
+      this.users_list=response;
+      let user=this.users_list.find(item=>item.userId.userId==this.selectedtask.resources);
+        this.taskresourceemail=user.userId.userId
+         this.getUserRole();
+    });
   }
   updatetask(){
     
@@ -175,6 +208,7 @@ export class EditTaskComponent implements OnInit {
       taskupdatFormValue["history"]=this.taskhistory
       taskupdatFormValue["endDate"]=this.endDate
       taskupdatFormValue["taskName"]=this.taskname
+      taskupdatFormValue["taskCategory"]=this.taskcategory
       this.spinner.show();
       this.rest.updateTask(taskupdatFormValue).subscribe( res =>{
         this.spinner.hide();
@@ -264,14 +298,7 @@ else
 
 
     
-    getallusers()
-    {
-      let tenantid=localStorage.getItem("tenantName")
-      this.rest.getuserslist(tenantid).subscribe(response=>{
-      
-        this.users_list=response;
-      });
-    }
+   
 
     getTaskAttachments(){
       this.rest.getTaskAttachments(this.selectedtask.projectId,this.selectedtask.id).subscribe(data =>{
@@ -290,17 +317,19 @@ else
     }
 
     getUserRole(){
+      
       let user=this.users_list.find(item=>item.userId.userId==this.taskresource);
       this.userid=user.userId.userId
       this.rest.getRole(this.userid).subscribe(data =>{
         this.userrole=data
+        console.log("userdata",this.userrole)
         for (let index = 0; index <= this.userrole.message.length; index++) {
           this.rolename =  this.userrole.message[index];
           if(this.rolename!=undefined){
             this.rolelist.push(this.rolename.name)
             this.roles=this.rolelist.join(',')
           }
-          console.log("role", this.rolelist)
+        
         }
         //this.rolename=this.userrole.message[0].name
        
@@ -318,7 +347,7 @@ else
       }
       }
 
-      console.log("taskc",this.taskcomments)
+    
     }
     resetupdatetaskproject(){
       this.updatetaskForm.reset();
@@ -342,7 +371,7 @@ else
 
 
   onDeleteItem(id,fileName){
-    console.log("came to onDelete");
+  
     let input=[{
       "id": id,
       "fileName":fileName
@@ -363,7 +392,7 @@ else
           let status:any = res;
           if(status.errorMessage==undefined)
           {
-          Swal.fire("Success",status.status,"success") 
+          Swal.fire("Success",status.message,"success") 
           this.getTaskAttachments();
           this.removeallchecks();
           this.checktodelete();
@@ -389,30 +418,23 @@ else
 
 
   filecheckAll(ev) {
-    this.taskattacments.forEach(x =>
-       x.checked = ev.target.checked);
+    if(this.filecheckeddisabled==false)
+      this.taskattacments=this.taskattacments.map(item=>{item.checked=true; return item});
+    if(this.filecheckeddisabled==true)
+      this.taskattacments=this.taskattacments.map(item=>{item.checked=false; return item});
     this.checktodelete();
   }
 
   checktodelete()
   {
-    const selectedresourcedata = this.taskattacments.filter(product => product.checked).map(p => p.id);
-    if(selectedresourcedata.length>0)
-    {
-      this.filedeleteflag=true;
-    }else
-    {
-      this.filedeleteflag=false;
-    }
+    this.taskattacments.filter(item=>item.checked==true).length>0?(this.filecheckflag=false):(this.filecheckflag=true);
+    this.taskattacments.filter(item=>item.checked==true).length==this.taskattacments.length?(this.filecheckeddisabled=true):(this.filecheckeddisabled=false);
   }
 
   removeallchecks()
   {
-    for(let i=0;i<this.taskattacments.length;i++)
-    {
-      this.taskattacments[i].checked= false;
-    }
-    this.filecheckflag=false;
+    this.taskattacments=this.taskattacments.map(item=>{item.checked=false;return item});
+    this.checktodelete();
   }
 
   filechecktoggle(id, event)
@@ -423,19 +445,41 @@ else
 
   onDownloadSelectedItems(){
     let downloadSelectedfiles=[];
-    this.taskattacments.filter(product => product.checked==true).map(p=>{
-     downloadSelectedfiles.push(p.fileName);
-    });
-    this.rest.downloadTaskAttachment(downloadSelectedfiles).subscribe(data=>{
-      let response:any=data
-      // downloadSelectedfiles.forEach(fileName=>{
-      for(let i=0;i<response.length;i++){
-      var link = document.createElement('a');
-      let extension=((((downloadSelectedfiles[i].toString()).split("")).reverse()).join("")).split(".")[0].split("").reverse().join("")
-      link.download = downloadSelectedfiles[i];
-      link.href =((extension=='png' ||extension=='jpg' ||extension=='svg' ||extension=='gif')?`data:image/${extension};base64,${response[i]}`:`data:application/${extension};base64,${response[i]}`) ;
-      link.click();
+    downloadSelectedfiles=this.taskattacments.filter(product => product.checked==true).map(p=>{return (p.fileName)});
+    this.spinner.show();
+    this.rest.downloadTaskAttachment(downloadSelectedfiles).subscribe((response:any)=>{
+      this.spinner.hide();
+      if(response.errorMessage==undefined)
+      {
+        var zip = new JSZip();
+        response.forEach((value,i) => {
+          let extension=((((downloadSelectedfiles[i].toString()).split("")).reverse()).join("")).split(".")[0].split("").reverse().join("")
+          if(extension=='jpg'|| 'PNG' || 'svg' || 'jpeg' || 'png')
+            zip.file(downloadSelectedfiles[i],value,{base64:true});
+          else
+            zip.file(downloadSelectedfiles[i],value);    
+        });
+        zip.generateAsync({ type: "blob" }).then(function (content) {
+          FileSaver.saveAs(content, `Attachments.zip`);
+          Swal.fire("Success","Attachments downloaded successfully","success")
+        });
       }
+      else
+      {
+        Swal.fire("Error",response.errorMessage,"error");
+      }
+      // for(let i=0;i<response.length;i++){
+      // var link = document.createElement('a');
+      // let extension=((((downloadSelectedfiles[i].toString()).split("")).reverse()).join("")).split(".")[0].split("").reverse().join("")
+      // link.download = downloadSelectedfiles[i];
+      // link.href =((extension=='png' ||extension=='jpg' ||extension=='svg' ||extension=='gif')?`data:image/${extension};base64,${response[i]}`:`data:application/${extension};base64,${response[i]}`) ;
+      // link.click();
+      // }
+    },(err:any)=>{
+    
+      this.spinner.hide();
+      
+      Swal.fire("Error","Unable to task attachments","error");
     })
    // this.getTaskAttachments();
   }
@@ -447,8 +491,10 @@ else
         "id": p.id,
         "fileName": p.fileName
       }
+      console.log(obj)
       selectedFiles.push(obj);
       });
+      
       Swal.fire({
         title: 'Are you sure?',
         text: "You won't be able to revert this!",
@@ -458,23 +504,21 @@ else
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes, delete it!'
       }).then((result) => {
-        if (result.value) {
+        if (result.isConfirmed) {
           this.spinner.show();
           this.rest.deleteFiles(selectedFiles).subscribe( res =>{ 
-            let status:any = res;
-            Swal.fire({
-              title: 'Success',
-              text: ""+status.message,
-              position: 'center',
-              icon: 'success',
-              showCancelButton: false,
-              confirmButtonColor: '#007bff',
-              cancelButtonColor: '#d33',
-              confirmButtonText: 'Ok'
-            }) 
-            this.getTaskAttachments();
-            this.removeallchecks();
-            this.spinner.hide();
+              let status:any = res;
+              this.spinner.hide();
+              if(status.errorMessage==undefined)
+              {
+                Swal.fire("Success",status.message,"success");
+                this.getTaskAttachments();
+                this.removeallchecks();
+              } 
+              else
+              {
+                Swal.fire("Error",status.errorMessage,"error");
+              }
             },err => {
               Swal.fire({
                 icon: 'error',
@@ -489,4 +533,40 @@ else
       
   }
 
+  getallbpmprocess(){
+    this.rest.getprocessnames().subscribe(data =>{
+      let response:any=data;
+      let resp:any="";
+    resp=response.filter(item=>item.status=="APPROVED");
+    this.bpm_process_list=resp.sort((a,b) => (a.processName.toLowerCase() > b.processName.toLowerCase() ) ? 1 : ((b.processName.toLowerCase() > a.processName.toLowerCase() ) ? -1 : 0));
+    })
+  }
+
+  getallpiprocess(){
+    this.rest.getAlluserProcessPiIds().subscribe(data =>{
+      let response:any=data;
+      this.pi_process_list=response.data.sort((a,b) => (a.piName.toLowerCase() > b.piName.toLowerCase() ) ? 1 : ((b.piName.toLowerCase() > a.piName.toLowerCase() ) ? -1 : 0));
+    })
+  }
+
+  getallbots(){
+    this.rest.getAllActiveBots().subscribe(data =>{
+      let response:any=data;
+     this.bot_list=response.sort((a,b) => (a.botName.toLowerCase() > b.botName.toLowerCase() ) ? 1 : ((b.botName.toLowerCase() > a.botName.toLowerCase() ) ? -1 : 0));
+    })
+  }
+  taskSummaryMaxLength(value){
+    if(value.length > 150){
+    this.taskSummaryFlag = true;
+    }else{
+      this.taskSummaryFlag = false;
+    }
+     }
+     taskDescriptionMaxLength(value){
+      if(value.length > 150){
+      this.taskDescriptionFlag = true;
+      }else{
+        this.taskDescriptionFlag = false;
+      }
+       }
 }

@@ -1,119 +1,129 @@
+<div *ngIf="expiry>=0" class="nav-main">
+    <section class="sidebar-main">
+        <mat-nav-list class="ep-nav-font">
 
-<div class="nav-main">
-<section class="sidebar-main">
+            <!-- <a mat-list-item ><i class="fa fa-area-chart"></i> &nbsp; &nbsp; Dashboard</a> -->
+            <a mat-list-item *ngIf="!freetrail" class="link" id="eiap-home" (click)="hightlight('eiap-home',null)"
+              routerLink="/pages/home" [matTooltip]=" !obj.sideBarOpen ? 'Dashboard' : ''" matTooltipClass="sidebarTooltip"
+              matTooltipPosition="right">
+              <span class="side-icon">
+                <span class="active-img" id="eiap-home-icon-active">
+                  <img src="../../../assets/images/dashboard_icons/active-icons/Dashboard.svg">
+                </span>
+                <span class="hover-img" id="eiap-home-icon-white">
+                  <img src="../../../assets/images/dashboard_icons/white-icons/Dashboard.svg">
+                </span>
+                <span class="default-img" id="eiap-home-icon-gray">
+                  <img src="../../../assets/images/dashboard_icons/grey-icons/Dashboard.svg">
+                </span>
+              </span>
+              <span class="side-menu-font">Dashboard</span>
+            </a>
 
-<mat-nav-list class="ep-nav-font">
-  <!-- <div class="profile-card">
-      <img src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Soufiane FADIL">
-      <br>
-  </div> -->
+            <a mat-list-item class="link" id="projects" (click)="hightlight('projects',null)"
+              routerLink="/pages/projects/listOfProjects" [matTooltip]=" !obj.sideBarOpen ? 'Projects' : ''"
+              matTooltipClass="sidebarTooltip" matTooltipPosition="right">
+              <span class="side-icon">
+                <span class="active-img" id="eiap-home-icon-active">
+                  <img src="../../../assets/images/dashboard_icons/active-icons/Projects.svg">
+                </span>
+                <span class="hover-img" id="eiap-home-icon-white">
+                  <img src="../../../assets/images/dashboard_icons/white-icons/Projects.svg">
+                </span>
+                <span class="default-img" id="eiap-home-icon-gray">
+                  <img src="../../../assets/images/dashboard_icons/grey-icons/Projects.svg">
+                </span>
+              </span>
+              <span class="side-menu-font" (click)="hightlight('listOfProjects','null')">Projects</span>
+            </a>
 
-  <!-- <a mat-list-item ><i class="fa fa-area-chart"></i> &nbsp; &nbsp; Dashboard</a> -->
-  <a mat-list-item class="link" id="eiap-home" (click)="hightlight('eiap-home',null)"  routerLink="/pages/home"  [matTooltip]=" !obj.sideBarOpen ? 'Dashboard' : ''" matTooltipClass="sidebarTooltip" matTooltipPosition="right">
-    <span class="side-icon">
-      <span class="active-img" id="eiap-home-icon-active">
-          <img src="../../../assets/images/dashboard_icons/active-icons/Dashboard.svg">
-      </span>
-      <span class="hover-img" id="eiap-home-icon-white">
-        <img src="../../../assets/images/dashboard_icons/white-icons/Dashboard.svg">
-    </span>
-      <span  class="default-img" id="eiap-home-icon-gray">
-          <img src="../../../assets/images/dashboard_icons/grey-icons/Dashboard.svg">
-      </span>
-    </span>
+            <!-- <mat-list-item (click)="showProjectsSubmenu = !showProjectsSubmenu; selection()"
+              [ngClass]="{'activeMenu' : showProjectsSubmenu}" id='expand_projects' class="link"
+              [matTooltip]=" !obj.sideBarOpen ? 'Projects' : ''" matTooltipClass="sidebarTooltip" matTooltipPosition="right">
+              <span class="side-icon">
+                <span class="active-img" id="eiap-home-icon-active">
+                  <img src="../../../assets/images/dashboard_icons/active-icons/Projects.svg">
+                </span>
+                <span class="hover-img" id="eiap-home-icon-white">
+                  <img src="../../../assets/images/dashboard_icons/white-icons/Projects.svg">
+                </span>
+                <span class="default-img" id="eiap-home-icon-gray">
+                  <img src="../../../assets/images/dashboard_icons/grey-icons/Projects.svg">
+                </span>
+              </span>
+              <span class="side-menu-font">Projects</span>
+              <mat-icon class="menu-button" [ngClass]="{'rotated' : showProjectsSubmenu}">&#xe5cf;
+              </mat-icon>
+            </mat-list-item>
+            <div class="submenus" [ngClass]="{'expanded' : showProjectsSubmenu}">
+              <a mat-list-item class="link" id='backlogs' (click)="hightlight('backlogs','expand_projects')"
+                routerLink="/pages/projects/backlogsList">
+                <span class="side-menu-font">Backlogs</span>
+              </a>
+              <a mat-list-item class="link" id='projectsList' (click)="hightlight('projectsList','expand_projects')"
+                routerLink="/pages/projects/listOfProjects">
+                <span class="side-menu-font">Projects List</span>
+              </a>
+            </div> -->
+            
+          <!-- <a mat-list-item class="link" id="process" (click)="hightlight('process',null)"
+            [matTooltip]=" !obj.sideBarOpen ? 'Processes' : ''" matTooltipClass="sidebarTooltip" matTooltipPosition="right">
+            <span class="side-icon">
+              <span class="active-img" id="eiap-home-icon-active">
+                <img src="../../../assets/images/dashboard_icons/active-icons/Processes.svg">
+              </span>
+              <span class="hover-img" id="eiap-home-icon-white">
+                <img src="../../../assets/images/dashboard_icons/white-icons/Processes.svg">
+              </span>
+              <span class="default-img" id="eiap-home-icon-gray">
+                <img src="../../../assets/images/dashboard_icons/grey-icons/Processes.svg">
+              </span>
+            </span>
+            <span class="side-menu-font">Processes</span>
+          </a> -->
 
-    <span class="side-menu-font">Dashboard</span>
-    
-  </a>
- 
-  <!-- <a mat-list-item class="link" id="process" (click)="hightlight('process')"  data-toggle="tooltip" data-placement="right"  title="Processes">
-    <span class="side-icon">
-      <span class="active-img" id="eiap-home-icon-white">
-          <img src="../../../assets/images/dashboard_icons/white-icons/Project-flow.svg">
-      </span>
-      <span  class="default-img" id="eiap-home-icon-gray">
-          <img src="../../../assets/images/dashboard_icons/grey-icons/Project-flow.svg">
-      </span>
-    </span>
-
-    <span class="side-menu-font">Processes</span>
-  </a> -->
-  
-
-  <a mat-list-item class="link" id="projects" (click)="hightlight('projects',null)" routerLink="/pages/projects/listOfProjects" [matTooltip]=" !obj.sideBarOpen ? 'Projects' : ''" matTooltipClass="sidebarTooltip" matTooltipPosition="right">
-  <span class="side-icon">
-    <span class="active-img" id="eiap-home-icon-active">
-        <img src="../../../assets/images/dashboard_icons/active-icons/Projects.svg">
-    </span>
-    <span class="hover-img" id="eiap-home-icon-white">
-      <img src="../../../assets/images/dashboard_icons/white-icons/Projects.svg">
-  </span>
-    <span  class="default-img" id="eiap-home-icon-gray">
-        <img src="../../../assets/images/dashboard_icons/grey-icons/Projects.svg">
-    </span>
-  </span>
-
-    <span class="side-menu-font" (click)="hightlight('listOfProjects','null')" >Projects</span>
-  </a>
-
-  <!-- <a mat-list-item class="link" id="process" (click)="hightlight('process',null)" [matTooltip]=" !obj.sideBarOpen ? 'Processes' : ''" matTooltipClass="sidebarTooltip" matTooltipPosition="right">
-    <span class="side-icon">
-      <span class="active-img" id="eiap-home-icon-active">
-          <img src="../../../assets/images/dashboard_icons/active-icons/Processes.svg">
-      </span>
-      <span class="hover-img" id="eiap-home-icon-white">
-        <img src="../../../assets/images/dashboard_icons/white-icons/Processes.svg">
-    </span>
-      <span  class="default-img" id="eiap-home-icon-gray">
-          <img src="../../../assets/images/dashboard_icons/grey-icons/Processes.svg">
-      </span>
-    </span>
-
-    <span class="side-menu-font">Processes</span>
-  </a> -->
-  
-  <a mat-list-item class="link" id='so' (click)="hightlight('so',null)" routerLink="/pages/serviceOrchestration/home" [matTooltip]=" !obj.sideBarOpen ? 'Orchestration' : ''" matTooltip="Orchestration" matTooltipClass="sidebarTooltip" matTooltipPosition="right">
-    <span class="side-icon">
+            <a mat-list-item class="link" id='so' *ngIf="freetrail!=true" (click)="hightlight('so',null)" routerLink="/pages/serviceOrchestration/home" [matTooltip]=" !obj.sideBarOpen ? 'Orchestration' : ''" matTooltip="Orchestration" matTooltipClass="sidebarTooltip" matTooltipPosition="right">
+                <span class="side-icon">
       <span class="active-img" id="eiap-home-icon-active">
           <img src="../../../assets/images/dashboard_icons/active-icons/Orchestration.svg">
       </span>
-      <span class="hover-img" id="eiap-home-icon-white">
+                <span class="hover-img" id="eiap-home-icon-white">
         <img src="../../../assets/images/dashboard_icons/white-icons/Orchestration.svg">
     </span>
-      <span  class="default-img" id="eiap-home-icon-gray">
+                <span class="default-img" id="eiap-home-icon-gray">
           <img src="../../../assets/images/dashboard_icons/grey-icons/Orchestration.svg">
       </span>
-    </span>
-    <span class="side-menu-font">Orchestration</span>
-  </a>
-  
+                </span>
+                <span class="side-menu-font">Orchestration</span>
+            </a>
 
-    <!-- <span class="side-menu-font">Workspace</span> -->
-    <!-- <button mat-icon-button #trigger=matMenuTrigger [matMenuTriggerFor]="workspacemenu">
+
+            <!-- <span class="side-menu-font">Workspace</span> -->
+            <!-- <button mat-icon-button #trigger=matMenuTrigger [matMenuTriggerFor]="workspacemenu">
       <mat-icon>more_vert</mat-icon>
    </button> -->
-   <mat-list-item (click)="showSubmenu = !showSubmenu; selection()" [ngClass]="{'activeMenu' : showSubmenu}" id='expand_menu' class="link" [matTooltip]=" !obj.sideBarOpen ? 'Workspace' : ''" matTooltipClass="sidebarTooltip" matTooltipPosition="right">
-    <!-- <span class="full-width" >Workspace</span>
+            <mat-list-item (click)="showSubmenu = !showSubmenu; selection()" [ngClass]="{'activeMenu' : showSubmenu}" id='expand_menu' class="link" [matTooltip]=" !obj.sideBarOpen ? 'Workspace' : ''" matTooltipClass="sidebarTooltip" matTooltipPosition="right">
+                <!-- <span class="full-width" >Workspace</span>
     <mat-icon mat-list-icon>work</mat-icon> -->
-    <span class="side-icon">
+                <span class="side-icon">
       <span class="active-img" id="eiap-home-icon-active">
           <img src="../../../assets/images/dashboard_icons/active-icons/Workspace.svg">
       </span>
-      <span class="hover-img" id="eiap-home-icon-white">
+                <span class="hover-img" id="eiap-home-icon-white">
         <img src="../../../assets/images/dashboard_icons/white-icons/Workspace.svg">
     </span>
-      <span  class="default-img" id="eiap-home-icon-gray">
+                <span class="default-img" id="eiap-home-icon-gray">
           <img src="../../../assets/images/dashboard_icons/grey-icons/Workspace.svg">
       </span>
-    </span>
+                </span>
 
-    <span class="side-menu-font">Workspace</span>
-    <mat-icon class="menu-button" [ngClass]="{'rotated' : showSubmenu}" >&#xe5cf;
-    </mat-icon>
-  </mat-list-item>
-  <div class="submenus" [ngClass]="{'expanded' : showSubmenu}">
-    <a mat-list-item  class="link" id="pi" (click)="hightlight('pi','expand_menu')" routerLink="/pages/processIntelligence/upload"  >
-      <!-- <span class="side-icon">
+                <span class="side-menu-font">Workspace</span>
+                <mat-icon class="menu-button" [ngClass]="{'rotated' : showSubmenu}">&#xe5cf;
+                </mat-icon>
+            </mat-list-item>
+            <div class="submenus" [ngClass]="{'expanded' : showSubmenu}">
+                <a mat-list-item class="link" id="pi" (click)="hightlight('pi','expand_menu')" routerLink="/pages/processIntelligence/upload">
+                    <!-- <span class="side-icon">
         <span class="active-img" id="eiap-home-icon-active">
             <img src="../../../assets/images/dashboard_icons/active-icons/Process-intelligence.svg">
         </span>
@@ -124,10 +134,10 @@
             <img src="../../../assets/images/dashboard_icons/grey-icons/Process-intelligence.svg">
         </span>
       </span> -->
-      <span class="side-menu-font">Process Intelligence</span>
-    </a>
-    <a mat-list-item class="link" id='bps' (click)="hightlight('bps','expand_menu')" routerLink="/pages/businessProcess/home" >
-      <span class="side-icon">
+                    <span class="side-menu-font">Process Intelligence</span>
+                </a>
+                <a mat-list-item class="link" id='bps' (click)="hightlight('bps','expand_menu')" routerLink="/pages/businessProcess/home">
+                    <!-- <span class="side-icon">
         <span class="active-img" id="eiap-home-icon-active">
             <img src="../../../assets/images/dashboard_icons/active-icons/Document.svg">
         </span>
@@ -137,11 +147,11 @@
         <span  class="default-img" id="eiap-home-icon-gray">
             <img src="../../../assets/images/dashboard_icons/grey-icons/Document.svg">
         </span>
-      </span>
-      <span class="side-menu-font">Business Process Studio</span>
-    </a>
-    <a mat-list-item class="link" id='rpa' (click)="hightlight('rpa','expand_menu')" routerLink="/pages/rpautomation/home" >
-      <span class="side-icon">
+      </span> -->
+                    <span class="side-menu-font">Business Process Studio</span>
+                </a>
+                <a mat-list-item class="link" id='rpa' (click)="hightlight('rpa','expand_menu')" routerLink="/pages/rpautomation/home">
+                    <!-- <span class="side-icon">
         <span class="active-img" id="eiap-home-icon-active">
             <img src="../../../assets/images/dashboard_icons/active-icons/RPA-Canvas.svg">
         </span>
@@ -151,13 +161,13 @@
         <span  class="default-img" id="eiap-home-icon-gray">
             <img src="../../../assets/images/dashboard_icons/grey-icons/RPA-Canvas.svg">
         </span>
-      </span>
-      <span class="side-menu-font">RPA</span>
-    </a>
-  </div>
+      </span> -->
+                    <span class="side-menu-font">RPA</span>
+                </a>
+            </div>
 
-  
-  <!-- <a mat-list-item class="link" id="eiap-home">
+
+            <!-- <a mat-list-item class="link" id="eiap-home">
     <span class="side-icon">
       <mat-icon  >admin_panel_settings</mat-icon>
     </span>
@@ -167,56 +177,98 @@
       <mat-icon>more_vert</mat-icon>
    </button>
   </a> -->
-  <mat-list-item (click)="showadminSubmenu = !showadminSubmenu; selection()" [ngClass]="{'activeMenu' : showadminSubmenu}" id="expand_admin" class="link" [matTooltip]=" !obj.sideBarOpen ? 'Administration' : ''" matTooltipClass="sidebarTooltip" matTooltipPosition="right">
-    <!-- <span class="full-width" >Workspace</span>
+            <mat-list-item *ngIf="freetrail!=true" (click)="showadminSubmenu = !showadminSubmenu; selection()" [ngClass]="{'activeMenu' : showadminSubmenu}" id="expand_admin" class="link" [matTooltip]=" !obj.sideBarOpen ? 'Administration' : ''" matTooltipClass="sidebarTooltip" matTooltipPosition="right">
+                <!-- <span class="full-width" >Workspace</span>
     <mat-icon mat-list-icon>work</mat-icon> -->
-    <span class="side-icon">
+                <span class="side-icon">
       <span class="active-img" id="eiap-home-icon-active">
           <img src="../../../assets/images/dashboard_icons/active-icons/Administration.svg">
       </span>
-      <span class="hover-img" id="eiap-home-icon-white">
+                <span class="hover-img" id="eiap-home-icon-white">
         <img src="../../../assets/images/dashboard_icons/white-icons/Administration.svg">
     </span>
-      <span  class="default-img" id="eiap-home-icon-gray">
+                <span class="default-img" id="eiap-home-icon-gray">
           <img src="../../../assets/images/dashboard_icons/grey-icons/Administration.svg">
       </span>
-    </span>
+                </span>
 
-    <span class="side-menu-font">Administration</span>
-    <mat-icon class="menu-button" [ngClass]="{'rotated' : showadminSubmenu}" >&#xe5cf;
-    </mat-icon>
-  </mat-list-item>
-  <div class="submenus" [ngClass]="{'expanded' : showadminSubmenu}">
-    <a mat-list-item  class="link" id="pi" (click)="hightlight('user','expand_admin')" routerLink="/pages/admin/myaccount" >
+                <span class="side-menu-font">Administration</span>
+                <mat-icon class="menu-button" [ngClass]="{'rotated' : showadminSubmenu}">&#xe5cf;
+                </mat-icon>
+            </mat-list-item>
+            <div class="submenus" [ngClass]="{'expanded' : showadminSubmenu}">
+                <!-- <a mat-list-item  class="link" id="pi" (click)="hightlight('user','expand_admin')" routerLink="/pages/admin/myaccount" >
       <span class="side-icon">
         <mat-icon>manage_accounts</mat-icon>
       </span>
-      <span class="side-menu-font">User Management</span>
-    </a>
-    <!-- <a mat-list-item  class="link" id="bps" (click)="hightlight('settings','expand_admin')"  >
+      <span class="side-menu-font">My Account</span>
+    </a> -->
+                <a mat-list-item class="link" id="bps" (click)="hightlight('usermanagement','expand_admin')" *ngIf="this.userRoles.includes('System Admin')" routerLink="/pages/admin/user-management">
+                    <span class="side-icon">
+        <mat-icon>settings</mat-icon>
+      </span>
+                    <span class="side-menu-font">User Management</span>
+                </a>
+                <!-- <a mat-list-item  class="link" id="bps" (click)="hightlight('settings','expand_admin')"  >
       <span class="side-icon">
         <mat-icon>settings</mat-icon>
       </span>
       <span class="side-menu-font">System Settings</span>
     </a> -->
-    <!-- <a mat-list-item  class="link" id="support" (click)="hightlight('support','expand_admin')" routerLink="/pages/support/ticket-list">
-      <span class="side-icon">
+                <a mat-list-item class="link" id="support" (click)="hightlight('support','expand_admin')" routerLink="/pages/support/ticket-list">
+                    <span class="side-icon">
         <mat-icon>settings</mat-icon>
       </span>
-      <span class="side-menu-font">Support</span>
-    </a> -->
-  </div> 
-   
-    <!-- <div class="link">
+                    <span class="side-menu-font">Support</span>
+                </a>
+            </div>
+
+            <!-- <div class="link">
       <span class="side-menu-font">
       <img class="header_icon" src="..\assets\images\poweredby-logo.png">
     </span>
     </div> -->
 
-   
 
 
-  <!-- <a mat-list-item class="link active" id="eiap-home" (click)="hightlight('eiap-home')"  routerLink="/pages/home"  >
+
+
+
+    <!-- will uncomment Subscriptions after the completion of credit card work -->
+
+    <!-- <a *ngIf="!freetrail" mat-list-item class="link" id='subscriptions' (click)="hightlight('subscriptions',null)" routerLink="/pages/subscriptions" [matTooltip]=" !obj.sideBarOpen ? 'Subscriptions' : ''" matTooltip="Subscriptions" matTooltipClass="sidebarTooltip" matTooltipPosition="right">
+      <span class="side-icon">
+<span class="active-img" id="eiap-home-icon-active">
+<img src="../../../assets/images/subscription/BillingAdresses1.svg">
+</span>
+      <span class="hover-img" id="eiap-home-icon-white">
+        <img src="../../../assets/images/subscription/BillingAdresses1.svg">
+</span>
+      <span class="default-img" id="eiap-home-icon-gray">
+        <img src="../../../assets/images/subscription/BillingAdresses1.svg">
+</span>
+      </span>
+      <span class="side-menu-font">Manage Subscriptions</span>
+  </a> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <!-- <a mat-list-item class="link active" id="eiap-home" (click)="hightlight('eiap-home')"  routerLink="/pages/home"  >
     <span class="side-icon">
       <mat-icon  >home</mat-icon>
     </span>
@@ -235,7 +287,7 @@
     </span>
     <span class="side-menu-font">Service Orchestration</span>
   </a> -->
-  <!-- <mat-menu #workspacemenu="matMenu">
+            <!-- <mat-menu #workspacemenu="matMenu">
     <a mat-list-item  class="link" id="pi" (click)="hightlight('pi')" routerLink="/pages/processIntelligence/upload"  >
       <span class="side-icon">
         <mat-icon>device_hub</mat-icon>
@@ -273,15 +325,50 @@
       <span class="side-menu-font">System Setting</span>
     </a>
   </mat-menu> -->
-</mat-nav-list>
+        </mat-nav-list>
 
-</section>
-<div class="epslogo">
-  <img src="..\assets\images\footerlogo.png" alt="" height="54">
-  <span class="poweredby">
+    </section>
+    <div class="epslogo">
+        <img src="..\assets\images\footerlogo.png" alt="" height="54">
+        <span class="poweredby">
       <label class="poweredby-label">Powered By</label>
       <label class="epsoft-label">EPSoft<sup>R</sup></label>
   </span>
+    </div>
+
 </div>
+
+
+<div *ngIf="expiry<0" class="nav-main">
+  <section class="sidebar-main">
+
+      <mat-nav-list class="ep-nav-font">
+
+  <a mat-list-item class="link" id='subscriptions' (click)="hightlight('subscriptions',null)" routerLink="/pages/subscriptions" [matTooltip]=" !obj.sideBarOpen ? 'Subscriptions' : ''" matTooltip="Subscriptions" matTooltipClass="sidebarTooltip" matTooltipPosition="right">
+    <span class="side-icon">
+<span class="active-img" id="eiap-home-icon-active">
+<img src="../../../assets/images/subscription/BillingAdresses1.svg">
+</span>
+    <span class="hover-img" id="eiap-home-icon-white">
+      <img src="../../../assets/images/subscription/BillingAdresses1.svg">
+</span>
+    <span class="default-img" id="eiap-home-icon-gray">
+      <img src="../../../assets/images/subscription/BillingAdresses1.svg">
+</span>
+    </span>
+    <span class="side-menu-font">Manage Subscriptions</span>
+</a>
+
+ 
+      </mat-nav-list>
+
+  </section>
+  <div class="epslogo">
+      <img src="..\assets\images\footerlogo.png" alt="" height="54">
+      <span class="poweredby">
+    <label class="poweredby-label">Powered By</label>
+    <label class="epsoft-label">EPSoft<sup>R</sup></label>
+</span>
+  </div>
 
 </div>

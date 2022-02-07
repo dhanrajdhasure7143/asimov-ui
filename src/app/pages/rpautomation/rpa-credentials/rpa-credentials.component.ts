@@ -16,13 +16,14 @@ import { NgxSpinnerService } from "ngx-spinner";
   styleUrls: ['./rpa-credentials.component.css']
 })
 export class RpaCredentialsComponent implements OnInit {
-  displayedColumns1: string[] = ["check","userName","password","serverName","createdTimeStamp","createdBy"];
+  displayedColumns1: string[] = ["check","userName","password","serverName","categoryName","createdTimeStamp","createdBy"];
   public toggle:boolean;
   dataSource2:MatTableDataSource<any>;
   public updateflag: boolean;
   public submitted:Boolean;
   public Credcheckflag:boolean = false;
   public dbupdateid : any;
+  categoryList:any;
   @ViewChild("paginator2",{static:false}) paginator2: MatPaginator;
   @ViewChild("sort2",{static:false}) sort2: MatSort;
   public button:string;
@@ -54,6 +55,7 @@ export class RpaCredentialsComponent implements OnInit {
       this.insertForm=this.formBuilder.group({
         userName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         password: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        categoryId:["0", Validators.compose([Validators.required])],
         serverName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         inBoundAddress: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         inBoundAddressPort: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
@@ -65,6 +67,7 @@ export class RpaCredentialsComponent implements OnInit {
     this.updateForm=this.formBuilder.group({
         userName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         password: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
+        categoryId:["0", Validators.compose([Validators.required])],
         serverName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         inBoundAddress: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         inBoundAddressPort: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
@@ -82,13 +85,14 @@ export class RpaCredentialsComponent implements OnInit {
    // document.getElementById("filters").style.display='block';
     this.dt.changeHints(this.hints.rpadbchints);
     this.getallCredentials();
+    this.getCategories();
     this.passwordtype1=false;
     this.passwordtype2=false;
 
     this.userRole = localStorage.getItem("userRole")
     this.userRole = this.userRole.split(',');
     this.isButtonVisible = this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') || this.userRole.includes('RPA Admin') || this.userRole.includes('RPA Designer')
-    || this.userRole.includes('Process Owner') || this.userRole.includes('Process Architect')  || this.userRole.includes('Process Analyst')  || this.userRole.includes('RPA Developer')  || this.userRole.includes('Process Architect') || this.userRole.includes("System Admin");
+    || this.userRole.includes('Process Owner') || this.userRole.includes('Process Architect')  || this.userRole.includes('Process Analyst')  || this.userRole.includes('RPA Developer')  || this.userRole.includes('Process Architect') || this.userRole.includes("System Admin") || this.userRole.includes('User');
     
     this.api.getCustomUserRole(2).subscribe(role=>{
       this.customUserRole=role.message[0].permission;
@@ -119,6 +123,11 @@ inputNumberOnly(event){
          { 
            this.Credcheckeddisabled = false;
            this.credentials.sort((a,b) => a.credentialId > b.credentialId ? -1 : 1);
+           this.credentials=this.credentials.map(item=>{
+            item["categoryName"]=this.categoryList.find(item2=>item2.categoryId==item.categoryId).categoryName;
+            return item;
+          })
+         
            setTimeout(() => {
             this.sortmethod(); 
           }, 80);
@@ -150,6 +159,7 @@ inputNumberOnly(event){
   {
    // document.getElementById("filters").style.display='none';
     document.getElementById("createcredentials").style.display='block';
+    this.insertForm.get("categoryId").setValue(this.categoryList.length==1?this.categoryList[0].categoryId:"0")
     document.getElementById("Updatecredntials").style.display='none';
   }
 
@@ -192,6 +202,9 @@ inputNumberOnly(event){
       Swal.fire("Error",status.errorMessage,"error");
 
   
+    },err=>{
+      this.spinner.hide();
+      Swal.fire("Error","Unable to save credentials","error");
     });
    
   }
@@ -202,6 +215,9 @@ inputNumberOnly(event){
 
   resetCredForm(){
     this.insertForm.reset();
+    this.insertForm.get("categoryId").setValue(this.categoryList.length==1?this.categoryList[0].categoryId:'0')
+    this.insertForm.get("serverName").setValue("")
+    
     this.passwordtype1=false;
   }
 
@@ -232,6 +248,9 @@ inputNumberOnly(event){
         Swal.fire("Error",status.errorMessage,"error");
       }
      
+  },err=>{
+      this.spinner.hide();
+      Swal.fire("Error","Unable to update credentials","error")
   });
 }
 else
@@ -254,6 +273,7 @@ updatecreddata()
         this.updateForm.get("userName").setValue(this.credupdatedata["userName"]);
         this.updateForm.get("password").setValue(this.credupdatedata["password"]);
         this.updateForm.get("serverName").setValue(this.credupdatedata["serverName"]);
+        this.updateForm.get("categoryId").setValue(this.credupdatedata["categoryId"]);
         this.updateForm.get("inBoundAddress").setValue(this.credupdatedata["inBoundAddress"]);
         this.updateForm.get("inBoundAddressPort").setValue(this.credupdatedata["inBoundAddressPort"]);
         this.updateForm.get("outBoundAddress").setValue(this.credupdatedata["outBoundAddress"]);
@@ -300,6 +320,9 @@ updatecreddata()
           {
             Swal.fire("Error",status.errorMessage,"error")
           }              
+        },err=>{
+          this.spinner.hide();
+          Swal.fire("Error","Unable to delete credentails","error");
         });
       }
     });
@@ -359,5 +382,15 @@ updatecreddata()
       this.credentials[i].checked= false;
     }
     this.Credcheckflag=false;
+  }
+  getCategories()
+  {
+    this.api.getCategoriesList().subscribe(data=>{
+      let response:any=data;
+      if(response.errorMessage==undefined)
+      {
+        this.categoryList=response.data;
+      }
+    })
   }
 }

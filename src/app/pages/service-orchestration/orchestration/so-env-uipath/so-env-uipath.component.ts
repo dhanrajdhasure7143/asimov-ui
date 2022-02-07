@@ -23,7 +23,7 @@ import {ActivatedRoute} from "@angular/router";
 export class SoEnvUipathComponent implements OnInit {
 
   
-  displayedColumns: string[] = ["check","accountName","tenantName","clientId","userKey","active","createdTimeStamp","createdBy"];
+  displayedColumns: string[] = ["check","accountName","categoryName","tenantName","clientId","userKey","active","createdTimeStamp","createdBy"];
   dataSource1:MatTableDataSource<any>;
   public isDataSource: boolean;
   @ViewChild("paginator1",{static:false}) paginator1: MatPaginator;
@@ -37,6 +37,7 @@ export class SoEnvUipathComponent implements OnInit {
   public param:any=0;
   public processId : any;
   public checkeddisabled:boolean =false;
+  public categoryLengthCheck:Boolean=false;
   public createpopup=document.getElementById('createevironment');
   public button:string;
   //public updatepopup=document.getElementById('env_updatepopup');
@@ -50,7 +51,7 @@ export class SoEnvUipathComponent implements OnInit {
   private updateid:number;
   public term:string;
   public submitted:Boolean;
-  public updatesubmitted : Boolean;
+  public updatesubmitted : Boolean=false;
   public checkflag:Boolean;
   public toggle:Boolean;
   public passwordtype1:Boolean;
@@ -63,6 +64,7 @@ export class SoEnvUipathComponent implements OnInit {
   public addBPconfigstatus:boolean=false;
   public isTableHasData : boolean = false;
   public FilterHasnodata : boolean = true;
+  public categoryList:any=[]
 constructor(private api:RestApiService,
   private router:Router,
   private formBuilder: FormBuilder,
@@ -77,6 +79,7 @@ constructor(private api:RestApiService,
     this.UipathForm = this.formBuilder.group({
       accountName: ["", Validators.compose([Validators.required,Validators.maxLength(50)])],
       tenantName: ["", Validators.compose([Validators.required,Validators.maxLength(50)])],
+      categoryId:["",Validators.compose([Validators.required])],
       userKey: ["", Validators.compose([Validators.required,Validators.maxLength(50)])],
       clientId: ["", Validators.compose([Validators.required,Validators.maxLength(50)])],
       active : [],
@@ -85,6 +88,7 @@ constructor(private api:RestApiService,
     this.UpdateUipathForm = this.formBuilder.group({
       accountName: ["", Validators.compose([Validators.required,Validators.maxLength(50)])],
       tenantName: ["", Validators.compose([Validators.required,Validators.maxLength(50)])],
+      categoryId:["",Validators.compose([Validators.required])],
       userKey: ["", Validators.compose([Validators.required,Validators.maxLength(50)])],
       clientId: ["", Validators.compose([Validators.required,Validators.maxLength(50)])],
       active : [],
@@ -96,7 +100,7 @@ ngOnInit() {
   this.passwordtype2=false;
   //this.updatepopup=document.getElementById('env_updatepopup');
   // this.dt.changeHints(this.hints.rpaenvhints);
-  this.getUiPath();
+  this.getCategoryList();
   //this.getallData();
   this.spinner.hide();
 }
@@ -115,9 +119,13 @@ getUiPath()
       this.isTableHasData = true;
      }
    this.Uipath_configs= this.Uipath_configs.value;
-   console.log("this.Uipath_configs",this.Uipath_configs);
+  
+   this.Uipath_configs=this.Uipath_configs.map(item=>{
+     item["categoryName"]=this.categoryList.find(item2=>item2.categoryId==item.categoryId).categoryName;
+     return item;
+   })
    this.dataSource1= new MatTableDataSource(this.Uipath_configs);
-   console.log("this.dataSource1",this.dataSource1);
+  
    this.isDataSource = true;
    this.dataSource1.sort=this.sort1;
    this.dataSource1.paginator=this.paginator1;
@@ -127,12 +135,20 @@ getUiPath()
 }
 
 createUiPath(){
+  
+  this.UipathForm.reset();
   document.getElementById("createUipath").style.display = "block";
   document.getElementById("updateUipath").style.display = "none";
+  if(this.categoryList.length==1)
+    this.UipathForm.get("categoryId").setValue(this.categoryList[0].categoryId)
+  else
+    this.UipathForm.get("categoryId").setValue("")
+
+  
 }
 
 savedata(){
-  console.log(this.UipathForm);
+ 
 }
 
 close(){
@@ -153,10 +169,8 @@ UpdateUipath(){
 
 checkEnableDisableBtn(id, event)
 {
-  console.log(event);
-  console.log(id);
-  console.log(event.target.checked);
-  this.Uipath_configs.find(data=>data.userKey==id).checked=event.target.checked;
+  
+  this.Uipath_configs.find(data=>data.sourceAccId==id).checked=event.target.checked;
   if(this.Uipath_configs.filter(data=>data.checked==true).length==this.Uipath_configs.length)
   {
     this.checkflag=true;
@@ -175,7 +189,7 @@ checktoupdate()
   if(selectedBluePrism.length==1)
   {
     this.updateflag=true;
-    this.updateid=selectedBluePrism[0].userKey;
+    this.updateid=selectedBluePrism[0].sourceAccId;
   }else
   {
     this.updateflag=false;
@@ -185,7 +199,7 @@ checktoupdate()
 
 checktodelete()
 {
-  console.log(this.Uipath_configs.filter(product => product.checked).map(p => p.userKey));
+ 
   const selectedBluePrism = this.Uipath_configs.filter(product => product.checked).map(p => p.userKey);
   if(selectedBluePrism.length>0)
   {
@@ -201,9 +215,9 @@ removeallchecks()
 {
   for(let i=0;i<this.Uipath_configs.length;i++)
   {
-    console.log(this.Uipath_configs[i]);
+  
     this.Uipath_configs[i].checked= false;
-    console.log(this.Uipath_configs[i]);
+    
   }
   this.checkflag=false;
 }
@@ -241,41 +255,57 @@ updatedata()
   document.getElementById("createUipath").style.display='none';
   document.getElementById('updateUipath').style.display='block';
   let data:any;
-  console.log("this.blueprism_configs.value",this.Uipath_configs);
+  
   for(data of this.Uipath_configs)
   {
-    if(data.userKey==this.updateid)
+    if(data.sourceAccId==this.updateid)
     {
-      (data.active==true)?data.active=1:data.active=0;
+      if(data.active==true)
+        data.active=1
+      else
+        data.active=0;
       this.UpdateUipathForm.get("accountName").setValue(data["accountName"]);
       this.UpdateUipathForm.get("tenantName").setValue(data["tenantName"]);
+      this.UpdateUipathForm.get("categoryId").setValue(data["categoryId"]);
       this.UpdateUipathForm.get("userKey").setValue(data["userKey"]);
       this.UpdateUipathForm.get("clientId").setValue(data["clientId"]);
       this.UpdateUipathForm.get("active").setValue(data["active"]);
+      if(this.categoryList.length==1)
+      {
+        this.UpdateUipathForm.get("categoryId").setValue(this.categoryList[0].categoryId);
+      }else
+      {
+        this.UpdateUipathForm.get("categoryId").setValue(data["categoryId"]);
+      }
       break;
     }
   }
-  console.log(this.UpdateUipathForm.value);
+  this.updatesubmitted=false;
+  
 }
 
 Update_UiPath(){
   this.spinner.show();
-  if(this.UpdateUipathForm.valid){
-    this.updatesubmitted = true;
-    setTimeout(()=>{
+    let updatedData=this.UpdateUipathForm.value;
+    updatedData["sourceAccId"]=this.updateid,
+    updatedData["sourceType"]="UiPath"
+   
+    this.api.update_uipath_env(updatedData).subscribe(res=>{
       this.spinner.hide();
-      Swal.fire({
-        position: 'center',
-        icon: 'success',
-        title: "Successfully Updated !!",
-        showConfirmButton: false,
-        timer: 2000
-      });
-    }, 5000)
-    this.updatesubmitted = false;
-    document.getElementById("UpdateUipathForm").style.display='none';
+      let response:any=res;
+      this.updatesubmitted=false;
+      if(response.errorMessage==undefined)
+      {
+        Swal.fire("Success",response.status,"success");
+        document.getElementById('updateUipath').style.display='none';
+      }
+      else{
+        Swal.fire("Error",response.errorMessage,"error")
+      }
+    })
+  
   }
-}
+
 
 // apply filter
 
@@ -291,4 +321,35 @@ applyFilter(filterValue: string) {
   }
 }
 
+
+getCategoryList()
+{
+  this.api.getCategoriesList().subscribe(data=>{
+    let catResponse : any;
+    catResponse=data
+    if(catResponse.errorMessage==undefined)
+    {
+      this.categoryList=catResponse.data;
+      if(this.categoryList.length==1)
+      {
+        this.categoryLengthCheck=true;
+      }
+      else
+      {
+        this.categoryLengthCheck=false;
+      }
+    }
+    this.getUiPath();
+  });
+}
+
+reset_createUiPath(){
+this.UipathForm.reset();
+this.UipathForm.get("categoryId").setValue("")
+}
+
+reset_UpdateUiPath(){
+  this.UpdateUipathForm.reset();
+  this.UpdateUipathForm.get("categoryId").setValue("")
+}
 }

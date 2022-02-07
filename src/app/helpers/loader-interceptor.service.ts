@@ -15,7 +15,7 @@ export class LoaderInterceptor implements HttpInterceptor {
   private requests: HttpRequest<any>[] = [];
 
   constructor(private loaderService: LoaderService) { 
-console.log(this.loaderService.isLoading);
+
   }
 
   removeRequest(req: HttpRequest<any>) {
