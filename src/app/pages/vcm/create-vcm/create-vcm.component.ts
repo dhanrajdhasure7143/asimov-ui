@@ -2,22 +2,32 @@ import { NestedTreeControl } from '@angular/cdk/tree';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTreeNestedDataSource } from '@angular/material';
 import { MatTree } from '@angular/material/tree';
+import {Router} from "@angular/router"
 
 let TREE_DATA: any[] = [
   {
     name: 'Management Process',
+    description:'',
+    owner:'',
     children: []
   },
   {
     name: 'Core Process',
+    description:'',
+    owner:'',
     children: []
   },
   {
     name: 'Support Process',
+    description:'',
+    owner:'',
     children: []
   },
   {
     vcmname: ''
+  },
+  {
+    documents:[]
   }
 ];
 
@@ -43,7 +53,7 @@ export class CreateVcmComponent implements OnInit {
   supportinput = '';
   vcmName = '';
 
-  constructor() {
+  constructor(private router: Router) {
     this.dataSource.data = TREE_DATA;
     this.vcmProcess = TREE_DATA;
   }
@@ -51,6 +61,14 @@ export class CreateVcmComponent implements OnInit {
   hasChild = (_: number, node: any) => !!node.children && node.children.length > 0;
 
   ngOnInit(): void {
+    let checkProperties = JSON.parse(sessionStorage.getItem('vcmTree'));
+    if(checkProperties){
+      this.vcmProcess = null;
+      this.vcmProcess = checkProperties;
+      this.dataSource.data = null;
+      this.dataSource.data = checkProperties;
+    console.log(this.vcmProcess);
+    }
   }
   
   addManageProcess() {
@@ -160,18 +178,27 @@ export class CreateVcmComponent implements OnInit {
     TREE_DATA = [
       {
         name: 'Management Process',
+        description:'',
+        owner:'',
         children: []
       },
       {
         name: 'Core Process',
+        description:'',
+        owner:'',
         children: []
       },
       {
         name: 'Support Process',
+        description:'',
+        owner:'',
         children: []
       },
       {
         vcmname: ''
+      },
+      {
+        documents:[]
       }
     ];
     this.dataSource.data = null;
@@ -179,6 +206,7 @@ export class CreateVcmComponent implements OnInit {
     this.vcmProcess = null;
     this.vcmProcess = TREE_DATA;
     this.vcmName = '';
+    sessionStorage.removeItem('vcmTree');
   }
 
   saveLevel1() {
@@ -187,6 +215,14 @@ export class CreateVcmComponent implements OnInit {
     this.dataSource.data = TREE_DATA;
     this.vcmProcess = null;
     this.vcmProcess = TREE_DATA;
+  }
+
+  goToProperties(){
+    if(this.vcmProcess[0].children.length != 0 || this.vcmProcess[1].children.length != 0 || this.vcmProcess[2].children.length != 0){
+    this.router.navigate(['/pages/vcm/properties']);
+    TREE_DATA[3].vcmname = this.vcmName;
+    sessionStorage.setItem('vcmTree',JSON.stringify(this.vcmProcess));
+    }
   }
 
 }

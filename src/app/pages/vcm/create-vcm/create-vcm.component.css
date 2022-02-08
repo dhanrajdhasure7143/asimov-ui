@@ -21,11 +21,13 @@
 .vcm-leveldiv mat-panel-title h5 {
     font-size: 16px;
 }
+
 .vcm-leveldiv ::ng-deep span.mat-expansion-indicator {
     position: absolute;
     right: 16px;
     top: 14px;
 }
+
 .vcm-leveldiv .mat-expansion-panel-content {
     border-top: 1px solid #ccc !important;
 }
@@ -43,12 +45,17 @@
     margin-bottom: 20px !important;
     position: relative;
 }
+
 .mat-expansion-panel:last-child {
     margin-bottom: 0px !important;
 }
-.content , .level1process{
+
+.content,
+.level1process {
     position: relative;
 }
+
+
 /* .content i {
     position: absolute;
     top: 10px;
@@ -57,7 +64,8 @@
     cursor: pointer;
 } */
 
-.level1process button, .content button {
+.level1process button,
+.content button {
     position: absolute;
     right: 10px;
     background-color: transparent !important;
@@ -76,37 +84,45 @@
     border-radius: 3px;
     height: 100%;
 }
+
 .previewdiv h4 {
-   font-size: 16px;
-   color: #7a7a7a;
-   text-transform: uppercase;
+    font-size: 16px;
+    color: #7a7a7a;
+    text-transform: uppercase;
 }
+
 .previewcontdiv {
     background-color: #fff;
     border-radius: 3px;
     height: 90%;
     padding: 15px;
 }
+
 img.preview-img {
     width: 100%;
     margin-bottom: 20px;
 }
+
 .previewcontdiv h5 {
     color: #00a0e3;
     font-size: 15px;
     text-align: center;
 }
+
 .previewcontdiv p {
     text-align: center;
     font-weight: 300;
     color: #001c47;
     font-size: 14px;
 }
+
 .submit button.btn.btn-primary {
     margin-right: 0px !important;
 }
 
-.management h4, .core h4, .support h4 {
+.management h4,
+.core h4,
+.support h4 {
     font-size: 14px !important;
     margin-bottom: 10px !important;
 }
@@ -115,7 +131,9 @@ ul.subfolders {
     margin-left: 3%;
 }
 
-.management, .core, .support {
+.management,
+.core,
+.support {
     margin-bottom: 20px;
 }
 
@@ -126,6 +144,8 @@ li.childHover {
 li.overflowcontent {
     color: #607d8b;
 }
+
+
 /* li.childHover {
     position: relative;
 }
@@ -164,4 +184,12 @@ li.overflowcontent {
 
 mat-tree {
     background: #f6f6f6;
+}
+
+.dis {
+    cursor: not-allowed;
+}
+
+.view {
+    cursor: pointer;
 }

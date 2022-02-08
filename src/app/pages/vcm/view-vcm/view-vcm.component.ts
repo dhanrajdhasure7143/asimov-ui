@@ -20,6 +20,7 @@ export class ViewVcmComponent implements OnInit {
   }
 
   createVcm(){
+    sessionStorage.removeItem('vcmTree');
     this.router.navigate(['/pages/vcm/create-vcm']);
   }
 

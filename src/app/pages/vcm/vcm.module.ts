@@ -7,11 +7,12 @@ import { VcmComponent } from './vcm.component';
 import { MatTreeModule, MatListModule, MatMenuModule, MatButtonModule, MatIconModule, MatToolbarModule, MatSidenavModule, MatTooltipModule, MatCard, MatCardModule, MatSortModule, MatPaginatorModule, MatTableModule, MatDialogModule, MatFormFieldModule, MatInputModule, MatProgressBarModule, MatProgressSpinnerModule, MatSelectModule, MatSliderModule, MatSlideToggleModule, MatTabsModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatExpansionModule} from '@angular/material/expansion';
+import { VcmPropertiesComponent } from './vcm-properties/vcm-properties.component';
 
 
 
 @NgModule({
-  declarations: [ViewVcmComponent, CreateVcmComponent, VcmComponent],
+  declarations: [ViewVcmComponent, CreateVcmComponent, VcmComponent, VcmPropertiesComponent],
   imports: [
     CommonModule,
     VcmRoutingModule,
