@@ -14,6 +14,7 @@ export const environment = {
   platform_url:'https://ezflow.epsoftinc.com/aiotalplatform',
   schema_registry_url:"http://schema-registry:8081",
   alerts_url:'https://ezflow.epsoftinc.com/alerts',
+  subscriptionendpoint_url:'https://ezflow.epsoftinc.com/subscriptions',
 
   // Aiotal redirection urls 
   myaccount_url : "https://ezflow.epsoftinc.com/#/activation",
