@@ -488,7 +488,7 @@ resetsla(){
  loadbotdatadesign(botId)
   {
     localStorage.setItem("botId",botId);
-    this.router.navigate(["/pages/rpautomation/home"]);
+    //this.router.navigate(["/pages/rpautomation/designer"]);
   }
 
 

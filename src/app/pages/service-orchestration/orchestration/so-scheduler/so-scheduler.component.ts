@@ -688,7 +688,7 @@ export class SoSchedulerComponent implements OnInit {
 export class Envname implements PipeTransform {
   transform(value: any,arg:any)
   {
-    debugger
+    
     let environments:any=[];
     environments=arg;
     let environmentName
