@@ -193,3 +193,19 @@ mat-tree {
 .view {
     cursor: pointer;
 }
+
+.tsttooltipbtn {
+    position: relative;
+}
+
+.tsttooltipbtn:hover .default-img {
+    display: none;
+}
+
+.tsttooltipbtn:hover .hover-img {
+    display: initial;
+}
+
+.tsttooltipbtn:hover span.testtooltip {
+    display: block;
+}

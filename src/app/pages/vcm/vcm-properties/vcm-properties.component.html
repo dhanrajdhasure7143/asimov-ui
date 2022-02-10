@@ -13,7 +13,7 @@
     </div>
 
     <div class="module-body">
-        <div class="container-fluid row" style="margin-top: 1% !important;">
+        <div class="container-fluid row" style="margin-top: 1% !important;" *ngIf="levelType == 'level1'">
             <div class="col-md-12 col-lg-12">
                 <div class="dbichart-block">
                     <div class="dbichart-body">
@@ -24,16 +24,18 @@
                                 <th style="width: 30%;">Process</th>
                                 <th style="width: 70%;">Owner</th>
                             </tr>
-                            <tr *ngFor="let prop of vcmProperties">
-                                <td *ngIf="prop.children?.length != 0 && prop.name">{{prop.name}}</td>
-                                <td *ngIf="prop.children?.length != 0 && prop.name">
-                                    <select class="form-control" #ownerValue (change)="owner(prop , ownerValue.value)">
-                                        <option value="undefined" hidden disabled>Select Owner</option>
+                            <ng-container *ngFor="let prop of vcmProperties">
+                                <tr *ngFor="let name of prop.children;let i = index">
+                                    <td *ngIf="name.name">{{name.name}}</td>
+                                    <td *ngIf="name.name">
+                                        <select class="form-control" #ownerValue [(ngModel)]="name.owner">
+                                        <option value="" hidden disabled>Select Owner</option>
                                         <option value="John Doe">John Doe</option>
                                         <option value="Emily Mac">Emily Mac</option>   
                                     </select>
-                                </td>
-                            </tr>
+                                    </td>
+                                </tr>
+                            </ng-container>
                         </table>
                     </div>
                 </div>
@@ -45,14 +47,16 @@
                         <h4 style="font-weight: bold;">Process Definition</h4>
                         <hr>
                         <div *ngFor="let prop of vcmProperties">
-                            <p *ngIf="prop.children?.length != 0 && prop.name" style="font-weight: bold;margin: 0;">{{prop.name}}</p>
-                            <textarea *ngIf="prop.children?.length != 0 && prop.name" class="form-control" id="descriptionValue" #descriptionValue style="width: 70%;margin-bottom: 20px !important;" (change)="description(prop,$event.target.value)" placeholder="Definition for {{prop.name}}"></textarea>
+                            <ng-container *ngFor="let name of prop.children;let i = index">
+                                <p *ngIf="name.name" style="font-weight: bold;margin: 0;">{{name.name}}</p>
+                                <textarea *ngIf="name.name" class="form-control" id="descriptionValue" style="width: 70%;margin-bottom: 20px !important;" [(ngModel)]="name.description" placeholder="Enter Description"></textarea>
+                            </ng-container>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-12 col-lg-12">
+            <!-- <div class="col-md-12 col-lg-12">
                 <div class="dbichart-block" style="background: #f6f6f6;">
                     <div class="dbichart-body">
                         <div class="row module-heading title">
@@ -83,7 +87,88 @@
                         </div>
                     </div>
                 </div>
+            </div> -->
+        </div>
+
+        <div class="container-fluid row" style="margin-top: 1% !important;" *ngIf="levelType == 'level2'">
+            <div class="col-md-12 col-lg-12">
+                <div class="dbichart-block">
+                    <div class="dbichart-body">
+                        <h4 style="font-weight: bold;">Ownership</h4>
+                        <hr>
+                        <table style="width:100%">
+                            <tr style="border-top: 1px solid #dddddd;">
+                                <th style="width: 30%;">Process</th>
+                                <th style="width: 70%;">Owner</th>
+                            </tr>
+                            <ng-container *ngFor="let prop of vcmProperties">
+                                <ng-container *ngFor="let name of prop.children;">
+                                    <tr *ngFor="let level2 of name.children;let i = index">
+                                        <td *ngIf="level2.name">{{level2.name}}</td>
+                                        <td *ngIf="level2.name">
+                                            <select class="form-control" #ownerValue [(ngModel)]="level2.owner">
+                                        <option value="" hidden disabled>Select Owner</option>
+                                        <option value="John Doe">John Doe</option>
+                                        <option value="Emily Mac">Emily Mac</option>   
+                                    </select>
+                                        </td>
+                                    </tr>
+                                </ng-container>
+                            </ng-container>
+                        </table>
+                    </div>
+                </div>
             </div>
+
+            <div class="col-md-12 col-lg-12">
+                <div class="dbichart-block" style="background: #f6f6f6;">
+                    <div class="dbichart-body">
+                        <h4 style="font-weight: bold;">Process Definition</h4>
+                        <hr>
+                        <div *ngFor="let prop of vcmProperties">
+                            <ng-container *ngFor="let name of prop.children">
+                                <ng-container *ngFor="let level2 of name.children;let i = index">
+                                    <p *ngIf="level2.name" style="font-weight: bold;margin: 0;">{{level2.name}}</p>
+                                    <textarea *ngIf="level2.name" class="form-control" id="descriptionValue" style="width: 70%;margin-bottom: 20px !important;" [(ngModel)]="level2.description" placeholder="Enter Description"></textarea>
+                                </ng-container>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div class="col-md-12 col-lg-12">
+                <div class="dbichart-block" style="background: #f6f6f6;">
+                    <div class="dbichart-body">
+                        <div class="row module-heading title">
+                            <div>
+                                <h4 style="font-weight: bold;">Documents</h4>
+                            </div>
+                            <div class="ml-auto submit">
+                                <span class="module-back-button" (click)="fileInput.click()">
+                                    <input multiple #fileInput type="file" (change)="documentsUpload($event)" style="display:none;"/>
+                                    <i aria-hidden="true" class="fa fa-upload"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="module-body">
+                            <table style="width:100%" *ngIf="fileName.length != 0">
+                                <tr>
+                                    <th style="width: 5%;">S.No</th>
+                                    <th style="width: 95%;">Documents</th>
+                                </tr>
+                                <tr *ngFor="let file of fileName;let i = index;">
+                                    <td>{{i + 1}}</td>
+                                    <td>
+                                        {{file.name}} &nbsp;&nbsp;
+                                        <img src="../../../../assets/images/VCM/circle-close-red.svg" class="testplus1" (click)="RemoveFile(file,i)" />
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
         </div>
     </div>
 </div>
