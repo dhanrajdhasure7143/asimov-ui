@@ -13,37 +13,37 @@ template:`
     </div>
     <div class="col-md-12 p-0" [ngSwitch]="field.type">
         <div *ngIf ="field.visibility">
-          <textbox *ngSwitchCase="'text'" [field]="field" [form]="form"></textbox>
+          <textbox [feilddisable]="isdisabled" *ngSwitchCase="'text'" [field]="field" [form]="form"></textbox>
         </div>
         <div *ngIf ="field.visibility">
-          <textbox *ngSwitchCase="'email'" [field]="field" [form]="form"></textbox>
+          <textbox [feilddisable]="isdisabled" *ngSwitchCase="'email'" [field]="field" [form]="form"></textbox>
         </div>
         <div *ngIf ="field.visibility">
-          <textbox *ngSwitchCase="'password'" [field]="field" [form]="form"></textbox>
+          <textbox [feilddisable]="isdisabled" *ngSwitchCase="'password'" [field]="field" [form]="form"></textbox>
         </div>
         <div *ngIf ="field.visibility">
-          <textbox *ngSwitchCase="'number'" [field]="field" [form]="form"></textbox>
+          <textbox [feilddisable]="isdisabled" *ngSwitchCase="'number'" [field]="field" [form]="form"></textbox>
         </div>
         <div *ngIf ="field.visibility">
-          <textbox *ngSwitchCase="'textarea'" [field]="field" [form]="form"></textbox>
+          <textbox [feilddisable]="isdisabled" *ngSwitchCase="'textarea'" [field]="field" [form]="form"></textbox>
         </div>
         <div *ngIf ="field.visibility">
-          <dropdown *ngSwitchCase="'dropdown'" [field]="field" [form]="form"></dropdown>
+          <dropdown [feilddisable]="isdisabled" *ngSwitchCase="'dropdown'" [field]="field" [form]="form"></dropdown>
         </div>
         <div *ngIf ="field.visibility">
-          <dropdown *ngSwitchCase="'restapi'" [field]="field" [form]="form"></dropdown>
+          <dropdown [feilddisable]="isdisabled" *ngSwitchCase="'restapi'" [field]="field" [form]="form"></dropdown>
         </div>
         <div *ngIf ="field.visibility">
-          <checkbox *ngSwitchCase="'checkbox'" [field]="field" [form]="form"></checkbox>
+          <checkbox [feilddisable]="isdisabled" *ngSwitchCase="'checkbox'" [field]="field" [form]="form"></checkbox>
         </div>
         <div *ngIf ="field.visibility">
-          <checkbox *ngSwitchCase="'checkboxToggle'" [field]="field" [form]="form"></checkbox>
+          <checkbox [feilddisable]="isdisabled" *ngSwitchCase="'checkboxToggle'" [field]="field" [form]="form"></checkbox>
         </div>
         <div *ngIf ="field.visibility">
-          <radio *ngSwitchCase="'radio'" [field]="field" [form]="form"></radio>
+          <radio [feilddisable]="isdisabled" *ngSwitchCase="'radio'" [field]="field" [form]="form"></radio>
         </div>
         <div *ngIf ="field.visibility">
-          <file *ngSwitchCase="'multipart'" [field]="field" [form]="form"></file>
+          <file [feilddisable]="isdisabled" *ngSwitchCase="'multipart'" [field]="field" [form]="form"></file>
         </div>
         <div *ngIf="!isValid && (isDirty || istouched) ">
           <span class="errspan required">{{field.label}} is required</span>
@@ -58,7 +58,8 @@ styleUrls: ['./form-builder.component.css']
 export class FormBuilderComponent implements OnInit {
   @Input() field:any;
   @Input() form:any;
-
+  isdisabled:boolean;
+  userRole: string;
   get isValid() { return this.form.controls[this.field.name+"_"+this.field.id].valid; }
   get isDirty() { return this.form.controls[this.field.name+"_"+this.field.id].dirty; }
   get istouched() { return this.form.controls[this.field.name+"_"+this.field.id].touched; }
@@ -66,6 +67,13 @@ export class FormBuilderComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    this.userRole = localStorage.getItem("userRole");
+      if(this.userRole=='Process Owner'){
+        this.isdisabled=null
+      }
+      else{
+        this.isdisabled=true
+      }
   }
 
 }
