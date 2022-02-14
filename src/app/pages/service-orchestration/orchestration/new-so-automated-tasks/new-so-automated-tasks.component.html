@@ -208,7 +208,7 @@
                 </ng-container>
 
                 <ng-container matColumnDef="status">
-                    <th mat-header-cell  mat-sort-header *matHeaderCellDef>Status</th>
+                    <th mat-header-cell   *matHeaderCellDef>Status</th>
                     <td mat-cell *matCellDef="let element">
                         <span  [matTooltip]="element.status">
                         <span *ngIf="element.status!='null'" [id]="element.taskId+'__status'">
@@ -314,7 +314,7 @@
                 </button>
               </span>
                             <span>
-                <button [disabled]="element.botId==0" [class]="element.botId==0?'undobtn':''" (click)="loadbotdatadesign(element.botId)" [disabled]="element.sourceType!='EPSoft'" *ngIf="element.taskType =='Automated'||element.taskType =='Bot'" matTooltip="View Bot">
+                <button [disabled]="element.botId==0" routerLink="/pages/rpautomation/designer" [queryParams]="{botId:element.botId,name:'ochestration' }" [class]="element.botId==0?'undobtn':''" (click)="loadbotdatadesign(element.botId)" [disabled]="element.sourceType!='EPSoft'" *ngIf="element.taskType =='Automated'||element.taskType =='Bot'" matTooltip="View Bot">
                   <img src="../../../../../assets/images/Projects/eye-show.svg" class="testplus" />
                 </button>
                 <button  *ngIf="element.taskType !='Automated'" class="undobtn" >

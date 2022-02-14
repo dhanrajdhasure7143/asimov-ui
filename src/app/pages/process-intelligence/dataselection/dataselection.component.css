@@ -175,3 +175,6 @@
 .PI.table th {
     border-bottom: unset !important;
 }
+.sel-tab{
+    display: contents;
+}

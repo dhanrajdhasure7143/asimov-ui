@@ -9,8 +9,9 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
         <div class="col-md-12 p-0 form-group"  [id]="field.id+'_form_data'"  *ngFor="let field of fields; let i =index ">
             <form-builder [field]="field" [form]="form"></form-builder>
         </div>
-        <div class="form-footer">
-            <button type="submit"  [disabled]="!form.valid" class="btn btn-primary">Save</button>
+        <div class="form-footer" *ngIf="!feilddisable">
+            <button *ngIf="isdisabled==null" type="submit"  [disabled]="!form.valid" class="btn btn-primary">Save</button>
+            <button *ngIf="isdisabled==true" type="submit"  [disabled]="true" class="btn btn-primary">Save</button>
         </div>
       </div>
     </form>
@@ -20,6 +21,8 @@ export class DynamicFormsComponent implements OnInit {
   @Output() onSubmit = new EventEmitter();
   @Input() fields: any[] = [];
   form: FormGroup;
+  isdisabled:boolean;
+  userRole: string;
   constructor() { }
   onSub(){
     this.onSubmit.emit(this.form.value)
@@ -39,6 +42,13 @@ export class DynamicFormsComponent implements OnInit {
       }*/
     }
     this.form = new FormGroup(fieldsCtrls);
+    this.userRole = localStorage.getItem("userRole");
+      if(this.userRole=='Process Owner'){
+        this.isdisabled=null
+      }
+      else{
+        this.isdisabled=true
+      }
   }
 
 }

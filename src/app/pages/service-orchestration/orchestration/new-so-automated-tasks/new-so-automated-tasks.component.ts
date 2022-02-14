@@ -122,6 +122,8 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
       botSource: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       breachAlerts: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       cascadingImpact: false,
+      email:[''],
+      sms:[''],
       /*expectedDate: [],
       expectedTime : [],*/
       expectedEDate : [],
@@ -488,7 +490,7 @@ resetsla(){
  loadbotdatadesign(botId)
   {
     localStorage.setItem("botId",botId);
-    this.router.navigate(["/pages/rpautomation/home"]);
+    //this.router.navigate(["/pages/rpautomation/designer"]);
   }
 
 
@@ -931,6 +933,9 @@ resetsla(){
               $("#"+statusdata.taskId+"__failed").html(statusdata.failureTask)
 
               $("#"+statusdata.taskId+"__success").html(statusdata.successTask)
+              this.automatedtask.find(item=>item.taskId==statusdata.taskId).status=statusdata.status;
+
+              this.responsedata.find(item=>item.taskId==statusdata.taskId).status=statusdata.status;
               // if(responsedata.automationTasks.filter(prodata=>prodata.status=="InProgress"||prodata.status=="Running").length>0)
               // {
               // }else
