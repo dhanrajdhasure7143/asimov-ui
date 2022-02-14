@@ -17,3 +17,22 @@ select {
 textarea {
     border: 1px solid #dddddd;
 }
+
+.descriptionview {
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+    width: 70%;
+}
+
+*::first-letter {
+    text-transform: capitalize;
+}
+
+img {
+    cursor: pointer;
+}
+
+.definitionscroll {
+    overflow-x: hidden;
+}

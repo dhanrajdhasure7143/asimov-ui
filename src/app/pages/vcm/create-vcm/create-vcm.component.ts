@@ -78,7 +78,7 @@ export class CreateVcmComponent implements OnInit {
       name: this.manageinput,
       description: '',
       owner: '',
-      documents:[]
+      documents: []
     }
     TREE_DATA.filter(e => e.name == 'Management Process')[0].children.push(record);
     this.vcmProcess = null;
@@ -94,7 +94,7 @@ export class CreateVcmComponent implements OnInit {
       name: this.coreinput,
       description: '',
       owner: '',
-      documents:[]
+      documents: []
     }
     TREE_DATA.filter(e => e.name == 'Core Process')[0].children.push(record);
     this.vcmProcess = null;
@@ -110,7 +110,7 @@ export class CreateVcmComponent implements OnInit {
       name: this.supportinput,
       description: '',
       owner: '',
-      documents:[]
+      documents: []
 
     }
     TREE_DATA.filter(e => e.name == 'Support Process')[0].children.push(record);
@@ -145,7 +145,7 @@ export class CreateVcmComponent implements OnInit {
       level1child: this.level1process.name,
       description: '',
       owner: '',
-      documents:[]
+      documents: []
     };
     var index = TREE_DATA.filter(e => e.name === this.level1process.processname)[0]
       .children.findIndex(c => c.name === this.level1process.name);
@@ -216,62 +216,62 @@ export class CreateVcmComponent implements OnInit {
     sessionStorage.removeItem('vcmTree');
   }
 
-  editProcess(item,name,level){
+  editProcess(item, name, level) {
     this.drawer.open();
     this.editLevelProperties = level;
     console.log(this.editLevelProperties);
     this.editProcessDescription = '';
     this.editProcessOwner = '';
-    console.log(item , name);
+    console.log(item, name);
     this.propertiesName = name.processname;
-    if(name.description){
+    if (name.description) {
       this.editProcessDescription = name.description;
     }
-    if(name.owner){
+    if (name.owner) {
       this.editProcessOwner = name.owner;
     }
-    if(name.documents){
+    if (name.documents) {
       this.fileName = name.documents;
     }
     this.editProcessName = name.name;
   }
 
-  editProperties(){
-   TREE_DATA.filter((e)=>e.name === this.propertiesName)[0].children
-   .filter(n=>n.name === this.editProcessName)[0].description = this.editProcessDescription;
-   TREE_DATA.filter((e)=>e.name === this.propertiesName)[0].children
-   .filter(n=>n.name === this.editProcessName)[0].owner = this.editProcessOwner;
-    console.log(TREE_DATA); 
-    this.drawer.close(); 
+  editProperties() {
+    TREE_DATA.filter((e) => e.name === this.propertiesName)[0].children
+      .filter(n => n.name === this.editProcessName)[0].description = this.editProcessDescription;
+    TREE_DATA.filter((e) => e.name === this.propertiesName)[0].children
+      .filter(n => n.name === this.editProcessName)[0].owner = this.editProcessOwner;
+    console.log(TREE_DATA);
+    this.drawer.close();
   }
-  editLevel2(name,level2,level){
+  editLevel2(name, level2, level) {
     this.drawer.open();
     this.editProcessDescription = '';
     this.editProcessOwner = '';
     this.editLevelProperties = level;
-    console.log(name , level2);
-    this.level1child =  level2.level1child;
+    console.log(name, level2);
+    this.level1child = level2.level1child;
     this.propertiesName = level2.processname;
-    if(level2.description){
+    if (level2.description) {
       this.editProcessDescription = level2.description;
     }
-    if(level2.owner){
+    if (level2.owner) {
       this.editProcessOwner = level2.owner;
     }
-    if(level2.documents){
+    if (level2.documents) {
       this.fileName = level2.documents;
     }
     this.editProcessName = level2.name;
   }
-  editProcessLevel2(){
-    TREE_DATA.filter((e)=>e.name === this.propertiesName)[0].children
-    .filter(n=>n.name === this.level1child)[0].children.filter(c=>c.name === this.editProcessName)[0]
-    .description = this.editProcessDescription;
-    TREE_DATA.filter((e)=>e.name === this.propertiesName)[0].children
-    .filter(n=>n.name === this.level1child)[0].children.filter(c=>c.name === this.editProcessName)[0]
-    .owner = this.editProcessOwner;
+  editProcessLevel2() {
+    TREE_DATA.filter((e) => e.name === this.propertiesName)[0].children
+      .filter(n => n.name === this.level1child)[0].children.filter(c => c.name === this.editProcessName)[0]
+      .description = this.editProcessDescription;
+    TREE_DATA.filter((e) => e.name === this.propertiesName)[0].children
+      .filter(n => n.name === this.level1child)[0].children.filter(c => c.name === this.editProcessName)[0]
+      .owner = this.editProcessOwner;
     console.log(TREE_DATA);
-    this.drawer.close(); 
+    this.drawer.close();
   }
 
   documentsUpload(event) {
@@ -285,14 +285,23 @@ export class CreateVcmComponent implements OnInit {
     for (var i = 0; i < this.fileName.length; i++) {
       formdata.append("file", this.fileName[i]);
     }
-    if(this.editLevelProperties == 1){
-      TREE_DATA.filter((e)=>e.name === this.propertiesName)[0].children
-      .filter(n=>n.name === this.editProcessName)[0].documents = this.fileName;
+    if (this.editLevelProperties == 1) {
+      console.log(this.fileName);
+      TREE_DATA.filter((e) => e.name === this.propertiesName)[0].children
+        .filter(n => n.name === this.editProcessName)[0].documents = this.fileName;
+      this.dataSource.data = null;
+      this.dataSource.data = TREE_DATA;
+      this.vcmProcess = null;
+      this.vcmProcess = TREE_DATA;
     }
-    if(this.editLevelProperties == 2){
-      TREE_DATA.filter((e)=>e.name === this.propertiesName)[0].children
-    .filter(n=>n.name === this.level1child)[0].children.filter(c=>c.name === this.editProcessName)[0]
-    .documents = this.fileName;
+    if (this.editLevelProperties == 2) {
+      TREE_DATA.filter((e) => e.name === this.propertiesName)[0].children
+        .filter(n => n.name === this.level1child)[0].children.filter(c => c.name === this.editProcessName)[0]
+        .documents = this.fileName;
+      this.dataSource.data = null;
+      this.dataSource.data = TREE_DATA;
+      this.vcmProcess = null;
+      this.vcmProcess = TREE_DATA;
     }
     console.log(this.fileName);
     console.log(TREE_DATA);
@@ -316,14 +325,14 @@ export class CreateVcmComponent implements OnInit {
   }
   RemoveFile(file, i: number) {
     this.fileName.splice(i, 1);
-    if(this.editLevelProperties == 1){
-      TREE_DATA.filter((e)=>e.name === this.propertiesName)[0].children
-      .filter(n=>n.name === this.editProcessName)[0].documents = this.fileName;
+    if (this.editLevelProperties == 1) {
+      TREE_DATA.filter((e) => e.name === this.propertiesName)[0].children
+        .filter(n => n.name === this.editProcessName)[0].documents = this.fileName;
     }
-    if(this.editLevelProperties == 2){
-      TREE_DATA.filter((e)=>e.name === this.propertiesName)[0].children
-    .filter(n=>n.name === this.level1child)[0].children.filter(c=>c.name === this.editProcessName)[0]
-    .documents = this.fileName;
+    if (this.editLevelProperties == 2) {
+      TREE_DATA.filter((e) => e.name === this.propertiesName)[0].children
+        .filter(n => n.name === this.level1child)[0].children.filter(c => c.name === this.editProcessName)[0]
+        .documents = this.fileName;
     }
     console.log(TREE_DATA);
   }
@@ -335,7 +344,7 @@ export class CreateVcmComponent implements OnInit {
     this.vcmProcess = null;
     this.vcmProcess = TREE_DATA;
   }
-  vcmHeading(){
+  vcmHeading() {
     TREE_DATA[3].vcmname = this.vcmName;
     this.dataSource.data = null;
     this.dataSource.data = TREE_DATA;
@@ -343,13 +352,14 @@ export class CreateVcmComponent implements OnInit {
     this.vcmProcess = TREE_DATA;
   }
   goToProperties(level) {
-    let nav:NavigationExtras={
-      queryParams:{
-        level:level
+    let nav: NavigationExtras = {
+      queryParams: {
+        level: level
       }
     }
+    console.log(this.vcmProcess);
     if (this.vcmProcess[0].children.length != 0 || this.vcmProcess[1].children.length != 0 || this.vcmProcess[2].children.length != 0) {
-      this.router.navigate(['/pages/vcm/properties'],nav);
+      this.router.navigate(['/pages/vcm/properties'], nav);
       TREE_DATA[3].vcmname = this.vcmName;
       sessionStorage.setItem('vcmTree', JSON.stringify(this.vcmProcess));
     }

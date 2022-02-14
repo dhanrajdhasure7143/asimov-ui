@@ -21,13 +21,15 @@
                         <hr>
                         <table style="width:100%">
                             <tr style="border-top: 1px solid #dddddd;">
-                                <th style="width: 30%;">Process</th>
-                                <th style="width: 70%;">Owner</th>
+                                <th style="width: 20%;">Process Name</th>
+                                <th style="width: 20%;">Level1 Name</th>
+                                <th style="width: 60%;">Owner</th>
                             </tr>
                             <ng-container *ngFor="let prop of vcmProperties">
                                 <tr *ngFor="let name of prop.children;let i = index">
+                                    <td *ngIf="name.name">{{prop.name}}</td>
                                     <td *ngIf="name.name">{{name.name}}</td>
-                                    <td *ngIf="name.name">
+                                    <td *ngIf="name.name" (click)="owner(name,'level1')">
                                         <select class="form-control" #ownerValue [(ngModel)]="name.owner">
                                         <option value="" hidden disabled>Select Owner</option>
                                         <option value="John Doe">John Doe</option>
@@ -46,12 +48,53 @@
                     <div class="dbichart-body">
                         <h4 style="font-weight: bold;">Process Definition</h4>
                         <hr>
-                        <div *ngFor="let prop of vcmProperties">
-                            <ng-container *ngFor="let name of prop.children;let i = index">
-                                <p *ngIf="name.name" style="font-weight: bold;margin: 0;">{{name.name}}</p>
-                                <textarea *ngIf="name.name" class="form-control" id="descriptionValue" style="width: 70%;margin-bottom: 20px !important;" [(ngModel)]="name.description" placeholder="Enter Description"></textarea>
+                        <div *ngFor="let prop of vcmProperties;let i = index;" class="definitionscroll">
+                            <ng-container *ngFor="let name of prop.children;let j = index;">
+                                <div style="display: flex;cursor:pointer;">
+                                    <p *ngIf="name.name" style="font-weight: bold;margin: 0;">{{name.name}}</p>
+                                </div>
+                                <div [hidden]="name.name && descriptionEdit == j && name.processname == descriptionProcessName" (click)="descriptionView(name , j , 'level1')">
+                                    <span style="display: flex;padding-bottom: 1%;cursor:pointer">
+                                        <p *ngIf="!name.description" class="descriptionview">Enter Definition</p>
+                                        <p class="descriptionview" *ngIf="name.description">{{name.description}}</p> &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <i class="fas fa-edit" (click)="descriptionView(name , j , 'level1')" style="float: right;margin-right: 2%;color: blue;cursor:pointer"></i>
+                                    </span>
+                                </div>
+                                <textarea *ngIf="name.name && descriptionEdit == j && name.processname == descriptionProcessName" class="form-control" id="descriptionValue" style="width: 70%;margin-bottom: 5px !important;" [(ngModel)]="name.description" placeholder="Enter Description"></textarea>
+                                <p style="position: relative;left: 65%;margin: 0;" *ngIf="name.name && descriptionEdit == j && name.processname == descriptionProcessName">
+                                    <img (click)="descriptionCancel(name)" src="../../../../assets/images/VCM/circle-close-red.svg" class="testplus1" /> &nbsp;&nbsp;
+                                    <img (click)="descriptionSubmit(name,'level1')" src="../../../../assets/images/VCM/Green Tick.svg" class="testplus1" />
+                                </p>
                             </ng-container>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12 col-lg-12">
+                <div class="dbichart-block">
+                    <div class="dbichart-body">
+                        <h4 style="font-weight: bold;">Documents</h4>
+                        <hr>
+                        <table style="width:100%">
+                            <tr style="border-top: 1px solid #dddddd;">
+                                <th style="width: 20%;">Process Name</th>
+                                <th style="width: 80%;">Documents</th>
+                            </tr>
+                            <ng-container *ngFor="let prop of vcmProperties">
+                                <tr *ngFor="let name of prop.children;let i = index">
+                                    <td *ngIf="name.name">{{prop.name}}</td>
+                                    <td *ngIf="name.documents">
+                                        <ng-container *ngFor="let doc of name.documents;let j = index">
+                                            {{j+1}} . {{doc.convertedsize}}&nbsp;
+                                            <img src="../../../../assets/images/VCM/circle-close-red.svg" class="testplus1" (click)="RemoveFile(name,j,'level1')" /> &nbsp;,
+                                        </ng-container>
+                                        <input multiple #fileInput type="file" style="display:none;" (change)="documentsUpload($event,name,'level1')" />
+                                        <i class="fas fa-upload" style="color: blue;float: right;cursor: pointer;" (click)="fileInput.click()"></i>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -98,14 +141,16 @@
                         <hr>
                         <table style="width:100%">
                             <tr style="border-top: 1px solid #dddddd;">
-                                <th style="width: 30%;">Process</th>
-                                <th style="width: 70%;">Owner</th>
+                                <th style="width: 20%;">Process Name</th>
+                                <th style="width: 20%;">Level2 Name</th>
+                                <th style="width: 60%;">Owner</th>
                             </tr>
                             <ng-container *ngFor="let prop of vcmProperties">
                                 <ng-container *ngFor="let name of prop.children;">
                                     <tr *ngFor="let level2 of name.children;let i = index">
+                                        <td *ngIf="level2.name">{{prop.name}}</td>
                                         <td *ngIf="level2.name">{{level2.name}}</td>
-                                        <td *ngIf="level2.name">
+                                        <td *ngIf="level2.name" (click)="owner(level2,'level2')">
                                             <select class="form-control" #ownerValue [(ngModel)]="level2.owner">
                                         <option value="" hidden disabled>Select Owner</option>
                                         <option value="John Doe">John Doe</option>
@@ -125,14 +170,65 @@
                     <div class="dbichart-body">
                         <h4 style="font-weight: bold;">Process Definition</h4>
                         <hr>
-                        <div *ngFor="let prop of vcmProperties">
+                        <div *ngFor="let prop of vcmProperties;let i = index;" class="definitionscroll">
                             <ng-container *ngFor="let name of prop.children">
-                                <ng-container *ngFor="let level2 of name.children;let i = index">
-                                    <p *ngIf="level2.name" style="font-weight: bold;margin: 0;">{{level2.name}}</p>
-                                    <textarea *ngIf="level2.name" class="form-control" id="descriptionValue" style="width: 70%;margin-bottom: 20px !important;" [(ngModel)]="level2.description" placeholder="Enter Description"></textarea>
+                                <ng-container *ngFor="let level2 of name.children;let j = index">
+                                    <div style="display: flex;cursor:pointer;">
+                                        <p *ngIf="level2.name" style="font-weight: bold;margin: 0;">{{level2.name}}</p>
+                                    </div>
+                                    <div [hidden]="level2.name && descriptionEdit == j && level2.name == descriptionProcessName" (click)="descriptionView(level2 , j , 'level2')">
+                                        <span style="display: flex;padding-bottom: 1%;cursor:pointer">
+                                        <p *ngIf="!level2.description" class="descriptionview">Enter Definition</p>
+                                        <p class="descriptionview" *ngIf="level2.description">{{level2.description}}</p> &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <i class="fas fa-edit" (click)="descriptionView(level2 , j , 'level2')" style="float: right;margin-right: 2%;color: blue;cursor:pointer"></i>
+                                    </span>
+                                    </div>
+                                    <textarea *ngIf="level2.name && descriptionEdit == j && level2.name == descriptionProcessName" class="form-control" id="descriptionValue" style="width: 70%;margin-bottom: 5px !important;" [(ngModel)]="level2.description" placeholder="Enter Description"></textarea>
+                                    <p style="position: relative;left: 65%;margin: 0;" *ngIf="level2.name && descriptionEdit == j && level2.name == descriptionProcessName">
+                                        <img (click)="descriptionCancel()" src="../../../../assets/images/VCM/circle-close-red.svg" class="testplus1" /> &nbsp;&nbsp;
+                                        <img (click)="descriptionSubmit(level2,'level2')" src="../../../../assets/images/VCM/Green Tick.svg" class="testplus1" />
+                                    </p>
                                 </ng-container>
                             </ng-container>
                         </div>
+                        <!-- <div *ngFor="let prop of vcmProperties">
+                            <ng-container *ngFor="let name of prop.children">
+                                <ng-container *ngFor="let level2 of name.children;let i = index">
+                                    <p *ngIf="level2.name" style="font-weight: bold;margin: 0;">{{level2.name}}</p>
+                                    <textarea *ngIf="level2.name" class="form-control" id="descriptionValue" style="width: 70%;margin-bottom: 5px !important;" [(ngModel)]="level2.description" placeholder="Enter Description"></textarea>
+                                </ng-container>
+                            </ng-container>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12 col-lg-12">
+                <div class="dbichart-block">
+                    <div class="dbichart-body">
+                        <h4 style="font-weight: bold;">Documents</h4>
+                        <hr>
+                        <table style="width:100%">
+                            <tr style="border-top: 1px solid #dddddd;">
+                                <th style="width: 20%;">Process Name</th>
+                                <th style="width: 80%;">Documents</th>
+                            </tr>
+                            <ng-container *ngFor="let prop of vcmProperties">
+                                <ng-container *ngFor="let name of prop.children;let i = index">
+                                    <tr *ngFor="let level2 of name.children">
+                                        <td *ngIf="level2.name">{{level2.name}}</td>
+                                        <td *ngIf="level2.documents">
+                                            <ng-container *ngFor="let doc of level2.documents;let j = index">
+                                                {{j+1}} . {{doc.convertedsize}}&nbsp;
+                                                <img src="../../../../assets/images/VCM/circle-close-red.svg" class="testplus1" (click)="RemoveFile(level2,j,'level2')" /> &nbsp;,
+                                            </ng-container>
+                                            <input multiple #fileInput type="file" style="display:none;" (change)="documentsUpload($event,level2,'level2')" />
+                                            <i class="fas fa-upload" style="color: blue;float: right;cursor: pointer;" (click)="fileInput.click()"></i>
+                                        </td>
+                                    </tr>
+                                </ng-container>
+                            </ng-container>
+                        </table>
                     </div>
                 </div>
             </div>

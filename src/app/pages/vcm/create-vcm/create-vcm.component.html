@@ -44,7 +44,7 @@
                     </mat-tab>
                     <mat-tab label="Documents">
                         <div class="name" style="padding: 5%;">
-                            <p>Process Name</p>
+                            <p>{{editProcessName}}</p>
                             <button class="tsttooltipbtn" (click)="fileInput.click()" style="width: 100%;height: 30vh;border: solid 1px gray !important;">
                                 <input multiple #fileInput type="file" (change)="documentsUpload($event)" style="display:none;" />
                                 <img style="width: 100%;height: 5vh;" src="../../../../assets/images/Admin/attach-black.svg" class="testplus default-img" >
