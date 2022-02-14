@@ -698,6 +698,8 @@ export class CreateBpmnDiagramComponent implements OnInit {
     bpmnModel.userEmail = sel_List['userEmail'];
     bpmnModel.bpmnModelId= sel_List['bpmnModelId'];
     bpmnModel.bpmnProcessName=sel_List['bpmnProcessName'];
+    bpmnModel.processOwner = _self.saved_bpmn_list[_self.selected_notation]['processOwner'];
+    bpmnModel.processOwnerName = _self.saved_bpmn_list[_self.selected_notation]['processOwnerName'];
     bpmnModel.category = sel_List['category'];
     bpmnModel.ntype = sel_List['ntype'] ? sel_List['ntype'] : '-';
     bpmnModel.processIntelligenceId= sel_List['processIntelligenceId']? sel_List['processIntelligenceId']:Math.floor(100000 + Math.random() * 900000);//?? Will repeat need to replace with proper alternative??

@@ -60,6 +60,12 @@ export class ProcessCategoryOverlayComponent implements OnInit {
           }
         })
       }
+    }else{
+      this.processName='';
+      this.categoryName=undefined;
+      if(this.overlay_data.module !="pi"){
+        this.process_owner=undefined;
+      }
     }
   if(changes['uploadedFileName']){
     let change = changes['uploadedFileName'];
