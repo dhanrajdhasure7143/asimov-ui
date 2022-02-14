@@ -122,6 +122,8 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
       botSource: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       breachAlerts: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       cascadingImpact: false,
+      email:[''],
+      sms:[''],
       /*expectedDate: [],
       expectedTime : [],*/
       expectedEDate : [],
