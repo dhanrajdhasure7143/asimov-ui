@@ -804,10 +804,13 @@ resetupdateprogram(){
   this.updateprogramForm.get("status").setValue("");
 }
 getreducedValue(value) {​​​​​​​​
-  if (value.length > 15)
-  return value.substring(0,16) + '...';
-  else
-  return value;
+  if(value!=undefined){
+    if (value.length > 15)
+    return value.substring(0,16) + '...';
+    else
+    return value;
+  }
+  
 }​​​​​​​​
 
 getInitiatives(){
