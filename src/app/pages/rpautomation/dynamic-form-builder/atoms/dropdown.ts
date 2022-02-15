@@ -6,7 +6,7 @@ import { RpaStudioDesignerworkspaceComponent } from '../../rpa-studio-designerwo
     selector: 'dropdown',
     template: `
       <div [formGroup]="form">
-        <select [required]="field.required==true" (change)="onChangeEmail($event)" class="form-control" [value]="field.value" [id]="field.id" [formControlName]="field.name+'_'+field.id">
+        <select [attr.disabled]="feilddisable" [required]="field.required==true" (change)="onChangeEmail($event)" class="form-control" [value]="field.value" [id]="field.id" [formControlName]="field.name+'_'+field.id">
         <option  value="" >--{{field.placeholder}}--</option>
         <option *ngFor="let opt of field.options" [value]="opt.key">{{opt.label}}</option>
         <option  *ngIf="field.label=='Email'" value="New">New</option>
@@ -27,7 +27,7 @@ import { RpaStudioDesignerworkspaceComponent } from '../../rpa-studio-designerwo
 export class DropDownComponent {
     @Input() field:any = {};
     @Input() form:FormGroup;
-
+    @Input('feilddisable') public feilddisable:boolean;
     constructor(private designer:RpaStudioDesignerworkspaceComponent) {
 
     }
