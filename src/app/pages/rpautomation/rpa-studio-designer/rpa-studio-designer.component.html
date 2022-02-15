@@ -70,7 +70,7 @@
                       <i class="ri-play-line"></i>
                   </div> -->
                         <div class="action-item hovericon" *ngIf="current_instance != undefined">
-                            <button class="tsttooltipbtn" [disabled]="current_instance.savebotrespose==undefined" (click)=" current_instance.executionAct()">
+                            <button class="tsttooltipbtn" [disabled]="current_instance.savebotrespose==undefined || current_instance.selectedEnvironments.length==0" (click)=" current_instance.executionAct()">
                       <img src="../../../../assets/images/RPA/icon_latest/play.svg" class="testplus1">
                         <!-- <i class="ri-play-circle-line"></i> -->
                         <span class="testtooltip">Start Bot</span>
@@ -97,7 +97,7 @@
 
                         </div>
                         <div class="action-item hovericon" *ngIf="current_instance != undefined">
-                            <button class="tsttooltipbtn" [disabled]="current_instance.savebotrespose==undefined" (click)=" current_instance.viewlogdata( current_instance.logspopup,'open')">
+                            <button class="tsttooltipbtn" [disabled]="current_instance.savebotrespose==undefined" (click)="current_instance.filteredLogVersion=current_instance.selectedversion; current_instance.viewlogdata( current_instance.logspopup,'open')">
                     <img src="../../../../assets/images/RPA/icon_latest/View Logs.svg" class="testplus1">
                       <!-- <i class="ri-clipboard-line"></i> -->
                       <span class="testtooltip">View Logs</span>
