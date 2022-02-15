@@ -297,6 +297,16 @@ export class RestApiService{
     return this.http.get(`/rpa-service/get-botImage?bot-id=${botId}&version=${version}`)
   }
 
+  addAuditLogs(dataInput:any[])
+  {
+    return this.http.post("/rpa-service/auditlogs",dataInput);
+  }
+
+  getAuditLogs(botId:number)
+  {
+    return this.http.get(`/rpa-service/auditlog-fetching/${botId}`)
+  }
+
   scheduleList(botid){
     let data=""
     return this.http.post('/rpa-service/getschedulesintervals-bot/'+botid,data)

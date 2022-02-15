@@ -53,11 +53,11 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
   public resplogbyrun:any;
   public selectedversion:any;
   public logresponse:any=[];
+  public auditLogsData:any=[]
   displayedColumns: string[] = ['run_id','version','start_date','end_date', "bot_status"];
   Viewloglist:MatTableDataSource<any>;
   displayedColumns1: string[] = ['task_name', 'status','start_date','end_date','error_info' ];
   logbyrunid:MatTableDataSource<any>;
-
   @ViewChild("paginator1",{static:false}) paginator1: MatPaginator;
   @ViewChild("paginator2",{static:false}) paginator2: MatPaginator;
   @ViewChild("sort1",{static:false}) sort1: MatSort;
@@ -67,6 +67,8 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
   @Input('tabsArray') public tabsArray: any[];
   @ViewChild(RpaStudioDesignerworkspaceComponent, { static: false }) childBotWorkspace: RpaStudioDesignerworkspaceComponent;
   @ViewChild('logspopup' ,{static:false}) public logspopup:any;
+  @ViewChild('auditLogsPopup',{static:false}) public auditLogsPopup:any;
+  public auditLogsModelRef:BsModalRef;
   pause: any;
   resume: any;
   stop: any;
@@ -302,6 +304,18 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
             this.rpa_studio.spinner.hide();
             this.getVersionlist();
             Swal.fire("Success","Bot updated successfully","success")
+            let auditLogs=[...this.childBotWorkspace.auditLogs];
+            if(auditLogs.length!=0)
+            this.rest.addAuditLogs(auditLogs).subscribe((data:any)=>{
+              this.childBotWorkspace.actualTaskValue=[...this.savebotrespose.tasks];
+              if(data.errorMessage==undefined)
+              {
+                // Swal.fire("Success","added audit logs successfully","success")
+              }
+            },err=>{
+              console.log(err)
+
+            })
             // if(this.childBotWorkspace.finaldataobjects.find(item=>item.inSeqId.split("_")=="START")!=undefined)
             // {
             //   let firstTask=this.childBotWorkspace.finaldataobjects.find(item=>item.inSeqId.split("_")=="START")
@@ -528,6 +542,31 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
    }
 
 
+
+
+   getAuditLogs()
+   {
+     this.rpa_studio.spinner.show();
+     let botId:number=this.savebotrespose.botId
+     this.rest.getAuditLogs(botId).subscribe((data:any)=>{
+        this.spinner.hide();
+        if(data.errorMessage==undefined)
+        {
+          this.auditLogsData=data.Status;
+          this.auditLogsModelRef=this.modalService.show(this.auditLogsPopup, {class:"logs-modal"});
+          // this.auditLogsTableData=new MatTableDataSource(data.status);
+          // this.auditLogsTableData.sort=this.auditLogsSort;
+          // this.auditLogsTableData.paginator=this.auditLogsPaginator;
+        }
+        else{
+          Swal.fire("Error",data.errorMessage,"error")
+        }
+     },err=>{
+       this.rpa_studio.spinner.hide();
+     })
+   }
+
+
    updateLog(logid,Logtemplate)
    {
     
@@ -670,6 +709,7 @@ loadpredefinedbot(botId)
       {
         responsedata.sequences.find(item=>item.targetTaskId==nodeid).targetTaskId=node.id
       }
+
 
 
 

@@ -103,6 +103,19 @@
                       <span class="testtooltip">View Logs</span>
                     </button>
                         </div>
+
+
+                        <div class="action-item hovericon" *ngIf="current_instance != undefined">
+                          <button class="tsttooltipbtn" [disabled]="current_instance.savebotrespose==undefined" (click)=" current_instance.getAuditLogs()">
+                  <img src="../../../../assets/images/RPA/icon_latest/View Logs.svg" class="testplus1">
+                    <!-- <i class="ri-clipboard-line"></i> -->
+                    <span class="testtooltip">Audit Logs</span>
+                  </button>
+                      </div>
+
+
+
+
                         <div class="action-item hovericon" *ngIf="current_instance != undefined">
                             <button class="tsttooltipbtn" [disabled]="current_instance.savebotrespose==undefined || freetrail=='true'" (click)=" current_instance.openschedule()">
                     <img src="../../../../assets/images/RPA/icon_latest/schedule.svg" class="testplus1">
