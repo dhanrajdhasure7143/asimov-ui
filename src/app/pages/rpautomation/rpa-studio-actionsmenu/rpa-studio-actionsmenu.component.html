@@ -847,7 +847,7 @@
     <div class="logs-container" style="background: white;">
           <div *ngIf="auditLogsData.length!=0">
             <div class="log-row"   *ngFor="let log of auditLogsData">
-              {{log.changedBy}} updated {{log.taskName}} the input field {{log.changeActivity}} from {{log.previousValue}} to {{log.newValue}} on {{log.changedDate}}
+              <b>{{log.changedBy}}</b> updated <b>{{log.taskName}}</b> task input field <b>{{log.changeActivity}}</b> from <b>{{log.previousValue}}</b> to <b>{{log.newValue}}</b> on {{log.changedDate}}
             </div>
           </div>
           <div class="text-center" *ngIf="auditLogsData.length==0">

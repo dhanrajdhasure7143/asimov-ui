@@ -236,7 +236,6 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
         {
           let url=window.location.hash;
           window.history.pushState("", "", url.split("botId=")[0]+"botId="+this.savebotrespose.botId);
-       
           this.botState=data;
           Swal.fire("Success","Bot saved successfully !!","success");
           this.startbot=true;
@@ -295,13 +294,13 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
             if(auditLogs.length!=0)
             this.rest.addAuditLogs(auditLogs).subscribe((data:any)=>{
               this.childBotWorkspace.actualTaskValue=[...this.savebotrespose.tasks.filter(item=>item.version==this.savebotrespose.version)];
-              if(data.errorMessage==undefined)
+              if(data.errorMessage!=undefined)
               {
-                // Swal.fire("Success","added audit logs successfully","success")
+                 Swal.fire("Error",data.errorMessage,"error")
               }
             },err=>{
               console.log(err)
-
+              Swal.fire("Error","Unable to add audit logs","error")
             })
             // if(this.childBotWorkspace.finaldataobjects.find(item=>item.inSeqId.split("_")=="START")!=undefined)
             // {
