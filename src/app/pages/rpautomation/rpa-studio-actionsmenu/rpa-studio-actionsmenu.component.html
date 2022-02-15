@@ -817,3 +817,32 @@
   </div>
 </div>
 
+
+<ng-template #auditLogsPopup>
+  <div class="modal-header modelprhead newmodelcla">
+    Audit Logs  
+    <span class="pull-right">
+      <span class=" clickable" (click)="auditLogsModelRef.hide()">
+        <img src="../../../../assets/images/Projects/circle-close.svg" alt="">
+      </span>
+    </span>
+  </div>
+  <div class="modal-body newmodelbodycl" >
+    <div class="logs-container" style="background: white;">
+          <div *ngIf="auditLogsData.length!=0">
+            <div class="log-row"   *ngFor="let log of auditLogsData">
+              {{log.changedBy}} updated {{log.taskName}} input {{log.changeActivity}} from {{log.previousValue}} to {{log.newValue}}
+            </div>
+          </div>
+          <div class="text-center" *ngIf="auditLogsData.length==0">
+            <img style="height:300px" src="../../../../assets/images/RPA/No-Items.svg">
+            <br>
+            <h6>No Items To Display</h6>
+          </div>
+    </div>
+
+  </div>
+
+
+
+</ng-template>
