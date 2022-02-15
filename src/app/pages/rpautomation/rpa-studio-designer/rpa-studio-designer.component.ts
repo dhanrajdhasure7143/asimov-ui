@@ -57,12 +57,28 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   
   removetab(tab)
   {
-    localStorage.removeItem("bot_id")
-    this.tabsArray.splice(this.tabsArray.indexOf(tab), 1)
-    if(this.tabsArray.length==0)
-    {
-      this.router.navigate(["pages/rpautomation/home"])  
-    }
+    
+     localStorage.removeItem("bot_id");
+
+    // this.tabsArray.splice(this.tabsArray.indexOf(tab), 1)
+    // if(this.tabsArray.length==0)
+    // {
+    //   //this.router.navigate(["pages/rpautomation/home"])  
+    //   this.router.navigate(["/pages/serviceOrchestration/home"])  
+    // }
+    // else{
+    //   this.router.navigate(["pages/rpautomation/home"])
+    // }
+    this.activeRoute.queryParams.subscribe(data=>{
+      let params:any=data;
+      if(params.name=='ochestration')
+      {
+        this.router.navigate(["/pages/serviceOrchestration/home"],{queryParams:{tab:3}})
+      }else
+      {
+        this.router.navigate(["/pages/rpautomation/home"])
+      }
+    })
   }
 
 
@@ -129,6 +145,7 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
 
   navigateToBack()
   {
+    
     this.activeRoute.queryParams.subscribe(data=>{
       let params:any=data;
       if(params.projectId!=undefined)

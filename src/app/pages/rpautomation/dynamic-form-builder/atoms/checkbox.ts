@@ -8,7 +8,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
       <div [formGroup]="form" *ngIf="field.type=='checkbox'">
         <div style="display:flex"  >
           <div  class="form-check form-check">
-             <input  [formControlName]="field.name+'_'+field.id" class="form-check-input" type="checkbox" [id]="field.id"  [checked]="field.value==true || field.value=='true'" />
+             <input [attr.disabled]="feilddisable" [formControlName]="field.name+'_'+field.id" class="form-check-input" type="checkbox" [id]="field.id"  [checked]="field.value==true || field.value=='true'" />
              &nbsp;<span>{{field.label}}</span>
           </div>
         </div>
@@ -16,7 +16,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
       <div [formGroup]="form" *ngIf="field.type=='checkboxToggle'">
       <div style="display:flex"  >
         <div  class="form-check form-check">
-           <input  [formControlName]="field.name+'_'+field.id" class="form-check-input" type="checkbox" [id]="field.id" (click)="change()" [checked]="field.value==true || field.value=='true'" />
+           <input [attr.disabled]="feilddisable" [formControlName]="field.name+'_'+field.id" class="form-check-input" type="checkbox" [id]="field.id" (click)="change()" [checked]="field.value==true || field.value=='true'" />
            &nbsp;<span>{{field.label}}</span>
         </div>
       </div>
@@ -40,6 +40,7 @@ export class CheckBoxComponent implements OnInit  {
     get isValid() { return this.form.controls[this.field.name+"_"+this.field.id].valid; }
     get isDirty() { return this.form.controls[this.field.name+"_"+this.field.id].dirty; }
     fields:any=[];
+    @Input('feilddisable') public feilddisable:boolean;
     constructor(private dynamic_forms:DynamicFormsComponent){
 
     }
