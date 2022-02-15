@@ -90,6 +90,7 @@ export class VcmPropertiesComponent implements OnInit {
     console.log(event);
     for (var i = 0; i < event.target.files.length; i++) {
       event.target.files[i]['convertedsize'] = this.convertFileSize(event.target.files[i].size);
+      event.target.files[i]['filename'] = event.target.files[i]['name'];
       this.fileName.push(event.target.files[i]);
     }
     const formdata = new FormData();

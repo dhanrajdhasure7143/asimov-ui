@@ -83,10 +83,10 @@
                             </tr>
                             <ng-container *ngFor="let prop of vcmProperties">
                                 <tr *ngFor="let name of prop.children;let i = index">
-                                    <td *ngIf="name.name">{{prop.name}}</td>
+                                    <td *ngIf="name.name">{{name.name}}</td>
                                     <td *ngIf="name.documents">
                                         <ng-container *ngFor="let doc of name.documents;let j = index">
-                                            {{j+1}} . {{doc.convertedsize}}&nbsp;
+                                            {{j+1}} . {{doc.filename}}&nbsp;
                                             <img src="../../../../assets/images/VCM/circle-close-red.svg" class="testplus1" (click)="RemoveFile(name,j,'level1')" /> &nbsp;,
                                         </ng-container>
                                         <input multiple #fileInput type="file" style="display:none;" (change)="documentsUpload($event,name,'level1')" />
@@ -219,7 +219,7 @@
                                         <td *ngIf="level2.name">{{level2.name}}</td>
                                         <td *ngIf="level2.documents">
                                             <ng-container *ngFor="let doc of level2.documents;let j = index">
-                                                {{j+1}} . {{doc.convertedsize}}&nbsp;
+                                                {{j+1}} . {{doc.filename}}&nbsp;
                                                 <img src="../../../../assets/images/VCM/circle-close-red.svg" class="testplus1" (click)="RemoveFile(level2,j,'level2')" /> &nbsp;,
                                             </ng-container>
                                             <input multiple #fileInput type="file" style="display:none;" (change)="documentsUpload($event,level2,'level2')" />

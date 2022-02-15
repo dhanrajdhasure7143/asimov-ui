@@ -8,11 +8,12 @@ import { MatTreeModule, MatListModule, MatMenuModule, MatButtonModule, MatIconMo
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { VcmPropertiesComponent } from './vcm-properties/vcm-properties.component';
+import { VcmStructureComponent } from './vcm-structure/vcm-structure.component';
 
 
 
 @NgModule({
-  declarations: [ViewVcmComponent, CreateVcmComponent, VcmComponent, VcmPropertiesComponent],
+  declarations: [ViewVcmComponent, CreateVcmComponent, VcmComponent, VcmPropertiesComponent, VcmStructureComponent],
   imports: [
     CommonModule,
     VcmRoutingModule,
