@@ -307,7 +307,7 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
             let auditLogs=[...this.childBotWorkspace.auditLogs];
             if(auditLogs.length!=0)
             this.rest.addAuditLogs(auditLogs).subscribe((data:any)=>{
-              this.childBotWorkspace.actualTaskValue=[...this.savebotrespose.tasks];
+              this.childBotWorkspace.actualTaskValue=[...this.savebotrespose.tasks.filter(item=>item.version==this.savebotrespose.version)];
               if(data.errorMessage==undefined)
               {
                 // Swal.fire("Success","added audit logs successfully","success")
