@@ -484,7 +484,7 @@
 
                 <!-- Version Column -->
                 <ng-container matColumnDef="version">
-                    <th mat-header-cell mat-sort-header *matHeaderCellDef> Version 
+                    <th mat-header-cell *matHeaderCellDef> Version 
                       <span >
                         <select class="logsVersionFilter clickable" (change)="changeLogVersion($event)" [value]="filteredLogVersion" >
                           <option [value]="version.vId" *ngFor="let version of AllVersionsList">V {{version.vId}}</option>

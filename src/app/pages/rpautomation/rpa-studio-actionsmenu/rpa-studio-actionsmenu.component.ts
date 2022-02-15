@@ -644,9 +644,9 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
  changeLogVersion(event)
  {
    this.filteredLogVersion=event.target.value;
-    this.filteredLogs=this.allLogs.filter(item=>item.version==this.filteredLogVersion);
-    this.Viewloglist = new MatTableDataSource(this.filteredLogs);
-    
+    this.filteredLogs=[...this.allLogs.filter(item=>item.version==this.filteredLogVersion)];
+    let logs=[...this.filteredLogs]
+    this.Viewloglist = new MatTableDataSource(logs);
     this.changeDetector.detectChanges();
     // setTimeout(()=>{
     //   console.log(this.Viewloglist)
@@ -750,24 +750,24 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
     else(this.viewlogid1!=undefined)
     {
       if(event.direction=='asc')
-      sortdes=true;
+        sortdes=true;
       else if(event.direction=='des')
-      sortdes=false;
+        sortdes=false;
       if(event.direction!="")
       {
-        this.allRuns=this.allRuns.sort(function(a,b){
+        let allRuns=[...this.allRuns.sort(function(a,b){
           let check_a=isNaN(a[event.active])?a[event.active].toUpperCase():a[event.active];
           let check_b=isNaN(b[event.active])?b[event.active].toUpperCase():b[event.active];
           if (sortdes==true)
             return (check_a > check_b) ? 1 : -1;
           else
             return (check_a < check_b) ? 1 : -1;
-        },this);
+        },this)];
       }
-      this.logbyrunid = new MatTableDataSource(this.allRuns);
+      this.logbyrunid = new MatTableDataSource(this.allRuns)
       this.changeDetector.detectChanges();
-      // this.logbyrunid.sort=this.logsSort;
-      // this.logbyrunid.paginator=this.logsPaginator
+       this.logbyrunid.sort=this.logsSort;
+       this.logbyrunid.paginator=this.logsPaginator
     }
   }
 
