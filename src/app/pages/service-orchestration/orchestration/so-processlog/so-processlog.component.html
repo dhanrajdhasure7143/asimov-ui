@@ -36,7 +36,7 @@
                 <ng-container matColumnDef="processEndDate">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>End Date</th>
                     <td mat-cell *matCellDef="let element">
-                        <span *ngIf="element.processEndDate != null">{{element.processEndDate.split('T')[0] | date:'EEE MMM d, yyyy'}}, {{element.processStartTime.slice(11,19)}}</span>
+                        <span *ngIf="element.processEndDate != null">{{element.processEndDate.split('T')[0] | date:'EEE MMM d, yyyy'}}, {{element.processEndTime.slice(11,19)}}</span>
                         <span *ngIf="element.processEndDate == undefined">-</span> </td>
                 </ng-container>
                 <ng-container matColumnDef="runStatus">

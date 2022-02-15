@@ -84,6 +84,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   public form_change:Boolean=false;
   startNodeId:any=""
   stopNodeId:any=""
+  actualTaskValue:any=[];
+  auditLogs:any=[]
   @ViewChild('template', { static: false }) template: TemplateRef<any>;
   public nodedata: any;
   categoryList:any=[];
@@ -132,6 +134,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     }
     if (this.finalbot.botId != undefined) {
       this.finaldataobjects = this.finalbot.tasks;
+      this.actualTaskValue=[...this.finalbot.tasks];
       this.loadnodes();
     }
     this.dragareaid = "dragarea__" + this.finalbot.botName;
@@ -975,7 +978,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     this.arrange_task_order(this.startNodeId);
     this.get_coordinates();
     await this.getsvg();
-    console.log("-----------------------------",this.final_tasks)
       this.saveBotdata = {
         "botName": botProperties.botName,
         "botType": botProperties.botType,
@@ -1062,6 +1064,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     this.arrange_task_order(this.startNodeId);
     this.get_coordinates();
     await this.getsvg();
+    this.rpaAuditLogs();
     this.saveBotdata = {
       "version": botProperties.version,
       "botId": botProperties.botId,
@@ -1084,7 +1087,9 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
      return false;
     else
     {
+      //console.log(JSON.stringify(this.saveBotdata))
       return this.rest.updateBot(this.saveBotdata)
+      //return false;
     } 
 
   }
@@ -1291,7 +1296,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           this.finaldataobjects[i].x = position.left + "px";
           this.finaldataobjects[i].y = position.top + "px";
         }
-      
       }
     })
     if(this.finaldataobjects.find(item=>item.inSeqId==this.startNodeId)!=undefined)
@@ -1327,6 +1331,54 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
 
+  rpaAuditLogs()
+  {
+    this.auditLogs=[];
+    let finalTasks:any=[];
+    finalTasks=this.final_tasks;
+    let actualTasks:any=this.actualTaskValue;
+    let AddedorRemovedTasks=[]
+    // console.log(this.finalbot.tasks)
+    // console.log(actualTasks)
+    finalTasks.forEach((item:any)=>{
+      if(actualTasks.find(item2=>item.nodeId==item2.nodeId)==undefined)
+      {
+        AddedorRemovedTasks.push(item) 
+      }
+      else
+      {
+        let actualTask:any=(actualTasks.find(item2=>item.nodeId==item2.nodeId))
+        for(let i=0;i<item.attributes.length;i++)
+        {
+          let actualTaskAttribute=actualTask.attributes.find((att:any)=>att.metaAttrId==item.attributes[i].metaAttrId);
+        
+          if(item.attributes[i].attrValue!=actualTaskAttribute.attrValue)
+          {
+            let firstName=localStorage.getItem("firstName");
+            let lastName=localStorage.getItem("lastName")
+            let date=  new Date().toLocaleDateString()+", "+new Date().toLocaleTimeString();
+            this.auditLogs.push(
+              {
+                "botId": this.finalbot.botId,
+                "botName": this.finalbot.botName,
+                "changeActivity": item.attributes[i].metaAttrValue,
+                "changedBy": `${firstName} ${lastName}` ,
+                "changedDate":date,
+                "newValue":item.attributes[i].attrValue,
+                "previousValue": actualTaskAttribute.attrValue,
+                "taskName":item.taskName,
+                "version": this.finalbot.version
+              }
+            )
+
+
+
+          }
+        }
+      }
+    })
+    console.log(AddedorRemovedTasks)
+  }
 
 
 
@@ -1390,6 +1442,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     this.SelectedOutputType = "";
   }
 
+
+  
   arrange_task_order(start) {
     this.final_tasks = [];
     let object = this.finaldataobjects.find(object => object.inSeqId == start);

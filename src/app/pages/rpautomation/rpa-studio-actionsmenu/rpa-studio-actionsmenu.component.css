@@ -375,3 +375,10 @@ ul#versions li:hover {
   display: block;
   margin-top: 10px;
 }
+
+
+.log-row{
+  padding:10px;
+  width:100%;
+  border-bottom:1px solid lightgray;
+}

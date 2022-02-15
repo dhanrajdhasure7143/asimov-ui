@@ -9,8 +9,11 @@
                     <label class="main-subtitle">Let’s Automate !</label>
                     <label class="subtitle-tag">Create and configure bots that suit your needs</label>
                     <div class="main-subheaderBtns">
-                        <div class="rpa-home-block" id="createbot-Home">
-                            <button class="btn btn-primary rpa-home-btn-title" id="create_newbot" (click)="createoverlay()" aria-hidden="true" placement="bottom">Create</button>
+                        <div class="rpa-home-block" id="createbot-Home" *ngIf="!this.userRole.includes('Process Owner')">
+                            <button [disabled]="true" class="btn btn-primary rpa-home-btn-title" id="create_newbot" (click)="createoverlay()" aria-hidden="true" placement="bottom">Create</button>
+                        </div>
+                        <div class="rpa-home-block" id="createbot-Home" *ngIf="this.userRole.includes('Process Owner')">
+                            <button  class="btn btn-primary rpa-home-btn-title" id="create_newbot" (click)="createoverlay()" aria-hidden="true" placement="bottom">Create</button>
                         </div>
                         <div class="rpa-home-block" id="Configuration_Home">
                             <button class="btn btn-primary rpa-home-btn-title" id="create_Configuration" [routerLink]="[ '/pages/rpautomation/configurations']" placement="bottom">Configurations</button>
@@ -82,7 +85,7 @@
                                     </button>
                                 </div>
                                 <div class="flex-col header gridheader-th">
-                                    <button mat-sort-header="botStatus">
+                                    <button >
                                         <span>Status</span>
                                     </button>
                                 </div>
