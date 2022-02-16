@@ -2690,3 +2690,10 @@ span.pdicon {
   max-height: 65px !important;
   overflow: auto !important;
 }
+
+.vcmprop.mat-drawer-opened .mat-tab-body-wrapper {
+  padding: 10px 0px;
+}
+.vcmprop.mat-drawer-opened .mat-tab-label {
+  height: 45px;
+}

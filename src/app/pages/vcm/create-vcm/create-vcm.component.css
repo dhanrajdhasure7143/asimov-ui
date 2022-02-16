@@ -1,5 +1,5 @@
 .vcm-leveldiv {
-    margin-top: 20px;
+    margin-top: 12px;
 }
 
 .vcm-leveldiv h4 {
@@ -35,7 +35,7 @@
 .dbichart-block {
     background: #f6f6f6;
     /* min-height: 55vh; */
-    min-height: calc(100vh - 240px);
+    min-height: calc(100vh - 225px);
     margin-bottom: 0px !important;
 }
 
@@ -76,7 +76,8 @@
 }
 
 .overflowcontent span {
-    margin: 0px 5px;
+    /* margin-left: 5px; */
+    width: 88%;
 }
 
 .previewdiv {
@@ -164,10 +165,60 @@ li.overflowcontent {
 }
 .actimg {
     text-align: right;
-    width: 10%;
+    width: 12%;
+    cursor: pointer;
 }
 li.childHover span {
-    width: 90%;
+    width: 88%;
+}
+
+.vcmprop.mat-drawer-opened {
+    width: 25% !important;
+}
+.editcontent {
+    height: calc(100vh - 235px);
+}
+.propfooter button.btn.btn-primary {
+    margin-right: 0px !important;
+}
+img.testplus2 {
+    width: 12px;
+    height: 12px;
+    margin-right: 5px;
+}
+.vcmdocs {
+    border: 2px dashed #00a0e4;
+    padding: 20px 0px !important;
+    border-radius: 3px;
+    cursor: pointer;
+}
+.vcmdocs:hover {
+    background-color: aliceblue;
+}
+.vcmdocs p {
+    margin: 0px;
+}
+.vcmdocs button {
+    width: 100%;
+}
+.files img {
+    float: right;
+    opacity: 0.6;
+    cursor: pointer;
+}
+.files img:hover {
+    opacity: 1;
+}
+.procname {
+    margin: 0px 0px 10px !important;
+    font-weight: 600;
+    color: #7b7b7b;
+}
+.actimg img:hover {
+    opacity: 1;
+}
+.actimg img {
+    opacity: 0.6;
 }
 
 /* li.childHover {
