@@ -14,7 +14,7 @@
 
     <div class="module-body view-vcm-body">
         <div class="container-fluid row">
-            <div class="col-md-3 col-lg-3" *ngFor="let vcm of vcmProcess">
+            <div class="col-md-3 col-lg-3" *ngFor="let vcm of vcmProcess" (click)="viewStructure()">
                 <div class="dbichart-block">
                     <div class="dbichart-body">
                         <img src="../../../../assets/images/VCM/VCM.svg" class="vcmproc-img" />

@@ -21,7 +21,10 @@ export class ViewVcmComponent implements OnInit {
 
   createVcm(){
     sessionStorage.removeItem('vcmTree');
-    this.router.navigate(['/pages/vcm/create-vcm']);
+    this.router.navigateByUrl('/pages/vcm/create-vcm');
+  }
+  viewStructure(){
+    this.router.navigateByUrl('/pages/vcm/vcm-structure');
   }
 
 }
