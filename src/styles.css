@@ -2696,4 +2696,8 @@ span.pdicon {
 }
 .vcmprop.mat-drawer-opened .mat-tab-label {
   height: 45px;
+  min-width: 100px !important;
+}
+.vcmprop.mat-drawer-opened .mat-tab-header-pagination-controls-enabled .mat-tab-header-pagination {
+  display: none;
 }
