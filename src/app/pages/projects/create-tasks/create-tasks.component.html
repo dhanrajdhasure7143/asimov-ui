@@ -133,39 +133,44 @@
                     <div class="col-md-12" *ngIf="optionValue == 'BPMN Design'">
                             <div class="form-fields col-md-6 pl-0">                         
                                             
-                          <span class="labeltit" for="correlationID">Process</span>
+                          <span class="labeltit" for="correlationID">Process</span><span class="star">*</span>
           
-                          <select formControlName="correlationID" class="form-control data enteredfield-color">
+                          <select formControlName="correlationID" class="form-control data enteredfield-color" required>
                                     <option value="">Select Process</option>
                                     <option *ngFor="let process of bpm_process_list" [value]="process.correlationID">
                                     {{process.processName}}</option>   
                                 </select>
+                                <span *ngIf="createtaskForm.get('correlationID').invalid && createtaskForm.get('correlationID').touched"
+                                class="errspan required">Process Required*</span>
                         </div>    
                     </div>
                     <div class="col-md-12" *ngIf="optionValue == 'Process Mining'">
                             <div class="form-fields col-md-6 pl-0">                         
                                             
-                          <span class="labeltit" for="correlationID">Process</span>
+                          <span class="labeltit" for="correlationID">Process</span><span class="star">*</span>
           
-                          <select formControlName="correlationID" class="form-control data enteredfield-color">
+                          <select formControlName="correlationID" class="form-control data enteredfield-color" required>
                                     <option value="">Select Process</option>
                                     <option *ngFor="let process of pi_process_list" [value]="process.piId">
                                     {{process.piName}}</option>   
                                 </select>
+                                <span *ngIf="createtaskForm.get('correlationID').invalid && createtaskForm.get('correlationID').touched"
+                                class="errspan required">Process Required*</span>
                         
                     </div>
                     </div>
                     <div class="col-md-12" *ngIf="optionValue == 'RPA Implementation'">
                             <div class="form-fields col-md-6 pl-0">                         
                                             
-                          <span class="labeltit" for="correlationID">Bot</span>
+                          <span class="labeltit" for="correlationID">Bot</span><span class="star">*</span>
           
                           <select formControlName="correlationID" class="form-control data enteredfield-color">
                                     <option value="">Select Bot</option>
                                     <option *ngFor="let bot of bot_list" [value]="bot.botId">
                                     {{bot.botName}}</option>   
                                 </select>
-                        
+                                <span *ngIf="createtaskForm.get('correlationID').invalid && createtaskForm.get('correlationID').touched"
+                                class="errspan required">Bot Required*</span>
                     </div>
                     </div>
                         <div class="col-md-12">
