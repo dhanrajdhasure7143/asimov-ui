@@ -787,13 +787,13 @@
                                     <img src="../../../../../assets/images/Projects/delete-red.svg" class="hover-img">
                                 </a>
                                 <!-- <span class="actions-seperator">|</span> -->
-                                <a class="clickable text-dark" *ngIf="element.taskCategory =='RPA Implementation'|| element.taskCategory =='BPMN Design'|| element.taskCategory =='Process Mining'" (click)="navigateToWorkspace(element)" matTooltip="View Task">
+                                <a class="clickable text-dark" *ngIf="(element.taskCategory =='RPA Implementation'|| element.taskCategory =='BPMN Design'|| element.taskCategory =='Process Mining') && element.correlationID.length!=0" (click)="navigateToWorkspace(element)" matTooltip="View Task">
                                     <!-- <img src="../../../../../assets/images/Projects/eye-show.svg" /> -->
                                     <img src="../../../../../assets/images/Projects/eye-show.svg" class="default-img">
                                     <img src="../../../../../assets/images/Projects/eye-show-blue.svg" class="hover-img">
                                 </a>
 
-                                <a *ngIf="element.taskCategory =='Analysis'">
+                                <a *ngIf="element.taskCategory =='Analysis' || element.correlationID.length==0">
                                     <img src="../../../../../assets/images/Projects/eye-hide.svg" class="icon-disabled">
 
                                 </a>

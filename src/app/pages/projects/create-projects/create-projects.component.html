@@ -292,7 +292,7 @@
                                         <div class="form-fields col-md-6 pl-0">
                                             <label class="label-control">Select Process<span
                                                 class="star">*</span></label>
-                                        <select class="form-control" formControlName="process"
+                                        <select class="form-control" formControlName="process" (change)="onProcessChange($event.target.value)"
                                             [ngClass]="createprogram.get('process').valid?'enteredfield-color':'inputfield-color'">
                                             <option [value]="null" disabled hidden>Select Process</option>
                                             <option value="" [selected]="true">Select Process</option>
@@ -318,7 +318,7 @@
                                                 </select>
                                                 <span
                                                     *ngIf="createprogram.get('processOwner').invalid && createprogram.get('processOwner').touched"
-                                                    class="errspan required">Owner Required*</span>
+                                                    class="errspan required">Process Owner Required*</span>
                                             </div>
                                         </div>
 

@@ -135,11 +135,13 @@
                                             
                           <span class="labeltit" for="correlationID">Process</span>
           
-                          <select formControlName="correlationID" class="form-control data enteredfield-color">
+                          <select formControlName="correlationID" class="form-control data enteredfield-color" >
                                     <option value="">Select Process</option>
                                     <option *ngFor="let process of bpm_process_list" [value]="process.correlationID">
                                     {{process.processName}}</option>   
                                 </select>
+                                <span *ngIf="createtaskForm.get('correlationID').invalid && createtaskForm.get('correlationID').touched"
+                                class="errspan required">Process Required*</span>
                         </div>    
                     </div>
                     <div class="col-md-12" *ngIf="optionValue == 'Process Mining'">
@@ -147,11 +149,13 @@
                                             
                           <span class="labeltit" for="correlationID">Process</span>
           
-                          <select formControlName="correlationID" class="form-control data enteredfield-color">
+                          <select formControlName="correlationID" class="form-control data enteredfield-color" >
                                     <option value="">Select Process</option>
                                     <option *ngFor="let process of pi_process_list" [value]="process.piId">
                                     {{process.piName}}</option>   
                                 </select>
+                                <span *ngIf="createtaskForm.get('correlationID').invalid && createtaskForm.get('correlationID').touched"
+                                class="errspan required">Process Required*</span>
                         
                     </div>
                     </div>
@@ -165,7 +169,8 @@
                                     <option *ngFor="let bot of bot_list" [value]="bot.botId">
                                     {{bot.botName}}</option>   
                                 </select>
-                        
+                                <span *ngIf="createtaskForm.get('correlationID').invalid && createtaskForm.get('correlationID').touched"
+                                class="errspan required">Bot Required*</span>
                     </div>
                     </div>
                         <div class="col-md-12">

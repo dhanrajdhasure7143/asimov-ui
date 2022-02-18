@@ -1,4 +1,4 @@
-import {Input,ViewChild,Output,EventEmitter, Component, OnInit,  ChangeDetectorRef,AfterContentChecked, ViewRef } from '@angular/core';
+import {Input,ViewChild,Output,EventEmitter, Component, OnInit,  ChangeDetectorRef,AfterContentChecked,  OnChanges, SimpleChanges } from '@angular/core';
 import { RpaStudioDesignerworkspaceComponent } from '../rpa-studio-designerworkspace/rpa-studio-designerworkspace.component';
 import { RestApiService } from '../../services/rest-api.service';
 import { FormGroup,Validators,FormBuilder } from '@angular/forms';
@@ -33,6 +33,7 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
   public predefinedbotValue: any = [];
   public selectedEnvironments: any = []
   public versionsList: any = [];
+  public AllVersionsList:any=[];
   public schedule_list:any=[];
   public schedule_list_scheduler:any=[];
   public schpop:Boolean=false;
@@ -58,9 +59,11 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
   Viewloglist:MatTableDataSource<any>;
   displayedColumns1: string[] = ['task_name', 'status','start_date','end_date','error_info' ];
   logbyrunid:MatTableDataSource<any>;
-  @ViewChild("paginator1",{static:false}) paginator1: MatPaginator;
+  allLogs:any=[];
+  filteredLogs:any=[];
+  @ViewChild("logsSort",{static:false}) logsSort:MatSort;
+  @ViewChild("logsPaginator",{static:false}) logsPaginator:MatPaginator;
   @ViewChild("paginator2",{static:false}) paginator2: MatPaginator;
-  @ViewChild("sort1",{static:false}) sort1: MatSort;
   @ViewChild("sort2",{static:false}) sort2: MatSort;
   @Output() closeTabEvent = new EventEmitter<void>();
   @ViewChild('t', { static: false }) ngbTabset;
@@ -87,6 +90,9 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
   public respdata1:boolean = false;
   public respdata2:boolean = false;
   public she:any;
+ public selectedLogVersion:any;
+ public filteredLogVersion:any;
+ public logsLoading:Boolean=false;
   userRole;
   logsmodalref:BsModalRef
   isButtonVisible: boolean;
@@ -148,29 +154,10 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
 
   }
 
-
-  check()
-  {
-    alert(this.rpa_toolset.sidenavbutton)
-  }
-  // deploybot() {
-
-  //   this.rest.deployremotemachine(this.savebotrespose.botId).subscribe(data => {
-  //     this.deploymachinedata = data;
-  //     Swal.fire({
-  //       position: 'top-end',
-  //       icon: 'success',
-  //       title:this.deploymachinedata.status,
-  //       showConfirmButton: false,
-  //       timer: 2000
-  //     })
-
-  //   })
-
-  // }
   ngAfterContentChecked() : void {
     this.changeDetector.detectChanges();
 }
+
 
   reset()
   {
@@ -249,7 +236,6 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
         {
           let url=window.location.hash;
           window.history.pushState("", "", url.split("botId=")[0]+"botId="+this.savebotrespose.botId);
-       
           this.botState=data;
           Swal.fire("Success","Bot saved successfully !!","success");
           this.startbot=true;
@@ -258,6 +244,30 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
           this.childBotWorkspace.disable=true;
           let bottask:any=this.botState;
           this.getVersionlist();
+          let changedBy=`${localStorage.getItem("firstName")} ${localStorage.getItem("lastName")}`
+          let auditLogs:any={
+            "botId": this.savebotrespose.botId,
+            "botName": `${this.botState.botName}|BotCreated` ,
+            "changeActivity":this.botState.botName,
+            "changedBy":  changedBy,
+            "changedDate":(new Date().toLocaleDateString()+", "+new Date().toLocaleTimeString()),
+            "newValue":'-',
+            "previousValue":'-',
+            "taskName":this.botState.botName,
+            "version": 1
+          }
+          
+          this.rest.addAuditLogs(auditLogs).subscribe((data:any)=>{
+            this.childBotWorkspace.actualTaskValue=[...this.savebotrespose.tasks.filter(item=>item.version==this.savebotrespose.version)];
+            if(data.errorMessage!=undefined)
+            {
+               Swal.fire("Error",data.errorMessage,"error")
+            }
+          },err=>{
+            console.log(err)
+            this.rpa_studio.spinner.hide();
+            //Swal.fire("Error","Unable to add audit logs","error")
+          })
           // let coordinates=(this.childBotWorkspace.finaldataobjects[0].x.split("|")!=undefined)?this.childBotWorkspace.finaldataobjects[0].nodeId.split("|"):undefined;
           // if(coordinates!=undefined)
           // {
@@ -281,6 +291,9 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
             this.childBotWorkspace.finaldataobjects[0].nodeId=coordinates[0];
           }
         }
+      },err=>{
+        this.spinner.hide();
+        Swal.fire("Error","Unable to save bot","error")
       });
       }
     }
@@ -308,13 +321,14 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
             if(auditLogs.length!=0)
             this.rest.addAuditLogs(auditLogs).subscribe((data:any)=>{
               this.childBotWorkspace.actualTaskValue=[...this.savebotrespose.tasks.filter(item=>item.version==this.savebotrespose.version)];
-              if(data.errorMessage==undefined)
+              if(data.errorMessage!=undefined)
               {
-                // Swal.fire("Success","added audit logs successfully","success")
+                 Swal.fire("Error",data.errorMessage,"error")
               }
             },err=>{
               console.log(err)
-
+              this.rpa_studio.spinner.hide();
+              Swal.fire("Error","Unable to add audit logs","error")
             })
             // if(this.childBotWorkspace.finaldataobjects.find(item=>item.inSeqId.split("_")=="START")!=undefined)
             // {
@@ -339,6 +353,10 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
             }
            
           }
+        },err=>{
+          console.log(err)
+          this.spinner.hide()
+          Swal.fire("Error","Unable to update bot","error")
         });
       }
     }
@@ -520,6 +538,7 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
           versions.push(item)
       })
       this.versionsList=versions;
+      this.AllVersionsList=sortedversions;
     })
   }
 
@@ -552,11 +571,23 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
         this.spinner.hide();
         if(data.errorMessage==undefined)
         {
-          this.auditLogsData=data.Status;
+          this.auditLogsData=[...data.Status.map((item:any)=>{
+            if(item.botName.split("|")[1]!=undefined)
+            {
+              item["Status"]=item.botName.split("|")[1];
+              if(item["Status"]=='AddedEnv'|| item['Status']=='RemovedEnv')
+              {
+                let envId=parseInt(item.taskName);
+                item["taskName"]=this.environment.find((envItem:any)=>envItem.environmentId==envId)==undefined?'Deleted Environment':this.environment.find((envItem:any)=>envItem.environmentId==envId).environmentName;
+              }
+            }
+            else
+            {
+              item["Status"]="UpdatedConfig"
+            }
+            return item;
+          })].reverse();
           this.auditLogsModelRef=this.modalService.show(this.auditLogsPopup, {class:"logs-modal"});
-          // this.auditLogsTableData=new MatTableDataSource(data.status);
-          // this.auditLogsTableData.sort=this.auditLogsSort;
-          // this.auditLogsTableData.paginator=this.auditLogsPaginator;
         }
         else{
           Swal.fire("Error",data.errorMessage,"error")
@@ -580,6 +611,10 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
           Swal.fire("Error",response.errorMessage,"error");
      });
    }
+
+
+
+   
    viewlogdata(log_popup_template,action){
     this.childBotWorkspace.addsquences();
     this.viewlogid1=undefined;
@@ -588,8 +623,13 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
    let log:any=[];
    this.logresponse=[];
    this.rpa_studio.spinner.show()
-   this.rest.getviewlogdata(this.savebotrespose.botId,this.savebotrespose.version).subscribe(data =>{
+   this.logsLoading=true;
+  
+   if(action=='open')
+    this.filteredLogVersion=this.savebotrespose.version;
+   this.rest.getviewlogdata(this.savebotrespose.botId,this.filteredLogVersion).subscribe(data =>{
        this.logresponse=data;
+       this.logsLoading=false;
        this.rpa_studio.spinner.hide()
        if(this.logresponse.length >0)
        {
@@ -626,20 +666,44 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
        }
        log.push(response)
      });
-     log.sort((a,b) => a.run_id > b.run_id ? -1 : 1);
-     this.Viewloglist = new MatTableDataSource(log);
-     this.Viewloglist.paginator=this.paginator1;
-     this.Viewloglist.sort=this.sort1;
-    // document.getElementById(this.viewlogid1).style.display="none";
-    if(action=='open')
+      log.sort((a,b) => a.run_id > b.run_id ? -1 : 1);
+      this.allLogs=log;
+      this.filteredLogs=[...this.allLogs.filter(item=>item.version==this.filteredLogVersion)];
+      this.Viewloglist = new MatTableDataSource(this.filteredLogs);
+      this.changeDetector.detectChanges();
+      this.Viewloglist.sort=this.logsSort;
+      this.Viewloglist.paginator=this.logsPaginator;
+      if(action=='open')
       this.logsmodalref=this.modalService.show(this.logspopup, {class:"logs-modal"})
+        
 
+   },err=>{
+     this.spinner.hide();
+     this.logsLoading=false;
+     Swal.fire("Error","unable to get logs","error")
    });
  }
 
 
+
+ changeLogVersion(event)
+ {
+   this.filteredLogVersion=event.target.value;
+    this.filteredLogs=[...this.allLogs.filter(item=>item.version==this.filteredLogVersion)];
+    let logs=[...this.filteredLogs]
+    this.Viewloglist = new MatTableDataSource(logs);
+    this.changeDetector.detectChanges();
+    // setTimeout(()=>{
+    //   console.log(this.Viewloglist)
+    //   console.log(this.logsPaginator)
+    //   console.log(this.logsSort)
+    //   this.Viewloglist.paginator=this.logsPaginator;
+    //   this.Viewloglist.sort=this.logsSort;
+    // },4000)
+ }
+
  public botrunid:any;
- public selectedLogVersion:any;
+ public allRuns:any=[];
  ViewlogByrunid(runid,version){
    this.botrunid=runid;
    this.selectedLogVersion=version
@@ -647,33 +711,115 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
    let logbyrunidresp:any;
    let resplogbyrun:any=[];
    this.rpa_studio.spinner.show();
-   this.rest.getViewlogbyrunid(this.savebotrespose.botId,version,runid).subscribe((data)=>{
-     responsedata = data;
-     this.rpa_studio.spinner.hide();
-     if(responsedata.length >0)
+   this.logsLoading=true;
+   this.rest.getViewlogbyrunid(this.savebotrespose.botId,version,runid).subscribe((data:any)=>{
+     if(data.errorMessage==undefined)
      {
-       this.respdata2 = false;
-     }else
-     {
-       this.respdata2 = true;
-     }
-     responsedata.forEach(rlog=>{
-       logbyrunidresp=rlog;
-       logbyrunidresp["start_date"]=logbyrunidresp.start_time;
-       logbyrunidresp["end_date"]=logbyrunidresp.end_time;
-       logbyrunidresp.start_time=logbyrunidresp.start_time;
-       logbyrunidresp.end_time=logbyrunidresp.end_time;
+      responsedata = data;
+      this.logsLoading=false;
+      this.rpa_studio.spinner.hide();
+      if(responsedata.length >0)
+      {
+        this.respdata2 = false;
+      }else
+      {
+        this.respdata2 = true;
+      }
+      responsedata.forEach(rlog=>{
+        logbyrunidresp=rlog;
+        logbyrunidresp["start_date"]=logbyrunidresp.start_time;
+        logbyrunidresp["end_date"]=logbyrunidresp.end_time;
+        logbyrunidresp.start_time=logbyrunidresp.start_time;
+        logbyrunidresp.end_time=logbyrunidresp.end_time;
 
-       resplogbyrun.push(logbyrunidresp)
-     });
-     this.logflag=true;
-     resplogbyrun.sort((a,b) => a.task_id > b.task_id ? 1 : -1);
-     this.logbyrunid = new MatTableDataSource(resplogbyrun);
-     this.logbyrunid.paginator=this.paginator2;
-     this.logbyrunid.sort=this.sort2
-     this.viewlogid1=runid;
+        resplogbyrun.push(logbyrunidresp)
+      });
+      this.logflag=true;
+      resplogbyrun.sort((a,b) => a.task_id > b.task_id ? 1 : -1);
+      this.viewlogid1=runid;
+      this.allRuns=[...resplogbyrun];
+      this.logbyrunid = new MatTableDataSource(resplogbyrun);
+      this.changeDetector.detectChanges();
+      this.logbyrunid.paginator=this.paginator2;
+      this.logbyrunid.sort=this.sort2
+    }
+    else
+    {
+      
+      this.spinner.hide();
+      this.logsLoading=false;
+      Swal.fire("Error",data.errorMessage,"error")
+    }
+     
+    }, err=>{
+      this.spinner.hide();
+      this.logsLoading=false;
+      
+     this.spinner.hide();
+     Swal.fire("Error","unable to get logs","error")
     })
   }
+
+
+  sortasc(event)
+  {
+    let sortdes:Boolean
+    console.log(event)
+    if(this.viewlogid1==undefined)
+    {
+      if(event.direction=='asc')
+      sortdes=true;
+      else if(event.direction=='des')
+      sortdes=false;
+      if(event.direction!="")
+      {
+        if(event.active!='version')
+        this.filteredLogs=this.filteredLogs.sort(function(a,b){
+          let check_a=isNaN(a[event.active])?a[event.active].toUpperCase():a[event.active];
+          let check_b=isNaN(b[event.active])?b[event.active].toUpperCase():b[event.active];
+          if (sortdes==true)
+            return (check_a > check_b) ? 1 : -1;
+          else
+            return (check_a < check_b) ? 1 : -1;
+        },this);
+      }
+      else
+      {
+        this.filteredLogs=[...this.allLogs.filter((item:any)=>item.version=this.filteredLogVersion)];
+      }
+      this.Viewloglist = new MatTableDataSource(this.filteredLogs);
+      this.changeDetector.detectChanges();
+      this.Viewloglist.sort=this.logsSort;
+      this.Viewloglist.paginator=this.logsPaginator
+    }
+    else(this.viewlogid1!=undefined)
+    {
+      if(event.direction=='asc')
+        sortdes=true;
+      else if(event.direction=='des')
+        sortdes=false;
+      if(event.direction!="")
+      {
+        let allRuns=[...this.allRuns.sort(function(a,b){
+          let check_a=isNaN(a[event.active])?a[event.active].toUpperCase():a[event.active];
+          let check_b=isNaN(b[event.active])?b[event.active].toUpperCase():b[event.active];
+          if (sortdes==true)
+            return (check_a > check_b) ? 1 : -1;
+          else
+            return (check_a < check_b) ? 1 : -1;
+        },this)];
+      }
+      this.logbyrunid = new MatTableDataSource(this.allRuns)
+      this.changeDetector.detectChanges();
+       this.logbyrunid.sort=this.logsSort;
+       this.logbyrunid.paginator=this.logsPaginator
+    }
+  }
+
+
+
+
+
 
 loadpredefinedbot(botId)
 {
