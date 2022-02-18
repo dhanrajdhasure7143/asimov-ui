@@ -323,6 +323,8 @@ createproject(event)
      {
        Swal.fire("Warning","This project is already selected","warning");
      }
+     this.selected_project='';
+     $('#selectprojects').val('');
   }
 
   remove_project(project,status)
