@@ -245,7 +245,7 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
           let bottask:any=this.botState;
           this.getVersionlist();
           let changedBy=`${localStorage.getItem("firstName")} ${localStorage.getItem("lastName")}`
-          let auditLogs:any={
+          let auditLogs:any=[{
             "botId": this.savebotrespose.botId,
             "botName": `${this.botState.botName}|BotCreated` ,
             "changeActivity":this.botState.botName,
@@ -255,7 +255,7 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
             "previousValue":'-',
             "taskName":this.botState.botName,
             "version": 1
-          }
+          }]
           
           this.rest.addAuditLogs(auditLogs).subscribe((data:any)=>{
             this.childBotWorkspace.actualTaskValue=[...this.savebotrespose.tasks.filter(item=>item.version==this.savebotrespose.version)];
@@ -266,7 +266,7 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
           },err=>{
             console.log(err)
             this.rpa_studio.spinner.hide();
-            //Swal.fire("Error","Unable to add audit logs","error")
+            Swal.fire("Error","Unable to add audit logs","error")
           })
           // let coordinates=(this.childBotWorkspace.finaldataobjects[0].x.split("|")!=undefined)?this.childBotWorkspace.finaldataobjects[0].nodeId.split("|"):undefined;
           // if(coordinates!=undefined)
@@ -321,6 +321,7 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
             if(auditLogs.length!=0)
             this.rest.addAuditLogs(auditLogs).subscribe((data:any)=>{
               this.childBotWorkspace.actualTaskValue=[...this.savebotrespose.tasks.filter(item=>item.version==this.savebotrespose.version)];
+              this.childBotWorkspace.actualEnv=[...this.savebotrespose.envIds]
               if(data.errorMessage!=undefined)
               {
                  Swal.fire("Error",data.errorMessage,"error")
