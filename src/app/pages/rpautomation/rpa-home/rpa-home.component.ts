@@ -1035,7 +1035,7 @@ export class RpaHomeComponent implements OnInit {
         const rows$ = of(data);
         this.totalRows$ = rows$.pipe(map(rows => rows.length));
         this.displayedRows$ = rows$.pipe(sortRows(sortEvents$), paginateRows(pageEvents$));
-      
+        this.paginator301.firstPage();
       }
 
       applySearchFilter(v){      
