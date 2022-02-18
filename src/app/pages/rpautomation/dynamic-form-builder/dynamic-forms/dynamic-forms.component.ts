@@ -43,7 +43,7 @@ export class DynamicFormsComponent implements OnInit {
     }
     this.form = new FormGroup(fieldsCtrls);
     this.userRole = localStorage.getItem("userRole");
-      if(this.userRole=='Process Owner'){
+      if(this.userRole=='Process Owner' || this.userRole=='RPA Developer'){
         this.isdisabled=null
       }
       else{
