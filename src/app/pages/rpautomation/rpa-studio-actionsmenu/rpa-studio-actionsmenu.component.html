@@ -455,7 +455,7 @@
       Refresh
     </span>
 
-    <span (click)="ViewlogByrunid(viewlogid1, selectedLogVersion)" *ngIf="viewlogid1!=undefined" class="clickable refecls">
+    <span (click)="ViewlogByrunid(viewlogid1, filteredLogVersion)" *ngIf="viewlogid1!=undefined" class="clickable refecls">
       Refresh
       </span>
 
@@ -487,7 +487,7 @@
                     <th mat-header-cell *matHeaderCellDef> Version 
                       <span >
                         <select class="logsVersionFilter clickable" (change)="changeLogVersion($event)" [value]="filteredLogVersion" >
-                          <option [value]="version.vId" *ngFor="let version of AllVersionsList">V {{version.vId}}</option>
+                          <option [selected]="filteredLogVersion==version.vId" [value]="version.vId" *ngFor="let version of AllVersionsList">V {{version.vId}}</option>
                         </select>
                       </span>
                    </th>
@@ -847,7 +847,22 @@
     <div class="logs-container" style="background: white;">
           <div *ngIf="auditLogsData.length!=0">
             <div class="log-row"   *ngFor="let log of auditLogsData">
-              <b>{{log.changedBy}}</b> updated <b>{{log.taskName}}</b> task input field <b>{{log.changeActivity}}</b> from <b>{{log.previousValue}}</b> to <b>{{log.newValue}}</b> on {{log.changedDate}}
+              <span *ngIf="log.Status=='UpdatedConfig'">
+                <b>{{log.changedBy}}</b> updated <b>{{log.taskName}}</b> task input field <b>{{log.changeActivity}}</b> from <b>{{log.previousValue}}</b> to <b>{{log.newValue}}</b> on {{log.changedDate}}
+              </span>
+              <span *ngIf="log.Status=='AddedTask'">
+                <b>{{log.changedBy}}</b> added task <b>{{log.taskName}}</b> on {{log.changedDate}}
+              </span>
+              <span *ngIf="log.Status=='RemovedTask'">
+                <b>{{log.changedBy}}</b> removed task <b>{{log.taskName}}</b> on {{log.changedDate}}
+              </span>
+              <span *ngIf="log.Status=='AddedEnv'">
+                <b>{{log.changedBy}}</b> added environment <b>{{log.taskName}}</b> on {{log.changedDate}}
+              </span>
+              <span *ngIf="log.Status=='RemovedEnv'">
+                <b>{{log.changedBy}}</b> removed environment <b>{{log.taskName}}</b> on {{log.changedDate}}
+              </span>
+              
             </div>
           </div>
           <div class="text-center" *ngIf="auditLogsData.length==0">

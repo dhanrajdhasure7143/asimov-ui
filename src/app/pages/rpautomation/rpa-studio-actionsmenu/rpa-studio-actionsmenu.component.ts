@@ -244,6 +244,30 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
           this.childBotWorkspace.disable=true;
           let bottask:any=this.botState;
           this.getVersionlist();
+          let changedBy=`${localStorage.getItem("firstName")} ${localStorage.getItem("lastName")}`
+          let auditLogs:any={
+            "botId": this.savebotrespose.botId,
+            "botName": `${this.botState.botName}|BotCreated` ,
+            "changeActivity":this.botState.botName,
+            "changedBy":  changedBy,
+            "changedDate":(new Date().toLocaleDateString()+", "+new Date().toLocaleTimeString()),
+            "newValue":'-',
+            "previousValue":'-',
+            "taskName":this.botState.botName,
+            "version": 1
+          }
+          
+          this.rest.addAuditLogs(auditLogs).subscribe((data:any)=>{
+            this.childBotWorkspace.actualTaskValue=[...this.savebotrespose.tasks.filter(item=>item.version==this.savebotrespose.version)];
+            if(data.errorMessage!=undefined)
+            {
+               Swal.fire("Error",data.errorMessage,"error")
+            }
+          },err=>{
+            console.log(err)
+            this.rpa_studio.spinner.hide();
+            //Swal.fire("Error","Unable to add audit logs","error")
+          })
           // let coordinates=(this.childBotWorkspace.finaldataobjects[0].x.split("|")!=undefined)?this.childBotWorkspace.finaldataobjects[0].nodeId.split("|"):undefined;
           // if(coordinates!=undefined)
           // {
@@ -267,6 +291,9 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
             this.childBotWorkspace.finaldataobjects[0].nodeId=coordinates[0];
           }
         }
+      },err=>{
+        this.spinner.hide();
+        Swal.fire("Error","Unable to save bot","error")
       });
       }
     }
@@ -300,6 +327,7 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
               }
             },err=>{
               console.log(err)
+              this.rpa_studio.spinner.hide();
               Swal.fire("Error","Unable to add audit logs","error")
             })
             // if(this.childBotWorkspace.finaldataobjects.find(item=>item.inSeqId.split("_")=="START")!=undefined)
@@ -325,6 +353,10 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
             }
            
           }
+        },err=>{
+          console.log(err)
+          this.spinner.hide()
+          Swal.fire("Error","Unable to update bot","error")
         });
       }
     }
@@ -539,11 +571,23 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
         this.spinner.hide();
         if(data.errorMessage==undefined)
         {
-          this.auditLogsData=data.Status;
+          this.auditLogsData=[...data.Status.map((item:any)=>{
+            if(item.botName.split("|")[1]!=undefined)
+            {
+              item["Status"]=item.botName.split("|")[1];
+              if(item["Status"]=='AddedEnv'|| item['Status']=='RemovedEnv')
+              {
+                let envId=parseInt(item.taskName);
+                item["taskName"]=this.environment.find((envItem:any)=>envItem.environmentId==envId)==undefined?'Deleted Environment':this.environment.find((envItem:any)=>envItem.environmentId==envId).environmentName;
+              }
+            }
+            else
+            {
+              item["Status"]="UpdatedConfig"
+            }
+            return item;
+          })].reverse();
           this.auditLogsModelRef=this.modalService.show(this.auditLogsPopup, {class:"logs-modal"});
-          // this.auditLogsTableData=new MatTableDataSource(data.status);
-          // this.auditLogsTableData.sort=this.auditLogsSort;
-          // this.auditLogsTableData.paginator=this.auditLogsPaginator;
         }
         else{
           Swal.fire("Error",data.errorMessage,"error")
@@ -580,8 +624,10 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
    this.logresponse=[];
    this.rpa_studio.spinner.show()
    this.logsLoading=true;
-   
-   this.rest.getviewlogdata(this.savebotrespose.botId,this.savebotrespose.version).subscribe(data =>{
+  
+   if(action=='open')
+    this.filteredLogVersion=this.savebotrespose.version;
+   this.rest.getviewlogdata(this.savebotrespose.botId,this.filteredLogVersion).subscribe(data =>{
        this.logresponse=data;
        this.logsLoading=false;
        this.rpa_studio.spinner.hide()
@@ -622,12 +668,11 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
      });
       log.sort((a,b) => a.run_id > b.run_id ? -1 : 1);
       this.allLogs=log;
-      this.filteredLogs=[...this.allLogs.filter(item=>item.version==this.savebotrespose.version)];
+      this.filteredLogs=[...this.allLogs.filter(item=>item.version==this.filteredLogVersion)];
       this.Viewloglist = new MatTableDataSource(this.filteredLogs);
       this.changeDetector.detectChanges();
       this.Viewloglist.sort=this.logsSort;
       this.Viewloglist.paginator=this.logsPaginator;
-      // document.getElementById(this.viewlogid1).style.display="none";
       if(action=='open')
       this.logsmodalref=this.modalService.show(this.logspopup, {class:"logs-modal"})
         
