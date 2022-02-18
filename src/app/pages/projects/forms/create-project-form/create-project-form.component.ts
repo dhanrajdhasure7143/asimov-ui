@@ -115,8 +115,7 @@ export class CreateProjectFormComponent implements OnInit {
       let processOwner:any=this.users_list.find(item=>(`${item.userId.firstName} ${item.userId.lastName}`==process.createdBy))
       if(processOwner!=undefined)
       {
-        this.insertForm2.get("processOwner").setValue(process.createdBy)
-        this.insertForm2.get("processOwner").disable()
+        this.insertForm2.get("processOwner").setValue(processOwner.userId.userId)
       }else
       {
         this.insertForm2.get("processOwner").setValue("")
