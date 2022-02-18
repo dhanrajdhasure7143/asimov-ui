@@ -374,5 +374,22 @@ createproject(event)
    this.descptionFlag = false;
  }
   }
+
+  onProcessChange(processId:number)
+  {
+    let process=this.selected_process_names.find(process=>process.processId==processId);
+    if(process!=undefined)
+    {
+      let processOwner:any=this.userslist.find(item=>(`${item.userId.firstName} ${item.userId.lastName}`==process.createdBy))
+      if(processOwner!=undefined)
+      {
+        this.createprogram.get("processOwner").setValue(processOwner.userId.userId)
+      }else
+      {
+        this.createprogram.get("processOwner").setValue("")
+        Swal.fire("Error","Unable to find process owner for selected process","error")
+      }
+    }
+  }
   
 }
