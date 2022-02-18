@@ -58,7 +58,7 @@
                                 <span >
                                     <textarea *ngIf="!name.description" class="form-control descriptionview" placeholder="Enter Definition"></textarea>
                                     <textarea class="form-control descriptionview" *ngIf="name.description">{{name.description}}</textarea>
-                                    <img src="../../../../assets/images/Projects/Edit-blue.svg" class="testplus1" 
+                                    <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus" 
                                         (click)="descriptionView(name , j , 'level1')"/>
                                     
                                 </span>
@@ -67,8 +67,11 @@
                             <div class="proc_deffield">
                                 <textarea *ngIf="name.name && descriptionEdit == j && name.processname == descriptionProcessName" class="form-control" id="descriptionValue"  [(ngModel)]="name.description" placeholder="Enter Description"></textarea>
                                 <span  class="procdesc_act" *ngIf="name.name && descriptionEdit == j && name.processname == descriptionProcessName">
-                                    <img (click)="descriptionCancel(name)" src="../../../../assets/images/VCM/circle-close-red.svg" class="testplus" /> 
-                                    <img (click)="descriptionSubmit(name,'level1')" src="../../../../assets/images/VCM/Green Tick.svg" class="testplus" />
+                                    <span>
+                                        <img  src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img" />
+                                        <img (click)="descriptionCancel(name)" src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" />
+                                    </span>
+                                    <img (click)="descriptionSubmit(name,'level1')" src="../../../../assets/images/VCM/Green Tick.svg" class="testplus1" />
                                 </span>
                             </div>
 
@@ -94,12 +97,13 @@
                             <ng-container *ngFor="let prop of vcmProperties">
                                 <tr *ngFor="let name of prop.children;let i = index">
                                     <td *ngIf="name.name">{{name.name}}</td>
-                                    <td *ngIf="name.documents">
+                                    <td *ngIf="name.documents" >
                                         <ng-container *ngFor="let doc of name.documents;let j = index">
-                                            {{j+1}} . {{doc.filename}} 
-                                            <img src="../../../../assets/images/VCM/circle-close-red.svg" class="testplus1" (click)="RemoveFile(name,j,'level1')" /> ,
+                                            <span class="docpill">
+                                                {{j+1}} . {{doc.filename}}                                                 
+                                                <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2" (click)="RemoveFile(name,j,'level1')" />
+                                            </span>
                                         </ng-container>
-
                                     </td>
                                     <td *ngIf="name.documents">
                                         
@@ -201,7 +205,7 @@
                                     <span >
                                         <textarea  *ngIf="!level2.description" class="form-control descriptionview" placeholder="Enter Definition"></textarea>
                                         <textarea class="form-control descriptionview" *ngIf="level2.description">{{level2.description}}</textarea>
-                                        <img src="../../../../assets/images/Projects/Edit-blue.svg" class="testplus1" 
+                                        <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus" 
                                             (click)="descriptionView(level2 , j , 'level2')" /> 
                                        
                                     </span>
@@ -210,8 +214,11 @@
                                     <textarea *ngIf="level2.name && descriptionEdit == j && level2.name == descriptionProcessName" class="form-control" id="descriptionValue"  [(ngModel)]="level2.description" placeholder="Enter Description"></textarea>
                                     
                                     <span class="procdesc_act" *ngIf="level2.name && descriptionEdit == j && level2.name == descriptionProcessName">
-                                            <img (click)="descriptionCancel()" src="../../../../assets/images/VCM/circle-close-red.svg" class="testplus" /> 
-                                            <img (click)="descriptionSubmit(level2,'level2')" src="../../../../assets/images/VCM/Green Tick.svg" class="testplus" />
+                                        <span>
+                                            <img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img" /> 
+                                            <img (click)="descriptionCancel()" src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" /> 
+                                        </span>
+                                        <img (click)="descriptionSubmit(level2,'level2')" src="../../../../assets/images/VCM/Green Tick.svg" class="testplus1" />
                                     </span>
                                 </div>  
                                 
@@ -251,10 +258,12 @@
                                 <ng-container *ngFor="let name of prop.children;let i = index">
                                     <tr *ngFor="let level2 of name.children">
                                         <td *ngIf="level2.name">{{level2.name}}</td>
-                                        <td *ngIf="level2.documents">
+                                        <td *ngIf="level2.documents" >
                                             <ng-container *ngFor="let doc of level2.documents;let j = index">
-                                                {{j+1}} . {{doc.filename}} 
-                                                <img src="../../../../assets/images/VCM/circle-close-red.svg" class="testplus1" (click)="RemoveFile(level2,j,'level2')" /> ,                                                
+                                                <span class="docpill">
+                                                    {{j+1}} . {{doc.filename}}                                                   
+                                                    <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2" (click)="RemoveFile(level2,j,'level2')" />
+                                                </span>
                                             </ng-container>
                                         </td>
                                         <td *ngIf="level2.documents">

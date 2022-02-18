@@ -74,7 +74,10 @@
     min-width: auto;
     margin: 0px !important;
 }
-
+.level1process button[disabled],
+.content button[disabled] {
+    opacity: 0.35;
+}
 .overflowcontent span {
     /* margin-left: 5px; */
     width: 88%;
@@ -187,10 +190,12 @@ img.testplus2 {
     margin-right: 5px;
 }
 .vcmdocs {
-    border: 2px dashed #00a0e4;
+    border: 2px dashed #e7e7e7;
+    background-color: #f6f6f6;
     padding: 20px 0px !important;
     border-radius: 3px;
     cursor: pointer;
+    text-align: center;
 }
 .vcmdocs:hover {
     background-color: aliceblue;
@@ -198,13 +203,23 @@ img.testplus2 {
 .vcmdocs p {
     margin: 0px;
 }
+.vcmdocs img {
+    width: 20%;
+    height: auto;
+    display: block;
+    margin: 0px auto;
+}
 .vcmdocs button {
-    width: 100%;
+    border: 1px solid #00a0e3 !important;
+    color: #00a0e3;
+    margin: 15px 0px 0px 0px !important;
+    padding: 8px 25px !important;
 }
 .files img {
     float: right;
-    opacity: 0.6;
-    cursor: pointer;
+    /* opacity: 0.6; */
+    cursor: pointer;  
+    margin-top: 5px;
 }
 .files img:hover {
     opacity: 1;
@@ -214,11 +229,14 @@ img.testplus2 {
     font-weight: 600;
     color: #7b7b7b;
 }
-.actimg img:hover {
-    opacity: 1;
+.actimg span:hover .default-img,
+.files span:hover .default-img {
+    display: none;
 }
-.actimg img {
-    opacity: 0.6;
+
+.actimg span:hover .hover-img,
+.files span:hover .hover-img {
+    display: initial;
 }
 
 /* li.childHover {
@@ -273,13 +291,13 @@ mat-tree {
     position: relative;
 }
 
-.tsttooltipbtn:hover .default-img {
+/* .tsttooltipbtn:hover .default-img {
     display: none;
 }
 
 .tsttooltipbtn:hover .hover-img {
     display: initial;
-}
+} */
 
 .tsttooltipbtn:hover span.testtooltip {
     display: block;
