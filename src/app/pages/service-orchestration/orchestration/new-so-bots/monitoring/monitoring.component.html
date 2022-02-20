@@ -115,17 +115,17 @@
                     <div class="dbichart-body" >
                         <div class="newexecbots_progress">
                             <label>Successful</label>
-                            <mat-progress-bar class="progress-bar-green" mode="determinate" [value]="executed.success"></mat-progress-bar>
+                            <mat-progress-bar class="progress-bar-green" mode="determinate" [value]="executed.success" [matTooltip]="executed.success"></mat-progress-bar>
                         </div>
                         <div class="newexecbots_progress">
                             <label>Stopped</label> 
-                            <mat-progress-bar class="progress-bar-warn" mode="determinate" [value]="executed.cancelled"></mat-progress-bar>
+                            <mat-progress-bar class="progress-bar-warn" mode="determinate" [value]="executed.cancelled" [matTooltip]="executed.cancelled"></mat-progress-bar>
         
                         </div>
                         
                         <div class="newexecbots_progress">
                             <label>Failed</label>
-                            <mat-progress-bar class="progress-bar-red"  mode="determinate" [value]="executed.failure"></mat-progress-bar>
+                            <mat-progress-bar class="progress-bar-red"  mode="determinate" [value]="executed.failure" [matTooltip]="executed.failure"></mat-progress-bar>
                         </div>
                     </div>
                 </div>

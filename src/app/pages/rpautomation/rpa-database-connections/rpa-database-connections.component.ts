@@ -24,7 +24,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
   public submitted:Boolean;
   public DBcheckflag:boolean = false;
   public dbupdateid : any;
-  @ViewChild("paginator2",{static:false}) paginator2: MatPaginator;
+  @ViewChild("paginator4",{static:false}) paginator4: MatPaginator;
   @ViewChild("sort2",{static:false}) sort2: MatSort;
   public button:string;
   public dbconnections:any=[];
@@ -137,7 +137,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
 
   sortmethod(){
     this.dataSource2.sort = this.sort2;   
-    this.dataSource2.paginator=this.paginator2; 
+    this.dataSource2.paginator=this.paginator4; 
   }
 
   DBcheckAllCheckBox(ev) {

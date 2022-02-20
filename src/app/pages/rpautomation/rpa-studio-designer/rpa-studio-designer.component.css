@@ -265,7 +265,9 @@ ul#versions li.clickable:hover {
     border-radius: 3px;
 }
 
-.action-item.hovericon:hover img.testplus1 {
+.action-item.hovericon:hover img.testplus1,
+
+.action-item.hovericon:hover img.testplus2 {
     filter: brightness(2.5) !important;
 }
 
@@ -360,4 +362,9 @@ span.testtooltip::before {
     top: -5px;
     background: #001c47;
     transform: rotate( 45deg);
+}
+.action-item img.testplus2 {
+
+    width: 18px !important;
+
 }
