@@ -7,6 +7,7 @@ import {NgxSpinnerService} from 'ngx-spinner';
 import * as Chart from 'chart.js'
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
 import * as $ from 'jquery'
+import Swal from 'sweetalert2'
 @Component({
   selector: 'app-monitoring',
   templateUrl: './monitoring.component.html',
@@ -75,6 +76,9 @@ export class MonitoringComponent implements OnInit {
       this.spinner.hide();
       this.getbotscount();
       this.botruntimestats();
+    },err=>{
+      this.spinner.hide();
+      Swal.fire("Error","Unable to add ","error")
     })
   }
 

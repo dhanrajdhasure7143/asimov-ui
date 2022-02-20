@@ -108,6 +108,7 @@ export class CreateProjectFormComponent implements OnInit {
   }
   onProcessChange(processId:number)
   {
+    
     let process=this.selected_process_names.find(process=>process.processId==processId);
     if(process!=undefined)
     {
