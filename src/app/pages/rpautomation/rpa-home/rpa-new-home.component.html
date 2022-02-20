@@ -9,10 +9,10 @@
                     <label class="main-subtitle">Let’s Automate !</label>
                     <label class="subtitle-tag">Create and configure bots that suit your needs</label>
                     <div class="main-subheaderBtns">
-                        <div class="rpa-home-block" id="createbot-Home" *ngIf="!this.userRole.includes('Process Owner')">
+                        <div class="rpa-home-block" id="createbot-Home" *ngIf="!this.userRole.includes('Process Owner') && !this.userRole.includes('RPA Developer')">
                             <button [disabled]="true" class="btn btn-primary rpa-home-btn-title" id="create_newbot" (click)="createoverlay()" aria-hidden="true" placement="bottom">Create</button>
                         </div>
-                        <div class="rpa-home-block" id="createbot-Home" *ngIf="this.userRole.includes('Process Owner')">
+                        <div class="rpa-home-block" id="createbot-Home" *ngIf="this.userRole.includes('Process Owner') || this.userRole.includes('RPA Developer')">
                             <button  class="btn btn-primary rpa-home-btn-title" id="create_newbot" (click)="createoverlay()" aria-hidden="true" placement="bottom">Create</button>
                         </div>
                         <div class="rpa-home-block" id="Configuration_Home">
@@ -142,7 +142,11 @@
                                                 <span *ngIf="bot.botStatus==null">---</span>
                                     
                                             </div>
-                                            <div class="flex-col">
+                                            <div class="flex-col" *ngIf="!this.userRole.includes('Process Owner') && !this.userRole.includes('RPA Developer')">
+                                                <button tooltip="Edit Bot" placement="bottom" [disabled]="true" (click)="editbotoverlay(bot);botpanel1.toggle()"><img src="../../../../assets/images/RPA/icon_latest/edit.svg" alt="" class="testplus">&nbsp;</button>
+                                                <button tooltip="Delete Bot" placement="bottom" [disabled]="isButtonVisible==true" (click)="botdelete(bot.botId);botpanel1.toggle()"><img src="../../../../assets/images/RPA/icon_latest/delete.svg" alt="" class="testplus">&nbsp;</button>
+                                            </div>
+                                            <div class="flex-col" *ngIf="this.userRole.includes('Process Owner') || this.userRole.includes('RPA Developer')">
                                                 <button tooltip="Edit Bot" placement="bottom" [disabled]="!((isButtonVisible==true && userName==bot.createdBy)||(isButtonVisible==false))" (click)="editbotoverlay(bot);botpanel1.toggle()"><img src="../../../../assets/images/RPA/icon_latest/edit.svg" alt="" class="testplus">&nbsp;</button>
                                                 <button tooltip="Delete Bot" placement="bottom" [disabled]="isButtonVisible==true" (click)="botdelete(bot.botId);botpanel1.toggle()"><img src="../../../../assets/images/RPA/icon_latest/delete.svg" alt="" class="testplus">&nbsp;</button>
                                             </div>

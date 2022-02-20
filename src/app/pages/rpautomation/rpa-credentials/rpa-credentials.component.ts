@@ -24,7 +24,7 @@ export class RpaCredentialsComponent implements OnInit {
   public Credcheckflag:boolean = false;
   public dbupdateid : any;
   categoryList:any;
-  @ViewChild("paginator2",{static:false}) paginator2: MatPaginator;
+  @ViewChild("paginator3",{static:false}) paginator3: MatPaginator;
   @ViewChild("sort2",{static:false}) sort2: MatSort;
   public button:string;
   public credentials:any=[];
@@ -121,12 +121,16 @@ inputNumberOnly(event){
         this.credentials = data1;
         if(this.credentials.length>0)
          { 
+           
            this.Credcheckeddisabled = false;
            this.credentials.sort((a,b) => a.credentialId > b.credentialId ? -1 : 1);
-           this.credentials=this.credentials.map(item=>{
-            item["categoryName"]=this.categoryList.find(item2=>item2.categoryId==item.categoryId).categoryName;
-            return item;
-          })
+           if(this.categoryList!=undefined){
+            this.credentials=this.credentials.map(item=>{
+              item["categoryName"]=this.categoryList.find(item2=>item2.categoryId==item.categoryId).categoryName;
+              return item;
+            })
+           }
+         
          
            setTimeout(() => {
             this.sortmethod(); 
@@ -145,7 +149,7 @@ inputNumberOnly(event){
 
   sortmethod(){
     this.dataSource2.sort = this.sort2;   
-    this.dataSource2.paginator=this.paginator2; 
+    this.dataSource2.paginator=this.paginator3; 
   }
 
   CredcheckAllCheckBox(ev) {
@@ -385,12 +389,12 @@ updatecreddata()
   }
   getCategories()
   {
+    
     this.api.getCategoriesList().subscribe(data=>{
       let response:any=data;
-      if(response.errorMessage==undefined)
-      {
+     
         this.categoryList=response.data;
-      }
+      
     })
   }
 }

@@ -17,7 +17,7 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   toolset_instance:any;
   selected_tab_instance:any;
   userRole:any;
-  checkCreate:Boolean=false;
+  checkCreate:Boolean=false; 
   freetrail: string;
   isProcessAnalyst:Boolean=false;
   constructor(private rpa_studio:RpaStudioComponent, 

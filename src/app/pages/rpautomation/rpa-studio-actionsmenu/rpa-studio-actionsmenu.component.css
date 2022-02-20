@@ -382,3 +382,18 @@ ul#versions li:hover {
   width:100%;
   border-bottom:1px solid lightgray;
 }
+.logsVersionFilter{
+  border-top: none;
+  border-right:none;
+  border-left:none;
+  background-color: transparent;
+  
+}
+
+.logs-loader{
+  margin-top:12%;
+  text-align: center;
+}
+.logsVersionFilter:focus{
+  border:none !important;
+}

@@ -455,9 +455,10 @@
       Refresh
     </span>
 
-    <span (click)="ViewlogByrunid(viewlogid1, selectedLogVersion)" *ngIf="viewlogid1!=undefined" class="clickable refecls">
+    <span (click)="ViewlogByrunid(viewlogid1, filteredLogVersion)" *ngIf="viewlogid1!=undefined" class="clickable refecls">
       Refresh
       </span>
+
     <span class="pull-right">
    
     <span class=" clickable" (click)="logsmodalref.hide()">
@@ -470,20 +471,26 @@
       <!-- <div class="rpa-modal-header">
          <h4>Logs</h4>
       </div> -->
-    <div class="logs-container" style="background: white;">
+    <div class="logs-container" *ngIf="logsLoading==false" style="background: white;">
     
-            <table mat-table class="logs-table" [dataSource]="Viewloglist" #sort1="matSort" matSort>
+            <table mat-table class="logs-table"  (matSortChange)="sortasc($event)" [dataSource]="Viewloglist" #logsSort="matSort" matSort>
 
 
                 <!-- Run Id Column -->
                 <ng-container matColumnDef="run_id">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left:55px;width:13%"> Run ID </th>
+                    <th mat-header-cell  *matHeaderCellDef mat-sort-header style="padding-left:55px;width:13%"> Run ID </th>
                     <td mat-cell *matCellDef="let element" style="padding-left:55px;width:13%"><button style="color:#00a1e3; text-decoration: underline;" (click)="ViewlogByrunid(element.run_id,element.version)">{{element.run_id}}</button></td>
                 </ng-container>
 
                 <!-- Version Column -->
                 <ng-container matColumnDef="version">
-                    <th mat-header-cell *matHeaderCellDef> Version </th>
+                    <th mat-header-cell *matHeaderCellDef> Version 
+                      <span >
+                        <select class="logsVersionFilter clickable" (change)="changeLogVersion($event)" [value]="filteredLogVersion" >
+                          <option [selected]="filteredLogVersion==version.vId" [value]="version.vId" *ngFor="let version of AllVersionsList">V {{version.vId}}</option>
+                        </select>
+                      </span>
+                   </th>
                     <td mat-cell *matCellDef="let element">
                         <span *ngIf="element.version!=null">V{{element.version}}</span>
                         <span *ngIf="element.version == undefined">-</span>
@@ -492,9 +499,9 @@
 
                 <!-- Start Date Column -->
                 <ng-container matColumnDef="start_date">
-                    <th mat-header-cell *matHeaderCellDef style="width:25%;"> Start Date </th>
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef style="width:25%;"> Start Date </th>
                     <td mat-cell *matCellDef="let element" style="width:25%;">
-                        <span *ngIf="element.start_date!=null">{{element.start_date  | date:'EEE MMM d, yyyy' }}, {{element.start_time}}</span>
+                        <span *ngIf="element.start_date!=null">{{element.start_date  }}, {{element.start_time}}</span>
                         <span *ngIf="element.start_date == undefined">-</span>
                     </td>
                 </ng-container>
@@ -502,14 +509,14 @@
                 <!-- End Date Column -->
 
                 <ng-container matColumnDef="end_date">
-                    <th mat-header-cell *matHeaderCellDef style="width:25%;"> End Date </th>
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef style="width:25%;"> End Date </th>
                     <td mat-cell *matCellDef="let element" style="width:25%;">
-                        <span *ngIf="element.end_date!=null">{{element.end_date  | date:'EEE MMM d, yyyy' }}, {{element.end_time}}</span>
+                        <span *ngIf="element.end_date!=null">{{element.end_date }}, {{element.end_time}}</span>
                         <span *ngIf="element.end_date == undefined">-</span>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="bot_status">
-                    <th mat-header-cell *matHeaderCellDef>Status</th>
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef>Status</th>
                     <td class="" mat-cell *matCellDef="let element">
                             <span *ngIf="element.bot_status=='Running'" class="text-primary" >
                               <span>
@@ -557,27 +564,31 @@
                         <span *ngIf="element.bot_status == undefined || element.bot_status == null">-</span></td>
                 </ng-container>
 
-                <ng-container matColumnDef="noData">
-                    <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="7">
-                        No Records Found
-                    </td>
-                </ng-container>
+               
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': !respdata1}"></tr>
             </table>
-         
-       
-    </div>
-    <!-- <mat-paginator #paginator1 [pageSize]="5" [showFirstLastButtons]="true"></mat-paginator> -->
-  </div>
+            <div *ngIf="filteredLogs.length==0" class="text-center">
+              <img src="../../../../assets/images/RPA/No-Items.svg" style="height:250px">
+              <h5>No Items To Display</h5>
 
+            </div>
+  
+    </div>
+    <div class="logs-container" *ngIf="logsLoading==true">
+      <div class="logs-loader">
+        <img src="../../../../assets/images/EZFlow_Loader.gif">
+      </div>
+    </div>
+    <!-- <mat-paginator #logsPaginator [pageSize]="5" [showFirstLastButtons]="true"></mat-paginator>-->
+  </div>
+  
   <div [id]="viewlogid1" *ngIf="viewlogid1!=undefined" class="modal-body modelprbody">
    
-    <div class="logs-container">
+    <div class="logs-container" *ngIf="logsLoading==false">
    
-        <table mat-table class="logs-table" [dataSource]="logbyrunid" #sort2="matSort" matSort style="width:100%;">
+        <table mat-table class="logs-table"  (matSortChange)="sortasc($event)" [dataSource]="logbyrunid" #sort2="matSort" matSort style="width:100%;">
 
             <!-- Task Name Column -->
             <ng-container matColumnDef="task_name">
@@ -585,7 +596,7 @@
                 <td mat-cell *matCellDef="let element" style="padding-left:55px;width:18%">
                     <span *ngIf="element.task_name != null" class="btntaskname">
                         {{(element.task_name.length > 25) ? ((element.task_name).slice(0, 25) + '...') : element.task_name}}</span>
-                        <span *ngIf="element.task_name == undefined">-</span>
+                    <span *ngIf="element.task_name == undefined">-</span>
                 </td>
             </ng-container>
 
@@ -640,8 +651,8 @@
             </ng-container>
 
             <!-- Start date Column -->
-            <ng-container matColumnDef="start_date">
-                <th mat-header-cell *matHeaderCellDef style="width:18%"> Start Date </th>
+            <ng-container   matColumnDef="start_date">
+                <th mat-header-cell  mat-sort-header *matHeaderCellDef style="width:18%"> Start Date </th>
                 <td mat-cell *matCellDef="let element" style="width:18%">
                     <span *ngIf="element.start_date != null">{{element.start_date.split('T')[0] | date:'EEE MMM d, yyyy' }},{{element.start_time.slice(11,19)}}</span>
                     <span *ngIf="element.start_date == undefined">-</span>
@@ -653,7 +664,7 @@
 
             <!-- End Date Column -->
             <ng-container matColumnDef="end_date">
-                <th mat-header-cell *matHeaderCellDef style="width:18%"> End Date </th>
+                <th mat-header-cell  mat-sort-header  *matHeaderCellDef style="width:18%"> End Date </th>
                 <td mat-cell *matCellDef="let element" style="width:18%">
                     <span *ngIf="element.end_date != null||element.end_date != undefined">{{element.end_date.split('T')[0] | date:'EEE MMM d, yyyy' }},{{element.end_time.slice(11,19)}}</span>
                     <span *ngIf="element.end_date == undefined">-</span>
@@ -662,7 +673,7 @@
 
             <!-- Error Info Column -->
             <ng-container matColumnDef="error_info">
-                <th mat-header-cell *matHeaderCellDef> Error Info </th>
+                <th mat-header-cell  mat-sort-header *matHeaderCellDef> Info </th>
                 <td mat-cell *matCellDef="let element">
                     <span *ngIf="element.error_info!=null && element.error_info != 'NA'" [tooltip]="element.error_info" class="btnerrorinfo">
                         {{(element.error_info.length > 50) ? ((element.error_info).slice(0, 50) + '...') : element.error_info}}</span>
@@ -682,6 +693,11 @@
             <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': !respdata2}"></tr>
         </table>
        
+    </div>
+    <div class="logs-container " *ngIf="logsLoading==true">
+      <div class="logs-loader">
+        <img src="../../../../assets/images/EZFlow_Loader.gif">
+      </div>
     </div>
     <!-- <mat-paginator #paginator2 [pageSize]="5" [showFirstLastButtons]="true"></mat-paginator> -->
   </div>
@@ -831,7 +847,27 @@
     <div class="logs-container" style="background: white;">
           <div *ngIf="auditLogsData.length!=0">
             <div class="log-row"   *ngFor="let log of auditLogsData">
-              {{log.changedBy}} updated {{log.taskName}} the input field {{log.changeActivity}} from {{log.previousValue}} to {{log.newValue}} on {{log.changedDate}}
+              <span *ngIf="log.Status=='UpdatedConfig'">
+                <b>{{log.changedBy}}</b> updated <b>{{log.taskName}}</b> task input field <b>{{log.changeActivity}}</b> from <b>{{log.previousValue}}</b> to <b>{{log.newValue}}</b> on {{log.changedDate}}
+              </span>
+              <span *ngIf="log.Status=='AddedTask'">
+                <b>{{log.changedBy}}</b> added task <b>{{log.taskName}}</b> on {{log.changedDate}}
+              </span>
+              <span *ngIf="log.Status=='RemovedTask'">
+                <b>{{log.changedBy}}</b> removed task <b>{{log.taskName}}</b> on {{log.changedDate}}
+              </span>
+              <span *ngIf="log.Status=='AddedEnv'">
+                <b>{{log.changedBy}}</b> added environment <b>{{log.taskName}}</b> on {{log.changedDate}}
+              </span>
+              <span *ngIf="log.Status=='RemovedEnv'">
+                <b>{{log.changedBy}}</b> removed environment <b>{{log.taskName}}</b> on {{log.changedDate}}
+              </span>
+
+              
+              <span *ngIf="log.Status=='BotCreated'">
+                <b>{{log.changedBy}}</b> created bot <b>{{log.taskName}}</b> on {{log.changedDate}}
+              </span>
+              
             </div>
           </div>
           <div class="text-center" *ngIf="auditLogsData.length==0">
