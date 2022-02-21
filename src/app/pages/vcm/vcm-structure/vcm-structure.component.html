@@ -7,15 +7,16 @@
             <span class="module-header-title">Value Chain Mapping</span>
         </div>
         <div class="ml-auto submit">
-            <button class="btn btn-primary" (click)="edit()">Edit</button>
+            <button class="btn btn-primary" (click)="edit()">
+                <img  src="../../../../assets/images/Projects/edit.svg" class="testplus" />Edit</button>
         </div>
     </div>
 
-    <div class="module-body" style="background: #f6f6f6;margin: 2%;">
-        <div class="container-fluid">
-            <h3 style="font-weight: bold;">{{vcmProcess[3].vcmname}}</h3>
-            <div class="row maincontent h-100">
-                <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="example-tree" style="background: #f6f6f6;">
+    <div class="module-body" >
+        <div class="vcm-treesmain h-100">
+            <h4 >{{vcmProcess[3].vcmname}}</h4>
+            <div class="row maincontent">
+                <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="example-tree" >
                     <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
                         {{node.name}}
                     </mat-tree-node>

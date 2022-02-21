@@ -1,38 +1,62 @@
-td,
-th {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
+.submit button.btn.btn-primary {
+    margin-right: 0px !important;
 }
-
-select {
-    width: 50%;
-    cursor: pointer;
+.vcm-prop-content {
+    padding: 15px 0px 0px;
 }
-
-::placeholder {
-    /* padding-left: 1%; */
+.prop_owner, .prop_docs, .prop_procdef {
+    border: 1px solid #e1e7ec;
+    border-radius: 3px;
+    padding: 10px;
+    margin-bottom: 15px;
 }
-
-textarea {
-    border: 1px solid #dddddd;
+.vcm-prop-content h4 {
+    color: #001c47;
+    margin: 0;
+    padding-bottom: 10px;
+    font-size: 15px;
+    font-weight: 600;
 }
-
-.descriptionview {
-    white-space: nowrap;
-    overflow: hidden !important;
-    text-overflow: ellipsis;
-    width: 70%;
-}
-
-*::first-letter {
-    text-transform: capitalize;
-}
-
 img {
     cursor: pointer;
 }
-
-.definitionscroll {
-    overflow-x: hidden;
+.proc_deffield textarea {
+    width: 95%;
+}
+.proc_deffield {
+    position: relative;
+    margin-bottom: 10px;
+}
+.proc_deffield img.testplus, 
+.proc_deffield span.procdesc_act {
+    position: absolute;
+    right: 0px;
+    top: 18px;
+}
+.proc_deffield img.testplus2 {
+    width: 12px;
+    height: 12px;
+    margin-right: 5px;
+}
+.procdesc_act span:hover .default-img {
+    display: none;
+}
+.procdesc_act span:hover .hover-img {
+    display: initial;
+}
+span.docpill {
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    padding: 4px 8px;
+    margin-right: 5px;
+    margin-bottom: 8px;
+    display: inline-block;
+}
+span.docpill:hover {
+    background-color: #f6f6f6;
+}
+.docpill img.testplus2 {
+    margin-left: 5px;
+    width: 10px;
+    height: auto;
 }

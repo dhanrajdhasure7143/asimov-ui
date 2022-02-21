@@ -2693,9 +2693,19 @@ span.pdicon {
   max-height: 65px !important;
   overflow: auto !important;
 }
-.custom-content-notification{
-  min-width: 330px ;
-  /* height: 330px; */
-  height: 310px;
-  overflow: auto;
+
+.vcmprop.mat-drawer-opened .mat-tab-body-wrapper {
+  padding: 10px 0px;
+}
+.vcmprop.mat-drawer-opened .mat-tab-label {
+  height: 45px;
+  justify-content: left !important;
+  padding-left: 15px !important;
+  min-width: 140px !important;
+}
+.vcmprop mat-ink-bar.mat-ink-bar {
+  width: 140px !important;
+}
+.vcmprop.mat-drawer-opened .mat-tab-header-pagination-controls-enabled .mat-tab-header-pagination {
+  display: none;
 }
