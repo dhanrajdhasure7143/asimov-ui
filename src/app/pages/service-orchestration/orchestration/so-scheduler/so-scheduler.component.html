@@ -49,26 +49,26 @@
                     <button class="btn btn-primary eiap-btn" (click)="add_sch()">Add</button>
                     <div class="scheduletimer-actionbtns">
 
-                        <button [disabled]="!(flags.startflag)" tooltip="Start" mat-mini-fab color="basic" (click)="start_schedule()">
+                        <button [disabled]="!(flags.startflag)" ooltip="Start" mat-mini-fab color="basic" (click)="start_schedule()">
                             <!-- <img src="../../../../assets/images/RPA/icon_latest/play.svg" alt="" class="testplus"> -->
                             <i class="ri-play-line testplus"></i>
                         </button>
 
-                        <button [disabled]="!(flags.pauseflag)" tooltip="Pause" mat-mini-fab color="basic" (click)="pause_schedule()">
+                        <button [disabled]="!(flags.pauseflag)" matTooltip="Pause" mat-mini-fab color="basic" (click)="pause_schedule()">
                             <!-- <img src="../../../../assets/images/RPA/icon_latest/pause.svg" alt="" class="testplus"> -->
                             <i class="ri-pause-line testplus"></i>
                         </button>
 
-                        <button [disabled]="!(flags.resumeflag)" tooltip="Resume" mat-mini-fab color="basic" (click)="resume_schedule()">
+                        <button [disabled]="!(flags.resumeflag)" matTooltip="Resume" mat-mini-fab color="basic" (click)="resume_schedule()">
                             <!-- <img src="../../../../assets/images/RPA/icon_latest/pause.svg" alt="" class="testplus"> -->
                             <i class="ri-skip-forward-line testplus"></i>
                         </button>
-                        <button [disabled]="!(flags.deleteflag)" tooltip="Delete" mat-mini-fab color="basic" (click)="delete_schedule()">
+                        <button [disabled]="!(flags.deleteflag)" matTooltip="Delete" mat-mini-fab color="basic" (click)="delete_schedule()">
                         <!-- <img src="../../../../assets/images/RPA/icon_latest/delete.svg" alt="" class="testplus"> -->
                         <i class="ri-delete-bin-line testplus"></i>
                     </button>
 
-                        <button mat-mini-fab color="basic" tooltip="Refresh" (click)="get_schedule()">
+                        <button mat-mini-fab color="basic" matTooltip="Refresh" (click)="get_schedule()">
                             <i class="ri-refresh-line testplus"></i>
                         <!-- <img src="../../../../assets/images/RPA/icon_latest/reset.svg" alt="" class="testplus"> -->
                       </button>

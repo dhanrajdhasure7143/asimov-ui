@@ -37,6 +37,7 @@ export class SoEnvUipathComponent implements OnInit {
   public param:any=0;
   public processId : any;
   public checkeddisabled:boolean =false;
+  public categoryLengthCheck:Boolean=false;
   public createpopup=document.getElementById('createevironment');
   public button:string;
   //public updatepopup=document.getElementById('env_updatepopup');
@@ -136,9 +137,14 @@ getUiPath()
 createUiPath(){
   
   this.UipathForm.reset();
-  this.UipathForm.get("categoryId").setValue(((this.categoryList.lenght==1)?this.categoryList[0].categoryId:""))
   document.getElementById("createUipath").style.display = "block";
   document.getElementById("updateUipath").style.display = "none";
+  if(this.categoryList.length==1)
+    this.UipathForm.get("categoryId").setValue(this.categoryList[0].categoryId)
+  else
+    this.UipathForm.get("categoryId").setValue("")
+
+  
 }
 
 savedata(){
@@ -254,13 +260,23 @@ updatedata()
   {
     if(data.sourceAccId==this.updateid)
     {
-      (data.active==true)?data.active=1:data.active=0;
+      if(data.active==true)
+        data.active=1
+      else
+        data.active=0;
       this.UpdateUipathForm.get("accountName").setValue(data["accountName"]);
       this.UpdateUipathForm.get("tenantName").setValue(data["tenantName"]);
       this.UpdateUipathForm.get("categoryId").setValue(data["categoryId"]);
       this.UpdateUipathForm.get("userKey").setValue(data["userKey"]);
       this.UpdateUipathForm.get("clientId").setValue(data["clientId"]);
       this.UpdateUipathForm.get("active").setValue(data["active"]);
+      if(this.categoryList.length==1)
+      {
+        this.UpdateUipathForm.get("categoryId").setValue(this.categoryList[0].categoryId);
+      }else
+      {
+        this.UpdateUipathForm.get("categoryId").setValue(data["categoryId"]);
+      }
       break;
     }
   }
@@ -311,7 +327,18 @@ getCategoryList()
   this.api.getCategoriesList().subscribe(data=>{
     let catResponse : any;
     catResponse=data
-    this.categoryList=catResponse.data;
+    if(catResponse.errorMessage==undefined)
+    {
+      this.categoryList=catResponse.data;
+      if(this.categoryList.length==1)
+      {
+        this.categoryLengthCheck=true;
+      }
+      else
+      {
+        this.categoryLengthCheck=false;
+      }
+    }
     this.getUiPath();
   });
 }

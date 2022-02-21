@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
@@ -15,9 +15,9 @@ export class InviteUserComponent implements OnInit {
   inviteUserForm:FormGroup;
   categories: any=[];
   allRoles: any;
-  inviteeMail:any;
-  departments:any[]=[];
-  role:any;
+  public inviteeMail:any;
+  public departments:any[]=[];
+  public role:any;
   isdprtDisabled:boolean=false;
 
   constructor(private formBuilder: FormBuilder,private api:RestApiService, private router: Router,private spinner:NgxSpinnerService ) { }
@@ -75,17 +75,21 @@ getAllCategories(){
 
  }
 
- resetUserInvite(){
-   this.inviteeMail='';
-   this.role=undefined;
-   this.departments=[];
+ resetUserInvite(form:NgForm){
+   
+  //  this.inviteeMail='';
+  //  this.role=undefined;
+  //  this.departments=[];
+ form.resetForm();
+ form.form.markAsPristine();
+form.form.markAsUntouched();
   // this.inviteUserForm.reset();
   // this.inviteUserForm.get("departments").setValue("");
   // this.inviteUserForm.get("inviteeMail").setValue("");
   // this.inviteUserForm.get("role").setValue("");
  }
 
- inviteUser(){
+ inviteUser(form){
   this.spinner.show();
    let body = {
     "inviterMailId": localStorage.getItem('ProfileuserId'),
@@ -97,27 +101,41 @@ getAllCategories(){
         }
     ]
    }
-   this.api.inviteUserwithoutReg(body).subscribe(resp => {
-     if(resp.message==="User invited Successfully !!"){
-        Swal.fire({
-        title: 'Success',
-        text: "User Invited Successfully !!",
-        position: 'center',
-        icon: 'success',
-        showCancelButton: false,
-        confirmButtonColor: '#007bff',
-        heightAuto: false,
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Ok'
-    }).then((result) => {
-      this.resetUserInvite();
-      this.router.navigate(['/pages/admin/user-management'])
-    }) 
-    }else {
+   var domianArr = this.inviteeMail.split('@');
+   console.log(domianArr[1]);
+   this.api.getWhiteListedDomain(domianArr[1]).subscribe(res => {
+     if(res.Message && res.Message === "White listed domain.. Please proceed with invite"){
+      this.api.inviteUserwithoutReg(body).subscribe(resp => {
+        if(resp.message==="User invited Successfully !!"){
+           Swal.fire({
+           title: 'Success',
+           text: "User Invited Successfully !!",
+           position: 'center',
+           icon: 'success',
+           showCancelButton: false,
+           confirmButtonColor: '#007bff',
+           heightAuto: false,
+           cancelButtonColor: '#d33',
+           confirmButtonText: 'Ok'
+       }).then((result) => {
+         this.resetUserInvite(form);
+         this.router.navigate(['/pages/admin/user-management'])
+       }) 
+       }else {
+         Swal.fire("Error","Failed to invite! Check if user already exists!!","error");
+       }
+       this.spinner.hide();
+      });
+     }else if(res.errorMessage){
+      Swal.fire("Error",res.errorMessage,"error");
+      this.spinner.hide();
+      return;
+     }else{
+      this.spinner.hide();
       Swal.fire("Error","Failed to invite! Check if user already exists!!","error");
-    }
-    this.spinner.hide();
-   });
+     }
+   })
+   
   }
 
   onchangeRole(value){

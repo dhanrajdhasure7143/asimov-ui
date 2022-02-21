@@ -127,7 +127,8 @@ export class RestApiService{
     return this.http.post("/bpsprocess/submit/bpms/notation/approve", bpmnModel)
   }
   getBPMNTempNotations(){
-    return this.http.get("/bpsprocess/temp/bpmn/all/user");
+    // return this.http.get("/bpsprocess/temp/bpmn/all/user");
+    return this.http.get("/bpsprocess/temp/bpmn/latestModified");
   }
   autoSaveBPMNFileContent(bpmnModel){
     return this.http.post("/bpsprocess/temp/bpms/notation", bpmnModel)
@@ -1257,4 +1258,38 @@ getProgrmaDetailsById(programid){
   subscribePlan(token,planData){
     return this.http.post<any>('/subscriptionservice/v1/orders?paymentToken='+token,planData,{responseType:'json'})
   }
+
+  expiryInfo():Observable<any>{
+     return this.http.get<any>('/subscriptionservice/v1/freetrials/planExpiryInfo')
+  }
+  getWhiteListedDomain(domain):Observable<any>{
+    return this.http.get<any>('/api/tenant/whiteListedDomain?domain='+domain)
+     
+ }
+ getMyAccountPaymentToken(cardData){
+  return this.http.post('/subscriptionservice/v1/paymentmethods/cardToken?tab=myaccount',cardData,{responseType:'json'})
+}
+addNewCard(token,isdefault) :Observable<any>{
+  return this.http.post<any>('/subscriptionservice/v1/paymentmethods?paymentToken='+token+'&markAsDeafult='+isdefault,httpOptions)
+}
+deletePaymentMode(paymentMethodId):Observable<any>{
+  return this.http.post<any>('/subscriptionservice/v1/paymentmethods/'+paymentMethodId,httpOptions);
+}
+setasDefaultCard(paymentModeId){
+  return this.http.post('/subscriptionservice/v1/paymentmethods/set-default/'+paymentModeId,{responseType:'json'});
+}
+
+updatePiData(body){
+  return this.http.post('/processintelligence/v1/processgraph/UpdateProcessName',body)
+}
+updateBpsData(body){
+  return this.http.post('/bpsprocess/updateBpmnInfo',body);
+}
+bpmnVersionChecking(bpmnId){
+  return this.http.get('/bpsprocess/checkBpmnVersion?bpmnModelId='+bpmnId);
+}
+deleteNotationFromTemp(body){
+  return this.http.post('/bpsprocess/delete/processTempInfo/data',body); 
+}
+
 }

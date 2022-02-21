@@ -20,6 +20,7 @@ import { map } from 'rxjs/operators';
 import { MatSort, Sort } from '@angular/material';;
 import { fromMatSort, sortRows } from './../model/datasource-utils';
 import {FilterPipe} from './../custom_filter.pipe';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-bpshome',
   templateUrl: './home.component.html',
@@ -58,6 +59,10 @@ export class BpsHomeComponent implements OnInit {
   @ViewChild(MatSort,{static:false}) sort: MatSort;
   @ViewChild(MatPaginator,{static:false}) paginator: MatPaginator;
   categories_list:any[]=[];
+  saved_diagramsList:any=[];
+  isEdit:boolean=false;
+  selectedObj:any={};
+  refreshSubscription:Subscription;
 
   constructor(private router:Router, private bpmnservice:SharebpmndiagramService, private dt:DataTransferService,
      private rest:RestApiService, private hints:BpsHints, private global:GlobalScript,
@@ -70,7 +75,7 @@ export class BpsHomeComponent implements OnInit {
     this.bpmnVisible=this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') || this.userRole.includes('Process Owner') || this.userRole.includes('Process Architect')  || this.userRole.includes('Process Analyst')  || this.userRole.includes('RPA Developer')  || this.userRole.includes('Process Architect') || this.userRole.includes("System Admin") ;
     if(this.userRole.includes('SuperAdmin')){
       this.isButtonVisible = true;
-    }else if(this.userRole.includes('Admin') || this.userRole.includes('Process Architect')){
+    }else if(this.userRole.includes('System Admin') ){
       this.isButtonVisible = true;
       this.isAdminUser = true;
     }
@@ -88,11 +93,21 @@ export class BpsHomeComponent implements OnInit {
     let obj={}
     this.dt.bpsNotationaScreenValues(obj);
     this.dt.bpsHeaderValues('');
+    this.refreshSubscription=this.dt.isTableRefresh.subscribe(res => {
+      if (res) {
+        if (res.isRfresh) {
+          this.isLoading = true;
+          this.getBPMNList();
+        }
+      }
+    })
   }
 
   async getBPMNList(){
+    this.dt.processDetailsUpdateSuccess({"isRfresh":false});
     await this.rest.getUserBpmnsList().subscribe( (res:any[]) =>  {
       this.saved_diagrams = res; 
+      this.saved_diagramsList=res;
       this.saved_diagrams.map(item => {item.xpandStatus = false;return item;})
       this.saved_diagrams.forEach(ele => {
         ele['eachObj']={
@@ -146,16 +161,17 @@ export class BpsHomeComponent implements OnInit {
       this.saved_diagrams[this.index].xpandStatus=false;
   }
 
-  openDiagram(bpmnDiagram){
+  openDiagram(bpmnDiagram,index){
     // if(bpmnDiagram.bpmnProcessStatus && bpmnDiagram.bpmnProcessStatus =="PENDING" ) return;
     let binaryXMLContent = bpmnDiagram.eachObj.bpmnXmlNotation; 
+// return;
     let bpmnModelId = bpmnDiagram.bpmnModelId;
     let bpmnVersion = bpmnDiagram.version;
     let bpmnType = bpmnDiagram.ntype;
     this.bpmnservice.uploadBpmn(atob(binaryXMLContent));
     let push_Obj={"rejectedOrApproved":bpmnDiagram.bpmnProcessStatus,"isfromApprover":false,
     "isShowConformance":false,"isStartProcessBtn":false,"autosaveTime":bpmnDiagram.eachObj.modifiedTimestamp,
-    "isFromcreateScreen":false,'process_name':bpmnDiagram.bpmnProcessName,'isEditbtn':false,'isSavebtn':true}
+    "isFromcreateScreen":false,'process_name':bpmnDiagram.bpmnProcessName,'isEditbtn':false,'isSavebtn':true,"selectedNotation":this.saved_diagramsList[index]}
 this.dt.bpsNotationaScreenValues(push_Obj);
 this.dt.bpsHeaderValues('');
     this.router.navigate(['/pages/businessProcess/uploadProcessModel'], { queryParams: { bpsId: bpmnModelId , ver: bpmnVersion, ntype: bpmnType}});
@@ -164,7 +180,7 @@ this.dt.bpsHeaderValues('');
   getAutoSavedDiagrams(){
     this.rest.getBPMNTempNotations().subscribe( (res:any) =>  {
       if(Array.isArray(res))
-        this.autosavedDiagramList = res; 
+        this.autosavedDiagramList = res;
     });
    }
 
@@ -182,13 +198,13 @@ this.dt.bpsHeaderValues('');
   }
 
   fitTableView(processName){
-    if(processName && processName.length > 10)
-      return processName.substr(0,15)+'..';
+    if(processName && processName.length > 14)
+      return processName.substr(0,14)+'...';
     return processName;
   }
 
   fitTableViewTime(processName){
-    if(processName && processName.length > 10)
+    if(processName && processName.length > 12)
       return processName.substr(0,12)+'...';
     return processName;
   }
@@ -359,11 +375,33 @@ this.dt.bpsHeaderValues('');
           "version": bpmNotation.version
         }
         this.rest.deleteBPMNProcess(data).subscribe(res => {
+          // console.log(res)
+          if(res == "It is an ongoing project.Please contact Project Owner(s)"){
+            Swal.fire({
+              icon: 'info',
+              title: 'Info',
+              text: res,
+              heightAuto: false
+            })
+          }else{
+            Swal.fire({
+              icon: 'success',
+              title: 'Success',
+              text: bpmNotation.bpmnProcessName+' V1.'+bpmNotation.version+' deleted',
+              heightAuto: false
+            });
           this.isLoading = true;
           this.getBPMNList();
-          this.global.notify(bpmNotation.bpmnProcessName+' V1.'+bpmNotation.version+' deleted','success')
+          }
+          // this.global.notify(bpmNotation.bpmnProcessName+' V1.'+bpmNotation.version+' deleted','success')
         }, err => {
-          this.global.notify('Oops! Something went wrong','error')
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!',
+            heightAuto: false,
+          });
+          // this.global.notify('Oops! Something went wrong','error')
         })
       }
     })
@@ -432,6 +470,27 @@ this.assignPagenation(filtered)
     const filterPipe = new FilterPipe();
   const fiteredArr = filterPipe.transform(this.saved_diagrams,v);
   this.assignPagenation(fiteredArr)
+  }
+
+  onEdit(e,obj){
+    e.stopPropagation();
+
+    this.isEdit=true;
+    this.selectedObj={
+      "category":obj.category,
+      "bpmnProcessName":obj.bpmnProcessName,
+      "ntype":obj.ntype,
+      "id":obj.eachObj.id,
+      "bpmnModelId":obj.bpmnModelId,
+      "processOwner":obj.processOwner
+    }
+    setTimeout(() => {
+      this.isEdit=false;
+    }, 500);
+  }
+
+  ngOnDestroy() {
+    this.refreshSubscription.unsubscribe();
   }
  
 }

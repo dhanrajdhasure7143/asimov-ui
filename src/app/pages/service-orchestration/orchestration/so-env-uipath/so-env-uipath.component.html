@@ -123,7 +123,7 @@
                     </div>
                     <div class="col-md-12 p-0 form-group">
                         <label class="label-control" for="categoryId">Category<span class="star">*</span></label>
-                        <select class="form-control data" formControlName="categoryId" value="">
+                        <select class="form-control data"  formControlName="categoryId" >
                                 <option value="">Select Category</option>
                                 <option *ngFor="let category of categoryList" [value]="category.categoryId">{{category.categoryName}}</option>      
                             </select>
@@ -188,7 +188,7 @@
                     </div>
                     <div class="col-md-12 p-0 form-group">
                         <label class="label-control" for="categoryId">Category<span class="star">*</span></label>
-                        <select class="form-control data" formControlName="categoryId" value="">
+                        <select class="form-control data"    formControlName="categoryId" value="">
                                 <option value="">Select Category</option>
                                 <option *ngFor="let category of categoryList" [value]="category.categoryId">{{category.categoryName}}</option>      
                             </select>

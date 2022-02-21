@@ -23,4 +23,6 @@ export class BpmnModel{
     hasConformance:boolean = false;
     bpmnConfProcessMeta:string = "";
     processOwner:string;
+    role:string;
+    processOwnerName:string;
 }

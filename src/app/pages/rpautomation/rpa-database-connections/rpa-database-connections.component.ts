@@ -201,6 +201,9 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
           
         Swal.fire("Error","Connection Failed","error")
         }
+    },err=>{
+      this.spinner.hide();
+      Swal.fire("Error","Unable to test connection details","error")
     });
     this.activestatus();
   }
@@ -272,8 +275,13 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
           }
           else
           {
+              this.submitted=false
               Swal.fire("Error",status.errorMessage,"error")
           }
+    },err=>{
+      this.spinner.hide();
+      this.submitted=false;
+      Swal.fire("Error","Unable to save database connections","error")
     });
    
   }
@@ -334,6 +342,9 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
       {
         Swal.fire("Error",status.errorMessage,"error")
       }
+  },err=>{
+    this.spinner.hide();
+    Swal.fire("Error","Unable to update database connection details","error")
   });
 }
 else
@@ -420,6 +431,9 @@ updatedbdata()
           else
           Swal.fire("Error",status.errorMessage,"error")
 
+        },err=>{
+          this.spinner.hide();
+          Swal.fire("Error","Unable to delete database connections","error")
         });
       }
     });

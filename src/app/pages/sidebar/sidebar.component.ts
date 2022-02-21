@@ -21,11 +21,14 @@ export class SidebarComponent implements OnInit {
   freetrail: boolean;
   tenantId: string;
   plansList: any;
+  expiry: any;
+  showProjectsSubmenu: boolean = false;
   constructor(private obj:PagesComponent, private dt:DataTransferService,
     private rest_service: RestApiService) { }
 
   ngOnInit() {
     //this.disable();
+    this.getexpiryInfo();
     this.rest_service.getUserRole(2).subscribe(res=>{
       this.userRoles=res.message
     });
@@ -59,6 +62,7 @@ export class SidebarComponent implements OnInit {
      this.obj.sidebar.showSubmenu=false;
      this.obj.sidebar.showprocessesSubmenu=false;
       this.obj.sidebar.showadminSubmenu=false;
+      this.obj.sidebar.showProjectsSubmenu=false;
       this.obj.contentMargin = 60;
   }
   
@@ -84,6 +88,14 @@ export class SidebarComponent implements OnInit {
       this.freetrail=false
      }
     }
+  })
+}
+
+getexpiryInfo(){
+  this.rest_service.expiryInfo().subscribe(data => {
+    this.expiry = data.Expiresin;
+    console.log("left over days ----",this.expiry)
+
   })
 }
 }

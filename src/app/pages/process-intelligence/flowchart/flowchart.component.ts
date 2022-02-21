@@ -4,7 +4,6 @@
 import { Component, OnInit, AfterViewInit,ViewChild,EventEmitter,ElementRef, Renderer2,Output ,HostListener} from '@angular/core';
 import { Options } from 'ng5-slider';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ZoomSlider } from '../../../zoomSlider';
 import { ProcessGraphModel } from '../model/process-graph-flowchart-model';
 import { DataTransferService } from '../../services/data-transfer.service';
 import { SharebpmndiagramService } from '../../services/sharebpmndiagram.service';
@@ -1003,9 +1002,10 @@ combofilterObject:any;
         },
         (err =>{
           Swal.fire({
-              icon: 'info',
-              title: '',
-              text: 'Meaningful BPM notation cannot be derived from the 100% graph as this may result in duplication of activities, Please try generating BPM notation with the combination of cases under variants ',
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Internal server error, Please try again later !',
+              // text: 'Meaningful BPM notation cannot be derived from the 100% graph as this may result in duplication of activities, Please try generating BPM notation with the combination of cases under variants ',
               heightAuto: false,
             });
         }))
@@ -1023,7 +1023,7 @@ combofilterObject:any;
             } else{
               Swal.fire({
                 icon: 'error',
-                title: 'Oops!',
+                title: 'Oops...',
                 text: 'Failed to generate BPM Notation, Please try again later !',
                 heightAuto: false,
               });

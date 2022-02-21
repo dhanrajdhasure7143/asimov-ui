@@ -321,9 +321,15 @@ import { NgxSpinnerService } from "ngx-spinner";
         }
         else
         {
+          this.submitted=false;
           Swal.fire("Error",response.errorMessage,"error");
+
         }
 
+    },err=>{
+      this.spinner.hide();
+      Swal.fire("Error","Unable to add environment","error");
+      this.submitted=false;
     });
   }
   else
@@ -368,6 +374,9 @@ import { NgxSpinnerService } from "ngx-spinner";
         Swal.fire("Error",response.errorMessage,"error")
       }
     
+      },err=>{
+        this.spinner.hide();
+        Swal.fire("Error","Unable to update environment details","error")
       });
     }
     else
@@ -434,6 +443,7 @@ import { NgxSpinnerService } from "ngx-spinner";
         if (result.value) {
           this.spinner.show();
           this.api.deleteenvironment(selectedEnvironments).subscribe( (res:any) =>{ 
+            this.spinner.hide();
             // Swal.fire({
             //   position: 'center',
             //   icon: 'success',
@@ -447,13 +457,15 @@ import { NgxSpinnerService } from "ngx-spinner";
             
             this.removeallchecks();
             this.getallData(); 
-            this.spinner.hide();
             this.checktoupdate();
             this.checktodelete();
             }else
             {
               Swal.fire("Error",res.errorMessage,"error")
             }
+          },err=>{
+            this.spinner.hide();
+            Swal.fire("Error","Unable to delete environment","error")
           })
         }
       }) 
@@ -519,7 +531,7 @@ import { NgxSpinnerService } from "ngx-spinner";
       this.spinner.show();
       this.api.deployenvironment(selectedEnvironments).subscribe( res =>{ 
         let data:any=res
-     
+        this.spinner.hide();   
         if(data[0].errorMessage==undefined){
           Swal.fire("Success",data[0].status,"success")
 
@@ -530,14 +542,14 @@ import { NgxSpinnerService } from "ngx-spinner";
         this.getallData(); 
         this.checktoupdate();
         this.checktodelete();  
-        this.spinner.hide();   
+      },err=>{
+          Swal.fire("Error","Failed to deploy bot in selected evironment","error")
+          this.spinner.hide(); 
       })
     }
-    this.spinner.hide(); 
   }
   
   applyFilter(filterValue: string) {
-    
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
     this.dataSource1.filter = filterValue;

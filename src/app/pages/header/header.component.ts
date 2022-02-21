@@ -7,6 +7,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { PagesComponent } from '../pages.component'
 import Swal from 'sweetalert2';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-header',
@@ -48,6 +49,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   notificationbody: { tenantId: string; };
   notificationreadlist: any;
   notificationsList: any;
+  user_details:any;
+  user_firstletter:any;
+  user_lName:any
+  user_fName:any;
 
   constructor(
     private router: Router,
@@ -55,6 +60,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private dataTransfer: DataTransferService,
     private rpa: RestApiService,
     private spinner: NgxSpinnerService,
+    private jwtHelper: JwtHelperService,
     @Inject(APP_CONFIG) private config) { }
 
   ngOnInit() {
@@ -131,18 +137,20 @@ export class HeaderComponent implements OnInit, OnDestroy {
       //this.error = "Please complete your registration process";
 
     })
-    this.spinner.show();
-    
+    this.spinner.show();    
     setTimeout(() => {
-      this.getImage();
-      this.profileName();
-      this.getAllNotifications();
-      this.getNotifications();
+      this.userDetails();
+      // this.getAllNotifications();
     }, 1000);
     setTimeout(() => {
       this.spinner.hide();
     }, 900);
 
+    this.dataTransfer.logged_userData.subscribe(res=>{
+      if(res){
+        this.addUserName(res);
+      }
+    });
 
   }
 
@@ -215,39 +223,30 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.router.navigate(['/redirect']);
   }
 
-  profileName() {
-    setTimeout(() => {
-      this.firstname = localStorage.getItem('firstName');
-      this.lastname = localStorage.getItem('lastName');
-      var firstnameFirstLetter = this.firstname.charAt(0)
-      var lastnameFirstLetter = this.lastname.charAt(0)
-      this.firstletter = firstnameFirstLetter + lastnameFirstLetter
-    }, 1000);
-  }
-
-  getImage() {
-    // console.log("inside image")
-    const userid = localStorage.getItem('ProfileuserId');
+  userDetails() {
+    var userDetails = localStorage.getItem('accessToken');
+    var deCryptUserDetails = this.jwtHelper.decodeToken(userDetails);
+    let userid = deCryptUserDetails.userDetails.userId;
     this.rpa.getUserDetails(userid).subscribe(res => {
       this.retrieveResonse = res;
-      setTimeout(() => {
-        this.user_name = this.retrieveResonse.firstName
-        this.user_designation = this.retrieveResonse.designation
-      }, 500);
-      if (this.retrieveResonse.image == null || this.retrieveResonse.image == "") {
-        this.profileName();
-        this.profilePicture = false;
+      if (res) {
+        this.user_details = this.retrieveResonse;
+        this.getAllNotifications();
+        this.getNotificationsList();
+        this.user_name = this.retrieveResonse.firstName;
+        this.user_designation = this.retrieveResonse.designation;
+        this.dataTransfer.userDetails(this.user_details);
+        this.addUserName(this.user_details);
+        if (this.retrieveResonse.image == null || this.retrieveResonse.image == "") {
+          this.profilePicture = false;
+        }
+        else {
+          this.profilePicture = true;
+        }
+        this.base64Data = this.retrieveResonse.image;
+        this.retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;
       }
-      else {
-        this.profilePicture = true;
-      }
-      this.base64Data = this.retrieveResonse.image;
-      // console.log("image",this.base64Data);
-      // localStorage.setItem('image', this.base64Data);
-      this.retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;
-      // console.log(this.retrievedImage);
-    }
-    );
+    });
   }
 
   getCount() {
@@ -258,10 +257,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
       }
     }, 10000);
   }
+
   getAllNotifications() {
-    let userId = localStorage.getItem("ProfileuserId")
-    this.tenantId = localStorage.getItem('tenantName');
-    this.role = localStorage.getItem('userRole')
+    let userId = this.user_details.userId;
+    this.tenantId = this.user_details.tenantID;
+    this.role = this.userRole[0];
     let notificationbody = {
       "tenantId": this.tenantId
     }
@@ -269,27 +269,22 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.rpa.getNotificationaInitialCount(this.role, userId, notificationbody).subscribe(data => {
       this.notificationList = data
       this.notificationscount = this.notificationList
-      // console.log(this.notificationscount)
       if (this.notificationscount == undefined || this.notificationscount == null) {
         this.notificationscount = 0;
       }
-      // console.log("count",this.notificationList.length)
     })
     this.getCount();
-
   }
 
   deletnotification(id) {
     this.dataid = id
   }
+
   canceldeleteNotification(index) {
     this.dataid = '';
   }
-  deleteNotification(data, index) {
-    console.log(data)
 
-    // console.log(resp)
-    this.getNotifications();
+  deleteNotification(data, index) {
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -313,7 +308,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
             confirmButtonText: 'Ok'
           }).then((result) => {
             if (result.value) {
-              window.location.reload();
+              // window.location.reload();
+              this.getNotificationsList();
             }
           })
         });
@@ -321,29 +317,32 @@ export class HeaderComponent implements OnInit, OnDestroy {
     });
   }
 
-  getNotifications() {
-    let userId = localStorage.getItem("ProfileuserId")
-    this.tenantId = localStorage.getItem('tenantName');
-    this.role = localStorage.getItem('userRole')
+  getNotificationsList() {
+    let userId = this.user_details.userId
+    this.tenantId = this.user_details.tenantID;
+    this.role = this.userRole[0];
     let notificationbody = {
       "tenantId": this.tenantId
     }
+    let resp_data:any;
     this.rpa.getNotifications(this.role, userId, notificationbody).subscribe(data => {
-      this.notificationsList = data
-      if (this.notificationsList.errorMessage == 'No records found') {
+      resp_data = data
+      if(Array.isArray(resp_data)){
+        this.notificationsList=resp_data
+      }
+      if (resp_data.errorMessage == 'No records found') {
         this.error = "No Records Found"
       }
     })
   }
 
   notificationclick(id) {
-    let userId = localStorage.getItem("ProfileuserId")
-    this.tenantId = localStorage.getItem('tenantName');
-    this.role = localStorage.getItem('userRole')
+    let userId = this.user_details.userId;
+    this.tenantId = this.user_details.tenantID;
+    this.role = this.userRole[0];
     this.notificationbody = {
       "tenantId": this.tenantId
     }
-    console.log("notification id", id)
     if (this.notificationsList.find(ntf => ntf.id == id).status != 'read') {
       this.rpa.getReadNotificaionCount(this.role, userId, id, this.notificationbody).subscribe(data => {
         this.notificationreadlist = data
@@ -351,11 +350,20 @@ export class HeaderComponent implements OnInit, OnDestroy {
         // document.getElementById('ntf_'+id).style.color="grey"
         //document.getElementById('date_'+id).style.color="grey"
         //document.getElementById(id).style.cursor="none"
-        window.location.reload();
+        // window.location.reload();
         // console.log(this.notificationreadlist)
+        this.getNotificationsList();
       })
 
     }
   }
 
+  addUserName(data){
+    this.user_fName=data.firstName;
+        this.user_lName=data.lastName;
+
+        var fname_fLetter = data.firstName.charAt(0);
+        var lname_fLetter = data.lastName.charAt(0);
+        this.user_firstletter = fname_fLetter + lname_fLetter;
+  }
 }

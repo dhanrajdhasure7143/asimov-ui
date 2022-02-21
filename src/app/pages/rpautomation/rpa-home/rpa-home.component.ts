@@ -37,7 +37,7 @@ export class RpaHomeComponent implements OnInit {
   public isTableHasData = true;
   public respdata1=false;
 
-  displayedColumns: string[] = ["botName","description","department","version","botStatus","actions"];
+   displayedColumns: string[] = ["botName","description","department","version","actions"];
   displayedColumns2: string[] = ["processName","taskName","Assign","status","successTask","failureTask","Operations"];
   departmentlist :string[] = ['Development','QA','HR'];
   botNameFilter = new FormControl('');
@@ -536,6 +536,7 @@ export class RpaHomeComponent implements OnInit {
 
   createoverlay()
   {
+    this.botNamespace=false;
     if (this.freetrail == 'true') {
       if (this.bot_list.length == this.appconfig.rpabotfreetraillimit) {
         Swal.fire({
@@ -569,6 +570,7 @@ export class RpaHomeComponent implements OnInit {
 
   onCreateSubmit() {
     this.userFilter.name = "";
+   
     document.getElementById("create-bot").style.display ="none";
     var createBotFormValue=this.insertbot.value;
     
@@ -917,6 +919,7 @@ export class RpaHomeComponent implements OnInit {
    this.sortkey[colKey]=!sortdes;
   }
   editbotoverlay(botdetails){
+    this.botNamespace=false
     document.getElementById("edit-bot").style.display="block";
    let category=botdetails.department;
    let selectedcategory=this.categaoriesList.find(item=>item.categoryName==category)
@@ -938,22 +941,36 @@ export class RpaHomeComponent implements OnInit {
     }
   }
 
-  validate(code){
+  validate(code,event){
     let validate = code;
+    let botname = event.target.value;
     this.count = 0;
-    for(let i=0;i < validate.length -1; i++){
-      if(validate.charAt(i) == String.fromCharCode(32)){
-        this.count= this.count+1;
+    // for(let i=0;i < validate.length; i++){
+    //   if(validate.charAt(i) == String.fromCharCode(32)||validate.charAt(i) == String.fromCharCode(46)){
+    //     this.count= this.count+1;
+    //   }
+    // }
+    var regex = new RegExp("^[a-zA-Z0-9_-]*$");
+
+   
+
+      if(!(regex.test(botname))){
+
+        this.count=1;
+
       }
-    }
     if(this.count !== 0)
     {
       this.botNamespace = true;
     }
     else{
       this.botNamespace = false;
+      
     }
   }
+
+
+
 
   checkBotnamevalidation()
   {

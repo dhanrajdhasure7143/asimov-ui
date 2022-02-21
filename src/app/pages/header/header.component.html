@@ -98,16 +98,21 @@
     <!-- <a id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="/page.html">
       <i class="glyphicon glyphicon-bell"></i>
     </a> -->
-    <button mat-icon-button class="txt-wh" data-toggle="dropdown"  aria-label="Example icon-button with heart icon">
+    <!-- <button mat-icon-button class="txt-wh" (click)="getNotificationsList()" data-toggle="dropdown"  aria-label="Example icon-button with heart icon">
       <i style="font-size: 18px;opacity: 0.5;" class="fa fa-bell"></i>
-      <div *ngIf="this.notificationscount!=0" class="notification-count" >
+      <div *ngIf="notificationscount!=0" class="notification-count" >
         <span>{{notificationscount}}</span>
      </div>
-     </button>
-    <ul class="dropdown-menu notifications" role="menu" style="left: -160px;" aria-labelledby="dLabel">
+     </button> -->
+      <button mat-icon-button type="button" [outsideClick]="false" class="clr-hvr txt-wh" (click)="getNotificationsList()" #pop2="bs-popover" [popover]="shareTemplate" placement="bottom">
+        <i style="font-size: 18px;opacity: 0.5;" class="fa fa-bell"></i>
+        <div *ngIf="notificationscount!=0" class="notification-count">
+          <span>{{notificationscount}}</span>
+        </div>
+      </button>
+    <!-- <ul class="dropdown-menu notifications" role="menu" style="left: -160px;" aria-labelledby="dLabel">
       
       <div class="notification-heading"><h4 class="menu-title"><b>Notifications</b></h4>
-        <!-- <h4 class="menu-title pull-right">View all<i class="glyphicon glyphicon-circle-arrow-right"></i></h4> -->
       </div>
       <div class="divider"></div>
      <div class="notifications-wrapper" *ngIf="!error ">
@@ -119,7 +124,7 @@
           <p class="item-info" [id]="'msg_'+messageList.id"  
           (click)="notificationclick(messageList.id)" style="cursor: pointer;">{{messageList.notificationAuditId[0].contentType}}</p>
         <span class="notification_action_cell pull-right">
-          <!-- <button aria-hidden="true" (click)='deletnotification(messageList.id)' class="cross_delet">&times;
+          <button aria-hidden="true" (click)='deletnotification(messageList.id)' class="cross_delet">&times;
             <div id="myid" [ngClass]="messageList.id == dataid?'isdelet':''" class="deletconfm">
               <div class="container-fluid deletefrm">
             <h5 class="pull-left">Confirmation</h5>
@@ -128,7 +133,7 @@
             <button class="confm pull-left" (click)="canceldeleteNotification(i)">No</button>
             </div>
             </div>
-          </button> -->
+          </button>
           <button class="subsc"   (click)="deleteNotification(messageList.id)" matTooltip="Delete Notification"> 
             <img src="./../../../assets/images/unsubscribe.svg" >
           </button>
@@ -140,10 +145,10 @@
      </div>
       <li class="divider"></li>
       <div class="notification-footer" *ngIf="error ">
-        <!-- <h4 class="menu-title">View all<i class="glyphicon glyphicon-circle-arrow-right"></i></h4>-->
+        <h4 class="menu-title">View all<i class="glyphicon glyphicon-circle-arrow-right"></i></h4>
        <h4><b>{{error}}</b></h4>
         </div> 
-    </ul>
+    </ul> -->
     
   </div>
 
@@ -209,8 +214,8 @@
   <span class="txt-wh header-seperator">|</span>
  
   <div style="line-height: 7px;margin-right: 13px;margin-top:6px;">
-    <span class="txt-u header-rgttext" *ngIf="firstname!='null'">{{firstname}} {{lastname}}</span><br>
-    <span class="txt-u header-rgttext" *ngIf="firstname=='null'">- -</span><br>
+    <span class="txt-u header-rgttext" *ngIf="user_fName != null">{{user_fName | titlecase}} {{user_lName |titlecase}}</span><br>
+    <span class="txt-u header-rgttext" *ngIf="user_fName == null">- -</span><br>
     <span class="txt-u header-userrole">{{userRole}}</span>
   </div>
   
@@ -218,13 +223,13 @@
   
   <span>
   
-    <div   *ngIf="profilePicture==true && firstname!='null'">
+    <div   *ngIf="profilePicture==true && user_fName!='null'">
        <img class="res-circle-img" [src]="retrievedImage" >
      </div>
-     <div  class="res-circle" *ngIf="profilePicture==false && firstname!='null'">
-       <span>{{firstletter|uppercase}}</span>
+     <div  class="res-circle" *ngIf="profilePicture==false && user_fName!='null'">
+       <span>{{user_firstletter|uppercase}}</span>
      </div>
-     <div  *ngIf=" firstname=='null'">
+     <div  *ngIf=" user_fName =='null'">
       <span><img class="res-circle-img" src="../../../../assets/images/pro1.png" /></span>
     </div>
   </span>
@@ -248,4 +253,31 @@
   </mat-menu>
   
   </mat-toolbar>
-  
+<ng-template #shareTemplate>
+  <div class="notification-heading">
+    <h4 class="menu-title"><b>Notifications</b></h4>
+    <button type="button" (click)='pop2.hide()' class="notif-close" aria-label="Close">
+      <span>
+        <img src="../../../assets/images/RPA/icon_latest/close.svg" />
+      </span>
+    </button>
+  </div>
+  <div class="custom-content-notification">
+    <div class="notification-item" [id]="'ntf_'+messageList.id"
+      [ngClass]="messageList.status === 'read'?'isRead':'unread'" *ngFor="let messageList of notificationsList">
+      <h4 class="item-title">Notification Message</h4>
+      <span class="notification_action_cell pull-right">
+        <button class="subsc" (click)="deleteNotification(messageList.id)" matTooltip="Delete Notification">
+          <img src="./../../../assets/images/unsubscribe.svg" class="testplus1">
+        </button>
+      </span>
+      <span class="notification-created" [id]="'date_'+messageList.id">{{messageList.createdAt | date}}
+        {{messageList.createdAt.split("T")[1].split(".")[0]}}</span>
+      <p class="item-info" [id]="'msg_'+messageList.id" (click)="notificationclick(messageList.id)"
+        style="cursor: pointer;">{{messageList.notificationAuditId[0].contentType}}</p>
+    </div>
+    <div class="notification-footer" *ngIf="error ">
+      <h4><b>{{error}}</b></h4>
+    </div>
+  </div>
+</ng-template>

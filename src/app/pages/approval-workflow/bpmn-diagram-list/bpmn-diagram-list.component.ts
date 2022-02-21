@@ -119,7 +119,7 @@ export class BpmnDiagramListComponent implements OnInit {
       this.bpmnservice.uploadBpmn(atob(binaryXMLContent));
       let push_Obj={"rejectedOrApproved":bpmnProcessStatus,"isfromApprover":fromApprover,
                     "isShowConformance":false,"isStartProcessBtn":false,"autosaveTime":bpmnProcessTime,
-                    "isFromcreateScreen":false,'process_name':bpmnProcessName}
+                    "isFromcreateScreen":false,'process_name':bpmnProcessName,"selectedNotation":this.selected_processInfo}
         this.dt.bpsNotationaScreenValues(push_Obj);
       this.router.navigate(['/pages/businessProcess/uploadProcessModel'], { queryParams: { bpsId: bpmnModelId, ver: bpmnVersion, isfromApprover: fromApprover, ntype:bpmnType }});
     }
@@ -235,7 +235,11 @@ this.selectedrow =i;
       "tenantId": data.tenantId,
       "userName": data.userName,
       "version": data.version,
-      "ntype": data.ntype
+      "ntype": data.ntype,
+      "processOwner":data.processOwner,
+      "processOwnerName":data.processOwnerName,
+      "bpmnModelModifiedBy":data.bpmnModelModifiedBy,
+      "bpmnModelModifiedByMailId":data.bpmnModelModifiedByMailId
     };
     this.rest_Api.approve_producemessage(this.approver_info).subscribe(
       data =>{

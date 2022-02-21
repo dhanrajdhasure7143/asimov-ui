@@ -107,7 +107,7 @@ export class EditTaskComponent implements OnInit {
        })
 
 
-       this.getallusers();
+    //  this.getallusers();
        this.gettask();
       
        setTimeout(() => {
@@ -138,7 +138,10 @@ export class EditTaskComponent implements OnInit {
         this.endDate=moment(task.endDate).format("YYYY-MM-DD")
         this.mindate=moment(this.startDate).format("YYYY-MM-DD")
         console.log(this.endDate)
-        this.updatetaskdata(task);
+       
+          this.updatetaskdata(task);
+       
+        
       })
     })
   }
@@ -146,6 +149,7 @@ export class EditTaskComponent implements OnInit {
   
   updatetaskdata(data)
   {  
+    
     this.taskcomments=[];
     this.taskhistory=[];
     this.rolelist=[];
@@ -172,12 +176,26 @@ export class EditTaskComponent implements OnInit {
     console.log("taskhistory",this.taskhistory)
     console.log("taskcomment",this.taskcomments,this.taskcomments_list)
     this.getTaskAttachments();
-    setTimeout(() => {
-      let user=this.users_list.find(item=>item.userId.userId==this.selectedtask.resources);
-      this.taskresourceemail=user.userId.userId
-      this.getUserRole();
-    }, 500);
+    // setTimeout(() => {
+    //   let user=this.users_list.find(item=>item.userId.userId==this.selectedtask.resources);
+    //   this.taskresourceemail=user.userId.userId
+    //   this.getUserRole();
+    // }, 200);
+    this.getallusers()
+   
     // this.updatetaskmodalref=this.modalService.show(updatetaskmodal,{class:"modal-lg"})
+  }
+  getallusers()
+  {
+    
+    let tenantid=localStorage.getItem("tenantName")
+    this.rest.getuserslist(tenantid).subscribe(response=>{
+    
+      this.users_list=response;
+      let user=this.users_list.find(item=>item.userId.userId==this.selectedtask.resources);
+        this.taskresourceemail=user.userId.userId
+         this.getUserRole();
+    });
   }
   updatetask(){
     
@@ -280,14 +298,7 @@ else
 
 
     
-    getallusers()
-    {
-      let tenantid=localStorage.getItem("tenantName")
-      this.rest.getuserslist(tenantid).subscribe(response=>{
-      
-        this.users_list=response;
-      });
-    }
+   
 
     getTaskAttachments(){
       this.rest.getTaskAttachments(this.selectedtask.projectId,this.selectedtask.id).subscribe(data =>{
@@ -306,10 +317,12 @@ else
     }
 
     getUserRole(){
+      
       let user=this.users_list.find(item=>item.userId.userId==this.taskresource);
       this.userid=user.userId.userId
       this.rest.getRole(this.userid).subscribe(data =>{
         this.userrole=data
+        console.log("userdata",this.userrole)
         for (let index = 0; index <= this.userrole.message.length; index++) {
           this.rolename =  this.userrole.message[index];
           if(this.rolename!=undefined){
@@ -472,13 +485,16 @@ else
   }
 
   onDeleteSelectedItems(event){
-    var selectedFiles = [];
-    selectedFiles=this.taskattacments.filter(product => product.checked==true).map(p=>{
+    const selectedFiles = [];
+    this.taskattacments.filter(product => product.checked==true).map(p=>{
       let obj={
         "id": p.id,
         "fileName": p.fileName
       }
+      console.log(obj)
+      selectedFiles.push(obj);
       });
+      
       Swal.fire({
         title: 'Are you sure?',
         text: "You won't be able to revert this!",

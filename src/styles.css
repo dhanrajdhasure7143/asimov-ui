@@ -375,6 +375,9 @@ th {
   font-size: 14px !important;
   vertical-align: middle !important;
 }
+thead  tr,tbody tr {
+  height: 40px;
+}
 
 ul.nav.nav-tabs.justify-content-start li {
   height: 38px !important;
@@ -2689,4 +2692,10 @@ span.pdicon {
 .update_department .ng-select .ng-select-container{
   max-height: 65px !important;
   overflow: auto !important;
+}
+.custom-content-notification{
+  min-width: 330px ;
+  /* height: 330px; */
+  height: 310px;
+  overflow: auto;
 }

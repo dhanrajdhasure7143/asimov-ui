@@ -32,6 +32,7 @@ export class CurrentplanComponent implements OnInit {
   features: any
   currentplanname: string;
   getallplans: boolean=false;
+  public isdiable: boolean = false;
   public allplans: any=[];
   paymentMode: any;
   paymentToken: any;
@@ -49,6 +50,7 @@ export class CurrentplanComponent implements OnInit {
   freetrail: any;
   listofplans: any[];
   tableData: any;
+  expiry: any;
  
   constructor(
     private api: RestApiService, private spinner: NgxSpinnerService,private modalService: BsModalService,
@@ -59,6 +61,7 @@ export class CurrentplanComponent implements OnInit {
     this.currentplanname=localStorage.getItem('currentplan')
     this.getCurrentPlan()
     //this.getAllPlans();
+    this.expiryInfo();
   }
 
 
@@ -182,6 +185,7 @@ export class CurrentplanComponent implements OnInit {
      
   }
   buyProductPlan(template){
+    this.isdiable=true;
     const cardValue = {
       "name":  this.cardDetails[0].name,
       "number": "3782 8224 6310 005",
@@ -229,6 +233,7 @@ export class CurrentplanComponent implements OnInit {
           confirmButtonText: 'Ok'
       })
         this.spinner.hide();
+        this.isdiable=false;
       }
       else {
 
@@ -237,6 +242,7 @@ export class CurrentplanComponent implements OnInit {
           this.spinner.hide();
           this.finalAmount = this.subscriptionDetails.amountPaid;
           this.productId = "EZFlow";
+          this.isdiable=false;
           this.modalRef = this.modalService.show(template);
         })
       }
@@ -257,6 +263,12 @@ export class CurrentplanComponent implements OnInit {
   chooseplan(){
     this.getallplans=true;
     this.revieworder=false;
+  }
+  expiryInfo(){
+    this.api.expiryInfo().subscribe(data => {
+      this.expiry = data.Expiresin;
+      console.log("left over days ----",this.expiry)
+    })
   }
 
   contactUs(){
