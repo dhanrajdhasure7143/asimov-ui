@@ -862,6 +862,11 @@
               <span *ngIf="log.Status=='RemovedEnv'">
                 <b>{{log.changedBy}}</b> removed environment <b>{{log.taskName}}</b> on {{log.changedDate}}
               </span>
+
+              
+              <span *ngIf="log.Status=='BotCreated'">
+                <b>{{log.changedBy}}</b> created bot <b>{{log.taskName}}</b> on {{log.changedDate}}
+              </span>
               
             </div>
           </div>
