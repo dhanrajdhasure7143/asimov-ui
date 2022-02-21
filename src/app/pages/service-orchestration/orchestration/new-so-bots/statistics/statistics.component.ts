@@ -5,7 +5,7 @@ import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 import * as moment from 'moment';
 import {NgxSpinnerService} from 'ngx-spinner';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
-
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-statistics',
   templateUrl: './statistics.component.html',
@@ -102,6 +102,10 @@ this.getEnvironments();
       this.botruntimestats();
       this.spinner.hide();
       
+    },
+    err=>{
+      this.spinner.hide();
+      Swal.fire("Error","Unable to get bots list","error")
     })
   }
 

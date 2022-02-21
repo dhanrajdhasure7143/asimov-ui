@@ -84,6 +84,9 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   public form_change:Boolean=false;
   startNodeId:any=""
   stopNodeId:any=""
+  actualTaskValue:any=[];
+  actualEnv:any=[];
+  auditLogs:any=[]
   @ViewChild('template', { static: false }) template: TemplateRef<any>;
   public nodedata: any;
   categoryList:any=[];
@@ -132,6 +135,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     }
     if (this.finalbot.botId != undefined) {
       this.finaldataobjects = this.finalbot.tasks;
+      this.actualTaskValue=[...this.finalbot.tasks];
+      this.actualEnv=[...this.finalbot.envIds]
       this.loadnodes();
     }
     this.dragareaid = "dragarea__" + this.finalbot.botName;
@@ -1062,6 +1067,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     this.arrange_task_order(this.startNodeId);
     this.get_coordinates();
     await this.getsvg();
+    this.rpaAuditLogs(env);
     this.saveBotdata = {
       "version": botProperties.version,
       "botId": botProperties.botId,
@@ -1084,7 +1090,9 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
      return false;
     else
     {
+      //console.log(JSON.stringify(this.saveBotdata))
       return this.rest.updateBot(this.saveBotdata)
+      //return false;
     } 
 
   }
@@ -1327,6 +1335,120 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
 
+  rpaAuditLogs(env:any[])
+  {
+    this.auditLogs=[];
+    let finalTasks:any=[];
+    finalTasks=this.final_tasks;
+    let actualTasks:any=this.actualTaskValue;
+    let firstName=localStorage.getItem("firstName");
+    let lastName=localStorage.getItem("lastName")
+    finalTasks.forEach((item:any)=>{
+      if(actualTasks.find(item2=>item.nodeId==item2.nodeId)==undefined)
+      {
+        this.auditLogs.push(
+          {
+            "botId": this.finalbot.botId,
+            "botName": `${this.finalbot.botName}|AddedTask` ,
+            "changeActivity":'-',
+            "changedBy": `${firstName} ${lastName}` ,
+            "changedDate":(new Date().toLocaleDateString()+", "+new Date().toLocaleTimeString()),
+            "newValue":'-',
+            "previousValue":'-',
+            "taskName": item.taskName,
+            "version": this.finalbot.version
+          }
+        )
+      }
+      else
+      {
+        let actualTask:any=(actualTasks.find(item2=>item.nodeId==item2.nodeId))
+        for(let i=0;i<item.attributes.length;i++)
+        {
+          let actualTaskAttribute=actualTask.attributes.find((att:any)=>att.metaAttrId==item.attributes[i].metaAttrId);
+        
+          if(item.attributes[i].attrValue!=actualTaskAttribute.attrValue)
+          {
+            this.auditLogs.push(
+              {
+                "botId": this.finalbot.botId,
+                "botName": `${this.finalbot.botName}|UpdatedConfig` ,
+                "changeActivity":item.attributes[i].metaAttrValue,
+                "changedBy": `${firstName} ${lastName}` ,
+                "changedDate":(new Date().toLocaleDateString()+", "+new Date().toLocaleTimeString()),
+                "newValue":item.attributes[i].attrValue,
+                "previousValue": actualTaskAttribute.attrValue,
+                "taskName": actualTask.taskName,
+                "version": this.finalbot.version
+              }
+            )
+          }
+        }
+      }
+    })
+    let RemovedTasks:any=[]
+    actualTasks.forEach((item:any)=>{
+      if(finalTasks.find((item2:any)=>item2.nodeId==item.nodeId)==undefined)
+      {
+        this.auditLogs.push(
+          {
+            "botId": this.finalbot.botId,
+            "botName": `${this.finalbot.botName}|RemovedTask` ,
+            "changeActivity":'-',
+            "changedBy": `${firstName} ${lastName}` ,
+            "changedDate":(new Date().toLocaleDateString()+", "+new Date().toLocaleTimeString()),
+            "newValue":'-',
+            "previousValue":'-',
+            "taskName": item.taskName,
+            "version": this.finalbot.version
+          }
+        )
+      }
+    })
+
+
+    this.actualEnv.forEach((item:any)=>{
+      if(env.find((envId)=>item==envId)==undefined)
+      {
+        this.auditLogs.push(
+          {
+            "botId": this.finalbot.botId,
+            "botName": `${this.finalbot.botName}|RemovedEnv` ,
+            "changeActivity":'-',
+            "changedBy": `${firstName} ${lastName}` ,
+            "changedDate":(new Date().toLocaleDateString()+", "+new Date().toLocaleTimeString()),
+            "newValue":'-',
+            "previousValue":'-',
+            "taskName":String(item),
+            "version": this.finalbot.version
+          }
+        )
+      }
+    })
+
+
+    env.forEach((item:any)=>{
+      if(this.actualEnv.find((envId)=>item==envId)==undefined)
+      {
+        this.auditLogs.push(
+          {
+            "botId": this.finalbot.botId,
+            "botName": `${this.finalbot.botName}|AddedEnv` ,
+            "changeActivity":'-',
+            "changedBy": `${firstName} ${lastName}` ,
+            "changedDate":(new Date().toLocaleDateString()+", "+new Date().toLocaleTimeString()),
+            "newValue":'-',
+            "previousValue":'-',
+            "taskName":String(item),
+            "version": this.finalbot.version
+          }
+        )
+      }
+    })
+
+
+
+  }
 
 
 
@@ -1390,6 +1512,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     this.SelectedOutputType = "";
   }
 
+
+  
   arrange_task_order(start) {
     this.final_tasks = [];
     let object = this.finaldataobjects.find(object => object.inSeqId == start);

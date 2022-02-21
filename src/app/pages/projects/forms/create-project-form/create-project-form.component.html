@@ -173,10 +173,11 @@
                     <div class="form-fields col-md-6 pl-0" *ngIf="freetrail!='true'">
                         <label class="label-control">Process Owner<span class="star">*</span></label>
                         <select formControlName="processOwner" class="form-control" [ngClass]="insertForm2.get('processOwner').valid?'enteredfield-color':'inputfield-color'">
-                        <option value="">Select Process Owner</option>
-                        <option *ngFor="let user of users_list" [value]="user.userId.userId">
-                            {{user.userId.firstName|titlecase}} {{user.userId.lastName|titlecase}}</option>
-                    </select>
+                            <option value="">Select Process Owner</option>
+                            <option *ngFor="let user of users_list" [value]="user.userId.userId">
+                                {{user.userId.firstName|titlecase}} {{user.userId.lastName|titlecase}}</option>
+                        </select>
+                   
                         <span *ngIf="insertForm2.get('processOwner').invalid && insertForm2.get('processOwner').touched" class="errspan required">Process Owner Required*</span>
                     </div>
                     <div class="form-fields col-md-6 pl-0" *ngIf="freetrail=='true'">

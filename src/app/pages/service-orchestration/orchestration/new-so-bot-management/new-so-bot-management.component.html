@@ -68,7 +68,10 @@
               <ng-container matColumnDef="version">
                   <th mat-header-cell *matHeaderCellDef mat-sort-header>Version </th>
                   <td mat-cell *matCellDef="let element">
-                      <button *ngIf="element.version!=null">V{{element.version}}</button>
+                      <button *ngIf="element.version!=null">V{{element.version}} 
+
+                      
+                       </button>
                       <span *ngIf="element.version==''">-</span> </td>
               </ng-container>
               <ng-container matColumnDef="botStatus">
@@ -214,7 +217,7 @@
       <div [id]="viewlogid" *ngIf="viewlogid1==undefined" class="modal-body newmodelbodycl">
 
 
-          <div class="logs-container">
+          <div class="logs-container" *ngIf="logflag!='Loading'">
               <table mat-table [dataSource]="Viewloglist" #sort4="matSort" matSort class="logs-table">
 
 
@@ -228,10 +231,15 @@
 
                   <!-- Version Column -->
                   <ng-container matColumnDef="version">
-                      <th mat-header-cell *matHeaderCellDef style="width:15%"> Version </th>
+                      <th mat-header-cell *matHeaderCellDef style="width:15%"> Version     
+                        <select [value]="log_version"  (change)="changeEpsoftLogs($event.target.value)">
+                            <option [value]="botVersion.vId" [selected]="botVersion.vId==log_version" *ngFor="let botVersion of AllVersions">V{{botVersion.vId}}</option>
+                        </select> 
+                    </th>
                       <td mat-cell *matCellDef="let element" style="width:15%">
                           <span *ngIf="element.version!=null">V{{element.version}}</span>
                           <span *ngIf="element.version == undefined">-</span>
+                           
                       </td>
                   </ng-container>
 
@@ -297,22 +305,24 @@
                       </td>
                   </ng-container>
 
-                  <ng-container matColumnDef="noData">
-                      <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="7">
-                          No Records Found
-                      </td>
-                  </ng-container>
+                 
 
                   <tr mat-header-row *matHeaderRowDef="displayedColumns4; sticky: true"></tr>
                   <tr mat-row *matRowDef="let row; columns: displayedColumns4;"></tr>
-                  <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': !respdata1}"></tr>
               </table>
+              <div *ngIf="filteredLogs.length==0" class="text-center">
+                <img src="../../../../../assets/images/RPA/No-Items.svg" style="height:200px">
+                <h5>No items to display</h5>
+              </div>
+          </div>
+          <div class="logs-container text-center" *ngIf="logflag=='Loading'">
+            <img src="../../../../../assets/images/EZFlow_Loader.gif" style="margin-top:12%">
           </div>
           <!-- <mat-paginator #paginator4 [pageSize]="5" [showFirstLastButtons]="true"></mat-paginator> -->
       </div>
       <div [id]="viewlogid1" *ngIf="viewlogid1!=undefined" class="modal-body">
 
-          <div class="logs-container">
+          <div class="logs-container" *ngIf="logflag!='Loading'">
               <table mat-table class="logs-table" [dataSource]="logbyrunid" #sort5="matSort" matSort>
 
                   <!-- Task Name Column -->
@@ -399,17 +409,17 @@
                           </span>
                           <span *ngIf="element.error_info == undefined ||element.error_info == 'NA' ">-</span></td>
                   </ng-container>
-
-                  <ng-container matColumnDef="noData">
-                      <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="7">
-                          No Records Found
-                      </td>
-                  </ng-container>
-
                   <tr mat-header-row *matHeaderRowDef="displayedColumns5; sticky: true"></tr>
                   <tr mat-row *matRowDef="let row; columns: displayedColumns5;"></tr>
-                  <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': !respdata2}"></tr>
               </table>
+                <div *ngIf="logTasks.length==0" class="text-center">
+                  <img src="../../../../../assets/images/RPA/No-Items.svg" style="height:200px">
+                  <h5>No items to display</h5>
+                </div>
+          </div>
+
+          <div class="logs-container text-center" *ngIf="logflag=='Loading'">
+            <img src="../../../../../assets/images/EZFlow_Loader.gif">
           </div>
 
           <!-- <mat-paginator #paginator5 [pageSize]="5" [showFirstLastButtons]="true"></mat-paginator> -->

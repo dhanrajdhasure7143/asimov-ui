@@ -6,7 +6,7 @@ import { FormGroup } from '@angular/forms';
     template: `
       <div style='display: flex;' [formGroup]="form">
         <div class="form-check" *ngFor="let opt of field.options">
-          <input class="form-check-input" type="radio" [value]="opt.key" >
+          <input [attr.disabled]="feilddisable" class="form-check-input" type="radio" [value]="opt.key" >
           <label style="color: #615f5f;padding: 0px 10px;" class="form-check-label">
             {{opt.label}}
           </label>
@@ -17,4 +17,5 @@ import { FormGroup } from '@angular/forms';
 export class RadioComponent {
     @Input() field:any = {};
     @Input() form:FormGroup;
+    @Input('feilddisable') public feilddisable:boolean;
 }

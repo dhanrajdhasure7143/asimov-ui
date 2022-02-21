@@ -39,6 +39,7 @@ export class ProcessCategoryOverlayComponent implements OnInit {
   process_name_error:boolean=false;
   freetrail: string;
   isLoading:boolean=false;
+  isValidName:boolean=false;
   @ViewChild('processCategoryForm', {static: true}) processForm: NgForm;
   constructor( private rest:RestApiService, private activatedRoute: ActivatedRoute, private global:GlobalScript,
     private cdRef: ChangeDetectorRef, private dt: DataTransferService) { }
@@ -46,6 +47,7 @@ export class ProcessCategoryOverlayComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges) {
     // console.log("this.ovrlayData",this.overlay_data)
     if(this.overlay_data.type=="edit"){
+      this.isValidName=false;
       if(this.overlay_data.module=="pi"){
         this.categoryName=this.overlay_data.selectedObj.categoryName;
         this.processName=this.overlay_data.selectedObj.piName;
@@ -59,6 +61,14 @@ export class ProcessCategoryOverlayComponent implements OnInit {
             this.process_owner=i;
           }
         })
+      }
+    }else{
+      this.processName='';
+      this.categoryName=undefined;
+      this.isValidName=false;
+      if(this.overlay_data.module !="pi"){
+        this.process_owner=undefined;
+        this.notationType='';
       }
     }
   if(changes['uploadedFileName']){
@@ -117,14 +127,10 @@ export class ProcessCategoryOverlayComponent implements OnInit {
   }
 
   proceedChanges(form){
-    //console.log(this.categoriesList.data['categoryName'].includes(this.othercategory));
-
-    // if(this.categoryName =='other'){
-    //   if(this.categoriesList.data.includes(this.othercategory) == true){
-    //     console.log("exusted");
-    //     return;
-    //   }
-    // }
+    if(this.processName.trim().length == 0){
+      this.isValidName=true;
+      return;
+    }
     var found = false;
     if (this.categoryName == 'other') {
 
@@ -136,7 +142,6 @@ export class ProcessCategoryOverlayComponent implements OnInit {
         }
       }
     }
-    console.log("in else", found);
 
     if (found == false) {
       this.saveCategory();
@@ -194,7 +199,8 @@ export class ProcessCategoryOverlayComponent implements OnInit {
   }
 
   lettersOnly(event) {
-    var regex = new RegExp("^[a-zA-Z0-9-_]+$");
+    this.isValidName=false;
+    var regex = new RegExp("^[a-zA-Z0-9-_ ]+$");
     var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
       if (!regex.test(key)) {
         event.preventDefault();
@@ -253,6 +259,11 @@ export class ProcessCategoryOverlayComponent implements OnInit {
   }
 
   updateChanges() {
+    if(this.processName.trim().length == 0){
+      this.isValidName=true;
+      return;
+    };
+
     if (this.overlay_data.module == "pi") {
       this.isLoading=true;
       let req_body = {
