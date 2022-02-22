@@ -59,13 +59,13 @@
                                     <textarea *ngIf="!name.description" class="form-control descriptionview" placeholder="Enter Definition"></textarea>
                                     <textarea class="form-control descriptionview" *ngIf="name.description">{{name.description}}</textarea>
                                     <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus" 
-                                        (click)="descriptionView(name , j , 'level1')"/>
+                                        (click)="descriptionView(name , j , 'level1')" *ngIf="name.description" />
                                     
                                 </span>
                             </div>
                             
                             <div class="proc_deffield">
-                                <textarea *ngIf="name.name && descriptionEdit == j && name.processname == descriptionProcessName" class="form-control" id="descriptionValue"  [(ngModel)]="name.description" placeholder="Enter Description"></textarea>
+                                <textarea *ngIf="name.name && descriptionEdit == j && name.processname == descriptionProcessName" class="form-control" id="descriptionValue" [(ngModel)]="name.description" placeholder="Enter Definition"></textarea>
                                 <span  class="procdesc_act" *ngIf="name.name && descriptionEdit == j && name.processname == descriptionProcessName">
                                     <span>
                                         <img  src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img" />
@@ -206,12 +206,12 @@
                                         <textarea  *ngIf="!level2.description" class="form-control descriptionview" placeholder="Enter Definition"></textarea>
                                         <textarea class="form-control descriptionview" *ngIf="level2.description">{{level2.description}}</textarea>
                                         <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus" 
-                                            (click)="descriptionView(level2 , j , 'level2')" /> 
+                                            (click)="descriptionView(level2 , j , 'level2')"  *ngIf="level2.description" /> 
                                        
                                     </span>
                                 </div>
                                 <div class="proc_deffield">
-                                    <textarea *ngIf="level2.name && descriptionEdit == j && level2.name == descriptionProcessName" class="form-control" id="descriptionValue"  [(ngModel)]="level2.description" placeholder="Enter Description"></textarea>
+                                    <textarea *ngIf="level2.name && descriptionEdit == j && level2.name == descriptionProcessName" class="form-control" id="descriptionValue"  [(ngModel)]="level2.description" placeholder="Enter Definition"></textarea>
                                     
                                     <span class="procdesc_act" *ngIf="level2.name && descriptionEdit == j && level2.name == descriptionProcessName">
                                         <span>
