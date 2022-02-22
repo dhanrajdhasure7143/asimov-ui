@@ -199,8 +199,9 @@ export class SchedulerComponent implements OnInit {
         else
         {
           this.notifier.notify("success",resp.status)
-          this.schedule_list.find(data=>data.check==true).run_status="started";
-          this.updateflags();
+          // this.schedule_list.find(data=>data.check==true).run_status="started";
+          // this.updateflags();
+          this.get_schedule()
         }
 
       })
@@ -226,8 +227,9 @@ export class SchedulerComponent implements OnInit {
         else
         {
           Swal.fire(resp.status,"","success")
-          this.schedule_list.find(data=>data.check==true).run_status="pause";
-          this.updateflags();
+          // this.schedule_list.find(data=>data.check==true).run_status="pause";
+          // this.updateflags();
+          this.get_schedule();
         }
       })
     }
@@ -251,8 +253,9 @@ export class SchedulerComponent implements OnInit {
       {
 
         this.notifier.notify("warning", resp.status);
-        this.schedule_list.find(data=>data.check==true).run_status="resume";
-        this.updateflags();
+        // this.schedule_list.find(data=>data.check==true).run_status="resume";
+        // this.updateflags();
+        this.get_schedule()
       }
     })
 

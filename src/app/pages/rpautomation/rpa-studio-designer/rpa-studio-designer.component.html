@@ -77,14 +77,14 @@
                     </button>
                         </div>
                         <div class="action-item hovericon" *ngIf="current_instance != undefined">
-                            <button class="tsttooltipbtn" [disabled]="current_instance.savebotrespose==undefined" (click)=" current_instance.stopBot()">
+                            <button class="tsttooltipbtn" [disabled]="current_instance.savebotrespose==undefined || current_instance.pausebot==false" (click)=" current_instance.stopBot()">
                       <img src="../../../../assets/images/RPA/icon_latest/Stop Bot.svg"class="testplus1">
                       <span class="testtooltip">Stop Bot</span>
                     </button>
                             <!-- <i class="ri-stop-circle-line"></i> -->
                         </div>
-                        <div class="action-item hovericon" *ngIf="current_instance != undefined" [isDisabled]=" current_instance.predefinedbotsData.length==0" dropdown id="predefinedBotsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <button class="dropdown-action-item clickable dropdown-toggle tsttooltipbtn" id="predefinedBots" dropdownToggle  type="button" aria-controls="predefinedBotDropdown">
+                        <div class="action-item hovericon" *ngIf="current_instance != undefined" [isDisabled]="current_instance.predefinedbotsData.length==0" dropdown id="predefinedBotsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <button  class="dropdown-action-item clickable dropdown-toggle tsttooltipbtn" id="predefinedBots" dropdownToggle  type="button" aria-controls="predefinedBotDropdown">
                               <img src="../../../../assets/images/RPA/icon_latest/Predefined Bots.svg" class="testplus1">
                               &nbsp;<span class="caret"></span>
                               <span class="testtooltip">Predefined Bots</span>
