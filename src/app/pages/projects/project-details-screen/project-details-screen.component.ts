@@ -151,7 +151,7 @@ percentageComplete: number;
     private spinner:NgxSpinnerService) { }
 
 
-  ngOnInit() {
+  ngOnInit() { 
     this.processOwner=false
     localStorage.setItem('project_id',null);
     localStorage.setItem('bot_id',null);
