@@ -160,7 +160,7 @@ li.overflowcontent {
 .vcname button {
     position: absolute;
     top: 32px;
-    right: 25px;
+    right: 13px;
     min-width: auto !important;
     padding: 0px !important;
     margin: 0px !important;
@@ -187,7 +187,7 @@ li.childHover span {
 img.testplus2 {
     width: 12px;
     height: 12px;
-    margin-right: 5px;
+    margin-right: 8px;
 }
 .vcmdocs {
     border: 2px dashed #e7e7e7;
