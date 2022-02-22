@@ -106,6 +106,7 @@ export class RpaSchedulerComponent implements OnInit {
             this.schedule_list[index].run_status="not_started";
           })
           this.actions.updatesavedschedules(response.botMainSchedulerEntity);
+          this.updateflags()
         }
       })
     }
@@ -233,8 +234,9 @@ export class RpaSchedulerComponent implements OnInit {
         {
          
           this.notifier.notify("success",resp.status)
-          this.schedule_list.find(data=>data.check==true).run_status="started";
-          this.updateflags();
+          // this.schedule_list.find(data=>data.check==true).run_status="started";
+          // this.updateflags();
+          this.get_schedule();
         }
         else
         {
@@ -262,8 +264,9 @@ export class RpaSchedulerComponent implements OnInit {
         if(resp.errorMessage==undefined)
         {
           this.notifier.notify("success",resp.status)
-          this.schedule_list.find(data=>data.check==true).run_status="pause";
-          this.updateflags();
+          // this.schedule_list.find(data=>data.check==true).run_status="pause";
+          // this.updateflags();
+          this.get_schedule();
         }
         else
         {
@@ -288,8 +291,9 @@ export class RpaSchedulerComponent implements OnInit {
       if(resp.errorMessage==undefined)
       {
         this.notifier.notify("success", resp.status);
-        this.schedule_list.find(data=>data.check==true).run_status="resume";
-        this.updateflags();
+        // this.schedule_list.find(data=>data.check==true).run_status="resume";
+        // this.updateflags();
+        this.get_schedule();
       }
       else
       {

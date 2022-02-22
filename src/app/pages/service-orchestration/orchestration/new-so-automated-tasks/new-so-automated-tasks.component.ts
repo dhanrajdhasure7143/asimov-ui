@@ -489,8 +489,10 @@ resetsla(){
 
  loadbotdatadesign(botId)
   {
-    localStorage.setItem("botId",botId);
-    //this.router.navigate(["/pages/rpautomation/designer"]);
+    if(this.selectedvalue==undefined || this.selectedvalue=='')
+      this.router.navigate(["/pages/rpautomation/designer"],{queryParams:{name:"orchestration",botId:botId}});
+    else
+      this.router.navigate(["/pages/rpautomation/designer"],{queryParams:{processId:this.selectedvalue,botId:botId}});
   }
 
 
