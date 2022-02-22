@@ -142,5 +142,11 @@ export class UsersComponent implements OnInit {
     this.router.navigate(['/pages/admin/modify-user'], { queryParams: {id:data.email,role:userroles, dept:depts} });
 
   }
-
+  applyFilter(filterValue: string) {
+    this.dataSource2.filter = filterValue.trim().toLowerCase();
+    //console.log(this.dataSource2.filter);
+    if (this.dataSource2.paginator) {
+      this.dataSource2.paginator.firstPage();
+    }
+  }
 }
