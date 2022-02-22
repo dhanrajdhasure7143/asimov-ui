@@ -55,3 +55,11 @@ span.testtooltip {
   .newinntalx1 a {
     margin-right: 10px;
   }
+  .userssearch {
+    position: relative;
+  }
+  .userssearch img.testplus {
+    position: absolute;
+    right: 20px;
+    top: 8px;
+  }

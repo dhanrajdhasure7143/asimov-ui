@@ -71,10 +71,14 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
     // }
     this.activeRoute.queryParams.subscribe(data=>{
       let params:any=data;
-      if(params.name=='ochestration')
+      if(params.name!=undefined)
       {
         this.router.navigate(["/pages/serviceOrchestration/home"],{queryParams:{tab:3}})
-      }else
+      }else if(params.processId!=undefined)
+      {
+        this.router.navigate(["/pages/serviceOrchestration/home"],{queryParams:{processid:params.processId}})
+      }
+      else
       {
         this.router.navigate(["/pages/rpautomation/home"])
       }
@@ -137,6 +141,7 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
     if(localStorage.getItem('project_id')!="null"){
       this.router.navigate(["/pages/projects/projectdetails"], 
      {queryParams:{"id":localStorage.getItem('project_id')}})
+    
     }else{
       $(".bot-close").click();
     }

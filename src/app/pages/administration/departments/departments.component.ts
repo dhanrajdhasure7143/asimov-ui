@@ -18,7 +18,7 @@ export class DepartmentsComponent implements OnInit {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild("paginator", { static: false }) paginator: MatPaginator;
   dataSource2:MatTableDataSource<any>;
-  displayedColumns: string[] = ["check","categoryId","categoryName","owner","createdBy","createdAt","action"];
+  displayedColumns: string[] = ["check","categoryName","owner","createdBy","createdAt","action"];
   public departments:any=[];
   public Departmentcheckeddisabled:boolean =false;
   public Departmentcheckflag:boolean = false;
