@@ -29,6 +29,7 @@ export class CreateProjectFormComponent implements OnInit {
   categories_list:any[]=[];
   categoriesList:any=[];
   freetrail: string;
+  processOwner:boolean;
   ngOnInit(): void {
     this.loggedInUserId=localStorage.getItem("ProfileuserId")
     this.insertForm2=this.formBuilder.group({
@@ -42,7 +43,7 @@ export class CreateProjectFormComponent implements OnInit {
       priority: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       measurableMetrics: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       process: ["", Validators.compose([Validators.maxLength(50)])],
-      processOwner: ["", Validators.compose([ Validators.maxLength(50)])],
+      processOwner: [""],
      
       // description: ["", Validators.compose([Validators.maxLength(200)])],
      // access: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
@@ -115,7 +116,8 @@ export class CreateProjectFormComponent implements OnInit {
       let processOwner:any=this.users_list.find(item=>(`${item.userId.firstName} ${item.userId.lastName}`==process.createdBy))
       if(processOwner!=undefined)
       {
-        this.insertForm2.get("processOwner").setValue(processOwner.userId.userId)
+        this.insertForm2.get("processOwner").setValue(processOwner.userId.userId);
+        this.processOwner=false
       }else
       {
         this.insertForm2.get("processOwner").setValue("")
