@@ -101,7 +101,7 @@
                                             <i class="material-icons expand-open">chevron_right</i>
                                             <i class="material-icons expand-close">expand_less</i>
                                         </div>
-                                        <div class="cell cell2" [matTooltip]=each_diag.bpmnProcessName matTooltipClass="bpsHeaderTooltip">{{each_diag.bpmnProcessName ?fitTableView(each_diag.bpmnProcessName |titlecase): '-'}}</div>
+                                        <div class="cell cell2" [matTooltip]=each_diag.bpmnProcessName matTooltipClass="bpsHeaderTooltip">{{each_diag.bpmnProcessName ?fitTableView(each_diag.bpmnProcessName): '-'}}</div>
                                         <div class="cell cell3">{{each_diag.ntype ? each_diag.ntype.toUpperCase(): '-' }}</div>
                                         <div class="cell cell4">{{each_diag.category}}</div>
                                         <div class="cell cell4">{{each_diag.processOwnerName ? each_diag.processOwnerName : '-'}}</div>

@@ -60,7 +60,7 @@
         <div class='col-md-2'>
             <select class="form-control border_bottom" name="graphId" id="process_graph_list" #graphId="ngModel" [(ngModel)]="graphIds" (change)="onchangegraphId(graphIds)">
                 <option value="undefined" hidden disabled>Select Process Graph</option>
-                <option *ngFor="let process_list of process_graph_list.data;let i=index;trackBy:loopTrackBy" [value]="process_list.piId">{{process_list.piName|titlecase}}</option>
+                <option *ngFor="let process_list of process_graph_list.data;let i=index;trackBy:loopTrackBy" [value]="process_list.piId">{{process_list.piName}}</option>
             </select>            
         </div>
          <!-- <div class='col-sm-2'>
