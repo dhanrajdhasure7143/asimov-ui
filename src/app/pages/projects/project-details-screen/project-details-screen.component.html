@@ -45,7 +45,7 @@
           <button class="btn btn-default">Cancel</button>
         </span>
             <span *ngIf="editdata==true" (click)="updateprojectDetails()">
-          <button [disabled]="projectNameFlag || projectPurposeFlag" class="btn btn-primary">Save</button>
+          <button [disabled]="projectNameFlag || projectPurposeFlag || processOwnerFlag" class="btn btn-primary">Save</button>
         </span>
             <span class="prjdetails-headerbuttons" *ngIf="editdata==false">
           <button class="btn btn-primary" (click)="editdata=true">
@@ -184,9 +184,7 @@
                                     <span class="labeltit">Process Owner</span>
 
                                     <span class="tab-text" *ngIf="projectDetails.processOwner==null||projectDetails.processOwner==''|| projectDetails.processOwner==undefined">-</span>
-                                    <select  class="small-input" id="processowner" [value]="projectDetails.processOwner" [attr.disabled]="processOwner==false" 
-                                                    >
-                                                  
+                                    <select  class="small-input" id="processowner" [value]="projectDetails.processOwner" [attr.disabled]="processOwner==false" >                                  
                                                     <option [value]="projectDetails.processOwner" >{{projectDetails.processOwner | userPipe : users_list}}</option>
                                                     <option *ngFor="let user of userslist" [value]="user.userId.userId">
                                                         {{user.userId.firstName|titlecase}} {{user.userId.lastName|titlecase}}</option>
