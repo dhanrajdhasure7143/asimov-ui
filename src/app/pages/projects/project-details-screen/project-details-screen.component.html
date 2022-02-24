@@ -256,7 +256,9 @@
                                     </div>
                                     <div *ngIf="editdata==true">
                                         <select class="small-input" (change)="projectDetails.status=$event.target.value" [value]="(projectDetails.status==undefined||projectDetails.status==null)?'':projectDetails.status">
-                        <option value="">Select Status</option>
+                                            <option value="" disabled hidden>Select Status</option>
+                                            <option value="null" disabled hidden>Select Status</option>
+                                            <option value="" disabled hidden>Select Status</option>
                         <option value="New">New</option>
                         <option value="In Progress">In Progress</option>
                         <option value="Pipeline">Pipeline</option>
