@@ -333,7 +333,7 @@ export class RpaHomeComponent implements OnInit {
      // response=response.reverse();
       // if(response.length==0)
       // {
-      //   //this.rpa_studio.spinner.hide();
+      //   //this.rpa_studio.spinner.hide(); 
       // }
       // response.forEach(data=>{
       //   let object:any=data;
