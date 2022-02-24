@@ -8,7 +8,7 @@
         </div>
         <div class="ml-auto submit">
             <button class="btn btn-default" (click)="resetLevel1()">Reset</button>
-            <button class="btn btn-primary" [disabled]="vcmName == '' " (click)="saveLevel1()">Save</button>
+            <button class="btn btn-primary" [disabled]="vcmName == '' " (click)="saveLevel1()">Save1</button>
         </div>
     </div>
 
@@ -26,8 +26,8 @@
                                 <label class="label-control">Process Owner</label>
                                 <select class="form-control" [(ngModel)]="editProcessOwner">
                                     <option value="" hidden disabled>Select Owner</option>
-                                    <option value="John Doe">John Doe</option>
-                                    <option value="Emily Mac">Emily Mac</option>   
+                                    <option *ngFor="let each_approver of processOwners_list;let i=index" [value]=each_approver.userId>
+                                        {{(each_approver.firstName | titlecase) +" "+(each_approver.lastName==undefined?"":each_approver.lastName)}}</option>
                                 </select>
                             </div>
                             <div class="col-md-12 form-group">
@@ -37,9 +37,8 @@
                         </div>
                         <div class="propfooter col-md-12 text-right">
                             <button class="btn btn-default" (click)="resetProperties()">Reset</button>
-                            <button class="btn btn-primary" *ngIf="editLevelProperties == 1" (click)="editProperties()">Save</button>
-                            <button class="btn btn-primary" *ngIf="editLevelProperties == 2" (click)="editProcessLevel2()">Save</button>
-
+                            <button class="btn btn-primary" *ngIf="editLevelProperties == 1" (click)="editProperties()">Save2</button>
+                            <button class="btn btn-primary" *ngIf="editLevelProperties == 2" (click)="editProcessLevel2()">Save3</button>
                         </div>
                     </mat-tab>
                     <mat-tab label="Documents">
@@ -102,7 +101,7 @@
                                             <ul *ngFor="let item of vcmProcess">
                                                 <ul *ngIf="item.name == 'Management Process'">
                                                     <li *ngFor="let name of item.children;let i = index" class="childHover">
-                                                        <span>{{i + 1}}. {{name.name}}</span>
+                                                        <span>{{i + 1}}. {{name.title}}</span>
                                                         <div class="actimg">
                                                             <span><img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img"  />
                                                             <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" (click)="removeChild(name)" /></span>
@@ -135,7 +134,7 @@
                                             <ul *ngFor="let item of vcmProcess">
                                                 <ul *ngIf="item.name == 'Core Process'">
                                                     <li *ngFor="let name of item.children;let i = index" class="childHover">
-                                                        <span>{{i+1}}. {{name.name}}</span>
+                                                        <span>{{i+1}}. {{name.title}}</span>
                                                         <div class="actimg">
                                                             <span><img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img" />
                                                             <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" (click)="removeChild(name)" /></span>
@@ -168,7 +167,7 @@
                                             <ul *ngFor="let item of vcmProcess">
                                                 <ul *ngIf="item.name == 'Support Process'">
                                                     <li *ngFor="let name of item.children;let i = index" class="childHover">
-                                                        <span>{{i+1}}. {{name.name}}</span>
+                                                        <span>{{i+1}}. {{name.title}}</span>
                                                         <div class="actimg">
                                                             <span><img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img"  />
                                                             <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" (click)="removeChild(name)" /></span>
@@ -195,7 +194,7 @@
                                         <select class="form-control" id="level1" name="Level1" [(ngModel)]="level1process" [ngModelOptions]="{standalone: true}">
                                     <option value="undefined" hidden disabled>Select L1 Process</option>
                                     <ng-container *ngFor="let item of vcmProcess">
-                                        <option *ngFor="let name of item.children" [ngValue]=name>{{name.name}}</option>
+                                        <option *ngFor="let name of item.children" [ngValue]=name>{{name.title}}</option>
                                     </ng-container>
                                 </select>
                                     </div>
@@ -210,11 +209,11 @@
                                         <h4>Management Process</h4>
                                         <ng-container *ngFor="let item of vcmProcess">
                                             <ng-container *ngFor="let name of item.children">
-                                                <p *ngIf="name.processname == 'Management Process'">
-                                                    <img src="../../../../assets/images/VCM/small-right.svg" class="testplus2" />{{name.name}}</p>
+                                                <p *ngIf="name.parent == 'Management Process'">
+                                                    <img src="../../../../assets/images/VCM/small-right.svg" class="testplus2" />{{name.title}}</p>
                                                 <ul *ngFor="let level2 of name.children" class="subfolders">
-                                                    <li class="overflowcontent" *ngIf="level2.processname == 'Management Process'">
-                                                        <span><img src="../../../../assets/images/VCM/small-right.svg" class="testplus2" />{{level2.name}}</span>
+                                                    <li class="overflowcontent" *ngIf="level2.parent == 'Management Process'">
+                                                        <span><img src="../../../../assets/images/VCM/small-right.svg" class="testplus2" />{{level2.title}}</span>
                                                         <div class="actimg">
                                                             <span><img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img"  />
                                                             <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" (click)="level2removeChild(level2)" /></span>
@@ -230,11 +229,11 @@
                                         <h4>Core Process</h4>
                                         <ng-container *ngFor="let item of vcmProcess">
                                             <ng-container *ngFor="let name of item.children">
-                                                <p *ngIf="name.processname == 'Core Process'">
-                                                    <img src="../../../../assets/images/VCM/small-right.svg" class="testplus2" />{{name.name}}</p>
+                                                <p *ngIf="name.parent == 'Core Process'">
+                                                    <img src="../../../../assets/images/VCM/small-right.svg" class="testplus2" />{{name.title}}</p>
                                                 <ul *ngFor="let level2 of name.children" class="subfolders">
-                                                    <li class="overflowcontent" *ngIf="level2.processname == 'Core Process'">
-                                                        <span><img src="../../../../assets/images/VCM/small-right.svg" class="testplus2" />{{level2.name}}</span>
+                                                    <li class="overflowcontent" *ngIf="level2.parent == 'Core Process'">
+                                                        <span><img src="../../../../assets/images/VCM/small-right.svg" class="testplus2" />{{level2.title}}</span>
                                                         <div class="actimg">
                                                             <span><img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img"  />
                                                             <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" (click)="level2removeChild(level2)" /></span>
@@ -249,11 +248,11 @@
                                         <h4>Support Process</h4>
                                         <ng-container *ngFor="let item of vcmProcess">
                                             <ng-container *ngFor="let name of item.children">
-                                                <p *ngIf="name.processname == 'Support Process'">
-                                                    <img src="../../../../assets/images/VCM/small-right.svg" class="testplus2" />{{name.name}}</p>
+                                                <p *ngIf="name.parent == 'Support Process'">
+                                                    <img src="../../../../assets/images/VCM/small-right.svg" class="testplus2" />{{name.title}}</p>
                                                 <ul *ngFor="let level2 of name.children" class="subfolders">
-                                                    <li class="overflowcontent" *ngIf="level2.processname == 'Support Process'">
-                                                        <span><img src="../../../../assets/images/VCM/small-right.svg" class="testplus2" />{{level2.name}}</span>
+                                                    <li class="overflowcontent" *ngIf="level2.parent == 'Support Process'">
+                                                        <span><img src="../../../../assets/images/VCM/small-right.svg" class="testplus2" />{{level2.title}}</span>
                                                         <div class="actimg">
                                                             <span><img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img"  />
                                                             <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" (click)="level2removeChild(level2)" /></span>

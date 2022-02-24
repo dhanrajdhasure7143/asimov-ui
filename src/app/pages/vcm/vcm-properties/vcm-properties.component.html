@@ -28,13 +28,13 @@
                         <tbody>
                             <ng-container *ngFor="let prop of vcmProperties">
                                 <tr *ngFor="let name of prop.children;let i = index">
-                                    <td *ngIf="name.name">{{prop.name}}</td>
-                                    <td *ngIf="name.name">{{name.name}}</td>
-                                    <td *ngIf="name.name" (click)="owner(name,'level1')">
-                                        <select class="form-control" #ownerValue [(ngModel)]="name.owner">
+                                    <td *ngIf="name.title">{{prop.name}}</td>
+                                    <td *ngIf="name.title">{{name.title}}</td>
+                                    <td *ngIf="name.title" (click)="owner(name,'level1')">
+                                        <select class="form-control" #ownerValue [(ngModel)]="name.processOwner">
                                             <option value="" hidden disabled>Select Owner</option>
-                                            <option value="John Doe">John Doe</option>
-                                            <option value="Emily Mac">Emily Mac</option>   
+                                            <option *ngFor="let each_approver of processOwners_list;let i=index" [value]=each_approver.userId>
+                                                {{(each_approver.firstName | titlecase) +" "+(each_approver.lastName==undefined?"":each_approver.lastName)}}</option>
                                         </select>
                                     </td>
                                 </tr>
@@ -51,12 +51,12 @@
 
                         <ng-container *ngFor="let name of prop.children;let j = index;">
                             
-                            <p *ngIf="name.name" >{{name.name}}</p>
+                            <p *ngIf="name.title" >{{name.title}}</p>
                             
-                            <div [hidden]="name.name && descriptionEdit == j && name.processname == descriptionProcessName" (click)="descriptionView(name , j , 'level1')" class="proc_deffield">
+                            <div [hidden]="name.title && descriptionEdit == j && name.parent == descriptionProcessName" (click)="descriptionView(name , j , 'level1')" class="proc_deffield">
                                     
                                 <span >
-                                    <textarea *ngIf="!name.description" class="form-control descriptionview" placeholder="Enter Definition"></textarea>
+                                    <textarea *ngIf="!name.description" class="form-control descriptionview" placeholder="Enter Definition1"></textarea>
                                     <textarea class="form-control descriptionview" *ngIf="name.description">{{name.description}}</textarea>
                                     <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus" 
                                         (click)="descriptionView(name , j , 'level1')" *ngIf="name.description" />
@@ -65,8 +65,8 @@
                             </div>
                             
                             <div class="proc_deffield">
-                                <textarea *ngIf="name.name && descriptionEdit == j && name.processname == descriptionProcessName" class="form-control" id="descriptionValue" [(ngModel)]="name.description" placeholder="Enter Definition"></textarea>
-                                <span  class="procdesc_act" *ngIf="name.name && descriptionEdit == j && name.processname == descriptionProcessName">
+                                <textarea *ngIf="name.title && descriptionEdit == j && name.parent == descriptionProcessName" class="form-control" id="descriptionValue" [(ngModel)]="name.description" placeholder="Enter Definition"></textarea>
+                                <span  class="procdesc_act" *ngIf="name.title && descriptionEdit == j && name.parent == descriptionProcessName">
                                     <span>
                                         <img  src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img" />
                                         <img (click)="descriptionCancel(name)" src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" />
@@ -96,7 +96,7 @@
                         <tbody>
                             <ng-container *ngFor="let prop of vcmProperties">
                                 <tr *ngFor="let name of prop.children;let i = index">
-                                    <td *ngIf="name.name">{{name.name}}</td>
+                                    <td *ngIf="name.title">{{name.title}}</td>
                                     <td *ngIf="name.documents" >
                                         <ng-container *ngFor="let doc of name.documents;let j = index">
                                             <span class="docpill">
@@ -171,14 +171,14 @@
                             <ng-container *ngFor="let prop of vcmProperties">
                                 <ng-container *ngFor="let name of prop.children;">
                                     <tr *ngFor="let level2 of name.children;let i = index">
-                                        <td *ngIf="level2.name">{{prop.name}}</td>
-                                        <td *ngIf="level2.name">{{level2.name}}</td>
-                                        <td *ngIf="level2.name" (click)="owner(level2,'level2')">
-                                            <select class="form-control" #ownerValue [(ngModel)]="level2.owner">
-                                                <option value="" hidden disabled>Select Owner</option>
-                                                <option value="John Doe">John Doe</option>
-                                                <option value="Emily Mac">Emily Mac</option>   
-                                            </select>
+                                        <td *ngIf="level2.title">{{prop.title}}</td>
+                                        <td *ngIf="level2.title">{{level2.title}}</td>
+                                        <td *ngIf="level2.title" (click)="owner(level2,'level2')">
+                                                <select class="form-control" #ownerValue [(ngModel)]="level2.processOwner">
+                                                    <option value="" hidden disabled>Select Owner</option>
+                                                    <option *ngFor="let each_approver of processOwners_list;let i=index" [value]=each_approver.userId>
+                                                        {{(each_approver.firstName | titlecase) +" "+(each_approver.lastName==undefined?"":each_approver.lastName)}}</option>
+                                                </select>
                                         </td>
                                     </tr>
                                 </ng-container>
@@ -198,9 +198,9 @@
                                 
                             <ng-container *ngFor="let level2 of name.children;let j = index">
                                     
-                                <p *ngIf="level2.name" >{{level2.name}}</p>
+                                <p *ngIf="level2.title" >{{level2.title}}</p>
                                     
-                                <div [hidden]="level2.name && descriptionEdit == j && level2.name == descriptionProcessName" (click)="descriptionView(level2 , j , 'level2')" class="proc_deffield">
+                                <div [hidden]="level2.title && descriptionEdit == j && level2.title == descriptionProcessName" (click)="descriptionView(level2 , j , 'level2')" class="proc_deffield">
                                         
                                     <span >
                                         <textarea  *ngIf="!level2.description" class="form-control descriptionview" placeholder="Enter Definition"></textarea>
@@ -211,9 +211,9 @@
                                     </span>
                                 </div>
                                 <div class="proc_deffield">
-                                    <textarea *ngIf="level2.name && descriptionEdit == j && level2.name == descriptionProcessName" class="form-control" id="descriptionValue"  [(ngModel)]="level2.description" placeholder="Enter Definition"></textarea>
+                                    <textarea *ngIf="level2.title && descriptionEdit == j && level2.title == descriptionProcessName" class="form-control" id="descriptionValue"  [(ngModel)]="level2.description" placeholder="Enter Definition"></textarea>
                                     
-                                    <span class="procdesc_act" *ngIf="level2.name && descriptionEdit == j && level2.name == descriptionProcessName">
+                                    <span class="procdesc_act" *ngIf="level2.title && descriptionEdit == j && level2.title == descriptionProcessName">
                                         <span>
                                             <img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img" /> 
                                             <img (click)="descriptionCancel()" src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" /> 
@@ -257,7 +257,7 @@
                             <ng-container *ngFor="let prop of vcmProperties">
                                 <ng-container *ngFor="let name of prop.children;let i = index">
                                     <tr *ngFor="let level2 of name.children">
-                                        <td *ngIf="level2.name">{{level2.name}}</td>
+                                        <td *ngIf="level2.title">{{level2.title}}</td>
                                         <td *ngIf="level2.documents" >
                                             <ng-container *ngFor="let doc of level2.documents;let j = index">
                                                 <span class="docpill">
