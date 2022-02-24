@@ -95,12 +95,13 @@ export class RpaHomeComponent implements OnInit {
   userName:any="";
   displayedRows$: Observable<any[]>;
   rpaVisible:boolean=false;
+  saved_diagrams:any=[]
   userCheck:boolean=false;
   @ViewChild(MatSort,{static:false}) sort: MatSort;
   totalRows$: Observable<number>;
   @ViewChild(MatPaginator,{static:false}) paginator301: MatPaginator;
   freetrail: string;
-
+  botlistitems:any=[]
   constructor(
     private route: ActivatedRoute, 
     private rest:RestApiService, 
@@ -327,10 +328,12 @@ export class RpaHomeComponent implements OnInit {
         this.loadflag=false;
       },1000)
       response=botlist;
+      this.botlistitems=botlist;
+      this.saved_diagrams=botlist
      // response=response.reverse();
       // if(response.length==0)
       // {
-      //   //this.rpa_studio.spinner.hide();
+      //   //this.rpa_studio.spinner.hide(); 
       // }
       // response.forEach(data=>{
       //   let object:any=data;
@@ -991,6 +994,26 @@ export class RpaHomeComponent implements OnInit {
      rpaCategory["categoryName"] =this.editbot.value.newCategoryName;
    return this.rest.addCategory(rpaCategory);
   }
+  searchByCategory(category) {      // Filter table data based on selected categories
+    debugger
+    var filter_saved_diagrams= []
+    this.saved_diagrams=[]
+    if (category == "") {
+     this.saved_diagrams=this.botlistitems;
+     this.assignPagination(this.saved_diagrams);
+      // this.dataSource.filter = fulldata;
+    }
+    else{  
+      filter_saved_diagrams=this.botlistitems;
+      
+      filter_saved_diagrams.forEach(e=>{
+        if(e.categoryName===category){
+          this.saved_diagrams.push(e)
+        }
+      });
+      this.assignPagination(this.saved_diagrams);
+    }
+  }
   onEditBot() {
     let botdetails = this.editbot.value;
     if(botdetails.department==="others"){
@@ -1038,9 +1061,10 @@ export class RpaHomeComponent implements OnInit {
         this.paginator301.firstPage();
       }
 
-      applySearchFilter(v){      
+      applySearchFilter(v){  
+  debugger    
     const filterPipe = new SearchRpaPipe();   
-     const fiteredArr = filterPipe.transform(this.bot_list,v);   
+     const fiteredArr = filterPipe.transform(this.saved_diagrams,v);   
           
       this.assignPagination(fiteredArr)    
   }

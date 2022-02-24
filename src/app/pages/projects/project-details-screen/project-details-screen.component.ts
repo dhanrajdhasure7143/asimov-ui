@@ -144,6 +144,7 @@ percentageComplete: number;
   freetrail: string;
   projectNameFlag: boolean = false;
   projectPurposeFlag: boolean = false;
+  processOwnerFlag:boolean=false;
   uploadFileDescriptionFlag: boolean = false;
   processownername: any;
   constructor(private dt:DataTransferService,private route:ActivatedRoute, private rpa:RestApiService,
@@ -487,7 +488,7 @@ this.editdata=false;
 this.rpa.getProjectDetailsById(paramsdata.id).subscribe( res=>{​​​​​​
 this.spinner.hide();
 this.projectDetails=res
-
+this.processOwnerFlag=false
 this.projectenddate=moment(this.projectDetails.endDate).format("YYYY-MM-DD");
 this.projectStartDate = moment(this.projectDetails.startDate).format("YYYY-MM-DD");
 
@@ -575,13 +576,15 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
           {
             console.log("project details",this.projectDetails)
            document.getElementById('processowner')['value']=processOwner.userId.userId;
-           this.processownername=processOwner.userId.userId
+           this.processownername=processOwner.userId.userId;
+           this.processOwnerFlag=false;
            
             // this.createprogram.get("processOwner").setValue(processOwner.userId.userId);
             // this.processOwner=false;
           }else
           {
-            document.getElementById('processowner')['value']=''
+            document.getElementById('processowner')['value']='';
+            this.processOwnerFlag=true;
             //this.createprogram.get("processOwner").setValue("")
             Swal.fire("Error","Unable to find process owner for selected process","error")
           }
