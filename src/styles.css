@@ -2699,3 +2699,6 @@ span.pdicon {
   height: 310px;
   overflow: auto;
 }
+.edit-task-tabs .mat-tab-body-wrapper {
+  height: calc(100vh - 340px) !important;
+}

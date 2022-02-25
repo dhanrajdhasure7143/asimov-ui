@@ -65,8 +65,8 @@
   
   
     
-  label.label-control {
-    /* padding: 4px 0px; */
+  /* label.label-control {
+    
     border: 1px solid transparent;
     border-bottom: medium none;
     margin: 0px !important;
@@ -74,12 +74,11 @@
     color: black;
     font-weight: 600;
     font-size: 14px;
-    /* height: 30px; */
     margin-bottom: 3px !important;
     white-space: nowrap;
     width: 100%;
     text-overflow: ellipsis;
-  }
+  } */
   
   .prj-crt-form {
     margin-right: -15px !important;
@@ -101,8 +100,8 @@
 
   .labelcont{
     color: #00a0e3 !important;
-    font-weight: 600;
-    
+    /* font-weight: 600; */
+    margin-left: 5px;
   }
   
   
@@ -170,6 +169,16 @@ ul.historydiv, .edit-resourcesdiv  {
 }
 .attachmentdiv{
   padding: 10px;
+  height: 100%;
+}
+.attachmentdiv table {
+  /* height: calc(100% - 30px); */
+  overflow: hidden scroll;
+}
+.attachmentdiv .paginationdiv1 {
+  bottom: 10px;
+  position: absolute;
+  width: 97%;
 }
 .row.attachment-content {
   margin-bottom: 10px !important;
@@ -219,7 +228,7 @@ ul.historydiv li:last-child {
 }
 
 ::ng-deep .edit-task-tabs .mat-tab-body-content{
-  height:178px !important;
+  /* height:178px !important; */
   overflow:auto !important;
   border : 1px solid #ddd;
 }
@@ -347,4 +356,9 @@ button:disabled .default-img .hover-img{
   cursor: not-allowed !important;
 }
 
-
+.comment-action button:hover img.testplus.default-img {
+  display: none;
+}
+.comment-action button:hover img.testplus.hover-img {
+  display: initial;
+}

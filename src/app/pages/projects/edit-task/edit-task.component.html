@@ -28,7 +28,7 @@
     <div class="bg-task row">
         <!-- {{selectedtask.id}} /
          -->
-        <div class="col-md-11 p-0">
+        <div class="col-md-10 p-0">
             <div class="d-flex">
                 <div class="task-name">{{taskcategory}} / &nbsp;</div>
                 <div><input type="text" maxlength="50" class="form-control rpa-control task-name-input" (change)="taskname=$event.target.value" [value]="taskname"></div>
@@ -39,15 +39,15 @@
                 <span class="level3">{{lastModifiedTimestamp |  date:'MMM dd, y, HH:mm:ss'}}</span>
             </div>
         </div>
-        <div class="col-md-1 p-0">
-            <label class="h6 label-control" id="startdate" for="startDate">Start Date</label>
+        <div class="col-md-2 p-0 text-right">
+            <label class="label-control" id="startdate" for="startDate">Start Date: </label>
             <span class="labelcont">{{startDate  | date}}</span>
         </div>
 
     </div>
 </div>
 <div class="edit-task-body">
-    <div class="edit-task-body-content">
+    <div class="edit-task-body-content h-100">
         <form [formGroup]="updatetaskForm" (ngSubmit)="updatetask()">
         <div class="row">
             <div class="col-md-5 pl-0">
@@ -55,7 +55,7 @@
                
 
                     <div class="form-fields col-md-6 pl-0">
-                        <label class="h6 label-control" id="assignee" for="assignee">Assignee</label>
+                        <label class="label-control" id="assignee" for="assignee">Assignee</label>
                         <!-- <span class="labelcont">{{taskresource| userPipe : users_list}}</span> -->
                         <select [value]="taskresource" formControlName="resources" class="form-control rpa-control">
                     <option >Select Assignee</option>
@@ -64,12 +64,12 @@
                   </select>
                     </div>
                     <div class="form-fields col-md-6 pr-0">
-                        <label class="h6 label-control" id="enddate" for="endDate">Task Completion Date</label><br>
+                        <label class="label-control" id="enddate" for="endDate">Task Completion Date</label><br>
                         <!-- <span class="labelcont">{{endDate  | date}}</span> -->
                         <input type="date" class="form-control rpa-control" [min]="mindate" max="9999-12-31" (change)="endDate=$event.target.value" [value]="endDate" formControlName="endDate">
                     </div>
                     <div class="form-fields col-md-6 pl-0">
-                        <label id="status" class="h6 label-control" for="status">Status<span class="star">*</span></label>
+                        <label id="status" class="label-control" for="status">Status<span class="star">*</span></label>
                         <select formControlName="status" class="form-control data">
                     <option value="">Select Status</option>
                     <option value="New">New</option>
@@ -80,7 +80,7 @@
                         <span *ngIf="updatetaskForm.get('status').invalid && updatetaskForm.get('status').touched" class="errspan required">Status Required*</span>
                     </div>
                     <div class="form-fields col-md-6 pr-0">
-                        <label id="priority" class="h6 label-control" for="priority">Priority<span class="star">*</span></label>
+                        <label id="priority" class="label-control" for="priority">Priority<span class="star">*</span></label>
                         <select formControlName="priority" class="form-control data">
                     <option value="">Select Priority</option>
                     <option value="High">High</option>
@@ -116,14 +116,14 @@
                     </div>
 
                     <div class="form-fields col-md-6 pr-0">
-                        <label class="h6 label-control" id="percentage" for="percentage">Percentage Completed</label>
+                        <label class="label-control" id="percentage" for="percentage">Percentage Completed</label>
                         <!-- <ng5-slider [(value)]="slider" formControlName="percentageComplete" [options]="options"></ng5-slider> -->
                         <div class="labelcont">{{slider}}%<input type="range" min=0 max=100 (change)="slider=$event.target.value" formControlName="percentageComplete" [value]="slider"></div>
                     </div>
 
                     <div class="form-fields col-md-12 p-0">
-                        <label class="h6 label-control" id="summary" class="label-control">Summary</label>
-                        <textarea class="form-control" maxlength="151" formControlName="summary" rows="3" (keyup)="taskSummaryMaxLength($event.target.value)" style=" resize: none;" placeholder="Enter Summary">
+                        <label class="label-control" id="summary">Summary</label>
+                        <textarea class="form-control" maxlength="151" formControlName="summary" rows="2" (keyup)="taskSummaryMaxLength($event.target.value)" style=" resize: none;" placeholder="Enter Summary">
                               </textarea>
                               <span *ngIf="taskSummaryFlag" class="errspan required">
                                 Maximum of 150 characters
@@ -131,8 +131,8 @@
                         
                     </div>
                     <div class="form-fields col-md-12 p-0">
-                        <label class="h6" id="description" class="label-control">Description</label>
-                        <textarea class="form-control" maxlength="151" formControlName="description" rows="3" (keyup)="taskDescriptionMaxLength($event.target.value)" style=" resize: none;" placeholder="Enter Description">
+                        <label class="label-control" id="description">Description</label>
+                        <textarea class="form-control" maxlength="151" formControlName="description" rows="2" (keyup)="taskDescriptionMaxLength($event.target.value)" style=" resize: none;" placeholder="Enter Description">
                               </textarea>
                               <span *ngIf="taskDescriptionFlag" class="errspan required">
                                 Maximum of 150 characters
@@ -144,7 +144,7 @@
             </div>
             <div class="col-md-7 pr-0">
                 <h4 class="module-sub-header-title">Activity</h4>
-                <mat-tab-group id="Project-dashboard-tabs" class="edit-task-tabs">
+                <mat-tab-group id="Project-dashboard-tabs" class="edit-task-tabs h-100">
                     <mat-tab label="Comment">
                         <div class="t-comments-box">
                             <div class="add-comment">
@@ -189,8 +189,10 @@
                                                 </div>
                                                 <div class="col-md-2 pr-0 comment-action" *ngIf="i!=commentnumber">
                                                     <button type="button" (click)="editComments(c.comments,i)">
-                                  Edit
-                                </button>
+                                                        <!-- Edit -->
+                                                        <img src="../../../../assets/images/Projects/edit-black.svg" class="testplus default-img" />
+                                                        <img src="../../../../assets/images/Projects/Edit-blue.svg" class="testplus hover-img" />
+                                                    </button>
                                                 </div>
                                             </div>
                                             <div class="commentsadded" *ngIf="i!=commentnumber">
@@ -364,8 +366,10 @@
                                 <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['Loading']" [ngClass]="{'hide':dataSource3!=null}"></tr>
                                 <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(dataSource3!=null && dataSource3.data.length==0)}"></tr>
                             </table>
-                            <mat-paginator class="newpaginationdiv" #paginator101 [pageSize]="2" [showFirstLastButtons]="true">
-                            </mat-paginator>
+                            <div class="paginationdiv1">
+                                <mat-paginator class="newpaginationdiv" #paginator101 [pageSize]="5" [showFirstLastButtons]="true">
+                                </mat-paginator>
+                            </div>
                         </div>
                     </mat-tab>
                     <mat-tab label="Resources">
