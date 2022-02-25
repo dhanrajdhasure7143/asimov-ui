@@ -115,7 +115,7 @@ public slaupdate : boolean = false;
       this.insertslaForm_so_bot=this.formBuilder.group({
         botName: ["", Validators.compose([Validators.required])],
         //botSource: ["", Validators.compose([Validators.required])],
-        breachAlerts: ["", Validators.compose([Validators.required])],
+        breachAlerts: [""],
         //notificationType: [""],
         retriesInterval: [""],
         slaConfigId: ["", Validators.compose([Validators.required])],
@@ -137,6 +137,11 @@ public slaupdate : boolean = false;
     this.get_sla_list();
     this.getusersList();
     this.popup=false;
+  }
+
+
+  ngAfterViewInit(): void {
+    console.log(this.sort5)
   }
   method(){
     let result: any = [];
@@ -276,6 +281,7 @@ public slaupdate : boolean = false;
 
   }
   SelectSLACon(bot){
+    
     this.sla_bot=bot;
     if(this.sla_bot.sourceType=="EPSoft")
       this.slaconId=this.sla_list.find(item=>item.botId==bot.botId);
@@ -455,7 +461,7 @@ public slaupdate : boolean = false;
         this.spinner.hide();
     }
     },(err)=>{
-     
+      console.log(err)
       this.spinner.hide();
       Swal.fire("Error","Unable to get bots data","error")
     })
@@ -613,6 +619,7 @@ public slaupdate : boolean = false;
                       })];
         this.logflag="Success";
         this.logbyrunid = new MatTableDataSource(this.logTasks);
+        this.detectChanges.detectChanges();
         this.logbyrunid.paginator=this.paginator5;
         this.logbyrunid.sort=this.sort5;
         this.viewlogid1=runid;
@@ -753,6 +760,7 @@ public slaupdate : boolean = false;
           })
     }
 
+    public bluePrsimAllLogs:any=[]
     getBluePrismlogs(botname){
       $(".tour_guide").hide()
       this.blueprismbotname = botname;
@@ -781,7 +789,7 @@ public slaupdate : boolean = false;
           //   item["endTimeStamp"]=moment(item.endTimeStamp).format("MMM D ,yyyy, HH:MM");
           //   return item;
           // })
-         
+          this.bluePrsimAllLogs=[...blueprismlogs]
           this.blueprimslogs = new MatTableDataSource(blueprismlogs);
           this.blueprimslogs.sort=this.sort7;
           this.blueprimslogs.paginator=this.paginator7;
@@ -803,6 +811,7 @@ public slaupdate : boolean = false;
 
 
     public uipathbotName:any;
+    public uipathAllLogs:any=[];
     getuipathlogs(template,botname,action)
     {
       
@@ -814,18 +823,84 @@ public slaupdate : boolean = false;
         let logsbytime:any=logs.sort((right,left)=>{
           return moment.utc(left.StartTime).diff(moment.utc(right.StartTime))
         });
+        this.uipathAllLogs=logsbytime;
         this.uipathlogs=new MatTableDataSource(logsbytime);
+        this.detectChanges.detectChanges();
         this.uipathlogs.sort=this.sort6;
         this.uipathlogs.paginator=this.paginator6;
         this.spinner.hide();
         if(action=="closed")
         this.logs_modal=this.modalService.show(template,{class:"logs-modal"});
       },err=>{
+        console.log(err)
         this.spinner.hide()
         Swal.fire("Error","Unable to get uipath bots","error");
       });
 
 
+    }
+
+
+
+    sortLogs(sourceType:String, sortEvent:any, tableType:String)
+    {
+      let sortArray:any=[]
+      if(sourceType=='EPSOFT')
+      {
+        if(tableType=='LOGS')
+          sortArray=[...this.filteredLogs];
+        else if(tableType=='RUNS')
+          sortArray=[...this.logTasks]
+      }
+      else if(sourceType=="UIPATH")
+      {
+        sortArray=[...this.uipathAllLogs];
+      }
+      else if(sourceType=="BLUEPRISM")
+      {
+        sortArray=[...this.bluePrsimAllLogs];
+      }
+      let sortedArray:any=[]
+      if(sortEvent.direction!='')
+        sortedArray=sortArray.sort(function(a,b){
+          let check_a=isNaN(a[sortEvent.active])?a[sortEvent.active].toUpperCase():a[sortEvent.active];
+          let check_b=isNaN(b[sortEvent.active])?b[sortEvent.active].toUpperCase():b[sortEvent.active];
+          if (sortEvent.direction=='asc')
+            return (check_a > check_b) ? 1 : -1;
+          else
+            return (check_a < check_b) ? 1 : -1;
+        },this);
+      else
+        sortedArray=[...sortArray];
+      if(sourceType=='BLUEPRISM')
+      {
+        this.blueprimslogs= new MatTableDataSource(sortedArray);
+        this.blueprimslogs.sort=this.sort7;
+        this.blueprimslogs.paginator=this.paginator7;
+      }
+      else if(sourceType=='UIPATH')
+      {
+        this.uipathlogs=new MatTableDataSource(sortedArray);
+        this.uipathlogs.sort=this.sort6;
+        this.uipathlogs.paginator=this.paginator6;
+      }
+      else if(sourceType=='EPSOFT')
+      {
+        if(tableType=="LOGS")
+        {
+          this.Viewloglist = new MatTableDataSource(sortedArray);
+          this.detectChanges.detectChanges()
+          this.Viewloglist.paginator=this.paginator4;
+          this.Viewloglist.sort=this.sort4;
+        }
+        else if(tableType=="RUNS")
+        {
+          this.logbyrunid= new MatTableDataSource(sortedArray);
+          this.detectChanges.detectChanges();
+          this.logbyrunid.paginator=this.paginator5;
+          this.logbyrunid.sort=this.sort5;
+        }
+      }
     }
 
     viewuipathlogclose()
