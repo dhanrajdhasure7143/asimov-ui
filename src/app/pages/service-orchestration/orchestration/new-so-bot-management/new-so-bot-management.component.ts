@@ -281,7 +281,7 @@ public slaupdate : boolean = false;
 
   }
   SelectSLACon(bot){
-    debugger
+    
     this.sla_bot=bot;
     if(this.sla_bot.sourceType=="EPSoft")
       this.slaconId=this.sla_list.find(item=>item.botId==bot.botId);
