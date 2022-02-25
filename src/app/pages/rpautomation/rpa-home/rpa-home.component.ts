@@ -95,7 +95,7 @@ export class RpaHomeComponent implements OnInit {
   userName:any="";
   displayedRows$: Observable<any[]>;
   rpaVisible:boolean=false;
-  saved_diagrams:any=[]
+  botslist:any=[]
   userCheck:boolean=false;
   @ViewChild(MatSort,{static:false}) sort: MatSort;
   totalRows$: Observable<number>;
@@ -329,7 +329,7 @@ export class RpaHomeComponent implements OnInit {
       },1000)
       response=botlist;
       this.botlistitems=botlist;
-      this.saved_diagrams=botlist
+      this.botslist=botlist
      // response=response.reverse();
       // if(response.length==0)
       // {
@@ -997,10 +997,10 @@ export class RpaHomeComponent implements OnInit {
   searchByCategory(category) {      // Filter table data based on selected categories
     debugger
     var filter_saved_diagrams= []
-    this.saved_diagrams=[]
+    this.botslist=[]
     if (category == "") {
-     this.saved_diagrams=this.botlistitems;
-     this.assignPagination(this.saved_diagrams);
+     this.botslist=this.botlistitems;
+     this.assignPagination(this.botslist);
       // this.dataSource.filter = fulldata;
     }
     else{  
@@ -1008,10 +1008,10 @@ export class RpaHomeComponent implements OnInit {
       
       filter_saved_diagrams.forEach(e=>{
         if(e.categoryName===category){
-          this.saved_diagrams.push(e)
+          this.botslist.push(e)
         }
       });
-      this.assignPagination(this.saved_diagrams);
+      this.assignPagination(this.botslist);
     }
   }
   onEditBot() {
@@ -1064,7 +1064,7 @@ export class RpaHomeComponent implements OnInit {
       applySearchFilter(v){  
   debugger    
     const filterPipe = new SearchRpaPipe();   
-     const fiteredArr = filterPipe.transform(this.saved_diagrams,v);   
+     const fiteredArr = filterPipe.transform(this.botslist,v);   
           
       this.assignPagination(fiteredArr)    
   }

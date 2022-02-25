@@ -115,7 +115,7 @@ public slaupdate : boolean = false;
       this.insertslaForm_so_bot=this.formBuilder.group({
         botName: ["", Validators.compose([Validators.required])],
         //botSource: ["", Validators.compose([Validators.required])],
-        breachAlerts: ["", Validators.compose([Validators.required])],
+        breachAlerts: [""],
         //notificationType: [""],
         retriesInterval: [""],
         slaConfigId: ["", Validators.compose([Validators.required])],
@@ -281,6 +281,7 @@ public slaupdate : boolean = false;
 
   }
   SelectSLACon(bot){
+    debugger
     this.sla_bot=bot;
     if(this.sla_bot.sourceType=="EPSoft")
       this.slaconId=this.sla_list.find(item=>item.botId==bot.botId);
