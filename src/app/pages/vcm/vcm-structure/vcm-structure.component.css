@@ -27,3 +27,14 @@
     font-weight: 600;
     margin-top: 0px;
 }
+.text-color{
+    color: blue;
+    cursor: pointer;
+}
+.custom-footer-content p{
+    cursor: pointer !important;
+    font-weight: 600;
+}
+.Apr-cnt{
+    border-bottom: 1px solid black;
+}

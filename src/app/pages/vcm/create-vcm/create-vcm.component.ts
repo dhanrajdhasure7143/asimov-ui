@@ -5,6 +5,8 @@ import { MatTree } from '@angular/material/tree';
 import { MatDrawer } from '@angular/material/sidenav';
 import { NavigationExtras, Router } from "@angular/router";
 import { RestApiService } from '../../services/rest-api.service';
+import { DataTransferService } from '../../services/data-transfer.service';
+import Swal from 'sweetalert2';
 
 let TREE_DATA: any[] = [
   {
@@ -49,11 +51,14 @@ export class CreateVcmComponent implements OnInit {
   editProcessName: any;
   propertiesName: any;
   editLevelProperties: number;
-  parentL2: any;
+  childParent: any;
   fileName = [];
   processOwners_list:any[]=[];
+  process_ownerName:any;
+  isLoading:boolean=false;
+  user_details:any;
 
-  constructor(private router: Router,private rest_api : RestApiService) {
+  constructor(private router: Router,private rest_api : RestApiService, private dt: DataTransferService) {
     this.dataSource.data = TREE_DATA;
     this.vcmProcess = TREE_DATA;
   }
@@ -62,6 +67,9 @@ export class CreateVcmComponent implements OnInit {
 
   ngOnInit(): void {
     this.getProcessOwnersList();
+    this.dt.logged_userData.subscribe(res=>{this.user_details=res
+      console.log(res)
+    })  
     let checkProperties = JSON.parse(sessionStorage.getItem('vcmTree'));
     if (checkProperties) {
       this.vcmProcess = null;
@@ -150,7 +158,7 @@ export class CreateVcmComponent implements OnInit {
       type: 'Process',
       title: this.addLevel2,
       parent: this.level1process.parent,
-      parentL2: this.level1process.title,
+      childParent: this.level1process.title,
       description: '',
       processOwner: '',
       documents: [],
@@ -187,7 +195,7 @@ export class CreateVcmComponent implements OnInit {
     console.log(name);
     var processIndex = TREE_DATA.findIndex(e => e.name === name.parent);
     var processData = TREE_DATA[processIndex]['children'];
-    var parentIndex = processData.findIndex(e => e.name === name.parentL2);
+    var parentIndex = processData.findIndex(e => e.name === name.childParent);
     var parentData = processData[parentIndex]['children'];
     var childIndex = parentData.findIndex(e => e.name === name.title);
     TREE_DATA[processIndex]['children'][parentIndex]['children'].splice(childIndex, 1);
@@ -256,7 +264,7 @@ export class CreateVcmComponent implements OnInit {
     this.editProcessOwner = '';
     this.editLevelProperties = level;
     console.log(name, level2);
-    this.parentL2 = level2.parentL2;
+    this.childParent = level2.childParent;
     this.propertiesName = level2.parent;
     if (level2.description) {
       this.editProcessDescription = level2.description;
@@ -271,10 +279,10 @@ export class CreateVcmComponent implements OnInit {
   }
   editProcessLevel2() {
     TREE_DATA.filter((e) => e.name === this.propertiesName)[0].children
-      .filter(n => n.name === this.parentL2)[0].children.filter(c => c.name === this.editProcessName)[0]
+      .filter(n => n.name === this.childParent)[0].children.filter(c => c.name === this.editProcessName)[0]
       .description = this.editProcessDescription;
     TREE_DATA.filter((e) => e.name === this.propertiesName)[0].children
-      .filter(n => n.name === this.parentL2)[0].children.filter(c => c.name === this.editProcessName)[0]
+      .filter(n => n.name === this.childParent)[0].children.filter(c => c.name === this.editProcessName)[0]
       .processOwner = this.editProcessOwner;
     console.log(TREE_DATA);
     this.drawer.close();
@@ -303,7 +311,7 @@ export class CreateVcmComponent implements OnInit {
     }
     if (this.editLevelProperties == 2) {
       TREE_DATA.filter((e) => e.name === this.propertiesName)[0].children
-        .filter(n => n.name === this.parentL2)[0].children.filter(c => c.name === this.editProcessName)[0]
+        .filter(n => n.name === this.childParent)[0].children.filter(c => c.name === this.editProcessName)[0]
         .documents = this.fileName;
       this.dataSource.data = null;
       this.dataSource.data = TREE_DATA;
@@ -338,19 +346,17 @@ export class CreateVcmComponent implements OnInit {
     }
     if (this.editLevelProperties == 2) {
       TREE_DATA.filter((e) => e.name === this.propertiesName)[0].children
-        .filter(n => n.name === this.parentL2)[0].children.filter(c => c.name === this.editProcessName)[0]
+        .filter(n => n.name === this.childParent)[0].children.filter(c => c.name === this.editProcessName)[0]
         .documents = this.fileName;
     }
     console.log(TREE_DATA);
   }
 
-  saveLevel1() {
-    // TREE_DATA[3].vcmname = this.vcmName;
+  saveVcm() {
     this.dataSource.data = null;
     this.dataSource.data = TREE_DATA;
     this.vcmProcess = null;
     this.vcmProcess = TREE_DATA;
-    console.log(this.vcmProcess)
     let data1=[];
     let data2=[];
     this.vcmProcess.forEach(element => {
@@ -366,11 +372,57 @@ export class CreateVcmComponent implements OnInit {
         });
       }
     })
-    let data3={"vcmName":this.vcmName,
-    "createdBy": "sai nookala",
-    "vcmV2": data2
-  }
-    console.log(data3)
+
+    // let data4=data2;
+    let data4=[]
+    // data4.map(item => {item["children"] = [];return item;});
+    data2.forEach(element => {
+      // element["children"]=[]
+      let obj={}
+      obj["description"]=element.description
+      obj["parent"]=element.parent
+      obj["processOwner"]=element.processOwner
+      obj["title"]=element.title
+      obj["level"]=element.level
+      obj["type"]=element.type
+      if(element.childParent){
+        obj["childParent"]=element.childParent
+      }
+      data4.push(obj)
+
+    });
+    // console.log(this.vcmProcess)
+
+
+    let data3 = {
+      "vcmName": this.vcmName,
+      "createdBy": this.user_details.firstName+ " "+this.user_details.lastName,
+      "processOwner": this.process_ownerName,
+      "vcmV2": data4
+    }
+    console.log(data4)
+    this.isLoading=true;
+    this.rest_api.createVcm(data3).subscribe((res:any)=>{
+      console.log(res)
+      this.isLoading=false;
+      Swal.fire({
+        title: 'Success',
+        text: res.message,
+        position: 'center',
+        icon: 'success',
+        showCancelButton: false,
+        heightAuto: false,
+        confirmButtonColor: '#007bff',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ok'
+      }).then((result) => {
+        if (result.value) {
+          this.router.navigate(['/pages/vcm/view-vcm'])
+        }
+      })
+
+    })
+
   }
   vcmHeading() {
     // TREE_DATA[3].vcmname = this.vcmName;
@@ -386,9 +438,11 @@ export class CreateVcmComponent implements OnInit {
       }
     }
     console.log(this.vcmProcess);
+    localStorage.setItem("vcmData",btoa(JSON.stringify(this.vcmProcess)));
+    this.dt.vcmDataTransfer(this.vcmProcess)
     if (this.vcmProcess[0].children.length != 0 || this.vcmProcess[1].children.length != 0 || this.vcmProcess[2].children.length != 0) {
       this.router.navigate(['/pages/vcm/properties'], nav);
-      // TREE_DATA[3].vcmname = this.vcmName;
+    // TREE_DATA[3].vcmname = this.vcmName;
       this.vcmProcess = TREE_DATA;
       console.log(this.vcmProcess);
       sessionStorage.setItem('vcmTree', JSON.stringify(this.vcmProcess));

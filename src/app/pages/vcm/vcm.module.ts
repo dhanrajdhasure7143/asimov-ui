@@ -9,6 +9,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { VcmPropertiesComponent } from './vcm-properties/vcm-properties.component';
 import { VcmStructureComponent } from './vcm-structure/vcm-structure.component';
+import { PopoverModule } from 'ngx-bootstrap/popover';
+import { SharedModule } from '../../shared/shared.module';
 
 
 
@@ -27,7 +29,9 @@ import { VcmStructureComponent } from './vcm-structure/vcm-structure.component';
     MatTabsModule,
     ReactiveFormsModule,FormsModule,MatSliderModule,
     MatFormFieldModule,
-    MatExpansionModule
+    MatExpansionModule,
+    PopoverModule.forRoot(),
+    SharedModule
   ],
   providers:[]
 })

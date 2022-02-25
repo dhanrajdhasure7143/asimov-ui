@@ -1,13 +1,13 @@
 <div class="h-100">
     <div class="row module-heading title">
         <div>
-            <span class="module-back-button" (click)="removeSession()" routerLink="/pages/vcm/create-vcm">
+            <span class="module-back-button" (click)="backToVcm()" routerLink="/pages/vcm/create-vcm" >
                 <i aria-hidden="true" class="fas fa-arrow-left"></i>
             </span>
             <span class="module-header-title">Properties</span>
         </div>
         <div class="ml-auto submit">
-            <button class="btn btn-default" (click)="removeSession()" routerLink="/pages/vcm/create-vcm">Cancel</button>
+            <button class="btn btn-default" (click)="resetProperties()" >Cancel</button>
             <button class="btn btn-primary" (click)="saveProperties()">Save</button>
         </div>
     </div>
@@ -26,13 +26,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <ng-container *ngFor="let prop of vcmProperties">
-                                <tr *ngFor="let name of prop.children;let i = index">
-                                    <td *ngIf="name.title">{{prop.name}}</td>
-                                    <td *ngIf="name.title">{{name.title}}</td>
-                                    <td *ngIf="name.title" (click)="owner(name,'level1')">
-                                        <select class="form-control" #ownerValue [(ngModel)]="name.processOwner">
+                            <ng-container *ngFor="let prop of vcmProperties;let j=index">
+                                <tr *ngFor="let each of prop.children;let i = index">
+                                    <td *ngIf="each.title">{{prop.name}}</td>
+                                    <td *ngIf="each.title">{{each.title}}</td>
+                                    <td *ngIf="each.title">
+                                        <select class="form-control" #ownerValue (change)="onchangeowner($event.target.value,i,j)">
                                             <option value="" hidden disabled>Select Owner</option>
+                                            <!-- <option value="ranjith@epsoft" >ranjith</option> -->
                                             <option *ngFor="let each_approver of processOwners_list;let i=index" [value]=each_approver.userId>
                                                 {{(each_approver.firstName | titlecase) +" "+(each_approver.lastName==undefined?"":each_approver.lastName)}}</option>
                                         </select>

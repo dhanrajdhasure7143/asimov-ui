@@ -1,4 +1,4 @@
-<div class="h-100">
+<div class="h-100" *ngIf="!isShow">
     <div class="row module-heading title">
         <div>
             <span class="module-back-button" routerLink="/pages/vcm/view-vcm">
@@ -8,7 +8,7 @@
         </div>
         <div class="ml-auto submit">
             <button class="btn btn-default" (click)="resetLevel1()">Reset</button>
-            <button class="btn btn-primary" [disabled]="vcmName == '' " (click)="saveLevel1()">Save1</button>
+            <button class="btn btn-primary" [disabled]="!vcmName || !process_ownerName" (click)="saveVcm()">Save</button>
         </div>
     </div>
 
@@ -66,12 +66,21 @@
                 <div class="row maincontent h-100">
                     <div class="col-md-12 pl-0 vcm-leveldiv">
 
-                        <div class="col-md-12 col-lg-12 pr-0 form-group vcname">
+                        <div class="col-md-6 pr-0 form-group vcname">
                             <label class="label-control">Value Chain Name</label>
                             <input type="text" class="form-control" [(ngModel)]="vcmName" placeholder="Enter Value Chain Name">
                             <button class="btn" (click)="vcmHeading()" >
                                 <img [hidden]="!vcmName" src="../../../../assets/images/VCM/Green Tick.svg" class="testplus1"  />
                             </button>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label class="label-control">Process Owner</label>
+                            <select class="form-control" [(ngModel)]="process_ownerName">
+                                <option value="" hidden disabled>Select Process Owner</option>
+                                <option value="undefined" hidden disabled>Select Process Owner</option>
+                                <option *ngFor="let each_approver of processOwners_list;let i=index" [value]=each_approver.userId>
+                                    {{(each_approver.firstName | titlecase) +" "+(each_approver.lastName==undefined?"":each_approver.lastName)}}</option>
+                            </select>
                         </div>
 
                         <div class="col-md-6 col-lg-6 pr-0">
@@ -279,5 +288,11 @@
                 </div>
             </mat-drawer-content>
         </mat-drawer-container>
+    </div>
+</div>
+
+<div class="spinoverlay" *ngIf="isLoading">
+    <div class="spincenter">
+        <img  src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader"/>
     </div>
 </div>

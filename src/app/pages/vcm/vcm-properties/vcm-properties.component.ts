@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DataTransferService } from '../../services/data-transfer.service';
 import { RestApiService } from '../../services/rest-api.service';
 
 @Component({
@@ -23,27 +24,33 @@ export class VcmPropertiesComponent implements OnInit {
   descriptionviewonly = true;
   descriptionProcessName: any;
   processOwners_list:any[]=[];
+  vcmData:any=[];
 
-  constructor(private router: Router, private route: ActivatedRoute, private rest_api:RestApiService) {
+  constructor(private router: Router, private route: ActivatedRoute, private rest_api:RestApiService, private dt: DataTransferService) {
     this.route.queryParams.subscribe(res => {
-      console.log(res);
       this.levelType = res.level
     });
   }
 
   ngOnInit(): void {
     this.getProcessOwnersList();
-    this.vcmProperties = JSON.parse(sessionStorage.getItem('vcmTree'));
-    console.log(this.vcmProperties);
+    let res_data
+    this.dt.getVcm_Data.subscribe(res=>{res_data=res
+      if(res){
+        // this.vcmData=res_data;
+        this.vcmProperties=res_data;
+
+      }
+    })
+    // this.vcmProperties = JSON.parse(sessionStorage.getItem('vcmTree'));
+    setTimeout(() => {
+      let vData = localStorage.getItem("vcmData");
+      this.vcmData = JSON.parse(atob(vData));
+    console.log(this.vcmData);
+
+    }, 5000);
   }
 
-  saveProperties() {
-    console.log(this.vcmProperties);
-  }
-
-  owner(prop, level) {
-    sessionStorage.setItem('vcmTree', JSON.stringify(this.vcmProperties));
-  }
 
   descriptionView(name, i, level) {
     if (level == 'level1') {
@@ -63,19 +70,15 @@ export class VcmPropertiesComponent implements OnInit {
   descriptionSubmit(prop, level) {
     console.log(prop,this.vcmProperties)
     if (level == 'level1') {
-      this.vcmProperties.filter((e) => e.name === prop.parent)[0].children
-        .filter(n => n.name === prop.title)[0].description;
+      this.vcmProperties.filter((e) => e.name === prop.parent)[0].children.filter(n => n.name === prop.title)[0].description;
       console.log(this.vcmProperties);    
-      sessionStorage.setItem('vcmTree', JSON.stringify(this.vcmProperties));
       this.descriptionEdit = '';
       this.descriptionProcessName = '';
       this.descriptionviewonly = true;
-    }
-    else {
+    }else {
       this.vcmProperties.filter((e) => e.name === prop.parent)[0].children
-        .filter(n => n.name === prop.parentL2)[0].children.filter(c => c.name === prop.name)[0]
+        .filter(n => n.name === prop.childParent)[0].children.filter(c => c.name === prop.name)[0]
         .description;
-      sessionStorage.setItem('vcmTree', JSON.stringify(this.vcmProperties));
       this.descriptionEdit = '';
       this.descriptionProcessName = '';
       this.descriptionviewonly = true;
@@ -104,13 +107,11 @@ export class VcmPropertiesComponent implements OnInit {
     if (level == 'level1') {
     this.vcmProperties.filter((e) => e.name === name.parent)[0].children
       .filter(n => n.name === name.name)[0].documents = this.fileName;
-      sessionStorage.setItem('vcmTree', JSON.stringify(this.vcmProperties));
     }
     if (level == 'level2') {
       this.vcmProperties.filter((e) => e.name === name.parent)[0].children
-        .filter(n => n.name === name.parentL2)[0].children.filter(c => c.name === name.name)[0]
+        .filter(n => n.name === name.childParent)[0].children.filter(c => c.name === name.name)[0]
         .documents = this.fileName;
-        sessionStorage.setItem('vcmTree', JSON.stringify(this.vcmProperties));        
     }
     console.log(this.fileName);
     console.log(this.vcmProperties);
@@ -139,18 +140,28 @@ export class VcmPropertiesComponent implements OnInit {
     if (level == 'level1') {
       this.vcmProperties.filter((e) => e.name === file.parent)[0].children
         .filter(n => n.name === file.name)[0].documents.splice(i, 1);
-      sessionStorage.setItem('vcmTree', JSON.stringify(this.vcmProperties));
     }
     else {
       this.vcmProperties.filter((e) => e.name === file.parent)[0].children
-        .filter(n => n.name === file.parentL2)[0].children.filter(c => c.name === file.name)[0]
+        .filter(n => n.name === file.childParent)[0].children.filter(c => c.name === file.name)[0]
         .documents.splice(i, 1);
-      sessionStorage.setItem('vcmTree', JSON.stringify(this.vcmProperties));
     }
   }
 
-  removeSession() {
-    sessionStorage.removeItem('vcmTree');
+
+  saveProperties() {
+    console.log(this.vcmProperties);
+    console.log(this.vcmData);
+  }
+
+  backToVcm(){
+    console.log(this.vcmProperties);
+    console.log(this.vcmData);
+  }
+
+  resetProperties(){
+    console.log(this.vcmProperties);
+    console.log(this.vcmData);
   }
 
   async getProcessOwnersList(){
@@ -160,6 +171,12 @@ export class VcmPropertiesComponent implements OnInit {
      if(Array.isArray(res))
        this.processOwners_list = res;
    });
+  }
+  
+  onchangeowner(e,i,j){
+    this.vcmProperties[j]["children"][i].processOwner=e
+    console.log(e,i,j)
+    console.log(this.vcmProperties)
   }
 
   // owner(prop, owner) {

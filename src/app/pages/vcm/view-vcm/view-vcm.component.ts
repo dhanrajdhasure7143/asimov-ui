@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { RestApiService } from '../../services/rest-api.service';
 
 @Component({
   selector: 'app-view-vcm',
@@ -9,119 +10,36 @@ import { Router } from '@angular/router';
 export class ViewVcmComponent implements OnInit {
 
   vcmProcess:any[];
-
-  vcmData= [
-  {
-  "type": "Process",
-  "processOwner": "John Mustermann",
-  "level": "L1",
-  "description": "The implementation and generation of an appropriate strategy by the management requires a structured approach.",
-  "title": "manage",
-  "parent": "Management Process",
-  "children":[]
-  },
-  
-  {
-  "type": "Process",
-  "processOwner": "John Mustermann",
-  "level": "L1",
-  "description": "The implementation and generation of an appropriate strategy by the management requires a structured approach.",
-  "title": "hr",
-  "parent": "Management Process",
-  "children":[]
-  },
-  {
-  "type": "Process",
-  "processOwner": "John Mustermann",
-  "level": "L1",
-  "description": "The implementation and generation of an appropriate strategy by the management requires a structured approach.",
-  "title": "core",
-  "parent": "Core Process",
-  "children":[]
-  },
-  {
-  "type": "Process",
-  "processOwner": "John Mustermann",
-  "level": "L1",
-  "description": "The implementation and generation of an appropriate strategy by the management requires a structured approach.",
-  "title": "support",
-  "parent": "Support Process",
-  "children":[]
-  },
-  {
-  "type": "Process",
-  "processOwner": "John Mustermann",
-  "level": "L1",
-  "description": "The implementation and generation of an appropriate strategy by the management requires a structured approach.",
-  "title": "support1",
-  "parent": "Support Process",
-  "children":[]
-  },
-  {
-  "type": "process",
-  "processOwner": "John Mustermann",
-  "level": "L2",
-  "description": "The implementation and generation of an appropriate strategy by the management requires a structured.",
-  "title": "manage the company finances",
-  "parent": "Management Process",
-  "parentl1": "manage"
-  } 
-  ]
+  vcms_list:any=[];
+  isLoading:boolean=false;
+  vcm_id:any=[];
   
 
-
-  constructor(private router: Router) { }
-
-
-  data={name: "Management Process",
-  children: [{children: [],description: "",documents: [],level: "L1",parent: "Management Process",processOwner: "",title: "trest",type: "Process"},]
-  }
+  constructor(private router: Router,private rest_api: RestApiService, private route: ActivatedRoute) { }
 
 
   ngOnInit(): void {
-    let objData=[{name:"Management Process",children:[]},
-    {name:"Core Process",children:[]},
-    {name:"Support Process",children:[]}
-  ]
-
-    this.vcmData.forEach(e=>{
-      objData.forEach(e1=>{
-        if(e.level == "L1"){
-          if(e.parent == e1.name){
-            console.log(e)
-            e1["children"].push(e)
-          }
-        }
-      })
-    })
-
-    this.vcmData.forEach(e=>{
-      objData.forEach(e1=>{
-        if(e.level == "L2"){
-          if(e.parent == e1.name){
-            console.log(e)
-            e1.children.forEach(e2=>{
-              if(e2.title == e.parentl1 ){
-                e2['children'].push(e)
-              }
-            })
-          }
-        }
-      })
-    })
-    console.log(objData)
-    this.vcmProcess = [
-      {vcmname:'Value Chain Mapping 1'},{vcmname:'Value Chain Mapping 2'},{vcmname:'Value Chain Mapping 3'},
-      {vcmname:'Value Chain Mapping 4'}
-    ]
+    this.getListofVcms();
   }
 
   createVcm(){
-    sessionStorage.removeItem('vcmTree');
     this.router.navigateByUrl('/pages/vcm/create-vcm');
   }
-  viewStructure(){
-    this.router.navigateByUrl('/pages/vcm/vcm-structure');
+  viewStructure(object){
+    this.router.navigate(['/pages/vcm/vcm-structure'],{queryParams: {id: object.id}})
   }
+
+  getListofVcms(){
+    this.isLoading=true;
+    this.rest_api.getAllvcms().subscribe(res=>{this.vcms_list=res
+      this.isLoading=false;
+    })
+  }
+  delete(){
+    let body={"vcmId":1994}
+  this.rest_api.deleteVcm(body).subscribe(res=>{
+    console.log(res);
+  });
+}
 
 }
