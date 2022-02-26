@@ -12,6 +12,7 @@ export class VcmComponent implements OnInit {
 
   ngOnInit(): void {
     console.log(this.router.url);
+    sessionStorage.removeItem('vcmTree');
     if(this.router.url == '/pages/vcm/properties?level=level1' || this.router.url == '/pages/vcm/properties?level=level2')
     {
     this.router.navigate(['/pages/vcm/create-vcm']); 

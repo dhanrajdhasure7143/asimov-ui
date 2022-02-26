@@ -43,6 +43,7 @@ export class VcmStructureComponent implements OnInit {
   vcm_id:any;
   isLoading:boolean=false;
   vcmData:any[]=[];
+  expandTree = false;
   @ViewChild('tree',{static: false}) tree;
 
   vcmData1= [
@@ -143,11 +144,9 @@ export class VcmStructureComponent implements OnInit {
   ngOnInit(): void {
     this.getselectedVcm();
   }
-  ngAfterViewInit() {
-    // this.treeControl.dataNodes = this.dataSource.data; 
-    // this.treeControl.expandAll();
-    // this.tree.treeControl.expandAll();
-  }
+  // ngAfterViewInit() {
+    
+  // }
 
   hasChild = (_: number, node: any) => !!node.children && node.children.length > 0;
 
@@ -293,11 +292,26 @@ export class VcmStructureComponent implements OnInit {
       })
     })
     console.log(objData)
-    this.dataSource.data=objData
     // this.vcmProcess = this.dataSource.data;
     this.vcmProcess = objData;
+    this.dataSource.data=objData;
+    console.log(this.dataSource.data,"data");
+    this.treeControl.dataNodes = this.dataSource.data; 
+    this.treeControl.expandAll();
+    this.tree.treeControl.expandAll();
 
   }
 
+  collapse(){
+    this.treeControl.dataNodes = this.dataSource.data; 
+    this.treeControl.collapseAll();
+    this.expandTree = true;
+  }
+  expand(){
+    this.treeControl.dataNodes = this.dataSource.data; 
+    this.treeControl.expandAll();
+    this.tree.treeControl.expandAll();
+    this.expandTree = false;
+  }
 }
 
