@@ -238,9 +238,9 @@ export class RpaHomeComponent implements OnInit {
     //     })
 
 
-          if(localStorage.getItem('project_id')!="null" && localStorage.getItem('bot_id')!="null"){
-            this.loadbotdata(localStorage.getItem('bot_id'));
-          }
+          // if(localStorage.getItem('project_id')!="null" && localStorage.getItem('bot_id')!="null"){
+          //   this.loadbotdata(localStorage.getItem('bot_id'));
+          // }
           this.freetrail=localStorage.getItem('freetrail')
      }
 

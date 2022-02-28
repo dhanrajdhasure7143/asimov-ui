@@ -77,6 +77,9 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
       }else if(params.processId!=undefined)
       {
         this.router.navigate(["/pages/serviceOrchestration/home"],{queryParams:{processid:params.processId}})
+      }else if(params.projectId!=undefined)
+      {
+        this.router.navigate(["/pages/rpautomation/home"])
       }
       else
       {
