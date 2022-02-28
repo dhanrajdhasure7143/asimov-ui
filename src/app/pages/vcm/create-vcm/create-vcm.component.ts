@@ -7,6 +7,7 @@ import { NavigationExtras, Router } from "@angular/router";
 import { RestApiService } from '../../services/rest-api.service';
 import { DataTransferService } from '../../services/data-transfer.service';
 import Swal from 'sweetalert2';
+import { UUID } from 'angular2-uuid';
 
 let TREE_DATA: any[] = [
   {
@@ -89,7 +90,8 @@ export class CreateVcmComponent implements OnInit {
       description: '',
       processOwner: '',
       documents: [],
-      level: "L1"
+      level: "L1",
+      'uniqueId':UUID.UUID()
     }
     console.log(TREE_DATA)
     TREE_DATA.filter(e => e.name == 'Management Process')[0].children.push(record);
@@ -108,7 +110,8 @@ export class CreateVcmComponent implements OnInit {
       description: '',
       processOwner: '',
       documents: [],
-      level: "L1"
+      level: "L1",
+      'uniqueId':UUID.UUID()
     }
     TREE_DATA.filter(e => e.name == 'Core Process')[0].children.push(record);
     this.vcmProcess = null;
@@ -126,7 +129,8 @@ export class CreateVcmComponent implements OnInit {
       description: '',
       processOwner: '',
       documents: [],
-      level: "L1"
+      level: "L1",
+      'uniqueId':UUID.UUID()
 
     }
     TREE_DATA.filter(e => e.name == 'Support Process')[0].children.push(record);
@@ -164,6 +168,7 @@ export class CreateVcmComponent implements OnInit {
       processOwner: '',
       documents: [],
       level: "L2",
+      'level1UniqueId':UUID.UUID()
     };
     var index = TREE_DATA.filter(e => e.name === this.level1process.parent)[0]
       .children.findIndex(c => c.title === this.level1process.title);
@@ -360,6 +365,7 @@ export class CreateVcmComponent implements OnInit {
     this.vcmProcess = TREE_DATA;
     let data1=[];
     let data2=[];
+    let randomId = UUID.UUID();
     this.vcmProcess.forEach(element => {
       element.children.forEach(e=>{
         data1.push(e);
@@ -373,6 +379,7 @@ export class CreateVcmComponent implements OnInit {
         });
       }
     })
+    console.log(data1,data2)
 
     // let data4=data2;
     let data4=[]
@@ -399,7 +406,8 @@ export class CreateVcmComponent implements OnInit {
       "vcmName": this.vcmName,
       "createdBy": this.user_details.firstName+ " "+this.user_details.lastName,
       "processOwner": this.process_ownerName,
-      "vcmV2": data4
+      "vcmV2": data4,
+      "uniqueId":UUID.UUID()
     }
     console.log(data4)
     this.isLoading=true;
