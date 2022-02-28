@@ -88,7 +88,7 @@ export class VcmPropertiesComponent implements OnInit {
     }
 
     documentsUpload(event, name ,level) {
-      console.log(name);
+      console.log(name,this.vcmProperties);
       console.log(level);
       this.fileName = []
       console.log(event);
@@ -98,6 +98,15 @@ export class VcmPropertiesComponent implements OnInit {
         this.fileName.push(event.target.files[i]);
       }
       const formdata = new FormData();
+      formdata.append("vcmLevel",name.level);
+      formdata.append("uniqueId",name.uniqueId);
+      if (level == 'level1') {
+      formdata.append("vcmuniqueId",this.vcmProperties[0].uniqueId);
+      }
+      if (level == 'level2') {
+        formdata.append("vcmuniqueId",this.vcmProperties[0].level1UniqueId);
+        }
+      formdata.append("masterId",null);
       for (var i = 0; i < this.fileName.length; i++) {
         formdata.append("file", this.fileName[i]);
       }

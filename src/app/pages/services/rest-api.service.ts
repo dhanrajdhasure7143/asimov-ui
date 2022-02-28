@@ -1318,5 +1318,9 @@ deleteVcm(body){
   return this.http.post('/vcmv2/deletevcm',body); 
 }
 
+uploadVCMPropDocument(body){
+  return this.http.post('/vcmv2/uploadDocuments',body); 
+}
+
 
 }

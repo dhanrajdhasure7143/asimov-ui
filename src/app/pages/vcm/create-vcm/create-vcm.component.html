@@ -15,6 +15,7 @@
     <div class="module-body">
         <mat-drawer-container class="example-container h-100" style="background-color: white;">
             <mat-drawer #drawer class="example-sidenav vcmprop" mode="side" position="end" >
+                <div><img src="../../../../assets/images/VCM/VCM-close.svg" class="close-btn" (click)="closeOverlay()"  /></div>
                 <mat-tab-group>
                     <mat-tab label="Properties">
                         <div class="editcontent" >
@@ -36,9 +37,9 @@
                             </div>
                         </div>
                         <div class="propfooter col-md-12 text-right">
-                            <button class="btn btn-default" (click)="resetProperties()">Reset</button>
-                            <button class="btn btn-primary" *ngIf="editLevelProperties == 1" (click)="editProperties()">Save2</button>
-                            <button class="btn btn-primary" *ngIf="editLevelProperties == 2" (click)="editProcessLevel2()">Save3</button>
+                            <!-- <button class="btn btn-default" (click)="resetProperties()">Reset</button> -->
+                            <button class="btn btn-primary" *ngIf="editLevelProperties == 1" (click)="editProperties()">Save</button>
+                            <button class="btn btn-primary" *ngIf="editLevelProperties == 2" (click)="editProcessLevel2()">Save</button>
                         </div>
                     </mat-tab>
                     <mat-tab label="Documents">

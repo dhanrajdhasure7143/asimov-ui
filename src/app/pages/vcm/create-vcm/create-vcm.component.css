@@ -302,3 +302,10 @@ mat-tree {
 .tsttooltipbtn:hover span.testtooltip {
     display: block;
 }
+.close-btn{
+    width: 12px;
+    height: 12px;
+    margin-top: 10px;
+    margin-left: 90%;
+    cursor: pointer;
+}
