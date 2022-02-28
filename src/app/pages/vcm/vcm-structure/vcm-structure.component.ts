@@ -238,7 +238,7 @@ export class VcmStructureComponent implements OnInit {
     let res_data
     this.rest_api.getselectedVcmById(this.vcm_id).subscribe(res=>{res_data=res
       console.log(res);
-      this.vcmData=res_data.vcmV2
+      this.vcmData=res_data.data.vcmV2
       this.isLoading=false;
       this.dataMappingToTreeStructer()
     })

@@ -66,14 +66,14 @@
                 <div class="row maincontent h-100">
                     <div class="col-md-12 pl-0 vcm-leveldiv">
 
-                        <div class="col-md-6 pr-0 form-group vcname">
+                        <div class="col-md-12 pr-0 form-group vcname">
                             <label class="label-control">Value Chain Name</label>
                             <input type="text" class="form-control" [(ngModel)]="vcmName" placeholder="Enter Value Chain Name">
                             <button class="btn" (click)="vcmHeading()" >
                                 <img [hidden]="!vcmName" src="../../../../assets/images/VCM/Green Tick.svg" class="testplus1"  />
                             </button>
                         </div>
-                        <div class="col-md-6 form-group">
+                        <div class="col-md-12 form-group">
                             <label class="label-control">Process Owner</label>
                             <select class="form-control" [(ngModel)]="process_ownerName">
                                 <option value="" hidden disabled>Select Process Owner</option>
@@ -208,7 +208,7 @@
                                 </select>
                                     </div>
                                     <div class="level1process form-group">
-                                        <input placeholder="Enter Process Folder Name" class="form-control" type="text" name="levelName" [(ngModel)]="addLevel2">
+                                        <input placeholder="Enter Process Group Name" class="form-control" type="text" name="levelName" [(ngModel)]="addLevel2">
                                         <button [disabled]="addLevel2 == '' || !level1process" type="submit" class="btn" (click)="addNewLevel2()">
                                     <img src="../../../../assets/images/VCM/Green Tick.svg" class="testplus1" />
                                 </button>

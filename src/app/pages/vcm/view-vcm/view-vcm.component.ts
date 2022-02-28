@@ -31,7 +31,9 @@ export class ViewVcmComponent implements OnInit {
 
   getListofVcms(){
     this.isLoading=true;
-    this.rest_api.getAllvcms().subscribe(res=>{this.vcms_list=res
+    let res_data
+    this.rest_api.getAllvcms().subscribe(res=>{res_data=res
+      this.vcms_list=res_data.data
       this.isLoading=false;
     })
   }
