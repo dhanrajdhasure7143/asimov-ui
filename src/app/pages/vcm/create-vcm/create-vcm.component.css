@@ -33,7 +33,7 @@
 }
 
 .dbichart-block {
-    background: #f6f6f6;
+    background: #e1e7ec;
     /* min-height: 55vh; */
     min-height: calc(100vh - 225px);
     margin-bottom: 0px !important;

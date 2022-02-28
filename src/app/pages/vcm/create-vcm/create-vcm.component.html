@@ -37,8 +37,8 @@
                         </div>
                         <div class="propfooter col-md-12 text-right">
                             <button class="btn btn-default" (click)="resetProperties()">Reset</button>
-                            <button class="btn btn-primary" *ngIf="editLevelProperties == 1" (click)="editProperties()">Save2</button>
-                            <button class="btn btn-primary" *ngIf="editLevelProperties == 2" (click)="editProcessLevel2()">Save3</button>
+                            <button class="btn btn-primary" *ngIf="editLevelProperties == 1" (click)="editProperties()">Save</button>
+                            <button class="btn btn-primary" *ngIf="editLevelProperties == 2" (click)="editProcessLevel2()">Save</button>
                         </div>
                     </mat-tab>
                     <mat-tab label="Documents">
@@ -73,7 +73,7 @@
                                 <img [hidden]="!vcmName" src="../../../../assets/images/VCM/Green Tick.svg" class="testplus1"  />
                             </button>
                         </div>
-                        <div class="col-md-12 form-group">
+                        <div class="col-md-12 pr-0 form-group">
                             <label class="label-control">Process Owner</label>
                             <select class="form-control" [(ngModel)]="process_ownerName">
                                 <option value="" hidden disabled>Select Process Owner</option>

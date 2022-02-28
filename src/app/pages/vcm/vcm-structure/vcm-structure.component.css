@@ -27,14 +27,23 @@
     font-weight: 600;
     margin-top: 0px;
 }
-.text-color{
+/* .text-color{
     color: blue;
     cursor: pointer;
-}
+} */
 .custom-footer-content p{
     cursor: pointer !important;
     font-weight: 600;
 }
-.Apr-cnt{
-    border-bottom: 1px solid black;
+.Apr-cnt h4{
+    border-bottom: 1px solid #ccc;
+    color: #00a1e4;
+    margin: 0px;
+    padding: 0px 0px 10px;
+}
+.notif-close img {
+    opacity: 0.2;
+}
+.submit button.btn.btn-primary {
+    margin-right: 0px !important;
 }
