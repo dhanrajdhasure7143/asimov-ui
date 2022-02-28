@@ -58,33 +58,33 @@
                         <!-- <span class="asc" *ngIf="orderAsc && sortIndex==7">&#8595;</span> -->
                         <!-- <span class="desc" *ngIf="!orderAsc && sortIndex==7">&#8593;</span> -->
                     </div>
-                    <div class="cell cell4" mat-sort-header="processOwnerName">Process Owner</div>
-                    <div class="cell cell5" mat-sort-header="version">Version
+                    <div class="cell cell5" mat-sort-header="processOwnerName">Process Owner</div>
+                    <div class="cell cell6" mat-sort-header="version">Version
                         <!-- <div class="cell cell5" mat-sort-header="version" (click)="sort('version',1)">Version -->
                         <!-- <span class="asc" *ngIf="orderAsc && sortIndex==1">&#8595;</span> -->
                         <!-- <span class="desc" *ngIf="!orderAsc && sortIndex==1">&#8593;</span> -->
                     </div>
-                    <div class="cell cell6" mat-sort-header="convertedModifiedTime">Last Modified
+                    <div class="cell cell7" mat-sort-header="convertedModifiedTime">Last Modified
                         <!-- <div class="cell cell6" mat-sort-header="convertedModifiedTime" (click)="sort('modifiedTimestamp',2)">Last Modified -->
                         <!-- <span class="asc" *ngIf="orderAsc && sortIndex==2">&#8595;</span> -->
                         <!-- <span class="desc" *ngIf="!orderAsc && sortIndex==2">&#8593;</span> -->
                     </div>
-                    <div class="cell cell7" mat-sort-header="approverName">Approver
+                    <div class="cell cell8" mat-sort-header="approverName">Approver
                         <!-- <div class="cell cell7" mat-sort-header="approverName" (click)="sort('approverName',3)">Approver -->
                         <!-- <span class="asc" *ngIf="orderAsc && sortIndex==3">&#8595;</span> -->
                         <!-- <span class="desc" *ngIf="!orderAsc && sortIndex==3">&#8593;</span> -->
                     </div>
-                    <div class="cell cell8" mat-sort-header="bpmnProcessStatus">Status
+                    <div class="cell cell9" mat-sort-header="bpmnProcessStatus">Status
                         <!-- <div class="cell cell8" mat-sort-header="bpmnProcessStatus" (click)="sort('bpmnProcessStatus',4)">Status -->
                         <!-- <span class="asc" *ngIf="orderAsc && sortIndex==4">&#8595;</span> -->
                         <!-- <span class="desc" *ngIf="!orderAsc && sortIndex==4">&#8593;</span> -->
                     </div>
-                    <div class="cell cell9" mat-sort-header="reviewComments">Message
+                    <div class="cell cell10" mat-sort-header="reviewComments">Message
                         <!-- <div class="cell cell9" mat-sort-header="reviewComments" (click)="sort('reviewComments',5)">Message -->
                         <!-- <span class="asc" *ngIf="orderAsc && sortIndex==5">&#8595;</span> -->
                         <!-- <span class="desc" *ngIf="!orderAsc && sortIndex==5">&#8593;</span> -->
                     </div>
-                    <div class="cell cell10">Actions</div>
+                    <div class="cell cell11">Actions</div>
                     <!-- </div> -->
 
                 </div>
@@ -104,16 +104,16 @@
                                         <div class="cell cell2" [matTooltip]=each_diag.bpmnProcessName matTooltipClass="bpsHeaderTooltip">{{each_diag.bpmnProcessName ?fitTableView(each_diag.bpmnProcessName): '-'}}</div>
                                         <div class="cell cell3">{{each_diag.ntype ? each_diag.ntype.toUpperCase(): '-' }}</div>
                                         <div class="cell cell4">{{each_diag.category}}</div>
-                                        <div class="cell cell4">{{each_diag.processOwnerName ? each_diag.processOwnerName : '-'}}</div>
-                                        <div class="cell cell5">{{each_diag.bpmnProcessName ? " V1."+each_diag.version+" ": '-'}}</div>
-                                        <div class="cell cell6">{{each_diag.convertedModifiedTime*1000 | date:'medium'}}</div>
-                                        <div class="cell cell7" [matTooltip]=each_diag.approverName matTooltipClass="bpsHeaderTooltip">{{each_diag.approverName ? formatApproverName(each_diag.approverName): '-'}}</div>
+                                        <div class="cell cell5" [matTooltip]=each_diag.processOwnerName matTooltipClass="bpsHeaderTooltip">{{each_diag.processOwnerName ? fitTableView(each_diag.processOwnerName) : '-'}}</div>
+                                        <div class="cell cell6">{{each_diag.bpmnProcessName ? " V1."+each_diag.version+" ": '-'}}</div>
+                                        <div class="cell cell7">{{each_diag.convertedModifiedTime*1000 | date:'medium'}}</div>
+                                        <div class="cell cell8" [matTooltip]=each_diag.approverName matTooltipClass="bpsHeaderTooltip">{{each_diag.approverName ? formatApproverName(each_diag.approverName): '-'}}</div>
                                         <!-- <div class="cell cell8" [ngStyle]="{'color':getColor(each_diag.bpmnProcessStatus)}"
                         [class.pending_value_properties]="each_diag.bpmnProcessStatus=='PENDING'">{{each_diag.bpmnProcessStatus=='PENDING'?pendingStatus:each_diag.bpmnProcessStatus}}</div> -->
-                                        <div class="cell cell8" [ngStyle]="{'color':getColor(each_diag.bpmnProcessStatus)}" [class.pending_value_properties]="each_diag.bpmnProcessStatus=='PENDING'">{{getNotationStatus(each_diag.bpmnProcessStatus)}}</div>
+                                        <div class="cell cell9" [ngStyle]="{'color':getColor(each_diag.bpmnProcessStatus)}" [class.pending_value_properties]="each_diag.bpmnProcessStatus=='PENDING'">{{getNotationStatus(each_diag.bpmnProcessStatus)}}</div>
 
-                                        <div class="cell cell9"><img src="../../../../assets/images/BPMS/Msg.svg" class="testplus" [matTooltip]=each_diag.reviewComments matTooltipClass="bpsHeaderTooltip" matTooltipPosition="right"></div>
-                                        <div class="cell cell10">
+                                        <div class="cell cell10"><img src="../../../../assets/images/BPMS/Msg.svg" class="testplus" [matTooltip]=each_diag.reviewComments matTooltipClass="bpsHeaderTooltip" matTooltipPosition="right"></div>
+                                        <div class="cell cell11">
                                             <span (click)="onEdit($event,each_diag)" class="newinntalx">
                                                 <img matTooltip="Edit" matTooltipPosition="left" src="../../../../assets/images/Projects/edit-black.svg" class="default-img">
                                                 <img matTooltip="Edit" matTooltipPosition="left" src="../../../../../assets/images/Projects/Edit-blue.svg" class="hover-img">
