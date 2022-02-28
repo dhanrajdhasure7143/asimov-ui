@@ -660,7 +660,9 @@
                             Maximum of 50 characters
                         </div>
                     </div> -->
+                   
                       <div class="col-md-12 p-0 form-group">
+                        
                           <label class="label-control" for="taskOwner">Task Owner<span class="star">*</span></label>
                           <!-- <input type="text" maxlength="51" class="form-control data" formControlName="taskOwner"  value="" placeholder="Enter Connection Name"> -->
                           <select formControlName="taskOwner" class="form-control">
@@ -674,7 +676,7 @@
                         </div>-->
                       </div>
                       <div class="col-md-6 pl-0 form-group">
-                          <label class="label-control" for="slaConfigId">SLA Breach Limit (Min)
+                          <label class="label-control" for="slaConfigId">SLA Breach Limit (Min)<span class="star">*</span>
                          <!-- <span class="star">*</span> -->
                        </label>
                           <input type="number" min=0 max=60 maxlength="2" formControlName="slaConfigId" onkeypress="return (event.charCode > 47 && event.charCode < 58)" class="form-control data" value="" placeholder="00">
@@ -701,7 +703,7 @@
                   </div>-->
                       <!-- </div> -->
                       <div class="col-md-6 pr-0 form-group">
-                          <label class="label-control" for="thresholdLimit">Threshold Limit (Min)
+                          <label class="label-control" for="thresholdLimit">Threshold Limit (Min)<span class="star">*</span>
                          <!-- <span class="star">*</span> -->
                        </label>
                           <input type="number" min=0 max=60 onkeypress="return (event.charCode > 47 && event.charCode < 58)" class="form-control data" formControlName="thresholdLimit" value="" maxlength="2" placeholder="00">
@@ -738,7 +740,7 @@
 
                       <div class="form-footer">
                           <button class="btn btn-default" (click)="resetsla()">Reset</button>
-                          <button class="btn btn-primary btn-test" (click)="slaalerts()">Save</button>
+                          <button class="btn btn-primary btn-test" [disabled]="insertslaForm_so_bot.invalid || insertslaForm_so_bot.get('slaConfigId').value=='0'|| insertslaForm_so_bot.get('thresholdLimit').value=='0'" (click)="slaalerts()">Save</button>
                       </div>
                   </form>
               </div>
@@ -746,4 +748,4 @@
           </div>
 
       </div>
-  </div>
+  </div> 
