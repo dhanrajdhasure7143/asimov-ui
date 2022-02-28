@@ -67,18 +67,16 @@ export class CreateVcmComponent implements OnInit {
 
   ngOnInit(): void {
     this.getProcessOwnersList();
-    this.dt.logged_userData.subscribe(res=>{this.user_details=res
-      console.log(res)
-    })  
-    let checkProperties = JSON.parse(sessionStorage.getItem('vcmTree'));
-    if (checkProperties) {
-      TREE_DATA = checkProperties;
-      this.vcmProcess = null;
-      this.vcmProcess = checkProperties;
-      this.dataSource.data = null;
-      this.dataSource.data = checkProperties;
-      console.log(this.vcmProcess);
-    }
+    this.dt.logged_userData.subscribe(res=>{this.user_details=res})  
+    let res_data
+    this.dt.getVcm_Data.subscribe(res=>{res_data=res
+      console.log(res_data)
+      if(res){
+        TREE_DATA = res_data;
+        this.vcmProcess = null;
+        this.vcmProcess = res_data;
+      }
+    });
   }
 
   addManageProcess() {
@@ -228,7 +226,7 @@ export class CreateVcmComponent implements OnInit {
     this.vcmProcess = null;
     this.vcmProcess = TREE_DATA;
     this.vcmName = '';
-    sessionStorage.removeItem('vcmTree');
+    localStorage.removeItem('vcmData');
   }
 
   editProcess(item, name, level) {
@@ -419,7 +417,7 @@ export class CreateVcmComponent implements OnInit {
       }).then((result) => {
         if (result.value) {
           this.router.navigate(['/pages/vcm/view-vcm']);
-          sessionStorage.removeItem('vcmTree');
+          localStorage.removeItem('vcmData');
         }
       })
 
@@ -439,15 +437,14 @@ export class CreateVcmComponent implements OnInit {
         level: level
       }
     }
-    console.log(this.vcmProcess);
-    localStorage.setItem("vcmData",(JSON.stringify(this.vcmProcess)));
-    this.dt.vcmDataTransfer(this.vcmProcess)
+
     if (this.vcmProcess[0].children.length != 0 || this.vcmProcess[1].children.length != 0 || this.vcmProcess[2].children.length != 0) {
+      localStorage.setItem("vcmData",(JSON.stringify(this.vcmProcess)));
+      this.dt.vcmDataTransfer(this.vcmProcess)
       this.router.navigate(['/pages/vcm/properties'], nav);
     // TREE_DATA[3].vcmname = this.vcmName;
       this.vcmProcess = TREE_DATA;
       console.log(this.vcmProcess);
-      sessionStorage.setItem('vcmTree', JSON.stringify(this.vcmProcess));
     }
   }
 

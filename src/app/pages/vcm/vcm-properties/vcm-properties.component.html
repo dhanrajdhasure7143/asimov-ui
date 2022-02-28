@@ -7,7 +7,7 @@
             <span class="module-header-title">Properties</span>
         </div>
         <div class="ml-auto submit">
-            <button class="btn btn-default" (click)="resetProperties()">Cancel</button>
+            <button class="btn btn-default" (click)="resetProperties()">Reset</button>
             <button class="btn btn-primary" (click)="saveProperties()">Save</button>
         </div>
     </div>
@@ -31,7 +31,7 @@
                                     <td *ngIf="each.title">{{prop.name}}</td>
                                     <td *ngIf="each.title">{{each.title}}</td>
                                     <td *ngIf="each.title">
-                                        <select class="form-control" [(ngModel)]="each.processOwner" #ownerValue (change)="onchangeowner($event.target.value,i,j)">
+                                        <select class="form-control" [(ngModel)]="each.processOwner" #ownerValue>
                                             <option value="" hidden disabled>Select Owner</option>
                                             <!-- <option value="ranjith@epsoft" >ranjith</option> -->
                                             <option *ngFor="let each_approver of processOwners_list;let i=index" [value]=each_approver.userId>
@@ -173,7 +173,7 @@
                                     <tr *ngFor="let level2 of name.children;let k = index">
                                         <td *ngIf="level2.title">{{prop.name}}</td>
                                         <td *ngIf="level2.title">{{level2.title}}</td>
-                                        <td *ngIf="level2.title" (change)="onchangeownerL2($event.target.value,i,j,k)">
+                                        <td *ngIf="level2.title" >
                                             <select class="form-control" #ownerValue [(ngModel)]="level2.processOwner">
                                                     <option value="" hidden disabled>Select Owner</option>
                                                     <option *ngFor="let each_approver of processOwners_list;let i=index" [value]=each_approver.userId>
