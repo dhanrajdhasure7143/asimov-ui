@@ -16,12 +16,21 @@
         <div class="vcm-treesmain h-100">
             <!-- <h4 >{{vcmProcess[3].vcmname}}</h4> -->
             <div class="row maincontent">
+                <button *ngIf="!expandTree" style="position: absolute;left: 35%;top: 15%;" class="btn btn-primary" (click)="collapse()">
+                    <span>Collapse</span>
+                </button>
+                <button *ngIf="expandTree" style="position: absolute;left: 35%;top: 15%;" class="btn btn-primary" (click)="expand()">
+                    <span>Expand</span>
+                </button>
                 <mat-tree [dataSource]="dataSource" #tree [treeControl]="treeControl" class="example-tree">
-                    <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle >
-                        <span class="text-color" *ngIf="node.level == 'L3'" (click)="navigateToNoytation(node)" >{{node.title}}</span>
+                    <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
+                        <span class="text-color" *ngIf="node.level == 'L3'" (click)="navigateToNoytation(node)">{{node.title}}</span>
                         <span *ngIf="node.level == 'L1'">{{node.title}}</span>
-                        <span *ngIf="node.level == 'L2'">{{node.title}}<button #pop2="bs-popover" [outsideClick]="true" [popover]="popTemplate" placement="right" *ngIf="node.level=='L2'"  ><mat-icon>add</mat-icon></button></span>
-
+                        <span *ngIf="node.level == 'L2'">{{node.title}}
+                            <button #pop2="bs-popover" [outsideClick]="true" [popover]="popTemplate" placement="right" >
+                                <mat-icon>add</mat-icon>
+                            </button>
+                        </span>
                     </mat-tree-node>
                     <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
                         <div class="mat-tree-node">
@@ -29,8 +38,8 @@
                                 <mat-icon class="mat-icon-rtl-mirror">
                                     {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
                                 </mat-icon>
-                            </button>
-                            {{node.title}}<button #pop2="bs-popover" [popover]="popTemplate" [outsideClick]="true" placement="right" *ngIf="node.level=='L2'" ><mat-icon>add</mat-icon></button>
+                            </button> {{node.title}}
+                            <button #pop2="bs-popover" [popover]="popTemplate" [outsideClick]="true" placement="right" *ngIf="node.level=='L2'"><mat-icon>add</mat-icon></button>
                         </div>
                         <div [class.example-tree-invisible]="!treeControl.isExpanded(node)" role="group">
                             <ng-container matTreeNodeOutlet></ng-container>
@@ -62,10 +71,10 @@
     </div>
 </ng-template>
 
-<process-category-overlay headerTitle="BPMN Details"  [overlay_data]="overlay_data" (proceed)="uploadCreateBpmn($event)" class="bpmnCreate"></process-category-overlay>
+<process-category-overlay headerTitle="BPMN Details" [overlay_data]="overlay_data" (proceed)="uploadCreateBpmn($event)" class="bpmnCreate"></process-category-overlay>
 
 <div class="spinoverlay" *ngIf="isLoading">
     <div class="spincenter">
-        <img  src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader"/>
+        <img src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader" />
     </div>
 </div>
