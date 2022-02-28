@@ -388,6 +388,9 @@ this.rest_api.uploadVCMPropDocument(formdata).subscribe(res=>{
     data1.forEach(e=>{
       if(e.children){
         e.children.forEach(e1 => {
+          e1["uniqueId"]=e.uniqueId
+        console.log(e1)
+
           data2.push(e1)
         });
       }
@@ -409,6 +412,12 @@ this.rest_api.uploadVCMPropDocument(formdata).subscribe(res=>{
       if(element.childParent){
         obj["childParent"]=element.childParent
       }
+      if(element.uniqueId){
+        obj["uniqueId"]=element.uniqueId
+      }
+      if(element.level1UniqueId){
+        obj["level1UniqueId"]=element.level1UniqueId
+      }
       data4.push(obj)
 
     });
@@ -420,7 +429,7 @@ this.rest_api.uploadVCMPropDocument(formdata).subscribe(res=>{
       "createdBy": this.user_details.firstName+ " "+this.user_details.lastName,
       "processOwner": this.process_ownerName,
       "vcmV2": data4,
-      "uniqueId":UUID.UUID()
+      "vcmuniqueId":this.vcmProcess[0].uniqueId
     }
     console.log(data4)
     this.isLoading=true;

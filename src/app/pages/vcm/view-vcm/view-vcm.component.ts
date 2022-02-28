@@ -20,6 +20,7 @@ export class ViewVcmComponent implements OnInit {
 
   ngOnInit(): void {
     this.getListofVcms();
+    localStorage.removeItem('vcmData');
   }
 
   createVcm(){
