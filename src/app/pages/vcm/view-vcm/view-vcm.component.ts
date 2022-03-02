@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DataTransferService } from '../../services/data-transfer.service';
 import { RestApiService } from '../../services/rest-api.service';
 
 @Component({
@@ -15,12 +16,14 @@ export class ViewVcmComponent implements OnInit {
   vcm_id:any=[];
   
 
-  constructor(private router: Router,private rest_api: RestApiService, private route: ActivatedRoute) { }
+  constructor(private router: Router,private rest_api: RestApiService, private route: ActivatedRoute,
+    private dt: DataTransferService) { }
 
 
   ngOnInit(): void {
     this.getListofVcms();
     localStorage.removeItem('vcmData');
+    this.dt.vcmDataTransfer({data:[]})
   }
 
   createVcm(){

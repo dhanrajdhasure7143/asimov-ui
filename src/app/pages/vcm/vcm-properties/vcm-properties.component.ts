@@ -27,6 +27,8 @@ export class VcmPropertiesComponent implements OnInit {
   processOwners_list:any[]=[];
   vcmData:any=[];
   isLoading:boolean=false;
+  vcmName:any;
+  process_ownerName:any;
   constructor(private router: Router, private route: ActivatedRoute, private rest_api:RestApiService, private dt: DataTransferService) {
     this.route.queryParams.subscribe(res => {
       this.levelType = res.level
@@ -38,7 +40,9 @@ export class VcmPropertiesComponent implements OnInit {
     let res_data
     this.dt.getVcm_Data.subscribe(res=>{res_data=res
       if(res){
-        this.vcmProperties=res_data;
+        this.vcmProperties=res_data.data;
+        if(res_data.vName)this.vcmName=res_data.vName;
+        if(res_data.pOwner)this.process_ownerName=res_data.pOwner;
       }
     })
     setTimeout(() => {
@@ -177,8 +181,9 @@ export class VcmPropertiesComponent implements OnInit {
   saveProperties() {
     console.log(this.vcmProperties);
     console.log(this.vcmData);
-    this.dt.vcmDataTransfer(this.vcmProperties)
-    // this.router.navigate(['/pages/vcm/create-vcm']);
+    let obj={vName:this.vcmName,pOwner:this.process_ownerName,data:this.vcmProperties}
+    this.dt.vcmDataTransfer(obj)
+    this.router.navigate(['/pages/vcm/create-vcm']);
 
   }
 
@@ -189,7 +194,8 @@ export class VcmPropertiesComponent implements OnInit {
 
   resetProperties(){
     this.vcmProperties=this.vcmData
-    this.dt.vcmDataTransfer(this.vcmData);
+    let obj={vName:this.vcmName,pOwner:this.process_ownerName,data:this.vcmData}
+    this.dt.vcmDataTransfer(obj);
 
   }
 

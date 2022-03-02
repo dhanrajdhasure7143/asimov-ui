@@ -75,9 +75,16 @@ export class CreateVcmComponent implements OnInit {
     this.dt.getVcm_Data.subscribe(res=>{res_data=res
       console.log(res_data)
       if(res){
-        TREE_DATA = res_data;
+        if(res_data.data.length==0){
+          this.vcmProcess = TREE_DATA
+
+        }else{
+        TREE_DATA = res_data.data;
         this.vcmProcess = null;
-        this.vcmProcess = res_data;
+        this.vcmProcess = res_data.data;
+        if(res_data.vName)this.vcmName=res_data.vName;
+        if(res_data.pOwner)this.process_ownerName=res_data.pOwner;
+        }
       }
     });
   }
@@ -490,7 +497,8 @@ this.rest_api.uploadVCMPropDocument(formdata).subscribe(res=>{
 
     if (this.vcmProcess[0].children.length != 0 || this.vcmProcess[1].children.length != 0 || this.vcmProcess[2].children.length != 0) {
       localStorage.setItem("vcmData",(JSON.stringify(this.vcmProcess)));
-      this.dt.vcmDataTransfer(this.vcmProcess)
+      let obj={vName:this.vcmName,pOwner:this.process_ownerName,data:this.vcmProcess}
+      this.dt.vcmDataTransfer(obj)
       this.router.navigate(['/pages/vcm/properties'], nav);
     // TREE_DATA[3].vcmname = this.vcmName;
       this.vcmProcess = TREE_DATA;
