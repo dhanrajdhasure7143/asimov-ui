@@ -1,0 +1,49 @@
+.example-tree-invisible {
+    display: none;
+}
+
+.example-tree ul,
+.example-tree li {
+    margin-top: 0;
+    margin-bottom: 0;
+    list-style-type: none;
+}
+
+.example-tree .mat-nested-tree-node div[role=group],
+.example-tree div[role=group]>.mat-tree-node {
+    padding-left: 30px;
+}
+
+.vcm-treesmain {
+    padding: 20px 15px;
+    background-color: #f6f6f6;
+}
+
+.vcm-treesmain .example-tree {
+    background-color: #f6f6f6;
+}
+
+.vcm-treesmain h4 {
+    font-weight: 600;
+    margin-top: 0px;
+}
+/* .text-color{
+    color: blue;
+    cursor: pointer;
+} */
+.custom-footer-content p{
+    cursor: pointer !important;
+    font-weight: 600;
+}
+.Apr-cnt h4{
+    border-bottom: 1px solid #ccc;
+    color: #00a1e4;
+    margin: 0px;
+    padding: 0px 0px 10px;
+}
+.notif-close img {
+    opacity: 0.2;
+}
+.submit button.btn.btn-primary {
+    margin-right: 0px !important;
+}

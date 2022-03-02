@@ -45,7 +45,7 @@
           <button class="btn btn-default">Cancel</button>
         </span>
             <span *ngIf="editdata==true" (click)="updateprojectDetails()">
-          <button [disabled]="projectNameFlag || projectPurposeFlag" class="btn btn-primary">Save</button>
+          <button [disabled]="projectNameFlag || projectPurposeFlag || processOwnerFlag" class="btn btn-primary">Save</button>
         </span>
             <span class="prjdetails-headerbuttons" *ngIf="editdata==false">
           <button class="btn btn-primary" (click)="editdata=true">
@@ -165,7 +165,7 @@
                                         <span *ngIf="projectDetails.process!=null && projectDetails.process!=undefined && projectDetails.process!=''" class="tab-text labelcont">{{projectDetails.process | processName : processes}}</span>
                                     </div>
                                     <div *ngIf="editdata==true">
-                                        <select class="small-input" (change)="projectDetails.process=$event.target.value" [value]="(projectDetails.process==undefined||projectDetails.process==null)?'':projectDetails.process">
+                                        <select class="small-input" (change)="onProcessChange($event.target.value)" (change)="projectDetails.process=$event.target.value" [value]="(projectDetails.process==undefined||projectDetails.process==null)?'':projectDetails.process">
                           <option value="">Select Process</option>
                           <option *ngFor="let process of processes" [value]="process.processId">{{process.processName}}</option>
                         </select>
@@ -173,11 +173,22 @@
                                 </div>
                             </div>
                             <div class="col-sm-2 p-0">
-                                <div class="mainset">
+                                <div class="mainset" *ngIf="editdata==false">
                                     <span class="labeltit">Process Owner</span>
 
                                     <span class="tab-text" *ngIf="projectDetails.processOwner==null||projectDetails.processOwner==''|| projectDetails.processOwner==undefined">-</span>
                                     <span *ngIf="projectDetails.processOwner!=null && projectDetails.processOwner!=''&& projectDetails.processOwner!=undefined" class="tab-text labelcont">{{projectDetails.processOwner | userPipe : users_list}}</span>
+
+                                </div>
+                                <div class="mainset" *ngIf="editdata==true">
+                                    <span class="labeltit">Process Owner</span>
+
+                                    <span class="tab-text" *ngIf="projectDetails.processOwner==null||projectDetails.processOwner==''|| projectDetails.processOwner==undefined">-</span>
+                                    <select  class="small-input" id="processowner" [value]="projectDetails.processOwner" [attr.disabled]="processOwner==false" >                                  
+                                                    <option [value]="projectDetails.processOwner" >{{projectDetails.processOwner | userPipe : users_list}}</option>
+                                                    <option *ngFor="let user of userslist" [value]="user.userId.userId">
+                                                        {{user.userId.firstName|titlecase}} {{user.userId.lastName|titlecase}}</option>
+                                                </select>
 
                                 </div>
                             </div>
@@ -245,7 +256,9 @@
                                     </div>
                                     <div *ngIf="editdata==true">
                                         <select class="small-input" (change)="projectDetails.status=$event.target.value" [value]="(projectDetails.status==undefined||projectDetails.status==null)?'':projectDetails.status">
-                        <option value="">Select Status</option>
+                                            <option value="" disabled hidden>Select Status</option>
+                                            <option value="null" disabled hidden>Select Status</option>
+                                            <option value="" disabled hidden>Select Status</option>
                         <option value="New">New</option>
                         <option value="In Progress">In Progress</option>
                         <option value="Pipeline">Pipeline</option>

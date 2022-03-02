@@ -88,7 +88,7 @@ percentageComplete: number;
  selectedtaskfileupload: any;
  editdata:Boolean=false;
  resources:any=[];
-  
+ processOwner:boolean=false;
   
   userid: any;
  
@@ -96,7 +96,7 @@ percentageComplete: number;
   userrole: any=[];
   public rolename: any;
   roles: any;
-  
+  userslist:any=[];
   useremail: any;
   processes: any;
   taskdata: any;
@@ -144,13 +144,16 @@ percentageComplete: number;
   freetrail: string;
   projectNameFlag: boolean = false;
   projectPurposeFlag: boolean = false;
+  processOwnerFlag:boolean=false;
   uploadFileDescriptionFlag: boolean = false;
+  processownername: any;
   constructor(private dt:DataTransferService,private route:ActivatedRoute, private rpa:RestApiService,
     private modalService: BsModalService,private formBuilder: FormBuilder,private router: Router,
     private spinner:NgxSpinnerService) { }
 
 
-  ngOnInit() {
+  ngOnInit() { 
+    this.processOwner=false
     localStorage.setItem('project_id',null);
     localStorage.setItem('bot_id',null);
     $('.link').removeClass('active');
@@ -227,6 +230,7 @@ percentageComplete: number;
         this.freetrail=localStorage.getItem("freetrail")
   }
 
+ 
   onTabChanged(event)
   {
     this.check_tab=event.index;
@@ -484,7 +488,7 @@ this.editdata=false;
 this.rpa.getProjectDetailsById(paramsdata.id).subscribe( res=>{​​​​​​
 this.spinner.hide();
 this.projectDetails=res
-console.log("project details",this.projectDetails)
+this.processOwnerFlag=false
 this.projectenddate=moment(this.projectDetails.endDate).format("YYYY-MM-DD");
 this.projectStartDate = moment(this.projectDetails.startDate).format("YYYY-MM-DD");
 
@@ -561,7 +565,31 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
      
       }
 
-
+      onProcessChange(processId:number)
+      {
+        debugger
+        let process=this.selected_process_names.find(process=>process.processId==processId);
+        if(process!=undefined)
+        {
+          let processOwner:any=this.userslist.find(item=>(`${item.userId.firstName} ${item.userId.lastName}`==process.createdBy))
+          if(processOwner!=undefined)
+          {
+            console.log("project details",this.projectDetails)
+           document.getElementById('processowner')['value']=processOwner.userId.userId;
+           this.processownername=processOwner.userId.userId;
+           this.processOwnerFlag=false;
+           
+            // this.createprogram.get("processOwner").setValue(processOwner.userId.userId);
+            // this.processOwner=false;
+          }else
+          {
+            document.getElementById('processowner')['value']='';
+            this.processOwnerFlag=true;
+            //this.createprogram.get("processOwner").setValue("")
+            Swal.fire("Error","Unable to find process owner for selected process","error")
+          }
+        }
+      }
       getallusers()
       {
         let tenantid=localStorage.getItem("tenantName")
@@ -569,6 +597,7 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
      
         
           this.users_list=response;
+          this.userslist=this.users_list.filter(x=>x.user_role_status=='ACTIVE')
           let users:any=[]
           this.projectDetails.resource.forEach(item=>{
               if(this.users_list.find(item2=>item2.userId.userId==item.resource)!=undefined)
@@ -604,6 +633,7 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
           let resp:any=[]
           resp=processnames
           this.processes=resp.filter(item=>item.status=="APPROVED");
+          this.selected_process_names=resp.sort((a,b) => (a.processName.toLowerCase() > b.processName.toLowerCase() ) ? 1 : ((b.processName.toLowerCase() > a.processName.toLowerCase() ) ? -1 : 0));
         })
       }
 
@@ -985,7 +1015,9 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
       updateprojectDetails()
       {
         this.spinner.show()
+        console.log('project details',this.projectDetails)
         this.projectDetails["type"]="Project";
+        this.projectDetails.processOwner=this.processownername
         this.projectDetails.endDate=this.projectenddate;
         this.projectDetails.startDate=this.projectStartDate;
         this.projectDetails.effortsSpent=parseInt(this.projectDetails.effortsSpent)

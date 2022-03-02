@@ -75,9 +75,16 @@ export class CreateVcmComponent implements OnInit {
     this.dt.getVcm_Data.subscribe(res=>{res_data=res
       console.log(res_data)
       if(res){
-        TREE_DATA = res_data;
+        if(res_data.data.length==0){
+          this.vcmProcess = TREE_DATA
+
+        }else{
+        TREE_DATA = res_data.data;
         this.vcmProcess = null;
-        this.vcmProcess = res_data;
+        this.vcmProcess = res_data.data;
+        if(res_data.vName)this.vcmName=res_data.vName;
+        if(res_data.pOwner)this.process_ownerName=res_data.pOwner;
+        }
       }
     });
   }
@@ -168,7 +175,7 @@ export class CreateVcmComponent implements OnInit {
       processOwner: '',
       documents: [],
       level: "L2",
-      'level1UniqueId':UUID.UUID()
+      'uniqueId':UUID.UUID()
     };
     var index = TREE_DATA.filter(e => e.name === this.level1process.parent)[0]
       .children.findIndex(c => c.title === this.level1process.title);
@@ -406,7 +413,7 @@ this.rest_api.uploadVCMPropDocument(formdata).subscribe(res=>{
     data1.forEach(e=>{
       if(e.children){
         e.children.forEach(e1 => {
-          e1["uniqueId"]=e.uniqueId
+          e1["level1UniqueId"]=e.uniqueId
         console.log(e1)
 
           data2.push(e1)
@@ -490,7 +497,8 @@ this.rest_api.uploadVCMPropDocument(formdata).subscribe(res=>{
 
     if (this.vcmProcess[0].children.length != 0 || this.vcmProcess[1].children.length != 0 || this.vcmProcess[2].children.length != 0) {
       localStorage.setItem("vcmData",(JSON.stringify(this.vcmProcess)));
-      this.dt.vcmDataTransfer(this.vcmProcess)
+      let obj={vName:this.vcmName,pOwner:this.process_ownerName,data:this.vcmProcess}
+      this.dt.vcmDataTransfer(obj)
       this.router.navigate(['/pages/vcm/properties'], nav);
     // TREE_DATA[3].vcmname = this.vcmName;
       this.vcmProcess = TREE_DATA;
