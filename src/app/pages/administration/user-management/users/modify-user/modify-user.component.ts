@@ -42,12 +42,12 @@ getAllCategories(){
   this.spinner.show();
   this.api.getDepartmentsList().subscribe(resp => {
     this.categories = resp.data; 
-    this.spinner.hide();
+    // this.spinner.hide();
     this.getRoles();
   })
  }
  getRoles(){
-  this.spinner.show();
+  // this.spinner.show();
    var roles1:any=[];
    this.depts=[];
   this.api.getAllRoles(2).subscribe(resp => {
@@ -84,7 +84,7 @@ getAllCategories(){
       this.email=this.userData.id;
       this.departments=this.depts;
       this.role=roles1[0];
-      this.spinner.hide();
+      setTimeout(()=>{ this.spinner.hide()},500);
   })
 //  })
 }
