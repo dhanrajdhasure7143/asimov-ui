@@ -489,8 +489,10 @@ resetsla(){
 
  loadbotdatadesign(botId)
   {
-    localStorage.setItem("botId",botId);
-    //this.router.navigate(["/pages/rpautomation/designer"]);
+    if(this.selectedvalue==undefined || this.selectedvalue=='')
+      this.router.navigate(["/pages/rpautomation/designer"],{queryParams:{name:"orchestration",botId:botId}});
+    else
+      this.router.navigate(["/pages/rpautomation/designer"],{queryParams:{processId:this.selectedvalue,botId:botId}});
   }
 
 
@@ -1301,6 +1303,7 @@ resetsla(){
   }
 
   delete(taskid, processId){
+    console.log("processid======",processId,"and ",this.selectedvalue)
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -1315,14 +1318,13 @@ resetsla(){
       this.rest.deleteTaskInProcess(taskid).subscribe(resp => {
           let value: any = resp
         if (value.message === "Task Deleted Successfully!!") {
-          this.getautomatedtasks(0);
+          this.getautomatedtasks(this.selectedvalue);
           Swal.fire("Success", "Task Deleted Successfully!!", "success")
         }
         else {
           Swal.fire("Error", "Failed to delete task", "error");
         }
-        this.spinner.hide();
-      })
+        })
     }
     })
 
@@ -1348,7 +1350,7 @@ resetsla(){
     else {
       Swal.fire("Error", "Failed to add task", "error");
     }
-    this.spinner.hide();
+    // this.spinner.hide();
     this.logs_modal.hide();
     this.addTaskForm.reset();
   })

@@ -2709,3 +2709,13 @@ span.pdicon {
 .vcmprop.mat-drawer-opened .mat-tab-header-pagination-controls-enabled .mat-tab-header-pagination {
   display: none;
 }
+.custom-content-notification{
+  min-width: 330px ;
+  /* height: 330px; */
+  height: 310px;
+  overflow: auto;
+}
+
+.workspace-title button.mat-sort-header-button {
+  font-size: 14px !important;
+}

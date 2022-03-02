@@ -168,7 +168,7 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonText: 'Yes, reset designer!'
     }).then((result) => {
     if (result.value) {
       this.childBotWorkspace.resetdata();
@@ -190,8 +190,10 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
           confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
         if (result.value) {
+          this.spinner.show();
           this.rest.getDeleteBot(this.savebotrespose.botId).subscribe(data=>{
             let response:any=data;
+            this.spinner.hide()
             if(response.status!=undefined)
             {
                 Swal.fire("Success",response.status,"success");
@@ -201,6 +203,10 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
             {
                 Swal.fire("Error",response.errorMessage,"error")
             }
+          },err=>{
+            console.log(err)
+            this.spinner.hide();
+            Swal.fire("Error","Unable to delete bot","error")
           })
         }
 
@@ -544,8 +550,21 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
   }
 
   getpredefinedbotlist() {
-    this.rest.getpredefinedbots().subscribe(data => {
-      this.predefinedbotsData=data;
+    this.spinner.hide();
+    this.rest.getpredefinedbots().subscribe((data:any) => {
+      this.spinner.hide();
+      if(data.errorMessage==undefined)
+      {
+        this.predefinedbotsData=data;
+      }
+      else
+      {
+        Swal.fire("Error",data.errorMessage,"error")
+      }
+    },err=>{
+      console.log(err);
+      this.spinner.hide();
+      Swal.fire("Error","Unable to get predefined bots","error")
     });
    }
 
@@ -555,9 +574,21 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
       let response:any;
       this.rest.getbotversiondata(this.savebotrespose.botId,vid).subscribe(data =>{
         response=data;
-        let index=this.rpa_studio.tabsArray.findIndex(data=>data.botName==response.botName);
-        this.rpa_studio.tabsArray[index]=response;
         this.rpa_studio.spinner.hide();
+        if(response.errorMessage==undefined)
+        {
+          let index=this.rpa_studio.tabsArray.findIndex(data=>data.botName==response.botName);
+          this.rpa_studio.tabsArray[index]=response;
+        }
+        else
+        {
+          this.rpa_studio.spinner.hide()
+          Swal.fire("Error",response.errorMessage,"error")
+        }
+      },err=>{
+        console.log(err)
+        this.rpa_studio.spinner.hide();
+        Swal.fire("Error","Unable to get version bot","error")
       })
    }
 
@@ -595,6 +626,7 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
         }
      },err=>{
        this.rpa_studio.spinner.hide();
+       Swal.fire("Error","Unable to get audit logs","error")
      })
    }
 

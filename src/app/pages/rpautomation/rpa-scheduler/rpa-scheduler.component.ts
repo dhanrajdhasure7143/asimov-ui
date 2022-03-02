@@ -106,6 +106,7 @@ export class RpaSchedulerComponent implements OnInit {
             this.schedule_list[index].run_status="not_started";
           })
           this.actions.updatesavedschedules(response.botMainSchedulerEntity);
+          this.updateflags()
         }
       })
     }
@@ -131,7 +132,32 @@ export class RpaSchedulerComponent implements OnInit {
     this.enddate=this.startdate;
     this.starttime=d.getHours()+":"+d.getMinutes();
   }
+  dateChange($event){
+   debugger
+    console.log($event.target.value)
+   if(this.isDateToday($event.target.value)) {
 
+   }
+    else{
+      this.starttime="00:00";
+      this.endtime='23:59'
+    }
+    
+  }
+  isDateToday(date) {
+    const otherDate = new Date(date);
+    const todayDate = new Date();
+  
+    if (
+      otherDate.getDate() === todayDate.getDate() &&
+      otherDate.getMonth() === todayDate.getMonth() &&
+      otherDate.getFullYear() === todayDate.getFullYear()
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
   add_sch()
   {
     // Scheduler
@@ -208,8 +234,9 @@ export class RpaSchedulerComponent implements OnInit {
         {
          
           this.notifier.notify("success",resp.status)
-          this.schedule_list.find(data=>data.check==true).run_status="started";
-          this.updateflags();
+          // this.schedule_list.find(data=>data.check==true).run_status="started";
+          // this.updateflags();
+          this.get_schedule();
         }
         else
         {
@@ -237,8 +264,9 @@ export class RpaSchedulerComponent implements OnInit {
         if(resp.errorMessage==undefined)
         {
           this.notifier.notify("success",resp.status)
-          this.schedule_list.find(data=>data.check==true).run_status="pause";
-          this.updateflags();
+          // this.schedule_list.find(data=>data.check==true).run_status="pause";
+          // this.updateflags();
+          this.get_schedule();
         }
         else
         {
@@ -263,8 +291,9 @@ export class RpaSchedulerComponent implements OnInit {
       if(resp.errorMessage==undefined)
       {
         this.notifier.notify("success", resp.status);
-        this.schedule_list.find(data=>data.check==true).run_status="resume";
-        this.updateflags();
+        // this.schedule_list.find(data=>data.check==true).run_status="resume";
+        // this.updateflags();
+        this.get_schedule();
       }
       else
       {
