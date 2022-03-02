@@ -76,6 +76,20 @@ export class CreateVcmComponent implements OnInit {
       console.log(res_data)
       if(res){
         if(res_data.data.length==0){
+          TREE_DATA=[
+            {
+              name: 'Management Process',uniqueId:UUID.UUID(),
+              children: []
+            },
+            {
+              name: 'Core Process',
+              children: []
+            },
+            {
+              name: 'Support Process',
+              children: []
+            },
+          ];
           this.vcmProcess = TREE_DATA
 
         }else{
@@ -276,10 +290,11 @@ export class CreateVcmComponent implements OnInit {
 
   editLevel2(name, level2, level) {
     this.drawer.open();
+    this.selectedObj=level2;
     this.editProcessDescription = '';
     this.editProcessOwner = '';
     this.editLevelProperties = level;
-    console.log(name, level2);
+    console.log(name, level2,this.vcmProcess);
     this.childParent = level2.childParent;
     this.propertiesName = level2.parent;
     if (level2.description) {
@@ -323,6 +338,7 @@ export class CreateVcmComponent implements OnInit {
     // for (var i = 0; i < this.fileName.length; i++) {
     //   formdata.append("file", this.fileName[i]);
     // }
+    console.log("selectedObj",this.selectedObj)
     this.isLoading=true;
 this.rest_api.uploadVCMPropDocument(formdata).subscribe(res=>{
   this.isLoading=false;
@@ -414,13 +430,11 @@ this.rest_api.uploadVCMPropDocument(formdata).subscribe(res=>{
       if(e.children){
         e.children.forEach(e1 => {
           e1["level1UniqueId"]=e.uniqueId
-        console.log(e1)
 
           data2.push(e1)
         });
       }
     })
-    console.log(data1,data2)
 
     // let data4=data2;
     let data4=[]
@@ -456,10 +470,9 @@ this.rest_api.uploadVCMPropDocument(formdata).subscribe(res=>{
       "vcmV2": data4,
       "vcmuniqueId":this.vcmProcess[0].uniqueId
     }
-    console.log(data4)
+    console.log("request body",data4)
     this.isLoading=true;
     this.rest_api.createVcm(data3).subscribe((res:any)=>{
-      console.log(res);
       this.isLoading=false;
       Swal.fire({
         title: 'Success',
