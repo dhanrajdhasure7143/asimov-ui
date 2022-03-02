@@ -11,11 +11,12 @@ import { VcmPropertiesComponent } from './vcm-properties/vcm-properties.componen
 import { VcmStructureComponent } from './vcm-structure/vcm-structure.component';
 import { PopoverModule } from 'ngx-bootstrap/popover';
 import { SharedModule } from '../../shared/shared.module';
+import { EditVcmComponent } from './edit-vcm/edit-vcm.component';
 
 
 
 @NgModule({
-  declarations: [ViewVcmComponent, CreateVcmComponent, VcmComponent, VcmPropertiesComponent, VcmStructureComponent],
+  declarations: [ViewVcmComponent, CreateVcmComponent, VcmComponent, VcmPropertiesComponent, VcmStructureComponent, EditVcmComponent],
   imports: [
     CommonModule,
     VcmRoutingModule,
