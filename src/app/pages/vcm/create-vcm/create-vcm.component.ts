@@ -301,42 +301,60 @@ export class CreateVcmComponent implements OnInit {
   documentsUpload(event) {
     // this.fileName = []
     // console.log(event);
-    console.log(this.selectedObj)
+    const formdata = new FormData();
     for (var i = 0; i < event.target.files.length; i++) {
       event.target.files[i]['convertedsize'] = this.convertFileSize(event.target.files[i].size);
       event.target.files[i]['filename'] = event.target.files[i]['name'];
-      this.fileName.push(event.target.files[i]);
+      // this.fileName.push(event.target.files[i]);
+      formdata.append("file", event.target.files[i]);
     }
-    const formdata = new FormData();
     formdata.append("vcmLevel",this.selectedObj.level);
     formdata.append("uniqueId",this.selectedObj.uniqueId);
     formdata.append("vcmuniqueId",this.vcmProcess[0].uniqueId);
-    formdata.append("masterId",null);
+    formdata.append("masterId","000");
 
-    for (var i = 0; i < this.fileName.length; i++) {
-      formdata.append("file", this.fileName[i]);
-    }
+    // for (var i = 0; i < this.fileName.length; i++) {
+    //   formdata.append("file", this.fileName[i]);
+    // }
+    this.isLoading=true;
 this.rest_api.uploadVCMPropDocument(formdata).subscribe(res=>{
+  this.isLoading=false;
+  for (var i = 0; i < event.target.files.length; i++) {
+    event.target.files[i]['convertedsize'] = this.convertFileSize(event.target.files[i].size);
+    event.target.files[i]['filename'] = event.target.files[i]['name'];
+    this.fileName.push(event.target.files[i]);
+  }
+  if (this.editLevelProperties == 1) {
+    console.log(this.fileName);
+    TREE_DATA.filter((e) => e.name === this.propertiesName)[0].children
+      .filter(n => n.title === this.editProcessName)[0].documents = this.fileName;
+    this.dataSource.data = null;
+    this.dataSource.data = TREE_DATA;
+    this.vcmProcess = null;
+    this.vcmProcess = TREE_DATA;
+  }
+  if (this.editLevelProperties == 2) {
+    TREE_DATA.filter((e) => e.name === this.propertiesName)[0].children
+      .filter(n => n.title === this.childParent)[0].children.filter(c => c.title === this.editProcessName)[0]
+      .documents = this.fileName;
+    this.dataSource.data = null;
+    this.dataSource.data = TREE_DATA;
+    this.vcmProcess = null;
+    this.vcmProcess = TREE_DATA;
+  }
+
   console.log(res)
+},err=>{
+  this.isLoading=false;
+  Swal.fire({
+    title: 'Error',
+    text: "File upload failed",
+    position: 'center',
+    icon: 'error',
+    heightAuto: false,
+  })
 })
-    if (this.editLevelProperties == 1) {
-      console.log(this.fileName);
-      TREE_DATA.filter((e) => e.name === this.propertiesName)[0].children
-        .filter(n => n.title === this.editProcessName)[0].documents = this.fileName;
-      this.dataSource.data = null;
-      this.dataSource.data = TREE_DATA;
-      this.vcmProcess = null;
-      this.vcmProcess = TREE_DATA;
-    }
-    if (this.editLevelProperties == 2) {
-      TREE_DATA.filter((e) => e.name === this.propertiesName)[0].children
-        .filter(n => n.title === this.childParent)[0].children.filter(c => c.title === this.editProcessName)[0]
-        .documents = this.fileName;
-      this.dataSource.data = null;
-      this.dataSource.data = TREE_DATA;
-      this.vcmProcess = null;
-      this.vcmProcess = TREE_DATA;
-    }
+
     console.log(this.fileName);
     console.log(TREE_DATA);
   }
