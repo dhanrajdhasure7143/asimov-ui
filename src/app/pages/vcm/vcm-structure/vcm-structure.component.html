@@ -7,8 +7,16 @@
             <span class="module-header-title">Value Chain Mapping</span>
         </div>
         <div class="ml-auto submit">
+            <button *ngIf="!expandTree" class="btn btn-default" (click)="collapse()">
+                <span>Collapse</span>
+            </button>
+            <button *ngIf="expandTree" class="btn btn-default" (click)="expand()">
+                <span>Expand</span>
+            </button>
             <button class="btn btn-primary" (click)="edit()">
-                <img src="../../../../assets/images/Projects/edit.svg" class="testplus" />Edit</button>
+                <img src="../../../../assets/images/Projects/edit.svg" class="testplus" />Edit
+            </button>
+
         </div>
     </div>
 
@@ -16,19 +24,20 @@
         <div class="vcm-treesmain h-100">
             <!-- <h4 >{{vcmProcess[3].vcmname}}</h4> -->
             <div class="row maincontent">
-                <button *ngIf="!expandTree" style="position: absolute;left: 35%;top: 15%;" class="btn btn-primary" (click)="collapse()">
+                <!-- <button *ngIf="!expandTree" style="position: absolute;left: 35%;top: 15%;" class="btn btn-primary" (click)="collapse()">
                     <span>Collapse</span>
                 </button>
                 <button *ngIf="expandTree" style="position: absolute;left: 35%;top: 15%;" class="btn btn-primary" (click)="expand()">
                     <span>Expand</span>
-                </button>
+                </button> -->
                 <mat-tree [dataSource]="dataSource" #tree [treeControl]="treeControl" class="example-tree">
                     <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
                         <span class="text-color" *ngIf="node.level == 'L3'" (click)="navigateToNoytation(node)">{{node.title}}</span>
-                        <span *ngIf="node.level == 'L1'">{{node.title}}</span>
-                        <span *ngIf="node.level == 'L2'">{{node.title}}
+                        <span *ngIf="node.level == 'L1'">{{node.title}} </span>
+                        <span *ngIf="node.level == 'L2'">{{node.title}} 
                             <button #pop2="bs-popover" [outsideClick]="true" [popover]="popTemplate" placement="right" >
-                                <mat-icon>add</mat-icon>
+                                <!-- <mat-icon>add</mat-icon> -->
+                                <img src="../../../../assets/images/RPA/icon_latest/new-blue.svg" class="testplus" />
                             </button>
                         </span>
                     </mat-tree-node>
@@ -38,8 +47,11 @@
                                 <mat-icon class="mat-icon-rtl-mirror">
                                     {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
                                 </mat-icon>
-                            </button> {{node.title}}
-                            <button #pop2="bs-popover" [popover]="popTemplate" [outsideClick]="true" placement="right" *ngIf="node.level=='L2'"><mat-icon>add</mat-icon></button>
+                            </button> {{node.title}} 
+                            <button #pop2="bs-popover" [popover]="popTemplate" [outsideClick]="true" placement="right" *ngIf="node.level=='L2'">
+                                <!-- <mat-icon>add</mat-icon> -->
+                                <img src="../../../../assets/images/RPA/icon_latest/new-blue.svg" class="testplus" />
+                            </button>
                         </div>
                         <div [class.example-tree-invisible]="!treeControl.isExpanded(node)" role="group">
                             <ng-container matTreeNodeOutlet></ng-container>
@@ -55,18 +67,17 @@
 <ng-template #popTemplate>
     <div class="custom-content ">
         <div class="col-md-12 p-0 form-group Apr-cnt">
-            <label class="label-control text-color">Create Notation</label>
-            <button type="button" (click)='pop2.hide()' class="notif-close" aria-label="Close">
-                <span>
-                  <img src="../../../assets/images/RPA/icon_latest/close.svg" />
-                </span>
-              </button>
+            <h4 class="label-control text-color">Create Notation
+                <button type="button" (click)='pop2.hide()' class="notif-close pull-right" aria-label="Close">
+                    <span><img src="../../../assets/images/RPA/icon_latest/close.svg" /></span>
+                </button>
+            </h4>
         </div>
-        <hr>
+        
 
         <div class="custom-footer-content">
-            <p (click)="onCreateBpmn();">Create Bpmn</p>
-            <p (click)="onCreateDmn()">Create DMN</p>
+            <p (click)="onCreateBpmn();"><img src="../../../../assets/images/SO/plus dis.svg" class="testplus" />Create Bpmn</p>
+            <p (click)="onCreateDmn()"><img src="../../../../assets/images/SO/plus dis.svg" class="testplus" />Create DMN</p>
         </div>
     </div>
 </ng-template>
