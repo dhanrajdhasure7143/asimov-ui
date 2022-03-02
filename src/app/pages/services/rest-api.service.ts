@@ -1304,7 +1304,7 @@ deleteNotationFromTemp(body){
 
 // vcm apis
 createVcm(body){
-  return this.http.post('/vcmv2/saveLevel1andlevel21vcm',body); 
+  return this.http.post('/vcmv2/saveLevel1andlevel2vcm',body); 
 }
 
 getAllvcms(){

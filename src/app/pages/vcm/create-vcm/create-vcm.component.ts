@@ -168,7 +168,7 @@ export class CreateVcmComponent implements OnInit {
       processOwner: '',
       documents: [],
       level: "L2",
-      'level1UniqueId':UUID.UUID()
+      'uniqueId':UUID.UUID()
     };
     var index = TREE_DATA.filter(e => e.name === this.level1process.parent)[0]
       .children.findIndex(c => c.title === this.level1process.title);
@@ -406,7 +406,7 @@ this.rest_api.uploadVCMPropDocument(formdata).subscribe(res=>{
     data1.forEach(e=>{
       if(e.children){
         e.children.forEach(e1 => {
-          e1["uniqueId"]=e.uniqueId
+          e1["level1UniqueId"]=e.uniqueId
         console.log(e1)
 
           data2.push(e1)

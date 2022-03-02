@@ -131,6 +131,66 @@ export class VcmStructureComponent implements OnInit {
         },
     ];
 
+
+
+  vcmData2=[
+    {
+    "type": "Process",
+    "uniqueId": "8058218c-4182-3524-c7f3-4cd657a784d9",
+    "processOwner": "Sai Nookala",
+    "description": "The implementation",
+    "level": "L1",
+    "title": "biology",
+    "parent": "Management Process",
+    "children": [],
+    },
+    {
+      "type": "Process",
+      "uniqueId": "8058218c-4182-3524-c7f3-4cd63456",
+      "processOwner": "Sai Nookala",
+      "description": "The implementation",
+      "level": "L1",
+      "title": "biology1",
+      "parent": "Management Process",
+      "children": [],
+      },
+    {
+    "type": "Process",
+    "uniqueId": "9058218c-4182-3524-c7f3-4cd657a784d9",
+    "processOwner": "Sai Nookala",
+    "description": "The implementation",
+    "level": "L1",
+    "title": "chemistry",
+    "parent": "Core Process",
+    "children": [],
+    "attachments": []
+    },
+    {
+    "type": "Process",
+    "uniqueId": "5058218c-4182-3524-c7f3-4cd657a784d9",
+    "processOwner": "Sai Nookala",
+    "description": "The implementation",
+    "level": "L1",
+    "title": "Maths",
+    "parent": "Support Process",
+    "children": [],
+    "attachments": []
+    },
+    {
+    "type": "Process",
+    "uniqueId": "8058218c-4182-3524-c7f3-4cd657a73421",
+    "level1UniqueId": "8058218c-4182-3524-c7f3-4cd657a784d9",
+    "processOwner": "Sai Nookala",
+    "description": "The implementation",
+    "level": "L2",
+    "title": "differentiation",
+    "parent": "Management Process",
+    "childParent": "biology",
+    "children": [],
+    },
+    ]
+
+
     overlay_data={"type":"create","module":"bps","ntype":"dmn"};
     randomId: string;bpmnModel:BpmnModel = new BpmnModel();
 
@@ -142,11 +202,13 @@ export class VcmStructureComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    this.treeControl.dataNodes = this.dataSource.data; 
     this.getselectedVcm();
   }
   // ngAfterViewInit() {
     
   // }
+
 
   hasChild = (_: number, node: any) => !!node.children && node.children.length > 0;
 
@@ -237,9 +299,10 @@ export class VcmStructureComponent implements OnInit {
     let res_data
     this.rest_api.getselectedVcmById(this.vcm_id).subscribe(res=>{res_data=res
       console.log(res);
-      this.vcmData=res_data.data.vcmV2
+      this.vcmData=res_data.data.vcmV2;
+      // this.vcmData=this.vcmData1
       this.isLoading=false;
-      this.dataMappingToTreeStructer()
+      this.dataMappingToTreeStructer1();
     })
   }
 
@@ -295,11 +358,74 @@ export class VcmStructureComponent implements OnInit {
     // this.vcmProcess = this.dataSource.data;
     this.vcmProcess = objData;
     this.dataSource.data=objData;
-    console.log(this.dataSource.data,"data");
     this.treeControl.dataNodes = this.dataSource.data; 
-    this.treeControl.expandAll();
-    this.tree.treeControl.expandAll();
+    // this.treeControl.expandAll();
+    this.treeControl.expand(this.treeControl.dataNodes[0]);
+    this.treeControl.expand(this.treeControl.dataNodes[1]);
+    this.treeControl.expand(this.treeControl.dataNodes[2]);
+    // this.tree.treeControl.expandAll();
 
+  }
+
+  dataMappingToTreeStructer1(){
+    let objData = [
+      { title: "Management Process","children":[]},
+      { title: "Core Process","children":[]},
+      { title: "Support Process","children":[]}
+    ]
+
+    this.vcmData.forEach(e=>{
+      objData.forEach(e1=>{
+        if(e.level == "L1"){
+          if(e.parent == e1.title){
+            e1["children"].push(e);
+          }
+        }
+      })
+    })
+    console.log(objData)
+
+    this.vcmData.forEach(e=>{
+      objData.forEach(e1=>{
+        if(e.level == "L2"){
+          if(e.parent == e1.title){
+            e1.children.forEach(e2=>{
+              if(e2.uniqueId == e.level1UniqueId ){
+                e2['children'].push(e);
+              }
+            })
+          }
+        }
+      })
+    })
+
+    this.vcmData.forEach(e=>{
+      objData.forEach(e1=>{
+        if(e.level == "L3"){
+          if(e.parent == e1.title){
+            e1.children.forEach(e2=>{
+              if(e2.title == e.childParent ){
+                e2.children.forEach(e3 => {
+                  if(e3.uniqueId == e.level2UniqueId ){
+                    e3['children'].push(e)
+                  }
+                });
+              }
+            })
+          }
+        }
+      })
+    })
+    console.log(objData)
+    // this.vcmProcess = this.dataSource.data;
+    this.vcmProcess = objData;
+    this.dataSource.data=objData;
+    this.treeControl.dataNodes = this.dataSource.data; 
+    this.treeControl.expand(this.treeControl.dataNodes[0]);
+    this.treeControl.expand(this.treeControl.dataNodes[1]);
+    this.treeControl.expand(this.treeControl.dataNodes[2]);
+    // this.treeControl.expandAll();
+    // this.tree.treeControl.expandAll();
   }
 
   collapse(){
