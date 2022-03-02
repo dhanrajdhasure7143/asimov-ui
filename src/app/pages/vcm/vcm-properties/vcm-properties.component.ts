@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataTransferService } from '../../services/data-transfer.service';
 import { RestApiService } from '../../services/rest-api.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-vcm-properties',
@@ -25,7 +26,7 @@ export class VcmPropertiesComponent implements OnInit {
   descriptionProcessName: any;
   processOwners_list:any[]=[];
   vcmData:any=[];
-
+  isLoading:boolean=false;
   constructor(private router: Router, private route: ActivatedRoute, private rest_api:RestApiService, private dt: DataTransferService) {
     this.route.queryParams.subscribe(res => {
       this.levelType = res.level
@@ -90,38 +91,56 @@ export class VcmPropertiesComponent implements OnInit {
     documentsUpload(event, name ,level) {
       console.log(name,this.vcmProperties);
       console.log(level);
+      this.isLoading=true;
+
       this.fileName = []
-      console.log(event);
+      const formdata = new FormData();
+
       for (var i = 0; i < event.target.files.length; i++) {
         event.target.files[i]['convertedsize'] = this.convertFileSize(event.target.files[i].size);
         event.target.files[i]['filename'] = event.target.files[i]['name'];
-        this.fileName.push(event.target.files[i]);
+        this.fileName.push();
+        formdata.append("file", event.target.files[i]);
       }
-      const formdata = new FormData();
       formdata.append("vcmLevel",name.level);
       formdata.append("uniqueId",name.uniqueId);
+      formdata.append("masterId","000");
+
       if (level == 'level1') {
       formdata.append("vcmuniqueId",this.vcmProperties[0].uniqueId);
       }
       if (level == 'level2') {
         formdata.append("vcmuniqueId",this.vcmProperties[0].level1UniqueId);
         }
-      formdata.append("masterId",null);
-      for (var i = 0; i < this.fileName.length; i++) {
-        formdata.append("file", this.fileName[i]);
-      }
-      if (level == 'level1') {
-      this.vcmProperties.filter((e) => e.name === name.parent)[0].children
-        .filter(n => n.title === name.title)[0].documents = this.fileName;
-      }
-      if (level == 'level2') {
-        this.vcmProperties.filter((e) => e.name === name.parent)[0].children
-          .filter(n => n.title === name.childParent)[0].children.filter(c => c.title === name.title)[0]
-          .documents = this.fileName;
-      }
-      console.log(this.fileName);
+      this.rest_api.uploadVCMPropDocument(formdata).subscribe(res => {
+        this.isLoading = false;
+        for (var i = 0; i < event.target.files.length; i++) {
+          this.fileName.push(event.target.files[i]);
+        }
+
+        if (level == 'level1') {
+          this.vcmProperties.filter((e) => e.name === name.parent)[0].children
+            .filter(n => n.title === name.title)[0].documents = this.fileName;
+        }
+        if (level == 'level2') {
+          this.vcmProperties.filter((e) => e.name === name.parent)[0].children
+            .filter(n => n.title === name.childParent)[0].children.filter(c => c.title === name.title)[0]
+            .documents = this.fileName;
+        }
+      },err=>{
+        this.isLoading=false;
+        Swal.fire({
+          title: 'Error',
+          text: "File upload failed",
+          position: 'center',
+          icon: 'error',
+          heightAuto: false,
+        })
+
+      });
       console.log(this.vcmProperties);
     }
+    
   convertFileSize(e) {
     let divided_size: any = String(e / 1024)
     if (e / 1024 <= 1024) {
