@@ -61,9 +61,18 @@
 }
 
 span.proc-title {
-    color: #00a1e4;
-    line-height: 14px;
-    font-size: 16px;
+    color: #00a1e4 !important;
+    font-size: 16px !important;
+}
+.mat-tree-node span {
+    color: #607088;
+    font-size: 14px;
+    line-height: 22px;
+}
+img.procmenu {
+    width: auto;
+    height: 18px;
+    margin-right: 5px;
 }
 .close-btn h3 {
     padding: 10px 0px 0px 15px;
