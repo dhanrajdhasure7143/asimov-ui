@@ -34,7 +34,7 @@
                                         <select class="form-control" [(ngModel)]="each.processOwner" #ownerValue>
                                             <option value="" hidden disabled>Select Owner</option>
                                             <!-- <option value="ranjith@epsoft" >ranjith</option> -->
-                                            <option *ngFor="let each_approver of processOwners_list;let i=index" [value]=each_approver.userId>
+                                            <option *ngFor="let each_approver of processOwners_list;let i=index" [value]="each_approver.firstName+' '+each_approver.lastName">
                                                 {{(each_approver.firstName | titlecase) +" "+(each_approver.lastName==undefined?"":each_approver.lastName)}}</option>
                                         </select>
                                     </td>
@@ -176,7 +176,7 @@
                                         <td *ngIf="level2.title">
                                             <select class="form-control" #ownerValue [(ngModel)]="level2.processOwner">
                                                     <option value="" hidden disabled>Select Owner</option>
-                                                    <option *ngFor="let each_approver of processOwners_list;let i=index" [value]=each_approver.userId>
+                                                    <option *ngFor="let each_approver of processOwners_list;let i=index" [value]="each_approver.firstName+' '+each_approver.lastName">
                                                         {{(each_approver.firstName | titlecase) +" "+(each_approver.lastName==undefined?"":each_approver.lastName)}}</option>
                                                 </select>
                                         </td>

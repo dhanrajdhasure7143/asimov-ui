@@ -28,7 +28,7 @@
                                 <select class="form-control">
                                     <option value="" hidden disabled>Select Owner</option>
                                     <option *ngFor="let each_approver of processOwners_list;let i=index"
-                                        [value]=each_approver.userId>
+                                        [value]="each_approver.firstName+' '+each_approver.lastName">
                                         {{(each_approver.firstName | titlecase) +"
                                         "+(each_approver.lastName==undefined?"":each_approver.lastName)}}</option>
                                 </select>

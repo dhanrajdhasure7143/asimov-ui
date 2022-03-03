@@ -56,6 +56,8 @@ export class VcmStructureComponent implements OnInit {
   processDesc:any;
   uploadedFiles:any=[];
   isPropDisabled:boolean=true;
+  isViewProperties:boolean=false;
+  node_data:any=[];
 
   vcmData1= [
     {
@@ -381,8 +383,23 @@ export class VcmStructureComponent implements OnInit {
     this.expandTree = false;
   }
 
-  viewProperties(){
-    this.drawer.open();
+  viewProperties(node){
+    console.log(node)
+    this.node_data=[]
+this.vcmData.forEach(element => {
+if(element.parent == node.title){
+this.node_data.push(element)
+}
+
+});
+    console.log(this.node_data)
+    this.isViewProperties=true;
+    this.isShow=false;
+  }
+
+  backToView(){
+    this.isShow=false;
+    this.isViewProperties=false;
   }
 
   closeOverlay(){
@@ -399,14 +416,12 @@ export class VcmStructureComponent implements OnInit {
   }
 
   openNodeProperties(node){
-    console.log(node)
     this.uploadedFiles=[];
     this.processName=node.title
     this.processOwner=node.processOwner;
     this.processDesc=node.description;
     this.uploadedFiles=node.attachments
     this.drawer.open();
-
   }
   
 }
