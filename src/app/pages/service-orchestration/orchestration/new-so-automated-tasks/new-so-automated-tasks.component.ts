@@ -1335,6 +1335,9 @@ resetsla(){
     this.rest.tasksListInProcess(this.selectedvalue).subscribe(resp => {
       this.taskslist = resp.tasks;
     })
+    // this.taskslist=[{taskId:1,taskName:"abc"},{taskId:1,taskName:"abc"},{taskId:1,taskName:"abc"},
+    // {taskId:1,taskName:"abc"},{taskId:1,taskName:"abc"},
+    // {taskId:1,taskName:"abc"},{taskId:1,taskName:"abc"},{taskId:1,taskName:"abc"},{taskId:1,taskName:"abc"},{taskId:1,taskName:"abc"},]
     this.logs_modal = this.modalService.show(template);
   }
 

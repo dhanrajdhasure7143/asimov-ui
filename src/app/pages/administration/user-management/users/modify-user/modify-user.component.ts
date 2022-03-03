@@ -126,14 +126,15 @@ updateUser(){
 }
 
 onchangeRole(value){
-  this.departments=[];
+ 
   if(value== '8'){
+    this.departments=[];
     this.categories.forEach(element => {
       this.departments.push(element.categoryId)
     });
     this.isdprtDisabled=true;
   }else{
-    this.departments=[];
+    
    // this.departments=this.depts;
     this.isdprtDisabled=false;
   }
