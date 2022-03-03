@@ -105,7 +105,8 @@
                                     <ng-container matTreeNodeOutlet></ng-container>
                                 </div>
                             </mat-nested-tree-node>
-                        </mat-tree>
+                            </mat-tree>
+                        </div>
                     </div>
                 </div>
             </mat-drawer-content>
@@ -120,7 +121,7 @@
     </div>
 </div>
 
-<div *ngIf="isShow">
+<div *ngIf="isShow" class="h-100">
 
     <app-edit-vcm [vcmData]="vcmProcess"></app-edit-vcm>
 </div>
