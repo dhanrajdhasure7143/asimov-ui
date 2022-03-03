@@ -15,7 +15,10 @@
     <div class="module-body">
         <mat-drawer-container class="example-container h-100" style="background-color: white;">
             <mat-drawer #drawer class="example-sidenav vcmprop" mode="side" position="end" >
-                <div><img src="../../../../assets/images/VCM/VCM-close.svg" class="close-btn" (click)="closeOverlay()"  /></div>
+                <div class="close-btn">
+                    <h3>{{editProcessName}}
+                    <img src="../../../../assets/images/VCM/VCM-close.svg" (click)="closeOverlay()" /></h3>
+                </div>
                 <mat-tab-group>
                     <mat-tab label="Properties">
                         <div class="editcontent" >
@@ -44,7 +47,7 @@
                     </mat-tab>
                     <mat-tab label="Documents">
                         <div class="col-md-12 form-group" >
-                            <h4 class="procname">{{editProcessName}}</h4>
+                            <!-- <h4 class="procname">{{editProcessName}}</h4> -->
                             <div class="vcmdocs">
                                 <img src="../../../../assets/images/VCM/VCM-Upload.svg"  />
                                 <button class="btn" (click)="fileInput.click()" >
