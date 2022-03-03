@@ -42,9 +42,9 @@
                         
                         <div class="col-md-6 p-0">
                             <div class="col-md-6 form-group pr-0 rpa-searchip">
-                                <select class="form-control" (change)="applySearchFilter($event.target.value)">
+                                <select class="form-control" (change)="searchByCategory($event.target.value)">
                                     <option value="" >All Categories</option>
-                                    <option [value]="category.categoryName" *ngFor="let category of categaoriesList">{{category.categoryName | titlecase}}</option>
+                                    <option [value]="category.categoryName" *ngFor="let category of categaoriesList;let i=index;trackBy:loopTrackBy">{{category.categoryName | titlecase}}</option>
                                 </select>
                             </div>
                             <div class="col-md-6 form-group pr-0 rpa-searchip">
