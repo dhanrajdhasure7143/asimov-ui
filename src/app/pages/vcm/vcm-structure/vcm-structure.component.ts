@@ -51,6 +51,11 @@ export class VcmStructureComponent implements OnInit {
   uploadedDocuments:any=[];
   vcm_data:any;
   selectedVcmName:any;
+  processName:any;
+  processOwner:any;
+  processDesc:any;
+  uploadedFiles:any=[];
+  isPropDisabled:boolean=true;
 
   vcmData1= [
     {
@@ -391,6 +396,17 @@ export class VcmStructureComponent implements OnInit {
      if(Array.isArray(res))
        this.processOwners_list = res;
    });
+  }
+
+  openNodeProperties(node){
+    console.log(node)
+    this.uploadedFiles=[];
+    this.processName=node.title
+    this.processOwner=node.processOwner;
+    this.processDesc=node.description;
+    this.uploadedFiles=node.attachments
+    this.drawer.open();
+
   }
   
 }

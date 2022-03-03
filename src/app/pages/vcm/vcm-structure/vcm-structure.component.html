@@ -29,46 +29,39 @@
                         <div class="editcontent">
                             <div class="col-md-12 form-group">
                                 <label class="label-control">Process Name</label>
-                                <input type="text" disabled class="form-control">
+                                <input type="text" [disabled]="isPropDisabled" class="form-control" [(ngModel)]="processName">
                             </div>
                             <div class="col-md-12 form-group">
                                 <label class="label-control">Process Owner</label>
-                                <select class="form-control">
+                                <select class="form-control" [disabled]="isPropDisabled" [(ngModel)]="processOwner">
                                     <option value="" hidden disabled>Select Owner</option>
-                                    <option *ngFor="let each_approver of processOwners_list;let i=index"
-                                        [value]=each_approver.userId>
+                                    <option *ngFor="let each_approver of processOwners_list;let i=index" [value]=each_approver.userId>
                                         {{(each_approver.firstName | titlecase) +"
                                         "+(each_approver.lastName==undefined?"":each_approver.lastName)}}</option>
                                 </select>
                             </div>
                             <div class="col-md-12 form-group">
                                 <label class="label-control">Process Description</label>
-                                <textarea class="form-control" placeholder="Enter Process Description"></textarea>
+                                <textarea class="form-control" [disabled]="isPropDisabled" placeholder="Enter Process Description" [(ngModel)]="processDesc"></textarea>
                             </div>
-                        </div>
-                        <div class="propfooter col-md-12 text-right">
-                            <!-- <button class="btn btn-primary" *ngIf="editLevelProperties == 1" (click)="editProperties()">Save</button> -->
-                            <!-- <button class="btn btn-primary" *ngIf="editLevelProperties == 2" (click)="editProcessLevel2()">Save</button> -->
                         </div>
                     </mat-tab>
                     <mat-tab label="Documents">
                         <div class="col-md-12 form-group">
-                            <!-- <h4 class="procname">{{editProcessName}}</h4> -->
-                            <div class="vcmdocs">
-                                <img src="../../../../assets/images/VCM/VCM-Upload.svg" />
-                                <button class="btn" (click)="fileInput.click()">
-                                <input multiple #fileInput type="file" (change)="documentsUpload($event)" style="display:none;" />
-                                Upload
-                            </button>
-                            </div>
+                            <h4 class="procname">{{processName}}</h4>
                         </div>
                         <div class="col-md-12 form-group files">
-                            <p *ngFor="let file of uploadedDocuments;let i = index;">
-                                {{file.name}}
-                                <span><img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img" />
+                            <p *ngFor="let each of uploadedFiles;let i = index;">
+                               {{i+1}}. {{each.fileName}}
+                                <!-- <span><img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img" />
                                 <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img"
-                                    (click)="RemoveFile(file,i)" /></span>
+                                    (click)="RemoveFile(file,i)" /></span> -->
+                                    <!-- <a href="data:image/png;base64,{{each.fileData}}" download="{{each.fileName}}">
+                                        <img src="../../../../assets/images/Admin/download-black.svg" class="default-img testplus" >
+                                        <img src="../../../../assets/images/Admin/download-blue.svg" class="hover-img testplus" >
+                                        </a> -->
                             </p>
+                            
                         </div>
                     </mat-tab>
                 </mat-tab-group>
@@ -83,8 +76,8 @@
                         <mat-tree [dataSource]="dataSource" #tree [treeControl]="treeControl" class="example-tree">
                             <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
                                 <span class="text-color" *ngIf="node.level == 'L3'" (click)="navigateToNoytation(node)">{{node.title}}</span>
-                                <span *ngIf="node.level == 'L1'">{{node.title}} </span>
-                                <span *ngIf="node.level == 'L2'">{{node.title}}
+                                <span *ngIf="node.level == 'L1'" (click)="openNodeProperties(node)">{{node.title}} </span>
+                                <span *ngIf="node.level == 'L2'" (click)="openNodeProperties(node)">{{node.title}}
                                 </span>
                             </mat-tree-node>
                             <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
