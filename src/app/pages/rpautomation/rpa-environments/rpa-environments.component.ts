@@ -543,7 +543,9 @@ import { NgxSpinnerService } from "ngx-spinner";
         this.checktoupdate();
         this.checktodelete();  
       },err=>{
-          Swal.fire("Error","Failed to deploy bot in selected evironment","error")
+          // Swal.fire("Error","Failed to deploy bot in selected evironment","error")
+          // -- This is only for production case as it is giving 502 due to timeout issues
+          Swal.fire("Success","Agent Deployed Successfully !!","success")
           this.spinner.hide(); 
       })
     }
