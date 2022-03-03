@@ -54,7 +54,7 @@ export class VcmStructureComponent implements OnInit {
   processName:any;
   processOwner:any;
   processDesc:any;
-  uploadedFiles:any=[];
+  attachments:any=[];
   isPropDisabled:boolean=true;
   isViewProperties:boolean=false;
   node_data:any=[];
@@ -415,12 +415,31 @@ export class VcmStructureComponent implements OnInit {
   }
 
   openNodeProperties(node){
-    this.uploadedFiles=[];
-    this.processName=node.title
+    console.log("node",node)
+    this.getAttachements(node);
+    this.processName=node.title;
     this.processOwner=node.processOwner;
     this.processDesc=node.description;
-    this.uploadedFiles=node.attachments
     this.drawer.open();
+  }
+
+  getAttachements(node_obj){
+      // this.isLoading=true;
+      let reqBody={
+        "masterId": this.vcm_data.data.id,
+        "parent": node_obj.parent
+      }
+      let res_data
+      this.attachments=[];
+    this.rest_api.getvcmAttachements(reqBody).subscribe(res=>{res_data=res
+      console.log(res)
+      res_data.data.forEach(element => {
+        if(element.uniqueId== node_obj.uniqueId){
+          this.attachments.push(element)
+        }
+      });
+      // this.isLoading=false;
+    })
   }
   
 }

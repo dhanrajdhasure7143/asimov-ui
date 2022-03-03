@@ -54,10 +54,17 @@
                             <h4 class="procname">{{processName}}</h4>
                         </div> -->
                         <div class="col-md-12 form-group files">
-                            <p *ngFor="let each of uploadedFiles;let i = index;">
+                            <p *ngFor="let each of attachments;let i = index;">
                                {{i+1}}. {{each.fileName}}
                                <span>
-                                   <img src="../../../../assets/images/Admin/download-blue.svg" class="testplus" >
+                                   <!-- <img src="../../../../assets/images/Admin/download-blue.svg" class="testplus" > -->
+                                   <span class="deleteattachment tsttooltipbtn">
+                                    <a href="data:image/png;base64,{{each.filedata}}" download="{{each.fileName}}">
+                                    <img src="../../../../assets/images/Admin/download-black.svg" class="default-img testplus" >
+                                    <img src="../../../../assets/images/Admin/download-blue.svg" class="hover-img testplus" >
+                                    </a>
+                                    <!-- <span class="testtooltip">Download</span> -->
+                                </span>
                                </span>
                                 <!-- <span><img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img" />
                                 <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img"

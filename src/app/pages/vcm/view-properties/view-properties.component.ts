@@ -31,14 +31,6 @@ export class ViewPropertiesComponent implements OnInit {
         this.prop_data.push(element)
       }
     })
-    this.vcm_data.forEach(element => {
-      if(element.attachments.length>0){
-        element.attachments.forEach(ele => {
-        this.attachments.push(ele)
-        });
-      }
-      
-    });
   }
 
   getAttachements(){
@@ -48,8 +40,11 @@ export class ViewPropertiesComponent implements OnInit {
         "masterId": this.vcm_resData.data.id,
         "parent": this.vcm_resData.mainParent
       }
-    this.rest_api.getvcmAttachements(reqBody).subscribe(res=>{
+      let res_data
+      this.attachments=[];
+    this.rest_api.getvcmAttachements(reqBody).subscribe(res=>{res_data=res
       console.log(res)
+      this.attachments=res_data.data
       this.isLoading=false;
     })
     }

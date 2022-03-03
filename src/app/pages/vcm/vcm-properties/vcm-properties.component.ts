@@ -199,7 +199,8 @@ export class VcmPropertiesComponent implements OnInit {
   }
 
   resetProperties(){
-    this.vcmProperties=this.vcmData
+    let vData = localStorage.getItem("vcmData");
+    this.vcmProperties = JSON.parse((vData));
     let obj={vName:this.vcmName,pOwner:this.process_ownerName,data:this.vcmData}
     this.dt.vcmDataTransfer(obj);
 
