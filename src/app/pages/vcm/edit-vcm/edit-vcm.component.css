@@ -137,3 +137,8 @@ mat-tree-node button img.testplus {
 .vcm-treediv {
     height: calc(100% - 110px);
 }
+img.procmenu {
+    width: auto;
+    height: 18px;
+    margin-right: 5px;
+}

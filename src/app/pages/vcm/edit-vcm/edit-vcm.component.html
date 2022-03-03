@@ -115,7 +115,7 @@
                                     <div class="mat-tree-node">
                                         <button (click)="viewProperties()"
                                             *ngIf="(node.title=='Management Process'&& treeControl.dataNodes[1])|| (node.title=='Core Process'&& treeControl.dataNodes[1]) || (node.title=='Support Process'&& treeControl.dataNodes[2])">
-                                            <img src="../../../assets/images/menu-line.svg" class="testplus" alt="">
+                                            <img src="../../../assets/images/menu-line.svg" class="procmenu" alt="">
                                         </button>
                                         <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name"
                                             *ngIf="node.title != 'Management Process' && node.title != 'Core Process' && node.title != 'Support Process'">
