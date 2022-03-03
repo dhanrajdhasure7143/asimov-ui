@@ -48,4 +48,11 @@ export class ViewVcmComponent implements OnInit {
   });
 }
 
+deleteVcm(){
+  this.rest_api.deleteVcm(3276).subscribe(res=>{
+    console.log(res)
+    this.getListofVcms();
+  })
+}
+
 }

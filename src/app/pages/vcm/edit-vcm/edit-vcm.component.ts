@@ -26,6 +26,11 @@ export class EditVcmComponent implements OnInit {
   overlay_data={"type":"create","module":"bps","ntype":"dmn"};
   randomId: string;bpmnModel:BpmnModel = new BpmnModel();
   processOwners_list:any;
+  parent: any;
+  childParent: any;
+  title: any;
+  processName: any;
+  uniqueId: any;
 
   constructor(private router: Router,private bpmnservice:SharebpmndiagramService,private rest_api: RestApiService,
     private route : ActivatedRoute) {
@@ -40,7 +45,7 @@ export class EditVcmComponent implements OnInit {
   }
 
   ngOnChanges(){
-
+    console.log(this.vcmData);
     this.dataSource.data=this.vcmData;
     console.log(this.dataSource.data)
     this.treeControl.dataNodes = this.dataSource.data; 
@@ -141,6 +146,42 @@ export class EditVcmComponent implements OnInit {
      if(Array.isArray(res))
        this.processOwners_list = res;
    });
+  }
+
+  onUploadNotation(){
+
+  }
+
+  addLevel(node){
+    console.log(node);
+    this.parent = node.parent;
+    this.childParent = node.childParent;
+    this.title = node.title;
+    this.processName;
+    this.uniqueId = node.uniqueId;
+  }
+  editLevel3(){
+    this.vcmData.filter((e) => e.title === this.parent)[0].children
+    .filter(n => n.title === this.childParent)[0].children
+    .filter(c=>c.title == this.title)[0].children.push(
+      {
+        level:"L3",
+        parent:this.parent,
+        title:this.processName,
+        description:'',
+        processOwner:'',
+        type:"Process",
+        level2UniqueId:this.uniqueId
+      }
+    );
+    console.log(this.vcmData);
+    this.dataSource.data = null;
+    this.dataSource.data = this.vcmData;
+    this.parent = '';
+    this.childParent = '';
+    this.title = '';
+    this.uniqueId = '';
+    this.processName = '';
   }
 
 }

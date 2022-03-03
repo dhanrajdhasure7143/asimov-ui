@@ -47,7 +47,7 @@
 
             <div class="col-md-12 col-lg-12">
                 <div class="prop_procdef">
-                    <h4>Process Definition</h4>
+                    <h4>Process Description</h4>
                     <div *ngFor="let prop of vcmProperties;let i = index;" class="definitionscroll">
 
                         <ng-container *ngFor="let name of prop.children;let j = index;">
@@ -57,16 +57,16 @@
                             <div [hidden]="name.title && descriptionEdit == j && name.parent == descriptionProcessName" (click)="descriptionView(name , j , 'level1')" class="proc_deffield">
 
                                 <span>
-                                    <textarea *ngIf="!name.description" class="form-control descriptionview" placeholder="Enter Definition1"></textarea>
-                                    <textarea class="form-control descriptionview" *ngIf="name.description">{{name.description}}</textarea>
+                                    <textarea  (click)="descriptionView(name , j , 'level1')" *ngIf="!name.description" class="form-control descriptionview" placeholder="Enter Description"></textarea>
+                                    <textarea  (click)="descriptionView(name , j , 'level1')" class="form-control descriptionview" *ngIf="name.description">{{name.description}}</textarea>
                                     <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus" 
-                                        (click)="descriptionView(name , j , 'level1')" *ngIf="name.description" />
+                                        (click)="descriptionView(name , j , 'level1')"/>
                                     
                                 </span>
                             </div>
 
                             <div class="proc_deffield">
-                                <textarea *ngIf="name.title && descriptionEdit == j && name.parent == descriptionProcessName" class="form-control" id="descriptionValue" [(ngModel)]="name.description" placeholder="Enter Definition"></textarea>
+                                <textarea *ngIf="name.title && descriptionEdit == j && name.parent == descriptionProcessName" class="form-control" #descriptionValue [(ngModel)]="name.description" placeholder="Enter Description"></textarea>
                                 <span class="procdesc_act" *ngIf="name.title && descriptionEdit == j && name.parent == descriptionProcessName">
                                     <span>
                                         <img  src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img" />
@@ -173,7 +173,7 @@
                                     <tr *ngFor="let level2 of name.children;let k = index">
                                         <td *ngIf="level2.title">{{prop.name}}</td>
                                         <td *ngIf="level2.title">{{level2.title}}</td>
-                                        <td *ngIf="level2.title" >
+                                        <td *ngIf="level2.title">
                                             <select class="form-control" #ownerValue [(ngModel)]="level2.processOwner">
                                                     <option value="" hidden disabled>Select Owner</option>
                                                     <option *ngFor="let each_approver of processOwners_list;let i=index" [value]=each_approver.userId>
@@ -190,7 +190,7 @@
 
             <div class="col-md-12 col-lg-12">
                 <div class="prop_procdef">
-                    <h4>Process Definition</h4>
+                    <h4>Process Description</h4>
 
                     <div *ngFor="let prop of vcmProperties;let i = index;" class="definitionscroll">
 
@@ -203,15 +203,15 @@
                                 <div [hidden]="level2.title && descriptionEdit == j && level2.parent == descriptionProcessName" (click)="descriptionView(level2 , j , 'level2')" class="proc_deffield">
 
                                     <span>
-                                        <textarea  *ngIf="!level2.description" class="form-control descriptionview" placeholder="Enter Definition"></textarea>
-                                        <textarea class="form-control descriptionview" *ngIf="level2.description">{{level2.description}}</textarea>
+                                        <textarea  (click)="descriptionView(level2 , j , 'level2')"  *ngIf="!level2.description" class="form-control descriptionview" placeholder="Enter Description"></textarea>
+                                        <textarea (click)="descriptionView(level2 , j , 'level2')"  class="form-control descriptionview" *ngIf="level2.description">{{level2.description}}</textarea>
                                         <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus" 
                                             (click)="descriptionView(level2 , j , 'level2')"  *ngIf="level2.description" /> 
                                        
                                     </span>
                                 </div>
                                 <div class="proc_deffield">
-                                    <textarea *ngIf="level2.title && descriptionEdit == j && level2.parent == descriptionProcessName" class="form-control" id="descriptionValue" [(ngModel)]="level2.description" placeholder="Enter Definition"></textarea>
+                                    <textarea *ngIf="level2.title && descriptionEdit == j && level2.parent == descriptionProcessName" class="form-control" #descriptionValue [(ngModel)]="level2.description" placeholder="Enter Description"></textarea>
 
                                     <span class="procdesc_act" *ngIf="level2.title && descriptionEdit == j && level2.parent == descriptionProcessName">
                                         <span>
@@ -318,6 +318,6 @@
 
 <div class="spinoverlay" *ngIf="isLoading">
     <div class="spincenter">
-        <img  src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader"/>
+        <img src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader" />
     </div>
 </div>
