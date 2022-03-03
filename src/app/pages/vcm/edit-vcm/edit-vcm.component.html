@@ -4,7 +4,7 @@
             <span class="module-back-button" routerLink="/pages/vcm/view-vcm">
                 <i aria-hidden="true" class="fas fa-arrow-left"></i>
             </span>
-            <span class="module-header-title">Value Chain Mapping</span>
+            <span class="module-header-title">Value Chain Mapping - Edit</span>
         </div>
         <div class="ml-auto submit">
             <button class="btn btn-primary">Save</button>
@@ -83,7 +83,7 @@
                                 <span *ngIf="node.level == 'L2'">{{node.title}}
                                     <button #pop3="bs-popover" *ngIf="node.level == 'L2'" (click)="onSelectedNode(node)"
                                         [popover]="popTemplate1" [outsideClick]="true" placement="right">
-                                        <img src="../../../../assets/images/RPA/icon_latest/new-blue.svg"
+                                        <img src="../../../../assets/images/VCM/plus-bordercircle.svg"
                                             class="testplus" />
                                     </button>
 
@@ -111,7 +111,9 @@
                                         <mat-icon class="mat-icon-rtl-mirror">
                                             {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
                                         </mat-icon>
-                                    </button> {{node.title}}
+                                    </button> 
+                                    <span *ngIf="node.level == 'L1' || node.level == 'L2' || node.level == 'L3' ">{{node.title}} </span>
+                                    <span class="test" *ngIf="node.level != 'L1' && node.level != 'L2' && node.level != 'L3' ">{{node.title}}</span>
                                     <!-- <button style="padding-left: 1%;" *ngIf="node.level == 'L2'" (click)="onSelectedNode(node)" #pop2="bs-popover" [popover]="popTemplate" [outsideClick]="true" placement="right" *ngIf="node.title != 'Management Process' && node.title != 'Core Process' && node.title != 'Support Process'">
                                     <img src="../../../../assets/images/RPA/icon_latest/new-blue.svg" class="testplus" />
                                 </button> -->
@@ -119,7 +121,7 @@
                                     <button style="padding-left: 1%;" *ngIf="node.level == 'L2'"
                                         (click)="onSelectedNode(node)" #pop2="bs-popover" [popover]="popTemplate1"
                                         [outsideClick]="true" placement="right">
-                                        <img src="../../../../assets/images/RPA/icon_latest/new-blue.svg"
+                                        <img src="../../../../assets/images/VCM/plus-bordercircle.svg"
                                             class="testplus" />
                                     </button>
 
@@ -153,11 +155,11 @@
 <ng-template #popTemplate>
     <div class="custom-content ">
         <div class="custom-footer-content">
-            <p (click)="onCreateBpmn();"><img src="../../../../assets/images/SO/plus dis.svg" class="testplus" />Create
+            <p (click)="onCreateBpmn();"><img src="../../../../assets/images/VCM/Plus-litblue.svg" class="testplus" />Create
                 Bpmn</p>
-            <p (click)="onCreateDmn()"><img src="../../../../assets/images/SO/plus dis.svg" class="testplus" />Create
+            <p (click)="onCreateDmn()"><img src="../../../../assets/images/VCM/Plus-litblue.svg" class="testplus" />Create
                 DMN</p>
-            <p (click)="onUploadNotation()"><img src="../../../../assets/images/VCM/VCM-Upload.svg"
+            <p (click)="onUploadNotation()"><img src="../../../../assets/images/VCM/upload-litblue.svg"
                     class="testplus" />Upload Notation</p>
         </div>
     </div>
@@ -166,9 +168,9 @@
 <ng-template #popTemplate1>
     <div class="custom-content ">
         <div class="custom-footer-content">
-            <p><img src="../../../../assets/images/SO/plus dis.svg" class="testplus" />Create Notation</p>
-            <p><img src="../../../../assets/images/SO/plus dis.svg" class="testplus" />Upload Notation</p>
-            <p (click)="onCreateLevel3()"><img src="../../../../assets/images/VCM/VCM-Upload.svg"
+            <p><img src="../../../../assets/images/VCM/Plus-litblue.svg" class="testplus" />Create Notation</p>
+            <p><img src="../../../../assets/images/VCM/upload-litblue.svg" class="testplus" />Upload Notation</p>
+            <p (click)="onCreateLevel3()"><img src="../../../../assets/images/VCM/Folder-litblue.svg"
                     class="testplus" />Create Level 3</p>
         </div>
     </div>

@@ -69,11 +69,12 @@
             <mat-drawer-content>
                 <div class="vcm-treesmain h-100">
                     <!-- <h4 >{{vcmProcess[3].vcmname}}</h4> -->
-                    <div class="row maincontent">
+                    <div class="maincontent h-100">
                         <div>
-                            <h2>{{selectedVcmName}}</h2>
+                            <h4>{{selectedVcmName}}</h4>
                         </div>
                         <mat-tree [dataSource]="dataSource" #tree [treeControl]="treeControl" class="example-tree">
+                            
                             <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
                                 <span class="text-color" *ngIf="node.level == 'L3'" (click)="navigateToNoytation(node)">{{node.title}}</span>
                                 <span *ngIf="node.level == 'L1'" (click)="openNodeProperties(node)">{{node.title}} </span>
@@ -89,7 +90,9 @@
                                         <mat-icon class="mat-icon-rtl-mirror">
                                             {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
                                         </mat-icon>
-                                    </button> {{node.title}}
+                                    </button> 
+                                    <span *ngIf="node.level == 'L1' || node.level == 'L2' || node.level == 'L3' ">{{node.title}} </span>
+                                    <span class="test" *ngIf="node.level != 'L1' && node.level != 'L2' && node.level != 'L3' ">{{node.title}}</span>
                                 </div>
                                 <div [class.example-tree-invisible]="!treeControl.isExpanded(node)" role="group">
                                     <ng-container matTreeNodeOutlet></ng-container>
