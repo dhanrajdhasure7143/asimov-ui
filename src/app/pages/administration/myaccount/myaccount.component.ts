@@ -107,6 +107,9 @@ export class MyAccountComponent implements OnInit {
         
         }
       }
+      if(this.formOne.country==null || this.formOne.country==undefined){
+        this.formOne.country="United States"
+      }
       this.show=false
       this.spinner.hide();
     })

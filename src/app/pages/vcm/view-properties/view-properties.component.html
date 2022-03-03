@@ -33,16 +33,10 @@
         <div class="col-md-12 col-lg-12">
             <div class="prop_procdef">
                 <h4>Process Description</h4>
-            </div>
-            <div  *ngFor="let each of vcm_data">
-                <div>
-                <div *ngIf="each.description">
-                    <h3>{{each.title}}</h3>
-                </div>
-                <div>
+                <div  *ngFor="let each of vcm_data" class="prdeflist">               
+                    <h3 *ngIf="each.description">{{each.title}}</h3>
                     <p>{{each.description}}</p>
                 </div>
-            </div>
             </div>
         </div>
 
@@ -50,10 +44,20 @@
             <div class="prop_docs">
                 <h4>Documents</h4>
                 <table class="table">
+                    <thead>
+                        <tr>
+                            <th>S.No</th>
+                            <th>File Name</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
                     <tbody>
                         <tr *ngFor="let each_obj of attachments;let i = index">
                             <td>{{i+1}}</td>
                             <td>{{each_obj.fileName}}</td>
+                            <td>
+                                <img src="../../../../assets/images/Admin/download-blue.svg" class="hover-img testplus">
+                            </td>
                         </tr>
                     </tbody>
                 </table>

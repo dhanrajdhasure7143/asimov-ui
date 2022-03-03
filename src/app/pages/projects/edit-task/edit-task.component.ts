@@ -80,6 +80,8 @@ export class EditTaskComponent implements OnInit {
   mindate= moment().format("YYYY-MM-DD");
   taskSummaryFlag: boolean = false;
   taskDescriptionFlag: boolean = false;
+  taskcategories: Object;
+  optionValue:any;
   constructor(private formBuilder:FormBuilder,
     private router:ActivatedRoute,
     private route:Router,
@@ -88,9 +90,10 @@ export class EditTaskComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
+    this.spinner.show();
     this.updatetaskForm=this.formBuilder.group({
       taskName:["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      // taskCategory: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      taskCategory: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       priority: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       startDate: ['', Validators.compose([Validators.maxLength(200)])],
       resources: ['', Validators.compose([Validators.maxLength(200)])],
@@ -118,6 +121,7 @@ export class EditTaskComponent implements OnInit {
         this.getallpiprocess();
         this.getallbpmprocess();
         this.getallbots();
+        this.getTaskCategories();
   }
 
 
@@ -129,7 +133,7 @@ export class EditTaskComponent implements OnInit {
       this.rest.gettaskandComments(params.projectid).subscribe(response=>{
         let taskList:any=response;
         let task:any=taskList.find(item=>item.id==data.taskId)
-        this.taskcategory=task.taskCategory
+        //this.taskcategory=task.taskCategory
         this.taskname=task.taskName
         this.lastModifiedBy=task.lastModifiedBy
         this.lastModifiedTimestamp=task.lastModifiedTimestamp
@@ -146,16 +150,27 @@ export class EditTaskComponent implements OnInit {
     })
   }
 
-  
+  getTaskCategories(){
+    this.rest.getTaskCategories().subscribe(data =>{
+      this.taskcategories=data
+    })
+  }
+  OnChangeTaskCategory(data){
+    if(this.selectedtask.taskCategory==data.target.value){
+    this.updatetaskForm.get("correlationID").setValue(this.selectedtask.correlationID);
+  }else{
+    this.updatetaskForm.get("correlationID").setValue("");
+    }
+  }
   updatetaskdata(data)
   {  
-    
     this.taskcomments=[];
     this.taskhistory=[];
     this.rolelist=[];
     this.selectedtask=data
     
     this.updatetaskForm.get("taskName").setValue(data.taskName);
+    this.updatetaskForm.get("taskCategory").setValue(data.taskCategory);
     this.updatetaskForm.get("priority").setValue(data["priority"]);
     this.updatetaskForm.get("endDate").setValue(this.endDate);
     this.updatetaskForm.get("resources").setValue(data["resources"]);
@@ -208,7 +223,7 @@ export class EditTaskComponent implements OnInit {
       taskupdatFormValue["history"]=this.taskhistory
       taskupdatFormValue["endDate"]=this.endDate
       taskupdatFormValue["taskName"]=this.taskname
-      taskupdatFormValue["taskCategory"]=this.taskcategory
+     // taskupdatFormValue["taskCategory"]=this.taskcategory
       this.spinner.show();
       this.rest.updateTask(taskupdatFormValue).subscribe( res =>{
         this.spinner.hide();
@@ -334,7 +349,7 @@ else
         //this.rolename=this.userrole.message[0].name
        
       })
-
+this.spinner.hide();
     }
 
 

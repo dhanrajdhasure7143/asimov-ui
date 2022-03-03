@@ -23,7 +23,10 @@
     <div class="module-body">
         <mat-drawer-container class="example-container h-100" style="background-color: white;">
             <mat-drawer #drawer class="example-sidenav vcmprop" mode="side" position="end">
-                <div class="close-btn"><img src="../../../../assets/images/VCM/VCM-close.svg" (click)="closeOverlay()" /></div>
+                <div class="close-btn">
+                    <h3>{{processName}}
+                    <img src="../../../../assets/images/VCM/VCM-close.svg" (click)="closeOverlay()" /></h3>
+                </div>
                 <mat-tab-group>
                     <mat-tab label="Properties">
                         <div class="editcontent">
@@ -47,9 +50,9 @@
                         </div>
                     </mat-tab>
                     <mat-tab label="Documents">
-                        <div class="col-md-12 form-group">
+                        <!-- <div class="col-md-12 form-group">
                             <h4 class="procname">{{processName}}</h4>
-                        </div>
+                        </div> -->
                         <div class="col-md-12 form-group files">
                             <p *ngFor="let each of uploadedFiles;let i = index;">
                                {{i+1}}. {{each.fileName}}
@@ -69,17 +72,24 @@
             <mat-drawer-content>
                 <div class="vcm-treesmain h-100">
                     <!-- <h4 >{{vcmProcess[3].vcmname}}</h4> -->
-                    <div class="maincontent h-100">
-                        <div>
+                    <div class="row maincontent h-100">
+                        <div class="col-md-12 p-0 form-group vcname">
+                            <label class="label-control">Value Chain Name</label>
+                            <input type="text" class="form-control" [(ngModel)]="selectedVcmName" placeholder="Enter Value Chain Name" readonly>
+                            <button class="btn" >
+                                <img [hidden]="!selectedVcmName" src="../../../../assets/images/VCM/Green Tick.svg" class="testplus1"  />
+                            </button>
+                        </div>
+                        <div class="col-md-12 p-0">
                             <h4>{{selectedVcmName}}</h4>
                         </div>
-                        <mat-tree [dataSource]="dataSource" #tree [treeControl]="treeControl" class="example-tree">
+                        <div class="col-md-12 p-0 vcm-treediv">
+                            <mat-tree [dataSource]="dataSource" #tree [treeControl]="treeControl" class="example-tree">
                             
                             <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
                                 <span class="text-color" *ngIf="node.level == 'L3'" (click)="navigateToNoytation(node)">{{node.title}}</span>
-                                <span *ngIf="node.level == 'L1'" (click)="openNodeProperties(node)">{{node.title}} </span>
-                                <span *ngIf="node.level == 'L2'" (click)="openNodeProperties(node)">{{node.title}}
-                                </span>
+                                <span *ngIf="node.level == 'L1'" (click)="openNodeProperties(node)" class="sub-nodel1">{{node.title}} </span>
+                                <span *ngIf="node.level == 'L2'" (click)="openNodeProperties(node)" class="sub-nodel2">{{node.title}}</span>
                             </mat-tree-node>
                             <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
                                 <div class="mat-tree-node">
@@ -92,13 +102,14 @@
                                         </mat-icon>
                                     </button> 
                                     <span *ngIf="node.level == 'L1' || node.level == 'L2' || node.level == 'L3' " (click)="openNodeProperties(node)">{{node.title}} </span>
-                                    <span class="test" *ngIf="node.level != 'L1' && node.level != 'L2' && node.level != 'L3' ">{{node.title}}</span>
+                                    <span class="proc-title" *ngIf="node.level != 'L1' && node.level != 'L2' && node.level != 'L3' ">{{node.title}}</span>
                                 </div>
                                 <div [class.example-tree-invisible]="!treeControl.isExpanded(node)" role="group">
                                     <ng-container matTreeNodeOutlet></ng-container>
                                 </div>
                             </mat-nested-tree-node>
-                        </mat-tree>
+                            </mat-tree>
+                        </div>
                     </div>
                 </div>
             </mat-drawer-content>
@@ -113,7 +124,7 @@
     </div>
 </div>
 
-<div *ngIf="isShow && !isViewProperties">
+<div *ngIf="isShow && !isViewProperties" class="h-100">
     <app-edit-vcm [vcmData]="vcmProcess"></app-edit-vcm>
 </div>
 
