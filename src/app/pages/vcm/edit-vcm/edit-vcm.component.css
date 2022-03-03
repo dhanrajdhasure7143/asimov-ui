@@ -16,11 +16,11 @@
 
 .vcm-treesmain {
     /* padding: 20px 15px; */
-    background-color: #f6f6f6;
+    background-color: #f5f5f5;
 }
 
 .vcm-treesmain .example-tree {
-    background-color: #f6f6f6;
+    background-color: #f5f5f5;
     padding: 0px 15px;
     height: 94%;
 }
@@ -67,12 +67,13 @@ mat-drawer {
     width: 25%;
 }
 
-span.test {
+span.proc-title {
     color: #00a1e4;
+    line-height: 14px;
 }
 .vcmdocs {
     border: 2px dashed #e7e7e7;
-    background-color: #f6f6f6;
+    background-color: #f5f5f5;
     padding: 20px 0px !important;
     border-radius: 3px;
     cursor: pointer;
@@ -113,4 +114,16 @@ span.test {
 }
 mat-tree-node button img.testplus {
     margin-left: 5px;
+}
+.vcname input {
+    position: relative;
+}
+.vcname button {
+    position: absolute;
+    top: 32px;
+    right: 13px;
+    min-width: auto !important;
+    padding: 0px !important;
+    margin: 0px !important;
+    background-color: transparent !important;
 }

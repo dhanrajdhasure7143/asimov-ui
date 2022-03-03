@@ -2719,3 +2719,12 @@ span.pdicon {
 .workspace-title button.mat-sort-header-button {
   font-size: 14px !important;
 }
+
+.vcm-treesmain .mat-tree-node {
+  min-height: 30px;
+}
+.vcm-treesmain .mat-icon-button {
+  width: auto;
+  height: 25px;
+  line-height: 25px;
+}

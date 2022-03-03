@@ -113,7 +113,7 @@
                                         </mat-icon>
                                     </button> 
                                     <span *ngIf="node.level == 'L1' || node.level == 'L2' || node.level == 'L3' ">{{node.title}} </span>
-                                    <span class="test" *ngIf="node.level != 'L1' && node.level != 'L2' && node.level != 'L3' ">{{node.title}}</span>
+                                    <span class="proc-title" *ngIf="node.level != 'L1' && node.level != 'L2' && node.level != 'L3' ">{{node.title}}</span>
                                     <!-- <button style="padding-left: 1%;" *ngIf="node.level == 'L2'" (click)="onSelectedNode(node)" #pop2="bs-popover" [popover]="popTemplate" [outsideClick]="true" placement="right" *ngIf="node.title != 'Management Process' && node.title != 'Core Process' && node.title != 'Support Process'">
                                     <img src="../../../../assets/images/RPA/icon_latest/new-blue.svg" class="testplus" />
                                 </button> -->
