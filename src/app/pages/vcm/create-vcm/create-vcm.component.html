@@ -27,7 +27,7 @@
                                 <label class="label-control">Process Owner</label>
                                 <select class="form-control" [(ngModel)]="editProcessOwner">
                                     <option value="" hidden disabled>Select Owner</option>
-                                    <option *ngFor="let each_approver of processOwners_list;let i=index" [value]=each_approver.userId>
+                                    <option *ngFor="let each_approver of processOwners_list;let i=index" [value]="each_approver.firstName+' '+each_approver.lastName">
                                         {{(each_approver.firstName | titlecase) +" "+(each_approver.lastName==undefined?"":each_approver.lastName)}}</option>
                                 </select>
                             </div>
@@ -78,7 +78,7 @@
                             <select class="form-control" [(ngModel)]="process_ownerName">
                                 <option value="" hidden disabled>Select Process Owner</option>
                                 <option value="undefined" hidden disabled>Select Process Owner</option>
-                                <option *ngFor="let each_approver of processOwners_list;let i=index" [value]=each_approver.userId>
+                                <option *ngFor="let each_approver of processOwners_list;let i=index" [value]="each_approver.firstName+' '+each_approver.lastName">
                                     {{(each_approver.firstName | titlecase) +" "+(each_approver.lastName==undefined?"":each_approver.lastName)}}</option>
                             </select>
                         </div>

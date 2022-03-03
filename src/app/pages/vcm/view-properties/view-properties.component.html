@@ -1,0 +1,63 @@
+<div class="module-body">
+    <div class="vcm-prop-content h-100">
+        <div class="col-md-12 col-lg-12">
+            <div class="prop_owner">
+                <h4>Ownership</h4>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Level1 Name</th>
+                            <th>Owner</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let each of prop_data;let i = index">
+                            <td *ngIf="each.title">{{each.title}}</td>
+                            <td *ngIf="each.title">{{each.processOwner}}
+
+                                <!-- <select class="form-control" [(ngModel)]="each.processOwner" [disabled]="isDisabled"
+                                    #ownerValue>
+                                    <option value="" hidden disabled>Select Owner</option>
+                                    <option *ngFor="let each_approver of processOwners_list;let i=index"
+                                        [value]="each_approver.firstName+' '+each_approver.lastName">
+                                        {{(each_approver.firstName | titlecase) +"
+                                        "+(each_approver.lastName==undefined?"":each_approver.lastName)}}</option>
+                                </select> -->
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="col-md-12 col-lg-12">
+            <div class="prop_procdef">
+                <h4>Process Description</h4>
+            </div>
+            <div  *ngFor="let each of vcm_data">
+                <div>
+                <div *ngIf="each.description">
+                    <h3>{{each.title}}</h3>
+                </div>
+                <div>
+                    <p>{{each.description}}</p>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 col-lg-12">
+            <div class="prop_docs">
+                <h4>Documents</h4>
+                <table class="table">
+                    <tbody>
+                        <tr *ngFor="let each_obj of attachements;let i = index">
+                            <td>{{i+1}}</td>
+                            <td>{{each_obj.fileName}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
