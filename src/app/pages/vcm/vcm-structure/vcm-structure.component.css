@@ -61,9 +61,18 @@
 }
 
 span.proc-title {
-    color: #00a1e4;
-    line-height: 14px;
-    font-size: 16px;
+    color: #00a1e4 !important;
+    font-size: 16px !important;
+}
+.mat-tree-node span {
+    color: #607088;
+    font-size: 14px;
+    line-height: 22px;
+}
+img.procmenu {
+    width: auto;
+    height: 18px;
+    margin-right: 5px;
 }
 .close-btn h3 {
     padding: 10px 0px 0px 15px;
@@ -146,4 +155,40 @@ mat-drawer {
 .editcontent {
     /* height: calc(100vh - 235px); */
     height: calc(100vh - 255px);
+}
+.tsttooltipbtn {
+    position: relative;
+}
+.tsttooltipbtn:hover .default-img{
+    display: none;
+}
+
+.tsttooltipbtn:hover .hover-img {
+    display: initial;
+}
+.tsttooltipbtn:hover span.testtooltip {
+    display: block;
+}
+span.testtooltip {
+    position: absolute;
+    top: 32px;
+    right: 0px;
+    background-color: #001c47;
+    color: #fff;
+    width: -moz-max-content;
+    width: max-content;
+    padding: 3px 10px;
+    border-radius: 4px;
+    display: none;
+    z-index: 1;
+}
+span.testtooltip:after {
+    content: "";
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    top: -4px;
+    background-color: #001c47;
+    transform: rotate(45deg);
+    right: 10px;
 }

@@ -1321,6 +1321,8 @@ deleteVcm(body){
 uploadVCMPropDocument(body){
   return this.http.post('/vcmv2/uploadDocuments',body); 
 }
-
+getvcmAttachements(body){
+  return this.http.post('/vcmv2/fetchDocumentsByProcessType',body); 
+}
 
 }

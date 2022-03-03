@@ -76,3 +76,40 @@ span.docpill:hover {
 .prdeflist {
     padding: 10px 10px 0px;
 }
+
+.tsttooltipbtn {
+    position: relative;
+}
+.tsttooltipbtn:hover .default-img{
+    display: none;
+}
+
+.tsttooltipbtn:hover .hover-img {
+    display: initial;
+}
+.tsttooltipbtn:hover span.testtooltip {
+    display: block;
+}
+span.testtooltip {
+    position: absolute;
+    top: 32px;
+    right: 0px;
+    background-color: #001c47;
+    color: #fff;
+    width: -moz-max-content;
+    width: max-content;
+    padding: 3px 10px;
+    border-radius: 4px;
+    display: none;
+    z-index: 1;
+}
+span.testtooltip:after {
+    content: "";
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    top: -4px;
+    background-color: #001c47;
+    transform: rotate(45deg);
+    right: 10px;
+}

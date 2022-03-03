@@ -56,12 +56,26 @@
                             <td>{{i+1}}</td>
                             <td>{{each_obj.fileName}}</td>
                             <td>
-                                <img src="../../../../assets/images/Admin/download-blue.svg" class="hover-img testplus">
+                                <span class="deleteattachment tsttooltipbtn">
+                                    <a href="data:image/png;base64,{{each_obj.filedata}}" download="{{each_obj.fileName}}">
+                                    <img src="../../../../assets/images/Admin/download-black.svg" class="default-img testplus" >
+                                    <img src="../../../../assets/images/Admin/download-blue.svg" class="hover-img testplus" >
+                                    </a>
+                                    <span class="testtooltip">Download</span>
+                                </span>
+                                <!-- <img src="../../../../assets/images/Admin/download-blue.svg" class="testplus"> -->
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
+    </div>
+</div>
+
+
+<div class="spinoverlay" *ngIf="isLoading">
+    <div class="spincenter">
+        <img src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader" />
     </div>
 </div>
