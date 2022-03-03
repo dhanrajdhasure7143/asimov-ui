@@ -2699,3 +2699,7 @@ span.pdicon {
   height: 310px;
   overflow: auto;
 }
+
+.workspace-title button.mat-sort-header-button {
+  font-size: 14px !important;
+}

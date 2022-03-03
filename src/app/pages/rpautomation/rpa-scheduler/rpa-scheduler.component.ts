@@ -133,7 +133,7 @@ export class RpaSchedulerComponent implements OnInit {
     this.starttime=d.getHours()+":"+d.getMinutes();
   }
   dateChange($event){
-   debugger
+   
     console.log($event.target.value)
    if(this.isDateToday($event.target.value)) {
 

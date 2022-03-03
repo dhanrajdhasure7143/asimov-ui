@@ -95,12 +95,13 @@ export class RpaHomeComponent implements OnInit {
   userName:any="";
   displayedRows$: Observable<any[]>;
   rpaVisible:boolean=false;
+  botslist:any=[]
   userCheck:boolean=false;
   @ViewChild(MatSort,{static:false}) sort: MatSort;
   totalRows$: Observable<number>;
   @ViewChild(MatPaginator,{static:false}) paginator301: MatPaginator;
   freetrail: string;
-
+  botlistitems:any=[]
   constructor(
     private route: ActivatedRoute, 
     private rest:RestApiService, 
@@ -237,9 +238,9 @@ export class RpaHomeComponent implements OnInit {
     //     })
 
 
-          if(localStorage.getItem('project_id')!="null" && localStorage.getItem('bot_id')!="null"){
-            this.loadbotdata(localStorage.getItem('bot_id'));
-          }
+          // if(localStorage.getItem('project_id')!="null" && localStorage.getItem('bot_id')!="null"){
+          //   this.loadbotdata(localStorage.getItem('bot_id'));
+          // }
           this.freetrail=localStorage.getItem('freetrail')
      }
 
@@ -327,10 +328,12 @@ export class RpaHomeComponent implements OnInit {
         this.loadflag=false;
       },1000)
       response=botlist;
+      this.botlistitems=botlist;
+      this.botslist=botlist
      // response=response.reverse();
       // if(response.length==0)
       // {
-      //   //this.rpa_studio.spinner.hide();
+      //   //this.rpa_studio.spinner.hide(); 
       // }
       // response.forEach(data=>{
       //   let object:any=data;
@@ -991,6 +994,26 @@ export class RpaHomeComponent implements OnInit {
      rpaCategory["categoryName"] =this.editbot.value.newCategoryName;
    return this.rest.addCategory(rpaCategory);
   }
+  searchByCategory(category) {      // Filter table data based on selected categories
+    debugger
+    var filter_saved_diagrams= []
+    this.botslist=[]
+    if (category == "") {
+     this.botslist=this.botlistitems;
+     this.assignPagination(this.botslist);
+      // this.dataSource.filter = fulldata;
+    }
+    else{  
+      filter_saved_diagrams=this.botlistitems;
+      
+      filter_saved_diagrams.forEach(e=>{
+        if(e.categoryName===category){
+          this.botslist.push(e)
+        }
+      });
+      this.assignPagination(this.botslist);
+    }
+  }
   onEditBot() {
     let botdetails = this.editbot.value;
     if(botdetails.department==="others"){
@@ -1038,9 +1061,10 @@ export class RpaHomeComponent implements OnInit {
         this.paginator301.firstPage();
       }
 
-      applySearchFilter(v){      
+      applySearchFilter(v){  
+  debugger    
     const filterPipe = new SearchRpaPipe();   
-     const fiteredArr = filterPipe.transform(this.bot_list,v);   
+     const fiteredArr = filterPipe.transform(this.botslist,v);   
           
       this.assignPagination(fiteredArr)    
   }

@@ -58,31 +58,34 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   removetab(tab)
   {
     
-     localStorage.removeItem("bot_id");
+    // localStorage.removeItem("bot_id");
 
-    // this.tabsArray.splice(this.tabsArray.indexOf(tab), 1)
-    // if(this.tabsArray.length==0)
-    // {
-    //   //this.router.navigate(["pages/rpautomation/home"])  
-    //   this.router.navigate(["/pages/serviceOrchestration/home"])  
-    // }
-    // else{
-    //   this.router.navigate(["pages/rpautomation/home"])
-    // }
-    this.activeRoute.queryParams.subscribe(data=>{
-      let params:any=data;
-      if(params.name!=undefined)
-      {
-        this.router.navigate(["/pages/serviceOrchestration/home"],{queryParams:{tab:3}})
-      }else if(params.processId!=undefined)
-      {
-        this.router.navigate(["/pages/serviceOrchestration/home"],{queryParams:{processid:params.processId}})
-      }
-      else
-      {
-        this.router.navigate(["/pages/rpautomation/home"])
-      }
-    })
+    this.tabsArray.splice(this.tabsArray.indexOf(tab), 1)
+  
+    if(this.tabsArray.length==0)
+    {
+      //this.router.navigate(["pages/rpautomation/home"])  
+      //this.router.navigate(["/pages/serviceOrchestration/home"])  
+      this.activeRoute.queryParams.subscribe(data=>{
+        let params:any=data;
+        if(params.name!=undefined)
+        {
+          this.router.navigate(["/pages/serviceOrchestration/home"],{queryParams:{tab:3}})
+        }else if(params.processId!=undefined)
+        {
+          this.router.navigate(["/pages/serviceOrchestration/home"],{queryParams:{processid:params.processId}})
+        }else if(params.projectId!=undefined)
+        {
+          this.router.navigate(["/pages/rpautomation/home"])
+        }
+        else
+        {
+          this.router.navigate(["/pages/rpautomation/home"])
+        }
+      })
+    }
+    
+    
   }
 
 
