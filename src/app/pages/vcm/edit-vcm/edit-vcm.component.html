@@ -14,18 +14,17 @@
     <div class="module-body">
         <mat-drawer-container class="example-container h-100" style="background-color: white;">
             <mat-drawer #drawer class="example-sidenav vcmprop" mode="side" position="end">
-                <div class="close-btn"><img src="../../../../assets/images/VCM/VCM-close.svg"
-                        (click)="closeOverlay()" /></div>
+                <div class="close-btn"><img src="../../../../assets/images/VCM/VCM-close.svg" (click)="closeOverlay()" /></div>
                 <mat-tab-group>
                     <mat-tab label="Properties">
                         <div class="editcontent">
                             <div class="col-md-12 form-group">
                                 <label class="label-control">Process Name</label>
-                                <input type="text" disabled class="form-control">
+                                <input type="text" disabled class="form-control" [(ngModel)]="editTitleName">
                             </div>
                             <div class="col-md-12 form-group">
                                 <label class="label-control">Process Owner</label>
-                                <select class="form-control">
+                                <select class="form-control" [(ngModel)]="processOwner" (click)="editProcessOwner()">
                                     <option value="" hidden disabled>Select Owner</option>
                                     <option *ngFor="let each_approver of processOwners_list;let i=index"
                                         [value]="each_approver.firstName+' '+each_approver.lastName">
@@ -35,7 +34,7 @@
                             </div>
                             <div class="col-md-12 form-group">
                                 <label class="label-control">Process Description</label>
-                                <textarea class="form-control" placeholder="Enter Process Description"></textarea>
+                                <textarea class="form-control" [(ngModel)]="description" (ngModelChange)="editDescription()" placeholder="Enter Process Description"></textarea>
                             </div>
                         </div>
                         <div class="propfooter col-md-12 text-right">
@@ -56,12 +55,12 @@
                             </div>
                         </div>
                         <div class="col-md-12 form-group files">
-                            <p *ngFor="let file of uploadedDocuments;let i = index;">
-                                {{file.name}}
-                                <span><img src="../../../../assets/images/VCM/VCM-close.svg"
+                            <p *ngFor="let file of uploadedFiles;let i = index;">
+                                {{file.fileName}}
+                                <span (click)="RemoveFile(file,i)"><img src="../../../../assets/images/VCM/VCM-close.svg"
                                         class="testplus2 default-img" />
                                     <img src="../../../../assets/images/VCM/VCM-close-red.svg"
-                                        class="testplus2 hover-img" (click)="RemoveFile(file,i)" /></span>
+                                        class="testplus2 hover-img"  /></span>
                             </p>
                         </div>
                     </mat-tab>
@@ -73,8 +72,8 @@
                     <div class="row maincontent h-100">
                         <div class="col-md-12 p-0 form-group vcname">
                             <label class="label-control">Value Chain Name</label>
-                            <input type="text" class="form-control"  placeholder="Enter Value Chain Name" readonly>
-                            <button class="btn" >
+                            <input type="text" class="form-control" placeholder="Enter Value Chain Name" readonly>
+                            <button class="btn">
                                 <img  src="../../../../assets/images/VCM/Green Tick.svg" class="testplus1"  />
                             </button>
                         </div>
@@ -84,65 +83,90 @@
                         <div class="col-md-12 p-0 vcm-treediv">
                             <mat-tree [dataSource]="dataSource" #tree [treeControl]="treeControl" class="example-tree">
                                 <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
-                                    <span class="text-color" *ngIf="node.level == 'L3'"
-                                        (click)="navigateToNoytation(node)">{{node.title}}
-                                        <button><img src="../../../../assets/images/VCM/edit-3.svg"
-                                                class="testplus2" /></button>
-    
+                                    <p class="text-color" *ngIf="node.level == 'L3'">
+                                        <span (click)="navigateToNoytation(node)">{{node.title}}</span> &nbsp;&nbsp;
+                                        <button #pop3="bs-popover" *ngIf="node.level == 'L3'" [popover]="popTemplate" [outsideClick]="true" placement="right">
+                                            <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" />
+                                        </button>
+
+                                    </p>
+                                    <span *ngIf="node.level == 'L1'">
+                                       <span (click)="openNodeProperties(node)" *ngIf="!(levelNameShow && lavelNameParent == node.parent && 
+                                       levelNameChild == node.childParent)">{{node.title}} </span>
+                                    <button (click)="editLevelName(node)">
+                                                <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" />
+                                            </button>
                                     </span>
-                                    <span *ngIf="node.level == 'L1'">{{node.title}} </span>
-                                    <span *ngIf="node.level == 'L2'">{{node.title}}
-                                        <button #pop3="bs-popover" *ngIf="node.level == 'L2'" (click)="onSelectedNode(node)"
-                                            [popover]="popTemplate1" [outsideClick]="true" placement="right">
+                                    <span *ngIf="node.level == 'L2'">
+                                        <span (click)="openNodeProperties(node)" *ngIf="!(levelNameShow && lavelNameParent == node.parent && 
+                                        levelNameChild == node.childParent)">{{node.title}}</span>
+                                    <div *ngIf="levelNameShow && lavelNameParent == node.parent && 
+                                            levelNameChild == node.childParent" style="display: flex;width: 150%;margin-top: 5%;">
+                                        <input type="text" class="form-control" placeholder="Enter Process Name" [(ngModel)]="node.title">
+                                        <button style="position: relative;right: 8%;" (click)="editTitle(node)">
+                                                        <img class="testplus1" src="../../../../assets/images/VCM/Green Tick.svg">
+                                                </button>
+                                    </div>
+                                    <button #pop3="bs-popover" *ngIf="!(levelNameShow && lavelNameParent == node.parent && 
+                                    levelNameChild == node.childParent)" (click)="onSelectedNode(node)" [popover]="popTemplate1" [outsideClick]="true" placement="right">
                                             <img src="../../../../assets/images/VCM/plus-bordercircle.svg"
                                                 class="testplus" />
                                         </button>
-    
-                                        <!-- <button (click)="addLevel(node)"><img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2"/></button><br>                                 -->
-                                        <div *ngIf="uniqueId==node.uniqueId"
-                                            style="display: flex;width: 150%;margin-top: 5%;">
-                                            <input type="text" class="form-control" placeholder="Enter Process Name"
-                                                [(ngModel)]="processName">
-                                            <button [hidden]="!processName" style="position: relative;right: 8%;"
-                                                (click)="editLevel3()">
+                                    <button *ngIf="!(levelNameShow && lavelNameParent == node.parent && 
+                                    levelNameChild == node.childParent)" (click)="editLevelName(node)">
+                                            <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" />
+                                        </button>
+
+                                    <!-- <button (click)="addLevel(node)"><img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2"/></button><br>                                 -->
+                                    <div *ngIf="uniqueId==node.uniqueId" style="display: flex;width: 150%;margin-top: 5%;">
+                                        <input type="text" class="form-control" placeholder="Enter Process Name" [(ngModel)]="processName">
+                                        <button [hidden]="!processName" style="position: relative;right: 8%;" (click)="editLevel3()">
                                                 <img class="testplus1" src="../../../../assets/images/VCM/Green Tick.svg">
                                             </button>
-                                        </div>
+                                    </div>
                                     </span>
-    
+
                                 </mat-tree-node>
                                 <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
                                     <div class="mat-tree-node">
-                                        <button (click)="viewProperties()"
-                                            *ngIf="(node.title=='Management Process'&& treeControl.dataNodes[1])|| (node.title=='Core Process'&& treeControl.dataNodes[1]) || (node.title=='Support Process'&& treeControl.dataNodes[2])">
+                                        <button *ngIf="(node.title=='Management Process'&& treeControl.dataNodes[1])|| (node.title=='Core Process'&& treeControl.dataNodes[1]) || (node.title=='Support Process'&& treeControl.dataNodes[2])">
                                             <img src="../../../assets/images/menu-line.svg" class="testplus" alt="">
                                         </button>
-                                        <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name"
-                                            *ngIf="node.title != 'Management Process' && node.title != 'Core Process' && node.title != 'Support Process'">
+                                        <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name" *ngIf="node.title != 'Management Process' && node.title != 'Core Process' && node.title != 'Support Process'">
                                             <mat-icon class="mat-icon-rtl-mirror">
                                                 {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
                                             </mat-icon>
-                                        </button> 
-                                        <span *ngIf="node.level == 'L1' || node.level == 'L2' || node.level == 'L3' ">{{node.title}} </span>
+                                        </button>
+                                        <span *ngIf="node.level == 'L1' || node.level == 'L2' || node.level == 'L3' ">
+                                            <span *ngIf="!(levelNameShow && lavelNameParent == node.parent && 
+                                            levelNameChild == node.childParent)" (click)="openNodeProperties(node)">{{node.title}} </span>
+                                        <div *ngIf="(levelNameShow && lavelNameParent == node.parent && 
+                                            levelNameChild == node.childParent) && (node.level == 'L1' || node.level == 'L2' || node.level == 'L3' ) " style="display: flex;width: 150%;margin-top: 5%;">
+                                            <input type="text" class="form-control" placeholder="Enter Process Name" [(ngModel)]="node.title">
+                                            <button style="position: relative;right: 8%;" (click)="editTitle(node)">
+                                                        <img class="testplus1" src="../../../../assets/images/VCM/Green Tick.svg">
+                                                </button>
+                                        </div>
+                                        <button *ngIf="!(levelNameShow && lavelNameParent == node.parent && 
+                                        levelNameChild == node.childParent)" (click)="editLevelName(node)">
+                                                     <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" />
+                                                 </button>
+                                        </span>
+
                                         <span class="proc-title" *ngIf="node.level != 'L1' && node.level != 'L2' && node.level != 'L3' ">{{node.title}}</span>
                                         <!-- <button style="padding-left: 1%;" *ngIf="node.level == 'L2'" (click)="onSelectedNode(node)" #pop2="bs-popover" [popover]="popTemplate" [outsideClick]="true" placement="right" *ngIf="node.title != 'Management Process' && node.title != 'Core Process' && node.title != 'Support Process'">
                                         <img src="../../../../assets/images/RPA/icon_latest/new-blue.svg" class="testplus" />
                                     </button> -->
-    
-                                        <button style="padding-left: 1%;" *ngIf="node.level == 'L2'"
-                                            (click)="onSelectedNode(node)" #pop2="bs-popover" [popover]="popTemplate1"
-                                            [outsideClick]="true" placement="right">
+
+                                        <button style="padding-left: 1%;" *ngIf="node.level == 'L2' && !levelNameShow" (click)="onSelectedNode(node)" #pop2="bs-popover" [popover]="popTemplate1" [outsideClick]="true" placement="right">
                                             <img src="../../../../assets/images/VCM/plus-bordercircle.svg"
                                                 class="testplus" />
                                         </button>
-    
+
                                         <!-- <button (click)="addLevel(node)" *ngIf="node.level == 'L2' && node.title != 'Management Process' && node.title != 'Core Process' && node.title != 'Support Process'"><img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2"/></button><br> -->
-                                        <div *ngIf="node.level == 'L2' && parent == node.parent && childParent == node.childParent && node.title != 'Management Process' && node.title != 'Core Process' && node.title != 'Support Process'"
-                                            style="margin-top: 9%;right: 9% !important;position: relative;display: flex; width: 35%;">
-                                            <input type="text" class="form-control" placeholder="Enter Process Name"
-                                                [(ngModel)]="processName" style="width: 75%;">
-                                            <button [hidden]="!processName" style="position: relative;right: 8%;"
-                                                (click)="editLevel3()" style="position: relative;
+                                        <div *ngIf="node.level == 'L2' && parent == node.parent && childParent == node.childParent && node.title != 'Management Process' && node.title != 'Core Process' && node.title != 'Support Process'" style="margin-top: 9%;right: 9% !important;position: relative;display: flex; width: 35%;">
+                                            <input type="text" class="form-control" placeholder="Enter Process Name" [(ngModel)]="processName" style="width: 75%;">
+                                            <button [hidden]="!processName" style="position: relative;right: 8%;" (click)="editLevel3()" style="position: relative;
                                             right: 8%;">
                                                 <img class="testplus1" src="../../../../assets/images/VCM/Green Tick.svg">
                                             </button>
@@ -162,18 +186,16 @@
     </div>
 </div>
 
-<process-category-overlay headerTitle="BPMN Details" [overlay_data]="overlay_data" (proceed)="uploadCreateBpmn($event)"
-    class="bpmnCreate"></process-category-overlay>
+<process-category-overlay headerTitle="BPMN Details" [overlay_data]="overlay_data" (proceed)="uploadCreateBpmn($event)" class="bpmnCreate"></process-category-overlay>
 
 <ng-template #popTemplate>
     <div class="custom-content ">
         <div class="custom-footer-content">
-            <p (click)="onCreateBpmn();"><img src="../../../../assets/images/VCM/Plus-litblue.svg" class="testplus" />Create
-                Bpmn</p>
-            <p (click)="onCreateDmn()"><img src="../../../../assets/images/VCM/Plus-litblue.svg" class="testplus" />Create
-                DMN</p>
-            <p (click)="onUploadNotation()"><img src="../../../../assets/images/VCM/upload-litblue.svg"
-                    class="testplus" />Upload Notation</p>
+            <p (click)="onCreateBpmn();"><img src="../../../../assets/images/VCM/Plus-litblue.svg" class="testplus" />Create Bpmn
+            </p>
+            <p (click)="onCreateDmn()"><img src="../../../../assets/images/VCM/Plus-litblue.svg" class="testplus" />Create DMN
+            </p>
+            <p (click)="onUploadNotation()"><img src="../../../../assets/images/VCM/upload-litblue.svg" class="testplus" />Upload Notation</p>
         </div>
     </div>
 </ng-template>
@@ -183,8 +205,7 @@
         <div class="custom-footer-content">
             <p><img src="../../../../assets/images/VCM/Plus-litblue.svg" class="testplus" />Create Notation</p>
             <p><img src="../../../../assets/images/VCM/upload-litblue.svg" class="testplus" />Upload Notation</p>
-            <p (click)="onCreateLevel3()"><img src="../../../../assets/images/VCM/Folder-litblue.svg"
-                    class="testplus" />Create Level 3</p>
+            <p (click)="onCreateLevel3()"><img src="../../../../assets/images/VCM/Folder-litblue.svg" class="testplus" />Create Level 3</p>
         </div>
     </div>
 </ng-template>
