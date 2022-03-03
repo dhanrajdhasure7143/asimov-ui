@@ -13,6 +13,7 @@
 .example-tree div[role=group]>.mat-tree-node {
     padding-left: 15px;
     margin-bottom: 15px;
+    cursor: pointer;
 }
 
 .vcm-treesmain {

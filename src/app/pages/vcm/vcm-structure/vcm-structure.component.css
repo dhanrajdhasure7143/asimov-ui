@@ -13,6 +13,7 @@
 .example-tree div[role=group]>.mat-tree-node {
     padding-left: 15px;
     margin-bottom: 15px;
+    cursor: pointer;
 }
 
 .vcm-treesmain {
@@ -64,10 +65,19 @@ span.proc-title {
     line-height: 14px;
     font-size: 16px;
 }
-.close-btn {
-    display: flex;
-    justify-content: end;
-    margin: 5%;
+.close-btn h3 {
+    padding: 10px 0px 0px 15px;
+    margin: 0px;
+    text-transform: uppercase;
+    font-size: 18px;
+}
+.close-btn img{
+    width: 12px;
+    height: 12px;
+    margin-right: 12px;
+    margin-top: 4px;
+    cursor: pointer;
+    float: right;
 }
 
 mat-drawer {
@@ -132,4 +142,8 @@ mat-drawer {
 }
 .vcm-treediv {
     height: calc(100% - 110px);
+}
+.editcontent {
+    /* height: calc(100vh - 235px); */
+    height: calc(100vh - 255px);
 }

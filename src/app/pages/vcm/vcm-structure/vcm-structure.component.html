@@ -23,7 +23,10 @@
     <div class="module-body">
         <mat-drawer-container class="example-container h-100" style="background-color: white;">
             <mat-drawer #drawer class="example-sidenav vcmprop" mode="side" position="end">
-                <div class="close-btn"><img src="../../../../assets/images/VCM/VCM-close.svg" (click)="closeOverlay()" /></div>
+                <div class="close-btn">
+                    <h3>{{processName}}
+                    <img src="../../../../assets/images/VCM/VCM-close.svg" (click)="closeOverlay()" /></h3>
+                </div>
                 <mat-tab-group>
                     <mat-tab label="Properties">
                         <div class="editcontent">
@@ -47,9 +50,9 @@
                         </div>
                     </mat-tab>
                     <mat-tab label="Documents">
-                        <div class="col-md-12 form-group">
+                        <!-- <div class="col-md-12 form-group">
                             <h4 class="procname">{{processName}}</h4>
-                        </div>
+                        </div> -->
                         <div class="col-md-12 form-group files">
                             <p *ngFor="let each of uploadedFiles;let i = index;">
                                {{i+1}}. {{each.fileName}}
@@ -85,8 +88,8 @@
                             
                             <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
                                 <span class="text-color" *ngIf="node.level == 'L3'" (click)="navigateToNoytation(node)">{{node.title}}</span>
-                                <span *ngIf="node.level == 'L1'" (click)="openNodeProperties(node)">{{node.title}} </span>
-                                <span *ngIf="node.level == 'L2'" (click)="openNodeProperties(node)">{{node.title}}</span>
+                                <span *ngIf="node.level == 'L1'" (click)="openNodeProperties(node)" class="sub-nodel1">{{node.title}} </span>
+                                <span *ngIf="node.level == 'L2'" (click)="openNodeProperties(node)" class="sub-nodel2">{{node.title}}</span>
                             </mat-tree-node>
                             <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
                                 <div class="mat-tree-node">
