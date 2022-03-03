@@ -31,6 +31,8 @@ export class EditVcmComponent implements OnInit {
   title: any;
   processName: any;
   uniqueId: any;
+  selectedNode:any;
+  @ViewChild('pop2',{static: false}) pop2;
 
   constructor(private router: Router,private bpmnservice:SharebpmndiagramService,private rest_api: RestApiService,
     private route : ActivatedRoute) {
@@ -49,9 +51,10 @@ export class EditVcmComponent implements OnInit {
     this.dataSource.data=this.vcmData;
     console.log(this.dataSource.data)
     this.treeControl.dataNodes = this.dataSource.data; 
-    this.treeControl.expand(this.treeControl.dataNodes[0]);
-    this.treeControl.expand(this.treeControl.dataNodes[1]);
-    this.treeControl.expand(this.treeControl.dataNodes[2]);
+    // this.treeControl.expand(this.treeControl.dataNodes[0]);
+    // this.treeControl.expand(this.treeControl.dataNodes[1]);
+    // this.treeControl.expand(this.treeControl.dataNodes[2]);
+    this.treeControl.expandAll();
   }
 
   navigateToNoytation(v){
@@ -159,6 +162,7 @@ export class EditVcmComponent implements OnInit {
     this.title = node.title;
     this.processName;
     this.uniqueId = node.uniqueId;
+    this.selectedNode=node
   }
   editLevel3(){
     this.vcmData.filter((e) => e.title === this.parent)[0].children
@@ -171,17 +175,33 @@ export class EditVcmComponent implements OnInit {
         description:'',
         processOwner:'',
         type:"Process",
-        level2UniqueId:this.uniqueId
+        level2UniqueId:this.selectedNode.uniqueId,
+        level1UniqueId:this.selectedNode.level1UniqueId,
+        uniqueId : UUID.UUID()
       }
     );
     console.log(this.vcmData);
     this.dataSource.data = null;
-    this.dataSource.data = this.vcmData;
+    this.dataSource.data=this.vcmData;
+    setTimeout(() => {
+    this.treeControl.dataNodes = this.dataSource.data; 
+    }, 200);
     this.parent = '';
     this.childParent = '';
     this.title = '';
     this.uniqueId = '';
     this.processName = '';
+  }
+  onSelectedNode(node){
+    console.log(node);
+    this.selectedNode=node
+  }
+
+  onCreateLevel3(){
+    this.parent = this.selectedNode.parent;
+    this.childParent = this.selectedNode.childParent;
+    this.title = this.selectedNode.title;
+    this.uniqueId = this.selectedNode.uniqueId;
   }
 
 }
