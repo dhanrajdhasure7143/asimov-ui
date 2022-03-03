@@ -71,8 +71,13 @@ mat-drawer {
 }
 
 span.proc-title {
-    color: #00a1e4;
-    line-height: 14px;
+    color: #00a1e4 !important;
+    font-size: 16px !important;
+}
+.mat-tree-node span {
+    color: #607088;
+    font-size: 14px;
+    line-height: 22px;
 }
 .vcmdocs {
     border: 2px dashed #e7e7e7;
