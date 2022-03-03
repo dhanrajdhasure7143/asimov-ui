@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataTransferService } from '../../services/data-transfer.service';
 import { RestApiService } from '../../services/rest-api.service';
@@ -10,6 +10,9 @@ import Swal from 'sweetalert2';
   styleUrls: ['./vcm-properties.component.css']
 })
 export class VcmPropertiesComponent implements OnInit {
+
+  @ViewChild('descriptionValue',{static:false})
+  texarea: ElementRef;
 
   vcmProperties = [];
   documents: any;
@@ -58,12 +61,14 @@ export class VcmPropertiesComponent implements OnInit {
         console.log(name, i);
         this.descriptionProcessName = name.parent;
         this.descriptionviewonly = false;
+        this.texarea.nativeElement.focus();
       }
       else {
         this.descriptionEdit = i;
         console.log(name, i, level);
         this.descriptionProcessName = name.parent;
         this.descriptionviewonly = false;
+        this.texarea.nativeElement.focus();
       }
     }
 
