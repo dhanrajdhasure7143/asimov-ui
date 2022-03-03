@@ -11,21 +11,25 @@
 
 .example-tree .mat-nested-tree-node div[role=group],
 .example-tree div[role=group]>.mat-tree-node {
-    padding-left: 30px;
+    padding-left: 25px;
 }
 
 .vcm-treesmain {
-    /* padding: 20px 15px;
-    background-color: #f6f6f6; */
+    /* padding: 20px 15px;*/
+    background-color: #f6f6f6; 
 }
 
 .vcm-treesmain .example-tree {
     background-color: #f6f6f6;
+    padding: 0px 15px;
+    height: 94%;
 }
 
 .vcm-treesmain h4 {
     font-weight: 600;
-    margin-top: 0px;
+    margin: 0px;
+    color: #001c47;
+    padding: 10px 15px 0px;
 }
 /* .text-color{
     color: blue;
@@ -46,4 +50,8 @@
 }
 .submit button.btn.btn-primary {
     margin-right: 0px !important;
+}
+
+span.test {
+    color: #00a1e4;
 }
