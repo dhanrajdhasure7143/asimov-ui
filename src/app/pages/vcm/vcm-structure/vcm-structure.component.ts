@@ -386,13 +386,14 @@ export class VcmStructureComponent implements OnInit {
   viewProperties(node){
     console.log(node)
     this.node_data=[]
+    console.log("this.vcm_data.data.vcmV2",this.vcm_data.data.vcmV2)
 this.vcmData.forEach(element => {
 if(element.parent == node.title){
 this.node_data.push(element)
 }
 
 });
-    console.log(this.node_data)
+    console.log("shared data",this.node_data)
     this.isViewProperties=true;
     this.isShow=false;
   }

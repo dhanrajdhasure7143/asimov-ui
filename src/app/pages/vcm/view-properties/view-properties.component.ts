@@ -10,7 +10,7 @@ export class ViewPropertiesComponent implements OnInit {
   @Input() vcm_data:any;
   @Input() processOwners_list:any;
   isDisabled:boolean=true;
-  attachements:any=[];
+  attachments:any=[];
   prop_data:any=[]
 
   constructor() { }
@@ -21,22 +21,22 @@ export class ViewPropertiesComponent implements OnInit {
   }
 
   ngOnChanges(){
-    console.log(this.processOwners_list)
+    console.log("this.vcm_data",this.vcm_data)
     this.vcm_data.forEach(element => {
       if(element.processOwner){
         this.prop_data.push(element)
       }
     })
     this.vcm_data.forEach(element => {
-      if(element.attachements){
-        element.attachements.forEach(ele => {
-        this.attachements.push(ele)
+      if(element.attachments.length>0){
+        element.attachments.forEach(ele => {
+        this.attachments.push(ele)
           
         });
       }
       
     });
-    console.log(this.attachements)
+    console.log("this.attachements",this.attachments)
   }
 
 
