@@ -334,6 +334,7 @@ export class CreateVcmComponent implements OnInit {
     formdata.append("uniqueId",this.selectedObj.uniqueId);
     formdata.append("vcmuniqueId",this.vcmProcess[0].uniqueId);
     formdata.append("masterId","000");
+    formdata.append("parent",this.selectedObj.parent);
 
     // for (var i = 0; i < this.fileName.length; i++) {
     //   formdata.append("file", this.fileName[i]);

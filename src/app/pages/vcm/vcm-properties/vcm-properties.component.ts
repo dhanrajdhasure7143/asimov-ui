@@ -114,12 +114,13 @@ export class VcmPropertiesComponent implements OnInit {
       formdata.append("vcmLevel",name.level);
       formdata.append("uniqueId",name.uniqueId);
       formdata.append("masterId","000");
+      formdata.append("parent",name.parent);
 
       if (level == 'level1') {
       formdata.append("vcmuniqueId",this.vcmProperties[0].uniqueId);
       }
       if (level == 'level2') {
-        formdata.append("vcmuniqueId",this.vcmProperties[0].level1UniqueId);
+        formdata.append("vcmuniqueId",this.vcmProperties[0].uniqueId);
         }
       this.rest_api.uploadVCMPropDocument(formdata).subscribe(res => {
         this.isLoading = false;
