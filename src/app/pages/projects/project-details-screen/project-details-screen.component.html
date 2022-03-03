@@ -183,7 +183,7 @@
                                 <div class="mainset" *ngIf="editdata==true">
                                     <span class="labeltit">Process Owner</span>
 
-                                    <span class="tab-text" *ngIf="projectDetails.processOwner==null||projectDetails.processOwner==''|| projectDetails.processOwner==undefined">-</span>
+                                 
                                     <select  class="small-input" id="processowner" [value]="projectDetails.processOwner" [attr.disabled]="processOwner==false" >                                  
                                                     <option [value]="projectDetails.processOwner" >{{projectDetails.processOwner | userPipe : users_list}}</option>
                                                     <option *ngFor="let user of userslist" [value]="user.userId.userId">

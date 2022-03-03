@@ -567,7 +567,7 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
 
       onProcessChange(processId:number)
       {
-        debugger
+        
         let process=this.selected_process_names.find(process=>process.processId==processId);
         if(process!=undefined)
         {
