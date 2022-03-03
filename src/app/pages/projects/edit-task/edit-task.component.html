@@ -24,42 +24,58 @@
             <span class="projects-menu-item"><i class="ri-filter-line"></i></span>
             <span class="projects-menu-item"><i class="ri-more-2-line"></i></span>
           </span> -->
+          
     </div>
-    <div class="bg-task row">
-        <!-- {{selectedtask.id}} /
-         -->
-        <div class="col-md-11 p-0">
-            <div class="d-flex">
-                <div class="task-name">{{taskcategory}} / &nbsp;</div>
-                <div><input type="text" maxlength="50" class="form-control rpa-control task-name-input" (change)="taskname=$event.target.value" [value]="taskname"></div>
-            </div>
-            <div class="value">
-                <span class="level3">Last Modified By : {{lastModifiedBy}}</span>&nbsp;
-                <span>|</span>&nbsp;
-                <span class="level3">{{lastModifiedTimestamp |  date:'MMM dd, y, HH:mm:ss'}}</span>
-            </div>
-        </div>
-        <div class="col-md-1 p-0">
-            <label class="h6 label-control" id="startdate" for="startDate">Start Date</label>
-            <span class="labelcont">{{startDate  | date}}</span>
-        </div>
-
-    </div>
+  
+   
 </div>
 <div class="edit-task-body">
     <div class="edit-task-body-content">
         <form [formGroup]="updatetaskForm" (ngSubmit)="updatetask()">
+
+            <div class="bg-task row">
+                <!-- {{selectedtask.id}} /
+                 -->
+                <div class="col-md-5 pl-0">
+                    <div class="d-flex">
+                        <!-- <div class="task-name">{{taskcategory}} / &nbsp;</div> -->
+                        <div class="form-fields col-md-6 pl-0">
+                        <label class="h6 label-control" id="taskcategory" for="taskcategory">Task Category</label>
+                        <select class="form-control rpa-control" formControlName="taskCategory"  [(ngModel)]="optionValue" (change)="OnChangeTaskCategory($event)">
+                            <option value="" disabled hidden>Select Task Category</option>
+                            <option value="null" disabled hidden>Select Task Category</option>
+                            <option value="" disabled hidden>Select Task Category</option>
+                            <option *ngFor="let categories of taskcategories" [value]="categories.category">{{categories.category}}</option>
+                            </select>
+                        </div>
+                        <div class="form-fields col-md-6 pr-0">
+                            <label class="h6 label-control" id="taskname" for="taskname">Task Name</label>
+                            <input type="text" maxlength="50" class="form-control rpa-control task-name-input" (change)="taskname=$event.target.value" [value]="taskname">
+                        </div>
+                    </div>
+                    <div class="value">
+                        <span class="level3">Last Modified By : {{lastModifiedBy}}</span>&nbsp;
+                        <span>|</span>&nbsp;
+                        <span class="level3">{{lastModifiedTimestamp |  date:'MMM dd, y, HH:mm:ss'}}</span>
+                    </div>
+                </div>
+                <div class="pull-right">
+                    <label class="h6 label-control" id="startdate" for="startDate">Start Date</label>
+                    <span class="labelcont">{{startDate  | date}}</span>
+                </div>
+        
+            </div>
         <div class="row">
             <div class="col-md-5 pl-0">
 
-               
+                
 
                     <div class="form-fields col-md-6 pl-0">
                         <label class="h6 label-control" id="assignee" for="assignee">Assignee</label>
                         <!-- <span class="labelcont">{{taskresource| userPipe : users_list}}</span> -->
                         <select [value]="taskresource" formControlName="resources" class="form-control rpa-control">
-                    <option >Select Assignee</option>
-
+                    <option value="" disabled hidden>Select Assignee</option>
+                    <option value="null" disabled >Select Assignee</option>
                     <option *ngFor="let user of users_list" [value]="user.userId.userId">{{user.userId.firstName}} {{user.userId.lastName}}</option>
                   </select>
                     </div>
@@ -90,26 +106,28 @@
                         <span *ngIf="updatetaskForm.get('priority').invalid && updatetaskForm.get('priority').touched" class="errspan required">Priority Required*</span>
                     </div>
 
-                    <div class="form-fields col-md-6 pl-0" *ngIf="taskcategory == 'BPMN Design'">
+                    <div class="form-fields col-md-6 pl-0" *ngIf="optionValue == 'BPMN Design'">
                         <span class="labeltit" for="correlationID">Process</span>
                         <select formControlName="correlationID" class="form-control data enteredfield-color">
-                    <option value="">Select Process</option>
+                            <option value="" disabled hidden>Select Process</option>
                     <option *ngFor="let process of bpm_process_list" [value]="process.correlationID">
                       {{process.processName}}</option>   
                   </select>
                     </div>
-                    <div class="form-fields col-md-6 pl-0" *ngIf="taskcategory == 'Process Mining'">
+                    <div class="form-fields col-md-6 pl-0" *ngIf="optionValue === 'Process Mining'">
                         <span class="labeltit" for="correlationID">Process</span>
                         <select formControlName="correlationID" class="form-control data enteredfield-color">
-                    <option value="">Select Process</option>
+                            <option value="" disabled hidden>Select Process</option>
+                            <option value="null" disabled hidden>Select Process</option>
                     <option *ngFor="let process of pi_process_list" [value]="process.piId">
                       {{process.piName}}</option>   
                   </select>
                     </div>
-                    <div class="form-fields col-md-6 pl-0" *ngIf="taskcategory == 'RPA Implementation'">
+                    <div class="form-fields col-md-6 pl-0" *ngIf="optionValue == 'RPA Implementation'">
                         <span class="labeltit" for="correlationID">Bot</span>
                         <select formControlName="correlationID" class="form-control data enteredfield-color">
-                    <option value="">Select Bot</option>
+                            <option value="" disabled hidden>Select Bot</option>
+                            <option value="null" disabled hidden>Select Bot</option>
                     <option *ngFor="let bot of bot_list" [value]="bot.botId">
                       {{bot.botName}}</option>   
                   </select>
