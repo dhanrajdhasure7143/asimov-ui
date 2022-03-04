@@ -13,16 +13,16 @@
                     <tbody>
                         <tr *ngFor="let each of prop_data;let i = index">
                             <td *ngIf="each.title">{{each.title}}</td>
-                            <td *ngIf="each.title">{{each.processOwner}}
+                            <td *ngIf="each.title">
+                                <span *ngIf="!edit">{{each.processOwner}}</span>
 
-                                <!-- <select class="form-control" [(ngModel)]="each.processOwner" [disabled]="isDisabled"
-                                    #ownerValue>
+                                <select *ngIf="edit == 'edit'" class="form-control" [(ngModel)]="each.processOwner" #ownerValue>
                                     <option value="" hidden disabled>Select Owner</option>
                                     <option *ngFor="let each_approver of processOwners_list;let i=index"
                                         [value]="each_approver.firstName+' '+each_approver.lastName">
                                         {{(each_approver.firstName | titlecase) +"
                                         "+(each_approver.lastName==undefined?"":each_approver.lastName)}}</option>
-                                </select> -->
+                                </select>
                             </td>
                         </tr>
                     </tbody>
@@ -33,9 +33,10 @@
         <div class="col-md-12 col-lg-12">
             <div class="prop_procdef">
                 <h4>Process Description</h4>
-                <div  *ngFor="let each of vcm_data" class="prdeflist">               
+                <div *ngFor="let each of vcm_data" class="prdeflist">
                     <h3 *ngIf="each.description">{{each.title}}</h3>
-                    <p>{{each.description}}</p>
+                    <p *ngIf="!edit">{{each.description}}</p>
+                    <textarea class="form-control" [(ngModel)]="each.description" *ngIf="edit == 'edit'"></textarea>
                 </div>
             </div>
         </div>
@@ -62,6 +63,13 @@
                                     <img src="../../../../assets/images/Admin/download-blue.svg" class="hover-img testplus" >
                                     </a>
                                     <span class="testtooltip">Download</span>
+                                </span> &nbsp;
+                                <span class="tsttooltipbtn" *ngIf="edit == 'edit'">
+                                    <img class="testplus" src="../../../../assets/images/VCM/VCM-Upload.svg"  />
+                                    <button class="btn" (click)="fileInput.click()" >
+                                        <input multiple #fileInput type="file" (change)="documentsUpload($event)" style="display:none;" />
+                                    </button>
+                                    <span class="testtooltip">Upload</span>
                                 </span>
                                 <!-- <img src="../../../../assets/images/Admin/download-blue.svg" class="testplus"> -->
                             </td>

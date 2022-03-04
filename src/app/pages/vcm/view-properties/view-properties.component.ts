@@ -11,6 +11,7 @@ export class ViewPropertiesComponent implements OnInit {
   @Input() vcm_data:any;
   @Input() processOwners_list:any=[];
   @Input() vcm_resData:any;
+  @Input() edit:any;
   isDisabled:boolean=true;
   attachments:any=[];
   prop_data:any=[];
@@ -19,7 +20,7 @@ export class ViewPropertiesComponent implements OnInit {
   constructor(private rest_api: RestApiService) { }
 
   ngOnInit(): void {
-
+    console.log(this.edit);
   }
 
   ngOnChanges(){

@@ -43,7 +43,14 @@ export class EditVcmComponent implements OnInit {
   editLevel: any;
   editLevelParent: any;
   editLevelChild: any;
-  uploadedFiles: any[];
+  attachments: any[];
+  isViewProperties = false;
+  isShow = false;
+  node_data: any[];
+  isLoading:boolean=false;
+  vcm_data: any;
+  edit:any;
+  selectedVcmName: any;
 
   constructor(private router: Router, private bpmnservice: SharebpmndiagramService, private rest_api: RestApiService,
     private route: ActivatedRoute) {
@@ -55,6 +62,7 @@ export class EditVcmComponent implements OnInit {
   hasChild = (_: number, node: any) => !!node.children && node.children.length > 0;
   ngOnInit(): void {
     this.getProcessOwnersList();
+    this.getselectedVcm();
   }
 
   ngOnChanges() {
@@ -172,32 +180,32 @@ export class EditVcmComponent implements OnInit {
     this.selectedNode = node
   }
   editLevel3() {
-    this.vcmData.filter((e) => e.title === this.parent)[0].children
-      .filter(n => n.title === this.childParent)[0].children
-      .filter(c => c.title == this.title)[0].children.push(
-        {
-          level: "L3",
-          parent: this.parent,
-          title: this.processName,
-          description: '',
-          processOwner: '',
-          type: "Process",
-          level2UniqueId: this.selectedNode.uniqueId,
-          level1UniqueId: this.selectedNode.level1UniqueId,
-          uniqueId: UUID.UUID()
-        }
-      );
     console.log(this.vcmData);
-    this.dataSource.data = null;
-    this.dataSource.data = this.vcmData;
-    setTimeout(() => {
-      this.treeControl.dataNodes = this.dataSource.data;
-    }, 200);
-    this.parent = '';
-    this.childParent = '';
-    this.title = '';
-    this.uniqueId = '';
-    this.processName = '';
+    // this.vcmData.filter((e) => e.parent === this.parent)[0].children
+    //   .filter(n => n.childParent === this.childParent && n.title == this.title)[0].children.push(
+    //     {
+    //       level: "L3",
+    //       parent: this.parent,
+    //       title: this.processName,
+    //       description: '',
+    //       processOwner: '',
+    //       type: "Process",
+    //       level2UniqueId: this.selectedNode.uniqueId,
+    //       level1UniqueId: this.selectedNode.level1UniqueId,
+    //       uniqueId: UUID.UUID()
+    //     }
+    //   );
+    // console.log(this.vcmData);
+    // this.dataSource.data = null;
+    // this.dataSource.data = this.vcmData;
+    // setTimeout(() => {
+    //   this.treeControl.dataNodes = this.dataSource.data;
+    // }, 200);
+    // this.parent = '';
+    // this.childParent = '';
+    // this.title = '';
+    // this.uniqueId = '';
+    // this.processName = '';
   }
   onSelectedNode(node) {
     console.log(node);
@@ -228,40 +236,48 @@ export class EditVcmComponent implements OnInit {
 
   openNodeProperties(node) {
     console.log(node);
-    this.uploadedFiles=[];
+    // this.getAttachements(node);
     this.description = node.description;
     this.editTitleName = node.title;
     this.processOwner = node.processOwner;
     this.editLevel = node.level;
     this.editLevelParent = node.parent;
     this.editLevelChild = node.childParent;
-    this.uploadedFiles=node.attachments
     this.drawer.open();
   }
 
   editProcessOwner() {
-    if (this.editLevel == 'L1') {
-      this.vcmData.filter((e) => e.title === this.editLevelParent)[0].children
-        .filter(n => n.title === this.editTitleName)[0].processOwner = this.processOwner;
-    }
-    if (this.editLevel == 'L2') {
-      this.vcmData.filter((e) => e.title === this.editLevelParent)[0].children
-        .filter(n => n.title === this.editLevelChild)[0].children
-        .filter(t=>t.title == this.editTitleName)[0].processOwner = this.processOwner;
-    }
+    console.log(this.vcmData);
+    console.log(this.editLevelParent);
+    this.vcmData.filter((e) => e.parent === this.editLevelParent && e.title == this.editTitleName)
+    [0].processOwner = this.processOwner;
+    // if (this.editLevel == 'L1') {
+    //   this.vcmData.filter((e) => e.parent === this.editLevelParent && e.title == this.editTitleName)
+    //   [0].processOwner = this.processOwner;
+    //   // [0].children
+    //   //   .filter(n => n.title === this.editTitleName)[0].processOwner = this.processOwner;
+    // }
+    // if (this.editLevel == 'L2') {
+    //   this.vcmData.filter((e) => e.parent === this.editLevelParent && e.title == this.editTitleName)
+    //   [0].processOwner 
+    //     // .filter(n => n.title === this.editLevelChild)[0].children
+    //     // .filter(t=>t.title == this.editTitleName)[0].processOwner = this.processOwner;
+    // }
     console.log(this.vcmData);
   }
 
   editDescription() {
-    if (this.editLevel == 'L1') {
-      this.vcmData.filter((e) => e.title === this.editLevelParent)[0].children
-        .filter(n => n.title === this.editTitleName)[0].description = this.description;
-    }
-    if (this.editLevel == 'L2') {
-      this.vcmData.filter((e) => e.title === this.editLevelParent)[0].children
-        .filter(n => n.title === this.editLevelChild)[0].children
-        .filter(t=>t.title == this.editTitleName)[0].description = this.description;
-    }
+    this.vcmData.filter((e) => e.parent === this.editLevelParent && e.title == this.editTitleName)
+    [0].description = this.description;
+    // if (this.editLevel == 'L1') {
+    //   this.vcmData.filter((e) => e.title === this.editLevelParent)[0].children
+    //     .filter(n => n.title === this.editTitleName)[0].description = this.description;
+    // }
+    // if (this.editLevel == 'L2') {
+    //   this.vcmData.filter((e) => e.title === this.editLevelParent)[0].children
+    //     .filter(n => n.title === this.editLevelChild)[0].children
+    //     .filter(t=>t.title == this.editTitleName)[0].description = this.description;
+    // }
     console.log(this.vcmData);
   }
 
@@ -279,5 +295,126 @@ export class EditVcmComponent implements OnInit {
         .attachments.splice(i, 1);
     }
   }
+
+  viewProperties(node){
+    console.log(this.vcmData);
+    console.log(node);
+    this.node_data = [];
+    this.vcm_data["mainParent"] = node.title
+    this.vcmData.forEach(element => {
+      if (element.parent == node.title) {
+        this.node_data.push(element)
+      }
+    });
+    console.log(this.node_data);
+    
+    this.isViewProperties = true;
+    this.isShow = false;
+    this.edit = 'edit';
+  }
+
+  backToView(){
+    this.isShow=false;
+    this.isViewProperties=false;
+  }
+
+  getselectedVcm(){
+    this.isLoading=true;
+    let res_data
+    this.rest_api.getselectedVcmById(this.vcm_id).subscribe(res=>{res_data=res
+      this.isLoading=false;
+      console.log(res);
+
+      if(res){
+      this.vcm_data=res_data
+      this.vcmData=res_data.data.vcmV2;
+      this.selectedVcmName=res_data.data.vcmName
+      // this.vcmData=this.vcmData1
+      this.dataMappingToTreeStructer1();
+      }
+    })
+  }
+
+  dataMappingToTreeStructer1(){
+    let objData = [
+      { title: "Management Process","children":[]},
+      { title: "Core Process","children":[]},
+      { title: "Support Process","children":[]}
+    ]
+
+    this.vcmData.forEach(e=>{
+      objData.forEach(e1=>{
+        if(e.level == "L1"){
+          if(e.parent == e1.title){
+            e1["children"].push(e);
+          }
+        }
+      })
+    })
+    console.log(objData)
+
+    this.vcmData.forEach(e=>{
+      objData.forEach(e1=>{
+        if(e.level == "L2"){
+          if(e.parent == e1.title){
+            e1.children.forEach(e2=>{
+              if(e2.uniqueId == e.level1UniqueId ){
+                e2['children'].push(e);
+              }
+            })
+          }
+        }
+      })
+    })
+
+    this.vcmData.forEach(e=>{
+      objData.forEach(e1=>{
+        if(e.level == "L3"){
+          if(e.parent == e1.title){
+            e1.children.forEach(e2=>{
+              if(e2.title == e.childParent ){
+                e2.children.forEach(e3 => {
+                  if(e3.uniqueId == e.level2UniqueId ){
+                    e3['children'].push(e)
+                  }
+                });
+              }
+            })
+          }
+        }
+      })
+    })
+    console.log(objData)
+    // this.vcmProcess = this.dataSource.data;
+    this.vcmProcess = objData;
+    this.dataSource.data=objData;
+    this.treeControl.dataNodes = this.dataSource.data; 
+    this.treeControl.expand(this.treeControl.dataNodes[0]);
+    this.treeControl.expand(this.treeControl.dataNodes[1]);
+    this.treeControl.expand(this.treeControl.dataNodes[2]);
+    // this.treeControl.expandAll();
+    // this.tree.treeControl.expandAll();
+  }
+
+
+//   getAttachements(node_obj){
+//     // this.isLoading=true;
+//     console.log(node_obj);
+//     let reqBody={
+//       "masterId": this.vcmData.data.id,
+//       "parent": node_obj.parent
+//     }
+//     let res_data
+//     this.attachments=[];
+//   this.rest_api.getvcmAttachements(reqBody).subscribe(res=>{res_data=res
+//     console.log(res)
+//     res_data.data.forEach(element => {
+//       if(element.uniqueId== node_obj.uniqueId){
+//         this.attachments.push(element)
+//       }
+//     });
+//     // this.isLoading=false;
+//   })
+// }
 
 }

@@ -1,4 +1,4 @@
-<div class="h-100">
+<div class="h-100" *ngIf="!isShow && !isViewProperties">
     <div class="row module-heading title">
         <div>
             <span class="module-back-button" routerLink="/pages/vcm/view-vcm">
@@ -55,7 +55,7 @@
                             </div>
                         </div>
                         <div class="col-md-12 form-group files">
-                            <p *ngFor="let file of uploadedFiles;let i = index;">
+                            <p *ngFor="let file of attachments;let i = index;">
                                 {{file.fileName}}
                                 <span (click)="RemoveFile(file,i)"><img src="../../../../assets/images/VCM/VCM-close.svg"
                                         class="testplus2 default-img" />
@@ -72,13 +72,13 @@
                     <div class="row maincontent h-100">
                         <div class="col-md-12 p-0 form-group vcname">
                             <label class="label-control">Value Chain Name</label>
-                            <input type="text" class="form-control" placeholder="Enter Value Chain Name" readonly>
+                            <input type="text" class="form-control" placeholder="Enter Value Chain Name" [(ngModel)]="selectedVcmName">
                             <button class="btn">
                                 <img  src="../../../../assets/images/VCM/Green Tick.svg" class="testplus1"  />
                             </button>
                         </div>
                         <div class="col-md-12 p-0">
-                            <h4>VCM Name</h4>
+                            <h4>{{selectedVcmName}}</h4>
                         </div>
                         <div class="col-md-12 p-0 vcm-treediv">
                             <mat-tree [dataSource]="dataSource" #tree [treeControl]="treeControl" class="example-tree">
@@ -129,7 +129,7 @@
                                 </mat-tree-node>
                                 <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
                                     <div class="mat-tree-node">
-                                        <button *ngIf="(node.title=='Management Process'&& treeControl.dataNodes[1])|| (node.title=='Core Process'&& treeControl.dataNodes[1]) || (node.title=='Support Process'&& treeControl.dataNodes[2])">
+                                        <button (click)="viewProperties(node)" *ngIf="(node.title=='Management Process'&& treeControl.dataNodes[1])|| (node.title=='Core Process'&& treeControl.dataNodes[1]) || (node.title=='Support Process'&& treeControl.dataNodes[2])">
                                             <img src="../../../assets/images/menu-line.svg" class="testplus" alt="">
                                         </button>
                                         <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name" *ngIf="node.title != 'Management Process' && node.title != 'Core Process' && node.title != 'Support Process'">
@@ -209,3 +209,15 @@
         </div>
     </div>
 </ng-template>
+
+<div class="h-100" *ngIf="isViewProperties && !isShow">
+    <div class="row module-heading title">
+        <div>
+            <span class="module-back-button" (click)="backToView()">
+                <i aria-hidden="true" class="fas fa-arrow-left"></i>
+            </span>
+            <span class="module-header-title">Properties</span>
+        </div>
+    </div>
+    <app-view-properties [vcm_data]="node_data" [vcm_resData]="vcm_data" [processOwners_list]="processOwners_list" [edit]="edit"></app-view-properties>
+</div>

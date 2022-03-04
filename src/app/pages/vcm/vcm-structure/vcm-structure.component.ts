@@ -384,6 +384,7 @@ export class VcmStructureComponent implements OnInit {
   }
 
   viewProperties(node){
+    console.log(node);
     this.node_data = [];
     this.vcm_data["mainParent"] = node.title
     this.vcmData.forEach(element => {
