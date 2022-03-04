@@ -1,0 +1,323 @@
+<div class="h-100">
+    <div class="row module-heading title">
+        <div>
+            <span class="module-back-button" (click)="backToVcm()" routerLink="/pages/vcm/create-vcm">
+                <i aria-hidden="true" class="fas fa-arrow-left"></i>
+            </span>
+            <span class="module-header-title">Properties</span>
+        </div>
+        <div class="ml-auto submit">
+            <button class="btn btn-default" (click)="resetProperties()">Reset</button>
+            <button class="btn btn-primary" (click)="saveProperties()">Save</button>
+        </div>
+    </div>
+
+    <div class="module-body">
+        <div class="vcm-prop-content h-100" *ngIf="levelType == 'level1'">
+            <div class="col-md-12 col-lg-12">
+                <div class="prop_owner">
+                    <h4>Ownership</h4>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Process Name</th>
+                                <th>Level1 Name</th>
+                                <th>Owner</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngFor="let prop of vcmProperties;let j=index">
+                                <tr *ngFor="let each of prop.children;let i = index">
+                                    <td *ngIf="each.title">{{prop.name}}</td>
+                                    <td *ngIf="each.title">{{each.title}}</td>
+                                    <td *ngIf="each.title">
+                                        <select class="form-control" [(ngModel)]="each.processOwner" #ownerValue>
+                                            <option value="" hidden disabled>Select Owner</option>
+                                            <!-- <option value="ranjith@epsoft" >ranjith</option> -->
+                                            <option *ngFor="let each_approver of processOwners_list;let i=index" [value]="each_approver.firstName+' '+each_approver.lastName">
+                                                {{(each_approver.firstName | titlecase) +" "+(each_approver.lastName==undefined?"":each_approver.lastName)}}</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="col-md-12 col-lg-12">
+                <div class="prop_procdef">
+                    <h4>Process Description</h4>
+                    <div *ngFor="let prop of vcmProperties;let i = index;" class="definitionscroll">
+
+                        <ng-container *ngFor="let name of prop.children;let j = index;">
+
+                            <p *ngIf="name.title">{{name.title}}</p>
+
+                            <div [hidden]="name.title && descriptionEdit == j && name.parent == descriptionProcessName" (click)="descriptionView(name , j , 'level1')" class="proc_deffield">
+
+                                <span>
+                                    <textarea  (click)="descriptionView(name , j , 'level1')" *ngIf="!name.description" class="form-control descriptionview" placeholder="Enter Description"></textarea>
+                                    <textarea  (click)="descriptionView(name , j , 'level1')" class="form-control descriptionview" *ngIf="name.description">{{name.description}}</textarea>
+                                    <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus" 
+                                        (click)="descriptionView(name , j , 'level1')"/>
+                                    
+                                </span>
+                            </div>
+
+                            <div class="proc_deffield">
+                                <textarea *ngIf="name.title && descriptionEdit == j && name.parent == descriptionProcessName" class="form-control" #descriptionValue [(ngModel)]="name.description" placeholder="Enter Description"></textarea>
+                                <span class="procdesc_act" *ngIf="name.title && descriptionEdit == j && name.parent == descriptionProcessName">
+                                    <span>
+                                        <img  src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img" />
+                                        <img (click)="descriptionCancel(name)" src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" />
+                                    </span>
+                                <img (click)="descriptionSubmit(name,'level1')" src="../../../../assets/images/VCM/Green Tick.svg" class="testplus1" />
+                                </span>
+                            </div>
+
+                        </ng-container>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12 col-lg-12">
+                <div class="prop_docs">
+                    <h4>Documents</h4>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Process Name</th>
+                                <th>Documents</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngFor="let prop of vcmProperties">
+                                <tr *ngFor="let name of prop.children;let i = index">
+                                    <td *ngIf="name.title">{{name.title}}</td>
+                                    <td *ngIf="name.documents">
+                                        <ng-container *ngFor="let doc of name.documents;let j = index">
+                                            <span class="docpill">
+                                                {{j+1}} . {{doc.filename}}                                                 
+                                                <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2" (click)="RemoveFile(name,j,'level1')" />
+                                            </span>
+                                        </ng-container>
+                                    </td>
+                                    <td *ngIf="name.documents">
+
+                                        <input multiple #fileInput type="file" style="display: none;" (change)="documentsUpload($event,name,'level1')" />
+                                        <img src="../../../../assets/images/Projects/upload-blue.svg" class="testplus" (click)="fileInput.click()" />
+
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+            <!-- <div class="col-md-12 col-lg-12">
+                <div class="dbichart-block" >
+                    <div class="dbichart-body">
+                        <div class="row module-heading title">
+                            <div>
+                                <h4 >Documents</h4>
+                            </div>
+                            <div class="ml-auto submit">
+                                <span class="module-back-button" (click)="fileInput.click()">
+                                    <input multiple #fileInput type="file" (change)="documentsUpload($event)" style="display: none;" />
+                                    <i aria-hidden="true" class="fa fa-upload"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="module-body">
+                            <table  *ngIf="fileName.length != 0">
+                                <tr>
+                                    <th style="width: 5%;">S.No</th>
+                                    <th style="width: 95%;">Documents</th>
+                                </tr>
+                                <tr *ngFor="let file of fileName;let i = index;">
+                                    <td>{{i + 1}}</td>
+                                    <td>
+                                        {{file.name}} 
+                                        <img src="../../../../assets/images/VCM/circle-close-red.svg" class="testplus1" (click)="RemoveFile(file,i)" />
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+
+        <div class="vcm-prop-content h-100" *ngIf="levelType == 'level2'">
+            <div class="col-md-12 col-lg-12">
+                <div class="prop_owner">
+                    <h4>Ownership</h4>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Process Name</th>
+                                <th>Level2 Name</th>
+                                <th>Owner</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngFor="let prop of vcmProperties;let i = index">
+                                <ng-container *ngFor="let name of prop.children;let j = index">
+                                    <tr *ngFor="let level2 of name.children;let k = index">
+                                        <td *ngIf="level2.title">{{prop.name}}</td>
+                                        <td *ngIf="level2.title">{{level2.title}}</td>
+                                        <td *ngIf="level2.title">
+                                            <select class="form-control" #ownerValue [(ngModel)]="level2.processOwner">
+                                                    <option value="" hidden disabled>Select Owner</option>
+                                                    <option *ngFor="let each_approver of processOwners_list;let i=index" [value]="each_approver.firstName+' '+each_approver.lastName">
+                                                        {{(each_approver.firstName | titlecase) +" "+(each_approver.lastName==undefined?"":each_approver.lastName)}}</option>
+                                                </select>
+                                        </td>
+                                    </tr>
+                                </ng-container>
+                            </ng-container>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="col-md-12 col-lg-12">
+                <div class="prop_procdef">
+                    <h4>Process Description</h4>
+
+                    <div *ngFor="let prop of vcmProperties;let i = index;" class="definitionscroll">
+
+                        <ng-container *ngFor="let name of prop.children">
+
+                            <ng-container *ngFor="let level2 of name.children;let j = index">
+
+                                <p *ngIf="level2.title">{{level2.title}}</p>
+
+                                <div [hidden]="level2.title && descriptionEdit == j && level2.parent == descriptionProcessName" (click)="descriptionView(level2 , j , 'level2')" class="proc_deffield">
+
+                                    <span>
+                                        <textarea  (click)="descriptionView(level2 , j , 'level2')"  *ngIf="!level2.description" class="form-control descriptionview" placeholder="Enter Description"></textarea>
+                                        <textarea (click)="descriptionView(level2 , j , 'level2')"  class="form-control descriptionview" *ngIf="level2.description">{{level2.description}}</textarea>
+                                        <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus" 
+                                            (click)="descriptionView(level2 , j , 'level2')"  *ngIf="level2.description" /> 
+                                       
+                                    </span>
+                                </div>
+                                <div class="proc_deffield">
+                                    <textarea *ngIf="level2.title && descriptionEdit == j && level2.parent == descriptionProcessName" class="form-control" #descriptionValue [(ngModel)]="level2.description" placeholder="Enter Description"></textarea>
+
+                                    <span class="procdesc_act" *ngIf="level2.title && descriptionEdit == j && level2.parent == descriptionProcessName">
+                                        <span>
+                                            <img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img" /> 
+                                            <img (click)="descriptionCancel(level2)" src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" /> 
+                                        </span>
+                                    <img (click)="descriptionSubmit(level2,'level2')" src="../../../../assets/images/VCM/Green Tick.svg" class="testplus1" />
+                                    </span>
+                                </div>
+
+
+                            </ng-container>
+
+                        </ng-container>
+
+                    </div>
+
+                    <!-- <div *ngFor="let prop of vcmProperties">
+                            <ng-container *ngFor="let name of prop.children">
+                                <ng-container *ngFor="let level2 of name.children;let i = index">
+                                    <p *ngIf="level2.name" >{{level2.name}}</p>
+                                    <textarea *ngIf="level2.name" class="form-control" id="descriptionValue"  [(ngModel)]="level2.description" placeholder="Enter Description"></textarea>
+                                </ng-container>
+                            </ng-container>
+                        </div> -->
+
+                </div>
+            </div>
+
+            <div class="col-md-12 col-lg-12">
+                <div class="prop_docs">
+                    <h4>Documents</h4>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Process Name</th>
+                                <th>Documents</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngFor="let prop of vcmProperties">
+                                <ng-container *ngFor="let name of prop.children;let i = index">
+                                    <tr *ngFor="let level2 of name.children">
+                                        <td *ngIf="level2.title">{{level2.title}}</td>
+                                        <td *ngIf="level2.documents">
+                                            <ng-container *ngFor="let doc of level2.documents;let j = index">
+                                                <span class="docpill">
+                                                    {{j+1}} . {{doc.filename}}                                                   
+                                                    <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2" (click)="RemoveFile(level2,j,'level2')" />
+                                                </span>
+                                            </ng-container>
+                                        </td>
+                                        <td *ngIf="level2.documents">
+
+                                            <input multiple #fileInput type="file" style="display: none;" (change)="documentsUpload($event,level2,'level2')" />
+                                            <img src="../../../../assets/images/Projects/upload-blue.svg" class="testplus" (click)="fileInput.click()" />
+                                        </td>
+                                    </tr>
+                                </ng-container>
+                            </ng-container>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- <div class="col-md-12 col-lg-12">
+                <div class="dbichart-block" >
+                    <div class="dbichart-body">
+                        <div class="row module-heading title">
+                            <div>
+                                <h4 >Documents</h4>
+                            </div>
+                            <div class="ml-auto submit">
+                                <span class="module-back-button" (click)="fileInput.click()">
+                                    <input multiple #fileInput type="file" (change)="documentsUpload($event)" style="display: none;" />
+                                    <i aria-hidden="true" class="fa fa-upload"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="module-body">
+                            <table  *ngIf="fileName.length != 0">
+                                <tr>
+                                    <th style="width: 5%;">S.No</th>
+                                    <th style="width: 95%;">Documents</th>
+                                </tr>
+                                <tr *ngFor="let file of fileName;let i = index;">
+                                    <td>{{i + 1}}</td>
+                                    <td>
+                                        {{file.name}} 
+                                        <img src="../../../../assets/images/VCM/circle-close-red.svg" class="testplus1" (click)="RemoveFile(file,i)" />
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+    </div>
+</div>
+
+
+<div class="spinoverlay" *ngIf="isLoading">
+    <div class="spincenter">
+        <img src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader" />
+    </div>
+</div>

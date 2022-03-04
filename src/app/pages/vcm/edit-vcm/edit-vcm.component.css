@@ -1,0 +1,149 @@
+.example-tree-invisible {
+    display: none;
+}
+
+.example-tree ul,
+.example-tree li {
+    margin-top: 0;
+    margin-bottom: 0;
+    list-style-type: none;
+}
+
+.example-tree .mat-nested-tree-node div[role=group],
+.example-tree div[role=group]>.mat-tree-node {
+    padding-left: 15px;
+    margin-bottom: 15px;
+    cursor: pointer;
+}
+
+.vcm-treesmain {
+    padding: 10px 15px;
+    /* background-color: #f5f5f5;  */
+}
+
+.vcm-treesmain .example-tree {
+    background-color: #f5f5f5;
+    padding: 0px 15px;
+    height: 100%;
+}
+
+.vcm-treesmain h4 {
+    font-weight: 600;
+    margin: 0px;
+    color: #001c47;
+    padding: 10px 15px;
+    background-color: #f5f5f5;
+}
+
+.text-color {
+    color: #00a1e4;
+    cursor: pointer;
+}
+
+.custom-footer-content p {
+    cursor: pointer !important;
+    font-weight: 600;
+}
+
+.Apr-cnt h4 {
+    border-bottom: 1px solid #ccc;
+    color: #00a1e4;
+    margin: 0px;
+    padding: 0px 0px 10px;
+}
+
+.notif-close img {
+    opacity: 0.2;
+}
+
+.submit button.btn.btn-primary {
+    margin-right: 0px !important;
+}
+
+.close-btn {
+    display: flex;
+    justify-content: end;
+    margin: 5%;
+}
+
+mat-drawer {
+    width: 25%;
+}
+
+span.proc-title {
+    color: #00a1e4 !important;
+    font-size: 16px !important;
+}
+.mat-tree-node span {
+    color: #607088;
+    font-size: 14px;
+    line-height: 22px;
+}
+.vcmdocs {
+    border: 2px dashed #e7e7e7;
+    background-color: #f5f5f5;
+    padding: 20px 0px !important;
+    border-radius: 3px;
+    cursor: pointer;
+    text-align: center;
+}
+.vcmdocs:hover {
+    background-color: aliceblue;
+}
+.vcmdocs p {
+    margin: 0px;
+}
+.vcmdocs img {
+    width: 20%;
+    height: auto;
+    display: block;
+    margin: 0px auto;
+}
+.vcmdocs button {
+    border: 1px solid #00a0e3 !important;
+    color: #00a0e3;
+    margin: 15px 0px 0px 0px !important;
+    padding: 8px 25px !important;
+}
+.files img {
+    float: right;
+    /* opacity: 0.6; */
+    cursor: pointer;  
+    margin-top: 5px;
+}
+.files img:hover {
+    opacity: 1;
+}
+.files span:hover .default-img {
+    display: none;
+}
+.files span:hover .hover-img {
+    display: initial;
+}
+mat-tree-node button img.testplus {
+    margin-left: 5px;
+}
+
+.vcname {
+    background-color: #fff;
+}
+.vcname input {
+    position: relative;
+}
+.vcname button {
+    position: absolute;
+    top: 32px;
+    right: 13px;
+    min-width: auto !important;
+    padding: 0px !important;
+    margin: 0px !important;
+    background-color: transparent !important;
+}
+.vcm-treediv {
+    height: calc(100% - 110px);
+}
+img.procmenu {
+    width: auto;
+    height: 18px;
+    margin-right: 5px;
+}

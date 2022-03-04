@@ -2693,6 +2693,22 @@ span.pdicon {
   max-height: 65px !important;
   overflow: auto !important;
 }
+
+.vcmprop.mat-drawer-opened .mat-tab-body-wrapper {
+  padding: 10px 0px;
+}
+.vcmprop.mat-drawer-opened .mat-tab-label {
+  height: 45px;
+  justify-content: left !important;
+  padding-left: 15px !important;
+  min-width: 140px !important;
+}
+.vcmprop mat-ink-bar.mat-ink-bar {
+  width: 140px !important;
+}
+.vcmprop.mat-drawer-opened .mat-tab-header-pagination-controls-enabled .mat-tab-header-pagination {
+  display: none;
+}
 .custom-content-notification{
   min-width: 330px ;
   /* height: 330px; */
@@ -2702,4 +2718,19 @@ span.pdicon {
 
 .workspace-title button.mat-sort-header-button {
   font-size: 14px !important;
+}
+
+.vcm-treesmain .mat-tree-node {
+  min-height: 30px;
+}
+.vcm-treesmain .mat-icon-button {
+  width: auto;
+  height: 25px;
+  line-height: 25px;
+  color: #607088 !important
+}
+.vcm-treesmain .mat-icon-button .mat-icon {
+  line-height: 16px;
+    width: auto;
+    height: 18px;
 }
