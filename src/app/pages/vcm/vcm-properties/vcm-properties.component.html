@@ -59,7 +59,7 @@
                                 <span>
                                     <textarea  (click)="descriptionView(name , j , 'level1')" *ngIf="!name.description" class="form-control descriptionview" placeholder="Enter Description"></textarea>
                                     <textarea  (click)="descriptionView(name , j , 'level1')" class="form-control descriptionview" *ngIf="name.description">{{name.description}}</textarea>
-                                    <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus" 
+                                    <img *ngIf="name.description" src="../../../../assets/images/VCM/edit-3.svg" class="testplus" 
                                         (click)="descriptionView(name , j , 'level1')"/>
                                     
                                 </span>
