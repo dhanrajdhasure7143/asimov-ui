@@ -70,7 +70,7 @@ span.docpill:hover {
     padding: 0px !important;
 }
 .prop_procdef h4 {
-    background-color: #e8f7fd;
+    /* background-color: #e8f7fd; */
     padding:10px;
 }
 .prdeflist {

@@ -16,8 +16,8 @@
         <mat-drawer-container class="example-container h-100" style="background-color: white;">
             <mat-drawer #drawer class="example-sidenav vcmprop" mode="side" position="end" >
                 <div class="close-btn">
-                    <h3>{{editProcessName}}
-                    <img src="../../../../assets/images/VCM/VCM-close.svg" (click)="closeOverlay()" /></h3>
+                    <h3>{{editProcessName}}</h3>
+                    <img src="../../../../assets/images/VCM/VCM-close.svg" (click)="closeOverlay()" />
                 </div>
                 <mat-tab-group>
                     <mat-tab label="Properties">
@@ -36,7 +36,7 @@
                             </div>
                             <div class="col-md-12 form-group">
                                 <label class="label-control">Process Description</label>
-                                <textarea  class="form-control" [(ngModel)]="editProcessDescription" placeholder="Enter Process Description"></textarea>
+                                <textarea  class="form-control"  rows="5" [(ngModel)]="editProcessDescription" placeholder="Enter Process Description"></textarea>
                             </div>
                         </div>
                         <div class="propfooter col-md-12 text-right">
