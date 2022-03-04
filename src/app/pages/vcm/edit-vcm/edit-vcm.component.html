@@ -118,12 +118,19 @@
                                         </button>
 
                                     <!-- <button (click)="addLevel(node)"><img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2"/></button><br>                                 -->
-                                    <div *ngIf="uniqueId==node.uniqueId" style="display: flex;width: 150%;margin-top: 5%;">
+                                    <div *ngIf="uniqueId === node.uniqueId" style="display: flex;width: 150%;margin-top: 5%;">
                                         <input type="text" class="form-control" placeholder="Enter Process Name" [(ngModel)]="processName">
                                         <button [hidden]="!processName" style="position: relative;right: 8%;" (click)="editLevel3()">
                                                 <img class="testplus1" src="../../../../assets/images/VCM/Green Tick.svg">
                                             </button>
                                     </div>
+                                    </span>
+
+                                    <span *ngIf="node.level == 'L3'">{{node.title}}
+                                        <button style="padding-left: 1%;"   #pop="bs-popover" [popover]="popTemplate" [outsideClick]="true" placement="right">
+                                            <img src="../../../../assets/images/VCM/plus-bordercircle.svg"
+                                                class="testplus" />
+                                        </button>
                                     </span>
 
                                 </mat-tree-node>
@@ -164,13 +171,13 @@
                                         </button>
 
                                         <!-- <button (click)="addLevel(node)" *ngIf="node.level == 'L2' && node.title != 'Management Process' && node.title != 'Core Process' && node.title != 'Support Process'"><img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2"/></button><br> -->
-                                        <div *ngIf="node.level == 'L2' && parent == node.parent && childParent == node.childParent && node.title != 'Management Process' && node.title != 'Core Process' && node.title != 'Support Process'" style="margin-top: 9%;right: 9% !important;position: relative;display: flex; width: 35%;">
+                                        <!-- <div *ngIf="node.level == 'L2' && parent == node.parent && childParent == node.childParent && node.title != 'Management Process' && node.title != 'Core Process' && node.title != 'Support Process'" style="margin-top: 9%;right: 9% !important;position: relative;display: flex; width: 35%;">
                                             <input type="text" class="form-control" placeholder="Enter Process Name" [(ngModel)]="processName" style="width: 75%;">
                                             <button [hidden]="!processName" style="position: relative;right: 8%;" (click)="editLevel3()" style="position: relative;
                                             right: 8%;">
                                                 <img class="testplus1" src="../../../../assets/images/VCM/Green Tick.svg">
                                             </button>
-                                        </div>
+                                        </div> -->
                                     </div>
                                     <div [class.example-tree-invisible]="!treeControl.isExpanded(node)" role="group">
                                         <ng-container matTreeNodeOutlet></ng-container>
