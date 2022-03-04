@@ -2730,7 +2730,8 @@ span.pdicon {
   color: #607088 !important
 }
 .vcm-treesmain .mat-icon-button .mat-icon {
-  line-height: 16px;
-    width: auto;
-    height: 18px;
+  line-height: 15px;
+  width: auto;
+  height: 18px;
+  color: #a0a0a0;
 }
