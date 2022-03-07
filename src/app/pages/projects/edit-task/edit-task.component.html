@@ -38,9 +38,9 @@
                  -->
                 <div class="col-md-5 pl-0">
                     <div class="d-flex">
-                        <!-- <div class="task-name">{{taskcategory}} / &nbsp;</div> -->
-                        <div class="form-fields col-md-6 pl-0">
-                        <label class="h6 label-control" id="taskcategory" for="taskcategory">Task Category</label>
+                        <!-- <div class="task-name">{{taskcategory}} / </div> -->
+                        <div class=" col-md-6 pl-0">
+                        <label class="label-control" id="taskcategory" for="taskcategory">Task Category</label>
                         <select class="form-control rpa-control" formControlName="taskCategory"  [(ngModel)]="optionValue" (change)="OnChangeTaskCategory($event)">
                             <option value="" disabled hidden>Select Task Category</option>
                             <option value="null" disabled hidden>Select Task Category</option>
@@ -48,28 +48,25 @@
                             <option *ngFor="let categories of taskcategories" [value]="categories.category">{{categories.category}}</option>
                             </select>
                         </div>
-                        <div class="form-fields col-md-6 pr-0">
-                            <label class="h6 label-control" id="taskname" for="taskname">Task Name</label>
+                        <div class=" col-md-6 pr-0">
+                            <label class="label-control" id="taskname" for="taskname">Task Name</label>
                             <input type="text" maxlength="50" class="form-control rpa-control task-name-input" (change)="taskname=$event.target.value" [value]="taskname">
                         </div>
                     </div>
                     <div class="value">
-                        <span class="level3">Last Modified By : {{lastModifiedBy}}</span>&nbsp;
-                        <span>|</span>&nbsp;
+                        <span class="level3">Last Modified By : {{lastModifiedBy}} </span>
+                        <span> | </span>
                         <span class="level3">{{lastModifiedTimestamp |  date:'MMM dd, y, HH:mm:ss'}}</span>
                     </div>
                 </div>
                 <div class="pull-right">
-                    <label class="h6 label-control" id="startdate" for="startDate">Start Date</label>
+                    <label class="label-control" id="startdate" for="startDate">Start Date</label>
                     <span class="labelcont">{{startDate  | date}}</span>
                 </div>
         
             </div>
         <div class="row">
-            <div class="col-md-5 pl-0">
-
-                
-
+            <div class="col-md-5">
                     <div class="form-fields col-md-6 pl-0">
                         <label class="label-control" id="assignee" for="assignee">Assignee</label>
                         <!-- <span class="labelcont">{{taskresource| userPipe : users_list}}</span> -->
@@ -148,7 +145,7 @@
                               </span>
                         
                     </div>
-                    <div class="form-fields col-md-12 p-0">
+                    <div class="col-md-12 p-0">
                         <label class="label-control" id="description">Description</label>
                         <textarea class="form-control" maxlength="151" formControlName="description" rows="2" (keyup)="taskDescriptionMaxLength($event.target.value)" style=" resize: none;" placeholder="Enter Description">
                               </textarea>
@@ -160,7 +157,7 @@
 
                
             </div>
-            <div class="col-md-7 pr-0">
+            <div class="col-md-7">
                 <h4 class="module-sub-header-title">Activity</h4>
                 <mat-tab-group id="Project-dashboard-tabs" class="edit-task-tabs h-100">
                     <mat-tab label="Comment">

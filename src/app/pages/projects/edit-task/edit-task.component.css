@@ -100,8 +100,9 @@
 
   .labelcont{
     color: #00a0e3 !important;
-    /* font-weight: 600; */
-    margin-left: 5px;
+    /* margin-left: 5px; */
+    display: block;
+    font-weight: 600;
   }
   
   
@@ -237,7 +238,7 @@ ul.historydiv li:last-child {
 .bg-task{
   background-color: #F3F3F3;
   padding: 10px !important;
-
+  margin-bottom: 15px !important;
 }
 .task-name{
   font-weight: 600;
@@ -258,8 +259,9 @@ ul.historydiv li:last-child {
 }
 
 .edit-task-body {
-  padding: 10px;
-  height: calc(100% - 130px) !important;
+  /* padding: 10px; */
+  /* height: calc(100% - 130px) !important; */
+  height: calc(100% - 55px) !important;
   overflow: auto !important;
 }
 
@@ -315,7 +317,7 @@ img.hover-img {
   padding-top: 6px;
 }  
 .task-name-input{
-  width:200px; 
+  /* width:200px;  */
 }
 /*.edit-task-body-content input[type=date]::-webkit-calendar-picker-indicator {
   -webkit-appearance: none;
@@ -361,4 +363,7 @@ button:disabled .default-img .hover-img{
 }
 .comment-action button:hover img.testplus.hover-img {
   display: initial;
+}
+h4.module-sub-header-title {
+  margin: 0px;
 }
