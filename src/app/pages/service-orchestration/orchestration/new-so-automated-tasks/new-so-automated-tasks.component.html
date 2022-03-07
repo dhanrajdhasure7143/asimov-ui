@@ -857,30 +857,37 @@
     </div>
 </div>
 
-<ng-template class="modal-lg" #addTask>
-    <div class="modal-header modelprhead">
-        <h4 class="modal-title pull-left">Add Task</h4>
-        <button type="button" class="close pull-right" aria-label="Close" (click)="logs_modal.hide();">
-          <span aria-hidden="true"><img src="../../../../assets/images/Projects/circle-close.svg" alt=""></span>
-      </button>
-    </div>
-        <div class="modal-body addTasksBlock">
-            <form [formGroup]="addTaskForm" #addtask="ngForm" (ngSubmit)="addexistingtasks()">
-                <div class="col-md-12 p-0 form-fields">
-                    <label class="label-control">Task(s)<span class="star">*</span></label>
-                    <ng-select formControlName="tasks" [multiple]="true" placeholder="Select tasks" [(ngModel)]="tasks" required>
-                        <ng-option *ngFor="let task of taskslist" [value]="task.taskId">{{task.taskName}}</ng-option>
-                    </ng-select>
 
-                    <span *ngIf="addTaskForm.get('tasks').invalid && addTaskForm.get('tasks').touched" class="errspan required">Tasks Required*</span>
-                </div>
-            </form>
-            
-            <div class="pull-right">
-                <button (click)="logs_modal.hide()" class="btn btn-default">Cancel</button>
-                <button (click)="addexistingtasks()" class="btn btn-primary btn-update">Submit</button>
-                <br><br>
-            </div>
+        <ng-template class="modal-lg"  #addTask>
            
-        </div>
-</ng-template>
+                    <div class="modal-header modelprhead">
+                            <h4 class="modal-title pull-left">Add Task</h4>
+                            <button type="button" class="close pull-right" aria-label="Close" (click)="logs_modal.hide();">
+                              <span aria-hidden="true"><img src="../../../../assets/images/Projects/circle-close.svg" alt=""></span>
+                          </button>
+                        </div>
+                            <div class="modal-body addTasksBlock">
+                                <form [formGroup]="addTaskForm" #addtask="ngForm" (ngSubmit)="addexistingtasks()">
+                                    <div class="col-md-12 p-0 form-fields">
+                                        <label class="label-control">Task(s)<span class="star">*</span></label>
+                                        <ng-select formControlName="tasks" [multiple]="true" placeholder="Select tasks" [(ngModel)]="tasks" required>
+                                            <ng-option *ngFor="let task of taskslist" [value]="task.taskId">{{task.taskName}}</ng-option>
+                                        </ng-select>
+                    
+                                        <span *ngIf="addTaskForm.get('tasks').invalid && addTaskForm.get('tasks').touched" class="errspan required">Tasks Required*</span>
+                                    </div>
+                                </form>
+                                
+                                <div class="buttons pull right">
+                                    <button (click)="logs_modal.hide()" class="btn btn-default">Cancel</button>
+                                    <button (click)="addexistingtasks()" class="btn btn-primary btn-update">Submit</button>
+                                    <br><br>
+                                </div>
+                               
+                            </div>
+           
+              
+            </ng-template>
+
+       
+

@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
 import Swal from 'sweetalert2';
+import { inject } from '@angular/core/testing';
+import { APP_CONFIG } from 'src/app/app.config';
 
 @Component({
   selector: 'app-invite-user',
@@ -20,7 +22,8 @@ export class InviteUserComponent implements OnInit {
   public role:any;
   isdprtDisabled:boolean=false;
 
-  constructor(private formBuilder: FormBuilder,private api:RestApiService, private router: Router,private spinner:NgxSpinnerService ) { }
+  constructor(private formBuilder: FormBuilder,private api:RestApiService, private router: Router,private spinner:NgxSpinnerService,
+    @Inject(APP_CONFIG) private config ) { }
 
   ngOnInit(): void {
     this.getAllCategories();
@@ -91,16 +94,34 @@ form.form.markAsUntouched();
 
  inviteUser(form){
   this.spinner.show();
-   let body = {
+  let body = {
     "inviterMailId": localStorage.getItem('ProfileuserId'),
     "inviteeMailId": this.inviteeMail,
     "departmentId": this.departments.toString(),
+    "office365User": false,
+    "redirectionUrl": this.config.platform_home_url,
     "userRoles":[
         {
             "id":this.role
         }
     ]
    }
+  var office = localStorage.getItem("officeUser");
+  if(office != undefined && office != null && office === 'officeUser'){
+   body = {
+      "inviterMailId": localStorage.getItem('ProfileuserId'),
+      "inviteeMailId": this.inviteeMail,
+      "departmentId": this.departments.toString(),
+      "office365User": true,
+      "redirectionUrl": this.config.platform_home_url,
+      "userRoles":[
+          {
+              "id":this.role
+          }
+      ]
+     }
+  }
+   
    var domianArr = this.inviteeMail.split('@');
    console.log(domianArr[1]);
    this.api.getWhiteListedDomain(domianArr[1]).subscribe(res => {

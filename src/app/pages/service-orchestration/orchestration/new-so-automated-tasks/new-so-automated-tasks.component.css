@@ -202,7 +202,15 @@ span.logrefresh {
     display: block;
     height: auto;
     box-sizing: border-box;
-    max-height: 60px !important;
+    max-height: 120px !important;
     z-index: 99999 !important;
     overflow-y: auto;
+}
+.addTasksBlock{
+    height: 200px !important;
+}
+
+.buttons{
+    margin-top: 57px;
+
 }

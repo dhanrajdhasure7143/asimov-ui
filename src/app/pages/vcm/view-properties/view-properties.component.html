@@ -1,0 +1,89 @@
+<div class="module-body">
+    <div class="vcm-prop-content h-100">
+        <div class="col-md-12 col-lg-12">
+            <div class="prop_owner">
+                <h4>Ownership</h4>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Level1 Name</th>
+                            <th>Owner</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let each of prop_data;let i = index">
+                            <td *ngIf="each.title">{{each.title}}</td>
+                            <td *ngIf="each.title">
+                                <span *ngIf="!edit">{{each.processOwner}}</span>
+
+                                <select *ngIf="edit == 'edit'" class="form-control" [(ngModel)]="each.processOwner" #ownerValue>
+                                    <option value="" hidden disabled>Select Owner</option>
+                                    <option *ngFor="let each_approver of processOwners_list;let i=index"
+                                        [value]="each_approver.firstName+' '+each_approver.lastName">
+                                        {{(each_approver.firstName | titlecase) +"
+                                        "+(each_approver.lastName==undefined?"":each_approver.lastName)}}</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="col-md-12 col-lg-12">
+            <div class="prop_procdef">
+                <h4>Process Description</h4>
+                <div *ngFor="let each of vcm_data" class="prdeflist">
+                    <h3 *ngIf="each.description">{{each.title}}</h3>
+                    <p *ngIf="!edit">{{each.description}}</p>
+                    <textarea class="form-control" [(ngModel)]="each.description" *ngIf="edit == 'edit'"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 col-lg-12">
+            <div class="prop_docs">
+                <h4>Documents</h4>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>S.No</th>
+                            <th>File Name</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let each_obj of attachments;let i = index">
+                            <td>{{i+1}}</td>
+                            <td>{{each_obj.fileName}}</td>
+                            <td>
+                                <span class="deleteattachment tsttooltipbtn">
+                                    <a href="data:image/png;base64,{{each_obj.filedata}}" download="{{each_obj.fileName}}">
+                                    <img src="../../../../assets/images/Admin/download-black.svg" class="default-img testplus" >
+                                    <img src="../../../../assets/images/Admin/download-blue.svg" class="hover-img testplus" >
+                                    </a>
+                                    <span class="testtooltip">Download</span>
+                                </span> &nbsp;
+                                <span class="tsttooltipbtn" *ngIf="edit == 'edit'">
+                                    <img class="testplus" src="../../../../assets/images/VCM/VCM-Upload.svg"  />
+                                    <button class="btn" (click)="fileInput.click()" >
+                                        <input multiple #fileInput type="file" (change)="documentsUpload($event)" style="display:none;" />
+                                    </button>
+                                    <span class="testtooltip">Upload</span>
+                                </span>
+                                <!-- <img src="../../../../assets/images/Admin/download-blue.svg" class="testplus"> -->
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="spinoverlay" *ngIf="isLoading">
+    <div class="spincenter">
+        <img src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader" />
+    </div>
+</div>

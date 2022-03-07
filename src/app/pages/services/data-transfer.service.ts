@@ -108,4 +108,12 @@ export class DataTransferService {
     this.workSpacerefresh.next(value);
   }
 
+  
+  private vcmData:BehaviorSubject<any>=new BehaviorSubject<any>(null)
+  getVcm_Data=this.vcmData.asObservable();
+
+  vcmDataTransfer(value:any){
+    this.vcmData.next(value);
+  }
+
 }

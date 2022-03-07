@@ -84,6 +84,15 @@ export class CreateProjectFormComponent implements OnInit {
       //this.selected_process_names=resp.filter(item=>item.status=="APPROVED");
       resp=response.filter(item=>item.status=="APPROVED");
       this.selected_process_names=resp.sort((a,b) => (a.processName.toLowerCase() > b.processName.toLowerCase() ) ? 1 : ((b.processName.toLowerCase() > a.processName.toLowerCase() ) ? -1 : 0));
+      // this.selected_process_names =[...this.selected_process_names.map(process=>
+
+      //   {
+      //     let userdata=this.users_list.find(userData=>userData.userId.userId==process.ProcessOwner)
+      //     if(userdata!=undefined){
+      //       process["processOwnerName"]=userdata.firstName +" "+  userdata.lastName; 
+            
+      //     }
+      //     return process;})]
     })
   }
 
@@ -109,11 +118,12 @@ export class CreateProjectFormComponent implements OnInit {
   }
   onProcessChange(processId:number)
   {
-    
+    debugger
     let process=this.selected_process_names.find(process=>process.processId==processId);
     if(process!=undefined)
     {
-      let processOwner:any=this.users_list.find(item=>(`${item.userId.firstName} ${item.userId.lastName}`==process.createdBy))
+    
+      let processOwner:any=this.users_list.find(item=>(item.userId.userId==process.ProcessOwner))
       if(processOwner!=undefined)
       {
         this.insertForm2.get("processOwner").setValue(processOwner.userId.userId);

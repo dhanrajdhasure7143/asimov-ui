@@ -1,4 +1,4 @@
-import { Component, OnInit,  NgZone ,AfterViewInit, ViewChild, ElementRef, Input , Pipe, PipeTransform, TemplateRef} from '@angular/core';
+import { Component, OnInit,  NgZone ,AfterViewInit,ChangeDetectorRef, ViewChild, ElementRef, Input , Pipe, PipeTransform, TemplateRef} from '@angular/core';
 import { DndDropEvent } from 'ngx-drag-drop';
 import { fromEvent } from 'rxjs';
 import { jsPlumb, jsPlumbInstance } from 'jsplumb';
@@ -99,7 +99,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     private toolset:RpaToolsetComponent,
     private formBuilder: FormBuilder,
     private spinner: NgxSpinnerService,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private changesDecorator:ChangeDetectorRef,
     ) {
 
       this.insertForm=this.formBuilder.group({
@@ -165,9 +166,23 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     this.jsPlumbInstance.bind('connection', info => {
       // alert(info.sourceId);
       var connection = info.connection;
-
+      
       let node_object = this.finaldataobjects.find(object2 => object2.nodeId.split("__")[1] == info.sourceId);
 
+      if(connection.sourceId==this.startNodeId)
+      {
+        
+      let connectionNodeForTarget=this.nodes.find((item:any)=>item.id==connection.targetId);
+      if(connectionNodeForTarget.selectedNodeTask=='If condition')
+        {
+          Swal.fire("Alert","Start Node Should not connect directly to if condition","warning");
+            setTimeout(()=>{ 
+              this.changesDecorator.detectChanges()
+              this.jsPlumbInstance.deleteConnection(connection)
+            },1000)
+        }
+      
+      }
       if (node_object != undefined) {
 
         var source_length = this.jsPlumbInstance.getAllConnections().filter(data => data.sourceId == connection.sourceId).length;
@@ -200,6 +215,25 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           });
         }
 
+
+      }
+  
+      else{
+        let connectionNodeForSource=this.nodes.find((item:any)=>item.id==info.sourceId);
+        console.log(connectionNodeForSource);
+        if(connectionNodeForSource!=undefined)
+        {
+          if(connectionNodeForSource.selectedNodeTask=='If condition')
+          {
+            Swal.fire("Alert","Please do config before adding connections for if condition","warning");
+            setTimeout(()=>{ 
+              this.changesDecorator.detectChanges()
+              this.jsPlumbInstance.deleteConnection(connection)
+            },1000)
+          }
+        }
+       
+   
 
       }
       
@@ -980,6 +1014,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     this.arrange_task_order(this.startNodeId);
     this.get_coordinates();
     await this.getsvg();
+    console.log("-----------------------------",this.final_tasks)
       this.saveBotdata = {
         "botName": botProperties.botName,
         "botType": botProperties.botType,
@@ -1298,6 +1333,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           this.finaldataobjects[i].x = position.left + "px";
           this.finaldataobjects[i].y = position.top + "px";
         }
+      
       }
     })
     if(this.finaldataobjects.find(item=>item.inSeqId==this.startNodeId)!=undefined)
