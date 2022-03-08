@@ -2698,9 +2698,10 @@ span.pdicon {
   padding: 10px 0px;
 }
 .vcmprop.mat-drawer-opened .mat-tab-label {
-  height: 45px;
+  height: 45px !important;
   justify-content: left !important;
-  padding-left: 15px !important;
+  padding-left: 0px !important;
+  margin-left: 15px !important;
   min-width: 140px !important;
 }
 .vcmprop mat-ink-bar.mat-ink-bar {
@@ -2734,4 +2735,9 @@ span.pdicon {
   width: auto;
   height: 18px;
   color: #a0a0a0;
+}
+
+.vcmprop.mat-drawer-opened .mat-tab-label-active {
+  color: #00a1e4 !important;
+  opacity: 1;
 }

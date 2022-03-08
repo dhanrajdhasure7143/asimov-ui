@@ -12,10 +12,11 @@
 }
 .vcm-prop-content h4 {
     color: #001c47;
-    margin: 0;
+    margin: 0px;
     padding-bottom: 10px;
     font-size: 15px;
     font-weight: 600;
+    border-bottom: 1px solid #e5e5e5;
 }
 img {
     cursor: pointer;
@@ -63,3 +64,15 @@ span.docpill:hover {
 /* .proc_deffield img.editdef {
     top: 5px !important;
 } */
+.prop_procdef h3 {
+    margin: 0px 0px 5px;
+    font-weight: 600;
+    font-size: 15px;
+}
+.prop_procdef {
+    padding: 0px !important;
+}
+.prop_procdef h4 {
+    /* background-color: #e8f7fd; */
+    padding:10px;
+}
