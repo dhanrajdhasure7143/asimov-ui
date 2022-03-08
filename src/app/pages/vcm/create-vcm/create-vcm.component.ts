@@ -3,11 +3,12 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTreeNestedDataSource } from '@angular/material';
 import { MatTree } from '@angular/material/tree';
 import { MatDrawer } from '@angular/material/sidenav';
-import { NavigationExtras, Router } from "@angular/router";
+import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
 import { RestApiService } from '../../services/rest-api.service';
 import { DataTransferService } from '../../services/data-transfer.service';
 import Swal from 'sweetalert2';
 import { UUID } from 'angular2-uuid';
+import { object } from '@amcharts/amcharts4/core';
 
 let TREE_DATA: any[] = [
   {
@@ -59,11 +60,18 @@ export class CreateVcmComponent implements OnInit {
   isLoading:boolean=false;
   user_details:any;
   selectedObj:any;
-  vcmUniqueId=UUID.UUID()
+  vcmUniqueId=UUID.UUID();
+  vcm_id:any;
+  selectedVcm
 
-  constructor(private router: Router,private rest_api : RestApiService, private dt: DataTransferService) {
+  constructor(private router: Router,private rest_api : RestApiService, private dt: DataTransferService,
+    private route:ActivatedRoute) {
     this.dataSource.data = TREE_DATA;
     this.vcmProcess = TREE_DATA;
+    this.route.queryParams.subscribe(res => {
+      if(res)
+      this.vcm_id = res.id
+    });
   }
 
   hasChild = (_: number, node: any) => !!node.children && node.children.length > 0;
@@ -98,9 +106,15 @@ export class CreateVcmComponent implements OnInit {
         this.vcmProcess = res_data.data;
         if(res_data.vName)this.vcmName=res_data.vName;
         if(res_data.pOwner)this.process_ownerName=res_data.pOwner;
+        // if(res_data){
+        //   console.log("selectedVcmData", res_data.selectedVcm)
+        // }
         }
       }
     });
+    if(this.vcm_id){
+      this.getselectedVcm();
+    }
   }
 
   addManageProcess() {
@@ -114,7 +128,6 @@ export class CreateVcmComponent implements OnInit {
       level: "L1",
       'uniqueId':UUID.UUID()
     }
-    console.log(TREE_DATA)
     TREE_DATA.filter(e => e.name == 'Management Process')[0].children.push(record);
     this.vcmProcess = null;
     this.vcmProcess = TREE_DATA;
@@ -543,5 +556,78 @@ this.rest_api.uploadVCMPropDocument(formdata).subscribe(res=>{
   closeOverlay(){
     this.drawer.close()
   }
+
+  getselectedVcm(){
+    this.isLoading=true;
+    this.rest_api.getselectedVcmById(this.vcm_id).subscribe(res=>{this.selectedVcm=res
+      this.isLoading=false;
+      console.log(res);
+      if(res){
+        this.vcmName=this.selectedVcm.data.vcmName;
+        this.process_ownerName=this.selectedVcm.data.processOwner;
+      this.dataMappingToTreeStructer1(this.selectedVcm.data.vcmV2);
+      }
+    })
+  }
+
+  dataMappingToTreeStructer1(data){
+    let objData = [
+      { title: "Management Process","children":[]},
+      { title: "Core Process","children":[]},
+      { title: "Support Process","children":[]}
+    ]
+
+    data.forEach(e=>{
+      objData.forEach(e1=>{
+        if(e.level == "L1"){
+          if(e.parent == e1.title){
+            e1["children"].push(e);
+          }
+        }
+      })
+    })
+
+    data.forEach(e=>{
+      objData.forEach(e1=>{
+        if(e.level == "L2"){
+          if(e.parent == e1.title){
+            e1.children.forEach(e2=>{
+              if(e2.uniqueId == e.level1UniqueId ){
+                e2['children'].push(e);
+              }
+            })
+          }
+        }
+      })
+    })
+
+    data.forEach(e=>{
+      objData.forEach(e1=>{
+        if(e.level == "L3"){
+          if(e.parent == e1.title){
+            e1.children.forEach(e2=>{
+              if(e2.title == e.childParent ){
+                e2.children.forEach(e3 => {
+                  if(e3.uniqueId == e.level2UniqueId ){
+                    e3['children'].push(e)
+                  }
+                });
+              }
+            })
+          }
+        }
+      })
+    })
+
+    console.log(objData)
+    objData.forEach(element => {
+        element["name"]=element.title
+      });
+    this.vcmProcess = null;
+    this.vcmProcess =objData;
+    this.dataSource.data=objData;
+    this.treeControl.dataNodes = this.dataSource.data; 
+  }
+
 
 }

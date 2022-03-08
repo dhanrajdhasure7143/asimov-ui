@@ -16,6 +16,9 @@
             <button class="btn btn-primary" (click)="editVcm()">
                 <img src="../../../../assets/images/Projects/edit.svg" class="testplus" />Edit
             </button>
+            <button class="btn btn-primary" (click)="quickEditVcm()">
+                <img src="../../../../assets/images/Projects/edit.svg" class="testplus" />QuickEdit
+            </button>
 
         </div>
     </div>
@@ -81,7 +84,7 @@
             </mat-drawer>
             <mat-drawer-content>
                 <div class="vcm-treesmain h-100">
-                    <!-- <h4 >{{vcmProcess[3].vcmname}}</h4> -->
+                    <!-- <h4 >{{vcmTreeData[3].vcmname}}</h4> -->
                     <div class="row maincontent h-100">
                         <div class="col-md-12 p-0 form-group vcname">
                             <label class="label-control">Value Chain Name</label>
@@ -135,7 +138,7 @@
 </div>
 
 <div *ngIf="isShow && !isViewProperties" class="h-100">
-    <app-edit-vcm [vcmData]="vcmProcess" [res_data]="vcm_data.data" (viewVcm)="readVcmValue($event)"></app-edit-vcm>
+    <app-edit-vcm [vcmData]="vcmTreeData" [res_data]="vcm_data.data" (viewVcm)="readVcmValue($event)"></app-edit-vcm>
 </div>
 
 
