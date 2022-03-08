@@ -328,7 +328,7 @@ mat-tree {
 hr {
     margin-bottom: 13px !important;
 }
-.vcm-leveldiv select.form-control.ng-valid.ng-touched.ng-dirty {
+.vcm-leveldiv select.form-control.ng-dirty {
     background-color: #FFF9C7 !important;
     color: #001c47 !important;
 }
