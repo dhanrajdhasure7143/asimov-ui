@@ -254,6 +254,8 @@ export class CreateVcmComponent implements OnInit {
     this.vcmProcess = null;
     this.vcmProcess = TREE_DATA;
     this.vcmName = '';
+    this.level1process='';
+    this.process_ownerName='';
     localStorage.removeItem('vcmData');
   }
 
