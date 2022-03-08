@@ -11,7 +11,7 @@
             <ng-container matColumnDef="processName">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header  style="width:200px;">Process Name </th>
                 <td mat-cell *matCellDef="let element" [matTooltip]="element.processName" style="width:200px;">
-                  <span *ngIf="element.processName != null">{{(element.processName.length > 20) ? ((element.processName).slice(0, 20) + '...') : element.botName}}
+                  <span *ngIf="element.processName != null">{{(element.processName.length > 10) ? ((element.processName).slice(0, 10) + '...') : element.botName}}
                   </span>
                   <span *ngIf="element.processName == null">-</span>
                 </td>
@@ -35,7 +35,9 @@
              <ng-container matColumnDef="lastRunTS">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Previous Run</th>
                 <td mat-cell *matCellDef="let element">
-                    <span *ngIf="element.lastRunTS != null">{{element.lastRunTS |date: 'MMM d, y, H:mm:ss' }}</span>
+                    <span *ngIf="element.lastRunTS != null" [matTooltip]="element.lastRunTS |date: 'MMM d, y, H:mm:ss'">
+                        {{(element.lastRunTS.length > 10) ? ((element.lastRunTS |date: 'MMM d, y, H:mm:ss').slice(0, 10) + '...') : element.lastRunTS |date: 'MMM d, y, H:mm:ss' }}
+                    </span>
                     <span *ngIf="element.lastRunTS == null">-</span>
                 </td>
             </ng-container>
@@ -43,7 +45,9 @@
             <ng-container matColumnDef="nextRunTS">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Next Run</th>
                 <td mat-cell *matCellDef="let element">
-                    <span *ngIf="element.nextRunTS != null">{{element.nextRunTS |date: 'MMM d, y, H:mm:ss' }}</span>
+                    <span *ngIf="element.nextRunTS != null" [matTooltip]="element.nextRunTS |date: 'MMM d, y, H:mm:ss'">
+                        {{(element.nextRunTS.length > 10) ? ((element.nextRunTS |date: 'MMM d, y, H:mm:ss').slice(0, 10) + '...') : element.nextRunTS |date: 'MMM d, y, H:mm:ss' }}
+                    </span>
                     <span *ngIf="element.nextRunTS == null">-</span>
                 </td>
             </ng-container>
@@ -95,7 +99,7 @@
             <ng-container matColumnDef="timezone">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Time Zone</th>
                 <td mat-cell *matCellDef="let element">
-                    <span *ngIf="element.timezone != null">{{element.timezone}}</span>
+                    <span *ngIf="element.timezone != null" [matTooltip]="element.timezone">{{(element.timezone.length > 8) ? ((element.timezone).slice(0, 8) + '...') : element.timezone}}</span>
                     <span *ngIf="element.timezone == null">-</span>
                 </td>
             </ng-container>
