@@ -33,7 +33,7 @@
         <div class="col-md-12 col-lg-12">
             <div class="prop_procdef">
                 <h4>Process Description</h4>
-                <div *ngFor="let each of vcm_data" class="prdeflist">
+                <div *ngFor="let each of vcm_data" class="">
                     <h3 *ngIf="each.description">{{each.title}}</h3>
                     <span *ngIf="each.description">
                     <p *ngIf="!edit">{{each.description}}</p>
