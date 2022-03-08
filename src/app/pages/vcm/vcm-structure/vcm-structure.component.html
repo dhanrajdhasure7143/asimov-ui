@@ -37,7 +37,7 @@
                             <div class="col-md-12 form-group">
                                 <label class="label-control">Process Owner</label>
                                 <select class="form-control" [disabled]="isPropDisabled" [(ngModel)]="processOwner">
-                                    <option value="" hidden disabled>Select Owner</option>
+                                    <option value="" hidden disabled>Select Process Owner</option>
                                     <option *ngFor="let each_approver of processOwners_list;let i=index" [value]="each_approver.firstName+' '+each_approver.lastName">
                                         {{(each_approver.firstName | titlecase) +"
                                         "+(each_approver.lastName==undefined?"":each_approver.lastName)}}</option>
@@ -135,7 +135,7 @@
 </div>
 
 <div *ngIf="isShow && !isViewProperties" class="h-100">
-    <app-edit-vcm [vcmData]="vcmProcess"></app-edit-vcm>
+    <app-edit-vcm [vcmData]="vcmProcess" [res_data]="vcm_data.data" (viewVcm)="readVcmValue($event)"></app-edit-vcm>
 </div>
 
 

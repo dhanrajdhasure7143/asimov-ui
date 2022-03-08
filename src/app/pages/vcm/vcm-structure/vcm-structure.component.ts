@@ -298,7 +298,6 @@ export class VcmStructureComponent implements OnInit {
       })
     })
     console.log(objData)
-    // this.vcmProcess = this.dataSource.data;
     this.vcmProcess = objData;
     this.dataSource.data=objData;
     this.treeControl.dataNodes = this.dataSource.data; 
@@ -443,5 +442,12 @@ export class VcmStructureComponent implements OnInit {
     })
   }
   
+  readVcmValue(value){
+console.log(value)
+if(value){
+  this.isShow=false;
+  this.isViewProperties=false;
+}
+  }
 }
 

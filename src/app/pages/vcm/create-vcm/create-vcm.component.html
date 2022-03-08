@@ -205,13 +205,14 @@
                                     <div class="form-group">
                                         <select class="form-control" id="level1" name="Level1" [(ngModel)]="level1process" [ngModelOptions]="{standalone: true}">
                                     <option value="undefined" hidden disabled>Select L1 Process</option>
+                                    <option value="" hidden disabled>Select L1 Process</option>
                                     <ng-container *ngFor="let item of vcmProcess">
                                         <option *ngFor="let name of item.children" [ngValue]=name>{{name.title}}</option>
                                     </ng-container>
                                 </select>
                                     </div>
                                     <div class="level1process form-group">
-                                        <input placeholder="Enter Process Group Name" class="form-control" type="text" name="levelName" [(ngModel)]="addLevel2">
+                                        <input placeholder="Enter Process Group Name" class="form-control" type="text" name="levelName" autocomplete="off" [(ngModel)]="addLevel2">
                                         <button [disabled]="addLevel2 == '' || !level1process" type="submit" class="btn" (click)="addNewLevel2()">
                                     <img src="../../../../assets/images/VCM/Green Tick.svg" class="testplus1" />
                                 </button>

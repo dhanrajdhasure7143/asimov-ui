@@ -26,12 +26,14 @@ export class ViewPropertiesComponent implements OnInit {
   ngOnChanges(){
     console.log("this.vcm_data",this.vcm_data)
     console.log("this.vcm_resData",this.vcm_resData)
+    this.prop_data=[];
     this.getAttachements();
     this.vcm_data.forEach(element => {
       if(element.processOwner){
         this.prop_data.push(element)
       }
     })
+    console.log("properties data",this.prop_data)
   }
 
   getAttachements(){
