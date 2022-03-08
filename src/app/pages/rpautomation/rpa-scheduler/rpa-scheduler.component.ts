@@ -134,7 +134,7 @@ export class RpaSchedulerComponent implements OnInit {
   }
   dateChange($event){
    
-    console.log($event.target.value)
+    
    if(this.isDateToday($event.target.value)) {
 
    }
