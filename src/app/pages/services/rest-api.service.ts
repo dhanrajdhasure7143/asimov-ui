@@ -1302,4 +1302,27 @@ deleteNotationFromTemp(body){
   return this.http.post('/bpsprocess/delete/processTempInfo/data',body); 
 }
 
+// vcm apis
+createVcm(body){
+  return this.http.post('/vcmv2/saveLevel1andlevel2vcm',body); 
+}
+
+getAllvcms(){
+  return this.http.get('/vcmv2/fetchallvcm');
+}
+
+getselectedVcmById(id){
+  return this.http.get('/vcmv2/fetchvcm?vcmId='+id);
+}
+deleteVcm(body){
+  return this.http.post('/vcmv2/deletevcm',body); 
+}
+
+uploadVCMPropDocument(body){
+  return this.http.post('/vcmv2/uploadDocuments',body); 
+}
+getvcmAttachements(body){
+  return this.http.post('/vcmv2/fetchDocumentsByProcessType',body); 
+}
+
 }

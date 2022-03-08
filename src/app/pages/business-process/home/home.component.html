@@ -103,7 +103,8 @@
                                         </div>
                                         <div class="cell cell2" [matTooltip]=each_diag.bpmnProcessName matTooltipClass="bpsHeaderTooltip">{{each_diag.bpmnProcessName ?fitTableView(each_diag.bpmnProcessName): '-'}}</div>
                                         <div class="cell cell3">{{each_diag.ntype ? each_diag.ntype.toUpperCase(): '-' }}</div>
-                                        <div class="cell cell4">{{each_diag.category}}</div>
+                                        <!-- <div class="cell cell4">{{each_diag.category}}</div> -->
+                                        <div class="cell cell4" [matTooltip]=each_diag.category matTooltipClass="bpsHeaderTooltip">{{fitTableViewCategory(each_diag.category)}}</div>
                                         <div class="cell cell5" [matTooltip]=each_diag.processOwnerName matTooltipClass="bpsHeaderTooltip">{{each_diag.processOwnerName ? fitTableView(each_diag.processOwnerName) : '-'}}</div>
                                         <div class="cell cell6">{{each_diag.bpmnProcessName ? " V1."+each_diag.version+" ": '-'}}</div>
                                         <div class="cell cell7">{{each_diag.convertedModifiedTime*1000 | date:'medium'}}</div>

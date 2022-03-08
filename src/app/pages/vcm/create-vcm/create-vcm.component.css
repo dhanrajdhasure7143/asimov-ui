@@ -1,0 +1,322 @@
+.vcm-leveldiv {
+    margin-top: 12px;
+}
+
+.vcm-leveldiv h4 {
+    font-size: 16px;
+    color: #2C3952;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.vcm-leveldiv h4 img.testplus {
+    float: right;
+}
+
+.vcm-leveldiv mat-panel-title.mat-expansion-panel-header-title {
+    padding: 0px !important;
+    color: #001c47 !important;
+}
+
+.vcm-leveldiv mat-panel-title h5 {
+    font-size: 16px;
+    color: #2C3952;
+}
+
+.vcm-leveldiv ::ng-deep span.mat-expansion-indicator {
+    position: absolute;
+    right: 16px;
+    top: 14px;
+}
+
+.vcm-leveldiv .mat-expansion-panel-content {
+    border-top: 1px solid #ccc !important;
+}
+
+.dbichart-block {
+    background: #f4fafd;
+    border: 1px solid #cfe1f7;
+    min-height: 67vh;
+    /* min-height: calc(100vh - 225px); */
+    margin-bottom: 0px !important;
+}
+
+::ng-deep .mat-expansion-panel {
+    border: solid 1px #ebebeb;
+    padding: 10px;
+    margin-bottom: 20px !important;
+    position: relative;
+}
+
+.mat-expansion-panel:last-child {
+    margin-bottom: 0px !important;
+}
+
+.content,
+.level1process {
+    position: relative;
+}
+
+
+/* .content i {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    color: green;
+    cursor: pointer;
+} */
+
+.level1process button,
+.content button {
+    position: absolute;
+    right: 10px;
+    background-color: transparent !important;
+    top: 10px;
+    padding: 0px !important;
+    min-width: auto;
+    margin: 0px !important;
+}
+.level1process button[disabled],
+.content button[disabled] {
+    opacity: 0.35;
+}
+.overflowcontent span {
+    /* margin-left: 5px; */
+    width: 88%;
+}
+
+.previewdiv {
+    background-color: #f6f6f6;
+    border-radius: 3px;
+    height: 100%;
+}
+
+.previewdiv h4 {
+    font-size: 16px;
+    color: #7a7a7a;
+    text-transform: uppercase;
+}
+
+.previewcontdiv {
+    background-color: #fff;
+    border-radius: 3px;
+    height: 90%;
+    padding: 15px;
+}
+
+img.preview-img {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.previewcontdiv h5 {
+    color: #00a0e3;
+    font-size: 15px;
+    text-align: center;
+}
+
+.previewcontdiv p {
+    text-align: center;
+    font-weight: 300;
+    color: #001c47;
+    font-size: 14px;
+}
+
+.submit button.btn.btn-primary {
+    margin-right: 0px !important;
+}
+
+.management h4,
+.core h4,
+.support h4 {
+    font-size: 14px !important;
+    margin-bottom: 10px !important;
+}
+
+ul.subfolders {
+    margin-left: 3%;
+}
+
+.management,
+.core,
+.support {
+    margin-bottom: 20px;
+}
+
+li.childHover {
+    margin-bottom: 8px;
+    display: flex;
+    width: 100%;
+}
+
+li.overflowcontent {
+    color: #607d8b;
+    width: 100%;
+    display: flex;
+}
+
+
+.vcname input {
+    position: relative;
+}
+.vcname button {
+    position: absolute;
+    top: 32px;
+    right: 13px;
+    min-width: auto !important;
+    padding: 0px !important;
+    margin: 0px !important;
+    background-color: transparent !important;
+}
+.actimg {
+    text-align: right;
+    width: 12%;
+    cursor: pointer;
+}
+li.childHover span {
+    width: 88%;
+}
+
+.vcmprop.mat-drawer-opened {
+    width: 25% !important;
+}
+.editcontent {
+    /* height: calc(100vh - 235px); */
+    height: calc(100vh - 255px);
+}
+.propfooter button.btn.btn-primary {
+    margin-right: 0px !important;
+}
+img.testplus2 {
+    width: 12px;
+    height: 12px;
+    margin-right: 8px;
+}
+.vcmdocs {
+    border: 2px dashed #e7e7e7;
+    background-color: #f6f6f6;
+    padding: 20px 0px !important;
+    border-radius: 3px;
+    cursor: pointer;
+    text-align: center;
+}
+.vcmdocs:hover {
+    background-color: aliceblue;
+}
+.vcmdocs p {
+    margin: 0px;
+}
+.vcmdocs img {
+    width: 20%;
+    height: auto;
+    display: block;
+    margin: 0px auto;
+}
+.vcmdocs button {
+    border: 1px solid #00a0e3 !important;
+    color: #00a0e3;
+    margin: 15px 0px 0px 0px !important;
+    padding: 8px 25px !important;
+}
+.files img {
+    float: right;
+    /* opacity: 0.6; */
+    cursor: pointer;  
+    margin-top: 5px;
+}
+.files img:hover {
+    opacity: 1;
+}
+.procname {
+    margin: 0px 0px 10px !important;
+    font-weight: 600;
+    color: #7b7b7b;
+}
+.actimg span:hover .default-img,
+.files span:hover .default-img {
+    display: none;
+}
+
+.actimg span:hover .hover-img,
+.files span:hover .hover-img {
+    display: initial;
+}
+
+/* li.childHover {
+    position: relative;
+}
+
+.childHover i.fa.fa-times-circle {
+    position: absolute;
+    right: 2px;
+    top: 4px;
+    color: red;
+    cursor: pointer;
+} */
+
+.example-tree-invisible {
+    display: none;
+}
+
+.example-tree ul,
+.example-tree li {
+    margin-top: 0;
+    margin-bottom: 0;
+    list-style-type: none;
+}
+
+.example-tree .mat-nested-tree-node div[role=group] {
+    padding-left: 40px;
+}
+
+.example-tree div[role=group]>.mat-tree-node {
+    padding-left: 40px;
+    display: inline-block;
+    width: 200px;
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+}
+
+mat-tree {
+    background: #f6f6f6;
+}
+
+.dis {
+    cursor: not-allowed;
+}
+
+.view {
+    cursor: pointer;
+}
+
+.tsttooltipbtn {
+    position: relative;
+}
+
+/* .tsttooltipbtn:hover .default-img {
+    display: none;
+}
+
+.tsttooltipbtn:hover .hover-img {
+    display: initial;
+} */
+
+.tsttooltipbtn:hover span.testtooltip {
+    display: block;
+}
+.close-btn h3 {
+    padding: 10px 10px 10px 15px;
+    margin: 0px;
+    font-size: 16px;
+    font-weight: 600;
+    width: 90%;
+}
+.close-btn img{
+    width: 12px;
+    height: 12px;
+    cursor: pointer;
+    position: absolute;
+    right: 12px;
+    top: 14px;
+}
