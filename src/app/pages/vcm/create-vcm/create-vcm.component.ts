@@ -8,7 +8,6 @@ import { RestApiService } from '../../services/rest-api.service';
 import { DataTransferService } from '../../services/data-transfer.service';
 import Swal from 'sweetalert2';
 import { UUID } from 'angular2-uuid';
-import { object } from '@amcharts/amcharts4/core';
 
 let TREE_DATA: any[] = [
   {
@@ -35,7 +34,6 @@ export class CreateVcmComponent implements OnInit {
   @ViewChild('tree', { static: false }) tree: MatTree<any>;
   @ViewChild('drawer', { static: false }) drawer: MatDrawer;
 
-
   treeControl = new NestedTreeControl<any>(node => node.children);
   dataSource = new MatTreeNestedDataSource<any>();
 
@@ -47,7 +45,6 @@ export class CreateVcmComponent implements OnInit {
   coreinput = '';
   supportinput = '';
   vcmName = '';
-  // properties
   editProcessDescription: any;
   editProcessOwner: any;
   editProcessName: any;
@@ -109,15 +106,10 @@ export class CreateVcmComponent implements OnInit {
         this.vcmProcess = res_data.data;
         if(res_data.vName)this.vcmName=res_data.vName;
         if(res_data.pOwner)this.process_ownerName=res_data.pOwner;
-        // if(res_data){
-        //   console.log("selectedVcmData", res_data.selectedVcm)
-        // }
         }
       }
     });
-    if(this.vcm_id){
-      this.getselectedVcm();
-    }
+
   }
 
   addManageProcess() {
@@ -432,13 +424,40 @@ this.rest_api.uploadVCMPropDocument(formdata).subscribe(res=>{
   }
 
   saveVcm() {
+    
+    let requestBody= this.getrequestData();
+    console.log("request body",requestBody)
+    this.isLoading=true;
+    this.rest_api.createVcm(requestBody).subscribe((res:any)=>{
+      this.isLoading=false;
+
+      Swal.fire({
+        title: 'Success',
+        text: res.message,
+        position: 'center',
+        icon: 'success',
+        showCancelButton: false,
+        heightAuto: false,
+        confirmButtonColor: '#007bff',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ok'
+      }).then((result) => {
+        if (result.value) {
+          this.router.navigate(['/pages/vcm/view-vcm']);
+          localStorage.removeItem('vcmData');
+        }
+      })
+
+    })
+  }
+
+  getrequestData(){
     this.dataSource.data = null;
     this.dataSource.data = TREE_DATA;
     this.vcmProcess = null;
     this.vcmProcess = TREE_DATA;
     let data1=[];
     let data2=[];
-    let randomId = UUID.UUID();
     this.vcmProcess.forEach(element => {
       element.children.forEach(e=>{
         data1.push(e);
@@ -489,29 +508,7 @@ this.rest_api.uploadVCMPropDocument(formdata).subscribe(res=>{
       "vcmV2": data4,
       "vcmuniqueId":this.vcmProcess[0].uniqueId
     }
-    console.log("request body",data4)
-    this.isLoading=true;
-    this.rest_api.createVcm(data3).subscribe((res:any)=>{
-      this.isLoading=false;
-      Swal.fire({
-        title: 'Success',
-        text: res.message,
-        position: 'center',
-        icon: 'success',
-        showCancelButton: false,
-        heightAuto: false,
-        confirmButtonColor: '#007bff',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Ok'
-      }).then((result) => {
-        if (result.value) {
-          this.router.navigate(['/pages/vcm/view-vcm']);
-          localStorage.removeItem('vcmData');
-        }
-      })
-
-    })
-
+    return data3;
   }
   vcmHeading() {
     // TREE_DATA[3].vcmname = this.vcmName;
@@ -555,87 +552,26 @@ this.rest_api.uploadVCMPropDocument(formdata).subscribe(res=>{
   ngDestroy(){
     
   }
-
-  closeOverlay(){
-    this.drawer.close()
-  }
-
   onExpansionClik(i){
     this.isOpenedState=i;
     this.menuToggleTitle = true;
     this.propertiesContainer = true;
   }
-  getselectedVcm(){
-    this.isLoading=true;
-    this.rest_api.getselectedVcmById(this.vcm_id).subscribe(res=>{this.selectedVcm=res
-      this.isLoading=false;
-      console.log(res);
-      if(res){
-        this.vcmName=this.selectedVcm.data.vcmName;
-        this.process_ownerName=this.selectedVcm.data.processOwner;
-      this.dataMappingToTreeStructer1(this.selectedVcm.data.vcmV2);
-      }
-    })
+  closeOverlay(){
+    this.drawer.close()
   }
 
-  dataMappingToTreeStructer1(data){
-    let objData = [
-      { title: "Management Process","children":[]},
-      { title: "Core Process","children":[]},
-      { title: "Support Process","children":[]}
-    ]
 
-    data.forEach(e=>{
-      objData.forEach(e1=>{
-        if(e.level == "L1"){
-          if(e.parent == e1.title){
-            e1["children"].push(e);
-          }
-        }
-      })
-    })
-
-    data.forEach(e=>{
-      objData.forEach(e1=>{
-        if(e.level == "L2"){
-          if(e.parent == e1.title){
-            e1.children.forEach(e2=>{
-              if(e2.uniqueId == e.level1UniqueId ){
-                e2['children'].push(e);
-              }
-            })
-          }
-        }
-      })
-    })
-
-    data.forEach(e=>{
-      objData.forEach(e1=>{
-        if(e.level == "L3"){
-          if(e.parent == e1.title){
-            e1.children.forEach(e2=>{
-              if(e2.title == e.childParent ){
-                e2.children.forEach(e3 => {
-                  if(e3.uniqueId == e.level2UniqueId ){
-                    e3['children'].push(e)
-                  }
-                });
-              }
-            })
-          }
-        }
-      })
-    })
-
-    console.log(objData)
-    objData.forEach(element => {
-        element["name"]=element.title
-      });
-    this.vcmProcess = null;
-    this.vcmProcess =objData;
-    this.dataSource.data=objData;
-    this.treeControl.dataNodes = this.dataSource.data; 
+  showPreview(){
+    let requestBody= this.getrequestData();
+    console.log("request body",requestBody)
+    let obj={"vName":this.vcmName,
+      "pOwner":this.process_ownerName,
+      "data":this.vcmProcess,
+      "requestBody":requestBody
+    }
+      this.dt.vcmDataTransfer(obj);
+      this.router.navigate(["/pages/vcm/preview"])
   }
-
 
 }
