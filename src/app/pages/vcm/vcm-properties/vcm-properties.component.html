@@ -48,7 +48,7 @@
             <div class="col-md-12 col-lg-12">
                 <div class="prop_procdef">
                     <h4>Process Description</h4>
-                    <div *ngFor="let prop of vcmProperties;let i = index;" class="definitionscroll">
+                    <div *ngFor="let prop of vcmProperties;let i = index;" >
 
                         <ng-container *ngFor="let name of prop.children;let j = index;">
 
@@ -192,7 +192,7 @@
                 <div class="prop_procdef">
                     <h4>Process Description</h4>
 
-                    <div *ngFor="let prop of vcmProperties;let i = index;" class="definitionscroll">
+                    <div *ngFor="let prop of vcmProperties;let i = index;">
 
                         <ng-container *ngFor="let name of prop.children">
 

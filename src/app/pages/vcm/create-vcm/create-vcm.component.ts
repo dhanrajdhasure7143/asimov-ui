@@ -57,7 +57,10 @@ export class CreateVcmComponent implements OnInit {
   isLoading:boolean=false;
   user_details:any;
   selectedObj:any;
-  vcmUniqueId=UUID.UUID();
+  isOpenedState:number=0;
+  menuToggleTitle : boolean = false;
+  propertiesContainer : boolean = false;
+  vcmUniqueId=UUID.UUID()
   vcm_id:any;
   selectedVcm
 
@@ -549,7 +552,11 @@ this.rest_api.uploadVCMPropDocument(formdata).subscribe(res=>{
   ngDestroy(){
     
   }
-
+  onExpansionClik(i){
+    this.isOpenedState=i;
+    this.menuToggleTitle = true;
+    this.propertiesContainer = true;
+  }
   closeOverlay(){
     this.drawer.close()
   }

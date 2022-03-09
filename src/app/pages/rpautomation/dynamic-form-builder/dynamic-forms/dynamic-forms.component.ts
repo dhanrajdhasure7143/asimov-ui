@@ -31,7 +31,10 @@ export class DynamicFormsComponent implements OnInit {
     let fieldsCtrls = {};
     for (let f of this.fields) {
     //  if (f.type != 'checkbox') {
-        fieldsCtrls[f.name+'_'+f.id] = new FormControl(f.value || '', f.required && f.dependency == ''  ? Validators.required : [])
+      if(f.type=='email')
+        fieldsCtrls[f.name+'_'+f.id] = new FormControl(f.value || '', f.required && f.dependency == ''  ? [Validators.pattern("[a-zA-Z0-9.-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{3,}")] : [Validators.pattern("[a-zA-Z0-9.-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{3,}")])
+      else
+        fieldsCtrls[f.name+'_'+f.id] = new FormControl(f.value || '', f.required && f.dependency == ''  ? [Validators.required] : [])
       //  console.log(f);
      /* } else {
         let opts = {};
@@ -40,6 +43,7 @@ export class DynamicFormsComponent implements OnInit {
         }
         fieldsCtrls[f.name] = new FormGroup(opts)
       }*/
+
     }
     this.form = new FormGroup(fieldsCtrls);
     this.userRole = localStorage.getItem("userRole");

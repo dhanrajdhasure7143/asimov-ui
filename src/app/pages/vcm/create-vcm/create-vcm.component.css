@@ -182,8 +182,7 @@ li.childHover span {
     width: 25% !important;
 }
 .editcontent {
-    /* height: calc(100vh - 235px); */
-    height: calc(100vh - 275px);
+    /* height: calc(100vh - 275px); */
 }
 .propfooter button.btn.btn-primary {
     margin-right: 0px !important;
@@ -328,7 +327,61 @@ mat-tree {
 hr {
     margin-bottom: 13px !important;
 }
-.vcm-leveldiv select.form-control.ng-valid.ng-touched.ng-dirty {
+.vcm-leveldiv select.form-control.ng-dirty {
     background-color: #FFF9C7 !important;
     color: #001c47 !important;
 }
+
+.powner {
+    position: relative;
+    display: flex;
+    margin-top: 17px;
+}
+.powner button:hover img.default-img {
+    display: none;
+}
+.powner button:hover img.hover-img {
+    display: initial;
+}
+.powner select.form-control {
+    width: 200px !important;
+    margin-left: 10px;
+    border: transparent !important;
+}
+
+/* properties overlay */
+.vcmprop div#propertiesContainer {
+    top: 33px;
+    width: 100%;
+    height: calc(100% - 33px);
+    border: none !important;
+}
+.vcmprop div#propertiesPanelBody {
+    /* height: calc(100% - 40px); */
+    height: 100%;
+    position: absolute;
+    /* top: 40px; */
+    overflow: auto;
+    width: 100%;
+}
+.propertiesContainer mat-expansion-panel {
+    background-color: #607088;
+    margin: 0px !important;
+    border:none !important;
+    border-top: 1px solid #ebebeb !important;
+    padding: 0px !important;
+}
+.propertiesContainer mat-expansion-panel-header:hover {
+    background-color: #00a0e3;
+}
+.propertiesContainer .mat-expansion-panel-header-title {
+    border: none;
+}
+.vcmprop .propertiesContainer label.accordionHeader {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 500;
+    margin-left: 10px;
+    margin-bottom: 0px;
+}
+/* properties overlay */

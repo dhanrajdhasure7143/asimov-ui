@@ -22,16 +22,17 @@ img {
     cursor: pointer;
 }
 .proc_deffield textarea {
-    width: 95%;
+    width: 94%;
+    margin: 10px 0px 10px 10px;
 }
 .proc_deffield {
     position: relative;
-    margin-bottom: 10px;
+    /* margin-bottom: 10px; */
 }
 .proc_deffield img.testplus, 
 .proc_deffield span.procdesc_act {
     position: absolute;
-    right: 0px;
+    right: 8px;
     top: 18px;
 }
 .proc_deffield img.testplus2 {
@@ -75,4 +76,11 @@ span.docpill:hover {
 .prop_procdef h4 {
     /* background-color: #e8f7fd; */
     padding:10px;
+}
+.prop_procdef p {
+    padding: 10px 10px 0px;
+    margin: 0px;
+}
+.definitionscroll {
+    padding: 8px 10px 15px;
 }
