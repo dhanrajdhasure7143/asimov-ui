@@ -59,6 +59,9 @@ export class CreateVcmComponent implements OnInit {
   isLoading:boolean=false;
   user_details:any;
   selectedObj:any;
+  isOpenedState:number=0;
+  menuToggleTitle : boolean = false;
+  propertiesContainer : boolean = false;
   vcmUniqueId=UUID.UUID()
 
   constructor(private router: Router,private rest_api : RestApiService, private dt: DataTransferService) {
@@ -543,5 +546,37 @@ this.rest_api.uploadVCMPropDocument(formdata).subscribe(res=>{
   closeOverlay(){
     this.drawer.close()
   }
+
+  // toggleOpen(){
+  //   this.menuToggleTitle = true;
+  //   this.propertiesContainer = true;
+  //   let el = document.getElementById("propertiesPanelBody");
+  //   if(el){
+  //     el.classList.remove("slide-right");
+  //     el.classList.add("slide-left");
+  //   }
+    
+  // }
+  // toggleClosed(){
+  //   this.menuToggleTitle = false;
+  //   this.propertiesContainer = false;
+  //   let el = document.getElementById("propertiesPanelBody");
+  //   if(el){
+  //     el.classList.remove("slide-left");
+  //     el.classList.add("slide-right");
+  //   }
+  //   this.isOpenedState=0;
+  // }
+  onExpansionClik(i){
+    this.isOpenedState=i;
+    this.menuToggleTitle = true;
+    this.propertiesContainer = true;
+    // let el = document.getElementById("propertiesPanelBody");
+    // if(el){
+    //   el.classList.remove("slide-right");
+    //   el.classList.add("slide-left");
+    // }
+  }
+
 
 }

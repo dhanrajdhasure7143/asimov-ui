@@ -2741,3 +2741,15 @@ span.pdicon {
   color: #00a1e4 !important;
   opacity: 1;
 }
+.vcmprop .propertiesContainer span.mat-expansion-indicator {
+    display: none !important;
+}
+.vcmprop .propertiesContainer .mat-expansion-panel-body {
+  height: 100% !important;
+  max-height: 413px !important;
+  background-color: #fff !important;
+  padding: 10px !important;
+}
+.vcmprop .propertiesContainer .mat-expansion-panel-header-description {
+  margin:0px !important
+}
