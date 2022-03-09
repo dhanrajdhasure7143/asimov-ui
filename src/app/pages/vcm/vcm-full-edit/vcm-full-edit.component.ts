@@ -27,11 +27,11 @@ let TREE_DATA: any[] = [
 
 
 @Component({
-  selector: 'app-create-vcm',
-  templateUrl: './create-vcm.component.html',
-  styleUrls: ['./create-vcm.component.css']
+  selector: 'app-vcm-full-edit',
+  templateUrl: './vcm-full-edit.component.html',
+  styleUrls: ['./vcm-full-edit.component.css']
 })
-export class CreateVcmComponent implements OnInit {
+export class VcmFullEditComponent implements OnInit {
   @ViewChild('tree', { static: false }) tree: MatTree<any>;
   @ViewChild('drawer', { static: false }) drawer: MatDrawer;
 
@@ -62,7 +62,11 @@ export class CreateVcmComponent implements OnInit {
   selectedObj:any;
   vcmUniqueId=UUID.UUID();
   vcm_id:any;
-  selectedVcm
+  selectedVcm:any;
+
+
+
+
 
   constructor(private router: Router,private rest_api : RestApiService, private dt: DataTransferService,
     private route:ActivatedRoute) {
@@ -628,6 +632,8 @@ this.rest_api.uploadVCMPropDocument(formdata).subscribe(res=>{
     this.dataSource.data=objData;
     this.treeControl.dataNodes = this.dataSource.data; 
   }
-
+  backToViewVcm(){
+    this.router.navigate(["/pages/vcm/vcm-structure"],{queryParams:{id:this.vcm_id}})
+  }
 
 }

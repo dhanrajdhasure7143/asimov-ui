@@ -15,7 +15,7 @@ export class VcmPropertiesComponent implements OnInit {
   texarea: ElementRef;
 
   vcmProperties = [];
-  documents: any;
+  attachments: any;
   fileName = [];
   managementOwner: any;
   coreOwner: any;
@@ -107,7 +107,7 @@ export class VcmPropertiesComponent implements OnInit {
 
       for (var i = 0; i < event.target.files.length; i++) {
         event.target.files[i]['convertedsize'] = this.convertFileSize(event.target.files[i].size);
-        event.target.files[i]['filename'] = event.target.files[i]['name'];
+        event.target.files[i]['fileName'] = event.target.files[i]['name'];
         this.fileName.push();
         formdata.append("file", event.target.files[i]);
       }
@@ -130,12 +130,12 @@ export class VcmPropertiesComponent implements OnInit {
 
         if (level == 'level1') {
           this.vcmProperties.filter((e) => e.name === name.parent)[0].children
-            .filter(n => n.title === name.title)[0].documents = this.fileName;
+            .filter(n => n.title === name.title)[0].attachments = this.fileName;
         }
         if (level == 'level2') {
           this.vcmProperties.filter((e) => e.name === name.parent)[0].children
             .filter(n => n.title === name.childParent)[0].children.filter(c => c.title === name.title)[0]
-            .documents = this.fileName;
+            .attachments = this.fileName;
         }
       },err=>{
         this.isLoading=false;
@@ -174,12 +174,12 @@ export class VcmPropertiesComponent implements OnInit {
     console.log(file, i);
     if (level == 'level1') {
       this.vcmProperties.filter((e) => e.name === file.parent)[0].children
-        .filter(n => n.title === file.title)[0].documents.splice(i, 1);
+        .filter(n => n.title === file.title)[0].attachments.splice(i, 1);
     }
     else {
       this.vcmProperties.filter((e) => e.name === file.parent)[0].children
         .filter(n => n.title === file.childParent)[0].children.filter(c => c.title === file.title)[0]
-        .documents.splice(i, 1);
+        .attachments.splice(i, 1);
     }
   }
 
@@ -308,7 +308,7 @@ export class VcmPropertiesComponent implements OnInit {
   //     formdata.append("file", this.fileName[i]);
   //   }
   //   console.log(this.fileName);
-  //   this.vcmProperties[4].documents = (this.fileName);
+  //   this.vcmProperties[4].attachments = (this.fileName);
   //   this.router.navigate(['/pages/vcm/view-vcm']);
   // }
 

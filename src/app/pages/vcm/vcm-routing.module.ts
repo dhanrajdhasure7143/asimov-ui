@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CreateVcmComponent } from './create-vcm/create-vcm.component';
+import { VcmFullEditComponent } from './vcm-full-edit/vcm-full-edit.component';
 import { VcmPropertiesComponent } from './vcm-properties/vcm-properties.component';
 import { VcmStructureComponent } from './vcm-structure/vcm-structure.component';
 import { VcmComponent } from './vcm.component';
@@ -23,7 +24,11 @@ const routes: Routes = [
       {
         path:'vcm-structure',
         component:VcmStructureComponent
-      }
+      },
+      {
+        path:'edit',
+        component:VcmFullEditComponent
+      },
     ]
   }
 ];
