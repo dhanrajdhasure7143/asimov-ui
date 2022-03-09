@@ -329,6 +329,13 @@ export class RestApiService{
     return this.http.post<any>("/rpa-service/agent/save-environment",data);
   }
 
+  
+  addenvironmentV2(data:any):Observable<any>
+  {
+    return this.http.post<any>("/rpa-service/agent/save-environment-v2",data);
+  }
+  
+
   deleteenvironment(data:any) :Observable<any>
   {
     return this.http.post<any>("/rpa-service/agent/delete-environment",data);
