@@ -8,6 +8,7 @@
         </div>
         <div class="ml-auto submit">
             <button class="btn btn-default" (click)="resetLevel1()">Reset</button>
+            <button class="btn btn-danger" (click)="showPreview()" [disabled]="!vcmName || !process_ownerName">Preview</button>
             <button class="btn btn-primary" [disabled]="!vcmName || !process_ownerName" (click)="saveVcm()">Save</button>
         </div>
     </div>
@@ -222,16 +223,16 @@
                                         <div class="management" *ngIf="vcmProcess[0].children.length != 0">
                                             <h4>Management Process</h4>
                                             <ng-container *ngFor="let item of vcmProcess">
-                                                <ng-container *ngFor="let name of item.children">
-                                                    <p *ngIf="name.parent == 'Management Process'">
-                                                        <img src="../../../../assets/images/VCM/small-right.svg" class="testplus2" />{{name.title}}</p>
-                                                    <ul *ngFor="let level2 of name.children" class="subfolders">
+                                                <ng-container *ngFor="let each of item.children">
+                                                    <p *ngIf="each.parent == 'Management Process'">
+                                                        <img src="../../../../assets/images/VCM/small-right.svg" class="testplus2" />{{each.title}}</p>
+                                                    <ul *ngFor="let level2 of each.children" class="subfolders">
                                                         <li class="overflowcontent" *ngIf="level2.parent == 'Management Process'">
                                                             <span><img src="../../../../assets/images/VCM/small-right.svg" class="testplus2" />{{level2.title}}</span>
                                                             <div class="actimg">
                                                                 <span><img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img"  />
                                                                 <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" (click)="level2removeChild(level2)" /></span>
-                                                                <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" (click)="editLevel2(name,level2,2)" />
+                                                                <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" (click)="editLevel2(each,level2,2)" />
                                                                 
                                                             </div>
                                                         </li>

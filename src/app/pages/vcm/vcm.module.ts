@@ -14,11 +14,12 @@ import { SharedModule } from '../../shared/shared.module';
 import { EditVcmComponent } from './edit-vcm/edit-vcm.component';
 import { ViewPropertiesComponent } from './view-properties/view-properties.component';
 import { VcmFullEditComponent } from './vcm-full-edit/vcm-full-edit.component';
+import { VcmPreviewComponent } from './vcm-preview/vcm-preview.component';
 
 
 
 @NgModule({
-  declarations: [ViewVcmComponent, CreateVcmComponent, VcmComponent, VcmPropertiesComponent, VcmStructureComponent, EditVcmComponent, ViewPropertiesComponent, VcmFullEditComponent],
+  declarations: [ViewVcmComponent, CreateVcmComponent, VcmComponent, VcmPropertiesComponent, VcmStructureComponent, EditVcmComponent, ViewPropertiesComponent, VcmFullEditComponent, VcmPreviewComponent],
   imports: [
     CommonModule,
     VcmRoutingModule,
