@@ -88,7 +88,7 @@
                                         <span (click)="openNodeProperties(node)" *ngIf=" uniqueId1 != node.uniqueId ">{{node.title}} </span>
                                         <span> 
                                             <button style="padding-left: 1%;" (click)="onCreateLevel1(node)">
-                                                <img src="../../../../assets/images/VCM/plus-bordercircle.svg" class="testplus" />1
+                                                <img src="../../../../assets/images/VCM/plus-bordercircle.svg" class="testplus" />
                                             </button>
                                             <div *ngIf="uniqueId==node.uniqueId" style="display: flex;width: 150%;margin-top: 5%;">
                                                 <input type="text" class="form-control" placeholder="Enter Process Name" [(ngModel)]="processName">
@@ -99,7 +99,7 @@
                                         </span>
                                         <span>
                                             <button (click)="editLevelName(node)" *ngIf=" uniqueId1 != node.uniqueId ">
-                                                <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" />1
+                                                <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" />
                                             </button>
                                             <div *ngIf="uniqueId1 == node.uniqueId" style="display: flex;width: 150%;margin-top: 5%;">
                                                 <input type="text" class="form-control" placeholder="Enter Process Name" [(ngModel)]="node.title">
@@ -114,7 +114,7 @@
                                         <span>
                                             <button style="padding-left: 1%;" (click)="onSelectedNode(node)" #pop2="bs-popover"
                                                 [popover]="popTemplate1" [outsideClick]="true" placement="right">
-                                                <img src="../../../../assets/images/VCM/plus-bordercircle.svg" class="testplus" />2
+                                                <img src="../../../../assets/images/VCM/plus-bordercircle.svg" class="testplus" />
                                             </button>
                                         
                                             <!-- <button (click)="addLevel(node)" *ngIf="node.level == 'L2' && node.title != 'Management Process' && node.title != 'Core Process' && node.title != 'Support Process'"><img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2"/></button><br> -->
@@ -127,7 +127,7 @@
                                         </span>
                                         <span>
                                             <button (click)="editLevelName(node)" *ngIf=" uniqueId1 != node.uniqueId ">
-                                                <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" />2
+                                                <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" />
                                             </button>
                                             <div *ngIf="uniqueId1 == node.uniqueId" style="display: flex;width: 150%;margin-top: 5%;">
                                                 <input type="text" class="form-control" placeholder="Enter Process Name" [(ngModel)]="node.title">
@@ -143,11 +143,11 @@
                                         <span>
                                             <button style="padding-left: 1%;" #pop="bs-popover" [popover]="popTemplate" [outsideClick]="true"
                                                 placement="right">
-                                                <img src="../../../../assets/images/VCM/plus-bordercircle.svg" class="testplus" />3
+                                                <img src="../../../../assets/images/VCM/plus-bordercircle.svg" class="testplus" />
                                             </button>
                                             <span>
                                                 <button (click)="editLevelName(node)" *ngIf=" uniqueId1 != node.uniqueId ">
-                                                    <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" />2
+                                                    <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" />
                                                 </button>
                                                 <div *ngIf="uniqueId1 == node.uniqueId" style="display: flex;width: 150%;margin-top: 5%;">
                                                     <input type="text" class="form-control" placeholder="Enter Process Name" [(ngModel)]="node.title">
@@ -176,7 +176,7 @@
                                             <span (click)="openNodeProperties(node)" *ngIf=" uniqueId1 != node.uniqueId ">{{node.title}} </span>
                                             <span> 
                                                 <button style="padding-left: 1%;" (click)="onCreateLevel1(node)">
-                                                    <img src="../../../../assets/images/VCM/plus-bordercircle.svg" class="testplus" />4
+                                                    <img src="../../../../assets/images/VCM/plus-bordercircle.svg" class="testplus" />
                                                 </button>
                                                 <div *ngIf="uniqueId==node.uniqueId" style="display: flex;width: 150%;margin-top: 5%;">
                                                     <input type="text" class="form-control" placeholder="Enter Process Name" [(ngModel)]="processName">
@@ -187,7 +187,7 @@
                                             </span>
                                             <span>
                                                 <button (click)="editLevelName(node)" *ngIf=" uniqueId1 != node.uniqueId ">
-                                                    <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" />4
+                                                    <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" />
                                                 </button>
                                                 <div *ngIf="uniqueId1 == node.uniqueId" style="display: flex;width: 150%;margin-top: 5%;">
                                                     <input type="text" class="form-control" placeholder="Enter Process Name" [(ngModel)]="node.title">
@@ -207,7 +207,7 @@
                                                     <img class="testplus1" src="../../../../assets/images/VCM/Green Tick.svg">
                                                 </button>
                                             </div>
-                                            <button *ngIf="uniqueId1 != node.uniqueId" (click)="editLevelName(node)">5
+                                            <button *ngIf="uniqueId1 != node.uniqueId" (click)="editLevelName(node)">
                                                 <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" />
                                             </button>
                                         <!-- </span>
@@ -215,7 +215,7 @@
                                         <span *ngIf="node.level == 'L2'"> -->
                                             <button style="padding-left: 1%;" (click)="onSelectedNode(node)" #pop2="bs-popover" [popover]="popTemplate1" [outsideClick]="true" placement="right">
                                                 <img src="../../../../assets/images/VCM/plus-bordercircle.svg"
-                                                    class="testplus" />5
+                                                    class="testplus" />
                                             </button>
     
                                             <div *ngIf="uniqueId== node.uniqueId" style="margin-top: 9%;right: 9% !important;position: relative;display: flex; width: 35%;">

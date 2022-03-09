@@ -1,7 +1,7 @@
 <div class="h-100" *ngIf="!isShow">
     <div class="row module-heading title">
         <div>
-            <span class="module-back-button" routerLink="/pages/vcm/edit">
+            <span class="module-back-button" (click)="backToViewVcm()">
                 <i aria-hidden="true" class="fas fa-arrow-left"></i>
             </span>
             <span class="module-header-title">Value Chain Mapping - Edit</span>
@@ -58,7 +58,7 @@
                         </div>
                         <div class="col-md-12 form-group files" >
                             <p *ngFor="let file of fileName;let i = index;">
-                                {{file.name}} 
+                                {{i+1}}.{{file.fileName}} 
                                 <span><img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img"  />
                                 <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" (click)="RemoveFile(file,i)" /></span>
                             </p>
@@ -93,7 +93,7 @@
                                         Level 1 Process
                                         <img [ngClass]="(vcmProcess[0].children?.length != 0 || vcmProcess[1].children?.length != 0 || vcmProcess[2].children?.length != 0) ? 'view' : 'dis'" (click)="goToProperties('level1')" src="../../../../assets/images/VCM/Level 1.svg" class="testplus" alt="">
                                     </h4>
-                                    <mat-expansion-panel>
+                                    <mat-expansion-panel expanded>
                                         <mat-expansion-panel-header>
                                             <mat-panel-title>
                                                 <h5>
@@ -126,7 +126,7 @@
                                         </div>
                                     </mat-expansion-panel>
 
-                                    <mat-expansion-panel>
+                                    <mat-expansion-panel expanded>
                                         <mat-expansion-panel-header>
                                             <mat-panel-title>
                                                 <h5>
@@ -159,7 +159,7 @@
                                         </div>
                                     </mat-expansion-panel>
 
-                                    <mat-expansion-panel>
+                                    <mat-expansion-panel expanded>
                                         <mat-expansion-panel-header>
                                             <mat-panel-title>
                                                 <h5>

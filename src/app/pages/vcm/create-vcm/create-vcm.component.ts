@@ -341,7 +341,7 @@ export class CreateVcmComponent implements OnInit {
     const formdata = new FormData();
     for (var i = 0; i < event.target.files.length; i++) {
       event.target.files[i]['convertedsize'] = this.convertFileSize(event.target.files[i].size);
-      event.target.files[i]['filename'] = event.target.files[i]['name'];
+      event.target.files[i]['fileName'] = event.target.files[i]['name'];
       // this.fileName.push(event.target.files[i]);
       formdata.append("file", event.target.files[i]);
     }
@@ -360,7 +360,7 @@ this.rest_api.uploadVCMPropDocument(formdata).subscribe(res=>{
   this.isLoading=false;
   for (var i = 0; i < event.target.files.length; i++) {
     event.target.files[i]['convertedsize'] = this.convertFileSize(event.target.files[i].size);
-    event.target.files[i]['filename'] = event.target.files[i]['name'];
+    event.target.files[i]['fileName'] = event.target.files[i]['name'];
     this.fileName.push(event.target.files[i]);
   }
   if (this.editLevelProperties == 1) {
