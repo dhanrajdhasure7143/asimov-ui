@@ -995,7 +995,6 @@ export class RpaHomeComponent implements OnInit {
    return this.rest.addCategory(rpaCategory);
   }
   searchByCategory(category) {      // Filter table data based on selected categories
-    debugger
     var filter_saved_diagrams= []
     this.botslist=[]
     if (category == "") {
@@ -1062,11 +1061,10 @@ export class RpaHomeComponent implements OnInit {
       }
 
       applySearchFilter(v){  
-  debugger    
-    const filterPipe = new SearchRpaPipe();   
-     const fiteredArr = filterPipe.transform(this.botslist,v);   
-          
-      this.assignPagination(fiteredArr)    
+      const filterPipe = new SearchRpaPipe();   
+       const fiteredArr = filterPipe.transform(this.botslist,v);   
+            
+        this.assignPagination(fiteredArr)    
   }
 
 
