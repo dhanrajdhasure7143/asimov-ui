@@ -64,7 +64,6 @@ export class CreateVcmComponent implements OnInit {
   menuToggleTitle : boolean = false;
   propertiesContainer : boolean = false;
   vcmUniqueId=UUID.UUID()
-  vcmUniqueId=UUID.UUID();
   vcm_id:any;
   selectedVcm
 
