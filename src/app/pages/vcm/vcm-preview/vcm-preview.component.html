@@ -29,13 +29,7 @@
                             </div>
                             <div class="col-md-12 form-group">
                                 <label class="label-control">Process Owner</label>
-                                <!-- <select class="form-control" [disabled]="isPropDisabled" [(ngModel)]="processOwner">
-                                    <option value="" hidden disabled>Select Process Owner</option>
-                                    <option *ngFor="let each_approver of processOwners_list;let i=index" [value]="each_approver.firstName+' '+each_approver.lastName">
-                                        {{(each_approver.firstName | titlecase) +"
-                                        "+(each_approver.lastName==undefined?"":each_approver.lastName)}}</option>
-                                </select> -->
-                                <div>{{processOwner}}</div>
+                                <input type="text" [disabled]="isPropDisabled" class="form-control" placeholder="Select Process Owner" [(ngModel)]="processOwner">
                             </div>
                             <div class="col-md-12 form-group">
                                 <label class="label-control">Process Description</label>
@@ -77,15 +71,15 @@
                 <div class="vcm-treesmain h-100">
                     <!-- <h4 >{{vcmTreeData[3].vcmname}}</h4> -->
                     <div class="row maincontent h-100">
-                        <div class="col-md-12 p-0 form-group vcname">
+                        <!-- <div class="col-md-12 p-0 form-group vcname">
                             <label class="label-control">Value Chain Name</label>
                             <input type="text" class="form-control" [(ngModel)]="selectedVcmName" placeholder="Enter Value Chain Name" readonly>
                             <button class="btn" >
                                 <img [hidden]="!selectedVcmName" src="../../../../assets/images/VCM/Green Tick.svg" class="testplus1"  />
                             </button>
-                        </div>
+                        </div> -->
                         <div class="col-md-12 p-0">
-                            <h4>{{selectedVcmName}}</h4>
+                            <h4>{{vcmName}}</h4>
                         </div>
                         <div class="col-md-12 p-0 vcm-treediv">
                             <mat-tree [dataSource]="dataSource" #tree [treeControl]="treeControl" class="example-tree">

@@ -67,6 +67,7 @@ ngOnInit(): void {
     this.dt.getVcm_Data.subscribe(res=>{res_data=res
       console.log(res_data)
       if(res){
+        this.vcmName=res_data.vName
         if(res_data.data.length>0){
           this.vcmTreeData=res_data.data;
 
