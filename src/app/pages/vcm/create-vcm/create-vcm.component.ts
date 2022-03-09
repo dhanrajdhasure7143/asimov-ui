@@ -124,7 +124,7 @@ export class CreateVcmComponent implements OnInit {
       title: this.manageinput,
       description: '',
       processOwner: '',
-      documents: [],
+      attachments: [],
       level: "L1",
       'uniqueId':UUID.UUID()
     }
@@ -143,7 +143,7 @@ export class CreateVcmComponent implements OnInit {
       title: this.coreinput,
       description: '',
       processOwner: '',
-      documents: [],
+      attachments: [],
       level: "L1",
       'uniqueId':UUID.UUID()
     }
@@ -162,7 +162,7 @@ export class CreateVcmComponent implements OnInit {
       title: this.supportinput,
       description: '',
       processOwner: '',
-      documents: [],
+      attachments: [],
       level: "L1",
       'uniqueId':UUID.UUID()
 
@@ -200,7 +200,7 @@ export class CreateVcmComponent implements OnInit {
       childParent: this.level1process.title,
       description: '',
       processOwner: '',
-      documents: [],
+      attachments: [],
       level: "L2",
       'uniqueId':UUID.UUID()
     };
@@ -287,8 +287,8 @@ export class CreateVcmComponent implements OnInit {
     if (name.processOwner) {
       this.editProcessOwner = name.processOwner;
     }
-    if (name.documents) {
-      this.fileName = name.documents;
+    if (name.attachments) {
+      this.fileName = name.attachments;
     }
     this.editProcessName = name.title;
   }
@@ -318,8 +318,8 @@ export class CreateVcmComponent implements OnInit {
     if (level2.processOwner) {
       this.editProcessOwner = level2.processOwner;
     }
-    if (level2.documents) {
-      this.fileName = level2.documents;
+    if (level2.attachments) {
+      this.fileName = level2.attachments;
     }
     this.editProcessName = level2.title;
   }
@@ -366,7 +366,7 @@ this.rest_api.uploadVCMPropDocument(formdata).subscribe(res=>{
   if (this.editLevelProperties == 1) {
     console.log(this.fileName);
     TREE_DATA.filter((e) => e.name === this.propertiesName)[0].children
-      .filter(n => n.title === this.editProcessName)[0].documents = this.fileName;
+      .filter(n => n.title === this.editProcessName)[0].attachments = this.fileName;
     this.dataSource.data = null;
     this.dataSource.data = TREE_DATA;
     this.vcmProcess = null;
@@ -375,7 +375,7 @@ this.rest_api.uploadVCMPropDocument(formdata).subscribe(res=>{
   if (this.editLevelProperties == 2) {
     TREE_DATA.filter((e) => e.name === this.propertiesName)[0].children
       .filter(n => n.title === this.childParent)[0].children.filter(c => c.title === this.editProcessName)[0]
-      .documents = this.fileName;
+      .attachments = this.fileName;
     this.dataSource.data = null;
     this.dataSource.data = TREE_DATA;
     this.vcmProcess = null;
@@ -418,12 +418,12 @@ this.rest_api.uploadVCMPropDocument(formdata).subscribe(res=>{
     this.fileName.splice(i, 1);
     if (this.editLevelProperties == 1) {
       TREE_DATA.filter((e) => e.name === this.propertiesName)[0].children
-        .filter(n => n.title === this.editProcessName)[0].documents = this.fileName;
+        .filter(n => n.title === this.editProcessName)[0].attachments = this.fileName;
     }
     if (this.editLevelProperties == 2) {
       TREE_DATA.filter((e) => e.name === this.propertiesName)[0].children
         .filter(n => n.title === this.childParent)[0].children.filter(c => c.tit === this.editProcessName)[0]
-        .documents = this.fileName;
+        .attachments = this.fileName;
     }
     console.log(TREE_DATA);
   }

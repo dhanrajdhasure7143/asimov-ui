@@ -98,15 +98,15 @@
                             <ng-container *ngFor="let prop of vcmProperties">
                                 <tr *ngFor="let name of prop.children;let i = index">
                                     <td *ngIf="name.title">{{name.title}}</td>
-                                    <td *ngIf="name.documents">
-                                        <ng-container *ngFor="let doc of name.documents;let j = index">
+                                    <td *ngIf="name.attachments">
+                                        <ng-container *ngFor="let doc of name.attachments;let j = index">
                                             <span class="docpill">
                                                 {{j+1}} . {{doc.filename}}                                                 
                                                 <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2" (click)="RemoveFile(name,j,'level1')" />
                                             </span>
                                         </ng-container>
                                     </td>
-                                    <td *ngIf="name.documents">
+                                    <td *ngIf="name.attachments">
 
                                         <input multiple #fileInput type="file" style="display: none;" (change)="documentsUpload($event,name,'level1')" />
                                         <img src="../../../../assets/images/Projects/upload-blue.svg" class="testplus" (click)="fileInput.click()" />
@@ -258,15 +258,15 @@
                                 <ng-container *ngFor="let name of prop.children;let i = index">
                                     <tr *ngFor="let level2 of name.children">
                                         <td *ngIf="level2.title">{{level2.title}}</td>
-                                        <td *ngIf="level2.documents">
-                                            <ng-container *ngFor="let doc of level2.documents;let j = index">
+                                        <td *ngIf="level2.attachments">
+                                            <ng-container *ngFor="let doc of level2.attachments;let j = index">
                                                 <span class="docpill">
                                                     {{j+1}} . {{doc.filename}}                                                   
                                                     <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2" (click)="RemoveFile(level2,j,'level2')" />
                                                 </span>
                                             </ng-container>
                                         </td>
-                                        <td *ngIf="level2.documents">
+                                        <td *ngIf="level2.attachments">
 
                                             <input multiple #fileInput type="file" style="display: none;" (change)="documentsUpload($event,level2,'level2')" />
                                             <img src="../../../../assets/images/Projects/upload-blue.svg" class="testplus" (click)="fileInput.click()" />
