@@ -62,7 +62,11 @@ export class CreateVcmComponent implements OnInit {
   propertiesContainer : boolean = false;
   vcmUniqueId=UUID.UUID()
   vcm_id:any;
-  selectedVcm
+  selectedVcm:any;
+  inputUniqueId:any;
+  selectedNode_obj:any;
+  l3ProcessName:any;
+  ownerValues: any;
 
   constructor(private router: Router,private rest_api : RestApiService, private dt: DataTransferService,
     private route:ActivatedRoute) {
@@ -572,6 +576,20 @@ this.rest_api.uploadVCMPropDocument(formdata).subscribe(res=>{
     }
       this.dt.vcmDataTransfer(obj);
       this.router.navigate(["/pages/vcm/preview"])
+  }
+  onSelectedNode(node,parentObj){
+    this.selectedNode_obj=node
+
+  }
+
+  onCreateLevel3(){
+    this.inputUniqueId = this.selectedNode_obj.uniqueId;
+
+  }
+
+  onChangeProcessOwner(){
+    let splitedValues=this.process_ownerName.split(' ');
+    this.ownerValues=splitedValues[0].charAt(0)+splitedValues[1].charAt(0)
   }
 
 }
