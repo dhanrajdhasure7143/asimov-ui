@@ -1,0 +1,304 @@
+<div class="h-100" *ngIf="!isShow">
+    <div class="row module-heading title">
+        <div>
+            <span class="module-back-button" routerLink="/pages/vcm/edit">
+                <i aria-hidden="true" class="fas fa-arrow-left"></i>
+            </span>
+            <span class="module-header-title">Value Chain Mapping - Edit</span>
+        </div>
+        <div class="ml-auto submit">
+            <button class="btn btn-default" (click)="resetLevel1()">Reset</button>
+            <button class="btn btn-primary" [disabled]="!vcmName || !process_ownerName" (click)="saveVcm()">Save</button>
+        </div>
+    </div>
+
+    <div class="module-body">
+        <mat-drawer-container class="example-container h-100" style="background-color: white;">
+            <mat-drawer #drawer class="example-sidenav vcmprop" mode="side" position="end" >
+                <div class="close-btn">
+                    <h3>{{editProcessName}}</h3>
+                    <img src="../../../../assets/images/VCM/VCM-close.svg" (click)="closeOverlay()" />
+                </div>
+                <mat-tab-group>
+                    <mat-tab label="Properties">
+                        <div class="editcontent" >
+                            <div class="col-md-12 form-group">
+                                <label class="label-control">Process Name</label>
+                                <input type="text" disabled class="form-control" [(ngModel)]="editProcessName">
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <label class="label-control">Process Owner</label>
+                                <select class="form-control" [(ngModel)]="editProcessOwner">
+                                    <option value="" hidden disabled>Select Owner</option>
+                                    <option *ngFor="let each_approver of processOwners_list;let i=index" [value]="each_approver.firstName+' '+each_approver.lastName">
+                                        {{(each_approver.firstName | titlecase) +" "+(each_approver.lastName==undefined?"":each_approver.lastName)}}</option>
+                                </select>
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <label class="label-control">Process Description</label>
+                                <textarea  class="form-control"  rows="5" [(ngModel)]="editProcessDescription" placeholder="Enter Process Description"></textarea>
+                            </div>
+                        </div>
+                        <div class="propfooter col-md-12 text-right">
+                            <!-- <button class="btn btn-default" (click)="resetProperties()">Reset</button> -->
+                            <button class="btn btn-primary" *ngIf="editLevelProperties == 1" (click)="editProperties()">Save</button>
+                            <button class="btn btn-primary" *ngIf="editLevelProperties == 2" (click)="editProcessLevel2()">Save</button>
+                        </div>
+                    </mat-tab>
+                    <mat-tab label="Documents">
+                        <div class="col-md-12 form-group" >
+                            <!-- <h4 class="procname">{{editProcessName}}</h4> -->
+                            <div class="vcmdocs">
+                                <img src="../../../../assets/images/VCM/VCM-Upload.svg"  />
+                                <button class="btn" (click)="fileInput.click()" >
+                                    <input multiple #fileInput type="file" (change)="documentsUpload($event)" style="display:none;" />
+                                    Upload
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-12 form-group files" >
+                            <p *ngFor="let file of fileName;let i = index;">
+                                {{file.name}} 
+                                <span><img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img"  />
+                                <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" (click)="RemoveFile(file,i)" /></span>
+                            </p>
+                        </div>
+                    </mat-tab>
+                </mat-tab-group>
+            </mat-drawer>
+            <mat-drawer-content>
+                <div class="row maincontent h-100">
+                    <div class="col-md-12 pl-0 vcm-leveldiv">
+                        <div class="col-md-6 pr-0 form-group vcname">
+                            <label class="label-control">Value Chain Name</label>
+                            <input type="text" class="form-control" [(ngModel)]="vcmName" placeholder="Enter Value Chain Name">
+                            <button class="btn" (click)="vcmHeading()" >
+                                <img [hidden]="!vcmName" src="../../../../assets/images/VCM/Green Tick.svg" class="testplus1"  />
+                            </button>
+                        </div>
+                        <div class="col-md-6 pr-0 form-group">
+                            <label class="label-control">Process Owner</label>
+                            <select class="form-control" [(ngModel)]="process_ownerName">
+                                <option value="" hidden disabled>Select Process Owner</option>
+                                <option value="undefined" hidden disabled>Select Process Owner</option>
+                                <option *ngFor="let each_approver of processOwners_list;let i=index" [value]="each_approver.firstName+' '+each_approver.lastName">
+                                    {{(each_approver.firstName | titlecase) +" "+(each_approver.lastName==undefined?"":each_approver.lastName)}}</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6 col-lg-6 pr-0">
+                            <div class="dbichart-block">
+                                <div class="dbichart-body">
+                                    <h4>
+                                        Level 1 Process
+                                        <img [ngClass]="(vcmProcess[0].children?.length != 0 || vcmProcess[1].children?.length != 0 || vcmProcess[2].children?.length != 0) ? 'view' : 'dis'" (click)="goToProperties('level1')" src="../../../../assets/images/VCM/Level 1.svg" class="testplus" alt="">
+                                    </h4>
+                                    <mat-expansion-panel>
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title>
+                                                <h5>
+                                                    <img src="../../../assets/images/menu-line.svg" class="testplus" alt="">Management Process
+                                                </h5>
+                                            </mat-panel-title>
+                                        </mat-expansion-panel-header>
+                                        <div class="row">
+
+                                            <div class="col-md-12 p-0 form-group content">
+                                                <input [(ngModel)]="manageinput" class="form-control" type="text" placeholder="Enter Management Process Name">
+                                                <button (click)="addManageProcess()" [disabled]="manageinput == '' " class="btn">
+                                                    <img src="../../../../assets/images/VCM/Green Tick.svg" class="testplus1" />
+                                                </button>
+                                            </div>
+                                            <div class="l1process-list">
+                                                <ul *ngFor="let item of vcmProcess">
+                                                    <ul *ngIf="item.name == 'Management Process'">
+                                                        <li *ngFor="let name of item.children;let i = index" class="childHover">
+                                                            <span>{{i + 1}}. {{name.title}}</span>
+                                                            <div class="actimg">
+                                                                <span><img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img"  />
+                                                                <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" (click)="removeChild(name)" /></span>
+                                                                <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" (click)="editProcess(item,name,1)" />
+                                                            </div>                                                        
+                                                        </li>
+                                                    </ul>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </mat-expansion-panel>
+
+                                    <mat-expansion-panel>
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title>
+                                                <h5>
+                                                    <img src="../../../assets/images/menu-line.svg" class="testplus" alt="">Core Process
+                                                </h5>
+                                            </mat-panel-title>
+                                        </mat-expansion-panel-header>
+                                        <div class="row">
+
+                                            <div class="col-md-12 p-0 form-group content">
+                                                <input [(ngModel)]="coreinput" class="form-control" type="text" placeholder="Enter Core Process Name">
+                                                <button (click)="addCoreProcess()" [disabled]="coreinput == '' " class="btn">
+                                                    <img src="../../../../assets/images/VCM/Green Tick.svg" class="testplus1" />
+                                                </button>
+                                            </div>
+                                            <div class="l1process-list">
+                                                <ul *ngFor="let item of vcmProcess">
+                                                    <ul *ngIf="item.name == 'Core Process'">
+                                                        <li *ngFor="let name of item.children;let i = index" class="childHover">
+                                                            <span>{{i+1}}. {{name.title}}</span>
+                                                            <div class="actimg">
+                                                                <span><img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img" />
+                                                                <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" (click)="removeChild(name)" /></span>
+                                                                <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" (click)="editProcess(item,name,1)" />
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </mat-expansion-panel>
+
+                                    <mat-expansion-panel>
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title>
+                                                <h5>
+                                                    <img src="../../../assets/images/menu-line.svg" class="testplus" alt="">Support Process
+                                                </h5>
+                                            </mat-panel-title>
+                                        </mat-expansion-panel-header>
+                                        <div class="row">
+
+                                            <div class="col-md-12 p-0 form-group content">
+                                                <input [(ngModel)]="supportinput" class="form-control" type="text" placeholder="Enter Support process name">
+                                                <button (click)="addSupportProcess()" [disabled]="supportinput == '' " class="btn">
+                                                    <img src="../../../../assets/images/VCM/Green Tick.svg" class="testplus1" />
+                                                </button>
+                                            </div>
+                                            <div class="l1process-list">
+                                                <ul *ngFor="let item of vcmProcess">
+                                                    <ul *ngIf="item.name == 'Support Process'">
+                                                        <li *ngFor="let name of item.children;let i = index" class="childHover">
+                                                            <span>{{i+1}}. {{name.title}}</span>
+                                                            <div class="actimg">
+                                                                <span><img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img"  />
+                                                                <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" (click)="removeChild(name)" /></span>
+                                                                <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" (click)="editProcess(item,name,1)" />
+                                                            </div>                                                       
+                                                        </li>
+                                                    </ul>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </mat-expansion-panel>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-lg-6 pr-0">
+                            <div class="dbichart-block">
+                                <div class="dbichart-body">
+                                    <h4>
+                                        Level 2 Process
+                                        <img [ngClass]="(vcmProcess[0].children?.length != 0 || vcmProcess[1].children?.length != 0 || vcmProcess[2].children?.length != 0) ? 'view' : 'dis'" (click)="goToProperties('level2')" src="../../../../assets/images/VCM/Level 1.svg" class="testplus" alt="">
+                                    </h4>
+                                    <div class="form-group">
+                                        <select class="form-control" id="level1" name="Level1" [(ngModel)]="level1process" [ngModelOptions]="{standalone: true}">
+                                    <option value="undefined" hidden disabled>Select L1 Process</option>
+                                    <option value="" hidden disabled>Select L1 Process</option>
+                                    <ng-container *ngFor="let item of vcmProcess">
+                                        <option *ngFor="let name of item.children" [ngValue]=name>{{name.title}}</option>
+                                    </ng-container>
+                                </select>
+                                    </div>
+                                    <div class="level1process form-group">
+                                        <input placeholder="Enter Process Group Name" class="form-control" type="text" name="levelName" autocomplete="off" [(ngModel)]="addLevel2">
+                                        <button [disabled]="addLevel2 == '' || !level1process" type="submit" class="btn" (click)="addNewLevel2()">
+                                    <img src="../../../../assets/images/VCM/Green Tick.svg" class="testplus1" />
+                                </button>
+                                    </div>
+                                    <hr>
+                                    <div class="l2proccess-list">
+                                        <div class="management" *ngIf="vcmProcess[0].children.length != 0">
+                                            <h4>Management Process</h4>
+                                            <ng-container *ngFor="let item of vcmProcess">
+                                                <ng-container *ngFor="let name of item.children">
+                                                    <p *ngIf="name.parent == 'Management Process'">
+                                                        <img src="../../../../assets/images/VCM/small-right.svg" class="testplus2" />{{name.title}}</p>
+                                                    <ul *ngFor="let level2 of name.children" class="subfolders">
+                                                        <li class="overflowcontent" *ngIf="level2.parent == 'Management Process'">
+                                                            <span><img src="../../../../assets/images/VCM/small-right.svg" class="testplus2" />{{level2.title}}</span>
+                                                            <div class="actimg">
+                                                                <span><img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img"  />
+                                                                <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" (click)="level2removeChild(level2)" /></span>
+                                                                <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" (click)="editLevel2(name,level2,2)" />
+                                                                
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </ng-container>
+                                            </ng-container>
+                                        </div>
+                                        <div class="core" *ngIf="vcmProcess[1].children.length != 0">
+                                            <h4>Core Process</h4>
+                                            <ng-container *ngFor="let item of vcmProcess">
+                                                <ng-container *ngFor="let name of item.children">
+                                                    <p *ngIf="name.parent == 'Core Process'">
+                                                        <img src="../../../../assets/images/VCM/small-right.svg" class="testplus2" />{{name.title}}</p>
+                                                    <ul *ngFor="let level2 of name.children" class="subfolders">
+                                                        <li class="overflowcontent" *ngIf="level2.parent == 'Core Process'">
+                                                            <span><img src="../../../../assets/images/VCM/small-right.svg" class="testplus2" />{{level2.title}}</span>
+                                                            <div class="actimg">
+                                                                <span><img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img"  />
+                                                                <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" (click)="level2removeChild(level2)" /></span>
+                                                                <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" (click)="editLevel2(name,level2,2)" />
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </ng-container>
+                                            </ng-container>
+                                        </div>
+                                        <div class="support" *ngIf="vcmProcess[2].children.length != 0">
+                                            <h4>Support Process</h4>
+                                            <ng-container *ngFor="let item of vcmProcess">
+                                                <ng-container *ngFor="let name of item.children">
+                                                    <p *ngIf="name.parent == 'Support Process'">
+                                                        <img src="../../../../assets/images/VCM/small-right.svg" class="testplus2" />{{name.title}}</p>
+                                                    <ul *ngFor="let level2 of name.children" class="subfolders">
+                                                        <li class="overflowcontent" *ngIf="level2.parent == 'Support Process'">
+                                                            <span><img src="../../../../assets/images/VCM/small-right.svg" class="testplus2" />{{level2.title}}</span>
+                                                            <div class="actimg">
+                                                                <span><img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img"  />
+                                                                <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" (click)="level2removeChild(level2)" /></span>
+                                                                <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" (click)="editLevel2(name,level2,2)" />
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </ng-container>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="col-md-3 previewdiv">
+                <h4>Preview</h4>
+                <div class="previewcontdiv">
+                    <img src="../../../../assets/images/VCM/Preview Image.png" class="preview-img" />
+
+                    <h5>Welcome to Value Chain Mapping !</h5>
+                    <p>Value Chain Mapping helps you to manage organised process all in one place. All your folders will be listed here.</p>
+                </div>
+            </div> -->
+                </div>
+            </mat-drawer-content>
+        </mat-drawer-container>
+    </div>
+</div>
+
+<div class="spinoverlay" *ngIf="isLoading">
+    <div class="spincenter">
+        <img  src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader"/>
+    </div>
+</div>

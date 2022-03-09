@@ -463,7 +463,7 @@ export class VcmStructureComponent implements OnInit {
     //   "data":this.vcmTreeData,
     //   "selectedVcm":this.vcm_data}
     // this.dt.vcmDataTransfer(obj);
-    this.router.navigate(["/pages/vcm/create-vcm"],{queryParams: {id: this.vcm_id}})
+    this.router.navigate(["/pages/vcm/edit"],{queryParams: {id: this.vcm_id}})
   }
 
 }
