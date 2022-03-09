@@ -70,7 +70,6 @@ export class EditVcmComponent implements OnInit {
   hasChild = (_: number, node: any) => !!node.children && node.children.length > 0;
   ngOnInit(): void {
     this.getProcessOwnersList();
-    // this.getselectedVcm();
   }
 
   ngOnChanges() {

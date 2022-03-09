@@ -59,6 +59,9 @@ export class VcmStructureComponent implements OnInit {
   isPropDisabled:boolean=true;
   isViewProperties:boolean=false;
   node_data:any=[];
+  nodeParent:any="";
+  uniqueId1:any;
+  uniqueId:any;
 
   vcmData1= [
     {
@@ -464,6 +467,10 @@ export class VcmStructureComponent implements OnInit {
     //   "selectedVcm":this.vcm_data}
     // this.dt.vcmDataTransfer(obj);
     this.router.navigate(["/pages/vcm/edit"],{queryParams: {id: this.vcm_id}})
+  }
+  onSelectedProcessEdit(node){
+    console.log(node)
+this.nodeParent=node.title
   }
 
 }
