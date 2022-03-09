@@ -45,9 +45,14 @@ template:`
         <div *ngIf ="field.visibility">
           <file [feilddisable]="isdisabled" *ngSwitchCase="'multipart'" [field]="field" [form]="form"></file>
         </div>
-        <div *ngIf="!isValid && (isDirty || istouched) ">
-          <span class="errspan required">{{field.label}} is required</span>
+       
+        <div *ngIf="!isValid && (isDirty || istouched)">
+          <span *ngIf="isRequired" class="errspan required">{{field.label}} is required</span>
+          <span *ngIf="isEmail" class="errspan required">Enter valid email address</span>
+          
         </div>
+
+      
     </div>
   </div>
   `,
@@ -63,6 +68,8 @@ export class FormBuilderComponent implements OnInit {
   get isValid() { return this.form.controls[this.field.name+"_"+this.field.id].valid; }
   get isDirty() { return this.form.controls[this.field.name+"_"+this.field.id].dirty; }
   get istouched() { return this.form.controls[this.field.name+"_"+this.field.id].touched; }
+  get isRequired() {return this.form.controls[this.field.name+"_"+this.field.id].errors.required}
+  get isEmail() {return this.form.controls[this.field.name+"_"+this.field.id].errors.pattern}
 
   constructor() { }
 
