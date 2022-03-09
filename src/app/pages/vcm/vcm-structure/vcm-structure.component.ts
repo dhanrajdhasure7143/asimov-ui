@@ -12,6 +12,7 @@ import Swal from 'sweetalert2';
 import { APP_CONFIG } from 'src/app/app.config';
 import { RestApiService } from '../../services/rest-api.service';
 import { MatDrawer } from '@angular/material/sidenav';
+import { DataTransferService } from '../../services/data-transfer.service';
 
 let TREE_DATA: any[] = [
   {
@@ -39,7 +40,7 @@ let TREE_DATA: any[] = [
 export class VcmStructureComponent implements OnInit {
   treeControl = new NestedTreeControl<any>(node => node.children);
   dataSource = new MatTreeNestedDataSource<any>();
-  vcmProcess:any;
+  vcmTreeData:any;
   vcm_id:any;
   isLoading:boolean=false;
   vcmData:any[]=[];
@@ -207,8 +208,10 @@ export class VcmStructureComponent implements OnInit {
     overlay_data={"type":"create","module":"bps","ntype":"dmn"};
     randomId: string;bpmnModel:BpmnModel = new BpmnModel();
 
-  constructor(private router: Router,private bpmnservice:SharebpmndiagramService,private rest_api: RestApiService,
-    private route : ActivatedRoute) {
+  constructor(private router: Router,private bpmnservice:SharebpmndiagramService,
+    private rest_api: RestApiService,
+    private route : ActivatedRoute,
+    private dt: DataTransferService) {
     this.route.queryParams.subscribe(res => {
       this.vcm_id = res.id
     });
@@ -227,7 +230,7 @@ export class VcmStructureComponent implements OnInit {
   hasChild = (_: number, node: any) => !!node.children && node.children.length > 0;
 
   editVcm(){
-    // console.log(this.vcmProcess)
+    // console.log(this.vcmTreeData)
     this.isShow=true;
   }
 
@@ -298,7 +301,7 @@ export class VcmStructureComponent implements OnInit {
       })
     })
     console.log(objData)
-    this.vcmProcess = objData;
+    this.vcmTreeData = objData;
     this.dataSource.data=objData;
     this.treeControl.dataNodes = this.dataSource.data; 
     // this.treeControl.expandAll();
@@ -359,8 +362,8 @@ export class VcmStructureComponent implements OnInit {
       })
     })
     console.log(objData)
-    // this.vcmProcess = this.dataSource.data;
-    this.vcmProcess = objData;
+    // this.vcmTreeData = this.dataSource.data;
+    this.vcmTreeData = objData;
     this.dataSource.data=objData;
     this.treeControl.dataNodes = this.dataSource.data; 
     this.treeControl.expand(this.treeControl.dataNodes[0]);
@@ -442,12 +445,26 @@ export class VcmStructureComponent implements OnInit {
     })
   }
   
-  readVcmValue(value){
-console.log(value)
-if(value){
-  this.isShow=false;
-  this.isViewProperties=false;
-}
+  readVcmValue(value) {
+    console.log(value)
+    if (value) {
+      this.isShow = false;
+      this.isViewProperties = false;
+    }
   }
+
+  quickEditVcm(){
+    // this.vcmTreeData.forEach(element => {
+    //   element["name"]=element.title
+    // });
+    
+    // let obj={"vName":this.vcm_data.data.vcmName,
+    //   "pOwner":this.vcm_data.data.processOwner,
+    //   "data":this.vcmTreeData,
+    //   "selectedVcm":this.vcm_data}
+    // this.dt.vcmDataTransfer(obj);
+    this.router.navigate(["/pages/vcm/edit"],{queryParams: {id: this.vcm_id}})
+  }
+
 }
 

@@ -27,11 +27,11 @@ let TREE_DATA: any[] = [
 
 
 @Component({
-  selector: 'app-create-vcm',
-  templateUrl: './create-vcm.component.html',
-  styleUrls: ['./create-vcm.component.css']
+  selector: 'app-vcm-full-edit',
+  templateUrl: './vcm-full-edit.component.html',
+  styleUrls: ['./vcm-full-edit.component.css']
 })
-export class CreateVcmComponent implements OnInit {
+export class VcmFullEditComponent implements OnInit {
   @ViewChild('tree', { static: false }) tree: MatTree<any>;
   @ViewChild('drawer', { static: false }) drawer: MatDrawer;
 
@@ -60,13 +60,13 @@ export class CreateVcmComponent implements OnInit {
   isLoading:boolean=false;
   user_details:any;
   selectedObj:any;
-  isOpenedState:number=0;
-  menuToggleTitle : boolean = false;
-  propertiesContainer : boolean = false;
-  vcmUniqueId=UUID.UUID()
   vcmUniqueId=UUID.UUID();
   vcm_id:any;
-  selectedVcm
+  selectedVcm:any;
+
+
+
+
 
   constructor(private router: Router,private rest_api : RestApiService, private dt: DataTransferService,
     private route:ActivatedRoute) {
@@ -561,11 +561,6 @@ this.rest_api.uploadVCMPropDocument(formdata).subscribe(res=>{
     this.drawer.close()
   }
 
-  onExpansionClik(i){
-    this.isOpenedState=i;
-    this.menuToggleTitle = true;
-    this.propertiesContainer = true;
-  }
   getselectedVcm(){
     this.isLoading=true;
     this.rest_api.getselectedVcmById(this.vcm_id).subscribe(res=>{this.selectedVcm=res
@@ -637,6 +632,8 @@ this.rest_api.uploadVCMPropDocument(formdata).subscribe(res=>{
     this.dataSource.data=objData;
     this.treeControl.dataNodes = this.dataSource.data; 
   }
-
+  backToViewVcm(){
+    this.router.navigate(["/pages/vcm/vcm-structure"],{queryParams:{id:this.vcm_id}})
+  }
 
 }
