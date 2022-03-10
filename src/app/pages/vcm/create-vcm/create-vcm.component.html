@@ -8,7 +8,7 @@
         </div>
         <div class="ml-auto submit">
             <button class="btn btn-default" (click)="resetLevel1()">Reset</button>
-            <button class="btn btn-danger" (click)="showPreview()" [disabled]="!vcmName || !process_ownerName">Preview</button>
+            <button class="btn btn-primary" (click)="showPreview()" [disabled]="!vcmName || !process_ownerName">Preview</button>
             <button class="btn btn-primary" [disabled]="!vcmName || !process_ownerName" (click)="saveVcm()">Save</button>
         </div>
     </div>
@@ -20,19 +20,7 @@
                     <h3>{{editProcessName}}</h3>
                     <img src="../../../../assets/images/VCM/VCM-close.svg" (click)="closeOverlay()" />
                 </div>
-                <div class="propertiesContainer" id="propertiesContainer">
-                    <!-- <div *ngIf="!menuToggleTitle" [ngClass]="{hideTitle: !menuToggleTitle, showTitle: menuToggleTitle}" class="propertiesTitle" (click)="toggleOpen()">
-                        <div class="menuToggle">
-                            <img src="../../../../assets/images/BPMS/expand-left.svg" alt="menuToggleIcon" class="menuToggleIcon" >
-                        </div>
-                    </div>
-                    <div *ngIf="menuToggleTitle" [ngClass]="{hideTitle: !menuToggleTitle, showTitle: menuToggleTitle}" class="propertiesTitle" (click)="toggleClosed()">
-                        <div class="menuToggle" >
-                            <img src="../../../../assets/images/BPMS/expand-right.svg" alt="menuToggleIcon" class="menuToggleIcon" >
-                            <label class="menuToggleTitle">Menu</label>
-                        </div>
-                    </div> -->
-
+                <div  class="propertiesContainer" id="propertiesContainer" >
                     <div class="propertiesPanelBody" id="propertiesPanelBody">
                         <mat-accordion>
                             <mat-expansion-panel (opened)="onExpansionClik('1')" hideToggle [expanded]="isOpenedState==1">
@@ -46,8 +34,8 @@
                                     </mat-panel-title>
                                 </mat-expansion-panel-header>
                                 <mat-panel-description>
-                                    <div class="container p-0">
-                                        <div class="editcontent">
+                                    <div class="container p-0 prop-content">
+                                        <div class="editcontent" >
                                             <div class="col-md-12 p-0 form-group">
                                                 <label class="label-control">Process Name</label>
                                                 <input type="text" disabled class="form-control" [(ngModel)]="editProcessName">
@@ -84,8 +72,8 @@
                                     </mat-panel-title>
                                 </mat-expansion-panel-header>
                                 <mat-panel-description>
-                                    <div class="container p-0">
-                                        <div class="col-md-12 form-group">
+                                    <div class="container p-0 doc-content">
+                                        <div class="col-md-12 form-group" >
                                             <!-- <h4 class="procname">{{editProcessName}}</h4> -->
                                             <div class="vcmdocs">
                                                 <img src="../../../../assets/images/VCM/VCM-Upload.svg" />
@@ -173,7 +161,7 @@
                                     <img src="../../../../assets/images/VCM/pc.svg" class="default-img"/>
                                     <img src="../../../../assets/images/VCM/pc-hover.svg" class="hover-img"/>
                                 </button>
-                                <h4 *ngIf="process_ownerName">{{ownerValues| uppercase}}</h4>
+                                <span class="poname"  *ngIf="process_ownerName">{{ownerValues| uppercase}}</span>
                                 <select class="form-control" (change)="onChangeProcessOwner(process_ownerName)" [(ngModel)]="process_ownerName">
                                     <option value="" hidden disabled>Select Process Owner</option>
                                     <option value="undefined" hidden disabled>Select Process Owner</option>
@@ -342,14 +330,21 @@
                                                             <span><img src="../../../../assets/images/VCM/small-right.svg" class="testplus2" />{{level2.title}}</span>
                                                             <div class="actimg">
                                                                 <span>
-                                                                    <span>
-                                                                        <img src="../../../../assets/images/VCM/more-vertical-default.svg" class="testplus default-img" />
-                                                                        <img src="../../../../assets/images/VCM/more-vertical-hover.svg" class="testplus hover-img" (click)="editLevel2(each,level2,2)" />
-                                                                    </span>
-                                                                <button (click)="onSelectedNode(level2,item)" #pop2="bs-popover" [popover]="popTemplate1" [outsideClick]="true" placement="right"><img src="../../../../assets/images/VCM/plus-bordercircle.svg" class="testplus" />
-                                                                </button>
-                                                                <img src="../../../../assets/images/VCM/VCM-close-default.svg" class="testplus2 default-img" />
-                                                                <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" (click)="level2removeChild(level2)" /></span>
+                                                                    <button (click)="onSelectedNode(level2,item)" #pop2="bs-popover" [popover]="popTemplate1" [outsideClick]="true"
+                                                                        placement="right">
+                                                                        <img src="../../../../assets/images/RPA/icon_latest/new-dis.svg" class="testplus default-img" />
+                                                                        <img src="../../../../assets/images/RPA/icon_latest/new-blue.svg" class="testplus hover-img" />
+                                                                    </button>
+                                                                </span>
+                                                                <span>
+                                                                    <img src="../../../../assets/images/VCM/more-vertical-default.svg" class="testplus default-img" />
+                                                                    <img src="../../../../assets/images/VCM/more-vertical-hover.svg" class="testplus hover-img" (click)="editLevel2(each,level2,2)" />
+                                                                </span>
+                                                                
+                                                                <span>
+                                                                    <img src="../../../../assets/images/VCM/VCM-close-default.svg" class="testplus2 default-img"  />
+                                                                    <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" (click)="level2removeChild(level2)" />
+                                                                </span>
                                                                 <!-- <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" (click)="editLevel2(name,level2,2)" /> -->
 
                                                             </div>

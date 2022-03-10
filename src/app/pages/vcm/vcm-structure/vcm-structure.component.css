@@ -205,3 +205,18 @@ span.sub-nodel2 {
     margin-left: 10px;
     color: #607087 !important;
 }
+
+.proc-title button {
+    display: none;
+}
+.proc-title:hover button {
+    display: inline-block;
+}
+.qedit-btn {
+    border: 1px solid #00a0e3;
+    padding:6px 10px;
+    margin-left: 10px;
+    border-radius: 50%;
+    color: #00a0e3;
+    font-size: 14px;
+}

@@ -106,7 +106,7 @@
                                             <button (click)="onCreateLevel1(node)" *ngIf="uniqueId != node.uniqueId">
                                                 <img src="../../../../assets/images/VCM/plus-bordercircle.svg" class="testplus" />1
                                             </button>
-                                            <div *ngIf="uniqueId==node.uniqueId" style="display: flex;width: 150%;margin-top: 5%;">
+                                            <div *ngIf="uniqueId==node.uniqueId" class="test" style="display: flex;width: 150%;margin-top: 5%;">
                                                 <input type="text" class="form-control" placeholder="Enter Process Name" [(ngModel)]="processName">
                                                 <button [hidden]="!processName" style="position: relative;right: 8%;" (click)="addL1Nodes(node)">
                                                     <img class="testplus1" src="../../../../assets/images/VCM/Green Tick.svg">
@@ -182,7 +182,7 @@
                                             <img src="../../../assets/images/menu-line.svg" class="procmenu" alt="">
                                         </button>
                                         <span class="proc-title" *ngIf="node.level != 'L1' && node.level != 'L2' && node.level != 'L3' ">{{node.title}} 
-                                            <button class="btn btn-primary" (click)="onSelectedProcessEdit(node)">Edit</button>
+                                            <button class="btn qedit-btn" (click)="onSelectedProcessEdit(node)">Quick Edit</button>
                                         </span>
                                         <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name" *ngIf="node.title != 'Management Process' && node.title != 'Core Process' && node.title != 'Support Process'">
                                             <mat-icon class="mat-icon-rtl-mirror">
