@@ -1364,7 +1364,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         for(let i=0;i<item.attributes.length;i++)
         {
           let actualTaskAttribute=actualTask.attributes.find((att:any)=>att.metaAttrId==item.attributes[i].metaAttrId);
-        
+          
+          if(actualTaskAttribute != undefined){
           if(item.attributes[i].attrValue!=actualTaskAttribute.attrValue)
           {
             this.auditLogs.push(
@@ -1381,6 +1382,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
               }
             )
           }
+         }
         }
       }
     })
