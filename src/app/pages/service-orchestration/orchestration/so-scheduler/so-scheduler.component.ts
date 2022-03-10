@@ -534,7 +534,7 @@ export class SoSchedulerComponent implements OnInit {
           let resp:any=data;
           if(resp.errorMessage==undefined)
           {
-            this.notifier.notify("success","Schedule added successfully")
+            this.notifier.notify("success","Schedules saved successfully")
 
             /*if(resp.botMainSchedulerEntity==null){
             }
@@ -562,7 +562,7 @@ export class SoSchedulerComponent implements OnInit {
         let resp:any=data
         if(resp.errorMessage==undefined)
         {
-          this.notifier.notify("success",resp.response);
+          this.notifier.notify("success","Schedules saved successfully");
           this.get_schedule();
           this.updateflags();
         }
