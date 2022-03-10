@@ -602,9 +602,10 @@ export class SoSchedulerComponent implements OnInit {
 
   }
 
-  dateChange($event){
+  dateChange($event,date){
    
-    
+    if(date=='startdate')
+    this.enddate=this.startdate;
    if(this.isDateToday($event.target.value)) {
 
    }

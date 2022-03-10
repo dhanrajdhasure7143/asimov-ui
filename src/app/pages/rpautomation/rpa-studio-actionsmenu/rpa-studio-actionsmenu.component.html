@@ -848,24 +848,43 @@
           <div *ngIf="auditLogsData.length!=0">
             <div class="log-row"   *ngFor="let log of auditLogsData">
               <span *ngIf="log.Status=='UpdatedConfig'">
-                <b>{{log.changedBy}}</b> updated <b>{{log.taskName}}</b> task input field <b>{{log.changeActivity}}</b> from <b>{{log.previousValue}}</b> to <b>{{log.newValue}}</b> on {{log.changedDate}}
+                <b>{{log.changedBy}}</b> updated <b>{{log.taskName}}</b> task input field <b>{{log.changeActivity}}</b> from <b>{{log.previousValue}}</b> to <b>{{log.newValue}}</b> on
+                <span *ngIf="log.changedDate!=null && log.changedDate!=undefined">
+                  {{log.changedDate| date:'MMM dd, y, HH:mm:ss'}}
+                </span>
+      
               </span>
               <span *ngIf="log.Status=='AddedTask'">
-                <b>{{log.changedBy}}</b> added task <b>{{log.taskName}}</b> on {{log.changedDate}}
+                <b>{{log.changedBy}}</b> added task <b>{{log.taskName}}</b> on 
+                <span *ngIf="log.changedDate!=null && log.changedDate!=undefined">
+                  {{log.changedDate| date:'MMM dd, y, HH:mm:ss'}}
+                </span>
               </span>
               <span *ngIf="log.Status=='RemovedTask'">
-                <b>{{log.changedBy}}</b> removed task <b>{{log.taskName}}</b> on {{log.changedDate}}
+                <b>{{log.changedBy}}</b> removed task <b>{{log.taskName}}</b> on
+                <span *ngIf="log.changedDate!=null && log.changedDate!=undefined">
+                  {{log.changedDate| date:'MMM dd, y, HH:mm:ss'}}
+                </span>
               </span>
               <span *ngIf="log.Status=='AddedEnv'">
-                <b>{{log.changedBy}}</b> added environment <b>{{log.taskName}}</b> on {{log.changedDate}}
+                <b>{{log.changedBy}}</b> added environment <b>{{log.taskName}}</b> on
+                <span *ngIf="log.changedDate!=null && log.changedDate!=undefined">
+                  {{log.changedDate| date:'MMM dd, y, HH:mm:ss'}}
+                </span>
               </span>
               <span *ngIf="log.Status=='RemovedEnv'">
-                <b>{{log.changedBy}}</b> removed environment <b>{{log.taskName}}</b> on {{log.changedDate}}
+                <b>{{log.changedBy}}</b> removed environment <b>{{log.taskName}}</b> on 
+                <span *ngIf="log.changedDate!=null && log.changedDate!=undefined">
+                  {{log.changedDate| date:'MMM dd, y, HH:mm:ss'}}
+                </span>
               </span>
 
               
               <span *ngIf="log.Status=='BotCreated'">
-                <b>{{log.changedBy}}</b> created bot <b>{{log.taskName}}</b> on {{log.changedDate}}
+                <b>{{log.changedBy}}</b> created bot <b>{{log.taskName}}</b> on
+                <span *ngIf="log.changedDate!=null && log.changedDate!=undefined">
+                  {{log.changedDate| date:'MMM dd, y, HH:mm:ss'}}
+                </span>
               </span>
               
             </div>
