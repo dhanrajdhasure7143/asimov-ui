@@ -7,7 +7,7 @@
             <span class="module-header-title">Preview - {{vcmName}}</span>
         </div>
         <div class="ml-auto submit">
-            <button class="btn btn-primary" (click)="editVcm()">Edit</button>
+            <button class="btn btn-default" (click)="editVcm()">Edit</button>
             <button class="btn btn-primary" (click)="saveCreatedVcm()">Save</button>
 
         </div>
@@ -20,7 +20,84 @@
                     <h3>{{processName}}</h3>
                     <img src="../../../../assets/images/VCM/VCM-close.svg" (click)="closeOverlay()" />
                 </div>
-                <mat-tab-group>
+                <div  class="propertiesContainer" id="propertiesContainer" >
+                    <div class="propertiesPanelBody" id="propertiesPanelBody">
+                        <mat-accordion>
+                            <mat-expansion-panel (opened)="onExpansionClik('1')" hideToggle [expanded]="isOpenedState==1">
+                                <mat-expansion-panel-header>
+                                  <mat-panel-title class="accordionHeaderMain">
+                                      <div class="accordionHeaderToggle">
+                                          <img src="../../../../assets/images/BPMS/Properties.svg" alt="menuToggleIcon" class="menuToggleIcon">
+                                          <label class="accordionHeader">Properties</label>
+                                          <!-- <img src="../../../../assets/images/BPMS/maximize-2.svg" alt="propexpandIcon" class="propexpandIcon"> -->
+                                      </div>
+                                  </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <mat-panel-description>
+                                    <div class="container p-0 prop-content">
+                                        <div class="editcontent">
+                                            <div class="col-md-12 form-group">
+                                                <label class="label-control">Process Name</label>
+                                                <input type="text" [disabled]="isPropDisabled" class="form-control" [(ngModel)]="processName">
+                                            </div>
+                                            <div class="col-md-12 form-group">
+                                                <label class="label-control">Process Owner</label>
+                                                <input type="text" [disabled]="isPropDisabled" class="form-control" placeholder="Select Process Owner" [(ngModel)]="processOwner">
+                                            </div>
+                                            <div class="col-md-12 form-group">
+                                                <label class="label-control">Process Description</label>
+                                                <textarea class="form-control" rows="5" [disabled]="isPropDisabled" placeholder="Enter Process Description" [(ngModel)]="processDesc"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </mat-panel-description>
+                            </mat-expansion-panel>
+
+                            <mat-expansion-panel (opened)="onExpansionClik('2')" hideToggle [expanded]="isOpenedState==2">
+                                <mat-expansion-panel-header>
+                                  <mat-panel-title>
+                                      <div class="accordionHeaderToggle">
+                                          <img src="../../../../assets/images/BPMS/Discussions.svg" alt="menuToggleIcon" class="menuToggleIcon">
+                                          <label for="" class="accordionHeader">Documents</label>
+                                      </div>
+                                  </mat-panel-title>                                            
+                                </mat-expansion-panel-header>
+                                <mat-panel-description>
+                                    <div class="container p-0 doc-content">
+                                         <!-- <div class="col-md-12 form-group">
+                                                <h4 class="procname">{{processName}}</h4>
+                                            </div> -->
+                                        <div class="col-md-12 form-group files">
+                                            <p *ngFor="let each of attachments;let i = index;">
+                                               {{i+1}}. {{each.fileName}}
+                                               <span>
+                                                   <!-- <img src="../../../../assets/images/Admin/download-blue.svg" class="testplus" > -->
+                                                   <span class="deleteattachment tsttooltipbtn">
+                                                    <a href="data:image/png;base64,{{each.filedata}}" download="{{each.fileName}}">
+                                                    <img src="../../../../assets/images/Admin/download-black.svg" class="default-img testplus" >
+                                                    <img src="../../../../assets/images/Admin/download-blue.svg" class="hover-img testplus" >
+                                                    </a>
+                                                    <!-- <span class="testtooltip">Download</span> -->
+                                                </span>
+                                               </span>
+                                                <!-- <span><img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img" />
+                                                <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img"
+                                                    (click)="RemoveFile(file,i)" /></span> -->
+                                                    <!-- <a href="data:image/png;base64,{{each.fileData}}" download="{{each.fileName}}">
+                                                        <img src="../../../../assets/images/Admin/download-black.svg" class="default-img testplus" >
+                                                        <img src="../../../../assets/images/Admin/download-blue.svg" class="hover-img testplus" >
+                                                        </a> -->
+                                            </p>
+                                            
+                                        </div>
+                                    </div>
+                                </mat-panel-description>                                         
+                            </mat-expansion-panel>
+
+                        </mat-accordion>
+                    </div>
+                </div>
+                <!-- <mat-tab-group>
                     <mat-tab label="Properties">
                         <div class="editcontent">
                             <div class="col-md-12 form-group">
@@ -38,34 +115,21 @@
                         </div>
                     </mat-tab>
                     <mat-tab label="Documents">
-                        <!-- <div class="col-md-12 form-group">
-                            <h4 class="procname">{{processName}}</h4>
-                        </div> -->
                         <div class="col-md-12 form-group files">
                             <p *ngFor="let each of attachments;let i = index;">
                                {{i+1}}. {{each.fileName}}
                                <span>
-                                   <!-- <img src="../../../../assets/images/Admin/download-blue.svg" class="testplus" > -->
                                    <span class="deleteattachment tsttooltipbtn">
                                     <a href="data:image/png;base64,{{each.filedata}}" download="{{each.fileName}}">
                                     <img src="../../../../assets/images/Admin/download-black.svg" class="default-img testplus" >
                                     <img src="../../../../assets/images/Admin/download-blue.svg" class="hover-img testplus" >
                                     </a>
-                                    <!-- <span class="testtooltip">Download</span> -->
                                 </span>
                                </span>
-                                <!-- <span><img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img" />
-                                <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img"
-                                    (click)="RemoveFile(file,i)" /></span> -->
-                                    <!-- <a href="data:image/png;base64,{{each.fileData}}" download="{{each.fileName}}">
-                                        <img src="../../../../assets/images/Admin/download-black.svg" class="default-img testplus" >
-                                        <img src="../../../../assets/images/Admin/download-blue.svg" class="hover-img testplus" >
-                                        </a> -->
-                            </p>
-                            
+                            </p>                            
                         </div>
                     </mat-tab>
-                </mat-tab-group>
+                </mat-tab-group> -->
             </mat-drawer>
             <mat-drawer-content>
                 <div class="vcm-treesmain h-100">
@@ -81,7 +145,7 @@
                         <div class="col-md-12 p-0">
                             <h4>{{vcmName}}</h4>
                         </div>
-                        <div class="col-md-12 p-0 vcm-treediv">
+                        <div class="col-md-12 p-0 vcm-treedivpreview">
                             <mat-tree [dataSource]="dataSource" #tree [treeControl]="treeControl" class="example-tree">
                             
                             <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>

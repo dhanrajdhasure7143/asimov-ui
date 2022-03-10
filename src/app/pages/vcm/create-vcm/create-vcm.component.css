@@ -83,7 +83,7 @@
 }
 .overflowcontent span {
     /* margin-left: 5px; */
-    width: 88%;
+    width: 82%;
 }
 
 .previewdiv {
@@ -171,7 +171,7 @@ li.overflowcontent {
 }
 .actimg {
     text-align: right;
-    width: 12%;
+    width: 18%;
     cursor: pointer;
 }
 li.childHover span {
@@ -318,7 +318,7 @@ mat-tree {
     cursor: pointer;
     position: absolute;
     right: 12px;
-    top: 14px;
+    top: 12px;
 }
 
 /* .l1process-list {
@@ -358,6 +358,18 @@ span.poname {
     padding: 10px 12px;
     letter-spacing: 1px;
 }
+.l3pname-div {
+    position: relative;
+    margin-top: 10px;
+}
+.l3pname-div button {
+    position: absolute;
+    right: 12px;
+    top: 5px;
+}
+
+
+
 /* properties overlay */
 .vcmprop div#propertiesContainer {
     top: 33px;
