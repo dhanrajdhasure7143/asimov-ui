@@ -328,7 +328,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.rpa.getNotifications(this.role, userId, notificationbody).subscribe(data => {
       resp_data = data
       if(Array.isArray(resp_data)){
-        this.notificationsList=resp_data
+        this.notificationsList=resp_data.reverse()
       }
       if (resp_data.errorMessage == 'No records found') {
         this.error = "No Records Found"
