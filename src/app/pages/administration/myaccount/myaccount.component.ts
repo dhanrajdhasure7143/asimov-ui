@@ -47,7 +47,7 @@ export class MyAccountComponent implements OnInit {
 
   ngOnInit() {
     this.spinner.show();
-    this.show=true
+    
     this.countryInfo = countries.Countries;
     setTimeout(() => {
       this.userDetails();
@@ -101,6 +101,7 @@ export class MyAccountComponent implements OnInit {
       this. getAllStates();
       this.gatAllCities();
       this.isRefresh = !this.isRefresh;
+      this.show=true
       for (var i = 0; i < this.countryInfo.length; i++) {
         if (this.countryInfo[i].CountryName == this.formOne.country) {
           this.phnCountryCode = this.countryInfo[i].CountryCode
