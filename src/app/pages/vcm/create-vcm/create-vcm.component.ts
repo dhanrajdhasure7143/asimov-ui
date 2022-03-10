@@ -57,7 +57,7 @@ export class CreateVcmComponent implements OnInit {
   isLoading:boolean=false;
   user_details:any;
   selectedObj:any;
-  isOpenedState:number=0;
+  isOpenedState:number=1;
   menuToggleTitle : boolean = false;
   propertiesContainer : boolean = false;
   vcmUniqueId=UUID.UUID()
