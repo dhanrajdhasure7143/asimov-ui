@@ -8,7 +8,7 @@
         </div>
         <div class="ml-auto submit">
             <button class="btn btn-default" (click)="resetLevel1()">Reset</button>
-            <button class="btn btn-danger" (click)="showPreview()" [disabled]="!vcmName || !process_ownerName">Preview</button>
+            <button class="btn btn-primary" (click)="showPreview()" [disabled]="!vcmName || !process_ownerName">Preview</button>
             <button class="btn btn-primary" [disabled]="!vcmName || !process_ownerName" (click)="saveVcm()">Save</button>
         </div>
     </div>
@@ -47,7 +47,7 @@
                                   </mat-panel-title>
                                 </mat-expansion-panel-header>
                                 <mat-panel-description>
-                                    <div class="container p-0">
+                                    <div class="container p-0 prop-content">
                                         <div class="editcontent" >
                                             <div class="col-md-12 p-0 form-group">
                                                 <label class="label-control">Process Name</label>
@@ -85,7 +85,7 @@
                                   </mat-panel-title>                                            
                                 </mat-expansion-panel-header>
                                 <mat-panel-description>
-                                    <div class="container p-0">
+                                    <div class="container p-0 doc-content">
                                         <div class="col-md-12 form-group" >
                                             <!-- <h4 class="procname">{{editProcessName}}</h4> -->
                                             <div class="vcmdocs">
@@ -174,7 +174,7 @@
                                     <img src="../../../../assets/images/VCM/pc.svg" class="default-img"/>
                                     <img src="../../../../assets/images/VCM/pc-hover.svg" class="hover-img"/>
                                 </button>
-                                <h4 *ngIf="process_ownerName">{{ownerValues| uppercase}}</h4>
+                                <span class="poname"  *ngIf="process_ownerName">{{ownerValues| uppercase}}</span>
                                 <select class="form-control" (change)="onChangeProcessOwner(process_ownerName)" [(ngModel)]="process_ownerName">
                                     <option value="" hidden disabled>Select Process Owner</option>
                                     <option value="undefined" hidden disabled>Select Process Owner</option>
