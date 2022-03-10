@@ -62,6 +62,7 @@ export class VcmStructureComponent implements OnInit {
   nodeParent:any="";
   uniqueId1:any;
   uniqueId:any;
+  l1UniqueId:any;
 
   vcmData1= [
     {
@@ -210,6 +211,7 @@ export class VcmStructureComponent implements OnInit {
 
     overlay_data={"type":"create","module":"bps","ntype":"dmn"};
     randomId: string;bpmnModel:BpmnModel = new BpmnModel();
+    selectedNode:any;
 
   constructor(private router: Router,private bpmnservice:SharebpmndiagramService,
     private rest_api: RestApiService,
@@ -472,6 +474,100 @@ export class VcmStructureComponent implements OnInit {
     console.log(node)
 this.nodeParent=node.title
   }
+
+  onCreateLevel3() {
+    // this.parent = this.selectedNode.parent;
+    // this.childParent = this.selectedNode.childParent;
+    // this.title = this.selectedNode.title;
+    this.uniqueId = this.selectedNode.uniqueId;
+    console.log(this.selectedNode)
+  }
+
+  onCreateLevel1(node) {
+    console.log(node)
+
+    this.l1UniqueId = node.uniqueId;
+    this.uniqueId = node.uniqueId;
+
+  }
+  addL1Nodes(node){
+    console.log(node)
+    console.log(this.vcmData);
+    this.uniqueId=UUID.UUID();
+  
+    this.vcmTreeData.filter((e) => e.title === node.parent)[0].children
+      .filter(n => n.uniqueId === node.uniqueId)[0].children.
+      push({
+          level: "L2",
+          parent: node.parent,
+          title: this.processName,
+          description: '',
+          processOwner: '',
+          type: "Process",
+          level1UniqueId: node.uniqueId,
+          uniqueId: UUID.UUID(),
+          attachments:[],
+          children:[]
+        }
+      );
+    console.log("vcmData",this.vcmTreeData);
+    setTimeout(() => {
+      this.dataSource.data = null;
+      this.dataSource.data = this.vcmTreeData;
+      this.treeControl.dataNodes = this.dataSource.data;
+      this.treeControl.expandAll();
+      this.processName='';
+    }, 200);
+  }
+
+  editLevelName(node) {
+    console.log(node);
+    this.uniqueId1 = node.uniqueId;
+    // this.levelNameShow = true;
+    this.drawer.close();
+  }
+
+  editTitle(node) {
+    console.log(node);
+    this.uniqueId1 = null;
+    this.drawer.close();
+  }
+
+  onSelectedNode(node) {
+    console.log(node);
+    this.selectedNode = node
+  }
+
+  addL3Nodes(){
+    console.log("vcmData",this.vcmTreeData);
+        console.log("this.selectedNode",this.selectedNode)
+        this.uniqueId=UUID.UUID();
+    
+        this.vcmTreeData.filter((e) => e.title === this.selectedNode.parent)[0].children
+          .filter(n => n.uniqueId === this.selectedNode.level1UniqueId)[0].children
+          .filter(n => n.uniqueId === this.selectedNode.uniqueId)[0]["children"].
+          push({
+              level: "L3",
+              parent: this.selectedNode.parent,
+              title: this.processName,
+              description: '',
+              processOwner: '',
+              type: "Process",
+              level2UniqueId: this.selectedNode.uniqueId,
+              level1UniqueId: this.selectedNode.level1UniqueId,
+              uniqueId: UUID.UUID(),
+              attachments:[]
+            }
+          );
+        console.log("vcmData",this.vcmTreeData);
+    
+        setTimeout(() => {
+          this.dataSource.data = null;
+          this.dataSource.data = this.vcmTreeData;
+          this.treeControl.dataNodes = this.dataSource.data;
+          this.treeControl.expandAll()
+        }, 100);
+    }
 
 }
 
