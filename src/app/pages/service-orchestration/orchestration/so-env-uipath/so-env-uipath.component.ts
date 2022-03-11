@@ -298,6 +298,7 @@ Update_UiPath(){
       {
         Swal.fire("Success",response.status,"success");
         document.getElementById('updateUipath').style.display='none';
+        this.getCategoryList()
       }
       else{
         Swal.fire("Error",response.errorMessage,"error")

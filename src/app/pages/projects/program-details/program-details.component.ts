@@ -628,6 +628,7 @@ export class ProgramDetailsComponent implements OnInit {
       this.modalref.hide();
       if(res.message==="Project Added Successfully"){
         Swal.fire("Success","Project Added Successfully !!","success")
+        this.getunassignedprojectslist(this.userRoles,this.userName,this.email);
       }else
       Swal.fire("Error","Unable to add the Project","error");
      
