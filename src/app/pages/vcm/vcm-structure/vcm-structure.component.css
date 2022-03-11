@@ -79,11 +79,13 @@ img.procmenu {
     margin-top: 18px;
 }
 .close-btn h3 {
-    padding: 10px 10px 10px 15px;
+    /* padding: 10px 10px 10px 15px; */
+    padding: 15px 10px 15px 12px;
     margin: 0px;
     font-size: 16px;
     font-weight: 600;
-    width: 90%;
+    width: 90%;    
+    color: #fff;
 }
 .close-btn img{
     width: 12px;
@@ -91,7 +93,8 @@ img.procmenu {
     cursor: pointer;
     position: absolute;
     right: 12px;
-    top: 14px;
+    top: 16px;
+    filter: brightness(10) grayscale(1) brightness(10);
 }
 
 mat-drawer {
@@ -158,10 +161,7 @@ mat-drawer {
     height: calc(100% - 110px);
     background-color: #f5f5f5d6 !important;
 }
-.editcontent {
-    /* height: calc(100vh - 235px); */
-    height: calc(100vh - 255px);
-}
+
 .tsttooltipbtn {
     position: relative;
 }
@@ -227,3 +227,49 @@ button.btn.qedit-btn:hover{
 button img.testplus {
     margin-left: 10px;
 }
+
+/* properties overlay */
+.vcmprop div#propertiesContainer {
+    width: 100%;
+    height: calc(100vh - 130px);
+    border: none !important;
+    box-shadow: none !important;
+}
+.vcmprop div#propertiesPanelBody {
+    /* height: calc(100% - 40px); */
+    position: absolute;
+    /* top: 40px; */
+    overflow: auto;
+    width: 100%;
+}
+.propertiesContainer mat-expansion-panel {
+    background-color: #607088;
+    margin: 0px !important;
+    border:none !important;
+    border-top: 1px solid #ebebeb !important;
+    padding: 0px !important;
+}
+.propertiesContainer mat-expansion-panel-header:hover {
+    background-color: #00a0e3;
+}
+.propertiesContainer .mat-expansion-panel-header-title {
+    border: none;
+}
+.vcmprop .propertiesContainer label.accordionHeader {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 500;
+    margin-left: 10px;
+    margin-bottom: 0px;
+}
+.doc-content {
+    height: calc(100vh - 280px);
+}
+.container.p-0.prop-content {
+    height: calc(100vh - 280px) !important;
+}
+.editcontent {
+    /* height: calc(100vh - 275px); */
+    height: calc(100vh - 325px) !important;
+}
+/* properties overlay */

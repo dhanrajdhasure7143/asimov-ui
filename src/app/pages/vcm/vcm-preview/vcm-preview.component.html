@@ -16,11 +16,12 @@
     <div class="module-body">
         <mat-drawer-container class="example-container h-100" style="background-color: white;">
             <mat-drawer #drawer class="example-sidenav vcmprop" mode="side" position="end">
-                <div class="close-btn">
-                    <h3>{{processName}}</h3>
-                    <img src="../../../../assets/images/VCM/VCM-close.svg" (click)="closeOverlay()" />
-                </div>
+                
                 <div  class="propertiesContainer" id="propertiesContainer" >
+                    <div class="close-btn">
+                        <h3>{{processName}}</h3>
+                        <img src="../../../../assets/images/VCM/VCM-close.svg" (click)="closeOverlay()" />
+                    </div>
                     <div class="propertiesPanelBody" id="propertiesPanelBody">
                         <mat-accordion>
                             <mat-expansion-panel (opened)="onExpansionClik('1')" hideToggle [expanded]="isOpenedState==1">

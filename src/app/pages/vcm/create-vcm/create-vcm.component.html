@@ -16,11 +16,12 @@
     <div class="module-body">
         <mat-drawer-container class="example-container h-100" style="background-color: white;">
             <mat-drawer #drawer class="example-sidenav vcmprop" mode="side" position="end">
-                <div class="close-btn">
-                    <h3>{{editProcessName}}</h3>
-                    <img src="../../../../assets/images/VCM/VCM-close.svg" (click)="closeOverlay()" />
-                </div>
+               
                 <div  class="propertiesContainer" id="propertiesContainer" >
+                    <div class="close-btn">
+                        <h3>{{editProcessName}}</h3>
+                        <img src="../../../../assets/images/VCM/VCM-close.svg" (click)="closeOverlay()" />
+                    </div>
                     <div class="propertiesPanelBody" id="propertiesPanelBody">
                         <mat-accordion>
                             <mat-expansion-panel (opened)="onExpansionClik('1')" hideToggle [expanded]="isOpenedState==1">
@@ -162,13 +163,15 @@
                                     <img src="../../../../assets/images/VCM/pc-hover.svg" class="hover-img"/>
                                 </button>
                                 <span class="poname"  *ngIf="process_ownerName">{{ownerValues| uppercase}}</span>
-                                <select class="form-control" (change)="onChangeProcessOwner(process_ownerName)" [(ngModel)]="process_ownerName">
-                                    <option value="" hidden disabled>Select Process Owner</option>
-                                    <option value="undefined" hidden disabled>Select Process Owner</option>
-                                    <option *ngFor="let each_approver of processOwners_list;let i=index" [value]="each_approver.firstName+' '+each_approver.lastName">
+                                <div class="povaluediv">
+                                    <select class="form-control" (change)="onChangeProcessOwner(process_ownerName)" [(ngModel)]="process_ownerName">
+                                        <option value="" hidden disabled>Select Process Owner</option>
+                                        <option value="undefined" hidden disabled>Select Process Owner</option>
+                                        <option *ngFor="let each_approver of processOwners_list;let i=index" [value]="each_approver.firstName+' '+each_approver.lastName">
                                         {{(each_approver.firstName | titlecase) +" "+(each_approver.lastName==undefined?"":each_approver.lastName)}}</option>
-                                </select>
-                                
+                                    </select>
+                                    <span class="polabel" *ngIf="process_ownerName">Process Owner</span>
+                                </div>
                             </div>
                             <!-- <p *ngIf="process_ownerName">Process Owner</p> -->
                         </div>

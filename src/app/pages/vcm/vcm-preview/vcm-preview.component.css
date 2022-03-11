@@ -80,7 +80,8 @@ img.procmenu {
     margin-top: 20px;
 }
 .close-btn h3 {
-    padding: 10px 10px 10px 15px;
+    /* padding: 10px 10px 10px 15px; */
+    padding: 15px 10px 15px 12px;
     margin: 0px;
     font-size: 16px;
     font-weight: 600;
@@ -91,8 +92,9 @@ img.procmenu {
     height: 12px;
     cursor: pointer;
     position: absolute;
-    right: 12px;
-    top: 14px;
+    right: 12px;    
+    top: 16px;
+    filter: brightness(10) grayscale(1) brightness(10);
 }
 
 mat-drawer {
@@ -208,14 +210,13 @@ span.sub-nodel2 {
 }
 /* properties overlay */
 .vcmprop div#propertiesContainer {
-    top: 36px;
     width: 100%;
-    height: calc(100% - 36px);
+    height: calc(100vh - 130px);
     border: none !important;
+    box-shadow: none !important;
 }
 .vcmprop div#propertiesPanelBody {
     /* height: calc(100% - 40px); */
-    height: 100%;
     position: absolute;
     /* top: 40px; */
     overflow: auto;
@@ -242,6 +243,13 @@ span.sub-nodel2 {
     margin-bottom: 0px;
 }
 .doc-content {
-    height: calc(100vh - 270px);
+    height: calc(100vh - 280px);
+}
+.container.p-0.prop-content {
+    height: calc(100vh - 280px) !important;
+}
+.editcontent {
+    /* height: calc(100vh - 275px); */
+    height: calc(100vh - 325px) !important;
 }
 /* properties overlay */

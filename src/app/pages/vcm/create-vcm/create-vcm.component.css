@@ -1,5 +1,7 @@
 .vcm-leveldiv {
     margin-top: 12px;
+    overflow: hidden;
+    height: calc(100vh - 142px);
 }
 
 .vcm-leveldiv h4 {
@@ -172,6 +174,9 @@ li.overflowcontent {
 .actimg {
     text-align: right;
     width: 18%;
+    margin-right: 3px;
+}
+.actimg img {
     cursor: pointer;
 }
 li.childHover span {
@@ -181,9 +186,7 @@ li.childHover span {
 .vcmprop.mat-drawer-opened {
     width: 25% !important;
 }
-.editcontent {
-    /* height: calc(100vh - 275px); */
-}
+
 .propfooter button.btn.btn-primary {
     margin-right: 0px !important;
 }
@@ -306,11 +309,13 @@ mat-tree {
     display: block;
 }
 .close-btn h3 {
-    padding: 10px 10px 5px 15px;
+    /* padding: 10px 10px 5px 15px; */
+    padding: 15px 10px 15px 12px;
     margin: 0px;
     font-size: 16px;
     font-weight: 600;
     width: 90%;
+    color: #fff;
 }
 .close-btn img{
     width: 12px;
@@ -318,14 +323,15 @@ mat-tree {
     cursor: pointer;
     position: absolute;
     right: 12px;
-    top: 12px;
+    top: 16px;
+    filter: brightness(10) grayscale(1) brightness(10);
 }
 
 /* .l1process-list {
     height: 100px;
 } */
 hr {
-    margin-bottom: 13px !important;
+    margin-bottom: 8px !important;
 }
 .vcm-leveldiv select.form-control.ng-dirty {
     background-color: #FFF9C7 !important;
@@ -345,7 +351,7 @@ hr {
 }
 .vcm-leveldiv .powner select.form-control {
     width: 200px !important;
-    margin-left: 10px;
+    padding-left: 0px !important;
     border: transparent !important;
     background-color: transparent !important;
 }
@@ -356,13 +362,23 @@ span.poname {
     background-color: #00a0e3;
     color: #fff;
     border-radius: 100%;
-    padding: 10px 12px;
-    letter-spacing: 1px;
+    padding: 9px 11px;
 }
 .powner p {
     font-size: 12px;
     color: #ccc;
     margin:0px;
+}
+.povaluediv {
+    position: relative;
+    margin-left: 10px;
+}
+span.polabel {
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    color: #7a7a7a;
+    font-size: 12px;
 }
 .l3pname-div {
     position: relative;
@@ -379,14 +395,13 @@ span.poname {
 
 /* properties overlay */
 .vcmprop div#propertiesContainer {
-    top: 33px;
     width: 100%;
-    height: calc(100% - 33px);
+    height: calc(100vh - 130px);
     border: none !important;
+    box-shadow: none !important;
 }
 .vcmprop div#propertiesPanelBody {
     /* height: calc(100% - 40px); */
-    height: 100%;
     position: absolute;
     /* top: 40px; */
     overflow: auto;
@@ -413,6 +428,18 @@ span.poname {
     margin-bottom: 0px;
 }
 .doc-content {
-    height: calc(100vh - 270px);
+    height: calc(100vh - 280px);
+}
+.container.p-0.prop-content {
+    height: calc(100vh - 280px) !important;
+}
+.editcontent {
+    /* height: calc(100vh - 275px); */
+    height: calc(100vh - 325px) !important;
 }
 /* properties overlay */
+
+.l2proccess-list {
+    overflow: auto;
+    height: calc(100vh - 392px);
+}

@@ -26,11 +26,94 @@
     <div class="module-body">
         <mat-drawer-container class="example-container h-100" style="background-color: white;">
             <mat-drawer #drawer class="example-sidenav vcmprop" mode="side" position="end">
-                <div class="close-btn">
-                    <h3>{{processName}}</h3>
-                    <img src="../../../../assets/images/VCM/VCM-close.svg" (click)="closeOverlay()" />
+               
+                <div  class="propertiesContainer" id="propertiesContainer" >
+                    <div class="close-btn">
+                        <h3>{{processName}}</h3>
+                        <img src="../../../../assets/images/VCM/VCM-close.svg" (click)="closeOverlay()" />
+                    </div>
+                    <div class="propertiesPanelBody" id="propertiesPanelBody">
+                        <mat-accordion>
+                            <mat-expansion-panel (opened)="onExpansionClik('1')" hideToggle [expanded]="isOpenedState==1">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title class="accordionHeaderMain">
+                                        <div class="accordionHeaderToggle">
+                                            <img src="../../../../assets/images/BPMS/Properties.svg" alt="menuToggleIcon" class="menuToggleIcon">
+                                            <label class="accordionHeader">Properties</label>
+                                            <!-- <img src="../../../../assets/images/BPMS/maximize-2.svg" alt="propexpandIcon" class="propexpandIcon"> -->
+                                        </div>
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <mat-panel-description>
+                                    <div class="container p-0 prop-content">
+                                        <div class="editcontent">
+                                            <div class="col-md-12 form-group">
+                                                <label class="label-control">Process Name</label>
+                                                <input type="text" [disabled]="isPropDisabled" class="form-control" [(ngModel)]="processName">
+                                            </div>
+                                            <div class="col-md-12 form-group">
+                                                <label class="label-control">Process Owner</label>
+                                                <select class="form-control" [disabled]="isPropDisabled" [(ngModel)]="processOwner">
+                                                    <option value="" hidden disabled>Select Process Owner</option>
+                                                    <option *ngFor="let each_approver of processOwners_list;let i=index" [value]="each_approver.firstName+' '+each_approver.lastName">
+                                                        {{(each_approver.firstName | titlecase) +"
+                                                        "+(each_approver.lastName==undefined?"":each_approver.lastName)}}</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-12 form-group">
+                                                <label class="label-control">Process Description</label>
+                                                <textarea class="form-control" rows="5" [disabled]="isPropDisabled" placeholder="Enter Process Description" [(ngModel)]="processDesc"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </mat-panel-description>
+                            </mat-expansion-panel>
+
+                            <mat-expansion-panel (opened)="onExpansionClik('2')" hideToggle [expanded]="isOpenedState==2">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        <div class="accordionHeaderToggle">
+                                            <img src="../../../../assets/images/BPMS/Discussions.svg" alt="menuToggleIcon" class="menuToggleIcon">
+                                            <label for="" class="accordionHeader">Documents</label>
+                                        </div>
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <mat-panel-description>
+                                    <div class="container p-0 doc-content">
+                                        <!--<div class="col-md-12 form-group">
+                                                <h4 class="procname">{{processName}}</h4>
+                                        </div> -->
+                                        <div class="col-md-12 form-group files">
+                                            <p *ngFor="let each of attachments;let i = index;">
+                                               {{i+1}}. {{each.fileName}}
+                                               <span>
+                                                   <!-- <img src="../../../../assets/images/Admin/download-blue.svg" class="testplus" > -->
+                                                   <span class="deleteattachment tsttooltipbtn">
+                                                    <a href="data:image/png;base64,{{each.filedata}}" download="{{each.fileName}}">
+                                                    <img src="../../../../assets/images/Admin/download-black.svg" class="default-img testplus" >
+                                                    <img src="../../../../assets/images/Admin/download-blue.svg" class="hover-img testplus" >
+                                                    </a>
+                                                    <!-- <span class="testtooltip">Download</span> -->
+                                                </span>
+                                               </span>
+                                                <!-- <span><img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img" />
+                                                <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img"
+                                                    (click)="RemoveFile(file,i)" /></span> -->
+                                                    <!-- <a href="data:image/png;base64,{{each.fileData}}" download="{{each.fileName}}">
+                                                        <img src="../../../../assets/images/Admin/download-black.svg" class="default-img testplus" >
+                                                        <img src="../../../../assets/images/Admin/download-blue.svg" class="hover-img testplus" >
+                                                        </a> -->
+                                            </p>
+
+                                        </div>
+                                    </div>
+                                </mat-panel-description>
+                            </mat-expansion-panel>
+
+                        </mat-accordion>
+                    </div>
                 </div>
-                <mat-tab-group>
+                <!-- <mat-tab-group>
                     <mat-tab label="Properties">
                         <div class="editcontent">
                             <div class="col-md-12 form-group">
@@ -53,34 +136,21 @@
                         </div>
                     </mat-tab>
                     <mat-tab label="Documents">
-                        <!-- <div class="col-md-12 form-group">
-                            <h4 class="procname">{{processName}}</h4>
-                        </div> -->
                         <div class="col-md-12 form-group files">
                             <p *ngFor="let each of attachments;let i = index;">
                                {{i+1}}. {{each.fileName}}
                                <span>
-                                   <!-- <img src="../../../../assets/images/Admin/download-blue.svg" class="testplus" > -->
                                    <span class="deleteattachment tsttooltipbtn">
                                     <a href="data:image/png;base64,{{each.filedata}}" download="{{each.fileName}}">
                                     <img src="../../../../assets/images/Admin/download-black.svg" class="default-img testplus" >
                                     <img src="../../../../assets/images/Admin/download-blue.svg" class="hover-img testplus" >
                                     </a>
-                                    <!-- <span class="testtooltip">Download</span> -->
                                 </span>
                                </span>
-                                <!-- <span><img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img" />
-                                <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img"
-                                    (click)="RemoveFile(file,i)" /></span> -->
-                                    <!-- <a href="data:image/png;base64,{{each.fileData}}" download="{{each.fileName}}">
-                                        <img src="../../../../assets/images/Admin/download-black.svg" class="default-img testplus" >
-                                        <img src="../../../../assets/images/Admin/download-blue.svg" class="hover-img testplus" >
-                                        </a> -->
-                            </p>
-                            
+                            </p>                            
                         </div>
                     </mat-tab>
-                </mat-tab-group>
+                </mat-tab-group> -->
             </mat-drawer>
             <mat-drawer-content>
                 <div class="vcm-treesmain h-100">

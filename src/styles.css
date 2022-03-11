@@ -2745,11 +2745,17 @@ span.pdicon {
     display: none !important;
 }
 .vcmprop .propertiesContainer .mat-expansion-panel-body {
-  height: 100% !important;
-  max-height: 413px !important;
+  /* height: 100% !important;
+  max-height: 413px !important; */
+  height: calc(100% - 40px) !important;
+    max-height: calc(100% - 40px) !important;
   background-color: #fff !important;
   padding: 10px !important;
 }
 .vcmprop .propertiesContainer .mat-expansion-panel-header-description {
   margin:0px !important
+}
+
+.propertiesContainer mat-expansion-panel-header.mat-expanded {
+  background-color: #00a0e3 !important;
 }
