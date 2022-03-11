@@ -343,10 +343,11 @@ hr {
 .powner button:hover img.hover-img {
     display: initial;
 }
-.powner select.form-control {
+.vcm-leveldiv .powner select.form-control {
     width: 200px !important;
     margin-left: 10px;
     border: transparent !important;
+    background-color: transparent !important;
 }
 .submit button.btn.btn-primary:last-child {
     margin-left: 10px;
@@ -358,6 +359,11 @@ span.poname {
     padding: 10px 12px;
     letter-spacing: 1px;
 }
+.powner p {
+    font-size: 12px;
+    color: #ccc;
+    margin:0px;
+}
 .l3pname-div {
     position: relative;
     margin-top: 10px;
@@ -367,8 +373,9 @@ span.poname {
     right: 12px;
     top: 5px;
 }
-
-
+.actimg span {
+    width: 25px !important;
+}
 
 /* properties overlay */
 .vcmprop div#propertiesContainer {
