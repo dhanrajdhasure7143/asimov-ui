@@ -585,7 +585,8 @@ export class CreateVcmComponent implements OnInit {
 
   }
 
-  onCreateLevel3() {
+  onCreateLevel3(node, parentObj) {
+    this.selectedNode_obj = node
     this.inputUniqueId = this.selectedNode_obj.uniqueId;
 
   }

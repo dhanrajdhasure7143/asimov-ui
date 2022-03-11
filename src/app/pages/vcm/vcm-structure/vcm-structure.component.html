@@ -7,15 +7,9 @@
             <span class="module-header-title">Value Chain Mapping</span>
         </div>
         <div class="ml-auto submit">
-            <!-- <button *ngIf="!expandTree" class="btn btn-default" (click)="collapse()">
-                <span>Collapse</span>
-            </button> -->
-            <!-- <button *ngIf="expandTree" class="btn btn-default" (click)="expand()">
-                <span>Expand</span>
-            </button> -->
-            <button class="btn btn-default" (click)="editVcm()">
+            <!-- <button class="btn btn-default" (click)="editVcm()">
                 <img src="../../../../assets/images/Projects/edit.svg" class="testplus" />QuickEdit
-            </button>
+            </button> -->
             <button class="btn btn-primary" (click)="quickEditVcm()">
                 <img src="../../../../assets/images/Projects/edit.svg" class="testplus" />Edit
             </button>
@@ -94,7 +88,9 @@
                             </button>
                         </div>
                         <div class="col-md-12 p-0">
-                            <h4>{{selectedVcmName}}</h4>
+                            <h4>
+                                <span><img (click)="viewTotalProperties(node)" src="../../../assets/images/menu-line.svg" class="procmenu" alt=""></span>
+                                {{selectedVcmName}}</h4>
                         </div>
                         <div class="col-md-12 p-0 vcm-treediv">
                             <mat-tree [dataSource]="dataSource" #tree [treeControl]="treeControl" class="example-tree">
@@ -103,8 +99,8 @@
                                     <span *ngIf="node.level == 'L1'">
                                         <span (click)="openNodeProperties(node)" *ngIf=" uniqueId1 != node.uniqueId ">{{node.title}} </span>
                                         <span *ngIf="nodeParent == node.parent"> 
-                                            <button (click)="onCreateLevel1(node)" *ngIf="uniqueId != node.uniqueId">
-                                                <img src="../../../../assets/images/VCM/plus-bordercircle.svg" class="testplus" />1
+                                            <button (click)="onCreateLevel1(node)" *ngIf="uniqueId != node.uniqueId && uniqueId1 != node.uniqueId">
+                                                <img src="../../../../assets/images/VCM/plus-bordercircle.svg" class="testplus" />
                                             </button>
                                             <div *ngIf="uniqueId==node.uniqueId" class="test" style="display: flex;width: 150%;margin-top: 5%;">
                                                 <input type="text" class="form-control" placeholder="Enter Process Name" [(ngModel)]="processName">
@@ -112,9 +108,7 @@
                                                     <img class="testplus1" src="../../../../assets/images/VCM/Green Tick.svg">
                                                 </button>
                                             </div>
-                                        </span>
-                                        <span *ngIf="nodeParent == node.parent">
-                                            <button (click)="editLevelName(node)" *ngIf=" uniqueId1 != node.uniqueId ">
+                                            <button (click)="editLevelName(node)" *ngIf=" uniqueId1 != node.uniqueId && uniqueId != node.uniqueId ">
                                                 <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" />
                                             </button>
                                             <div *ngIf="uniqueId1 == node.uniqueId" style="display: flex;width: 150%;margin-top: 5%;">
@@ -126,23 +120,21 @@
                                         </span>
                                     </span>
                                     <span *ngIf="node.level == 'L2'">
-                                        <span (click)="openNodeProperties(node)"  *ngIf=" uniqueId1 != node.uniqueId " class="sub-nodel2">{{node.title}}</span>
+                                        <span (click)="openNodeProperties(node)"  *ngIf="uniqueId1 != node.uniqueId " class="sub-nodel2">{{node.title}}</span>
                                         <span *ngIf="nodeParent == node.parent">
-                                            <button  (click)="onSelectedNode(node)" #pop2="bs-popover"
+                                            <button *ngIf="uniqueId != node.uniqueId && uniqueId1 != node.uniqueId" (click)="onSelectedNode(node)" #pop2="bs-popover"
                                                 [popover]="popTemplate1" [outsideClick]="true" placement="right">
-                                                <img src="../../../../assets/images/VCM/plus-bordercircle.svg" class="testplus" />2
+                                                <img src="../../../../assets/images/VCM/plus-bordercircle.svg" class="testplus" />
                                             </button>
                                         
-                                            <!-- <button (click)="addLevel(node)" *ngIf="node.level == 'L2' && node.title != 'Management Process' && node.title != 'Core Process' && node.title != 'Support Process'"><img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2"/></button><br> -->
                                             <div *ngIf="uniqueId==node.uniqueId" style="display: flex;width: 150%;margin-top: 5%;">
                                                 <input type="text" class="form-control" placeholder="Enter Process Name" [(ngModel)]="processName">
                                                 <button [hidden]="!processName" style="position: relative;right: 8%;" (click)="addL3Nodes()">
                                                     <img class="testplus1" src="../../../../assets/images/VCM/Green Tick.svg">
                                                 </button>
                                             </div>
-                                        </span>
-                                        <span *ngIf="nodeParent == node.parent">
-                                            <button (click)="editLevelName(node)" *ngIf=" uniqueId1 != node.uniqueId ">
+ 
+                                            <button (click)="editLevelName(node)" *ngIf=" uniqueId1 != node.uniqueId && uniqueId != node.uniqueId">
                                                 <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" />
                                             </button>
                                             <div *ngIf="uniqueId1 == node.uniqueId" style="display: flex;width: 150%;margin-top: 5%;">
@@ -193,7 +185,7 @@
                                         <span *ngIf="node.level == 'L1'">
                                             <span (click)="openNodeProperties(node)" *ngIf=" uniqueId1 != node.uniqueId ">{{node.title}} </span>
                                             <span *ngIf="nodeParent == node.parent"> 
-                                                <button (click)="onCreateLevel1(node)">
+                                                <button *ngIf="uniqueId  != node.uniqueId && uniqueId1 != node.uniqueId" (click)="onCreateLevel1(node)">
                                                     <img src="../../../../assets/images/VCM/plus-bordercircle.svg" class="testplus" />
                                                 </button>
                                                 <div *ngIf="uniqueId==node.uniqueId" style="display: flex;width: 150%;margin-top: 5%;">
@@ -204,7 +196,7 @@
                                                 </div>
                                             </span>
                                             <span *ngIf="nodeParent == node.parent">
-                                                <button (click)="editLevelName(node)" *ngIf=" uniqueId1 != node.uniqueId ">
+                                                <button (click)="editLevelName(node)" *ngIf=" uniqueId1 != node.uniqueId && uniqueId  != node.uniqueId">
                                                     <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" />
                                                 </button>
                                                 <div *ngIf="uniqueId1 == node.uniqueId" style="display: flex;width: 150%;margin-top: 5%;">
@@ -228,9 +220,7 @@
                                             <button *ngIf="uniqueId1 != node.uniqueId" (click)="editLevelName(node)">
                                                 <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" />
                                             </button>
-                                        <!-- </span>
-                                        
-                                        <span *ngIf="node.level == 'L2'"> -->
+                                       
                                             <button  (click)="onSelectedNode(node)" #pop2="bs-popover" [popover]="popTemplate1" [outsideClick]="true" placement="right">
                                                 <img src="../../../../assets/images/VCM/plus-bordercircle.svg"
                                                     class="testplus" />

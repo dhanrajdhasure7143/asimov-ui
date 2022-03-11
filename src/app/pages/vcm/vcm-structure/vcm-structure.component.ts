@@ -476,18 +476,15 @@ this.nodeParent=node.title
   }
 
   onCreateLevel3() {
-    // this.parent = this.selectedNode.parent;
-    // this.childParent = this.selectedNode.childParent;
-    // this.title = this.selectedNode.title;
     this.uniqueId = this.selectedNode.uniqueId;
     console.log(this.selectedNode)
   }
 
   onCreateLevel1(node) {
-    console.log(node)
 
     this.l1UniqueId = node.uniqueId;
     this.uniqueId = node.uniqueId;
+    this.uniqueId1 = null;
 
   }
   addL1Nodes(node){
@@ -523,7 +520,7 @@ this.nodeParent=node.title
   editLevelName(node) {
     console.log(node);
     this.uniqueId1 = node.uniqueId;
-    // this.levelNameShow = true;
+    this.uniqueId = null;
     this.drawer.close();
   }
 
@@ -567,6 +564,9 @@ this.nodeParent=node.title
           this.treeControl.dataNodes = this.dataSource.data;
           this.treeControl.expandAll()
         }, 100);
+    }
+    viewTotalProperties(){
+      
     }
 
 }
