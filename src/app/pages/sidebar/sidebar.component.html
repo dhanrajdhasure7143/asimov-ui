@@ -82,7 +82,7 @@
           <span class="side-menu-font">Processes</span>
         </a> -->
 
-        <mat-list-item (click)="showprocessesSubmenu = !showprocessesSubmenu; selection()" *ngIf="freetrail!=true" [ngClass]="{'activeMenu' : showprocessesSubmenu}" id='expand_processes' class="link" [matTooltip]=" !obj.sideBarOpen ? 'Processes' : ''" matTooltipClass="sidebarTooltip" matTooltipPosition="right">
+        <!-- <mat-list-item (click)="showprocessesSubmenu = !showprocessesSubmenu; selection()" *ngIf="freetrail!=true" [ngClass]="{'activeMenu' : showprocessesSubmenu}" id='expand_processes' class="link" [matTooltip]=" !obj.sideBarOpen ? 'Processes' : ''" matTooltipClass="sidebarTooltip" matTooltipPosition="right">
             
           <span class="side-icon">
               <span class="active-img" id="eiap-home-icon-active">
@@ -107,7 +107,7 @@
           <a mat-list-item class="link" id='vcm'  (click)="hightlight('vcm','expand_processes')" routerLink="/pages/vcm/view-vcm">  
               <span class="side-menu-font">Value Chain Mapping</span>
           </a>              
-        </div>
+        </div> -->
 
           <a mat-list-item class="link" id='so' *ngIf="freetrail!=true" (click)="hightlight('so',null)" routerLink="/pages/serviceOrchestration/home" [matTooltip]=" !obj.sideBarOpen ? 'Orchestration' : ''" matTooltip="Orchestration" matTooltipClass="sidebarTooltip" matTooltipPosition="right">
               <span class="side-icon">
