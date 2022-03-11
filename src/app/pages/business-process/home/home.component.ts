@@ -202,6 +202,11 @@ this.dt.bpsHeaderValues('');
       return processName.substr(0,14)+'...';
     return processName;
   }
+  fitTableViewCategory(processName){
+    if(processName && processName.length > 7)
+      return processName.substr(0,7)+'..';
+    return processName;
+  }
 
   fitTableViewTime(processName){
     if(processName && processName.length > 12)

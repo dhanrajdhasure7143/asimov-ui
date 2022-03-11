@@ -57,6 +57,8 @@ export class BackendURLInterceptor implements HttpInterceptor {
             url = this.config.bussinessProcessEndPoint + req.url;
         else if(req.url.indexOf('vcmprocess') > -1)
             url = this.config.bussinessProcessEndPoint + req.url;
+            else if(req.url.indexOf('vcmv2') > -1)
+            url = this.config.bussinessProcessEndPoint + req.url;
         else if(req.url.indexOf('processintelligence') > -1)
             url = this.config.processIntelligenceEndPoint + req.url;
         else if(req.url.indexOf('ReddisCopy') > -1)

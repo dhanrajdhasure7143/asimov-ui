@@ -1014,6 +1014,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     this.arrange_task_order(this.startNodeId);
     this.get_coordinates();
     await this.getsvg();
+    console.log("-----------------------------",this.final_tasks)
       this.saveBotdata = {
         "botName": botProperties.botName,
         "botType": botProperties.botType,
@@ -1332,6 +1333,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           this.finaldataobjects[i].x = position.left + "px";
           this.finaldataobjects[i].y = position.top + "px";
         }
+      
       }
     })
     if(this.finaldataobjects.find(item=>item.inSeqId==this.startNodeId)!=undefined)
