@@ -56,52 +56,61 @@ this.getEnvironments();
   getallbots()
   {
     am4core.useTheme(am4themes_animated);
-    this.rest.getallsobots().subscribe(item=>{
-       this.allbots=item;
-       let data:any=[{
-        "country": "Failure",
-        "litres": this.allbots.filter(bot=>bot.botStatus=="Failure").length,
-        "color": "#BC1D28"
-      },{
-        "country": "New",
-        "litres":  this.allbots.filter(bot=>bot.botStatus=="New").length,
-        "color": "#00a0e3"
-      }, {
-        "country": "Stopped",
-        "litres":  this.allbots.filter(bot=>bot.botStatus=="Stopped" || bot.botStatus=="Stop").length,
-        "color": "#FF0000"
-      },
-      {
-        "country": "Success",
-        "litres":  this.allbots.filter(bot=>bot.botStatus=="Success").length,
-        "color":"#62C849"
-      }];
-
-      
-      this.chart1(data)
-      //this.chart2()
-      let sourceType=[{
-        "country": "UiPath",
-        "litres": this.allbots.filter(item=>item.sourceType=="UiPath").length,
-        "color": "#fa4616"
-      },{
-        "country": "Blue Prism",
-        "litres":  this.allbots.filter(item=>item.sourceType=="BluePrism").length,
-        "color": "#001c47"
-      },{
-        "country": "EPSoft",
-        "litres":this.allbots.filter(item=>item.sourceType=="EPSoft").length,
-        "color": "#00a0e3"
-      }];
-      
-      this.chart3(sourceType, this.allbots.length);
-      //this.chart4();
-      
-      this.getprocesses();
-      this.getBpmnApprovedProcesses();
-      this.botruntimestats();
+    this.rest.getallsobots().subscribe((item:any)=>{
       this.spinner.hide();
+      if(item.errorMessage==undefined){
+        this.allbots=item;
+        let data:any=[{
+          "country": "Failure",
+          "litres": this.allbots.filter(bot=>bot.botStatus=="Failure").length,
+          "color": "#BC1D28"
+        },{
+          "country": "New",
+          "litres":  this.allbots.filter(bot=>bot.botStatus=="New").length,
+          "color": "#00a0e3"
+        }, {
+          "country": "Stopped",
+          "litres":  this.allbots.filter(bot=>bot.botStatus=="Stopped" || bot.botStatus=="Stop").length,
+          "color": "#FF0000"
+        },
+        {
+          "country": "Success",
+          "litres":  this.allbots.filter(bot=>bot.botStatus=="Success").length,
+          "color":"#62C849"
+        }];
+        this.chart1(data)
+
+        let sourceType=[{
+          "country": "UiPath",
+          "litres": this.allbots.filter(item=>item.sourceType=="UiPath").length,
+          "color": "#fa4616"
+        },{
+          "country": "Blue Prism",
+          "litres":  this.allbots.filter(item=>item.sourceType=="BluePrism").length,
+          "color": "#001c47"
+        },{
+          "country": "EPSoft",
+          "litres":this.allbots.filter(item=>item.sourceType=="EPSoft").length,
+          "color": "#00a0e3"
+        }];
+        
+        this.chart3(sourceType, this.allbots.length);
+        //this.chart4();
+        
+        this.getprocesses();
+        this.getBpmnApprovedProcesses();
+        this.botruntimestats();
+        
+      }
+  
+      else{
+        Swal.fire("Error",item.errorMessage,"error")
+      }
       
+      
+     
+      //this.chart2()
+     
     },
     err=>{
       this.spinner.hide();
