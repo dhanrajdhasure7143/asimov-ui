@@ -63,12 +63,18 @@ export class ProcessCategoryOverlayComponent implements OnInit {
         })
       }
     }else{
+      if(this.activatedRoute.snapshot['_routerState'].url.includes('businessProcess') || this.activatedRoute.snapshot['_routerState'].url.includes('vcm')){
+        this.isBpmnModule = true;
+      }
       this.processName='';
       this.categoryName=undefined;
       this.isValidName=false;
       if(this.overlay_data.module !="pi"){
         this.process_owner=undefined;
         this.notationType='';
+        if(this.overlay_data.ntype){
+          this.notationType=this.overlay_data.ntype
+        }
       }
     }
   if(changes['uploadedFileName']){

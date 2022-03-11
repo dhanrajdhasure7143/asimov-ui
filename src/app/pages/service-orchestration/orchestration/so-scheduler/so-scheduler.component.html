@@ -33,12 +33,12 @@
                 </div>
 
                 <div class="col-md-6 pl-0">
-                    <input type="date" class="rpa-control form-control form-group" [(ngModel)]="startdate" [min]="startdate" (dateChange)="enddate=startdate">
+                    <input type="date" (change)="dateChange($event,'startdate')" class="rpa-control form-control form-group" [(ngModel)]="startdate" [min]="startdate" >
                     <ngx-timepicker-field [controlOnly]="true" [defaultTime]="'23:11'" [format]="24" [(ngModel)]="starttime"></ngx-timepicker-field>
                 </div>
 
                 <div class="col-md-6 pr-0">
-                    <input type="date" class="rpa-control form-control form-group" [(ngModel)]="enddate" [min]="startdate">
+                    <input type="date" (change)="dateChange($event,'enddate')" class="rpa-control form-control form-group" [(ngModel)]="enddate" [min]="startdate">
                     <ngx-timepicker-field [controlOnly]="true" [defaultTime]="'23:11'" [format]="24" [(ngModel)]="endtime"></ngx-timepicker-field>
 
                 </div>

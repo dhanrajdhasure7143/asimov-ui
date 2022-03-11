@@ -53,6 +53,9 @@ import { NgxSpinnerService } from "ngx-spinner";
     public isButtonVisible = false;
     public userRole:any = [];
     public categoryList:any=[];
+    public isKeyValuePair:Boolean=false;
+    public password:any="";
+    public keyValueFile:File;
   constructor(private api:RestApiService, 
     private router:Router, 
     private formBuilder: FormBuilder,
@@ -61,6 +64,7 @@ import { NgxSpinnerService } from "ngx-spinner";
     private dt:DataTransferService,
     private hints:Rpa_Hints,
     private spinner: NgxSpinnerService
+    
     ) { 
     const ipPattern = 
     "(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
@@ -71,7 +75,9 @@ import { NgxSpinnerService } from "ngx-spinner";
         hostAddress: ["", Validators.compose([Validators.required,  Validators.maxLength(50)])],
         categoryId:["0", Validators.compose([Validators.required])],
         username: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-        password: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
+        
+        // isKeyValuePair: [false, Validators.compose([Validators.required])],
+        // password: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
         connectionType: ["SSH",Validators.compose([Validators.required,, Validators.maxLength(50), Validators.pattern("[A-Za-z]*")])],
         portNumber: ["22",  Validators.compose([Validators.required, Validators.maxLength(6)])],
         activeStatus: [true]
@@ -341,6 +347,66 @@ import { NgxSpinnerService } from "ngx-spinner";
 
   }
 
+
+
+  saveEnvironmentV2()
+  {
+      if(this.insertForm.value.activeStatus==true)
+       {
+         this.insertForm.value.activeStatus=7
+       }else{
+         this.insertForm.value.activeStatus=8
+       }
+       this.insertForm.value.createdBy="admin";
+      this.submitted=true;
+      let environment=this.insertForm.value;
+      let formData=new FormData();
+      Object.keys(environment).forEach(key => {
+        formData.append(key, environment[key])
+      });
+      if(this.isKeyValuePair==true)
+      {
+        formData.append("key", this.keyValueFile);
+        this.password="";
+      }
+      else
+      {
+        formData.append("password",this.password);
+      }
+      this.spinner.show();
+      this.api.addenvironmentV2(formData).subscribe((response:any)=>{
+             this.spinner.hide();
+         if(response.errorMessage==undefined)
+         {
+           Swal.fire("Success",response.status,"success")
+           this.getallData();
+           this.checktoupdate();
+           this.checktodelete();
+           document.getElementById("createenvironment").style.display='none'; 
+           this.insertForm.reset();
+           this.insertForm.get("portNumber").setValue("22");
+           this.insertForm.get("connectionType").setValue("SSH");
+           this.insertForm.get("activeStatus").setValue(true);
+           this.isKeyValuePair=false;
+           this.password="";
+           this.keyValueFile=undefined;
+           this.submitted=false;
+         }
+         else
+         {
+           this.submitted=false;
+           Swal.fire("Error",response.errorMessage,"error");
+         }
+     },err=>{
+       this.spinner.hide();
+       Swal.fire("Error","Unable to add environment","error");
+       this.submitted=false;
+     });
+  }
+
+
+
+
   async updateEnvironment()
   {
     
@@ -423,6 +489,9 @@ import { NgxSpinnerService } from "ngx-spinner";
     //document.getElementById("filters").style.display='block';
     document.getElementById('createenvironment').style.display='none';
     document.getElementById('update-popup').style.display='none';
+    this.isKeyValuePair=false;
+    this.password="";
+    this.keyValueFile=undefined;
     this.resetEnvForm();
   }
 

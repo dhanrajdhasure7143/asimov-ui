@@ -16,6 +16,7 @@ const routes: Routes = [
     {path:'admin', loadChildren:'./administration/administration.module#AdministrationModule'},
     {path:'subscriptions', loadChildren:'./manage-subscriptions/manage-subscriptions.module#ManageSubscriptionsModule'},
     {path:'support', loadChildren:'./support/support.module#SupportModule'},
+    {path:'vcm', loadChildren:'./vcm/vcm.module#VcmModule'},
     {path:'**', redirectTo:'/home', pathMatch:"full"}
   ]}
 ];

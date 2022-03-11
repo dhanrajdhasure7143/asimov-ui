@@ -238,7 +238,19 @@ div#bpmn_list {
         width: 40% !important;
     }
     .cell.cell4 {
-        width: 55% !important;
+        width: 60% !important;
+    }
+    .workspace-title .cell.cell5{
+        width: 95% !important;
+    }
+    .workspace-title .expan-icon {
+        width: 16%;
+    }
+    .cell.cell2 {
+        width: 75% !important;
+    }
+    .workspace-title .cell.cell2 {
+        width: 73% !important;
     }
     .no-item-img{
         height: calc(100vh - 500px)

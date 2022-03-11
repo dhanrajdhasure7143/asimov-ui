@@ -149,4 +149,11 @@ export class UsersComponent implements OnInit {
       this.dataSource2.paginator.firstPage();
     }
   }
+
+  getreducedValue(value) {​​​​​​​​
+    if (value.length > 15)
+    return value.substring(0,16) + '...';
+    else
+    return value;
+  }​​​​​​​​
 }
