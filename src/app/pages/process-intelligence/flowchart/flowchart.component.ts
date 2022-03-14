@@ -990,7 +990,7 @@ combofilterObject:any;
       this.rest.getFullGraphBPMN(reqObj)
         .subscribe((res:any) => {          
           if(res.data != null){
-          this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true,pid:this.graphIds,category:categoryName, processName:reqObj.pname}})
+          this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true,pid:this.graphIds,category:categoryName, processName:reqObj.pname,ntype:"bpmn"}})
           } else{
             Swal.fire({
               icon: 'error',
@@ -1019,7 +1019,7 @@ combofilterObject:any;
       this.rest.getSingleTraceBPMN(reqObj1)
         .subscribe((res:any) => {
           if(res.data != null){
-            this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true,pid:this.graphIds,category:categoryName, processName:reqObj1.pname}})
+            this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true,pid:this.graphIds,category:categoryName, processName:reqObj1.pname,ntype:"bpmn"}})
             } else{
               Swal.fire({
                 icon: 'error',
@@ -1047,7 +1047,7 @@ combofilterObject:any;
       this.rest.getMultiTraceBPMN(reqObj2)
         .subscribe((res:any) => {
           if(res.data != null){
-            this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true,pid:this.graphIds,category:categoryName, processName:reqObj2.pname}})
+            this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true,pid:this.graphIds,category:categoryName, processName:reqObj2.pname,ntype:"bpmn"}})
             } else{
               Swal.fire({
                 icon: 'error',
@@ -1076,7 +1076,7 @@ combofilterObject:any;
       this.rest.getSliderTraceBPMN(reqObj3)
         .subscribe((res:any) => {
           if(res.data != null){
-            this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true,pid:this.graphIds,category:categoryName, processName:reqObj3.pname}})
+            this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true,pid:this.graphIds,category:categoryName, processName:reqObj3.pname,ntype:"bpmn"}})
             } else{
               Swal.fire({
                 icon: 'error',
