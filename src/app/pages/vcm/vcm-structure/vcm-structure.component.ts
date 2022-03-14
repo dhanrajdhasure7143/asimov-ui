@@ -391,6 +391,17 @@ export class VcmStructureComponent implements OnInit {
   }
 
   viewProperties(node){
+    
+    if(node== 'all'){
+      
+      this.vcmData.forEach(element => {
+          this.node_data.push(element)
+      });
+      console.log("shared data", this.node_data)
+      this.isViewProperties = true;
+      this.isShow = false;
+
+    }else{
     console.log(node);
     this.node_data = [];
     this.vcm_data["mainParent"] = node.title
@@ -402,6 +413,7 @@ export class VcmStructureComponent implements OnInit {
     console.log("shared data", this.node_data)
     this.isViewProperties = true;
     this.isShow = false;
+  }
   }
 
   backToView(){
