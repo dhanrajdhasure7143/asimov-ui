@@ -501,8 +501,8 @@
                 <ng-container matColumnDef="start_date">
                     <th mat-header-cell mat-sort-header *matHeaderCellDef style="width:25%;"> Start Date </th>
                     <td mat-cell *matCellDef="let element" style="width:25%;">
-                        <span *ngIf="element.start_date!=null">{{element.start_date  }}, {{element.start_time}}</span>
-                        <span *ngIf="element.start_date == undefined">-</span>
+                        <span *ngIf="element.start_date!=null">{{element.start_date.split('T')[0] | date:'EEE MMM d, yyyy' }},{{element.start_time.slice(11,19)}}</span>
+                        <span *ngIf="element.start_date == undefined">--</span>
                     </td>
                 </ng-container>
 
@@ -511,8 +511,8 @@
                 <ng-container matColumnDef="end_date">
                     <th mat-header-cell mat-sort-header *matHeaderCellDef style="width:25%;"> End Date </th>
                     <td mat-cell *matCellDef="let element" style="width:25%;">
-                        <span *ngIf="element.end_date!=null">{{element.end_date }}, {{element.end_time}}</span>
-                        <span *ngIf="element.end_date == undefined">-</span>
+                        <span *ngIf="element.end_date!=null">{{element.end_date.split('T')[0] | date:'EEE MMM d, yyyy' }},{{element.end_time.slice(11,19)}}</span>
+                        <span *ngIf="element.end_date == undefined">--</span>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="bot_status">
@@ -655,7 +655,7 @@
                 <th mat-header-cell  mat-sort-header *matHeaderCellDef style="width:18%"> Start Date </th>
                 <td mat-cell *matCellDef="let element" style="width:18%">
                     <span *ngIf="element.start_date != null">{{element.start_date.split('T')[0] | date:'EEE MMM d, yyyy' }},{{element.start_time.slice(11,19)}}</span>
-                    <span *ngIf="element.start_date == undefined">-</span>
+                    <span *ngIf="element.start_date == undefined">--</span>
                 </td>
             </ng-container>
 
@@ -667,7 +667,7 @@
                 <th mat-header-cell  mat-sort-header  *matHeaderCellDef style="width:18%"> End Date </th>
                 <td mat-cell *matCellDef="let element" style="width:18%">
                     <span *ngIf="element.end_date != null||element.end_date != undefined">{{element.end_date.split('T')[0] | date:'EEE MMM d, yyyy' }},{{element.end_time.slice(11,19)}}</span>
-                    <span *ngIf="element.end_date == undefined">-</span>
+                    <span *ngIf="element.end_date == undefined">--</span>
                 </td>
             </ng-container>
 
@@ -848,24 +848,43 @@
           <div *ngIf="auditLogsData.length!=0">
             <div class="log-row"   *ngFor="let log of auditLogsData">
               <span *ngIf="log.Status=='UpdatedConfig'">
-                <b>{{log.changedBy}}</b> updated <b>{{log.taskName}}</b> task input field <b>{{log.changeActivity}}</b> from <b>{{log.previousValue}}</b> to <b>{{log.newValue}}</b> on {{log.changedDate}}
+                <b>{{log.changedBy}}</b> updated <b>{{log.taskName}}</b> task input field <b>{{log.changeActivity}}</b> from <b>{{log.previousValue}}</b> to <b>{{log.newValue}}</b> on
+                <span *ngIf="log.changedDate!=null && log.changedDate!=undefined">
+                  {{log.changedDate| date:'MMM dd, y, HH:mm:ss'}}
+                </span>
+      
               </span>
               <span *ngIf="log.Status=='AddedTask'">
-                <b>{{log.changedBy}}</b> added task <b>{{log.taskName}}</b> on {{log.changedDate}}
+                <b>{{log.changedBy}}</b> added task <b>{{log.taskName}}</b> on 
+                <span *ngIf="log.changedDate!=null && log.changedDate!=undefined">
+                  {{log.changedDate| date:'MMM dd, y, HH:mm:ss'}}
+                </span>
               </span>
               <span *ngIf="log.Status=='RemovedTask'">
-                <b>{{log.changedBy}}</b> removed task <b>{{log.taskName}}</b> on {{log.changedDate}}
+                <b>{{log.changedBy}}</b> removed task <b>{{log.taskName}}</b> on
+                <span *ngIf="log.changedDate!=null && log.changedDate!=undefined">
+                  {{log.changedDate| date:'MMM dd, y, HH:mm:ss'}}
+                </span>
               </span>
               <span *ngIf="log.Status=='AddedEnv'">
-                <b>{{log.changedBy}}</b> added environment <b>{{log.taskName}}</b> on {{log.changedDate}}
+                <b>{{log.changedBy}}</b> added environment <b>{{log.taskName}}</b> on
+                <span *ngIf="log.changedDate!=null && log.changedDate!=undefined">
+                  {{log.changedDate| date:'MMM dd, y, HH:mm:ss'}}
+                </span>
               </span>
               <span *ngIf="log.Status=='RemovedEnv'">
-                <b>{{log.changedBy}}</b> removed environment <b>{{log.taskName}}</b> on {{log.changedDate}}
+                <b>{{log.changedBy}}</b> removed environment <b>{{log.taskName}}</b> on 
+                <span *ngIf="log.changedDate!=null && log.changedDate!=undefined">
+                  {{log.changedDate| date:'MMM dd, y, HH:mm:ss'}}
+                </span>
               </span>
 
               
               <span *ngIf="log.Status=='BotCreated'">
-                <b>{{log.changedBy}}</b> created bot <b>{{log.taskName}}</b> on {{log.changedDate}}
+                <b>{{log.changedBy}}</b> created bot <b>{{log.taskName}}</b> on
+                <span *ngIf="log.changedDate!=null && log.changedDate!=undefined">
+                  {{log.changedDate| date:'MMM dd, y, HH:mm:ss'}}
+                </span>
               </span>
               
             </div>

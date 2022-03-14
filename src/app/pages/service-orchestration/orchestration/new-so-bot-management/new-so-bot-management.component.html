@@ -38,7 +38,7 @@
 
                 <ng-container matColumnDef="botName"id="bmbotname">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Bot Name </th>
-                    <td mat-cell *matCellDef="let element"> <button *ngIf="element.botName!=null" (click)="loadbotdatadesign(element.botId);"><span *ngIf="element.botName!=null" [matTooltip]="element.botName">{{(element.botName.length > 15) ? ((element.botName).slice(0, 15) + '...') : element.botName}}</span>
+                    <td mat-cell *matCellDef="let element"> <button *ngIf="element.botName!=null" (click)="loadbotdatadesign(element.botId);"><span *ngIf="element.botName!=null" [matTooltip]="element.botName">{{(element.botName.length > 8) ? ((element.botName).slice(0, 8) + '...') : element.botName}}</span>
                         <span *ngIf="element.botName==null || element.botName==''">---</span></button> </td>
               </ng-container>
 
@@ -46,7 +46,7 @@
               <ng-container matColumnDef="description">
                   <th mat-header-cell *matHeaderCellDef mat-sort-header>Description </th>
                   <td mat-cell *matCellDef="let element">
-                      <span *ngIf="element.description!=null" [matTooltip]="element.description">{{(element.description.length > 15) ? ((element.description).slice(0, 15) + '...') : element.description}}</span>
+                      <span *ngIf="element.description!=null" [matTooltip]="element.description">{{(element.description.length > 10) ? ((element.description).slice(0, 10) + '...') : element.description}}</span>
                       <span *ngIf="element.description==null || element.description==''">-</span> </td>
               </ng-container>
               <!--  <ng-container matColumnDef="botType"id="bottype">
@@ -218,7 +218,7 @@
 
 
           <div class="logs-container" *ngIf="logflag!='Loading'">
-              <table mat-table [dataSource]="Viewloglist" #sort4="matSort" matSort class="logs-table">
+              <table mat-table [dataSource]="Viewloglist"  (matSortChange)="sortLogs('EPSOFT', $event, 'LOGS')" #sort4="matSort" matSort class="logs-table">
 
 
                   <!-- Run Id Column -->
@@ -245,7 +245,7 @@
 
                   <!-- Start Date Column -->
                   <ng-container matColumnDef="start_date">
-                      <th mat-header-cell *matHeaderCellDef> Start Date </th>
+                      <th mat-header-cell mat-sort-header *matHeaderCellDef> Start Date </th>
                       <td mat-cell *matCellDef="let element">
                           <span *ngIf="element.start_date!=null">{{element.start_date  | date:'EEE MMM d, yyyy' }} {{element.start_time}}</span>
                           <span *ngIf="element.start_date == undefined">-</span>
@@ -255,7 +255,7 @@
                   <!-- End Date Column -->
 
                   <ng-container matColumnDef="end_date">
-                      <th mat-header-cell *matHeaderCellDef> End Date </th>
+                      <th mat-header-cell mat-sort-header *matHeaderCellDef> End Date </th>
                       <td mat-cell *matCellDef="let element">
                           <span *ngIf="element.end_date!=null">{{element.end_date  | date:'EEE MMM d, yyyy'}} {{element.end_time}}</span>
                           <span *ngIf="element.end_date == undefined">-</span>
@@ -263,7 +263,7 @@
                   </ng-container>
 
                   <ng-container matColumnDef="bot_status">
-                      <th mat-header-cell *matHeaderCellDef>Status</th>
+                      <th mat-header-cell mat-sort-header *matHeaderCellDef>Status</th>
                       <td class="" mat-cell *matCellDef="let element">
                           <!--<span *ngIf="element.bot_status!=null">
                       <span *ngIf="element.bot_status=='Running'" class="text-primary" ><span class="fa fa-spinner fa-spin"></span>&nbsp;<span>{{element.bot_status}}</span></span>
@@ -323,7 +323,7 @@
       <div [id]="viewlogid1" *ngIf="viewlogid1!=undefined" class="modal-body">
 
           <div class="logs-container" *ngIf="logflag!='Loading'">
-              <table mat-table class="logs-table" [dataSource]="logbyrunid" #sort5="matSort" matSort>
+              <table mat-table class="logs-table" (matSortChange)="sortLogs('EPSOFT', $event, 'RUNS')" [dataSource]="logbyrunid" #sort5="matSort" matSort>
 
                   <!-- Task Name Column -->
                   <ng-container matColumnDef="task_name">
@@ -337,7 +337,7 @@
 
                   <!-- Start date Column -->
                   <ng-container matColumnDef="start_date">
-                      <th mat-header-cell *matHeaderCellDef style="width:18%"> Start Date </th>
+                      <th mat-header-cell mat-sort-header *matHeaderCellDef style="width:18%"> Start Date </th>
                       <td mat-cell *matCellDef="let element" style="width:18%">
                           <span *ngIf="element.start_date != null">{{element.start_date.split('T')[0]  | date:'EEE MMM d, yyyy'}}, {{element.start_time.slice(11,19)}}</span>
                           <span *ngIf="element.start_date == undefined">-</span>
@@ -346,7 +346,7 @@
 
                   <!-- End Date Column -->
                   <ng-container matColumnDef="end_date">
-                      <th mat-header-cell *matHeaderCellDef style="width:18%"> End Date </th>
+                      <th mat-header-cell mat-sort-header *matHeaderCellDef style="width:18%"> End Date </th>
                       <td mat-cell *matCellDef="let element" style="width:18%">
                           <span *ngIf="element.end_date != null">{{element.end_date.split('T')[0] | date:'EEE MMM d, yyyy'}}, {{element.end_time.slice(11,19)}}</span>
                           <span *ngIf="element.end_date == undefined">-</span>
@@ -356,7 +356,7 @@
 
                   <!-- Status Column -->
                   <ng-container matColumnDef="status">
-                      <th mat-header-cell *matHeaderCellDef style="width:15%">Status</th>
+                      <th mat-header-cell mat-sort-header *matHeaderCellDef style="width:15%">Status</th>
                       <td class="" mat-cell *matCellDef="let element" style="width:15%">
                           <!-- <span *ngIf="element.status!=null">
                     <span *ngIf="element.status=='Running'" class="text-primary" ><span class="fa fa-spinner fa-spin"></span>&nbsp;<span>{{element.status}}</span></span>
@@ -401,7 +401,7 @@
 
                   <!-- Error Info Column -->
                   <ng-container matColumnDef="error_info">
-                      <th mat-header-cell *matHeaderCellDef>Info </th>
+                      <th mat-header-cell mat-sort-header *matHeaderCellDef>Info </th>
                       <td mat-cell *matCellDef="let element">
                           <span *ngIf="element.error_info!=null && element.error_info != 'NA'" class="tsttooltipbtn">
                             {{(element.error_info.length > 30) ? ((element.error_info).slice(0, 30) + '...') : element.error_info}}
@@ -419,7 +419,7 @@
           </div>
 
           <div class="logs-container text-center" *ngIf="logflag=='Loading'">
-            <img src="../../../../../assets/images/EZFlow_Loader.gif">
+            <img src="../../../../../assets/images/EZFlow_Loader.gif"  style="margin-top:12%">
           </div>
 
           <!-- <mat-paginator #paginator5 [pageSize]="5" [showFirstLastButtons]="true"></mat-paginator> -->
@@ -458,12 +458,12 @@
       </div>
       <div class="modal-body">
           <div class="logs-container">
-              <table mat-table [dataSource]="uipathlogs" #sort6="matSort" matSort class="logs-table">
+              <table mat-table [dataSource]="uipathlogs"  (matSortChange)="sortLogs('UIPATH', $event, 'RUNS')" #sort6="matSort" matSort class="logs-table">
 
 
                   <!-- Run Id Column -->
                   <ng-container matColumnDef="ReleaseName">
-                      <th mat-header-cell *matHeaderCellDef mat-sort-header>Process Name</th>
+                      <th mat-header-cell  mat-sort-header *matHeaderCellDef mat-sort-header>Process Name</th>
                       <td mat-cell *matCellDef="let element">
                           {{(element.ReleaseName.length > 15) ? ((element.ReleaseName).slice(0, 15) + '...') : element.ReleaseName}}
                       </td>
@@ -471,21 +471,21 @@
 
                   <!-- Version Column -->
                   <ng-container matColumnDef="StartTime">
-                      <th mat-header-cell *matHeaderCellDef> Start Time </th>
+                      <th mat-header-cell mat-sort-header *matHeaderCellDef> Start Time </th>
                       <td mat-cell *matCellDef="let element">
                           <span *ngIf="element.EndTime!=null">{{element.StartTime   | date:'EEE MMM d, yyyy, HH:MM'}}</span>
                       </td>
                   </ng-container>
 
                   <ng-container matColumnDef="EndTime">
-                      <th mat-header-cell *matHeaderCellDef> End Time </th>
+                      <th mat-header-cell mat-sort-header *matHeaderCellDef> End Time </th>
                       <td mat-cell *matCellDef="let element">
                           <span *ngIf="element.EndTime!=null">{{element.EndTime   | date:'EEE MMM d, yyyy, HH:MM'}}</span>
                       </td>
                   </ng-container>
                   <!-- End Date Column -->
                   <ng-container matColumnDef="State">
-                      <th mat-header-cell *matHeaderCellDef>Status</th>
+                      <th mat-header-cell mat-sort-header *matHeaderCellDef>Status</th>
                       <td mat-cell *matCellDef="let element">
                           <span *ngIf="element.State!=null">
                       <span class="text-success" *ngIf="element.State=='Successful'">
@@ -510,7 +510,7 @@
                       </td>
                   </ng-container>
                   <ng-container matColumnDef="Info">
-                      <th mat-header-cell *matHeaderCellDef>Info</th>
+                      <th mat-header-cell mat-sort-header *matHeaderCellDef>Info</th>
                       <td mat-cell *matCellDef="let element">
                           <span *ngIf="element.Info!=null && element.Info != 'NA'" class="tsttooltipbtn">
                           {{(element.Info.length > 30) ? ((element.Info).slice(0, 30) + '...') : element.Info}}
@@ -544,7 +544,7 @@
               <img src="../../../../../assets/images/RPA/icon_latest/repeat-blue.svg" class="testplus" >
             </button>
                   <div class="">
-                      <table mat-table [dataSource]="blueprimslogs" #sort7="matSort" matSort style="width:100%;overflow-x:scroll;">
+                      <table mat-table  (matSortChange)="sortLogs('BLUEPRISM', $event, 'RUNS')" [dataSource]="blueprimslogs" #sort7="matSort" matSort style="width:100%;overflow-x:scroll;">
 
 
                           <!-- Run Id Column -->
@@ -660,7 +660,9 @@
                             Maximum of 50 characters
                         </div>
                     </div> -->
+                   
                       <div class="col-md-12 p-0 form-group">
+                        
                           <label class="label-control" for="taskOwner">Task Owner<span class="star">*</span></label>
                           <!-- <input type="text" maxlength="51" class="form-control data" formControlName="taskOwner"  value="" placeholder="Enter Connection Name"> -->
                           <select formControlName="taskOwner" class="form-control">
@@ -674,7 +676,7 @@
                         </div>-->
                       </div>
                       <div class="col-md-6 pl-0 form-group">
-                          <label class="label-control" for="slaConfigId">SLA Breach Limit (Min)
+                          <label class="label-control" for="slaConfigId">SLA Breach Limit (Min)<span class="star">*</span>
                          <!-- <span class="star">*</span> -->
                        </label>
                           <input type="number" min=0 max=60 maxlength="2" formControlName="slaConfigId" onkeypress="return (event.charCode > 47 && event.charCode < 58)" class="form-control data" value="" placeholder="00">
@@ -701,7 +703,7 @@
                   </div>-->
                       <!-- </div> -->
                       <div class="col-md-6 pr-0 form-group">
-                          <label class="label-control" for="thresholdLimit">Threshold Limit (Min)
+                          <label class="label-control" for="thresholdLimit">Threshold Limit (Min)<span class="star">*</span>
                          <!-- <span class="star">*</span> -->
                        </label>
                           <input type="number" min=0 max=60 onkeypress="return (event.charCode > 47 && event.charCode < 58)" class="form-control data" formControlName="thresholdLimit" value="" maxlength="2" placeholder="00">
@@ -738,7 +740,7 @@
 
                       <div class="form-footer">
                           <button class="btn btn-default" (click)="resetsla()">Reset</button>
-                          <button class="btn btn-primary btn-test" (click)="slaalerts()">Save</button>
+                          <button class="btn btn-primary btn-test" [disabled]="insertslaForm_so_bot.invalid || insertslaForm_so_bot.get('slaConfigId').value=='0'|| insertslaForm_so_bot.get('thresholdLimit').value=='0'" (click)="slaalerts()">Save</button>
                       </div>
                   </form>
               </div>
@@ -746,4 +748,4 @@
           </div>
 
       </div>
-  </div>
+  </div> 

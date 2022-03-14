@@ -33,6 +33,7 @@ export class MyAccountComponent implements OnInit {
   public eyeshow: boolean = true;
   public neweyeshow: boolean = true;
   public confeyeshow: boolean = true;
+  show:boolean=false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -46,6 +47,7 @@ export class MyAccountComponent implements OnInit {
 
   ngOnInit() {
     this.spinner.show();
+    
     this.countryInfo = countries.Countries;
     setTimeout(() => {
       this.userDetails();
@@ -99,12 +101,17 @@ export class MyAccountComponent implements OnInit {
       this. getAllStates();
       this.gatAllCities();
       this.isRefresh = !this.isRefresh;
+      this.show=true
       for (var i = 0; i < this.countryInfo.length; i++) {
         if (this.countryInfo[i].CountryName == this.formOne.country) {
           this.phnCountryCode = this.countryInfo[i].CountryCode
         
         }
       }
+      if(this.formOne.country==null || this.formOne.country==undefined){
+        this.formOne.country="United States"
+      }
+      this.show=false
       this.spinner.hide();
     })
    

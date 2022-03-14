@@ -676,26 +676,22 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
        response=data;
        if(response.start_time != null)
        {
-         let startdate=response.start_time.split("T");
-         response["start_date"]=startdate[0];
-         response.start_time=startdate[1].slice(0,8);
+        // let startdate=response.start_time.split("T");
+         response["start_date"]=response.start_time;
+         response.start_time=response.start_time;
+
+        //  logbyrunidresp["start_date"]=logbyrunidresp.start_time;
+        //  logbyrunidresp["end_date"]=logbyrunidresp.end_time;
+        //  logbyrunidresp.start_time=logbyrunidresp.start_time;
+        //  logbyrunidresp.end_time=logbyrunidresp.end_time;
 
 
-       }else
-       {
-         response["start_date"]="-";
-         response.start_time="-";
        }
        if(response.end_time != null)
        {
-         let enddate=response.end_time.split("T");
-         response["end_date"]=enddate[0];
-         response.end_time=enddate[1].slice(0,8);
-       }else
-       {
-         response["end_date"]="---";
-         response.end_time="---";
-
+        // let enddate=response.end_time.split("T");
+         response["end_date"]=response.end_time;
+         response.end_time=response.end_time;
        }
        log.push(response)
      });

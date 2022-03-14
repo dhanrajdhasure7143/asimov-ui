@@ -333,6 +333,7 @@ mat-list-item.mat-list-item.activeMenu:hover .active-img {
 .submenus.expanded .mat-list-item {
   height: 32px !important;
   display: flex !important;
+  padding-top:3px;
 }
 
 ::ng-deep mat-toolbar {
