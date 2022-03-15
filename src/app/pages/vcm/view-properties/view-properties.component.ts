@@ -81,7 +81,7 @@ export class ViewPropertiesComponent implements OnInit {
 
   getAttachements(){
     if(this.vcm_resData){
-      // this.isLoading=true;
+      this.isLoading=true;
       let reqBody={
         "masterId": this.vcm_resData.data.id,
         "parent": this.vcm_process
@@ -118,10 +118,27 @@ export class ViewPropertiesComponent implements OnInit {
     // this.paginator.firstPage();
   }
 
-  ondeleteAttachements(){
-
-  }
-
-
-
+  ondeleteAttachements(data){
+    let req_body=[]
+    let obj={
+      "uniqueId":data.uniqueId,
+      "fileVersion":data.fileVersion
+    }
+    req_body.push(obj)
+    console.log(data)
+    // [
+    //   {
+    //       "uniqueId": "4d11aaae-2942-eb19-5bd6-5c39024d05fb",
+    //      "fileVersion": "20220315155749-invoice.pdf"
+    //   },
+    //   {
+    //       "uniqueId": "4d11aaae-2942-eb19-5bd6-5c39024d05fb",
+    //      "fileVersion": "20220315155819-basic.bpmn"
+    //   }
+    //   ]
+    this.rest_api.ondeleteAttachements(req_body).subscribe(res=>{
+      console.log(res)
+      this. getAttachements();
+      })
+}
 }
