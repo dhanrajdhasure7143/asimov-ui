@@ -1327,5 +1327,8 @@ getvcmAttachements(body){
 ondeleteAttachements(body){
   return this.http.post('/vcmv2/deleteDocument',body);
 }
+updateVcm(body){
+  return this.http.post('/vcmv2/updatevcm',body);
+}
 
 }

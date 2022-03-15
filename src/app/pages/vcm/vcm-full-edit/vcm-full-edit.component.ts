@@ -63,7 +63,7 @@ export class VcmFullEditComponent implements OnInit {
   vcmUniqueId=UUID.UUID();
   vcm_id:any;
   selectedVcm:any;
-
+  ownerValues: any;
 
 
 
@@ -569,7 +569,9 @@ this.rest_api.uploadVCMPropDocument(formdata).subscribe(res=>{
       if(res){
         this.vcmName=this.selectedVcm.data.vcmName;
         this.process_ownerName=this.selectedVcm.data.processOwner;
-      this.dataMappingToTreeStructer1(this.selectedVcm.data.vcmV2);
+        let splitedValues = this.process_ownerName.split(' ');
+        this.ownerValues = splitedValues[0].charAt(0) + splitedValues[1].charAt(0);
+        this.dataMappingToTreeStructer1(this.selectedVcm.data.vcmV2);
       }
     })
   }
@@ -635,5 +637,16 @@ this.rest_api.uploadVCMPropDocument(formdata).subscribe(res=>{
   backToViewVcm(){
     this.router.navigate(["/pages/vcm/vcm-structure"],{queryParams:{id:this.vcm_id}})
   }
+
+  onChangeProcessOwner() {
+    let splitedValues = this.process_ownerName.split(' ');
+    this.ownerValues = splitedValues[0].charAt(0) + splitedValues[1].charAt(0);
+  }
+
+  // fitProcessName(processName){
+  //   if(processName && processName.length > 25)
+  //     return processName.substr(0,25)+'..';
+  //   return processName;
+  // }
 
 }

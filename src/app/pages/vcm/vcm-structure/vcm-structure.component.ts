@@ -63,152 +63,6 @@ export class VcmStructureComponent implements OnInit {
   uniqueId1:any;
   uniqueId:any;
   l1UniqueId:any;
-
-  vcmData1= [
-    {
-    "type": "Process",
-    "processOwner": "John Mustermann",
-    "level": "L1",
-    "description": "The implementation and generation of an appropriate strategy by the management requires a structured approach.",
-    "title": "manage",
-    "parent": "Management Process",
-    "children":[]
-    },
-    
-    {
-    "type": "Process",
-    "processOwner": "John Mustermann",
-    "level": "L1",
-    "description": "The implementation and generation of an appropriate strategy by the management requires a structured approach.",
-    "title": "hr",
-    "parent": "Management Process",
-    "children":[]
-    },
-    {
-    "type": "Process",
-    "processOwner": "John Mustermann",
-    "level": "L1",
-    "description": "The implementation and generation of an appropriate strategy by the management requires a structured approach.",
-    "title": "core",
-    "parent": "Core Process",
-    "children":[]
-    },
-    {
-    "type": "Process",
-    "processOwner": "John Mustermann",
-    "level": "L1",
-    "description": "The implementation and generation of an appropriate strategy by the management requires a structured approach.",
-    "title": "support",
-    "parent": "Support Process",
-    "children":[]
-    },
-    {
-    "type": "Process",
-    "processOwner": "John Mustermann",
-    "level": "L1",
-    "description": "The implementation and generation of an appropriate strategy by the management requires a structured approach.",
-    "title": "support1",
-    "parent": "Support Process",
-    "children":[]
-    },
-    {
-    "type": "process",
-    "processOwner": "John Mustermann",
-    "level": "L2",
-    "description": "The implementation and generation of an appropriate strategy by the management requires a structured.",
-    "title": "manage the company finances",
-    "parent": "Management Process",
-    "childParent": "manage",
-    "children":[]
-    },
-    {
-      "type": "process",
-      "processOwner": "John Mustermann",
-      "level": "L3",
-      "description": "The implementation and generation of an appropriate strategy by the management requires a structured.",
-      "title": "VCM test",
-      "parent": "Management Process",
-      "childParent": "manage",
-      "subChildParent": "manage the company finances",
-      "bpsId":"5831e9ea-2fcf-af70-a460-7c9623cba4bd",
-      "ntype":"bpmn",
-      "children":[]
-      },
-      {
-        "type": "process",
-        "processOwner": "John Mustermann",
-        "level": "L3",
-        "description": "",
-        "title": "Jklop Bpm",
-        "parent": "Management Process",
-        "childParent": "manage",
-        "subChildParent": "manage the company finances",
-        "bpsId":"0b58218c-4182-3524-c7f3-4cd657a784d9",
-        "ntype":"bpmn",
-        "children":[],
-        },
-    ];
-
-
-
-  vcmData2=[
-    {
-    "type": "Process",
-    "uniqueId": "8058218c-4182-3524-c7f3-4cd657a784d9",
-    "processOwner": "Sai Nookala",
-    "description": "The implementation",
-    "level": "L1",
-    "title": "biology",
-    "parent": "Management Process",
-    "children": [],
-    },
-    {
-      "type": "Process",
-      "uniqueId": "8058218c-4182-3524-c7f3-4cd63456",
-      "processOwner": "Sai Nookala",
-      "description": "The implementation",
-      "level": "L1",
-      "title": "biology1",
-      "parent": "Management Process",
-      "children": [],
-      },
-    {
-    "type": "Process",
-    "uniqueId": "9058218c-4182-3524-c7f3-4cd657a784d9",
-    "processOwner": "Sai Nookala",
-    "description": "The implementation",
-    "level": "L1",
-    "title": "chemistry",
-    "parent": "Core Process",
-    "children": [],
-    "attachments": []
-    },
-    {
-    "type": "Process",
-    "uniqueId": "5058218c-4182-3524-c7f3-4cd657a784d9",
-    "processOwner": "Sai Nookala",
-    "description": "The implementation",
-    "level": "L1",
-    "title": "Maths",
-    "parent": "Support Process",
-    "children": [],
-    "attachments": []
-    },
-    {
-    "type": "Process",
-    "uniqueId": "8058218c-4182-3524-c7f3-4cd657a73421",
-    "level1UniqueId": "8058218c-4182-3524-c7f3-4cd657a784d9",
-    "processOwner": "Sai Nookala",
-    "description": "The implementation",
-    "level": "L2",
-    "title": "differentiation",
-    "parent": "Management Process",
-    "childParent": "biology",
-    "children": [],
-    },
-    ]
-
-
     overlay_data={"type":"create","module":"bps","ntype":"dmn"};
     randomId: string;bpmnModel:BpmnModel = new BpmnModel();
     selectedNode:any;
@@ -237,7 +91,6 @@ export class VcmStructureComponent implements OnInit {
   hasChild = (_: number, node: any) => !!node.children && node.children.length > 0;
 
   editVcm(){
-    // console.log(this.vcmTreeData)
     this.isShow=true;
   }
 
@@ -692,7 +545,69 @@ this.nodeParent=node.title
     }
 
     saveProcess(){
-      console.log(this.vcmTreeData)
+      
+      let treeData=[]
+      let treeData1=[]
+      let treeData2=[]
+      let treeData3=[]
+      this.vcmTreeData.forEach(ele=>{
+          ele.children.forEach(e=>{
+            treeData.push(e)
+            treeData1.push(e)
+          })
+      })
+      treeData1.forEach(element => {
+        element.children.forEach(e=>{
+          treeData.push(e)
+          treeData2.push(e)
+        })
+      });
+
+      treeData2.forEach(e=>{
+        e.children.forEach(ele=>{
+          treeData.push(ele);
+          treeData3.push(ele)
+        })
+      })
+      let treeData4=[]
+      treeData.forEach(e=>{
+        let obj={
+          "type": e.type,
+        "uniqueId": e.uniqueId,
+        "processOwner": e.processOwner,
+        "description": e.description,
+        "level": e.level,
+        "title": e.title,
+        "parent": e.parent,
+        "children": [],
+        "attachments": [],
+        }
+        if(e.level1UniqueId){
+          obj["level1UniqueId"]=e.level1UniqueId
+        }
+        if(e.level2UniqueId){
+          obj["level1UniqueId"]=e.level2UniqueId
+        }
+        treeData4.push(obj)
+      })
+      // console.log(this.vcmTreeData)
+      console.log(treeData,treeData3)
+      let req_body={
+        "id": this.vcm_data.data.id,
+        "vcmuniqueId": this.vcm_data.data.vcmuniqueId,
+        "vcmName": this.vcm_data.data.vcmName,
+        "processOwner": this.vcm_data.data.processOwner,
+        "active": true,
+        "createdBy": this.vcm_data.data.createdBy,
+        "createdTimestamp": this.vcm_data.data.createdTimestamp,
+        "convertedCreatedTime": 0,
+        "convertedModifiedTime": 0,
+        "vcmV2": treeData4
+      }
+ 
+      this.rest_api.updateVcm(req_body).subscribe(res=>{
+      console.log(res)
+      })
     }
 
 }

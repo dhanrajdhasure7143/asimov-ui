@@ -247,7 +247,7 @@
                                         <span class="proc-title" *ngIf="node.level != 'L1' && node.level != 'L2' && node.level != 'L3' ">{{node.title}}
                                             <span class="" *ngIf="node.level != 'L1' && node.level != 'L2' && node.level != 'L3' && nodeParent == node.title ">
                                                 <img (click)="createLevel1(node)" src="../../../../assets/images/VCM/plus-bordercircle.svg" class="testplus" /> 
-                                                <button class="btn" (click)="saveProcess()">Save</button>
+                                                <button class="btn qsave-btn" (click)="saveProcess()">Save</button>
                                             </span> 
                                             <button class="btn qedit-btn" (click)="onSelectedProcessEdit(node)" *ngIf="nodeParent != node.title">Quick Edit</button>
                                         </span>
@@ -258,14 +258,12 @@
                                             </mat-icon>
                                         </button>
 
-                                        <span>
                                             <div *ngIf="nodeParent1 == node.title" style="display: flex;width: 150%;margin-top: 5%;">
                                                 <input type="text" class="form-control" placeholder="Enter Process Name1" [(ngModel)]="l1processName">
                                                 <button [hidden]="!l1processName" style="position: relative;right: 8%;" (click)="addL1Nodes(node)">
                                                     <img class="testplus1" src="../../../../assets/images/VCM/Green Tick.svg">
                                                 </button>
                                             </div>
-                                        </span>
 
                                         <span *ngIf="node.level == 'L1'">
                                             <span (click)="openNodeProperties(node)" *ngIf=" uniqueId1 != node.uniqueId ">{{node.title}} </span>
