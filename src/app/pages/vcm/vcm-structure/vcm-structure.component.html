@@ -174,7 +174,7 @@
                                             </button>
                                             <div *ngIf="uniqueId==node.uniqueId" class="test" style="display: flex;width: 150%;margin-top: 5%;">
                                                 <input type="text" class="form-control" placeholder="Enter Process Name" [(ngModel)]="processName">
-                                                <button [hidden]="!processName" style="position: relative;right: 8%;" (click)="addL1Nodes(node)">
+                                                <button [hidden]="!processName" style="position: relative;right: 8%;" (click)="addL2Nodes(node)">
                                                     <img class="testplus1" src="../../../../assets/images/VCM/Green Tick.svg">
                                                 </button>
                                             </div>
@@ -246,11 +246,25 @@
                                         <span class="proc-title" *ngIf="node.level != 'L1' && node.level != 'L2' && node.level != 'L3' ">{{node.title}} 
                                             <button class="btn qedit-btn" (click)="onSelectedProcessEdit(node)">Quick Edit</button>
                                         </span>
+
+                                        <span class="" *ngIf="node.level != 'L1' && node.level != 'L2' && node.level != 'L3' && nodeParent == node.title ">
+                                                <img (click)="createLevel1(node)" src="../../../../assets/images/VCM/plus-bordercircle.svg" class="testplus" />   
+                                        </span>
+
                                         <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name" *ngIf="node.title != 'Management Process' && node.title != 'Core Process' && node.title != 'Support Process'">
                                             <mat-icon class="mat-icon-rtl-mirror">
                                                 {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
                                             </mat-icon>
                                         </button>
+
+                                        <span>
+                                            <div *ngIf="nodeParent1 == node.title" style="display: flex;width: 150%;margin-top: 5%;">
+                                                <input type="text" class="form-control" placeholder="Enter Process Name1" [(ngModel)]="l1processName">
+                                                <button [hidden]="!l1processName" style="position: relative;right: 8%;" (click)="addL1Nodes(node)">
+                                                    <img class="testplus1" src="../../../../assets/images/VCM/Green Tick.svg">
+                                                </button>
+                                            </div>
+                                        </span>
 
                                         <span *ngIf="node.level == 'L1'">
                                             <span (click)="openNodeProperties(node)" *ngIf=" uniqueId1 != node.uniqueId ">{{node.title}} </span>
@@ -260,7 +274,7 @@
                                                 </button>
                                                 <div *ngIf="uniqueId==node.uniqueId" style="display: flex;width: 150%;margin-top: 5%;">
                                                     <input type="text" class="form-control" placeholder="Enter Process Name" [(ngModel)]="processName">
-                                                    <button [hidden]="!processName" style="position: relative;right: 8%;" (click)="addL1Nodes(node)">
+                                                    <button [hidden]="!processName" style="position: relative;right: 8%;" (click)="addL2Nodes(node)">
                                                         <img class="testplus1" src="../../../../assets/images/VCM/Green Tick.svg">
                                                     </button>
                                                 </div>
@@ -353,10 +367,8 @@
 <ng-template #popTemplate>
     <div class="custom-content ">
         <div class="custom-footer-content">
-            <p (click)="onCreateBpmn();"><img src="../../../../assets/images/VCM/Plus-litblue.svg" class="testplus" />Create Bpmn
-            </p>
-            <p (click)="onCreateDmn()"><img src="../../../../assets/images/VCM/Plus-litblue.svg" class="testplus" />Create DMN
-            </p>
+            <p (click)="onCreateBpmn();"><img src="../../../../assets/images/VCM/Plus-litblue.svg" class="testplus" />Create Bpmn</p>
+            <p (click)="onCreateDmn()"><img src="../../../../assets/images/VCM/Plus-litblue.svg" class="testplus" />Create DMN</p>
             <p (click)="onUploadNotation()"><img src="../../../../assets/images/VCM/upload-litblue.svg" class="testplus" />Upload Notation</p>
         </div>
     </div>
@@ -365,8 +377,8 @@
 <ng-template #popTemplate1>
     <div class="custom-content ">
         <div class="custom-footer-content">
-            <p><img src="../../../../assets/images/VCM/Plus-litblue.svg" class="testplus" />Create Notation</p>
-            <p><img src="../../../../assets/images/VCM/upload-litblue.svg" class="testplus" />Upload Notation</p>
+            <p (click)="onCreateBpmn();"><img src="../../../../assets/images/VCM/Plus-litblue.svg" class="testplus" />Create Notation</p>
+            <p (click)="onUploadNotation()" ><img src="../../../../assets/images/VCM/upload-litblue.svg" class="testplus" />Upload Notation</p>
             <p (click)="onCreateLevel3()"><img src="../../../../assets/images/VCM/Folder-litblue.svg" class="testplus" />Create Level 3</p>
         </div>
     </div>
@@ -383,3 +395,6 @@
     </div>
     <app-view-properties [vcm_data]="node_data" [vcm_resData]="vcm_data" [processOwners_list]="processOwners_list" [edit]="edit"></app-view-properties>
 </div>
+
+
+<process-category-overlay headerTitle="BPMN Details" [overlay_data]="overlay_data" (proceed)="uploadCreateBpmn($event)" class="bpmnCreate"></process-category-overlay>

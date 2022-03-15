@@ -38,7 +38,7 @@ export class ViewPropertiesComponent implements OnInit {
 
   getAttachements(){
     if(this.vcm_resData){
-      this.isLoading=true;
+      // this.isLoading=true;
       let reqBody={
         "masterId": this.vcm_resData.data.id,
         "parent": this.vcm_resData.mainParent

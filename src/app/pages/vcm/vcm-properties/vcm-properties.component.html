@@ -23,6 +23,7 @@
                                 <th>Process Name</th>
                                 <th>Level1 Name</th>
                                 <th>Process Owner</th>
+                                <th>Process Description</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -38,6 +39,13 @@
                                                 {{(each_approver.firstName | titlecase) +" "+(each_approver.lastName==undefined?"":each_approver.lastName)}}</option>
                                         </select>
                                     </td>
+                                    <span>
+                                        <textarea  (click)="descriptionView(each , j , 'level1')" *ngIf="!each.description" class="form-control descriptionview" placeholder="Enter Description"></textarea>
+                                        <textarea  (click)="descriptionView(each , j , 'level1')" class="form-control descriptionview" *ngIf="each.description">{{each.description}}</textarea>
+                                        <img *ngIf="each.description" src="../../../../assets/images/VCM/edit-3.svg" class="testplus" 
+                                            (click)="descriptionView(each , j , 'level1')"/>
+                                        
+                                    </span>
                                 </tr>
                             </ng-container>
                         </tbody>
@@ -165,6 +173,7 @@
                                 <th>Process Name</th>
                                 <th>Level2 Name</th>
                                 <th>Process Owner</th>
+                                <th>Process Description</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -179,6 +188,15 @@
                                                     <option *ngFor="let each_approver of processOwners_list;let i=index" [value]="each_approver.firstName+' '+each_approver.lastName">
                                                         {{(each_approver.firstName | titlecase) +" "+(each_approver.lastName==undefined?"":each_approver.lastName)}}</option>
                                                 </select>
+                                        </td>
+                                        <td>
+                                            <span>
+                                                <textarea  (click)="descriptionView(level2 , j , 'level2')"  *ngIf="!level2.description" class="form-control descriptionview" placeholder="Enter Description"></textarea>
+                                                <textarea (click)="descriptionView(level2 , j , 'level2')"  class="form-control descriptionview" *ngIf="level2.description">{{level2.description}}</textarea>
+                                                <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus" 
+                                                    (click)="descriptionView(level2 , j , 'level2')"  *ngIf="level2.description" /> 
+                                               
+                                            </span>
                                         </td>
                                     </tr>
                                 </ng-container>
