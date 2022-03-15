@@ -215,7 +215,7 @@ span.sub-nodel2 {
 }
 button.btn.qedit-btn, button.btn.qsave-btn  {
     border: 1px solid #00a0e3 !important;
-    padding: 2px 8px !important;
+    padding: 0px 8px !important;
     margin-left: 10px !important;
     border-radius: 50px !important;
     color: #00a0e3 !important;
