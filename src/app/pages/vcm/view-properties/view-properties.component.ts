@@ -66,7 +66,7 @@ export class ViewPropertiesComponent implements OnInit {
     // })
     // console.log("properties data",this.prop_data)
     if(this.vcm_process != "all"){
-      this.dataSource= new MatTableDataSource(this.vcm_data);
+      this.dataSource3= new MatTableDataSource(this.vcm_data);
 
     }else{
       this.vcm_data.map(item => {item.xpandStatus = false;return item;})

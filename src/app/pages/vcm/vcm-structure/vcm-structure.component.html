@@ -172,7 +172,7 @@
                                             <button (click)="onCreateLevel1(node)" *ngIf="uniqueId != node.uniqueId && uniqueId1 != node.uniqueId">
                                                 <img src="../../../../assets/images/VCM/plus-bordercircle.svg" class="testplus" />
                                             </button>
-                                            <div *ngIf="uniqueId==node.uniqueId" class="test" style="display: flex;width: 150%;margin-top: 5%;">
+                                            <div *ngIf="uniqueId==node.uniqueId" class="test" style="display: flex;width: 150%;margin-top: 2%;">
                                                 <input type="text" class="form-control" placeholder="Enter Process Name" [(ngModel)]="processName">
                                                 <button [hidden]="!processName" style="position: relative;right: 8%;" (click)="addL2Nodes(node)">
                                                     <img class="testplus1" src="../../../../assets/images/VCM/Green Tick.svg">
@@ -181,7 +181,7 @@
                                             <button (click)="editLevelName(node)" *ngIf=" uniqueId1 != node.uniqueId && uniqueId != node.uniqueId ">
                                                 <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" />
                                             </button>
-                                            <div *ngIf="uniqueId1 == node.uniqueId" style="display: flex;width: 150%;margin-top: 5%;">
+                                            <div *ngIf="uniqueId1 == node.uniqueId" style="display: flex;width: 150%;margin-top: 2%;">
                                                 <input type="text" class="form-control" placeholder="Enter Process Name" [(ngModel)]="node.title">
                                                 <button style="position: relative;right: 8%;" (click)="editTitle(node)">
                                                     <img class="testplus1" src="../../../../assets/images/VCM/Green Tick.svg">
@@ -197,7 +197,7 @@
                                                 <img src="../../../../assets/images/VCM/plus-bordercircle.svg" class="testplus" />
                                             </button>
                                         
-                                            <div *ngIf="uniqueId==node.uniqueId" style="display: flex;width: 150%;margin-top: 5%;">
+                                            <div *ngIf="uniqueId==node.uniqueId" style="display: flex;width: 150%;margin-top: 2%;">
                                                 <input type="text" class="form-control" placeholder="Enter Process Name" [(ngModel)]="processName">
                                                 <button [hidden]="!processName" style="position: relative;right: 8%;" (click)="addL3Nodes()">
                                                     <img class="testplus1" src="../../../../assets/images/VCM/Green Tick.svg">
@@ -207,7 +207,7 @@
                                             <button (click)="editLevelName(node)" *ngIf=" uniqueId1 != node.uniqueId && uniqueId != node.uniqueId">
                                                 <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" />
                                             </button>
-                                            <div *ngIf="uniqueId1 == node.uniqueId" style="display: flex;width: 150%;margin-top: 5%;">
+                                            <div *ngIf="uniqueId1 == node.uniqueId" style="display: flex;width: 150%;margin-top: 2%;">
                                                 <input type="text" class="form-control" placeholder="Enter Process Name" [(ngModel)]="node.title">
                                                 <button style="position: relative;right: 8%;" (click)="editTitle(node)">
                                                     <img class="testplus1" src="../../../../assets/images/VCM/Green Tick.svg">
@@ -227,7 +227,7 @@
                                                 <button (click)="editLevelName(node)" *ngIf=" uniqueId1 != node.uniqueId ">
                                                     <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" />
                                                 </button>
-                                                <div *ngIf="uniqueId1 == node.uniqueId" style="display: flex;width: 150%;margin-top: 5%;">
+                                                <div *ngIf="uniqueId1 == node.uniqueId" style="display: flex;width: 150%;margin-top: 2%;">
                                                     <input type="text" class="form-control" placeholder="Enter Process Name" [(ngModel)]="node.title">
                                                     <button style="position: relative;right: 8%;" (click)="editTitle(node)">
                                                         <img class="testplus1" src="../../../../assets/images/VCM/Green Tick.svg">
@@ -259,7 +259,7 @@
                                         </button>
 
                                         <span>
-                                            <div *ngIf="nodeParent1 == node.title" style="display: flex;width: 150%;margin-top: 5%;">
+                                            <div *ngIf="nodeParent1 == node.title" style="display: flex;width: 150%;margin-top: 2%;">
                                                 <input type="text" class="form-control" placeholder="Enter Process Name1" [(ngModel)]="l1processName">
                                                 <button [hidden]="!l1processName" style="position: relative;right: 8%;" (click)="addL1Nodes(node)">
                                                     <img class="testplus1" src="../../../../assets/images/VCM/Green Tick.svg">
@@ -273,7 +273,7 @@
                                                 <button *ngIf="uniqueId  != node.uniqueId && uniqueId1 != node.uniqueId" (click)="onCreateLevel1(node)">
                                                     <img src="../../../../assets/images/VCM/plus-bordercircle.svg" class="testplus" />
                                                 </button>
-                                                <div *ngIf="uniqueId==node.uniqueId" style="display: flex;width: 150%;margin-top: 5%;">
+                                                <div *ngIf="uniqueId==node.uniqueId" style="display: flex;width: 150%;margin-top: 2%;">
                                                     <input type="text" class="form-control" placeholder="Enter Process Name" [(ngModel)]="processName">
                                                     <button [hidden]="!processName" style="position: relative;right: 8%;" (click)="addL2Nodes(node)">
                                                         <img class="testplus1" src="../../../../assets/images/VCM/Green Tick.svg">
@@ -284,7 +284,7 @@
                                                 <button (click)="editLevelName(node)" *ngIf=" uniqueId1 != node.uniqueId && uniqueId  != node.uniqueId">
                                                     <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" />
                                                 </button>
-                                                <div *ngIf="uniqueId1 == node.uniqueId" style="display: flex;width: 150%;margin-top: 5%;">
+                                                <div *ngIf="uniqueId1 == node.uniqueId" style="display: flex;width: 150%;margin-top: 2%;">
                                                     <input type="text" class="form-control" placeholder="Enter Process Name" [(ngModel)]="node.title">
                                                     <button style="position: relative;right: 8%;" (click)="editTitle(node)">
                                                         <img class="testplus1" src="../../../../assets/images/VCM/Green Tick.svg">
@@ -296,7 +296,7 @@
 
                                         <span *ngIf="node.level == 'L2'">
                                             <span *ngIf="uniqueId1 != node.uniqueId" (click)="openNodeProperties(node)">{{node.title}} </span>
-                                            <div *ngIf="uniqueId1 == node.uniqueId" style="display: flex;width: 150%;margin-top: 5%;">
+                                            <div *ngIf="uniqueId1 == node.uniqueId" style="display: flex;width: 150%;margin-top: 2%;">
                                                 <input type="text" class="form-control" placeholder="Enter Process Name" [(ngModel)]="node.title">
                                                 <button style="position: relative;right: 8%;" (click)="editTitle(node)">
                                                     <img class="testplus1" src="../../../../assets/images/VCM/Green Tick.svg">

@@ -190,110 +190,112 @@
                                         Level 1 Process
                                         <img [ngClass]="(vcmProcess[0].children?.length != 0 || vcmProcess[1].children?.length != 0 || vcmProcess[2].children?.length != 0) ? 'view' : 'dis'" (click)="goToProperties('level1')" src="../../../../assets/images/VCM/Level 1.svg" class="testplus" alt="">
                                     </h4>
-                                    <mat-expansion-panel expanded>
-                                        <mat-expansion-panel-header>
-                                            <mat-panel-title>
-                                                <h5>
-                                                    <img src="../../../assets/images/menu-line.svg" class="testplus" alt="">Management Process
-                                                </h5>
-                                            </mat-panel-title>
-                                        </mat-expansion-panel-header>
-                                        <div class="row">
+                                    <div class="l1processlistdiv">
+                                        <mat-expansion-panel expanded>
+                                            <mat-expansion-panel-header>
+                                                <mat-panel-title>
+                                                    <h5>
+                                                        <img src="../../../assets/images/menu-line.svg" class="testplus" alt="">Management Process
+                                                    </h5>
+                                                </mat-panel-title>
+                                            </mat-expansion-panel-header>
+                                            <div class="row">
 
-                                            <div class="col-md-12 p-0 form-group content">
-                                                <input [(ngModel)]="manageinput" class="form-control" type="text" placeholder="Enter Management Process Name">
-                                                <button (click)="addManageProcess()" [disabled]="manageinput == '' " class="btn">
-                                                    <img src="../../../../assets/images/VCM/Green Tick.svg" class="testplus1" />
-                                                </button>
-                                            </div>
-                                            <div class="l1process-list">
-                                                <ul *ngFor="let item of vcmProcess">
-                                                    <ul *ngIf="item.name == 'Management Process'">
-                                                        <li *ngFor="let name of item.children;let i = index" class="childHover">
-                                                            <span>{{i + 1}}. {{name.title}}</span>
-                                                            <div class="actimg">
-                                                                <span><img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img"  />
-                                                                <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" (click)="removeChild(name)" /></span>
-                                                                <!-- <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" (click)="editProcess(item,name,1)" /> -->
-                                                                <span><img src="../../../../assets/images/VCM/more-vertical-default.svg" class="testplus default-img" />
-                                                                    <img src="../../../../assets/images/VCM/more-vertical-hover.svg" class="testplus hover-img" (click)="editProcess(item,name,1)" /></span>
-                                                            </div>                                                        
-                                                        </li>
+                                                <div class="col-md-12 p-0 form-group content">
+                                                    <input [(ngModel)]="manageinput" class="form-control" type="text" placeholder="Enter Management Process Name">
+                                                    <button (click)="addManageProcess()" [disabled]="manageinput == '' " class="btn">
+                                                        <img src="../../../../assets/images/VCM/Green Tick.svg" class="testplus1" />
+                                                    </button>
+                                                </div>
+                                                <div class="l1process-list">
+                                                    <ul *ngFor="let item of vcmProcess">
+                                                        <ul *ngIf="item.name == 'Management Process'">
+                                                            <li *ngFor="let name of item.children;let i = index" class="childHover">
+                                                                <span>{{i + 1}}. {{name.title}}</span>
+                                                                <div class="actimg">
+                                                                    <span><img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img"  />
+                                                                    <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" (click)="removeChild(name)" /></span>
+                                                                    <!-- <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" (click)="editProcess(item,name,1)" /> -->
+                                                                    <span><img src="../../../../assets/images/VCM/more-vertical-default.svg" class="testplus default-img" />
+                                                                        <img src="../../../../assets/images/VCM/more-vertical-hover.svg" class="testplus hover-img" (click)="editProcess(item,name,1)" /></span>
+                                                                </div>                                                        
+                                                            </li>
+                                                        </ul>
                                                     </ul>
-                                                </ul>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </mat-expansion-panel>
+                                        </mat-expansion-panel>
 
-                                    <mat-expansion-panel expanded>
-                                        <mat-expansion-panel-header>
-                                            <mat-panel-title>
-                                                <h5>
-                                                    <img src="../../../assets/images/menu-line.svg" class="testplus" alt="">Core Process
-                                                </h5>
-                                            </mat-panel-title>
-                                        </mat-expansion-panel-header>
-                                        <div class="row">
+                                        <mat-expansion-panel expanded>
+                                            <mat-expansion-panel-header>
+                                                <mat-panel-title>
+                                                    <h5>
+                                                        <img src="../../../assets/images/menu-line.svg" class="testplus" alt="">Core Process
+                                                    </h5>
+                                                </mat-panel-title>
+                                            </mat-expansion-panel-header>
+                                            <div class="row">
 
-                                            <div class="col-md-12 p-0 form-group content">
-                                                <input [(ngModel)]="coreinput" class="form-control" type="text" placeholder="Enter Core Process Name">
-                                                <button (click)="addCoreProcess()" [disabled]="coreinput == '' " class="btn">
-                                                    <img src="../../../../assets/images/VCM/Green Tick.svg" class="testplus1" />
-                                                </button>
-                                            </div>
-                                            <div class="l1process-list">
-                                                <ul *ngFor="let item of vcmProcess">
-                                                    <ul *ngIf="item.name == 'Core Process'">
-                                                        <li *ngFor="let name of item.children;let i = index" class="childHover">
-                                                            <span>{{i+1}}. {{name.title}}</span>
-                                                            <div class="actimg">
-                                                                <span><img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img" />
-                                                                <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" (click)="removeChild(name)" /></span>
-                                                                <!-- <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" (click)="editProcess(item,name,1)" /> -->
-                                                                <span><img src="../../../../assets/images/VCM/more-vertical-default.svg" class="testplus default-img" />
-                                                                    <img src="../../../../assets/images/VCM/more-vertical-hover.svg" class="testplus hover-img" (click)="editProcess(item,name,1)" /></span>
-                                                            </div>
-                                                        </li>
+                                                <div class="col-md-12 p-0 form-group content">
+                                                    <input [(ngModel)]="coreinput" class="form-control" type="text" placeholder="Enter Core Process Name">
+                                                    <button (click)="addCoreProcess()" [disabled]="coreinput == '' " class="btn">
+                                                        <img src="../../../../assets/images/VCM/Green Tick.svg" class="testplus1" />
+                                                    </button>
+                                                </div>
+                                                <div class="l1process-list">
+                                                    <ul *ngFor="let item of vcmProcess">
+                                                        <ul *ngIf="item.name == 'Core Process'">
+                                                            <li *ngFor="let name of item.children;let i = index" class="childHover">
+                                                                <span>{{i+1}}. {{name.title}}</span>
+                                                                <div class="actimg">
+                                                                    <span><img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img" />
+                                                                    <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" (click)="removeChild(name)" /></span>
+                                                                    <!-- <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" (click)="editProcess(item,name,1)" /> -->
+                                                                    <span><img src="../../../../assets/images/VCM/more-vertical-default.svg" class="testplus default-img" />
+                                                                        <img src="../../../../assets/images/VCM/more-vertical-hover.svg" class="testplus hover-img" (click)="editProcess(item,name,1)" /></span>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
                                                     </ul>
-                                                </ul>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </mat-expansion-panel>
+                                        </mat-expansion-panel>
 
-                                    <mat-expansion-panel expanded>
-                                        <mat-expansion-panel-header>
-                                            <mat-panel-title>
-                                                <h5>
-                                                    <img src="../../../assets/images/menu-line.svg" class="testplus" alt="">Support Process
-                                                </h5>
-                                            </mat-panel-title>
-                                        </mat-expansion-panel-header>
-                                        <div class="row">
+                                        <mat-expansion-panel expanded>
+                                            <mat-expansion-panel-header>
+                                                <mat-panel-title>
+                                                    <h5>
+                                                        <img src="../../../assets/images/menu-line.svg" class="testplus" alt="">Support Process
+                                                    </h5>
+                                                </mat-panel-title>
+                                            </mat-expansion-panel-header>
+                                            <div class="row">
 
-                                            <div class="col-md-12 p-0 form-group content">
-                                                <input [(ngModel)]="supportinput" class="form-control" type="text" placeholder="Enter Support process name">
-                                                <button (click)="addSupportProcess()" [disabled]="supportinput == '' " class="btn">
-                                                    <img src="../../../../assets/images/VCM/Green Tick.svg" class="testplus1" />
-                                                </button>
-                                            </div>
-                                            <div class="l1process-list">
-                                                <ul *ngFor="let item of vcmProcess">
-                                                    <ul *ngIf="item.name == 'Support Process'">
-                                                        <li *ngFor="let name of item.children;let i = index" class="childHover">
-                                                            <span>{{i+1}}. {{name.title}}</span>
-                                                            <div class="actimg">
-                                                                <span><img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img"  />
-                                                                <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" (click)="removeChild(name)" /></span>
-                                                                <!-- <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" (click)="editProcess(item,name,1)" /> -->
-                                                                <span><img src="../../../../assets/images/VCM/more-vertical-default.svg" class="testplus default-img" />
-                                                                    <img src="../../../../assets/images/VCM/more-vertical-hover.svg" class="testplus hover-img" (click)="editProcess(item,name,1)" /></span>
-                                                            </div>                                                       
-                                                        </li>
+                                                <div class="col-md-12 p-0 form-group content">
+                                                    <input [(ngModel)]="supportinput" class="form-control" type="text" placeholder="Enter Support process name">
+                                                    <button (click)="addSupportProcess()" [disabled]="supportinput == '' " class="btn">
+                                                        <img src="../../../../assets/images/VCM/Green Tick.svg" class="testplus1" />
+                                                    </button>
+                                                </div>
+                                                <div class="l1process-list">
+                                                    <ul *ngFor="let item of vcmProcess">
+                                                        <ul *ngIf="item.name == 'Support Process'">
+                                                            <li *ngFor="let name of item.children;let i = index" class="childHover">
+                                                                <span>{{i+1}}. {{name.title}}</span>
+                                                                <div class="actimg">
+                                                                    <span><img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img"  />
+                                                                    <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" (click)="removeChild(name)" /></span>
+                                                                    <!-- <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" (click)="editProcess(item,name,1)" /> -->
+                                                                    <span><img src="../../../../assets/images/VCM/more-vertical-default.svg" class="testplus default-img" />
+                                                                        <img src="../../../../assets/images/VCM/more-vertical-hover.svg" class="testplus hover-img" (click)="editProcess(item,name,1)" /></span>
+                                                                </div>                                                       
+                                                            </li>
+                                                        </ul>
                                                     </ul>
-                                                </ul>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </mat-expansion-panel>
+                                        </mat-expansion-panel>
+                                    </div>
                                 </div>
                             </div>
                         </div>
