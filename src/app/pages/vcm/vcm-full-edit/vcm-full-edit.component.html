@@ -7,16 +7,16 @@
             <span class="module-header-title">Value Chain Mapping - Edit</span>
         </div>
         <div class="ml-auto submit">
-            <button class="btn btn-default" (click)="resetLevel1()">Reset</button>
+            <!-- <button class="btn btn-default" (click)="resetLevel1()">Reset</button> -->
             <button class="btn btn-primary" [disabled]="!vcmName || !process_ownerName" (click)="saveVcm()">Save</button>
         </div>
     </div>
 
     <div class="module-body">
         <mat-drawer-container class="example-container h-100" style="background-color: white;">
-            <mat-drawer #drawer class="example-sidenav vcmprop" mode="side" position="end" >
-                
-                <div  class="propertiesContainer" id="propertiesContainer" >
+            <mat-drawer #drawer class="example-sidenav vcmprop" mode="side" position="end">
+
+                <div class="propertiesContainer" id="propertiesContainer">
                     <div class="close-btn">
                         <h3>{{editProcessName}}</h3>
                         <!-- <h3 class="tsttooltipbtn">{{fitProcessName(editProcessName)}}
@@ -37,7 +37,7 @@
                                 </mat-expansion-panel-header>
                                 <mat-panel-description>
                                     <div class="container p-0 prop-content">
-                                        <div class="editcontent" >
+                                        <div class="editcontent">
                                             <div class="col-md-12 p-0 form-group">
                                                 <label class="label-control">Process Name</label>
                                                 <input type="text" disabled class="form-control" [(ngModel)]="editProcessName">
@@ -52,7 +52,7 @@
                                             </div>
                                             <div class="col-md-12 p-0 form-group">
                                                 <label class="label-control">Process Description</label>
-                                                <textarea  class="form-control"  rows="5" [(ngModel)]="editProcessDescription" placeholder="Enter Process Description"></textarea>
+                                                <textarea class="form-control" rows="5" [(ngModel)]="editProcessDescription" placeholder="Enter Process Description"></textarea>
                                             </div>
                                         </div>
                                         <div class="propfooter col-md-12 p-0 text-right">
@@ -75,19 +75,19 @@
                                 </mat-expansion-panel-header>
                                 <mat-panel-description>
                                     <div class="container p-0 doc-content">
-                                        <div class="col-md-12 form-group" >
+                                        <div class="col-md-12 form-group">
                                             <!-- <h4 class="procname">{{editProcessName}}</h4> -->
                                             <div class="vcmdocs">
-                                                <img src="../../../../assets/images/VCM/VCM-Upload.svg"  />
-                                                <button class="btn" (click)="fileInput.click()" >
+                                                <img src="../../../../assets/images/VCM/VCM-Upload.svg" />
+                                                <button class="btn" (click)="fileInput.click()">
                                                     <input multiple #fileInput type="file" (change)="documentsUpload($event)" style="display:none;" />
                                                     Upload
                                                 </button>
                                             </div>
                                         </div>
-                                        <div class="col-md-12 form-group files" >
+                                        <div class="col-md-12 form-group files">
                                             <p *ngFor="let file of fileName;let i = index;">
-                                                {{i+1}}.{{file.fileName}} 
+                                                {{i+1}}.{{file.fileName}}
                                                 <span><img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img"  />
                                                 <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" (click)="RemoveFile(file,i)" /></span>
                                             </p>
@@ -152,7 +152,7 @@
                             <div class="col-md-4 pr-0 form-group vcname">
                                 <label class="label-control">Value Chain Name</label>
                                 <input type="text" class="form-control" [(ngModel)]="vcmName" placeholder="Enter Value Chain Name">
-                                <button class="btn" (click)="vcmHeading()" >
+                                <button class="btn" (click)="vcmHeading()">
                                     <img [hidden]="!vcmName" src="../../../../assets/images/VCM/Green Tick.svg" class="testplus1"  />
                                 </button>
                             </div>
@@ -161,7 +161,7 @@
                                     <img src="../../../../assets/images/VCM/pc.svg" class="default-img"/>
                                     <img src="../../../../assets/images/VCM/pc-hover.svg" class="hover-img"/>
                                 </button>
-                                <span class="poname"  *ngIf="process_ownerName">{{ownerValues| uppercase}}</span>
+                                <span class="poname" *ngIf="process_ownerName">{{ownerValues| uppercase}}</span>
                                 <div class="povaluediv">
                                     <select class="form-control" (change)="onChangeProcessOwner(process_ownerName)" [(ngModel)]="process_ownerName">
                                         <option value="" hidden disabled>Select Process Owner</option>
@@ -218,7 +218,7 @@
                                                                     <!-- <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" (click)="editProcess(item,name,1)" /> -->
                                                                     <span><img src="../../../../assets/images/VCM/more-vertical-default.svg" class="testplus default-img" />
                                                                         <img src="../../../../assets/images/VCM/more-vertical-hover.svg" class="testplus hover-img" (click)="editProcess(item,name,1)" /></span>
-                                                                </div>                                                        
+                                                                </div>
                                                             </li>
                                                         </ul>
                                                     </ul>
@@ -288,7 +288,7 @@
                                                                     <!-- <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" (click)="editProcess(item,name,1)" /> -->
                                                                     <span><img src="../../../../assets/images/VCM/more-vertical-default.svg" class="testplus default-img" />
                                                                         <img src="../../../../assets/images/VCM/more-vertical-hover.svg" class="testplus hover-img" (click)="editProcess(item,name,1)" /></span>
-                                                                </div>                                                       
+                                                                </div>
                                                             </li>
                                                         </ul>
                                                     </ul>
@@ -339,7 +339,7 @@
                                                                 <!-- <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" (click)="editLevel2(name,level2,2)" /> -->
                                                                 <span><img src="../../../../assets/images/VCM/more-vertical-default.svg" class="testplus default-img" />
                                                                     <img src="../../../../assets/images/VCM/more-vertical-hover.svg" class="testplus hover-img" (click)="editLevel2(name,level2,2)" /></span>
-                                                                
+
                                                             </div>
                                                         </li>
                                                     </ul>
@@ -410,6 +410,6 @@
 
 <div class="spinoverlay" *ngIf="isLoading">
     <div class="spincenter">
-        <img  src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader"/>
+        <img src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader" />
     </div>
 </div>

@@ -433,7 +433,9 @@ this.nodeParent=node.title
           this.dataSource.data = null;
           this.dataSource.data = this.vcmTreeData;
           this.treeControl.dataNodes = this.dataSource.data;
-          this.treeControl.expandAll()
+          this.treeControl.expandAll();
+          this.processName = '';
+          this.uniqueId = '';
         }, 100);
     }
     viewTotalProperties(){
