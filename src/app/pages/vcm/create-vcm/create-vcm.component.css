@@ -354,6 +354,7 @@ hr {
     padding-left: 0px !important;
     border: transparent !important;
     background-color: transparent !important;
+    color: #001c47 !important;
 }
 .submit button.btn.btn-primary:last-child {
     margin-left: 10px;

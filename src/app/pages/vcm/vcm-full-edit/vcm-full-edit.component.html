@@ -15,11 +15,92 @@
     <div class="module-body">
         <mat-drawer-container class="example-container h-100" style="background-color: white;">
             <mat-drawer #drawer class="example-sidenav vcmprop" mode="side" position="end" >
-                <div class="close-btn">
-                    <h3>{{editProcessName}}</h3>
-                    <img src="../../../../assets/images/VCM/VCM-close.svg" (click)="closeOverlay()" />
+                
+                <div  class="propertiesContainer" id="propertiesContainer" >
+                    <div class="close-btn">
+                        <h3>{{editProcessName}}</h3>
+                        <!-- <h3 class="tsttooltipbtn">{{fitProcessName(editProcessName)}}
+                            <span class="testtooltip">{{editProcessName}}</span>
+                        </h3> -->
+                        <img src="../../../../assets/images/VCM/VCM-close.svg" (click)="closeOverlay()" />
+                    </div>
+                    <div class="propertiesPanelBody" id="propertiesPanelBody">
+                        <mat-accordion>
+                            <mat-expansion-panel (opened)="onExpansionClik('1')" hideToggle [expanded]="isOpenedState==1">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title class="accordionHeaderMain">
+                                        <div class="accordionHeaderToggle">
+                                            <img src="../../../../assets/images/BPMS/Properties.svg" alt="menuToggleIcon" class="menuToggleIcon">
+                                            <label class="accordionHeader">Properties</label>
+                                        </div>
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <mat-panel-description>
+                                    <div class="container p-0 prop-content">
+                                        <div class="editcontent" >
+                                            <div class="col-md-12 p-0 form-group">
+                                                <label class="label-control">Process Name</label>
+                                                <input type="text" disabled class="form-control" [(ngModel)]="editProcessName">
+                                            </div>
+                                            <div class="col-md-12 p-0 form-group">
+                                                <label class="label-control">Process Owner</label>
+                                                <select class="form-control" [(ngModel)]="editProcessOwner">
+                                                    <option value="" hidden disabled>Select Owner</option>
+                                                    <option *ngFor="let each_approver of processOwners_list;let i=index" [value]="each_approver.firstName+' '+each_approver.lastName">
+                                                        {{(each_approver.firstName | titlecase) +" "+(each_approver.lastName==undefined?"":each_approver.lastName)}}</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-12 p-0 form-group">
+                                                <label class="label-control">Process Description</label>
+                                                <textarea  class="form-control"  rows="5" [(ngModel)]="editProcessDescription" placeholder="Enter Process Description"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="propfooter col-md-12 p-0 text-right">
+                                            <!-- <button class="btn btn-default" (click)="resetProperties()">Reset</button> -->
+                                            <button class="btn btn-primary" *ngIf="editLevelProperties == 1" (click)="editProperties()">Save</button>
+                                            <button class="btn btn-primary" *ngIf="editLevelProperties == 2" (click)="editProcessLevel2()">Save</button>
+                                        </div>
+                                    </div>
+                                </mat-panel-description>
+                            </mat-expansion-panel>
+
+                            <mat-expansion-panel (opened)="onExpansionClik('2')" hideToggle [expanded]="isOpenedState==2">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        <div class="accordionHeaderToggle">
+                                            <img src="../../../../assets/images/BPMS/Discussions.svg" alt="menuToggleIcon" class="menuToggleIcon">
+                                            <label for="" class="accordionHeader">Documents</label>
+                                        </div>
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <mat-panel-description>
+                                    <div class="container p-0 doc-content">
+                                        <div class="col-md-12 form-group" >
+                                            <!-- <h4 class="procname">{{editProcessName}}</h4> -->
+                                            <div class="vcmdocs">
+                                                <img src="../../../../assets/images/VCM/VCM-Upload.svg"  />
+                                                <button class="btn" (click)="fileInput.click()" >
+                                                    <input multiple #fileInput type="file" (change)="documentsUpload($event)" style="display:none;" />
+                                                    Upload
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 form-group files" >
+                                            <p *ngFor="let file of fileName;let i = index;">
+                                                {{i+1}}.{{file.fileName}} 
+                                                <span><img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img"  />
+                                                <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" (click)="RemoveFile(file,i)" /></span>
+                                            </p>
+                                        </div>
+
+                                    </div>
+                                </mat-panel-description>
+                            </mat-expansion-panel>
+
+                        </mat-accordion>
+                    </div>
                 </div>
-                <mat-tab-group>
+                <!-- <mat-tab-group>
                     <mat-tab label="Properties">
                         <div class="editcontent" >
                             <div class="col-md-12 form-group">
@@ -40,14 +121,12 @@
                             </div>
                         </div>
                         <div class="propfooter col-md-12 text-right">
-                            <!-- <button class="btn btn-default" (click)="resetProperties()">Reset</button> -->
                             <button class="btn btn-primary" *ngIf="editLevelProperties == 1" (click)="editProperties()">Save</button>
                             <button class="btn btn-primary" *ngIf="editLevelProperties == 2" (click)="editProcessLevel2()">Save</button>
                         </div>
                     </mat-tab>
                     <mat-tab label="Documents">
                         <div class="col-md-12 form-group" >
-                            <!-- <h4 class="procname">{{editProcessName}}</h4> -->
                             <div class="vcmdocs">
                                 <img src="../../../../assets/images/VCM/VCM-Upload.svg"  />
                                 <button class="btn" (click)="fileInput.click()" >
@@ -64,7 +143,7 @@
                             </p>
                         </div>
                     </mat-tab>
-                </mat-tab-group>
+                </mat-tab-group> -->
             </mat-drawer>
             <mat-drawer-content>
                 <div class="row maincontent h-100">

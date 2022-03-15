@@ -110,7 +110,11 @@ export class CreateVcmComponent implements OnInit {
           this.vcmProcess = null;
           this.vcmProcess = res_data.data;
           if (res_data.vName) this.vcmName = res_data.vName;
-          if (res_data.pOwner) this.process_ownerName = res_data.pOwner;
+          if (res_data.pOwner) {
+            this.process_ownerName = res_data.pOwner;
+            let splitedValues = this.process_ownerName.split(' ');
+            this.ownerValues = splitedValues[0].charAt(0) + splitedValues[1].charAt(0);
+          }
         }
       }
     });
