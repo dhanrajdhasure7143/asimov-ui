@@ -393,18 +393,19 @@ export class VcmStructureComponent implements OnInit {
   }
 
   viewProperties(node){
-    
+    console.log(node)
+    this.node_data=[];
     if(node== 'all'){
-      
       this.vcmData.forEach(element => {
           this.node_data.push(element)
       });
       console.log("shared data", this.node_data)
       this.isViewProperties = true;
       this.isShow = false;
+      let params1= {"id":this.vcm_id,"vcmLevel":"all"};
 
+      this.router.navigate([],{ relativeTo:this.route, queryParams:params1 });
     }else{
-    console.log(node);
     this.node_data = [];
     this.vcm_data["mainParent"] = node.title
     this.vcmData.forEach(element => {
@@ -412,6 +413,9 @@ export class VcmStructureComponent implements OnInit {
         this.node_data.push(element)
       }
     });
+    let params1= {"id":this.vcm_id,"vcmLevel":node.title};
+
+      this.router.navigate([],{ relativeTo:this.route, queryParams:params1 });
     console.log("shared data", this.node_data)
     this.isViewProperties = true;
     this.isShow = false;

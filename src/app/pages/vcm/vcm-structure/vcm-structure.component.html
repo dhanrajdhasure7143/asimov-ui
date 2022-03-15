@@ -352,7 +352,7 @@
                 <span class="module-back-button" (click)="backToView()">
                     <i aria-hidden="true" class="fas fa-arrow-left"></i>
                 </span>
-                <span class="module-header-title">Properties</span>
+                <span class="module-header-title">Consolidated Properties</span>
             </div>
         </div>
     <app-view-properties [vcm_data]="node_data" [vcm_resData]="vcm_data" [processOwners_list]="processOwners_list"></app-view-properties>
@@ -383,18 +383,6 @@
         </div>
     </div>
 </ng-template>
-
-<div class="h-100" *ngIf="isViewProperties && !isShow">
-    <div class="row module-heading title">
-        <div>
-            <span class="module-back-button" (click)="backToView()">
-                <i aria-hidden="true" class="fas fa-arrow-left"></i>
-            </span>
-            <span class="module-header-title">Properties</span>
-        </div>
-    </div>
-    <app-view-properties [vcm_data]="node_data" [vcm_resData]="vcm_data" [processOwners_list]="processOwners_list" [edit]="edit"></app-view-properties>
-</div>
 
 
 <process-category-overlay headerTitle="BPMN Details" [overlay_data]="overlay_data" (proceed)="uploadCreateBpmn($event)" class="bpmnCreate"></process-category-overlay>
