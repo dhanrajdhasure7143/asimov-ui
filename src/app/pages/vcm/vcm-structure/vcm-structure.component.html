@@ -258,14 +258,12 @@
                                             </mat-icon>
                                         </button>
 
-                                        <span>
                                             <div *ngIf="nodeParent1 == node.title" style="display: flex;width: 150%;margin-top: 5%;">
                                                 <input type="text" class="form-control" placeholder="Enter Process Name1" [(ngModel)]="l1processName">
                                                 <button [hidden]="!l1processName" style="position: relative;right: 8%;" (click)="addL1Nodes(node)">
                                                     <img class="testplus1" src="../../../../assets/images/VCM/Green Tick.svg">
                                                 </button>
                                             </div>
-                                        </span>
 
                                         <span *ngIf="node.level == 'L1'">
                                             <span (click)="openNodeProperties(node)" *ngIf=" uniqueId1 != node.uniqueId ">{{node.title}} </span>

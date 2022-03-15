@@ -1324,5 +1324,8 @@ uploadVCMPropDocument(body){
 getvcmAttachements(body){
   return this.http.post('/vcmv2/fetchDocumentsByProcessType',body); 
 }
+updateVcm(body){
+  return this.http.post('/vcmv2/updatevcm',body);
+}
 
 }

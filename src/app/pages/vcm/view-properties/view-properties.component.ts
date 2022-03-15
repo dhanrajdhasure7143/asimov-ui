@@ -66,7 +66,7 @@ export class ViewPropertiesComponent implements OnInit {
     // })
     // console.log("properties data",this.prop_data)
     if(this.vcm_process != "all"){
-      this.dataSource= new MatTableDataSource(this.vcm_data);
+      this.dataSource3= new MatTableDataSource(this.vcm_data);
 
     }else{
       this.vcm_data.map(item => {item.xpandStatus = false;return item;})
@@ -88,7 +88,7 @@ export class ViewPropertiesComponent implements OnInit {
       }
       let res_data
       this.attachments=[];
-      this.dataSource= new MatTableDataSource([]);
+      this.dataSource= new MatTableDataSource(this.attachments);
     this.rest_api.getvcmAttachements(reqBody).subscribe(res=>{res_data=res
       this.attachments=res_data.data
       this.dataSource= new MatTableDataSource(this.attachments);
@@ -101,6 +101,7 @@ export class ViewPropertiesComponent implements OnInit {
 
   getexpandedlevel(data){
     console.log(data,this.vcm_data)
+    this.expandedData=[];
     this.vcm_data.forEach(element => {
       if(element.parent == data.parent && element.level != data.level){
         this.expandedData.push(element);
