@@ -1,5 +1,14 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { RestApiService } from '../../services/rest-api.service';
+import { Observable  } from 'rxjs/Observable';
+import { of  } from 'rxjs/observable/of';
+import { map } from 'rxjs/operators';
+import { MatSort, Sort } from '@angular/material';;
+// import { fromMatSort, sortRows } from './../model/datasource-utils';
+import { fromMatSort, sortRows } from './../../../pages/business-process/model/datasource-utils';
+import {MatTableDataSource} from '@angular/material/table';
+import {MatPaginator} from '@angular/material/paginator';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-view-properties',
@@ -16,41 +25,101 @@ export class ViewPropertiesComponent implements OnInit {
   attachments:any=[];
   prop_data:any=[];
   isLoading:boolean=false;
+  displayedRows$: Observable<any[]>;
+  totalRows$: Observable<number>;
+  @ViewChild(MatSort,{static:false}) sort: MatSort;
+  @ViewChild(MatSort,{static:false}) sort1: MatSort;
+  @ViewChild('sort3',{static:false}) sort3: MatSort;
+  // @ViewChild(MatPaginator,{static:false}) paginator: MatPaginator;
+  dataSource:MatTableDataSource<any>;
+  dataSource1:MatTableDataSource<any>;
+  dataSource3:MatTableDataSource<any>;
+  displayedColumns: string[] = ["vcmLevel",'fileName',"description","uploadedBy","convertedUploadedTime",'actions'];
+  displayedColumns1: string[] = ["level","parent","title","processOwner","description"];
+  displayedColumns3: string[] = ["level","parent","title","processOwner","description"];
+  expandedData:any=[];
+  vcm_id:any;
+  vcm_process:any;
+  isShowAll:boolean=false;
 
-  constructor(private rest_api: RestApiService) { }
+  constructor(private rest_api: RestApiService,private route:ActivatedRoute) {
+    this.route.queryParams.subscribe(res => {
+      this.vcm_id = res.id
+      this.vcm_process = res.vcmLevel
+      this.vcm_process== "all"?this.isShowAll=true : this.isShowAll=false;
+    });
+   }
 
   ngOnInit(): void {
     console.log(this.edit);
+    // this.getAttachements();
+
   }
 
   ngOnChanges(){
     console.log("this.vcm_data",this.vcm_data)
     console.log("this.vcm_resData",this.vcm_resData)
-    this.prop_data=[];
+    // this.vcm_data.forEach(element => {
+    //   if(element.processOwner){
+    //     this.prop_data.push(element)
+    //   }
+    // })
+    // console.log("properties data",this.prop_data)
+    if(this.vcm_process != "all"){
+      this.dataSource= new MatTableDataSource(this.vcm_data);
+
+    }else{
+      this.vcm_data.map(item => {item.xpandStatus = false;return item;})
+      this.assignPagenation(this.vcm_data)
+    }
+
+  }
+  ngAfterViewInit(){
     this.getAttachements();
-    this.vcm_data.forEach(element => {
-      if(element.processOwner){
-        this.prop_data.push(element)
-      }
-    })
-    console.log("properties data",this.prop_data)
+
   }
 
   getAttachements(){
     if(this.vcm_resData){
-      this.isLoading=true;
+      // this.isLoading=true;
       let reqBody={
         "masterId": this.vcm_resData.data.id,
-        "parent": this.vcm_resData.mainParent
+        "parent": this.vcm_process
       }
       let res_data
       this.attachments=[];
+      this.dataSource= new MatTableDataSource([]);
     this.rest_api.getvcmAttachements(reqBody).subscribe(res=>{res_data=res
-      console.log(res)
       this.attachments=res_data.data
+      this.dataSource= new MatTableDataSource(this.attachments);
+      this.dataSource.sort=this.sort1;
+
       this.isLoading=false;
     })
     }
+  }
+
+  getexpandedlevel(data){
+    console.log(data,this.vcm_data)
+    this.vcm_data.forEach(element => {
+      if(element.parent == data.parent && element.level != data.level){
+        this.expandedData.push(element);
+      }
+    });
+    this.dataSource1= new MatTableDataSource(this.expandedData);
+  }
+
+  assignPagenation(data){
+    // const sortEvents$: Observable<Sort> = fromMatSort(this.sort);
+    // const pageEvents$: Observable<PageEvent> = fromMatPaginator(this.paginator);
+    const rows$ = of(data);
+    this.totalRows$ = rows$.pipe(map(rows => rows.length));
+    this.displayedRows$ = rows$;
+    // this.paginator.firstPage();
+  }
+
+  ondeleteAttachements(){
+
   }
 
 

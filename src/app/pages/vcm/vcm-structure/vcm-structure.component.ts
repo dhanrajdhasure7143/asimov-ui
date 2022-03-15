@@ -212,6 +212,8 @@ export class VcmStructureComponent implements OnInit {
     overlay_data={"type":"create","module":"bps","ntype":"dmn"};
     randomId: string;bpmnModel:BpmnModel = new BpmnModel();
     selectedNode:any;
+  nodeParent1: any;
+  l1processName: any;
 
   constructor(private router: Router,private bpmnservice:SharebpmndiagramService,
     private rest_api: RestApiService,
@@ -391,18 +393,19 @@ export class VcmStructureComponent implements OnInit {
   }
 
   viewProperties(node){
-    
+    console.log(node)
+    this.node_data=[];
     if(node== 'all'){
-      
       this.vcmData.forEach(element => {
           this.node_data.push(element)
       });
       console.log("shared data", this.node_data)
       this.isViewProperties = true;
       this.isShow = false;
+      let params1= {"id":this.vcm_id,"vcmLevel":"all"};
 
+      this.router.navigate([],{ relativeTo:this.route, queryParams:params1 });
     }else{
-    console.log(node);
     this.node_data = [];
     this.vcm_data["mainParent"] = node.title
     this.vcmData.forEach(element => {
@@ -410,6 +413,9 @@ export class VcmStructureComponent implements OnInit {
         this.node_data.push(element)
       }
     });
+    let params1= {"id":this.vcm_id,"vcmLevel":node.title};
+
+      this.router.navigate([],{ relativeTo:this.route, queryParams:params1 });
     console.log("shared data", this.node_data)
     this.isViewProperties = true;
     this.isShow = false;
@@ -499,7 +505,7 @@ this.nodeParent=node.title
     this.uniqueId1 = null;
 
   }
-  addL1Nodes(node){
+  addL2Nodes(node){
     console.log(node)
     console.log(this.vcmData);
     this.uniqueId=UUID.UUID();
@@ -579,6 +585,114 @@ this.nodeParent=node.title
     }
     viewTotalProperties(){
       
+    }
+
+    createLevel1(node){
+      console.log(node)
+      this.nodeParent1=node.title
+    }
+
+    onCreateBpmn() {
+      console.log("test")
+      var modal = document.getElementById('myModal');
+      modal.style.display = "block";
+      this.overlay_data = { "type": "create", "module": "bps", "ntype": "bpmn" };
+    }
+  
+    onCreateDmn() {
+      var modal = document.getElementById('myModal');
+      modal.style.display = "block";
+      this.overlay_data = { "type": "create", "module": "bps", "ntype": "dmn" };
+    }
+  
+    uploadCreateBpmn(e) {
+      console.log(e)
+      this.randomId = UUID.UUID();
+      // this.create_editor=false;
+      this.bpmnModel.bpmnProcessName = e.processName;
+      this.bpmnModel.ntype = e.ntype;
+      this.bpmnModel.bpmnModelId = this.randomId;
+      this.bpmnModel['processOwner'] = e.processOwner;
+      this.bpmnModel['processOwnerName'] = e.processOwnerName;
+      this.bpmnservice.setSelectedBPMNModelId(this.randomId);
+      this.bpmnModel.category = e.categoryName;
+      // if(this.uploaded_file){
+      // var myReader: FileReader = new FileReader();
+      // myReader.onloadend = (ev) => {
+      //   let fileString:string = myReader.result.toString();
+      //   let encrypted_bpmn = btoa(unescape(encodeURIComponent(fileString)));
+      //   if( this.router.url.indexOf("uploadProcessModel") > -1 ){
+      //     this.bpmnservice.changeConfNav(true);
+      //   }else{
+      //     this.bpmnservice.changeConfNav(false);
+      //     this.bpmnservice.uploadBpmn(encrypted_bpmn);
+      //   }
+      //   this.bpmnModel.bpmnXmlNotation = encrypted_bpmn;
+      //   this.initialSave(this.bpmnModel, "upload");
+      // };
+      // myReader.readAsText(this.uploaded_file);
+      // }else{
+      this.bpmnservice.changeConfNav(false);
+      this.rest_api.getBPMNFileContent("assets/resources/newDiagram." + e.ntype).subscribe(res => {
+        let encrypted_bpmn = btoa(unescape(encodeURIComponent(res)));
+        this.bpmnservice.uploadBpmn(encrypted_bpmn);
+        this.bpmnModel.bpmnXmlNotation = encrypted_bpmn;
+        this.initialSave(this.bpmnModel, "create");
+      });
+      // }
+    }
+  
+    initialSave(diagramModel: BpmnModel, target: string) {
+      let message;
+      // diagramModel.createdTimestamp = new Date();
+      // diagramModel.modifiedTimestamp = new Date();
+      this.rest_api.saveBPMNprocessinfofromtemp(diagramModel).subscribe(res => {
+        console.log(res)
+        // if(res['errorCode']!="2005"){
+        //   let isBPSHome = this.router.url == "/pages/businessProcess/home";
+  
+        // this.update.emit(true);
+  
+        if (target == "create") {
+          this.router.navigateByUrl('/pages/businessProcess/createDiagram');
+        }
+        if (target == "upload") {
+          this.router.navigate(['/pages/businessProcess/uploadProcessModel'], { queryParams: { isShowConformance: false } });
+        }
+  
+      });
+    }
+
+
+    addL1Nodes(node){
+      console.log(node)
+      this.vcmTreeData.filter((e) => e.title === node.title)[0].children
+        .push({
+            type: "Process",
+            level: "L1",
+            parent: node.title,
+            title: this.l1processName,
+            description: '',
+            processOwner: '',
+            uniqueId: UUID.UUID(),
+            attachments:[],
+            children:[]
+          }
+        );
+        this.nodeParent1=null;
+        this.l1processName='';
+      console.log("vcmTreeData",this.vcmTreeData);
+      setTimeout(() => {
+        this.dataSource.data = null;
+        this.dataSource.data = this.vcmTreeData;
+        this.treeControl.dataNodes = this.dataSource.data;
+        this.treeControl.expandAll();
+        this.processName='';
+      }, 100);
+    }
+
+    saveProcess(){
+      console.log(this.vcmTreeData)
     }
 
 }
