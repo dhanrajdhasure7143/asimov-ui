@@ -636,4 +636,10 @@ this.rest_api.uploadVCMPropDocument(formdata).subscribe(res=>{
     this.router.navigate(["/pages/vcm/vcm-structure"],{queryParams:{id:this.vcm_id}})
   }
 
+  // fitProcessName(processName){
+  //   if(processName && processName.length > 25)
+  //     return processName.substr(0,25)+'..';
+  //   return processName;
+  // }
+
 }
