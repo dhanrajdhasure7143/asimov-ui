@@ -607,6 +607,21 @@ this.nodeParent=node.title
  
       this.rest_api.updateVcm(req_body).subscribe(res=>{
       console.log(res)
+      Swal.fire({
+        title: 'Success',
+        text: "Updated Successfully !!",
+        position: 'center',
+        icon: 'success',
+        showCancelButton: false,
+        heightAuto: false,
+      })
+      },err=>{
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Something went wrong!',
+          heightAuto: false,
+        })
       })
     }
 
