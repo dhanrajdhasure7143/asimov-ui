@@ -545,6 +545,53 @@ this.nodeParent=node.title
     }
 
     saveProcess(){
+      
+      let treeData=[]
+      let treeData1=[]
+      let treeData2=[]
+      let treeData3=[]
+      this.vcmTreeData.forEach(ele=>{
+          ele.children.forEach(e=>{
+            treeData.push(e)
+            treeData1.push(e)
+          })
+      })
+      treeData1.forEach(element => {
+        element.children.forEach(e=>{
+          treeData.push(e)
+          treeData2.push(e)
+        })
+      });
+
+      treeData2.forEach(e=>{
+        e.children.forEach(ele=>{
+          treeData.push(ele);
+          treeData3.push(ele)
+        })
+      })
+      let treeData4=[]
+      treeData.forEach(e=>{
+        let obj={
+          "type": e.type,
+        "uniqueId": e.uniqueId,
+        "processOwner": e.processOwner,
+        "description": e.description,
+        "level": e.level,
+        "title": e.title,
+        "parent": e.parent,
+        "children": [],
+        "attachments": [],
+        }
+        if(e.level1UniqueId){
+          obj["level1UniqueId"]=e.level1UniqueId
+        }
+        if(e.level2UniqueId){
+          obj["level1UniqueId"]=e.level2UniqueId
+        }
+        treeData4.push(obj)
+      })
+      // console.log(this.vcmTreeData)
+      console.log(treeData,treeData3)
       let req_body={
         "id": this.vcm_data.data.id,
         "vcmuniqueId": this.vcm_data.data.vcmuniqueId,
@@ -555,12 +602,12 @@ this.nodeParent=node.title
         "createdTimestamp": this.vcm_data.data.createdTimestamp,
         "convertedCreatedTime": 0,
         "convertedModifiedTime": 0,
-        "vcmV2": []
+        "vcmV2": treeData4
       }
+ 
       this.rest_api.updateVcm(req_body).subscribe(res=>{
-
+      console.log(res)
       })
-      console.log(this.vcmTreeData,this.vcm_data)
     }
 
 }
