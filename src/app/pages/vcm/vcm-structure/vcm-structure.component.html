@@ -243,12 +243,13 @@
                                         <button (click)="viewProperties(node)" *ngIf="(node.title=='Management Process'&& treeControl.dataNodes[1])|| (node.title=='Core Process'&& treeControl.dataNodes[1]) || (node.title=='Support Process'&& treeControl.dataNodes[2])">
                                             <img src="../../../assets/images/menu-line.svg" class="procmenu" alt="">
                                         </button>
-                                        <span class="proc-title" *ngIf="node.level != 'L1' && node.level != 'L2' && node.level != 'L3' ">{{node.title}} 
-                                            <button class="btn qedit-btn" (click)="onSelectedProcessEdit(node)">Quick Edit</button>
-                                        </span>
-
-                                        <span class="" *ngIf="node.level != 'L1' && node.level != 'L2' && node.level != 'L3' && nodeParent == node.title ">
-                                                <img (click)="createLevel1(node)" src="../../../../assets/images/VCM/plus-bordercircle.svg" class="testplus" />   
+                                       
+                                        <span class="proc-title" *ngIf="node.level != 'L1' && node.level != 'L2' && node.level != 'L3' ">{{node.title}}
+                                            <span class="" *ngIf="node.level != 'L1' && node.level != 'L2' && node.level != 'L3' && nodeParent == node.title ">
+                                                <img (click)="createLevel1(node)" src="../../../../assets/images/VCM/plus-bordercircle.svg" class="testplus" /> 
+                                                <button class="btn" (click)="saveProcess()">Save</button>
+                                            </span> 
+                                            <button class="btn qedit-btn" (click)="onSelectedProcessEdit(node)" *ngIf="nodeParent != node.title">Quick Edit</button>
                                         </span>
 
                                         <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name" *ngIf="node.title != 'Management Process' && node.title != 'Core Process' && node.title != 'Support Process'">

@@ -668,13 +668,12 @@ this.nodeParent=node.title
       console.log(node)
       this.vcmTreeData.filter((e) => e.title === node.title)[0].children
         .push({
+            type: "Process",
             level: "L1",
             parent: node.title,
             title: this.l1processName,
             description: '',
             processOwner: '',
-            type: "Process",
-            level1UniqueId: node.uniqueId,
             uniqueId: UUID.UUID(),
             attachments:[],
             children:[]
@@ -691,7 +690,10 @@ this.nodeParent=node.title
         this.processName='';
       }, 100);
     }
-  
+
+    saveProcess(){
+      console.log(this.vcmTreeData)
+    }
 
 }
 
