@@ -158,7 +158,9 @@
                             </button>
                         </div>
                         <div class="col-md-12 p-0">
-                            <h4><img (click)="viewTotalProperties(node)" src="../../../assets/images/menu-line.svg" class="procmenu" alt="">{{selectedVcmName}}</h4>
+                            <h4>
+                                <span><img (click)="viewProperties('all')" src="../../../assets/images/menu-line.svg" class="procmenu" alt=""></span>
+                                {{selectedVcmName}}</h4>
                         </div>
                         <div class="col-md-12 p-0 vcm-treediv">
                             <mat-tree [dataSource]="dataSource" #tree [treeControl]="treeControl" class="example-tree">
