@@ -245,6 +245,7 @@
                                         </button>
                                         <span class="proc-title" *ngIf="node.level != 'L1' && node.level != 'L2' && node.level != 'L3' ">{{node.title}} 
                                             <button class="btn qedit-btn" (click)="onSelectedProcessEdit(node)">Quick Edit</button>
+                                            <button class="btn qsave-btn" (click)="onSelectedProcessEdit(node)">Save</button>
                                         </span>
                                         <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name" *ngIf="node.title != 'Management Process' && node.title != 'Core Process' && node.title != 'Support Process'">
                                             <mat-icon class="mat-icon-rtl-mirror">
