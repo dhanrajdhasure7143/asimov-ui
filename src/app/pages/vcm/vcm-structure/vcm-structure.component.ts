@@ -586,7 +586,7 @@ this.nodeParent=node.title
           obj["level1UniqueId"]=e.level1UniqueId
         }
         if(e.level2UniqueId){
-          obj["level1UniqueId"]=e.level2UniqueId
+          obj["level2UniqueId"]=e.level2UniqueId
         }
         treeData4.push(obj)
       })
