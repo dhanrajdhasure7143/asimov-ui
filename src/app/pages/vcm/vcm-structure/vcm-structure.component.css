@@ -312,9 +312,15 @@ button.btn.qsave-btn:hover {
     height: calc(100vh - 325px) !important;
 }
 
-
 /* properties overlay */
 
 h4 img.procmenu {
     margin: -3px 6px 0px 0px !important;
+}
+.bps_link{
+    color: #00a0e3 !important;
+    cursor: pointer;
+}
+.bps_link:hover{
+    font-weight: 600;
 }
