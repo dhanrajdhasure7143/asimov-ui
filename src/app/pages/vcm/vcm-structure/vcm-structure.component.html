@@ -292,11 +292,11 @@
                                         <span *ngIf="node.level == 'L2'">
                                             <span *ngIf="uniqueId1 != node.uniqueId" (click)="openNodeProperties(node)">{{node.title}} </span>
                                         <span *ngIf="nodeParent == node.parent">
-                                                <button (click)="onSelectedNode(node)" #pop2="bs-popover" [popover]="popTemplate1" [outsideClick]="true" placement="right">
+                                                <button *ngIf="uniqueId1 != node.uniqueId" (click)="onSelectedNode(node)" #pop2="bs-popover" [popover]="popTemplate1" [outsideClick]="true" placement="right">
                                                     <img src="../../../../assets/images/VCM/plus-bordercircle.svg"
                                                         class="testplus" />
                                                 </button>
-                                                <button *ngIf="uniqueId1 != node.uniqueId" (click)="editLevelName(node)">
+                                                <button *ngIf="uniqueId1 != node.uniqueId && uniqueId != node.uniqueId" (click)="editLevelName(node)">
                                                     <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" />
                                                 </button>    
                                                 <div *ngIf="uniqueId== node.uniqueId" style="width: 150%;display: flex;">

@@ -64,6 +64,9 @@ export class VcmFullEditComponent implements OnInit {
   vcm_id:any;
   selectedVcm:any;
   ownerValues: any;
+  selectedNode_obj: any;
+  inputUniqueId: any;
+  l3ProcessName: any;
 
 
 
@@ -118,6 +121,7 @@ export class VcmFullEditComponent implements OnInit {
     });
     if(this.vcm_id){
       this.getselectedVcm();
+      console.log(this.vcmProcess);
     }
   }
 
@@ -183,6 +187,7 @@ export class VcmFullEditComponent implements OnInit {
     console.log(name);
     var index = TREE_DATA.filter(e => e.name === name.parent)[0]
       .children.findIndex(c => c.title === name.title);
+      console.log(index);
     TREE_DATA.filter(e => e.name == name.parent)[0].children.splice(index, 1);
     this.vcmProcess = null;
     this.vcmProcess = TREE_DATA;
@@ -205,6 +210,7 @@ export class VcmFullEditComponent implements OnInit {
       description: '',
       processOwner: '',
       attachments: [],
+      children: [],
       level: "L2",
       'uniqueId':UUID.UUID()
     };
@@ -631,6 +637,7 @@ this.rest_api.uploadVCMPropDocument(formdata).subscribe(res=>{
       });
     this.vcmProcess = null;
     this.vcmProcess =objData;
+    TREE_DATA = objData;
     this.dataSource.data=objData;
     this.treeControl.dataNodes = this.dataSource.data; 
   }
@@ -648,5 +655,57 @@ this.rest_api.uploadVCMPropDocument(formdata).subscribe(res=>{
   //     return processName.substr(0,25)+'..';
   //   return processName;
   // }
+
+  onCreateLevel3(level2,item){
+    console.log(level2,item);
+    this.selectedNode_obj = level2;
+    this.inputUniqueId = this.selectedNode_obj.uniqueId;
+  }
+
+  editTitle(level2, item) {
+    console.log(level2, item);
+    let record = {
+      type: 'Process',
+      title: this.l3ProcessName,
+      parent: item.name,
+      childParent: level2.title,
+      l2childParent:level2.childParent,
+      description: '',
+      processOwner: '',
+      attachments: [],
+      level: "L3",
+      'uniqueId': UUID.UUID()
+    };
+
+    TREE_DATA.filter(e => e.name == item.name)[0]
+    .children.filter(c => c.title == level2.childParent)[0]
+    .children.filter(t => t.title == level2.title)[0].children.push(record);
+    console.log(TREE_DATA);
+    this.vcmProcess = null;
+    this.vcmProcess = TREE_DATA;
+    this.dataSource.data = null;
+    this.dataSource.data = TREE_DATA;
+    this.l3ProcessName = '';
+    this.inputUniqueId = '';
+  }
+
+  l3remove(l3){
+    console.log(l3);
+    var processIndex = TREE_DATA.findIndex(e => e.name === l3.parent);
+    var processData = TREE_DATA[processIndex]['children'];
+    var parentIndex = processData.findIndex(e => e.title === l3.l2childParent);
+    var parentData = processData[parentIndex]['children'];
+    console.log(parentData);
+    var childIndex = parentData.findIndex(e => e.title === l3.childParent);
+    var level3 =  parentData[childIndex]['children'];
+    console.log(level3);
+    var childIndexL3 = level3.findIndex(e=>e.title === l3.title);
+    TREE_DATA[processIndex]['children'][parentIndex]['children'][childIndex]['children'].splice(childIndexL3, 1);
+    this.vcmProcess = null;
+    this.vcmProcess = TREE_DATA;
+    this.dataSource.data = null;
+    this.dataSource.data = TREE_DATA;
+    console.log(this.vcmProcess);
+  }
 
 }
