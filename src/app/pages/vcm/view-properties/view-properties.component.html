@@ -3,15 +3,15 @@
         <div class="col-md-12 col-lg-12">
             <div class="prop_owner">
                 <h4>Process Details</h4>
-                <div *ngIf="isShowAll">
+                <div class="prop-detcont" *ngIf="isShowAll">
                     <div class="row col-md-12 text-bold workspace-title">
                         <div class="expan-icon"></div>
                         <div class="cell cell2">Level</div>
-                        <div class="cell cell4">Category</div>
-                        <div class="cell cell5">Process Name</div>
-                        <div class="cell cell6">Owner</div>
-                        <div class="cell cell11">Description</div>
-                        <div class="cell cell11">Actions</div>
+                        <div class="cell cell3">Category</div>
+                        <div class="cell cell4">Process Name</div>
+                        <div class="cell cell5">Owner</div>
+                        <div class="cell cell6">Description</div>
+                        <div class="cell cell7">Actions</div>
                     </div>
                     <div class="row col-md-12 new-bps-grid-data" id="bpmn_list">
                         <mat-accordion>
@@ -26,13 +26,24 @@
                                                     <i class="material-icons expand-close">expand_less</i>
                                                 </div>
                                                 <div class="cell cell2">{{each.level === "L1"? "1":"2"}}</div>
-                                                <div class="cell cell2">{{each.parent}}</div>
-                                                <div class="cell cell2">{{each.title}}</div>
-                                                <div class="cell cell2">{{each.processOwner?each.processOwner:'-'}}
-                                                </div>
-                                                <div class="cell cell2">{{each.description?each.description:'-'}}</div>
-                                                <div class="cell cell2">
-                                                    <button>Edit</button>
+                                                <div class="cell cell3">{{each.parent}}</div>
+                                                <div class="cell cell4">{{each.title}}</div>
+                                                <div class="cell cell5">{{each.processOwner?each.processOwner:'-'}}</div>
+                                                <div class="cell cell6">{{each.description?each.description:'-'}}</div>
+                                                <div class="cell cell7">
+                                                    <!-- <button>Edit</button> -->
+                                                    <span class="deleteattachment tsttooltipbtn" >
+                                                        <a href="#" >
+                                                            <img src="../../../../assets/images/RPA/icon_latest/new-dis.svg" class="default-img testplus">
+                                                            <img src="../../../../assets/images/RPA/icon_latest/new-blue.svg" class="hover-img testplus">
+                                                        </a>
+                                                        <span class="testtooltip">Add</span>
+                                                    </span>
+                                                    <span class="deleteattachment tsttooltipbtn">
+                                                        <img src="../../../../assets/images/Projects/eye-show.svg"  class="default-img testplus">
+                                                        <img src="../../../../assets/images/Projects/eye-show-blue.svg"  matTooltipPosition="left" class="hover-img testplus">
+                                                        <span class="testtooltip">View</span>
+                                                    </span>
                                                 </div>
                                             </div>
                                         </mat-panel-title>
@@ -74,7 +85,7 @@
                     </div>
                 </div>
 
-                <div *ngIf="!isShowAll">
+                <div class="prop-detcont" *ngIf="!isShowAll">
                     <table mat-table [dataSource]="dataSource3" #sort3="matSort" matSort class="PI table w-100">
                         <ng-container matColumnDef="level">
                             <th mat-header-cell *matHeaderCellDef class="table_header">Level </th>
@@ -111,55 +122,51 @@
         <div class="col-md-12 col-lg-12">
             <div class="prop_docs">
                 <h4>Documents</h4>
-                <table mat-table [dataSource]="dataSource" matSort class="PI table w-100">
-                    <ng-container matColumnDef="vcmLevel">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="table_header">Level </th>
-                        <td mat-cell *matCellDef="let element"> {{element.vcmLevel}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="fileName">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="table_header">File Name </th>
-                        <td mat-cell *matCellDef="let element"> {{element.fileName}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="description">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="table_header">Description </th>
-                        <td mat-cell *matCellDef="let element"> {{element.description}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="uploadedBy">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="table_header">Uploaded By </th>
-                        <td mat-cell *matCellDef="let element"> {{element.uploadedBy}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="convertedUploadedTime">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="table_header">Created By</th>
-                        <td mat-cell *matCellDef="let element"> {{element.convertedUploadedTime | date}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="actions">
-                        <th mat-header-cell *matHeaderCellDef class="table_header">Actions</th>
-                        <td mat-cell *matCellDef="let element">
-                            <span class="deleteattachment tsttooltipbtn">
-                                <span>
-                                    <a href="data:image/png;base64,{{element.filedata}}"
-                                        download="{{element.fileName}}">
-                                        <img src="../../../../assets/images/Admin/download-black.svg"
-                                            class="default-img testplus">
-                                        <img src="../../../../assets/images/Admin/download-blue.svg"
-                                            class="hover-img testplus">
+                <div class="prop-doccont">
+                    <table mat-table [dataSource]="dataSource" matSort class="PI table w-100">
+                        <ng-container matColumnDef="vcmLevel">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="table_header">Level </th>
+                            <td mat-cell *matCellDef="let element"> {{element.vcmLevel}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="fileName">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="table_header">File Name </th>
+                            <td mat-cell *matCellDef="let element"> {{element.fileName}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="description">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="table_header">Description </th>
+                            <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="uploadedBy">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="table_header">Uploaded By </th>
+                            <td mat-cell *matCellDef="let element"> {{element.uploadedBy}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="convertedUploadedTime">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="table_header">Created By</th>
+                            <td mat-cell *matCellDef="let element"> {{element.convertedUploadedTime | date}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="actions">
+                            <th mat-header-cell *matHeaderCellDef class="table_header">Actions</th>
+                            <td mat-cell *matCellDef="let element">
+                                <span class="deleteattachment tsttooltipbtn" (click)="downloadFile()" >
+                                    <a href="data:image/png;base64,{{element.filedata}}" download="{{element.fileName}}">
+                                        <img src="../../../../assets/images/Admin/download-black.svg" class="default-img testplus">
+                                        <img src="../../../../assets/images/Admin/download-blue.svg" class="hover-img testplus">
                                     </a>
                                     <span class="testtooltip">Download</span>
                                 </span>
-                                <span (click)="ondeleteAttachements(element)" class="delete-icon">
-                                    <img src="../../../../assets/images/Projects/delete-black.svg" matTooltip="Delete"
-                                        matTooltipPosition="left" class="default-img">
-                                    <img src="../../../../assets/images/Projects/delete-red.svg" matTooltip="Delete"
-                                        matTooltipPosition="left" class="hover-img">
+                                <span class="deleteattachment tsttooltipbtn">
+                                    <img src="../../../../assets/images/Admin/delete-black.svg"  class="default-img testplus">
+                                    <img src="../../../../assets/images/Admin/delete-red.svg" (click)="ondeleteAttachements(element)" matTooltipPosition="left" class="hover-img testplus">
+                                    <span class="testtooltip">Delete</span>
                                 </span>
-                            </span>
-                        </td>
-                    </ng-container>
+                            </td>
+                        </ng-container>
 
 
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="pList"></tr>
-                </table>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="pList"></tr>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
