@@ -850,21 +850,26 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
 
 
 
-loadpredefinedbot(botId)
+loadpredefinedbot(botId, dropCoordinates)
 {
+
+  console.log(dropCoordinates)
+  let droppedXcoordinate=dropCoordinates.x.split("px")[0]
+  
+  let droppedYcoordinate=dropCoordinates.y.split("px")[0]
   this.rpa_studio.spinner.show();
   let responsedata:any=[]
   this.rest.getpredefinedotdata(botId).subscribe(data=>{
     responsedata=data;
     if(responsedata.errorMessage==undefined)
     {
-      let j=200;
+      let j=0;
       responsedata.tasks.forEach(element=>
       {
         //this.childBotWorkspace.finaldataobjects.push(element)
         let nodename=  element.nodeId.split("__")[0];
         let nodeid=(element.nodeId.split("__")[1]).split("|")[0];
-        j=j+100;
+       
         let node={
           id:this.childBotWorkspace.idGenerator(),
           name:nodename,
@@ -872,9 +877,10 @@ loadpredefinedbot(botId)
           path:this.rpa_toolset.templateNodes.find(data=>data.name==nodename).path,
           selectedNodeId: element.tMetaId,
           tasks:this.rpa_toolset.templateNodes.find(data=>data.name==nodename).tasks,
-          x:j+'px',
-          y:j+"px",
+          x:j+parseInt(droppedXcoordinate)+'px',
+          y:j+parseInt(droppedYcoordinate)+"px",
       }
+      j=j+100;
       if(responsedata.sequences.find(item=>item.sourceTaskId==nodeid)!=undefined)
       {
         responsedata.sequences.find(item=>item.sourceTaskId==nodeid).sourceTaskId=node.id

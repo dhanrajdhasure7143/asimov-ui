@@ -803,7 +803,7 @@
           </div>
           <div class="col-md-12 p-0 form-group">
             <label class="label-control" for="portNumber">Port<span class="star">*</span></label>
-            <input type="text" maxlength="7" class="form-control" onkeypress="return (event.charCode > 47 && event.charCode < 58)" formControlName="portNumber" value="" placeholder="Enter Port">
+            <input type="text" maxlength="7" class="form-control" (keyup)=" (event.charCode > 47 && event.charCode < 58)" formControlName="portNumber" value="" placeholder="Enter Port">
 
             <span *ngIf="(insertForm.get('portNumber').invalid && insertForm.get('portNumber').touched) && !insertForm.controls['portNumber'].hasError('maxlength')" class="errspan required"> Port Required*</span>
 
