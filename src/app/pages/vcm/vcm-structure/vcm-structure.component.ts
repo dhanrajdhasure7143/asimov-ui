@@ -339,6 +339,7 @@ export class VcmStructureComponent implements OnInit {
     //   "data":this.vcmTreeData,
     //   "selectedVcm":this.vcm_data}
     // this.dt.vcmDataTransfer(obj);
+    this.nodeParent=null;
     this.router.navigate(["/pages/vcm/edit"],{queryParams: {id: this.vcm_id}})
   }
   onSelectedProcessEdit(node){
@@ -606,7 +607,7 @@ this.nodeParent=node.title
         "convertedModifiedTime": 0,
         "vcmV2": treeData4
       }
- 
+      this.isLoading=true;
       this.rest_api.updateVcm(req_body).subscribe(res=>{
       console.log(res)
       Swal.fire({
@@ -616,15 +617,22 @@ this.nodeParent=node.title
         icon: 'success',
         showCancelButton: false,
         heightAuto: false,
-      })
+      });
+      this.nodeParent=null;
+      this.isLoading=false;
       },err=>{
+        this.isLoading=false;
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
           text: 'Something went wrong!',
           heightAuto: false,
-        })
+        });
       })
+    }
+
+    cancelEdit(){
+      this.nodeParent=null;
     }
 
 }
