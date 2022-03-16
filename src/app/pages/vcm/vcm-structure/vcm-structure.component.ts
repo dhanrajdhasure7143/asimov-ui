@@ -69,6 +69,10 @@ export class VcmStructureComponent implements OnInit {
     selectedNode:any;
   nodeParent1: any;
   l1processName: any;
+  uploaded_file:any;
+  uploadedFileName: any;
+  validNotationTypes='.bpmn,.dmn'
+  notationType: any;
 
   constructor(private router: Router,private bpmnservice:SharebpmndiagramService,
     private rest_api: RestApiService,
@@ -639,22 +643,22 @@ this.nodeParent=node.title
       this.bpmnModel['processOwnerName'] = e.processOwnerName;
       this.bpmnservice.setSelectedBPMNModelId(this.randomId);
       this.bpmnModel.category = e.categoryName;
-      // if(this.uploaded_file){
-      // var myReader: FileReader = new FileReader();
-      // myReader.onloadend = (ev) => {
-      //   let fileString:string = myReader.result.toString();
-      //   let encrypted_bpmn = btoa(unescape(encodeURIComponent(fileString)));
-      //   if( this.router.url.indexOf("uploadProcessModel") > -1 ){
-      //     this.bpmnservice.changeConfNav(true);
-      //   }else{
-      //     this.bpmnservice.changeConfNav(false);
-      //     this.bpmnservice.uploadBpmn(encrypted_bpmn);
-      //   }
-      //   this.bpmnModel.bpmnXmlNotation = encrypted_bpmn;
-      //   this.initialSave(this.bpmnModel, "upload");
-      // };
-      // myReader.readAsText(this.uploaded_file);
-      // }else{
+      if(this.uploaded_file){
+      var myReader: FileReader = new FileReader();
+      myReader.onloadend = (ev) => {
+        let fileString:string = myReader.result.toString();
+        let encrypted_bpmn = btoa(unescape(encodeURIComponent(fileString)));
+        if( this.router.url.indexOf("uploadProcessModel") > -1 ){
+          this.bpmnservice.changeConfNav(true);
+        }else{
+          this.bpmnservice.changeConfNav(false);
+          this.bpmnservice.uploadBpmn(encrypted_bpmn);
+        }
+        this.bpmnModel.bpmnXmlNotation = encrypted_bpmn;
+        this.initialSave(this.bpmnModel, "upload");
+      };
+      myReader.readAsText(this.uploaded_file);
+      }else{
       this.bpmnservice.changeConfNav(false);
       this.rest_api.getBPMNFileContent("assets/resources/newDiagram." + e.ntype).subscribe(res => {
         let encrypted_bpmn = btoa(unescape(encodeURIComponent(res)));
@@ -662,7 +666,7 @@ this.nodeParent=node.title
         this.bpmnModel.bpmnXmlNotation = encrypted_bpmn;
         this.initialSave(this.bpmnModel, "create");
       });
-      // }
+      }
     }
   
     initialSave(diagramModel: BpmnModel, target: string) {
@@ -681,7 +685,9 @@ this.nodeParent=node.title
           this.router.navigateByUrl('/pages/businessProcess/createDiagram');
         }
         if (target == "upload") {
-          this.router.navigate(['/pages/businessProcess/uploadProcessModel'], { queryParams: { isShowConformance: false } });
+      this.router.navigate(['/pages/businessProcess/uploadProcessModel'], { queryParams: { isShowConformance: false,bpsId:this.randomId,ver:0,ntype:this.notationType,vcmId:this.vcm_id } });
+
+          // this.router.navigate(['/pages/businessProcess/uploadProcessModel'], { queryParams: { isShowConformance: false } });
         }
   
       });
@@ -691,6 +697,31 @@ this.nodeParent=node.title
     navigateToBpsNotation(node){
       console.log(node)
       this.router.navigate(['/pages/businessProcess/uploadProcessModel'], { queryParams: { isShowConformance: false,bpsId:node.bpsId,ver:0,ntype:node.ntype,vcmId:this.vcm_id } });
+    }
+
+
+    onSelect(e){
+      if(e.addedFiles.length == 1 && e.rejectedFiles.length == 0){
+        this.uploaded_file = e.addedFiles[0];
+        this.uploadedFileName = this.uploaded_file.name;
+      console.log(this.uploaded_file)
+    let uploadedFileSplit = this.uploadedFileName.split('.');
+      let uploadedFileExtension = uploadedFileSplit[uploadedFileSplit.length - 1];
+      this.notationType = uploadedFileExtension;
+        this.slideUp(this.notationType)
+      }else{
+        let message = "Oops! Something went wrong";
+        if(e.rejectedFiles[0].reason == "type")
+          message = "Please upload proper notation.";
+        // this.global.notify(message,"error");
+      }
+    }
+
+    slideUp(notationType) {
+      console.log("test")
+      var modal = document.getElementById('myModal');
+      modal.style.display = "block";
+      this.overlay_data = { "type": "create", "module": "bps", "ntype": notationType };
     }
 
 }

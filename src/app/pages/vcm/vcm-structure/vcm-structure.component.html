@@ -192,7 +192,7 @@
                                     <span *ngIf="node.level == 'L2'">
                                         <span (click)="openNodeProperties(node)"  *ngIf="uniqueId1 != node.uniqueId " class="sub-nodel2">{{node.title}}</span>
                                     <span *ngIf="nodeParent == node.parent">
-                                            <button *ngIf="uniqueId != node.uniqueId && uniqueId1 != node.uniqueId" (click)="onSelectedNode(node)" #pop2="bs-popover"
+                                            <button *ngIf="uniqueId != node.uniqueId && uniqueId1 != node.uniqueId" (click)="onSelectedNode(node)" #pop3="bs-popover"
                                                 [popover]="popTemplate1" [outsideClick]="true" placement="right">
                                                 <img src="../../../../assets/images/VCM/plus-bordercircle.svg" class="testplus" />
                                             </button>
@@ -295,8 +295,7 @@
                                             <span *ngIf="uniqueId1 != node.uniqueId" (click)="openNodeProperties(node)">{{node.title}} </span>
                                         <span *ngIf="nodeParent == node.parent">
                                                 <button *ngIf="uniqueId1 != node.uniqueId" (click)="onSelectedNode(node)" #pop2="bs-popover" [popover]="popTemplate1" [outsideClick]="true" placement="right">
-                                                    <img src="../../../../assets/images/VCM/plus-bordercircle.svg"
-                                                        class="testplus" />
+                                                    <img src="../../../../assets/images/VCM/plus-bordercircle.svg" class="testplus"/>
                                                 </button>
                                                 <button *ngIf="uniqueId1 != node.uniqueId && uniqueId != node.uniqueId" (click)="editLevelName(node)">
                                                     <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" />
@@ -359,10 +358,6 @@
     <app-view-properties [vcm_data]="node_data" [vcm_resData]="vcm_data" [processOwners_list]="processOwners_list"></app-view-properties>
 </div>
 
-
-
-
-
 <process-category-overlay headerTitle="BPMN Details" [overlay_data]="overlay_data" (proceed)="saveVCMForBpmn($event)" class="bpmnCreate"></process-category-overlay>
 
 <ng-template #popTemplate>
@@ -370,7 +365,13 @@
         <div class="custom-footer-content">
             <p (click)="onCreateBpmn();"><img src="../../../../assets/images/VCM/Plus-litblue.svg" class="testplus" />Create Bpmn</p>
             <p (click)="onCreateDmn()"><img src="../../../../assets/images/VCM/Plus-litblue.svg" class="testplus" />Create DMN</p>
-            <p (click)="onUploadNotation()"><img src="../../../../assets/images/VCM/upload-litblue.svg" class="testplus" />Upload Notation</p>
+            <p >
+                <ngx-dropzone (change)="onSelect($event)" [multiple]=false [accept]="validNotationTypes" >
+                    <div class="model-text">
+                            <img src="../../../assets/images/BPMS/upload.svg" alt="" class="testplusupload"> Upload Notation
+                    </div>    
+                </ngx-dropzone>
+            </p>
         </div>
     </div>
 </ng-template>
@@ -378,8 +379,16 @@
 <ng-template #popTemplate1>
     <div class="custom-content ">
         <div class="custom-footer-content">
-            <p (click)="onCreateBpmn();"><img src="../../../../assets/images/VCM/Plus-litblue.svg" class="testplus" />Create Notation</p>
-            <p (click)="onUploadNotation()"><img src="../../../../assets/images/VCM/upload-litblue.svg" class="testplus" />Upload Notation</p>
+            <p (click)="onCreateBpmn()">
+                <img src="../../../../assets/images/VCM/Plus-litblue.svg" class="testplus" />Create Notation
+            </p>
+            <p>
+                <ngx-dropzone (change)="onSelect($event)" [multiple]=false [accept]="validNotationTypes" >
+                    <div class="model-text">
+                            <img src="../../../assets/images/BPMS/upload.svg" alt="" class="testplusupload"> Upload Notation
+                    </div>    
+                </ngx-dropzone>
+            </p>
             <p (click)="onCreateLevel3()"><img src="../../../../assets/images/VCM/Folder-litblue.svg" class="testplus" />Create Level 3</p>
         </div>
     </div>

@@ -67,6 +67,7 @@ export class VcmFullEditComponent implements OnInit {
   selectedNode_obj: any;
   inputUniqueId: any;
   l3ProcessName: any;
+  vcm_resData:any
 
 
 
@@ -443,82 +444,6 @@ this.rest_api.uploadVCMPropDocument(formdata).subscribe(res=>{
     this.dataSource.data = TREE_DATA;
     this.vcmProcess = null;
     this.vcmProcess = TREE_DATA;
-    let data1=[];
-    let data2=[];
-    let randomId = UUID.UUID();
-    this.vcmProcess.forEach(element => {
-      element.children.forEach(e=>{
-        data1.push(e);
-        data2.push(e);
-      });
-    });
-    data1.forEach(e=>{
-      if(e.children){
-        e.children.forEach(e1 => {
-          e1["level1UniqueId"]=e.uniqueId
-
-          data2.push(e1)
-        });
-      }
-    })
-
-    // let data4=data2;
-    let data4=[]
-    // data4.map(item => {item["children"] = [];return item;});
-    data2.forEach(element => {
-      // element["children"]=[]
-      let obj={}
-      obj["description"]=element.description
-      obj["parent"]=element.parent
-      obj["processOwner"]=element.processOwner
-      obj["title"]=element.title
-      obj["level"]=element.level
-      obj["type"]=element.type
-      if(element.childParent){
-        obj["childParent"]=element.childParent
-      }
-      if(element.uniqueId){
-        obj["uniqueId"]=element.uniqueId
-      }
-      if(element.level1UniqueId){
-        obj["level1UniqueId"]=element.level1UniqueId
-      }
-      data4.push(obj)
-
-    });
-    // console.log(this.vcmProcess)
-
-
-    let data3 = {
-      "vcmName": this.vcmName,
-      "createdBy": this.user_details.firstName+ " "+this.user_details.lastName,
-      "processOwner": this.process_ownerName,
-      "vcmV2": data4,
-      "vcmuniqueId":this.vcmProcess[0].uniqueId
-    }
-    console.log("request body",data4)
-    this.isLoading=true;
-    this.rest_api.createVcm(data3).subscribe((res:any)=>{
-      this.isLoading=false;
-      Swal.fire({
-        title: 'Success',
-        text: res.message,
-        position: 'center',
-        icon: 'success',
-        showCancelButton: false,
-        heightAuto: false,
-        confirmButtonColor: '#007bff',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Ok'
-      }).then((result) => {
-        if (result.value) {
-          this.router.navigate(['/pages/vcm/view-vcm']);
-          localStorage.removeItem('vcmData');
-        }
-      })
-
-    })
-
   }
   vcmHeading() {
     // TREE_DATA[3].vcmname = this.vcmName;
@@ -706,6 +631,103 @@ this.rest_api.uploadVCMPropDocument(formdata).subscribe(res=>{
     this.dataSource.data = null;
     this.dataSource.data = TREE_DATA;
     console.log(this.vcmProcess);
+  }
+
+  
+  updateVcm(){
+    let req_body=this.getreqBody();
+    console.log("req_body",req_body)
+    this.isLoading=true;
+    this.rest_api.updateVcm(req_body).subscribe(res=>{
+    console.log(res)
+    Swal.fire({
+      title: 'Success',
+      text: "Updated Successfully !!",
+      position: 'center',
+      icon: 'success',
+      showCancelButton: false,
+      heightAuto: false,
+    });
+    this.isLoading=false;
+    },err=>{
+      this.isLoading=false;
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!',
+        heightAuto: false,
+      });
+    })
+  }
+
+  getreqBody(){
+    let treeData=[]
+    let treeData1=[]
+    let treeData2=[]
+    let treeData3=[]
+    console.log(this.vcmProcess)
+    console.log(TREE_DATA)
+    this.vcmProcess = TREE_DATA;
+    this.vcmProcess.forEach(ele=>{
+        ele.children.forEach(e=>{
+          treeData.push(e)
+          treeData1.push(e)
+        })
+    })
+    treeData1.forEach(element => {
+      element.children.forEach(e=>{
+        treeData.push(e)
+        treeData2.push(e)
+      })
+    });
+
+    treeData2.forEach(e=>{
+      e.children.forEach(ele=>{
+        treeData.push(ele);
+        treeData3.push(ele)
+      })
+    })
+    let treeData4=[]
+    treeData.forEach(e=>{
+      let obj={
+        "type": e.type,
+      "uniqueId": e.uniqueId,
+      "processOwner": e.processOwner,
+      "description": e.description,
+      "level": e.level,
+      "title": e.title,
+      "parent": e.parent,
+      "children": [],
+      "attachments": [],
+      }
+      if(e.level1UniqueId){
+        obj["level1UniqueId"]=e.level1UniqueId
+      }
+      if(e.level2UniqueId){
+        obj["level2UniqueId"]=e.level2UniqueId
+      }
+      if(e.level == "L3"){
+        obj["bpsId"]=e.bpsId
+      }
+      if(e.level == "L3"){
+        obj["ntype"]=e.ntype
+      }
+      treeData4.push(obj)
+    })
+    // console.log(this.vcmTreeData)
+    let req_body={
+      "id": this.selectedVcm.data.id,
+      "vcmuniqueId": this.selectedVcm.data.vcmuniqueId,
+      "vcmName": this.vcmName,
+      "processOwner": this.process_ownerName,
+      "active": true,
+      "createdBy": this.selectedVcm.data.createdBy,
+      "createdTimestamp": this.selectedVcm.data.createdTimestamp,
+      "convertedCreatedTime": 0,
+      "convertedModifiedTime": 0,
+      "vcmV2": treeData4
+    }
+    return req_body
   }
 
 }
