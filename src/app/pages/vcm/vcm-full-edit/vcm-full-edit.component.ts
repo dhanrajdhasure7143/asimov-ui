@@ -68,6 +68,9 @@ export class VcmFullEditComponent implements OnInit {
   inputUniqueId: any;
   l3ProcessName: any;
   vcm_resData:any
+  uniqueId1: any;
+  uniqueId: any;
+  level2Parent: any;
 
 
 
@@ -728,6 +731,53 @@ this.rest_api.uploadVCMPropDocument(formdata).subscribe(res=>{
       "vcmV2": treeData4
     }
     return req_body
+  }
+
+  editLevelName(node) {
+    console.log(node);
+    this.uniqueId1 = node.uniqueId;
+    this.uniqueId = null;
+    this.drawer.close();
+  }
+  editTitleName(node) {
+    console.log(node);
+    this.uniqueId1 = null;
+    this.drawer.close();
+  }
+
+  editLevel3(name,l3,level){
+    this.drawer.open();
+    this.selectedObj = l3;
+    this.editProcessDescription = '';
+    this.editProcessOwner = '';
+    this.editLevelProperties = level;
+    this.level2Parent = l3.childParent;
+    console.log(name, l3, this.vcmProcess);
+    this.childParent = name.childParent;
+    this.propertiesName = name.parent;
+    if (l3.description) {
+      this.editProcessDescription = l3.description;
+    }
+    if (l3.processOwner) {
+      this.editProcessOwner = l3.processOwner;
+    }
+    if (l3.attachments) {
+      this.fileName = l3.attachments;
+    }
+    this.editProcessName = l3.title;
+  }
+  editProcessLevel3(){
+    TREE_DATA.filter((e) => e.name === this.propertiesName)[0].children
+      .filter(n => n.title === this.childParent)[0].children.filter(c => c.title === this.level2Parent)[0]
+      .children.filter(f=>f.title === this.editProcessName)[0]
+      .description = this.editProcessDescription;
+    TREE_DATA.filter((e) => e.name === this.propertiesName)[0].children
+      .filter(n => n.title === this.childParent)[0].children.filter(c => c.title === this.level2Parent)[0]
+      .children.filter(f=>f.title === this.editProcessName)[0]
+      .processOwner = this.editProcessOwner;
+    console.log(TREE_DATA);
+    this.vcmProcess = TREE_DATA
+    this.drawer.close();
   }
 
 }

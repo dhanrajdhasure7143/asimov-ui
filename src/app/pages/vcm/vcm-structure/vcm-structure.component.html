@@ -152,9 +152,13 @@
                     <div class="row maincontent h-100">
                         <div class="col-md-12 p-0 form-group vcname">
                             <label class="label-control">Value Chain Name</label>
-                            <input type="text" class="form-control" [(ngModel)]="selectedVcmName" placeholder="Enter Value Chain Name" readonly>
-                            <button class="btn">
-                                <img [hidden]="!selectedVcmName" src="../../../../assets/images/VCM/Green Tick.svg" class="testplus1"  />
+                            <input style="width: 97%;" *ngIf="!editVcmTitle" type="text" class="form-control" [(ngModel)]="selectedVcmName" placeholder="Enter Value Chain Name" readonly>
+                            <input #vcmTitle style="width: 97%;" *ngIf="editVcmTitle" type="text" class="form-control" [(ngModel)]="selectedVcmName" placeholder="Enter Value Chain Name">
+                            <button (click)="editVcmName()" *ngIf="!editVcmTitle">
+                                <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" />
+                            </button>
+                            <button class="btn" (click)="submitVcmTitle()" style="right: 4%;">
+                                <img [hidden]="!selectedVcmName" src="../../../../assets/images/VCM/Green Tick.svg" class="testplus1" />
                             </button>
                         </div>
                         <div class="col-md-12 p-0">
@@ -218,7 +222,7 @@
 
                                     <span *ngIf="node.level == 'L3'">
                                         <span *ngIf="uniqueId1 != node.uniqueId && node.bpsId" class="bps_link" (click)="navigateToBpsNotation(node)">{{node.title}}</span> &nbsp;&nbsp;
-                                        <span *ngIf="uniqueId1 != node.uniqueId && !node.bpsId">{{node.title}}</span> &nbsp;&nbsp;
+                                    <span *ngIf="uniqueId1 != node.uniqueId && !node.bpsId">{{node.title}}</span> &nbsp;&nbsp;
                                     <span *ngIf="nodeParent == node.parent && !node.bpsId">
                                             <button  #pop="bs-popover" (click)="onSelectedNode(node)" [popover]="popTemplate" [outsideClick]="true"
                                                 placement="right">
@@ -365,11 +369,11 @@
         <div class="custom-footer-content">
             <p (click)="onCreateBpmn();"><img src="../../../../assets/images/VCM/Plus-litblue.svg" class="testplus" />Create Bpmn</p>
             <p (click)="onCreateDmn()"><img src="../../../../assets/images/VCM/Plus-litblue.svg" class="testplus" />Create DMN</p>
-            <p >
-                <ngx-dropzone (change)="onSelect($event)" [multiple]=false [accept]="validNotationTypes" >
+            <p>
+                <ngx-dropzone (change)="onSelect($event)" [multiple]=false [accept]="validNotationTypes">
                     <div class="model-text">
-                            <img src="../../../assets/images/BPMS/upload.svg" alt="" class="testplusupload"> Upload Notation
-                    </div>    
+                        <img src="../../../assets/images/BPMS/upload.svg" alt="" class="testplusupload"> Upload Notation
+                    </div>
                 </ngx-dropzone>
             </p>
         </div>
@@ -383,14 +387,13 @@
                 <img src="../../../../assets/images/VCM/Plus-litblue.svg" class="testplus" />Create Notation
             </p>
             <p>
-                <ngx-dropzone (change)="onSelect($event)" [multiple]=false [accept]="validNotationTypes" >
+                <ngx-dropzone (change)="onSelect($event)" [multiple]=false [accept]="validNotationTypes">
                     <div class="model-text">
-                            <img src="../../../assets/images/BPMS/upload.svg" alt="" class="testplusupload"> Upload Notation
-                    </div>    
+                        <img src="../../../assets/images/BPMS/upload.svg" alt="" class="testplusupload"> Upload Notation
+                    </div>
                 </ngx-dropzone>
             </p>
             <p (click)="onCreateLevel3()"><img src="../../../../assets/images/VCM/Folder-litblue.svg" class="testplus" />Create Level 3</p>
         </div>
     </div>
 </ng-template>
-
