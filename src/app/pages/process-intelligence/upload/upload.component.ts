@@ -890,6 +890,7 @@ getDBTables(){      //get DB tables list
   }
 
   applyFilter(event: Event) {       // search entered process ids from search input
+    if(this.categories_list.length > 1)
     this.categoryName = 'allcategories';
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource= new MatTableDataSource(this.process_graph_list);
