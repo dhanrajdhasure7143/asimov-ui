@@ -387,6 +387,19 @@ export class CreateVcmComponent implements OnInit {
         this.vcmProcess = null;
         this.vcmProcess = TREE_DATA;
       }
+      if (this.editLevelProperties == 3) {
+        TREE_DATA.filter((e) => e.name === this.propertiesName)[0].children
+        .filter(n => n.title === this.childParent)[0].children.filter(c => c.title === this.level2Parent)[0]
+        .children.filter(f=>f.title === this.editProcessName)[0]
+        .attachments = this.fileName;
+        this.dataSource.data = null;
+        this.dataSource.data = TREE_DATA;
+        this.vcmProcess = null;
+        this.vcmProcess = TREE_DATA;
+        console.log(TREE_DATA);
+      }
+
+      
 
       console.log(res)
     }, err => {
@@ -430,6 +443,12 @@ export class CreateVcmComponent implements OnInit {
       TREE_DATA.filter((e) => e.name === this.propertiesName)[0].children
         .filter(n => n.title === this.childParent)[0].children.filter(c => c.tit === this.editProcessName)[0]
         .attachments = this.fileName;
+    }
+    if (this.editLevelProperties == 3) {
+      TREE_DATA.filter((e) => e.name === this.propertiesName)[0].children
+      .filter(n => n.title === this.childParent)[0].children.filter(c => c.title === this.level2Parent)[0]
+      .children.filter(f=>f.title === this.editProcessName)[0]
+      .attachments = this.fileName;
     }
     console.log(TREE_DATA);
   }
