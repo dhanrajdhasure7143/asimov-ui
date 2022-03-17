@@ -157,8 +157,15 @@
             <td mat-cell *matCellDef="let element"> <span *ngIf="element.username!=null">{{element.username}}</span> <span *ngIf="element.username==''">-</span> </td>
         </ng-container>
         <ng-container matColumnDef="password">
-            <th mat-header-cell *matHeaderCellDef >Password</th>
-            <td mat-cell *matCellDef="let element"> <span *ngIf="element.password!=null">*******</span> <span *ngIf="element.password==''">-</span> </td>
+            <th mat-header-cell *matHeaderCellDef >Password / Key</th>
+            <td mat-cell *matCellDef="let element"> 
+                <span *ngIf="element.password.password !=undefined">
+                    <span *ngIf="element.password!=null">*******</span> <span *ngIf="element.password==''">-</span> 
+                </span>
+                <span *ngIf="element.password.key !=undefined">
+                    <a class="clickable downloadLink"  (click)="downloadOption(element.environmentName,element.keyValue)">Download Key</a>
+                </span>
+            </td>
         </ng-container>
         <!--<ng-container matColumnDef="connectionType">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Connection Type</th>
@@ -304,24 +311,23 @@ placeholder="Enter Environment Type" >-->
                             </div>
 
                         </div>
-
                         <div class="col-md-12 p-0 form-group">
+                            <label  class="label-control" for="password"><input type="checkbox" [checked]="isKeyValuePair" (change)="isKeyValuePair=!(isKeyValuePair)" >Key Pair Authentication<span class="star">*</span> </label>
+                        </div>
+                        <div class="col-md-12 p-0 form-group" *ngIf="isKeyValuePair==false">
                             <label class="label-control" for="password">Password<span class="star">*</span></label>
-                            <input [type]="passwordtype1 ? 'text': 'password'" maxlength="51" class="form-control" formControlName="password" value="" placeholder="Enter Password" passwordToggle>
+                            <input [type]="passwordtype1 ? 'text': 'password'" class="form-control"  [(ngModel)]="password"  [ngModelOptions]="{standalone: true}" placeholder="Enter Password">
                             <span *ngIf="passwordtype1==false" (click)="passwordtype1 =!passwordtype1" class="pdicon">
                                 <img src="../../../../../assets/images/Projects/eye-show.svg"  class="testplus1">
                             </span>
                             <span *ngIf="passwordtype1==true" (click)="passwordtype1 =!passwordtype1" class="pdicon">
                                 <img src="../../../../../assets/images/Projects/eye-hide.svg"  class="testplus1">
                             </span>
-
-                            <span *ngIf="(insertForm.get('password').invalid && insertForm.get('password').touched) && !insertForm.controls['password'].hasError('maxlength')"  class="errspan required"> Password Required*</span>
-
-                            <div *ngIf="insertForm.controls['password'].hasError('maxlength')"  class="errspan required">
-                                Maximum of 50 characters
-                            </div>
                         </div>
-
+                        <div class="col-md-12 p-0 form-group" *ngIf="isKeyValuePair==true">
+                            <!-- <label class="label-control" for="KeyValuePair">Key Value Pair <span class="star">*</span></label> -->
+                            <input type="file"  (change)="keyValueFile=$event.target.files[0]" class="form-control"  id="KeyValuePair">
+                        </div>
                         <div class="col-md-12 p-0 form-group">
                             <label class="label-control" for="connectionType">Connection Type<span class="star">*</span></label>
                             <input type="text" maxlength="51" class="form-control" formControlName="connectionType" value="" placeholder="Enter Connection Type" readonly>
@@ -334,7 +340,7 @@ placeholder="Enter Environment Type" >-->
 
                         <div class="col-md-12 p-0 form-group">
                             <label class="label-control" for="portNumber">Port<span class="star">*</span></label>
-                            <input type="text" maxlength="7" class="form-control" onkeypress="return (event.charCode > 47 && event.charCode < 58)" formControlName="portNumber" value="" placeholder="Enter Port">  
+                            <input type="text" maxlength="7" class="form-control" (keyup)="return (event.charCode > 47 && event.charCode < 58)" formControlName="portNumber" value="" placeholder="Enter Port">  
 
                             <span *ngIf="(insertForm.get('portNumber').invalid && insertForm.get('portNumber').touched) && !insertForm.controls['portNumber'].hasError('maxlength')"  class="errspan required"> Port Required*</span>
                         
@@ -350,6 +356,7 @@ placeholder="Enter Environment Type" >-->
                             <input type="checkbox" formControlName="activeStatus"> Active
                         </div>
                     
+
                         
                     <!-- <input type="button" class="btn btn-primary" value="Save" (click)="saveEnvironment()" [disabled]="insertForm.invalid || submitted">
                     <input type="button" class="btn btn-primary" value="Test Connection" (click)="testConnection('insert')" [disabled]="insertForm.invalid">
@@ -359,8 +366,8 @@ placeholder="Enter Environment Type" >-->
                 <div class="form-footer">
                             
                     <button class="btn btn-default" (click)="resetEnvForm()" >Reset</button>
-                    <button class="btn btn-primary btn-test" [disabled]="insertForm.invalid" (click)="testConnection('insert')" >Test Connection</button>
-                    <button class="btn btn-primary"[disabled]="insertForm.invalid || submitted" (click)="saveEnvironment()" >Save</button>
+                    <button class="btn btn-primary btn-test" [disabled]="insertForm.invalid || !((password!='' && isKeyValuePair==false  )||(isKeyValuePair==true && keyValueFile!=undefined))" (click)="testConnection('insert')" >Test Connection</button>
+                    <button class="btn btn-primary"[disabled]="insertForm.invalid || submitted || insertForm.invalid || !((password!='' && isKeyValuePair==false  )||(isKeyValuePair==true && keyValueFile!=undefined))" (click)="saveEnvironmentV2()" >Save</button>
                     
                     
                   </div>
@@ -457,7 +464,7 @@ placeholder="Enter Environment Type" >-->
                             </div>
                         </div>
 
-                        <div class="col-md-12 p-0 form-group">
+                        <!-- <div class="col-md-12 p-0 form-group" *ngIf="">
                             <label class="label-control" for="password">Password<span class="star">*</span></label>
                             <input [type]="passwordtype2 ? 'text': 'password'" class="form-control" maxlength="51" formControlName="password" placeholder="Enter Password">
                             <span *ngIf="passwordtype2==false" (click)="passwordtype2 =!passwordtype2" class="pdicon">
@@ -472,6 +479,25 @@ placeholder="Enter Environment Type" >-->
                             <div *ngIf="updateForm.controls['password'].hasError('maxlength')"  class="errspan required">
                                 Maximum of 50 characters
                             </div>
+                        </div> -->
+                        <div class="col-md-12 p-0 form-group">
+                            <label  class="label-control" for="password"><input type="checkbox" [checked]="isKeyValuePair" (change)="isKeyValuePair=!(isKeyValuePair)" > Key Pair Authentication<span class="star">*</span> </label>
+                            
+                        </div>
+                        <div class="col-md-12 p-0 form-group" *ngIf="isKeyValuePair==false">
+                            <label class="label-control" for="password">Password<span class="star">*</span></label>
+                            <input [type]="passwordtype1 ? 'text': 'password'" class="form-control"  [(ngModel)]="password"  [ngModelOptions]="{standalone: true}" placeholder="Enter Password" passwordToggle>
+                            <span *ngIf="passwordtype1==false" (click)="passwordtype1 =!passwordtype1" class="pdicon">
+                                <img src="../../../../../assets/images/Projects/eye-show.svg"  class="testplus1">
+                            </span>
+                            <span *ngIf="passwordtype1==true" (click)="passwordtype1 =!passwordtype1" class="pdicon">
+                                <img src="../../../../../assets/images/Projects/eye-hide.svg"  class="testplus1">
+                            </span>
+                        </div>
+                        <div class="col-md-12 p-0 form-group" *ngIf="isKeyValuePair==true">
+                            <!-- <label class="label-control" for="KeyValuePair">Key Pair Authentication <span class="star">*</span></label> -->
+                            <input type="file"  (change)="keyValueFile=$event.target.files[0]" class="form-control"  id="KeyValuePair">
+                            <a  class="downloadLink" *ngIf="updateenvdata.keyValue !=null" (click)="downloadOption(updateenvdata.environmentName,updateenvdata.keyValue)">Download Key</a>
                         </div>
 
                         <div class="col-md-12 p-0 form-group">
@@ -486,7 +512,7 @@ placeholder="Enter Environment Type" >-->
 
                         <div class="col-md-12 p-0 form-group">
                             <label class="label-control"  for="portNumber">Port<span class="star">*</span></label>
-                            <input type="text" maxlength="7" class="form-control" onkeypress="return (event.charCode > 47 && event.charCode < 58)" formControlName="portNumber" value="" placeholder="Enter Port">  
+                            <input type="text" maxlength="7" class="form-control" (keyup)="return (event.charCode > 47 && event.charCode < 58)" formControlName="portNumber" value="" placeholder="Enter Port">  
                             <span *ngIf="(updateForm.get('portNumber').invalid && updateForm.get('portNumber').touched) && !updateForm.controls['portNumber'].hasError('maxlength')"  class="errspan required"> Port Required*</span>
                         
                             <div *ngIf="updateForm.controls['portNumber'].hasError('maxlength')"  class="errspan required">
@@ -507,8 +533,8 @@ placeholder="Enter Environment Type" >-->
                 </form>
                 <div class="form-footer">
                     <button class="btn btn-default" (click)="resetupdateEnvForm()" >Reset</button>
-                    <button class="btn btn-primary btn-test" [disabled]="updateForm.invalid" (click)="testConnection('update')">Test Connection</button>
-                    <button class="btn btn-primary"[disabled]="updateForm.invalid || submitted" (click)="updateEnvironment()" >Modify</button>
+                    <button class="btn btn-primary btn-test" [disabled]="updateForm.invalid  || !((password!='' && isKeyValuePair==false  )||(isKeyValuePair==true && keyValueFile!=undefined))"  (click)="testConnection('update')">Test Connection</button>
+                    <button class="btn btn-primary"[disabled]="updateForm.invalid || submitted || !((password!='' && isKeyValuePair==false  )||(isKeyValuePair==true && keyValueFile!=undefined))" (click)="updateEnvironment()" >Modify</button>
                   </div>
             </div>
         </div>
