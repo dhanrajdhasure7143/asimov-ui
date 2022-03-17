@@ -222,7 +222,7 @@
 
                                     <span *ngIf="node.level == 'L3'">
                                         <span *ngIf="uniqueId1 != node.uniqueId && node.bpsId" class="bps_link" (click)="navigateToBpsNotation(node)">{{node.title}}</span> &nbsp;&nbsp;
-                                    <span *ngIf="uniqueId1 != node.uniqueId && !node.bpsId">{{node.title}}</span> &nbsp;&nbsp;
+                                    <span *ngIf="uniqueId1 != node.uniqueId && !node.bpsId" (click)="openNodeProperties(node)">{{node.title}}</span> &nbsp;&nbsp;
                                     <span *ngIf="nodeParent == node.parent && !node.bpsId">
                                             <button  #pop="bs-popover" (click)="onSelectedNode(node)" [popover]="popTemplate" [outsideClick]="true"
                                                 placement="right">

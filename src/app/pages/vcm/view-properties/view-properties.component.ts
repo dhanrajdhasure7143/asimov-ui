@@ -42,6 +42,7 @@ export class ViewPropertiesComponent implements OnInit {
   vcm_id:any;
   vcm_process:any;
   isShowAll:boolean=false;
+  vcmTreeData:any=[]
 
   constructor(private rest_api: RestApiService,private route:ActivatedRoute) {
     this.route.queryParams.subscribe(res => {
@@ -52,8 +53,8 @@ export class ViewPropertiesComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    console.log(this.edit);
     // this.getAttachements();
+    this.dataSource= new MatTableDataSource(this.attachments);
 
   }
 
@@ -66,6 +67,8 @@ export class ViewPropertiesComponent implements OnInit {
     //   }
     // })
     // console.log("properties data",this.prop_data)
+    this.vcmTreeData=this.vcm_resData.data.vcmV2
+    console.log(this.vcmTreeData)
     if(this.vcm_process != "all"){
       this.dataSource3= new MatTableDataSource(this.vcm_data);
 
@@ -89,7 +92,7 @@ export class ViewPropertiesComponent implements OnInit {
       }
       let res_data
       this.attachments=[];
-      this.dataSource= new MatTableDataSource(this.attachments);
+      // this.dataSource= new MatTableDataSource(this.attachments);
     this.rest_api.getvcmAttachements(reqBody).subscribe(res=>{res_data=res
       this.attachments=res_data.data
       this.dataSource= new MatTableDataSource(this.attachments);

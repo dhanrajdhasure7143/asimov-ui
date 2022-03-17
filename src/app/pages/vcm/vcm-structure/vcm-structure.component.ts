@@ -542,7 +542,7 @@ export class VcmStructureComponent implements OnInit {
     let req_body = {
       "id": this.vcm_data.data.id,
       "vcmuniqueId": this.vcm_data.data.vcmuniqueId,
-      "vcmName": this.vcm_data.data.vcmName,
+      "vcmName": this.selectedVcmName,
       "processOwner": this.vcm_data.data.processOwner,
       "active": true,
       "createdBy": this.vcm_data.data.createdBy,
