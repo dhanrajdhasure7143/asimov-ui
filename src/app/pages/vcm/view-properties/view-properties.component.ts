@@ -39,7 +39,7 @@ export class ViewPropertiesComponent implements OnInit {
   dataSource3:MatTableDataSource<any>;
   displayedColumns: string[] = ["vcmLevel",'fileName',"description","uploadedBy","convertedUploadedTime",'actions'];
   displayedColumns1: string[] = ["level","parent","title","processOwner","description"];
-  displayedColumns3: string[] = ["level","parent","title","processOwner","description"];
+  displayedColumns3: string[] = ["level","parent","title","processOwner","description","actions"];
   expandedData:any=[];
   vcm_id:any;
   vcm_process:any;
