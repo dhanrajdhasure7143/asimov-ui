@@ -22,11 +22,13 @@ export class ViewPropertiesComponent implements OnInit {
   @Input() processOwners_list:any=[];
   @Input() vcm_resData:any;
   @Input() edit:any;
+  @Input() vcmTreeData:any;
   isDisabled:boolean=true;
   attachments:any=[];
   prop_data:any=[];
   isLoading:boolean=false;
   displayedRows$: Observable<any[]>;
+  displayedRows1$: Observable<any[]>;
   totalRows$: Observable<number>;
   @ViewChild(MatSort,{static:false}) sort: MatSort;
   @ViewChild(MatSort,{static:false}) sort1: MatSort;
@@ -42,7 +44,7 @@ export class ViewPropertiesComponent implements OnInit {
   vcm_id:any;
   vcm_process:any;
   isShowAll:boolean=false;
-  vcmTreeData:any=[]
+  vcmTreeData1:any=[]
 
   constructor(private rest_api: RestApiService,private route:ActivatedRoute) {
     this.route.queryParams.subscribe(res => {
@@ -60,21 +62,29 @@ export class ViewPropertiesComponent implements OnInit {
 
   ngOnChanges(){
     console.log("this.vcm_data",this.vcm_data)
-    console.log("this.vcm_resData",this.vcm_resData)
+    console.log("this.vcmTreeData",this.vcmTreeData)
     // this.vcm_data.forEach(element => {
     //   if(element.processOwner){
     //     this.prop_data.push(element)
     //   }
     // })
-    // console.log("properties data",this.prop_data)
-    this.vcmTreeData=this.vcm_resData.data.vcmV2
-    console.log(this.vcmTreeData)
+    this.vcmTreeData.forEach(element => {
+      element.children.forEach(e => {
+        this.vcmTreeData1.push(e)
+        
+      });
+    });
+
+    this.assignPagenation(this.vcmTreeData1);
+    console.log("vcmTreeData1 data",this.vcmTreeData1)
+    // this.vcmTreeData=this.vcm_resData.data.vcmV2
+    // console.log(this.vcmTreeData)
     if(this.vcm_process != "all"){
       this.dataSource3= new MatTableDataSource(this.vcm_data);
 
     }else{
       this.vcm_data.map(item => {item.xpandStatus = false;return item;})
-      this.assignPagenation(this.vcm_data)
+      // this.assignPagenation(this.vcm_data)
     }
 
   }
@@ -112,6 +122,7 @@ export class ViewPropertiesComponent implements OnInit {
       }
     });
     this.dataSource1= new MatTableDataSource(this.expandedData);
+    this.assignPagenation1(this.expandedData);
   }
 
   assignPagenation(data){
@@ -120,6 +131,14 @@ export class ViewPropertiesComponent implements OnInit {
     const rows$ = of(data);
     this.totalRows$ = rows$.pipe(map(rows => rows.length));
     this.displayedRows$ = rows$;
+    // this.paginator.firstPage();
+  }
+  assignPagenation1(data){
+    // const sortEvents$: Observable<Sort> = fromMatSort(this.sort);
+    // const pageEvents$: Observable<PageEvent> = fromMatPaginator(this.paginator);
+    const rows$ = of(data);
+    this.totalRows$ = rows$.pipe(map(rows => rows.length));
+    this.displayedRows1$ = rows$;
     // this.paginator.firstPage();
   }
 

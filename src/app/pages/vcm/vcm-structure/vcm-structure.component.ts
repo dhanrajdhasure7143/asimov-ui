@@ -114,73 +114,14 @@ export class VcmStructureComponent implements OnInit {
         this.vcm_data = res_data
         this.vcmData = res_data.data.vcmV2;
         this.selectedVcmName = res_data.data.vcmName
+        this.vcmData.map(item => {item.xpandStatus = false;return item;})
         // this.vcmData=this.vcmData1
-        this.dataMappingToTreeStructer1();
+        this.dataMappingToTreeStructer();
       }
     })
   }
 
   dataMappingToTreeStructer() {
-    let objData = [
-      { title: "Management Process", "children": [] },
-      { title: "Core Process", "children": [] },
-      { title: "Support Process", "children": [] }
-    ]
-
-    this.vcmData.forEach(e => {
-      objData.forEach(e1 => {
-        if (e.level == "L1") {
-          if (e.parent == e1.title) {
-            e1["children"].push(e);
-          }
-        }
-      })
-    })
-
-    this.vcmData.forEach(e => {
-      objData.forEach(e1 => {
-        if (e.level == "L2") {
-          if (e.parent == e1.title) {
-            e1.children.forEach(e2 => {
-              if (e2.title == e.childParent) {
-                e2['children'].push(e);
-              }
-            })
-          }
-        }
-      })
-    })
-
-    this.vcmData.forEach(e => {
-      objData.forEach(e1 => {
-        if (e.level == "L3") {
-          if (e.parent == e1.title) {
-            e1.children.forEach(e2 => {
-              if (e2.title == e.childParent) {
-                e2.children.forEach(e3 => {
-                  if (e3.title == e.subChildParent) {
-                    e3['children'].push(e)
-                  }
-                });
-              }
-            })
-          }
-        }
-      })
-    })
-    console.log(objData)
-    this.vcmTreeData = objData;
-    this.dataSource.data = objData;
-    this.treeControl.dataNodes = this.dataSource.data;
-    // this.treeControl.expandAll();
-    this.treeControl.expand(this.treeControl.dataNodes[0]);
-    this.treeControl.expand(this.treeControl.dataNodes[1]);
-    this.treeControl.expand(this.treeControl.dataNodes[2]);
-    // this.tree.treeControl.expandAll();
-
-  }
-
-  dataMappingToTreeStructer1() {
     let objData = [
       { title: "Management Process", "children": [] },
       { title: "Core Process", "children": [] },
@@ -258,6 +199,7 @@ export class VcmStructureComponent implements OnInit {
     console.log(node)
     this.node_data = [];
     if (node == 'all') {
+      
       this.vcmData.forEach(element => {
         this.node_data.push(element)
       });

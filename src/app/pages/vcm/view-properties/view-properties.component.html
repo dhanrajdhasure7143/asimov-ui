@@ -16,8 +16,8 @@
                     <div class="row col-md-12 new-bps-grid-data" id="bpmn_list">
                         <mat-accordion>
                             <span *ngFor="let each of displayedRows$ | async ;let i=index;trackBy:loopTrackBy">
-                                <mat-expansion-panel [(expanded)]="each.xpandStatus" *ngIf="each.level === 'L1'"
-                                    (afterExpand)="getexpandedlevel(each)" hideToggle>
+                                <span *ngIf="each.children.length > 0">
+                                <mat-expansion-panel [(expanded)]="each.xpandStatus" hideToggle>
                                     <mat-expansion-panel-header class="dropdown_icon">
                                         <mat-panel-title>
                                             <div class="row col-md-12">
@@ -28,56 +28,112 @@
                                                 <div class="cell cell2">{{each.level === "L1"? "1":"2"}}</div>
                                                 <div class="cell cell3">{{each.parent}}</div>
                                                 <div class="cell cell4">{{each.title}}</div>
-                                                <div class="cell cell5">{{each.processOwner?each.processOwner:'-'}}</div>
+                                                <div class="cell cell5">{{each.processOwner?each.processOwner:'-'}}
+                                                </div>
                                                 <div class="cell cell6">{{each.description?each.description:'-'}}</div>
                                                 <div class="cell cell7">
-                                                    <!-- <button>Edit</button> -->
-                                                    <span class="deleteattachment tsttooltipbtn" >
-                                                        <a  matTooltip="Add">
-                                                            <img src="../../../../assets/images/VCM/plus-black.svg" class="default-img testplus">
-                                                            <img src="../../../../assets/images/RPA/icon_latest/new-blue.svg" class="hover-img testplus">
+                                                    <span class="deleteattachment tsttooltipbtn">
+                                                        <a matTooltip="Add">
+                                                            <img src="../../../../assets/images/VCM/plus-black.svg"
+                                                                class="default-img testplus">
+                                                            <img src="../../../../assets/images/RPA/icon_latest/new-blue.svg"
+                                                                class="hover-img testplus">
                                                         </a>
                                                     </span>
-                                                    <span class="deleteattachment tsttooltipbtn" matTooltip="View">
-                                                        <img src="../../../../assets/images/Projects/eye-show.svg"  class="default-img testplus">
-                                                        <img src="../../../../assets/images/Projects/eye-show-blue.svg" class="hover-img testplus">
+                                                    <span class="deleteattachment tsttooltipbtn"  matTooltip="View">
+                                                        <img src="../../../../assets/images/Projects/eye-show.svg"
+                                                            class="default-img testplus">
+                                                        <img src="../../../../assets/images/Projects/eye-show-blue.svg"
+                                                            class="hover-img testplus">
                                                     </span>
                                                 </div>
                                             </div>
                                         </mat-panel-title>
                                     </mat-expansion-panel-header>
-                                    <div class="">
-                                        <table mat-table [dataSource]="dataSource1" matSort class="PI table w-100">
-                                            <ng-container matColumnDef="level">
-                                                <th mat-header-cell *matHeaderCellDef class="table_header">Level </th>
-                                                <td mat-cell *matCellDef="let element"> {{element.level}} </td>
-                                            </ng-container>
-                                            <ng-container matColumnDef="parent">
-                                                <th mat-header-cell *matHeaderCellDef class="table_header">Category
-                                                </th>
-                                                <td mat-cell *matCellDef="let element"> {{element.parent}} </td>
-                                            </ng-container>
-                                            <ng-container matColumnDef="title">
-                                                <th mat-header-cell *matHeaderCellDef class="table_header">Process Name
-                                                </th>
-                                                <td mat-cell *matCellDef="let element"> {{element.title}} </td>
-                                            </ng-container>
-                                            <ng-container matColumnDef="processOwner">
-                                                <th mat-header-cell *matHeaderCellDef class="table_header">Owner </th>
-                                                <td mat-cell *matCellDef="let element"> {{element.processOwner}} </td>
-                                            </ng-container>
-                                            <ng-container matColumnDef="description">
-                                                <th mat-header-cell *matHeaderCellDef class="table_header">Description
-                                                </th>
-                                                <td mat-cell *matCellDef="let element"> {{element.description}} </td>
-                                            </ng-container>
-
-                                            <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
-                                            <tr mat-row *matRowDef="let row; columns: displayedColumns1;" class="pList">
-                                            </tr>
-                                        </table>
+                                    <div class="prop-detcont">
+                                        <div class="row col-md-12 text-bold workspace-title">
+                                            <div class="expan-icon"></div>
+                                            <div class="cell cell2">Level23</div>
+                                            <div class="cell cell3">Category</div>
+                                            <div class="cell cell4">Process Name</div>
+                                            <div class="cell cell5">Owner</div>
+                                            <div class="cell cell6">Description</div>
+                                            <div class="cell cell7">Actions</div>
+                                        </div>
+                                        <div class="row col-md-12 new-bps-grid-data" id="bpmn_list">
+                                            <mat-accordion>
+                                                <span *ngFor="let item of each.children; let i1=index;trackBy:loopTrackBy">
+                                                    <mat-expansion-panel hideToggle [(expanded)]="item.xpandStatus">
+                                                        <mat-expansion-panel-header class="dropdown_icon">
+                                                            <mat-panel-title>
+                                                                <div class="row col-md-12">
+                                                                    <div class="expan-icon">
+                                                                        <i class="material-icons expand-open">chevron_right</i>
+                                                                        <i class="material-icons expand-close">expand_less</i>
+                                                                    </div>
+                                                                    <div class="cell cell2">2</div>
+                                                                    <div class="cell cell3">{{item.parent}}</div>
+                                                                    <div class="cell cell4">{{item.title}}</div>
+                                                                    <div class="cell cell5">{{item.processOwner?item.processOwner:'-'}}
+                                                                    </div>
+                                                                    <div class="cell cell6">{{item.description?item.description:'-'}}</div>
+                                                                    <div class="cell cell7">
+                                                                        <span class="deleteattachment tsttooltipbtn">
+                                                                            <a href="#">
+                                                                                <img src="../../../../assets/images/RPA/icon_latest/new-dis.svg"
+                                                                                    class="default-img testplus">
+                                                                                <img src="../../../../assets/images/RPA/icon_latest/new-blue.svg"
+                                                                                    class="hover-img testplus">
+                                                                            </a>
+                                                                            <span class="testtooltip">Add</span>
+                                                                        </span>
+                                                                        <span class="deleteattachment tsttooltipbtn">
+                                                                            <img src="../../../../assets/images/Projects/eye-show.svg"
+                                                                                class="default-img testplus">
+                                                                            <img src="../../../../assets/images/Projects/eye-show-blue.svg"
+                                                                                matTooltipPosition="left" class="hover-img testplus">
+                                                                            <span class="testtooltip">View</span>
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            </mat-panel-title>
+                                                        </mat-expansion-panel-header>
+                                                        
+                                                    </mat-expansion-panel>
+                                                </span>
+                                            </mat-accordion>
+                                        </div>
                                     </div>
                                 </mat-expansion-panel>
+                                </span>
+                                <span *ngIf="each.children.length == 0">
+                                    <div class="row col-md-12">
+                                        <div class="cell cell2">{{each.level === "L1"? "1":"2"}}</div>
+                                        <div class="cell cell3">{{each.parent}}</div>
+                                        <div class="cell cell4">{{each.title}}</div>
+                                        <div class="cell cell5">{{each.processOwner?each.processOwner:'-'}}
+                                        </div>
+                                        <div class="cell cell6">{{each.description?each.description:'-'}}</div>
+                                        <div class="cell cell7">
+                                            <span class="deleteattachment tsttooltipbtn">
+                                                <a href="#">
+                                                    <img src="../../../../assets/images/RPA/icon_latest/new-dis.svg"
+                                                        class="default-img testplus">
+                                                    <img src="../../../../assets/images/RPA/icon_latest/new-blue.svg"
+                                                        class="hover-img testplus">
+                                                </a>
+                                                <span class="testtooltip">Add</span>
+                                            </span>
+                                            <span class="deleteattachment tsttooltipbtn">
+                                                <img src="../../../../assets/images/Projects/eye-show.svg"
+                                                    class="default-img testplus">
+                                                <img src="../../../../assets/images/Projects/eye-show-blue.svg"
+                                                    matTooltipPosition="left" class="hover-img testplus">
+                                                <span class="testtooltip">View</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </span>
                             </span>
                         </mat-accordion>
                     </div>
