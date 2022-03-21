@@ -256,7 +256,7 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
             "botName": `${this.botState.botName}|BotCreated` ,
             "changeActivity":this.botState.botName,
             "changedBy":  changedBy,
-            "changedDate":(new Date().toLocaleDateString()+", "+new Date().toLocaleTimeString()),
+           // "changedDate":(new Date().toLocaleDateString()+", "+new Date().toLocaleTimeString()),
             "newValue":'-',
             "previousValue":'-',
             "taskName":this.botState.botName,

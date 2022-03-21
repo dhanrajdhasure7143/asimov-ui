@@ -258,7 +258,9 @@ import { NgxSpinnerService } from "ngx-spinner";
     if(this.isKeyValuePair==false)
     {
       let connectionDetails=formdata.value;
-      connectionDetails["password"]=this.password
+      connectionDetails["password"]=this.password;
+      
+        
       this.spinner.show();
       await this.api.testenvironment(formdata.value).subscribe( res =>
         {
@@ -273,6 +275,7 @@ import { NgxSpinnerService } from "ngx-spinner";
         Swal.fire("Error","Unable to test connections", "error");
       });
       this.activestatus();
+      
     }
     else
     {
@@ -495,6 +498,76 @@ import { NgxSpinnerService } from "ngx-spinner";
     }
   }
 
+
+
+  async updateEnvironmentV2()
+  {
+        
+    if(this.updateForm.valid)
+    {
+      this.spinner.show();
+      if(this.updateForm.value.activeStatus==true)
+      {
+        this.updateForm.value.activeStatus=7
+      }else{
+        this.updateForm.value.activeStatus=8
+      }
+      let updatFormValue =  this.updateForm.value;
+      updatFormValue["environmentId"]= this.updateenvdata.environmentId;
+      updatFormValue["createdBy"]= this.updateenvdata.createdBy;
+      updatFormValue["deployStatus"]= this.updateenvdata.deployStatus;
+        let updateEnvData=new FormData();
+        Object.keys(updatFormValue).map(key => {
+           
+          return updateEnvData.append(String(key),String(updatFormValue[key]))
+        });
+        updateEnvData.append("formValue","sample")
+        if(this.isKeyValuePair==false)
+        {
+          updateEnvData.append("password",this.password);
+          updateEnvData.append("key",null)
+        }
+        else
+        {
+          
+          updateEnvData.append("password",null)
+          if(this.keyValueFile==undefined || this.keyValueFile==null)
+            updateEnvData.append("key",null)
+          else
+            updateEnvData.append("key",this.keyValueFile)
+
+        }
+          await this.api.updateEnvironmentV2(updateEnvData).subscribe( res => {
+            let response:any=res;
+            this.spinner.hide();
+            if(response.errorMessage==undefined)
+            {
+              Swal.fire("Success",res.status,"success")
+              this.removeallchecks();
+              this.getallData();
+              this.checktoupdate();
+              this.checktodelete();
+              document.getElementById("update-popup").style.display='none';
+            }else
+            {
+              Swal.fire("Error",response.errorMessage,"error")
+            }
+          },err=>{
+            console.log(err);
+            this.spinner.hide();
+            Swal.fire("Error","Unable to update environment details","error")
+          });
+        }
+        else
+        {
+          this.spinner.hide();
+          Swal.fire("Alert","Update Environment is not configured for key pair authentication","warning");
+        }
+      
+    //}
+    
+  }
+
   updatedata()
   {
     document.getElementById("createenvironment").style.display='none';    
@@ -513,10 +586,11 @@ import { NgxSpinnerService } from "ngx-spinner";
           this.updateForm.get("activeStatus").setValue(false);
         }
         this.updateenvdata=data;
-        console.log(data)
         if(data.password.password==undefined)
         {
           this.isKeyValuePair=true
+          this.password=""
+
         }
         else
         {
@@ -530,6 +604,7 @@ import { NgxSpinnerService } from "ngx-spinner";
         this.updateForm.get("hostAddress").setValue(this.updateenvdata["hostAddress"]);
         this.updateForm.get("username").setValue(this.updateenvdata["username"]);
         // this.updateForm.get("password").setValue(this.updateenvdata["password"]);
+        
         this.updateForm.get("connectionType").setValue(this.updateenvdata["connectionType"]);
         this.updateForm.get("portNumber").setValue(this.updateenvdata["portNumber"]);
         break;
