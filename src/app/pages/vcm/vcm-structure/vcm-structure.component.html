@@ -10,7 +10,7 @@
             <!-- <button class="btn btn-default" (click)="editVcm()">
                 <img src="../../../../assets/images/Projects/edit.svg" class="testplus" />QuickEdit
             </button> -->
-            <button class="btn btn-primary" (click)="quickEditVcm()">
+            <button class="btn btn-primary" (click)="fullEditVCM()">
                 <img src="../../../../assets/images/Projects/edit.svg" class="testplus" />Edit
             </button>
 
@@ -28,7 +28,7 @@
                     </div>
                     <div class="propertiesPanelBody" id="propertiesPanelBody">
                         <mat-accordion>
-                            <mat-expansion-panel (opened)="onExpansionClik('1')" hideToggle [expanded]="isOpenedState==1">
+                            <mat-expansion-panel hideToggle >
                                 <mat-expansion-panel-header>
                                     <mat-panel-title class="accordionHeaderMain">
                                         <div class="accordionHeaderToggle">
@@ -43,7 +43,7 @@
                                         <div class="editcontent">
                                             <div class="col-md-12 form-group">
                                                 <label class="label-control">Process Name</label>
-                                                <input type="text" [disabled]="isPropDisabled" class="form-control" [(ngModel)]="processName">
+                                                <input type="text" disabled class="form-control" [(ngModel)]="processName">
                                             </div>
                                             <div class="col-md-12 form-group">
                                                 <label class="label-control">Process Owner</label>
@@ -57,6 +57,11 @@
                                             <div class="col-md-12 form-group">
                                                 <label class="label-control">Process Description</label>
                                                 <textarea class="form-control" rows="5" [disabled]="isPropDisabled" placeholder="Enter Process Description" [(ngModel)]="processDesc"></textarea>
+                                            </div>
+                                            <div class="propfooter col-md-12 p-0 text-right" *ngIf="!isPropDisabled">
+                                               <button class="btn btn-primary" (click)="saveProperties('L1')" *ngIf="selectedPropNode.level == 'L1'">Save</button>
+                                               <button class="btn btn-primary" (click)="saveProperties('L2')" *ngIf="selectedPropNode.level == 'L2'">Save</button>
+                                               <button class="btn btn-primary" (click)="saveProperties('L3')" *ngIf="selectedPropNode.level == 'L3'">Save</button>
                                             </div>
                                         </div>
                                     </div>
@@ -356,7 +361,7 @@
             <span class="module-back-button" (click)="backToView()">
                     <i aria-hidden="true" class="fas fa-arrow-left"></i>
                 </span>
-            <span class="module-header-title">Consolidated Properties</span>
+            <span class="module-header-title">{{propType}} Properties</span>
         </div>
     </div>
     <app-view-properties [vcm_data]="node_data" [vcm_resData]="vcm_data" [vcmTreeData]="vcmTreeData" [processOwners_list]="processOwners_list"></app-view-properties>

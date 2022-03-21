@@ -75,6 +75,9 @@ export class VcmStructureComponent implements OnInit {
   validNotationTypes = '.bpmn,.dmn'
   notationType: any;
   editVcmTitle: boolean = false;
+  selectedPropNode:any={level:"L1"}
+  isOpenedState=1;
+  propType:any;
 
   constructor(private router: Router, private bpmnservice: SharebpmndiagramService,
     private rest_api: RestApiService,
@@ -196,20 +199,20 @@ export class VcmStructureComponent implements OnInit {
   }
 
   viewProperties(node) {
-    console.log(node)
     this.node_data = [];
     if (node == 'all') {
-      
+      this.propType="Consolidated"
       this.vcmData.forEach(element => {
         this.node_data.push(element)
       });
-      console.log("shared data", this.node_data)
+
       this.isViewProperties = true;
       this.isShow = false;
       let params1 = { "id": this.vcm_id, "vcmLevel": "all" };
 
       this.router.navigate([], { relativeTo: this.route, queryParams: params1 });
     } else {
+      this.propType=node.title
       this.node_data = [];
       this.vcm_data["mainParent"] = node.title
       this.vcmData.forEach(element => {
@@ -244,14 +247,6 @@ export class VcmStructureComponent implements OnInit {
     });
   }
 
-  openNodeProperties(node) {
-    console.log("node", node)
-    this.getAttachements(node);
-    this.processName = node.title;
-    this.processOwner = node.processOwner;
-    this.processDesc = node.description;
-    this.drawer.open();
-  }
 
   getAttachements(node_obj) {
     // this.isLoading=true;
@@ -281,7 +276,7 @@ export class VcmStructureComponent implements OnInit {
     }
   }
 
-  quickEditVcm() {
+  fullEditVCM() {
     // this.vcmTreeData.forEach(element => {
     //   element["name"]=element.title
     // });
@@ -296,6 +291,7 @@ export class VcmStructureComponent implements OnInit {
   }
   onSelectedProcessEdit(node) {
     console.log(node)
+    this.isPropDisabled=false;
     this.nodeParent = node.title;
     this.treeControl.expandAll();
   }
@@ -430,10 +426,11 @@ export class VcmStructureComponent implements OnInit {
   }
 
   getreqBody() {
-    let treeData = []
-    let treeData1 = []
-    let treeData2 = []
-    let treeData3 = []
+    let treeData = [];
+    let treeData1 = [];
+    let treeData2 = [];
+    let treeData3 = [];
+    console.log("vcmTreeData", this.vcmTreeData)
     this.vcmTreeData.forEach(ele => {
       ele.children.forEach(e => {
         treeData.push(e)
@@ -501,7 +498,7 @@ export class VcmStructureComponent implements OnInit {
     console.log(req_body)
     this.isLoading = true;
     this.rest_api.updateVcm(req_body).subscribe(res => {
-      console.log(res)
+      this.isPropDisabled=false;
       Swal.fire({
         title: 'Success',
         text: "Updated Successfully !!",
@@ -525,6 +522,7 @@ export class VcmStructureComponent implements OnInit {
 
   cancelEdit() {
     this.nodeParent = null;
+        this.isPropDisabled=false;
   }
 
   onCreateBpmn() {
@@ -677,6 +675,52 @@ export class VcmStructureComponent implements OnInit {
   }
   submitVcmTitle(){
     this.editVcmTitle = false;
+  }
+
+  
+  openNodeProperties(node) {
+    console.log("node", node)
+    this.selectedPropNode=node
+    this.getAttachements(node);
+    this.processName = node.title;
+    this.processOwner = node.processOwner;
+    this.processDesc = node.description;
+    this.drawer.open();
+  }
+
+  saveProperties(val){
+    console.log(this.vcmTreeData,this.selectedPropNode)
+    if(val=="L1"){
+      this.vcmTreeData.filter((e) => e.title === this.selectedPropNode.parent)[0].children
+        .filter(n => n.title === this.selectedPropNode.title)[0].description = this.processDesc;
+      this.vcmTreeData.filter((e) => e.title === this.selectedPropNode.parent)[0].children
+        .filter(n => n.title === this.selectedPropNode.title)[0].processOwner = this.processOwner;
+    }
+
+    if(val=="L2"){
+      this.vcmTreeData.filter((e) => e.title ===this.selectedPropNode.parent)[0].children
+      .filter(n => n.uniqueId === this.selectedPropNode.level1UniqueId)[0].children
+      .filter(c => c.uniqueId === this.selectedPropNode.uniqueId)[0]
+      .description = this.processDesc;
+      this.vcmTreeData.filter((e) => e.title === this.selectedPropNode.parent)[0].children
+      .filter(n => n.uniqueId === this.selectedPropNode.level1UniqueId)[0].children
+      .filter(c => c.uniqueId === this.selectedPropNode.uniqueId)[0]
+      .processOwner = this.processOwner;
+    }
+
+    if(val=="L3"){
+      this.vcmTreeData.filter((e) => e.title === this.selectedPropNode.parent)[0].children
+      .filter(n => n.uniqueId === this.selectedPropNode.level1UniqueId)[0].children
+      .filter(n => n.uniqueId === this.selectedPropNode.level2UniqueId)[0].children
+      .filter(c => c.uniqueId === this.selectedPropNode.uniqueId)[0]
+      .description = this.processDesc;
+      this.vcmTreeData.filter((e) => e.title === this.selectedPropNode.parent)[0].children
+      .filter(n => n.uniqueId === this.selectedPropNode.level1UniqueId)[0].children
+      .filter(n => n.uniqueId === this.selectedPropNode.level2UniqueId)[0].children
+      .filter(c => c.uniqueId === this.selectedPropNode.uniqueId)[0]
+      .processOwner = this.processOwner;
+    }
+      this.drawer.close();
   }
 
 }

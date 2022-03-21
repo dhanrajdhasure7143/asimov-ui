@@ -44,7 +44,7 @@ export class ViewPropertiesComponent implements OnInit {
   vcm_id:any;
   vcm_process:any;
   isShowAll:boolean=false;
-  vcmTreeData1:any=[]
+  vcmTreeData1:any=[];
 
   constructor(private rest_api: RestApiService,private route:ActivatedRoute) {
     this.route.queryParams.subscribe(res => {
@@ -90,12 +90,11 @@ export class ViewPropertiesComponent implements OnInit {
   }
   ngAfterViewInit(){
     this.getAttachements();
-
   }
 
   getAttachements(){
     if(this.vcm_resData){
-      this.isLoading=true;
+      // this.isLoading=true;
       let reqBody={
         "masterId": this.vcm_resData.data.id,
         "parent": this.vcm_process
