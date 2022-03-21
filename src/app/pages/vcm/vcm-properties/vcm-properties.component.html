@@ -1,14 +1,20 @@
 <div class="h-100">
     <div class="row module-heading title">
         <div>
-            <span class="module-back-button" (click)="backToVcm()" routerLink="/pages/vcm/create-vcm">
+            <span class="module-back-button" (click)="backToVcm()" routerLink="/pages/vcm/create-vcm" *ngIf="!isEdit">
+                <i aria-hidden="true" class="fas fa-arrow-left"></i>
+            </span>
+            <span class="module-back-button" (click)="backToFullEdit()"  *ngIf="isEdit">
                 <i aria-hidden="true" class="fas fa-arrow-left"></i>
             </span>
             <span class="module-header-title">Properties</span>
         </div>
-        <div class="ml-auto submit">
+        <div class="ml-auto submit" *ngIf="!isEdit">
             <button class="btn btn-default" (click)="resetProperties()">Reset</button>
             <button class="btn btn-primary" (click)="saveProperties()">Save</button>
+        </div>
+        <div class="ml-auto submit" *ngIf="isEdit">
+            <button class="btn btn-primary" (click)="updateProperties()">Update</button>
         </div>
     </div>
 

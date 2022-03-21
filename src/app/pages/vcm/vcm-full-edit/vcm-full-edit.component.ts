@@ -71,8 +71,7 @@ export class VcmFullEditComponent implements OnInit {
   uniqueId1: any;
   uniqueId: any;
   level2Parent: any;
-
-
+  isEdit:any;
 
 
   constructor(private router: Router,private rest_api : RestApiService, private dt: DataTransferService,
@@ -82,6 +81,7 @@ export class VcmFullEditComponent implements OnInit {
     this.route.queryParams.subscribe(res => {
       if(res)
       this.vcm_id = res.id
+      this.isEdit = res.isEdit
     });
   }
 
@@ -110,7 +110,6 @@ export class VcmFullEditComponent implements OnInit {
             },
           ];
           this.vcmProcess = TREE_DATA
-
         }else{
         TREE_DATA = res_data.data;
         this.vcmProcess = null;
@@ -123,10 +122,16 @@ export class VcmFullEditComponent implements OnInit {
         }
       }
     });
-    if(this.vcm_id){
-      this.getselectedVcm();
-      console.log(this.vcmProcess);
-    }
+
+
+      if(this.isEdit == "true"){
+        this.getselectedVcm();
+      }else{
+        this.getselectedVcm1();
+
+      }
+
+
   }
 
   addManageProcess() {
@@ -286,25 +291,24 @@ export class VcmFullEditComponent implements OnInit {
     localStorage.removeItem('vcmData');
   }
 
-  editProcess(item, name, level) {
-    console.log(item,name.uniqueId,this.vcmProcess)
+  showPropertiesPanel(item, obj, level) {
+    console.log(item,name,this.vcmProcess)
     this.drawer.open();
     this.editLevelProperties = level;
-    console.log(this.editLevelProperties);
     this.editProcessDescription = '';
     this.editProcessOwner = '';
-    this.propertiesName = name.parent;
-    this.selectedObj=name;
-    if (name.description) {
-      this.editProcessDescription = name.description;
+    this.propertiesName = obj.parent;
+    this.selectedObj=obj;
+    if (obj.description) {
+      this.editProcessDescription = obj.description;
     }
-    if (name.processOwner) {
-      this.editProcessOwner = name.processOwner;
+    if (obj.processOwner) {
+      this.editProcessOwner = obj.processOwner;
     }
-    if (name.attachments) {
-      this.fileName = name.attachments;
+    if (obj.attachments) {
+      this.fileName = obj.attachments;
     }
-    this.editProcessName = name.title;
+    this.editProcessName = obj.title;
   }
 
   editProperties() {
@@ -475,7 +479,7 @@ this.rest_api.uploadVCMPropDocument(formdata).subscribe(res=>{
   goToProperties(level) {
     let nav: NavigationExtras = {
       queryParams: {
-        level: level
+        level: level,"isEdit":"true",id:this.vcm_id
       }
     }
 
@@ -526,6 +530,12 @@ this.rest_api.uploadVCMPropDocument(formdata).subscribe(res=>{
       }
     })
   }
+  getselectedVcm1(){
+    this.rest_api.getselectedVcmById(this.vcm_id).subscribe(res=>{this.selectedVcm=res
+      console.log(res);
+
+    })
+  }
 
   dataMappingToTreeStructer1(data){
     let objData = [
@@ -558,14 +568,15 @@ this.rest_api.uploadVCMPropDocument(formdata).subscribe(res=>{
       })
     })
 
-    data.forEach(e=>{
-      objData.forEach(e1=>{
-        if(e.level == "L3"){
-          if(e.parent == e1.title){
-            e1.children.forEach(e2=>{
-              if(e2.title == e.childParent ){
+    data.forEach(e => {
+      objData.forEach(e1 => {
+        if (e.level == "L3") {
+          if (e.parent == e1.title) {
+            console.log(e, e1)
+            e1.children.forEach(e2 => {
+              if (e2.uniqueId == e.level1UniqueId) {
                 e2.children.forEach(e3 => {
-                  if(e3.uniqueId == e.level2UniqueId ){
+                  if (e3.uniqueId == e.level2UniqueId) {
                     e3['children'].push(e)
                   }
                 });
@@ -576,7 +587,6 @@ this.rest_api.uploadVCMPropDocument(formdata).subscribe(res=>{
       })
     })
 
-    console.log(objData)
     objData.forEach(element => {
         element["name"]=element.title
       });
@@ -586,6 +596,7 @@ this.rest_api.uploadVCMPropDocument(formdata).subscribe(res=>{
     this.dataSource.data=objData;
     this.treeControl.dataNodes = this.dataSource.data; 
   }
+
   backToViewVcm(){
     this.router.navigate(["/pages/vcm/vcm-structure"],{queryParams:{id:this.vcm_id}})
   }
@@ -610,22 +621,23 @@ this.rest_api.uploadVCMPropDocument(formdata).subscribe(res=>{
   editTitle(level2, item) {
     console.log(level2, item);
     let record = {
-      type: 'Process',
-      title: this.l3ProcessName,
-      parent: item.name,
-      childParent: level2.title,
-      l2childParent:level2.childParent,
-      description: '',
-      processOwner: '',
-      attachments: [],
-      level: "L3",
-      'uniqueId': UUID.UUID()
-    };
+      "level": "L3",
+        "parent": level2.parent,
+        "title": this.l3ProcessName,
+        "description": 'test',
+        "processOwner": '',
+        "type": "Process",
+        "level2UniqueId": level2.uniqueId,
+        "level1UniqueId": level2.level1UniqueId,
+        "uniqueId": UUID.UUID(),
+        "attachments": [],
+        "bpsId": '',
+        "ntype": ''
+    }
 
     TREE_DATA.filter(e => e.name == item.name)[0]
     .children.filter(c => c.title == level2.childParent)[0]
     .children.filter(t => t.title == level2.title)[0].children.push(record);
-    console.log(TREE_DATA);
     this.vcmProcess = null;
     this.vcmProcess = TREE_DATA;
     this.dataSource.data = null;
@@ -668,6 +680,7 @@ this.rest_api.uploadVCMPropDocument(formdata).subscribe(res=>{
       showCancelButton: false,
       heightAuto: false,
     });
+    this.backToViewVcm();
     this.isLoading=false;
     },err=>{
       this.isLoading=false;
@@ -796,5 +809,43 @@ this.rest_api.uploadVCMPropDocument(formdata).subscribe(res=>{
     this.vcmProcess = TREE_DATA
     this.drawer.close();
   }
+
+    saveProperties(val){
+    console.log(this.vcmProcess,this.selectedObj)
+    // console.log(TREE_DATA);
+    // this.vcmProcess=TREE_DATA
+    if(val=="L1"){
+      this.vcmProcess.filter((e) => e.title === this.selectedObj.parent)[0].children
+        .filter(n => n.title === this.selectedObj.title)[0].description = this.editProcessDescription;
+      this.vcmProcess.filter((e) => e.title === this.selectedObj.parent)[0].children
+        .filter(n => n.title === this.selectedObj.title)[0].processOwner = this.editProcessOwner;
+    }
+
+    if(val=="L2"){
+      this.vcmProcess.filter((e) => e.title ===this.selectedObj.parent)[0].children
+      .filter(n => n.uniqueId === this.selectedObj.level1UniqueId)[0].children
+      .filter(c => c.uniqueId === this.selectedObj.uniqueId)[0]
+      .description = this.editProcessDescription;
+      this.vcmProcess.filter((e) => e.title === this.selectedObj.parent)[0].children
+      .filter(n => n.uniqueId === this.selectedObj.level1UniqueId)[0].children
+      .filter(c => c.uniqueId === this.selectedObj.uniqueId)[0]
+      .processOwner = this.editProcessOwner;
+    }
+
+    if(val=="L3"){
+      this.vcmProcess.filter((e) => e.title === this.selectedObj.parent)[0].children
+      .filter(n => n.uniqueId === this.selectedObj.level1UniqueId)[0].children
+      .filter(n => n.uniqueId === this.selectedObj.level2UniqueId)[0].children
+      .filter(c => c.uniqueId === this.selectedObj.uniqueId)[0]
+      .description = this.editProcessDescription;
+      this.vcmProcess.filter((e) => e.title === this.selectedObj.parent)[0].children
+      .filter(n => n.uniqueId === this.selectedObj.level1UniqueId)[0].children
+      .filter(n => n.uniqueId === this.selectedObj.level2UniqueId)[0].children
+      .filter(c => c.uniqueId === this.selectedObj.uniqueId)[0]
+      .processOwner = this.editProcessOwner;
+    }
+      this.drawer.close();
+  }
+  
 
 }

@@ -32,9 +32,15 @@ export class VcmPropertiesComponent implements OnInit {
   isLoading:boolean=false;
   vcmName:any;
   process_ownerName:any;
+  isEdit:boolean=false;
+  vcm_id:any;
   constructor(private router: Router, private route: ActivatedRoute, private rest_api:RestApiService, private dt: DataTransferService) {
     this.route.queryParams.subscribe(res => {
       this.levelType = res.level
+      if(res.isEdit)
+      this.isEdit = res.isEdit
+      if(res.id)
+      this.vcm_id = res.id
     });
   }
 
@@ -194,8 +200,7 @@ export class VcmPropertiesComponent implements OnInit {
   }
 
   backToVcm(){
-    console.log(this.vcmProperties);
-    console.log(this.vcmData);
+
   }
 
   resetProperties(){
@@ -321,4 +326,16 @@ export class VcmPropertiesComponent implements OnInit {
   //   this.supportDescription = "";
   //   this.fileName = []
   // }
+  backToFullEdit(){
+    this.router.navigate(["/pages/vcm/edit"], { queryParams: { id: this.vcm_id,"isEdit":"false" } });
+  }
+  
+  updateProperties() {
+    console.log(this.vcmProperties);
+    console.log(this.vcmData);
+    let obj={vName:this.vcmName,pOwner:this.process_ownerName,data:this.vcmProperties}
+    this.dt.vcmDataTransfer(obj)
+    this.router.navigate(["/pages/vcm/edit"], { queryParams: { id: this.vcm_id,"isEdit":"false" } });
+
+  }
 }

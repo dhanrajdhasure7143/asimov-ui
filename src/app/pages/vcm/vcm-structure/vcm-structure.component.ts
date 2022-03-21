@@ -287,7 +287,7 @@ export class VcmStructureComponent implements OnInit {
     //   "selectedVcm":this.vcm_data}
     // this.dt.vcmDataTransfer(obj);
     this.nodeParent = null;
-    this.router.navigate(["/pages/vcm/edit"], { queryParams: { id: this.vcm_id } })
+    this.router.navigate(["/pages/vcm/edit"], { queryParams: { id: this.vcm_id,isEdit:"true" } })
   }
   onSelectedProcessEdit(node) {
     console.log(node)
