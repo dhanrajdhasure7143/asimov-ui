@@ -33,19 +33,18 @@
                                                 <div class="cell cell6">{{each.description?each.description:'-'}}</div>
                                                 <div class="cell cell7">
                                                     <span class="deleteattachment tsttooltipbtn">
-                                                        <a href="#">
-                                                            <img src="../../../../assets/images/RPA/icon_latest/new-dis.svg"
+                                                        <a matTooltip="Add">
+                                                            <img src="../../../../assets/images/VCM/plus-black.svg"
                                                                 class="default-img testplus">
                                                             <img src="../../../../assets/images/RPA/icon_latest/new-blue.svg"
                                                                 class="hover-img testplus">
                                                         </a>
                                                     </span>
-                                                    <span class="deleteattachment tsttooltipbtn">
+                                                    <span class="deleteattachment tsttooltipbtn"  matTooltip="View">
                                                         <img src="../../../../assets/images/Projects/eye-show.svg"
                                                             class="default-img testplus">
                                                         <img src="../../../../assets/images/Projects/eye-show-blue.svg"
-                                                            matTooltipPosition="left" class="hover-img testplus">
-                                                        <span class="testtooltip">View</span>
+                                                            class="hover-img testplus">
                                                     </span>
                                                 </div>
                                             </div>
@@ -176,7 +175,22 @@
 
         <div class="col-md-12 col-lg-12">
             <div class="prop_docs">
-                <h4>Documents</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Documents</h4>
+                    </div>
+                    <div class="col-md-6">
+                        <button class="tsttooltipbtn" matTooltip="Download All">
+                            <img src="../../../../assets/images/Admin/download-black.svg" class="default-img testplus">
+                            <img src="../../../../assets/images/Admin/download-blue.svg" class="hover-img testplus">
+                        </button>
+                        <button class="tsttooltipbtn" matTooltip="Delete All">
+                            <img src="../../../../assets/images/Admin/delete-black.svg" class="testplus default-img" >
+                            <img src="../../../../assets/images/Admin/delete-red.svg" class="testplus hover-img" >
+                        </button>
+                    </div>
+                </div>
+               
                 <div class="prop-doccont">
                     <table mat-table [dataSource]="dataSource" matSort class="PI table w-100">
                         <ng-container matColumnDef="vcmLevel">

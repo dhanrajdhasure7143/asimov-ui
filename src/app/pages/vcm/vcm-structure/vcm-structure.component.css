@@ -253,7 +253,10 @@ button.btn.qsave-btn:hover {
     border: 1px solid #001c47 !important;
 }
 
-.vcm-treediv button img.testplus {
+.vcm-treediv button img.testplusb {
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
     margin-left: 10px;
 }
 

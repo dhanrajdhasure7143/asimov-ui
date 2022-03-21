@@ -157,13 +157,14 @@
                     <div class="row maincontent h-100">
                         <div class="col-md-12 p-0 form-group vcname">
                             <label class="label-control">Value Chain Name</label>
-                            <input style="width: 97%;" *ngIf="!editVcmTitle" type="text" class="form-control" [(ngModel)]="selectedVcmName" placeholder="Enter Value Chain Name" readonly>
-                            <input #vcmTitle style="width: 97%;" *ngIf="editVcmTitle" type="text" class="form-control" [(ngModel)]="selectedVcmName" placeholder="Enter Value Chain Name">
+                            <input style="width: 96%;" *ngIf="!editVcmTitle" type="text" class="form-control" [(ngModel)]="selectedVcmName" placeholder="Enter Value Chain Name" readonly>
+                            <input #vcmTitle style="width: 96%;" *ngIf="editVcmTitle" type="text" class="form-control" [(ngModel)]="selectedVcmName" placeholder="Enter Value Chain Name">
                             <button (click)="editVcmName()" *ngIf="!editVcmTitle">
                                 <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" />
                             </button>
-                            <button class="btn" (click)="submitVcmTitle()" style="right: 4%;">
-                                <img [hidden]="!selectedVcmName" src="../../../../assets/images/VCM/Green Tick.svg" class="testplus1" />
+                            <button (click)="submitVcmTitle()" *ngIf="editVcmTitle">
+                                <img src="../../../../assets/images/VCM/Green Tick.svg" class="testplus1" />
+                                <!-- [hidden]="!selectedVcmName" -->
                             </button>
                         </div>
                         <div class="col-md-12 p-0">
@@ -179,7 +180,7 @@
                                         <span (click)="openNodeProperties(node)" *ngIf=" uniqueId1 != node.uniqueId ">{{node.title}} </span>
                                     <span *ngIf="nodeParent == node.parent"> 
                                             <button (click)="onCreateLevel1(node)" *ngIf="uniqueId != node.uniqueId && uniqueId1 != node.uniqueId">
-                                                <img src="../../../../assets/images/VCM/plus-bordercircle.svg" class="testplus" />
+                                                <img src="../../../../assets/images/VCM/plus-bordercircle.svg" class="testplusb" />
                                             </button>
                                             <div *ngIf="uniqueId==node.uniqueId" class="test" style="display: flex;width: 150%;margin-top: 2%;">
                                                 <input type="text" class="form-control" placeholder="Enter Process Name" [(ngModel)]="processName">
@@ -203,7 +204,7 @@
                                     <span *ngIf="nodeParent == node.parent">
                                             <button *ngIf="uniqueId != node.uniqueId && uniqueId1 != node.uniqueId" (click)="onSelectedNode(node)" #pop3="bs-popover"
                                                 [popover]="popTemplate1" [outsideClick]="true" placement="right">
-                                                <img src="../../../../assets/images/VCM/plus-bordercircle.svg" class="testplus" />
+                                                <img src="../../../../assets/images/VCM/plus-bordercircle.svg" class="testplusb" />
                                             </button>
                                         
                                             <div *ngIf="uniqueId==node.uniqueId" style="display: flex;width: 150%;margin-top: 2%;">
@@ -226,12 +227,12 @@
                                     </span>
 
                                     <span *ngIf="node.level == 'L3'">
-                                        <span *ngIf="uniqueId1 != node.uniqueId && node.bpsId" class="bps_link" (click)="navigateToBpsNotation(node)">{{node.title}}</span> &nbsp;&nbsp;
-                                    <span *ngIf="uniqueId1 != node.uniqueId && !node.bpsId" (click)="openNodeProperties(node)">{{node.title}}</span> &nbsp;&nbsp;
+                                        <span *ngIf="uniqueId1 != node.uniqueId && node.bpsId" class="bps_link" (click)="navigateToBpsNotation(node)">{{node.title}}</span> 
+                                    <span *ngIf="uniqueId1 != node.uniqueId && !node.bpsId" (click)="openNodeProperties(node)">{{node.title}}</span> 
                                     <span *ngIf="nodeParent == node.parent && !node.bpsId">
                                             <button  #pop="bs-popover" (click)="onSelectedNode(node)" [popover]="popTemplate" [outsideClick]="true"
                                                 placement="right">
-                                                <img src="../../../../assets/images/VCM/plus-bordercircle.svg" class="testplus" />
+                                                <img src="../../../../assets/images/VCM/plus-bordercircle.svg" class="testplusb" />
                                             </button>
                                             <span>
                                                 <button (click)="editLevelName(node)" *ngIf=" uniqueId1 != node.uniqueId ">
@@ -253,16 +254,24 @@
                                         <span class="proc-title" *ngIf="node.level != 'L1' && node.level != 'L2' && node.level != 'L3' ">
                                             <button (click)="viewProperties(node)" *ngIf="(node.title=='Management Process'&& treeControl.dataNodes[1])|| (node.title=='Core Process'&& treeControl.dataNodes[1]) || (node.title=='Support Process'&& treeControl.dataNodes[2])">
                                                 <img src="../../../assets/images/menu-line.svg" class="procmenu" alt="">
-                                            </button> &nbsp;{{node.title}}                                            
+                                            </button> {{node.title}}                                            
                                             <span class="" *ngIf="node.level != 'L1' && node.level != 'L2' && node.level != 'L3' && nodeParent == node.title ">
-                                                <img (click)="createLevel1(node)" src="../../../../assets/images/VCM/plus-bordercircle.svg" class="testplus" style="cursor: pointer;"/> 
-                                                <button class="btn qsave-btn" (click)="updateVcm()">Save</button>
-                                                <button class="btn qsave-btn" (click)="cancelEdit()">Cancel</button>
+                                                
+                                                <button (click)="createLevel1(node)">
+                                                    <img src="../../../../assets/images/VCM/plus-bordercircle.svg" class="testplusb" /> 
+                                                </button>
+                                                <button (click)="updateVcm()">
+                                                    <img class="testplus" src="../../../../assets/images/VCM/save.svg">
+                                                </button>
+                                                <button (click)="cancelEdit()">
+                                                    <img class="testplus" src="../../../../assets/images/VCM/Cancel-1.svg">
+                                                </button>
+
                                                 <div *ngIf="nodeParent1 == node.title" style="display: flex;width: 150%;margin-top: 3%;">
                                                     <input style="width: 73%;margin-left: 6%;" type="text" class="form-control" placeholder="Enter Process Name1" [(ngModel)]="l1processName">
                                                     <button [hidden]="!l1processName" style="position: relative;right: 6%;" (click)="addL1Nodes(node)">
-                                                            <img class="testplus1" src="../../../../assets/images/VCM/Green Tick.svg">
-                                                        </button>
+                                                        <img class="testplus1" src="../../../../assets/images/VCM/Green Tick.svg">
+                                                    </button>
                                                 </div>
                                             </span>
                                         <button class="btn qedit-btn" (click)="onSelectedProcessEdit(node)" *ngIf="nodeParent != node.title">Quick Edit</button>
@@ -277,7 +286,7 @@
                                             <span (click)="openNodeProperties(node)" *ngIf=" uniqueId1 != node.uniqueId ">{{node.title}} </span>
                                         <span *ngIf="nodeParent == node.parent"> 
                                                 <button *ngIf="uniqueId  != node.uniqueId && uniqueId1 != node.uniqueId" (click)="onCreateLevel1(node)">
-                                                    <img src="../../../../assets/images/VCM/plus-bordercircle.svg" class="testplus" />
+                                                    <img src="../../../../assets/images/VCM/plus-bordercircle.svg" class="testplusb" />
                                                 </button>
                                                 <div *ngIf="uniqueId==node.uniqueId" style="display: flex;width: 150%;margin-top: 2%;">
                                                     <input type="text" class="form-control" placeholder="Enter Process Name" [(ngModel)]="processName">
@@ -304,7 +313,7 @@
                                             <span *ngIf="uniqueId1 != node.uniqueId" (click)="openNodeProperties(node)">{{node.title}} </span>
                                         <span *ngIf="nodeParent == node.parent">
                                                 <button *ngIf="uniqueId1 != node.uniqueId" (click)="onSelectedNode(node)" #pop2="bs-popover" [popover]="popTemplate1" [outsideClick]="true" placement="right">
-                                                    <img src="../../../../assets/images/VCM/plus-bordercircle.svg" class="testplus"/>
+                                                    <img src="../../../../assets/images/VCM/plus-bordercircle.svg" class="testplusb"/>
                                                 </button>
                                                 <button *ngIf="uniqueId1 != node.uniqueId && uniqueId != node.uniqueId" (click)="editLevelName(node)">
                                                     <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" />
