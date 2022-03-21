@@ -359,7 +359,7 @@
             <span class="module-header-title">Consolidated Properties</span>
         </div>
     </div>
-    <app-view-properties [vcm_data]="node_data" [vcm_resData]="vcm_data" [processOwners_list]="processOwners_list"></app-view-properties>
+    <app-view-properties [vcm_data]="node_data" [vcm_resData]="vcm_data" [vcmTreeData]="vcmTreeData" [processOwners_list]="processOwners_list"></app-view-properties>
 </div>
 
 <process-category-overlay headerTitle="BPMN Details" [overlay_data]="overlay_data" (proceed)="saveVCMForBpmn($event)" class="bpmnCreate"></process-category-overlay>
