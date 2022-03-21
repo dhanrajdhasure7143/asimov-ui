@@ -360,9 +360,9 @@ hr {
 .vcm-leveldiv .povaluediv select.form-control.ng-dirty {
     padding-top: 0px !important;
 }
-.submit button.btn.btn-primary:last-child {
+/* .submit button.btn.btn-primary:last-child {
     margin-left: 10px;
-}
+} */
 span.poname {
     background-color: #00a0e3;
     color: #fff;
