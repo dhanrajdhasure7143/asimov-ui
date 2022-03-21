@@ -522,7 +522,7 @@ export class VcmStructureComponent implements OnInit {
 
   cancelEdit() {
     this.nodeParent = null;
-        this.isPropDisabled=false;
+    this.isPropDisabled=true;
   }
 
   onCreateBpmn() {

@@ -254,7 +254,8 @@ export class VcmFullEditComponent implements OnInit {
     console.log(name);
     var processIndex = TREE_DATA.findIndex(e => e.name === name.parent);
     var processData = TREE_DATA[processIndex]['children'];
-    var parentIndex = processData.findIndex(e => e.title === name.childParent);
+    console.log(processData)
+    var parentIndex = processData.findIndex(e => e.uniqueId === name.level1UniqueId);
     var parentData = processData[parentIndex]['children'];
     var childIndex = parentData.findIndex(e => e.title === name.title);
     TREE_DATA[processIndex]['children'][parentIndex]['children'].splice(childIndex, 1);
@@ -264,31 +265,6 @@ export class VcmFullEditComponent implements OnInit {
     this.dataSource.data = TREE_DATA;
     this.drawer.close();
     console.log(this.vcmProcess);
-  }
-
-  resetLevel1() {
-    TREE_DATA = [
-      {
-        name: 'Management Process',uniqueId:UUID.UUID(),
-        children: []
-      },
-      {
-        name: 'Core Process',
-        children: []
-      },
-      {
-        name: 'Support Process',
-        children: []
-      }
-    ];
-    this.dataSource.data = null;
-    this.dataSource.data = TREE_DATA;
-    this.vcmProcess = null;
-    this.vcmProcess = TREE_DATA;
-    this.vcmName = '';
-    this.level1process='';
-    this.process_ownerName='';
-    localStorage.removeItem('vcmData');
   }
 
   showPropertiesPanel(item, obj, level) {
