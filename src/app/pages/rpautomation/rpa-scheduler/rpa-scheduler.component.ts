@@ -3,8 +3,11 @@ import { CronOptions } from 'src/app/shared/cron-editor/CronOptions';
 import {RestApiService} from 'src/app/pages/services/rest-api.service';
 import Swal from 'sweetalert2';
 import cronstrue from 'cronstrue';
+import moment from 'moment';
 import { NotifierService } from 'angular-notifier';
 import { RpaStudioActionsmenuComponent } from '../rpa-studio-actionsmenu/rpa-studio-actionsmenu.component'
+import { first } from 'rxjs/operators';
+import { any } from '@amcharts/amcharts4/.internal/core/utils/Array';
 
 @Component({
   selector: 'app-rpa-scheduler',
@@ -17,6 +20,7 @@ export class RpaSchedulerComponent implements OnInit {
   @Input('data') public data: any;
   botid:any;
   processid:any;
+  beforetime:boolean=false;
   public Environments:any;
   public timesZones: any[] = ["UTC","Asia/Dubai","America/New_York","America/Los_Angeles","Asia/Kolkata","Canada/Atlantic","Canada/Central","Canada/Eastern","GMT"];
   i="";
@@ -50,6 +54,8 @@ export class RpaSchedulerComponent implements OnInit {
   picker1;
   picker2;
   starttime:any;
+  h:any;
+  todaytime:any;
   endtime:any="23:59";
   schedules:any=[];
   startdate:any= new Date();
@@ -60,6 +66,12 @@ export class RpaSchedulerComponent implements OnInit {
   selectedEnvironment:any;
   environmentid:any;
   deletestack:any=[];
+  month:any;
+  day:any;
+  endtimeerror:any;
+  issame:boolean;
+  selecteddate:any;
+  isbefore:boolean;
   flags={
     startflag:false,
     stopflag:false,
@@ -68,11 +80,29 @@ export class RpaSchedulerComponent implements OnInit {
     deleteflag:false,
   }
   q=0;
+  currenttime: any;
+  start_time:any;
+  end_time:any;
+  starttimeerror:any;
+  aftertime:boolean=false;
   constructor(private rest:RestApiService, private notifier: NotifierService, private actions:RpaStudioActionsmenuComponent) { }
 
   ngOnInit() {
-    this.startdate=this.startdate.getFullYear()+"-"+(this.startdate.getMonth()+1)+"-"+this.startdate.getDate();
-
+    
+    var dtToday = new Date();
+    this.selecteddate=new Date()
+   // this.startdate=this.startdate.getFullYear()+"-"+(this.startdate.getMonth()+1)+"-"+this.startdate.getDate();
+   this.month = dtToday.getMonth() + 1;
+    var day = dtToday.getDate();
+    var year = dtToday.getFullYear();
+    if(this.month < 10)
+        this.month = '0' + this.month.toString();
+    if(day < 10)
+        this.day = '0' + day.toString();
+    
+    var minDate= year + '-' + this.month + '-' + day;
+    $('#txtDate').attr('min', minDate);
+    $('#enddatepicker').attr('min', minDate);
     if(this.data.botid!=undefined && this.data.botid !="not_saved")
     {
       this.botid=this.data.botid;
@@ -85,10 +115,34 @@ export class RpaSchedulerComponent implements OnInit {
       this.schedule_list=this.data.schedule_list;
     }
     this.enddate=this.startdate;
+   this.gettime();
+
+    console.log("todaytime",this.todaytime);
+
     this.starttime=(new Date).getHours()+":"+(new Date).getMinutes();
-
+   
   }
-
+gettime(){
+ 
+  this.todaytime=(new Date).getHours()+":"+(new Date).getMinutes();
+  // this.todaytime="8:6"
+   let firstchar=this.todaytime.split(":")
+   let str1='0'
+   if(firstchar[0]<10){
+     var firstchar1=str1.concat(firstchar[0])
+     
+   }
+   else{
+     firstchar1=firstchar[0]
+   }
+   if(firstchar[1]<10){
+     var firstchar2=str1.concat(firstchar[1])
+   }
+   else{
+     firstchar2=firstchar[1]
+   }
+   this.todaytime=firstchar1+ ":" +firstchar2
+}
   get_schedule()
   {
     this.schedule_list=[];
@@ -132,12 +186,140 @@ export class RpaSchedulerComponent implements OnInit {
     this.enddate=this.startdate;
     this.starttime=d.getHours()+":"+d.getMinutes();
   }
-  dateChange($event,date){
-   
-   if(date=='startdate')
-   this.enddate=this.startdate;
-   if(this.isDateToday($event.target.value)) {
+  onChangeHour(event,time){ 
+ debugger
+ this.todaytime=(new Date).getHours()+":"+(new Date).getMinutes();;
+ 
+    event=this.tConv24(event)
+    this.beforetime=false;
+    this.aftertime=false;
+    
+    if(this.isDateToday(this.selecteddate)){
+      if(time=='starttime'){
+     
 
+
+        this.currenttime=this.tConv24(this.todaytime)
+        this.end_time=this.tConv24(this.endtime)
+         let a=moment(event,'h:mma')
+         let b=moment(this.currenttime,'h:mma')
+         let f=moment(this.end_time,'h:mma')
+       
+         this.isbefore=(a.isBefore(b));
+         let g=(a.isAfter(f))
+         this.issame=(a.isSame(f))
+        if(this.isbefore){
+          this.starttimeerror="start time should not be before than current time"
+          this.beforetime=true
+        }
+        
+        if(g){
+           this.starttimeerror="start time should not be greater than end time";
+           this.beforetime=true
+        }
+        if(this.issame){
+          this.starttimeerror="start time should not be equal to end time";
+          this.beforetime=true
+        }
+       
+      }
+      else{
+        this.start_time=this.tConv24(this.starttime);
+        this.currenttime=this.tConv24(this.todaytime)
+        
+        let c=moment(this.start_time,'h:mma')
+        let d=moment(event,'h:mma');
+        let currenttime=moment(this.currenttime,'h:mma')
+        let beforecurrenttime=(d.isBefore(currenttime))
+       
+        let e=(c.isBefore(d))
+       let starttime_error=(c.isBefore(currenttime))
+        console.log(e)
+        if(e==false ){
+          this.aftertime=true;
+          this.endtimeerror="end time should not be before than or equal to start time"
+        }
+        if(beforecurrenttime){
+          this.aftertime=true;
+          this.endtimeerror="end time should not be before than or equal to currenttime"
+        }
+       if(starttime_error){
+         this.beforetime=true;
+         this.starttimeerror="start time should not be before than current time"
+       }
+      }
+    }
+    else{
+      if(this.startdate==this.enddate){
+        if(time=='starttime'){
+     
+
+          this.end_time=this.tConv24(this.endtime)
+          this.start_time=this.tConv24(this.starttime)
+           let a=moment(this.end_time,'h:mma')
+           let b=moment(this.start_time,'h:mma')
+          this.issame=(a.isSame(b))
+           this.isbefore=(b.isAfter(a));
+          if(this.isbefore){
+            this.beforetime=true;
+            this.starttimeerror="start time should not be before than end time"
+  
+          }
+          if(this.issame ){
+            this.beforetime=true;
+            this.starttimeerror="start time should not be equal to end time"
+          }
+         
+        }
+        else{
+          this.end_time=this.tConv24(this.endtime)
+          this.start_time=this.tConv24(this.starttime)
+           let a=moment(this.end_time,'h:mma')
+           let b=moment(this.start_time,'h:mma')
+           this.issame=(a.isSame(b))
+           this.isbefore=(a.isBefore(b));
+           if(this.isbefore ){
+            this.aftertime=true;
+            this.endtimeerror="end time should not be before than start time"
+           }
+           if(this.issame){
+            this.aftertime=true;
+            this.endtimeerror="end time should not be equal to start time"
+           }
+          
+  
+        }
+      }
+     
+    }
+   
+   
+  }
+  tConv24(time24) {
+    
+    
+    var ts = time24;
+    var H = +ts.substr(0, 2);
+    this.h = (H % 12) || 12;
+    this.h = (this.h < 10)?("0"+this.h):this.h;  // leading 0 at the left for 1 digit hours
+    var ampm = H < 12 ? " AM" : " PM"; 
+    ts = this.h + ts.substr(2, 3) +ampm;
+    return ts;
+
+  };
+
+  dateChange($event,date){
+    this.beforetime=false;
+    this.aftertime=false;
+   if(date=='startdate'){
+    this.enddate=this.startdate;
+    $('#enddatepicker').attr('min', this.startdate);
+   }
+  
+   this.selecteddate=$event.target.value
+   if(this.isDateToday($event.target.value)) {
+    this.starttime=(new Date).getHours()+":"+(new Date).getMinutes();
+    this.endtime='23:59'
    }
     else{
       this.starttime="00:00";
@@ -161,7 +343,37 @@ export class RpaSchedulerComponent implements OnInit {
   }
   add_sch()
   {
+    debugger
     // Scheduler
+    if(this.isDateToday(this.selecteddate)){
+      this.todaytime=(new Date).getHours()+":"+(new Date).getMinutes();;
+      let current_time=this.tConv24(this.todaytime)
+      let start_time=this.tConv24(this.starttime)
+       let validatecurrenttime=moment(start_time,'h:mma');
+       let validatesystemtime=moment(current_time,'h:mma');
+       let isbefore=(validatecurrenttime.isBefore(validatesystemtime));
+       if(isbefore){
+         this.beforetime=true;
+         this.starttimeerror="start time should not be before than current time"
+       }
+       else{
+         this.beforetime=false
+        this.addscheduler()
+       }
+       
+    }
+    else{
+      this.addscheduler()
+    }
+   
+
+   
+   
+ 
+
+  }
+
+  addscheduler(){
     if(this.startdate !="" && this.enddate!=""  && this.cronExpression != "" && this.starttime!=undefined && this.endtime!=undefined && this.timezone!="" && this.timezone!=undefined)
     {
       let starttime=this.starttime.split(":")
@@ -194,7 +406,6 @@ export class RpaSchedulerComponent implements OnInit {
       this.notifier.notify("error", "Please fill all inputs");
       //Swal.fire("Please fill all details","","error");
     }
-
   }
 
   check_all(event)
