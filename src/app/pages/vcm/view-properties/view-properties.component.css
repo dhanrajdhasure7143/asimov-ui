@@ -85,7 +85,7 @@ span.docpill:hover {
     margin: 0px;
 }
 .tsttooltipbtn {
-    position: relative;
+    /* position: relative; */
 }
 .tsttooltipbtn:hover .default-img{
     display: none;
@@ -94,7 +94,7 @@ span.docpill:hover {
 .tsttooltipbtn:hover .hover-img {
     display: initial;
 }
-.tsttooltipbtn:hover span.testtooltip {
+.tsttooltipbtn a:hover span.testtooltip {
     display: block;
 }
 span.testtooltip {
@@ -324,22 +324,6 @@ div#bpmn_list {
     .workspace-title .cell.cell2 {
         width: 25% !important;
     }
-    /* .cell.cell7 {
-        padding-right: 10px;
-    }
-    .cell.cell10, .cell.cell11, .cell.cell3 {
-        width: 45% !important;
-    }
-     .cell.cell6 {
-        width: 40% !important;
-    }
-    .cell.cell4 {
-        width: 60% !important;
-    }
-    .workspace-title .cell.cell5{
-        width: 95% !important;
-    }
-     */
     .no-item-img{
         height: calc(100vh - 500px)
     }
@@ -376,4 +360,7 @@ div#bpmn_list {
 .prop-detcont {
     height: calc(100vh - 400px) !important;
     overflow: hidden auto;
+}
+mat-accordion span table.PI.table.w-100.mat-table {
+    margin-left: 3.5%;
 }
