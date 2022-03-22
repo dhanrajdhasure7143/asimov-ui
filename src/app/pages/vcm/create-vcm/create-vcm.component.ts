@@ -9,7 +9,6 @@ import { DataTransferService } from '../../services/data-transfer.service';
 import Swal from 'sweetalert2';
 import { UUID } from 'angular2-uuid';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 
 let TREE_DATA: any[] = [
@@ -53,7 +52,7 @@ export class CreateVcmComponent implements OnInit {
   editProcessName: any;
   propertiesName: any;
   editLevelProperties: number;
-  fileName = [];
+  listOfAttachemnts = [];
   processOwners_list: any[] = [];
   process_ownerName: any;
   isLoading: boolean = false;
@@ -270,7 +269,7 @@ export class CreateVcmComponent implements OnInit {
       this.editProcessOwner = name.processOwner;
     }
     if (name.attachments) {
-      this.fileName = name.attachments;
+      this.listOfAttachemnts = name.attachments;
     }
     this.editProcessName = name.title;
   }
@@ -291,7 +290,7 @@ export class CreateVcmComponent implements OnInit {
       this.editProcessOwner = level2.processOwner;
     }
     if (level2.attachments) {
-      this.fileName = level2.attachments;
+      this.listOfAttachemnts = level2.attachments;
     }
     this.editProcessName = level2.title;
   }
@@ -317,15 +316,15 @@ export class CreateVcmComponent implements OnInit {
   
   RemoveFile(file, i: number) {
     console.log(this.selectedObj)
-    this.fileName.splice(i, 1);
+    this.listOfAttachemnts.splice(i, 1);
     if (this.editLevelProperties == 1) {
       TREE_DATA.filter((e) => e.name === this.propertiesName)[0].children
-        .filter(n => n.title === this.editProcessName)[0].attachments = this.fileName;
+        .filter(n => n.title === this.editProcessName)[0].attachments = this.listOfAttachemnts;
     }
     if (this.editLevelProperties == 2) {
       TREE_DATA.filter((e) => e.name === this.propertiesName)[0].children
         .filter(n => n.uniqueId === this.selectedObj.level1UniqueId)[0].children.filter(c => c.tit === this.editProcessName)[0]
-        .attachments = this.fileName;
+        .attachments = this.listOfAttachemnts;
     }
     this.vcmProcess=TREE_DATA
 
@@ -517,7 +516,7 @@ export class CreateVcmComponent implements OnInit {
   onSubmitUpload(){
     console.log(this.listOfFiles,this.selectedObj)
     
-    this.fileName =  this.listOfFiles;
+    this.listOfAttachemnts =  this.listOfFiles;
     let formdata = new FormData()
     for (var i = 0; i < this.listOfFiles.length; i++) {
       formdata.append("file", this.listOfFiles[i]);
@@ -530,7 +529,7 @@ export class CreateVcmComponent implements OnInit {
     let res_data
     this.rest_api.uploadVCMPropDocument(formdata).subscribe(res => {res_data=res
       console.log(res)
-    // this.fileName =  [res_data.data];
+    // this.listOfAttachemnts =  [res_data.data];
       this.isLoading = false;
       if (this.selectedObj.level == 'L1') {
         TREE_DATA.filter((e) => e.name === this.selectedObj.parent)[0].children
