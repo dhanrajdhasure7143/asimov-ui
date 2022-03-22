@@ -534,7 +534,7 @@ placeholder="Enter Environment Type" >-->
                 <div class="form-footer">
                     <button class="btn btn-default" (click)="resetupdateEnvForm()" >Reset</button>
                     <button class="btn btn-primary btn-test" [disabled]="updateForm.invalid  || !((password!='' && isKeyValuePair==false  )||(isKeyValuePair==true && keyValueFile!=undefined))"  (click)="testConnection('update')">Test Connection</button>
-                    <button class="btn btn-primary"[disabled]="updateForm.invalid || submitted || !((password!='' && isKeyValuePair==false  )||(isKeyValuePair==true && keyValueFile!=undefined))" (click)="updateEnvironment()" >Modify</button>
+                    <button class="btn btn-primary"[disabled]="updateForm.invalid || submitted || !((password!='' && isKeyValuePair==false  )||(isKeyValuePair==true && keyValueFile!=undefined))" (click)="updateEnvironmentV2()" >Modify</button>
                   </div>
             </div>
         </div>

@@ -91,7 +91,8 @@
                             </button>
                             <ul id="predefinedBotDropdown" *dropdownMenu class="dropdown-menu action-menu-dropdown" role="menu" aria-labelledby="button-basic">
                                 <li role="menuitem" class="clickable" *ngFor="let predefinedBot of  current_instance.predefinedbotsData" style="white-space: nowrap;">
-                                    <button (click)="current_instance.loadpredefinedbot(predefinedBot.botId)"> {{predefinedBot.botName}}</button>
+                                    <!-- <button [dndDraggable]="predefinedBot" (click)="current_instance.loadpredefinedbot(predefinedBot.botId)"> {{predefinedBot.botName}}</button> -->
+                                    <div [dndDraggable]="predefinedBot"> {{predefinedBot.botName}}</div>  
                                 </li>
                             </ul>
 

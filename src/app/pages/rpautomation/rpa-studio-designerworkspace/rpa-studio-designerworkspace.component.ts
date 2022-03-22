@@ -16,6 +16,7 @@ import domtoimage from 'dom-to-image';
 import * as $ from 'jquery';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { RpaStudioDesignerComponent } from '../rpa-studio-designer/rpa-studio-designer.component';
 
 @Component({
   selector: 'app-rpa-studio-designerworkspace',
@@ -96,6 +97,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     private dt: DataTransferService,
     private http: HttpClient,
     private child_rpa_studio: RpaStudioComponent,
+    private RPA_Designer_Component:RpaStudioDesignerComponent,
     private toolset:RpaToolsetComponent,
     private formBuilder: FormBuilder,
     private spinner: NgxSpinnerService,
@@ -220,7 +222,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   
       else{
         let connectionNodeForSource=this.nodes.find((item:any)=>item.id==info.sourceId);
-        console.log(connectionNodeForSource);
+        // console.log(connectionNodeForSource);
         if(connectionNodeForSource!=undefined)
         {
           if(connectionNodeForSource.selectedNodeTask=='If condition')
@@ -475,50 +477,56 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       x: mousePos.x + 'px',
       y: mousePos.y + 'px'
     };
-
-    const node = event.data;
-    node.id = this.idGenerator();
-    // node.selectedNodeTask = "";
-    // node.selectedNodeId = "";
-    const nodeWithCoordinates = Object.assign({}, node, dropCoordinates);
-    this.nodes.push(nodeWithCoordinates);
-    setTimeout(() => {
-      this.populateNodes(nodeWithCoordinates);
-    }, 240);
-
-    if (this.nodes.length == 1) {
-      let node = {
-        id: "START_" + this.finalbot.botName,
-        name: "START",
-        selectedNodeTask: "",
-        selectedNodeId: "",
-        path: "/assets/images/RPA/Start.png",
-        x: "2px",
-        y: "9px",
-      }
-      this.startNodeId=node.id
-      this.nodes.push(node);
+    if(event.data.botId!=undefined)
+    {
+      this.RPA_Designer_Component.current_instance.loadpredefinedbot(event.data.botId, dropCoordinates)
+    }
+    else
+    {
+      const node = event.data;
+      node.id = this.idGenerator();
+      // node.selectedNodeTask = "";
+      // node.selectedNodeId = "";
+      const nodeWithCoordinates = Object.assign({}, node, dropCoordinates);
+      this.nodes.push(nodeWithCoordinates);
       setTimeout(() => {
-        this.populateNodes(node);
+        this.populateNodes(nodeWithCoordinates);
       }, 240);
 
+      if (this.nodes.length == 1) {
+        let node = {
+          id: "START_" + this.finalbot.botName,
+          name: "START",
+          selectedNodeTask: "",
+          selectedNodeId: "",
+          path: "/assets/images/RPA/Start.png",
+          x: "2px",
+          y: "9px",
+        }
+        this.startNodeId=node.id
+        this.nodes.push(node);
+        setTimeout(() => {
+          this.populateNodes(node);
+        }, 240);
 
-      let stopnode = {
-        id: "STOP_" + this.finalbot.botName,
-        name: "STOP",
-        selectedNodeTask: "",
-        selectedNodeId: "",
-        path: "/assets/images/RPA/Stop.png",
-        x: "941px",
-        y: "396px",
+
+        let stopnode = {
+          id: "STOP_" + this.finalbot.botName,
+          name: "STOP",
+          selectedNodeTask: "",
+          selectedNodeId: "",
+          path: "/assets/images/RPA/Stop.png",
+          x: "941px",
+          y: "396px",
+        }
+        this.stopNodeId=stopnode.id
+        this.nodes.push(stopnode);
+        setTimeout(() => {
+          this.populateNodes(stopnode);
+        }, 240);
+
+
       }
-      this.stopNodeId=stopnode.id
-      this.nodes.push(stopnode);
-      setTimeout(() => {
-        this.populateNodes(stopnode);
-      }, 240);
-
-
     }
   }
 
@@ -1014,7 +1022,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     this.arrange_task_order(this.startNodeId);
     this.get_coordinates();
     await this.getsvg();
-    console.log("-----------------------------",this.final_tasks)
       this.saveBotdata = {
         "botName": botProperties.botName,
         "botType": botProperties.botType,
@@ -1386,7 +1393,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
             "botName": `${this.finalbot.botName}|AddedTask` ,
             "changeActivity":'-',
             "changedBy": `${firstName} ${lastName}` ,
-            "changedDate":(new Date().toLocaleDateString()+", "+new Date().toLocaleTimeString()),
+            //"changedDate":(new Date().toLocaleDateString()+", "+new Date().toLocaleTimeString()),
             "newValue":'-',
             "previousValue":'-',
             "taskName": item.taskName,
@@ -1400,23 +1407,28 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         for(let i=0;i<item.attributes.length;i++)
         {
           let actualTaskAttribute=actualTask.attributes.find((att:any)=>att.metaAttrId==item.attributes[i].metaAttrId);
-        
-          if(item.attributes[i].attrValue!=actualTaskAttribute.attrValue)
+          if(actualTaskAttribute != undefined)
           {
-            this.auditLogs.push(
-              {
-                "botId": this.finalbot.botId,
-                "botName": `${this.finalbot.botName}|UpdatedConfig` ,
-                "changeActivity":item.attributes[i].metaAttrValue,
-                "changedBy": `${firstName} ${lastName}` ,
-                "changedDate":(new Date().toLocaleDateString()+", "+new Date().toLocaleTimeString()),
-                "newValue":item.attributes[i].attrValue,
-                "previousValue": actualTaskAttribute.attrValue,
-                "taskName": actualTask.taskName,
-                "version": this.finalbot.version
-              }
-            )
+            if(item.attributes[i].attrValue!=actualTaskAttribute.attrValue)
+            {
+
+              console.log(item)
+              this.auditLogs.push(
+                {
+                  "botId": this.finalbot.botId,
+                  "botName": `${this.finalbot.botName}|UpdatedConfig` ,
+                  "changeActivity":item.attributes[i].metaAttrValue,
+                  "changedBy": `${firstName} ${lastName}` ,
+                  //"changedDate":(new Date().toLocaleDateString()+", "+new Date().toLocaleTimeString()),
+                  "newValue":item.attributes[i].attrValue,
+                  "previousValue": actualTaskAttribute.attrValue,
+                  "taskName": actualTask.taskName,
+                  "version": this.finalbot.version
+                }
+              )
+            }
           }
+         
         }
       }
     })
@@ -1430,7 +1442,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
             "botName": `${this.finalbot.botName}|RemovedTask` ,
             "changeActivity":'-',
             "changedBy": `${firstName} ${lastName}` ,
-            "changedDate":(new Date().toLocaleDateString()+", "+new Date().toLocaleTimeString()),
+           // "changedDate":(new Date().toLocaleDateString()+", "+new Date().toLocaleTimeString()),
             "newValue":'-',
             "previousValue":'-',
             "taskName": item.taskName,
@@ -1450,7 +1462,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
             "botName": `${this.finalbot.botName}|RemovedEnv` ,
             "changeActivity":'-',
             "changedBy": `${firstName} ${lastName}` ,
-            "changedDate":(new Date().toLocaleDateString()+", "+new Date().toLocaleTimeString()),
+           // "changedDate":(new Date().toLocaleDateString()+", "+new Date().toLocaleTimeString()),
             "newValue":'-',
             "previousValue":'-',
             "taskName":String(item),
@@ -1470,7 +1482,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
             "botName": `${this.finalbot.botName}|AddedEnv` ,
             "changeActivity":'-',
             "changedBy": `${firstName} ${lastName}` ,
-            "changedDate":(new Date().toLocaleDateString()+", "+new Date().toLocaleTimeString()),
+           // "changedDate":(new Date().toLocaleDateString()+", "+new Date().toLocaleTimeString()),
             "newValue":'-',
             "previousValue":'-',
             "taskName":String(item),
