@@ -1,8 +1,9 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataTransferService } from '../../services/data-transfer.service';
 import { RestApiService } from '../../services/rest-api.service';
 import Swal from 'sweetalert2';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-vcm-properties',
@@ -34,7 +35,14 @@ export class VcmPropertiesComponent implements OnInit {
   process_ownerName:any;
   isEdit:boolean=false;
   vcm_id:any;
-  constructor(private router: Router, private route: ActivatedRoute, private rest_api:RestApiService, private dt: DataTransferService) {
+  fileDescription:any;
+  uploadFilemodalref: BsModalRef;
+  listOfFiles:any=[];
+  filesData=[{fileDescription:""}];
+  selectedObj:any;
+
+  constructor(private router: Router, private route: ActivatedRoute, private rest_api:RestApiService, 
+    private dt: DataTransferService, private modalService: BsModalService,) {
     this.route.queryParams.subscribe(res => {
       this.levelType = res.level
       if(res.isEdit)
@@ -71,7 +79,6 @@ export class VcmPropertiesComponent implements OnInit {
       }
       else {
         this.descriptionEdit = i;
-        console.log(name, i, level);
         this.descriptionProcessName = name.parent;
         this.descriptionviewonly = false;
         this.texarea.nativeElement.focus();
@@ -83,14 +90,13 @@ export class VcmPropertiesComponent implements OnInit {
       if (level == 'level1') {
         this.vcmProperties.filter((e) => e.name === prop.parent)[0].children
           .filter(n => n.title === prop.title)[0].description;
-        console.log(this.vcmProperties);    
+        console.log(this.vcmProperties);
         this.descriptionEdit = '';
         this.descriptionProcessName = '';
         this.descriptionviewonly = true;
-      }
-      else {
+      }else {
         this.vcmProperties.filter((e) => e.name === prop.parent)[0].children
-          .filter(n => n.title === prop.childParent)[0].children.filter(c => c.title === prop.title)[0]
+          .filter(n => n.title === prop.level1UniqueId)[0].children.filter(c => c.uniqueId === prop.uniqueId)[0]
           .description;
         this.descriptionEdit = '';
         this.descriptionProcessName = '';
@@ -108,7 +114,7 @@ export class VcmPropertiesComponent implements OnInit {
       console.log(level);
       this.isLoading=true;
 
-      this.fileName = []
+      this.fileName = [];
       const formdata = new FormData();
 
       for (var i = 0; i < event.target.files.length; i++) {
@@ -140,7 +146,7 @@ export class VcmPropertiesComponent implements OnInit {
         }
         if (level == 'level2') {
           this.vcmProperties.filter((e) => e.name === name.parent)[0].children
-            .filter(n => n.title === name.childParent)[0].children.filter(c => c.title === name.title)[0]
+            .filter(n => n.uniqueId === name.level1UniqueId)[0].children.filter(c => c.uniqueId === name.uniqueId)[0]
             .attachments = this.fileName;
         }
       },err=>{
@@ -176,15 +182,13 @@ export class VcmPropertiesComponent implements OnInit {
   }
 
   RemoveFile(file, i: number, level) {
-    // this.fileName.splice(i, 1);
     console.log(file, i);
     if (level == 'level1') {
       this.vcmProperties.filter((e) => e.name === file.parent)[0].children
-        .filter(n => n.title === file.title)[0].attachments.splice(i, 1);
-    }
-    else {
+        .filter(n => n.uniqueId === file.uniqueId)[0].attachments.splice(i, 1);
+    }else {
       this.vcmProperties.filter((e) => e.name === file.parent)[0].children
-        .filter(n => n.title === file.childParent)[0].children.filter(c => c.title === file.title)[0]
+        .filter(n => n.uniqueId === file.level1UniqueId)[0].children.filter(c => c.uniqueId === file.uniqueId)[0]
         .attachments.splice(i, 1);
     }
   }
@@ -337,5 +341,78 @@ export class VcmPropertiesComponent implements OnInit {
     this.dt.vcmDataTransfer(obj)
     this.router.navigate(["/pages/vcm/edit"], { queryParams: { id: this.vcm_id,"isEdit":"false" } });
 
+  }
+
+  uploadFilemodalCancel(){
+    this.uploadFilemodalref.hide();
+  }
+
+  chnagefileUploadForm(e){
+    this.listOfFiles = [];
+    for (var i = 0; i < e.target.files.length; i++) {
+      e.target.files[i]['convertedsize'] = this.convertFileSize(e.target.files[i].size);
+      e.target.files[i]['fileName'] = e.target.files[i]['name'];
+      // e.target.files[i]['processName'] = this.selectedObj.title;
+      e.target.files[i]['fileDescription'] = ''
+      this.listOfFiles.push(e.target.files[i])
+    } 
+  }
+  removeSelectedFile(index) {
+    this.listOfFiles.splice(index, 1);
+   }
+
+   uploadFileModelOpen(template: TemplateRef<any>, obj){
+    this.uploadFilemodalref = this.modalService.show(template,{class:"modal-lr"});
+    this.selectedObj= obj;
+  }
+
+  onSubmitUpload(){
+    console.log(this.listOfFiles,this.selectedObj)
+    if (this.selectedObj.level == 'L1') {
+      this.vcmProperties.filter((e) => e.name === this.selectedObj.parent)[0].children
+        .filter(n => n.uniqueId === this.selectedObj.uniqueId)[0].attachments = this.listOfFiles;
+    }
+
+    if (this.selectedObj.level == 'L2') {
+      this.vcmProperties.filter((e) => e.name ===this.selectedObj.parent)[0].children
+      .filter(n => n.uniqueId === this.selectedObj.level1UniqueId)[0].children
+      .filter(c => c.uniqueId === this.selectedObj.uniqueId)[0].attachments = this.listOfFiles;
+    }
+    let formdata = new FormData()
+    for (var i = 0; i < this.listOfFiles.length; i++) {
+      formdata.append("file", this.listOfFiles[i]);
+    }
+    formdata.append("vcmLevel",this.selectedObj.level);
+    formdata.append("uniqueId",this.selectedObj.uniqueId);
+    formdata.append("masterId","000");
+    formdata.append("parent",this.selectedObj.parent);
+    formdata.append("vcmuniqueId",this.vcmProperties[0].uniqueId);
+
+    this.rest_api.uploadVCMPropDocument(formdata).subscribe(res => {
+      this.isLoading = false;
+  
+      if (this.selectedObj.level == 'L1') {
+        this.vcmProperties.filter((e) => e.name === this.selectedObj.parent)[0].children
+          .filter(n => n.uniqueId === this.selectedObj.uniqueId)[0].attachments = this.listOfFiles;
+      }
+
+      if (this.selectedObj.level == 'L2') {
+        this.vcmProperties.filter((e) => e.title ===this.selectedObj.parent)[0].children
+        .filter(n => n.uniqueId === this.selectedObj.level1UniqueId)[0].children
+        .filter(c => c.uniqueId === this.selectedObj.uniqueId)[0].attachments = this.listOfFiles;
+      }
+      this.uploadFilemodalCancel();
+    },err=>{
+      this.isLoading=false;
+      Swal.fire({
+        title: 'Error',
+        text: "File upload failed",
+        position: 'center',
+        icon: 'error',
+        heightAuto: false,
+      })
+
+    });
+    console.log(this.vcmProperties);
   }
 }

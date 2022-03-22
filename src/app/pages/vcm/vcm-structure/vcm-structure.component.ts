@@ -160,7 +160,6 @@ export class VcmStructureComponent implements OnInit {
       objData.forEach(e1 => {
         if (e.level == "L3") {
           if (e.parent == e1.title) {
-            console.log(e, e1)
             e1.children.forEach(e2 => {
               if (e2.uniqueId == e.level1UniqueId) {
                 e2.children.forEach(e3 => {

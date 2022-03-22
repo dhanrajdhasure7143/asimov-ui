@@ -16,6 +16,7 @@ import { ViewPropertiesComponent } from './view-properties/view-properties.compo
 import { VcmFullEditComponent } from './vcm-full-edit/vcm-full-edit.component';
 import { VcmPreviewComponent } from './vcm-preview/vcm-preview.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
+import { ModalModule, BsModalRef  } from 'ngx-bootstrap/modal';
 
 
 @NgModule({
@@ -36,8 +37,9 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
     MatExpansionModule,
     PopoverModule.forRoot(),
     SharedModule,
-    NgxDropzoneModule
+    NgxDropzoneModule,
+    ModalModule.forRoot(),
   ],
-  providers:[]
+  providers:[BsModalRef]
 })
 export class VcmModule { }
