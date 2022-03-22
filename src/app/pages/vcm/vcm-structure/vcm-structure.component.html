@@ -202,10 +202,14 @@
                                     <span *ngIf="node.level == 'L2'">
                                         <span (click)="openNodeProperties(node)"  *ngIf="uniqueId1 != node.uniqueId " class="sub-nodel2">{{node.title}}</span>
                                     <span *ngIf="nodeParent == node.parent">
-                                            <button *ngIf="uniqueId != node.uniqueId && uniqueId1 != node.uniqueId" (click)="onSelectedNode(node)" #pop3="bs-popover"
-                                                [popover]="popTemplate1" [outsideClick]="true" placement="right">
+                                            <button mat-button [matMenuTriggerFor]="custompopup1" *ngIf="uniqueId != node.uniqueId && uniqueId1 != node.uniqueId" 
+                                                (click)="onSelectedNode(node)" class="custom-popupbtn" >
                                                 <img src="../../../../assets/images/VCM/plus-bordercircle.svg" class="testplusb" />
                                             </button>
+                                            <!-- <button *ngIf="uniqueId != node.uniqueId && uniqueId1 != node.uniqueId" (click)="onSelectedNode(node)" #pop3="bs-popover"
+                                                [popover]="popTemplate1" [outsideClick]="true" placement="right">
+                                                <img src="../../../../assets/images/VCM/plus-bordercircle.svg" class="testplusb" />
+                                            </button> -->
                                         
                                             <div *ngIf="uniqueId==node.uniqueId" style="display: flex;width: 150%;margin-top: 2%;">
                                                 <input type="text" class="form-control" placeholder="Enter Process Name1" [(ngModel)]="processName">
@@ -230,10 +234,13 @@
                                         <span *ngIf="uniqueId1 != node.uniqueId && node.bpsId" class="bps_link" (click)="navigateToBpsNotation(node)">{{node.title}}</span> 
                                     <span *ngIf="uniqueId1 != node.uniqueId && !node.bpsId" (click)="openNodeProperties(node)">{{node.title}}</span> 
                                     <span *ngIf="nodeParent == node.parent && !node.bpsId">
-                                            <button  #pop="bs-popover" (click)="onSelectedNode(node)" [popover]="popTemplate" [outsideClick]="true"
-                                                placement="right">
+                                            <button (click)="onSelectedNode(node)"  mat-button [matMenuTriggerFor]="custompopup2" class="custom-popupbtn" >
                                                 <img src="../../../../assets/images/VCM/plus-bordercircle.svg" class="testplusb" />
                                             </button>
+                                            <!-- <button  #pop="bs-popover" (click)="onSelectedNode(node)" [popover]="popTemplate" [outsideClick]="true"
+                                                placement="right">
+                                                <img src="../../../../assets/images/VCM/plus-bordercircle.svg" class="testplusb" />
+                                            </button> -->
                                             <span>
                                                 <button (click)="editLevelName(node)" *ngIf=" uniqueId1 != node.uniqueId ">
                                                     <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" />
@@ -310,11 +317,15 @@
 
 
                                         <span *ngIf="node.level == 'L2'">
-                                            <span *ngIf="uniqueId1 != node.uniqueId" (click)="openNodeProperties(node)">{{node.title}} </span>
+                                            <span *ngIf="uniqueId1 != node.uniqueId" (click)="openNodeProperties(node)" class="sub-nodel2-haschild">{{node.title}} </span>
                                         <span *ngIf="nodeParent == node.parent">
-                                                <button *ngIf="uniqueId1 != node.uniqueId" (click)="onSelectedNode(node)" #pop2="bs-popover" [popover]="popTemplate1" [outsideClick]="true" placement="right">
+                                            <button mat-button [matMenuTriggerFor]="custompopup1" *ngIf="uniqueId1 != node.uniqueId" 
+                                                    (click)="onSelectedNode(node)" class="custom-popupbtn" >
+                                                <img src="../../../../assets/images/VCM/plus-bordercircle.svg" class="testplusb" />
+                                            </button>
+                                                <!-- <button *ngIf="uniqueId1 != node.uniqueId" (click)="onSelectedNode(node)" #pop2="bs-popover" [popover]="popTemplate1" [outsideClick]="true" placement="right">
                                                     <img src="../../../../assets/images/VCM/plus-bordercircle.svg" class="testplusb"/>
-                                                </button>
+                                                </button> -->
                                                 <button *ngIf="uniqueId1 != node.uniqueId && uniqueId != node.uniqueId" (click)="editLevelName(node)">
                                                     <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" />
                                                 </button>    
@@ -411,3 +422,43 @@
         </div>
     </div>
 </ng-template>
+
+<!-- Custom Popover -->
+
+    <mat-menu #custompopup1="matMenu" class="custom-popup-content">
+       
+        <p mat-menu-item (click)="onCreateBpmn()">
+            <img src="../../../../assets/images/VCM/Plus-litblue.svg" class="testplus" /> Create Notation
+        </p>
+        <p mat-menu-item>
+            <ngx-dropzone (change)="onSelect($event)" [multiple]=false [accept]="validNotationTypes">
+                <div class="model-text">
+                    <img src="../../../../assets/images/VCM/upload-litblue.svg" alt="" class="testplus"> Upload Notation
+                </div>
+            </ngx-dropzone>
+        </p>
+        <p mat-menu-item (click)="onCreateLevel3()">
+            <img src="../../../../assets/images/VCM/Folder-litblue.svg" class="testplus" /> Create Level 3
+        </p>
+             
+    </mat-menu>
+
+    <mat-menu #custompopup2="matMenu" class="custom-popup-content">
+       
+        <p mat-menu-item (click)="onCreateBpmn();">
+            <img src="../../../../assets/images/VCM/Plus-litblue.svg" class="testplus" /> Create Bpmn
+        </p>
+        <p mat-menu-item (click)="onCreateDmn()">
+            <img src="../../../../assets/images/VCM/Plus-litblue.svg" class="testplus" /> Create DMN
+        </p>
+        <p mat-menu-item >
+            <ngx-dropzone (change)="onSelect($event)" [multiple]=false [accept]="validNotationTypes">
+                <div class="model-text">
+                    <img src="../../../../assets/images/VCM/upload-litblue.svg" alt="" class="testplus"> Upload Notation
+                </div>
+            </ngx-dropzone>
+        </p>
+             
+    </mat-menu>
+
+<!-- Custom Popover -->

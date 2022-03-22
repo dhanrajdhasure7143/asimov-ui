@@ -331,3 +331,10 @@ h4 img.procmenu {
     height: 25px !important;
     color: #333c48;
 }
+.custom-content button {
+    float: right;
+}
+.sub-nodel2-haschild {
+    color: #607087 !important;
+}
+

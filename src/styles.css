@@ -2760,5 +2760,43 @@ span.pdicon {
   background-color: #00a0e3 !important;
 }
 .prop-detcont mat-accordion .has-childlevels .mat-expansion-panel-content.ng-trigger-bodyExpansion {
-  margin-left: 3.5% !important;
+  margin-left: 2.5% !important;
+  margin-right: 2% !important;
+}
+.vcmprop .popover-content.popover-body {
+  padding: 5px 10px !important;
+}
+/* .custom-popup-content {
+  position: absolute;
+  top: -20px;
+  left: 45px;
+}
+.custom-popup-content::before {
+  content: "";
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    top: -4px;
+    background-color: #001c47;
+    transform: rotate(45deg);
+    right: 10px;
+} */
+.custom-popup-content .mat-menu-content ngx-dropzone {
+  height: 25px !important;
+  background: transparent !important;
+  color: #333c48 !important;
+  font-weight: 500 !important;
+  font-size: 14px !important;
+}
+.custom-popup-content .mat-menu-content p {
+  height: 25px !important;
+  line-height: 25px !important;
+  margin-bottom: 5px !important;
+  color: #333c48 !important;
+}
+button.custom-popupbtn.mat-button {
+  padding: 0px !important;
+  min-width: auto !important;
+  line-height: unset !important;
+  width: auto !important;
 }
