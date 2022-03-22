@@ -146,6 +146,7 @@ export class VcmFullEditComponent implements OnInit {
         description: '',
         processOwner: '',
         attachments: [],
+        children:[],
         level: "L1",
         'uniqueId': UUID.UUID()
       }
@@ -160,6 +161,7 @@ export class VcmFullEditComponent implements OnInit {
         description: '',
         processOwner: '',
         attachments: [],
+        children:[],
         level: "L1",
         'uniqueId': UUID.UUID()
       }
@@ -174,6 +176,7 @@ export class VcmFullEditComponent implements OnInit {
         description: '',
         processOwner: '',
         attachments: [],
+        children:[],
         level: "L1",
         'uniqueId': UUID.UUID()
       }
@@ -257,6 +260,7 @@ console.log(this.level1process,index)
     this.editProcessOwner = '';
     this.propertiesName = obj.parent;
     this.selectedObj=obj;
+    this.uniqueId1=null;
     if (obj.description) {
       this.editProcessDescription = obj.description;
     }
@@ -574,8 +578,6 @@ console.log(this.level1process,index)
     let treeData1=[]
     let treeData2=[]
     let treeData3=[]
-    console.log(this.vcmProcess)
-    console.log(TREE_DATA)
     this.vcmProcess = TREE_DATA;
     this.vcmProcess.forEach(ele=>{
         ele.children.forEach(e=>{
@@ -583,7 +585,7 @@ console.log(this.level1process,index)
           treeData1.push(e)
         })
     })
-    treeData1.forEach(element => {
+        treeData1.forEach(element => {
       element.children.forEach(e=>{
         treeData.push(e)
         treeData2.push(e)
@@ -775,6 +777,9 @@ console.log(this.level1process,index)
 
     });
   }
+  onIputClick(){
+    this.uniqueId1=null
+  }
   
-
+  
 }
