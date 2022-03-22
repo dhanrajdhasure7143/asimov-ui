@@ -527,6 +527,17 @@ export class UploadComponent implements OnInit {
   }
 
   onGraphSelection(selectedpiIdData) {    // View selected graph on workspace
+    console.log(selectedpiIdData)
+    if(selectedpiIdData.status == "Inprogress"){
+      Swal.fire({
+        position: 'center',
+        icon: 'info',
+        title: 'This graph is under processing, please try again later',
+        showConfirmButton: true,
+        heightAuto: false,
+      })
+    return
+    }
     this.isgraph = true;
     let selected_process_id = selectedpiIdData.piId
     this.router.navigate(["/pages/processIntelligence/flowChart"], { queryParams: { wpiId: selected_process_id } });
