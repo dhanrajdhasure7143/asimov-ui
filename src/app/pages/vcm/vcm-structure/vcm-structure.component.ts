@@ -1,5 +1,5 @@
 import { NestedTreeControl } from '@angular/cdk/tree';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { MatTreeNestedDataSource } from '@angular/material';
 import { MatTree } from '@angular/material/tree';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -13,6 +13,7 @@ import { APP_CONFIG } from 'src/app/app.config';
 import { RestApiService } from '../../services/rest-api.service';
 import { MatDrawer } from '@angular/material/sidenav';
 import { DataTransferService } from '../../services/data-transfer.service';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 let TREE_DATA: any[] = [
   {
@@ -78,11 +79,14 @@ export class VcmStructureComponent implements OnInit {
   selectedPropNode:any={level:"L1"}
   isOpenedState=1;
   propType:any;
+  listOfFiles:any=[];
+  uploadFilemodalref: BsModalRef;
 
   constructor(private router: Router, private bpmnservice: SharebpmndiagramService,
     private rest_api: RestApiService,
     private route: ActivatedRoute,
-    private dt: DataTransferService) {
+    private dt: DataTransferService,
+    private modalService: BsModalService) {
     this.route.queryParams.subscribe(res => {
       this.vcm_id = res.id
     });
@@ -351,8 +355,7 @@ export class VcmStructureComponent implements OnInit {
   }
 
   onSelectedNode(node) {
-    console.log(node);
-    this.selectedNode = node
+    this.selectedNode = node;
   }
 
   addL3Nodes() {
@@ -429,7 +432,6 @@ export class VcmStructureComponent implements OnInit {
     let treeData1 = [];
     let treeData2 = [];
     let treeData3 = [];
-    console.log("vcmTreeData", this.vcmTreeData)
     this.vcmTreeData.forEach(ele => {
       ele.children.forEach(e => {
         treeData.push(e)
@@ -493,6 +495,7 @@ export class VcmStructureComponent implements OnInit {
   }
 
   updateVcm() {
+    this.cancelEdit();
     let req_body = this.getreqBody();
     console.log(req_body)
     this.isLoading = true;
@@ -521,7 +524,10 @@ export class VcmStructureComponent implements OnInit {
 
   cancelEdit() {
     this.nodeParent = null;
+    this.nodeParent1=null;
     this.isPropDisabled=true;
+    this.uniqueId1=null;
+    this.uniqueId=null;
   }
 
   onCreateBpmn() {
@@ -721,6 +727,103 @@ export class VcmStructureComponent implements OnInit {
     }
       this.drawer.close();
   }
+
+  chnagefileUploadForm(e){
+    this.listOfFiles = [];
+    for (var i = 0; i < e.target.files.length; i++) {
+      e.target.files[i]['convertedsize'] = this.convertFileSize(e.target.files[i].size);
+      e.target.files[i]['fileName'] = e.target.files[i]['name'];
+      // e.target.files[i]['processName'] = this.selectedObj.title;
+      e.target.files[i]['fileDescription'] = ''
+      this.listOfFiles.push(e.target.files[i])
+    } 
+  }
+
+  uploadFilemodalCancel(){
+    this.uploadFilemodalref.hide();
+  }
+
+  removeSelectedFile(index) {
+    this.listOfFiles.splice(index, 1);
+  }
+
+   uploadFileModelOpen(template: TemplateRef<any>){
+     this.listOfFiles=[];
+    this.uploadFilemodalref = this.modalService.show(template,{class:"modal-lr"});
+  }
+
+  convertFileSize(e) {
+    let divided_size: any = String(e / 1024)
+    if (e / 1024 <= 1024) {
+      if (divided_size.includes('.')) {
+        return divided_size.split('.')[0] + ' KB'
+      } else {
+        return divided_size + ' KB';
+      }
+    } else {
+      let size1: any = String(divided_size / 1024)
+      if (size1.includes('.')) {
+        return size1.split('.')[0] + ' MB'
+      } else {
+        return size1 + ' MB';
+      }
+    }
+  }
+
+  onSubmitUpload(){
+    console.log(this.vcmTreeData,this.selectedPropNode)
+    
+    this.attachments =  this.listOfFiles;
+    let formdata = new FormData()
+    for (var i = 0; i < this.listOfFiles.length; i++) {
+      formdata.append("file", this.listOfFiles[i]);
+    }
+    formdata.append("vcmLevel",this.selectedPropNode.level);
+    formdata.append("uniqueId",this.selectedPropNode.uniqueId);
+    formdata.append("masterId","000");
+    formdata.append("parent",this.selectedPropNode.parent);
+    formdata.append("vcmuniqueId",this.vcmTreeData[0].uniqueId);
+    let res_data
+    this.rest_api.uploadVCMPropDocument(formdata).subscribe(res => {res_data=res
+      console.log(res)
+    // this.attachments =  [res_data.data];
+      this.isLoading = false;
+      if (this.selectedPropNode.level == 'L1') {
+        this.vcmTreeData.filter((e) => e.title === this.selectedPropNode.parent)[0].children
+          .filter(n => n.uniqueId === this.selectedPropNode.uniqueId)[0].attachments = this.listOfFiles;
+      }
+
+      if (this.selectedPropNode.level == 'L2') {
+        this.vcmTreeData.filter((e) => e.title ===this.selectedPropNode.parent)[0].children
+        .filter(n => n.uniqueId === this.selectedPropNode.level1UniqueId)[0].children
+        .filter(c => c.uniqueId === this.selectedPropNode.uniqueId)[0].attachments = this.listOfFiles;
+      }
+
+      if (this.selectedPropNode.level == 'L3') {
+        this.vcmTreeData.filter((e) => e.title ===this.selectedPropNode.parent)[0].children
+        .filter(n => n.uniqueId === this.selectedPropNode.level1UniqueId)[0].children
+        .filter(m => m.uniqueId === this.selectedPropNode.level2UniqueId)[0].children
+        .filter(c => c.uniqueId === this.selectedPropNode.uniqueId)[0].attachments = this.listOfFiles;
+      }
+
+      this.uploadFilemodalCancel();
+    },err=>{
+      this.isLoading=false;
+      Swal.fire({
+        title: 'Error',
+        text: "File upload failed",
+        position: 'center',
+        icon: 'error',
+        heightAuto: false,
+      })
+
+    });
+  }
+
+  removeFile(){
+
+  }
+
 
 }
 
