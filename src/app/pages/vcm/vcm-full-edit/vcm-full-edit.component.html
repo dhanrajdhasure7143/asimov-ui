@@ -26,7 +26,7 @@
                     </div>
                     <div class="propertiesPanelBody" id="propertiesPanelBody">
                         <mat-accordion>
-                            <mat-expansion-panel (opened)="onExpansionClik('1')" hideToggle [expanded]="isOpenedState==1">
+                            <mat-expansion-panel hideToggle [expanded]="isOpenedState==1">
                                 <mat-expansion-panel-header>
                                     <mat-panel-title class="accordionHeaderMain">
                                         <div class="accordionHeaderToggle">
@@ -66,7 +66,7 @@
                                 </mat-panel-description>
                             </mat-expansion-panel>
 
-                            <mat-expansion-panel (opened)="onExpansionClik('2')" hideToggle [expanded]="isOpenedState==2">
+                            <mat-expansion-panel hideToggle>
                                 <mat-expansion-panel-header>
                                     <mat-panel-title>
                                         <div class="accordionHeaderToggle">
@@ -81,18 +81,20 @@
                                             <!-- <h4 class="procname">{{editProcessName}}</h4> -->
                                             <div class="vcmdocs">
                                                 <img src="../../../../assets/images/VCM/VCM-Upload.svg" />
-                                                <button class="btn" (click)="fileInput.click()">
-                                                    <input multiple #fileInput type="file" (change)="documentsUpload($event)" style="display:none;" />
-                                                    Upload
-                                                </button>
+                                                <button class="btn" (click)="uploadFileModelOpen(uploadFilemodal)">Upload</button>
                                             </div>
                                         </div>
                                         <div class="col-md-12 form-group files">
-                                            <p *ngFor="let file of fileName;let i = index;">
-                                                {{i+1}}.{{file.fileName}}
-                                                <span><img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img"  />
-                                                <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" (click)="RemoveFile(file,i)" /></span>
-                                            </p>
+                                            <div class="col-md-12" *ngFor="let each of listOfAttachemnts;let i = index;">
+                                                <p>
+                                                    {{i + 1}}. {{each.fileName}}
+                                                    <span><img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img"  />
+                                                    <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" (click)="RemoveFile(file,i)" /></span>
+                                                </p>
+                                                <div>
+                                                    <p>{{each.fileDescription}}</p>
+                                                </div>
+                                            </div>
                                         </div>
 
                                     </div>
@@ -102,50 +104,6 @@
                         </mat-accordion>
                     </div>
                 </div>
-                <!-- <mat-tab-group>
-                    <mat-tab label="Properties">
-                        <div class="editcontent" >
-                            <div class="col-md-12 form-group">
-                                <label class="label-control">Process Name</label>
-                                <input type="text" disabled class="form-control" [(ngModel)]="editProcessName">
-                            </div>
-                            <div class="col-md-12 form-group">
-                                <label class="label-control">Process Owner</label>
-                                <select class="form-control" [(ngModel)]="editProcessOwner">
-                                    <option value="" hidden disabled>Select Owner</option>
-                                    <option *ngFor="let each_approver of processOwners_list;let i=index" [value]="each_approver.firstName+' '+each_approver.lastName">
-                                        {{(each_approver.firstName | titlecase) +" "+(each_approver.lastName==undefined?"":each_approver.lastName)}}</option>
-                                </select>
-                            </div>
-                            <div class="col-md-12 form-group">
-                                <label class="label-control">Process Description</label>
-                                <textarea  class="form-control"  rows="5" [(ngModel)]="editProcessDescription" placeholder="Enter Process Description"></textarea>
-                            </div>
-                        </div>
-                        <div class="propfooter col-md-12 text-right">
-                            <button class="btn btn-primary" *ngIf="editLevelProperties == 1" (click)="editProperties()">Save</button>
-                            <button class="btn btn-primary" *ngIf="editLevelProperties == 2" (click)="editProcessLevel2()">Save</button>
-                        </div>
-                    </mat-tab>
-                    <mat-tab label="Documents">
-                        <div class="col-md-12 form-group" >
-                            <div class="vcmdocs">
-                                <img src="../../../../assets/images/VCM/VCM-Upload.svg"  />
-                                <button class="btn" (click)="fileInput.click()" >
-                                    <input multiple #fileInput type="file" (change)="documentsUpload($event)" style="display:none;" />
-                                    Upload
-                                </button>
-                            </div>
-                        </div>
-                        <div class="col-md-12 form-group files" >
-                            <p *ngFor="let file of fileName;let i = index;">
-                                {{i+1}}.{{file.fileName}} 
-                                <span><img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img"  />
-                                <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" (click)="RemoveFile(file,i)" /></span>
-                            </p>
-                        </div>
-                    </mat-tab>
-                </mat-tab-group> -->
             </mat-drawer>
             <mat-drawer-content>
                 <div class="row maincontent h-100">
@@ -205,7 +163,7 @@
 
                                                 <div class="col-md-12 p-0 form-group content">
                                                     <input [(ngModel)]="manageinput" class="form-control" type="text" placeholder="Enter Management Process Name">
-                                                    <button (click)="addManageProcess()" [disabled]="manageinput == '' " class="btn">
+                                                    <button (click)="addL1Process('Management Process')" [disabled]="manageinput == '' " class="btn">
                                                         <img src="../../../../assets/images/VCM/Green Tick.svg" class="testplus1" />
                                                     </button>
                                                 </div>
@@ -255,7 +213,7 @@
 
                                                 <div class="col-md-12 p-0 form-group content">
                                                     <input [(ngModel)]="coreinput" class="form-control" type="text" placeholder="Enter Core Process Name">
-                                                    <button (click)="addCoreProcess()" [disabled]="coreinput == '' " class="btn">
+                                                    <button (click)="addL1Process('Core Process')" [disabled]="coreinput == '' " class="btn">
                                                         <img src="../../../../assets/images/VCM/Green Tick.svg" class="testplus1" />
                                                     </button>
                                                 </div>
@@ -305,7 +263,7 @@
 
                                                 <div class="col-md-12 p-0 form-group content">
                                                     <input [(ngModel)]="supportinput" class="form-control" type="text" placeholder="Enter Support process name">
-                                                    <button (click)="addSupportProcess()" [disabled]="supportinput == '' " class="btn">
+                                                    <button (click)="addL1Process('Support Process')" [disabled]="supportinput == '' " class="btn">
                                                         <img src="../../../../assets/images/VCM/Green Tick.svg" class="testplus1" />
                                                     </button>
                                                 </div>
@@ -365,7 +323,7 @@
                                     </div>
                                     <div class="level1process form-group">
                                         <input placeholder="Enter Process Group Name" class="form-control" type="text" name="levelName" autocomplete="off" [(ngModel)]="addLevel2">
-                                        <button [disabled]="addLevel2 == '' || !level1process" type="submit" class="btn" (click)="addNewLevel2()">
+                                        <button [disabled]="addLevel2 == '' || !level1process" type="submit" class="btn" (click)="addLevel2Process()">
                                     <img src="../../../../assets/images/VCM/Green Tick.svg" class="testplus1" />
                                 </button>
                                     </div>
@@ -415,7 +373,7 @@
                                                         <li *ngIf="inputUniqueId == level2.uniqueId && item.name == 'Management Process'">
                                                             <div class="l3pname-div" style="padding-top: 1%;display: flex;">
                                                                 <input style="width: 95%;" type="text" class="form-control" placeholder="Enter Process Name" [(ngModel)]="l3ProcessName">
-                                                                <button [hidden]="!l3ProcessName" (click)="editTitle(level2,item)" style="position: relative;right: 4%;">
+                                                                <button [hidden]="!l3ProcessName" (click)="addL3Process(level2,item)" style="position: relative;right: 4%;">
                                                                     <img class="testplus1" src="../../../../assets/images/VCM/Green Tick.svg">
                                                                 </button>
                                                             </div>
@@ -426,7 +384,7 @@
                                                                 <div *ngIf="item.name == 'Management Process'" class="actimg" style="margin-top: 2%;">
                                                                     <span>
                                                                         <img src="../../../../assets/images/VCM/more-vertical-default.svg" class="testplus default-img" />
-                                                                        <img (click)="editLevel3(level2,l3,3)" src="../../../../assets/images/VCM/more-vertical-hover.svg" class="testplus hover-img"/>
+                                                                        <img (click)="openProperties(level2,l3,3)" src="../../../../assets/images/VCM/more-vertical-hover.svg" class="testplus hover-img"/>
                                                                     </span>
                                                                     <span>
                                                                         <img src="../../../../assets/images/VCM/VCM-close-default.svg" class="testplus2 default-img" />
@@ -484,7 +442,7 @@
                                                         <li *ngIf="inputUniqueId == level2.uniqueId && item.name == 'Core Process'">
                                                             <div class="l3pname-div" style="padding-top: 1%;display: flex;">
                                                                 <input style="width: 95%;" type="text" class="form-control" placeholder="Enter Process Name" [(ngModel)]="l3ProcessName">
-                                                                <button [hidden]="!l3ProcessName" (click)="editTitle(level2,item)" style="position: relative;right: 4%;">
+                                                                <button [hidden]="!l3ProcessName" (click)="addL3Process(level2,item)" style="position: relative;right: 4%;">
                                                                     <img class="testplus1" src="../../../../assets/images/VCM/Green Tick.svg">
                                                                 </button>
                                                             </div>
@@ -495,7 +453,7 @@
                                                                 <div *ngIf="item.name == 'Core Process'" class="actimg" style="margin-top: 2%;">
                                                                     <span>
                                                                         <img src="../../../../assets/images/VCM/more-vertical-default.svg" class="testplus default-img" />
-                                                                        <img (click)="editLevel3(level2,l3,3)" src="../../../../assets/images/VCM/more-vertical-hover.svg" class="testplus hover-img"/>
+                                                                        <img (click)="openProperties(level2,l3,3)" src="../../../../assets/images/VCM/more-vertical-hover.svg" class="testplus hover-img"/>
                                                                     </span>
                                                                     <span>
                                                                         <img src="../../../../assets/images/VCM/VCM-close-default.svg" class="testplus2 default-img" />
@@ -553,7 +511,7 @@
                                                         <li *ngIf="inputUniqueId == level2.uniqueId && item.name == 'Support Process'">
                                                             <div class="l3pname-div" style="padding-top: 1%;display: flex;">
                                                                 <input style="width: 95%;" type="text" class="form-control" placeholder="Enter Process Name" [(ngModel)]="l3ProcessName">
-                                                                <button [hidden]="!l3ProcessName" (click)="editTitle(level2,item)" style="position: relative;right: 4%;">
+                                                                <button [hidden]="!l3ProcessName" (click)="addL3Process(level2,item)" style="position: relative;right: 4%;">
                                                                     <img class="testplus1" src="../../../../assets/images/VCM/Green Tick.svg">
                                                                 </button>
                                                             </div>
@@ -564,7 +522,7 @@
                                                                 <div *ngIf="item.name == 'Support Process'" class="actimg" style="margin-top: 2%;">
                                                                     <span>
                                                                         <img src="../../../../assets/images/VCM/more-vertical-default.svg" class="testplus default-img" />
-                                                                        <img (click)="editLevel3(level2,l3,3)" src="../../../../assets/images/VCM/more-vertical-hover.svg" class="testplus hover-img"/>
+                                                                        <img (click)="openProperties(level2,l3,3)" src="../../../../assets/images/VCM/more-vertical-hover.svg" class="testplus hover-img"/>
                                                                     </span>
                                                                     <span>
                                                                         <img src="../../../../assets/images/VCM/VCM-close-default.svg" class="testplus2 default-img" />
@@ -604,3 +562,60 @@
         <img src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader" />
     </div>
 </div>
+
+
+
+<ng-template class="modal-up" #uploadFilemodal>
+    <div class="modal-header modelprhead">
+        <h4 class="modal-title pull-left">Upload File</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="uploadFilemodalCancel()">
+            <span aria-hidden="true"><img alt="" src="../../../../../assets/images/Projects/circle-close.svg"></span>
+        </button>
+    </div>
+    <div class="modal-body modelprbody uploadfilebdiv">
+        <div class="container p-0" style="width:100%">
+            <form>
+                <div>
+                    <label>Upload<span class="star">*</span></label>
+                    <div class="box-fileupload">
+                        <input type="file" name="file" (change)="chnagefileUploadForm($event)" id="file" class="inputfile" multiple />
+                        <label for="file" matTooltip="Upload File" (change)="chnagefileUploadForm($event)">
+                            <img src="../../../../assets/images/Projects/fileupload.svg" class="testplusupload">
+                            <span>Select File</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="form-fields col-md-12">
+                    <div class="upload-filesdiv">
+                        <div class="row">
+                            <div class="col-md-12 pl-0" *ngFor="let item of listOfFiles; let i = index">
+
+                                <div class="row project-card">
+                                    <!-- <span class="pull-right clickable" matTooltip="Remove"
+                                        (click)="removeSelectedFile(index)">
+                                        <img class="testplus1" src="../../../../assets/images/Projects/circle-close.svg" />
+                                    </span> -->
+                                    <div class="col-md-1">{{i+1}}</div>
+                                    <div class="col-md-5">
+                                        <div class="card-placeholder">File Name : {{item.fileName}}</div>
+                                        <div class="file-size">Size : {{item.convertedsize }}</div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <textarea name="desc" class="form-control" maxlength="151" rows="2" [(ngModel)]="item.fileDescription" placeholder="Enter Description..."></textarea>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="modal-footer modelprfooter">
+        <div class="pull-right">
+            <button (click)="uploadFilemodalCancel()" class="btn btn-default">Cancel</button>
+            <button class="btn btn-primary btn-update" (click)="onSubmitUpload()">Submit</button>
+        </div>
+    </div>
+</ng-template>
