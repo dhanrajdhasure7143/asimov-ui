@@ -189,3 +189,6 @@ width: 20px;
 .deleteSpan{
   padding-left: 10px;
 }
+::ng-deep .my-custom-tooltip {
+  max-width: unset !important;
+}
