@@ -359,8 +359,9 @@ div#bpmn_list {
     height: calc(100vh - 400px) !important;
     overflow: hidden auto;
 } */
-mat-accordion span table.PI.table.w-100.mat-table {
-    margin-left: 3.5%;
+mat-accordion span table.PI.table.w-100.mat-table,
+.prop-detcont mat-accordion .has-childlevels .mat-expansion-panel-content.ng-trigger-bodyExpansion {
+    margin-left: 3.5% !important;
 }
 
 span.no-childlevels div.col-md-12,

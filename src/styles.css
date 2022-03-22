@@ -2759,3 +2759,6 @@ span.pdicon {
 .propertiesContainer mat-expansion-panel-header.mat-expanded {
   background-color: #00a0e3 !important;
 }
+.prop-detcont mat-accordion .has-childlevels .mat-expansion-panel-content.ng-trigger-bodyExpansion {
+  margin-left: 3.5% !important;
+}
