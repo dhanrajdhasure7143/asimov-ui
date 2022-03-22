@@ -590,7 +590,6 @@ import { NgxSpinnerService } from "ngx-spinner";
         {
           this.isKeyValuePair=true
           this.password=""
-
         }
         else
         {
