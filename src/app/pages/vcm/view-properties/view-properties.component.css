@@ -191,7 +191,7 @@ span.testtooltip:after {
     background-color: transparent !important;
 }
 .new-bps-grid-data .mat-expansion-panel:hover {
-    background-color: #fdf6d4  !important;
+    /* background-color: #fdf6d4  !important; */
 }
 .new-bps-grid-data span {
     text-align: left !important;
@@ -366,7 +366,7 @@ mat-accordion span table.PI.table.w-100.mat-table,
 
 span.no-childlevels div.col-md-12,
 span.has-childlevels div.col-md-12 {
-    border-top: 1px solid #e1e1e1;
+    border-top: 1px solid #dee2e6;
     width: 100%;
     height: 40px;
     padding: 5px 10px !important;
@@ -374,7 +374,22 @@ span.has-childlevels div.col-md-12 {
     font-size: 13px !important;
     text-align: left;
 }
+span.no-childlevels div.col-md-12:hover,
+span.has-childlevels div.col-md-12:hover {
+    background-color: #fdf6d4  !important;
+}
+
 .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:hover:not([aria-disabled=true]) mat-panel-title,
 .mat-expansion-panel.mat-expanded mat-panel-title {
     color: inherit !important;
+}
+
+.prop-detcont .inner-grid {
+    margin-top: 10px;
+}
+.inner-grid .row.col-md-12.text-bold.workspace-title:hover {
+    background-color: #e8f7fd !important;
+}
+.inner-grid div#bpmn_list {
+    margin-bottom: 5px !important;
 }

@@ -447,3 +447,18 @@ span.polabel {
     overflow: auto;
     height: calc(100vh - 279px);
 }
+
+.box-fileupload {
+    background: #ffffff;
+    width: 100%;
+    padding: 5px;
+    border: 2px dashed #00a0e3;
+    border-radius: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+}
+.box-fileupload:hover{
+    background: #e3eaee !important; ;
+}
