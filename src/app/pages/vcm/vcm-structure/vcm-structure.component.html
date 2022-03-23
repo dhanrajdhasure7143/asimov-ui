@@ -79,35 +79,35 @@
                                 </mat-expansion-panel-header>
                                 <mat-panel-description>
                                     <div class="container p-0 doc-content">
+
                                         <div class="vcmdocs" *ngIf="!isPropDisabled">
                                             <img src="../../../../assets/images/VCM/VCM-Upload.svg" />
                                             <button class="btn" (click)="uploadFileModelOpen(uploadFilemodal)">Upload</button>    
                                         </div>
-                                        <!--<div class="col-md-12 form-group">
-                                                <h4 class="procname">{{processName}}</h4>
-                                        </div> -->
-                                        <div class="col-md-12 form-group files">
-                                            <div *ngFor="let each of attachments;let i = index;">
-                                            <p >
-                                                {{i+1}}. {{each.fileName}}
-                                                <span>
-                                                   <!-- <img src="../../../../assets/images/Admin/download-blue.svg" class="testplus" > -->
-                                                   <span class="deleteattachment tsttooltipbtn">
-                                                    <a href="data:image/png;base64,{{each.filedata}}" download="{{each.fileName}}">
-                                                    <img src="../../../../assets/images/Admin/download-black.svg" class="default-img testplus" >
-                                                    <img src="../../../../assets/images/Admin/download-blue.svg" class="hover-img testplus" >
-                                                    </a>
-                                                    <span><img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img"  />
-                                                        <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" (click)="removeFile(each,i)" /></span>
-                                                    <!-- <span class="testtooltip">Download</span> -->
-                                                </span>
-                                                </span>
-                                            </p>
-                                            <div>
+
+                                        <div class="form-group files">
+                                            <div class="col-md-12 p-0" *ngFor="let each of attachments;let i = index;">
+                                                <div style="display: flex;">
+                                                    <span style="margin-right:6px;">{{i + 1}}.</span>
+                                                    <span class="fname">{{each.fileName}}</span>
+                                                    <span style="float: right;">
+                                                        <span class="deleteattachment">
+                                                            <a href="data:image/png;base64,{{each.filedata}}" download="{{each.fileName}}">
+                                                                <img src="../../../../assets/images/Admin/download-black.svg" class="default-img testplus" >
+                                                                <img src="../../../../assets/images/Admin/download-blue.svg" class="hover-img testplus" >
+                                                            </a>
+                                                        </span>
+                                                        <span>
+                                                            <a>
+                                                                <img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img"  />
+                                                                <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" (click)="removeFile(each,i)" />
+                                                            </a>
+                                                        </span>
+                                                             
+                                                    </span>
+                                                </div>
                                                 <p>{{each.fileDescription}}</p>
                                             </div>
-                                        </div>
-
                                         </div>
                                     </div>
                                 </mat-panel-description>
@@ -398,42 +398,44 @@
         </button>
     </div>
     <div class="modal-body modelprbody uploadfilebdiv">
-        <div class="container p-0" style="width:100%">
-            <form>
-                <div>
-                    <label>Upload<span class="star">*</span></label>
-                    <div class="box-fileupload">
-                        <input type="file" name="file" (change)="chnagefileUploadForm($event)" id="file" class="inputfile" multiple />
-                        <label for="file" matTooltip="Upload File" (change)="chnagefileUploadForm($event)">
-                            <img src="../../../../assets/images/Projects/fileupload.svg" class="testplusupload">
-                            <span>Select File</span>
-                        </label>
-                    </div>
+        <form>
+            <div class="form-fields col-md-12">
+                <label>Upload<span class="star">*</span></label>
+                <div class="box-fileupload">
+                    <input type="file" name="file" (change)="chnagefileUploadForm($event)" id="file" class="inputfile" multiple />
+                    <label for="file" matTooltip="Upload File" (change)="chnagefileUploadForm($event)">
+                        <img src="../../../../assets/images/Projects/fileupload.svg" class="testplusupload">
+                        <span>Select File</span>
+                    </label>
                 </div>
-                <div class="form-fields col-md-12">
-                    <div class="upload-filesdiv">
-                        <div class="row">
-                            <div class="col-md-12 pl-0" *ngFor="let item of listOfFiles; let i = index">
-                                <div class="row project-card">
-                                    <!-- <span class="pull-right clickable" matTooltip="Remove"
-                                        (click)="removeSelectedFile(index)">
-                                        <img class="testplus1" src="../../../../assets/images/Projects/circle-close.svg" />
-                                    </span> -->
-                                    <div class="col-md-1">{{i+1}}</div>
-                                    <div class="col-md-5">
-                                        <div class="card-placeholder">File Name : {{item.fileName}}</div>
-                                        <div class="file-size">Size : {{item.convertedsize }}</div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <textarea name="desc" class="form-control" maxlength="151" rows="2" [(ngModel)]="item.fileDescription" placeholder="Enter Description..."></textarea>
+            </div>
+            <div class="form-fields col-md-12">
+                <div class="upload-filesdiv">
+                    <div class="row">
+                        <div class="form-fields col-md-12 p-0" *ngFor="let item of listOfFiles; let i = index">
+
+                            <div class="row project-card">
+                                <span class="tsttooltipbtn pull-right clickable" (click)="removeSelectedFile(index)">
+                                    <img class="testplus1" src="../../../../assets/images/VCM/circle-close-red.svg" />
+                                    <span class="testtooltip">Remove</span>
+                                </span>
+                                <div class="col-md-6 pl-0" style="display: flex;">
+                                    <div style="margin-right: 10px;">{{i+1}}.</div>
+                                    <div>
+                                        <div class="card-placeholder"><b>File Name :</b> {{item.fileName}}</div>
+                                        <div class="file-size"><b>Size :</b> {{item.convertedsize }}</div>
                                     </div>
                                 </div>
+                                <div class="col-md-5 p-0">
+                                    <textarea name="desc" class="form-control" maxlength="151" rows="2" [(ngModel)]="item.fileDescription" placeholder="Enter Description"></textarea>
+                                </div>
+
                             </div>
                         </div>
                     </div>
                 </div>
-            </form>
-        </div>
+            </div>
+        </form>
     </div>
     <div class="modal-footer modelprfooter">
         <div class="pull-right">

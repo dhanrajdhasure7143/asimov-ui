@@ -108,7 +108,7 @@ mat-drawer {
 .vcmdocs {
     border: 2px dashed #e7e7e7;
     background-color: #f5f5f5;
-    padding: 20px 0px !important;
+    padding: 18px 0px !important;
     border-radius: 3px;
     cursor: pointer;
     text-align: center;
@@ -137,8 +137,6 @@ mat-drawer {
 }
 
 .files img {
-    float: right;
-    /* opacity: 0.6; */
     cursor: pointer;
     margin-top: 5px;
 }
@@ -147,11 +145,11 @@ mat-drawer {
     opacity: 1;
 }
 
-.files span:hover .default-img {
+.files span a:hover .default-img {
     display: none;
 }
 
-.files span:hover .hover-img {
+.files span a:hover .hover-img {
     display: initial;
 }
 
@@ -303,6 +301,7 @@ button.btn.qsave-btn:hover {
 
 .doc-content {
     height: calc(100vh - 280px);
+    width: 100%;
 }
 
 .container.p-0.prop-content {
@@ -338,3 +337,69 @@ h4 img.procmenu {
     color: #607087 !important;
 }
 
+.files span.fname {
+    font-weight: 600;
+    width: 75%;
+    margin-right: 10px;
+    word-break: break-all;
+}
+.files p {
+    margin:2px 15px 2px 18px;
+    word-break: break-all;
+}
+.form-group.files {
+    margin-top: 15px;
+} 
+/* Upload Popup */
+
+.uploadfilebdiv {
+    height: calc(100vh - 260px);
+}
+.box-fileupload {
+    background: #ffffff;
+    width: 100%;
+    padding: 5px;
+    border: 2px dashed #00a0e3;
+    border-radius: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+}
+.box-fileupload:hover{
+    background: #e3eaee !important; ;
+}
+.inputfile + label {
+    display: inline-block;
+    cursor: pointer;
+    margin-bottom: 0px;
+}
+.inputfile {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}  
+.inputfile:focus + label,
+.inputfile + label:hover {
+    color: #00a0e3;
+    fill: #00a0e3;
+}
+.card-placeholder {
+    flex-basis: 0;
+    flex-grow: 1;
+    opacity: 1;
+    font-size: 12px;
+    font-weight: 400;
+}
+.file-size {
+    /* color: #999; */
+    font-size: 12px;
+    font-weight: 400;
+    display: block;
+    margin-top: 5px;
+}
+
+/* Upload Popup */
