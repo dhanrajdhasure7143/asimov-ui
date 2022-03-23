@@ -71,6 +71,7 @@ export class CreateVcmComponent implements OnInit {
   level2Parent: any;
   listOfFiles:any=[];
   uploadFilemodalref: BsModalRef;
+  attachementsList:any=[];
 
   constructor(private router: Router, private rest_api: RestApiService, private dt: DataTransferService,
     private route: ActivatedRoute, private modalService: BsModalService) {
@@ -332,7 +333,6 @@ export class CreateVcmComponent implements OnInit {
 
   saveVcm() {
     let requestBody = this.getrequestData();
-    console.log("request body", requestBody)
     this.isLoading = true;
     this.rest_api.createVcm(requestBody).subscribe((res: any) => {
       this.isLoading = false;
@@ -376,6 +376,7 @@ export class CreateVcmComponent implements OnInit {
     //     });
     //   }
     // })
+    console.log("data2",data2)
 
     // let data4=data2;
     let data4 = []
@@ -389,6 +390,7 @@ export class CreateVcmComponent implements OnInit {
       obj["title"] = element.title
       obj["level"] = element.level
       obj["type"] = element.type
+      obj["attachments"]=element.attachments
 
       if (element.uniqueId) {
         obj["uniqueId"] = element.uniqueId
@@ -399,6 +401,8 @@ export class CreateVcmComponent implements OnInit {
       data4.push(obj)
 
     });
+    console.log("data4",data4)
+
     // console.log(this.vcmProcess)
 
 
@@ -497,13 +501,15 @@ export class CreateVcmComponent implements OnInit {
   chnagefileUploadForm(e){
     this.listOfFiles = [];
     for (var i = 0; i < e.target.files.length; i++) {
+      let randomId=  UUID.UUID() 
       e.target.files[i]['convertedsize'] = this.convertFileSize(e.target.files[i].size);
-      e.target.files[i]['fileName'] = e.target.files[i]['name'];
-      // e.target.files[i]['processName'] = this.selectedObj.title;
+      e.target.files[i]['fileName'] =randomId + "&&" +e.target.files[i]['name'];
+      e.target.files[i]['uniqueId'] = randomId;
       e.target.files[i]['fileDescription'] = ''
-      this.listOfFiles.push(e.target.files[i])
+      this.listOfFiles.push(e.target.files[i])  
     } 
   }
+
   removeSelectedFile(index) {
     this.listOfFiles.splice(index, 1);
   }
@@ -514,9 +520,26 @@ export class CreateVcmComponent implements OnInit {
   }
 
   onSubmitUpload(){
-    console.log(this.listOfFiles,this.selectedObj)
+ 
+    this.attachementsList=[];
+    this.listOfFiles.forEach(e=>{
+      let obj={
+        name:e.name,
+        fileName: e['name'],
+        uniqueId : e.uniqueId,
+        convertedsize : e['convertedsize'],
+        fileDescription: e['fileDescription'],
+        size: e['size'],
+        lastModifiedDate: e['lastModifiedDate'],
+        lastModified: e['fileDescription'],
+      }
+      this.attachementsList.push(obj)
+    })
+    console.log(this.listOfAttachemnts,this.attachementsList)
     
-    this.listOfAttachemnts =  this.listOfFiles;
+    this.attachementsList.forEach(element => {
+      this.listOfAttachemnts.push(element)
+    });
     let formdata = new FormData()
     for (var i = 0; i < this.listOfFiles.length; i++) {
       formdata.append("file", this.listOfFiles[i]);
@@ -529,17 +552,20 @@ export class CreateVcmComponent implements OnInit {
     let res_data
     this.rest_api.uploadVCMPropDocument(formdata).subscribe(res => {res_data=res
       console.log(res)
-    // this.listOfAttachemnts =  [res_data.data];
+    // this.listOfAttachemnts =  this.attachementsList
+    this.attachementsList.forEach(element => {
+      this.listOfAttachemnts.push(element)
+    });
       this.isLoading = false;
       if (this.selectedObj.level == 'L1') {
         TREE_DATA.filter((e) => e.name === this.selectedObj.parent)[0].children
-          .filter(n => n.uniqueId === this.selectedObj.uniqueId)[0].attachments = this.listOfFiles;
+          .filter(n => n.uniqueId === this.selectedObj.uniqueId)[0].attachments = this.listOfAttachemnts;
       }
 
       if (this.selectedObj.level == 'L2') {
         TREE_DATA.filter((e) => e.name ===this.selectedObj.parent)[0].children
         .filter(n => n.uniqueId === this.selectedObj.level1UniqueId)[0].children
-        .filter(c => c.uniqueId === this.selectedObj.uniqueId)[0].attachments = this.listOfFiles;
+        .filter(c => c.uniqueId === this.selectedObj.uniqueId)[0].attachments = this.listOfAttachemnts;
       }
       this.vcmProcess=TREE_DATA;
 

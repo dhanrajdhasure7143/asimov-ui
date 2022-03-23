@@ -32,13 +32,11 @@
                                                 </div>
                                                 <div class="cell cell6">{{each.description?each.description:'-'}}</div>
                                                 <div class="cell cell7">
-                                                    <span class="deleteattachment tsttooltipbtn">
-                                                        <a matTooltip="Add">
+                                                    <span class="deleteattachment tsttooltipbtn"  matTooltip="Add" (click)="addCollaborators(collaborators,each)">
                                                             <img src="../../../../assets/images/VCM/plus-black.svg"
                                                                 class="default-img testplus">
                                                             <img src="../../../../assets/images/RPA/icon_latest/new-blue.svg"
                                                                 class="hover-img testplus">
-                                                        </a>
                                                     </span>
                                                     <span class="deleteattachment tsttooltipbtn"  matTooltip="View">
                                                         <img src="../../../../assets/images/Projects/eye-show.svg"
@@ -114,19 +112,13 @@
                                         </div>
                                         <div class="cell cell6">{{each.description?each.description:'-'}}</div>
                                         <div class="cell cell7">
-                                            <span class="deleteattachment tsttooltipbtn">
-                                                <a matTooltip="Add">
-                                                    <img src="../../../../assets/images/VCM/plus-black.svg"
-                                                        class="default-img testplus">
-                                                    <img src="../../../../assets/images/RPA/icon_latest/new-blue.svg"
-                                                        class="hover-img testplus">
-                                                </a>
+                                            <span class="deleteattachment tsttooltipbtn" matTooltip="Add" (click)="addCollaborators(collaborators,each)">
+                                                <img src="../../../../assets/images/VCM/plus-black.svg" class="default-img testplus">
+                                                <img src="../../../../assets/images/RPA/icon_latest/new-blue.svg" class="hover-img testplus">
                                             </span>
-                                            <span class="deleteattachment tsttooltipbtn" matTooltip="View">
-                                                <img src="../../../../assets/images/Projects/eye-show.svg"
-                                                    class="default-img testplus">
-                                                <img src="../../../../assets/images/Projects/eye-show-blue.svg"
-                                                    matTooltipPosition="left" class="hover-img testplus">
+                                            <span class="deleteattachment tsttooltipbtn" matTooltip="View" matTooltipPosition="left">
+                                                <img src="../../../../assets/images/Projects/eye-show.svg" class="default-img testplus">
+                                                <img src="../../../../assets/images/Projects/eye-show-blue.svg" class="hover-img testplus">
                                             </span>
                                         </div>
                                     </div>
@@ -261,3 +253,44 @@
         <img src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader" />
     </div>
 </div>
+
+
+<ng-template class="modal-up" #collaborators>
+    <div class="modal-header modelprhead">
+        <h4 class="modal-title pull-left">Add collaborators</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="uploadFilemodalCancel()">
+            <span aria-hidden="true"><img alt="" src="../../../../../assets/images/Projects/circle-close.svg"></span>
+        </button>
+    </div>
+    <div class="modal-body modelprbody uploadfilebdiv">
+        <div>
+            <button (click)="addNewcollabratorsObj()">Add New</button>
+        </div>
+        <div class="container p-0" style="width:100%">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Stakeholder</th>
+                        <th>Interest</th>
+                        <th>Role</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let each of collaboratorsArray">
+                        <td>{{each.stakeholder}}</td>
+                        <td>{{each.interest}}</td>
+                        <td>{{each.role}}</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="modal-footer modelprfooter">
+        <div class="pull-right">
+            <button (click)="uploadFilemodalCancel()" class="btn btn-default">Cancel</button>
+            <button class="btn btn-primary btn-update" (click)="onSubmitUpload()">Submit</button>
+        </div>
+    </div>
+</ng-template>

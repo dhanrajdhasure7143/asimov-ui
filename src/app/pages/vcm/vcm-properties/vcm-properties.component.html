@@ -116,7 +116,7 @@
                                     <td *ngIf="item.attachments">
                                         <ng-container *ngFor="let doc of item.attachments;let j = index">
                                             <div class="docpill">
-                                                {{j+1}} . {{doc.fileName}}                                                 
+                                                {{j+1}} . {{doc.name}}                                                 
                                                 <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2" (click)="RemoveFile(item,j,'level1')" />
                                             </div>
                                         </ng-container>
@@ -291,7 +291,7 @@
                                         <td *ngIf="level2.attachments">
                                             <ng-container *ngFor="let doc of level2.attachments;let j = index">
                                                 <span class="docpill">
-                                                    {{j+1}} . {{doc.fileName}}                                                   
+                                                    {{j+1}} . {{doc.name}}                                                   
                                                     <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2" (click)="RemoveFile(level2,j,'level2')" />
                                                 </span>
                                             </ng-container>
@@ -390,7 +390,7 @@
                                     </span> -->
                                     <div class="col-md-1">{{i+1}}</div>
                                     <div class="col-md-5">
-                                        <div class="card-placeholder">File Name : {{item.fileName}}</div>
+                                        <div class="card-placeholder">File Name : {{item.name}}</div>
                                         <div class="file-size">Size : {{item.convertedsize }}</div>
                                     </div>
                                     <div class="col-md-6">

@@ -57,7 +57,7 @@ export class VcmStructureComponent implements OnInit {
   processName: any;
   processOwner: any;
   processDesc: any;
-  attachments: any = [];
+  listOfAttachemnts: any = [];
   isPropDisabled: boolean = true;
   isViewProperties: boolean = false;
   node_data: any = [];
@@ -81,6 +81,7 @@ export class VcmStructureComponent implements OnInit {
   propType:any;
   listOfFiles:any=[];
   uploadFilemodalref: BsModalRef;
+  attachementsList=[];
 
   constructor(private router: Router, private bpmnservice: SharebpmndiagramService,
     private rest_api: RestApiService,
@@ -258,13 +259,12 @@ export class VcmStructureComponent implements OnInit {
       "parent": node_obj.parent
     }
     let res_data
-    this.attachments = [];
     this.rest_api.getvcmAttachements(reqBody).subscribe(res => {
       res_data = res
       console.log(res)
       res_data.data.forEach(element => {
         if (element.uniqueId == node_obj.uniqueId) {
-          this.attachments.push(element)
+          this.listOfAttachemnts.push(element)
         }
       });
       // this.isLoading=false;
@@ -305,7 +305,6 @@ export class VcmStructureComponent implements OnInit {
   }
 
   onCreateLevel1(node) {
-
     this.l1UniqueId = node.uniqueId;
     this.uniqueId = node.uniqueId;
     this.uniqueId1 = null;
@@ -462,7 +461,7 @@ export class VcmStructureComponent implements OnInit {
         "title": e.title,
         "parent": e.parent,
         "children": [],
-        "attachments": [],
+        "attachments": e.attachments,
       }
       if (e.level1UniqueId) {
         obj["level1UniqueId"] = e.level1UniqueId
@@ -684,13 +683,19 @@ export class VcmStructureComponent implements OnInit {
 
   
   openNodeProperties(node) {
+    this.attachementsList=[]
     console.log("node", node)
     this.selectedPropNode=node
-    this.getAttachements(node);
+    // this.getAttachements(node);attachments
     this.processName = node.title;
     this.processOwner = node.processOwner;
     this.processDesc = node.description;
     this.drawer.open();
+    if(node.attachments){
+      this.listOfAttachemnts=node.attachments
+    }else{
+      this.listOfAttachemnts=[]
+    }
   }
 
   saveProperties(val){
@@ -731,12 +736,15 @@ export class VcmStructureComponent implements OnInit {
   chnagefileUploadForm(e){
     this.listOfFiles = [];
     for (var i = 0; i < e.target.files.length; i++) {
+      let randomId=  UUID.UUID() 
       e.target.files[i]['convertedsize'] = this.convertFileSize(e.target.files[i].size);
-      e.target.files[i]['fileName'] = e.target.files[i]['name'];
-      // e.target.files[i]['processName'] = this.selectedObj.title;
+      e.target.files[i]['fileName'] =randomId + "&&" +e.target.files[i]['name'];
+      e.target.files[i]['uniqueId'] = randomId;
       e.target.files[i]['fileDescription'] = ''
       this.listOfFiles.push(e.target.files[i])
+      
     } 
+    console.log(this.listOfFiles,this.attachementsList)
   }
 
   uploadFilemodalCancel(){
@@ -772,8 +780,26 @@ export class VcmStructureComponent implements OnInit {
 
   onSubmitUpload(){
     console.log(this.vcmTreeData,this.selectedPropNode)
+    this.attachementsList=[]
+    this.listOfFiles.forEach(e=>{
+      let obj={
+        name:e.name,
+        fileName: e['name'],
+        uniqueId : e.uniqueId,
+        convertedsize : e['convertedsize'],
+        fileDescription: e['fileDescription'],
+        size: e['size'],
+        lastModifiedDate: e['lastModifiedDate'],
+        lastModified: e['fileDescription'],
+      }
+      this.attachementsList.push(obj)
+    })
+    console.log(this.listOfAttachemnts,this.attachementsList)
     
-    this.attachments =  this.listOfFiles;
+    this.attachementsList.forEach(element => {
+      this.listOfAttachemnts.push(element)
+    });
+
     let formdata = new FormData()
     for (var i = 0; i < this.listOfFiles.length; i++) {
       formdata.append("file", this.listOfFiles[i]);
@@ -786,24 +812,26 @@ export class VcmStructureComponent implements OnInit {
     let res_data
     this.rest_api.uploadVCMPropDocument(formdata).subscribe(res => {res_data=res
       console.log(res)
-    // this.attachments =  [res_data.data];
+      this.attachementsList.forEach(element => {
+        this.listOfAttachemnts.push(element)
+      });
       this.isLoading = false;
       if (this.selectedPropNode.level == 'L1') {
         this.vcmTreeData.filter((e) => e.title === this.selectedPropNode.parent)[0].children
-          .filter(n => n.uniqueId === this.selectedPropNode.uniqueId)[0].attachments = this.listOfFiles;
+          .filter(n => n.uniqueId === this.selectedPropNode.uniqueId)[0].attachments = this.listOfAttachemnts;
       }
 
       if (this.selectedPropNode.level == 'L2') {
         this.vcmTreeData.filter((e) => e.title ===this.selectedPropNode.parent)[0].children
         .filter(n => n.uniqueId === this.selectedPropNode.level1UniqueId)[0].children
-        .filter(c => c.uniqueId === this.selectedPropNode.uniqueId)[0].attachments = this.listOfFiles;
+        .filter(c => c.uniqueId === this.selectedPropNode.uniqueId)[0].attachments = this.listOfAttachemnts;
       }
 
       if (this.selectedPropNode.level == 'L3') {
         this.vcmTreeData.filter((e) => e.title ===this.selectedPropNode.parent)[0].children
         .filter(n => n.uniqueId === this.selectedPropNode.level1UniqueId)[0].children
         .filter(m => m.uniqueId === this.selectedPropNode.level2UniqueId)[0].children
-        .filter(c => c.uniqueId === this.selectedPropNode.uniqueId)[0].attachments = this.listOfFiles;
+        .filter(c => c.uniqueId === this.selectedPropNode.uniqueId)[0].attachments = this.listOfAttachemnts;
       }
 
       this.uploadFilemodalCancel();

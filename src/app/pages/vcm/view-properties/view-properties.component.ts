@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { RestApiService } from '../../services/rest-api.service';
 import { Observable  } from 'rxjs/Observable';
 import { of  } from 'rxjs/observable/of';
@@ -8,8 +8,9 @@ import { MatSort, Sort } from '@angular/material';;
 import { fromMatSort, sortRows } from './../../../pages/business-process/model/datasource-utils';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-view-properties',
@@ -45,8 +46,11 @@ export class ViewPropertiesComponent implements OnInit {
   vcm_process:any;
   isShowAll:boolean=false;
   vcmTreeData1:any=[];
+  addCollaboratorsOverlay: BsModalRef;
+  collaboratorsArray:any=[];
 
-  constructor(private rest_api: RestApiService,private route:ActivatedRoute) {
+  constructor(private router: Router, private rest_api: RestApiService,
+    private route: ActivatedRoute, private modalService: BsModalService) {
     this.route.queryParams.subscribe(res => {
       this.vcm_id = res.id
       this.vcm_process = res.vcmLevel
@@ -57,7 +61,15 @@ export class ViewPropertiesComponent implements OnInit {
   ngOnInit(): void {
     // this.getAttachements();
     this.dataSource= new MatTableDataSource(this.attachments);
-
+    this.collaboratorsArray=[
+      {
+        "id": 3736,
+        "stakeholder": "sai nookala",
+        "interest": "Informed",
+        "role": "Exec",
+        "uniqueId": "a4ae9b84-8038-3762-6021-c92e9ba6204b"
+        },
+    ]
   }
 
   ngOnChanges(){
@@ -187,4 +199,23 @@ export class ViewPropertiesComponent implements OnInit {
       }
     });
   }
+
+  addCollaborators(template: TemplateRef<any>,obj){
+    console.log(obj)
+   this.addCollaboratorsOverlay = this.modalService.show(template,{class:"modal-lr"});
+ }
+
+ addNewcollabratorsObj(){
+   let object= {
+    "id": 3736,
+    "stakeholder": "sai nookala",
+    "interest": "Informed",
+    "role": "Exec",
+    "uniqueId": "a4ae9b84-8038-3762-6021-c92e9ba6204b"
+    }
+  this.collaboratorsArray.push(object)
+ }
+ uploadFilemodalCancel(){
+  this.addCollaboratorsOverlay.hide();
+}
 }

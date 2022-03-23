@@ -4,6 +4,7 @@ import { DataTransferService } from '../../services/data-transfer.service';
 import { RestApiService } from '../../services/rest-api.service';
 import Swal from 'sweetalert2';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { UUID } from 'angular2-uuid';
 
 @Component({
   selector: 'app-vcm-properties',
@@ -40,6 +41,7 @@ export class VcmPropertiesComponent implements OnInit {
   listOfFiles:any=[];
   filesData=[{fileDescription:""}];
   selectedObj:any;
+  attachementsList:any=[];
 
   constructor(private router: Router, private route: ActivatedRoute, private rest_api:RestApiService, 
     private dt: DataTransferService, private modalService: BsModalService,) {
@@ -350,12 +352,15 @@ export class VcmPropertiesComponent implements OnInit {
   chnagefileUploadForm(e){
     this.listOfFiles = [];
     for (var i = 0; i < e.target.files.length; i++) {
+      let randomId=  UUID.UUID() 
       e.target.files[i]['convertedsize'] = this.convertFileSize(e.target.files[i].size);
-      e.target.files[i]['fileName'] = e.target.files[i]['name'];
-      // e.target.files[i]['processName'] = this.selectedObj.title;
+      e.target.files[i]['fileName'] =randomId + "&&" +e.target.files[i]['name'];
+      e.target.files[i]['uniqueId'] = randomId;
       e.target.files[i]['fileDescription'] = ''
       this.listOfFiles.push(e.target.files[i])
+      
     } 
+    console.log(this.listOfFiles,this.attachementsList)
   }
   removeSelectedFile(index) {
     this.listOfFiles.splice(index, 1);
@@ -367,17 +372,42 @@ export class VcmPropertiesComponent implements OnInit {
   }
 
   onSubmitUpload(){
-    console.log(this.listOfFiles,this.selectedObj)
+    this.attachementsList=[];
+    this.listOfFiles.forEach(e=>{
+      let obj={
+        name:e.name,
+        fileName: e['name'],
+        uniqueId : e.uniqueId,
+        convertedsize : e['convertedsize'],
+        fileDescription: e['fileDescription'],
+        size: e['size'],
+        lastModifiedDate: e['lastModifiedDate'],
+        lastModified: e['fileDescription'],
+      }
+      this.attachementsList.push(obj)
+    })
+    console.log(this.listOfFiles,this.attachementsList)
+
     if (this.selectedObj.level == 'L1') {
-      this.vcmProperties.filter((e) => e.name === this.selectedObj.parent)[0].children
-        .filter(n => n.uniqueId === this.selectedObj.uniqueId)[0].attachments = this.listOfFiles;
+      this.attachementsList.forEach(element => {
+        this.vcmProperties.filter((e) => e.name === this.selectedObj.parent)[0].children
+        .filter(n => n.uniqueId === this.selectedObj.uniqueId)[0].attachments.push(element);
+      });
+      // this.vcmProperties.filter((e) => e.name === this.selectedObj.parent)[0].children
+      //   .filter(n => n.uniqueId === this.selectedObj.uniqueId)[0].attachments = this.attachementsList;
     }
 
     if (this.selectedObj.level == 'L2') {
-      this.vcmProperties.filter((e) => e.name ===this.selectedObj.parent)[0].children
+      this.attachementsList.forEach(element => {
+        this.vcmProperties.filter((e) => e.name ===this.selectedObj.parent)[0].children
       .filter(n => n.uniqueId === this.selectedObj.level1UniqueId)[0].children
-      .filter(c => c.uniqueId === this.selectedObj.uniqueId)[0].attachments = this.listOfFiles;
+      .filter(c => c.uniqueId === this.selectedObj.uniqueId)[0].attachments.push(element);
+      });
+      // this.vcmProperties.filter((e) => e.name ===this.selectedObj.parent)[0].children
+      // .filter(n => n.uniqueId === this.selectedObj.level1UniqueId)[0].children
+      // .filter(c => c.uniqueId === this.selectedObj.uniqueId)[0].attachments = this.attachementsList;
     }
+    console.log(this.vcmProperties)
     let formdata = new FormData()
     for (var i = 0; i < this.listOfFiles.length; i++) {
       formdata.append("file", this.listOfFiles[i]);
@@ -392,14 +422,23 @@ export class VcmPropertiesComponent implements OnInit {
       this.isLoading = false;
   
       if (this.selectedObj.level == 'L1') {
-        this.vcmProperties.filter((e) => e.name === this.selectedObj.parent)[0].children
-          .filter(n => n.uniqueId === this.selectedObj.uniqueId)[0].attachments = this.listOfFiles;
+        this.attachementsList.forEach(element => {
+          this.vcmProperties.filter((e) => e.name === this.selectedObj.parent)[0].children
+          .filter(n => n.uniqueId === this.selectedObj.uniqueId)[0].attachments.push(element);
+        });
+        // this.vcmProperties.filter((e) => e.name === this.selectedObj.parent)[0].children
+        //   .filter(n => n.uniqueId === this.selectedObj.uniqueId)[0].attachments = this.attachementsList;
       }
-
+  
       if (this.selectedObj.level == 'L2') {
-        this.vcmProperties.filter((e) => e.title ===this.selectedObj.parent)[0].children
+        this.attachementsList.forEach(element => {
+          this.vcmProperties.filter((e) => e.name ===this.selectedObj.parent)[0].children
         .filter(n => n.uniqueId === this.selectedObj.level1UniqueId)[0].children
-        .filter(c => c.uniqueId === this.selectedObj.uniqueId)[0].attachments = this.listOfFiles;
+        .filter(c => c.uniqueId === this.selectedObj.uniqueId)[0].attachments.push(element);
+        });
+        // this.vcmProperties.filter((e) => e.name ===this.selectedObj.parent)[0].children
+        // .filter(n => n.uniqueId === this.selectedObj.level1UniqueId)[0].children
+        // .filter(c => c.uniqueId === this.selectedObj.uniqueId)[0].attachments = this.attachementsList;
       }
       this.uploadFilemodalCancel();
     },err=>{
