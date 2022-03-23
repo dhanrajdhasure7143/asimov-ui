@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { RestApiService } from '../../services/rest-api.service';
 import { Observable  } from 'rxjs/Observable';
 import { of  } from 'rxjs/observable/of';
@@ -8,8 +8,9 @@ import { MatSort, Sort } from '@angular/material';;
 import { fromMatSort, sortRows } from './../../../pages/business-process/model/datasource-utils';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-view-properties',
@@ -45,8 +46,15 @@ export class ViewPropertiesComponent implements OnInit {
   vcm_process:any;
   isShowAll:boolean=false;
   vcmTreeData1:any=[];
+  addCollaboratorsOverlay: BsModalRef;
+  viewCollaboratorsOverlay: BsModalRef;
+  collaboratorsArray:any=[];
+  collaboratorsList:any=[];
+  stackHolders_list:any=[];
+  selectedIndex:number;
 
-  constructor(private rest_api: RestApiService,private route:ActivatedRoute) {
+  constructor(private router: Router, private rest_api: RestApiService,
+    private route: ActivatedRoute, private modalService: BsModalService) {
     this.route.queryParams.subscribe(res => {
       this.vcm_id = res.id
       this.vcm_process = res.vcmLevel
@@ -57,7 +65,15 @@ export class ViewPropertiesComponent implements OnInit {
   ngOnInit(): void {
     // this.getAttachements();
     this.dataSource= new MatTableDataSource(this.attachments);
-
+    this.collaboratorsArray=[
+      {
+        "id": 0,
+        "stakeholder": "",
+        "interest": "",
+        "role": "",
+        "uniqueId": ""
+        },
+    ]
   }
 
   ngOnChanges(){
@@ -90,6 +106,7 @@ export class ViewPropertiesComponent implements OnInit {
   }
   ngAfterViewInit(){
     this.getAttachements();
+    this.getApproverList();
   }
 
   getAttachements(){
@@ -187,4 +204,73 @@ export class ViewPropertiesComponent implements OnInit {
       }
     });
   }
+
+  addCollaborators(template: TemplateRef<any>,obj){
+    console.log(obj)
+   this.addCollaboratorsOverlay = this.modalService.show(template,{class:"modal-lr"});
+ }
+
+ addNewcollabratorsObj(){
+   let object= {
+    "id": 0,
+    "stakeholder": "",
+    "interest": "",
+    "role": "",
+    "uniqueId": ""
+    }
+  this.collaboratorsArray.push(object)
+ }
+
+ cancelModel(){
+  this.addCollaboratorsOverlay.hide();
+}
+
+ getApproverList(){
+  let roles={"roleNames": ["Process Owner","Process Architect"]}
+   this.rest_api.getmultipleApproverforusers(roles).subscribe( res =>  {//Process Architect
+    if(Array.isArray(res))
+     this.stackHolders_list = res;
+     console.log(res)
+ });
+}
+
+submitCollabrators(){
+  console.log(this.collaboratorsArray)
+}
+
+deleteCollaborater(index){
+  this.collaboratorsArray.splice(index,1)
+}
+
+viewCollaborators(template: TemplateRef<any>,obj){
+  let collaborations= [
+    {
+    "id": 3736,
+    "stakeholder": "anitha.gada123@epsoftinc.com",
+    "interest": "informed",
+    "role": "Exec",
+    "uniqueId": "a4ae9b84-8038-3762-6021-c92e9ba6204b"
+    },
+    {
+    "id": 3737,
+    "stakeholder": "ranjith@epsoftinc.co",
+    "interest": "informed",
+    "role": "Exec",
+    "uniqueId": "a4ae9b84-8038-3762-6021-c92e9ba6204b"
+    }
+  ]
+  // this.collaboratorsList= obj.collaborations ? obj.collaborations : []
+  this.collaboratorsList=collaborations
+   this.viewCollaboratorsOverlay = this.modalService.show(template,{class:"modal-lr"});
+ }
+
+ cancelViewModel(){
+  this.viewCollaboratorsOverlay.hide();
+  this.selectedIndex=null;
+}
+
+editCollaborator(obj,index){
+  this.selectedIndex = index;
+}
+
 }
