@@ -339,9 +339,13 @@ h4 img.procmenu {
 
 .files span.fname {
     font-weight: 600;
-    width: 75%;
+    width: 80%;
     margin-right: 10px;
     word-break: break-all;
+}
+.files span.fbtns {
+    width: 20%;
+    text-align: right;
 }
 .files p {
     margin:2px 15px 2px 18px;

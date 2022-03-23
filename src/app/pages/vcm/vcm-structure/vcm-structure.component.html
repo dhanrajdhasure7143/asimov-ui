@@ -89,7 +89,7 @@
                                                 <div style="display: flex;">
                                                     <span style="margin-right:6px;">{{i + 1}}.</span>
                                                     <span class="fname">{{each.name}}</span>
-                                                    <span style="float: right;">
+                                                    <span class="fbtns">
                                                         <span class="deleteattachment">
                                                             <a href="data:image/png;base64,{{each.filedata}}" download="{{each.name}}" *ngIf="isPropDisabled">
                                                                 <img src="../../../../assets/images/Admin/download-black.svg" class="default-img testplus" >
@@ -101,12 +101,12 @@
                                                                 <img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img"  />
                                                                 <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" (click)="removeFile(each,i)" />
                                                             </a>
-                                                        </span>
-                                                             
-                                                    </span>
-                                                    <p>{{each.fileDescription}}</p>
-                                                    
+                                                        </span>                                                             
+                                                    </span>                                                    
                                                 </div>
+                                                <p>{{each.fileDescription}}</p>
+                                            </div>
+                                        </div>
                                         
                                     </div>
                                 </mat-panel-description>
