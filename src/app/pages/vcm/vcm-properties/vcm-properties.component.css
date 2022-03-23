@@ -84,3 +84,67 @@ span.docpill:hover {
 .definitionscroll {
     padding: 8px 10px 15px;
 }
+
+/* Upload Popup */
+
+.uploadfilebdiv {
+    height: calc(100vh - 260px);
+}
+.box-fileupload {
+    background: #ffffff;
+    width: 100%;
+    padding: 5px;
+    border: 2px dashed #00a0e3;
+    border-radius: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+}
+.box-fileupload:hover{
+    background: #e3eaee !important; ;
+}
+.inputfile + label {
+    display: inline-block;
+    cursor: pointer;
+    margin-bottom: 0px;
+}
+.inputfile {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}  
+.inputfile:focus + label,
+.inputfile + label:hover {
+    color: #00a0e3;
+    fill: #00a0e3;
+}
+.card-placeholder {
+    flex-basis: 0;
+    flex-grow: 1;
+    opacity: 1;
+    font-size: 12px;
+    font-weight: 400;
+}
+.file-size {
+    /* color: #999; */
+    font-size: 12px;
+    font-weight: 400;
+    display: block;
+    margin-top: 5px;
+}
+
+.files span.fname {
+    font-weight: 600;
+    width: 100%;
+    margin-right: 10px;
+    word-break: break-all;
+}
+.files p {
+    margin:2px 15px 2px 18px;
+    word-break: break-all;
+}
+/* Upload Popup */

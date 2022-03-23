@@ -2766,21 +2766,32 @@ span.pdicon {
 .vcmprop .popover-content.popover-body {
   padding: 5px 10px !important;
 }
-/* .custom-popup-content {
+/* Custom Popover */
+.custom-popup-content {
   position: absolute;
-  top: -20px;
-  left: 45px;
+    top: -35px;
+    left: 30px;
+    background: transparent;
+    box-shadow: none;
 }
 .custom-popup-content::before {
   content: "";
-    width: 10px;
-    height: 10px;
-    position: absolute;
-    top: -4px;
-    background-color: #001c47;
-    transform: rotate(45deg);
-    right: 10px;
-} */
+  width: 15px;
+  height: 15px;
+  position: absolute;  
+  top: 18px;
+  left: 5px;
+  background-color: #fff;
+  transform: rotate(135deg);  
+  border-bottom: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+}
+.custom-popup-content .mat-menu-content {
+  background-color: #fff !important;
+  margin-left: 13px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
 .custom-popup-content .mat-menu-content ngx-dropzone {
   height: 25px !important;
   background: transparent !important;
@@ -2800,3 +2811,4 @@ button.custom-popupbtn.mat-button {
   line-height: unset !important;
   width: auto !important;
 }
+/* Custom Popover */

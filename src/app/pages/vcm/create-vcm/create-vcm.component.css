@@ -198,7 +198,7 @@ img.testplus2 {
 .vcmdocs {
     border: 2px dashed #e7e7e7;
     background-color: #f6f6f6;
-    padding: 20px 0px !important;
+    padding: 18px 0px !important;
     border-radius: 3px;
     cursor: pointer;
     text-align: center;
@@ -222,10 +222,9 @@ img.testplus2 {
     padding: 8px 25px !important;
 }
 .files img {
-    float: right;
-    /* opacity: 0.6; */
     cursor: pointer;  
     margin-top: 5px;
+    margin-right: 0px;
 }
 .files img:hover {
     opacity: 1;
@@ -305,9 +304,35 @@ mat-tree {
     display: initial;
 } */
 
-.tsttooltipbtn:hover span.testtooltip {
+span.testtooltip {
+    position: absolute;
+    top: 35px;
+    right: 0px;
+    background-color: #001c47;
+    color: #fff;
+    width: max-content;
+    padding: 3px 10px;
+    border-radius: 4px;
+    display: none;
+    z-index: 999;
+  }
+  
+  span.testtooltip:before {
+    content: '';
+    border: 2px solid #001c47;
+    border-width: 0px 0px 2px 2px;
+    position: absolute;
+    padding: 4px;
+    right: 13px;
+    top:  -5px;
+    background: #001c47;
+    transform: rotate(45deg);
+  }
+  
+  .tsttooltipbtn:hover span.testtooltip {
     display: block;
-}
+  }
+  
 .close-btn h3 {
     /* padding: 10px 10px 5px 15px; */
     padding: 15px 10px 15px 12px;
@@ -351,8 +376,6 @@ hr {
 }
 .vcm-leveldiv .powner select.form-control {
     width: 200px !important;
-    padding-left: 0px !important;
-    /* padding-top: 0px !important; */
     border: transparent !important;
     background-color: transparent !important;
     color: #001c47 !important;
@@ -360,9 +383,6 @@ hr {
 .vcm-leveldiv .povaluediv select.form-control.ng-dirty {
     padding-top: 0px !important;
 }
-/* .submit button.btn.btn-primary:last-child {
-    margin-left: 10px;
-} */
 span.poname {
     background-color: #00a0e3;
     color: #fff;
@@ -371,7 +391,7 @@ span.poname {
 }
 .povaluediv {
     position: relative;
-    margin-left: 10px;
+    margin-left: 5px;
 }
 span.polabel {
     position: absolute;
@@ -429,6 +449,7 @@ span.polabel {
 }
 .doc-content {
     height: calc(100vh - 280px);
+    width: 100%;
 }
 .container.p-0.prop-content {
     height: calc(100vh - 280px) !important;
@@ -447,7 +468,22 @@ span.polabel {
     overflow: auto;
     height: calc(100vh - 279px);
 }
+.files span.fname {
+    font-weight: 600;
+    width: 100%;
+    margin-right: 10px;
+    word-break: break-all;
+}
+.files p {
+    margin:2px 15px 2px 18px;
+    word-break: break-all;
+}
 
+/* Upload Popup */
+
+.uploadfilebdiv {
+    height: calc(100vh - 260px);
+}
 .box-fileupload {
     background: #ffffff;
     width: 100%;
@@ -462,3 +498,37 @@ span.polabel {
 .box-fileupload:hover{
     background: #e3eaee !important; ;
 }
+.inputfile + label {
+    display: inline-block;
+    cursor: pointer;
+    margin-bottom: 0px;
+}
+.inputfile {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}  
+.inputfile:focus + label,
+.inputfile + label:hover {
+    color: #00a0e3;
+    fill: #00a0e3;
+}
+.card-placeholder {
+    flex-basis: 0;
+    flex-grow: 1;
+    opacity: 1;
+    font-size: 12px;
+    font-weight: 400;
+}
+.file-size {
+    /* color: #999; */
+    font-size: 12px;
+    font-weight: 400;
+    display: block;
+    margin-top: 5px;
+}
+
+/* Upload Popup */

@@ -366,44 +366,44 @@
         </button>
     </div>
     <div class="modal-body modelprbody uploadfilebdiv">
-        <div class="container p-0" style="width:100%">
-            <form>
-                <div>
-                    <label>Upload<span class="star">*</span></label>
-                    <div class="box-fileupload">
-                        <input type="file" name="file" (change)="chnagefileUploadForm($event)" id="file" class="inputfile" multiple />
-                        <label for="file" matTooltip="Upload File" (change)="chnagefileUploadForm($event)">
-                            <img src="../../../../assets/images/Projects/fileupload.svg" class="testplusupload">
-                            <span>Select File</span>
-                        </label>
-                    </div>
+        <form>
+            <div class="form-fields col-md-12">
+                <label>Upload<span class="star">*</span></label>
+                <div class="box-fileupload">
+                    <input type="file" name="file" (change)="chnagefileUploadForm($event)" id="file" class="inputfile" multiple />
+                    <label for="file" matTooltip="Upload File" (change)="chnagefileUploadForm($event)">
+                        <img src="../../../../assets/images/Projects/fileupload.svg" class="testplusupload">
+                        <span>Select File</span>
+                    </label>
                 </div>
-                <div class="form-fields col-md-12">
-                    <div class="upload-filesdiv">
-                        <div class="row">
-                            <div class="col-md-12 pl-0" *ngFor="let item of listOfFiles; let i = index">
+            </div>
+            <div class="form-fields col-md-12">
+                <div class="upload-filesdiv">
+                    <div class="row">
+                        <div class="form-fields col-md-12 p-0" *ngFor="let item of listOfFiles; let i = index">
 
-                                <div class="row project-card">
-                                    <!-- <span class="pull-right clickable" matTooltip="Remove"
-                                        (click)="removeSelectedFile(index)">
-                                        <img class="testplus1" src="../../../../assets/images/Projects/circle-close.svg" />
-                                    </span> -->
-                                    <div class="col-md-1">{{i+1}}</div>
-                                    <div class="col-md-5">
-                                        <div class="card-placeholder">File Name : {{item.name}}</div>
-                                        <div class="file-size">Size : {{item.convertedsize }}</div>
+                            <div class="row project-card">
+                                <span class="tsttooltipbtn pull-right clickable" (click)="removeSelectedFile(index)">
+                                    <img class="testplus1" src="../../../../assets/images/VCM/circle-close-red.svg" />
+                                    <span class="testtooltip">Remove</span>
+                                </span>
+                                <div class="col-md-6 pl-0" style="display: flex;">
+                                    <div style="margin-right: 10px;">{{i+1}}.</div>
+                                    <div>
+                                        <div class="card-placeholder"><b>File Name :</b> {{item.fileName}}</div>
+                                        <div class="file-size"><b>Size :</b> {{item.convertedsize }}</div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <textarea name="desc" class="form-control" maxlength="151" rows="2" [(ngModel)]="item.fileDescription" placeholder="Enter Description..."></textarea>
-                                    </div>
-
                                 </div>
+                                <div class="col-md-5 p-0">
+                                    <textarea name="desc" class="form-control" maxlength="151" rows="2" [(ngModel)]="item.fileDescription" placeholder="Enter Description"></textarea>
+                                </div>
+
                             </div>
                         </div>
                     </div>
                 </div>
-            </form>
-        </div>
+            </div>
+        </form>
     </div>
     <div class="modal-footer modelprfooter">
         <div class="pull-right">
