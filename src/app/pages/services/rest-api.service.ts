@@ -1341,5 +1341,18 @@ ondeleteAttachements(body){
 updateVcm(body){
   return this.http.post('/vcmv2/updatevcm',body);
 }
+getCollaborators(uniqueId){
+  return this.http.get('/vcmv2/fetchCollaborations?uniqueId='+uniqueId)
+}
+createCollaborators(body){
+  return this.http.post('/vcmv2/createCollaborations',body);
+}
+updateCollaborators(body){
+  return this.http.post('/vcmv2/updateCollaborations',body);
+}
+deleteCollaborators(body){
+  return this.http.post('/vcmv2/deleteCollaborations',body);
+}
+
 
 }

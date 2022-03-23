@@ -52,6 +52,10 @@ export class ViewPropertiesComponent implements OnInit {
   collaboratorsList:any=[];
   stackHolders_list:any=[];
   selectedIndex:number;
+  selectedCollaboratorsObj:any;
+  isLoading1:boolean=false;
+  collaboratorsRoles=["Executive"]
+  collaboratorsInterests=["Informed","Accountable"]
 
   constructor(private router: Router, private rest_api: RestApiService,
     private route: ActivatedRoute, private modalService: BsModalService) {
@@ -65,15 +69,6 @@ export class ViewPropertiesComponent implements OnInit {
   ngOnInit(): void {
     // this.getAttachements();
     this.dataSource= new MatTableDataSource(this.attachments);
-    this.collaboratorsArray=[
-      {
-        "id": 0,
-        "stakeholder": "",
-        "interest": "",
-        "role": "",
-        "uniqueId": ""
-        },
-    ]
   }
 
   ngOnChanges(){
@@ -205,18 +200,31 @@ export class ViewPropertiesComponent implements OnInit {
     });
   }
 
-  addCollaborators(template: TemplateRef<any>,obj){
+  addCollaborators(template: TemplateRef<any>,obj,event){
+    if(event){  
+      event.stopPropagation();
+    }
     console.log(obj)
+    this.selectedCollaboratorsObj=obj
+    this.collaboratorsArray=[
+      {
+        "stakeholder": "",
+        "stakeholderEmail":"",
+        "interest": "",
+        "role": "",
+        "uniqueId": obj.uniqueId
+        },
+    ];
    this.addCollaboratorsOverlay = this.modalService.show(template,{class:"modal-lr"});
  }
 
  addNewcollabratorsObj(){
    let object= {
-    "id": 0,
     "stakeholder": "",
+    "stakeholderEmail":"",
     "interest": "",
     "role": "",
-    "uniqueId": ""
+    "uniqueId": this.selectedCollaboratorsObj.uniqueId
     }
   this.collaboratorsArray.push(object)
  }
@@ -234,34 +242,55 @@ export class ViewPropertiesComponent implements OnInit {
  });
 }
 
-submitCollabrators(){
+saveCollabrators(){
+  let req_body=[]
+  this.collaboratorsArray.forEach(element => {
+    this.stackHolders_list.forEach(e => {
+      if(element.stakeholderEmail == e.userId){
+        element.stakeholder = e.firstName + " " + e.lastName
+      }
+    });
+  });
   console.log(this.collaboratorsArray)
+    this.rest_api.createCollaborators(req_body).subscribe((res:any)=>{
+      if(res){
+      Swal.fire({
+        title: 'Success',
+        text: res.message,
+        position: 'center',
+        icon: 'success',
+        showCancelButton: false,
+        heightAuto: false,
+      })
+      this.cancelModel();
+    }
+  },err=>{
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: 'Something went wrong!',
+      heightAuto: false,
+    });
+  })
 }
 
 deleteCollaborater(index){
   this.collaboratorsArray.splice(index,1)
 }
 
-viewCollaborators(template: TemplateRef<any>,obj){
-  let collaborations= [
-    {
-    "id": 3736,
-    "stakeholder": "anitha.gada123@epsoftinc.com",
-    "interest": "informed",
-    "role": "Exec",
-    "uniqueId": "a4ae9b84-8038-3762-6021-c92e9ba6204b"
-    },
-    {
-    "id": 3737,
-    "stakeholder": "ranjith@epsoftinc.co",
-    "interest": "informed",
-    "role": "Exec",
-    "uniqueId": "a4ae9b84-8038-3762-6021-c92e9ba6204b"
-    }
-  ]
-  // this.collaboratorsList= obj.collaborations ? obj.collaborations : []
-  this.collaboratorsList=collaborations
+viewCollaborators(template: TemplateRef<any>,obj,event){
+  if(event){  
+    event.stopPropagation();
+  }
+  this.isLoading=true;
+  // obj.uniqueId="90f813c9-6964-1b9d-a5a1-f5585fd4d31f"
+  let res_data:any;
+  this.rest_api.getCollaborators(obj.uniqueId).subscribe(res =>{res_data=res
+    console.log(res)
+    this.isLoading=false;
+    this.collaboratorsList=res_data.data
    this.viewCollaboratorsOverlay = this.modalService.show(template,{class:"modal-lr"});
+  })
  }
 
  cancelViewModel(){
@@ -272,5 +301,40 @@ viewCollaborators(template: TemplateRef<any>,obj){
 editCollaborator(obj,index){
   this.selectedIndex = index;
 }
+
+viewDeleteCollaborator(obj,index){
+  let req_body=[{"id": obj.id}]
+  this.rest_api.deleteCollaborators(req_body).subscribe((res:any)=>{
+    this.collaboratorsList.splice(index,1);
+    Swal.fire({
+      title: 'Success',
+      text: res.message,
+      position: 'center',
+      icon: 'success',
+      showCancelButton: false,
+      heightAuto: false,
+    })
+    console.log(res)
+  })
+}
+
+updateCollabrators(element){
+  let req_body=[];
+  this.isLoading=true;
+  req_body.push(element)
+  req_body.forEach(element => {
+    this.stackHolders_list.forEach(e => {
+      if(element.stakeholderEmail == e.userId){
+        element.stakeholder = e.firstName + " " + e.lastName
+      }
+    });
+  });
+  this.rest_api.updateCollaborators(req_body).subscribe(res=>{
+      console.log(res);
+      this.isLoading=false;
+      this.selectedIndex=null;
+  });
+}
+
 
 }
