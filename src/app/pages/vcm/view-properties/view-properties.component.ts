@@ -47,7 +47,11 @@ export class ViewPropertiesComponent implements OnInit {
   isShowAll:boolean=false;
   vcmTreeData1:any=[];
   addCollaboratorsOverlay: BsModalRef;
+  viewCollaboratorsOverlay: BsModalRef;
   collaboratorsArray:any=[];
+  collaboratorsList:any=[];
+  stackHolders_list:any=[];
+  selectedIndex:number;
 
   constructor(private router: Router, private rest_api: RestApiService,
     private route: ActivatedRoute, private modalService: BsModalService) {
@@ -63,11 +67,11 @@ export class ViewPropertiesComponent implements OnInit {
     this.dataSource= new MatTableDataSource(this.attachments);
     this.collaboratorsArray=[
       {
-        "id": 3736,
-        "stakeholder": "sai nookala",
-        "interest": "Informed",
-        "role": "Exec",
-        "uniqueId": "a4ae9b84-8038-3762-6021-c92e9ba6204b"
+        "id": 0,
+        "stakeholder": "",
+        "interest": "",
+        "role": "",
+        "uniqueId": ""
         },
     ]
   }
@@ -102,6 +106,7 @@ export class ViewPropertiesComponent implements OnInit {
   }
   ngAfterViewInit(){
     this.getAttachements();
+    this.getApproverList();
   }
 
   getAttachements(){
@@ -207,15 +212,65 @@ export class ViewPropertiesComponent implements OnInit {
 
  addNewcollabratorsObj(){
    let object= {
-    "id": 3736,
-    "stakeholder": "sai nookala",
-    "interest": "Informed",
-    "role": "Exec",
-    "uniqueId": "a4ae9b84-8038-3762-6021-c92e9ba6204b"
+    "id": 0,
+    "stakeholder": "",
+    "interest": "",
+    "role": "",
+    "uniqueId": ""
     }
   this.collaboratorsArray.push(object)
  }
- uploadFilemodalCancel(){
+
+ cancelModel(){
   this.addCollaboratorsOverlay.hide();
 }
+
+ getApproverList(){
+  let roles={"roleNames": ["Process Owner","Process Architect"]}
+   this.rest_api.getmultipleApproverforusers(roles).subscribe( res =>  {//Process Architect
+    if(Array.isArray(res))
+     this.stackHolders_list = res;
+     console.log(res)
+ });
+}
+
+submitCollabrators(){
+  console.log(this.collaboratorsArray)
+}
+
+deleteCollaborater(index){
+  this.collaboratorsArray.splice(index,1)
+}
+
+viewCollaborators(template: TemplateRef<any>,obj){
+  let collaborations= [
+    {
+    "id": 3736,
+    "stakeholder": "anitha.gada123@epsoftinc.com",
+    "interest": "informed",
+    "role": "Exec",
+    "uniqueId": "a4ae9b84-8038-3762-6021-c92e9ba6204b"
+    },
+    {
+    "id": 3737,
+    "stakeholder": "ranjith@epsoftinc.co",
+    "interest": "informed",
+    "role": "Exec",
+    "uniqueId": "a4ae9b84-8038-3762-6021-c92e9ba6204b"
+    }
+  ]
+  // this.collaboratorsList= obj.collaborations ? obj.collaborations : []
+  this.collaboratorsList=collaborations
+   this.viewCollaboratorsOverlay = this.modalService.show(template,{class:"modal-lr"});
+ }
+
+ cancelViewModel(){
+  this.viewCollaboratorsOverlay.hide();
+  this.selectedIndex=null;
+}
+
+editCollaborator(obj,index){
+  this.selectedIndex = index;
+}
+
 }
