@@ -162,7 +162,7 @@
                                             <div class="row">
 
                                                 <div class="col-md-12 p-0 form-group content">
-                                                    <input [(ngModel)]="manageinput" class="form-control" type="text" placeholder="Enter Management Process Name">
+                                                    <input [(ngModel)]="manageinput" class="form-control" (click)="onIputClick()" type="text" placeholder="Enter Management Process Name">
                                                     <button (click)="addL1Process('Management Process')" [disabled]="manageinput == '' " class="btn">
                                                         <img src="../../../../assets/images/VCM/Green Tick.svg" class="testplus1" />
                                                     </button>
@@ -212,7 +212,7 @@
                                             <div class="row">
 
                                                 <div class="col-md-12 p-0 form-group content">
-                                                    <input [(ngModel)]="coreinput" class="form-control" type="text" placeholder="Enter Core Process Name">
+                                                    <input [(ngModel)]="coreinput" class="form-control" (click)="onIputClick()"type="text" placeholder="Enter Core Process Name">
                                                     <button (click)="addL1Process('Core Process')" [disabled]="coreinput == '' " class="btn">
                                                         <img src="../../../../assets/images/VCM/Green Tick.svg" class="testplus1" />
                                                     </button>
@@ -262,7 +262,7 @@
                                             <div class="row">
 
                                                 <div class="col-md-12 p-0 form-group content">
-                                                    <input [(ngModel)]="supportinput" class="form-control" type="text" placeholder="Enter Support process name">
+                                                    <input [(ngModel)]="supportinput" class="form-control" (click)="onIputClick()" type="text" placeholder="Enter Support process name">
                                                     <button (click)="addL1Process('Support Process')" [disabled]="supportinput == '' " class="btn">
                                                         <img src="../../../../assets/images/VCM/Green Tick.svg" class="testplus1" />
                                                     </button>
