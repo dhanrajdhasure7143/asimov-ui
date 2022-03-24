@@ -103,6 +103,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
   downloadFileformate:Subscription;
   header_btn_functions:Subscription;
   header_approvalBtn:Subscription;
+  vcmId:any;
   @ViewChild('variabletemplate',{ static: true }) variabletemplate: TemplateRef<any>;
   @ViewChild('keyboardShortcut',{ static: true }) keyboardShortcut: TemplateRef<any>;
   @ViewChild('dmnTabs',{ static: true }) dmnTabs: ElementRef<any>;
@@ -120,6 +121,9 @@ export class CreateBpmnDiagramComponent implements OnInit {
       this.selected_modelId = params['bpsId'];
       this.selected_version = params['ver'];
       this.selectedNotationType = params['ntype'];
+      if(params["vcmId"]){
+        this.vcmId = params['vcmId'];
+      }
     });
     this.keyboardLabels=this.shortcut[this.selectedNotationType];
     this.setRPAData();
@@ -289,6 +293,9 @@ export class CreateBpmnDiagramComponent implements OnInit {
   getSelectedApprover(){
     let current_bpmn_info = this.saved_bpmn_list[this.selected_notation];
     let params:Params = {'bpsId':current_bpmn_info["bpmnModelId"], 'ver': current_bpmn_info["version"], 'ntype':current_bpmn_info["ntype"]}
+    if(this.vcmId){
+      params['vcmId']=this.vcmId
+    }
     this.router.navigate([],{ relativeTo:this.route, queryParams:params });
     this.rejectedOrApproved = current_bpmn_info["bpmnProcessStatus"];
     this.updated_date_time = current_bpmn_info["modifiedTimestamp"];
@@ -771,6 +778,9 @@ export class CreateBpmnDiagramComponent implements OnInit {
                 last_version = each.version;
             })
             let params:Params = {'bpsId':sel_List["bpmnModelId"], 'ver': last_version+1, 'ntype':sel_List["ntype"]}
+            if(this.vcmId){
+              params['vcmId']=this.vcmId
+            }
             _self.router.navigate([],{ relativeTo:_self.route, queryParams:params });
             _self.getUserBpmnList();
           }

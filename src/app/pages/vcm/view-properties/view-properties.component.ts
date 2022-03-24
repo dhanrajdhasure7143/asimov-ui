@@ -74,33 +74,27 @@ export class ViewPropertiesComponent implements OnInit {
   ngOnChanges(){
     console.log("this.vcm_data",this.vcm_data)
     console.log("this.vcmTreeData",this.vcmTreeData)
-    // this.vcm_data.forEach(element => {
-    //   if(element.processOwner){
-    //     this.prop_data.push(element)
-    //   }
-    // })
-    this.vcmTreeData.forEach(element => {
-      element.children.forEach(e => {
-        this.vcmTreeData1.push(e)
-        
-      });
-    });
-
-    this.assignPagenation(this.vcmTreeData1);
-    console.log("vcmTreeData1 data",this.vcmTreeData1)
-    // this.vcmTreeData=this.vcm_resData.data.vcmV2
-    // console.log(this.vcmTreeData)
     if(this.vcm_process != "all"){
-      this.dataSource3= new MatTableDataSource(this.vcm_data);
-
+      let filteredData=[]
+      this.vcm_data.forEach(element => {
+        if(!element.bpsId){
+          filteredData.push(element)
+        }
+      });
+      this.dataSource3= new MatTableDataSource(filteredData);
     }else{
-      this.vcm_data.map(item => {item.xpandStatus = false;return item;})
-      // this.assignPagenation(this.vcm_data)
+      this.vcmTreeData.forEach(element => {
+        element.children.forEach(e => {
+          this.vcmTreeData1.push(e)
+        });
+      });
+      this.assignPagenation(this.vcmTreeData1);
+      console.log("vcmTreeData1 data",this.vcmTreeData1)
     }
-
   }
+
   ngAfterViewInit(){
-    this.getAttachements();
+    // this.getAttachements();
     this.getApproverList();
   }
 
@@ -279,6 +273,7 @@ deleteCollaborater(index){
 }
 
 viewCollaborators(template: TemplateRef<any>,obj,event){
+  console.log(obj)
   if(event){  
     event.stopPropagation();
   }
