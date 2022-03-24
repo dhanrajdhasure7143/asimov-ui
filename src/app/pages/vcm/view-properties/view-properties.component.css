@@ -121,19 +121,6 @@ span.testtooltip:after {
     right: 10px;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 .new-bps-sample {
     padding: 0px;
 }
@@ -279,18 +266,7 @@ div#bpmn_list {
     right: 10px;
 }
 
-    i.material-icons.expand-close {
-        display: none;
-    }
-    .mat-expanded i.material-icons.expand-close {
-        display: block !important;
-    }
-    i.material-icons.expand-open {
-        display: block;
-    }
-    .mat-expanded i.material-icons.expand-open {
-        display: none !important;
-    }
+   
     .workspace-title.header {
         display:table-header-group;
         font-weight:bold;
@@ -374,10 +350,13 @@ span.has-childlevels div.col-md-12 {
     font-size: 13px !important;
     text-align: left;
 }
-span.no-childlevels div.col-md-12:hover,
-span.has-childlevels div.col-md-12:hover {
+.cons_grid_content:hover {
     background-color: #fdf6d4  !important;
 }
+/* span.no-childlevels div.col-md-12:hover,
+span.has-childlevels div.col-md-12:hover {
+    background-color: #fdf6d4  !important;
+} */
 
 .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:hover:not([aria-disabled=true]) mat-panel-title,
 .mat-expansion-panel.mat-expanded mat-panel-title {
@@ -393,25 +372,21 @@ span.has-childlevels div.col-md-12:hover {
 .inner-grid div#bpmn_list {
     margin-bottom: 5px !important;
 }
-
+.row.col-md-12.p-0.cons_grid_content {
+    border: none !important;
+}
 i.material-icons.expand-close1 {
     display: none;
 }
-.mat-expanded i.material-icons.expand-close1 {
-    display: block !important;
+.mat-expansion-panel-header:not([aria-expanded=true]) i.material-icons.expand-close {
+    display: none;
 }
-i.material-icons.expand-open1 {
-    display: block;
+.mat-expansion-panel-header:not([aria-expanded=false]) i.material-icons.expand-open {
+    display: none;
 }
-.mat-expanded i.material-icons.expand-open1 {
-    display: none !important;
+.mat-expansion-panel-header:not([aria-expanded=true]) .inner-grid .mat-expansion-panel-header:not([aria-expanded=true]) i.material-icons.expand-close {
+    display: none;
 }
-
-.expan-icon1 {
-    width: 18%;
-    color: #5b5b5b;
-    opacity: 0.6;
-}
-.workspace-title .expan-icon1 {
-    width: 16%;
+.mat-expansion-panel-header:not([aria-expanded=false]) .inner-grid .mat-expansion-panel-header:not([aria-expanded=false]) i.material-icons.expand-open {
+    display: none;
 }
