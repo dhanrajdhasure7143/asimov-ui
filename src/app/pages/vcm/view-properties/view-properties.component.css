@@ -393,3 +393,25 @@ span.has-childlevels div.col-md-12:hover {
 .inner-grid div#bpmn_list {
     margin-bottom: 5px !important;
 }
+
+i.material-icons.expand-close1 {
+    display: none;
+}
+.mat-expanded i.material-icons.expand-close1 {
+    display: block !important;
+}
+i.material-icons.expand-open1 {
+    display: block;
+}
+.mat-expanded i.material-icons.expand-open1 {
+    display: none !important;
+}
+
+.expan-icon1 {
+    width: 18%;
+    color: #5b5b5b;
+    opacity: 0.6;
+}
+.workspace-title .expan-icon1 {
+    width: 16%;
+}

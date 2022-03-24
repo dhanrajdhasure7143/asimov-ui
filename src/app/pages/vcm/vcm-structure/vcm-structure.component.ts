@@ -122,7 +122,15 @@ export class VcmStructureComponent implements OnInit {
         this.vcm_data = res_data
         this.vcmData = res_data.data.vcmV2;
         this.selectedVcmName = res_data.data.vcmName
-        this.vcmData.map(item => {item.xpandStatus = false;return item;})
+        // this.vcmData.map(item => {item.xpandStatus = false;return item;})
+        this.vcmData.forEach(ele=>{
+          if(ele.level == "L1"){
+            ele["xpandStatus"] = false;
+          }
+          if(ele.level == "L2"){
+            ele["xpandStatus1"] = false;
+          }
+        })
         // this.vcmData=this.vcmData1
         this.dataMappingToTreeStructer();
       }
@@ -369,7 +377,7 @@ export class VcmStructureComponent implements OnInit {
         "level": "L3",
         "parent": this.selectedNode.parent,
         "title": this.processName,
-        "description": 'test',
+        "description": '',
         "processOwner": '',
         "type": "Process",
         "level2UniqueId": this.selectedNode.uniqueId,
@@ -443,6 +451,7 @@ export class VcmStructureComponent implements OnInit {
         treeData2.push(e)
       })
     });
+    console.log(treeData2)
 
     treeData2.forEach(e => {
       e.children.forEach(ele => {
@@ -527,10 +536,10 @@ export class VcmStructureComponent implements OnInit {
     this.isPropDisabled=true;
     this.uniqueId1=null;
     this.uniqueId=null;
+    this.selectedPropNode={}
   }
 
   onCreateBpmn() {
-    console.log("test")
     var modal = document.getElementById('myModal');
     modal.style.display = "block";
     this.overlay_data = { "type": "create", "module": "bps", "ntype": "bpmn" };
@@ -543,26 +552,48 @@ export class VcmStructureComponent implements OnInit {
   }
 
   saveVCMForBpmn(e) {
-    console.log("test", this.selectedNode, this.vcmTreeData)
     this.randomId = UUID.UUID()
+    console.log(this.selectedNode)
+    if(this.selectedNode.level == "L2"){
     this.vcmTreeData.filter((e) => e.title === this.selectedNode.parent)[0].children
-      .filter(n => n.uniqueId === this.selectedNode.level1UniqueId)[0].children
-      .filter(n => n.uniqueId === this.selectedNode.level2UniqueId)[0]["children"].
+      .filter(n => n.uniqueId === this.selectedNode.level1UniqueId)[0].children.
       push({
         "level": "L3",
         "parent": this.selectedNode.parent,
         "title": e.processName,
-        "description": 'test',
+        "description": '',
         "processOwner": '',
         "type": "Process",
-        "level2UniqueId": this.selectedNode.level2UniqueId,
         "level1UniqueId": this.selectedNode.level1UniqueId,
         "uniqueId": UUID.UUID(),
         "attachments": [],
         "bpsId": this.randomId,
-        "ntype": e.ntype
+        "ntype": e.ntype,
+        "children": [],
       }
       );
+    }
+    if(this.selectedNode.level == "L3"){
+      this.vcmTreeData.filter((e) => e.title === this.selectedNode.parent)[0].children
+        .filter(n => n.uniqueId === this.selectedNode.level1UniqueId)[0].children
+        .filter(n => n.uniqueId === this.selectedNode.level2UniqueId)[0]["children"].
+        push({
+          "level": "L3",
+          "parent": this.selectedNode.parent,
+          "title": e.processName,
+          "description": '',
+          "processOwner": '',
+          "type": "Process",
+          "level2UniqueId": this.selectedNode.level2UniqueId,
+          "level1UniqueId": this.selectedNode.level1UniqueId,
+          "uniqueId": UUID.UUID(),
+          "attachments": [],
+          "bpsId": this.randomId,
+          "ntype": e.ntype,
+          "children": []
+        }
+        );
+      }
     let req_body = this.getreqBody();
     console.log(req_body)
     this.isLoading = true;
@@ -631,7 +662,7 @@ export class VcmStructureComponent implements OnInit {
       // this.update.emit(true);
 
       if (target == "create") {
-        this.router.navigateByUrl('/pages/businessProcess/createDiagram');
+        this.router.navigate(['/pages/businessProcess/createDiagram'], { queryParams: { vcmId: this.vcm_id } });
       }
       if (target == "upload") {
         this.router.navigate(['/pages/businessProcess/uploadProcessModel'], { queryParams: { isShowConformance: false, bpsId: this.randomId, ver: 0, ntype: this.notationType, vcmId: this.vcm_id } });
@@ -667,7 +698,6 @@ export class VcmStructureComponent implements OnInit {
   }
 
   slideUp(notationType) {
-    console.log("test")
     var modal = document.getElementById('myModal');
     modal.style.display = "block";
     this.overlay_data = { "type": "create", "module": "bps", "ntype": notationType };
