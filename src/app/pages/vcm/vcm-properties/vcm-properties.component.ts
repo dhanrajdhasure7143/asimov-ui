@@ -407,7 +407,6 @@ export class VcmPropertiesComponent implements OnInit {
       // .filter(n => n.uniqueId === this.selectedObj.level1UniqueId)[0].children
       // .filter(c => c.uniqueId === this.selectedObj.uniqueId)[0].attachments = this.attachementsList;
     }
-    console.log(this.vcmProperties)
     let formdata = new FormData()
     for (var i = 0; i < this.listOfFiles.length; i++) {
       formdata.append("file", this.listOfFiles[i]);
@@ -416,6 +415,7 @@ export class VcmPropertiesComponent implements OnInit {
     formdata.append("uniqueId",this.selectedObj.uniqueId);
     formdata.append("masterId","000");
     formdata.append("parent",this.selectedObj.parent);
+    formdata.append("processName",this.selectedObj.title);
     formdata.append("vcmuniqueId",this.vcmProperties[0].uniqueId);
 
     this.rest_api.uploadVCMPropDocument(formdata).subscribe(res => {

@@ -198,7 +198,7 @@ export class FullEditPropertiesComponent implements OnInit {
     if (this.selectedObj.level == 'L1') {
       this.attachementsList.forEach(element => {
         this.vcmProperties.filter((e) => e.name === this.selectedObj.parent)[0].children
-        .filter(n => n.uniqueId === this.selectedObj.uniqueId)[0].attachments.push(element);
+        .filter(n => n.uniqueId === this.selectedObj.uniqueId)[0]["attachments"].push(element);
       });
     }
 
@@ -206,7 +206,7 @@ export class FullEditPropertiesComponent implements OnInit {
       this.attachementsList.forEach(element => {
         this.vcmProperties.filter((e) => e.name ===this.selectedObj.parent)[0].children
       .filter(n => n.uniqueId === this.selectedObj.level1UniqueId)[0].children
-      .filter(c => c.uniqueId === this.selectedObj.uniqueId)[0].attachments.push(element);
+      .filter(c => c.uniqueId === this.selectedObj.uniqueId)[0]["attachments"].push(element);
       });
     }
     console.log(this.vcmProperties)
@@ -218,11 +218,12 @@ export class FullEditPropertiesComponent implements OnInit {
     formdata.append("uniqueId",this.selectedObj.uniqueId);
     formdata.append("masterId","000");
     formdata.append("parent",this.selectedObj.parent);
+    formdata.append("processName",this.selectedObj.title);
     formdata.append("vcmuniqueId",this.vcmProperties[0].uniqueId);
 
     this.rest_api.uploadVCMPropDocument(formdata).subscribe(res => {
       this.isLoading = false;
-  
+      this.listOfFiles=[];
       if (this.selectedObj.level == 'L1') {
         this.attachementsList.forEach(element => {
           this.vcmProperties.filter((e) => e.name === this.selectedObj.parent)[0].children

@@ -79,14 +79,9 @@
                                 <mat-panel-description>
                                     <div class="container p-0 doc-content">
                                         <div class="col-md-12 form-group">
-                                            <div class="vcmdocs">
+                                            <div class="vcmdocs" (click)="uploadFileModelOpen(uploadFilemodal)">
                                                 <img src="../../../../assets/images/VCM/VCM-Upload.svg" />
-                                                <!-- <button class="btn" (click)="fileInput.click()">
-                                                    <input multiple #fileInput type="file" (change)="documentsUpload($event)" style="display:none;" />
-                                                    Upload
-                                                </button> -->
-                                                <button class="btn" (click)="uploadFileModelOpen(uploadFilemodal)">Upload</button>
-                                                
+                                                <button class="btn">Upload</button>
                                             </div>
                                         </div>
                                         <div class="form-group files">

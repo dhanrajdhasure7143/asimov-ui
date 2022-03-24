@@ -435,6 +435,7 @@ console.log(this.level1process,index)
     this.isLoading=true;
     this.rest_api.updateVcm(req_body).subscribe(res=>{
     console.log(res)
+    this.isLoading=false;
     Swal.fire({
       title: 'Success',
       text: "Updated Successfully !!",
@@ -442,9 +443,11 @@ console.log(this.level1process,index)
       icon: 'success',
       showCancelButton: false,
       heightAuto: false,
-    });
-    this.backToViewVcm();
-    this.isLoading=false;
+    }).then((result) => {
+      if (result.value) {
+        this.backToViewVcm();
+      }
+    })
     },err=>{
       this.isLoading=false;
       Swal.fire({

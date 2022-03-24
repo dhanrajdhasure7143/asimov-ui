@@ -520,7 +520,6 @@ export class CreateVcmComponent implements OnInit {
   }
 
   onSubmitUpload(){
- 
     this.attachementsList=[];
     this.listOfFiles.forEach(e=>{
       let obj={
@@ -535,7 +534,6 @@ export class CreateVcmComponent implements OnInit {
       }
       this.attachementsList.push(obj)
     })
-    console.log(this.listOfAttachemnts,this.attachementsList)
     
     this.attachementsList.forEach(element => {
       this.listOfAttachemnts.push(element)
@@ -549,6 +547,7 @@ export class CreateVcmComponent implements OnInit {
     formdata.append("masterId","000");
     formdata.append("parent",this.selectedObj.parent);
     formdata.append("vcmuniqueId",this.vcmProcess[0].uniqueId);
+    formdata.append("processName",this.selectedObj.title);
     let res_data
     this.rest_api.uploadVCMPropDocument(formdata).subscribe(res => {res_data=res
       console.log(res)

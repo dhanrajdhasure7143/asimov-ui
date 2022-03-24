@@ -55,6 +55,7 @@ export class VcmStructureComponent implements OnInit {
   vcm_data: any;
   selectedVcmName: any;
   processName: any;
+  processName1: any;
   processOwner: any;
   processDesc: any;
   listOfAttachemnts: any = [];
@@ -717,7 +718,8 @@ export class VcmStructureComponent implements OnInit {
     console.log("node", node)
     this.selectedPropNode=node
     // this.getAttachements(node);attachments
-    this.processName = node.title;
+    // this.processName = node.title;
+    this.processName1 = node.title;
     this.processOwner = node.processOwner;
     this.processDesc = node.description;
     this.drawer.open();
@@ -838,6 +840,7 @@ export class VcmStructureComponent implements OnInit {
     formdata.append("uniqueId",this.selectedPropNode.uniqueId);
     formdata.append("masterId","000");
     formdata.append("parent",this.selectedPropNode.parent);
+    formdata.append("processName",this.selectedPropNode.title);
     formdata.append("vcmuniqueId",this.vcmTreeData[0].uniqueId);
     let res_data
     this.rest_api.uploadVCMPropDocument(formdata).subscribe(res => {res_data=res
