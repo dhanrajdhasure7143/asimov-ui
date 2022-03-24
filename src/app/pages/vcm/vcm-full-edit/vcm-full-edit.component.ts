@@ -76,6 +76,9 @@ export class VcmFullEditComponent implements OnInit {
   uploadFilemodalref: BsModalRef;
   listOfAttachemnts=[];
   isOpenedState=1;
+  isShow:boolean= false;
+  propertiesLevel:any;
+  uniqueIdL3:any;
 
 
   constructor(private router: Router,private rest_api : RestApiService, private dt: DataTransferService,
@@ -84,7 +87,6 @@ export class VcmFullEditComponent implements OnInit {
     this.route.queryParams.subscribe(res => {
       if(res)
       this.vcm_id = res.id
-      this.isEdit = res.isEdit
     });
   }
 
@@ -92,49 +94,8 @@ export class VcmFullEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.getProcessOwnersList();
-    this.dt.logged_userData.subscribe(res=>{this.user_details=res})  
-    let res_data
-    this.dt.getVcm_Data.subscribe(res=>{res_data=res
-      console.log(res_data)
-      if(res){
-        if(res_data.data.length==0){
-          TREE_DATA=[
-            {
-              name: 'Management Process',uniqueId:UUID.UUID(),
-              children: []
-            },
-            {
-              name: 'Core Process',
-              children: []
-            },
-            {
-              name: 'Support Process',
-              children: []
-            },
-          ];
-          this.vcmProcess = TREE_DATA
-        }else{
-        TREE_DATA = res_data.data;
-        this.vcmProcess = null;
-        this.vcmProcess = res_data.data;
-        if(res_data.vName)this.vcmName=res_data.vName;
-        if(res_data.pOwner)this.process_ownerName=res_data.pOwner;
-        // if(res_data){
-        //   console.log("selectedVcmData", res_data.selectedVcm)
-        // }
-        }
-      }
-    });
-
-
-      if(this.isEdit == "true"){
-        this.getselectedVcm();
-      }else{
-        this.getselectedVcm1();
-
-      }
-
-
+    this.dt.logged_userData.subscribe(res=>{this.user_details=res})  ;
+    this.getselectedVcm();
   }
 
   addL1Process(value) {
@@ -198,10 +159,7 @@ export class VcmFullEditComponent implements OnInit {
     console.log(this.vcmProcess);
   }
 
-  // 
-
   addLevel2Process() {
-    console.log(this.addLevel2);
     console.log(this.level1process);
     let record = {
       type: 'Process',
@@ -225,8 +183,7 @@ console.log(this.level1process,index)
       this.vcmProcess = null;
       this.vcmProcess = TREE_DATA;
       this.addLevel2 = '';
-    }
-    else {
+    }else {
       TREE_DATA.filter(e => e.name == this.level1process.parent)[0]
         .children[index]['children'] = [];
       TREE_DATA.filter(e => e.name == this.level1process.parent)[0]
@@ -273,47 +230,6 @@ console.log(this.level1process,index)
     this.editProcessName = obj.title;
   }
 
-  editProperties() {
-    TREE_DATA.filter((e) => e.name === this.propertiesName)[0].children
-      .filter(n => n.title === this.editProcessName)[0].description = this.editProcessDescription;
-    TREE_DATA.filter((e) => e.name === this.propertiesName)[0].children
-      .filter(n => n.title === this.editProcessName)[0].processOwner = this.editProcessOwner;
-    console.log(this.vcmProcess)
-    this.vcmProcess=TREE_DATA;
-    this.drawer.close();
-  }
-  
-
-  editLevel2(name, level2, level) {
-    this.drawer.open();
-    this.selectedObj=level2;
-    this.editProcessDescription = '';
-    this.editProcessOwner = '';
-    this.editLevelProperties = level;
-    this.propertiesName = level2.parent;
-    if (level2.description) {
-      this.editProcessDescription = level2.description;
-    }
-    if (level2.processOwner) {
-      this.editProcessOwner = level2.processOwner;
-    }
-    if (level2.attachments) {
-      this.listOfAttachemnts = level2.attachments;
-    }
-    this.editProcessName = level2.title;
-  }
-  editProcessLevel2() {
-    TREE_DATA.filter((e) => e.name === this.propertiesName)[0].children
-      .filter(n => n.uniqueId === this.selectedObj.level1UniqueId)[0].children.filter(c => c.uniqueId === this.selectedObj.uniqueId)[0]
-      .description = this.editProcessDescription;
-    TREE_DATA.filter((e) => e.name === this.propertiesName)[0].children
-      .filter(n => n.uniqueId === this.selectedObj.level1UniqueId)[0].children.filter(c => c.uniqueId === this.selectedObj.uniqueId)[0]
-      .processOwner = this.editProcessOwner;
-    this.vcmProcess=TREE_DATA
-    this.drawer.close();
-  }
-
-
   convertFileSize(e) {
     let divided_size: any = String(e / 1024)
     if (e / 1024 <= 1024) {
@@ -352,49 +268,26 @@ console.log(this.level1process,index)
     console.log(TREE_DATA);
   }
 
-  saveVcm() {
-    this.vcmProcess = null;
-    this.vcmProcess = TREE_DATA;
-  }
   vcmHeading() {
-    // TREE_DATA[3].vcmname = this.vcmName;
     this.vcmProcess = null;
     this.vcmProcess = TREE_DATA;
   }
+
   goToProperties(level) {
-    let nav: NavigationExtras = {
-      queryParams: {
-        level: level,"isEdit":"true",id:this.vcm_id
-      }
-    }
-
     if (this.vcmProcess[0].children.length != 0 || this.vcmProcess[1].children.length != 0 || this.vcmProcess[2].children.length != 0) {
-      localStorage.setItem("vcmData",(JSON.stringify(this.vcmProcess)));
-      let obj={vName:this.vcmName,pOwner:this.process_ownerName,data:this.vcmProcess}
-      this.dt.vcmDataTransfer(obj)
-      this.router.navigate(['/pages/vcm/properties'], nav);
-    // TREE_DATA[3].vcmname = this.vcmName;
+    this.isShow=true;
+      this.isShow=true;
+      this.propertiesLevel=level
       this.vcmProcess = TREE_DATA;
-      console.log(this.vcmProcess);
     }
-  }
-
-  resetProperties(){    
-    this.editProcessDescription = '';
-    this.editProcessOwner = '';
   }
 
   async getProcessOwnersList(){
     let roles={"roleNames": ["Process Owner"]}
     await this.rest_api.getmultipleApproverforusers(roles).subscribe( res =>  {
-    //  console.log(res)
      if(Array.isArray(res))
        this.processOwners_list = res;
    });
-  }
-
-  ngDestroy(){
-    
   }
 
   closeOverlay(){
@@ -411,14 +304,11 @@ console.log(this.level1process,index)
         this.process_ownerName=this.selectedVcm.data.processOwner;
         let splitedValues = this.process_ownerName.split(' ');
         this.ownerValues = splitedValues[0].charAt(0) + splitedValues[1].charAt(0);
+        this.selectedVcm.data.vcmV2.forEach(element => {
+          // element["attachments"]=[];
+        });
         this.dataMappingToTreeStructer1(this.selectedVcm.data.vcmV2);
       }
-    })
-  }
-  getselectedVcm1(){
-    this.rest_api.getselectedVcmById(this.vcm_id).subscribe(res=>{this.selectedVcm=res
-      console.log(res);
-
     })
   }
 
@@ -491,12 +381,6 @@ console.log(this.level1process,index)
     this.ownerValues = splitedValues[0].charAt(0) + splitedValues[1].charAt(0);
   }
 
-  // fitProcessName(processName){
-  //   if(processName && processName.length > 25)
-  //     return processName.substr(0,25)+'..';
-  //   return processName;
-  // }
-
   onCreateLevel3(level2,item){
     console.log(level2,item);
     this.selectedNode_obj = level2;
@@ -545,7 +429,6 @@ console.log(this.level1process,index)
     console.log(this.vcmProcess);
   }
 
-  
   updateVcm(){
     let req_body=this.getreqBody();
     console.log("req_body",req_body)
@@ -653,31 +536,8 @@ console.log(this.level1process,index)
     this.drawer.close();
   }
 
-  openProperties(name,l3,level){
-    console.log(name,l3,level)
-    this.drawer.open();
-    this.selectedObj = l3;
-    this.editProcessDescription = '';
-    this.editProcessOwner = '';
-    this.editLevelProperties = level;
-    this.childParent = name.childParent;
-    this.propertiesName = name.parent;
-    if (l3.description) {
-      this.editProcessDescription = l3.description;
-    }
-    if (l3.processOwner) {
-      this.editProcessOwner = l3.processOwner;
-    }
-    if (l3.attachments) {
-      this.listOfAttachemnts = l3.attachments;
-    }
-    this.editProcessName = l3.title;
-  }
-
     saveProperties(val){
     console.log(this.vcmProcess,this.selectedObj)
-    // console.log(TREE_DATA);
-    // this.vcmProcess=TREE_DATA
     if(val=="L1"){
       this.vcmProcess.filter((e) => e.title === this.selectedObj.parent)[0].children
         .filter(n => n.title === this.selectedObj.title)[0].description = this.editProcessDescription;
@@ -725,6 +585,7 @@ console.log(this.level1process,index)
       this.listOfFiles.push(e.target.files[i])
     } 
   }
+
   removeSelectedFile(index) {
     this.listOfFiles.splice(index, 1);
   }
@@ -735,8 +596,6 @@ console.log(this.level1process,index)
   }
 
   onSubmitUpload(){
-    console.log(this.listOfFiles,this.selectedObj)
-    
     this.listOfAttachemnts =  this.listOfFiles;
     let formdata = new FormData()
     for (var i = 0; i < this.listOfFiles.length; i++) {
@@ -777,8 +636,28 @@ console.log(this.level1process,index)
 
     });
   }
+
   onIputClick(){
     this.uniqueId1=null
+  }
+
+  readEmitValue(event){
+    console.log(event)
+    this.isShow=false;
+    if(event.updateStatus){
+      TREE_DATA = event.data
+      this.vcmProcess = TREE_DATA;
+    }else{
+      this.vcmProcess = TREE_DATA;
+    }
+
+  }
+
+  editL3Process(obj){
+    this.uniqueIdL3 = obj.uniqueId
+  }
+  updateL3Process(){
+    this.uniqueIdL3=''
   }
   
   

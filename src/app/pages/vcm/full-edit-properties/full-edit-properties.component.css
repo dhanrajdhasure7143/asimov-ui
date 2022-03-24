@@ -1,0 +1,150 @@
+.submit button.btn.btn-primary {
+    margin-right: 0px !important;
+}
+.vcm-prop-content {
+    padding: 15px 0px 0px;
+}
+.prop_owner, .prop_docs, .prop_procdef {
+    border: 1px solid #e1e7ec;
+    border-radius: 3px;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+.vcm-prop-content h4 {
+    color: #001c47;
+    margin: 0px;
+    padding-bottom: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    border-bottom: 1px solid #e5e5e5;
+}
+img {
+    cursor: pointer;
+}
+.proc_deffield textarea {
+    width: 94%;
+    margin: 3px 0px 10px 10px;
+}
+.proc_deffield {
+    position: relative;
+    /* margin-bottom: 10px; */
+}
+.proc_deffield img.testplus, 
+.proc_deffield span.procdesc_act {
+    position: absolute;
+    right: 12px;
+    top: 18px;
+}
+.proc_deffield img.testplus2 {
+    width: 12px;
+    height: 12px;
+    margin-right: 10px;
+}
+.procdesc_act span:hover .default-img {
+    display: none;
+}
+.procdesc_act span:hover .hover-img {
+    display: initial;
+}
+span.docpill {
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    padding: 3px 8px 5px;
+    margin-right: 5px;
+    margin-bottom: 8px;
+    display: inline-block;
+}
+span.docpill:hover {
+    background-color: #f6f6f6;
+}
+.docpill img.testplus2 {
+    margin-left: 5px;
+    width: 10px;
+    height: auto;
+}
+/* .proc_deffield img.editdef {
+    top: 5px !important;
+} */
+.prop_procdef h3 {
+    margin: 0px 0px 5px;
+    font-weight: 600;
+    font-size: 15px;
+}
+.prop_procdef {
+    padding: 0px !important;
+}
+.prop_procdef h4 {
+    /* background-color: #e8f7fd; */
+    padding:10px;
+}
+.prop_procdef p {
+    padding: 10px 10px 0px;
+    margin: 0px;
+}
+.definitionscroll {
+    padding: 8px 10px 15px;
+}
+
+/* Upload Popup */
+
+.uploadfilebdiv {
+    height: calc(100vh - 260px);
+}
+.box-fileupload {
+    background: #ffffff;
+    width: 100%;
+    padding: 5px;
+    border: 2px dashed #00a0e3;
+    border-radius: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+}
+.box-fileupload:hover{
+    background: #e3eaee !important; ;
+}
+.inputfile + label {
+    display: inline-block;
+    cursor: pointer;
+    margin-bottom: 0px;
+}
+.inputfile {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}  
+.inputfile:focus + label,
+.inputfile + label:hover {
+    color: #00a0e3;
+    fill: #00a0e3;
+}
+.card-placeholder {
+    flex-basis: 0;
+    flex-grow: 1;
+    opacity: 1;
+    font-size: 12px;
+    font-weight: 400;
+}
+.file-size {
+    /* color: #999; */
+    font-size: 12px;
+    font-weight: 400;
+    display: block;
+    margin-top: 5px;
+}
+
+.files span.fname {
+    font-weight: 600;
+    width: 100%;
+    margin-right: 10px;
+    word-break: break-all;
+}
+.files p {
+    margin:2px 15px 2px 18px;
+    word-break: break-all;
+}
+/* Upload Popup */

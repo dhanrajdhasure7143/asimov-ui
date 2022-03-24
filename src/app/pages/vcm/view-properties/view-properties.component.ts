@@ -250,6 +250,7 @@ saveCollabrators(){
         element.stakeholder = e.firstName + " " + e.lastName
       }
     });
+    req_body.push(element)  
   });
   console.log(this.collaboratorsArray)
     this.rest_api.createCollaborators(req_body).subscribe((res:any)=>{
