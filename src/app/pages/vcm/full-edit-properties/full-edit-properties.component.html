@@ -241,6 +241,7 @@
                 <table class="table">
                     <thead>
                         <tr>
+                            <th>Level</th>
                             <th>Process Name</th>
                             <th>Documents</th>
                             <th>Description</th>
@@ -251,6 +252,7 @@
                         <ng-container *ngFor="let prop of vcmProperties">
                             <ng-container *ngFor="let name of prop.children;let i = index">
                                 <tr *ngFor="let level2 of name.children">
+                                    <td>{{level2.level}}</td>
                                     <td>{{level2.title}}</td>
                                     <td>
                                         <ng-container *ngFor="let doc of level2.attachments;let j = index">

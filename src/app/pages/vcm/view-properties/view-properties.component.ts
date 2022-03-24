@@ -4,8 +4,7 @@ import { Observable  } from 'rxjs/Observable';
 import { of  } from 'rxjs/observable/of';
 import { map } from 'rxjs/operators';
 import { MatSort, Sort } from '@angular/material';;
-// import { fromMatSort, sortRows } from './../model/datasource-utils';
-import { fromMatSort, sortRows } from './../../../pages/business-process/model/datasource-utils';
+import { fromMatSort, sortRows } from './../model/datasource-utils';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -29,7 +28,6 @@ export class ViewPropertiesComponent implements OnInit {
   prop_data:any=[];
   isLoading:boolean=false;
   displayedRows$: Observable<any[]>;
-  displayedRows1$: Observable<any[]>;
   totalRows$: Observable<number>;
   @ViewChild(MatSort,{static:false}) sort: MatSort;
   @ViewChild(MatSort,{static:false}) sort1: MatSort;
@@ -38,7 +36,7 @@ export class ViewPropertiesComponent implements OnInit {
   dataSource:MatTableDataSource<any>;
   dataSource1:MatTableDataSource<any>;
   dataSource3:MatTableDataSource<any>;
-  displayedColumns: string[] = ["vcmLevel",'fileName',"description","uploadedBy","convertedUploadedTime",'actions'];
+  displayedColumns: string[] = ["vcmLevel",'processName','fileName',"description","uploadedBy","convertedUploadedTime",'actions'];
   displayedColumns1: string[] = ["level","parent","title","processOwner","description"];
   displayedColumns3: string[] = ["level","parent","title","processOwner","description","actions"];
   expandedData:any=[];
@@ -82,20 +80,28 @@ export class ViewPropertiesComponent implements OnInit {
         }
       });
       this.dataSource3= new MatTableDataSource(filteredData);
+      this.dataSource3.sort=this.sort3;
     }else{
+      this.vcmTreeData1=[]
       this.vcmTreeData.forEach(element => {
         element.children.forEach(e => {
           this.vcmTreeData1.push(e)
         });
       });
-      this.assignPagenation(this.vcmTreeData1);
+      setTimeout(() => {
+        this.assignPagenation(this.vcmTreeData1);
+      }, 500);
       console.log("vcmTreeData1 data",this.vcmTreeData1)
     }
   }
 
   ngAfterViewInit(){
-    // this.getAttachements();
+    this.getAttachements();
     this.getApproverList();
+  }
+
+  ngDestroy(){
+    this.assignPagenation([]);
   }
 
   getAttachements(){
@@ -111,40 +117,21 @@ export class ViewPropertiesComponent implements OnInit {
     this.rest_api.getvcmAttachements(reqBody).subscribe(res=>{res_data=res
       this.attachments=res_data.data
       this.dataSource= new MatTableDataSource(this.attachments);
-      this.dataSource.sort=this.sort1;
+      this.dataSource.sort=this.sort;
 
       this.isLoading=false;
     })
     }
   }
 
-  getexpandedlevel(data){
-    console.log(data,this.vcm_data)
-    this.expandedData=[];
-    this.vcm_data.forEach(element => {
-      if(element.parent == data.parent && element.level != data.level){
-        this.expandedData.push(element);
-      }
-    });
-    this.dataSource1= new MatTableDataSource(this.expandedData);
-    this.assignPagenation1(this.expandedData);
-  }
-
   assignPagenation(data){
-    // const sortEvents$: Observable<Sort> = fromMatSort(this.sort);
+    console.log(data)
     // const pageEvents$: Observable<PageEvent> = fromMatPaginator(this.paginator);
     const rows$ = of(data);
     this.totalRows$ = rows$.pipe(map(rows => rows.length));
-    this.displayedRows$ = rows$;
-    // this.paginator.firstPage();
-  }
-  assignPagenation1(data){
-    // const sortEvents$: Observable<Sort> = fromMatSort(this.sort);
-    // const pageEvents$: Observable<PageEvent> = fromMatPaginator(this.paginator);
-    const rows$ = of(data);
-    this.totalRows$ = rows$.pipe(map(rows => rows.length));
-    this.displayedRows1$ = rows$;
-    // this.paginator.firstPage();
+    const sortEvents$: Observable<Sort> = fromMatSort(this.sort);
+    // this.displayedRows$ = rows$;
+    this.displayedRows$ = rows$.pipe(sortRows(sortEvents$));
   }
 
   ondeleteAttachements(data) {
@@ -232,7 +219,6 @@ export class ViewPropertiesComponent implements OnInit {
    this.rest_api.getmultipleApproverforusers(roles).subscribe( res =>  {//Process Architect
     if(Array.isArray(res))
      this.stackHolders_list = res;
-     console.log(res)
  });
 }
 

@@ -18,6 +18,8 @@ import { VcmPreviewComponent } from './vcm-preview/vcm-preview.component';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { ModalModule, BsModalRef  } from 'ngx-bootstrap/modal';
 import { FullEditPropertiesComponent } from './full-edit-properties/full-edit-properties.component';
+import {CustomMatPaginatorIntl} from './../../shared/custom-mat-paginator-int';
+import {MatPaginatorIntl} from '@angular/material';
 
 
 @NgModule({
@@ -41,6 +43,9 @@ import { FullEditPropertiesComponent } from './full-edit-properties/full-edit-pr
     NgxDropzoneModule,
     ModalModule.forRoot(),
   ],
-  providers:[BsModalRef]
+  providers:[BsModalRef,{
+    provide: MatPaginatorIntl, 
+    useClass: CustomMatPaginatorIntl
+  }]
 })
 export class VcmModule { }
