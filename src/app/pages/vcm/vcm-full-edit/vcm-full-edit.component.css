@@ -459,7 +459,6 @@ hr {
 
 .vcm-leveldiv .powner select.form-control {
     width: 200px !important;
-    /* padding-left: 0px !important; */
     padding-top: 0px !important;
     border: transparent !important;
     background-color: transparent !important;
@@ -475,13 +474,14 @@ span.poname {
 
 .povaluediv {
     position: relative;
-    margin-left: 10px;
+    /* margin-left: 10px; */
 }
 
 span.polabel {
     position: absolute;
     bottom: -3px;
-    left: 0;
+    /* left: 0; */
+    left: 10px;
     color: #7a7a7a;
     font-size: 12px;
 }
