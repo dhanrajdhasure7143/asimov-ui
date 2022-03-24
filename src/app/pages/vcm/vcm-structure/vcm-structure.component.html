@@ -23,7 +23,7 @@
 
                 <div class="propertiesContainer" id="propertiesContainer">
                     <div class="close-btn">
-                        <h3>{{processName}}</h3>
+                        <h3>{{processName1}}</h3>
                         <img src="../../../../assets/images/VCM/VCM-close.svg" (click)="closeOverlay()" />
                     </div>
                     <div class="propertiesPanelBody" id="propertiesPanelBody">
@@ -43,7 +43,7 @@
                                         <div class="editcontent">
                                             <div class="col-md-12 form-group">
                                                 <label class="label-control">Process Name</label>
-                                                <input type="text" disabled class="form-control" [(ngModel)]="processName">
+                                                <input type="text" disabled class="form-control" [(ngModel)]="processName1">
                                             </div>
                                             <div class="col-md-12 form-group">
                                                 <label class="label-control">Process Owner</label>
@@ -421,7 +421,7 @@
                                 <div class="col-md-6 pl-0" style="display: flex;">
                                     <div style="margin-right: 10px;">{{i+1}}.</div>
                                     <div>
-                                        <div class="card-placeholder"><b>File Name :</b> {{item.fileName}}</div>
+                                        <div class="card-placeholder"><b>File Name :</b> {{item.name}}</div>
                                         <div class="file-size"><b>Size :</b> {{item.convertedsize }}</div>
                                     </div>
                                 </div>

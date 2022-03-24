@@ -520,7 +520,6 @@ export class CreateVcmComponent implements OnInit {
   }
 
   onSubmitUpload(){
- 
     this.attachementsList=[];
     this.listOfFiles.forEach(e=>{
       let obj={
@@ -535,7 +534,6 @@ export class CreateVcmComponent implements OnInit {
       }
       this.attachementsList.push(obj)
     })
-    console.log(this.listOfAttachemnts,this.attachementsList)
     
     this.attachementsList.forEach(element => {
       this.listOfAttachemnts.push(element)
@@ -549,6 +547,7 @@ export class CreateVcmComponent implements OnInit {
     formdata.append("masterId","000");
     formdata.append("parent",this.selectedObj.parent);
     formdata.append("vcmuniqueId",this.vcmProcess[0].uniqueId);
+    formdata.append("processName",this.selectedObj.title);
     let res_data
     this.rest_api.uploadVCMPropDocument(formdata).subscribe(res => {res_data=res
       console.log(res)
@@ -585,21 +584,18 @@ export class CreateVcmComponent implements OnInit {
 
   saveProperties(val){
     console.log(this.vcmProcess,this.selectedObj)
-    // console.log(TREE_DATA);
-    // this.vcmProcess=TREE_DATA
     if(val=="L1"){
-      TREE_DATA.filter((e) => e.title === this.selectedObj.parent)[0].children
+      TREE_DATA.filter((e) => e.name === this.selectedObj.parent)[0].children
         .filter(n => n.title === this.selectedObj.title)[0].description = this.editProcessDescription;
       TREE_DATA.filter((e) => e.title === this.selectedObj.parent)[0].children
         .filter(n => n.title === this.selectedObj.title)[0].processOwner = this.editProcessOwner;
     }
-
     if(val=="L2"){
-      TREE_DATA.filter((e) => e.title ===this.selectedObj.parent)[0].children
+      TREE_DATA.filter((e) => e.name ===this.selectedObj.parent)[0].children
       .filter(n => n.uniqueId === this.selectedObj.level1UniqueId)[0].children
       .filter(c => c.uniqueId === this.selectedObj.uniqueId)[0]
       .description = this.editProcessDescription;
-      TREE_DATA.filter((e) => e.title === this.selectedObj.parent)[0].children
+      TREE_DATA.filter((e) => e.name === this.selectedObj.parent)[0].children
       .filter(n => n.uniqueId === this.selectedObj.level1UniqueId)[0].children
       .filter(c => c.uniqueId === this.selectedObj.uniqueId)[0]
       .processOwner = this.editProcessOwner;

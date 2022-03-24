@@ -7,21 +7,17 @@
             <span class="module-header-title">Value Chain Mapping - Edit</span>
         </div>
         <div class="ml-auto submit">
-            <!-- <button class="btn btn-default" (click)="resetLevel1()">Reset</button> -->
-            <button class="btn btn-primary" [disabled]="!vcmName || !process_ownerName" (click)="updateVcm()">Update</button>
+            <button class="btn btn-primary" [disabled]="!vcmName || !process_ownerName"
+                (click)="updateVcm()">Update</button>
         </div>
     </div>
 
     <div class="module-body">
         <mat-drawer-container class="example-container h-100" style="background-color: white;">
             <mat-drawer #drawer class="example-sidenav vcmprop" mode="side" position="end">
-
                 <div class="propertiesContainer" id="propertiesContainer">
                     <div class="close-btn">
                         <h3>{{editProcessName}}</h3>
-                        <!-- <h3 class="tsttooltipbtn">{{fitProcessName(editProcessName)}}
-                            <span class="testtooltip">{{editProcessName}}</span>
-                        </h3> -->
                         <img src="../../../../assets/images/VCM/VCM-close.svg" (click)="closeOverlay()" />
                     </div>
                     <div class="propertiesPanelBody" id="propertiesPanelBody">
@@ -30,7 +26,8 @@
                                 <mat-expansion-panel-header>
                                     <mat-panel-title class="accordionHeaderMain">
                                         <div class="accordionHeaderToggle">
-                                            <img src="../../../../assets/images/BPMS/Properties.svg" alt="menuToggleIcon" class="menuToggleIcon">
+                                            <img src="../../../../assets/images/BPMS/Properties.svg"
+                                                alt="menuToggleIcon" class="menuToggleIcon">
                                             <label class="accordionHeader">Properties</label>
                                         </div>
                                     </mat-panel-title>
@@ -40,27 +37,34 @@
                                         <div class="editcontent">
                                             <div class="col-md-12 p-0 form-group">
                                                 <label class="label-control">Process Name</label>
-                                                <input type="text" disabled class="form-control" [(ngModel)]="editProcessName">
+                                                <input type="text" disabled class="form-control"
+                                                    [(ngModel)]="editProcessName">
                                             </div>
                                             <div class="col-md-12 p-0 form-group">
                                                 <label class="label-control">Process Owner</label>
                                                 <select class="form-control" [(ngModel)]="editProcessOwner">
                                                     <option value="" hidden disabled>Select Owner</option>
-                                                    <option *ngFor="let each_approver of processOwners_list;let i=index" [value]="each_approver.firstName+' '+each_approver.lastName">
-                                                        {{(each_approver.firstName | titlecase) +" "+(each_approver.lastName==undefined?"":each_approver.lastName)}}</option>
+                                                    <option *ngFor="let each_approver of processOwners_list;let i=index"
+                                                        [value]="each_approver.firstName+' '+each_approver.lastName">
+                                                        {{(each_approver.firstName | titlecase) +"
+                                                        "+(each_approver.lastName==undefined?"":each_approver.lastName)}}
+                                                    </option>
                                                 </select>
                                             </div>
                                             <div class="col-md-12 p-0 form-group">
                                                 <label class="label-control">Process Description</label>
-                                                <textarea class="form-control" rows="5" [(ngModel)]="editProcessDescription" placeholder="Enter Process Description"></textarea>
+                                                <textarea class="form-control" rows="5"
+                                                    [(ngModel)]="editProcessDescription"
+                                                    placeholder="Enter Process Description"></textarea>
                                             </div>
                                         </div>
                                         <div class="propfooter col-md-12 p-0 text-right">
-                                            <!-- <button class="btn btn-default" (click)="resetProperties()">Reset</button> -->
-                                            <button class="btn btn-primary" *ngIf="editLevelProperties == 1" (click)="saveProperties('L1')">Save</button>
-                                            <button class="btn btn-primary" *ngIf="editLevelProperties == 2" (click)="saveProperties('L2')">Save</button>
-                                            <button class="btn btn-primary" *ngIf="editLevelProperties == 3" (click)="saveProperties('L3')">Save</button>
-
+                                            <button class="btn btn-primary" *ngIf="editLevelProperties == 1"
+                                                (click)="saveProperties('L1')">Update</button>
+                                            <button class="btn btn-primary" *ngIf="editLevelProperties == 2"
+                                                (click)="saveProperties('L2')">Update</button>
+                                            <button class="btn btn-primary" *ngIf="editLevelProperties == 3"
+                                                (click)="saveProperties('L3')">Update</button>
                                         </div>
                                     </div>
                                 </mat-panel-description>
@@ -70,7 +74,8 @@
                                 <mat-expansion-panel-header>
                                     <mat-panel-title>
                                         <div class="accordionHeaderToggle">
-                                            <img src="../../../../assets/images/BPMS/Discussions.svg" alt="menuToggleIcon" class="menuToggleIcon">
+                                            <img src="../../../../assets/images/BPMS/Discussions.svg"
+                                                alt="menuToggleIcon" class="menuToggleIcon">
                                             <label for="" class="accordionHeader">Documents</label>
                                         </div>
                                     </mat-panel-title>
@@ -80,17 +85,21 @@
                                         <div class="col-md-12 form-group">
                                             <div class="vcmdocs">
                                                 <img src="../../../../assets/images/VCM/VCM-Upload.svg" />
-                                                <button class="btn" (click)="uploadFileModelOpen(uploadFilemodal)">Upload</button>
+                                                <button class="btn"
+                                                    (click)="uploadFileModelOpen(uploadFilemodal)">Upload</button>
                                             </div>
                                         </div>
                                         <div class="form-group files">
-                                            <div class="col-md-12" *ngFor="let each of listOfAttachemnts;let i = index;">
+                                            <div class="col-md-12"
+                                                *ngFor="let each of listOfAttachemnts;let i = index;">
                                                 <div style="display: flex;">
                                                     <span style="margin-right:6px;">{{i + 1}}.</span>
                                                     <span class="fname">{{each.fileName}}</span>
                                                     <span style="float: right;">
-                                                        <img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img"  />
-                                                        <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" (click)="RemoveFile(file,i)" />
+                                                        <img src="../../../../assets/images/VCM/VCM-close.svg"
+                                                            class="testplus2 default-img" />
+                                                        <img src="../../../../assets/images/VCM/VCM-close-red.svg"
+                                                            class="testplus2 hover-img" (click)="RemoveFile(file,i)" />
                                                     </span>
                                                 </div>
                                                 <p>{{each.fileDescription}}</p>
@@ -100,7 +109,6 @@
                                     </div>
                                 </mat-panel-description>
                             </mat-expansion-panel>
-
                         </mat-accordion>
                     </div>
                 </div>
@@ -111,87 +119,109 @@
                         <div class="row">
                             <div class="col-md-4 pr-0 form-group vcname">
                                 <label class="label-control">Value Chain Name</label>
-                                <input type="text" class="form-control" [(ngModel)]="vcmName" placeholder="Enter Value Chain Name">
+                                <input type="text" class="form-control" [(ngModel)]="vcmName"
+                                    placeholder="Enter Value Chain Name">
                                 <button class="btn" (click)="vcmHeading()">
-                                    <img [hidden]="!vcmName" src="../../../../assets/images/VCM/Green Tick.svg" class="testplus1"  />
+                                    <img [hidden]="!vcmName" src="../../../../assets/images/VCM/Green Tick.svg"
+                                        class="testplus1" />
                                 </button>
                             </div>
                             <div class="col-md-4 pr-0 form-group powner">
                                 <button *ngIf="!process_ownerName">
-                                    <img src="../../../../assets/images/VCM/pc.svg" class="default-img"/>
-                                    <img src="../../../../assets/images/VCM/pc-hover.svg" class="hover-img"/>
+                                    <img src="../../../../assets/images/VCM/pc.svg" class="default-img" />
+                                    <img src="../../../../assets/images/VCM/pc-hover.svg" class="hover-img" />
                                 </button>
                                 <span class="poname" *ngIf="process_ownerName">{{ownerValues| uppercase}}</span>
                                 <div class="povaluediv">
-                                    <select class="form-control" (change)="onChangeProcessOwner(process_ownerName)" [(ngModel)]="process_ownerName">
+                                    <select class="form-control" (change)="onChangeProcessOwner(process_ownerName)"
+                                        [(ngModel)]="process_ownerName">
                                         <option value="" hidden disabled>Select Process Owner</option>
                                         <option value="undefined" hidden disabled>Select Process Owner</option>
-                                        <option *ngFor="let each_approver of processOwners_list;let i=index" [value]="each_approver.firstName+' '+each_approver.lastName">
-                                            {{(each_approver.firstName | titlecase) +" "+(each_approver.lastName==undefined?"":each_approver.lastName)}}</option>
+                                        <option *ngFor="let each_approver of processOwners_list;let i=index"
+                                            [value]="each_approver.firstName+' '+each_approver.lastName">
+                                            {{(each_approver.firstName | titlecase) +"
+                                            "+(each_approver.lastName==undefined?"":each_approver.lastName)}}</option>
                                     </select>
                                     <span class="polabel" *ngIf="process_ownerName">Process Owner</span>
                                 </div>
                             </div>
                         </div>
-                        <!-- <div class="col-md-6 pr-0 form-group">
-                            <label class="label-control">Process Owner</label>
-                            <select class="form-control" [(ngModel)]="process_ownerName">
-                                <option value="" hidden disabled>Select Process Owner</option>
-                                <option value="undefined" hidden disabled>Select Process Owner</option>
-                                <option *ngFor="let each_approver of processOwners_list;let i=index" [value]="each_approver.firstName+' '+each_approver.lastName">
-                                    {{(each_approver.firstName | titlecase) +" "+(each_approver.lastName==undefined?"":each_approver.lastName)}}</option>
-                            </select>
-                        </div> -->
 
                         <div class="col-md-6 col-lg-6 pr-0">
                             <div class="dbichart-block">
                                 <div class="dbichart-body">
                                     <h4>
                                         Level 1 Process
-                                        <img [ngClass]="(vcmProcess[0].children?.length != 0 || vcmProcess[1].children?.length != 0 || vcmProcess[2].children?.length != 0) ? 'view' : 'dis'" (click)="goToProperties('level1')" src="../../../../assets/images/VCM/Level 1.svg" class="testplus" alt="">
+                                        <img [ngClass]="(vcmProcess[0].children?.length != 0 || vcmProcess[1].children?.length != 0 || vcmProcess[2].children?.length != 0) ? 'view' : 'dis'"
+                                            (click)="goToProperties('level1')"
+                                            src="../../../../assets/images/VCM/Level 1.svg" class="testplus" alt="">
                                     </h4>
                                     <div class="l1processlistdiv">
                                         <mat-expansion-panel expanded>
                                             <mat-expansion-panel-header>
                                                 <mat-panel-title>
                                                     <h5>
-                                                        <img src="../../../assets/images/menu-line.svg" class="testplus" alt="">Management Process
+                                                        <img src="../../../assets/images/menu-line.svg" class="testplus"
+                                                            alt="">Management Process
                                                     </h5>
                                                 </mat-panel-title>
                                             </mat-expansion-panel-header>
                                             <div class="row">
 
                                                 <div class="col-md-12 p-0 form-group content">
-                                                    <input [(ngModel)]="manageinput" class="form-control" (click)="onIputClick()" type="text" placeholder="Enter Management Process Name">
-                                                    <button (click)="addL1Process('Management Process')" [disabled]="manageinput == '' " class="btn">
-                                                        <img src="../../../../assets/images/VCM/Green Tick.svg" class="testplus1" />
+                                                    <input [(ngModel)]="manageinput" class="form-control"
+                                                        (click)="onIputClick()" type="text"
+                                                        placeholder="Enter Management Process Name">
+                                                    <button (click)="addL1Process('Management Process')"
+                                                        [disabled]="manageinput == '' " class="btn">
+                                                        <img src="../../../../assets/images/VCM/Green Tick.svg"
+                                                            class="testplus1" />
                                                     </button>
                                                 </div>
                                                 <div class="l1process-list">
                                                     <ul *ngFor="let item of vcmProcess">
                                                         <ul *ngIf="item.name == 'Management Process'">
-                                                            <li *ngFor="let name of item.children;let i = index" class="childHover">
-                                                                <span *ngIf="uniqueId1 != name.uniqueId">{{i + 1}}. {{name.title}}</span>
-                                                                <div *ngIf="uniqueId1 == name.uniqueId" style="display: flex;width: 110%;">
-                                                                    <span style="width: auto;padding-top: 1%;padding-right: 1%;">{{i + 1}}.</span> 
-                                                                    <input type="text" class="form-control" placeholder="Enter Process Name" [(ngModel)]="name.title">
-                                                                    <button style="position: relative;right: 6%;bottom: 7%;" (click)="editTitleName(name)">
-                                                                        <img class="testplus1" src="../../../../assets/images/VCM/Green Tick.svg">
+                                                            <li *ngFor="let name of item.children;let i = index"
+                                                                class="childHover">
+                                                                <span *ngIf="uniqueId1 != name.uniqueId">{{i + 1}}.
+                                                                    {{name.title}}</span>
+                                                                <div *ngIf="uniqueId1 == name.uniqueId"
+                                                                    style="display: flex;width: 110%;">
+                                                                    <span
+                                                                        style="width: auto;padding-top: 1%;padding-right: 1%;">{{i
+                                                                        + 1}}.</span>
+                                                                    <input type="text" class="form-control"
+                                                                        placeholder="Enter Process Name"
+                                                                        [(ngModel)]="name.title">
+                                                                    <button
+                                                                        style="position: relative;right: 6%;bottom: 7%;"
+                                                                        (click)="editTitleName(name)">
+                                                                        <img class="testplus1"
+                                                                            src="../../../../assets/images/VCM/Green Tick.svg">
                                                                     </button>
                                                                 </div>
                                                                 <div class="actimg">
                                                                     <span *ngIf="uniqueId1 != name.uniqueId">
-                                                                        <img src="../../../../assets/images/VCM/edit-plus-litblue.svg" class="testplus2 default-img" />
-                                                                        <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2 hover-img" (click)="editLevelName(name)" />
-                                                                    </span> 
+                                                                        <img src="../../../../assets/images/VCM/edit-plus-litblue.svg"
+                                                                            class="testplus2 default-img" />
+                                                                        <img src="../../../../assets/images/VCM/edit-3.svg"
+                                                                            class="testplus2 hover-img"
+                                                                            (click)="editLevelName(name)" />
+                                                                    </span>
                                                                     <span>
-                                                                        <img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img"  />
-                                                                        <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" (click)="removeChild(name)" />
+                                                                        <img src="../../../../assets/images/VCM/VCM-close.svg"
+                                                                            class="testplus2 default-img" />
+                                                                        <img src="../../../../assets/images/VCM/VCM-close-red.svg"
+                                                                            class="testplus2 hover-img"
+                                                                            (click)="removeChild(name)" />
                                                                     </span>
                                                                     <!-- <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" (click)="showPropertiesPanel(item,name,1)" /> -->
                                                                     <span>
-                                                                        <img src="../../../../assets/images/VCM/more-vertical-default.svg" class="testplus default-img" />
-                                                                        <img src="../../../../assets/images/VCM/more-vertical-hover.svg" class="testplus hover-img" (click)="showPropertiesPanel(item,name,1)" />
+                                                                        <img src="../../../../assets/images/VCM/more-vertical-default.svg"
+                                                                            class="testplus default-img" />
+                                                                        <img src="../../../../assets/images/VCM/more-vertical-hover.svg"
+                                                                            class="testplus hover-img"
+                                                                            (click)="showPropertiesPanel(item,name,1)" />
                                                                     </span>
                                                                 </div>
                                                             </li>
@@ -205,43 +235,66 @@
                                             <mat-expansion-panel-header>
                                                 <mat-panel-title>
                                                     <h5>
-                                                        <img src="../../../assets/images/menu-line.svg" class="testplus" alt="">Core Process
+                                                        <img src="../../../assets/images/menu-line.svg" class="testplus"
+                                                            alt="">Core Process
                                                     </h5>
                                                 </mat-panel-title>
                                             </mat-expansion-panel-header>
                                             <div class="row">
 
                                                 <div class="col-md-12 p-0 form-group content">
-                                                    <input [(ngModel)]="coreinput" class="form-control" (click)="onIputClick()"type="text" placeholder="Enter Core Process Name">
-                                                    <button (click)="addL1Process('Core Process')" [disabled]="coreinput == '' " class="btn">
-                                                        <img src="../../../../assets/images/VCM/Green Tick.svg" class="testplus1" />
+                                                    <input [(ngModel)]="coreinput" class="form-control"
+                                                        (click)="onIputClick()" type="text"
+                                                        placeholder="Enter Core Process Name">
+                                                    <button (click)="addL1Process('Core Process')"
+                                                        [disabled]="coreinput == '' " class="btn">
+                                                        <img src="../../../../assets/images/VCM/Green Tick.svg"
+                                                            class="testplus1" />
                                                     </button>
                                                 </div>
                                                 <div class="l1process-list">
                                                     <ul *ngFor="let item of vcmProcess">
                                                         <ul *ngIf="item.name == 'Core Process'">
-                                                            <li *ngFor="let name of item.children;let i = index" class="childHover">
-                                                                <span *ngIf="uniqueId1 != name.uniqueId">{{i + 1}}. {{name.title}}</span>
-                                                                <div *ngIf="uniqueId1 == name.uniqueId" style="display: flex;width: 110%;">
-                                                                    <span style="width: auto;padding-top: 1%;padding-right: 1%;">{{i + 1}}.</span> 
-                                                                    <input type="text" class="form-control" placeholder="Enter Process Name" [(ngModel)]="name.title">
-                                                                    <button style="position: relative;right: 6%;bottom: 7%;" (click)="editTitleName(name)">
-                                                                        <img class="testplus1" src="../../../../assets/images/VCM/Green Tick.svg">
+                                                            <li *ngFor="let name of item.children;let i = index"
+                                                                class="childHover">
+                                                                <span *ngIf="uniqueId1 != name.uniqueId">{{i + 1}}.
+                                                                    {{name.title}}</span>
+                                                                <div *ngIf="uniqueId1 == name.uniqueId"
+                                                                    style="display: flex;width: 110%;">
+                                                                    <span
+                                                                        style="width: auto;padding-top: 1%;padding-right: 1%;">{{i
+                                                                        + 1}}.</span>
+                                                                    <input type="text" class="form-control"
+                                                                        placeholder="Enter Process Name"
+                                                                        [(ngModel)]="name.title">
+                                                                    <button
+                                                                        style="position: relative;right: 6%;bottom: 7%;"
+                                                                        (click)="editTitleName(name)">
+                                                                        <img class="testplus1"
+                                                                            src="../../../../assets/images/VCM/Green Tick.svg">
                                                                     </button>
                                                                 </div>
                                                                 <div class="actimg">
                                                                     <span *ngIf="uniqueId1 != name.uniqueId">
-                                                                        <img src="../../../../assets/images/VCM/edit-plus-litblue.svg" class="testplus2 default-img" />
-                                                                        <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2 hover-img" (click)="editLevelName(name)" />
-                                                                    </span> 
-                                                                    <span>
-                                                                        <img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img" />
-                                                                        <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" (click)="removeChild(name)" />
+                                                                        <img src="../../../../assets/images/VCM/edit-plus-litblue.svg"
+                                                                            class="testplus2 default-img" />
+                                                                        <img src="../../../../assets/images/VCM/edit-3.svg"
+                                                                            class="testplus2 hover-img"
+                                                                            (click)="editLevelName(name)" />
                                                                     </span>
-                                                                    <!-- <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" (click)="showPropertiesPanel(item,name,1)" /> -->
                                                                     <span>
-                                                                        <img src="../../../../assets/images/VCM/more-vertical-default.svg" class="testplus default-img" />
-                                                                        <img src="../../../../assets/images/VCM/more-vertical-hover.svg" class="testplus hover-img" (click)="showPropertiesPanel(item,name,1)" />
+                                                                        <img src="../../../../assets/images/VCM/VCM-close.svg"
+                                                                            class="testplus2 default-img" />
+                                                                        <img src="../../../../assets/images/VCM/VCM-close-red.svg"
+                                                                            class="testplus2 hover-img"
+                                                                            (click)="removeChild(name)" />
+                                                                    </span>
+                                                                    <span>
+                                                                        <img src="../../../../assets/images/VCM/more-vertical-default.svg"
+                                                                            class="testplus default-img" />
+                                                                        <img src="../../../../assets/images/VCM/more-vertical-hover.svg"
+                                                                            class="testplus hover-img"
+                                                                            (click)="showPropertiesPanel(item,name,1)" />
                                                                     </span>
                                                                 </div>
                                                             </li>
@@ -255,43 +308,67 @@
                                             <mat-expansion-panel-header>
                                                 <mat-panel-title>
                                                     <h5>
-                                                        <img src="../../../assets/images/menu-line.svg" class="testplus" alt="">Support Process
+                                                        <img src="../../../assets/images/menu-line.svg" class="testplus"
+                                                            alt="">Support Process
                                                     </h5>
                                                 </mat-panel-title>
                                             </mat-expansion-panel-header>
                                             <div class="row">
 
                                                 <div class="col-md-12 p-0 form-group content">
-                                                    <input [(ngModel)]="supportinput" class="form-control" (click)="onIputClick()" type="text" placeholder="Enter Support process name">
-                                                    <button (click)="addL1Process('Support Process')" [disabled]="supportinput == '' " class="btn">
-                                                        <img src="../../../../assets/images/VCM/Green Tick.svg" class="testplus1" />
+                                                    <input [(ngModel)]="supportinput" class="form-control"
+                                                        (click)="onIputClick()" type="text"
+                                                        placeholder="Enter Support process name">
+                                                    <button (click)="addL1Process('Support Process')"
+                                                        [disabled]="supportinput == '' " class="btn">
+                                                        <img src="../../../../assets/images/VCM/Green Tick.svg"
+                                                            class="testplus1" />
                                                     </button>
                                                 </div>
                                                 <div class="l1process-list">
                                                     <ul *ngFor="let item of vcmProcess">
                                                         <ul *ngIf="item.name == 'Support Process'">
-                                                            <li *ngFor="let name of item.children;let i = index" class="childHover">
-                                                                <span *ngIf="uniqueId1 != name.uniqueId">{{i + 1}}. {{name.title}}</span>
-                                                                <div *ngIf="uniqueId1 == name.uniqueId" style="display: flex;width: 110%;">
-                                                                    <span style="width: auto;padding-top: 1%;padding-right: 1%;;">{{i + 1}}.</span> 
-                                                                    <input type="text" class="form-control" placeholder="Enter Process Name" [(ngModel)]="name.title">
-                                                                    <button style="position: relative;right: 6%;bottom: 7%;" (click)="editTitleName(name)">
-                                                                        <img class="testplus1" src="../../../../assets/images/VCM/Green Tick.svg">
+                                                            <li *ngFor="let name of item.children;let i = index"
+                                                                class="childHover">
+                                                                <span *ngIf="uniqueId1 != name.uniqueId">{{i + 1}}.
+                                                                    {{name.title}}</span>
+                                                                <div *ngIf="uniqueId1 == name.uniqueId"
+                                                                    style="display: flex;width: 110%;">
+                                                                    <span
+                                                                        style="width: auto;padding-top: 1%;padding-right: 1%;;">{{i
+                                                                        + 1}}.</span>
+                                                                    <input type="text" class="form-control"
+                                                                        placeholder="Enter Process Name"
+                                                                        [(ngModel)]="name.title">
+                                                                    <button
+                                                                        style="position: relative;right: 6%;bottom: 7%;"
+                                                                        (click)="editTitleName(name)">
+                                                                        <img class="testplus1"
+                                                                            src="../../../../assets/images/VCM/Green Tick.svg">
                                                                     </button>
                                                                 </div>
                                                                 <div class="actimg">
                                                                     <span *ngIf="uniqueId1 != name.uniqueId">
-                                                                        <img src="../../../../assets/images/VCM/edit-plus-litblue.svg" class="testplus2 default-img" />
-                                                                        <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2 hover-img" (click)="editLevelName(name)" />
-                                                                    </span> 
+                                                                        <img src="../../../../assets/images/VCM/edit-plus-litblue.svg"
+                                                                            class="testplus2 default-img" />
+                                                                        <img src="../../../../assets/images/VCM/edit-3.svg"
+                                                                            class="testplus2 hover-img"
+                                                                            (click)="editLevelName(name)" />
+                                                                    </span>
                                                                     <span>
-                                                                        <img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img"  />
-                                                                        <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" (click)="removeChild(name)" />
+                                                                        <img src="../../../../assets/images/VCM/VCM-close.svg"
+                                                                            class="testplus2 default-img" />
+                                                                        <img src="../../../../assets/images/VCM/VCM-close-red.svg"
+                                                                            class="testplus2 hover-img"
+                                                                            (click)="removeChild(name)" />
                                                                     </span>
                                                                     <!-- <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" (click)="showPropertiesPanel(item,name,1)" /> -->
                                                                     <span>
-                                                                        <img src="../../../../assets/images/VCM/more-vertical-default.svg" class="testplus default-img" />
-                                                                        <img src="../../../../assets/images/VCM/more-vertical-hover.svg" class="testplus hover-img" (click)="showPropertiesPanel(item,name,1)" />
+                                                                        <img src="../../../../assets/images/VCM/more-vertical-default.svg"
+                                                                            class="testplus default-img" />
+                                                                        <img src="../../../../assets/images/VCM/more-vertical-hover.svg"
+                                                                            class="testplus hover-img"
+                                                                            (click)="showPropertiesPanel(item,name,1)" />
                                                                     </span>
                                                                 </div>
                                                             </li>
@@ -310,88 +387,152 @@
                                 <div class="dbichart-body">
                                     <h4>
                                         Level 2 Process
-                                        <img [ngClass]="(vcmProcess[0].children?.length != 0 || vcmProcess[1].children?.length != 0 || vcmProcess[2].children?.length != 0) ? 'view' : 'dis'" (click)="goToProperties('level2')" src="../../../../assets/images/VCM/Level 1.svg" class="testplus" alt="">
+                                        <img [ngClass]="(vcmProcess[0].children?.length != 0 || vcmProcess[1].children?.length != 0 || vcmProcess[2].children?.length != 0) ? 'view' : 'dis'"
+                                            (click)="goToProperties('level2')"
+                                            src="../../../../assets/images/VCM/Level 1.svg" class="testplus" alt="">
                                     </h4>
                                     <div class="form-group">
-                                        <select class="form-control" id="level1" name="Level1" [(ngModel)]="level1process" [ngModelOptions]="{standalone: true}">
-                                    <option value="undefined" hidden disabled>Select L1 Process</option>
-                                    <option value="" hidden disabled>Select L1 Process</option>
-                                    <ng-container *ngFor="let item of vcmProcess">
-                                        <option *ngFor="let name of item.children" [ngValue]=name>{{name.title}}</option>
-                                    </ng-container>
-                                </select>
+                                        <select class="form-control" id="level1" name="Level1"
+                                            [(ngModel)]="level1process" [ngModelOptions]="{standalone: true}">
+                                            <option value="undefined" hidden disabled>Select L1 Process</option>
+                                            <option value="" hidden disabled>Select L1 Process</option>
+                                            <ng-container *ngFor="let item of vcmProcess">
+                                                <option *ngFor="let name of item.children" [ngValue]=name>{{name.title}}
+                                                </option>
+                                            </ng-container>
+                                        </select>
                                     </div>
                                     <div class="level1process form-group">
-                                        <input placeholder="Enter Process Group Name" class="form-control" type="text" name="levelName" autocomplete="off" [(ngModel)]="addLevel2">
-                                        <button [disabled]="addLevel2 == '' || !level1process" type="submit" class="btn" (click)="addLevel2Process()">
-                                    <img src="../../../../assets/images/VCM/Green Tick.svg" class="testplus1" />
-                                </button>
+                                        <input placeholder="Enter Process Group Name" class="form-control" type="text"
+                                            name="levelName" autocomplete="off" [(ngModel)]="addLevel2">
+                                        <button [disabled]="addLevel2 == '' || !level1process" type="submit" class="btn"
+                                            (click)="addLevel2Process()">
+                                            <img src="../../../../assets/images/VCM/Green Tick.svg" class="testplus1" />
+                                        </button>
                                     </div>
                                     <hr>
                                     <div class="l2proccess-list">
                                         <div class="management" *ngIf="vcmProcess[0].children.length != 0">
-                                            <h4>Management Process</h4>
+                                            <h4>Management Process1</h4>
                                             <ng-container *ngFor="let item of vcmProcess">
                                                 <ng-container *ngFor="let name of item.children">
                                                     <p *ngIf="name.parent == 'Management Process'">
-                                                        <img src="../../../../assets/images/VCM/small-right.svg" class="testplus2" />{{name.title}}</p>
+                                                        <img src="../../../../assets/images/VCM/small-right.svg"
+                                                            class="testplus2" />{{name.title}}
+                                                    </p>
                                                     <ul *ngFor="let level2 of name.children" class="subfolders">
-                                                        <li class="overflowcontent" *ngIf="level2.parent == 'Management Process'">
-                                                            <span *ngIf="uniqueId1 != level2.uniqueId"><img src="../../../../assets/images/VCM/small-right.svg" class="testplus2" />{{level2.title}}</span>
-                                                            <div *ngIf="uniqueId1 == level2.uniqueId" style="display: flex;width: 110%;">
-                                                                <img style="margin-top: 2%;" src="../../../../assets/images/VCM/small-right.svg" class="testplus2" />
-                                                                <input type="text" class="form-control" placeholder="Enter Process Name" [(ngModel)]="level2.title">
-                                                                <button style="position: relative;right: 6%; bottom: 3%;" (click)="editTitleName(level2)">
-                                                                        <img class="testplus1" src="../../../../assets/images/VCM/Green Tick.svg">
-                                                                    </button>
+                                                        <li class="overflowcontent"
+                                                            *ngIf="level2.parent == 'Management Process'">
+                                                            <span *ngIf="uniqueId1 != level2.uniqueId"><img
+                                                                    src="../../../../assets/images/VCM/small-right.svg"
+                                                                    class="testplus2" />{{level2.title}}</span>
+                                                            <div *ngIf="uniqueId1 == level2.uniqueId"
+                                                                style="display: flex;width: 110%;">
+                                                                <img style="margin-top: 2%;"
+                                                                    src="../../../../assets/images/VCM/small-right.svg"
+                                                                    class="testplus2" />
+                                                                <input type="text" class="form-control"
+                                                                    placeholder="Enter Process Name"
+                                                                    [(ngModel)]="level2.title">
+                                                                <button
+                                                                    style="position: relative;right: 6%; bottom: 3%;"
+                                                                    (click)="editTitleName(level2)">
+                                                                    <img class="testplus1"
+                                                                        src="../../../../assets/images/VCM/Green Tick.svg">
+                                                                </button>
                                                             </div>
                                                             <div class="actimg">
                                                                 <span *ngIf="uniqueId1 != level2.uniqueId">
-                                                                    <img src="../../../../assets/images/VCM/edit-plus-litblue.svg" class="testplus2 default-img" />
-                                                                    <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2 hover-img" (click)="editLevelName(level2)" />
-                                                                </span> 
+                                                                    <img src="../../../../assets/images/VCM/edit-plus-litblue.svg"
+                                                                        class="testplus2 default-img" />
+                                                                    <img src="../../../../assets/images/VCM/edit-3.svg"
+                                                                        class="testplus2 hover-img"
+                                                                        (click)="editLevelName(level2)" />
+                                                                </span>
                                                                 <span>
-                                                                    <!-- <button (click)="onSelectedNode(level2,item)" #pop2="bs-popover" [popover]="popTemplate1" [outsideClick]="true"
-                                                                        placement="right"> -->
-                                                                        <button (click)="onCreateLevel3(level2,item)">
-                                                                        <img src="../../../../assets/images/RPA/icon_latest/new-dis.svg" class="testplus default-img" />
-                                                                        <img src="../../../../assets/images/RPA/icon_latest/new-blue.svg" class="testplus hover-img" />
+                                                                    <button (click)="onCreateLevel3(level2,item)">
+                                                                        <img src="../../../../assets/images/RPA/icon_latest/new-dis.svg"
+                                                                            class="testplus default-img" />
+                                                                        <img src="../../../../assets/images/RPA/icon_latest/new-blue.svg"
+                                                                            class="testplus hover-img" />
                                                                     </button>
                                                                 </span>
                                                                 <span>
-                                                                    <img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img"  />
-                                                                    <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" (click)="level2removeChild(level2)" />
+                                                                    <img src="../../../../assets/images/VCM/VCM-close.svg"
+                                                                        class="testplus2 default-img" />
+                                                                    <img src="../../../../assets/images/VCM/VCM-close-red.svg"
+                                                                        class="testplus2 hover-img"
+                                                                        (click)="level2removeChild(level2)" />
                                                                 </span>
-                                                                <!-- <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" (click)="editLevel2(name,level2,2)" /> -->
                                                                 <span>
-                                                                    <img src="../../../../assets/images/VCM/more-vertical-default.svg" class="testplus default-img" />
-                                                                    <img src="../../../../assets/images/VCM/more-vertical-hover.svg" class="testplus hover-img" (click)="editLevel2(name,level2,2)" />
+                                                                    <img src="../../../../assets/images/VCM/more-vertical-default.svg"
+                                                                        class="testplus default-img" />
+                                                                    <img src="../../../../assets/images/VCM/more-vertical-hover.svg"
+                                                                        class="testplus hover-img"
+                                                                        (click)="showPropertiesPanel(name,level2,2)" />
                                                                 </span>
 
                                                             </div>
                                                         </li>
-                                                        <li *ngIf="inputUniqueId == level2.uniqueId && item.name == 'Management Process'">
-                                                            <div class="l3pname-div" style="padding-top: 1%;display: flex;">
-                                                                <input style="width: 95%;" type="text" class="form-control" placeholder="Enter Process Name" [(ngModel)]="l3ProcessName">
-                                                                <button [hidden]="!l3ProcessName" (click)="addL3Process(level2,item)" style="position: relative;right: 4%;">
-                                                                    <img class="testplus1" src="../../../../assets/images/VCM/Green Tick.svg">
+                                                        <li
+                                                            *ngIf="inputUniqueId == level2.uniqueId && item.name == 'Management Process'">
+                                                            <div class="l3pname-div"
+                                                                style="padding-top: 1%;display: flex;">
+                                                                <input style="width: 95%;" type="text"
+                                                                    class="form-control"
+                                                                    placeholder="Enter Process Name"
+                                                                    [(ngModel)]="l3ProcessName">
+                                                                <button [hidden]="!l3ProcessName"
+                                                                    (click)="addL3Process(level2,item)"
+                                                                    style="position: relative;right: 4%;">
+                                                                    <img class="testplus1"
+                                                                        src="../../../../assets/images/VCM/Green Tick.svg">
                                                                 </button>
                                                             </div>
                                                         </li>
                                                         <li class="overflowcontent" *ngFor="let l3 of level2.children">
-                                                            <ng-container *ngIf="level2.children">
-                                                                <span *ngIf="item.name == 'Management Process'" style="margin-left: 5%;margin-top: 2%;">{{l3.title}}</span>
-                                                                <div *ngIf="item.name == 'Management Process'" class="actimg" style="margin-top: 2%;">
-                                                                    <span>
-                                                                        <img src="../../../../assets/images/VCM/more-vertical-default.svg" class="testplus default-img" />
-                                                                        <img (click)="openProperties(level2,l3,3)" src="../../../../assets/images/VCM/more-vertical-hover.svg" class="testplus hover-img"/>
+                                                            <ng-container *ngIf="level2.children && !l3.bpsId">
+                                                                <span
+                                                                    *ngIf="item.name == 'Management Process' && uniqueIdL3 != l3.uniqueId"
+                                                                    style="margin-left: 5%;margin-top: 2%;">{{l3.title}}</span>
+                                                                <span *ngIf="l3.uniqueId == uniqueIdL3">
+                                                                    <div class="l3pname-div"
+                                                                        style="padding-top: 1%;display: flex;">
+                                                                        <input style="width: 95%;" type="text"
+                                                                            class="form-control"
+                                                                            placeholder="Enter Process Name"
+                                                                            [(ngModel)]="l3.title">
+                                                                        <button [hidden]="!l3.title"
+                                                                            (click)="updateL3Process(level2,item)"
+                                                                            style="position: relative;right: 4%;">
+                                                                            <img class="testplus1"
+                                                                                src="../../../../assets/images/VCM/Green Tick.svg">
+                                                                        </button>
+                                                                    </div>
+                                                                </span>
+                                                                <div *ngIf="item.name == 'Management Process'"
+                                                                    class="actimg" style="margin-top: 2%;">
+                                                                    <span *ngIf="uniqueIdL3 != l3.uniqueId">
+                                                                        <img src="../../../../assets/images/VCM/edit-plus-litblue.svg"
+                                                                            class="testplus2 default-img" />
+                                                                        <img src="../../../../assets/images/VCM/edit-3.svg"
+                                                                            class="testplus2 hover-img"
+                                                                            (click)="editL3Process(l3)" />
                                                                     </span>
                                                                     <span>
-                                                                        <img src="../../../../assets/images/VCM/VCM-close-default.svg" class="testplus2 default-img" />
-                                                                        <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" (click)="l3remove(l3,item)" />
+                                                                        <img src="../../../../assets/images/VCM/VCM-close-default.svg"
+                                                                            class="testplus2 default-img" />
+                                                                        <img src="../../../../assets/images/VCM/VCM-close-red.svg"
+                                                                            class="testplus2 hover-img"
+                                                                            (click)="l3remove(l3,item)" />
                                                                     </span>
-                                                                    <!-- <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" (click)="editLevel2(name,level2,2)" /> -->
-
+                                                                    <span>
+                                                                        <img src="../../../../assets/images/VCM/more-vertical-default.svg"
+                                                                            class="testplus default-img" />
+                                                                        <img (click)="showPropertiesPanel(level2,l3,3)"
+                                                                            src="../../../../assets/images/VCM/more-vertical-hover.svg"
+                                                                            class="testplus hover-img" />
+                                                                    </span>
                                                                 </div>
                                                             </ng-container>
                                                         </li>
@@ -404,63 +545,123 @@
                                             <ng-container *ngFor="let item of vcmProcess">
                                                 <ng-container *ngFor="let name of item.children">
                                                     <p *ngIf="name.parent == 'Core Process'">
-                                                        <img src="../../../../assets/images/VCM/small-right.svg" class="testplus2" />{{name.title}}</p>
+                                                        <img src="../../../../assets/images/VCM/small-right.svg"
+                                                            class="testplus2" />{{name.title}}
+                                                    </p>
                                                     <ul *ngFor="let level2 of name.children" class="subfolders">
-                                                        <li class="overflowcontent" *ngIf="level2.parent == 'Core Process'">
-                                                            <span *ngIf="uniqueId1 != level2.uniqueId"><img src="../../../../assets/images/VCM/small-right.svg" class="testplus2" />{{level2.title}}</span>
-                                                            <div *ngIf="uniqueId1 == level2.uniqueId" style="display: flex;width: 110%;">
-                                                                <img style="margin-top: 2%;" src="../../../../assets/images/VCM/small-right.svg" class="testplus2" />
-                                                                <input type="text" class="form-control" placeholder="Enter Process Name" [(ngModel)]="level2.title">
-                                                                <button style="position: relative;right: 6%; bottom: 3%;" (click)="editTitleName(level2)">
-                                                                        <img class="testplus1" src="../../../../assets/images/VCM/Green Tick.svg">
-                                                                    </button>
+                                                        <li class="overflowcontent"
+                                                            *ngIf="level2.parent == 'Core Process'">
+                                                            <span *ngIf="uniqueId1 != level2.uniqueId"><img
+                                                                    src="../../../../assets/images/VCM/small-right.svg"
+                                                                    class="testplus2" />{{level2.title}}</span>
+                                                            <div *ngIf="uniqueId1 == level2.uniqueId"
+                                                                style="display: flex;width: 110%;">
+                                                                <img style="margin-top: 2%;"
+                                                                    src="../../../../assets/images/VCM/small-right.svg"
+                                                                    class="testplus2" />
+                                                                <input type="text" class="form-control"
+                                                                    placeholder="Enter Process Name"
+                                                                    [(ngModel)]="level2.title">
+                                                                <button
+                                                                    style="position: relative;right: 6%; bottom: 3%;"
+                                                                    (click)="editTitleName(level2)">
+                                                                    <img class="testplus1"
+                                                                        src="../../../../assets/images/VCM/Green Tick.svg">
+                                                                </button>
                                                             </div>
                                                             <div class="actimg">
                                                                 <span *ngIf="uniqueId1 != level2.uniqueId">
-                                                                    <img src="../../../../assets/images/VCM/edit-plus-litblue.svg" class="testplus2 default-img" />
-                                                                    <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2 hover-img" (click)="editLevelName(level2)" />
-                                                                </span> 
+                                                                    <img src="../../../../assets/images/VCM/edit-plus-litblue.svg"
+                                                                        class="testplus2 default-img" />
+                                                                    <img src="../../../../assets/images/VCM/edit-3.svg"
+                                                                        class="testplus2 hover-img"
+                                                                        (click)="editLevelName(level2)" />
+                                                                </span>
                                                                 <span>
                                                                     <!-- <button (click)="onSelectedNode(level2,item)" #pop2="bs-popover" [popover]="popTemplate1" [outsideClick]="true"
                                                                         placement="right"> -->
-                                                                        <button (click)="onCreateLevel3(level2,item)">
-                                                                        <img src="../../../../assets/images/RPA/icon_latest/new-dis.svg" class="testplus default-img" />
-                                                                        <img src="../../../../assets/images/RPA/icon_latest/new-blue.svg" class="testplus hover-img" />
+                                                                    <button (click)="onCreateLevel3(level2,item)">
+                                                                        <img src="../../../../assets/images/RPA/icon_latest/new-dis.svg"
+                                                                            class="testplus default-img" />
+                                                                        <img src="../../../../assets/images/RPA/icon_latest/new-blue.svg"
+                                                                            class="testplus hover-img" />
                                                                     </button>
                                                                 </span>
                                                                 <span>
-                                                                    <img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img"  />
-                                                                    <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" (click)="level2removeChild(level2)" />
+                                                                    <img src="../../../../assets/images/VCM/VCM-close.svg"
+                                                                        class="testplus2 default-img" />
+                                                                    <img src="../../../../assets/images/VCM/VCM-close-red.svg"
+                                                                        class="testplus2 hover-img"
+                                                                        (click)="level2removeChild(level2)" />
                                                                 </span>
-                                                                <!-- <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" (click)="editLevel2(name,level2,2)" /> -->
                                                                 <span>
-                                                                    <img src="../../../../assets/images/VCM/more-vertical-default.svg" class="testplus default-img" />
-                                                                    <img src="../../../../assets/images/VCM/more-vertical-hover.svg" class="testplus hover-img" (click)="editLevel2(name,level2,2)" />
+                                                                    <img src="../../../../assets/images/VCM/more-vertical-default.svg"
+                                                                        class="testplus default-img" />
+                                                                    <img src="../../../../assets/images/VCM/more-vertical-hover.svg"
+                                                                        class="testplus hover-img"
+                                                                        (click)="showPropertiesPanel(name,level2,2)" />
                                                                 </span>
                                                             </div>
                                                         </li>
-                                                        <li *ngIf="inputUniqueId == level2.uniqueId && item.name == 'Core Process'">
-                                                            <div class="l3pname-div" style="padding-top: 1%;display: flex;">
-                                                                <input style="width: 95%;" type="text" class="form-control" placeholder="Enter Process Name" [(ngModel)]="l3ProcessName">
-                                                                <button [hidden]="!l3ProcessName" (click)="addL3Process(level2,item)" style="position: relative;right: 4%;">
-                                                                    <img class="testplus1" src="../../../../assets/images/VCM/Green Tick.svg">
+                                                        <li
+                                                            *ngIf="inputUniqueId == level2.uniqueId && item.name == 'Core Process'">
+                                                            <div class="l3pname-div"
+                                                                style="padding-top: 1%;display: flex;">
+                                                                <input style="width: 95%;" type="text"
+                                                                    class="form-control"
+                                                                    placeholder="Enter Process Name"
+                                                                    [(ngModel)]="l3ProcessName">
+                                                                <button [hidden]="!l3ProcessName"
+                                                                    (click)="addL3Process(level2,item)"
+                                                                    style="position: relative;right: 4%;">
+                                                                    <img class="testplus1"
+                                                                        src="../../../../assets/images/VCM/Green Tick.svg">
                                                                 </button>
                                                             </div>
                                                         </li>
                                                         <li class="overflowcontent" *ngFor="let l3 of level2.children">
-                                                            <ng-container *ngIf="level2.children">
-                                                                <span *ngIf="item.name == 'Core Process'" style="margin-left: 5%;margin-top: 2%;">{{l3.title}}</span>
-                                                                <div *ngIf="item.name == 'Core Process'" class="actimg" style="margin-top: 2%;">
-                                                                    <span>
-                                                                        <img src="../../../../assets/images/VCM/more-vertical-default.svg" class="testplus default-img" />
-                                                                        <img (click)="openProperties(level2,l3,3)" src="../../../../assets/images/VCM/more-vertical-hover.svg" class="testplus hover-img"/>
+                                                            <ng-container *ngIf="level2.children && !l3.bpsId">
+                                                                <span
+                                                                    *ngIf="item.name == 'Core Process' && uniqueIdL3 != l3.uniqueId"
+                                                                    style="margin-left: 5%;margin-top: 2%;">{{l3.title}}</span>
+                                                                <span *ngIf="l3.uniqueId == uniqueIdL3">
+                                                                    <div class="l3pname-div"
+                                                                        style="padding-top: 1%;display: flex;">
+                                                                        <input style="width: 95%;" type="text"
+                                                                            class="form-control"
+                                                                            placeholder="Enter Process Name"
+                                                                            [(ngModel)]="l3.title">
+                                                                        <button [hidden]="!l3.title"
+                                                                            (click)="updateL3Process(level2,item)"
+                                                                            style="position: relative;right: 4%;">
+                                                                            <img class="testplus1"
+                                                                                src="../../../../assets/images/VCM/Green Tick.svg">
+                                                                        </button>
+                                                                    </div>
+                                                                </span>
+                                                                <div *ngIf="item.name == 'Core Process'" class="actimg"
+                                                                    style="margin-top: 2%;">
+                                                                    <span *ngIf="uniqueIdL3 != l3.uniqueId">
+                                                                        <img src="../../../../assets/images/VCM/edit-plus-litblue.svg"
+                                                                            class="testplus2 default-img" />
+                                                                        <img src="../../../../assets/images/VCM/edit-3.svg"
+                                                                            class="testplus2 hover-img"
+                                                                            (click)="editL3Process(l3)" />
                                                                     </span>
                                                                     <span>
-                                                                        <img src="../../../../assets/images/VCM/VCM-close-default.svg" class="testplus2 default-img" />
-                                                                        <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" (click)="l3remove(l3,item)" />
+                                                                        <img src="../../../../assets/images/VCM/VCM-close-default.svg"
+                                                                            class="testplus2 default-img" />
+                                                                        <img src="../../../../assets/images/VCM/VCM-close-red.svg"
+                                                                            class="testplus2 hover-img"
+                                                                            (click)="l3remove(l3,item)" />
                                                                     </span>
-                                                                    <!-- <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" (click)="editLevel2(name,level2,2)" /> -->
-
+                                                                    <span>
+                                                                        <img src="../../../../assets/images/VCM/more-vertical-default.svg"
+                                                                            class="testplus default-img" />
+                                                                        <img (click)="showPropertiesPanel(level2,l3,3)"
+                                                                            src="../../../../assets/images/VCM/more-vertical-hover.svg"
+                                                                            class="testplus hover-img" />
+                                                                    </span>
                                                                 </div>
                                                             </ng-container>
                                                         </li>
@@ -473,63 +674,123 @@
                                             <ng-container *ngFor="let item of vcmProcess">
                                                 <ng-container *ngFor="let name of item.children">
                                                     <p *ngIf="name.parent == 'Support Process'">
-                                                        <img src="../../../../assets/images/VCM/small-right.svg" class="testplus2" />{{name.title}}</p>
+                                                        <img src="../../../../assets/images/VCM/small-right.svg"
+                                                            class="testplus2" />{{name.title}}
+                                                    </p>
                                                     <ul *ngFor="let level2 of name.children" class="subfolders">
-                                                        <li class="overflowcontent" *ngIf="level2.parent == 'Support Process'">
-                                                            <span *ngIf="uniqueId1 != level2.uniqueId"><img src="../../../../assets/images/VCM/small-right.svg" class="testplus2" />{{level2.title}}</span>
-                                                            <div *ngIf="uniqueId1 == level2.uniqueId" style="display: flex;width: 110%;">
-                                                                <img style="margin-top: 2%;" src="../../../../assets/images/VCM/small-right.svg" class="testplus2" />
-                                                                <input type="text" class="form-control" placeholder="Enter Process Name" [(ngModel)]="level2.title">
-                                                                <button style="position: relative;right: 6%; bottom: 3%;" (click)="editTitleName(level2)">
-                                                                        <img class="testplus1" src="../../../../assets/images/VCM/Green Tick.svg">
-                                                                    </button>
+                                                        <li class="overflowcontent"
+                                                            *ngIf="level2.parent == 'Support Process'">
+                                                            <span *ngIf="uniqueId1 != level2.uniqueId"><img
+                                                                    src="../../../../assets/images/VCM/small-right.svg"
+                                                                    class="testplus2" />{{level2.title}}</span>
+                                                            <div *ngIf="uniqueId1 == level2.uniqueId"
+                                                                style="display: flex;width: 110%;">
+                                                                <img style="margin-top: 2%;"
+                                                                    src="../../../../assets/images/VCM/small-right.svg"
+                                                                    class="testplus2" />
+                                                                <input type="text" class="form-control"
+                                                                    placeholder="Enter Process Name"
+                                                                    [(ngModel)]="level2.title">
+                                                                <button
+                                                                    style="position: relative;right: 6%; bottom: 3%;"
+                                                                    (click)="editTitleName(level2)">
+                                                                    <img class="testplus1"
+                                                                        src="../../../../assets/images/VCM/Green Tick.svg">
+                                                                </button>
                                                             </div>
                                                             <div class="actimg">
                                                                 <span *ngIf="uniqueId1 != level2.uniqueId">
-                                                                    <img src="../../../../assets/images/VCM/edit-plus-litblue.svg" class="testplus2 default-img" />
-                                                                    <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2 hover-img" (click)="editLevelName(level2)" />
-                                                                </span> 
+                                                                    <img src="../../../../assets/images/VCM/edit-plus-litblue.svg"
+                                                                        class="testplus2 default-img" />
+                                                                    <img src="../../../../assets/images/VCM/edit-3.svg"
+                                                                        class="testplus2 hover-img"
+                                                                        (click)="editLevelName(level2)" />
+                                                                </span>
                                                                 <span>
                                                                     <!-- <button (click)="onSelectedNode(level2,item)" #pop2="bs-popover" [popover]="popTemplate1" [outsideClick]="true"
                                                                         placement="right"> -->
-                                                                        <button (click)="onCreateLevel3(level2,item)">
-                                                                        <img src="../../../../assets/images/RPA/icon_latest/new-dis.svg" class="testplus default-img" />
-                                                                        <img src="../../../../assets/images/RPA/icon_latest/new-blue.svg" class="testplus hover-img" />
+                                                                    <button (click)="onCreateLevel3(level2,item)">
+                                                                        <img src="../../../../assets/images/RPA/icon_latest/new-dis.svg"
+                                                                            class="testplus default-img" />
+                                                                        <img src="../../../../assets/images/RPA/icon_latest/new-blue.svg"
+                                                                            class="testplus hover-img" />
                                                                     </button>
                                                                 </span>
                                                                 <span>
-                                                                    <img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img"  />
-                                                                    <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" (click)="level2removeChild(level2)" />
+                                                                    <img src="../../../../assets/images/VCM/VCM-close.svg"
+                                                                        class="testplus2 default-img" />
+                                                                    <img src="../../../../assets/images/VCM/VCM-close-red.svg"
+                                                                        class="testplus2 hover-img"
+                                                                        (click)="level2removeChild(level2)" />
                                                                 </span>
-                                                                <!-- <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" (click)="editLevel2(name,level2,2)" /> -->
                                                                 <span>
-                                                                    <img src="../../../../assets/images/VCM/more-vertical-default.svg" class="testplus default-img" />
-                                                                    <img src="../../../../assets/images/VCM/more-vertical-hover.svg" class="testplus hover-img" (click)="editLevel2(name,level2,2)" />
+                                                                    <img src="../../../../assets/images/VCM/more-vertical-default.svg"
+                                                                        class="testplus default-img" />
+                                                                    <img src="../../../../assets/images/VCM/more-vertical-hover.svg"
+                                                                        class="testplus hover-img"
+                                                                        (click)="showPropertiesPanel(name,level2,2)" />
                                                                 </span>
                                                             </div>
                                                         </li>
-                                                        <li *ngIf="inputUniqueId == level2.uniqueId && item.name == 'Support Process'">
-                                                            <div class="l3pname-div" style="padding-top: 1%;display: flex;">
-                                                                <input style="width: 95%;" type="text" class="form-control" placeholder="Enter Process Name" [(ngModel)]="l3ProcessName">
-                                                                <button [hidden]="!l3ProcessName" (click)="addL3Process(level2,item)" style="position: relative;right: 4%;">
-                                                                    <img class="testplus1" src="../../../../assets/images/VCM/Green Tick.svg">
+                                                        <li
+                                                            *ngIf="inputUniqueId == level2.uniqueId && item.name == 'Support Process'">
+                                                            <div class="l3pname-div"
+                                                                style="padding-top: 1%;display: flex;">
+                                                                <input style="width: 95%;" type="text"
+                                                                    class="form-control"
+                                                                    placeholder="Enter Process Name"
+                                                                    [(ngModel)]="l3ProcessName">
+                                                                <button [hidden]="!l3ProcessName"
+                                                                    (click)="addL3Process(level2,item)"
+                                                                    style="position: relative;right: 4%;">
+                                                                    <img class="testplus1"
+                                                                        src="../../../../assets/images/VCM/Green Tick.svg">
                                                                 </button>
                                                             </div>
                                                         </li>
                                                         <li class="overflowcontent" *ngFor="let l3 of level2.children">
-                                                            <ng-container *ngIf="level2.children">
-                                                                <span *ngIf="item.name == 'Support Process'" style="margin-left: 5%;margin-top: 2%;">{{l3.title}}</span>
-                                                                <div *ngIf="item.name == 'Support Process'" class="actimg" style="margin-top: 2%;">
-                                                                    <span>
-                                                                        <img src="../../../../assets/images/VCM/more-vertical-default.svg" class="testplus default-img" />
-                                                                        <img (click)="openProperties(level2,l3,3)" src="../../../../assets/images/VCM/more-vertical-hover.svg" class="testplus hover-img"/>
+                                                            <ng-container *ngIf="level2.children && !l3.bpsId">
+                                                                <span
+                                                                    *ngIf="item.name == 'Support Process' && uniqueIdL3 != l3.uniqueId"
+                                                                    style="margin-left: 5%;margin-top: 2%;">{{l3.title}}</span>
+                                                                <span *ngIf="l3.uniqueId == uniqueIdL3">
+                                                                    <div class="l3pname-div"
+                                                                        style="padding-top: 1%;display: flex;">
+                                                                        <input style="width: 95%;" type="text"
+                                                                            class="form-control"
+                                                                            placeholder="Enter Process Name"
+                                                                            [(ngModel)]="l3.title">
+                                                                        <button [hidden]="!l3.title"
+                                                                            (click)="updateL3Process(level2,item)"
+                                                                            style="position: relative;right: 4%;">
+                                                                            <img class="testplus1"
+                                                                                src="../../../../assets/images/VCM/Green Tick.svg">
+                                                                        </button>
+                                                                    </div>
+                                                                </span>
+                                                                <div *ngIf="item.name == 'Support Process'"
+                                                                    class="actimg" style="margin-top: 2%;">
+                                                                    <span *ngIf="uniqueIdL3 != l3.uniqueId">
+                                                                        <img src="../../../../assets/images/VCM/edit-plus-litblue.svg"
+                                                                            class="testplus2 default-img" />
+                                                                        <img src="../../../../assets/images/VCM/edit-3.svg"
+                                                                            class="testplus2 hover-img"
+                                                                            (click)="editL3Process(l3)" />
                                                                     </span>
                                                                     <span>
-                                                                        <img src="../../../../assets/images/VCM/VCM-close-default.svg" class="testplus2 default-img" />
-                                                                        <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" (click)="l3remove(l3,item)" />
+                                                                        <img src="../../../../assets/images/VCM/VCM-close-default.svg"
+                                                                            class="testplus2 default-img" />
+                                                                        <img src="../../../../assets/images/VCM/VCM-close-red.svg"
+                                                                            class="testplus2 hover-img"
+                                                                            (click)="l3remove(l3,item)" />
                                                                     </span>
-                                                                    <!-- <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" (click)="editLevel2(name,level2,2)" /> -->
-
+                                                                    <span>
+                                                                        <img src="../../../../assets/images/VCM/more-vertical-default.svg"
+                                                                            class="testplus default-img" />
+                                                                        <img (click)="showPropertiesPanel(level2,l3,3)"
+                                                                            src="../../../../assets/images/VCM/more-vertical-hover.svg"
+                                                                            class="testplus hover-img" />
+                                                                    </span>
                                                                 </div>
                                                             </ng-container>
                                                         </li>
@@ -542,19 +803,15 @@
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="col-md-3 previewdiv">
-                <h4>Preview</h4>
-                <div class="previewcontdiv">
-                    <img src="../../../../assets/images/VCM/Preview Image.png" class="preview-img" />
-
-                    <h5>Welcome to Value Chain Mapping !</h5>
-                    <p>Value Chain Mapping helps you to manage organised process all in one place. All your folders will be listed here.</p>
-                </div>
-            </div> -->
                 </div>
             </mat-drawer-content>
         </mat-drawer-container>
     </div>
+</div>
+
+<div class="h-100" *ngIf="isShow">
+    <app-full-edit-properties [vcmProcess]="vcmProcess" [propertiesLevel]="propertiesLevel"
+        (isUpdateProperties)="readEmitValue($event)"></app-full-edit-properties>
 </div>
 
 <div class="spinoverlay" *ngIf="isLoading">
@@ -573,12 +830,13 @@
         </button>
     </div>
     <div class="modal-body modelprbody uploadfilebdiv">
-     
+
         <form>
             <div class="form-fields col-md-12">
                 <label>Upload<span class="star">*</span></label>
                 <div class="box-fileupload">
-                    <input type="file" name="file" (change)="chnagefileUploadForm($event)" id="file" class="inputfile" multiple />
+                    <input type="file" name="file" (change)="chnagefileUploadForm($event)" id="file" class="inputfile"
+                        multiple />
                     <label for="file" matTooltip="Upload File" (change)="chnagefileUploadForm($event)">
                         <img src="../../../../assets/images/Projects/fileupload.svg" class="testplusupload">
                         <span>Select File</span>
@@ -598,12 +856,13 @@
                                 <div class="col-md-6 pl-0" style="display: flex;">
                                     <div style="margin-right: 10px;">{{i+1}}.</div>
                                     <div>
-                                        <div class="card-placeholder"><b>File Name :</b> {{item.fileName}}</div>
+                                        <div class="card-placeholder"><b>File Name :</b> {{item.name}}</div>
                                         <div class="file-size"><b>Size :</b> {{item.convertedsize }}</div>
                                     </div>
                                 </div>
                                 <div class="col-md-5 p-0">
-                                    <textarea name="desc" class="form-control" maxlength="151" rows="2" [(ngModel)]="item.fileDescription" placeholder="Enter Description"></textarea>
+                                    <textarea name="desc" class="form-control" maxlength="151" rows="2"
+                                        [(ngModel)]="item.fileDescription" placeholder="Enter Description"></textarea>
                                 </div>
 
                             </div>
@@ -612,7 +871,7 @@
                 </div>
             </div>
         </form>
-        
+
     </div>
     <div class="modal-footer modelprfooter">
         <div class="pull-right">
