@@ -316,23 +316,28 @@ export class CreateVcmComponent implements OnInit {
   }
   
   RemoveFile(file, i: number) {
-    console.log(this.selectedObj)
-    this.listOfAttachemnts.splice(i, 1);
-    if (this.editLevelProperties == 1) {
-      TREE_DATA.filter((e) => e.name === this.propertiesName)[0].children
-        .filter(n => n.title === this.editProcessName)[0].attachments = this.listOfAttachemnts;
-    }
-    if (this.editLevelProperties == 2) {
-      TREE_DATA.filter((e) => e.name === this.propertiesName)[0].children
-        .filter(n => n.uniqueId === this.selectedObj.level1UniqueId)[0].children.filter(c => c.tit === this.editProcessName)[0]
-        .attachments = this.listOfAttachemnts;
-    }
-    this.vcmProcess=TREE_DATA
+    this.isLoading=true;
+    let req_body=[{"documentId":this.selectedObj.uniqueId}]
+    this.rest_api.deleteAttachements(req_body).subscribe(res=>{
+      this.isLoading=false;
+      this.listOfAttachemnts.splice(i, 1);
+      if (this.editLevelProperties == 1) {
+        TREE_DATA.filter((e) => e.name === this.propertiesName)[0].children
+          .filter(n => n.title === this.editProcessName)[0].attachments = this.listOfAttachemnts;
+      }
+      if (this.editLevelProperties == 2) {
+        TREE_DATA.filter((e) => e.name === this.propertiesName)[0].children
+          .filter(n => n.uniqueId === this.selectedObj.level1UniqueId)[0].children.filter(c => c.uniqueId === this.selectedObj.uniqueId)[0]
+          .attachments = this.listOfAttachemnts;
+      }
+      this.vcmProcess=TREE_DATA
+    })
 
   }
 
   saveVcm() {
     let requestBody = this.getrequestData();
+    console.log("requestBody",requestBody)
     this.isLoading = true;
     this.rest_api.createVcm(requestBody).subscribe((res: any) => {
       this.isLoading = false;
@@ -367,15 +372,15 @@ export class CreateVcmComponent implements OnInit {
         data2.push(e);
       });
     });
-    // data1.forEach(e => {
-    //   if (e.children) {
-    //     e.children.forEach(e1 => {
-    //       e1["level1UniqueId"] = e.uniqueId
+    data1.forEach(e => {
+      if (e.children) {
+        e.children.forEach(e1 => {
+          // e1["level1UniqueId"] = e.uniqueId
 
-    //       data2.push(e1)
-    //     });
-    //   }
-    // })
+          data2.push(e1)
+        });
+      }
+    })
     console.log("data2",data2)
 
     // let data4=data2;
@@ -501,12 +506,12 @@ export class CreateVcmComponent implements OnInit {
   chnagefileUploadForm(e){
     this.listOfFiles = [];
     for (var i = 0; i < e.target.files.length; i++) {
-      let randomId=  UUID.UUID() 
+      let randomId=  UUID.UUID()
       e.target.files[i]['convertedsize'] = this.convertFileSize(e.target.files[i].size);
-      e.target.files[i]['fileName'] =randomId + "&&" +e.target.files[i]['name'];
+      e.target.files[i]['fileName'] =e.target.files[i]['name'];
       e.target.files[i]['uniqueId'] = randomId;
       e.target.files[i]['fileDescription'] = ''
-      this.listOfFiles.push(e.target.files[i])  
+      this.listOfFiles.push(e.target.files[i]); 
     } 
   }
 
@@ -520,8 +525,11 @@ export class CreateVcmComponent implements OnInit {
   }
 
   onSubmitUpload(){
+    this.isLoading=true;
     this.attachementsList=[];
+    let idsList=[]
     this.listOfFiles.forEach(e=>{
+      idsList.push( e.uniqueId)
       let obj={
         name:e.name,
         fileName: e['name'],
@@ -533,11 +541,9 @@ export class CreateVcmComponent implements OnInit {
         lastModified: e['fileDescription'],
       }
       this.attachementsList.push(obj)
-    })
-    
-    this.attachementsList.forEach(element => {
-      this.listOfAttachemnts.push(element)
-    });
+  })
+    console.log(this.listOfFiles)
+
     let formdata = new FormData()
     for (var i = 0; i < this.listOfFiles.length; i++) {
       formdata.append("file", this.listOfFiles[i]);
@@ -548,10 +554,10 @@ export class CreateVcmComponent implements OnInit {
     formdata.append("parent",this.selectedObj.parent);
     formdata.append("vcmuniqueId",this.vcmProcess[0].uniqueId);
     formdata.append("processName",this.selectedObj.title);
+    formdata.append("fileUniqueIds",JSON.stringify(idsList));
     let res_data
     this.rest_api.uploadVCMPropDocument(formdata).subscribe(res => {res_data=res
       console.log(res)
-    // this.listOfAttachemnts =  this.attachementsList
     this.attachementsList.forEach(element => {
       this.listOfAttachemnts.push(element)
     });
@@ -586,9 +592,9 @@ export class CreateVcmComponent implements OnInit {
     console.log(this.vcmProcess,this.selectedObj)
     if(val=="L1"){
       TREE_DATA.filter((e) => e.name === this.selectedObj.parent)[0].children
-        .filter(n => n.title === this.selectedObj.title)[0].description = this.editProcessDescription;
+        .filter(n => n.uniqueId === this.selectedObj.uniqueId)[0].description = this.editProcessDescription;
       TREE_DATA.filter((e) => e.title === this.selectedObj.parent)[0].children
-        .filter(n => n.title === this.selectedObj.title)[0].processOwner = this.editProcessOwner;
+        .filter(n => n.uniqueId === this.selectedObj.uniqueId)[0].processOwner = this.editProcessOwner;
     }
     if(val=="L2"){
       TREE_DATA.filter((e) => e.name ===this.selectedObj.parent)[0].children

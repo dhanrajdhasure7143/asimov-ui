@@ -1330,7 +1330,7 @@ deleteVcm(body){
 }
 
 uploadVCMPropDocument(body){
-  return this.http.post('/vcmv2/uploadDocuments',body); 
+  return this.http.post('/vcmv2/uploadDocuments',body);
 }
 getvcmAttachements(body){
   return this.http.post('/vcmv2/fetchDocumentsByProcessType',body); 
@@ -1352,6 +1352,10 @@ updateCollaborators(body){
 }
 deleteCollaborators(body){
   return this.http.post('/vcmv2/deleteCollaborations',body);
+}
+deleteAttachements(body){
+  return this.http.post('/vcmv2/deleteDocument',body);
+  
 }
 
 

@@ -88,10 +88,10 @@
                                             <div class="col-md-12 p-0" *ngFor="let each of listOfAttachemnts;let i = index;">
                                                 <div style="display: flex;">
                                                     <span style="margin-right:6px;">{{i + 1}}.</span>
-                                                    <span class="fname">{{each.name}}</span>
+                                                    <span class="fname">{{each.fileName}}</span>
                                                     <span class="fbtns">
                                                         <span class="deleteattachment">
-                                                            <a href="data:image/png;base64,{{each.filedata}}" download="{{each.name}}" *ngIf="isPropDisabled">
+                                                            <a href="data:image/png;base64,{{each.filedata}}" download="{{each.fileName}}" *ngIf="isPropDisabled">
                                                                 <img src="../../../../assets/images/Admin/download-black.svg" class="default-img testplus" >
                                                                 <img src="../../../../assets/images/Admin/download-blue.svg" class="hover-img testplus" >
                                                             </a>
@@ -428,7 +428,7 @@
                                 <div class="col-md-6 pl-0" style="display: flex;">
                                     <div style="margin-right: 10px;">{{i+1}}.</div>
                                     <div>
-                                        <div class="card-placeholder"><b>File Name :</b> {{item.name}}</div>
+                                        <div class="card-placeholder"><b>File Name :</b> {{item.fileName}}</div>
                                         <div class="file-size"><b>Size :</b> {{item.convertedsize }}</div>
                                     </div>
                                 </div>

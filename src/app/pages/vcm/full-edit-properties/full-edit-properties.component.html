@@ -113,7 +113,7 @@
                                     <td>
                                         <ng-container *ngFor="let doc of item.attachments;let j = index">
                                             <div class="docpill">
-                                                {{j+1}} . {{doc.name}}
+                                                {{j+1}} . {{doc.fileName}}
                                                 <img src="../../../../assets/images/VCM/VCM-close-red.svg"
                                                     class="testplus2" (click)="RemoveFile(item,j,'level1')" />
                                             </div>
@@ -259,7 +259,7 @@
                                         <td>
                                             <ng-container *ngFor="let doc of level2.attachments;let j = index">
                                                 <span class="docpill">
-                                                    {{j+1}} . {{doc.name}}
+                                                    {{j+1}} . {{doc.fileName}}
                                                     <img src="../../../../assets/images/VCM/VCM-close-red.svg"
                                                         class="testplus2" (click)="RemoveFile(level2,j,'level2')" />
                                                 </span>
@@ -267,7 +267,7 @@
                                         </td>
                                         <td>
                                             <ng-container *ngFor="let doc of level2.attachments;let j = index">
-                                                <div>{{doc.fileDescription}}</div>
+                                                <div>{{doc.fileDescription?doc.fileDescription:'-'}}</div>
                                             </ng-container>
                                         </td>
                                         <td>
@@ -282,8 +282,6 @@
                     </table>
                 </div>
             </div>
-
-
         </div>
     </div>
 
@@ -336,7 +334,7 @@
                                     <div class="col-md-6 pl-0" style="display: flex;">
                                         <div style="margin-right: 10px;">{{i+1}}.</div>
                                         <div>
-                                            <div class="card-placeholder"><b>File Name :</b> {{item.name}}</div>
+                                            <div class="card-placeholder"><b>File Name :</b> {{item.fileName}}</div>
                                             <div class="file-size"><b>Size :</b> {{item.convertedsize }}</div>
                                         </div>
                                     </div>
