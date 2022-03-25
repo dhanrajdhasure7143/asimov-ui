@@ -723,11 +723,11 @@ export class VcmStructureComponent implements OnInit {
     this.processOwner = node.processOwner;
     this.processDesc = node.description;
     this.drawer.open();
-    if(node.attachments){
-      this.listOfAttachemnts=node.attachments
-    }else{
-      this.listOfAttachemnts=[]
-    }
+    // if(node.attachments){
+    //   this.listOfAttachemnts=node.attachments
+    // }else{
+    //   this.listOfAttachemnts=[]
+    // }
   }
 
   saveProperties(val){
@@ -849,9 +849,10 @@ export class VcmStructureComponent implements OnInit {
     let res_data
     this.rest_api.uploadVCMPropDocument(formdata).subscribe(res => {res_data=res
       console.log(res)
-      this.attachementsList.forEach(element => {
-        this.listOfAttachemnts.push(element)
-      });
+      // this.attachementsList.forEach(element => {
+      //   this.listOfAttachemnts.push(element)
+      // });
+      this.onOpenDocuments()
       this.isLoading = false;
       if (this.selectedPropNode.level == 'L1') {
         this.vcmTreeData.filter((e) => e.title === this.selectedPropNode.parent)[0].children
@@ -885,8 +886,35 @@ export class VcmStructureComponent implements OnInit {
     });
   }
 
-  removeFile(){
+  removeFile(each,index){
+    console.log(each)
+    // console.log(this.selectedPropNode,each,index)
+    // console.log( this.listOfAttachemnts.splice(index, 1))
+    // this.vcmTreeData.filter((e) => e.title === this.selectedPropNode.parent)[0].children
+    // .filter(n => n.title === this.selectedPropNode.title)[0]
+    this.isLoading=true;
+    let req_body=[{"documentId":each.uniqueId}]
+    this.rest_api.deleteAttachements(req_body).subscribe(res=>{
+    console.log(res);
+    this.isLoading=false;
+    this.onOpenDocuments();
+    })
+  }
 
+  onOpenDocuments(){
+    console.log(this.vcm_data)
+    let res_data:any;
+    this.isLoading=true;
+    this.listOfAttachemnts=[]
+    let request= {"masterId":this.vcm_data.data.id,"uniqueId": this.selectedPropNode.uniqueId}
+    this.rest_api.getAttachementsByIndivdualProcess(request).subscribe(res=>{res_data=res
+      console.log(res)
+      this.isLoading=false;
+      if(res_data){
+        this.listOfAttachemnts=res_data.data
+      }
+        // this.listOfAttachemnts
+    })
   }
 
 

@@ -1355,7 +1355,15 @@ deleteCollaborators(body){
 }
 deleteAttachements(body){
   return this.http.post('/vcmv2/deleteDocument',body);
-  
+}
+getAttachementsByIndivdualProcess(body){
+  return this.http.post('/vcmv2/fetchDocumentsByIndivdualProcess',body);
+}
+getAttachementsBycategory(body){
+  return this.http.post('/vcmv2/fetchDocumentsByProcessType',body);
+}
+getAttachementsByLevel(body){
+  return this.http.post('/vcmv2/fetchDocumentsByLevel',body);
 }
 
 

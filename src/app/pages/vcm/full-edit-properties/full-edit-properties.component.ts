@@ -17,6 +17,7 @@ export class FullEditPropertiesComponent implements OnInit {
   texarea: ElementRef;
  @Input() vcmProcess:any=[];
  @Input() propertiesLevel:any;
+ @Input() selectedVcm:any;
  @Output() isUpdateProperties = new EventEmitter<any>()
   vcmProperties = [];
   attachments: any;
@@ -56,6 +57,10 @@ export class FullEditPropertiesComponent implements OnInit {
   ngOnChanges(){
     this.vcmProperties=this.vcmProcess;
     console.log(this.vcmProperties)
+  }
+
+  ngAfterViewInit(){
+    this.getAttachementsBycategory()
   }
 
 
@@ -241,5 +246,19 @@ export class FullEditPropertiesComponent implements OnInit {
 
     });
     console.log(this.vcmProperties);
+  }
+
+  getAttachementsBycategory(){
+    console.log(this.propertiesLevel)
+    this.isLoading=true;
+    let level=this.propertiesLevel=='level1'?"L1":"L2"
+     let request={"masterId":this.selectedVcm.data.id,"parent":level}
+    let res_data:any;
+    this.isLoading=false;
+    this.rest_api.getAttachementsBycategory(request).subscribe(res=>{res_data=res
+      if(res_data.data)
+      this.attachementsList=res_data.data
+      console.log(this.attachementsList)
+    })
   }
 }

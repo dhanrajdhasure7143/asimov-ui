@@ -810,7 +810,7 @@
 </div>
 
 <div class="h-100" *ngIf="isShow">
-    <app-full-edit-properties [vcmProcess]="vcmProcess" [propertiesLevel]="propertiesLevel"
+    <app-full-edit-properties [vcmProcess]="vcmProcess" [propertiesLevel]="propertiesLevel" [selectedVcm]="selectedVcm"
         (isUpdateProperties)="readEmitValue($event)"></app-full-edit-properties>
 </div>
 
@@ -834,21 +834,21 @@
         <form>
             <div class="form-fields col-md-12">
                 <label>Upload<span class="star">*</span></label>
-                <!-- <div class="box-fileupload">
+                <div class="box-fileupload">
                     <input type="file" name="file" (change)="chnagefileUploadForm($event)" id="file" class="inputfile"
                         multiple />
                     <label for="file" matTooltip="Upload File" (change)="chnagefileUploadForm($event)">
                         <img src="../../../../assets/images/Projects/fileupload.svg" class="testplusupload">
                         <span>Select File</span>
                     </label>
-                </div> -->
-                <div class="box-fileupload" (click)="fileInput.click()" (change)="chnagefileUploadForm($event)">
+                </div>
+                <!-- <div class="box-fileupload" (click)="fileInput.click()" (change)="chnagefileUploadForm($event)">
                     <input type="file" name="file" id="file" class="inputfile" multiple #fileInput style="display:none;"  />
                     <label for="file" (change)="chnagefileUploadForm($event)">
                         <img src="../../../../assets/images/Projects/fileupload.svg" class="testplusupload">
                         <span>Select File</span>
                     </label>
-                </div>
+                </div> -->
             </div>
             <div class="form-fields col-md-12">
                 <div class="upload-filesdiv">

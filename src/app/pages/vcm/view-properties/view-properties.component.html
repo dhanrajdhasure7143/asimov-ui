@@ -275,7 +275,7 @@
                         <ng-container matColumnDef="actions">
                             <th mat-header-cell *matHeaderCellDef class="table_header">Actions</th>
                             <td mat-cell *matCellDef="let element">
-                                <span class="deleteattachment tsttooltipbtn" (click)="downloadFile()" >
+                                <span class="deleteattachment tsttooltipbtn">
                                     <a href="data:image/png;base64,{{element.filedata}}" download="{{element.fileName}}" matTooltip="Download">
                                         <img src="../../../../assets/images/Admin/download-black.svg" class="default-img testplus">
                                         <img src="../../../../assets/images/Admin/download-blue.svg" class="hover-img testplus">

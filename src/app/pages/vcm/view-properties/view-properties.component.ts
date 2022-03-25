@@ -66,7 +66,7 @@ export class ViewPropertiesComponent implements OnInit {
 
   ngOnInit(): void {
     // this.getAttachements();
-    this.dataSource= new MatTableDataSource(this.attachments);
+    // this.dataSource= new MatTableDataSource(this.attachments);
   }
 
   ngOnChanges(){
@@ -106,21 +106,26 @@ export class ViewPropertiesComponent implements OnInit {
 
   getAttachements(){
     if(this.vcm_resData){
-      // this.isLoading=true;
-      let reqBody={
-        "masterId": this.vcm_resData.data.id,
-        "parent": this.vcm_process
-      }
+      this.isLoading=true;
+      let request={"masterId":this.vcm_resData.data.id,"parent":this.vcm_process}
       let res_data
       this.attachments=[];
-      // this.dataSource= new MatTableDataSource(this.attachments);
-    this.rest_api.getvcmAttachements(reqBody).subscribe(res=>{res_data=res
-      this.attachments=res_data.data
+      this.rest_api.getAttachementsBycategory(request).subscribe(res=>{res_data=res
+        if(res_data.data){
+          this.attachments=res_data.data
       this.dataSource= new MatTableDataSource(this.attachments);
       this.dataSource.sort=this.sort;
-
+        console.log(this.attachments)
+      }
       this.isLoading=false;
-    })
+      })
+    // this.rest_api.getvcmAttachements(reqBody).subscribe(res=>{res_data=res
+    //   this.attachments=res_data.data
+    //   this.dataSource= new MatTableDataSource(this.attachments);
+    //   this.dataSource.sort=this.sort;
+
+    //   this.isLoading=false;
+    // })
     }
   }
 
@@ -135,12 +140,7 @@ export class ViewPropertiesComponent implements OnInit {
   }
 
   ondeleteAttachements(data) {
-    let req_body = []
-    let obj = {
-      "uniqueId": data.uniqueId,
-      "fileVersion": data.fileVersion
-    }
-    req_body.push(obj)
+    let req_body=[{"documentId":data.uniqueId}]
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -153,7 +153,9 @@ export class ViewPropertiesComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
         this.isLoading = true;
-        this.rest_api.ondeleteAttachements(req_body).subscribe(res => {
+        this.rest_api.deleteAttachements(req_body).subscribe(res=>{
+          this.isLoading=false;
+        // this.rest_api.ondeleteAttachements(req_body).subscribe(res => {
           let status: any = res;
           Swal.fire({
             title: 'Success',
@@ -317,6 +319,16 @@ updateCollabrators(element){
       this.selectedIndex=null;
   });
 }
-
+// getAttachementsBycategory(){
+//     let request={"masterId":this.vcm_resData.data.id,"parent":this.vcm_process}
+//   this.isLoading=true;
+//   let res_data:any;
+//   this.isLoading=false;
+//   this.rest_api.getAttachementsBycategory(request).subscribe(res=>{res_data=res
+//     if(res_data.data)
+//     this.attachementsList=res_data.data
+//     console.log(this.attachementsList)
+//   })
+// }
 
 }
