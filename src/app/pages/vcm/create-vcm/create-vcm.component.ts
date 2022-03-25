@@ -90,7 +90,6 @@ export class CreateVcmComponent implements OnInit {
     let res_data
     this.dt.getVcm_Data.subscribe(res => {
       res_data = res
-      console.log(res_data)
       if (res) {
         if (res_data.data.length == 0) {
           TREE_DATA = [
@@ -182,8 +181,6 @@ export class CreateVcmComponent implements OnInit {
   }
 
   addLevel2Process() {
-    console.log(this.addLevel2);
-    console.log(this.level1process);
     let record = {
       type: 'Process',
       title: this.addLevel2,
@@ -219,7 +216,6 @@ export class CreateVcmComponent implements OnInit {
   }
 
   level2removeChild(name) {
-    console.log(name);
     var processIndex = TREE_DATA.findIndex(e => e.name === name.parent);
     var processData = TREE_DATA[processIndex]['children'];
     var parentIndex = processData.findIndex(e => e.uniqueId === name.level1UniqueId);
@@ -255,10 +251,8 @@ export class CreateVcmComponent implements OnInit {
   }
 
   editProcess(item, name, level) {
-    console.log(item, name, this.vcmProcess)
     this.drawer.open();
     this.editLevelProperties = level;
-    console.log(this.editLevelProperties);
     this.editProcessDescription = '';
     this.editProcessOwner = '';
     this.propertiesName = name.parent;
@@ -282,7 +276,6 @@ export class CreateVcmComponent implements OnInit {
     this.editProcessDescription = '';
     this.editProcessOwner = '';
     this.editLevelProperties = level;
-    console.log(name, level2, this.vcmProcess);
     this.propertiesName = level2.parent;
     if (level2.description) {
       this.editProcessDescription = level2.description;
@@ -337,7 +330,6 @@ export class CreateVcmComponent implements OnInit {
 
   saveVcm() {
     let requestBody = this.getrequestData();
-    console.log("requestBody",requestBody)
     this.isLoading = true;
     this.rest_api.createVcm(requestBody).subscribe((res: any) => {
       this.isLoading = false;
@@ -381,7 +373,6 @@ export class CreateVcmComponent implements OnInit {
         });
       }
     })
-    console.log("data2",data2)
 
     // let data4=data2;
     let data4 = []
@@ -406,9 +397,7 @@ export class CreateVcmComponent implements OnInit {
       data4.push(obj)
 
     });
-    console.log("data4",data4)
 
-    // console.log(this.vcmProcess)
 
 
     let data3 = {
@@ -440,7 +429,6 @@ export class CreateVcmComponent implements OnInit {
       this.router.navigate(['/pages/vcm/properties'], nav);
       // TREE_DATA[3].vcmname = this.vcmName;
       this.vcmProcess = TREE_DATA;
-      console.log(this.vcmProcess);
     }
   }
 
@@ -452,7 +440,6 @@ export class CreateVcmComponent implements OnInit {
   async getProcessOwnersList() {
     let roles = { "roleNames": ["Process Owner"] }
     await this.rest_api.getmultipleApproverforusers(roles).subscribe(res => {
-      //  console.log(res)
       if (Array.isArray(res))
         this.processOwners_list = res;
     });
@@ -475,7 +462,6 @@ export class CreateVcmComponent implements OnInit {
 
   showPreview() {
     let requestBody = this.getrequestData();
-    console.log("request body", requestBody)
     let obj = {
       "vName": this.vcmName,
       "pOwner": this.process_ownerName,
@@ -542,7 +528,6 @@ export class CreateVcmComponent implements OnInit {
       }
       this.attachementsList.push(obj)
   })
-    console.log(this.listOfFiles)
 
     let formdata = new FormData()
     for (var i = 0; i < this.listOfFiles.length; i++) {
@@ -557,7 +542,6 @@ export class CreateVcmComponent implements OnInit {
     formdata.append("fileUniqueIds",JSON.stringify(idsList));
     let res_data
     this.rest_api.uploadVCMPropDocument(formdata).subscribe(res => {res_data=res
-      console.log(res)
     this.attachementsList.forEach(element => {
       this.listOfAttachemnts.push(element)
     });
@@ -589,7 +573,6 @@ export class CreateVcmComponent implements OnInit {
   }
 
   saveProperties(val){
-    console.log(this.vcmProcess,this.selectedObj)
     if(val=="L1"){
       TREE_DATA.filter((e) => e.name === this.selectedObj.parent)[0].children
         .filter(n => n.uniqueId === this.selectedObj.uniqueId)[0].description = this.editProcessDescription;

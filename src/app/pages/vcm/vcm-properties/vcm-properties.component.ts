@@ -74,7 +74,6 @@ export class VcmPropertiesComponent implements OnInit {
   descriptionView(name, i, level) {
       if (level == 'level1') {
         this.descriptionEdit = i;
-        console.log(name, i);
         this.descriptionProcessName = name.parent;
         this.descriptionviewonly = false;
         this.texarea.nativeElement.focus();
@@ -88,11 +87,9 @@ export class VcmPropertiesComponent implements OnInit {
     }
 
     descriptionSubmit(prop, level) {
-      console.log(prop,this.vcmProperties)
       if (level == 'level1') {
         this.vcmProperties.filter((e) => e.name === prop.parent)[0].children
           .filter(n => n.uniqueId === prop.uniqueId)[0].description;
-        console.log(this.vcmProperties);
         this.descriptionEdit = '';
         this.descriptionProcessName = '';
         this.descriptionviewonly = true;
@@ -112,8 +109,6 @@ export class VcmPropertiesComponent implements OnInit {
     }
 
     documentsUpload(event, name ,level) {
-      console.log(name,this.vcmProperties);
-      console.log(level);
       this.isLoading=true;
 
       this.fileName = [];
@@ -162,7 +157,6 @@ export class VcmPropertiesComponent implements OnInit {
         })
 
       });
-      console.log(this.vcmProperties);
     }
     
   convertFileSize(e) {
@@ -187,7 +181,6 @@ export class VcmPropertiesComponent implements OnInit {
     this.isLoading=true;
     let req_body=[{"documentId":file.uniqueId}]
     this.rest_api.deleteAttachements(req_body).subscribe(res=>{
-    console.log(file, i,res);
     this.isLoading=false;
     if (level == 'level1') {
       this.vcmProperties.filter((e) => e.name === file.parent)[0].children
@@ -202,8 +195,6 @@ export class VcmPropertiesComponent implements OnInit {
 
 
   saveProperties() {
-    console.log(this.vcmProperties);
-    console.log(this.vcmData);
     let obj={vName:this.vcmName,pOwner:this.process_ownerName,data:this.vcmProperties}
     this.dt.vcmDataTransfer(obj)
     this.router.navigate(['/pages/vcm/create-vcm']);
@@ -232,17 +223,12 @@ export class VcmPropertiesComponent implements OnInit {
   
   onchangeowner(e,i,j){
     this.vcmProperties[j]["children"][i].processOwner=e
-    console.log(e,i,j);
-    console.log(this.vcmProperties);
   }
   onchangeownerL2(e,i,j,k){
     this.vcmProperties[i]["children"][j]["children"][k].processOwner = e;
-    console.log(e,i,j,k);
-    console.log(this.vcmProperties)
   }
 
   // owner(prop, owner) {
-  //   console.log(prop, owner);
   //   if (prop.name == 'Management Process') {
   //     this.managementOwner = owner;
   //   }
@@ -255,7 +241,6 @@ export class VcmPropertiesComponent implements OnInit {
   // }
 
   // documentsUpload(event) {
-  //   console.log(event);
   //   for (var i = 0; i < event.target.files.length; i++) {
   //     event.target.files[i]['convertedsize'] = this.convertFileSize(event.target.files[i].size);
   //     this.fileName.push(event.target.files[i]);
@@ -264,7 +249,6 @@ export class VcmPropertiesComponent implements OnInit {
   //   for (var i = 0; i < this.fileName.length; i++) {
   //     formdata.append("file", this.fileName[i]);
   //   }
-  //   console.log(this.fileName);
   // }
   // convertFileSize(e) {
   //   let divided_size: any = String(e / 1024)
@@ -285,7 +269,6 @@ export class VcmPropertiesComponent implements OnInit {
   // }
 
   // description(prop,value){
-  //   console.log(prop,value);
   //   if (prop.name == 'Management Process') {
   //     this.managementDescription = value;
   //   }
@@ -323,7 +306,6 @@ export class VcmPropertiesComponent implements OnInit {
   //   for (var i = 0; i < this.fileName.length; i++) {
   //     formdata.append("file", this.fileName[i]);
   //   }
-  //   console.log(this.fileName);
   //   this.vcmProperties[4].attachments = (this.fileName);
   //   this.router.navigate(['/pages/vcm/view-vcm']);
   // }
@@ -342,8 +324,6 @@ export class VcmPropertiesComponent implements OnInit {
   }
   
   updateProperties() {
-    console.log(this.vcmProperties);
-    console.log(this.vcmData);
     let obj={vName:this.vcmName,pOwner:this.process_ownerName,data:this.vcmProperties}
     this.dt.vcmDataTransfer(obj)
     this.router.navigate(["/pages/vcm/edit"], { queryParams: { id: this.vcm_id,"isEdit":"false" } });
@@ -364,7 +344,6 @@ export class VcmPropertiesComponent implements OnInit {
       e.target.files[i]['fileDescription'] = ''
       this.listOfFiles.push(e.target.files[i])
     } 
-    console.log(this.listOfFiles,this.attachementsList)
   }
   removeSelectedFile(index) {
     this.listOfFiles.splice(index, 1);
@@ -394,7 +373,6 @@ export class VcmPropertiesComponent implements OnInit {
       }
       this.attachementsList.push(obj)
     })
-    console.log(this.listOfFiles,this.attachementsList)
     
     let formdata = new FormData()
     for (var i = 0; i < this.listOfFiles.length; i++) {
@@ -443,6 +421,5 @@ export class VcmPropertiesComponent implements OnInit {
       })
 
     });
-    console.log(this.vcmProperties);
   }
 }
