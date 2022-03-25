@@ -185,7 +185,10 @@ export class VcmPropertiesComponent implements OnInit {
 
   RemoveFile(file, i: number, level,e) {
     this.rest_api
-    console.log(file, i);
+    this.isLoading=true;
+    let req_body=[{"documentId":file.uniqueId}]
+    this.rest_api.deleteAttachements(req_body).subscribe(res=>{
+    console.log(file, i,res);
     if (level == 'level1') {
       this.vcmProperties.filter((e) => e.name === file.parent)[0].children
         .filter(n => n.uniqueId === file.uniqueId)[0].attachments.splice(i, 1);
@@ -194,6 +197,7 @@ export class VcmPropertiesComponent implements OnInit {
         .filter(n => n.uniqueId === file.level1UniqueId)[0].children.filter(c => c.uniqueId === file.uniqueId)[0]
         .attachments.splice(i, 1);
     }
+  })
   }
 
 

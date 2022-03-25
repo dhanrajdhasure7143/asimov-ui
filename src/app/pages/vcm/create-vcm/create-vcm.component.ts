@@ -593,7 +593,7 @@ export class CreateVcmComponent implements OnInit {
     if(val=="L1"){
       TREE_DATA.filter((e) => e.name === this.selectedObj.parent)[0].children
         .filter(n => n.uniqueId === this.selectedObj.uniqueId)[0].description = this.editProcessDescription;
-      TREE_DATA.filter((e) => e.title === this.selectedObj.parent)[0].children
+      TREE_DATA.filter((e) => e.name === this.selectedObj.parent)[0].children
         .filter(n => n.uniqueId === this.selectedObj.uniqueId)[0].processOwner = this.editProcessOwner;
     }
     if(val=="L2"){
