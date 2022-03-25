@@ -117,7 +117,7 @@
                                         <ng-container *ngFor="let doc of item.attachments;let j = index">
                                             <div class="docpill">
                                                 {{j+1}} . {{doc.name}}                                                 
-                                                <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2" (click)="RemoveFile(item,j,'level1')" />
+                                                <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2" (click)="RemoveFile(item,j,'level1',doc)" />
                                             </div>
                                         </ng-container>
                                     </td>
@@ -292,7 +292,7 @@
                                             <ng-container *ngFor="let doc of level2.attachments;let j = index">
                                                 <span class="docpill">
                                                     {{j+1}} . {{doc.name}}                                                   
-                                                    <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2" (click)="RemoveFile(level2,j,'level2')" />
+                                                    <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2" (click)="RemoveFile(level2,j,'level2',doc)" />
                                                 </span>
                                             </ng-container>
                                         </td>

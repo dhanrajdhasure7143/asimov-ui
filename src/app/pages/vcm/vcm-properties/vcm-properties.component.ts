@@ -91,14 +91,14 @@ export class VcmPropertiesComponent implements OnInit {
       console.log(prop,this.vcmProperties)
       if (level == 'level1') {
         this.vcmProperties.filter((e) => e.name === prop.parent)[0].children
-          .filter(n => n.title === prop.title)[0].description;
+          .filter(n => n.uniqueId === prop.uniqueId)[0].description;
         console.log(this.vcmProperties);
         this.descriptionEdit = '';
         this.descriptionProcessName = '';
         this.descriptionviewonly = true;
       }else {
         this.vcmProperties.filter((e) => e.name === prop.parent)[0].children
-          .filter(n => n.title === prop.level1UniqueId)[0].children.filter(c => c.uniqueId === prop.uniqueId)[0]
+          .filter(n => n.uniqueId === prop.level1UniqueId)[0].children.filter(c => c.uniqueId === prop.uniqueId)[0]
           .description;
         this.descriptionEdit = '';
         this.descriptionProcessName = '';
@@ -183,7 +183,8 @@ export class VcmPropertiesComponent implements OnInit {
     }
   }
 
-  RemoveFile(file, i: number, level) {
+  RemoveFile(file, i: number, level,e) {
+    this.rest_api
     console.log(file, i);
     if (level == 'level1') {
       this.vcmProperties.filter((e) => e.name === file.parent)[0].children
@@ -354,11 +355,10 @@ export class VcmPropertiesComponent implements OnInit {
     for (var i = 0; i < e.target.files.length; i++) {
       let randomId=  UUID.UUID() 
       e.target.files[i]['convertedsize'] = this.convertFileSize(e.target.files[i].size);
-      e.target.files[i]['fileName'] =randomId + "&&" +e.target.files[i]['name'];
+      e.target.files[i]['fileName'] =e.target.files[i]['name'];
       e.target.files[i]['uniqueId'] = randomId;
       e.target.files[i]['fileDescription'] = ''
       this.listOfFiles.push(e.target.files[i])
-      
     } 
     console.log(this.listOfFiles,this.attachementsList)
   }
@@ -368,12 +368,16 @@ export class VcmPropertiesComponent implements OnInit {
 
    uploadFileModelOpen(template: TemplateRef<any>, obj){
     this.uploadFilemodalref = this.modalService.show(template,{class:"modal-lr"});
+    this.listOfFiles=[];
     this.selectedObj= obj;
   }
 
   onSubmitUpload(){
+    this.isLoading= true;
     this.attachementsList=[];
+    let idsList=[];
     this.listOfFiles.forEach(e=>{
+      idsList.push( e.uniqueId)
       let obj={
         name:e.name,
         fileName: e['name'],
@@ -387,26 +391,7 @@ export class VcmPropertiesComponent implements OnInit {
       this.attachementsList.push(obj)
     })
     console.log(this.listOfFiles,this.attachementsList)
-
-    if (this.selectedObj.level == 'L1') {
-      this.attachementsList.forEach(element => {
-        this.vcmProperties.filter((e) => e.name === this.selectedObj.parent)[0].children
-        .filter(n => n.uniqueId === this.selectedObj.uniqueId)[0].attachments.push(element);
-      });
-      // this.vcmProperties.filter((e) => e.name === this.selectedObj.parent)[0].children
-      //   .filter(n => n.uniqueId === this.selectedObj.uniqueId)[0].attachments = this.attachementsList;
-    }
-
-    if (this.selectedObj.level == 'L2') {
-      this.attachementsList.forEach(element => {
-        this.vcmProperties.filter((e) => e.name ===this.selectedObj.parent)[0].children
-      .filter(n => n.uniqueId === this.selectedObj.level1UniqueId)[0].children
-      .filter(c => c.uniqueId === this.selectedObj.uniqueId)[0].attachments.push(element);
-      });
-      // this.vcmProperties.filter((e) => e.name ===this.selectedObj.parent)[0].children
-      // .filter(n => n.uniqueId === this.selectedObj.level1UniqueId)[0].children
-      // .filter(c => c.uniqueId === this.selectedObj.uniqueId)[0].attachments = this.attachementsList;
-    }
+    
     let formdata = new FormData()
     for (var i = 0; i < this.listOfFiles.length; i++) {
       formdata.append("file", this.listOfFiles[i]);
@@ -417,6 +402,8 @@ export class VcmPropertiesComponent implements OnInit {
     formdata.append("parent",this.selectedObj.parent);
     formdata.append("processName",this.selectedObj.title);
     formdata.append("vcmuniqueId",this.vcmProperties[0].uniqueId);
+    formdata.append("fileUniqueIds",JSON.stringify(idsList));
+
 
     this.rest_api.uploadVCMPropDocument(formdata).subscribe(res => {
       this.isLoading = false;

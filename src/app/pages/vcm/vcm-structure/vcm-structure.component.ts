@@ -770,7 +770,7 @@ export class VcmStructureComponent implements OnInit {
     for (var i = 0; i < e.target.files.length; i++) {
       let randomId=  UUID.UUID() 
       e.target.files[i]['convertedsize'] = this.convertFileSize(e.target.files[i].size);
-      e.target.files[i]['fileName'] =randomId + "&&" +e.target.files[i]['name'];
+      e.target.files[i]['fileName'] =e.target.files[i]['name'];
       e.target.files[i]['uniqueId'] = randomId;
       e.target.files[i]['fileDescription'] = ''
       this.listOfFiles.push(e.target.files[i])
@@ -813,7 +813,9 @@ export class VcmStructureComponent implements OnInit {
   onSubmitUpload(){
     console.log(this.vcmTreeData,this.selectedPropNode)
     this.attachementsList=[]
+    let idsList=[]
     this.listOfFiles.forEach(e=>{
+      idsList.push( e.uniqueId)
       let obj={
         name:e.name,
         fileName: e['name'],
@@ -842,6 +844,8 @@ export class VcmStructureComponent implements OnInit {
     formdata.append("parent",this.selectedPropNode.parent);
     formdata.append("processName",this.selectedPropNode.title);
     formdata.append("vcmuniqueId",this.vcmTreeData[0].uniqueId);
+    formdata.append("fileUniqueIds",JSON.stringify(idsList));
+
     let res_data
     this.rest_api.uploadVCMPropDocument(formdata).subscribe(res => {res_data=res
       console.log(res)
