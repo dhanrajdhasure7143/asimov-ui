@@ -2759,10 +2759,10 @@ span.pdicon {
 .propertiesContainer mat-expansion-panel-header.mat-expanded {
   background-color: #00a0e3 !important;
 }
-.prop-detcont mat-accordion .has-childlevels .mat-expansion-panel-content.ng-trigger-bodyExpansion {
+/* .prop-detcont mat-accordion .has-childlevels .mat-expansion-panel-content.ng-trigger-bodyExpansion {
   margin-left: 2.5% !important;
   margin-right: 2% !important;
-}
+} */
 .vcmprop .popover-content.popover-body {
   padding: 5px 10px !important;
 }

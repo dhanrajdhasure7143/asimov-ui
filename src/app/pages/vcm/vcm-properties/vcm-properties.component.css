@@ -100,23 +100,24 @@ span.docpill:hover {
     justify-content: center;
     align-items: center;
     flex-flow: column;
+    cursor:pointer;
 }
 .box-fileupload:hover{
     background: #e3eaee !important; ;
 }
 .inputfile + label {
     display: inline-block;
-    cursor: pointer;
+    /* cursor: pointer; */
     margin-bottom: 0px;
 }
-.inputfile {
+/* .inputfile {
     width: 0.1px;
     height: 0.1px;
     opacity: 0;
     overflow: hidden;
     position: absolute;
     z-index: -1;
-}  
+}   */
 .inputfile:focus + label,
 .inputfile + label:hover {
     color: #00a0e3;
