@@ -186,6 +186,7 @@ export class CurrentplanComponent implements OnInit {
   }
   buyProductPlan(template){
     this.isdiable=true;
+    var quantity:any;
     const cardValue = {
       "name":  this.cardDetails[0].name,
       "number": "3782 8224 6310 005",
@@ -193,7 +194,9 @@ export class CurrentplanComponent implements OnInit {
       "exp_year":  this.cardDetails[0].cardExpYear,
       "cvc": "123"
     }
-   
+    if(this.selected_plans.nickName=='Standard' || this.selected_plans.nickName=='Professional'){
+      quantity="0"
+     }
     const plandetails = {
       "ip": "1.2.3.4",
       "promo": this.promo,
@@ -205,7 +208,7 @@ export class CurrentplanComponent implements OnInit {
             "plan_id": this.selected_plans.id
           },
           "planId": this.selected_plans.id,
-          "quantity":"100"
+          "quantity":quantity
         }
       ],
       "meta": {
