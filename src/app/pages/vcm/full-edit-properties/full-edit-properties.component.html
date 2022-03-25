@@ -115,7 +115,7 @@
                                             <div class="docpill">
                                                 {{j+1}} . {{doc.fileName}}
                                                 <img src="../../../../assets/images/VCM/VCM-close-red.svg"
-                                                    class="testplus2" (click)="RemoveFile(item,j,'level1')" />
+                                                    class="testplus2" (click)="RemoveFile(item,j,'level1',doc)" />
                                             </div>
                                         </ng-container>
                                     </td>
@@ -261,7 +261,7 @@
                                                 <span class="docpill">
                                                     {{j+1}} . {{doc.fileName}}
                                                     <img src="../../../../assets/images/VCM/VCM-close-red.svg"
-                                                        class="testplus2" (click)="RemoveFile(level2,j,'level2')" />
+                                                        class="testplus2" (click)="RemoveFile(level2,j,'level2',doc)" />
                                                 </span>
                                             </ng-container>
                                         </td>

@@ -310,7 +310,7 @@ export class CreateVcmComponent implements OnInit {
   
   RemoveFile(file, i: number) {
     this.isLoading=true;
-    let req_body=[{"documentId":this.selectedObj.uniqueId}]
+    let req_body=[{"documentId":file.documentId}]
     this.rest_api.deleteAttachements(req_body).subscribe(res=>{
       this.isLoading=false;
       this.listOfAttachemnts.splice(i, 1);

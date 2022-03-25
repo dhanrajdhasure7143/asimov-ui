@@ -122,16 +122,41 @@ export class FullEditPropertiesComponent implements OnInit {
     }
   }
 
-  RemoveFile(file, i: number, level) {
-    console.log(file, i);
+  // RemoveFile(file, i: number, level) {
+  //   console.log(file, i);
+  //   if (level == 'level1') {
+  //     this.vcmProperties.filter((e) => e.name === file.parent)[0].children
+  //       .filter(n => n.uniqueId === file.uniqueId)[0].attachments.splice(i, 1);
+  //   }else {
+  //     this.vcmProperties.filter((e) => e.name === file.parent)[0].children
+  //       .filter(n => n.uniqueId === file.level1UniqueId)[0].children.filter(c => c.uniqueId === file.uniqueId)[0]
+  //       .attachments.splice(i, 1);
+  //   }
+  // }
+  RemoveFile(each, i: number,level,e) {
+    this.isLoading=true;
+    let req_body=[{"documentId":e.documentId}]
+    this.rest_api.deleteAttachements(req_body).subscribe(res=>{
+    this.isLoading=false;
+    // this.onOpenDocuments();
     if (level == 'level1') {
-      this.vcmProperties.filter((e) => e.name === file.parent)[0].children
-        .filter(n => n.uniqueId === file.uniqueId)[0].attachments.splice(i, 1);
-    }else {
-      this.vcmProperties.filter((e) => e.name === file.parent)[0].children
-        .filter(n => n.uniqueId === file.level1UniqueId)[0].children.filter(c => c.uniqueId === file.uniqueId)[0]
-        .attachments.splice(i, 1);
+      this.vcmProperties.filter((e) => e.title === this.selectedObj.parent)[0].children
+        .filter(n => n.uniqueId === this.selectedObj.uniqueId)[0].attachments.splice(i, 1);
     }
+
+    if (this.selectedObj.level == 'L2') {
+      this.vcmProperties.filter((e) => e.title ===this.selectedObj.parent)[0].children
+      .filter(n => n.uniqueId === this.selectedObj.level1UniqueId)[0].children
+      .filter(c => c.uniqueId === this.selectedObj.uniqueId)[0].attachments.splice(i, 1);
+    }
+
+    if (this.selectedObj.level == 'L3') {
+      this.vcmProperties.filter((e) => e.title ===this.selectedObj.parent)[0].children
+      .filter(n => n.uniqueId === this.selectedObj.level1UniqueId)[0].children
+      .filter(m => m.uniqueId === this.selectedObj.level2UniqueId)[0].children
+      .filter(c => c.uniqueId === this.selectedObj.uniqueId)[0].attachments.splice(i, 1);
+    }
+    })
   }
 
   async getProcessOwnersList(){

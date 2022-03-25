@@ -723,11 +723,11 @@ export class VcmStructureComponent implements OnInit {
     this.processOwner = node.processOwner;
     this.processDesc = node.description;
     this.drawer.open();
-    // if(node.attachments){
-    //   this.listOfAttachemnts=node.attachments
-    // }else{
-    //   this.listOfAttachemnts=[]
-    // }
+    if(node.attachments){
+      this.listOfAttachemnts=node.attachments
+    }else{
+      this.listOfAttachemnts=[]
+    }
   }
 
   saveProperties(val){
@@ -845,12 +845,29 @@ export class VcmStructureComponent implements OnInit {
     let res_data
     this.rest_api.uploadVCMPropDocument(formdata).subscribe(res => {res_data=res
       console.log(res)
-      // this.attachementsList.forEach(element => {
-      //   this.listOfAttachemnts.push(element)
-      // });
-      this.onOpenDocuments()
+      this.attachementsList.forEach(element => {
+        this.listOfAttachemnts.push(element)
+      });
+      // this.onOpenDocuments()
       this.isLoading = false;
+      if (this.selectedPropNode.level == 'L1') {
+        this.vcmTreeData.filter((e) => e.title === this.selectedPropNode.parent)[0].children
+          .filter(n => n.uniqueId === this.selectedPropNode.uniqueId)[0].attachments = this.listOfAttachemnts;
+      }
 
+      if (this.selectedPropNode.level == 'L2') {
+        this.vcmTreeData.filter((e) => e.title ===this.selectedPropNode.parent)[0].children
+        .filter(n => n.uniqueId === this.selectedPropNode.level1UniqueId)[0].children
+        .filter(c => c.uniqueId === this.selectedPropNode.uniqueId)[0].attachments = this.listOfAttachemnts;
+      }
+
+      if (this.selectedPropNode.level == 'L3') {
+        this.vcmTreeData.filter((e) => e.title ===this.selectedPropNode.parent)[0].children
+        .filter(n => n.uniqueId === this.selectedPropNode.level1UniqueId)[0].children
+        .filter(m => m.uniqueId === this.selectedPropNode.level2UniqueId)[0].children
+        .filter(c => c.uniqueId === this.selectedPropNode.uniqueId)[0].attachments = this.listOfAttachemnts;
+      }
+      this.updateVcm()
       this.uploadFilemodalCancel();
     },err=>{
       this.isLoading=false;
@@ -866,22 +883,37 @@ export class VcmStructureComponent implements OnInit {
   }
 
   removeFile(each,index){
-    console.log(each)
-    // console.log(this.selectedPropNode,each,index)
-    // console.log( this.listOfAttachemnts.splice(index, 1))
-    // this.vcmTreeData.filter((e) => e.title === this.selectedPropNode.parent)[0].children
-    // .filter(n => n.title === this.selectedPropNode.title)[0]
+
     this.isLoading=true;
-    let req_body=[{"documentId":each.uniqueId}]
+    let req_body=[{"documentId":each.documentId}]
     this.rest_api.deleteAttachements(req_body).subscribe(res=>{
     console.log(res);
     this.isLoading=false;
-    this.onOpenDocuments();
+    // this.onOpenDocuments();
+    this.listOfAttachemnts.splice(index, 1);
+    if (this.selectedPropNode.level == 'L1') {
+      this.vcmTreeData.filter((e) => e.title === this.selectedPropNode.parent)[0].children
+        .filter(n => n.uniqueId === this.selectedPropNode.uniqueId)[0].attachments = this.listOfAttachemnts;
+    }
+
+    if (this.selectedPropNode.level == 'L2') {
+      this.vcmTreeData.filter((e) => e.title ===this.selectedPropNode.parent)[0].children
+      .filter(n => n.uniqueId === this.selectedPropNode.level1UniqueId)[0].children
+      .filter(c => c.uniqueId === this.selectedPropNode.uniqueId)[0].attachments = this.listOfAttachemnts;
+    }
+
+    if (this.selectedPropNode.level == 'L3') {
+      this.vcmTreeData.filter((e) => e.title ===this.selectedPropNode.parent)[0].children
+      .filter(n => n.uniqueId === this.selectedPropNode.level1UniqueId)[0].children
+      .filter(m => m.uniqueId === this.selectedPropNode.level2UniqueId)[0].children
+      .filter(c => c.uniqueId === this.selectedPropNode.uniqueId)[0].attachments = this.listOfAttachemnts;
+    }
     })
   }
 
   onOpenDocuments(){
     console.log(this.vcm_data)
+    console.log(this.selectedPropNode)
     let res_data:any;
     this.isLoading=true;
     this.listOfAttachemnts=[]
@@ -891,24 +923,6 @@ export class VcmStructureComponent implements OnInit {
       this.isLoading=false;
       if(res_data){
         this.listOfAttachemnts=res_data.data
-
-        if (this.selectedPropNode.level == 'L1') {
-          this.vcmTreeData.filter((e) => e.title === this.selectedPropNode.parent)[0].children
-            .filter(n => n.uniqueId === this.selectedPropNode.uniqueId)[0].attachments = this.listOfAttachemnts;
-        }
-  
-        if (this.selectedPropNode.level == 'L2') {
-          this.vcmTreeData.filter((e) => e.title ===this.selectedPropNode.parent)[0].children
-          .filter(n => n.uniqueId === this.selectedPropNode.level1UniqueId)[0].children
-          .filter(c => c.uniqueId === this.selectedPropNode.uniqueId)[0].attachments = this.listOfAttachemnts;
-        }
-  
-        if (this.selectedPropNode.level == 'L3') {
-          this.vcmTreeData.filter((e) => e.title ===this.selectedPropNode.parent)[0].children
-          .filter(n => n.uniqueId === this.selectedPropNode.level1UniqueId)[0].children
-          .filter(m => m.uniqueId === this.selectedPropNode.level2UniqueId)[0].children
-          .filter(c => c.uniqueId === this.selectedPropNode.uniqueId)[0].attachments = this.listOfAttachemnts;
-        }
       }
         // this.listOfAttachemnts
     })

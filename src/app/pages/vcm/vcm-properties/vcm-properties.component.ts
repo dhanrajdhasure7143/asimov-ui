@@ -179,7 +179,7 @@ export class VcmPropertiesComponent implements OnInit {
 
   RemoveFile(file, i: number, level,e) {
     this.isLoading=true;
-    let req_body=[{"documentId":file.uniqueId}]
+    let req_body=[{"documentId":e.documentId}]
     this.rest_api.deleteAttachements(req_body).subscribe(res=>{
     this.isLoading=false;
     if (level == 'level1') {
