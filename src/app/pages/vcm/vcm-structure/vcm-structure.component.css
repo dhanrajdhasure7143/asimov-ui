@@ -379,14 +379,14 @@ h4 img.procmenu {
     /* cursor: pointer; */
     margin-bottom: 0px;
 }
-/* .inputfile {
+.inputfile {
     width: 0.1px;
     height: 0.1px;
     opacity: 0;
     overflow: hidden;
     position: absolute;
     z-index: -1;
-}   */
+}  
 .inputfile:focus + label,
 .inputfile + label:hover {
     color: #00a0e3;

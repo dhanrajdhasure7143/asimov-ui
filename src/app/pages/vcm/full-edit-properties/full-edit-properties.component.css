@@ -110,14 +110,14 @@ span.docpill:hover {
     /* cursor: pointer; */
     margin-bottom: 0px;
 }
-/* .inputfile {
+.inputfile {
     width: 93%;
     height: 25px;
     opacity: 0;
     overflow: hidden;
     position: absolute;
     z-index: -1;
-}   */
+}  
 .inputfile:focus + label,
 .inputfile + label:hover {
     color: #00a0e3;

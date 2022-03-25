@@ -364,9 +364,9 @@ span.has-childlevels div.col-md-12:hover {
     color: inherit !important;
 }
 
-.prop-detcont .inner-grid {
+/* .prop-detcont .inner-grid {
     margin-top: 10px;
-}
+} */
 .inner-grid .row.col-md-12.text-bold.workspace-title:hover {
     background-color: #e8f7fd !important;
 }
@@ -397,8 +397,20 @@ button.savecbtn .testplus1 {
     margin-right: 1.5%;
 } */
 .level2row {
-    background-color: #c2edff;
+    background-color: #ffececbf;
 }
 .level1row {
-    background-color: #fff9a8;
+    background-color: #dcd3ff;
+}
+.cell.cell7 img.testplus, td img.testplus {
+    margin-right: 10px !important;
+}
+.cell.cell4 {
+    margin-right: 15px;
+}
+.cell.cell7 {
+    width: 25%;
+}
+.workspace-title .cell.cell7 {
+    width: 25% !important;
 }
