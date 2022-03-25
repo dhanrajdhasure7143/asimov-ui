@@ -66,7 +66,7 @@ export class ViewPropertiesComponent implements OnInit {
 
   ngOnInit(): void {
     // this.getAttachements();
-    // this.dataSource= new MatTableDataSource(this.attachments);
+    this.dataSource= new MatTableDataSource(this.attachments);
   }
 
   ngOnChanges(){

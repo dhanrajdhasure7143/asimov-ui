@@ -225,7 +225,7 @@ console.log(this.level1process,index)
       this.editProcessOwner = obj.processOwner;
     }
     if (obj.attachments) {
-      this.listOfAttachemnts = obj.attachments;
+      // this.listOfAttachemnts = obj.attachments;
     }
     this.editProcessName = obj.title;
   }
@@ -248,24 +248,30 @@ console.log(this.level1process,index)
     }
   }
 
-  RemoveFile(file, i: number) {
-    this.listOfAttachemnts.splice(i, 1);
-    if (this.editLevelProperties == 1) {
-      TREE_DATA.filter((e) => e.name === this.propertiesName)[0].children
-        .filter(n => n.title === this.editProcessName)[0].attachments = this.listOfAttachemnts;
-    }
-    if (this.editLevelProperties == 2) {
-      TREE_DATA.filter((e) => e.name === this.propertiesName)[0].children
-        .filter(n => n.title === this.childParent)[0].children.filter(c => c.tit === this.editProcessName)[0]
-        .attachments = this.listOfAttachemnts;
-    }
-    if (this.editLevelProperties == 3) {
-      TREE_DATA.filter((e) => e.name === this.propertiesName)[0].children
-      .filter(n => n.title === this.childParent)[0].children.filter(c => c.title === this.level2Parent)[0]
-      .children.filter(f=>f.title === this.editProcessName)[0]
-      .attachments = this.listOfAttachemnts;
-    }
-    console.log(TREE_DATA);
+  RemoveFile(each, i: number) {
+    // this.listOfAttachemnts.splice(i, 1);
+    // if (this.editLevelProperties == 1) {
+    //   TREE_DATA.filter((e) => e.name === this.propertiesName)[0].children
+    //     .filter(n => n.title === this.editProcessName)[0].attachments = this.listOfAttachemnts;
+    // }
+    // if (this.editLevelProperties == 2) {
+    //   TREE_DATA.filter((e) => e.name === this.propertiesName)[0].children
+    //     .filter(n => n.title === this.childParent)[0].children.filter(c => c.tit === this.editProcessName)[0]
+    //     .attachments = this.listOfAttachemnts;
+    // }
+    // if (this.editLevelProperties == 3) {
+    //   TREE_DATA.filter((e) => e.name === this.propertiesName)[0].children
+    //   .filter(n => n.title === this.childParent)[0].children.filter(c => c.title === this.level2Parent)[0]
+    //   .children.filter(f=>f.title === this.editProcessName)[0]
+    //   .attachments = this.listOfAttachemnts;
+    // }
+    // console.log(TREE_DATA);
+    this.isLoading=true;
+    let req_body=[{"documentId":each.uniqueId}]
+    this.rest_api.deleteAttachements(req_body).subscribe(res=>{
+    this.isLoading=false;
+    this.onOpenDocuments();
+    })
   }
 
   vcmHeading() {
@@ -599,32 +605,32 @@ console.log(this.level1process,index)
   }
 
   onSubmitUpload(){
-    this.listOfAttachemnts =  this.listOfFiles;
     let formdata = new FormData()
     for (var i = 0; i < this.listOfFiles.length; i++) {
       formdata.append("file", this.listOfFiles[i]);
     }
     formdata.append("vcmLevel",this.selectedObj.level);
     formdata.append("uniqueId",this.selectedObj.uniqueId);
-    formdata.append("masterId","000");
+    formdata.append("masterId",this.selectedVcm.data.id);
     formdata.append("parent",this.selectedObj.parent);
-    formdata.append("vcmuniqueId",this.vcmProcess[0].uniqueId);
+    formdata.append("vcmuniqueId",this.selectedVcm.data.vcmuniqueId);
     let res_data
     this.rest_api.uploadVCMPropDocument(formdata).subscribe(res => {res_data=res
       console.log(res)
-    // this.listOfAttachemnts =  [res_data.data];
+      // this.listOfAttachemnts =  this.listOfFiles;
+      this.onOpenDocuments()
       this.isLoading = false;
-      if (this.selectedObj.level == 'L1') {
-        TREE_DATA.filter((e) => e.name === this.selectedObj.parent)[0].children
-          .filter(n => n.uniqueId === this.selectedObj.uniqueId)[0].attachments = this.listOfFiles;
-      }
+      // if (this.selectedObj.level == 'L1') {
+      //   TREE_DATA.filter((e) => e.name === this.selectedObj.parent)[0].children
+      //     .filter(n => n.uniqueId === this.selectedObj.uniqueId)[0].attachments = this.listOfFiles;
+      // }
 
-      if (this.selectedObj.level == 'L2') {
-        TREE_DATA.filter((e) => e.name ===this.selectedObj.parent)[0].children
-        .filter(n => n.uniqueId === this.selectedObj.level1UniqueId)[0].children
-        .filter(c => c.uniqueId === this.selectedObj.uniqueId)[0].attachments = this.listOfFiles;
-      }
-      this.vcmProcess=TREE_DATA;
+      // if (this.selectedObj.level == 'L2') {
+      //   TREE_DATA.filter((e) => e.name ===this.selectedObj.parent)[0].children
+      //   .filter(n => n.uniqueId === this.selectedObj.level1UniqueId)[0].children
+      //   .filter(c => c.uniqueId === this.selectedObj.uniqueId)[0].attachments = this.listOfFiles;
+      // }
+      // this.vcmProcess=TREE_DATA;
 
       this.uploadFilemodalCancel();
     },err=>{
@@ -661,6 +667,41 @@ console.log(this.level1process,index)
   }
   updateL3Process(){
     this.uniqueIdL3=''
+  }
+
+  onOpenDocuments(){
+    console.log(this.selectedVcm)
+    let res_data:any;
+    this.isLoading=true;
+    this.listOfAttachemnts=[]
+    let request= {"masterId":this.selectedVcm.data.id,"uniqueId": this.selectedObj.uniqueId}
+    this.rest_api.getAttachementsByIndivdualProcess(request).subscribe(res=>{res_data=res
+      console.log(res)
+      this.isLoading=false;
+      if(res_data){
+        this.listOfAttachemnts=res_data.data
+
+        if (this.selectedObj.level == 'L1') {
+          TREE_DATA.filter((e) => e.title === this.selectedObj.parent)[0].children
+            .filter(n => n.uniqueId === this.selectedObj.uniqueId)[0].attachments = this.listOfAttachemnts;
+        }
+  
+        if (this.selectedObj.level == 'L2') {
+          TREE_DATA.filter((e) => e.title ===this.selectedObj.parent)[0].children
+          .filter(n => n.uniqueId === this.selectedObj.level1UniqueId)[0].children
+          .filter(c => c.uniqueId === this.selectedObj.uniqueId)[0].attachments = this.listOfAttachemnts;
+        }
+  
+        if (this.selectedObj.level == 'L3') {
+          TREE_DATA.filter((e) => e.title ===this.selectedObj.parent)[0].children
+          .filter(n => n.uniqueId === this.selectedObj.level1UniqueId)[0].children
+          .filter(m => m.uniqueId === this.selectedObj.level2UniqueId)[0].children
+          .filter(c => c.uniqueId === this.selectedObj.uniqueId)[0].attachments = this.listOfAttachemnts;
+        }
+        this.vcmProcess=TREE_DATA;
+      }
+        // this.listOfAttachemnts
+    })
   }
   
   

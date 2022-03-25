@@ -829,10 +829,6 @@ export class VcmStructureComponent implements OnInit {
       this.attachementsList.push(obj)
     })
     console.log(this.listOfAttachemnts,this.attachementsList)
-    
-    this.attachementsList.forEach(element => {
-      this.listOfAttachemnts.push(element)
-    });
 
     let formdata = new FormData()
     for (var i = 0; i < this.listOfFiles.length; i++) {
@@ -840,10 +836,10 @@ export class VcmStructureComponent implements OnInit {
     }
     formdata.append("vcmLevel",this.selectedPropNode.level);
     formdata.append("uniqueId",this.selectedPropNode.uniqueId);
-    formdata.append("masterId","000");
+    formdata.append("masterId",this.vcm_data.data.id);
     formdata.append("parent",this.selectedPropNode.parent);
     formdata.append("processName",this.selectedPropNode.title);
-    formdata.append("vcmuniqueId",this.vcmTreeData[0].uniqueId);
+    formdata.append("vcmuniqueId",this.vcm_data.data.vcmuniqueId);
     formdata.append("fileUniqueIds",JSON.stringify(idsList));
 
     let res_data
@@ -854,23 +850,6 @@ export class VcmStructureComponent implements OnInit {
       // });
       this.onOpenDocuments()
       this.isLoading = false;
-      if (this.selectedPropNode.level == 'L1') {
-        this.vcmTreeData.filter((e) => e.title === this.selectedPropNode.parent)[0].children
-          .filter(n => n.uniqueId === this.selectedPropNode.uniqueId)[0].attachments = this.listOfAttachemnts;
-      }
-
-      if (this.selectedPropNode.level == 'L2') {
-        this.vcmTreeData.filter((e) => e.title ===this.selectedPropNode.parent)[0].children
-        .filter(n => n.uniqueId === this.selectedPropNode.level1UniqueId)[0].children
-        .filter(c => c.uniqueId === this.selectedPropNode.uniqueId)[0].attachments = this.listOfAttachemnts;
-      }
-
-      if (this.selectedPropNode.level == 'L3') {
-        this.vcmTreeData.filter((e) => e.title ===this.selectedPropNode.parent)[0].children
-        .filter(n => n.uniqueId === this.selectedPropNode.level1UniqueId)[0].children
-        .filter(m => m.uniqueId === this.selectedPropNode.level2UniqueId)[0].children
-        .filter(c => c.uniqueId === this.selectedPropNode.uniqueId)[0].attachments = this.listOfAttachemnts;
-      }
 
       this.uploadFilemodalCancel();
     },err=>{
@@ -912,6 +891,24 @@ export class VcmStructureComponent implements OnInit {
       this.isLoading=false;
       if(res_data){
         this.listOfAttachemnts=res_data.data
+
+        if (this.selectedPropNode.level == 'L1') {
+          this.vcmTreeData.filter((e) => e.title === this.selectedPropNode.parent)[0].children
+            .filter(n => n.uniqueId === this.selectedPropNode.uniqueId)[0].attachments = this.listOfAttachemnts;
+        }
+  
+        if (this.selectedPropNode.level == 'L2') {
+          this.vcmTreeData.filter((e) => e.title ===this.selectedPropNode.parent)[0].children
+          .filter(n => n.uniqueId === this.selectedPropNode.level1UniqueId)[0].children
+          .filter(c => c.uniqueId === this.selectedPropNode.uniqueId)[0].attachments = this.listOfAttachemnts;
+        }
+  
+        if (this.selectedPropNode.level == 'L3') {
+          this.vcmTreeData.filter((e) => e.title ===this.selectedPropNode.parent)[0].children
+          .filter(n => n.uniqueId === this.selectedPropNode.level1UniqueId)[0].children
+          .filter(m => m.uniqueId === this.selectedPropNode.level2UniqueId)[0].children
+          .filter(c => c.uniqueId === this.selectedPropNode.uniqueId)[0].attachments = this.listOfAttachemnts;
+        }
       }
         // this.listOfAttachemnts
     })
