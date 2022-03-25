@@ -1,7 +1,5 @@
 .vcm-leveldiv {
     margin-top: 12px;
-    overflow: hidden;
-    height: calc(100vh - 142px);
 }
 
 .vcm-leveldiv h4 {
@@ -60,6 +58,15 @@
     margin-bottom: 8px !important;
 }
 
+
+/* .content i {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    color: green;
+    cursor: pointer;
+} */
+
 .level1process button,
 .content button {
     position: absolute;
@@ -70,13 +77,15 @@
     min-width: auto;
     margin: 0px !important;
 }
+
 .level1process button[disabled],
 .content button[disabled] {
     opacity: 0.35;
 }
+
 .overflowcontent span {
     /* margin-left: 5px; */
-    width: 82%;
+    width: 80%;
 }
 
 .previewdiv {
@@ -149,10 +158,10 @@ li.overflowcontent {
     display: flex;
 }
 
-
 .vcname input {
     position: relative;
 }
+
 .vcname button {
     position: absolute;
     top: 32px;
@@ -162,14 +171,13 @@ li.overflowcontent {
     margin: 0px !important;
     background-color: transparent !important;
 }
+
 .actimg {
     text-align: right;
-    width: 18%;
-    margin-right: 3px;
-}
-.actimg img {
+    width: 20%;
     cursor: pointer;
 }
+
 li.childHover span {
     width: 88%;
 }
@@ -181,11 +189,13 @@ li.childHover span {
 .propfooter button.btn.btn-primary {
     margin-right: 0px !important;
 }
+
 img.testplus2 {
     width: 12px;
     height: 12px;
     margin-right: 8px;
 }
+
 .vcmdocs {
     border: 2px dashed #e7e7e7;
     background-color: #f6f6f6;
@@ -194,37 +204,45 @@ img.testplus2 {
     cursor: pointer;
     text-align: center;
 }
+
 .vcmdocs:hover {
     background-color: aliceblue;
 }
+
 .vcmdocs p {
     margin: 0px;
 }
+
 .vcmdocs img {
     width: 20%;
     height: auto;
     display: block;
     margin: 0px auto;
 }
+
 .vcmdocs button {
     border: 1px solid #00a0e3 !important;
     color: #00a0e3;
     margin: 15px 0px 0px 0px !important;
     padding: 8px 25px !important;
 }
+
 .files img {
-    cursor: pointer;  
+    cursor: pointer;
     margin-top: 5px;
     margin-right: 0px;
 }
+
 .files img:hover {
     opacity: 1;
 }
+
 .procname {
     margin: 0px 0px 10px !important;
     font-weight: 600;
     color: #7b7b7b;
 }
+
 .actimg span:hover .default-img,
 .files span:hover .default-img {
     display: none;
@@ -234,6 +252,19 @@ img.testplus2 {
 .files span:hover .hover-img {
     display: initial;
 }
+
+
+/* li.childHover {
+    position: relative;
+}
+
+.childHover i.fa.fa-times-circle {
+    position: absolute;
+    right: 2px;
+    top: 4px;
+    color: red;
+    cursor: pointer;
+} */
 
 .example-tree-invisible {
     display: none;
@@ -275,6 +306,7 @@ mat-tree {
     position: relative;
 }
 
+
 /* .tsttooltipbtn:hover .default-img {
     display: none;
 }
@@ -307,11 +339,10 @@ span.testtooltip {
     background: #001c47;
     transform: rotate(45deg);
   }
-  
-  .tsttooltipbtn:hover span.testtooltip {
+.tsttooltipbtn:hover span.testtooltip {
     display: block;
-  }
-  
+}
+
 .close-btn h3 {
     /* padding: 10px 10px 5px 15px; */
     padding: 15px 10px 15px 12px;
@@ -321,7 +352,8 @@ span.testtooltip {
     width: 90%;
     color: #fff;
 }
-.close-btn img{
+
+.close-btn img {
     width: 12px;
     height: 12px;
     cursor: pointer;
@@ -331,17 +363,87 @@ span.testtooltip {
     filter: brightness(10) grayscale(1) brightness(10);
 }
 
+
 /* .l1process-list {
     height: 100px;
 } */
+
 hr {
     margin-bottom: 8px !important;
 }
+
 .vcm-leveldiv select.form-control.ng-dirty {
     background-color: #FFF9C7 !important;
     color: #001c47 !important;
 }
 
+
+/* properties overlay */
+
+.vcmprop div#propertiesContainer {
+    width: 100%;
+    height: calc(100vh - 130px);
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.vcmprop div#propertiesPanelBody {
+    /* height: calc(100% - 40px); */
+    position: absolute;
+    /* top: 40px; */
+    overflow: auto;
+    width: 100%;
+}
+
+.propertiesContainer mat-expansion-panel {
+    background-color: #607088;
+    margin: 0px !important;
+    border: none !important;
+    border-top: 1px solid #ebebeb !important;
+    padding: 0px !important;
+}
+
+.propertiesContainer mat-expansion-panel-header:hover {
+    background-color: #00a0e3;
+}
+
+.propertiesContainer .mat-expansion-panel-header-title {
+    border: none;
+}
+
+.vcmprop .propertiesContainer label.accordionHeader {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 500;
+    margin-left: 10px;
+    margin-bottom: 0px;
+}
+
+.doc-content {
+    height: calc(100vh - 280px);
+    width: 100%;
+}
+
+.container.p-0.prop-content {
+    height: calc(100vh - 300px) !important;
+}
+
+.editcontent {
+    /* height: calc(100vh - 275px); */
+    height: calc(100vh - 345px) !important;
+}
+
+
+/* properties overlay */
+
+.l2proccess-list {
+    overflow: auto;
+    height: calc(100vh - 392px);
+}
+.vcm-leveldiv select.form-control.ng-dirty {
+    background-color: #FFF9C7 !important;
+    color: #001c47 !important;
+}
 .powner {
     position: relative;
     display: flex;
@@ -350,28 +452,31 @@ hr {
 .powner button:hover img.default-img {
     display: none;
 }
+
 .powner button:hover img.hover-img {
     display: initial;
 }
+
 .vcm-leveldiv .powner select.form-control {
     width: 200px !important;
+    padding-top: 0px !important;
     border: transparent !important;
     background-color: transparent !important;
     color: #001c47 !important;
 }
-.vcm-leveldiv .povaluediv select.form-control.ng-dirty {
-    padding-top: 0px !important;
-}
+
 span.poname {
     background-color: #00a0e3;
     color: #fff;
     border-radius: 100%;
     padding: 9px 11px;
 }
+
 .povaluediv {
     position: relative;
-    /* margin-left: 5px; */
+    /* margin-left: 10px; */
 }
+
 span.polabel {
     position: absolute;
     bottom: -3px;
@@ -380,74 +485,12 @@ span.polabel {
     color: #7a7a7a;
     font-size: 12px;
 }
-.l3pname-div {
-    position: relative;
-    margin-top: 10px;
-}
-.l3pname-div button {
-    position: absolute;
-    right: 12px;
-    top: 5px;
-}
-.actimg span {
-    width: 25px !important;
-}
 
-/* properties overlay Start */
-.vcmprop div#propertiesContainer {
-    width: 100%;
-    height: calc(100vh - 130px);
-    border: none !important;
-    box-shadow: none !important;
-}
-.vcmprop div#propertiesPanelBody {
-    /* height: calc(100% - 40px); */
-    position: absolute;
-    /* top: 40px; */
-    overflow: auto;
-    width: 100%;
-}
-.propertiesContainer mat-expansion-panel {
-    background-color: #607088;
-    margin: 0px !important;
-    border:none !important;
-    border-top: 1px solid #ebebeb !important;
-    padding: 0px !important;
-}
-.propertiesContainer mat-expansion-panel-header:hover {
-    background-color: #00a0e3;
-}
-.propertiesContainer .mat-expansion-panel-header-title {
-    border: none;
-}
-.vcmprop .propertiesContainer label.accordionHeader {
-    color: #fff;
-    font-size: 16px;
-    font-weight: 500;
-    margin-left: 10px;
-    margin-bottom: 0px;
-}
-.doc-content {
-    height: calc(100vh - 280px);
-    width: 100%;
-}
-.container.p-0.prop-content {
-    height: calc(100vh - 280px) !important;
-}
-.editcontent {
-    /* height: calc(100vh - 275px); */
-    height: calc(100vh - 325px) !important;
-}
-/* properties overlay End*/
-
-.l2proccess-list {
-    overflow: auto;
-    height: calc(100vh - 392px);
-}
 .l1processlistdiv {
     overflow: auto;
     height: calc(100vh - 279px);
 }
+
 .files span.fname {
     font-weight: 600;
     width: 100%;
@@ -458,8 +501,7 @@ span.polabel {
     margin:2px 15px 2px 18px;
     word-break: break-all;
 }
-
-/* Upload Popup Start */
+/* Upload Popup */
 
 .uploadfilebdiv {
     height: calc(100vh - 260px);
@@ -474,13 +516,14 @@ span.polabel {
     justify-content: center;
     align-items: center;
     flex-flow: column;
+    cursor:pointer;
 }
 .box-fileupload:hover{
     background: #e3eaee !important; ;
 }
 .inputfile + label {
     display: inline-block;
-    cursor: pointer;
+    /* cursor: pointer; */
     margin-bottom: 0px;
 }
 .inputfile {
@@ -511,4 +554,4 @@ span.polabel {
     margin-top: 5px;
 }
 
-/* Upload Popup End */
+/* Upload Popup */

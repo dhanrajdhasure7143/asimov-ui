@@ -16,7 +16,8 @@
               <div class="value" *ngIf="isHeaderShow == 'true'">
                 <span *ngIf="!isShowConformance">
                   <span class="module-back-button" *ngIf="isfromApprover" (click)='backtoApprovalWorkflow()'><i aria-hidden="true" class="fas fa-arrow-left"></i></span>
-                  <span class="module-back-button" *ngIf="!isfromApprover" (click)='backtoNavigate()'><i aria-hidden="true" class="fas fa-arrow-left"></i></span>
+                  <span class="module-back-button" *ngIf="!isfromApprover && !vcm_id" (click)='backtoNavigate()'><i aria-hidden="true" class="fas fa-arrow-left"></i></span>
+                  <span class="module-back-button" *ngIf="vcm_id" (click)='backtoVcm()'><i aria-hidden="true" class="fas fa-arrow-left"></i></span>
                 </span>
                 <span class="module-back-button" *ngIf="isShowConformance" (click)='backtoPI()'><i aria-hidden="true" class="fas fa-arrow-left"></i></span>
                 <!-- <span class="level3"><strong>Level 3</strong> - Value Chain Acneage</span> -->

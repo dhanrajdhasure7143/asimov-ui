@@ -34,22 +34,17 @@ export class ViewVcmComponent implements OnInit {
   }
 
   getListofVcms(){
-    this.isLoading=true;
+    // this.isLoading=true;
     let res_data
     this.rest_api.getAllvcms().subscribe(res=>{res_data=res
       this.vcms_list=res_data.data
       this.isLoading=false;
     })
   }
-  delete(){
-    let body={"vcmId":1994}
-  this.rest_api.deleteVcm(body).subscribe(res=>{
-    console.log(res);
-  });
-}
 
 deleteVcm(){
-  this.rest_api.deleteVcm(3276).subscribe(res=>{
+  let body={"vcmId":3557}
+  this.rest_api.deleteVcm(body).subscribe(res=>{
     console.log(res)
     this.getListofVcms();
   })

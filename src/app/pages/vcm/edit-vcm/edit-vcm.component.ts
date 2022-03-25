@@ -1,5 +1,5 @@
 import { NestedTreeControl } from '@angular/cdk/tree';
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { MatTreeNestedDataSource } from '@angular/material';
 import { MatTree } from '@angular/material/tree';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -18,6 +18,9 @@ import { MatDrawer } from '@angular/material/sidenav';
 })
 export class EditVcmComponent implements OnInit {
   @Input() vcmData: any;
+  @Input() res_data: any;
+  @Output() viewVcm = new EventEmitter<any>()
+
   treeControl = new NestedTreeControl<any>(node => node.children);
   dataSource = new MatTreeNestedDataSource<any>();
   vcmProcess: any;
@@ -52,6 +55,10 @@ export class EditVcmComponent implements OnInit {
   edit:any;
   selectedVcmName: any;
   isShowInput:boolean=true;
+  uniqueId1: any;
+  edited_Object:any=[]
+  l1UniqueId: any;
+  vprocess_name:any;
 
   constructor(private router: Router, private bpmnservice: SharebpmndiagramService, private rest_api: RestApiService,
     private route: ActivatedRoute) {
@@ -63,14 +70,14 @@ export class EditVcmComponent implements OnInit {
   hasChild = (_: number, node: any) => !!node.children && node.children.length > 0;
   ngOnInit(): void {
     this.getProcessOwnersList();
-    // this.getselectedVcm();
   }
 
   ngOnChanges() {
     console.log(this.vcmData);
+    console.log("responseData",this.res_data)
     this.dataSource.data = this.vcmData;
-    console.log(this.dataSource.data)
     this.treeControl.dataNodes = this.dataSource.data;
+    this.vprocess_name=this.res_data.vcmName
     // this.treeControl.expand(this.treeControl.dataNodes[0]);
     // this.treeControl.expand(this.treeControl.dataNodes[1]);
     // this.treeControl.expand(this.treeControl.dataNodes[2]);
@@ -172,7 +179,6 @@ export class EditVcmComponent implements OnInit {
   }
 
   addLevel(node) {
-
     this.parent = node.parent;
     this.childParent = node.childParent;
     this.title = node.title;
@@ -180,6 +186,7 @@ export class EditVcmComponent implements OnInit {
     this.uniqueId = node.uniqueId;
     this.selectedNode = node
   }
+
   editLevel3() {
     console.log("vcmData",this.vcmData);
     console.log("this.selectedNode",this.selectedNode)
@@ -211,12 +218,6 @@ export class EditVcmComponent implements OnInit {
       this.treeControl.dataNodes = this.dataSource.data;
       this.treeControl.expandAll()
     }, 200);
-    // this.parent = '';
-    // this.childParent = '';
-    // this.title = '';
-    // this.uniqueId = '';
-    // this.processName = '';
-    // this.uniqueId=null;
   }
   onSelectedNode(node) {
     console.log(node);
@@ -228,18 +229,35 @@ export class EditVcmComponent implements OnInit {
     this.childParent = this.selectedNode.childParent;
     this.title = this.selectedNode.title;
     this.uniqueId = this.selectedNode.uniqueId;
+    console.log(this.selectedNode)
+  }
+
+  onCreateLevel1(node) {
+    console.log(node)
+
+    this.l1UniqueId = node.uniqueId;
+    this.uniqueId = node.uniqueId;
+
   }
 
   editLevelName(node) {
     console.log(node);
-    this.levelNameTitle = node.title;
-    this.levelNameChild = node.childParent;
-    this.lavelNameParent = node.parent;
-    this.levelNameShow = true;
+    // this.levelNameTitle = node.title;
+    // this.levelNameChild = node.childParent;
+    // this.lavelNameParent = node.parent;
+    this.uniqueId1 = node.uniqueId;
+    // this.levelNameShow = true;
     this.drawer.close();
+  }
+  editLevelName2(){
+    console.log("test2")
+  }
+  editLevelName3(){
+    console.log("test2")
   }
   editTitle(node) {
     console.log(node);
+    this.uniqueId1 = null;
     console.log(this.vcmData);
     this.levelNameShow = false;
     this.drawer.close();
@@ -427,5 +445,72 @@ export class EditVcmComponent implements OnInit {
 //     // this.isLoading=false;
 //   })
 // }
+
+addL1Nodes(node){
+  console.log(node)
+  console.log(this.vcmData);
+  this.uniqueId=UUID.UUID();
+
+  this.vcmData.filter((e) => e.title === node.parent)[0].children
+    .filter(n => n.uniqueId === node.uniqueId)[0].children.
+    push({
+        level: "L2",
+        parent: node.parent,
+        title: this.processName,
+        description: '',
+        processOwner: '',
+        type: "Process",
+        level1UniqueId: node.uniqueId,
+        uniqueId: UUID.UUID(),
+        attachments:[],
+        children:[]
+      }
+    );
+  console.log("vcmData",this.vcmData);
+  setTimeout(() => {
+    this.dataSource.data = null;
+    this.dataSource.data = this.vcmData;
+    this.treeControl.dataNodes = this.dataSource.data;
+    this.treeControl.expandAll();
+    this.processName='';
+  }, 200);
+}
+
+addL3Nodes(){
+console.log("vcmData",this.vcmData);
+    console.log("this.selectedNode",this.selectedNode)
+    this.uniqueId=UUID.UUID();
+    this.isShowInput=false
+
+    this.vcmData.filter((e) => e.title === this.parent)[0].children
+      .filter(n => n.uniqueId === this.selectedNode.level1UniqueId)[0].children
+      .filter(n => n.uniqueId === this.selectedNode.uniqueId)[0]["children"].
+      push({
+          level: "L3",
+          parent: this.parent,
+          title: this.processName,
+          description: '',
+          processOwner: '',
+          type: "Process",
+          level2UniqueId: this.selectedNode.uniqueId,
+          level1UniqueId: this.selectedNode.level1UniqueId,
+          uniqueId: UUID.UUID(),
+          attachments:[]
+        }
+      );
+    console.log("vcmData",this.vcmData);
+    // this.uniqueId=null;
+
+    setTimeout(() => {
+      this.dataSource.data = null;
+      this.dataSource.data = this.vcmData;
+      this.treeControl.dataNodes = this.dataSource.data;
+      this.treeControl.expandAll()
+    }, 100);
+}
+
+backToViewVcm(){
+  this.viewVcm.emit(true);
+}
 
 }

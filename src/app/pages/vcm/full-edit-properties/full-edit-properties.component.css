@@ -100,7 +100,7 @@ span.docpill:hover {
     justify-content: center;
     align-items: center;
     flex-flow: column;
-    cursor:pointer;
+    cursor: pointer;
 }
 .box-fileupload:hover{
     background: #e3eaee !important; ;
@@ -111,8 +111,8 @@ span.docpill:hover {
     margin-bottom: 0px;
 }
 .inputfile {
-    width: 0.1px;
-    height: 0.1px;
+    width: 93%;
+    height: 25px;
     opacity: 0;
     overflow: hidden;
     position: absolute;
@@ -148,8 +148,6 @@ span.docpill:hover {
     margin:2px 15px 2px 18px;
     word-break: break-all;
 }
-
-
 span.testtooltip {
     position: absolute;
     top: 35px;
@@ -179,3 +177,9 @@ span.testtooltip {
     display: block;
   }
 /* Upload Popup */
+.prop_docs th:first-child {
+    width: 30%;
+}
+.prop_docs th:last-child {
+    width: 10%;
+}

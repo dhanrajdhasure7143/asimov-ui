@@ -13,11 +13,17 @@ import { PopoverModule } from 'ngx-bootstrap/popover';
 import { SharedModule } from '../../shared/shared.module';
 import { EditVcmComponent } from './edit-vcm/edit-vcm.component';
 import { ViewPropertiesComponent } from './view-properties/view-properties.component';
-
+import { VcmFullEditComponent } from './vcm-full-edit/vcm-full-edit.component';
+import { VcmPreviewComponent } from './vcm-preview/vcm-preview.component';
+import { NgxDropzoneModule } from 'ngx-dropzone';
+import { ModalModule, BsModalRef  } from 'ngx-bootstrap/modal';
+import { FullEditPropertiesComponent } from './full-edit-properties/full-edit-properties.component';
+import {CustomMatPaginatorIntl} from './../../shared/custom-mat-paginator-int';
+import {MatPaginatorIntl} from '@angular/material';
 
 
 @NgModule({
-  declarations: [ViewVcmComponent, CreateVcmComponent, VcmComponent, VcmPropertiesComponent, VcmStructureComponent, EditVcmComponent, ViewPropertiesComponent],
+  declarations: [ViewVcmComponent, CreateVcmComponent, VcmComponent, VcmPropertiesComponent, VcmStructureComponent, EditVcmComponent, ViewPropertiesComponent, VcmFullEditComponent, VcmPreviewComponent, FullEditPropertiesComponent],
   imports: [
     CommonModule,
     VcmRoutingModule,
@@ -33,8 +39,13 @@ import { ViewPropertiesComponent } from './view-properties/view-properties.compo
     MatFormFieldModule,
     MatExpansionModule,
     PopoverModule.forRoot(),
-    SharedModule
+    SharedModule,
+    NgxDropzoneModule,
+    ModalModule.forRoot(),
   ],
-  providers:[]
+  providers:[BsModalRef,{
+    provide: MatPaginatorIntl, 
+    useClass: CustomMatPaginatorIntl
+  }]
 })
 export class VcmModule { }

@@ -2698,9 +2698,10 @@ span.pdicon {
   padding: 10px 0px;
 }
 .vcmprop.mat-drawer-opened .mat-tab-label {
-  height: 45px;
+  height: 45px !important;
   justify-content: left !important;
-  padding-left: 15px !important;
+  padding-left: 0px !important;
+  margin-left: 15px !important;
   min-width: 140px !important;
 }
 .vcmprop mat-ink-bar.mat-ink-bar {
@@ -2735,3 +2736,79 @@ span.pdicon {
   height: 18px;
   color: #a0a0a0;
 }
+
+.vcmprop.mat-drawer-opened .mat-tab-label-active {
+  color: #00a1e4 !important;
+  opacity: 1;
+}
+.vcmprop .propertiesContainer span.mat-expansion-indicator {
+    display: none !important;
+}
+.vcmprop .propertiesContainer .mat-expansion-panel-body {
+  /* height: 100% !important;
+  max-height: 413px !important; */
+  height: calc(100% - 40px) !important;
+    max-height: calc(100% - 40px) !important;
+  background-color: #fff !important;
+  padding: 10px !important;
+}
+.vcmprop .propertiesContainer .mat-expansion-panel-header-description {
+  margin:0px !important
+}
+
+.propertiesContainer mat-expansion-panel-header.mat-expanded {
+  background-color: #00a0e3 !important;
+}
+/* .prop-detcont mat-accordion .has-childlevels .mat-expansion-panel-content.ng-trigger-bodyExpansion {
+  margin-left: 2.5% !important;
+  margin-right: 2% !important;
+} */
+.vcmprop .popover-content.popover-body {
+  padding: 5px 10px !important;
+}
+/* Custom Popover */
+.custom-popup-content {
+  position: absolute;
+    top: -35px;
+    left: 30px;
+    background: transparent;
+    box-shadow: none;
+}
+.custom-popup-content::before {
+  content: "";
+  width: 15px;
+  height: 15px;
+  position: absolute;  
+  top: 18px;
+  left: 5px;
+  background-color: #fff;
+  transform: rotate(135deg);  
+  border-bottom: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+}
+.custom-popup-content .mat-menu-content {
+  background-color: #fff !important;
+  margin-left: 13px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+.custom-popup-content .mat-menu-content ngx-dropzone {
+  height: 25px !important;
+  background: transparent !important;
+  color: #333c48 !important;
+  font-weight: 500 !important;
+  font-size: 14px !important;
+}
+.custom-popup-content .mat-menu-content p {
+  height: 25px !important;
+  line-height: 25px !important;
+  margin-bottom: 5px !important;
+  color: #333c48 !important;
+}
+button.custom-popupbtn.mat-button {
+  padding: 0px !important;
+  min-width: auto !important;
+  line-height: unset !important;
+  width: auto !important;
+}
+/* Custom Popover */

@@ -1330,10 +1330,41 @@ deleteVcm(body){
 }
 
 uploadVCMPropDocument(body){
-  return this.http.post('/vcmv2/uploadDocuments',body); 
+  return this.http.post('/vcmv2/uploadDocuments',body);
 }
 getvcmAttachements(body){
   return this.http.post('/vcmv2/fetchDocumentsByProcessType',body); 
 }
+ondeleteAttachements(body){
+  return this.http.post('/vcmv2/deleteDocument',body);
+}
+updateVcm(body){
+  return this.http.post('/vcmv2/updatevcm',body);
+}
+getCollaborators(uniqueId){
+  return this.http.get('/vcmv2/fetchCollaborations?uniqueId='+uniqueId)
+}
+createCollaborators(body){
+  return this.http.post('/vcmv2/createCollaborations',body);
+}
+updateCollaborators(body){
+  return this.http.post('/vcmv2/updateCollaborations',body);
+}
+deleteCollaborators(body){
+  return this.http.post('/vcmv2/deleteCollaborations',body);
+}
+deleteAttachements(body){
+  return this.http.post('/vcmv2/deleteDocument',body);
+}
+getAttachementsByIndivdualProcess(body){
+  return this.http.post('/vcmv2/fetchDocumentsByIndivdualProcess',body);
+}
+getAttachementsBycategory(body){
+  return this.http.post('/vcmv2/fetchDocumentsByProcessType',body);
+}
+getAttachementsByLevel(body){
+  return this.http.post('/vcmv2/fetchDocumentsByLevel',body);
+}
+
 
 }
