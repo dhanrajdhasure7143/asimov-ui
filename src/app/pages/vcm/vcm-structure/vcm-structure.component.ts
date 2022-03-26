@@ -706,7 +706,7 @@ export class VcmStructureComponent implements OnInit {
 
   editVcmName(){
     this.editVcmTitle = true;
-    this.vcmTitleEdit.nativeElement.focus();
+    // this.vcmTitleEdit.nativeElement.focus();
   }
   submitVcmTitle(){
     this.editVcmTitle = false;

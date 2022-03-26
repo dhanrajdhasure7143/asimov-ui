@@ -241,7 +241,7 @@ export class FullEditPropertiesComponent implements OnInit {
     formdata.append("fileUniqueIds",JSON.stringify(idsList));
 
     this.rest_api.uploadVCMPropDocument(formdata).subscribe(res => {
-      // this.isLoading = false;
+      this.isLoading = false;
       this.listOfFiles=[];
       if (this.selectedObj.level == 'L1') {
         this.attachementsList.forEach(element => {

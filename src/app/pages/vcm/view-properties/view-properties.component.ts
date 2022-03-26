@@ -51,7 +51,6 @@ export class ViewPropertiesComponent implements OnInit {
   stackHolders_list:any=[];
   selectedIndex:number;
   selectedCollaboratorsObj:any;
-  isLoading1:boolean=false;
   collaboratorsRoles=["Executive"]
   collaboratorsInterests=["Informed","Accountable"]
 
