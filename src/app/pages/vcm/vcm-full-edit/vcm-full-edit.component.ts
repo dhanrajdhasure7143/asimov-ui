@@ -506,7 +506,7 @@ console.log(this.level1process,index)
       "title": e.title,
       "parent": e.parent,
       "children": [],
-      "attachments": [],
+      "attachments": e.attachments,
       }
       if(e.level1UniqueId){
         obj["level1UniqueId"]=e.level1UniqueId

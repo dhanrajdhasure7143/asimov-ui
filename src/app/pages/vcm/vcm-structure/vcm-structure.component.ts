@@ -867,7 +867,7 @@ export class VcmStructureComponent implements OnInit {
         .filter(m => m.uniqueId === this.selectedPropNode.level2UniqueId)[0].children
         .filter(c => c.uniqueId === this.selectedPropNode.uniqueId)[0].attachments = this.listOfAttachemnts;
       }
-      this.updateVcm()
+      // this.updateVcm()
       this.uploadFilemodalCancel();
     },err=>{
       this.isLoading=false;

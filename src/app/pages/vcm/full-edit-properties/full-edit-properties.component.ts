@@ -140,22 +140,22 @@ export class FullEditPropertiesComponent implements OnInit {
     this.isLoading=false;
     // this.onOpenDocuments();
     if (level == 'level1') {
-      this.vcmProperties.filter((e) => e.title === this.selectedObj.parent)[0].children
-        .filter(n => n.uniqueId === this.selectedObj.uniqueId)[0].attachments.splice(i, 1);
+      this.vcmProperties.filter((e) => e.title === each.parent)[0].children
+        .filter(n => n.uniqueId === each.uniqueId)[0].attachments.splice(i, 1);
     }
 
-    if (this.selectedObj.level == 'L2') {
-      this.vcmProperties.filter((e) => e.title ===this.selectedObj.parent)[0].children
-      .filter(n => n.uniqueId === this.selectedObj.level1UniqueId)[0].children
-      .filter(c => c.uniqueId === this.selectedObj.uniqueId)[0].attachments.splice(i, 1);
+    if (level == 'level2') {
+      this.vcmProperties.filter((e) => e.title ===each.parent)[0].children
+      .filter(n => n.uniqueId === each.level1UniqueId)[0].children
+      .filter(c => c.uniqueId === each.uniqueId)[0].attachments.splice(i, 1);
     }
 
-    if (this.selectedObj.level == 'L3') {
-      this.vcmProperties.filter((e) => e.title ===this.selectedObj.parent)[0].children
-      .filter(n => n.uniqueId === this.selectedObj.level1UniqueId)[0].children
-      .filter(m => m.uniqueId === this.selectedObj.level2UniqueId)[0].children
-      .filter(c => c.uniqueId === this.selectedObj.uniqueId)[0].attachments.splice(i, 1);
-    }
+    // if (level == 'L3') {
+    //   this.vcmProperties.filter((e) => e.title ===each.parent)[0].children
+    //   .filter(n => n.uniqueId === each.level1UniqueId)[0].children
+    //   .filter(m => m.uniqueId === each.level2UniqueId)[0].children
+    //   .filter(c => c.uniqueId === each.uniqueId)[0].attachments.splice(i, 1);
+    // }
     })
   }
 
@@ -234,14 +234,14 @@ export class FullEditPropertiesComponent implements OnInit {
     }
     formdata.append("vcmLevel",this.selectedObj.level);
     formdata.append("uniqueId",this.selectedObj.uniqueId);
-    formdata.append("masterId","000");
+    formdata.append("masterId",this.selectedVcm.data.id);
     formdata.append("parent",this.selectedObj.parent);
     formdata.append("processName",this.selectedObj.title);
-    formdata.append("vcmuniqueId",this.vcmProperties[0].uniqueId);
+    formdata.append("vcmuniqueId",this.selectedVcm.data.uniqueId);
     formdata.append("fileUniqueIds",JSON.stringify(idsList));
 
     this.rest_api.uploadVCMPropDocument(formdata).subscribe(res => {
-      this.isLoading = false;
+      // this.isLoading = false;
       this.listOfFiles=[];
       if (this.selectedObj.level == 'L1') {
         this.attachementsList.forEach(element => {
@@ -252,11 +252,14 @@ export class FullEditPropertiesComponent implements OnInit {
   
       if (this.selectedObj.level == 'L2') {
         this.attachementsList.forEach(element => {
+          console.log("testing",element)
           this.vcmProperties.filter((e) => e.name ===this.selectedObj.parent)[0].children
         .filter(n => n.uniqueId === this.selectedObj.level1UniqueId)[0].children
         .filter(c => c.uniqueId === this.selectedObj.uniqueId)[0].attachments.push(element);
         });
       }
+      console.log(this.selectedObj.level, this.vcmProperties)
+
       this.listOfFiles = [];
       this.uploadFilemodalCancel();
     },err=>{
