@@ -76,7 +76,7 @@ export class VcmPropertiesComponent implements OnInit {
         this.descriptionEdit = i;
         this.descriptionProcessName = name.parent;
         this.descriptionviewonly = false;
-        this.texarea.nativeElement.focus();
+        // this.texarea.nativeElement.focus();
       }
       else {
         this.descriptionEdit = i;

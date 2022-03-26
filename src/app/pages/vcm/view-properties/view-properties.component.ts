@@ -30,7 +30,7 @@ export class ViewPropertiesComponent implements OnInit {
   displayedRows$: Observable<any[]>;
   totalRows$: Observable<number>;
   @ViewChild(MatSort,{static:false}) sort: MatSort;
-  @ViewChild(MatSort,{static:false}) sort1: MatSort;
+  @ViewChild("sort1",{static:false}) sort1: MatSort;
   @ViewChild('sort3',{static:false}) sort3: MatSort;
   // @ViewChild(MatPaginator,{static:false}) paginator: MatPaginator;
   dataSource:MatTableDataSource<any>;
@@ -66,6 +66,7 @@ export class ViewPropertiesComponent implements OnInit {
   ngOnInit(): void {
     // this.getAttachements();
     this.dataSource= new MatTableDataSource(this.attachments);
+    this.dataSource.sort=this.sort;
   }
 
   ngOnChanges(){
@@ -89,14 +90,16 @@ export class ViewPropertiesComponent implements OnInit {
       });
       setTimeout(() => {
         this.assignPagenation(this.vcmTreeData1);
-      }, 500);
+      }, 300);
       console.log("vcmTreeData1 data",this.vcmTreeData1)
     }
   }
 
   ngAfterViewInit(){
-    this.getAttachements();
-    this.getApproverList();
+    setTimeout(() => {
+      this.getAttachements();
+      this.getApproverList();
+    }, 100);
   }
 
   ngDestroy(){
@@ -113,7 +116,7 @@ export class ViewPropertiesComponent implements OnInit {
         if(res_data.data){
           this.attachments=res_data.data
       this.dataSource= new MatTableDataSource(this.attachments);
-      this.dataSource.sort=this.sort;
+      this.dataSource.sort=this.sort1;
         console.log(this.attachments)
       }
       this.isLoading=false;
