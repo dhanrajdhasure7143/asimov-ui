@@ -206,6 +206,7 @@ export class FullEditPropertiesComponent implements OnInit {
   onSubmitUpload(){
     this.attachementsList=[];
     let idsList=[];
+    this.isLoading=true;
     this.listOfFiles.forEach(e=>{
       idsList.push( e.uniqueId)
       let obj={
