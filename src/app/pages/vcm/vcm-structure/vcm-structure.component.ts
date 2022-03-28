@@ -117,7 +117,6 @@ export class VcmStructureComponent implements OnInit {
     this.rest_api.getselectedVcmById(this.vcm_id).subscribe(res => {
       res_data = res
       this.isLoading = false;
-      console.log(res);
 
       if (res) {
         this.vcm_data = res_data
@@ -154,7 +153,6 @@ export class VcmStructureComponent implements OnInit {
         }
       })
     })
-    console.log(objData)
 
     this.vcmData.forEach(e => {
       objData.forEach(e1 => {
@@ -187,7 +185,6 @@ export class VcmStructureComponent implements OnInit {
         }
       })
     })
-    console.log(objData)
     // this.vcmTreeData = this.dataSource.data;
     this.vcmTreeData = objData;
     this.dataSource.data = objData;
@@ -236,7 +233,6 @@ export class VcmStructureComponent implements OnInit {
       let params1 = { "id": this.vcm_id, "vcmLevel": node.title };
 
       this.router.navigate([], { relativeTo: this.route, queryParams: params1 });
-      console.log("shared data", this.node_data)
       this.isViewProperties = true;
       this.isShow = false;
     }
@@ -254,7 +250,6 @@ export class VcmStructureComponent implements OnInit {
   async getProcessOwnersList() {
     let roles = { "roleNames": ["Process Owner"] }
     await this.rest_api.getmultipleApproverforusers(roles).subscribe(res => {
-      //  console.log(res)
       if (Array.isArray(res))
         this.processOwners_list = res;
     });
@@ -270,7 +265,6 @@ export class VcmStructureComponent implements OnInit {
     let res_data
     this.rest_api.getvcmAttachements(reqBody).subscribe(res => {
       res_data = res
-      console.log(res)
       res_data.data.forEach(element => {
         if (element.uniqueId == node_obj.uniqueId) {
           this.listOfAttachemnts.push(element)
@@ -281,7 +275,6 @@ export class VcmStructureComponent implements OnInit {
   }
 
   readVcmValue(value) {
-    console.log(value)
     if (value) {
       this.isShow = false;
       this.isViewProperties = false;
@@ -302,7 +295,6 @@ export class VcmStructureComponent implements OnInit {
     this.router.navigate(["/pages/vcm/edit"], { queryParams: { id: this.vcm_id} })
   }
   onSelectedProcessEdit(node) {
-    console.log(node)
     this.isPropDisabled=false;
     this.nodeParent = node.title;
     this.treeControl.expandAll();
@@ -310,7 +302,6 @@ export class VcmStructureComponent implements OnInit {
 
   onCreateLevel3() {
     this.uniqueId = this.selectedNode.uniqueId;
-    console.log(this.selectedNode)
   }
 
   onCreateLevel1(node) {
@@ -320,8 +311,6 @@ export class VcmStructureComponent implements OnInit {
 
   }
   addL2Nodes(node) {
-    console.log(node)
-    console.log(this.vcmData);
     this.uniqueId = UUID.UUID();
 
     this.vcmTreeData.filter((e) => e.title === node.parent)[0].children
@@ -339,7 +328,6 @@ export class VcmStructureComponent implements OnInit {
         children: []
       }
       );
-    console.log("vcmData", this.vcmTreeData);
     setTimeout(() => {
       this.dataSource.data = null;
       this.dataSource.data = this.vcmTreeData;
@@ -350,14 +338,12 @@ export class VcmStructureComponent implements OnInit {
   }
 
   editLevelName(node) {
-    console.log(node);
     this.uniqueId1 = node.uniqueId;
     this.uniqueId = null;
     this.drawer.close();
   }
 
   editTitle(node) {
-    console.log(node);
     this.uniqueId1 = null;
     this.drawer.close();
   }
@@ -367,8 +353,6 @@ export class VcmStructureComponent implements OnInit {
   }
 
   addL3Nodes() {
-    console.log("vcmData", this.vcmTreeData);
-    console.log("this.selectedNode", this.selectedNode)
     this.uniqueId = UUID.UUID();
 
     this.vcmTreeData.filter((e) => e.title === this.selectedNode.parent)[0].children
@@ -389,7 +373,6 @@ export class VcmStructureComponent implements OnInit {
         "ntype": ''
       }
       );
-    console.log("vcmData", this.vcmTreeData);
     setTimeout(() => {
       this.dataSource.data = null;
       this.dataSource.data = this.vcmTreeData;
@@ -404,12 +387,10 @@ export class VcmStructureComponent implements OnInit {
   }
 
   createLevel1(node) {
-    console.log(node)
     this.nodeParent1 = node.title
   }
 
   addL1Nodes(node) {
-    console.log(node)
     this.vcmTreeData.filter((e) => e.title === node.title)[0].children
       .push({
         type: "Process",
@@ -425,7 +406,6 @@ export class VcmStructureComponent implements OnInit {
       );
     this.nodeParent1 = null;
     this.l1processName = '';
-    console.log("vcmTreeData", this.vcmTreeData);
     setTimeout(() => {
       this.dataSource.data = null;
       this.dataSource.data = this.vcmTreeData;
@@ -452,7 +432,6 @@ export class VcmStructureComponent implements OnInit {
         treeData2.push(e)
       })
     });
-    console.log(treeData2)
 
     treeData2.forEach(e => {
       e.children.forEach(ele => {
@@ -487,7 +466,6 @@ export class VcmStructureComponent implements OnInit {
       }
       treeData4.push(obj)
     })
-    // console.log(this.vcmTreeData)
     let req_body = {
       "id": this.vcm_data.data.id,
       "vcmuniqueId": this.vcm_data.data.vcmuniqueId,
@@ -506,7 +484,6 @@ export class VcmStructureComponent implements OnInit {
   updateVcm() {
     this.cancelEdit();
     let req_body = this.getreqBody();
-    console.log(req_body)
     this.isLoading = true;
     this.rest_api.updateVcm(req_body).subscribe(res => {
       this.isPropDisabled=false;
@@ -554,7 +531,6 @@ export class VcmStructureComponent implements OnInit {
 
   saveVCMForBpmn(e) {
     this.randomId = UUID.UUID()
-    console.log(this.selectedNode)
     if(this.selectedNode.level == "L2"){
     this.vcmTreeData.filter((e) => e.title === this.selectedNode.parent)[0].children
       .filter(n => n.uniqueId === this.selectedNode.level1UniqueId)[0].children.
@@ -596,10 +572,8 @@ export class VcmStructureComponent implements OnInit {
         );
       }
     let req_body = this.getreqBody();
-    console.log(req_body)
     this.isLoading = true;
     this.rest_api.updateVcm(req_body).subscribe(res => {
-      console.log(res)
       this.uploadCreateBpmn(e)
       this.nodeParent = null;
       this.isLoading = false;
@@ -615,7 +589,6 @@ export class VcmStructureComponent implements OnInit {
   }
 
   uploadCreateBpmn(e) {
-    console.log(e)
     // this.create_editor=false;
     this.bpmnModel.bpmnProcessName = e.processName;
     this.bpmnModel.ntype = e.ntype;
@@ -651,12 +624,10 @@ export class VcmStructureComponent implements OnInit {
   }
 
   initialSave(diagramModel: BpmnModel, target: string) {
-    console.log(diagramModel, target)
     let message;
     // diagramModel.createdTimestamp = new Date();
     // diagramModel.modifiedTimestamp = new Date();
     this.rest_api.saveBPMNprocessinfofromtemp(diagramModel).subscribe(res => {
-      console.log(res)
       // if(res['errorCode']!="2005"){
       //   let isBPSHome = this.router.url == "/pages/businessProcess/home";
 
@@ -676,7 +647,6 @@ export class VcmStructureComponent implements OnInit {
 
 
   navigateToBpsNotation(node) {
-    console.log(node)
     this.router.navigate(['/pages/businessProcess/uploadProcessModel'], { queryParams: { isShowConformance: false, bpsId: node.bpsId, ver: 0, ntype: node.ntype, vcmId: this.vcm_id } });
   }
 
@@ -685,7 +655,6 @@ export class VcmStructureComponent implements OnInit {
     if (e.addedFiles.length == 1 && e.rejectedFiles.length == 0) {
       this.uploaded_file = e.addedFiles[0];
       this.uploadedFileName = this.uploaded_file.name;
-      console.log(this.uploaded_file)
       let uploadedFileSplit = this.uploadedFileName.split('.');
       let uploadedFileExtension = uploadedFileSplit[uploadedFileSplit.length - 1];
       this.notationType = uploadedFileExtension;
@@ -715,7 +684,6 @@ export class VcmStructureComponent implements OnInit {
   
   openNodeProperties(node) {
     this.attachementsList=[]
-    console.log("node", node)
     this.selectedPropNode=node
     // this.getAttachements(node);attachments
     // this.processName = node.title;
@@ -731,7 +699,6 @@ export class VcmStructureComponent implements OnInit {
   }
 
   saveProperties(val){
-    console.log(this.vcmTreeData,this.selectedPropNode)
     if(val=="L1"){
       this.vcmTreeData.filter((e) => e.title === this.selectedPropNode.parent)[0].children
         .filter(n => n.title === this.selectedPropNode.title)[0].description = this.processDesc;
@@ -776,7 +743,6 @@ export class VcmStructureComponent implements OnInit {
       this.listOfFiles.push(e.target.files[i])
       
     } 
-    console.log(this.listOfFiles,this.attachementsList)
   }
 
   uploadFilemodalCancel(){
@@ -811,7 +777,6 @@ export class VcmStructureComponent implements OnInit {
   }
 
   onSubmitUpload(){
-    console.log(this.vcmTreeData,this.selectedPropNode)
     this.attachementsList=[]
     let idsList=[]
     this.listOfFiles.forEach(e=>{
@@ -828,7 +793,6 @@ export class VcmStructureComponent implements OnInit {
       }
       this.attachementsList.push(obj)
     })
-    console.log(this.listOfAttachemnts,this.attachementsList)
 
     let formdata = new FormData()
     for (var i = 0; i < this.listOfFiles.length; i++) {
@@ -844,7 +808,6 @@ export class VcmStructureComponent implements OnInit {
 
     let res_data
     this.rest_api.uploadVCMPropDocument(formdata).subscribe(res => {res_data=res
-      console.log(res)
       this.attachementsList.forEach(element => {
         this.listOfAttachemnts.push(element)
       });
@@ -887,7 +850,6 @@ export class VcmStructureComponent implements OnInit {
     this.isLoading=true;
     let req_body=[{"documentId":each.documentId}]
     this.rest_api.deleteAttachements(req_body).subscribe(res=>{
-    console.log(res);
     this.isLoading=false;
     // this.onOpenDocuments();
     this.listOfAttachemnts.splice(index, 1);
@@ -912,14 +874,11 @@ export class VcmStructureComponent implements OnInit {
   }
 
   onOpenDocuments(){
-    console.log(this.vcm_data)
-    console.log(this.selectedPropNode)
     let res_data:any;
     this.isLoading=true;
     this.listOfAttachemnts=[]
     let request= {"masterId":this.vcm_data.data.id,"uniqueId": this.selectedPropNode.uniqueId}
     this.rest_api.getAttachementsByIndivdualProcess(request).subscribe(res=>{res_data=res
-      console.log(res)
       this.isLoading=false;
       if(res_data){
         this.listOfAttachemnts=res_data.data

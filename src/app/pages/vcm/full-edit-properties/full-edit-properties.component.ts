@@ -56,7 +56,6 @@ export class FullEditPropertiesComponent implements OnInit {
 
   ngOnChanges(){
     this.vcmProperties=this.vcmProcess;
-    console.log(this.vcmProperties)
   }
 
   ngAfterViewInit(){
@@ -67,7 +66,6 @@ export class FullEditPropertiesComponent implements OnInit {
   descriptionView(name, i, level) {
       if (level == 'level1') {
         this.descriptionEdit = i;
-        console.log(name, i);
         this.descriptionProcessName = name.parent;
         this.descriptionviewonly = false;
         this.texarea.nativeElement.focus();
@@ -81,11 +79,9 @@ export class FullEditPropertiesComponent implements OnInit {
     }
 
     descriptionSubmit(prop, level) {
-      console.log(prop,this.vcmProperties)
       if (level == 'level1') {
         this.vcmProperties.filter((e) => e.name === prop.parent)[0].children
           .filter(n => n.title === prop.title)[0].description;
-        console.log(this.vcmProperties);
         this.descriptionEdit = '';
         this.descriptionProcessName = '';
         this.descriptionviewonly = true;
@@ -123,7 +119,6 @@ export class FullEditPropertiesComponent implements OnInit {
   }
 
   // RemoveFile(file, i: number, level) {
-  //   console.log(file, i);
   //   if (level == 'level1') {
   //     this.vcmProperties.filter((e) => e.name === file.parent)[0].children
   //       .filter(n => n.uniqueId === file.uniqueId)[0].attachments.splice(i, 1);
@@ -197,7 +192,6 @@ export class FullEditPropertiesComponent implements OnInit {
       this.listOfFiles.push(e.target.files[i])
       
     } 
-    console.log(this.listOfFiles,this.attachementsList)
   }
   removeSelectedFile(index) {
     this.listOfFiles.splice(index, 1);
@@ -225,9 +219,7 @@ export class FullEditPropertiesComponent implements OnInit {
       }
       this.attachementsList.push(obj)
     })
-    console.log(this.listOfFiles,this.attachementsList)
 
-    console.log(this.vcmProperties)
     let formdata = new FormData()
     for (var i = 0; i < this.listOfFiles.length; i++) {
       formdata.append("file", this.listOfFiles[i]);
@@ -252,13 +244,11 @@ export class FullEditPropertiesComponent implements OnInit {
   
       if (this.selectedObj.level == 'L2') {
         this.attachementsList.forEach(element => {
-          console.log("testing",element)
           this.vcmProperties.filter((e) => e.name ===this.selectedObj.parent)[0].children
         .filter(n => n.uniqueId === this.selectedObj.level1UniqueId)[0].children
         .filter(c => c.uniqueId === this.selectedObj.uniqueId)[0].attachments.push(element);
         });
       }
-      console.log(this.selectedObj.level, this.vcmProperties)
 
       this.listOfFiles = [];
       this.uploadFilemodalCancel();
@@ -273,11 +263,9 @@ export class FullEditPropertiesComponent implements OnInit {
       })
 
     });
-    console.log(this.vcmProperties);
   }
 
   getAttachementsBycategory(){
-    console.log(this.propertiesLevel)
     this.isLoading=true;
     let level=this.propertiesLevel=='level1'?"L1":"L2"
      let request={"masterId":this.selectedVcm.data.id,"parent":level}
@@ -286,7 +274,6 @@ export class FullEditPropertiesComponent implements OnInit {
     this.rest_api.getAttachementsBycategory(request).subscribe(res=>{res_data=res
       if(res_data.data)
       this.attachementsList=res_data.data
-      console.log(this.attachementsList)
     })
   }
 }

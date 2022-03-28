@@ -70,8 +70,6 @@ export class ViewPropertiesComponent implements OnInit {
   }
 
   ngOnChanges(){
-    console.log("this.vcm_data",this.vcm_data)
-    console.log("this.vcmTreeData",this.vcmTreeData)
     if(this.vcm_process != "all"){
       let filteredData=[]
       this.vcm_data.forEach(element => {
@@ -91,7 +89,6 @@ export class ViewPropertiesComponent implements OnInit {
       setTimeout(() => {
         this.assignPagenation(this.vcmTreeData1);
       }, 300);
-      console.log("vcmTreeData1 data",this.vcmTreeData1)
     }
   }
 
@@ -117,7 +114,6 @@ export class ViewPropertiesComponent implements OnInit {
           this.attachments=res_data.data
       this.dataSource= new MatTableDataSource(this.attachments);
       this.dataSource.sort=this.sort1;
-        console.log(this.attachments)
       }
       this.isLoading=false;
       })
@@ -132,7 +128,6 @@ export class ViewPropertiesComponent implements OnInit {
   }
 
   assignPagenation(data){
-    console.log(data)
     // const pageEvents$: Observable<PageEvent> = fromMatPaginator(this.paginator);
     const rows$ = of(data);
     this.totalRows$ = rows$.pipe(map(rows => rows.length));
@@ -189,7 +184,6 @@ export class ViewPropertiesComponent implements OnInit {
     if(event){  
       event.stopPropagation();
     }
-    console.log(obj)
     this.selectedCollaboratorsObj=obj
     this.collaboratorsArray=[
       {
@@ -236,7 +230,6 @@ saveCollabrators(){
     });
     req_body.push(element)  
   });
-  console.log(this.collaboratorsArray)
     this.rest_api.createCollaborators(req_body).subscribe((res:any)=>{
       if(res){
       Swal.fire({
@@ -264,7 +257,6 @@ deleteCollaborater(index){
 }
 
 viewCollaborators(template: TemplateRef<any>,obj,event){
-  console.log(obj)
   if(event){  
     event.stopPropagation();
   }
@@ -272,7 +264,6 @@ viewCollaborators(template: TemplateRef<any>,obj,event){
   // obj.uniqueId="90f813c9-6964-1b9d-a5a1-f5585fd4d31f"
   let res_data:any;
   this.rest_api.getCollaborators(obj.uniqueId).subscribe(res =>{res_data=res
-    console.log(res)
     this.isLoading=false;
     this.collaboratorsList=res_data.data
    this.viewCollaboratorsOverlay = this.modalService.show(template,{class:"modal-lr"});
@@ -300,7 +291,6 @@ viewDeleteCollaborator(obj,index){
       showCancelButton: false,
       heightAuto: false,
     })
-    console.log(res)
   })
 }
 
@@ -316,7 +306,6 @@ updateCollabrators(element){
     });
   });
   this.rest_api.updateCollaborators(req_body).subscribe(res=>{
-      console.log(res);
       this.isLoading=false;
       this.selectedIndex=null;
   });
@@ -329,7 +318,6 @@ updateCollabrators(element){
 //   this.rest_api.getAttachementsBycategory(request).subscribe(res=>{res_data=res
 //     if(res_data.data)
 //     this.attachementsList=res_data.data
-//     console.log(this.attachementsList)
 //   })
 // }
 
