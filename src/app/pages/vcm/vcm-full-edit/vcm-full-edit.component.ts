@@ -589,9 +589,10 @@ export class VcmFullEditComponent implements OnInit {
   }
 
   onSubmitUpload(){
+    this.isLoading=true;
+    this.uploadFilemodalref.hide();
     let formdata = new FormData()
     let idsList=[];
-    this.isLoading=true;
     this.listOfFiles.forEach(e=>{
       idsList.push( e.uniqueId)
       let obj={

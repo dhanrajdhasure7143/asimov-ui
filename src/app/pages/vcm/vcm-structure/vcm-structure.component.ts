@@ -777,8 +777,9 @@ export class VcmStructureComponent implements OnInit {
   }
 
   onSubmitUpload(){
-    this.attachementsList=[]
     this.isLoading=true;
+    this.uploadFilemodalref.hide();    
+    this.attachementsList=[]    
     let idsList=[]
     this.listOfFiles.forEach(e=>{
       idsList.push( e.uniqueId)

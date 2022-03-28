@@ -356,7 +356,8 @@ export class VcmPropertiesComponent implements OnInit {
   }
 
   onSubmitUpload(){
-    this.isLoading= true;
+    this.isLoading=true;
+    this.uploadFilemodalref.hide();
     this.attachementsList=[];
     let idsList=[];
     this.listOfFiles.forEach(e=>{
