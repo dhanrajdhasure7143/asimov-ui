@@ -188,6 +188,7 @@ export class FullEditPropertiesComponent implements OnInit {
       e.target.files[i]['convertedsize'] = this.convertFileSize(e.target.files[i].size);
       e.target.files[i]['fileName'] =e.target.files[i]['name'];
       e.target.files[i]['uniqueId'] = randomId;
+      e.target.files[i]['documentId'] = randomId;
       e.target.files[i]['fileDescription'] = ''
       this.listOfFiles.push(e.target.files[i])
       
@@ -211,6 +212,7 @@ export class FullEditPropertiesComponent implements OnInit {
         name:e.name,
         fileName: e['name'],
         uniqueId : e.uniqueId,
+        documentId: e.uniqueId,
         convertedsize : e['convertedsize'],
         fileDescription: e['fileDescription'],
         size: e['size'],
