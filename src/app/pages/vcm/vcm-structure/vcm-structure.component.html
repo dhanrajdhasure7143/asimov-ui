@@ -90,11 +90,11 @@
                                                     <span style="margin-right:6px;">{{i + 1}}.</span>
                                                     <span class="fname">{{each.fileName}}</span>
                                                     <span class="fbtns">
-                                                        <span class="deleteattachment">
-                                                            <a href="data:image/png;base64,{{each.filedata}}" download="{{each.fileName}}" *ngIf="isPropDisabled">
+                                                        <span class="deleteattachment" (click)="downloadAttachement(each)">
+                                                            <!-- <a href="data:image/png;base64,{{each.filedata}}" download="{{each.fileName}}" *ngIf="isPropDisabled"> -->
                                                                 <img src="../../../../assets/images/Admin/download-black.svg" class="default-img testplus" >
                                                                 <img src="../../../../assets/images/Admin/download-blue.svg" class="hover-img testplus" >
-                                                            </a>
+                                                            <!-- </a> -->
                                                         </span>
                                                         <span *ngIf="!isPropDisabled">
                                                             <a>

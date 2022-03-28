@@ -83,6 +83,7 @@ export class VcmStructureComponent implements OnInit {
   listOfFiles:any=[];
   uploadFilemodalref: BsModalRef;
   attachementsList=[];
+  user_details: any;
 
   constructor(private router: Router, private bpmnservice: SharebpmndiagramService,
     private rest_api: RestApiService,
@@ -96,6 +97,7 @@ export class VcmStructureComponent implements OnInit {
 
   ngOnInit(): void {
     this.treeControl.dataNodes = this.dataSource.data;
+    this.dt.logged_userData.subscribe(res => { this.user_details = res })
     this.getselectedVcm();
     this.getProcessOwnersList();
   }
@@ -808,6 +810,7 @@ export class VcmStructureComponent implements OnInit {
     formdata.append("processName",this.selectedPropNode.title);
     formdata.append("vcmuniqueId",this.vcm_data.data.vcmuniqueId);
     formdata.append("fileUniqueIds",JSON.stringify(idsList));
+    formdata.append("uploadedBy",this.user_details.firstName + " " + this.user_details.lastName);
 
     let res_data
     this.rest_api.uploadVCMPropDocument(formdata).subscribe(res => {res_data=res
@@ -887,6 +890,23 @@ export class VcmStructureComponent implements OnInit {
         this.listOfAttachemnts=res_data.data
       }
         // this.listOfAttachemnts
+    })
+  }
+
+  downloadAttachement(ele){
+    console.log(ele)
+    this.isLoading=true;
+    let res_data:any;
+    let request= {"masterId":this.vcm_data.data.id,"documentId": ele.uniqueId}
+    this.rest_api.getAttachementsById(request).subscribe(res=>{res_data=res
+      console.log(res)
+    this.isLoading= false;
+      let response:any=res_data.data.filedata
+    var link = document.createElement('a');
+    let extension=((((ele.toString()).split("")).reverse()).join("")).split(".")[0].split("").reverse().join("")
+    link.download = res_data.data.fileName;
+    link.href =((extension=='png' ||extension=='jpg' ||extension=='svg' ||extension=='gif')?`data:image/${extension};base64,${response}`:`data:application/${extension};base64,${response}`) ;
+    link.click();
     })
   }
 

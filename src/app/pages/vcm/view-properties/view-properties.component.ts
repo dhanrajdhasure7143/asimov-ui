@@ -141,7 +141,7 @@ export class ViewPropertiesComponent implements OnInit {
   }
 
   ondeleteAttachements(data) {
-    let req_body=[{"documentId":data.uniqueId}]
+    let req_body=[{"documentId":data.documentId}]
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",

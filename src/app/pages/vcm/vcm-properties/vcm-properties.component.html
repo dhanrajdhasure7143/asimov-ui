@@ -290,10 +290,10 @@
                                         <td *ngIf="level2.title">{{level2.title}}</td>
                                         <td *ngIf="level2.attachments">
                                             <ng-container *ngFor="let doc of level2.attachments;let j = index">
-                                                <span class="docpill">
+                                                <div class="docpill">
                                                     {{j+1}} . {{doc.name}}                                                   
                                                     <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2" (click)="RemoveFile(level2,j,'level2',doc)" />
-                                                </span>
+                                                </div>
                                             </ng-container>
                                         </td>
                                         <td *ngIf="level2.attachments">
