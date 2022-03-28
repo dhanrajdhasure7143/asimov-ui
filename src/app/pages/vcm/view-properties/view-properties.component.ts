@@ -10,6 +10,9 @@ import {MatPaginator} from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import * as JSZip from 'jszip';
+import { saveAs } from "file-saver";
+import * as FileSaver from 'file-saver';
 
 @Component({
   selector: 'app-view-properties',
@@ -52,7 +55,8 @@ export class ViewPropertiesComponent implements OnInit {
   selectedIndex:number;
   selectedCollaboratorsObj:any;
   collaboratorsRoles=["Executive"]
-  collaboratorsInterests=["Informed","Accountable"]
+  collaboratorsInterests=["Informed","Accountable"];
+  attachment_namesArray:any=[];
 
   constructor(private router: Router, private rest_api: RestApiService,
     private route: ActivatedRoute, private modalService: BsModalService) {
@@ -320,5 +324,32 @@ updateCollabrators(element){
 //     this.attachementsList=res_data.data
 //   })
 // }
+
+downloadAllFiles(){
+  this.attachment_namesArray=[]
+  this.attachments.forEach((e,i)=>{
+    let name= e.fileName.split('.')
+    if(this.attachment_namesArray.includes(e.fileName)){
+      this.attachment_namesArray.push(name[0]+'('+i+').'+name[1]);
+      e["file_name"]=name[0]+'('+i+').'+name[1]
+    }else{
+      this.attachment_namesArray.push(e.fileName);
+      e["file_name"]=e.fileName
+    }
+  })
+  let _self=this;
+  var zip = new JSZip();
+  this.attachments.forEach((value,i) => {
+    if(value.type=='jpg'|| 'PNG' || 'svg' || 'jpeg' || 'png'){
+    zip.file(value.file_name,value.filedata,{base64:true});
+    }else{
+    zip.file(value.file_name,value.filedata);
+    }
+  });
+  // zip.file(this.attachments[1].file_name,this.all_attachements[1].filedata,{base64:true});
+  zip.generateAsync({ type: "blob" }).then(function (content) {
+    FileSaver.saveAs(content, _self.vcm_resData.data.vcmName+".zip");
+  });
+}
 
 }
