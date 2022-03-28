@@ -10,6 +10,9 @@ import {MatPaginator} from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import * as JSZip from 'jszip';
+import { saveAs } from "file-saver";
+import * as FileSaver from 'file-saver';
 
 @Component({
   selector: 'app-view-properties',
@@ -30,7 +33,7 @@ export class ViewPropertiesComponent implements OnInit {
   displayedRows$: Observable<any[]>;
   totalRows$: Observable<number>;
   @ViewChild(MatSort,{static:false}) sort: MatSort;
-  @ViewChild(MatSort,{static:false}) sort1: MatSort;
+  @ViewChild("sort1",{static:false}) sort1: MatSort;
   @ViewChild('sort3',{static:false}) sort3: MatSort;
   // @ViewChild(MatPaginator,{static:false}) paginator: MatPaginator;
   dataSource:MatTableDataSource<any>;
@@ -51,9 +54,9 @@ export class ViewPropertiesComponent implements OnInit {
   stackHolders_list:any=[];
   selectedIndex:number;
   selectedCollaboratorsObj:any;
-  isLoading1:boolean=false;
   collaboratorsRoles=["Executive"]
-  collaboratorsInterests=["Informed","Accountable"]
+  collaboratorsInterests=["Informed","Accountable"];
+  attachment_namesArray:any=[];
 
   constructor(private router: Router, private rest_api: RestApiService,
     private route: ActivatedRoute, private modalService: BsModalService) {
@@ -67,11 +70,10 @@ export class ViewPropertiesComponent implements OnInit {
   ngOnInit(): void {
     // this.getAttachements();
     this.dataSource= new MatTableDataSource(this.attachments);
+    this.dataSource.sort=this.sort;
   }
 
   ngOnChanges(){
-    console.log("this.vcm_data",this.vcm_data)
-    console.log("this.vcmTreeData",this.vcmTreeData)
     if(this.vcm_process != "all"){
       let filteredData=[]
       this.vcm_data.forEach(element => {
@@ -90,14 +92,15 @@ export class ViewPropertiesComponent implements OnInit {
       });
       setTimeout(() => {
         this.assignPagenation(this.vcmTreeData1);
-      }, 500);
-      console.log("vcmTreeData1 data",this.vcmTreeData1)
+      }, 300);
     }
   }
 
   ngAfterViewInit(){
-    this.getAttachements();
-    this.getApproverList();
+    setTimeout(() => {
+      this.getAttachements();
+      this.getApproverList();
+    }, 100);
   }
 
   ngDestroy(){
@@ -114,8 +117,7 @@ export class ViewPropertiesComponent implements OnInit {
         if(res_data.data){
           this.attachments=res_data.data
       this.dataSource= new MatTableDataSource(this.attachments);
-      this.dataSource.sort=this.sort;
-        console.log(this.attachments)
+      this.dataSource.sort=this.sort1;
       }
       this.isLoading=false;
       })
@@ -130,7 +132,6 @@ export class ViewPropertiesComponent implements OnInit {
   }
 
   assignPagenation(data){
-    console.log(data)
     // const pageEvents$: Observable<PageEvent> = fromMatPaginator(this.paginator);
     const rows$ = of(data);
     this.totalRows$ = rows$.pipe(map(rows => rows.length));
@@ -187,7 +188,6 @@ export class ViewPropertiesComponent implements OnInit {
     if(event){  
       event.stopPropagation();
     }
-    console.log(obj)
     this.selectedCollaboratorsObj=obj
     this.collaboratorsArray=[
       {
@@ -234,7 +234,6 @@ saveCollabrators(){
     });
     req_body.push(element)  
   });
-  console.log(this.collaboratorsArray)
     this.rest_api.createCollaborators(req_body).subscribe((res:any)=>{
       if(res){
       Swal.fire({
@@ -262,7 +261,6 @@ deleteCollaborater(index){
 }
 
 viewCollaborators(template: TemplateRef<any>,obj,event){
-  console.log(obj)
   if(event){  
     event.stopPropagation();
   }
@@ -270,7 +268,6 @@ viewCollaborators(template: TemplateRef<any>,obj,event){
   // obj.uniqueId="90f813c9-6964-1b9d-a5a1-f5585fd4d31f"
   let res_data:any;
   this.rest_api.getCollaborators(obj.uniqueId).subscribe(res =>{res_data=res
-    console.log(res)
     this.isLoading=false;
     this.collaboratorsList=res_data.data
    this.viewCollaboratorsOverlay = this.modalService.show(template,{class:"modal-lr"});
@@ -298,7 +295,6 @@ viewDeleteCollaborator(obj,index){
       showCancelButton: false,
       heightAuto: false,
     })
-    console.log(res)
   })
 }
 
@@ -314,7 +310,6 @@ updateCollabrators(element){
     });
   });
   this.rest_api.updateCollaborators(req_body).subscribe(res=>{
-      console.log(res);
       this.isLoading=false;
       this.selectedIndex=null;
   });
@@ -327,8 +322,34 @@ updateCollabrators(element){
 //   this.rest_api.getAttachementsBycategory(request).subscribe(res=>{res_data=res
 //     if(res_data.data)
 //     this.attachementsList=res_data.data
-//     console.log(this.attachementsList)
 //   })
 // }
+
+downloadAllFiles(){
+  this.attachment_namesArray=[]
+  this.attachments.forEach((e,i)=>{
+    let name= e.fileName.split('.')
+    if(this.attachment_namesArray.includes(e.fileName)){
+      this.attachment_namesArray.push(name[0]+'('+i+').'+name[1]);
+      e["file_name"]=name[0]+'('+i+').'+name[1]
+    }else{
+      this.attachment_namesArray.push(e.fileName);
+      e["file_name"]=e.fileName
+    }
+  })
+  let _self=this;
+  var zip = new JSZip();
+  this.attachments.forEach((value,i) => {
+    if(value.type=='jpg'|| 'PNG' || 'svg' || 'jpeg' || 'png'){
+    zip.file(value.file_name,value.filedata,{base64:true});
+    }else{
+    zip.file(value.file_name,value.filedata);
+    }
+  });
+  // zip.file(this.attachments[1].file_name,this.all_attachements[1].filedata,{base64:true});
+  zip.generateAsync({ type: "blob" }).then(function (content) {
+    FileSaver.saveAs(content, _self.vcm_resData.data.vcmName+".zip");
+  });
+}
 
 }

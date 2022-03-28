@@ -76,7 +76,7 @@ export class VcmPropertiesComponent implements OnInit {
         this.descriptionEdit = i;
         this.descriptionProcessName = name.parent;
         this.descriptionviewonly = false;
-        this.texarea.nativeElement.focus();
+        // this.texarea.nativeElement.focus();
       }
       else {
         this.descriptionEdit = i;
@@ -179,7 +179,7 @@ export class VcmPropertiesComponent implements OnInit {
 
   RemoveFile(file, i: number, level,e) {
     this.isLoading=true;
-    let req_body=[{"documentId":e.documentId}]
+    let req_body=[{"documentId":e.uniqueId}]
     this.rest_api.deleteAttachements(req_body).subscribe(res=>{
     this.isLoading=false;
     if (level == 'level1') {
@@ -356,7 +356,8 @@ export class VcmPropertiesComponent implements OnInit {
   }
 
   onSubmitUpload(){
-    this.isLoading= true;
+    this.isLoading=true;
+    this.uploadFilemodalref.hide();
     this.attachementsList=[];
     let idsList=[];
     this.listOfFiles.forEach(e=>{

@@ -73,8 +73,6 @@ export class EditVcmComponent implements OnInit {
   }
 
   ngOnChanges() {
-    console.log(this.vcmData);
-    console.log("responseData",this.res_data)
     this.dataSource.data = this.vcmData;
     this.treeControl.dataNodes = this.dataSource.data;
     this.vprocess_name=this.res_data.vcmName
@@ -85,7 +83,6 @@ export class EditVcmComponent implements OnInit {
   }
 
   navigateToNoytation(v) {
-    console.log(v)
     let pathValues = v.bpsId + "&ver=0&ntype=" + v.ntype
     this.router.navigateByUrl('/pages/businessProcess/uploadProcessModel?bpsId=' + pathValues);
     // http://localhost:4300/#/pages/businessProcess/uploadProcessModel?bpsId=5831e9ea-2fcf-af70-a460-7c9623cba4bd&ver=0&ntype=bpmn
@@ -104,7 +101,6 @@ export class EditVcmComponent implements OnInit {
   }
 
   uploadCreateBpmn(e) {
-    console.log(e)
     this.randomId = UUID.UUID();
     // this.create_editor=false;
     this.bpmnModel.bpmnProcessName = e.processName;
@@ -145,7 +141,6 @@ export class EditVcmComponent implements OnInit {
     // diagramModel.createdTimestamp = new Date();
     // diagramModel.modifiedTimestamp = new Date();
     this.rest_api.saveBPMNprocessinfofromtemp(diagramModel).subscribe(res => {
-      console.log(res)
       // if(res['errorCode']!="2005"){
       //   let isBPSHome = this.router.url == "/pages/businessProcess/home";
 
@@ -188,8 +183,6 @@ export class EditVcmComponent implements OnInit {
   }
 
   editLevel3() {
-    console.log("vcmData",this.vcmData);
-    console.log("this.selectedNode",this.selectedNode)
     this.uniqueId=UUID.UUID();
     this.isShowInput=false
 
@@ -209,7 +202,6 @@ export class EditVcmComponent implements OnInit {
           attachments:[]
         }
       );
-    console.log("vcmData",this.vcmData);
     // this.uniqueId=null;
 
     setTimeout(() => {
@@ -220,7 +212,6 @@ export class EditVcmComponent implements OnInit {
     }, 200);
   }
   onSelectedNode(node) {
-    console.log(node);
     this.selectedNode = node
   }
 
@@ -229,11 +220,9 @@ export class EditVcmComponent implements OnInit {
     this.childParent = this.selectedNode.childParent;
     this.title = this.selectedNode.title;
     this.uniqueId = this.selectedNode.uniqueId;
-    console.log(this.selectedNode)
   }
 
   onCreateLevel1(node) {
-    console.log(node)
 
     this.l1UniqueId = node.uniqueId;
     this.uniqueId = node.uniqueId;
@@ -241,7 +230,6 @@ export class EditVcmComponent implements OnInit {
   }
 
   editLevelName(node) {
-    console.log(node);
     // this.levelNameTitle = node.title;
     // this.levelNameChild = node.childParent;
     // this.lavelNameParent = node.parent;
@@ -250,21 +238,16 @@ export class EditVcmComponent implements OnInit {
     this.drawer.close();
   }
   editLevelName2(){
-    console.log("test2")
   }
   editLevelName3(){
-    console.log("test2")
   }
   editTitle(node) {
-    console.log(node);
     this.uniqueId1 = null;
-    console.log(this.vcmData);
     this.levelNameShow = false;
     this.drawer.close();
   }
 
   openNodeProperties(node) {
-    console.log(node);
     // this.getAttachements(node);
     this.description = node.description;
     this.editTitleName = node.title;
@@ -276,8 +259,6 @@ export class EditVcmComponent implements OnInit {
   }
 
   editProcessOwner() {
-    console.log(this.vcmData);
-    console.log(this.editLevelParent);
     this.vcmData.filter((e) => e.parent === this.editLevelParent && e.title == this.editTitleName)
     [0].processOwner = this.processOwner;
     // if (this.editLevel == 'L1') {
@@ -292,7 +273,6 @@ export class EditVcmComponent implements OnInit {
     //     // .filter(n => n.title === this.editLevelChild)[0].children
     //     // .filter(t=>t.title == this.editTitleName)[0].processOwner = this.processOwner;
     // }
-    console.log(this.vcmData);
   }
 
   editDescription() {
@@ -307,13 +287,10 @@ export class EditVcmComponent implements OnInit {
     //     .filter(n => n.title === this.editLevelChild)[0].children
     //     .filter(t=>t.title == this.editTitleName)[0].description = this.description;
     // }
-    console.log(this.vcmData);
   }
 
   RemoveFile(file, i: number) {
     // this.fileName.splice(i, 1);
-    console.log(file, i);
-    console.log(this.editLevelParent , this.editTitleName);
     if (this.editLevel == 'L1') {
       this.vcmData.filter((e) => e.name === this.editLevelParent)[0].children
         .filter(n => n.title === this.editTitleName)[0].attachments.splice(i, 1);
@@ -326,8 +303,6 @@ export class EditVcmComponent implements OnInit {
   }
 
   viewProperties(node){
-    console.log(this.vcmData);
-    console.log(node);
     this.node_data = [];
     this.vcm_data["mainParent"] = node.title
     this.vcmData.forEach(element => {
@@ -335,7 +310,6 @@ export class EditVcmComponent implements OnInit {
         this.node_data.push(element)
       }
     });
-    console.log(this.node_data);
     
     this.isViewProperties = true;
     this.isShow = false;
@@ -352,7 +326,6 @@ export class EditVcmComponent implements OnInit {
     let res_data
     this.rest_api.getselectedVcmById(this.vcm_id).subscribe(res=>{res_data=res
       this.isLoading=false;
-      console.log(res);
 
       if(res){
       this.vcm_data=res_data
@@ -380,7 +353,6 @@ export class EditVcmComponent implements OnInit {
         }
       })
     })
-    console.log(objData)
 
     this.vcmData.forEach(e=>{
       objData.forEach(e1=>{
@@ -413,7 +385,6 @@ export class EditVcmComponent implements OnInit {
         }
       })
     })
-    console.log(objData)
     // this.vcmProcess = this.dataSource.data;
     this.vcmProcess = objData;
     this.dataSource.data=objData;
@@ -428,7 +399,6 @@ export class EditVcmComponent implements OnInit {
 
 //   getAttachements(node_obj){
 //     // this.isLoading=true;
-//     console.log(node_obj);
 //     let reqBody={
 //       "masterId": this.vcmData.data.id,
 //       "parent": node_obj.parent
@@ -436,7 +406,6 @@ export class EditVcmComponent implements OnInit {
 //     let res_data
 //     this.attachments=[];
 //   this.rest_api.getvcmAttachements(reqBody).subscribe(res=>{res_data=res
-//     console.log(res)
 //     res_data.data.forEach(element => {
 //       if(element.uniqueId== node_obj.uniqueId){
 //         this.attachments.push(element)
@@ -447,8 +416,6 @@ export class EditVcmComponent implements OnInit {
 // }
 
 addL1Nodes(node){
-  console.log(node)
-  console.log(this.vcmData);
   this.uniqueId=UUID.UUID();
 
   this.vcmData.filter((e) => e.title === node.parent)[0].children
@@ -466,7 +433,6 @@ addL1Nodes(node){
         children:[]
       }
     );
-  console.log("vcmData",this.vcmData);
   setTimeout(() => {
     this.dataSource.data = null;
     this.dataSource.data = this.vcmData;
@@ -477,8 +443,6 @@ addL1Nodes(node){
 }
 
 addL3Nodes(){
-console.log("vcmData",this.vcmData);
-    console.log("this.selectedNode",this.selectedNode)
     this.uniqueId=UUID.UUID();
     this.isShowInput=false
 
@@ -498,7 +462,6 @@ console.log("vcmData",this.vcmData);
           attachments:[]
         }
       );
-    console.log("vcmData",this.vcmData);
     // this.uniqueId=null;
 
     setTimeout(() => {

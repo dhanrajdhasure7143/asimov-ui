@@ -152,16 +152,13 @@ export class VcmFullEditComponent implements OnInit {
   removeChild(name) {
     var index = TREE_DATA.filter(e => e.name === name.parent)[0]
       .children.findIndex(c => c.uniqueId === name.uniqueId);
-      console.log(index);
     TREE_DATA.filter(e => e.name == name.parent)[0].children.splice(index, 1);
     this.vcmProcess = null;
     this.vcmProcess = TREE_DATA;
     this.drawer.close();
-    console.log(this.vcmProcess);
   }
 
   addLevel2Process() {
-    console.log(this.level1process);
     let record = {
       type: 'Process',
       title: this.addLevel2,
@@ -176,7 +173,6 @@ export class VcmFullEditComponent implements OnInit {
     };
     var index = TREE_DATA.filter(e => e.name === this.level1process.parent)[0]
       .children.findIndex(c => c.uniqueId === this.level1process.uniqueId);
-console.log(this.level1process,index)
     if (TREE_DATA.filter(e => e.name == this.level1process.parent)[0]
       .children[index].children) {
       TREE_DATA.filter(e => e.name == this.level1process.parent)[0]
@@ -197,10 +193,8 @@ console.log(this.level1process,index)
 
 
   level2removeChild(name) {
-    console.log(name);
     var processIndex = TREE_DATA.findIndex(e => e.name === name.parent);
     var processData = TREE_DATA[processIndex]['children'];
-    console.log(processData)
     var parentIndex = processData.findIndex(e => e.uniqueId === name.level1UniqueId);
     var parentData = processData[parentIndex]['children'];
     var childIndex = parentData.findIndex(e => e.title === name.title);
@@ -208,7 +202,6 @@ console.log(this.level1process,index)
     this.vcmProcess = null;
     this.vcmProcess = TREE_DATA;
     this.drawer.close();
-    console.log(this.vcmProcess);
   }
 
   showPropertiesPanel(item, obj, level) {
@@ -250,8 +243,6 @@ console.log(this.level1process,index)
   }
 
   RemoveFile(each, i: number) {
-    console.log(each)
-    // console.log(TREE_DATA);
     this.isLoading=true;
     let req_body=[{"documentId":each.documentId}]
     this.rest_api.deleteAttachements(req_body).subscribe(res=>{
@@ -309,7 +300,6 @@ console.log(this.level1process,index)
     this.isLoading=true;
     this.rest_api.getselectedVcmById(this.vcm_id).subscribe(res=>{this.selectedVcm=res
       this.isLoading=false;
-      console.log(res);
       if(res){
         this.vcmName=this.selectedVcm.data.vcmName;
         this.process_ownerName=this.selectedVcm.data.processOwner;
@@ -358,7 +348,6 @@ console.log(this.level1process,index)
       objData.forEach(e1 => {
         if (e.level == "L3") {
           if (e.parent == e1.title) {
-            console.log(e, e1)
             e1.children.forEach(e2 => {
               if (e2.uniqueId == e.level1UniqueId) {
                 e2.children.forEach(e3 => {
@@ -393,13 +382,11 @@ console.log(this.level1process,index)
   }
 
   onCreateLevel3(level2,item){
-    console.log(level2,item);
     this.selectedNode_obj = level2;
     this.inputUniqueId = this.selectedNode_obj.uniqueId;
   }
 
   addL3Process(level2, item) {
-    console.log(level2, item);
     let record = {
       "level": "L3",
         "parent": level2.parent,
@@ -422,11 +409,9 @@ console.log(this.level1process,index)
     this.vcmProcess = TREE_DATA;
     this.l3ProcessName = '';
     this.inputUniqueId = '';
-    console.log(this.vcmProcess)
   }
 
   l3remove(l3){
-    console.log(l3);
     var processIndex = TREE_DATA.findIndex(e => e.name === l3.parent);
     var processData = TREE_DATA[processIndex]['children'];
     var parentIndex = processData.findIndex(e => e.uniqueId === l3.level1UniqueId);
@@ -437,15 +422,12 @@ console.log(this.level1process,index)
     TREE_DATA[processIndex]['children'][parentIndex]['children'][childIndex]['children'].splice(childIndexL3, 1);
     this.vcmProcess = null;
     this.vcmProcess = TREE_DATA;
-    console.log(this.vcmProcess);
   }
 
   updateVcm(){
     let req_body=this.getreqBody();
-    console.log("req_body",req_body)
     this.isLoading=true;
     this.rest_api.updateVcm(req_body).subscribe(res=>{
-    console.log(res)
     this.isLoading=false;
     Swal.fire({
       title: 'Success',
@@ -506,7 +488,7 @@ console.log(this.level1process,index)
       "title": e.title,
       "parent": e.parent,
       "children": [],
-      "attachments": [],
+      "attachments": e.attachments,
       }
       if(e.level1UniqueId){
         obj["level1UniqueId"]=e.level1UniqueId
@@ -522,7 +504,6 @@ console.log(this.level1process,index)
       }
       treeData4.push(obj)
     })
-    // console.log(this.vcmTreeData)
     let req_body={
       "id": this.selectedVcm.data.id,
       "vcmuniqueId": this.selectedVcm.data.vcmuniqueId,
@@ -539,19 +520,16 @@ console.log(this.level1process,index)
   }
 
   editLevelName(node) {
-    console.log(node);
     this.uniqueId1 = node.uniqueId;
     this.uniqueId = null;
     this.drawer.close();
   }
   editTitleName(node) {
-    console.log(node);
     this.uniqueId1 = null;
     this.drawer.close();
   }
 
     saveProperties(val){
-    console.log(this.vcmProcess,this.selectedObj)
     if(val=="L1"){
       this.vcmProcess.filter((e) => e.title === this.selectedObj.parent)[0].children
         .filter(n => n.title === this.selectedObj.title)[0].description = this.editProcessDescription;
@@ -611,6 +589,8 @@ console.log(this.level1process,index)
   }
 
   onSubmitUpload(){
+    this.isLoading=true;
+    this.uploadFilemodalref.hide();
     let formdata = new FormData()
     let idsList=[];
     this.listOfFiles.forEach(e=>{
@@ -619,6 +599,7 @@ console.log(this.level1process,index)
         name:e.name,
         fileName: e['name'],
         uniqueId : e.uniqueId,
+        documentId:e.uniqueId,
         convertedsize : e['convertedsize'],
         fileDescription: e['fileDescription'],
         size: e['size'],
@@ -639,7 +620,6 @@ console.log(this.level1process,index)
     formdata.append("fileUniqueIds",JSON.stringify(idsList));
     let res_data
     this.rest_api.uploadVCMPropDocument(formdata).subscribe(res => {res_data=res
-      console.log(res)
       // this.listOfAttachemnts =  this.listOfFiles;
       // this.onOpenDocuments()
       this.isLoading = false;
@@ -685,7 +665,6 @@ console.log(this.level1process,index)
   }
 
   readEmitValue(event){
-    console.log(event)
     this.isShow=false;
     if(event.updateStatus){
       TREE_DATA = event.data

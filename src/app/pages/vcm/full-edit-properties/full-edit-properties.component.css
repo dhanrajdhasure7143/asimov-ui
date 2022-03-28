@@ -183,3 +183,6 @@ span.testtooltip {
 .prop_docs th:last-child {
     width: 10%;
 }
+.modelprfooter{
+    z-index: 2000 !important;
+}

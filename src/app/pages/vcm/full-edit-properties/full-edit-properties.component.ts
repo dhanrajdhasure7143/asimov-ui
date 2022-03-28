@@ -56,7 +56,6 @@ export class FullEditPropertiesComponent implements OnInit {
 
   ngOnChanges(){
     this.vcmProperties=this.vcmProcess;
-    console.log(this.vcmProperties)
   }
 
   ngAfterViewInit(){
@@ -67,7 +66,6 @@ export class FullEditPropertiesComponent implements OnInit {
   descriptionView(name, i, level) {
       if (level == 'level1') {
         this.descriptionEdit = i;
-        console.log(name, i);
         this.descriptionProcessName = name.parent;
         this.descriptionviewonly = false;
         this.texarea.nativeElement.focus();
@@ -81,11 +79,9 @@ export class FullEditPropertiesComponent implements OnInit {
     }
 
     descriptionSubmit(prop, level) {
-      console.log(prop,this.vcmProperties)
       if (level == 'level1') {
         this.vcmProperties.filter((e) => e.name === prop.parent)[0].children
           .filter(n => n.title === prop.title)[0].description;
-        console.log(this.vcmProperties);
         this.descriptionEdit = '';
         this.descriptionProcessName = '';
         this.descriptionviewonly = true;
@@ -123,7 +119,6 @@ export class FullEditPropertiesComponent implements OnInit {
   }
 
   // RemoveFile(file, i: number, level) {
-  //   console.log(file, i);
   //   if (level == 'level1') {
   //     this.vcmProperties.filter((e) => e.name === file.parent)[0].children
   //       .filter(n => n.uniqueId === file.uniqueId)[0].attachments.splice(i, 1);
@@ -140,22 +135,22 @@ export class FullEditPropertiesComponent implements OnInit {
     this.isLoading=false;
     // this.onOpenDocuments();
     if (level == 'level1') {
-      this.vcmProperties.filter((e) => e.title === this.selectedObj.parent)[0].children
-        .filter(n => n.uniqueId === this.selectedObj.uniqueId)[0].attachments.splice(i, 1);
+      this.vcmProperties.filter((e) => e.title === each.parent)[0].children
+        .filter(n => n.uniqueId === each.uniqueId)[0].attachments.splice(i, 1);
     }
 
-    if (this.selectedObj.level == 'L2') {
-      this.vcmProperties.filter((e) => e.title ===this.selectedObj.parent)[0].children
-      .filter(n => n.uniqueId === this.selectedObj.level1UniqueId)[0].children
-      .filter(c => c.uniqueId === this.selectedObj.uniqueId)[0].attachments.splice(i, 1);
+    if (level == 'level2') {
+      this.vcmProperties.filter((e) => e.title ===each.parent)[0].children
+      .filter(n => n.uniqueId === each.level1UniqueId)[0].children
+      .filter(c => c.uniqueId === each.uniqueId)[0].attachments.splice(i, 1);
     }
 
-    if (this.selectedObj.level == 'L3') {
-      this.vcmProperties.filter((e) => e.title ===this.selectedObj.parent)[0].children
-      .filter(n => n.uniqueId === this.selectedObj.level1UniqueId)[0].children
-      .filter(m => m.uniqueId === this.selectedObj.level2UniqueId)[0].children
-      .filter(c => c.uniqueId === this.selectedObj.uniqueId)[0].attachments.splice(i, 1);
-    }
+    // if (level == 'L3') {
+    //   this.vcmProperties.filter((e) => e.title ===each.parent)[0].children
+    //   .filter(n => n.uniqueId === each.level1UniqueId)[0].children
+    //   .filter(m => m.uniqueId === each.level2UniqueId)[0].children
+    //   .filter(c => c.uniqueId === each.uniqueId)[0].attachments.splice(i, 1);
+    // }
     })
   }
 
@@ -193,11 +188,11 @@ export class FullEditPropertiesComponent implements OnInit {
       e.target.files[i]['convertedsize'] = this.convertFileSize(e.target.files[i].size);
       e.target.files[i]['fileName'] =e.target.files[i]['name'];
       e.target.files[i]['uniqueId'] = randomId;
+      e.target.files[i]['documentId'] = randomId;
       e.target.files[i]['fileDescription'] = ''
       this.listOfFiles.push(e.target.files[i])
       
     } 
-    console.log(this.listOfFiles,this.attachementsList)
   }
   removeSelectedFile(index) {
     this.listOfFiles.splice(index, 1);
@@ -209,14 +204,17 @@ export class FullEditPropertiesComponent implements OnInit {
   }
 
   onSubmitUpload(){
+    this.isLoading=true;
+    this.uploadFilemodalref.hide();
     this.attachementsList=[];
-    let idsList=[];
+    let idsList=[];    
     this.listOfFiles.forEach(e=>{
       idsList.push( e.uniqueId)
       let obj={
         name:e.name,
         fileName: e['name'],
         uniqueId : e.uniqueId,
+        documentId: e.uniqueId,
         convertedsize : e['convertedsize'],
         fileDescription: e['fileDescription'],
         size: e['size'],
@@ -225,19 +223,17 @@ export class FullEditPropertiesComponent implements OnInit {
       }
       this.attachementsList.push(obj)
     })
-    console.log(this.listOfFiles,this.attachementsList)
 
-    console.log(this.vcmProperties)
     let formdata = new FormData()
     for (var i = 0; i < this.listOfFiles.length; i++) {
       formdata.append("file", this.listOfFiles[i]);
     }
     formdata.append("vcmLevel",this.selectedObj.level);
     formdata.append("uniqueId",this.selectedObj.uniqueId);
-    formdata.append("masterId","000");
+    formdata.append("masterId",this.selectedVcm.data.id);
     formdata.append("parent",this.selectedObj.parent);
     formdata.append("processName",this.selectedObj.title);
-    formdata.append("vcmuniqueId",this.vcmProperties[0].uniqueId);
+    formdata.append("vcmuniqueId",this.selectedVcm.data.uniqueId);
     formdata.append("fileUniqueIds",JSON.stringify(idsList));
 
     this.rest_api.uploadVCMPropDocument(formdata).subscribe(res => {
@@ -257,6 +253,7 @@ export class FullEditPropertiesComponent implements OnInit {
         .filter(c => c.uniqueId === this.selectedObj.uniqueId)[0].attachments.push(element);
         });
       }
+
       this.listOfFiles = [];
       this.uploadFilemodalCancel();
     },err=>{
@@ -270,11 +267,9 @@ export class FullEditPropertiesComponent implements OnInit {
       })
 
     });
-    console.log(this.vcmProperties);
   }
 
   getAttachementsBycategory(){
-    console.log(this.propertiesLevel)
     this.isLoading=true;
     let level=this.propertiesLevel=='level1'?"L1":"L2"
      let request={"masterId":this.selectedVcm.data.id,"parent":level}
@@ -283,7 +278,6 @@ export class FullEditPropertiesComponent implements OnInit {
     this.rest_api.getAttachementsBycategory(request).subscribe(res=>{res_data=res
       if(res_data.data)
       this.attachementsList=res_data.data
-      console.log(this.attachementsList)
     })
   }
 }

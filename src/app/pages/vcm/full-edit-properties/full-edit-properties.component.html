@@ -4,7 +4,7 @@
             <span class="module-back-button" (click)="backToFullEdit()">
                 <i aria-hidden="true" class="fas fa-arrow-left"></i>
             </span>
-            <span class="module-header-title">Properties</span>
+            <span class="module-header-title">{{propertiesLevel=='level1'?"Level 1":"Level 2"}} - Properties</span>
         </div>
         <div class="ml-auto submit">
             <button class="btn btn-primary" (click)="updateProperties()">Update</button>
@@ -243,7 +243,7 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Level</th>
+                                <!-- <th>Level</th> -->
                                 <th>Process Name</th>
                                 <th>Documents</th>
                                 <th>Description</th>
@@ -254,15 +254,15 @@
                             <ng-container *ngFor="let prop of vcmProperties">
                                 <ng-container *ngFor="let name of prop.children;let i = index">
                                     <tr *ngFor="let level2 of name.children">
-                                        <td>{{level2.level}}</td>
+                                        <!-- <td>{{level2.level}}</td> -->
                                         <td>{{level2.title}}</td>
                                         <td>
                                             <ng-container *ngFor="let doc of level2.attachments;let j = index">
-                                                <span class="docpill">
+                                                <div class="docpill">
                                                     {{j+1}} . {{doc.fileName}}
                                                     <img src="../../../../assets/images/VCM/VCM-close-red.svg"
                                                         class="testplus2" (click)="RemoveFile(level2,j,'level2',doc)" />
-                                                </span>
+                                                </div>
                                             </ng-container>
                                         </td>
                                         <td>

@@ -235,11 +235,11 @@
                         <h4>Documents</h4>
                     </div>
                     <div class="col-md-6 p-0 text-right">
-                        <!-- <button class="tsttooltipbtn" matTooltip="Download All">
+                        <button class="tsttooltipbtn" matTooltip="Download All" (click)="downloadAllFiles()">
                             <img src="../../../../assets/images/Admin/download-black.svg" class="default-img testplus">
                             <img src="../../../../assets/images/Admin/download-blue.svg" class="hover-img testplus">
                         </button>
-                        <button class="tsttooltipbtn" matTooltip="Delete All">
+                        <!-- <button class="tsttooltipbtn" matTooltip="Delete All">
                             <img src="../../../../assets/images/Admin/delete-black.svg" class="testplus default-img" >
                             <img src="../../../../assets/images/Admin/delete-red.svg" class="testplus hover-img" >
                         </button> -->
@@ -247,7 +247,7 @@
                 </div>
                
                 <div class="prop-doccont">
-                    <table mat-table [dataSource]="dataSource" matSort class="PI table w-100">
+                    <table mat-table [dataSource]="dataSource" #sort1="matSort" matSort class="PI table w-100">
                         <ng-container matColumnDef="vcmLevel">
                             <th mat-header-cell *matHeaderCellDef mat-sort-header class="table_header">Level </th>
                             <td mat-cell *matCellDef="let element"> {{element.vcmLevel}} </td>

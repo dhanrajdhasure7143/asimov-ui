@@ -178,7 +178,7 @@
                                             </button> -->
                                         
                                             <div *ngIf="uniqueId==node.uniqueId" style="display: flex;width: 150%;margin-top: 2%;">
-                                                <input type="text" class="form-control" placeholder="Enter Process Name1" [(ngModel)]="processName">
+                                                <input type="text" class="form-control" placeholder="Enter Process Name" [(ngModel)]="processName">
                                                 <button [hidden]="!processName" style="position: relative;right: 8%;" (click)="addL3Nodes()">
                                                     <img class="testplus1" src="../../../../assets/images/VCM/Green Tick.svg">
                                                 </button>
@@ -241,7 +241,7 @@
                                                 </button>
 
                                                 <div *ngIf="nodeParent1 == node.title" style="display: flex;width: 150%;margin-top: 3%;">
-                                                    <input style="width: 73%;margin-left: 6%;" type="text" class="form-control" placeholder="Enter Process Name1" [(ngModel)]="l1processName">
+                                                    <input style="width: 73%;margin-left: 6%;" type="text" class="form-control" placeholder="Enter Process Name" [(ngModel)]="l1processName">
                                                     <button [hidden]="!l1processName" style="position: relative;right: 6%;" (click)="addL1Nodes(node)">
                                                         <img class="testplus1" src="../../../../assets/images/VCM/Green Tick.svg">
                                                     </button>
