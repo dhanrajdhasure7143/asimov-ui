@@ -787,6 +787,7 @@ export class VcmStructureComponent implements OnInit {
         name:e.name,
         fileName: e['name'],
         uniqueId : e.uniqueId,
+        documentId : e.uniqueId,
         convertedsize : e['convertedsize'],
         fileDescription: e['fileDescription'],
         size: e['size'],
