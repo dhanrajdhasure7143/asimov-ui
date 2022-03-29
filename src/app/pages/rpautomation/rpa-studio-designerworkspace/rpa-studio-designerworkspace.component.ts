@@ -17,6 +17,7 @@ import * as $ from 'jquery';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { RpaStudioDesignerComponent } from '../rpa-studio-designer/rpa-studio-designer.component';
+import { ItemsList } from '@ng-select/ng-select/ng-select/items-list';
 
 @Component({
   selector: 'app-rpa-studio-designerworkspace',
@@ -31,6 +32,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   public optionsVisible: boolean = true;
   public scheduler: any;
   result: any = [];
+  fileterdarray:any=[]
+  webelementtype:any=[]
   nodes = [];
   selectedNode: any = [];
   changePx: { x: number; y: number; };
@@ -77,6 +80,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   recordedcode:any;
   finalcode:any;
   svg:any;
+  finalarray:any=[]
   public insertForm:FormGroup;
   modalRef: BsModalRef;
   outputmodalRef:BsModalRef;
@@ -91,6 +95,10 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   @ViewChild('template', { static: false }) template: TemplateRef<any>;
   public nodedata: any;
   categoryList:any=[];
+  Webelementtype_array: { "Id": any; "value": any; }[];
+  Webelementvalue_array:{"Id":any;"value":any;}[];
+  fieldvaluetype_array:{"Id":any;"value":any;}[];
+  fieldvalue_array:{"Id":any;"value":any;}[];
   constructor(private rest: RestApiService,
     private notifier: NotifierService,
     private hints: Rpa_Hints,
@@ -920,9 +928,102 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   close_record_play(){
     document.getElementById('recordandplay').style.display='none';
   }
+  submitform(event){
+    debugger
+    this.fieldValues = event
+    this.fieldValues.forEach((item, i) => {
+      item.id = i + 1;
+    });
+    if (this.fieldValues['file1']) {
+      this.fieldValues['file1'] = this.fieldValues['file1'].substring(12)
+    }
+    if (this.fieldValues['file2']) {
+      this.fieldValues['file2'] = this.fieldValues['file2'].substring(12)
+    }
+    if (this.fileData != undefined) {
+      this.fieldValues['file'] = this.fileData
+    }
 
+
+    this.hiddenPopUp = false;
+  
+ 
+
+ for(let i=0;i<this.fieldValues.length;i++){
+  
+   this.Webelementtype_array = this.fieldValues.map(p=>{
+    return{
+      "Id": p.id,
+      "value": p.webElementType_223
+    }
+    });
+
+    this.Webelementvalue_array=this.fieldValues.map(p=>{
+      return{
+        "Id":p.id,
+        "value":p.webElementValue_224
+      }
+    })
+
+    this.fieldvaluetype_array=this.fieldValues.map(p=>{
+      return{
+        "Id":p.id,
+        "value":p.fillValueType_222
+      }
+    })
+
+    this.fieldvalue_array=this.fieldValues.map(p=>{
+      return{
+        "Id":p.id,
+        "value":p.fillValue_225
+      }
+    })
+  
+  //this.fileterdarray.push(this.selectedresource)
+  
+ }
+
+ 
+  for(let i=0;i<this.formVales.length;i++){
+  
+  this.fileterdarray = this.formVales.map(p=>{
+      if(p.name=='webElementType'){
+        return{
+          "metaAttrId": p.id,
+          "metaAttrValue": p.name,
+          "attrValue":this.Webelementtype_array
+        }
+      }
+     if(p.name=='webElementValue'){
+       return{
+        "metaAttrId": p.id,
+        "metaAttrValue": p.name,
+        "attrValue":this.Webelementvalue_array
+       }
+     }
+     if(p.name=='fillValueType'){
+       return{
+        "metaAttrId": p.id,
+        "metaAttrValue": p.name,
+        "attrValue":this.fieldvaluetype_array
+       }
+     }
+     if(p.name=='fillValue'){
+      return{
+        "metaAttrId": p.id,
+        "metaAttrValue": p.name,
+        "attrValue":this.fieldvalue_array
+       }
+     }
+     });
+  }
+  console.log("array",JSON.stringify(this.fileterdarray))
+  
+  
+  }
 
   onFormSubmit(event) {
+    debugger
     this.fieldValues = event
     if (this.fieldValues['file1']) {
       this.fieldValues['file1'] = this.fieldValues['file1'].substring(12)

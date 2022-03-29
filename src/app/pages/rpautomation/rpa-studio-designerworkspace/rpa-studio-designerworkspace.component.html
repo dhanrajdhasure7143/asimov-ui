@@ -46,7 +46,7 @@
           </div>
           <div class="modal-body actions-mbody"  *ngIf="form_change">
 
-            <app-dynamic-forms [fields]="getFields()" (onSubmit)="onFormSubmit($event)"></app-dynamic-forms>
+            <app-dynamic-forms [fields]="getFields()" [formheader]="formHeader"  (Submit)="submitform($event)"  (onSubmit)="onFormSubmit($event)"></app-dynamic-forms>
               
           </div>
       </div>
