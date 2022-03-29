@@ -90,13 +90,13 @@
                                                     <span style="margin-right:6px;">{{i + 1}}.</span>
                                                     <span class="fname">{{each.fileName}}</span>
                                                     <span class="fbtns">
-                                                        <span class="deleteattachment" (click)="downloadAttachement(each)">
+                                                        <span class="deleteattachment" (click)="downloadAttachement(each)" matTooltip="Download" matTooltipPosition="left">
                                                             <!-- <a href="data:image/png;base64,{{each.filedata}}" download="{{each.fileName}}" *ngIf="isPropDisabled"> -->
                                                                 <img src="../../../../assets/images/Admin/download-black.svg" class="default-img testplus" >
                                                                 <img src="../../../../assets/images/Admin/download-blue.svg" class="hover-img testplus" >
                                                             <!-- </a> -->
                                                         </span>
-                                                        <span *ngIf="!isPropDisabled">
+                                                        <span *ngIf="!isPropDisabled" matTooltip="Delete" matTooltipPosition="left">
                                                             <a>
                                                                 <img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img"  />
                                                                 <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" (click)="removeFile(each,i)" />

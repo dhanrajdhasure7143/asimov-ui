@@ -114,7 +114,7 @@
                                         <ng-container *ngFor="let doc of item.attachments;let j = index">
                                             <div class="docpill">
                                                 {{j+1}} . {{doc.fileName}}
-                                                <img src="../../../../assets/images/VCM/VCM-close-red.svg"
+                                                <img src="../../../../assets/images/VCM/VCM-close-red.svg" matTooltip="Delete" matTooltipPosition="left"
                                                     class="testplus2" (click)="RemoveFile(item,j,'level1',doc)" />
                                             </div>
                                         </ng-container>
