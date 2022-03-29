@@ -239,10 +239,10 @@
                             <img src="../../../../assets/images/Admin/download-black.svg" class="default-img testplus">
                             <img src="../../../../assets/images/Admin/download-blue.svg" class="hover-img testplus">
                         </button>
-                        <!-- <button class="tsttooltipbtn" matTooltip="Delete All">
+                        <button class="tsttooltipbtn" matTooltip="Delete All" (click)="ondeleteAttachements('all')">
                             <img src="../../../../assets/images/Admin/delete-black.svg" class="testplus default-img" >
                             <img src="../../../../assets/images/Admin/delete-red.svg" class="testplus hover-img" >
-                        </button> -->
+                        </button>
                     </div>
                 </div>
                
@@ -287,10 +287,22 @@
                                 </span>
                             </td>
                         </ng-container>
-
+                        <!-- <ng-container matColumnDef="Loading">
+                            <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
+                                Loading
+                            </td>
+                        </ng-container> -->
+                        <ng-container matColumnDef="noData">
+                            <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
+                                No Records Found
+                            </td>
+                        </ng-container>
 
                         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                         <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="pList"></tr>
+                        <!-- <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['Loading']" [ngClass]="{'hide':dataSource!=null}"></tr> -->
+                        <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(dataSource!=null && dataSource.data.length==0)}"></tr>
+                    
                     </table>
                 </div>
             </div>
