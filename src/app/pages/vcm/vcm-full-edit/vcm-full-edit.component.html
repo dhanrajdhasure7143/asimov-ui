@@ -82,7 +82,7 @@
                                 </mat-expansion-panel-header>
                                 <mat-panel-description>
                                     <div class="container p-0 doc-content">
-                                        <div class="col-md-12 form-group">
+                                        <div class="col-md-12 p-0 form-group">
                                             <div class="vcmdocs">
                                                 <img src="../../../../assets/images/VCM/VCM-Upload.svg" />
                                                 <button class="btn"
@@ -90,17 +90,18 @@
                                             </div>
                                         </div>
                                         <div class="form-group files">
-                                            <div class="col-md-12"
+                                            <div class="col-md-12 p-0"
                                                 *ngFor="let each of listOfAttachemnts;let i = index;">
                                                 <div style="display: flex;">
                                                     <span style="margin-right:6px;">{{i + 1}}.</span>
                                                     <span class="fname">{{each.fileName}}</span>
-                                                    <span style="float: right;">
+                                                    <button style="float: right;" class="tsttooltipbtn">
                                                         <img src="../../../../assets/images/VCM/VCM-close.svg"
                                                             class="testplus2 default-img" />
                                                         <img src="../../../../assets/images/VCM/VCM-close-red.svg"
                                                             class="testplus2 hover-img" (click)="RemoveFile(each,i)" />
-                                                    </span>
+                                                            <span class="testtooltip">Remove</span>
+                                                    </button>
                                                 </div>
                                                 <p>{{each.fileDescription}}</p>
                                             </div>
@@ -152,9 +153,12 @@
                                 <div class="dbichart-body">
                                     <h4>
                                         Level 1 Process
-                                        <img [ngClass]="(vcmProcess[0].children?.length != 0 || vcmProcess[1].children?.length != 0 || vcmProcess[2].children?.length != 0) ? 'view' : 'dis'"
-                                            (click)="goToProperties('level1')"
-                                            src="../../../../assets/images/VCM/Level 1.svg" class="testplus" alt="">
+                                       <span class="tsttooltipbtn">
+                                            <img [ngClass]="(vcmProcess[0].children?.length != 0 || vcmProcess[1].children?.length != 0 || vcmProcess[2].children?.length != 0) ? 'view' : 'dis'"
+                                                (click)="goToProperties('level1')"
+                                                src="../../../../assets/images/VCM/Level 1.svg" class="testplus" alt="">
+                                            <span class="testtooltip">View L1 - Properties</span>
+                                       </span>
                                     </h4>
                                     <div class="l1processlistdiv">
                                         <mat-expansion-panel expanded>
@@ -183,7 +187,7 @@
                                                         <ul *ngIf="item.name == 'Management Process'">
                                                             <li *ngFor="let name of item.children;let i = index"
                                                                 class="childHover">
-                                                                <span *ngIf="uniqueId1 != name.uniqueId">{{i + 1}}.
+                                                                <span *ngIf="uniqueId1 != name.uniqueId" class="l1c-process_title">{{i + 1}}.
                                                                     {{name.title}}</span>
                                                                 <div *ngIf="uniqueId1 == name.uniqueId"
                                                                     style="display: flex;width: 110%;">
@@ -201,27 +205,22 @@
                                                                     </button>
                                                                 </div>
                                                                 <div class="actimg">
-                                                                    <span *ngIf="uniqueId1 != name.uniqueId">
+                                                                    <span *ngIf="uniqueId1 != name.uniqueId" class="tsttooltipbtn">
                                                                         <img src="../../../../assets/images/VCM/edit-plus-litblue.svg"
                                                                             class="testplus2 default-img" />
-                                                                        <img src="../../../../assets/images/VCM/edit-3.svg"
-                                                                            class="testplus2 hover-img"
-                                                                            (click)="editLevelName(name)" />
+                                                                        <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2 hover-img" (click)="editLevelName(name)" />
+                                                                        <span class="testtooltip">Edit</span>
                                                                     </span>
-                                                                    <span>
-                                                                        <img src="../../../../assets/images/VCM/VCM-close.svg"
-                                                                            class="testplus2 default-img" />
-                                                                        <img src="../../../../assets/images/VCM/VCM-close-red.svg"
-                                                                            class="testplus2 hover-img"
-                                                                            (click)="removeChild(name)" />
+                                                                    <span class="tsttooltipbtn">
+                                                                        <img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img" />
+                                                                        <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" (click)="removeChild(name)" />
+                                                                        <span class="testtooltip">Remove</span>
                                                                     </span>
-                                                                    <!-- <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" (click)="showPropertiesPanel(item,name,1)" /> -->
-                                                                    <span>
-                                                                        <img src="../../../../assets/images/VCM/more-vertical-default.svg"
-                                                                            class="testplus default-img" />
-                                                                        <img src="../../../../assets/images/VCM/more-vertical-hover.svg"
-                                                                            class="testplus hover-img"
+                                                                    <span class="tsttooltipbtn">
+                                                                        <img src="../../../../assets/images/VCM/more-vertical-default.svg" class="testplus default-img" />
+                                                                        <img src="../../../../assets/images/VCM/more-vertical-hover.svg" class="testplus hover-img"
                                                                             (click)="showPropertiesPanel(item,name,1)" />
+                                                                        <span class="testtooltip">View Properties</span>
                                                                     </span>
                                                                 </div>
                                                             </li>
@@ -257,7 +256,7 @@
                                                         <ul *ngIf="item.name == 'Core Process'">
                                                             <li *ngFor="let name of item.children;let i = index"
                                                                 class="childHover">
-                                                                <span *ngIf="uniqueId1 != name.uniqueId">{{i + 1}}.
+                                                                <span *ngIf="uniqueId1 != name.uniqueId" class="l1c-process_title">{{i + 1}}.
                                                                     {{name.title}}</span>
                                                                 <div *ngIf="uniqueId1 == name.uniqueId"
                                                                     style="display: flex;width: 110%;">
@@ -275,26 +274,20 @@
                                                                     </button>
                                                                 </div>
                                                                 <div class="actimg">
-                                                                    <span *ngIf="uniqueId1 != name.uniqueId">
-                                                                        <img src="../../../../assets/images/VCM/edit-plus-litblue.svg"
-                                                                            class="testplus2 default-img" />
-                                                                        <img src="../../../../assets/images/VCM/edit-3.svg"
-                                                                            class="testplus2 hover-img"
-                                                                            (click)="editLevelName(name)" />
+                                                                    <span *ngIf="uniqueId1 != name.uniqueId" class="tsttooltipbtn" >
+                                                                        <img src="../../../../assets/images/VCM/edit-plus-litblue.svg" class="testplus2 default-img" />
+                                                                        <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2 hover-img" (click)="editLevelName(name)" />
+                                                                        <span class="testtooltip">Edit</span>
                                                                     </span>
-                                                                    <span>
-                                                                        <img src="../../../../assets/images/VCM/VCM-close.svg"
-                                                                            class="testplus2 default-img" />
-                                                                        <img src="../../../../assets/images/VCM/VCM-close-red.svg"
-                                                                            class="testplus2 hover-img"
-                                                                            (click)="removeChild(name)" />
+                                                                    <span class="tsttooltipbtn">
+                                                                        <img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img" />
+                                                                        <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" (click)="removeChild(name)" />
+                                                                        <span class="testtooltip">Remove</span>
                                                                     </span>
-                                                                    <span>
-                                                                        <img src="../../../../assets/images/VCM/more-vertical-default.svg"
-                                                                            class="testplus default-img" />
-                                                                        <img src="../../../../assets/images/VCM/more-vertical-hover.svg"
-                                                                            class="testplus hover-img"
-                                                                            (click)="showPropertiesPanel(item,name,1)" />
+                                                                    <span class="tsttooltipbtn">
+                                                                        <img src="../../../../assets/images/VCM/more-vertical-default.svg" class="testplus default-img" />
+                                                                        <img src="../../../../assets/images/VCM/more-vertical-hover.svg" class="testplus hover-img" (click)="showPropertiesPanel(item,name,1)" />
+                                                                        <span class="testtooltip">View Properties</span>
                                                                     </span>
                                                                 </div>
                                                             </li>
@@ -330,7 +323,7 @@
                                                         <ul *ngIf="item.name == 'Support Process'">
                                                             <li *ngFor="let name of item.children;let i = index"
                                                                 class="childHover">
-                                                                <span *ngIf="uniqueId1 != name.uniqueId">{{i + 1}}.
+                                                                <span *ngIf="uniqueId1 != name.uniqueId" class="l1c-process_title">{{i + 1}}.
                                                                     {{name.title}}</span>
                                                                 <div *ngIf="uniqueId1 == name.uniqueId"
                                                                     style="display: flex;width: 110%;">
@@ -348,27 +341,20 @@
                                                                     </button>
                                                                 </div>
                                                                 <div class="actimg">
-                                                                    <span *ngIf="uniqueId1 != name.uniqueId">
-                                                                        <img src="../../../../assets/images/VCM/edit-plus-litblue.svg"
-                                                                            class="testplus2 default-img" />
-                                                                        <img src="../../../../assets/images/VCM/edit-3.svg"
-                                                                            class="testplus2 hover-img"
-                                                                            (click)="editLevelName(name)" />
+                                                                    <span *ngIf="uniqueId1 != name.uniqueId" class="tsttooltipbtn">
+                                                                        <img src="../../../../assets/images/VCM/edit-plus-litblue.svg" class="testplus2 default-img" />
+                                                                        <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2 hover-img" (click)="editLevelName(name)" />
+                                                                        <span class="testtooltip">Edit</span>
                                                                     </span>
-                                                                    <span>
-                                                                        <img src="../../../../assets/images/VCM/VCM-close.svg"
-                                                                            class="testplus2 default-img" />
-                                                                        <img src="../../../../assets/images/VCM/VCM-close-red.svg"
-                                                                            class="testplus2 hover-img"
-                                                                            (click)="removeChild(name)" />
+                                                                    <span class="tsttooltipbtn">
+                                                                        <img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img" />
+                                                                        <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" (click)="removeChild(name)" />
+                                                                        <span class="testtooltip">Remove</span>
                                                                     </span>
-                                                                    <!-- <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" (click)="showPropertiesPanel(item,name,1)" /> -->
-                                                                    <span>
-                                                                        <img src="../../../../assets/images/VCM/more-vertical-default.svg"
-                                                                            class="testplus default-img" />
-                                                                        <img src="../../../../assets/images/VCM/more-vertical-hover.svg"
-                                                                            class="testplus hover-img"
-                                                                            (click)="showPropertiesPanel(item,name,1)" />
+                                                                    <span class="tsttooltipbtn">
+                                                                        <img src="../../../../assets/images/VCM/more-vertical-default.svg" class="testplus default-img" />
+                                                                        <img src="../../../../assets/images/VCM/more-vertical-hover.svg" class="testplus hover-img" (click)="showPropertiesPanel(item,name,1)" />
+                                                                        <span class="testtooltip">View Properties</span>
                                                                     </span>
                                                                 </div>
                                                             </li>
@@ -387,9 +373,12 @@
                                 <div class="dbichart-body">
                                     <h4>
                                         Level 2 Process
-                                        <img [ngClass]="(vcmProcess[0].children?.length != 0 || vcmProcess[1].children?.length != 0 || vcmProcess[2].children?.length != 0) ? 'view' : 'dis'"
+                                        <span class="tsttooltipbtn">
+                                            <img [ngClass]="(vcmProcess[0].children?.length != 0 || vcmProcess[1].children?.length != 0 || vcmProcess[2].children?.length != 0) ? 'view' : 'dis'"
                                             (click)="goToProperties('level2')"
                                             src="../../../../assets/images/VCM/Level 1.svg" class="testplus" alt="">
+                                            <span class="testtooltip">View L2 - Properties</span>
+                                        </span>
                                     </h4>
                                     <div class="form-group">
                                         <select class="form-control" id="level1" name="Level1"
@@ -423,9 +412,9 @@
                                                     <ul *ngFor="let level2 of name.children" class="subfolders">
                                                         <li class="overflowcontent"
                                                             *ngIf="level2.parent == 'Management Process'">
-                                                            <span *ngIf="uniqueId1 != level2.uniqueId"><img
-                                                                    src="../../../../assets/images/VCM/small-right.svg"
-                                                                    class="testplus2" />{{level2.title}}</span>
+                                                            <span *ngIf="uniqueId1 != level2.uniqueId" class="l2c-process_title">
+                                                                <img src="../../../../assets/images/VCM/small-right.svg" class="testplus2" />{{level2.title}}
+                                                            </span>
                                                             <div *ngIf="uniqueId1 == level2.uniqueId"
                                                                 style="display: flex;width: 110%;">
                                                                 <img style="margin-top: 2%;"
@@ -442,34 +431,28 @@
                                                                 </button>
                                                             </div>
                                                             <div class="actimg">
-                                                                <span *ngIf="uniqueId1 != level2.uniqueId">
-                                                                    <img src="../../../../assets/images/VCM/edit-plus-litblue.svg"
-                                                                        class="testplus2 default-img" />
-                                                                    <img src="../../../../assets/images/VCM/edit-3.svg"
-                                                                        class="testplus2 hover-img"
-                                                                        (click)="editLevelName(level2)" />
+                                                                <span *ngIf="uniqueId1 != level2.uniqueId" class="tsttooltipbtn">
+                                                                    <img src="../../../../assets/images/VCM/edit-plus-litblue.svg" class="testplus2 default-img" />
+                                                                    <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2 hover-img" (click)="editLevelName(level2)" />
+                                                                    <span class="testtooltip">Edit</span>
                                                                 </span>
-                                                                <span>
+                                                                <span class="tsttooltipbtn">
                                                                     <button (click)="onCreateLevel3(level2,item)">
-                                                                        <img src="../../../../assets/images/RPA/icon_latest/new-dis.svg"
-                                                                            class="testplus default-img" />
-                                                                        <img src="../../../../assets/images/RPA/icon_latest/new-blue.svg"
-                                                                            class="testplus hover-img" />
+                                                                        <img src="../../../../assets/images/RPA/icon_latest/new-dis.svg" class="testplus default-img" />
+                                                                        <img src="../../../../assets/images/RPA/icon_latest/new-blue.svg" class="testplus hover-img" />
                                                                     </button>
+                                                                    <span class="testtooltip">Add L3</span>
                                                                 </span>
-                                                                <span>
-                                                                    <img src="../../../../assets/images/VCM/VCM-close.svg"
-                                                                        class="testplus2 default-img" />
-                                                                    <img src="../../../../assets/images/VCM/VCM-close-red.svg"
-                                                                        class="testplus2 hover-img"
-                                                                        (click)="level2removeChild(level2)" />
+                                                                <span class="tsttooltipbtn">
+                                                                    <img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img" />
+                                                                    <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" (click)="level2removeChild(level2)" />
+                                                                    <span class="testtooltip">Remove</span>
                                                                 </span>
-                                                                <span>
-                                                                    <img src="../../../../assets/images/VCM/more-vertical-default.svg"
-                                                                        class="testplus default-img" />
-                                                                    <img src="../../../../assets/images/VCM/more-vertical-hover.svg"
-                                                                        class="testplus hover-img"
+                                                                <span class="tsttooltipbtn">
+                                                                    <img src="../../../../assets/images/VCM/more-vertical-default.svg" class="testplus default-img" />
+                                                                    <img src="../../../../assets/images/VCM/more-vertical-hover.svg" class="testplus hover-img"
                                                                         (click)="showPropertiesPanel(name,level2,2)" />
+                                                                    <span class="testtooltip">View Properties</span>
                                                                 </span>
 
                                                             </div>
@@ -492,7 +475,7 @@
                                                         </li>
                                                         <li class="overflowcontent" *ngFor="let l3 of level2.children">
                                                             <ng-container *ngIf="level2.children && !l3.bpsId">
-                                                                <span
+                                                                <span class="l2c-process_title"
                                                                     *ngIf="item.name == 'Management Process' && uniqueIdL3 != l3.uniqueId"
                                                                     style="margin-left: 5%;margin-top: 2%;">{{l3.title}}</span>
                                                                 <span *ngIf="l3.uniqueId == uniqueIdL3">
@@ -512,26 +495,20 @@
                                                                 </span>
                                                                 <div *ngIf="item.name == 'Management Process'"
                                                                     class="actimg" style="margin-top: 2%;">
-                                                                    <span *ngIf="uniqueIdL3 != l3.uniqueId">
-                                                                        <img src="../../../../assets/images/VCM/edit-plus-litblue.svg"
-                                                                            class="testplus2 default-img" />
-                                                                        <img src="../../../../assets/images/VCM/edit-3.svg"
-                                                                            class="testplus2 hover-img"
-                                                                            (click)="editL3Process(l3)" />
+                                                                    <span *ngIf="uniqueIdL3 != l3.uniqueId"  class="tsttooltipbtn">
+                                                                        <img src="../../../../assets/images/VCM/edit-plus-litblue.svg" class="testplus2 default-img" />
+                                                                        <img src="../../../../assets/images/VCM/edit-3.svg"  class="testplus2 hover-img" (click)="editL3Process(l3)" />
+                                                                        <span class="testtooltip">Edit</span>
                                                                     </span>
-                                                                    <span>
-                                                                        <img src="../../../../assets/images/VCM/VCM-close-default.svg"
-                                                                            class="testplus2 default-img" />
-                                                                        <img src="../../../../assets/images/VCM/VCM-close-red.svg"
-                                                                            class="testplus2 hover-img"
-                                                                            (click)="l3remove(l3,item)" />
+                                                                    <span class="tsttooltipbtn">
+                                                                        <img src="../../../../assets/images/VCM/VCM-close-default.svg" class="testplus2 default-img" />
+                                                                        <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" (click)="l3remove(l3,item)" />
+                                                                        <span class="testtooltip">Remove</span>
                                                                     </span>
-                                                                    <span>
-                                                                        <img src="../../../../assets/images/VCM/more-vertical-default.svg"
-                                                                            class="testplus default-img" />
-                                                                        <img (click)="showPropertiesPanel(level2,l3,3)"
-                                                                            src="../../../../assets/images/VCM/more-vertical-hover.svg"
-                                                                            class="testplus hover-img" />
+                                                                    <span class="tsttooltipbtn">
+                                                                        <img src="../../../../assets/images/VCM/more-vertical-default.svg" class="testplus default-img" />
+                                                                        <img (click)="showPropertiesPanel(level2,l3,3)" src="../../../../assets/images/VCM/more-vertical-hover.svg" class="testplus hover-img" />
+                                                                        <span class="testtooltip">View Properties</span>
                                                                     </span>
                                                                 </div>
                                                             </ng-container>
@@ -551,9 +528,9 @@
                                                     <ul *ngFor="let level2 of name.children" class="subfolders">
                                                         <li class="overflowcontent"
                                                             *ngIf="level2.parent == 'Core Process'">
-                                                            <span *ngIf="uniqueId1 != level2.uniqueId"><img
-                                                                    src="../../../../assets/images/VCM/small-right.svg"
-                                                                    class="testplus2" />{{level2.title}}</span>
+                                                            <span *ngIf="uniqueId1 != level2.uniqueId" class="l2c-process_title">
+                                                                <img src="../../../../assets/images/VCM/small-right.svg" class="testplus2" />{{level2.title}}
+                                                            </span>
                                                             <div *ngIf="uniqueId1 == level2.uniqueId"
                                                                 style="display: flex;width: 110%;">
                                                                 <img style="margin-top: 2%;"
@@ -570,36 +547,31 @@
                                                                 </button>
                                                             </div>
                                                             <div class="actimg">
-                                                                <span *ngIf="uniqueId1 != level2.uniqueId">
-                                                                    <img src="../../../../assets/images/VCM/edit-plus-litblue.svg"
-                                                                        class="testplus2 default-img" />
-                                                                    <img src="../../../../assets/images/VCM/edit-3.svg"
-                                                                        class="testplus2 hover-img"
-                                                                        (click)="editLevelName(level2)" />
+                                                                <span *ngIf="uniqueId1 != level2.uniqueId" class="tsttooltipbtn">
+                                                                    <img src="../../../../assets/images/VCM/edit-plus-litblue.svg" class="testplus2 default-img" />
+                                                                    <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2 hover-img" (click)="editLevelName(level2)" />
+                                                                    <span class="testtooltip">Edit</span>
                                                                 </span>
-                                                                <span>
+                                                                <span class="tsttooltipbtn">
                                                                     <!-- <button (click)="onSelectedNode(level2,item)" #pop2="bs-popover" [popover]="popTemplate1" [outsideClick]="true"
                                                                         placement="right"> -->
                                                                     <button (click)="onCreateLevel3(level2,item)">
-                                                                        <img src="../../../../assets/images/RPA/icon_latest/new-dis.svg"
-                                                                            class="testplus default-img" />
-                                                                        <img src="../../../../assets/images/RPA/icon_latest/new-blue.svg"
-                                                                            class="testplus hover-img" />
+                                                                        <img src="../../../../assets/images/RPA/icon_latest/new-dis.svg" class="testplus default-img" />
+                                                                        <img src="../../../../assets/images/RPA/icon_latest/new-blue.svg" class="testplus hover-img" />
                                                                     </button>
+                                                                    <span class="testtooltip">Add L3</span>
                                                                 </span>
-                                                                <span>
-                                                                    <img src="../../../../assets/images/VCM/VCM-close.svg"
-                                                                        class="testplus2 default-img" />
-                                                                    <img src="../../../../assets/images/VCM/VCM-close-red.svg"
-                                                                        class="testplus2 hover-img"
+                                                                <span class="tsttooltipbtn">
+                                                                    <img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img" />
+                                                                    <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img"
                                                                         (click)="level2removeChild(level2)" />
+                                                                    <span class="testtooltip">Remove</span>
                                                                 </span>
-                                                                <span>
-                                                                    <img src="../../../../assets/images/VCM/more-vertical-default.svg"
-                                                                        class="testplus default-img" />
-                                                                    <img src="../../../../assets/images/VCM/more-vertical-hover.svg"
-                                                                        class="testplus hover-img"
+                                                                <span class="tsttooltipbtn">
+                                                                    <img src="../../../../assets/images/VCM/more-vertical-default.svg" class="testplus default-img" />
+                                                                    <img src="../../../../assets/images/VCM/more-vertical-hover.svg" class="testplus hover-img"
                                                                         (click)="showPropertiesPanel(name,level2,2)" />
+                                                                    <span class="testtooltip">View Properties</span>
                                                                 </span>
                                                             </div>
                                                         </li>
@@ -621,7 +593,7 @@
                                                         </li>
                                                         <li class="overflowcontent" *ngFor="let l3 of level2.children">
                                                             <ng-container *ngIf="level2.children && !l3.bpsId">
-                                                                <span
+                                                                <span class="l2c-process_title"
                                                                     *ngIf="item.name == 'Core Process' && uniqueIdL3 != l3.uniqueId"
                                                                     style="margin-left: 5%;margin-top: 2%;">{{l3.title}}</span>
                                                                 <span *ngIf="l3.uniqueId == uniqueIdL3">
@@ -641,26 +613,20 @@
                                                                 </span>
                                                                 <div *ngIf="item.name == 'Core Process'" class="actimg"
                                                                     style="margin-top: 2%;">
-                                                                    <span *ngIf="uniqueIdL3 != l3.uniqueId">
-                                                                        <img src="../../../../assets/images/VCM/edit-plus-litblue.svg"
-                                                                            class="testplus2 default-img" />
-                                                                        <img src="../../../../assets/images/VCM/edit-3.svg"
-                                                                            class="testplus2 hover-img"
-                                                                            (click)="editL3Process(l3)" />
+                                                                    <span *ngIf="uniqueIdL3 != l3.uniqueId" class="tsttooltipbtn">
+                                                                        <img src="../../../../assets/images/VCM/edit-plus-litblue.svg" class="testplus2 default-img" />
+                                                                        <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2 hover-img" (click)="editL3Process(l3)" />
+                                                                        <span class="testtooltip">Edit</span>
                                                                     </span>
-                                                                    <span>
-                                                                        <img src="../../../../assets/images/VCM/VCM-close-default.svg"
-                                                                            class="testplus2 default-img" />
-                                                                        <img src="../../../../assets/images/VCM/VCM-close-red.svg"
-                                                                            class="testplus2 hover-img"
-                                                                            (click)="l3remove(l3,item)" />
+                                                                    <span  class="tsttooltipbtn">
+                                                                        <img src="../../../../assets/images/VCM/VCM-close-default.svg" class="testplus2 default-img" />
+                                                                        <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" (click)="l3remove(l3,item)" />
+                                                                        <span class="testtooltip">Remove</span>
                                                                     </span>
-                                                                    <span>
-                                                                        <img src="../../../../assets/images/VCM/more-vertical-default.svg"
-                                                                            class="testplus default-img" />
-                                                                        <img (click)="showPropertiesPanel(level2,l3,3)"
-                                                                            src="../../../../assets/images/VCM/more-vertical-hover.svg"
-                                                                            class="testplus hover-img" />
+                                                                    <span  class="tsttooltipbtn">
+                                                                        <img src="../../../../assets/images/VCM/more-vertical-default.svg" class="testplus default-img" />
+                                                                        <img (click)="showPropertiesPanel(level2,l3,3)" src="../../../../assets/images/VCM/more-vertical-hover.svg" class="testplus hover-img" />
+                                                                        <span class="testtooltip">View Properties</span>
                                                                     </span>
                                                                 </div>
                                                             </ng-container>
@@ -680,9 +646,9 @@
                                                     <ul *ngFor="let level2 of name.children" class="subfolders">
                                                         <li class="overflowcontent"
                                                             *ngIf="level2.parent == 'Support Process'">
-                                                            <span *ngIf="uniqueId1 != level2.uniqueId"><img
-                                                                    src="../../../../assets/images/VCM/small-right.svg"
-                                                                    class="testplus2" />{{level2.title}}</span>
+                                                            <span *ngIf="uniqueId1 != level2.uniqueId" class="l2c-process_title">
+                                                                <img src="../../../../assets/images/VCM/small-right.svg" class="testplus2" />{{level2.title}}
+                                                            </span>
                                                             <div *ngIf="uniqueId1 == level2.uniqueId"
                                                                 style="display: flex;width: 110%;">
                                                                 <img style="margin-top: 2%;"
@@ -699,36 +665,29 @@
                                                                 </button>
                                                             </div>
                                                             <div class="actimg">
-                                                                <span *ngIf="uniqueId1 != level2.uniqueId">
-                                                                    <img src="../../../../assets/images/VCM/edit-plus-litblue.svg"
-                                                                        class="testplus2 default-img" />
-                                                                    <img src="../../../../assets/images/VCM/edit-3.svg"
-                                                                        class="testplus2 hover-img"
-                                                                        (click)="editLevelName(level2)" />
+                                                                <span *ngIf="uniqueId1 != level2.uniqueId" class="tsttooltipbtn" >
+                                                                    <img src="../../../../assets/images/VCM/edit-plus-litblue.svg" class="testplus2 default-img" />
+                                                                    <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2 hover-img" (click)="editLevelName(level2)" />
+                                                                    <span class="testtooltip">Edit</span>
                                                                 </span>
-                                                                <span>
+                                                                <span class="tsttooltipbtn" >
                                                                     <!-- <button (click)="onSelectedNode(level2,item)" #pop2="bs-popover" [popover]="popTemplate1" [outsideClick]="true"
                                                                         placement="right"> -->
                                                                     <button (click)="onCreateLevel3(level2,item)">
-                                                                        <img src="../../../../assets/images/RPA/icon_latest/new-dis.svg"
-                                                                            class="testplus default-img" />
-                                                                        <img src="../../../../assets/images/RPA/icon_latest/new-blue.svg"
-                                                                            class="testplus hover-img" />
+                                                                        <img src="../../../../assets/images/RPA/icon_latest/new-dis.svg" class="testplus default-img" />
+                                                                        <img src="../../../../assets/images/RPA/icon_latest/new-blue.svg" class="testplus hover-img" />
                                                                     </button>
+                                                                    <span class="testtooltip">Add L3</span>
                                                                 </span>
-                                                                <span>
-                                                                    <img src="../../../../assets/images/VCM/VCM-close.svg"
-                                                                        class="testplus2 default-img" />
-                                                                    <img src="../../../../assets/images/VCM/VCM-close-red.svg"
-                                                                        class="testplus2 hover-img"
-                                                                        (click)="level2removeChild(level2)" />
+                                                                <span class="tsttooltipbtn" >
+                                                                    <img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img" />
+                                                                    <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" (click)="level2removeChild(level2)" />
+                                                                    <span class="testtooltip">Remove</span>
                                                                 </span>
-                                                                <span>
-                                                                    <img src="../../../../assets/images/VCM/more-vertical-default.svg"
-                                                                        class="testplus default-img" />
-                                                                    <img src="../../../../assets/images/VCM/more-vertical-hover.svg"
-                                                                        class="testplus hover-img"
-                                                                        (click)="showPropertiesPanel(name,level2,2)" />
+                                                                <span class="tsttooltipbtn" >
+                                                                    <img src="../../../../assets/images/VCM/more-vertical-default.svg" class="testplus default-img" />
+                                                                    <img src="../../../../assets/images/VCM/more-vertical-hover.svg" class="testplus hover-img" (click)="showPropertiesPanel(name,level2,2)" />
+                                                                    <span class="testtooltip">View Properties</span>
                                                                 </span>
                                                             </div>
                                                         </li>
@@ -750,7 +709,7 @@
                                                         </li>
                                                         <li class="overflowcontent" *ngFor="let l3 of level2.children">
                                                             <ng-container *ngIf="level2.children && !l3.bpsId">
-                                                                <span
+                                                                <span class="l2c-process_title"
                                                                     *ngIf="item.name == 'Support Process' && uniqueIdL3 != l3.uniqueId"
                                                                     style="margin-left: 5%;margin-top: 2%;">{{l3.title}}</span>
                                                                 <span *ngIf="l3.uniqueId == uniqueIdL3">
@@ -770,26 +729,21 @@
                                                                 </span>
                                                                 <div *ngIf="item.name == 'Support Process'"
                                                                     class="actimg" style="margin-top: 2%;">
-                                                                    <span *ngIf="uniqueIdL3 != l3.uniqueId">
-                                                                        <img src="../../../../assets/images/VCM/edit-plus-litblue.svg"
-                                                                            class="testplus2 default-img" />
-                                                                        <img src="../../../../assets/images/VCM/edit-3.svg"
-                                                                            class="testplus2 hover-img"
-                                                                            (click)="editL3Process(l3)" />
+                                                                    <span *ngIf="uniqueIdL3 != l3.uniqueId" class="tsttooltipbtn" >
+                                                                        <img src="../../../../assets/images/VCM/edit-plus-litblue.svg" class="testplus2 default-img" />
+                                                                        <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2 hover-img" (click)="editL3Process(l3)" />
+                                                                        <span class="testtooltip">Edit</span>
                                                                     </span>
-                                                                    <span>
-                                                                        <img src="../../../../assets/images/VCM/VCM-close-default.svg"
-                                                                            class="testplus2 default-img" />
-                                                                        <img src="../../../../assets/images/VCM/VCM-close-red.svg"
-                                                                            class="testplus2 hover-img"
-                                                                            (click)="l3remove(l3,item)" />
+                                                                    <span class="tsttooltipbtn" >
+                                                                        <img src="../../../../assets/images/VCM/VCM-close-default.svg" class="testplus2 default-img" />
+                                                                        <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" (click)="l3remove(l3,item)" />
+                                                                        <span class="testtooltip">Remove</span>
                                                                     </span>
-                                                                    <span>
+                                                                    <span class="tsttooltipbtn" >
                                                                         <img src="../../../../assets/images/VCM/more-vertical-default.svg"
                                                                             class="testplus default-img" />
-                                                                        <img (click)="showPropertiesPanel(level2,l3,3)"
-                                                                            src="../../../../assets/images/VCM/more-vertical-hover.svg"
-                                                                            class="testplus hover-img" />
+                                                                        <img (click)="showPropertiesPanel(level2,l3,3)"  src="../../../../assets/images/VCM/more-vertical-hover.svg" class="testplus hover-img" />
+                                                                        <span class="testtooltip">View Properties</span>
                                                                     </span>
                                                                 </div>
                                                             </ng-container>
@@ -837,7 +791,7 @@
                 <div class="box-fileupload">
                     <input type="file" name="file" (change)="chnagefileUploadForm($event)" id="file" class="inputfile"
                         multiple />
-                    <label for="file" matTooltip="Upload File" (change)="chnagefileUploadForm($event)">
+                    <label for="file" (change)="chnagefileUploadForm($event)">
                         <img src="../../../../assets/images/Projects/fileupload.svg" class="testplusupload">
                         <span>Select File</span>
                     </label>

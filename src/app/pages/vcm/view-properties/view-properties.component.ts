@@ -82,7 +82,9 @@ export class ViewPropertiesComponent implements OnInit {
         }
       });
       this.dataSource3= new MatTableDataSource(filteredData);
+      setTimeout(() => {
       this.dataSource3.sort=this.sort3;
+      }, 500);
     }else{
       this.vcmTreeData1=[]
       this.vcmTreeData.forEach(element => {
@@ -141,7 +143,18 @@ export class ViewPropertiesComponent implements OnInit {
   }
 
   ondeleteAttachements(data) {
-    let req_body=[{"documentId":data.uniqueId}]
+    console.log(data)
+    let req_body=[]
+    if(data == "all"){
+      this.attachments.forEach(e => {
+        let obj={"documentId":e.documentId}
+        req_body.push(obj)
+      });
+    }else{
+      let obj = {"documentId":data.documentId}
+      req_body.push(obj)
+    }
+    console.log(req_body)
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -351,5 +364,6 @@ downloadAllFiles(){
     FileSaver.saveAs(content, _self.vcm_resData.data.vcmName+".zip");
   });
 }
+
 
 }

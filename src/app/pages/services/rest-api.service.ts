@@ -1359,6 +1359,9 @@ deleteAttachements(body){
 getAttachementsByIndivdualProcess(body){
   return this.http.post('/vcmv2/fetchDocumentsByIndivdualProcess',body);
 }
+getAttachementsById(body){
+  return this.http.post('/vcmv2/fetchDocumentsBydocumentId',body);
+}
 getAttachementsBycategory(body){
   return this.http.post('/vcmv2/fetchDocumentsByProcessType',body);
 }

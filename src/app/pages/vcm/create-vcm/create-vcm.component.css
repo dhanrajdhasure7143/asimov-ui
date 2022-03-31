@@ -11,8 +11,9 @@
     margin-bottom: 15px;
 }
 
-.vcm-leveldiv h4 img.testplus {
+.vcm-leveldiv h4 span {
     float: right;
+    cursor: pointer;
 }
 
 .vcm-leveldiv mat-panel-title.mat-expansion-panel-header-title {
@@ -74,8 +75,7 @@
 .content button[disabled] {
     opacity: 0.35;
 }
-.overflowcontent span {
-    /* margin-left: 5px; */
+.overflowcontent span.l2c-process_title {
     width: 82%;
 }
 
@@ -170,7 +170,7 @@ li.overflowcontent {
 .actimg img {
     cursor: pointer;
 }
-li.childHover span {
+li.childHover span.l1c-process_title {
     width: 88%;
 }
 
@@ -267,46 +267,34 @@ mat-tree {
     cursor: not-allowed;
 }
 
-.view {
-    cursor: pointer;
-}
-
 .tsttooltipbtn {
     position: relative;
 }
 
-/* .tsttooltipbtn:hover .default-img {
-    display: none;
-}
-
-.tsttooltipbtn:hover .hover-img {
-    display: initial;
-} */
-
 span.testtooltip {
     position: absolute;
-    top: 35px;
-    right: 0px;
+    top: -2px;
+    right: 30px;
     background-color: #001c47;
     color: #fff;
+    width: -moz-max-content;
     width: max-content;
-    padding: 3px 10px;
+    padding: 6px 10px;
     border-radius: 4px;
     display: none;
-    z-index: 999;
-  }
+    z-index: 2;
+}
   
-  span.testtooltip:before {
-    content: '';
-    border: 2px solid #001c47;
-    border-width: 0px 0px 2px 2px;
+span.testtooltip:before {
+    content: "";
+    width: 10px;
+    height: 10px;
     position: absolute;
-    padding: 4px;
-    right: 13px;
-    top:  -5px;
-    background: #001c47;
+    background-color: #001c47;
     transform: rotate(45deg);
-  }
+    right: -4px;
+    top: 10px;
+}
   
   .tsttooltipbtn:hover span.testtooltip {
     display: block;
@@ -388,9 +376,6 @@ span.polabel {
     position: absolute;
     right: 12px;
     top: 5px;
-}
-.actimg span {
-    width: 25px !important;
 }
 
 /* properties overlay Start */
@@ -482,10 +467,14 @@ span.polabel {
     display: inline-block;
     cursor: pointer;
     margin-bottom: 0px;
+    width: 100%;
+    text-align: center;
 }
 .inputfile {
-    width: 0.1px;
-    height: 0.1px;
+    /* width: 0.1px;
+    height: 0.1px; */
+    width: 94%;
+    height: 34px;
     opacity: 0;
     overflow: hidden;
     position: absolute;
