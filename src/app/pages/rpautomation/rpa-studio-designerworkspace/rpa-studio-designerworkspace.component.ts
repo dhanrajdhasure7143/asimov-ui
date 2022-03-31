@@ -91,7 +91,11 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   stopNodeId:any=""
   actualTaskValue:any=[];
   actualEnv:any=[];
-  auditLogs:any=[]
+  auditLogs:any=[];
+  enableMultiForm:any={
+    check:false,
+    value:[],
+  };
   @ViewChild('template', { static: false }) template: TemplateRef<any>;
   public nodedata: any;
   categoryList:any=[];
@@ -711,7 +715,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   formNodeFunc(node) {
     this.nodedata=node
     this.form_change=false;
-    
+    this.enableMultiForm.check=false;
     if (node.selectedNodeTask != "") {
       this.selectedTask = {
         name: node.selectedNodeTask,
@@ -725,34 +729,44 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           let finalattributes: any = [];
           this.rest.attribute(node.selectedNodeId).subscribe((data) => {
             finalattributes = data
-            taskdata.attributes.forEach(element => {
-              if(finalattributes.find(data => data.id == element.metaAttrId).type=='restapi')
-              {
-                if(element.attrValue!='' && element.attrValue!=undefined)
-                {
-                  let attr_val=JSON.parse(element.attrValue);
-                  let attrnames=Object.getOwnPropertyNames(attr_val);
-                  finalattributes.find(data => data.id == element.metaAttrId).value=attr_val[attrnames[0]];
-                }
-              }
-              else
-              {
-                finalattributes.find(data => data.id == element.metaAttrId).value = element.attrValue;
-              }
-
-            });
-            if(finalattributes.find(attr=>attr.taskId==71)!=undefined)
+            console.log(finalattributes)
+            if(finalattributes.length==1 && finalattributes[0].type=="multiform")
             {
-              this.formVales = finalattributes;
-              this.update_record_n_play(finalattributes, node)
-            }
-            else if(finalattributes.find(attr=>attr.type=='restapi')!=undefined)
-            {
-              this.addoptions(finalattributes, node);
+              this.enableMultiForm.check=true;
+              let multiFormValue=[...JSON.parse(taskdata[0].attrValue)]
+              this.openMultiForm(finalattributes,node,multiFormValue)
             }
             else
             {
-              this.response(finalattributes,node);
+              taskdata.attributes.forEach(element => {
+                if(finalattributes.find(data => data.id == element.metaAttrId).type=='restapi')
+                {
+                  if(element.attrValue!='' && element.attrValue!=undefined)
+                  {
+                    let attr_val=JSON.parse(element.attrValue);
+                    let attrnames=Object.getOwnPropertyNames(attr_val);
+                    finalattributes.find(data => data.id == element.metaAttrId).value=attr_val[attrnames[0]];
+                  }
+                }
+                else
+                {
+                  finalattributes.find(data => data.id == element.metaAttrId).value = element.attrValue;
+                }
+
+              });
+              if(finalattributes.find(attr=>attr.taskId==71)!=undefined)
+              {
+                this.formVales = finalattributes;
+                this.update_record_n_play(finalattributes, node)
+              }
+              else if(finalattributes.find(attr=>attr.type=='restapi')!=undefined)
+              {
+                this.addoptions(finalattributes, node);
+              }
+              else
+              {
+                this.response(finalattributes,node);
+              }
             }
           });
         }
@@ -766,7 +780,12 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
         this.rest.attribute(node.selectedNodeId).subscribe((data) => {
           let attr_response:any=data;
-          if(node.selectedNodeTask=="Record & Play")
+          if(attr_response.length==1 && attr_response[0].type=="multiform")
+          {
+            this.enableMultiForm.check=true
+            this.openMultiForm(attr_response, node, []);
+          }
+          else if(node.selectedNodeTask=="Record & Play")
           {
 
               this.formVales = attr_response;
@@ -792,6 +811,17 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
 
+  openMultiForm(attr_data, node,value)
+  {
+    this.rest.getMultiFormAttributes(attr_data[0].dependency).subscribe(attributes=>{
+      console.log(attributes);
+      this.enableMultiForm.value=value;
+      alert(JSON.stringify(this.enableMultiForm))
+      setTimeout(()=>{
+        this.response(attributes,node)
+      },100)
+    })
+  }
 
   update_record_n_play(finalattributes, node)
   {

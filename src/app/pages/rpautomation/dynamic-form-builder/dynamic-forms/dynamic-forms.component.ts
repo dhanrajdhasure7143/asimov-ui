@@ -2,7 +2,6 @@ import { Component, Input, OnInit, Output, EventEmitter, ViewChild } from '@angu
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
-
 @Component({
   selector: 'app-dynamic-forms',
   template:`
@@ -11,28 +10,33 @@ import { MatPaginator } from '@angular/material/paginator';
         <div class="col-md-12 p-0 form-group"  [id]="field.id+'_form_data'"  *ngFor="let field of fields; let i =index ">
             <form-builder [field]="field" [form]="form"></form-builder>
         </div>
-        <div>
-        <button class="btn btn-success"  [disabled]="!form.valid" (click)="Push()" *ngIf="formheader=='Web Automation - Fill'">Add</button>
+
+
+
+        
+        <div *ngIf="isMultiForm==true">
+          <br>
+            <button class="btn btn-success"  [disabled]="!form.valid" (click)="Push()" >Add</button>
+          <br>
         </div>
-        <div class="mt-2" *ngIf="formheader=='Web Automation - Fill'">
+
+
+
+        <div class="mt-2" *ngIf="isMultiForm==true">
         <div class="tablmacl">
         <div class="innertabld">
             <table class="table">
                 <thead>
-                   
-                    <th>Web Element Type</th>
-                    <th>Web Element Value</th>
-                    <th>Value Type</th>
-                    <th>Value</th>
-                   
-                </thead>
+                    <th *ngFor="let tableHeader of fields">{{tableHeader.label}}</th>
+                    <th>Actions</th>     
+               </thead>
                 <tbody>
-                    <tr *ngFor="let i of fillarray  | paginate: { itemsPerPage: 2,currentPage: q }">
+                    <tr *ngFor="let eachObj of fillarray  | paginate: { itemsPerPage: 2,currentPage: q }">
                         
-                        <td>{{i.webElementType_223}}</td>
-                        <td>{{i.webElementValue_224}}</td>
-                        <td>{{i.fillValueType_222}}</td>
-                        <td>{{i.fillValue_225}}</td>
+                        <td *ngFor="let field of fields">
+                        {{eachObj[field.name+"_"+field.id]}}
+                        </td>
+                        <td>edit, delete</td>
                     </tr>
                 </tbody>
             </table>
@@ -44,9 +48,9 @@ import { MatPaginator } from '@angular/material/paginator';
         
         </div>
         <div class="form-footer" *ngIf="!feilddisable">
-            <button *ngIf="isdisabled==null && formheader!='Web Automation - Fill'" type="submit" (click)="onSub()" [disabled]="!form.valid" class="btn btn-primary">Save</button>
+            <button *ngIf="isdisabled==null && isMultiForm==false" type="submit" (click)="onSub()" [disabled]="!form.valid" class="btn btn-primary">Save</button>
             <button *ngIf="isdisabled==true" type="submit" (click)="onSub()" [disabled]="true" class="btn btn-primary">Save</button>
-            <button *ngIf="isdisabled==null && formheader=='Web Automation - Fill'" type="submit" (click)="onSub()" [disabled]="fillarray.length==0"   class="btn btn-primary">Save</button>
+            <button *ngIf="isdisabled==null &&  isMultiForm==true" type="submit" (click)="onSub()" [disabled]="fillarray.length==0"   class="btn btn-primary">Save</button>
         </div>
       </div>
     </form>
@@ -55,18 +59,20 @@ import { MatPaginator } from '@angular/material/paginator';
 export class DynamicFormsComponent implements OnInit {
   @Output() onSubmit = new EventEmitter();
   @Output() Submit = new EventEmitter();
+  @Input() enableMultiForm:any;
   @Input() fields: any[] = [];
   @Input() formheader:any;
   form: FormGroup;
   isdisabled:boolean;
   userRole: string;
   fillarray:any=[]
-  
-  
-  constructor() { }
+  isMultiForm:Boolean=false;
+  multiFormValue=[];
+  constructor() {
+   }
   onSub(){
 
-    if(this.formheader=='Web Automation - Fill'){
+    if(this.enableMultiForm.check==true){
       this.Submit.emit(this.fillarray)
     }
     else{
@@ -78,13 +84,25 @@ export class DynamicFormsComponent implements OnInit {
   }
 
   Push(){
-    this.fillarray.push(this.form.value)
-    this.form.reset()
-    
+    let value=(this.form.value)
+    value["id"]=this.idGenerator();
+    this.fillarray.push(value);
+    console.log(this.fillarray)
+    this.form.reset();
   }
+  
+  idGenerator() {
+    var S4 = function () {
+      return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+    };
+    return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
+  }
+
   ngOnInit() {
     let fieldsCtrls = {};
-    console.log("formheader",this.formheader)
+    this.isMultiForm=(this.enableMultiForm.check)
+    this.multiFormValue=[...this.enableMultiForm.value]
+
     for (let f of this.fields) {
     //  if (f.type != 'checkbox') {
       if(f.type=='email')

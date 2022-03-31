@@ -173,6 +173,12 @@ export class RestApiService{
     )
   }
 
+
+  getMultiFormAttributes(dependencyApi)
+  {
+    return this.http.get(dependencyApi);
+  }
+
   async saveBot(data:any)
   {
     return await this.http.post('/rpa-service/save-bot',data)
