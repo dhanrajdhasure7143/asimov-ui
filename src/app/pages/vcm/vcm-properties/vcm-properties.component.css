@@ -28,8 +28,7 @@ img {
 .proc_deffield {
     position: relative;
     /* margin-bottom: 10px; */
-}
-.proc_deffield img.testplus, 
+} 
 .proc_deffield span.procdesc_act {
     position: absolute;
     right: 12px;
@@ -62,9 +61,6 @@ span.docpill:hover {
     width: 10px;
     height: auto;
 }
-/* .proc_deffield img.editdef {
-    top: 5px !important;
-} */
 .prop_procdef h3 {
     margin: 0px 0px 5px;
     font-weight: 600;
@@ -107,17 +103,21 @@ span.docpill:hover {
 }
 .inputfile + label {
     display: inline-block;
-    /* cursor: pointer; */
+    cursor: pointer;
     margin-bottom: 0px;
+    width: 100%;
+    text-align: center;
 }
 .inputfile {
-    width: 0.1px;
-    height: 0.1px;
+    /* width: 0.1px;
+    height: 0.1px; */
+    width: 94%;
+    height: 34px;
     opacity: 0;
     overflow: hidden;
     position: absolute;
     z-index: -1;
-}  
+}   
 .inputfile:focus + label,
 .inputfile + label:hover {
     color: #00a0e3;
@@ -131,7 +131,6 @@ span.docpill:hover {
     font-weight: 400;
 }
 .file-size {
-    /* color: #999; */
     font-size: 12px;
     font-weight: 400;
     display: block;
@@ -149,33 +148,41 @@ span.docpill:hover {
     word-break: break-all;
 }
 
+/* Upload Popup */
 
+.tsttooltipbtn{
+    position: relative;
+}
 span.testtooltip {
     position: absolute;
     top: 35px;
-    right: 0px;
+    right: -5px;
     background-color: #001c47;
     color: #fff;
     width: max-content;
-    padding: 3px 10px;
+    padding: 6px 10px;
     border-radius: 4px;
     display: none;
-    z-index: 999;
-  }
-  
-  span.testtooltip:before {
+    z-index: 2;
+}  
+span.testtooltip:before {
     content: '';
-    border: 2px solid #001c47;
-    border-width: 0px 0px 2px 2px;
+    width: 10px;
+    height: 10px;
     position: absolute;
-    padding: 4px;
-    right: 13px;
-    top:  -5px;
+    right: 11px;
+    top: -5px;
     background: #001c47;
     transform: rotate(45deg);
-  }
-  
-  .tsttooltipbtn:hover span.testtooltip {
+}  
+.tsttooltipbtn:hover span.testtooltip {
     display: block;
-  }
-/* Upload Popup */
+}
+
+.tsttooltipbtn:hover .default-img{
+    display: none;
+}
+
+.tsttooltipbtn:hover .hover-img {
+    display: initial;
+}

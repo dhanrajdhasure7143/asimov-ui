@@ -84,9 +84,7 @@ span.docpill:hover {
     padding: 5px 10px 0px;
     margin: 0px;
 }
-.tsttooltipbtn {
-    /* position: relative; */
-}
+
 .tsttooltipbtn:hover .default-img{
     display: none;
 }
@@ -97,25 +95,31 @@ span.docpill:hover {
 .tsttooltipbtn a:hover span.testtooltip {
     display: block;
 }
+button.tsttooltipbtn {
+    position: relative;
+}
+button.tsttooltipbtn:hover span.testtooltip {
+    display: block;
+}
 span.testtooltip {
     position: absolute;
-    top: 32px;
+    bottom: 32px;
     right: 0px;
     background-color: #001c47;
     color: #fff;
     width: -moz-max-content;
     width: max-content;
-    padding: 3px 10px;
+    padding: 6px 10px;
     border-radius: 4px;
     display: none;
-    z-index: 1;
+    z-index: 2;
 }
 span.testtooltip:after {
     content: "";
     width: 10px;
     height: 10px;
     position: absolute;
-    top: -4px;
+    bottom: -4px;
     background-color: #001c47;
     transform: rotate(45deg);
     right: 10px;
@@ -177,17 +181,7 @@ span.testtooltip:after {
 .new-bps-grid-data mat-expansion-panel-header:hover {
     background-color: transparent !important;
 }
-.new-bps-grid-data .mat-expansion-panel:hover {
-    /* background-color: #fdf6d4  !important; */
-}
-.new-bps-grid-data span {
-    text-align: left !important;
-    /* padding: 0px 5px; */
-    width: 100% !important;
-    /* top: 50%;
-    position: relative;
-    transform: translateY(-50%); */
-}
+
 span.comment {
     padding: 0px !important;
     position: unset !important;
@@ -400,7 +394,7 @@ button.savecbtn .testplus1 {
     background-color: #ffececbf;
 }
 .level1row {
-    background-color: #dcd3ff;
+    background-color: #ffecb3;
 }
 .cell.cell7 img.testplus, td img.testplus {
     margin-right: 10px !important;
@@ -413,4 +407,20 @@ button.savecbtn .testplus1 {
 }
 .workspace-title .cell.cell7 {
     width: 25% !important;
+}
+.prop_docs button.tsttooltipbtn {
+    margin-left: 8px;
+}
+
+span.testtooltip.celltooltip {
+    top: -4px;
+    left: -60px;
+    bottom: unset;
+}
+span.testtooltip.celltooltip::after {
+    right: -3.9px;
+    top: 8px;
+}
+.actions_header {
+    z-index: 1;
 }

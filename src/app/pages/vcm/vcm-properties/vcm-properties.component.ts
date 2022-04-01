@@ -42,6 +42,7 @@ export class VcmPropertiesComponent implements OnInit {
   filesData=[{fileDescription:""}];
   selectedObj:any;
   attachementsList:any=[];
+  user_details: any;
 
   constructor(private router: Router, private route: ActivatedRoute, private rest_api:RestApiService, 
     private dt: DataTransferService, private modalService: BsModalService,) {
@@ -57,6 +58,7 @@ export class VcmPropertiesComponent implements OnInit {
   ngOnInit(): void {
     this.getProcessOwnersList();
     let res_data
+    this.dt.logged_userData.subscribe(res => { this.user_details = res })
     this.dt.getVcm_Data.subscribe(res=>{res_data=res
       if(res){
         this.vcmProperties=res_data.data;
@@ -76,12 +78,16 @@ export class VcmPropertiesComponent implements OnInit {
         this.descriptionEdit = i;
         this.descriptionProcessName = name.parent;
         this.descriptionviewonly = false;
-        // this.texarea.nativeElement.focus();
+        if(this.texarea)
+        if(this.texarea.nativeElement)
+        this.texarea.nativeElement.focus();
       }
       else {
         this.descriptionEdit = i;
         this.descriptionProcessName = name.parent;
         this.descriptionviewonly = false;
+        if(this.texarea)
+        if(this.texarea.nativeElement)
         this.texarea.nativeElement.focus();
       }
     }
@@ -108,56 +114,6 @@ export class VcmPropertiesComponent implements OnInit {
       this.descriptionviewonly = true;
     }
 
-    documentsUpload(event, name ,level) {
-      this.isLoading=true;
-
-      this.fileName = [];
-      const formdata = new FormData();
-
-      for (var i = 0; i < event.target.files.length; i++) {
-        event.target.files[i]['convertedsize'] = this.convertFileSize(event.target.files[i].size);
-        event.target.files[i]['fileName'] = event.target.files[i]['name'];
-        this.fileName.push();
-        formdata.append("file", event.target.files[i]);
-      }
-      formdata.append("vcmLevel",name.level);
-      formdata.append("uniqueId",name.uniqueId);
-      formdata.append("masterId","000");
-      formdata.append("parent",name.parent);
-
-      if (level == 'level1') {
-      formdata.append("vcmuniqueId",this.vcmProperties[0].uniqueId);
-      }
-      if (level == 'level2') {
-        formdata.append("vcmuniqueId",this.vcmProperties[0].uniqueId);
-        }
-      this.rest_api.uploadVCMPropDocument(formdata).subscribe(res => {
-        this.isLoading = false;
-        for (var i = 0; i < event.target.files.length; i++) {
-          this.fileName.push(event.target.files[i]);
-        }
-
-        if (level == 'level1') {
-          this.vcmProperties.filter((e) => e.name === name.parent)[0].children
-            .filter(n => n.title === name.title)[0].attachments = this.fileName;
-        }
-        if (level == 'level2') {
-          this.vcmProperties.filter((e) => e.name === name.parent)[0].children
-            .filter(n => n.uniqueId === name.level1UniqueId)[0].children.filter(c => c.uniqueId === name.uniqueId)[0]
-            .attachments = this.fileName;
-        }
-      },err=>{
-        this.isLoading=false;
-        Swal.fire({
-          title: 'Error',
-          text: "File upload failed",
-          position: 'center',
-          icon: 'error',
-          heightAuto: false,
-        })
-
-      });
-    }
     
   convertFileSize(e) {
     let divided_size: any = String(e / 1024)
@@ -386,6 +342,8 @@ export class VcmPropertiesComponent implements OnInit {
     formdata.append("processName",this.selectedObj.title);
     formdata.append("vcmuniqueId",this.vcmProperties[0].uniqueId);
     formdata.append("fileUniqueIds",JSON.stringify(idsList));
+    formdata.append("uploadedBy",this.user_details.firstName + " " + this.user_details.lastName);
+
 
 
     this.rest_api.uploadVCMPropDocument(formdata).subscribe(res => {

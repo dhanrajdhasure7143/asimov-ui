@@ -44,6 +44,7 @@ export class FullEditPropertiesComponent implements OnInit {
   filesData=[{fileDescription:""}];
   selectedObj:any;
   attachementsList:any=[];
+  user_details: any;
 
   constructor(private router: Router, private route: ActivatedRoute, private rest_api:RestApiService, 
     private dt: DataTransferService, private modalService: BsModalService,) {
@@ -52,6 +53,7 @@ export class FullEditPropertiesComponent implements OnInit {
 
   ngOnInit(): void {
     this.getProcessOwnersList();
+    this.dt.logged_userData.subscribe(res => { this.user_details = res })
   }
 
   ngOnChanges(){
@@ -235,6 +237,7 @@ export class FullEditPropertiesComponent implements OnInit {
     formdata.append("processName",this.selectedObj.title);
     formdata.append("vcmuniqueId",this.selectedVcm.data.uniqueId);
     formdata.append("fileUniqueIds",JSON.stringify(idsList));
+    formdata.append("uploadedBy",this.user_details.firstName + " " + this.user_details.lastName);
 
     this.rest_api.uploadVCMPropDocument(formdata).subscribe(res => {
       this.isLoading = false;

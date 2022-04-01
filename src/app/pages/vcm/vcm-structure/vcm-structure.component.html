@@ -90,17 +90,17 @@
                                                     <span style="margin-right:6px;">{{i + 1}}.</span>
                                                     <span class="fname">{{each.fileName}}</span>
                                                     <span class="fbtns">
-                                                        <span class="deleteattachment">
-                                                            <a href="data:image/png;base64,{{each.filedata}}" download="{{each.fileName}}" *ngIf="isPropDisabled">
+                                                        <span class="tsttooltipbtn" (click)="downloadAttachement(each)">
+                                                            <!-- <a href="data:image/png;base64,{{each.filedata}}" download="{{each.fileName}}" *ngIf="isPropDisabled"> -->
                                                                 <img src="../../../../assets/images/Admin/download-black.svg" class="default-img testplus" >
                                                                 <img src="../../../../assets/images/Admin/download-blue.svg" class="hover-img testplus" >
-                                                            </a>
+                                                                <span class="testtooltip">Download</span>
+                                                            <!-- </a> -->
                                                         </span>
-                                                        <span *ngIf="!isPropDisabled">
-                                                            <a>
-                                                                <img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img"  />
-                                                                <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" (click)="removeFile(each,i)" />
-                                                            </a>
+                                                        <span *ngIf="!isPropDisabled" class="tsttooltipbtn">
+                                                            <img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img"  />
+                                                            <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" (click)="removeFile(each,i)" />
+                                                            <span class="testtooltip">Remove</span>
                                                         </span>                                                             
                                                     </span>                                                    
                                                 </div>
@@ -125,17 +125,21 @@
                             <label class="label-control">Value Chain Name</label>
                             <input style="width: 96%;" *ngIf="!editVcmTitle" type="text" class="form-control" [(ngModel)]="selectedVcmName" placeholder="Enter Value Chain Name" readonly>
                             <input #vcmTitle style="width: 96%;" *ngIf="editVcmTitle" type="text" class="form-control" [(ngModel)]="selectedVcmName" placeholder="Enter Value Chain Name">
-                            <button (click)="editVcmName()" *ngIf="!editVcmTitle">
+                            <button (click)="editVcmName()" *ngIf="!editVcmTitle" class="tsttooltipbtn">
                                 <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" />
+                                <span class="testtooltip">Edit</span>
                             </button>
-                            <button (click)="submitVcmTitle()" *ngIf="editVcmTitle">
+                            <button (click)="submitVcmTitle()" *ngIf="editVcmTitle" class="tsttooltipbtn">
                                 <img src="../../../../assets/images/VCM/Green Tick.svg" class="testplus1" />
-                                <!-- [hidden]="!selectedVcmName" -->
+                                <span class="testtooltip">Save</span>
                             </button>
                         </div>
                         <div class="col-md-12 p-0">
                             <h4>
-                                <span><img (click)="viewProperties('all')" src="../../../assets/images/menu-line.svg" class="procmenu" alt=""></span> {{selectedVcmName}}
+                                <span class="tsttooltipbtn">
+                                    <img (click)="viewProperties('all')" src="../../../assets/images/menu-line.svg" class="procmenu" alt="">
+                                    <span class="testtooltip vcptooltip">View Consolidated Properties</span>
+                                </span> {{selectedVcmName}}
                             </h4>
                         </div>
                         <div class="col-md-12 p-0 vcm-treediv">
@@ -145,8 +149,9 @@
                                     <span *ngIf="node.level == 'L1'">
                                         <span (click)="openNodeProperties(node)" *ngIf=" uniqueId1 != node.uniqueId ">{{node.title}} </span>
                                     <span *ngIf="nodeParent == node.parent"> 
-                                            <button (click)="onCreateLevel1(node)" *ngIf="uniqueId != node.uniqueId && uniqueId1 != node.uniqueId">
+                                            <button (click)="onCreateLevel1(node)" *ngIf="uniqueId != node.uniqueId && uniqueId1 != node.uniqueId" class="tsttooltipbtn">
                                                 <img src="../../../../assets/images/VCM/plus-bordercircle.svg" class="testplusb" />
+                                                <span class="testtooltip mtooltip">Add</span>
                                             </button>
                                             <div *ngIf="uniqueId==node.uniqueId" class="test" style="display: flex;width: 150%;margin-top: 2%;">
                                                 <input type="text" class="form-control" placeholder="Enter Process Name" [(ngModel)]="processName">
@@ -154,8 +159,9 @@
                                                     <img class="testplus1" src="../../../../assets/images/VCM/Green Tick.svg">
                                                 </button>
                                             </div>
-                                            <button (click)="editLevelName(node)" *ngIf=" uniqueId1 != node.uniqueId && uniqueId != node.uniqueId ">
+                                            <button (click)="editLevelName(node)" *ngIf=" uniqueId1 != node.uniqueId && uniqueId != node.uniqueId " class="tsttooltipbtn">
                                                 <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" />
+                                                <span class="testtooltip mtooltip">Edit</span>
                                             </button>
                                             <div *ngIf="uniqueId1 == node.uniqueId" style="display: flex;width: 150%;margin-top: 2%;">
                                                 <input type="text" class="form-control" placeholder="Enter Process Name" [(ngModel)]="node.title">
@@ -169,8 +175,9 @@
                                         <span (click)="openNodeProperties(node)"  *ngIf="uniqueId1 != node.uniqueId " class="sub-nodel2">{{node.title}}</span>
                                     <span *ngIf="nodeParent == node.parent">
                                             <button mat-button [matMenuTriggerFor]="custompopup1" *ngIf="uniqueId != node.uniqueId && uniqueId1 != node.uniqueId" 
-                                                (click)="onSelectedNode(node)" class="custom-popupbtn" >
+                                                (click)="onSelectedNode(node)" class="custom-popupbtn " > 
                                                 <img src="../../../../assets/images/VCM/plus-bordercircle.svg" class="testplusb" />
+                                                <!-- <span class="testtooltip mtooltip">Add</span> -->
                                             </button>
                                             <!-- <button *ngIf="uniqueId != node.uniqueId && uniqueId1 != node.uniqueId" (click)="onSelectedNode(node)" #pop3="bs-popover"
                                                 [popover]="popTemplate1" [outsideClick]="true" placement="right">
@@ -184,8 +191,9 @@
                                                 </button>
                                             </div>
  
-                                            <button (click)="editLevelName(node)" *ngIf=" uniqueId1 != node.uniqueId && uniqueId != node.uniqueId">
+                                            <button (click)="editLevelName(node)" *ngIf=" uniqueId1 != node.uniqueId && uniqueId != node.uniqueId" class="tsttooltipbtn">
                                                 <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" />
+                                                <span class="testtooltip mtooltip">Edit</span>
                                             </button>
                                             <div *ngIf="uniqueId1 == node.uniqueId" style="display: flex;width: 150%;margin-top: 2%;">
                                                 <input type="text" class="form-control" placeholder="Enter Process Name" [(ngModel)]="node.title">
@@ -202,14 +210,16 @@
                                     <span *ngIf="nodeParent == node.parent && !node.bpsId">
                                             <button (click)="onSelectedNode(node)"  mat-button [matMenuTriggerFor]="custompopup2" class="custom-popupbtn" >
                                                 <img src="../../../../assets/images/VCM/plus-bordercircle.svg" class="testplusb" />
+                                                <!-- <span class="testtooltip mtooltip">Add</span> -->
                                             </button>
                                             <!-- <button  #pop="bs-popover" (click)="onSelectedNode(node)" [popover]="popTemplate" [outsideClick]="true"
                                                 placement="right">
                                                 <img src="../../../../assets/images/VCM/plus-bordercircle.svg" class="testplusb" />
                                             </button> -->
                                             <span>
-                                                <button (click)="editLevelName(node)" *ngIf=" uniqueId1 != node.uniqueId ">
+                                                <button (click)="editLevelName(node)" *ngIf=" uniqueId1 != node.uniqueId " class="tsttooltipbtn">
                                                     <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" />
+                                                    <span class="testtooltip mtooltip">Edit</span>
                                                 </button>
                                                 <div *ngIf="uniqueId1 == node.uniqueId" style="display: flex;width: 150%;margin-top: 2%;">
                                                     <input type="text" class="form-control" placeholder="Enter Process Name" [(ngModel)]="node.title">
@@ -224,20 +234,26 @@
                                 </mat-tree-node>
                                 <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
                                     <div class="mat-tree-node">
-                                        <span class="proc-title" *ngIf="node.level != 'L1' && node.level != 'L2' && node.level != 'L3' ">
-                                            <button (click)="viewProperties(node)" *ngIf="(node.title=='Management Process'&& treeControl.dataNodes[1])|| (node.title=='Core Process'&& treeControl.dataNodes[1]) || (node.title=='Support Process'&& treeControl.dataNodes[2])">
+                                        <span class="proc-title-main" *ngIf="node.level != 'L1' && node.level != 'L2' && node.level != 'L3' ">
+                                            <button (click)="viewProperties(node)" class="tsttooltipbtn" *ngIf="(node.title=='Management Process'&& treeControl.dataNodes[1])|| (node.title=='Core Process'&& treeControl.dataNodes[1]) || (node.title=='Support Process'&& treeControl.dataNodes[2])">
                                                 <img src="../../../assets/images/menu-line.svg" class="procmenu" alt="">
-                                            </button> {{node.title}}                                            
-                                            <span class="" *ngIf="node.level != 'L1' && node.level != 'L2' && node.level != 'L3' && nodeParent == node.title ">
+                                                <span class="testtooltip vcptooltip">View Properties</span>
+                                            </button>
+                                            <span class="proc-title">{{node.title}}</span>
+
+                                            <span class="qebtn-addons" *ngIf="node.level != 'L1' && node.level != 'L2' && node.level != 'L3' && nodeParent == node.title ">
                                                 
-                                                <button (click)="createLevel1(node)">
+                                                <button (click)="createLevel1(node)" class="tsttooltipbtn">
                                                     <img src="../../../../assets/images/VCM/plus-bordercircle.svg" class="testplusb" /> 
+                                                    <span class="testtooltip mtooltip">Add</span>
                                                 </button>
-                                                <button (click)="updateVcm()">
+                                                <button (click)="updateVcm()" class="tsttooltipbtn">
                                                     <img class="testplus" src="../../../../assets/images/VCM/save.svg">
+                                                    <span class="testtooltip mtooltip">Save</span>
                                                 </button>
-                                                <button (click)="cancelEdit()">
+                                                <button (click)="cancelEdit()" class="tsttooltipbtn">
                                                     <img class="testplus" src="../../../../assets/images/VCM/Cancel-1.svg">
+                                                    <span class="testtooltip mtooltip-cancel">Cancel</span>
                                                 </button>
 
                                                 <div *ngIf="nodeParent1 == node.title" style="display: flex;width: 150%;margin-top: 3%;">
@@ -247,7 +263,11 @@
                                                     </button>
                                                 </div>
                                             </span>
-                                        <button class="btn qedit-btn" (click)="onSelectedProcessEdit(node)" *ngIf="nodeParent != node.title">Quick Edit</button>
+                                            <span>
+                                                <button class="btn qedit-btn" (click)="onSelectedProcessEdit(node)"
+                                                 *ngIf="nodeParent != node.title">Quick Edit</button>
+                                            </span>
+                                            
                                         </span>
 
                                         <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name" *ngIf="node.title != 'Management Process' && node.title != 'Core Process' && node.title != 'Support Process'">
@@ -258,8 +278,9 @@
                                         <span *ngIf="node.level == 'L1'">
                                             <span (click)="openNodeProperties(node)" *ngIf=" uniqueId1 != node.uniqueId ">{{node.title}} </span>
                                         <span *ngIf="nodeParent == node.parent"> 
-                                                <button *ngIf="uniqueId  != node.uniqueId && uniqueId1 != node.uniqueId" (click)="onCreateLevel1(node)">
+                                                <button *ngIf="uniqueId  != node.uniqueId && uniqueId1 != node.uniqueId" (click)="onCreateLevel1(node)" class="tsttooltipbtn">
                                                     <img src="../../../../assets/images/VCM/plus-bordercircle.svg" class="testplusb" />
+                                                    <span class="testtooltip mtooltip">Add</span>
                                                 </button>
                                                 <div *ngIf="uniqueId==node.uniqueId" style="display: flex;width: 150%;margin-top: 2%;">
                                                     <input type="text" class="form-control" placeholder="Enter Process Name" [(ngModel)]="processName">
@@ -269,8 +290,9 @@
                                                 </div>
                                             </span>
                                         <span *ngIf="nodeParent == node.parent">
-                                                <button (click)="editLevelName(node)" *ngIf=" uniqueId1 != node.uniqueId && uniqueId  != node.uniqueId">
+                                                <button (click)="editLevelName(node)" *ngIf=" uniqueId1 != node.uniqueId && uniqueId  != node.uniqueId" class="tsttooltipbtn">
                                                     <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" />
+                                                    <span class="testtooltip mtooltip">Edit</span>
                                                 </button>
                                                 <div *ngIf="uniqueId1 == node.uniqueId" style="display: flex;width: 150%;margin-top: 2%;">
                                                     <input type="text" class="form-control" placeholder="Enter Process Name" [(ngModel)]="node.title">
@@ -288,17 +310,18 @@
                                             <button mat-button [matMenuTriggerFor]="custompopup1" *ngIf="uniqueId1 != node.uniqueId" 
                                                     (click)="onSelectedNode(node)" class="custom-popupbtn" >
                                                 <img src="../../../../assets/images/VCM/plus-bordercircle.svg" class="testplusb" />
+                                                <!-- <span class="testtooltip mtooltip">Add</span> -->
                                             </button>
                                                 <!-- <button *ngIf="uniqueId1 != node.uniqueId" (click)="onSelectedNode(node)" #pop2="bs-popover" [popover]="popTemplate1" [outsideClick]="true" placement="right">
                                                     <img src="../../../../assets/images/VCM/plus-bordercircle.svg" class="testplusb"/>
                                                 </button> -->
-                                                <button *ngIf="uniqueId1 != node.uniqueId && uniqueId != node.uniqueId" (click)="editLevelName(node)">
+                                                <button *ngIf="uniqueId1 != node.uniqueId && uniqueId != node.uniqueId" (click)="editLevelName(node)" class="tsttooltipbtn">
                                                     <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2" />
+                                                    <span class="testtooltip mtooltip">Edit</span>
                                                 </button>    
                                                 <div *ngIf="uniqueId== node.uniqueId" style="width: 150%;display: flex;">
                                                     <input type="text" class="form-control" placeholder="Enter Process Name" [(ngModel)]="processName">
-                                                    <button [hidden]="!processName" style="position: relative;right: 8%;" (click)="addL3Nodes()" style="position: relative;
-                                                        right: 8%;">
+                                                    <button [hidden]="!processName" style="position: relative;right: 8%;" (click)="addL3Nodes()" >
                                                             <img class="testplus1" src="../../../../assets/images/VCM/Green Tick.svg">
                                                         </button>
                                                 </div>                                              

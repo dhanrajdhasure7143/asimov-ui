@@ -310,7 +310,7 @@ export class CreateVcmComponent implements OnInit {
   
   RemoveFile(file, i: number) {
     this.isLoading=true;
-    let req_body=[{"documentId":file.documentId}]
+    let req_body=[{"documentId":file.uniqueId}]
     this.rest_api.deleteAttachements(req_body).subscribe(res=>{
       this.isLoading=false;
       this.listOfAttachemnts.splice(i, 1);
@@ -541,6 +541,7 @@ export class CreateVcmComponent implements OnInit {
     formdata.append("vcmuniqueId",this.vcmProcess[0].uniqueId);
     formdata.append("processName",this.selectedObj.title);
     formdata.append("fileUniqueIds",JSON.stringify(idsList));
+    formdata.append("uploadedBy",this.user_details.firstName + " " + this.user_details.lastName);
     let res_data
     this.rest_api.uploadVCMPropDocument(formdata).subscribe(res => {res_data=res
     this.attachementsList.forEach(element => {

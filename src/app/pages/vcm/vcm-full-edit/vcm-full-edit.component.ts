@@ -79,8 +79,7 @@ export class VcmFullEditComponent implements OnInit {
   isShow:boolean= false;
   propertiesLevel:any;
   uniqueIdL3:any;
-  attachementsList:any=[]
-
+  attachementsList:any=[];
 
   constructor(private router: Router,private rest_api : RestApiService, private dt: DataTransferService,
     private route:ActivatedRoute, private modalService: BsModalService) {
@@ -618,6 +617,7 @@ export class VcmFullEditComponent implements OnInit {
     formdata.append("vcmuniqueId",this.selectedVcm.data.vcmuniqueId);
     formdata.append("processName",this.selectedObj.title);
     formdata.append("fileUniqueIds",JSON.stringify(idsList));
+    formdata.append("uploadedBy",this.user_details.firstName + " " + this.user_details.lastName);
     let res_data
     this.rest_api.uploadVCMPropDocument(formdata).subscribe(res => {res_data=res
       // this.listOfAttachemnts =  this.listOfFiles;
