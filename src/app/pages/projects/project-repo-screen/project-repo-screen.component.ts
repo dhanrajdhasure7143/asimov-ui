@@ -560,7 +560,7 @@ this.getFileDetails();
      this.listOfFiles=[];
      this.fileList=[];
      this.uploadFilemodalref.hide();
-     
+    
    }
    uploadFileDescriptionMaxLength(value){
     if(value.length > 150){
