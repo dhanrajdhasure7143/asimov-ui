@@ -103,6 +103,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   Webelementvalue_array:{"Id":any;"value":any;}[];
   fieldvaluetype_array:{"Id":any;"value":any;}[];
   fieldvalue_array:{"Id":any;"value":any;}[];
+  multiformdata: any=[]
+  multiarray;any=[]
   constructor(private rest: RestApiService,
     private notifier: NotifierService,
     private hints: Rpa_Hints,
@@ -713,6 +715,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   formNodeFunc(node) {
+    debugger
     this.nodedata=node
     this.form_change=false;
     this.enableMultiForm.check=false;
@@ -730,11 +733,20 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           this.rest.attribute(node.selectedNodeId).subscribe((data) => {
             finalattributes = data
             console.log(finalattributes)
+            this.multiformdata=finalattributes
             if(finalattributes.length==1 && finalattributes[0].type=="multiform")
             {
               this.enableMultiForm.check=true;
-              let multiFormValue=[...JSON.parse(taskdata[0].attrValue)]
-              this.openMultiForm(finalattributes,node,multiFormValue)
+              if(taskdata.attributes.length!=0){
+                let multiFormValue=[...JSON.parse(taskdata.attributes[0].attrValue)]
+                this.openMultiForm(finalattributes,node,multiFormValue)
+              }
+             else{
+              this.openMultiForm(finalattributes, node, []);
+             }
+             
+
+             
             }
             else
             {
@@ -780,6 +792,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
         this.rest.attribute(node.selectedNodeId).subscribe((data) => {
           let attr_response:any=data;
+          this.multiformdata=data
           if(attr_response.length==1 && attr_response[0].type=="multiform")
           {
             this.enableMultiForm.check=true
@@ -816,10 +829,10 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     this.rest.getMultiFormAttributes(attr_data[0].dependency).subscribe(attributes=>{
       console.log(attributes);
       this.enableMultiForm.value=value;
-      alert(JSON.stringify(this.enableMultiForm))
-      setTimeout(()=>{
+     
+       this.multiarray=value
         this.response(attributes,node)
-      },100)
+      
     })
   }
 
@@ -864,6 +877,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
 
   response(data,node) {
+    debugger
     if (data.error == "No Data Found") {
       this.fields = [];
       let type = "info";
@@ -961,9 +975,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   submitform(event){
     debugger
     this.fieldValues = event
-    this.fieldValues.forEach((item, i) => {
-      item.id = i + 1;
-    });
+   
     if (this.fieldValues['file1']) {
       this.fieldValues['file1'] = this.fieldValues['file1'].substring(12)
     }
@@ -1014,40 +1026,67 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
  }
 
  
-  for(let i=0;i<this.formVales.length;i++){
+ 
   
-  this.fileterdarray = this.formVales.map(p=>{
-      if(p.name=='webElementType'){
-        return{
-          "metaAttrId": p.id,
-          "metaAttrValue": p.name,
-          "attrValue":this.Webelementtype_array
-        }
-      }
-     if(p.name=='webElementValue'){
-       return{
-        "metaAttrId": p.id,
-        "metaAttrValue": p.name,
-        "attrValue":this.Webelementvalue_array
-       }
-     }
-     if(p.name=='fillValueType'){
-       return{
-        "metaAttrId": p.id,
-        "metaAttrValue": p.name,
-        "attrValue":this.fieldvaluetype_array
-       }
-     }
-     if(p.name=='fillValue'){
-      return{
-        "metaAttrId": p.id,
-        "metaAttrValue": p.name,
-        "attrValue":this.fieldvalue_array
-       }
-     }
+  this.fileterdarray = this.multiformdata.map(p=>{
+
+    return{
+      "metaAttrId": p.id,
+       "metaAttrValue": p.name,
+      "attrValue":JSON.stringify(this.fieldValues)
+    }
+    //   if(p.name=='webElementType'){
+    //     return{
+    //       "metaAttrId": p.id,
+    //       "metaAttrValue": p.name,
+    //       "attrValue":this.Webelementtype_array
+    //     }
+    //   }
+    //  if(p.name=='webElementValue'){
+    //    return{
+    //     "metaAttrId": p.id,
+    //     "metaAttrValue": p.name,
+    //     "attrValue":this.Webelementvalue_array
+    //    }
+    //  }
+    //  if(p.name=='fillValueType'){
+    //    return{
+    //     "metaAttrId": p.id,
+    //     "metaAttrValue": p.name,
+    //     "attrValue":this.fieldvaluetype_array
+    //    }
+    //  }
+    //  if(p.name=='fillValue'){
+    //   return{
+    //     "metaAttrId": p.id,
+    //     "metaAttrValue": p.name,
+    //     "attrValue":this.fieldvalue_array
+    //    }
+    //  }
      });
+  
+ console.log("filteredarray",this.fileterdarray)
+ 
+  let cutedata = {
+
+    "taskName": this.selectedTask.name,
+    "tMetaId": this.selectedTask.id,
+    "inSeqId": 1,
+    "taskSubCategoryId": "1",
+    "outSeqId": 2,
+    "nodeId": this.selectedNode.name + "__" + this.selectedNode.id,
+    "x": this.selectedNode.x,
+    "y": this.selectedNode.y,
+    "attributes": this.fileterdarray ,
   }
-  console.log("array",JSON.stringify(this.fileterdarray))
+  let index = this.finaldataobjects.findIndex(sweetdata => sweetdata.nodeId == cutedata.nodeId)
+  if (index != undefined && index >= 0) {
+    this.finaldataobjects[index] = cutedata;
+  } else {
+    this.finaldataobjects.push(cutedata);
+
+  }
+  this.notifier.notify("info", "Data Saved Successfully");
   
   
   }

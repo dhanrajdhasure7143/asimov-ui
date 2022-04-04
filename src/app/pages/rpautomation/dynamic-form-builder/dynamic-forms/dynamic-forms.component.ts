@@ -16,8 +16,9 @@ import { MatPaginator } from '@angular/material/paginator';
         
         <div *ngIf="isMultiForm==true">
           <br>
-            <button class="btn btn-success"  [disabled]="!form.valid" (click)="Push()" >Add</button>
-          <br>
+            <button class="btn btn-success" *ngIf="editfill==false" [disabled]="!form.valid" (click)="Push()" >Add</button>
+            <button class="btn btn-success" *ngIf="editfill==true" [disabled]="!form.valid" (click)="Push()" >Update</button>
+          <br><br>
         </div>
 
 
@@ -36,7 +37,10 @@ import { MatPaginator } from '@angular/material/paginator';
                         <td *ngFor="let field of fields">
                         {{eachObj[field.name+"_"+field.id]}}
                         </td>
-                        <td>edit, delete</td>
+                       <td>
+                       <button tooltip="Edit" placement="bottom"  (click)="edit(eachObj)"><img src="../../../../assets/images/RPA/icon_latest/edit.svg" alt="" class="testplus">&nbsp;</button>
+                     <button tooltip="Delete" placement="bottom"  (click)="delete(eachObj)"><img src="../../../../assets/images/RPA/icon_latest/delete.svg" alt="" class="testplus">&nbsp;</button>
+                       <td>
                     </tr>
                 </tbody>
             </table>
@@ -62,18 +66,23 @@ export class DynamicFormsComponent implements OnInit {
   @Input() enableMultiForm:any;
   @Input() fields: any[] = [];
   @Input() formheader:any;
+  @Input() multiarray:any=[]
   form: FormGroup;
   isdisabled:boolean;
   userRole: string;
   fillarray:any=[]
   isMultiForm:Boolean=false;
   multiFormValue=[];
+  data: any=[]
+  id: any;
+  editfill:boolean=false;
+
   constructor() {
    }
   onSub(){
 
     if(this.enableMultiForm.check==true){
-      this.Submit.emit(this.fillarray)
+      this.Submit.emit(this.data)
     }
     else{
       this.onSubmit.emit(this.form.value)
@@ -82,13 +91,98 @@ export class DynamicFormsComponent implements OnInit {
      
      
   }
+  edit(obj){
+    
+    this.editfill=true
+this.id=obj.id
+this.form.patchValue(obj)
+  }
+  delete(obj){
+    
+    var index = this.fillarray.indexOf(obj);
 
+this.fillarray.splice(index, 1); 
+    
+  }
   Push(){
-    let value=(this.form.value)
-    value["id"]=this.idGenerator();
-    this.fillarray.push(value);
-    console.log(this.fillarray)
+    
+    if(this.editfill==true){
+      let value=(this.form.value)
+      value.id=this.id
+
+    for(let i=0;i<this.fillarray.length;i++){
+      if(this.fillarray[i].id==this.id){
+        this.fillarray[i]=value;
+        this.editfill=false
+      }
+    }
+    this.data=this.fillarray.map(p=>{
+      // return{
+      //   "webElementType":p.webElementType_223,
+      //   "webElementValue":p.webElementValue_224,
+      //   "fillValueType":p.fillValueType_222,
+      //   "fillValue":p.fillValue_225,
+      //   "id":p.id
+
+      // }
+      let filteredobject={};
+      let sample=(Object.keys(p));
+      sample.map(item=>{
+        if(item!="id")
+          filteredobject[item.split("_")[0]]=p[item];
+        else
+          filteredobject["id"]=p[item];
+      })    
+      console.log("object",filteredobject)
+      return filteredobject;
+    })
+    }
+    else{
+      let value=(this.form.value)
+   
+     
+      this.fillarray.push(this.form.value);
+      this.fillarray.forEach((item, i) => {
+        item.id = i + 1;
+      });
+       
+      this.data=this.fillarray.map(p=>{
+        debugger
+        let filteredobject={};
+        let sample=(Object.keys(p));
+        sample.map(item=>{
+          if(item!="id")
+          filteredobject[item.split("_")[0]]=p[item];
+          else
+          filteredobject["id"]=p[item];
+        })    
+        console.log("object",filteredobject)
+        return filteredobject;
+        
+
+        // return{
+        //   "webElementType":p.webElementType_223,
+        //   "webElementValue":p.webElementValue_224,
+        //   "fillValueType":p.fillValueType_222,
+        //   "fillValue":p.fillValue_225,
+        //   "id":p.id
+  
+        // }
+      })
+    }
+   
+  
+   
     this.form.reset();
+   
+    // console.log(this.fields)
+    for(let i=0;i<this.fields.length;i++){
+      if(this.fields[i].type=="dropdown"){
+        this.fields[i].value="";
+        this.form.get([this.fields[i].name+'_'+this.fields[i].id]).setValue("")
+      }
+    }
+    // console.log(this.fields)
   }
   
   idGenerator() {
@@ -100,9 +194,11 @@ export class DynamicFormsComponent implements OnInit {
 
   ngOnInit() {
     let fieldsCtrls = {};
+    console.log("multiarray",this.multiarray)
     this.isMultiForm=(this.enableMultiForm.check)
     this.multiFormValue=[...this.enableMultiForm.value]
-
+    
+    
     for (let f of this.fields) {
     //  if (f.type != 'checkbox') {
       if(f.type=='email')
@@ -120,12 +216,38 @@ export class DynamicFormsComponent implements OnInit {
 
     }
     this.form = new FormGroup(fieldsCtrls);
+    console.log(this.fields)
     this.userRole = localStorage.getItem("userRole");
       if(this.userRole=='Process Owner' || this.userRole=='RPA Developer'){
         this.isdisabled=null
       }
       else{
         this.isdisabled=true
+      }
+      if(this.multiarray!=undefined){
+        this.fillarray=this.multiarray.map(p=>{
+          return {
+            "webElementValue_224":p.webElementValue,
+            "webElementType_223":p.webElementType,
+            "fillValueType_222":p.fillValueType,
+            "fillValue_225":p.fillValue,
+            "id":p.id
+          }
+          
+          // let filteredobject={};
+          // let sample=(Object.keys(p));
+          // sample.map(item=>{
+          //   if(item!="id")
+          //    this.fields.map(i=>{
+          //    filteredobject[this.fields[i].name+'_'+this.fields[i].id]=p[item]
+          //    })
+          //   else
+          //   filteredobject["id"]=p[item];
+          // })    
+        })
+        
+        this.data=this.fillarray;
+        console.log("multiarraydata",this.data)
       }
   }
 
