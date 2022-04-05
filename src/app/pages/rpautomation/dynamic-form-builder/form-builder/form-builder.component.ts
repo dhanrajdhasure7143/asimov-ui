@@ -51,10 +51,12 @@ template:`
           <span *ngIf="isEmail" class="errspan required">Enter valid email address</span>
           
         </div>
+        
 
       
     </div>
   </div>
+ 
   `,
 styleUrls: ['./form-builder.component.css']
 })

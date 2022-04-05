@@ -17,6 +17,7 @@ import * as $ from 'jquery';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { RpaStudioDesignerComponent } from '../rpa-studio-designer/rpa-studio-designer.component';
+import { ItemsList } from '@ng-select/ng-select/ng-select/items-list';
 
 @Component({
   selector: 'app-rpa-studio-designerworkspace',
@@ -31,6 +32,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   public optionsVisible: boolean = true;
   public scheduler: any;
   result: any = [];
+  fileterdarray:any=[]
+  webelementtype:any=[]
   nodes = [];
   selectedNode: any = [];
   changePx: { x: number; y: number; };
@@ -77,6 +80,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   recordedcode:any;
   finalcode:any;
   svg:any;
+  finalarray:any=[]
   public insertForm:FormGroup;
   modalRef: BsModalRef;
   outputmodalRef:BsModalRef;
@@ -87,10 +91,20 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   stopNodeId:any=""
   actualTaskValue:any=[];
   actualEnv:any=[];
-  auditLogs:any=[]
+  auditLogs:any=[];
+  enableMultiForm:any={
+    check:false,
+    value:[],
+  };
   @ViewChild('template', { static: false }) template: TemplateRef<any>;
   public nodedata: any;
   categoryList:any=[];
+  Webelementtype_array: { "Id": any; "value": any; }[];
+  Webelementvalue_array:{"Id":any;"value":any;}[];
+  fieldvaluetype_array:{"Id":any;"value":any;}[];
+  fieldvalue_array:{"Id":any;"value":any;}[];
+  multiformdata: any=[]
+  multiarray;any=[]
   constructor(private rest: RestApiService,
     private notifier: NotifierService,
     private hints: Rpa_Hints,
@@ -701,9 +715,10 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   formNodeFunc(node) {
+    debugger
     this.nodedata=node
     this.form_change=false;
-    
+    this.enableMultiForm.check=false;
     if (node.selectedNodeTask != "") {
       this.selectedTask = {
         name: node.selectedNodeTask,
@@ -717,34 +732,53 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           let finalattributes: any = [];
           this.rest.attribute(node.selectedNodeId).subscribe((data) => {
             finalattributes = data
-            taskdata.attributes.forEach(element => {
-              if(finalattributes.find(data => data.id == element.metaAttrId).type=='restapi')
-              {
-                if(element.attrValue!='' && element.attrValue!=undefined)
-                {
-                  let attr_val=JSON.parse(element.attrValue);
-                  let attrnames=Object.getOwnPropertyNames(attr_val);
-                  finalattributes.find(data => data.id == element.metaAttrId).value=attr_val[attrnames[0]];
-                }
+            console.log(finalattributes)
+            this.multiformdata=finalattributes
+            if(finalattributes.length==1 && finalattributes[0].type=="multiform")
+            {
+              this.enableMultiForm.check=true;
+              if(taskdata.attributes.length!=0){
+                let multiFormValue=[...JSON.parse(taskdata.attributes[0].attrValue)]
+                this.openMultiForm(finalattributes,node,multiFormValue)
               }
-              else
-              {
-                finalattributes.find(data => data.id == element.metaAttrId).value = element.attrValue;
-              }
+             else{
+              this.openMultiForm(finalattributes, node, []);
+             }
+             
 
-            });
-            if(finalattributes.find(attr=>attr.taskId==71)!=undefined)
-            {
-              this.formVales = finalattributes;
-              this.update_record_n_play(finalattributes, node)
-            }
-            else if(finalattributes.find(attr=>attr.type=='restapi')!=undefined)
-            {
-              this.addoptions(finalattributes, node);
+             
             }
             else
             {
-              this.response(finalattributes,node);
+              taskdata.attributes.forEach(element => {
+                if(finalattributes.find(data => data.id == element.metaAttrId).type=='restapi')
+                {
+                  if(element.attrValue!='' && element.attrValue!=undefined)
+                  {
+                    let attr_val=JSON.parse(element.attrValue);
+                    let attrnames=Object.getOwnPropertyNames(attr_val);
+                    finalattributes.find(data => data.id == element.metaAttrId).value=attr_val[attrnames[0]];
+                  }
+                }
+                else
+                {
+                  finalattributes.find(data => data.id == element.metaAttrId).value = element.attrValue;
+                }
+
+              });
+              if(finalattributes.find(attr=>attr.taskId==71)!=undefined)
+              {
+                this.formVales = finalattributes;
+                this.update_record_n_play(finalattributes, node)
+              }
+              else if(finalattributes.find(attr=>attr.type=='restapi')!=undefined)
+              {
+                this.addoptions(finalattributes, node);
+              }
+              else
+              {
+                this.response(finalattributes,node);
+              }
             }
           });
         }
@@ -758,7 +792,13 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
         this.rest.attribute(node.selectedNodeId).subscribe((data) => {
           let attr_response:any=data;
-          if(node.selectedNodeTask=="Record & Play")
+          this.multiformdata=data
+          if(attr_response.length==1 && attr_response[0].type=="multiform")
+          {
+            this.enableMultiForm.check=true
+            this.openMultiForm(attr_response, node, []);
+          }
+          else if(node.selectedNodeTask=="Record & Play")
           {
 
               this.formVales = attr_response;
@@ -784,6 +824,17 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
 
+  openMultiForm(attr_data, node,value)
+  {
+    this.rest.getMultiFormAttributes(attr_data[0].dependency).subscribe(attributes=>{
+      console.log(attributes);
+      this.enableMultiForm.value=value;
+     
+       this.multiarray=value
+        this.response(attributes,node)
+      
+    })
+  }
 
   update_record_n_play(finalattributes, node)
   {
@@ -826,6 +877,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
 
   response(data,node) {
+    debugger
     if (data.error == "No Data Found") {
       this.fields = [];
       let type = "info";
@@ -920,9 +972,127 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   close_record_play(){
     document.getElementById('recordandplay').style.display='none';
   }
+  submitform(event){
+    debugger
+    this.fieldValues = event
+   
+    if (this.fieldValues['file1']) {
+      this.fieldValues['file1'] = this.fieldValues['file1'].substring(12)
+    }
+    if (this.fieldValues['file2']) {
+      this.fieldValues['file2'] = this.fieldValues['file2'].substring(12)
+    }
+    if (this.fileData != undefined) {
+      this.fieldValues['file'] = this.fileData
+    }
 
+
+    this.hiddenPopUp = false;
+  
+ 
+
+ for(let i=0;i<this.fieldValues.length;i++){
+  
+   this.Webelementtype_array = this.fieldValues.map(p=>{
+    return{
+      "Id": p.id,
+      "value": p.webElementType_223
+    }
+    });
+
+    this.Webelementvalue_array=this.fieldValues.map(p=>{
+      return{
+        "Id":p.id,
+        "value":p.webElementValue_224
+      }
+    })
+
+    this.fieldvaluetype_array=this.fieldValues.map(p=>{
+      return{
+        "Id":p.id,
+        "value":p.fillValueType_222
+      }
+    })
+
+    this.fieldvalue_array=this.fieldValues.map(p=>{
+      return{
+        "Id":p.id,
+        "value":p.fillValue_225
+      }
+    })
+  
+  //this.fileterdarray.push(this.selectedresource)
+  
+ }
+
+ 
+ 
+  
+  this.fileterdarray = this.multiformdata.map(p=>{
+
+    return{
+      "metaAttrId": p.id,
+       "metaAttrValue": p.name,
+      "attrValue":JSON.stringify(this.fieldValues)
+    }
+    //   if(p.name=='webElementType'){
+    //     return{
+    //       "metaAttrId": p.id,
+    //       "metaAttrValue": p.name,
+    //       "attrValue":this.Webelementtype_array
+    //     }
+    //   }
+    //  if(p.name=='webElementValue'){
+    //    return{
+    //     "metaAttrId": p.id,
+    //     "metaAttrValue": p.name,
+    //     "attrValue":this.Webelementvalue_array
+    //    }
+    //  }
+    //  if(p.name=='fillValueType'){
+    //    return{
+    //     "metaAttrId": p.id,
+    //     "metaAttrValue": p.name,
+    //     "attrValue":this.fieldvaluetype_array
+    //    }
+    //  }
+    //  if(p.name=='fillValue'){
+    //   return{
+    //     "metaAttrId": p.id,
+    //     "metaAttrValue": p.name,
+    //     "attrValue":this.fieldvalue_array
+    //    }
+    //  }
+     });
+  
+ console.log("filteredarray",this.fileterdarray)
+ 
+  let cutedata = {
+
+    "taskName": this.selectedTask.name,
+    "tMetaId": this.selectedTask.id,
+    "inSeqId": 1,
+    "taskSubCategoryId": "1",
+    "outSeqId": 2,
+    "nodeId": this.selectedNode.name + "__" + this.selectedNode.id,
+    "x": this.selectedNode.x,
+    "y": this.selectedNode.y,
+    "attributes": this.fileterdarray ,
+  }
+  let index = this.finaldataobjects.findIndex(sweetdata => sweetdata.nodeId == cutedata.nodeId)
+  if (index != undefined && index >= 0) {
+    this.finaldataobjects[index] = cutedata;
+  } else {
+    this.finaldataobjects.push(cutedata);
+
+  }
+  this.notifier.notify("info", "Data Saved Successfully");
+  
+  
+  }
 
   onFormSubmit(event) {
+    debugger
     this.fieldValues = event
     if (this.fieldValues['file1']) {
       this.fieldValues['file1'] = this.fieldValues['file1'].substring(12)
