@@ -1,5 +1,4 @@
 
-
 import { Injectable, OnInit } from '@angular/core';
 import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
@@ -347,6 +346,12 @@ export class RestApiService{
     }
     return this.http.put<any>("/rpa-service/agent/update-environment",data);
   }
+  
+  updateEnvironmentV2(formData)
+  {
+    return this.http.post<any>("/rpa-service/agent/update-environment-v2",formData);
+  }
+
 
   getAllRpaWorkSpaces(id:any){
     if(id==0)
