@@ -481,12 +481,12 @@ placeholder="Enter Environment Type" >-->
                             </div>
                         </div> -->
                         <div class="col-md-12 p-0 form-group">
-                            <label  class="label-control" for="password"><input type="checkbox" [checked]="isKeyValuePair" (change)="isKeyValuePair=!(isKeyValuePair)" > Key Pair Authentication<span class="star">*</span> </label>
+                            <label  class="label-control" for="password"><input type="checkbox" [checked]="isKeyValuePair" (change)="keypair($event)" > Key Pair Authentication<span class="star">*</span> </label>
                             
                         </div>
                         <div class="col-md-12 p-0 form-group" *ngIf="isKeyValuePair==false">
                             <label class="label-control" for="password">Password<span class="star">*</span></label>
-                            <input [type]="passwordtype1 ? 'text': 'password'" class="form-control"  [(ngModel)]="password"  [ngModelOptions]="{standalone: true}" placeholder="Enter Password" passwordToggle>
+                            <input [type]="passwordtype1 ? 'text': 'password'" class="form-control"  [(ngModel)]="password"  [ngModelOptions]="{standalone: true}" placeholder="Enter Password" >
                             <span *ngIf="passwordtype1==false" (click)="passwordtype1 =!passwordtype1" class="pdicon">
                                 <img src="../../../../../assets/images/Projects/eye-show.svg"  class="testplus1">
                             </span>
@@ -534,7 +534,7 @@ placeholder="Enter Environment Type" >-->
                 <div class="form-footer">
                     <button class="btn btn-default" (click)="resetupdateEnvForm()" >Reset</button>
                     <button class="btn btn-primary btn-test" [disabled]="updateForm.invalid  || !((password!='' && isKeyValuePair==false  )||(isKeyValuePair==true && keyValueFile!=undefined))"  (click)="testConnection('update')">Test Connection</button>
-                    <button class="btn btn-primary"[disabled]="updateForm.invalid || submitted || !((password!='' && isKeyValuePair==false  )||(isKeyValuePair==true && keyValueFile!=undefined))" (click)="updateEnvironmentV2()" >Modify</button>
+                    <button class="btn btn-primary"[disabled]="updateForm.invalid || !((password!='' && isKeyValuePair==false  )||(isKeyValuePair==true && keyValueFile!=undefined))" (click)="updateEnvironmentV2()" >Modify</button>
                   </div>
             </div>
         </div>

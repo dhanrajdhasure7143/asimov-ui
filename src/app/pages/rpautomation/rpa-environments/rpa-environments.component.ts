@@ -570,6 +570,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 
   updatedata()
   {
+    debugger
     document.getElementById("createenvironment").style.display='none';    
     //document.getElementById("filters").style.display='none';
     document.getElementById('update-popup').style.display='block';
@@ -596,6 +597,9 @@ import { NgxSpinnerService } from "ngx-spinner";
           this.password=data.password.password;
           this.isKeyValuePair=false;
         }
+        if(data.keyValue!=undefined){
+           this.keyValueFile=data.keyValue
+        }
         this.updateForm.get("environmentName").setValue(this.updateenvdata["environmentName"]);
         this.updateForm.get("environmentType").setValue(this.updateenvdata["environmentType"]);
         this.updateForm.get("agentPath").setValue(this.updateenvdata["agentPath"]);
@@ -610,7 +614,15 @@ import { NgxSpinnerService } from "ngx-spinner";
       }
     }
   }
-
+  keypair(event){
+    this.isKeyValuePair=!this.isKeyValuePair;
+    if(event.target.value==true){
+      this.password=''
+    }
+    else{
+      this.keyValueFile=undefined
+    }
+  }
   close()
   { 
     //document.getElementById("filters").style.display='block';

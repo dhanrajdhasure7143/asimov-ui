@@ -672,7 +672,7 @@ export class SoSchedulerComponent implements OnInit {
 
   }
   onChangeHour(event,time){ 
-    debugger
+    
     this.todaytime=(new Date).getHours()+":"+(new Date).getMinutes();;
     
        event=this.tConv24(event)

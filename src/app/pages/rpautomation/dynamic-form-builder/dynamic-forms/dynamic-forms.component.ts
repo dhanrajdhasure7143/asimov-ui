@@ -147,7 +147,7 @@ this.fillarray.splice(index, 1);
       });
        
       this.data=this.fillarray.map(p=>{
-        debugger
+        
         let filteredobject={};
         let sample=(Object.keys(p));
         sample.map(item=>{
