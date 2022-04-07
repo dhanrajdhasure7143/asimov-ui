@@ -53,6 +53,9 @@ import { NgxSpinnerService } from "ngx-spinner";
     public isButtonVisible = false;
     public userRole:any = [];
     public categoryList:any=[];
+    public isKeyValuePair:Boolean=false;
+    public password:any="";
+    public keyValueFile:File;
   constructor(private api:RestApiService, 
     private router:Router, 
     private formBuilder: FormBuilder,
@@ -61,6 +64,7 @@ import { NgxSpinnerService } from "ngx-spinner";
     private dt:DataTransferService,
     private hints:Rpa_Hints,
     private spinner: NgxSpinnerService
+    
     ) { 
     const ipPattern = 
     "(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
@@ -71,7 +75,9 @@ import { NgxSpinnerService } from "ngx-spinner";
         hostAddress: ["", Validators.compose([Validators.required,  Validators.maxLength(50)])],
         categoryId:["0", Validators.compose([Validators.required])],
         username: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-        password: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
+        
+        // isKeyValuePair: [false, Validators.compose([Validators.required])],
+        // password: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
         connectionType: ["SSH",Validators.compose([Validators.required,, Validators.maxLength(50), Validators.pattern("[A-Za-z]*")])],
         portNumber: ["22",  Validators.compose([Validators.required, Validators.maxLength(6)])],
         activeStatus: [true]
@@ -85,7 +91,7 @@ import { NgxSpinnerService } from "ngx-spinner";
       hostAddress: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       categoryId:["0", Validators.compose([Validators.required])],
       username: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      password: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
+      //password: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
       connectionType: ["SSH",Validators.compose([Validators.required,, Validators.maxLength(50), Validators.pattern("[A-Za-z]*")])],
       portNumber: ["22",  Validators.compose([Validators.required, Validators.maxLength(6)])],
       activeStatus: [""]
@@ -145,6 +151,18 @@ import { NgxSpinnerService } from "ngx-spinner";
         this.environments.sort((a,b) => a.activeTimeStamp > b.activeTimeStamp ? -1 : 1);
         this.environments=this.environments.map(item=>{
            item["categoryName"]=this.categoryList.find(item2=>item2.categoryId==item.categoryId).categoryName;
+            if(item.keyValue!=null)
+            {
+              item["password"]={
+                key:""
+              }
+            }
+            else
+            {
+              item["password"]={
+                  password:item.password
+              }
+            }
            return item;
         })
         this.dataSource1= new MatTableDataSource(this.environments);
@@ -222,7 +240,7 @@ import { NgxSpinnerService } from "ngx-spinner";
   }
 
   async testConnection(data){
-    this.spinner.show();
+    
     let formdata:any;
     if(data=="insert"){
       formdata=this.insertForm;
@@ -237,30 +255,33 @@ import { NgxSpinnerService } from "ngx-spinner";
     }else{
       formdata.value.activeStatus=8
     }
-     await this.api.testenvironment(formdata.value).subscribe( res =>
-      {
-        this.spinner.hide();
-        if(res.errorMessage==undefined){
-        // Swal.fire({
-        //   position: 'center',
-        //   icon: 'success',
-        //   title: "Successfully Connected",
-        //   showConfirmButton: false,
-        //   timer: 2000
-        // })
-        Swal.fire("Success","Successfully Connected","success")
-        }else{
-          // Swal.fire({
-          //   position: 'center',
-          //   icon: 'error',
-          //   title: 'Connection Failed',
-          //   showConfirmButton: false,
-          //   timer: 2000
-          // })
-          Swal.fire("Error","Connection Failed", "error")
-        }
-    });
-    this.activestatus();
+    if(this.isKeyValuePair==false)
+    {
+      let connectionDetails=formdata.value;
+      connectionDetails["password"]=this.password;
+      
+        
+      this.spinner.show();
+      await this.api.testenvironment(formdata.value).subscribe( res =>
+        {
+          this.spinner.hide();
+          if(res.errorMessage==undefined){
+            Swal.fire("Success","Successfully Connected","success")
+          }else{
+            Swal.fire("Error","Connection Failed", "error")
+          }
+      }, err=>{
+        this.spinner.hide()
+        Swal.fire("Error","Unable to test connections", "error");
+      });
+      this.activestatus();
+      
+    }
+    else
+    {
+      this.spinner.hide()
+      Swal.fire("Alert","Test connections for key pair authentication is not configured","warning")
+    }
   }
   else
   {
@@ -341,6 +362,85 @@ import { NgxSpinnerService } from "ngx-spinner";
 
   }
 
+
+
+  saveEnvironmentV2()
+  {
+      if(this.insertForm.value.activeStatus==true)
+       {
+         this.insertForm.value.activeStatus=7
+       }else{
+         this.insertForm.value.activeStatus=8
+       }
+       this.insertForm.value.createdBy="admin";
+      this.submitted=true;
+      let environment=this.insertForm.value;
+      let formData=new FormData();
+      Object.keys(environment).forEach(key => {
+        formData.append(key, environment[key])
+      });
+      if(this.isKeyValuePair==true)
+      {
+        formData.append("key", this.keyValueFile);
+        this.password="";
+      }
+      else
+      {
+        formData.append("password",this.password);
+      }
+      this.spinner.show();
+      this.api.addenvironmentV2(formData).subscribe((response:any)=>{
+             this.spinner.hide();
+         if(response.errorMessage==undefined)
+         {
+           Swal.fire("Success",response.status,"success")
+           this.getallData();
+           this.checktoupdate();
+           this.checktodelete();
+           document.getElementById("createenvironment").style.display='none'; 
+           this.insertForm.reset();
+           this.insertForm.get("portNumber").setValue("22");
+           this.insertForm.get("connectionType").setValue("SSH");
+           this.insertForm.get("activeStatus").setValue(true);
+           this.isKeyValuePair=false;
+           this.password="";
+           this.keyValueFile=undefined;
+           this.submitted=false;
+         }
+         else
+         {
+           this.submitted=false;
+           Swal.fire("Error",response.errorMessage,"error");
+         }
+     },err=>{
+       this.spinner.hide();
+       Swal.fire("Error","Unable to add environment","error");
+       this.submitted=false;
+     });
+  }
+
+  downloadOption(environmentName,fileData)
+  {
+    if(fileData!=null)
+    {
+      var element = document.createElement('a');
+      element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(fileData));
+      element.setAttribute('download',  `${environmentName}-Key.ppk`);
+      element.style.display = 'none';
+      document.body.appendChild(element);
+      element.click();
+      // var a = document.createElement("a"); //Create <a>
+      // a.href = "data:file/ppk;base64," + fileData; //Image Base64 Goes here
+      // a.download =; //File name Here
+      // a.click(); //Downloaded file
+    }
+    else
+    {
+      Swal.fire("Error","Unable to download .ppk file","error")
+    }
+  }
+
+
   async updateEnvironment()
   {
     
@@ -357,32 +457,115 @@ import { NgxSpinnerService } from "ngx-spinner";
       updatFormValue["environmentId"]= this.updateenvdata.environmentId;
       updatFormValue["createdBy"]= this.updateenvdata.createdBy;
       updatFormValue["deployStatus"]= this.updateenvdata.deployStatus;
-      await this.api.updateenvironment(updatFormValue).subscribe( res => {
-      let response:any=res;
-      this.spinner.hide();
-      if(response.errorMessage==undefined)
-      {
+      console.log(this.updateflag)
+      // if(this.updateflag==false)
+      // {
+        if(this.isKeyValuePair==false)
+        {
 
-        Swal.fire("Success",res.status,"success")
-        this.removeallchecks();
-        this.getallData();
-        this.checktoupdate();
-        this.checktodelete();
-        document.getElementById("update-popup").style.display='none';
-      }else
-      {
-        Swal.fire("Error",response.errorMessage,"error")
+          updatFormValue["password"]=this.password;
+          await this.api.updateenvironment(updatFormValue).subscribe( res => {
+            let response:any=res;
+            this.spinner.hide();
+            if(response.errorMessage==undefined)
+            {
+              Swal.fire("Success",res.status,"success")
+              this.removeallchecks();
+              this.getallData();
+              this.checktoupdate();
+              this.checktodelete();
+              document.getElementById("update-popup").style.display='none';
+            }else
+            {
+              Swal.fire("Error",response.errorMessage,"error")
+            }
+          },err=>{
+            console.log(err);
+            this.spinner.hide();
+            Swal.fire("Error","Unable to update environment details","error")
+          });
+        }
+        else
+        {
+          this.spinner.hide();
+          Swal.fire("Alert","Update Environment is not configured for key pair authentication","warning");
+        }
       }
-    
-      },err=>{
-        this.spinner.hide();
-        Swal.fire("Error","Unable to update environment details","error")
-      });
-    }
+    //}
     else
     {
       //alert("please fill all details");
     }
+  }
+
+
+
+  async updateEnvironmentV2()
+  {
+        
+    if(this.updateForm.valid)
+    {
+      this.spinner.show();
+      if(this.updateForm.value.activeStatus==true)
+      {
+        this.updateForm.value.activeStatus=7
+      }else{
+        this.updateForm.value.activeStatus=8
+      }
+      let updatFormValue =  this.updateForm.value;
+      updatFormValue["environmentId"]= this.updateenvdata.environmentId;
+      updatFormValue["createdBy"]= this.updateenvdata.createdBy;
+      updatFormValue["deployStatus"]= this.updateenvdata.deployStatus;
+        let updateEnvData=new FormData();
+        Object.keys(updatFormValue).map(key => {
+           
+          return updateEnvData.append(String(key),String(updatFormValue[key]))
+        });
+        updateEnvData.append("formValue","sample")
+        if(this.isKeyValuePair==false)
+        {
+          updateEnvData.append("password",this.password);
+          updateEnvData.append("key",null)
+        }
+        else
+        {
+          
+          updateEnvData.append("password",null)
+          if(this.keyValueFile==undefined || this.keyValueFile==null)
+            updateEnvData.append("key",null)
+          else
+            updateEnvData.append("key",this.keyValueFile)
+
+        }
+          await this.api.updateEnvironmentV2(updateEnvData).subscribe( res => {
+            let response:any=res;
+            this.spinner.hide();
+            if(response.errorMessage==undefined)
+            {
+              Swal.fire("Success",res.status,"success")
+              this.removeallchecks();
+              this.getallData();
+              this.checktoupdate();
+              this.checktodelete();
+              document.getElementById("update-popup").style.display='none';
+            }else
+            {
+              Swal.fire("Error",response.errorMessage,"error")
+            }
+          },err=>{
+            console.log(err);
+            this.spinner.hide();
+            Swal.fire("Error","Unable to update environment details","error")
+          });
+        }
+        else
+        {
+          this.spinner.hide();
+          Swal.fire("Alert","Update Environment is not configured for key pair authentication","warning");
+        }
+      
+    //}
+    
   }
 
   updatedata()
@@ -391,7 +574,7 @@ import { NgxSpinnerService } from "ngx-spinner";
     //document.getElementById("filters").style.display='none';
     document.getElementById('update-popup').style.display='block';
     let data:environmentobservable;
-    for(data of this.environments)
+    for(let data of this.environments)
     {
       if(data.environmentId==this.updateid)
       {
@@ -403,14 +586,24 @@ import { NgxSpinnerService } from "ngx-spinner";
           this.updateForm.get("activeStatus").setValue(false);
         }
         this.updateenvdata=data;
-        
+        if(data.password.password==undefined)
+        {
+          this.isKeyValuePair=true
+          this.password=""
+        }
+        else
+        {
+          this.password=data.password.password;
+          this.isKeyValuePair=false;
+        }
         this.updateForm.get("environmentName").setValue(this.updateenvdata["environmentName"]);
         this.updateForm.get("environmentType").setValue(this.updateenvdata["environmentType"]);
         this.updateForm.get("agentPath").setValue(this.updateenvdata["agentPath"]);
         this.updateForm.get("categoryId").setValue(this.updateenvdata["categoryId"]);
         this.updateForm.get("hostAddress").setValue(this.updateenvdata["hostAddress"]);
         this.updateForm.get("username").setValue(this.updateenvdata["username"]);
-        this.updateForm.get("password").setValue(this.updateenvdata["password"]);
+        // this.updateForm.get("password").setValue(this.updateenvdata["password"]);
+        
         this.updateForm.get("connectionType").setValue(this.updateenvdata["connectionType"]);
         this.updateForm.get("portNumber").setValue(this.updateenvdata["portNumber"]);
         break;
@@ -423,6 +616,9 @@ import { NgxSpinnerService } from "ngx-spinner";
     //document.getElementById("filters").style.display='block';
     document.getElementById('createenvironment').style.display='none';
     document.getElementById('update-popup').style.display='none';
+    this.isKeyValuePair=false;
+    this.password="";
+    this.keyValueFile=undefined;
     this.resetEnvForm();
   }
 
@@ -543,9 +739,8 @@ import { NgxSpinnerService } from "ngx-spinner";
         this.checktoupdate();
         this.checktodelete();  
       },err=>{
-          // Swal.fire("Error","Failed to deploy bot in selected evironment","error")
-          // -- This is only for production case as it is giving 502 due to timeout issues
-          Swal.fire("Success","Agent Deployed Successfully !!","success")
+         // Swal.fire("Error","Failed to deploy bot in selected evironment","error")
+         Swal.fire("Success","Agent Deployed Successfully !!","success")
           this.spinner.hide(); 
       })
     }
