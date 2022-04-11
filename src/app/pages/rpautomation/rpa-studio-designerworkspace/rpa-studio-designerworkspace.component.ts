@@ -715,7 +715,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   formNodeFunc(node) {
-    debugger
+    
     this.nodedata=node
     this.form_change=false;
     this.enableMultiForm.check=false;
@@ -877,7 +877,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
 
   response(data,node) {
-    debugger
+    
     if (data.error == "No Data Found") {
       this.fields = [];
       let type = "info";
@@ -973,7 +973,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     document.getElementById('recordandplay').style.display='none';
   }
   submitform(event){
-    debugger
+    
     this.fieldValues = event
    
     if (this.fieldValues['file1']) {
@@ -1092,7 +1092,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   onFormSubmit(event) {
-    debugger
+    
     this.fieldValues = event
     if (this.fieldValues['file1']) {
       this.fieldValues['file1'] = this.fieldValues['file1'].substring(12)
