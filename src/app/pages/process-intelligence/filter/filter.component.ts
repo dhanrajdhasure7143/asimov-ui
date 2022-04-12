@@ -6,8 +6,8 @@ enum Filter {
   'Activity',
   // 'Cases',
   'Variants',
-  'End Points'
-  // 'Performance'
+  'End Points',
+  'Performance'
 }
 @Component({
   selector: 'app-filter',
@@ -571,6 +571,23 @@ export class FilterComponent implements OnInit {
       };
       this.comboFilter();
       this.isApplyFilter = true;
+    }else{
+      console.log(this.variantListarray)
+      let seletedVariantArray = [];
+    for (var i = 0; i < this.variantListarray.length; i++) {
+      seletedVariantArray.push(this.variantListarray[i].name)
+    };
+
+    let object: any = { 
+      "activity": null,
+      "variants": seletedVariantArray,
+      "startPoint": null,
+      "endPoint": null,
+      "filterType":"performance"
+    };
+
+      this.selectedFilterValues.emit(object);
+    this.applyFilterValue.emit(true)
     }
     this.isStartPoint = false;
     this.isEndPoint = false;
@@ -1191,6 +1208,7 @@ export class FilterComponent implements OnInit {
       "max_tot_duration":this.maxPerfValue,
       "filterType": this.pFilterType
     }
+    this.appliedFilters.push("Performance")
     this.appliedPerformanceFiterValues.emit(reqObj)
   }
 

@@ -102,7 +102,7 @@ import { CustomMatPaginatorIntl } from 'src/app/shared/custom-mat-paginator-int'
     FilterPipeModule,
     DataTablesModule,
     NgbModule,MatExpansionModule,
-    ContextMenuModule.forRoot(),
+    // ContextMenuModule.forRoot(),
     DynamicFormBuilderModule,
     ReactiveFormsModule,
     CronEditorModule,
