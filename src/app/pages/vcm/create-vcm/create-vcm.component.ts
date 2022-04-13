@@ -72,6 +72,11 @@ export class CreateVcmComponent implements OnInit {
   listOfFiles:any=[];
   uploadFilemodalref: BsModalRef;
   attachementsList:any=[];
+  //addednew
+  showList: boolean = false; 
+  selected_procName = 'Select Process Owner'; 
+  
+  //addednew
 
   constructor(private router: Router, private rest_api: RestApiService, private dt: DataTransferService,
     private route: ActivatedRoute, private modalService: BsModalService) {
@@ -247,6 +252,8 @@ export class CreateVcmComponent implements OnInit {
     this.vcmName = '';
     this.level1process = '';
     this.process_ownerName = '';
+    this.selected_procName = 'Select Process Owner'; //addednew
+    this.showList =  false; //addednew
     localStorage.removeItem('vcmData');
   }
 
@@ -484,6 +491,18 @@ export class CreateVcmComponent implements OnInit {
     let splitedValues = this.process_ownerName.split(' ');
     this.ownerValues = splitedValues[0].charAt(0) + splitedValues[1].charAt(0)
   }
+
+//addednew
+  showProcessOwnerList() {
+    this.showList =  !this.showList;
+  }
+  poSelectedName(e) {
+    this.selected_procName = e.firstName+' '+e.lastName;
+    let splitedValues = this.selected_procName.split(' ');
+    this.ownerValues = splitedValues[0].charAt(0) + splitedValues[1].charAt(0);
+    this.showList =  false;
+  }
+//addednew
 
   uploadFilemodalCancel(){
     this.uploadFilemodalref.hide();
