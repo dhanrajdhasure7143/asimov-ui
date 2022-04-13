@@ -187,7 +187,7 @@ gettime(){
     this.starttime=d.getHours()+":"+d.getMinutes();
   }
   onChangeHour(event,time){ 
- debugger
+ 
  this.todaytime=(new Date).getHours()+":"+(new Date).getMinutes();;
  
     event=this.tConv24(event)
@@ -343,7 +343,7 @@ gettime(){
   }
   add_sch()
   {
-    debugger
+    
     // Scheduler
     if(this.isDateToday(this.selecteddate)){
       this.todaytime=(new Date).getHours()+":"+(new Date).getMinutes();;
