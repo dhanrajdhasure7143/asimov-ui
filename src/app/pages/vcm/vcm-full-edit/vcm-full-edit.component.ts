@@ -81,6 +81,9 @@ export class VcmFullEditComponent implements OnInit {
   uniqueIdL3:any;
   attachementsList:any=[];
 
+  showList: boolean = false; 
+  selected_procName = '';
+
   constructor(private router: Router,private rest_api : RestApiService, private dt: DataTransferService,
     private route:ActivatedRoute, private modalService: BsModalService) {
     this.vcmProcess = TREE_DATA;
@@ -301,8 +304,10 @@ export class VcmFullEditComponent implements OnInit {
       this.isLoading=false;
       if(res){
         this.vcmName=this.selectedVcm.data.vcmName;
-        this.process_ownerName=this.selectedVcm.data.processOwner;
-        let splitedValues = this.process_ownerName.split(' ');
+        // this.process_ownerName=this.selectedVcm.data.processOwner;
+        // let splitedValues = this.process_ownerName.split(' ');
+        this.selected_procName=this.selectedVcm.data.processOwner;
+        let splitedValues = this.selected_procName.split(' ');
         this.ownerValues = splitedValues[0].charAt(0) + splitedValues[1].charAt(0);
         this.selectedVcm.data.vcmV2.forEach(element => {
           // element["attachments"]=[];
@@ -379,6 +384,18 @@ export class VcmFullEditComponent implements OnInit {
     let splitedValues = this.process_ownerName.split(' ');
     this.ownerValues = splitedValues[0].charAt(0) + splitedValues[1].charAt(0);
   }
+
+  //addednew
+  showProcessOwnerList() {
+    this.showList =  !this.showList;
+  }
+  poSelectedName(e) {
+    this.selected_procName = e.firstName+' '+e.lastName;
+    let splitedValues = this.selected_procName.split(' ');
+    this.ownerValues = splitedValues[0].charAt(0) + splitedValues[1].charAt(0);
+    this.showList =  false;
+  }
+  //addednew
 
   onCreateLevel3(level2,item){
     this.selectedNode_obj = level2;
@@ -507,7 +524,8 @@ export class VcmFullEditComponent implements OnInit {
       "id": this.selectedVcm.data.id,
       "vcmuniqueId": this.selectedVcm.data.vcmuniqueId,
       "vcmName": this.vcmName,
-      "processOwner": this.process_ownerName,
+      // "processOwner": this.process_ownerName,
+      "processOwner": this.selected_procName,
       "active": true,
       "createdBy": this.selectedVcm.data.createdBy,
       "createdTimestamp": this.selectedVcm.data.createdTimestamp,

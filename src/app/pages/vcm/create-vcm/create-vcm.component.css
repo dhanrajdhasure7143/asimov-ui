@@ -319,9 +319,6 @@ span.testtooltip:before {
     filter: brightness(10) grayscale(1) brightness(10);
 }
 
-/* .l1process-list {
-    height: 100px;
-} */
 hr {
     margin-bottom: 8px !important;
 }
@@ -504,6 +501,10 @@ span.polabel {
     padding: 0px !important;
     min-width: max-content;
 }
+p.podefault {
+    margin: 0px 0px 0px 10px;
+    line-height: 40px;
+}
 .poundef {
     /* margin: 0px;
     line-height: 36px;
@@ -517,7 +518,6 @@ span.polabel {
     transform: rotate(90deg);
     width: 12px;
     height: 12px;
-    margin-top: -17px;
 }
 .selectedpodiv {
     position:relative;

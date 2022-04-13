@@ -7,8 +7,8 @@
             <span class="module-header-title">Value Chain Mapping - Edit</span>
         </div>
         <div class="ml-auto submit">
-            <button class="btn btn-primary" [disabled]="!vcmName || !process_ownerName"
-                (click)="updateVcm()">Update</button>
+            <!-- <button class="btn btn-primary" [disabled]="!vcmName || !process_ownerName" (click)="updateVcm()">Update</button> -->
+            <button class="btn btn-primary" [disabled]="!vcmName || !selected_procName" (click)="updateVcm()">Update</button>
         </div>
     </div>
 
@@ -127,7 +127,8 @@
                                         class="testplus1" />
                                 </button>
                             </div>
-                            <div class="col-md-4 pr-0 form-group powner">
+                            
+                            <!-- <div class="col-md-4 pr-0 form-group powner">
                                 <button *ngIf="!process_ownerName">
                                     <img src="../../../../assets/images/VCM/pc-def.svg" class="default-img" />
                                     <img src="../../../../assets/images/VCM/pc-hover.svg" class="hover-img" />
@@ -145,7 +146,33 @@
                                     </select>
                                     <span class="polabel" *ngIf="process_ownerName">Process Owner</span>
                                 </div>
+                            </div> -->
+
+                            <div class="col-md-4 pr-0 form-group powner">
+                                
+                                <button  (click)="showProcessOwnerList()" *ngIf="selected_procName == '' " > 
+                                    <img src="../../../../assets/images/VCM/pc-def.svg" class="default-img"/>
+                                    <img src="../../../../assets/images/VCM/pc-hover.svg" class="hover-img"/>
+                                </button>
+                                <span class="poname" *ngIf="selected_procName" >{{ownerValues| uppercase}}</span>
+
+                                <div class="pousersdiv" *ngIf="showList" >
+                                    <p  *ngFor="let each_approver of processOwners_list;let i=index" (click)="poSelectedName(each_approver)" >
+                                        {{(each_approver.firstName | titlecase) +" "+(each_approver.lastName==undefined?"":each_approver.lastName)}}
+                                    </p>
+                                </div>
+                                <div class="selectedpodiv">
+                                    <p class="poundef" >{{selected_procName}}</p>
+                                    <p class="podefault" *ngIf="selected_procName == ''  " >Select Process Owner</p>
+                                    <span class="polabel" *ngIf="selected_procName" >Process Owner</span>
+                                </div>                                
+
+                                <button class="poarbtn" (click)="showProcessOwnerList()" > 
+                                    <img src="../../../../assets/images/VCM/small-right.svg"  class="poarr" />
+                                </button>
+                                                                
                             </div>
+
                         </div>
 
                         <div class="col-md-6 col-lg-6 pr-0">
