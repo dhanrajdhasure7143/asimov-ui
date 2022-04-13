@@ -572,7 +572,6 @@ export class FilterComponent implements OnInit {
       this.comboFilter();
       this.isApplyFilter = true;
     }else{
-      console.log(this.variantListarray)
       let seletedVariantArray = [];
     for (var i = 0; i < this.variantListarray.length; i++) {
       seletedVariantArray.push(this.variantListarray[i].name)
@@ -1208,6 +1207,9 @@ export class FilterComponent implements OnInit {
       "max_tot_duration":this.maxPerfValue,
       "filterType": this.pFilterType
     }
+    this.appliedFilters=[];
+    this.deselectAllDataValue();
+    this.deselectAllVariantList(); 
     this.appliedFilters.push("Performance")
     this.appliedPerformanceFiterValues.emit(reqObj)
   }
