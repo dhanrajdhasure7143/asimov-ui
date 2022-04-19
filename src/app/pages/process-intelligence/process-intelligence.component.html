@@ -57,10 +57,14 @@
                 <img src="../../../assets/images/PI/businessinsight.svg">
                 <span class="testtooltip">Business Insights</span>
               </button>
-              <!-- <button class="tsttooltipbtn" (click)="openHersOverLay()">
+              <button class="tsttooltipbtn" (click)="openHersOverLay()" *ngIf="isTimefeed">
                 <img src="../../../assets/images/PI/timefeed.svg">
                 <span class="testtooltip">Time Feed</span>
-              </button> -->
+              </button>
+              <button class="tsttooltipbtn" *ngIf="!isTimefeed" class="edit-disabled">
+                <img src="../../../assets/images/PI/timefeed-dis.svg">
+                <span class="testtooltip">Time Feed</span>
+              </button>
                 <div *ngIf="isAddHrs" aria-labelledby="dropdownForm1" id="dropdownForm2">
                     <form class="row">
                       <div class="timefeed-header">

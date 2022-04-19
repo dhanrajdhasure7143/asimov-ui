@@ -326,6 +326,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
       localStorage.setItem("attributes", JSON.stringify(taskAttributes))
       for(var i=0; i<restApiAttributes.length; i++){
         let each_restApi = restApiAttributes[i];
+        if(taskAttributes[each_restApi.taskId][each_restApi.attrId])
         taskAttributes[each_restApi.taskId][each_restApi.attrId] = this.rest.getRestAttributes(taskAttributes[each_restApi.taskId][each_restApi.attrId], each_restApi.taskId, each_restApi.attrId);
       }
     })
