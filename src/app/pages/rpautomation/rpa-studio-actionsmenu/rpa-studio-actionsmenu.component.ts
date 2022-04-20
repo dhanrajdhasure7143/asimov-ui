@@ -76,6 +76,15 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
   resume: any;
   stop: any;
   checked: boolean;
+  loopIterations:any=[];
+  iterationsList:any=[];
+  fileteredLoopIterations:any=[];
+  selectedIterationId:any=0;
+  selectedIterationTask:any=undefined;
+  displayedloopColumns:string[]=['taskName','status','startTS','endTS',"errorMsg"];
+  loopbyrunid:MatTableDataSource<any>;
+  @ViewChild("looppaginator",{static:false}) looppaginator: MatPaginator;
+  @ViewChild("loopsort",{static:false}) loopsort: MatSort;
 
   public insertForm:FormGroup;
   listEnvironmentData: any = [];
@@ -1181,6 +1190,75 @@ loadpredefinedbot(botId)
         this.insertForm.get("portNumber").setValue("22");
       }
     }
+    
+  sortLoopsIteration(event){
+
+    this.fileteredLoopIterations=this.fileteredLoopIterations.sort(function(a,b){
+
+      let check_a=isNaN(a[event.active])?a[event.active].toUpperCase():a[event.active];
+
+      let check_b=isNaN(b[event.active])?b[event.active].toUpperCase():b[event.active];
+
+      if (event.direction=='asc')
+
+        return (check_a > check_b) ? 1 : -1;
+
+      else if(event.direction=='desc')
+
+        return (check_a < check_b) ? 1 : -1;
+
+    },this);
+
+    this.loopbyrunid = new MatTableDataSource(this.fileteredLoopIterations);
+
+    this.changeDetector.detectChanges();
+
+  }
+  
+  IterationId(event){
+
+     this.fileteredLoopIterations=[...this.loopIterations.filter(item=>item.iterationId==event.target.value)];
+
+     this.loopbyrunid = new MatTableDataSource(this.fileteredLoopIterations);
+
+     this.changeDetector.detectChanges();
+
+  }
+  
+  getLoopIterations(e, iterationId){
+    this.iterationsList=[]
+    this.logsLoading=true;
+    this.rest.getLooplogs(e.bot_id, e.version, e.run_id ).subscribe((response:any)=>{
+      this.logsLoading=false;
+      if(response.errorMessage==undefined)
+      {
+        this.loopIterations=[...response];
+        this.selectedIterationTask=e;
+        this.loopIterations.forEach(item=>{
+          if(this.iterationsList.find(item2=>item2==item.iterationId)==undefined)
+            this.iterationsList.push(item.iterationId)    
+        })
+        this.iterationsList=[...this.iterationsList.sort(function(a, b){return a - b})]
+        this.selectedIterationId=iterationId;
+        if((this.selectedIterationId==0 || this.selectedIterationId==undefined )&& this.iterationsList.length!=0)
+          this.selectedIterationId=this.iterationsList[this.iterationsList.length-1];
+        this.fileteredLoopIterations=[...this.loopIterations.filter(item=>item.iterationId==this.selectedIterationId)];
+        this.loopbyrunid = new MatTableDataSource(this.fileteredLoopIterations);
+        this.changeDetector.detectChanges();
+      }
+      else
+      {
+        this.logsLoading=false;
+        this.selectedIterationTask=undefined;
+        Swal.fire("Error",response.errorMessage,"error");
+      }
+       
+    },err=>{
+      this.logsLoading=false;
+      Swal.fire("Error","Unable to open loop logs","error");
+      console.log(err)
+    })
+  }
   
 }
 
