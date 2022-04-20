@@ -797,8 +797,8 @@
         <ng-container matColumnDef="errorMsg">
           <th mat-header-cell  mat-sort-header  *matHeaderCellDef style="width:18%">Info</th>
           <td mat-cell *matCellDef="let element" style="width:18%">
-              <span  [tooltip]="element.errorMsg" *ngIf="element.errorMsg != null||element.errorMsg != undefined || element.errorMsg!=''">  {{(element.errorMsg.length > 50) ? ((element.errorMsg).slice(0, 50) + '...') : element.errorMsg}}</span>
-              <span *ngIf="element.errorMsg == undefined || element.errorMsg == ''">--</span>
+              <span  [tooltip]="element.errorMsg" *ngIf="element.errorMsg != null && element.errorMsg != undefined && element.errorMsg!=''">  {{(element.errorMsg.length > 50) ? ((element.errorMsg).slice(0, 50) + '...') : element.errorMsg}}</span>
+              <span *ngIf="element.errorMsg == undefined || element.errorMsg == '' || element.errorMsg==null">--</span>
           </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedloopColumns; sticky: true"></tr>
