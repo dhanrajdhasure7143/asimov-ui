@@ -480,7 +480,7 @@
 
     <span class="pull-right">
    
-    <span class=" clickable" (click)="logsmodalref.hide()">
+    <span class=" clickable" (click)="logsmodalref.hide();selectedIterationTask=undefined">
       <img src="../../../../assets/images/Projects/circle-close.svg" alt="">
     </span>
    
@@ -520,7 +520,7 @@
                 <ng-container matColumnDef="start_date">
                     <th mat-header-cell mat-sort-header *matHeaderCellDef style="width:25%;"> Start Date </th>
                     <td mat-cell *matCellDef="let element" style="width:25%;">
-                        <span *ngIf="element.start_date!=null">{{element.start_date.split('T')[0] | date:'EEE MMM d, yyyy' }},{{element.start_time.slice(11,19)}}</span>
+                        <span *ngIf="element.start_date!=null && element.start_date!='-' ">{{element.start_date | date:'EEE MMM d, yyyy' }}, <span *ngIf="element.start_time!=undefined && element.start_time != null">{{element.start_time}}</span></span>
                         <span *ngIf="element.start_date == undefined">--</span>
                     </td>
                 </ng-container>
@@ -530,8 +530,8 @@
                 <ng-container matColumnDef="end_date">
                     <th mat-header-cell mat-sort-header *matHeaderCellDef style="width:25%;"> End Date </th>
                     <td mat-cell *matCellDef="let element" style="width:25%;">
-                        <span *ngIf="element.end_date!=null">{{element.end_date.split('T')[0] | date:'EEE MMM d, yyyy' }},{{element.end_time.slice(11,19)}}</span>
-                        <span *ngIf="element.end_date == undefined">--</span>
+                        <span *ngIf="element.end_date!=null && element.end_date!='---' ">{{element.end_date | date:'EEE MMM d, yyyy' }}, <span *ngIf="element.end_time!=undefined && element.end_time != null">{{element.end_time}}</span></span>
+                        <span *ngIf="element.end_date == undefined || element.end_date=='---'">---</span>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="bot_status">
@@ -706,15 +706,15 @@
                 </td>
             </ng-container>
 
-            <ng-container matColumnDef="noData">
+            <!-- <ng-container matColumnDef="noData">
                 <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="7">
                     No Records Found
                 </td>
-            </ng-container>
+            </ng-container> -->
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns1; sticky: true"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
-            <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': !respdata2}"></tr>
+            <!-- <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': !respdata2}"></tr> -->
         </table>
        
     </div>
@@ -756,7 +756,7 @@
             <td mat-cell *matCellDef="let element" style="width:18%">
                 <span *ngIf="element.status == 1">
                   <span>
-                    <img src="../../../../assets/images/RPA/icon_latest/Success.svg" class="testplus">
+                    <img src="../../../../assets/images/RPA/userobot.png" class="testplus">
                   </span>  
                   New
                 </span>
@@ -776,7 +776,7 @@
                   <span  >
                     <img src="../../../../assets/images/RPA/icon_latest/stop.svg" class="testplus">
                   </span>
-                  Stop
+                  Stopped
                 </span>
                 <span *ngIf="element.status == 5">
                   <span>
@@ -797,8 +797,8 @@
         <ng-container matColumnDef="errorMsg">
           <th mat-header-cell  mat-sort-header  *matHeaderCellDef style="width:18%">Info</th>
           <td mat-cell *matCellDef="let element" style="width:18%">
-              <span  [tooltip]="element.errorMsg" *ngIf="element.errorMsg != null||element.errorMsg != undefined || element.errorMsg!=''">  {{(element.errorMsg.length > 50) ? ((element.errorMsg).slice(0, 50) + '...') : element.errorMsg}}</span>
-              <span *ngIf="element.errorMsg == undefined || element.errorMsg == ''">--</span>
+              <span  [tooltip]="element.errorMsg" *ngIf="element.errorMsg != null && element.errorMsg != undefined && element.errorMsg!=''">  {{(element.errorMsg.length > 50) ? ((element.errorMsg).slice(0, 50) + '...') : element.errorMsg}}</span>
+              <span *ngIf="element.errorMsg == undefined || element.errorMsg == '' || element.errorMsg==null">--</span>
           </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedloopColumns; sticky: true"></tr>
