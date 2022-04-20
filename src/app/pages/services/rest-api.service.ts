@@ -1,4 +1,3 @@
-
 import { Injectable, OnInit } from '@angular/core';
 import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
@@ -1309,6 +1308,10 @@ bpmnVersionChecking(bpmnId){
 }
 deleteNotationFromTemp(body){
   return this.http.post('/bpsprocess/delete/processTempInfo/data',body); 
+}
+
+getLooplogs(botId,version,runId){
+    return this.http.get(`/rpa-service/loop-logs/${botId}/${version}/${runId}`);
 }
 
 }
