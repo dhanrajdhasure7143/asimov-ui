@@ -1310,6 +1310,63 @@ deleteNotationFromTemp(body){
   return this.http.post('/bpsprocess/delete/processTempInfo/data',body); 
 }
 
+// vcm apis
+createVcm(body){
+  return this.http.post('/vcmv2/saveLevel1andlevel2vcm',body); 
+}
+
+getAllvcms(){
+  return this.http.get('/vcmv2/fetchallvcm');
+}
+
+getselectedVcmById(id){
+  return this.http.get('/vcmv2/fetchvcm?vcmId='+id);
+}
+deleteVcm(body){
+  return this.http.post('/vcmv2/deletevcm',body); 
+}
+
+uploadVCMPropDocument(body){
+  return this.http.post('/vcmv2/uploadDocuments',body);
+}
+getvcmAttachements(body){
+  return this.http.post('/vcmv2/fetchDocumentsByProcessType',body); 
+}
+ondeleteAttachements(body){
+  return this.http.post('/vcmv2/deleteDocument',body);
+}
+updateVcm(body){
+  return this.http.post('/vcmv2/updatevcm',body);
+}
+getCollaborators(uniqueId){
+  return this.http.get('/vcmv2/fetchCollaborations?uniqueId='+uniqueId)
+}
+createCollaborators(body){
+  return this.http.post('/vcmv2/createCollaborations',body);
+}
+updateCollaborators(body){
+  return this.http.post('/vcmv2/updateCollaborations',body);
+}
+deleteCollaborators(body){
+  return this.http.post('/vcmv2/deleteCollaborations',body);
+}
+deleteAttachements(body){
+  return this.http.post('/vcmv2/deleteDocument',body);
+}
+getAttachementsByIndivdualProcess(body){
+  return this.http.post('/vcmv2/fetchDocumentsByIndivdualProcess',body);
+}
+getAttachementsById(body){
+  return this.http.post('/vcmv2/fetchDocumentsBydocumentId',body);
+}
+getAttachementsBycategory(body){
+  return this.http.post('/vcmv2/fetchDocumentsByProcessType',body);
+}
+getAttachementsByLevel(body){
+  return this.http.post('/vcmv2/fetchDocumentsByLevel',body);
+}
+
+
 getLooplogs(botId,version,runId){
     return this.http.get(`/rpa-service/loop-logs/${botId}/${version}/${runId}`);
 }
