@@ -1,5 +1,3 @@
-
-
 import { Injectable, OnInit } from '@angular/core';
 import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
@@ -328,14 +326,12 @@ export class RestApiService{
   {
     return this.http.post<any>("/rpa-service/agent/save-environment",data);
   }
-
   
   addenvironmentV2(data:any):Observable<any>
   {
     return this.http.post<any>("/rpa-service/agent/save-environment-v2",data);
   }
   
-
   deleteenvironment(data:any) :Observable<any>
   {
     return this.http.post<any>("/rpa-service/agent/delete-environment",data);
@@ -346,6 +342,11 @@ export class RestApiService{
       responseType: 'text'
     }
     return this.http.put<any>("/rpa-service/agent/update-environment",data);
+  }
+  
+  updateEnvironmentV2(formData)
+  {
+    return this.http.post<any>("/rpa-service/agent/update-environment-v2",formData);
   }
 
   getAllRpaWorkSpaces(id:any){
@@ -1309,27 +1310,8 @@ deleteNotationFromTemp(body){
   return this.http.post('/bpsprocess/delete/processTempInfo/data',body); 
 }
 
-// vcm apis
-createVcm(body){
-  return this.http.post('/vcmv2/saveLevel1andlevel2vcm',body); 
-}
-
-getAllvcms(){
-  return this.http.get('/vcmv2/fetchallvcm');
-}
-
-getselectedVcmById(id){
-  return this.http.get('/vcmv2/fetchvcm?vcmId='+id);
-}
-deleteVcm(body){
-  return this.http.post('/vcmv2/deletevcm',body); 
-}
-
-uploadVCMPropDocument(body){
-  return this.http.post('/vcmv2/uploadDocuments',body); 
-}
-getvcmAttachements(body){
-  return this.http.post('/vcmv2/fetchDocumentsByProcessType',body); 
+getLooplogs(botId,version,runId){
+    return this.http.get(`/rpa-service/loop-logs/${botId}/${version}/${runId}`);
 }
 
 }

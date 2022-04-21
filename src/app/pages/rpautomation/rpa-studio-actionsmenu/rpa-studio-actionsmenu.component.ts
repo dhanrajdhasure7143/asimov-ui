@@ -76,6 +76,15 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
   resume: any;
   stop: any;
   checked: boolean;
+  loopIterations:any=[];
+  iterationsList:any=[];
+  fileteredLoopIterations:any=[];
+  selectedIterationId:any=0;
+  selectedIterationTask:any=undefined;
+  displayedloopColumns:string[]=['taskName','status','startTS','endTS',"errorMsg"];
+  loopbyrunid:MatTableDataSource<any>;
+  @ViewChild("looppaginator",{static:false}) looppaginator: MatPaginator;
+  @ViewChild("loopsort",{static:false}) loopsort: MatSort;
 
   public insertForm:FormGroup;
   listEnvironmentData: any = [];
@@ -660,8 +669,10 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
   
    if(action=='open')
     this.filteredLogVersion=this.savebotrespose.version;
-   this.rest.getviewlogdata(this.savebotrespose.botId,this.filteredLogVersion).subscribe(data =>{
-       this.logresponse=data;
+    this.rest.getviewlogdata(this.savebotrespose.botId,this.filteredLogVersion).subscribe((response:any) =>{
+     if(response.errorMessage==undefined)
+     {
+       this.logresponse=response;
        this.logsLoading=false;
        this.rpa_studio.spinner.hide()
        if(this.logresponse.length >0)
@@ -676,22 +687,24 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
        response=data;
        if(response.start_time != null)
        {
-        // let startdate=response.start_time.split("T");
-         response["start_date"]=response.start_time;
-         response.start_time=response.start_time;
-
-        //  logbyrunidresp["start_date"]=logbyrunidresp.start_time;
-        //  logbyrunidresp["end_date"]=logbyrunidresp.end_time;
-        //  logbyrunidresp.start_time=logbyrunidresp.start_time;
-        //  logbyrunidresp.end_time=logbyrunidresp.end_time;
-
-
+         let startdate=response.start_time.split("T");
+         response["start_date"]=startdate[0];
+         response.start_time=startdate[1].slice(0,8);
+       }else
+       {
+         response["start_date"]="-";
+         response.start_time="-";
        }
        if(response.end_time != null)
        {
-        // let enddate=response.end_time.split("T");
-         response["end_date"]=response.end_time;
-         response.end_time=response.end_time;
+         let enddate=response.end_time.split("T");
+         response["end_date"]=enddate[0];
+         response.end_time=enddate[1].slice(0,8);
+       }else
+       {
+         response["end_date"]="---";
+         response.end_time="---";
+
        }
        log.push(response)
      });
@@ -704,8 +717,12 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
       this.Viewloglist.paginator=this.logsPaginator;
       if(action=='open')
       this.logsmodalref=this.modalService.show(this.logspopup, {class:"logs-modal"})
-        
-
+     }
+     else{
+        this.spinner.hide(); 
+        Swal.fire("Error",response.errorMessage, "error")
+        this.logsLoading=false;
+     }
    },err=>{
      this.spinner.hide();
      this.logsLoading=false;
@@ -744,15 +761,29 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
    this.rest.getViewlogbyrunid(this.savebotrespose.botId,version,runid).subscribe((data:any)=>{
      if(data.errorMessage==undefined)
      {
-      responsedata = data;
+      responsedata = [...data];
       this.logsLoading=false;
       this.rpa_studio.spinner.hide();
-      if(responsedata.length >0)
+      // if(responsedata.length >0)
+      // {
+      //   this.respdata2 = false;
+      // }else
+      // {
+      //   this.respdata2 = true;
+      // }
+     
+      
+      var flag=0;
+      var loopInsideArray:any=[]
+      responsedata=responsedata.sort((a,b) => a.task_id > b.task_id ? 1 : -1);
+      for(let i=0;i<responsedata.length;i++)
       {
-        this.respdata2 = false;
-      }else
-      {
-        this.respdata2 = true;
+        if(responsedata[i].task_name=='Loop-Start')
+          flag=1;
+        if(responsedata[i].task_name=='Loop-End')
+          flag=0;
+        if(flag==1)
+          loopInsideArray.push(responsedata[i])
       }
       responsedata.forEach(rlog=>{
         logbyrunidresp=rlog;
@@ -760,11 +791,12 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
         logbyrunidresp["end_date"]=logbyrunidresp.end_time;
         logbyrunidresp.start_time=logbyrunidresp.start_time;
         logbyrunidresp.end_time=logbyrunidresp.end_time;
-
-        resplogbyrun.push(logbyrunidresp)
+        if(loopInsideArray.find(item3=>item3.task_id==rlog.task_id)==undefined)
+          resplogbyrun.push(logbyrunidresp)
+        else if(loopInsideArray.find(item3=>item3.task_id==rlog.task_id).task_name=="Loop-Start")
+          resplogbyrun.push(logbyrunidresp)
       });
       this.logflag=true;
-      resplogbyrun.sort((a,b) => a.task_id > b.task_id ? 1 : -1);
       this.viewlogid1=runid;
       this.allRuns=[...resplogbyrun];
       this.logbyrunid = new MatTableDataSource(resplogbyrun);
@@ -1177,6 +1209,76 @@ loadpredefinedbot(botId)
         this.insertForm.get("portNumber").setValue("22");
       }
     }
+    
+  sortLoopsIteration(event){
+
+    this.fileteredLoopIterations=this.fileteredLoopIterations.sort(function(a,b){
+
+      let check_a=isNaN(a[event.active])?a[event.active].toUpperCase():a[event.active];
+
+      let check_b=isNaN(b[event.active])?b[event.active].toUpperCase():b[event.active];
+
+      if (event.direction=='asc')
+
+        return (check_a > check_b) ? 1 : -1;
+
+      else if(event.direction=='desc')
+
+        return (check_a < check_b) ? 1 : -1;
+
+    },this);
+
+    this.loopbyrunid = new MatTableDataSource(this.fileteredLoopIterations);
+
+    this.changeDetector.detectChanges();
+
+  }
+  
+  IterationId(event){
+
+     this.fileteredLoopIterations=[...this.loopIterations.filter(item=>item.iterationId==event.target.value)];
+
+     this.loopbyrunid = new MatTableDataSource(this.fileteredLoopIterations);
+
+     this.changeDetector.detectChanges();
+
+  }
+  
+  getLoopIterations(e, iterationId){
+    this.iterationsList=[]
+    this.logsLoading=true;
+    this.rest.getLooplogs(e.bot_id, e.version, e.run_id ).subscribe((response:any)=>{
+      this.logsLoading=false;
+      if(response.errorMessage==undefined)
+      {
+        this.loopIterations=[...response];
+        this.loopIterations=[...this.loopIterations.filter((item:any)=>item.taskName != 'Loop-End')]
+        this.selectedIterationTask=e;
+        this.loopIterations.forEach(item=>{
+          if(this.iterationsList.find(item2=>item2==item.iterationId)==undefined)
+            this.iterationsList.push(item.iterationId)    
+        })
+        this.iterationsList=[...this.iterationsList.sort(function(a, b){return a - b})];
+        this.selectedIterationId=iterationId;
+        if((this.selectedIterationId==0 || this.selectedIterationId==undefined )&& this.iterationsList.length!=0)
+          this.selectedIterationId=this.iterationsList[this.iterationsList.length-1];
+        this.fileteredLoopIterations=[...this.loopIterations.filter(item=>(item.iterationId==this.selectedIterationId))];
+        this.loopbyrunid = new MatTableDataSource(this.fileteredLoopIterations);
+        this.changeDetector.detectChanges();
+      }
+      else
+      {
+        this.logsLoading=false;
+        this.selectedIterationTask=undefined;
+        Swal.fire("Error",response.errorMessage,"error");
+      }
+       
+    },err=>{
+      this.logsLoading=false;
+      Swal.fire("Error","Unable to open loop logs","error");
+      console.log(err)
+    })
+  }
   
 }
 
