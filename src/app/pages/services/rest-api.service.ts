@@ -1382,5 +1382,9 @@ getAttachementsByLevel(body){
   return this.http.post('/vcmv2/fetchDocumentsByLevel',body);
 }
 
+getLooplogs(botId,version,runId){
+  return this.http.get(`/rpa-service/loop-logs/${botId}/${version}/${runId}`);
+}
+
 
 }

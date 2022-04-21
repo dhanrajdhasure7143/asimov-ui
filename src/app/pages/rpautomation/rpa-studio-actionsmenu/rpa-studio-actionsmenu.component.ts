@@ -77,6 +77,18 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
   stop: any;
   checked: boolean;
 
+
+
+  loopIterations:any=[];
+  iterationsList:any=[];
+  fileteredLoopIterations:any=[];
+  selectedIterationId:any=0;
+  selectedIterationTask:any=undefined;
+  displayedloopColumns:string[]=['taskName','status','startTS','endTS',"errorMsg"];
+  loopbyrunid:MatTableDataSource<any>;
+  @ViewChild("looppaginator",{static:false}) looppaginator: MatPaginator;
+  @ViewChild("loopsort",{static:false}) loopsort: MatSort;
+
   public insertForm:FormGroup;
   listEnvironmentData: any = [];
   dropdownList: any = [];
@@ -731,63 +743,80 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
     // },4000)
  }
 
+
+ 
  public botrunid:any;
  public allRuns:any=[];
  ViewlogByrunid(runid,version){
-   this.botrunid=runid;
-   this.selectedLogVersion=version
-   let responsedata:any=[];
-   let logbyrunidresp:any;
-   let resplogbyrun:any=[];
-   this.rpa_studio.spinner.show();
-   this.logsLoading=true;
-   this.rest.getViewlogbyrunid(this.savebotrespose.botId,version,runid).subscribe((data:any)=>{
-     if(data.errorMessage==undefined)
-     {
-      responsedata = data;
-      this.logsLoading=false;
-      this.rpa_studio.spinner.hide();
-      if(responsedata.length >0)
-      {
-        this.respdata2 = false;
-      }else
-      {
-        this.respdata2 = true;
-      }
-      responsedata.forEach(rlog=>{
-        logbyrunidresp=rlog;
-        logbyrunidresp["start_date"]=logbyrunidresp.start_time;
-        logbyrunidresp["end_date"]=logbyrunidresp.end_time;
-        logbyrunidresp.start_time=logbyrunidresp.start_time;
-        logbyrunidresp.end_time=logbyrunidresp.end_time;
-
-        resplogbyrun.push(logbyrunidresp)
-      });
-      this.logflag=true;
-      resplogbyrun.sort((a,b) => a.task_id > b.task_id ? 1 : -1);
-      this.viewlogid1=runid;
-      this.allRuns=[...resplogbyrun];
-      this.logbyrunid = new MatTableDataSource(resplogbyrun);
-      this.changeDetector.detectChanges();
-      this.logbyrunid.paginator=this.paginator2;
-      this.logbyrunid.sort=this.sort2
-    }
-    else
+  this.botrunid=runid;
+  this.selectedLogVersion=version
+  let responsedata:any=[];
+  let logbyrunidresp:any;
+  let resplogbyrun:any=[];
+  this.rpa_studio.spinner.show();
+  this.logsLoading=true;
+  this.rest.getViewlogbyrunid(this.savebotrespose.botId,version,runid).subscribe((data:any)=>{
+    if(data.errorMessage==undefined)
     {
-      
-      this.spinner.hide();
-      this.logsLoading=false;
-      Swal.fire("Error",data.errorMessage,"error")
-    }
+     responsedata = [...data];
+     this.logsLoading=false;
+     this.rpa_studio.spinner.hide();
+     // if(responsedata.length >0)
+     // {
+     //   this.respdata2 = false;
+     // }else
+     // {
+     //   this.respdata2 = true;
+     // }
+    
      
-    }, err=>{
-      this.spinner.hide();
-      this.logsLoading=false;
-      
+     var flag=0;
+     var loopInsideArray:any=[]
+     responsedata=responsedata.sort((a,b) => a.task_id > b.task_id ? 1 : -1);
+     for(let i=0;i<responsedata.length;i++)
+     {
+       if(responsedata[i].task_name=='Loop-Start')
+         flag=1;
+       if(responsedata[i].task_name=='Loop-End')
+         flag=0;
+       if(flag==1)
+         loopInsideArray.push(responsedata[i])
+     }
+     responsedata.forEach(rlog=>{
+       logbyrunidresp=rlog;
+       logbyrunidresp["start_date"]=logbyrunidresp.start_time;
+       logbyrunidresp["end_date"]=logbyrunidresp.end_time;
+       logbyrunidresp.start_time=logbyrunidresp.start_time;
+       logbyrunidresp.end_time=logbyrunidresp.end_time;
+       if(loopInsideArray.find(item3=>item3.task_id==rlog.task_id)==undefined)
+         resplogbyrun.push(logbyrunidresp)
+       else if(loopInsideArray.find(item3=>item3.task_id==rlog.task_id).task_name=="Loop-Start")
+         resplogbyrun.push(logbyrunidresp)
+     });
+     this.logflag=true;
+     this.viewlogid1=runid;
+     this.allRuns=[...resplogbyrun];
+     this.logbyrunid = new MatTableDataSource(resplogbyrun);
+     this.changeDetector.detectChanges();
+     this.logbyrunid.paginator=this.paginator2;
+     this.logbyrunid.sort=this.sort2
+   }
+   else
+   {
+     
      this.spinner.hide();
-     Swal.fire("Error","unable to get logs","error")
-    })
-  }
+     this.logsLoading=false;
+     Swal.fire("Error",data.errorMessage,"error")
+   }
+    
+   }, err=>{
+     this.spinner.hide();
+     this.logsLoading=false;
+     
+    this.spinner.hide();
+    Swal.fire("Error","unable to get logs","error")
+   })
+ }
 
 
   sortasc(event)
@@ -1182,6 +1211,78 @@ loadpredefinedbot(botId, dropCoordinates)
       }else if(this.insertForm.value.environmentType == "Linux"){
         this.insertForm.get("portNumber").setValue("22");
       }
+    }
+
+
+
+    sortLoopsIteration(event){
+
+      this.fileteredLoopIterations=this.fileteredLoopIterations.sort(function(a,b){
+  
+        let check_a=isNaN(a[event.active])?a[event.active].toUpperCase():a[event.active];
+  
+        let check_b=isNaN(b[event.active])?b[event.active].toUpperCase():b[event.active];
+  
+        if (event.direction=='asc')
+  
+          return (check_a > check_b) ? 1 : -1;
+  
+        else if(event.direction=='desc')
+  
+          return (check_a < check_b) ? 1 : -1;
+  
+      },this);
+  
+      this.loopbyrunid = new MatTableDataSource(this.fileteredLoopIterations);
+  
+      this.changeDetector.detectChanges();
+  
+    }
+    
+    IterationId(event){
+  
+       this.fileteredLoopIterations=[...this.loopIterations.filter(item=>item.iterationId==event.target.value)];
+  
+       this.loopbyrunid = new MatTableDataSource(this.fileteredLoopIterations);
+  
+       this.changeDetector.detectChanges();
+  
+    }
+    
+    getLoopIterations(e, iterationId){
+      this.iterationsList=[]
+      this.logsLoading=true;
+      this.rest.getLooplogs(e.bot_id, e.version, e.run_id ).subscribe((response:any)=>{
+        this.logsLoading=false;
+        if(response.errorMessage==undefined)
+        {
+          this.loopIterations=[...response];
+          this.loopIterations=[...this.loopIterations.filter((item:any)=>item.taskName != 'Loop-End')]
+          this.selectedIterationTask=e;
+          this.loopIterations.forEach(item=>{
+            if(this.iterationsList.find(item2=>item2==item.iterationId)==undefined)
+              this.iterationsList.push(item.iterationId)    
+          })
+          this.iterationsList=[...this.iterationsList.sort(function(a, b){return a - b})];
+          this.selectedIterationId=iterationId;
+          if((this.selectedIterationId==0 || this.selectedIterationId==undefined )&& this.iterationsList.length!=0)
+            this.selectedIterationId=this.iterationsList[this.iterationsList.length-1];
+          this.fileteredLoopIterations=[...this.loopIterations.filter(item=>(item.iterationId==this.selectedIterationId))];
+          this.loopbyrunid = new MatTableDataSource(this.fileteredLoopIterations);
+          this.changeDetector.detectChanges();
+        }
+        else
+        {
+          this.logsLoading=false;
+          this.selectedIterationTask=undefined;
+          Swal.fire("Error",response.errorMessage,"error");
+        }
+         
+      },err=>{
+        this.logsLoading=false;
+        Swal.fire("Error","Unable to open loop logs","error");
+        console.log(err)
+      })
     }
   
 }
