@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   pi_url: 'https://ezflow.demo.epsoftinc.com/prcintel',
+//   pi_url: 'http://10.100.7.20:9192',
   bps_url: 'https://ezflow.demo.epsoftinc.com/bpstudio',
   rpa_url: 'https://ezflow.demo.epsoftinc.com/wfrpa',
   loopback_url: 'http://10.11.0.107:3000',
@@ -32,7 +33,7 @@ export const environment = {
  // bpmnplatformUrl : "http://10.11.0.127:8080",
 
 //DB Connector
-  dbConnectorHost: "172.16.0.64",
+  dbConnectorHost: "pgpool",
   dbName: "eiap_demo",
 
 // Data upload path
