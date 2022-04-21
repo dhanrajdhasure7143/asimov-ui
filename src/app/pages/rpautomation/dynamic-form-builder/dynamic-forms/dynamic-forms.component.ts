@@ -196,21 +196,25 @@ this.fillarray.splice(index, 1);
   ngOnInit() {
     let fieldsCtrls = {};
     this.isMultiForm=(this.enableMultiForm.check)
-    this.multiFormValue=[...this.enableMultiForm.value]
-    let modifiedArray:any=[...this.multiarray.map((item:any)=>{
-        let objectKeys=Object.keys(item);
-        let fieldData={}
-        objectKeys.forEach((key:any)=>{
-          let obj=this.fields.find(field=>field.name==key)
-          if(obj!=undefined)
-            fieldData[key+"_"+obj.id]=item[key];
-        })
-        fieldData["id"]=item.id;
-        return fieldData;
-    })]
+  
 
+    if(this.multiarray!=undefined){
+      this.multiFormValue=[...this.enableMultiForm.value]
+      let modifiedArray:any=[...this.multiarray.map((item:any)=>{
+          let objectKeys=Object.keys(item);
+          let fieldData={}
+          objectKeys.forEach((key:any)=>{
+            let obj=this.fields.find(field=>field.name==key)
+            if(obj!=undefined)
+              fieldData[key+"_"+obj.id]=item[key];
+          })
+          fieldData["id"]=item.id;
+          return fieldData;
+      })]
+      this.fillarray=modifiedArray;
+    }
 
-   this.fillarray=modifiedArray;
+  
     // if(this.multiarray!=undefined){
     //   this.fillarray=this.multiarray.map(p=>{
     
