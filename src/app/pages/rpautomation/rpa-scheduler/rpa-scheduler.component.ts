@@ -18,7 +18,20 @@ export class RpaSchedulerComponent implements OnInit {
   botid:any;
   processid:any;
   public Environments:any;
-  public timesZones: any[] = ["UTC","Asia/Dubai","America/New_York","America/Los_Angeles","Asia/Kolkata","Canada/Atlantic","Canada/Central","Canada/Eastern","GMT"];
+  public timesZones: any[] = [
+    "America/New_York",
+    "America/Chicago",
+    "America/Los_Angeles",
+    "America/Denver",
+    "Canada/Atlantic",
+    "Canada/Central",
+    "Canada/Eastern",
+    "Canada/Mountain",
+    "Asia/Dubai",
+    "Asia/Calcutta",
+    "UTC",
+    "GMT",
+  ];
   i="";
   public cronOptions: CronOptions = {
     formInputClass: 'form-control cron-editor-input',
@@ -72,7 +85,8 @@ export class RpaSchedulerComponent implements OnInit {
 
   ngOnInit() {
     this.startdate=this.startdate.getFullYear()+"-"+(this.startdate.getMonth()+1)+"-"+this.startdate.getDate();
-
+    this.timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    this.onTimeZoneChange(this.timezone);
     if(this.data.botid!=undefined && this.data.botid !="not_saved")
     {
       this.botid=this.data.botid;
