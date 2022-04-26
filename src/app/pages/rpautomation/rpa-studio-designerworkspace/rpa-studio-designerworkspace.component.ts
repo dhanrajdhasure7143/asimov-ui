@@ -1111,10 +1111,12 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     this.formVales.forEach((ele, i) => {
       if (ele.visibility == true) {
         let objKeys = Object.keys(this.fieldValues);
+      
         objAttr = {
           "metaAttrId": ele.id,
           "metaAttrValue": ele.name,
-          "attrValue": ''
+          "attrValue": '',
+          "label":ele.label
         }
         if(ele.type=="checkbox" && this.fieldValues[ele.name+"_"+ele.id]=="")
         {
@@ -1581,13 +1583,11 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           {
             if(item.attributes[i].attrValue!=actualTaskAttribute.attrValue)
             {
-
-              console.log(item)
               this.auditLogs.push(
                 {
                   "botId": this.finalbot.botId,
                   "botName": `${this.finalbot.botName}|UpdatedConfig` ,
-                  "changeActivity":item.attributes[i].metaAttrValue,
+                  "changeActivity":item.attributes[i].label,
                   "changedBy": `${firstName} ${lastName}` ,
                   //"changedDate":(new Date().toLocaleDateString()+", "+new Date().toLocaleTimeString()),
                   "newValue":item.attributes[i].attrValue,

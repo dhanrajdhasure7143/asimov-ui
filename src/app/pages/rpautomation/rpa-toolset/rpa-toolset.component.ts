@@ -48,7 +48,7 @@ export class RpaToolsetComponent implements OnInit {
   {
         this.toolSetData=[];
         let data1:any = [];
-
+        console.log("-----------------Ammori daya------------------",this.templateNodes)
         this.userRole = localStorage.getItem("userRole")
         this.userRole = this.userRole.split(',');
         // this.rest.toolSet().subscribe(data => {
