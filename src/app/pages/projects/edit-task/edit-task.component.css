@@ -236,9 +236,13 @@ ul.historydiv li:last-child {
 
 
 .bg-task{
-  background-color: #F3F3F3;
+  /* background-color: #F3F3F3;
   padding: 10px !important;
+  margin-bottom: 15px !important; */
+  padding-bottom: 10px !important;
+  margin: 10px !important;
   margin-bottom: 15px !important;
+  border-bottom: 1px solid #cbcbcb;
 }
 .task-name{
   font-weight: 600;
