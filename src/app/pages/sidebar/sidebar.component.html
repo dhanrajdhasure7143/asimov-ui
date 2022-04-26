@@ -263,7 +263,7 @@
 
   <!-- will uncomment Subscriptions after the completion of credit card work -->
 
-  <!-- <a *ngIf="!freetrail" mat-list-item class="link" id='subscriptions' (click)="hightlight('subscriptions',null)" routerLink="/pages/subscriptions" [matTooltip]=" !obj.sideBarOpen ? 'Subscriptions' : ''" matTooltip="Subscriptions" matTooltipClass="sidebarTooltip" matTooltipPosition="right">
+  <a *ngIf="this.getCookie('card_enabled')=='true'" mat-list-item class="link" id='subscriptions' (click)="hightlight('subscriptions',null)" routerLink="/pages/subscriptions" [matTooltip]=" !obj.sideBarOpen ? 'Subscriptions' : ''" matTooltip="Subscriptions" matTooltipClass="sidebarTooltip" matTooltipPosition="right">
     <span class="side-icon">
 <span class="active-img" id="eiap-home-icon-active">
 <img src="../../../assets/images/subscription/BillingAdresses1.svg">
@@ -276,7 +276,7 @@
 </span>
     </span>
     <span class="side-menu-font">Manage Subscriptions</span>
-</a> -->
+</a>
 
 
 

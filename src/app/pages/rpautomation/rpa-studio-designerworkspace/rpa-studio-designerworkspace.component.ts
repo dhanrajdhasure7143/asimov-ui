@@ -16,6 +16,8 @@ import domtoimage from 'dom-to-image';
 import * as $ from 'jquery';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { RpaStudioDesignerComponent } from '../rpa-studio-designer/rpa-studio-designer.component';
+import { ItemsList } from '@ng-select/ng-select/ng-select/items-list';
 
 @Component({
   selector: 'app-rpa-studio-designerworkspace',
@@ -30,6 +32,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   public optionsVisible: boolean = true;
   public scheduler: any;
   result: any = [];
+  fileterdarray:any=[]
+  webelementtype:any=[]
   nodes = [];
   selectedNode: any = [];
   changePx: { x: number; y: number; };
@@ -76,6 +80,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   recordedcode:any;
   finalcode:any;
   svg:any;
+  finalarray:any=[]
   public insertForm:FormGroup;
   modalRef: BsModalRef;
   outputmodalRef:BsModalRef;
@@ -86,16 +91,27 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   stopNodeId:any=""
   actualTaskValue:any=[];
   actualEnv:any=[];
-  auditLogs:any=[]
+  auditLogs:any=[];
+  enableMultiForm:any={
+    check:false,
+    value:[],
+  };
   @ViewChild('template', { static: false }) template: TemplateRef<any>;
   public nodedata: any;
   categoryList:any=[];
+  Webelementtype_array: { "Id": any; "value": any; }[];
+  Webelementvalue_array:{"Id":any;"value":any;}[];
+  fieldvaluetype_array:{"Id":any;"value":any;}[];
+  fieldvalue_array:{"Id":any;"value":any;}[];
+  multiformdata: any=[]
+  multiarray;any=[]
   constructor(private rest: RestApiService,
     private notifier: NotifierService,
     private hints: Rpa_Hints,
     private dt: DataTransferService,
     private http: HttpClient,
     private child_rpa_studio: RpaStudioComponent,
+    private RPA_Designer_Component:RpaStudioDesignerComponent,
     private toolset:RpaToolsetComponent,
     private formBuilder: FormBuilder,
     private spinner: NgxSpinnerService,
@@ -220,7 +236,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   
       else{
         let connectionNodeForSource=this.nodes.find((item:any)=>item.id==info.sourceId);
-        console.log(connectionNodeForSource);
+        // console.log(connectionNodeForSource);
         if(connectionNodeForSource!=undefined)
         {
           if(connectionNodeForSource.selectedNodeTask=='If condition')
@@ -475,50 +491,56 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       x: mousePos.x + 'px',
       y: mousePos.y + 'px'
     };
-
-    const node = event.data;
-    node.id = this.idGenerator();
-    // node.selectedNodeTask = "";
-    // node.selectedNodeId = "";
-    const nodeWithCoordinates = Object.assign({}, node, dropCoordinates);
-    this.nodes.push(nodeWithCoordinates);
-    setTimeout(() => {
-      this.populateNodes(nodeWithCoordinates);
-    }, 240);
-
-    if (this.nodes.length == 1) {
-      let node = {
-        id: "START_" + this.finalbot.botName,
-        name: "START",
-        selectedNodeTask: "",
-        selectedNodeId: "",
-        path: "/assets/images/RPA/Start.png",
-        x: "2px",
-        y: "9px",
-      }
-      this.startNodeId=node.id
-      this.nodes.push(node);
+    if(event.data.botId!=undefined)
+    {
+      this.RPA_Designer_Component.current_instance.loadpredefinedbot(event.data.botId, dropCoordinates)
+    }
+    else
+    {
+      const node = event.data;
+      node.id = this.idGenerator();
+      // node.selectedNodeTask = "";
+      // node.selectedNodeId = "";
+      const nodeWithCoordinates = Object.assign({}, node, dropCoordinates);
+      this.nodes.push(nodeWithCoordinates);
       setTimeout(() => {
-        this.populateNodes(node);
+        this.populateNodes(nodeWithCoordinates);
       }, 240);
 
+      if (this.nodes.length == 1) {
+        let node = {
+          id: "START_" + this.finalbot.botName,
+          name: "START",
+          selectedNodeTask: "",
+          selectedNodeId: "",
+          path: "/assets/images/RPA/Start.png",
+          x: "2px",
+          y: "9px",
+        }
+        this.startNodeId=node.id
+        this.nodes.push(node);
+        setTimeout(() => {
+          this.populateNodes(node);
+        }, 240);
 
-      let stopnode = {
-        id: "STOP_" + this.finalbot.botName,
-        name: "STOP",
-        selectedNodeTask: "",
-        selectedNodeId: "",
-        path: "/assets/images/RPA/Stop.png",
-        x: "941px",
-        y: "396px",
+
+        let stopnode = {
+          id: "STOP_" + this.finalbot.botName,
+          name: "STOP",
+          selectedNodeTask: "",
+          selectedNodeId: "",
+          path: "/assets/images/RPA/Stop.png",
+          x: "941px",
+          y: "396px",
+        }
+        this.stopNodeId=stopnode.id
+        this.nodes.push(stopnode);
+        setTimeout(() => {
+          this.populateNodes(stopnode);
+        }, 240);
+
+
       }
-      this.stopNodeId=stopnode.id
-      this.nodes.push(stopnode);
-      setTimeout(() => {
-        this.populateNodes(stopnode);
-      }, 240);
-
-
     }
   }
 
@@ -693,9 +715,10 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   formNodeFunc(node) {
+    
     this.nodedata=node
     this.form_change=false;
-    
+    this.enableMultiForm.check=false;
     if (node.selectedNodeTask != "") {
       this.selectedTask = {
         name: node.selectedNodeTask,
@@ -709,34 +732,53 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           let finalattributes: any = [];
           this.rest.attribute(node.selectedNodeId).subscribe((data) => {
             finalattributes = data
-            taskdata.attributes.forEach(element => {
-              if(finalattributes.find(data => data.id == element.metaAttrId).type=='restapi')
-              {
-                if(element.attrValue!='' && element.attrValue!=undefined)
-                {
-                  let attr_val=JSON.parse(element.attrValue);
-                  let attrnames=Object.getOwnPropertyNames(attr_val);
-                  finalattributes.find(data => data.id == element.metaAttrId).value=attr_val[attrnames[0]];
-                }
+            console.log(finalattributes)
+            this.multiformdata=finalattributes
+            if(finalattributes.length==1 && finalattributes[0].type=="multiform")
+            {
+              this.enableMultiForm.check=true;
+              if(taskdata.attributes.length!=0){
+                let multiFormValue=[...JSON.parse(taskdata.attributes[0].attrValue)]
+                this.openMultiForm(finalattributes,node,multiFormValue)
               }
-              else
-              {
-                finalattributes.find(data => data.id == element.metaAttrId).value = element.attrValue;
-              }
+             else{
+              this.openMultiForm(finalattributes, node, []);
+             }
+             
 
-            });
-            if(finalattributes.find(attr=>attr.taskId==71)!=undefined)
-            {
-              this.formVales = finalattributes;
-              this.update_record_n_play(finalattributes, node)
-            }
-            else if(finalattributes.find(attr=>attr.type=='restapi')!=undefined)
-            {
-              this.addoptions(finalattributes, node);
+             
             }
             else
             {
-              this.response(finalattributes,node);
+              taskdata.attributes.forEach(element => {
+                if(finalattributes.find(data => data.id == element.metaAttrId).type=='restapi')
+                {
+                  if(element.attrValue!='' && element.attrValue!=undefined)
+                  {
+                    let attr_val=JSON.parse(element.attrValue);
+                    let attrnames=Object.getOwnPropertyNames(attr_val);
+                    finalattributes.find(data => data.id == element.metaAttrId).value=attr_val[attrnames[0]];
+                  }
+                }
+                else
+                {
+                  finalattributes.find(data => data.id == element.metaAttrId).value = element.attrValue;
+                }
+
+              });
+              if(finalattributes.find(attr=>attr.taskId==71)!=undefined)
+              {
+                this.formVales = finalattributes;
+                this.update_record_n_play(finalattributes, node)
+              }
+              else if(finalattributes.find(attr=>attr.type=='restapi')!=undefined)
+              {
+                this.addoptions(finalattributes, node);
+              }
+              else
+              {
+                this.response(finalattributes,node);
+              }
             }
           });
         }
@@ -750,7 +792,13 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
         this.rest.attribute(node.selectedNodeId).subscribe((data) => {
           let attr_response:any=data;
-          if(node.selectedNodeTask=="Record & Play")
+          this.multiformdata=data
+          if(attr_response.length==1 && attr_response[0].type=="multiform")
+          {
+            this.enableMultiForm.check=true
+            this.openMultiForm(attr_response, node, []);
+          }
+          else if(node.selectedNodeTask=="Record & Play")
           {
 
               this.formVales = attr_response;
@@ -776,6 +824,17 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
 
+  openMultiForm(attr_data, node,value)
+  {
+    this.rest.getMultiFormAttributes(attr_data[0].dependency).subscribe(attributes=>{
+      console.log(attributes);
+      this.enableMultiForm.value=value;
+     
+       this.multiarray=value
+        this.response(attributes,node)
+      
+    })
+  }
 
   update_record_n_play(finalattributes, node)
   {
@@ -818,6 +877,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
 
   response(data,node) {
+    
     if (data.error == "No Data Found") {
       this.fields = [];
       let type = "info";
@@ -912,9 +972,127 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   close_record_play(){
     document.getElementById('recordandplay').style.display='none';
   }
+  submitform(event){
+    
+    this.fieldValues = event
+   
+    if (this.fieldValues['file1']) {
+      this.fieldValues['file1'] = this.fieldValues['file1'].substring(12)
+    }
+    if (this.fieldValues['file2']) {
+      this.fieldValues['file2'] = this.fieldValues['file2'].substring(12)
+    }
+    if (this.fileData != undefined) {
+      this.fieldValues['file'] = this.fileData
+    }
 
+
+    this.hiddenPopUp = false;
+  
+ 
+
+ for(let i=0;i<this.fieldValues.length;i++){
+  
+   this.Webelementtype_array = this.fieldValues.map(p=>{
+    return{
+      "Id": p.id,
+      "value": p.webElementType_223
+    }
+    });
+
+    this.Webelementvalue_array=this.fieldValues.map(p=>{
+      return{
+        "Id":p.id,
+        "value":p.webElementValue_224
+      }
+    })
+
+    this.fieldvaluetype_array=this.fieldValues.map(p=>{
+      return{
+        "Id":p.id,
+        "value":p.fillValueType_222
+      }
+    })
+
+    this.fieldvalue_array=this.fieldValues.map(p=>{
+      return{
+        "Id":p.id,
+        "value":p.fillValue_225
+      }
+    })
+  
+  //this.fileterdarray.push(this.selectedresource)
+  
+ }
+
+ 
+ 
+  
+  this.fileterdarray = this.multiformdata.map(p=>{
+
+    return{
+      "metaAttrId": p.id,
+       "metaAttrValue": p.name,
+      "attrValue":JSON.stringify(this.fieldValues)
+    }
+    //   if(p.name=='webElementType'){
+    //     return{
+    //       "metaAttrId": p.id,
+    //       "metaAttrValue": p.name,
+    //       "attrValue":this.Webelementtype_array
+    //     }
+    //   }
+    //  if(p.name=='webElementValue'){
+    //    return{
+    //     "metaAttrId": p.id,
+    //     "metaAttrValue": p.name,
+    //     "attrValue":this.Webelementvalue_array
+    //    }
+    //  }
+    //  if(p.name=='fillValueType'){
+    //    return{
+    //     "metaAttrId": p.id,
+    //     "metaAttrValue": p.name,
+    //     "attrValue":this.fieldvaluetype_array
+    //    }
+    //  }
+    //  if(p.name=='fillValue'){
+    //   return{
+    //     "metaAttrId": p.id,
+    //     "metaAttrValue": p.name,
+    //     "attrValue":this.fieldvalue_array
+    //    }
+    //  }
+     });
+  
+ console.log("filteredarray",this.fileterdarray)
+ 
+  let cutedata = {
+
+    "taskName": this.selectedTask.name,
+    "tMetaId": this.selectedTask.id,
+    "inSeqId": 1,
+    "taskSubCategoryId": "1",
+    "outSeqId": 2,
+    "nodeId": this.selectedNode.name + "__" + this.selectedNode.id,
+    "x": this.selectedNode.x,
+    "y": this.selectedNode.y,
+    "attributes": this.fileterdarray ,
+  }
+  let index = this.finaldataobjects.findIndex(sweetdata => sweetdata.nodeId == cutedata.nodeId)
+  if (index != undefined && index >= 0) {
+    this.finaldataobjects[index] = cutedata;
+  } else {
+    this.finaldataobjects.push(cutedata);
+
+  }
+  this.notifier.notify("info", "Data Saved Successfully");
+  
+  
+  }
 
   onFormSubmit(event) {
+    
     this.fieldValues = event
     if (this.fieldValues['file1']) {
       this.fieldValues['file1'] = this.fieldValues['file1'].substring(12)
@@ -1014,7 +1192,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     this.arrange_task_order(this.startNodeId);
     this.get_coordinates();
     await this.getsvg();
-    console.log("-----------------------------",this.final_tasks)
       this.saveBotdata = {
         "botName": botProperties.botName,
         "botType": botProperties.botType,
@@ -1386,7 +1563,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
             "botName": `${this.finalbot.botName}|AddedTask` ,
             "changeActivity":'-',
             "changedBy": `${firstName} ${lastName}` ,
-            "changedDate":(new Date().toLocaleDateString()+", "+new Date().toLocaleTimeString()),
+            //"changedDate":(new Date().toLocaleDateString()+", "+new Date().toLocaleTimeString()),
             "newValue":'-',
             "previousValue":'-',
             "taskName": item.taskName,
@@ -1400,23 +1577,28 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         for(let i=0;i<item.attributes.length;i++)
         {
           let actualTaskAttribute=actualTask.attributes.find((att:any)=>att.metaAttrId==item.attributes[i].metaAttrId);
-        
-          if(item.attributes[i].attrValue!=actualTaskAttribute.attrValue)
+          if(actualTaskAttribute != undefined)
           {
-            this.auditLogs.push(
-              {
-                "botId": this.finalbot.botId,
-                "botName": `${this.finalbot.botName}|UpdatedConfig` ,
-                "changeActivity":item.attributes[i].metaAttrValue,
-                "changedBy": `${firstName} ${lastName}` ,
-                "changedDate":(new Date().toLocaleDateString()+", "+new Date().toLocaleTimeString()),
-                "newValue":item.attributes[i].attrValue,
-                "previousValue": actualTaskAttribute.attrValue,
-                "taskName": actualTask.taskName,
-                "version": this.finalbot.version
-              }
-            )
+            if(item.attributes[i].attrValue!=actualTaskAttribute.attrValue)
+            {
+
+              console.log(item)
+              this.auditLogs.push(
+                {
+                  "botId": this.finalbot.botId,
+                  "botName": `${this.finalbot.botName}|UpdatedConfig` ,
+                  "changeActivity":item.attributes[i].metaAttrValue,
+                  "changedBy": `${firstName} ${lastName}` ,
+                  //"changedDate":(new Date().toLocaleDateString()+", "+new Date().toLocaleTimeString()),
+                  "newValue":item.attributes[i].attrValue,
+                  "previousValue": actualTaskAttribute.attrValue,
+                  "taskName": actualTask.taskName,
+                  "version": this.finalbot.version
+                }
+              )
+            }
           }
+         
         }
       }
     })
@@ -1430,7 +1612,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
             "botName": `${this.finalbot.botName}|RemovedTask` ,
             "changeActivity":'-',
             "changedBy": `${firstName} ${lastName}` ,
-            "changedDate":(new Date().toLocaleDateString()+", "+new Date().toLocaleTimeString()),
+           // "changedDate":(new Date().toLocaleDateString()+", "+new Date().toLocaleTimeString()),
             "newValue":'-',
             "previousValue":'-',
             "taskName": item.taskName,
@@ -1450,7 +1632,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
             "botName": `${this.finalbot.botName}|RemovedEnv` ,
             "changeActivity":'-',
             "changedBy": `${firstName} ${lastName}` ,
-            "changedDate":(new Date().toLocaleDateString()+", "+new Date().toLocaleTimeString()),
+           // "changedDate":(new Date().toLocaleDateString()+", "+new Date().toLocaleTimeString()),
             "newValue":'-',
             "previousValue":'-',
             "taskName":String(item),
@@ -1470,7 +1652,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
             "botName": `${this.finalbot.botName}|AddedEnv` ,
             "changeActivity":'-',
             "changedBy": `${firstName} ${lastName}` ,
-            "changedDate":(new Date().toLocaleDateString()+", "+new Date().toLocaleTimeString()),
+           // "changedDate":(new Date().toLocaleDateString()+", "+new Date().toLocaleTimeString()),
             "newValue":'-',
             "previousValue":'-',
             "taskName":String(item),

@@ -67,7 +67,7 @@
                       </button>
                         </div>
                         <!-- <div class="action-item" >
-                      <i class="ri-play-line"></i>
+                      <i class="ri-play-line"></i> 
                   </div> -->
                         <div class="action-item hovericon" *ngIf="current_instance != undefined">
                             <button class="tsttooltipbtn" [disabled]="current_instance.savebotrespose==undefined || current_instance.selectedEnvironments.length==0" (click)=" current_instance.executionAct()">
@@ -76,13 +76,12 @@
                         <span class="testtooltip">Start Bot</span>
                     </button>
                         </div>
-                        <div class="action-item hovericon" *ngIf="current_instance != undefined">
+                        <!-- <div class="action-item hovericon" *ngIf="current_instance != undefined">
                             <button class="tsttooltipbtn" [disabled]="current_instance.savebotrespose==undefined || current_instance.pausebot==false" (click)=" current_instance.stopBot()">
                       <img src="../../../../assets/images/RPA/icon_latest/Stop Bot.svg"class="testplus1">
                       <span class="testtooltip">Stop Bot</span>
                     </button>
-                            <!-- <i class="ri-stop-circle-line"></i> -->
-                        </div>
+                        </div> -->
                         <div class="action-item hovericon" *ngIf="current_instance != undefined" [isDisabled]="current_instance.predefinedbotsData.length==0" dropdown id="predefinedBotsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <button  class="dropdown-action-item clickable dropdown-toggle tsttooltipbtn" id="predefinedBots" dropdownToggle  type="button" aria-controls="predefinedBotDropdown">
                               <img src="../../../../assets/images/RPA/icon_latest/Predefined Bots.svg" class="testplus1">
@@ -91,7 +90,8 @@
                             </button>
                             <ul id="predefinedBotDropdown" *dropdownMenu class="dropdown-menu action-menu-dropdown" role="menu" aria-labelledby="button-basic">
                                 <li role="menuitem" class="clickable" *ngFor="let predefinedBot of  current_instance.predefinedbotsData" style="white-space: nowrap;">
-                                    <button (click)="current_instance.loadpredefinedbot(predefinedBot.botId)"> {{predefinedBot.botName}}</button>
+                                    <!-- <button [dndDraggable]="predefinedBot" (click)="current_instance.loadpredefinedbot(predefinedBot.botId)"> {{predefinedBot.botName}}</button> -->
+                                    <div [dndDraggable]="predefinedBot"> {{predefinedBot.botName}}</div>  
                                 </li>
                             </ul>
 

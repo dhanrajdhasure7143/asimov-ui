@@ -31,7 +31,7 @@
     font-weight: 600;
     margin: 0px;
     color: #001c47;
-    padding: 18px 15px 0px 20px;
+    padding: 18px 15px 0px 15px;
     background-color: #f5f5f5d6 !important;
     text-transform: capitalize;
 }
@@ -43,7 +43,6 @@
 
 .custom-footer-content p {
     cursor: pointer !important;
-    font-weight: 600;
 }
 
 .Apr-cnt h4 {
@@ -61,37 +60,47 @@
     margin-right: 0px !important;
 }
 
+span.proc-title-main{   
+    margin-top: 18px;
+}
 span.proc-title {
     color: #00a1e4 !important;
     font-size: 16px !important;
-    /* font-weight: 600 !important; */
-    margin-top: 18px;
+    cursor: pointer;
 }
+
 .mat-tree-node span {
     color: #333c48;
     font-size: 14px;
     line-height: 22px;
 }
+
 img.procmenu {
     width: auto;
     height: 18px;
     margin-right: 6px;
-    margin-top: 20px;
+    /* margin-top: 18px; */
+    cursor: pointer;
 }
+
 .close-btn h3 {
-    padding: 10px 10px 10px 15px;
+    /* padding: 10px 10px 10px 15px; */
+    padding: 15px 10px 15px 12px;
     margin: 0px;
     font-size: 16px;
     font-weight: 600;
     width: 90%;
+    color: #fff;
 }
-.close-btn img{
+
+.close-btn img {
     width: 12px;
     height: 12px;
     cursor: pointer;
     position: absolute;
     right: 12px;
-    top: 14px;
+    top: 16px;
+    filter: brightness(10) grayscale(1) brightness(10);
 }
 
 mat-drawer {
@@ -101,50 +110,61 @@ mat-drawer {
 .vcmdocs {
     border: 2px dashed #e7e7e7;
     background-color: #f5f5f5;
-    padding: 20px 0px !important;
+    padding: 18px 0px !important;
     border-radius: 3px;
     cursor: pointer;
     text-align: center;
+    margin-bottom: 15px;
 }
+
 .vcmdocs:hover {
     background-color: aliceblue;
 }
+
 .vcmdocs p {
     margin: 0px;
 }
+
 .vcmdocs img {
     width: 20%;
     height: auto;
     display: block;
     margin: 0px auto;
 }
+
 .vcmdocs button {
     border: 1px solid #00a0e3 !important;
     color: #00a0e3;
     margin: 15px 0px 0px 0px !important;
     padding: 8px 25px !important;
 }
+
 .files img {
-    float: right;
-    /* opacity: 0.6; */
-    cursor: pointer;  
-    margin-top: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+    margin-right: 0px;
 }
+
 .files img:hover {
     opacity: 1;
 }
-.files span:hover .default-img {
+
+.files span a:hover .default-img {
     display: none;
 }
-.files span:hover .hover-img {
+
+.files span a:hover .hover-img {
     display: initial;
 }
+
 .vcname {
     background-color: #fff;
 }
+
 .vcname input {
     position: relative;
 }
+
 .vcname button {
     position: absolute;
     top: 32px;
@@ -154,54 +174,265 @@ mat-drawer {
     margin: 0px !important;
     background-color: transparent !important;
 }
+
 .vcm-treediv {
     height: calc(100% - 110px);
     background-color: #f5f5f5d6 !important;
 }
-.editcontent {
-    /* height: calc(100vh - 235px); */
-    height: calc(100vh - 255px);
+
+span.sub-nodel1 {
+    margin-left: -5px;
 }
-.tsttooltipbtn {
+
+span.sub-nodel2 {
+    margin-left: 10px;
+    color: #607087 !important;
+}
+
+.proc-title-main button.qedit-btn {
+    display: none;
+}
+
+.proc-title-main:hover button.qedit-btn {
+    display: inline-block ;
+}
+
+button.btn.qedit-btn,
+button.btn.qsave-btn {
+    border: 1px solid #00a0e3 !important;
+    padding: 0px 8px !important;
+    margin-left: 10px !important;
+    border-radius: 50px !important;
+    color: #00a0e3 !important;
+    font-size: 14px !important;
+}
+
+button.btn.qedit-btn:hover,
+button.btn.qsave-btn:hover {
+    color: #fff!important;
+    border: 1px solid #001c47 !important;
+}
+
+.vcm-treediv button img.testplusb {
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+    margin-left: 10px;
+}
+
+
+/* properties overlay */
+
+.vcmprop div#propertiesContainer {
+    width: 100%;
+    height: calc(100vh - 130px);
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.vcmprop div#propertiesPanelBody {
+    /* height: calc(100% - 40px); */
+    position: absolute;
+    /* top: 40px; */
+    overflow: auto;
+    width: 100%;
+}
+
+.propertiesContainer mat-expansion-panel {
+    background-color: #607088;
+    margin: 0px !important;
+    border: none !important;
+    border-top: 1px solid #ebebeb !important;
+    padding: 0px !important;
+}
+
+.propertiesContainer mat-expansion-panel-header:hover {
+    background-color: #00a0e3;
+}
+
+.propertiesContainer .mat-expansion-panel-header-title {
+    border: none;
+}
+
+.vcmprop .propertiesContainer label.accordionHeader {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 500;
+    margin-left: 10px;
+    margin-bottom: 0px;
+}
+
+.doc-content {
+    height: calc(100vh - 280px);
+    width: 100%;
+}
+
+.container.p-0.prop-content {
+    height: calc(100vh - 297px) !important;
+}
+
+.editcontent {
+    /* height: calc(100vh - 275px); */
+    height: calc(100vh - 325px) !important;
+}
+
+/* properties overlay */
+
+h4 img.procmenu {
+    margin: -3px 6px 0px 0px !important;
+}
+.bps_link{
+    color: #00a0e3 !important;
+    cursor: pointer;
+}
+.bps_link:hover{
+    font-weight: 600;
+}
+
+.custom-content ngx-dropzone {
+    height: 25px !important;
+    color: #333c48;
+}
+.custom-content button {
+    float: right;
+}
+.sub-nodel2-haschild {
+    color: #607087 !important;
+}
+
+.files span.fname {
+    font-weight: 600;
+    width: 80%;
+    margin-right: 10px;
+    word-break: break-all;
+}
+.files span.fbtns {
+    width: 20%;
+    text-align: right;
+}
+.files p {
+    margin:2px 15px 2px 18px;
+    word-break: break-all;
+}
+
+/* Upload Popup */
+
+.uploadfilebdiv {
+    height: calc(100vh - 260px);
+}
+.box-fileupload {
+    background: #ffffff;
+    width: 100%;
+    padding: 5px;
+    border: 2px dashed #00a0e3;
+    border-radius: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+    cursor:pointer;
+}
+.box-fileupload:hover{
+    background: #e3eaee !important; ;
+}
+.inputfile + label {
+    display: inline-block;
+    cursor: pointer;
+    margin-bottom: 0px;
+    width: 100%;
+    text-align: center;
+}
+.inputfile {
+    /* width: 0.1px;
+    height: 0.1px; */
+    width: 94%;
+    height: 34px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}   
+.inputfile:focus + label,
+.inputfile + label:hover {
+    color: #00a0e3;
+    fill: #00a0e3;
+}
+.card-placeholder {
+    flex-basis: 0;
+    flex-grow: 1;
+    opacity: 1;
+    font-size: 12px;
+    font-weight: 400;
+}
+.file-size {
+    /* color: #999; */
+    font-size: 12px;
+    font-weight: 400;
+    display: block;
+    margin-top: 5px;
+}
+
+/* Upload Popup */
+
+.tsttooltipbtn{
     position: relative;
+}
+span.testtooltip {
+    position: absolute;
+    top: 35px;
+    right: -5px;
+    background-color: #001c47;
+    color: #fff;
+    width: max-content;
+    padding: 6px 10px;
+    border-radius: 4px;
+    display: none;
+    z-index: 2;
+} 
+span.testtooltip.vcptooltip {
+    left: -5px;
+}
+span.testtooltip.vcptooltip::before {
+    left: 11px;
+}
+span.testtooltip::before {
+    content: '';
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    right: 11px;
+    top: -5px;
+    background: #001c47;
+    transform: rotate(45deg);
+}  
+.tsttooltipbtn:hover span.testtooltip {
+    display: block;
 }
 .tsttooltipbtn:hover .default-img{
     display: none;
 }
-
 .tsttooltipbtn:hover .hover-img {
     display: initial;
 }
-.tsttooltipbtn:hover span.testtooltip {
-    display: block;
-}
-span.testtooltip {
-    position: absolute;
-    top: 32px;
-    right: 0px;
-    background-color: #001c47;
+.mat-tree-node .tsttooltipbtn span.testtooltip.mtooltip,
+.mat-tree-node .tsttooltipbtn span.testtooltip.mtooltip-cancel {
+    right: -55px;
+    top: -2px;
     color: #fff;
-    width: -moz-max-content;
-    width: max-content;
-    padding: 3px 10px;
-    border-radius: 4px;
-    display: none;
-    z-index: 1;
+    padding: 1px 10px;
 }
-span.testtooltip:after {
-    content: "";
-    width: 10px;
-    height: 10px;
-    position: absolute;
-    top: -4px;
-    background-color: #001c47;
-    transform: rotate(45deg);
-    right: 10px;
+.mat-tree-node .tsttooltipbtn span.testtooltip.mtooltip-cancel {
+    right: -70px;
 }
-span.sub-nodel1 {
-    margin-left: -5px;
+.mat-tree-node .tsttooltipbtn span.testtooltip.mtooltip::before ,
+.mat-tree-node .tsttooltipbtn span.testtooltip.mtooltip-cancel::before ,
+.mat-tree-node span.testtooltip.vcptooltip::before {
+    top: 8px;
+    left: -5px;
 }
-span.sub-nodel2 {
-    margin-left: 10px;
-    color: #607087 !important;
+.mat-tree-node span.testtooltip.vcptooltip {
+    color: #fff;
+    top: -5px;
+    left: 28px;
+    padding: 2px 10px;
 }

@@ -158,19 +158,32 @@ export class RestApiService{
 
   getRestAttributes(attribute, taskId, attrId){
     let all_attr_data = JSON.parse(localStorage.getItem("attributes"))
+    if(attribute)
     this.http.get(attribute.dependency).subscribe(
-      (res:any[]) => {
+      (res:any) => {
+        if(res){
+        if(!res.errorMessage ){
         let tmpOpt = [];
+        if(res.length> 0){
         let keys = Object.keys(res[0])
         res.forEach(eachOpt => {
           let tmp_op = {key: eachOpt[keys[0]], label: eachOpt[keys[1]]};
           tmpOpt.push(tmp_op);
         })
         attribute.options = tmpOpt;
+      }
+      }
         all_attr_data[taskId][attrId] = attribute;
         localStorage.setItem("attributes", JSON.stringify(all_attr_data))
+    }
       }
     )
+  }
+
+
+  getMultiFormAttributes(dependencyApi)
+  {
+    return this.http.get(dependencyApi);
   }
 
   async saveBot(data:any)
@@ -329,6 +342,13 @@ export class RestApiService{
     return this.http.post<any>("/rpa-service/agent/save-environment",data);
   }
 
+  
+  addenvironmentV2(data:any):Observable<any>
+  {
+    return this.http.post<any>("/rpa-service/agent/save-environment-v2",data);
+  }
+  
+
   deleteenvironment(data:any) :Observable<any>
   {
     return this.http.post<any>("/rpa-service/agent/delete-environment",data);
@@ -341,6 +361,10 @@ export class RestApiService{
     return this.http.put<any>("/rpa-service/agent/update-environment",data);
   }
 
+  updateEnvironmentV2(formData)
+  {
+    return this.http.post<any>("/rpa-service/agent/update-environment-v2",formData);
+  }
   getAllRpaWorkSpaces(id:any){
     if(id==0)
     {
@@ -1319,10 +1343,48 @@ deleteVcm(body){
 }
 
 uploadVCMPropDocument(body){
-  return this.http.post('/vcmv2/uploadDocuments',body); 
+  return this.http.post('/vcmv2/uploadDocuments',body);
 }
 getvcmAttachements(body){
   return this.http.post('/vcmv2/fetchDocumentsByProcessType',body); 
 }
+ondeleteAttachements(body){
+  return this.http.post('/vcmv2/deleteDocument',body);
+}
+updateVcm(body){
+  return this.http.post('/vcmv2/updatevcm',body);
+}
+getCollaborators(uniqueId){
+  return this.http.get('/vcmv2/fetchCollaborations?uniqueId='+uniqueId)
+}
+createCollaborators(body){
+  return this.http.post('/vcmv2/createCollaborations',body);
+}
+updateCollaborators(body){
+  return this.http.post('/vcmv2/updateCollaborations',body);
+}
+deleteCollaborators(body){
+  return this.http.post('/vcmv2/deleteCollaborations',body);
+}
+deleteAttachements(body){
+  return this.http.post('/vcmv2/deleteDocument',body);
+}
+getAttachementsByIndivdualProcess(body){
+  return this.http.post('/vcmv2/fetchDocumentsByIndivdualProcess',body);
+}
+getAttachementsById(body){
+  return this.http.post('/vcmv2/fetchDocumentsBydocumentId',body);
+}
+getAttachementsBycategory(body){
+  return this.http.post('/vcmv2/fetchDocumentsByProcessType',body);
+}
+getAttachementsByLevel(body){
+  return this.http.post('/vcmv2/fetchDocumentsByLevel',body);
+}
+
+getLooplogs(botId,version,runId){
+  return this.http.get(`/rpa-service/loop-logs/${botId}/${version}/${runId}`);
+}
+
 
 }

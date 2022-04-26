@@ -527,6 +527,17 @@ export class UploadComponent implements OnInit {
   }
 
   onGraphSelection(selectedpiIdData) {    // View selected graph on workspace
+    console.log(selectedpiIdData)
+    if(selectedpiIdData.status == "Inprogress"){
+      Swal.fire({
+        position: 'center',
+        icon: 'info',
+        title: 'This graph is under processing, please try again later',
+        showConfirmButton: true,
+        heightAuto: false,
+      })
+    return
+    }
     this.isgraph = true;
     let selected_process_id = selectedpiIdData.piId
     this.router.navigate(["/pages/processIntelligence/flowChart"], { queryParams: { wpiId: selected_process_id } });
@@ -890,6 +901,7 @@ getDBTables(){      //get DB tables list
   }
 
   applyFilter(event: Event) {       // search entered process ids from search input
+    if(this.categories_list.length > 1)
     this.categoryName = 'allcategories';
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource= new MatTableDataSource(this.process_graph_list);

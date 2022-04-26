@@ -37,6 +37,8 @@ export class BusinessProcessComponent implements AfterViewChecked {
   processowner_list:any[]=[];
   process_owner:any;
   lastModified_user:any;
+  isVcm:boolean=false;
+  vcm_id:any;
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private cdRef: ChangeDetectorRef, private dt: DataTransferService,private rest:RestApiService,
               @Inject(APP_CONFIG) private config, ) { }
 
@@ -59,9 +61,10 @@ export class BusinessProcessComponent implements AfterViewChecked {
       this.isShowConformance = params['isShowConformance'] == 'true';
       this.selectedNotationType = params['ntype'];
       this.process_id=params['pid'];
-
+      this.vcm_id=params['vcmId'];
 
     });
+
     if(this.isUploaded){
       this.selectedNotationType='bpmn'
     }
@@ -235,13 +238,17 @@ export class BusinessProcessComponent implements AfterViewChecked {
 
   getBpmnDifferences(){
     this.dt.bpsHeaderValues("getBpmn_differences");
-
   }
+
   onsaveOverlayOpen(){
     if(this.selected_approver){
       this.selected_approver=null;
     }
+  }
 
+  backtoVcm(){
+    console.log(this.vcm_id);
+    this.router.navigate(['/pages/vcm/vcm-structure'],{queryParams: {id: this.vcm_id}})
   }
 
 }

@@ -190,3 +190,9 @@ button:disabled {
 .no-item-img{
   height:calc(100vh - 430px)
 }
+
+
+.downloadLink{
+  text-decoration: underline !important;
+  font-size: small;
+}

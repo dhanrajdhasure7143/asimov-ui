@@ -160,6 +160,7 @@ isGraph_changed:boolean=false;
 model3:any[]=[];
 selectedActivities1:any[]=[];
 combofilterObject:any;
+pi_fullGraph_data:any=[];
 
 
   constructor(private dt: DataTransferService,
@@ -272,7 +273,7 @@ combofilterObject:any;
   onchangegraphId(selectedpiId){  // change process  graps in dropdown
     this.isplay=false;
     this.isGraph_changed=true;
-    this.dt.pi_buttonValues({"isPlaybtn":false,"isTimefeed_btn":false});
+    this.dt.pi_buttonValues({"isPlaybtn":false,"isTimefeed_btn":true});
     this.dt.piHeaderValues(null);
       let element=document.getElementById("tipsy_div");
       if(element){
@@ -396,6 +397,7 @@ combofilterObject:any;
           this.activity_list=fullgraphOne.allSelectData.nodeDataArraycase.slice(1,-1)
           this.fullgraph_model=fullgraphOne.allSelectData.nodeDataArraycase
           this.fullgraph_model1=this.fullgraph_model
+          this.pi_fullGraph_data=fullgraphOne
         this.model1 = fullgraphOne.allSelectData.nodeDataArraycase;
         this.model3 = fullgraphOne.allSelectData.nodeDataArraycase;
         this.filterPerformData = this.fullgraph_model;
@@ -543,6 +545,7 @@ combofilterObject:any;
           this.activity_list=fullgraphOne.allSelectData.nodeDataArraycase.slice(1,-1)
           this.fullgraph_model=fullgraphOne.allSelectData.nodeDataArraycase
           this.fullgraph_model1=this.fullgraph_model
+          this.pi_fullGraph_data=fullgraphOne
         this.model1 = fullgraphOne.allSelectData.nodeDataArraycase;
         this.model3 = fullgraphOne.allSelectData.nodeDataArraycase;
         this.filterPerformData = this.fullgraph_model;
@@ -684,8 +687,6 @@ combofilterObject:any;
       this.isSingleTraceBPMN = false;
       this.isMultiTraceBPMN = false;
       this.isSliderBPMN = false;
-      this.isWorkingHrsBtn=true;
-      this.dt.pi_buttonValues({"isPlaybtn":false,"isTimefeed_btn":this.isWorkingHrsBtn});
     }else if (this.selectedCaseArry.length == 1) {
       this.isvariantSelectedOne=true;
       this.issliderDisabled=true;
@@ -715,8 +716,6 @@ combofilterObject:any;
       this.isSingleTraceBPMN = true;
       this.isMultiTraceBPMN = false;
       this.isSliderBPMN = false;
-      this.isWorkingHrsBtn=false;
-      this.dt.pi_buttonValues({"isPlaybtn":false,"isTimefeed_btn":this.isWorkingHrsBtn});
     }else{
       this.issliderDisabled=true;
       this.isvariantSelectedOne=false;
@@ -761,16 +760,16 @@ combofilterObject:any;
       this.isSingleTraceBPMN = false;
       this.isMultiTraceBPMN = true;
       this.isSliderBPMN = false;
-      this.isWorkingHrsBtn=false;
-      this.dt.pi_buttonValues({"isPlaybtn":false,"isTimefeed_btn":this.isWorkingHrsBtn});
     }
     
     if(this.selectedCaseArry.length ==this.varaint_data.data.length||this.selectedCaseArry.length==0){
       this.options = Object.assign({}, this.options, {disabled: false});
+      this.isWorkingHrsBtn=true;
     }else{
       this.options = Object.assign({}, this.options, {disabled: true});
+      this.isWorkingHrsBtn=false;
     }
-	
+    this.dt.pi_buttonValues({"isPlaybtn":false,"isTimefeed_btn":this.isWorkingHrsBtn});
 	  if(this.selectedCaseArry.length ==this.varaint_data.data.length){
       this.checkboxValue = true
     }else{
@@ -891,9 +890,9 @@ combofilterObject:any;
         this.varaint_data.data[i].selected = "inactive";
       }
       this.isDefaultData = true;
-      this.isWorkingHrsBtn=true;
-      this.dt.pi_buttonValues({"isPlaybtn":false,"isTimefeed_btn":this.isWorkingHrsBtn});
     }
+    this.isWorkingHrsBtn=true;
+    this.dt.pi_buttonValues({"isPlaybtn":false,"isTimefeed_btn":this.isWorkingHrsBtn});
       this.performanceValue=false
   }
 
@@ -990,7 +989,7 @@ combofilterObject:any;
       this.rest.getFullGraphBPMN(reqObj)
         .subscribe((res:any) => {          
           if(res.data != null){
-          this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true,pid:this.graphIds,category:categoryName, processName:reqObj.pname}})
+          this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true,pid:this.graphIds,category:categoryName, processName:reqObj.pname,ntype:"bpmn"}})
           } else{
             Swal.fire({
               icon: 'error',
@@ -1019,7 +1018,7 @@ combofilterObject:any;
       this.rest.getSingleTraceBPMN(reqObj1)
         .subscribe((res:any) => {
           if(res.data != null){
-            this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true,pid:this.graphIds,category:categoryName, processName:reqObj1.pname}})
+            this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true,pid:this.graphIds,category:categoryName, processName:reqObj1.pname,ntype:"bpmn"}})
             } else{
               Swal.fire({
                 icon: 'error',
@@ -1047,7 +1046,7 @@ combofilterObject:any;
       this.rest.getMultiTraceBPMN(reqObj2)
         .subscribe((res:any) => {
           if(res.data != null){
-            this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true,pid:this.graphIds,category:categoryName, processName:reqObj2.pname}})
+            this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true,pid:this.graphIds,category:categoryName, processName:reqObj2.pname,ntype:"bpmn"}})
             } else{
               Swal.fire({
                 icon: 'error',
@@ -1076,7 +1075,7 @@ combofilterObject:any;
       this.rest.getSliderTraceBPMN(reqObj3)
         .subscribe((res:any) => {
           if(res.data != null){
-            this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true,pid:this.graphIds,category:categoryName, processName:reqObj3.pname}})
+            this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true,pid:this.graphIds,category:categoryName, processName:reqObj3.pname,ntype:"bpmn"}})
             } else{
               Swal.fire({
                 icon: 'error',
@@ -1193,6 +1192,8 @@ selectedMetric(selectedValue){    //metrics selection in spinner
     this.isPerformance=false;
   }
   this.selectedPerformancevalue=index
+  this.model1=[];
+  this.model2=[];
   this.model1=modelArray3
   this.model2 = this.flowchartDataOne(this.model1,index)
 }
@@ -1207,6 +1208,7 @@ flowchartDataOne(dataArray,index) {   //Links generate from responce for perform
     var linktool=[]
     var label = this.nodeArray[i].name;
     for(var j=0; j< datalink.length; j++){
+      if ( this.nodeArray.some(e => e.name === datalink[j].linkNode)) {​​
       var obj = {};
         obj['from'] = label;
         obj['to'] = datalink[j].linkNode;
@@ -1219,6 +1221,7 @@ flowchartDataOne(dataArray,index) {   //Links generate from responce for perform
         obj['toolData']=datalink[j].tool
          obj['toolDataCount']=datalink[j].toolCount
         this.linkdataArray.push(obj);
+      }
   }
       if (this.nodeArray[i].tool.includes('Start Frequency')) {
         var obj = {};
@@ -1379,6 +1382,7 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
     this.dt.pi_buttonValues({"isPlaybtn":false,"isTimefeed_btn":this.isWorkingHrsBtn});
     this.isNodata=true;
     this.model1=this.fullgraph_model;
+    this.model3=this.fullgraph_model;
     this.filterPerformData = this.fullgraph_model;
 
     if(this.isPerformance==true){
@@ -1410,7 +1414,7 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
           sliderGraphArray.push(item);
       }
   });
-  
+
   this.sliderGraphData=sliderGraphArray;
   this.isNodata=true;
     var obj={"key": -1,"category": "Start","count": 80,"extraNode":'true'}
@@ -1422,6 +1426,7 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
         }
     modelOne.push(obj1)
     this.model1=modelOne;
+    this.model3=modelOne;
     if(this.isPerformance==true){
       if(this.selectedPerformancevalue==5||this.selectedPerformancevalue==6||this.selectedPerformancevalue==7||this.selectedPerformancevalue==8||this.selectedPerformancevalue==9){
       var modelArray3=[]
@@ -1635,12 +1640,19 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
     if(object.startPoint==null && object.endPoint==null && object.activity==null && object.variants.length==this.varaint_data.data.length){
       this.isWorkingHrsBtn=true;
       this.dt.pi_buttonValues({"isPlaybtn":false,"isTimefeed_btn":this.isWorkingHrsBtn});
-      let fullgraphOne=this.fullgraph.data;
+      let fullgraphOne
+      if(object.filterType){
+        if(object.filterType == "performance"){
+          fullgraphOne=this.pi_fullGraph_data;
+        }
+      }else{
+        fullgraphOne=this.fullgraph.data;
+      }
       this.model1 = fullgraphOne.allSelectData.nodeDataArraycase;
       this.model3 = fullgraphOne.allSelectData.nodeDataArraycase;
       // this.model1 = this.fullgraph_model;
       // this.model3 = this.fullgraph_model;
-      this.model2 = this.flowchartData(this.model1); 
+      this.model2 = this.flowchartData(this.model1);
             this.startArray=[];
             this.endArray=[];
             let fullModel2=this.model2
@@ -1973,7 +1985,8 @@ addWorkingHours(){
 
   applyPerformanceFilterMethod(event){
     var reqObj = {};
-    
+    this.loaderImgSrc = "/assets/images/PI/Loader_Retrieving-Generated-Graph.gif";
+    this.spinner.show();
     var _self = this;
     switch(event.filterType){
       case 'noofcases':
@@ -2065,6 +2078,7 @@ addWorkingHours(){
     this.rest.applyPerformanceFilter(reqObj)
     .subscribe(data =>{
        this.fullgraph=data //process graph full data call
+       this.spinner.hide();
     if(this.fullgraph.hasOwnProperty('display_msg')){
         Swal.fire({
           title: 'Oops!',

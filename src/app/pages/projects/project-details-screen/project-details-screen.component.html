@@ -166,7 +166,8 @@
                                     </div>
                                     <div *ngIf="editdata==true">
                                         <select class="small-input" (change)="onProcessChange($event.target.value)" (change)="projectDetails.process=$event.target.value" [value]="(projectDetails.process==undefined||projectDetails.process==null)?'':projectDetails.process">
-                          <option value="">Select Process</option>
+                                            <option value="null" disabled hidden>Select Process</option>
+                                            <option value="" disabled hidden>Select Process</option>
                           <option *ngFor="let process of processes" [value]="process.processId">{{process.processName}}</option>
                         </select>
                                     </div>
@@ -239,7 +240,9 @@
                                     </div>
                                     <div *ngIf="editdata==true">
                                         <select class="small-input" (change)="projectDetails.priority=$event.target.value" [value]="(projectDetails.priority==undefined||projectDetails.priority==null)?'':projectDetails.priority">
-                                          <option value="">Select Project Priority</option>
+                                            <option value="" disabled hidden>Select Project Priority</option>
+                                            <option value="null" disabled hidden>Select Project Priority</option>
+                                            <option value="" disabled hidden>Select Project Priority</option>
                                           <option value="High">High</option>
                                           <option value="Medium">Medium</option>
                                           <option value="Low">Low</option>
@@ -329,6 +332,8 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="row">
                             <div class="col-sm-2 p-0">
                                 <div class="mainset">
                                     <span class="labeltit">Progress Percentage</span>

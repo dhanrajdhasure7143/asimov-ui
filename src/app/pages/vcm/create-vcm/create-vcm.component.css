@@ -1,5 +1,7 @@
 .vcm-leveldiv {
     margin-top: 12px;
+    overflow: hidden;
+    height: calc(100vh - 142px);
 }
 
 .vcm-leveldiv h4 {
@@ -9,8 +11,9 @@
     margin-bottom: 15px;
 }
 
-.vcm-leveldiv h4 img.testplus {
+.vcm-leveldiv h4 span {
     float: right;
+    cursor: pointer;
 }
 
 .vcm-leveldiv mat-panel-title.mat-expansion-panel-header-title {
@@ -55,16 +58,8 @@
 .content,
 .level1process {
     position: relative;
+    margin-bottom: 8px !important;
 }
-
-
-/* .content i {
-    position: absolute;
-    top: 10px;
-    right: 12px;
-    color: green;
-    cursor: pointer;
-} */
 
 .level1process button,
 .content button {
@@ -80,9 +75,8 @@
 .content button[disabled] {
     opacity: 0.35;
 }
-.overflowcontent span {
-    /* margin-left: 5px; */
-    width: 88%;
+.overflowcontent span.l2c-process_title {
+    width: 82%;
 }
 
 .previewdiv {
@@ -170,20 +164,20 @@ li.overflowcontent {
 }
 .actimg {
     text-align: right;
-    width: 12%;
+    width: 18%;
+    margin-right: 3px;
+}
+.actimg img {
     cursor: pointer;
 }
-li.childHover span {
+li.childHover span.l1c-process_title {
     width: 88%;
 }
 
 .vcmprop.mat-drawer-opened {
     width: 25% !important;
 }
-.editcontent {
-    /* height: calc(100vh - 235px); */
-    height: calc(100vh - 255px);
-}
+
 .propfooter button.btn.btn-primary {
     margin-right: 0px !important;
 }
@@ -195,7 +189,7 @@ img.testplus2 {
 .vcmdocs {
     border: 2px dashed #e7e7e7;
     background-color: #f6f6f6;
-    padding: 20px 0px !important;
+    padding: 18px 0px !important;
     border-radius: 3px;
     cursor: pointer;
     text-align: center;
@@ -219,10 +213,9 @@ img.testplus2 {
     padding: 8px 25px !important;
 }
 .files img {
-    float: right;
-    /* opacity: 0.6; */
     cursor: pointer;  
     margin-top: 5px;
+    margin-right: 0px;
 }
 .files img:hover {
     opacity: 1;
@@ -241,18 +234,6 @@ img.testplus2 {
 .files span:hover .hover-img {
     display: initial;
 }
-
-/* li.childHover {
-    position: relative;
-}
-
-.childHover i.fa.fa-times-circle {
-    position: absolute;
-    right: 2px;
-    top: 4px;
-    color: red;
-    cursor: pointer;
-} */
 
 .example-tree-invisible {
     display: none;
@@ -286,31 +267,47 @@ mat-tree {
     cursor: not-allowed;
 }
 
-.view {
-    cursor: pointer;
-}
-
 .tsttooltipbtn {
     position: relative;
 }
 
-/* .tsttooltipbtn:hover .default-img {
+span.testtooltip {
+    position: absolute;
+    top: -2px;
+    right: 30px;
+    background-color: #001c47;
+    color: #fff;
+    width: -moz-max-content;
+    width: max-content;
+    padding: 6px 10px;
+    border-radius: 4px;
     display: none;
+    z-index: 2;
 }
-
-.tsttooltipbtn:hover .hover-img {
-    display: initial;
-} */
-
-.tsttooltipbtn:hover span.testtooltip {
+  
+span.testtooltip:before {
+    content: "";
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    background-color: #001c47;
+    transform: rotate(45deg);
+    right: -4px;
+    top: 10px;
+}
+  
+  .tsttooltipbtn:hover span.testtooltip {
     display: block;
-}
+  }
+  
 .close-btn h3 {
-    padding: 10px 10px 10px 15px;
+    /* padding: 10px 10px 5px 15px; */
+    padding: 15px 10px 15px 12px;
     margin: 0px;
     font-size: 16px;
     font-weight: 600;
     width: 90%;
+    color: #fff;
 }
 .close-btn img{
     width: 12px;
@@ -318,5 +315,189 @@ mat-tree {
     cursor: pointer;
     position: absolute;
     right: 12px;
-    top: 14px;
+    top: 16px;
+    filter: brightness(10) grayscale(1) brightness(10);
 }
+
+/* .l1process-list {
+    height: 100px;
+} */
+hr {
+    margin-bottom: 8px !important;
+}
+.vcm-leveldiv select.form-control.ng-dirty {
+    background-color: #FFF9C7 !important;
+    color: #001c47 !important;
+}
+
+.powner {
+    position: relative;
+    display: flex;
+    margin-top: 17px;
+}
+.powner button:hover img.default-img {
+    display: none;
+}
+.powner button:hover img.hover-img {
+    display: initial;
+}
+.vcm-leveldiv .powner select.form-control {
+    width: 200px !important;
+    border: transparent !important;
+    background-color: transparent !important;
+    color: #001c47 !important;
+}
+.vcm-leveldiv .povaluediv select.form-control.ng-dirty {
+    padding-top: 0px !important;
+}
+span.poname {
+    background-color: #00a0e3;
+    color: #fff;
+    border-radius: 100%;
+    padding: 9px 11px;
+}
+.povaluediv {
+    position: relative;
+    /* margin-left: 5px; */
+}
+span.polabel {
+    position: absolute;
+    bottom: -3px;
+    /* left: 0; */
+    left: 10px;
+    color: #7a7a7a;
+    font-size: 12px;
+}
+.l3pname-div {
+    position: relative;
+    margin-top: 10px;
+}
+.l3pname-div button {
+    position: absolute;
+    right: 12px;
+    top: 5px;
+}
+
+/* properties overlay Start */
+.vcmprop div#propertiesContainer {
+    width: 100%;
+    height: calc(100vh - 130px);
+    border: none !important;
+    box-shadow: none !important;
+}
+.vcmprop div#propertiesPanelBody {
+    /* height: calc(100% - 40px); */
+    position: absolute;
+    /* top: 40px; */
+    overflow: auto;
+    width: 100%;
+}
+.propertiesContainer mat-expansion-panel {
+    background-color: #607088;
+    margin: 0px !important;
+    border:none !important;
+    border-top: 1px solid #ebebeb !important;
+    padding: 0px !important;
+}
+.propertiesContainer mat-expansion-panel-header:hover {
+    background-color: #00a0e3;
+}
+.propertiesContainer .mat-expansion-panel-header-title {
+    border: none;
+}
+.vcmprop .propertiesContainer label.accordionHeader {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 500;
+    margin-left: 10px;
+    margin-bottom: 0px;
+}
+.doc-content {
+    height: calc(100vh - 280px);
+    width: 100%;
+}
+.container.p-0.prop-content {
+    height: calc(100vh - 280px) !important;
+}
+.editcontent {
+    /* height: calc(100vh - 275px); */
+    height: calc(100vh - 325px) !important;
+}
+/* properties overlay End*/
+
+.l2proccess-list {
+    overflow: auto;
+    height: calc(100vh - 392px);
+}
+.l1processlistdiv {
+    overflow: auto;
+    height: calc(100vh - 279px);
+}
+.files span.fname {
+    font-weight: 600;
+    width: 100%;
+    margin-right: 10px;
+    word-break: break-all;
+}
+.files p {
+    margin:2px 15px 2px 18px;
+    word-break: break-all;
+}
+
+/* Upload Popup Start */
+
+.uploadfilebdiv {
+    height: calc(100vh - 260px);
+}
+.box-fileupload {
+    background: #ffffff;
+    width: 100%;
+    padding: 5px;
+    border: 2px dashed #00a0e3;
+    border-radius: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+}
+.box-fileupload:hover{
+    background: #e3eaee !important; ;
+}
+.inputfile + label {
+    display: inline-block;
+    cursor: pointer;
+    margin-bottom: 0px;
+    width: 100%;
+    text-align: center;
+}
+.inputfile {
+    /* width: 0.1px;
+    height: 0.1px; */
+    width: 94%;
+    height: 34px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}  
+.inputfile:focus + label,
+.inputfile + label:hover {
+    color: #00a0e3;
+    fill: #00a0e3;
+}
+.card-placeholder {
+    flex-basis: 0;
+    flex-grow: 1;
+    opacity: 1;
+    font-size: 12px;
+    font-weight: 400;
+}
+.file-size {
+    /* color: #999; */
+    font-size: 12px;
+    font-weight: 400;
+    display: block;
+    margin-top: 5px;
+}
+
+/* Upload Popup End */

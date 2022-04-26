@@ -28,6 +28,10 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit() {
     //this.disable();
+    document.cookie = "card_enabled=false";
+    if(this.getCookie("card_enabled")!="false"){
+      document.cookie = "card_enabled=true";
+    }
     this.getexpiryInfo();
     this.rest_service.getUserRole(2).subscribe(res=>{
       this.userRoles=res.message
@@ -50,7 +54,21 @@ export class SidebarComponent implements OnInit {
     }, 200);
   this.getAllPlans();
   }
-
+  getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for(let i = 0; i <ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
+  }
   hightlight(element,name){
     localStorage.setItem('selectedModule',element+'&'+name)
      $('.link').removeClass('active');

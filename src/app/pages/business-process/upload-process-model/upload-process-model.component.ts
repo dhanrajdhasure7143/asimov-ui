@@ -147,6 +147,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
   processowner_list:any=[];
   process_owner:any;
   showconsfromanceModal:any;
+  vcmId:any;
   @ViewChild('variabletemplate',{ static: true }) variabletemplate: TemplateRef<any>;
   @ViewChild('keyboardShortcut',{ static: true }) keyboardShortcut: TemplateRef<any>;
   @ViewChild('dmnTabs',{ static: true }) dmnTabs: ElementRef<any>;
@@ -172,6 +173,10 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
       this.pid=params['pid'];
       this.isfromApprover=params['isfromApprover'] == 'true';
       this.validNotationTypes = '.bpmn, .cmmn, .dmn';
+      if(params['vcmId']){
+        this.vcmId=params['vcmId'];
+      }
+
     });
     this.keyboardLabels=this.shortcut[this.selectedNotationType];
 
@@ -321,6 +326,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
       localStorage.setItem("attributes", JSON.stringify(taskAttributes))
       for(var i=0; i<restApiAttributes.length; i++){
         let each_restApi = restApiAttributes[i];
+        if(taskAttributes[each_restApi.taskId][each_restApi.attrId])
         taskAttributes[each_restApi.taskId][each_restApi.attrId] = this.rest.getRestAttributes(taskAttributes[each_restApi.taskId][each_restApi.attrId], each_restApi.taskId, each_restApi.attrId);
       }
     })
@@ -425,6 +431,9 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
       let params:Params ={'bpsId':current_bpmn_info["bpmnModelId"], 'ver': current_bpmn_info["version"], 'ntype': current_bpmn_info["ntype"]};
       if(this.isfromApprover){
          params['isfromApprover']= this.isfromApprover;
+      }
+      if(this.vcmId){
+        params['vcmId']=this.vcmId
       }
       this.router.navigate([],{ relativeTo:this.route, queryParams:params });
     }
@@ -1245,6 +1254,9 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
                 inprogress_version = each.version;
               })
               let params:Params = {'bpsId':sel_List["bpmnModelId"], 'ver': inprogress_version, 'ntype': sel_List["ntype"]}
+              if(_self.vcmId){
+                params['vcmId']=_self.vcmId
+              }
               _self.router.navigate([],{ relativeTo:_self.route, queryParams:params });
             }
             if(_self.isShowConformance)

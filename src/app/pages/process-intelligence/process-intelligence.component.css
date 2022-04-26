@@ -166,5 +166,8 @@ span.testtooltip:before {
 .timefeed-header span:hover img.hover-img {
   display: initial;
 }
+.edit-disabled{
+  cursor: no-drop;
+}
 
 
