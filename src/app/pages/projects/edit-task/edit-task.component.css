@@ -239,10 +239,11 @@ ul.historydiv li:last-child {
   /* background-color: #F3F3F3;
   padding: 10px !important;
   margin-bottom: 15px !important; */
-  padding-bottom: 10px !important;
+  padding-bottom: 8px !important;
+  padding: 10px !important;
   margin: 10px !important;
   margin-bottom: 15px !important;
-  border-bottom: 1px solid #cbcbcb;
+  background-color: #F3F3F3;
 }
 .task-name{
   font-weight: 600;
@@ -260,12 +261,12 @@ ul.historydiv li:last-child {
   font-weight: 400;
   font-size: 13px;
   padding-top: 6px;
+  padding-right: 15px;
 }
 
 .edit-task-body {
-  /* padding: 10px; */
-  /* height: calc(100% - 130px) !important; */
-  height: calc(100% - 55px) !important;
+  /* height: calc(100% - 55px) !important; */
+  height: calc(100% - 49px) !important;
   overflow: auto !important;
 }
 
@@ -370,4 +371,16 @@ button:disabled .default-img .hover-img{
 }
 h4.module-sub-header-title {
   margin: 0px;
+    width: 100%;
+    font-size: 17px;
+    color: #000000de;
+}
+
+.value span.labelcont {
+  display: inline;
+  font-size: 12px;
+  line-height: 24px;
+}
+.value .lmtime {
+  margin-left: 10px;
 }

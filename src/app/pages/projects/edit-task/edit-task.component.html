@@ -30,13 +30,13 @@
    
 </div>
 <div class="edit-task-body">
-    <div class="edit-task-body-content h-100">
+    <div class="edit-task-body-content">
         <form [formGroup]="updatetaskForm" (ngSubmit)="updatetask()">
 
             <div class="bg-task row">
                 <!-- {{selectedtask.id}} /
                  -->
-                <div class="col-md-8 pl-0">
+                <div class="col-md-12 p-0">
                     <div class="d-flex">
                         <!-- <div class="task-name">{{taskcategory}} / </div> -->
                         <div class=" col-md-6 pl-0">
@@ -53,21 +53,30 @@
                             <input type="text" maxlength="50" class="form-control rpa-control task-name-input" (change)="taskname=$event.target.value" [value]="taskname">
                         </div>
                     </div>
-                    <div class="value">
-                        <span class="level3">Last Modified By : {{lastModifiedBy}} </span>
-                        <span> | </span>
-                        <span class="level3">{{lastModifiedTimestamp |  date:'MMM dd, y, HH:mm:ss'}}</span>
+                    <div class="d-flex">
+                        
+                            <div class="value">
+                                <span class="level3">Start Date : </span>
+                                <span class="labelcont">{{startDate  | date}}</span>
+                            </div>
+                        
+                            <div class="value">
+                                <span class="level3">Last Modified By : {{lastModifiedBy}} </span>
+                                <!-- <span> | </span> -->
+                                <span class="level3 lmtime"> {{lastModifiedTimestamp |  date:'MMM dd, y, HH:mm:ss'}}</span>
+                            </div>
+                        
                     </div>
                 </div>
-                <div class="pull-right">
+                <!-- <div class="pull-right">
                     <label class="label-control" id="startdate" for="startDate">Start Date</label>
                     <span class="labelcont">{{startDate  | date}}</span>
-                </div>
+                </div> -->
         
             </div>
         <div class="row">
             <div class="col-md-5">
-                    <div class="form-fields col-md-6 pl-0">
+                    <div class="form-group col-md-6 pl-0">
                         <label class="label-control" id="assignee" for="assignee">Assignee</label>
                         <!-- <span class="labelcont">{{taskresource| userPipe : users_list}}</span> -->
                         <select [value]="taskresource" formControlName="resources" class="form-control rpa-control">
@@ -76,12 +85,12 @@
                     <option *ngFor="let user of users_list" [value]="user.userId.userId">{{user.userId.firstName}} {{user.userId.lastName}}</option>
                   </select>
                     </div>
-                    <div class="form-fields col-md-6 pr-0">
+                    <div class="form-group col-md-6 pr-0">
                         <label class="label-control" id="enddate" for="endDate">Task Completion Date</label><br>
                         <!-- <span class="labelcont">{{endDate  | date}}</span> -->
                         <input type="date" class="form-control rpa-control" [min]="mindate" max="9999-12-31" (change)="endDate=$event.target.value" [value]="endDate" formControlName="endDate">
                     </div>
-                    <div class="form-fields col-md-6 pl-0">
+                    <div class="form-group col-md-6 pl-0">
                         <label id="status" class="label-control" for="status">Status<span class="star">*</span></label>
                         <select formControlName="status" class="form-control data">
                     <option value="">Select Status</option>
@@ -92,7 +101,7 @@
                   </select>
                         <span *ngIf="updatetaskForm.get('status').invalid && updatetaskForm.get('status').touched" class="errspan required">Status Required*</span>
                     </div>
-                    <div class="form-fields col-md-6 pr-0">
+                    <div class="form-group col-md-6 pr-0">
                         <label id="priority" class="label-control" for="priority">Priority<span class="star">*</span></label>
                         <select formControlName="priority" class="form-control data">
                     <option value="">Select Priority</option>
@@ -103,7 +112,7 @@
                         <span *ngIf="updatetaskForm.get('priority').invalid && updatetaskForm.get('priority').touched" class="errspan required">Priority Required*</span>
                     </div>
 
-                    <div class="form-fields col-md-6 pl-0" *ngIf="optionValue == 'BPMN Design'">
+                    <div class="form-group col-md-6 pl-0" *ngIf="optionValue == 'BPMN Design'">
                         <span class="labeltit" for="correlationID">Process</span>
                         <select formControlName="correlationID" class="form-control data enteredfield-color">
                             <option value="" disabled hidden>Select Process</option>
@@ -111,7 +120,7 @@
                       {{process.processName}}</option>   
                   </select>
                     </div>
-                    <div class="form-fields col-md-6 pl-0" *ngIf="optionValue === 'Process Mining'">
+                    <div class="form-group col-md-6 pl-0" *ngIf="optionValue === 'Process Mining'">
                         <span class="labeltit" for="correlationID">Process</span>
                         <select formControlName="correlationID" class="form-control data enteredfield-color">
                             <option value="" disabled hidden>Select Process</option>
@@ -120,7 +129,7 @@
                       {{process.piName}}</option>   
                   </select>
                     </div>
-                    <div class="form-fields col-md-6 pl-0" *ngIf="optionValue == 'RPA Implementation'">
+                    <div class="form-group col-md-6 pl-0" *ngIf="optionValue == 'RPA Implementation'">
                         <span class="labeltit" for="correlationID">Bot</span>
                         <select formControlName="correlationID" class="form-control data enteredfield-color">
                             <option value="" disabled hidden>Select Bot</option>
@@ -130,13 +139,13 @@
                   </select>
                     </div>
 
-                    <div class="form-fields col-md-6 pr-0">
+                    <div class="form-group col-md-6 pr-0">
                         <label class="label-control" id="percentage" for="percentage">Percentage Completed</label>
                         <!-- <ng5-slider [(value)]="slider" formControlName="percentageComplete" [options]="options"></ng5-slider> -->
                         <div class="labelcont">{{slider}}%<input type="range" min=0 max=100 (change)="slider=$event.target.value" formControlName="percentageComplete" [value]="slider"></div>
                     </div>
 
-                    <div class="form-fields col-md-12 p-0">
+                    <div class="form-group col-md-12 p-0">
                         <label class="label-control" id="summary">Summary</label>
                         <textarea class="form-control" maxlength="151" formControlName="summary" rows="2" (keyup)="taskSummaryMaxLength($event.target.value)" style=" resize: none;" placeholder="Enter Summary">
                               </textarea>
@@ -157,8 +166,8 @@
 
                
             </div>
-            <div class="col-md-7">
-                <h4 class="module-sub-header-title">Activity</h4>
+            <div class="col-md-7 prj_activities_block">
+                <h4 class="module-sub-header-title">Activities</h4>
                 <mat-tab-group id="Project-dashboard-tabs" class="edit-task-tabs h-100">
                     <mat-tab label="Comment">
                         <div class="t-comments-box">
