@@ -49,6 +49,12 @@ freetrail: string;
     $('#expand_menu').addClass("active");  
     this.userRole = localStorage.getItem("userRole")
     this.freetrail=localStorage.getItem("freetrail")
+    this.dt.pi_btnChanges.subscribe(res=>{this.btn_obj=res
+       if(res){
+       this.isplay=this.btn_obj.isPlaybtn;
+       this.isTimefeed = this.btn_obj.isTimefeed_btn
+       }
+    });
   }
 
  ngAfterViewChecked(){
@@ -56,8 +62,7 @@ freetrail: string;
     let windowUrl = window.location.href;
     if(windowUrl.indexOf('insights') == -1){
       this.isShow=false;
-    this.dt.pi_buttonValues(null);
-
+    // this.dt.pi_buttonValues(null);
     } else{
       this.isShow=true;
   }
@@ -110,12 +115,7 @@ if(windowUrl.indexOf('processIntelligence/insights') != -1){
  }
 
  ngAfterViewInit(){
-   this.dt.pi_btnChanges.subscribe(res=>{this.btn_obj=res
-     if(res){
-     this.isplay=this.btn_obj.isPlaybtn;
-    //  this.isTimefeed=this.btn_obj.isTimefeed_btn
-     }
-  });
+
  }
 
  gotoProcessgraph(){

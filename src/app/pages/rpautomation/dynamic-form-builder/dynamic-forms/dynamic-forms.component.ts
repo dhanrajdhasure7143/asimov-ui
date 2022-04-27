@@ -2,6 +2,7 @@ import { Component, Input, OnInit, Output, EventEmitter, ViewChild } from '@angu
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { object } from '@amcharts/amcharts4/core';
 @Component({
   selector: 'app-dynamic-forms',
   template:`
@@ -194,34 +195,51 @@ this.fillarray.splice(index, 1);
 
   ngOnInit() {
     let fieldsCtrls = {};
-    console.log("multiarray",this.multiarray)
     this.isMultiForm=(this.enableMultiForm.check)
-    this.multiFormValue=[...this.enableMultiForm.value]
+  
+
     if(this.multiarray!=undefined){
-      this.fillarray=this.multiarray.map(p=>{
-        return {
-          "webElementValue_224":p.webElementValue,
-          "webElementType_223":p.webElementType,
-          "fillValueType_222":p.fillValueType,
-          "fillValue_225":p.fillValue,
-          "id":p.id
-        }
-        
-        // let filteredobject={};
-        // let sample=(Object.keys(p));
-        // sample.map(item=>{
-        //   if(item!="id")
-        //    this.fields.map(i=>{
-        //    filteredobject[this.fields[i].name+'_'+this.fields[i].id]=p[item]
-        //    })
-        //   else
-        //   filteredobject["id"]=p[item];
-        // })    
-      })
-      
-      this.data=this.fillarray;
-      console.log("multiarraydata",this.data)
+      this.multiFormValue=[...this.enableMultiForm.value]
+      let modifiedArray:any=[...this.multiarray.map((item:any)=>{
+          let objectKeys=Object.keys(item);
+          let fieldData={}
+          objectKeys.forEach((key:any)=>{
+            let obj=this.fields.find(field=>field.name==key)
+            if(obj!=undefined)
+              fieldData[key+"_"+obj.id]=item[key];
+          })
+          fieldData["id"]=item.id;
+          return fieldData;
+      })]
+      this.fillarray=modifiedArray;
     }
+
+  
+    // if(this.multiarray!=undefined){
+    //   this.fillarray=this.multiarray.map(p=>{
+    
+        
+    //     let filteredobject={};
+    //     let sample=(Object.keys(p));
+    //     console.log(sample)
+    //     sample.forEach(item=>{
+    //       if(item!="id")
+    //       {
+    //           this.fields.forEach((data,index)=>{
+              
+    //       //  filteredobject[this.fields[i].name+'_'+this.fields[i].id]=p[item]
+    //           filteredobject[this.fields[index].name+'_'+this.fields[index].id]=p[item]
+    //        })
+    //       }
+    //       else
+    //         filteredobject["id"]=p[item];
+    //     })
+    //     console.log("----------------------------", filteredobject)    
+    //     return filteredobject;
+    //   })
+    //   console.log("--------------",this.fillarray)
+    //   this.data=this.fillarray;
+    // }
     
     for (let f of this.fields) {
     //  if (f.type != 'checkbox') {
