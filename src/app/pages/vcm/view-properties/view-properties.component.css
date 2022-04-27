@@ -365,7 +365,7 @@ span.has-childlevels div.col-md-12:hover {
     background-color: #e8f7fd !important;
 }
 .inner-grid div#bpmn_list {
-    margin-bottom: 5px !important;
+    margin-bottom: 0px !important;
     border-top: none;
 }
 .row.col-md-12.p-0.cons_grid_content {
@@ -390,12 +390,12 @@ button.savecbtn .testplus1 {
     margin-left: 1.5%;
     margin-right: 1.5%;
 } */
-.level2row {
+/* .level2row {
     background-color: #ffececbf;
 }
 .level1row {
     background-color: #ffecb3;
-}
+} */
 .cell.cell7 img.testplus, td img.testplus {
     margin-right: 10px !important;
 }
@@ -423,4 +423,7 @@ span.testtooltip.celltooltip::after {
 }
 .actions_header {
     z-index: 1;
+}
+.inner-grid .l3grid .cons_grid_content {
+    height: 35px !important;
 }
