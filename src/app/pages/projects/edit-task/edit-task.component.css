@@ -340,6 +340,8 @@ img.hover-img {
 }
 .edit-resourcesdiv table td {
   font-size: 13px;
+    vertical-align: middle;
+    padding: 5px 10px;
 }
 input.form-control[type="date"] {
   background-image: url('../../../../assets/images/Projects/calendar.svg');
