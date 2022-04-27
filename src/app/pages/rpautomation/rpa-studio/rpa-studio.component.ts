@@ -112,7 +112,7 @@ export class RpaStudioComponent implements OnInit {
         let temp:any = {
           name : element.name,
           path : 'data:' + 'image/png' + ';base64,' + element.icon,
-          tasks: element.taskList
+          tasks: element.taskList,
         };
         // if((this.userRole.includes('User') && 
         // (temp.name === 'Email' || temp.name === 'Excel' || temp.name === 'Database' || temp.name === 'Developer')) || 
