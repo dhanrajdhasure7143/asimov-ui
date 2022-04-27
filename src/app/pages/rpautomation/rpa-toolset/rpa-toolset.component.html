@@ -63,7 +63,7 @@
                   
                   </mat-expansion-panel-header>
                   <div *ngFor="let taskdata  of (node | task) ">
-                    <div class="toolset-con" [dndDraggable]="taskdata">
+                    <div  *ngIf="taskdata.visibulity!=false" class="toolset-con" [dndDraggable]="taskdata">
                         <span class="taskname">
                           <img [src]="taskdata.path" class="con-img" /> 
                         <span class="con-text">{{taskdata.selectedNodeTask}}</span>
