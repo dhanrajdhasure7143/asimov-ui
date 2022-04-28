@@ -767,7 +767,11 @@ import { NgxSpinnerService } from "ngx-spinner";
         this.checktodelete();  
       },err=>{
          // Swal.fire("Error","Failed to deploy bot in selected evironment","error")
-         Swal.fire("Success","Agent Deployed Successfully !!","success")
+         Swal.fire("Success","Agent Deployed Successfully !!","success");
+         this.removeallchecks();
+         this.getallData(); 
+         this.checktoupdate();
+         this.checktodelete();  
           this.spinner.hide(); 
       })
     }
