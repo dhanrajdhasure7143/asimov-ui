@@ -358,9 +358,6 @@
     </div>
 </div>
 
-<div *ngIf="isShow && !isViewProperties" class="h-100">
-    <app-edit-vcm [vcmData]="vcmTreeData" [res_data]="vcm_data.data" (viewVcm)="readVcmValue($event)"></app-edit-vcm>
-</div>
 
 
 <div class="h-100" *ngIf="isViewProperties && !isShow">
