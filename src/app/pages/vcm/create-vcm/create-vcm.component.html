@@ -57,12 +57,8 @@
                                         </div>
                                         <div class="propfooter col-md-12 p-0 text-right">
                                             <!-- <button class="btn btn-default" (click)="resetProperties()">Reset</button> -->
-                                            <!-- <button class="btn btn-primary" *ngIf="editLevelProperties == 1" (click)="editProperties()">Save</button>
-                                            <button class="btn btn-primary" *ngIf="editLevelProperties == 2" (click)="editProcessLevel2()">Save</button>
-                                            <button class="btn btn-primary" *ngIf="editLevelProperties == 3" (click)="editProcessLevel3()">Save</button> -->
                                             <button class="btn btn-primary" *ngIf="editLevelProperties == 1" (click)="saveProperties('L1')">Save</button>
                                             <button class="btn btn-primary" *ngIf="editLevelProperties == 2" (click)="saveProperties('L2')">Save</button>
-
                                         </div>
                                     </div>
                                 </mat-panel-description>
@@ -99,11 +95,9 @@
                                                 <p>{{each.fileDescription}}</p>
                                             </div>
                                         </div>
-
                                     </div>
                                 </mat-panel-description>
                             </mat-expansion-panel>
-
                         </mat-accordion>
                     </div>
                 </div>
@@ -115,9 +109,9 @@
                             <div class="col-md-4 pr-0 form-group vcname">
                                 <label class="label-control">Value Chain Name</label>
                                 <input type="text" class="form-control" [(ngModel)]="vcmName" placeholder="Enter Value Chain Name">
-                                <button class="btn" (click)="vcmHeading()">
+                                <!-- <button class="btn" (click)="vcmHeading()">
                                     <img [hidden]="!vcmName" src="../../../../assets/images/VCM/Green Tick.svg" class="testplus1"  />
-                                </button>
+                                </button> -->
                             </div>
                             
                             <!-- <div class="col-md-4 pr-0 form-group powner">

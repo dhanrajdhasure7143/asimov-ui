@@ -9,7 +9,8 @@ import { DataTransferService } from '../../services/data-transfer.service';
 import Swal from 'sweetalert2';
 import { UUID } from 'angular2-uuid';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-
+import { BpmnModel } from './../../../pages/business-process/model/bpmn-autosave-model';
+import { SharebpmndiagramService } from '../../services/sharebpmndiagram.service';
 
 let TREE_DATA: any[] = [
   {
@@ -80,12 +81,20 @@ export class VcmFullEditComponent implements OnInit {
   propertiesLevel:any;
   uniqueIdL3:any;
   attachementsList:any=[];
+  validNotationTypes = '.bpmn,.dmn';
+  notationType: any;
+  uploaded_file: any;
+  uploadedFileName: any;
+  selectedNode:any;
+  overlay_data = { "type": "create", "module": "bps", "ntype": "dmn" };
+  bpmnModel: BpmnModel = new BpmnModel();
+  randomId: string;
 
   showList: boolean = false; 
   selected_procName = '';
 
   constructor(private router: Router,private rest_api : RestApiService, private dt: DataTransferService,
-    private route:ActivatedRoute, private modalService: BsModalService) {
+    private route:ActivatedRoute, private modalService: BsModalService, private bpmnservice: SharebpmndiagramService) {
     this.vcmProcess = TREE_DATA;
     this.route.queryParams.subscribe(res => {
       if(res)
@@ -151,12 +160,54 @@ export class VcmFullEditComponent implements OnInit {
     this.vcmProcess = TREE_DATA;
   }
 
-  removeChild(name) {
-    var index = TREE_DATA.filter(e => e.name === name.parent)[0]
-      .children.findIndex(c => c.uniqueId === name.uniqueId);
-    TREE_DATA.filter(e => e.name == name.parent)[0].children.splice(index, 1);
-    this.vcmProcess = null;
-    this.vcmProcess = TREE_DATA;
+  removeSelectedProcess(each, level) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      heightAuto: false,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
+        let req_body = {
+          "uniqueId": each.uniqueId,
+          "level": level
+        }
+        this.rest_api.deleteSelectedvcmProcess(req_body).subscribe(res => {
+          if (level == "L1") {
+            var index = TREE_DATA.filter(e => e.name === each.parent)[0]
+              .children.findIndex(c => c.uniqueId === each.uniqueId);
+            TREE_DATA.filter(e => e.name == each.parent)[0].children.splice(index, 1);
+            this.vcmProcess = null;
+            this.vcmProcess = TREE_DATA;
+          } else if (level == "L2") {
+            var processIndex = TREE_DATA.findIndex(e => e.name === each.parent);
+            var processData = TREE_DATA[processIndex]['children'];
+            var parentIndex = processData.findIndex(e => e.uniqueId === each.level1UniqueId);
+            var parentData = processData[parentIndex]['children'];
+            var childIndex = parentData.findIndex(e => e.title === each.title);
+            TREE_DATA[processIndex]['children'][parentIndex]['children'].splice(childIndex, 1);
+            this.vcmProcess = null;
+            this.vcmProcess = TREE_DATA;
+          } else if (level = "L3") {
+            var processIndex = TREE_DATA.findIndex(e => e.name === each.parent);
+            var processData = TREE_DATA[processIndex]['children'];
+            var parentIndex = processData.findIndex(e => e.uniqueId === each.level1UniqueId);
+            var parentData = processData[parentIndex]['children'];
+            var childIndex = parentData.findIndex(e => e.uniqueId === each.level2UniqueId);
+            var level3 = parentData[childIndex]['children'];
+            var childIndexL3 = level3.findIndex(e => e.uniqueId === each.uniqueId);
+            TREE_DATA[processIndex]['children'][parentIndex]['children'][childIndex]['children'].splice(childIndexL3, 1);
+            this.vcmProcess = null;
+            this.vcmProcess = TREE_DATA;
+          }
+        })
+      }
+    })
+
     this.drawer.close();
   }
 
@@ -191,19 +242,6 @@ export class VcmFullEditComponent implements OnInit {
       this.vcmProcess = TREE_DATA;
       this.addLevel2 = '';
     }
-  }
-
-
-  level2removeChild(name) {
-    var processIndex = TREE_DATA.findIndex(e => e.name === name.parent);
-    var processData = TREE_DATA[processIndex]['children'];
-    var parentIndex = processData.findIndex(e => e.uniqueId === name.level1UniqueId);
-    var parentData = processData[parentIndex]['children'];
-    var childIndex = parentData.findIndex(e => e.title === name.title);
-    TREE_DATA[processIndex]['children'][parentIndex]['children'].splice(childIndex, 1);
-    this.vcmProcess = null;
-    this.vcmProcess = TREE_DATA;
-    this.drawer.close();
   }
 
   showPropertiesPanel(item, obj, level) {
@@ -398,7 +436,8 @@ export class VcmFullEditComponent implements OnInit {
   //addednew
 
   onCreateLevel3(level2,item){
-    this.selectedNode_obj = level2;
+    // this.selectedNode_obj = level2;
+    this.selectedNode_obj = this.selectedNode;
     this.inputUniqueId = this.selectedNode_obj.uniqueId;
   }
 
@@ -425,19 +464,6 @@ export class VcmFullEditComponent implements OnInit {
     this.vcmProcess = TREE_DATA;
     this.l3ProcessName = '';
     this.inputUniqueId = '';
-  }
-
-  l3remove(l3){
-    var processIndex = TREE_DATA.findIndex(e => e.name === l3.parent);
-    var processData = TREE_DATA[processIndex]['children'];
-    var parentIndex = processData.findIndex(e => e.uniqueId === l3.level1UniqueId);
-    var parentData = processData[parentIndex]['children'];
-    var childIndex = parentData.findIndex(e => e.uniqueId === l3.level2UniqueId);
-    var level3 =  parentData[childIndex]['children'];
-    var childIndexL3 = level3.findIndex(e=>e.uniqueId === l3.uniqueId);
-    TREE_DATA[processIndex]['children'][parentIndex]['children'][childIndex]['children'].splice(childIndexL3, 1);
-    this.vcmProcess = null;
-    this.vcmProcess = TREE_DATA;
   }
 
   updateVcm(){
@@ -469,10 +495,10 @@ export class VcmFullEditComponent implements OnInit {
   }
 
   getreqBody(){
-    let treeData=[]
-    let treeData1=[]
-    let treeData2=[]
-    let treeData3=[]
+    let treeData=[];
+    let treeData1=[];
+    let treeData2=[];
+    let treeData3=[];
     this.vcmProcess = TREE_DATA;
     this.vcmProcess.forEach(ele=>{
         ele.children.forEach(e=>{
@@ -541,12 +567,13 @@ export class VcmFullEditComponent implements OnInit {
     this.uniqueId = null;
     this.drawer.close();
   }
+
   editTitleName(node) {
     this.uniqueId1 = null;
     this.drawer.close();
   }
 
-    saveProperties(val){
+  saveProperties(val){
     if(val=="L1"){
       this.vcmProcess.filter((e) => e.title === this.selectedObj.parent)[0].children
         .filter(n => n.title === this.selectedObj.title)[0].description = this.editProcessDescription;
@@ -699,6 +726,164 @@ export class VcmFullEditComponent implements OnInit {
   updateL3Process(){
     this.uniqueIdL3=''
   }
+
+  onSelectedNode(node) {
+    this.selectedNode = node;
+  }
+
+  onCreateBpmn() {
+    var modal = document.getElementById('myModal');
+    modal.style.display = "block";
+    this.overlay_data = { "type": "create", "module": "bps", "ntype": "bpmn" };
+  }
+
+  onCreateDmn() {
+    var modal = document.getElementById('myModal');
+    modal.style.display = "block";
+    this.overlay_data = { "type": "create", "module": "bps", "ntype": "dmn" };
+  }
   
+  slideUp(notationType) {
+    var modal = document.getElementById('myModal');
+    modal.style.display = "block";
+    this.overlay_data = { "type": "create", "module": "bps", "ntype": notationType };
+  }
+
+  onSelect(e) {
+    if (e.addedFiles.length == 1 && e.rejectedFiles.length == 0) {
+      this.uploaded_file = e.addedFiles[0];
+      this.uploadedFileName = this.uploaded_file.name;
+      let uploadedFileSplit = this.uploadedFileName.split('.');
+      let uploadedFileExtension = uploadedFileSplit[uploadedFileSplit.length - 1];
+      this.notationType = uploadedFileExtension;
+      this.slideUp(this.notationType)
+    } else {
+      let message = "Oops! Something went wrong";
+      if (e.rejectedFiles[0].reason == "type")
+        message = "Please upload proper notation.";
+      // this.global.notify(message,"error");
+    }
+  }
+
+  saveVCMForBpmn(e) {
+    this.randomId = UUID.UUID()
+    if(this.selectedNode.level == "L2"){
+    this.vcmProcess.filter((e) => e.title === this.selectedNode.parent)[0].children
+      .filter(n => n.uniqueId === this.selectedNode.level1UniqueId)[0].children.
+      push({
+        "level": "L3",
+        "parent": this.selectedNode.parent,
+        "title": e.processName,
+        "description": '',
+        "processOwner": '',
+        "type": "Process",
+        "level1UniqueId": this.selectedNode.level1UniqueId,
+        "uniqueId": UUID.UUID(),
+        "attachments": [],
+        "bpsId": this.randomId,
+        "ntype": e.ntype,
+        "children": [],
+      }
+      );
+    }
+    if(this.selectedNode.level == "L3"){
+      this.vcmProcess.filter((e) => e.title === this.selectedNode.parent)[0].children
+        .filter(n => n.uniqueId === this.selectedNode.level1UniqueId)[0].children
+        .filter(n => n.uniqueId === this.selectedNode.level2UniqueId)[0]["children"].
+        push({
+          "level": "L3",
+          "parent": this.selectedNode.parent,
+          "title": e.processName,
+          "description": '',
+          "processOwner": '',
+          "type": "Process",
+          "level2UniqueId": this.selectedNode.level2UniqueId,
+          "level1UniqueId": this.selectedNode.level1UniqueId,
+          "uniqueId": UUID.UUID(),
+          "attachments": [],
+          "bpsId": this.randomId,
+          "ntype": e.ntype,
+          "children": []
+        }
+        );
+      }
+    let req_body = this.getreqBody();
+    this.isLoading = true;
+    this.rest_api.updateVcm(req_body).subscribe(res => {
+      this.uploadCreateBpmn(e)
+      // this.nodeParent = null;
+      this.isLoading = false;
+    }, err => {
+      this.isLoading = false;
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!',
+        heightAuto: false,
+      });
+    })
+  }
+
+  uploadCreateBpmn(e) {
+    // this.create_editor=false;
+    this.bpmnModel.bpmnProcessName = e.processName;
+    this.bpmnModel.ntype = e.ntype;
+    this.bpmnModel.bpmnModelId = this.randomId;
+    this.bpmnModel['processOwner'] = e.processOwner;
+    this.bpmnModel['processOwnerName'] = e.processOwnerName;
+    this.bpmnservice.setSelectedBPMNModelId(this.randomId);
+    this.bpmnModel.category = e.categoryName;
+    if (this.uploaded_file) {
+      var myReader: FileReader = new FileReader();
+      myReader.onloadend = (ev) => {
+        let fileString: string = myReader.result.toString();
+        let encrypted_bpmn = btoa(unescape(encodeURIComponent(fileString)));
+        if (this.router.url.indexOf("uploadProcessModel") > -1) {
+          this.bpmnservice.changeConfNav(true);
+        } else {
+          this.bpmnservice.changeConfNav(false);
+          this.bpmnservice.uploadBpmn(encrypted_bpmn);
+        }
+        this.bpmnModel.bpmnXmlNotation = encrypted_bpmn;
+        this.initialSave(this.bpmnModel, "upload");
+      };
+      myReader.readAsText(this.uploaded_file);
+    } else {
+      this.bpmnservice.changeConfNav(false);
+      this.rest_api.getBPMNFileContent("assets/resources/newDiagram." + e.ntype).subscribe(res => {
+        let encrypted_bpmn = btoa(unescape(encodeURIComponent(res)));
+        this.bpmnservice.uploadBpmn(encrypted_bpmn);
+        this.bpmnModel.bpmnXmlNotation = encrypted_bpmn;
+        this.initialSave(this.bpmnModel, "create");
+      });
+    }
+  }
+
+  initialSave(diagramModel: BpmnModel, target: string) {
+    let message;
+    // diagramModel.createdTimestamp = new Date();
+    // diagramModel.modifiedTimestamp = new Date();
+    this.rest_api.saveBPMNprocessinfofromtemp(diagramModel).subscribe(res => {
+      // if(res['errorCode']!="2005"){
+      //   let isBPSHome = this.router.url == "/pages/businessProcess/home";
+
+      // this.update.emit(true);
+
+      if (target == "create") {
+        this.router.navigate(['/pages/businessProcess/createDiagram'], { queryParams: { vcmId: this.vcm_id } });
+      }
+      if (target == "upload") {
+        this.router.navigate(['/pages/businessProcess/uploadProcessModel'], { queryParams: { isShowConformance: false, bpsId: this.randomId, ver: 0, ntype: this.notationType, vcmId: this.vcm_id } });
+
+        // this.router.navigate(['/pages/businessProcess/uploadProcessModel'], { queryParams: { isShowConformance: false } });
+      }
+
+    });
+  }
+
+
+  navigateToBpsNotation(node) {
+    this.router.navigate(['/pages/businessProcess/uploadProcessModel'], { queryParams: { isShowConformance: false, bpsId: node.bpsId, ver: 0, ntype: node.ntype, vcmId: this.vcm_id } });
+  }
   
 }
