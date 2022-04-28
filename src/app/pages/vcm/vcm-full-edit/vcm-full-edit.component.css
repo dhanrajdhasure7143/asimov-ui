@@ -540,3 +540,7 @@ span.polabel {
 .files button:hover img.default-img {
     display: none;
 }
+.custom-content ngx-dropzone {
+    height: 25px !important;
+    color: #333c48;
+}

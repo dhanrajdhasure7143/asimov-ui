@@ -119,9 +119,8 @@
             </mat-drawer>
             <mat-drawer-content>
                 <div class="vcm-treesmain h-100">
-                    <!-- <h4 >{{vcmTreeData[3].vcmname}}</h4> -->
                     <div class="row maincontent h-100">
-                        <div class="col-md-12 p-0 form-group vcname">
+                        <!-- <div class="col-md-12 p-0 form-group vcname">
                             <label class="label-control">Value Chain Name</label>
                             <input style="width: 96%;" *ngIf="!editVcmTitle" type="text" class="form-control" [(ngModel)]="selectedVcmName" placeholder="Enter Value Chain Name" readonly>
                             <input #vcmTitle style="width: 96%;" *ngIf="editVcmTitle" type="text" class="form-control" [(ngModel)]="selectedVcmName" placeholder="Enter Value Chain Name">
@@ -133,7 +132,7 @@
                                 <img src="../../../../assets/images/VCM/Green Tick.svg" class="testplus1" />
                                 <span class="testtooltip">Save</span>
                             </button>
-                        </div>
+                        </div> -->
                         <div class="col-md-12 p-0">
                             <h4>
                                 <span class="tsttooltipbtn">
@@ -263,10 +262,10 @@
                                                     </button>
                                                 </div>
                                             </span>
-                                            <span>
+                                            <!-- <span>
                                                 <button class="btn qedit-btn" (click)="onSelectedProcessEdit(node)"
                                                  *ngIf="nodeParent != node.title">Quick Edit</button>
-                                            </span>
+                                            </span> -->
                                             
                                         </span>
 
@@ -359,9 +358,6 @@
     </div>
 </div>
 
-<div *ngIf="isShow && !isViewProperties" class="h-100">
-    <app-edit-vcm [vcmData]="vcmTreeData" [res_data]="vcm_data.data" (viewVcm)="readVcmValue($event)"></app-edit-vcm>
-</div>
 
 
 <div class="h-100" *ngIf="isViewProperties && !isShow">
