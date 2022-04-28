@@ -65,8 +65,8 @@
   
   
     
-  label.label-control {
-    /* padding: 4px 0px; */
+  /* label.label-control {
+    
     border: 1px solid transparent;
     border-bottom: medium none;
     margin: 0px !important;
@@ -74,12 +74,11 @@
     color: black;
     font-weight: 600;
     font-size: 14px;
-    /* height: 30px; */
     margin-bottom: 3px !important;
     white-space: nowrap;
     width: 100%;
     text-overflow: ellipsis;
-  }
+  } */
   
   .prj-crt-form {
     margin-right: -15px !important;
@@ -101,8 +100,9 @@
 
   .labelcont{
     color: #00a0e3 !important;
+    /* margin-left: 5px; */
+    display: block;
     font-weight: 600;
-    
   }
   
   
@@ -170,6 +170,16 @@ ul.historydiv, .edit-resourcesdiv  {
 }
 .attachmentdiv{
   padding: 10px;
+  height: 100%;
+}
+.attachmentdiv table {
+  /* height: calc(100% - 30px); */
+  overflow: hidden scroll;
+}
+.attachmentdiv .paginationdiv1 {
+  bottom: 10px;
+  position: absolute;
+  width: 97%;
 }
 .row.attachment-content {
   margin-bottom: 10px !important;
@@ -219,16 +229,21 @@ ul.historydiv li:last-child {
 }
 
 ::ng-deep .edit-task-tabs .mat-tab-body-content{
-  height:178px !important;
+  /* height:178px !important; */
   overflow:auto !important;
   border : 1px solid #ddd;
 }
 
 
 .bg-task{
-  background-color: #F3F3F3;
+  /* background-color: #F3F3F3;
   padding: 10px !important;
-
+  margin-bottom: 15px !important; */
+  padding-bottom: 8px !important;
+  padding: 10px !important;
+  margin: 10px !important;
+  margin-bottom: 15px !important;
+  background-color: #F3F3F3;
 }
 .task-name{
   font-weight: 600;
@@ -246,11 +261,12 @@ ul.historydiv li:last-child {
   font-weight: 400;
   font-size: 13px;
   padding-top: 6px;
+  padding-right: 15px;
 }
 
 .edit-task-body {
-  padding: 10px;
-  height: calc(100% - 130px) !important;
+  /* height: calc(100% - 55px) !important; */
+  height: calc(100% - 49px) !important;
   overflow: auto !important;
 }
 
@@ -306,7 +322,7 @@ img.hover-img {
   padding-top: 6px;
 }  
 .task-name-input{
-  width:200px; 
+  /* width:200px;  */
 }
 /*.edit-task-body-content input[type=date]::-webkit-calendar-picker-indicator {
   -webkit-appearance: none;
@@ -324,6 +340,8 @@ img.hover-img {
 }
 .edit-resourcesdiv table td {
   font-size: 13px;
+    vertical-align: middle;
+    padding: 5px 10px;
 }
 input.form-control[type="date"] {
   background-image: url('../../../../assets/images/Projects/calendar.svg');
@@ -347,4 +365,24 @@ button:disabled .default-img .hover-img{
   cursor: not-allowed !important;
 }
 
+.comment-action button:hover img.testplus.default-img {
+  display: none;
+}
+.comment-action button:hover img.testplus.hover-img {
+  display: initial;
+}
+h4.module-sub-header-title {
+  margin: 0px;
+    width: 100%;
+    font-size: 17px;
+    color: #000000de;
+}
 
+.value span.labelcont {
+  display: inline;
+  font-size: 12px;
+  line-height: 24px;
+}
+.value .lmtime {
+  margin-left: 10px;
+}
