@@ -587,6 +587,7 @@ p.podefault {
 }
 .pousersdiv p:hover {
    background-color: #f3f3f3;
+}
 .custom-content ngx-dropzone {
     height: 25px !important;
     color: #333c48;

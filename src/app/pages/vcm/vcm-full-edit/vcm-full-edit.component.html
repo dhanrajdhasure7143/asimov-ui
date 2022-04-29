@@ -458,13 +458,17 @@
                                                                     <span class="testtooltip">Edit</span>
                                                                 </span>
                                                                 <span class="tsttooltipbtn">
-                                                                    <button (click)="onSelectedNode(level2,item)" #pop2="bs-popover" [popover]="popTemplate1" [outsideClick]="true"
-                                                                    placement="right">
-                                                                    <!-- <button (click)="onCreateLevel3(level2,item)"> -->
+                                                                    <button (click)="onSelectedNode(level2,item)"  mat-button [matMenuTriggerFor]="custompopup1" class="custom-popupbtn" >
+                                                                        <!-- <button (click)="onCreateLevel3(level2,item)"> -->
                                                                         <img src="../../../../assets/images/RPA/icon_latest/new-dis.svg" class="testplus default-img" />
                                                                         <img src="../../../../assets/images/RPA/icon_latest/new-blue.svg" class="testplus hover-img" />
                                                                     </button>
-                                                                    <span class="testtooltip">Add L3</span>
+                                                                    <!--<button (click)="onSelectedNode(level2,item)" #pop2="bs-popover" [popover]="popTemplate1" [outsideClick]="true"
+                                                                    placement="right">
+                                                                        <img src="../../../../assets/images/RPA/icon_latest/new-dis.svg" class="testplus default-img" />
+                                                                        <img src="../../../../assets/images/RPA/icon_latest/new-blue.svg" class="testplus hover-img" />
+                                                                    </button>
+                                                                    <span class="testtooltip">Add L3</span>-->
                                                                 </span>
                                                                 <span class="tsttooltipbtn">
                                                                     <img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img" />
@@ -516,12 +520,18 @@
                                                                         <img src="../../../../assets/images/VCM/edit-3.svg"  class="testplus2 hover-img" (click)="editL3Process(l3)" />
                                                                         <span class="testtooltip">Edit</span>
                                                                     </span>
-                                                                    <button (click)="onSelectedNode(l3,item)" #pop="bs-popover" [popover]="popTemplate" [outsideClick]="true"
+                                                                    <span class="tsttooltipbtn" >
+                                                                        <button (click)="onSelectedNode(l3,item)"  mat-button [matMenuTriggerFor]="custompopup2" class="custom-popupbtn" >
+                                                                            <!-- <button (click)="onCreateLevel3(level2,item)"> -->
+                                                                            <img src="../../../../assets/images/RPA/icon_latest/new-dis.svg" class="testplus default-img" />
+                                                                            <img src="../../../../assets/images/RPA/icon_latest/new-blue.svg" class="testplus hover-img" />
+                                                                        </button>
+                                                                    </span>
+                                                                    <!-- <button (click)="onSelectedNode(l3,item)" #pop="bs-popover" [popover]="popTemplate" [outsideClick]="true"
                                                                         placement="right">
-                                                                        <!-- <button (click)="onCreateLevel3(level2,item)"> -->
                                                                         <img src="../../../../assets/images/RPA/icon_latest/new-dis.svg" class="testplus default-img" />
                                                                         <img src="../../../../assets/images/RPA/icon_latest/new-blue.svg" class="testplus hover-img" />
-                                                                    </button>
+                                                                    </button> -->
                                                                     <span class="tsttooltipbtn">
                                                                         <img src="../../../../assets/images/VCM/VCM-close-default.svg" class="testplus2 default-img" />
                                                                         <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" (click)="removeSelectedProcess(l3,'L3')" />
@@ -575,13 +585,17 @@
                                                                     <span class="testtooltip">Edit</span>
                                                                 </span>
                                                                 <span class="tsttooltipbtn">
-                                                                    <button (click)="onSelectedNode(level2,item)" #pop2="bs-popover" [popover]="popTemplate1" [outsideClick]="true"
-                                                                        placement="right">
-                                                                    <!-- <button (click)="onCreateLevel3(level2,item)"> -->
+                                                                    <button (click)="onSelectedNode(level2,item)"  mat-button [matMenuTriggerFor]="custompopup1" class="custom-popupbtn" >
+                                                                        <!-- <button (click)="onCreateLevel3(level2,item)"> -->
                                                                         <img src="../../../../assets/images/RPA/icon_latest/new-dis.svg" class="testplus default-img" />
                                                                         <img src="../../../../assets/images/RPA/icon_latest/new-blue.svg" class="testplus hover-img" />
                                                                     </button>
-                                                                    <span class="testtooltip">Add L3</span>
+                                                                    <!-- <button (click)="onSelectedNode(level2,item)" #pop2="bs-popover" [popover]="popTemplate1" [outsideClick]="true"
+                                                                        placement="right">
+                                                                        <img src="../../../../assets/images/RPA/icon_latest/new-dis.svg" class="testplus default-img" />
+                                                                        <img src="../../../../assets/images/RPA/icon_latest/new-blue.svg" class="testplus hover-img" />
+                                                                    </button>
+                                                                    <span class="testtooltip">Add L3</span> -->
                                                                 </span>
                                                                 <span class="tsttooltipbtn">
                                                                     <img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img" />
@@ -639,12 +653,18 @@
                                                                         <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2 hover-img" (click)="editL3Process(l3)" />
                                                                         <span class="testtooltip">Edit</span>
                                                                     </span>
-                                                                    <button (click)="onSelectedNode(l3,item)" #pop="bs-popover" [popover]="popTemplate" [outsideClick]="true"
+                                                                    <span class="tsttooltipbtn" >
+                                                                        <button (click)="onSelectedNode(l3,item)"  mat-button [matMenuTriggerFor]="custompopup2" class="custom-popupbtn" >
+                                                                            <!-- <button (click)="onCreateLevel3(level2,item)"> -->
+                                                                            <img src="../../../../assets/images/RPA/icon_latest/new-dis.svg" class="testplus default-img" />
+                                                                            <img src="../../../../assets/images/RPA/icon_latest/new-blue.svg" class="testplus hover-img" />
+                                                                        </button>
+                                                                    </span>
+                                                                    <!-- <button (click)="onSelectedNode(l3,item)" #pop="bs-popover" [popover]="popTemplate" [outsideClick]="true"
                                                                         placement="right">
-                                                                        <!-- <button (click)="onCreateLevel3(level2,item)"> -->
                                                                         <img src="../../../../assets/images/RPA/icon_latest/new-dis.svg" class="testplus default-img" />
                                                                         <img src="../../../../assets/images/RPA/icon_latest/new-blue.svg" class="testplus hover-img" />
-                                                                    </button>
+                                                                    </button> -->
                                                                     <span  class="tsttooltipbtn">
                                                                         <img src="../../../../assets/images/VCM/VCM-close-default.svg" class="testplus2 default-img" />
                                                                         <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" (click)="removeSelectedProcess(l3,'L3')" />
@@ -698,13 +718,17 @@
                                                                     <span class="testtooltip">Edit</span>
                                                                 </span>
                                                                 <span class="tsttooltipbtn" >
-                                                                    <button (click)="onSelectedNode(level2,item)" #pop2="bs-popover" [popover]="popTemplate1" [outsideClick]="true"
-                                                                        placement="right">
-                                                                    <!-- <button (click)="onCreateLevel3(level2,item)"> -->
+                                                                    <button (click)="onSelectedNode(level2,item)"  mat-button [matMenuTriggerFor]="custompopup1" class="custom-popupbtn" >
+                                                                        <!-- <button (click)="onCreateLevel3(level2,item)"> -->
                                                                         <img src="../../../../assets/images/RPA/icon_latest/new-dis.svg" class="testplus default-img" />
                                                                         <img src="../../../../assets/images/RPA/icon_latest/new-blue.svg" class="testplus hover-img" />
                                                                     </button>
-                                                                    <span class="testtooltip">Add L3</span>
+                                                                    <!-- <button (click)="onSelectedNode(level2,item)" #pop2="bs-popover" [popover]="popTemplate1" [outsideClick]="true"
+                                                                        placement="right">
+                                                                        <img src="../../../../assets/images/RPA/icon_latest/new-dis.svg" class="testplus default-img" />
+                                                                        <img src="../../../../assets/images/RPA/icon_latest/new-blue.svg" class="testplus hover-img" />
+                                                                    </button>
+                                                                    <span class="testtooltip">Add L3</span> -->
                                                                 </span>
                                                                 <span class="tsttooltipbtn" >
                                                                     <img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img" />
@@ -761,12 +785,18 @@
                                                                         <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2 hover-img" (click)="editL3Process(l3)" />
                                                                         <span class="testtooltip">Edit</span>
                                                                     </span>
-                                                                    <button (click)="onSelectedNode(l3,item)" #pop="bs-popover" [popover]="popTemplate" [outsideClick]="true"
+                                                                    <span class="tsttooltipbtn" >
+                                                                        <button (click)="onSelectedNode(l3,item)"  mat-button [matMenuTriggerFor]="custompopup2" class="custom-popupbtn" >
+                                                                            <!-- <button (click)="onCreateLevel3(level2,item)"> -->
+                                                                            <img src="../../../../assets/images/RPA/icon_latest/new-dis.svg" class="testplus default-img" />
+                                                                            <img src="../../../../assets/images/RPA/icon_latest/new-blue.svg" class="testplus hover-img" />
+                                                                        </button>
+                                                                    </span>
+                                                                    <!-- <button (click)="onSelectedNode(l3,item)" #pop="bs-popover" [popover]="popTemplate" [outsideClick]="true"
                                                                         placement="right">
-                                                                        <!-- <button (click)="onCreateLevel3(level2,item)"> -->
                                                                         <img src="../../../../assets/images/RPA/icon_latest/new-dis.svg" class="testplus default-img" />
                                                                         <img src="../../../../assets/images/RPA/icon_latest/new-blue.svg" class="testplus hover-img" />
-                                                                    </button>
+                                                                    </button> -->
                                                                     <span class="tsttooltipbtn" >
                                                                         <img src="../../../../assets/images/VCM/VCM-close-default.svg" class="testplus2 default-img" />
                                                                         <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" (click)="removeSelectedProcess(l3,'L3')" />
@@ -913,3 +943,41 @@
 <process-category-overlay headerTitle="BPMN Details" [overlay_data]="overlay_data" (proceed)="saveVCMForBpmn($event)" class="bpmnCreate"></process-category-overlay>
 
 
+<!-- Custom Popover -->
+
+<mat-menu #custompopup1="matMenu" class="fulledit-custom-popup-content">
+       
+    <p mat-menu-item (click)="onCreateBpmn()">
+        <img src="../../../../assets/images/VCM/Plus-litblue.svg" class="testplus" /> Create Notation
+    </p>
+    <p mat-menu-item>
+        <ngx-dropzone (change)="onSelect($event)" [multiple]=false [accept]="validNotationTypes">
+            <div class="model-text">
+                <img src="../../../../assets/images/VCM/upload-litblue.svg" alt="" class="testplus"> Upload Notation
+            </div>
+        </ngx-dropzone>
+    </p>
+    <p mat-menu-item (click)="onCreateLevel3()">
+        <img src="../../../../assets/images/VCM/Folder-litblue.svg" class="testplus" /> Create Level 3
+    </p>
+         
+</mat-menu>
+
+<mat-menu #custompopup2="matMenu" class="fulledit-custom-popup-content">
+    <p mat-menu-item (click)="onCreateBpmn();">
+        <img src="../../../../assets/images/VCM/Plus-litblue.svg" class="testplus" /> Create Bpmn
+    </p>
+    <p mat-menu-item (click)="onCreateDmn()">
+        <img src="../../../../assets/images/VCM/Plus-litblue.svg" class="testplus" /> Create DMN
+    </p>
+    <p mat-menu-item >
+        <ngx-dropzone (change)="onSelect($event)" [multiple]=false [accept]="validNotationTypes">
+            <div class="model-text">
+                <img src="../../../../assets/images/VCM/upload-litblue.svg" alt="" class="testplus"> Upload Notation
+            </div>
+        </ngx-dropzone>
+    </p>
+         
+</mat-menu>
+
+<!-- Custom Popover -->

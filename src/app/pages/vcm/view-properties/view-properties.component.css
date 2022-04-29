@@ -369,7 +369,7 @@ span.has-childlevels div.col-md-12:hover {
     border-top: none;
 }
 .row.col-md-12.p-0.cons_grid_content {
-    border: none !important;
+    /* border: none !important; */
 }
 
 .mat-expansion-panel-header:not([aria-expanded=true]) i.material-icons.expand-close {
@@ -390,12 +390,17 @@ button.savecbtn .testplus1 {
     margin-left: 1.5%;
     margin-right: 1.5%;
 } */
-/* .level2row {
-    background-color: #ffececbf;
+.level2row {
+    /* background-color: #ffececbf; */
+    
+    /* background-color: #e4edf1; */
+    /* border: 1px solid #ddd; */
 }
 .level1row {
-    background-color: #ffecb3;
-} */
+    /* background-color: #ffecb3; */
+    background-color: #e6f7e2;
+    /* background: #fdf6d4 !important; */
+}
 .cell.cell7 img.testplus, td img.testplus {
     margin-right: 10px !important;
 }

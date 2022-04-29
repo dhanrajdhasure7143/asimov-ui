@@ -289,6 +289,9 @@ h4 img.procmenu {
 .bps_link:hover{
     font-weight: 600;
 }
+.bps_link:hover img.default-img{
+    display: none;
+}
 .bps_link:hover img.hover-img{
     display: initial;
 }
