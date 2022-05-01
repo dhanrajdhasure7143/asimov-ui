@@ -86,7 +86,7 @@ export class VcmFullEditComponent implements OnInit {
   uploaded_file: any;
   uploadedFileName: any;
   selectedNode:any;
-  overlay_data = { "type": "create", "module": "bps", "ntype": "dmn" };
+  overlay_data = { "type": "create", "module": "bps", "ntype": "dmn","component":"vcm" };
   bpmnModel: BpmnModel = new BpmnModel();
   randomId: string;
 
@@ -468,6 +468,7 @@ export class VcmFullEditComponent implements OnInit {
 
   updateVcm(){
     let req_body=this.getreqBody();
+    console.log(req_body)
     this.isLoading=true;
     this.rest_api.updateVcm(req_body).subscribe(res=>{
     this.isLoading=false;
@@ -734,19 +735,24 @@ export class VcmFullEditComponent implements OnInit {
   onCreateBpmn() {
     var modal = document.getElementById('myModal');
     modal.style.display = "block";
-    this.overlay_data = { "type": "create", "module": "bps", "ntype": "bpmn" };
+    this.overlay_data = { "type": "create", "module": "bps", "ntype": "bpmn","component":"vcm" };
+  }
+  onCreateNotation(){
+    var modal = document.getElementById('myModal');
+    modal.style.display = "block";
+    this.overlay_data = { "type": "create", "module": "bps", "ntype": undefined,"component":"vcm" };
   }
 
   onCreateDmn() {
     var modal = document.getElementById('myModal');
     modal.style.display = "block";
-    this.overlay_data = { "type": "create", "module": "bps", "ntype": "dmn" };
+    this.overlay_data = { "type": "create", "module": "bps", "ntype": "dmn","component":"vcm" };
   }
   
   slideUp(notationType) {
     var modal = document.getElementById('myModal');
     modal.style.display = "block";
-    this.overlay_data = { "type": "create", "module": "bps", "ntype": notationType };
+    this.overlay_data = { "type": "create", "module": "bps", "ntype": notationType,"component":"vcm" };
   }
 
   onSelect(e) {
@@ -766,7 +772,8 @@ export class VcmFullEditComponent implements OnInit {
   }
 
   saveVCMForBpmn(e) {
-    this.randomId = UUID.UUID()
+    this.randomId = UUID.UUID();
+    console.log(this.selectedNode)
     if(this.selectedNode.level == "L2"){
     this.vcmProcess.filter((e) => e.title === this.selectedNode.parent)[0].children
       .filter(n => n.uniqueId === this.selectedNode.level1UniqueId)[0].children.
@@ -808,6 +815,7 @@ export class VcmFullEditComponent implements OnInit {
         );
       }
     let req_body = this.getreqBody();
+    console.log(req_body);
     this.isLoading = true;
     this.rest_api.updateVcm(req_body).subscribe(res => {
       this.uploadCreateBpmn(e)
@@ -884,6 +892,11 @@ export class VcmFullEditComponent implements OnInit {
 
   navigateToBpsNotation(node) {
     this.router.navigate(['/pages/businessProcess/uploadProcessModel'], { queryParams: { isShowConformance: false, bpsId: node.bpsId, ver: 0, ntype: node.ntype, vcmId: this.vcm_id } });
+  }
+
+  cancelCreateProcess(){
+    console.log("cancel")
+    this.inputUniqueId=null;
   }
   
 }

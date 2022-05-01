@@ -40,6 +40,7 @@ export class ProcessCategoryOverlayComponent implements OnInit {
   freetrail: string;
   isLoading:boolean=false;
   isValidName:boolean=false;
+  notationsTypes=[{type:"BPMN",id:"bpmn"},{type:"CMMN",id:"cmmn"},{type:"DMN",id:"dmn"}];
   @ViewChild('processCategoryForm', {static: true}) processForm: NgForm;
   constructor( private rest:RestApiService, private activatedRoute: ActivatedRoute, private global:GlobalScript,
     private cdRef: ChangeDetectorRef, private dt: DataTransferService) { }
@@ -63,12 +64,16 @@ export class ProcessCategoryOverlayComponent implements OnInit {
         })
       }
     }else{
+    if(this.overlay_data.component == 'vcm'){
+      this.notationsTypes=[{type:"BPMN",id:"bpmn"},{type:"DMN",id:"dmn"}];
+    }
       if(this.activatedRoute.snapshot['_routerState'].url.includes('businessProcess') || this.activatedRoute.snapshot['_routerState'].url.includes('vcm')){
         this.isBpmnModule = true;
       }
       this.processName='';
       this.categoryName=undefined;
       this.isValidName=false;
+     
       if(this.overlay_data.module !="pi"){
         this.process_owner=undefined;
         this.notationType='';

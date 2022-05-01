@@ -205,8 +205,15 @@
 
                                     <span *ngIf="node.level == 'L3'">
                                         <span *ngIf="uniqueId1 != node.uniqueId && node.bpsId" class="bps_link" (click)="navigateToBpsNotation(node)">
+                                            <span *ngIf="node.ntype == 'bpmn'">
                                             <img  src="../../../../assets/images/VCM/vcm-bpmn-default.svg" class="testplus default-img" />
-                                            <img  src="../../../../assets/images/VCM/vcm-BPMN-hover.svg" class="testplus hover-img" />{{node.title}}</span> 
+                                            <img  src="../../../../assets/images/VCM/vcm-BPMN-hover.svg" class="testplus hover-img" />
+                                        </span>
+                                        <span *ngIf="node.ntype == 'dmn'">
+                                            <img  src="../../../../assets/images/VCM/vcm-dmn-default.svg" class="testplus default-img" />
+                                            <img  src="../../../../assets/images/VCM/vcm-DMN-hover.svg" class="testplus hover-img" />
+                                        </span>
+                                            {{node.title}}</span> 
                                     <span *ngIf="uniqueId1 != node.uniqueId && !node.bpsId" (click)="openNodeProperties(node)">{{node.title}}</span> 
                                     <span *ngIf="nodeParent == node.parent && !node.bpsId">
                                             <button (click)="onSelectedNode(node)"  mat-button [matMenuTriggerFor]="custompopup2" class="custom-popupbtn" >

@@ -283,11 +283,11 @@ h4 img.procmenu {
     margin: -3px 6px 0px 0px !important;
 }
 .bps_link{
-    color: #00a0e3 !important;
+    /* color: #00a0e3 !important; */
     cursor: pointer;
 }
 .bps_link:hover{
-    font-weight: 600;
+    font-weight: 700;
 }
 .bps_link:hover img.default-img{
     display: none;
