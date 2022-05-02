@@ -86,6 +86,7 @@
 
 .overflowcontent span.l2c-process_title {
     width: 80%;
+    margin-left: 3%;
 }
 
 .previewdiv {
@@ -137,7 +138,7 @@ img.preview-img {
 }
 
 ul.subfolders {
-    margin-left: 3%;
+    /* margin-left: 3%; */
 }
 
 .management,
@@ -244,12 +245,14 @@ img.testplus2 {
 }
 
 .actimg span:hover .default-img,
-.files span:hover .default-img {
+.files span:hover .default-img,
+.l3pname-div button:hover .default-img {
     display: none;
 }
 
 .actimg span:hover .hover-img,
-.files span:hover .hover-img {
+.files span:hover .hover-img,
+.l3pname-div button:hover .hover-img {
     display: initial;
 }
 
@@ -443,7 +446,11 @@ span.poname {
     background-color: #00a0e3;
     color: #fff;
     border-radius: 100%;
-    padding: 9px 11px;
+    /* padding: 9px 11px; */
+    width: 38px;
+    height: 38px;
+    text-align: center;
+    line-height: 36px;
 }
 
 .povaluediv {
@@ -591,4 +598,23 @@ p.podefault {
 .custom-content ngx-dropzone {
     height: 25px !important;
     color: #333c48;
+}
+
+.cancel-l3btn {
+    width: 5%;
+    text-align: right;
+}
+.l3pname-div {
+    padding-top: 1%;
+    display: flex;
+    width:100%;
+}
+.save-l3btn {
+    position: relative;
+    right: 4%;
+}
+.l3-process_title {
+    margin-left: 7%;
+    margin-top: 2%;
+    width: 80%;
 }
