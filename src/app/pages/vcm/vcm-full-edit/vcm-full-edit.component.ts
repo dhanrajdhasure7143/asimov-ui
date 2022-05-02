@@ -89,6 +89,7 @@ export class VcmFullEditComponent implements OnInit {
   overlay_data = { "type": "create", "module": "bps", "ntype": "dmn","component":"vcm" };
   bpmnModel: BpmnModel = new BpmnModel();
   randomId: string;
+  notationTitle: string;
 
   showList: boolean = false; 
   selected_procName = '';
@@ -736,17 +737,20 @@ export class VcmFullEditComponent implements OnInit {
     var modal = document.getElementById('myModal');
     modal.style.display = "block";
     this.overlay_data = { "type": "create", "module": "bps", "ntype": "bpmn","component":"vcm" };
+    this.notationTitle = "Create BPMN";
   }
   onCreateNotation(){
     var modal = document.getElementById('myModal');
     modal.style.display = "block";
     this.overlay_data = { "type": "create", "module": "bps", "ntype": undefined,"component":"vcm" };
+    this.notationTitle = "Create Notation";
   }
 
   onCreateDmn() {
     var modal = document.getElementById('myModal');
     modal.style.display = "block";
     this.overlay_data = { "type": "create", "module": "bps", "ntype": "dmn","component":"vcm" };
+    this.notationTitle = "Create DMN";
   }
   
   slideUp(notationType) {
