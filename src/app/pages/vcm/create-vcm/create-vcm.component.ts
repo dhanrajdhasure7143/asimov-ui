@@ -72,6 +72,10 @@ export class CreateVcmComponent implements OnInit {
   listOfFiles:any=[];
   uploadFilemodalref: BsModalRef;
   attachementsList:any=[];
+  
+  showList: boolean = false; 
+  selected_procName = '';  
+
 
   constructor(private router: Router, private rest_api: RestApiService, private dt: DataTransferService,
     private route: ActivatedRoute, private modalService: BsModalService) {
@@ -114,8 +118,12 @@ export class CreateVcmComponent implements OnInit {
           this.vcmProcess = res_data.data;
           if (res_data.vName) this.vcmName = res_data.vName;
           if (res_data.pOwner) {
-            this.process_ownerName = res_data.pOwner;
-            let splitedValues = this.process_ownerName.split(' ');
+            // this.process_ownerName = res_data.pOwner;
+            // let splitedValues = this.process_ownerName.split(' ');
+            
+            this.selected_procName = res_data.pOwner; //addednew
+            let splitedValues = this.selected_procName.split(' '); //addednew
+            
             this.ownerValues = splitedValues[0].charAt(0) + splitedValues[1].charAt(0);
           }
         }
@@ -247,6 +255,8 @@ export class CreateVcmComponent implements OnInit {
     this.vcmName = '';
     this.level1process = '';
     this.process_ownerName = '';
+    this.selected_procName = ''; //addednew
+    this.showList =  false; //addednew
     localStorage.removeItem('vcmData');
   }
 
@@ -403,7 +413,8 @@ export class CreateVcmComponent implements OnInit {
     let data3 = {
       "vcmName": this.vcmName,
       "createdBy": this.user_details.firstName + " " + this.user_details.lastName,
-      "processOwner": this.process_ownerName,
+      // "processOwner": this.process_ownerName,
+      "processOwner": this.selected_procName,
       "vcmV2": data4,
       "vcmuniqueId": this.vcmProcess[0].uniqueId
     }
@@ -424,7 +435,8 @@ export class CreateVcmComponent implements OnInit {
 
     if (this.vcmProcess[0].children.length != 0 || this.vcmProcess[1].children.length != 0 || this.vcmProcess[2].children.length != 0) {
       localStorage.setItem("vcmData", (JSON.stringify(this.vcmProcess)));
-      let obj = { vName: this.vcmName, pOwner: this.process_ownerName, data: this.vcmProcess }
+      // let obj = { vName: this.vcmName, pOwner: this.process_ownerName, data: this.vcmProcess }
+      let obj = { vName: this.vcmName, pOwner: this.selected_procName, data: this.vcmProcess }
       this.dt.vcmDataTransfer(obj)
       this.router.navigate(['/pages/vcm/properties'], nav);
       // TREE_DATA[3].vcmname = this.vcmName;
@@ -464,7 +476,8 @@ export class CreateVcmComponent implements OnInit {
     let requestBody = this.getrequestData();
     let obj = {
       "vName": this.vcmName,
-      "pOwner": this.process_ownerName,
+      // "pOwner": this.process_ownerName,
+      "pOwner": this.selected_procName,
       "data": this.vcmProcess,
       "requestBody": requestBody
     }
@@ -484,6 +497,18 @@ export class CreateVcmComponent implements OnInit {
     let splitedValues = this.process_ownerName.split(' ');
     this.ownerValues = splitedValues[0].charAt(0) + splitedValues[1].charAt(0)
   }
+
+//addednew
+  showProcessOwnerList() {
+    this.showList =  !this.showList;
+  }
+  poSelectedName(e) {
+    this.selected_procName = e.firstName+' '+e.lastName;
+    let splitedValues = this.selected_procName.split(' ');
+    this.ownerValues = splitedValues[0].charAt(0) + splitedValues[1].charAt(0);
+    this.showList =  false;
+  }
+//addednew
 
   uploadFilemodalCancel(){
     this.uploadFilemodalref.hide();

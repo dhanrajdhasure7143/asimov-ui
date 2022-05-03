@@ -233,12 +233,13 @@ div#bpmn_list {
     padding-bottom: 10px;
 }
 .new-bps-grid-data mat-expansion-panel {
-    width: 100%;
+    /* width: 100%; */
+    width: 99.25%;
     position: relative;
     padding: 2px 0px !important;
     border-top: 1px solid #dee2e6 !important;
     border: none;
-    margin: 0px;
+    margin: 0px !important;
 }
 .pagination {
     padding: 10px;
@@ -365,11 +366,11 @@ span.has-childlevels div.col-md-12:hover {
     background-color: #e8f7fd !important;
 }
 .inner-grid div#bpmn_list {
-    margin-bottom: 5px !important;
+    margin-bottom: 0px !important;
     border-top: none;
 }
 .row.col-md-12.p-0.cons_grid_content {
-    border: none !important;
+    /* border: none !important; */
 }
 
 .mat-expansion-panel-header:not([aria-expanded=true]) i.material-icons.expand-close {
@@ -391,10 +392,15 @@ button.savecbtn .testplus1 {
     margin-right: 1.5%;
 } */
 .level2row {
-    background-color: #ffececbf;
+    /* background-color: #ffececbf; */
+    
+    /* background-color: #e4edf1; */
+    /* border: 1px solid #ddd; */
 }
 .level1row {
-    background-color: #ffecb3;
+    /* background-color: #ffecb3; */
+    background-color: #e6f7e2;
+    /* background: #fdf6d4 !important; */
 }
 .cell.cell7 img.testplus, td img.testplus {
     margin-right: 10px !important;
@@ -424,3 +430,20 @@ span.testtooltip.celltooltip::after {
 .actions_header {
     z-index: 1;
 }
+.inner-grid .l3grid .cons_grid_content {
+    height: 35px !important;
+}
+/* //grid styles//
+span.has-childlevels mat-expansion-panel.mat-expanded {
+    border: 2px solid #00a0e3;
+}
+.new-bps-grid-data .inner-grid span.has-childlevels mat-expansion-panel.mat-expansion-panel.mat-expanded {
+    border-top: 1px solid #dee2e6 !important;
+    border: none;
+}
+span.no-childlevels div.col-md-12{
+    width: 99.25% !important;
+}
+span.has-childlevels div.col-md-12{
+    width: 100% !important;
+} */

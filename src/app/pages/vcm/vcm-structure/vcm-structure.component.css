@@ -66,7 +66,7 @@ span.proc-title-main{
 span.proc-title {
     color: #00a1e4 !important;
     font-size: 16px !important;
-    cursor: pointer;
+    /* cursor: pointer; */
 }
 
 .mat-tree-node span {
@@ -176,7 +176,8 @@ mat-drawer {
 }
 
 .vcm-treediv {
-    height: calc(100% - 110px);
+    /* height: calc(100% - 110px); */
+    height: calc(100% - 30px);
     background-color: #f5f5f5d6 !important;
 }
 
@@ -282,11 +283,17 @@ h4 img.procmenu {
     margin: -3px 6px 0px 0px !important;
 }
 .bps_link{
-    color: #00a0e3 !important;
+    /* color: #00a0e3 !important; */
     cursor: pointer;
 }
 .bps_link:hover{
-    font-weight: 600;
+    font-weight: 700;
+}
+.bps_link:hover img.default-img{
+    display: none;
+}
+.bps_link:hover img.hover-img{
+    display: initial;
 }
 
 .custom-content ngx-dropzone {
