@@ -220,8 +220,11 @@ import { NgxSpinnerService } from "ngx-spinner";
   
   }
   resetEnvForm(){
+  
     this.insertForm.reset();
-    
+    this.password=null;
+    console.log("keyvaluepair",this.isKeyValuePair)
+    this.isKeyValuePair=false;
     this.insertForm.get("portNumber").setValue("22");
     this.insertForm.get("connectionType").setValue("SSH");
     this.insertForm.get("categoryId").setValue(this.categoryList.length==1?this.categoryList[0].categoryId:'0');
@@ -232,7 +235,8 @@ import { NgxSpinnerService } from "ngx-spinner";
 
   resetupdateEnvForm(){
     this.updateForm.reset();
-    
+    this.password=null;
+    this.isKeyValuePair=false;
     this.updateForm.get("portNumber").setValue("22");
     this.updateForm.get("connectionType").setValue("SSH");
     this.updateForm.get("environmentType").setValue("");
