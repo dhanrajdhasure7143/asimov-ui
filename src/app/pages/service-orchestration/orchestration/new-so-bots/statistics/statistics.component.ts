@@ -119,8 +119,14 @@ this.getEnvironments();
   }
 
 
-  chart1(data){
-    
+  chart1(pieData){
+    let data:any=pieData.map((item:any)=>{
+       //console.log(item);
+      if(item.litres!=0)
+      {
+        return item;
+      }
+    })
     // Themes begin
     am4core.useTheme(am4themes_animated);
     // Themes end
