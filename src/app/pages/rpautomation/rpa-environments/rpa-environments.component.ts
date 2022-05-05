@@ -571,7 +571,41 @@ import { NgxSpinnerService } from "ngx-spinner";
     //}
     
   }
-
+  keypair(event){
+    
+    this.isKeyValuePair=!this.isKeyValuePair;
+    if(event.target.checked==true){
+      if(this.updateenvdata.password.password!=undefined){
+        this.password=this.updateenvdata.password.password
+      }
+      else{
+        this.password=''
+      }
+      
+        if(this.keyValueFile==undefined){
+          this.keyValueFile=undefined
+        }
+        else{
+         
+          this.keyValueFile= this.updateenvdata.keyValue
+         
+        }
+      
+     
+    }
+    else{
+      if(this.keyValueFile==undefined){
+        this.keyValueFile=undefined
+      }
+      if(this.updateenvdata.password.password!=undefined){
+        this.password=this.updateenvdata.password.password
+      }
+      else{
+        this.password=''
+      }
+      
+    }
+  }
   updatedata()
   {
     document.getElementById("createenvironment").style.display='none';    
