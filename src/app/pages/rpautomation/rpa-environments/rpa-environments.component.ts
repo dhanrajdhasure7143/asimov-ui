@@ -220,8 +220,11 @@ import { NgxSpinnerService } from "ngx-spinner";
   
   }
   resetEnvForm(){
+  
     this.insertForm.reset();
-    
+    this.password=null;
+    console.log("keyvaluepair",this.isKeyValuePair)
+    this.isKeyValuePair=false;
     this.insertForm.get("portNumber").setValue("22");
     this.insertForm.get("connectionType").setValue("SSH");
     this.insertForm.get("categoryId").setValue(this.categoryList.length==1?this.categoryList[0].categoryId:'0');
@@ -232,7 +235,8 @@ import { NgxSpinnerService } from "ngx-spinner";
 
   resetupdateEnvForm(){
     this.updateForm.reset();
-    
+    this.password=null;
+    this.isKeyValuePair=false;
     this.updateForm.get("portNumber").setValue("22");
     this.updateForm.get("connectionType").setValue("SSH");
     this.updateForm.get("environmentType").setValue("");
@@ -621,19 +625,33 @@ import { NgxSpinnerService } from "ngx-spinner";
     
     this.isKeyValuePair=!this.isKeyValuePair;
     if(event.target.checked==true){
-      if(this.password==''){
-        this.password=''
+      if(this.updateenvdata.password.password!=undefined){
+        this.password=this.updateenvdata.password.password
       }
       else{
+        this.password=''
+      }
+      
         if(this.keyValueFile==undefined){
           this.keyValueFile=undefined
         }
-      }
+        else{
+         
+          this.keyValueFile= this.updateenvdata.keyValue
+         
+        }
+      
      
     }
     else{
       if(this.keyValueFile==undefined){
         this.keyValueFile=undefined
+      }
+      if(this.updateenvdata.password.password!=undefined){
+        this.password=this.updateenvdata.password.password
+      }
+      else{
+        this.password=''
       }
       
     }
@@ -747,6 +765,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 
   deploybotenvironment()
   {
+    debugger
     const selectedEnvironments = this.environments.filter(product => product.checked).map(p => p.environmentId);
     
     if(selectedEnvironments.length!=0)
@@ -755,11 +774,11 @@ import { NgxSpinnerService } from "ngx-spinner";
       this.api.deployenvironment(selectedEnvironments).subscribe( res =>{ 
         let data:any=res
         this.spinner.hide();   
-        if(data[0].errorMessage==undefined){
+        if(data.errorMessage==undefined){
           Swal.fire("Success",data[0].status,"success")
 
         }else{
-          Swal.fire("Error",data[0].errorMessage,"error")
+          Swal.fire("Error",data.errorMessage,"error")
         }
         this.removeallchecks();
         this.getallData(); 

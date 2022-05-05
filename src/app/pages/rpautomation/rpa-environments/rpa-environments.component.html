@@ -312,7 +312,7 @@ placeholder="Enter Environment Type" >-->
 
                         </div>
                         <div class="col-md-12 p-0 form-group">
-                            <label  class="label-control" for="password"><input type="checkbox" [checked]="isKeyValuePair" (change)="isKeyValuePair=!(isKeyValuePair)" >Key Pair Authentication<span class="star">*</span> </label>
+                            <label  class="label-control" for="password"><input type="checkbox" [checked]="isKeyValuePair" (change)="keypair($event)" >Key Pair Authentication<span class="star">*</span> </label>
                         </div>
                         <div class="col-md-12 p-0 form-group" *ngIf="isKeyValuePair==false">
                             <label class="label-control" for="password">Password<span class="star">*</span></label>

@@ -119,8 +119,14 @@ this.getEnvironments();
   }
 
 
-  chart1(data){
-    
+  chart1(pieData){
+    let data:any=pieData.filter((item:any)=>{
+       //console.log(item);
+      if(item.litres!=0)
+      {
+        return item;
+      }
+    })
     // Themes begin
     am4core.useTheme(am4themes_animated);
     // Themes end
@@ -1007,10 +1013,11 @@ pieSeries.labels.template.fontSize = 18;
   statschart()
   {
     am4core.useTheme(am4themes_animated);
+    let graphData:any=[...this.runtimestats.filter((item:any)=>parseInt(item.value)>0)];
     setTimeout(()=>{
       this.runtimestatschart = am4core.create("runtimestatistics-piechart", am4charts.XYChart);
       this.runtimestatschart.hiddenState.properties.opacity = 0; // this creates initial fade-in
-      this.runtimestatschart.data=this.runtimestats;
+      this.runtimestatschart.data=graphData;
       this.runtimestatschart.zoomOutButton.disabled = true;
 
       this.runtimestatschart.colors.list = [
@@ -1168,7 +1175,10 @@ pieSeries.labels.template.fontSize = 18;
      markerTemplate.width = 10;
      markerTemplate.height = 10;
      chart.innerRadius = am4core.percent(0);
-     chart.data = this.processstatistics;
+     chart.data = this.processstatistics.filter(item=>{
+       if(item.litres !=0)
+        return item;
+     });
 
      chart.legend = new am4charts.Legend();
      chart.legend.fontSize = 13;
