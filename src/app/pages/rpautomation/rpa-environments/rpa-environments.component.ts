@@ -751,6 +751,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 
   deploybotenvironment()
   {
+    debugger
     const selectedEnvironments = this.environments.filter(product => product.checked).map(p => p.environmentId);
     
     if(selectedEnvironments.length!=0)
@@ -759,11 +760,11 @@ import { NgxSpinnerService } from "ngx-spinner";
       this.api.deployenvironment(selectedEnvironments).subscribe( res =>{ 
         let data:any=res
         this.spinner.hide();   
-        if(data[0].errorMessage==undefined){
+        if(data.errorMessage==undefined){
           Swal.fire("Success",data[0].status,"success")
 
         }else{
-          Swal.fire("Error",data[0].errorMessage,"error")
+          Swal.fire("Error",data.errorMessage,"error")
         }
         this.removeallchecks();
         this.getallData(); 
