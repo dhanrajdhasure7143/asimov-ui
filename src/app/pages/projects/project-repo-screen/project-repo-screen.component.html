@@ -131,7 +131,7 @@
                 <ng-container matColumnDef="fileName">
                   <th mat-header-cell *matHeaderCellDef mat-sort-header>File Name</th>
                   <td mat-cell *matCellDef="let element">
-                    <span *ngIf="element.fileName!=null" [matTooltip]="element.fileName">{{element.fileName}}</span>
+                    <span *ngIf="element.fileName!=null" [matTooltip]="element.fileName">{{fitTableViewCategory(element.fileName)}}</span>
                       <span *ngIf="element.fileName==null">---</span>
                   </td>
                 </ng-container>
@@ -158,6 +158,7 @@
                 <ng-container matColumnDef="fileSize">
                   <th mat-header-cell *matHeaderCellDef mat-sort-header>File Size</th>
                   <td mat-cell *matCellDef="let element" >
+                    
                     <span *ngIf="element.fileSize!=null">{{element.fileSize | fileSizePipe}}
                       <!-- <mat-progress-bar mode="determinate" [(value)]="element.percentageComplete"></mat-progress-bar> -->
                   </span>
@@ -167,7 +168,7 @@
                 <ng-container matColumnDef="comments">
                   <th mat-header-cell *matHeaderCellDef mat-sort-header>Comments</th>
                   <td mat-cell *matCellDef="let element" >
-                    <span *ngIf="element.comments!=null" matTooltipClass="my-custom-tooltip" [matTooltip]="element.comments" matTooltipPosition="below">{{element.comments.length>20?((element.comments.slice(0,20))+"..."):element.comments}}</span>
+                    <span *ngIf="element.comments!=null" matTooltipClass="my-custom-tooltip" [matTooltip]="element.comments" matTooltipPosition="below">{{fitTableViewCategory(element.comments)}}</span>
                     <span *ngIf="element.comments==null">---</span>
                   </td>
                 </ng-container>

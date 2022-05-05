@@ -74,7 +74,7 @@ this.route.queryParams.subscribe(data=>{​​​​​​​​
 
 
  this.spinner.show();
-this.getFileDetails();
+
 
 
 
@@ -288,6 +288,15 @@ this.getFileDetails();
   }
   getFileDetails(){
     this.api.getFileDetails(this.projectid).subscribe(data =>{
+      console.log("res",data);
+      console.log("userlist",this.userslist)
+      data.uploadedFiles.forEach(e=>{
+        this.userslist.forEach(ele=>{
+          // if(){
+          //   e["uploadedBy"]=ele.
+          // }
+        })
+      })
       this.uploadedFiledata=data.uploadedFiles.reverse();
      
       this.dataSource3= new MatTableDataSource(this.uploadedFiledata);
@@ -325,6 +334,7 @@ this.getFileDetails();
     this.api.getuserslist(tenantid).subscribe(item=>{
       let users:any=item
       this.userslist=users;
+      this.getFileDetails();
       
     })
   }
@@ -332,7 +342,6 @@ this.getFileDetails();
     var userName; 
     this.userslist.forEach(element => {
       if(element.userId.userId == event){
-        
         userName =  element.userId.firstName+" "+element.userId.lastName
       }
     });
@@ -569,5 +578,11 @@ this.getFileDetails();
       this.uploadFileDescriptionFlag = false;
     }
      }
+
+  fitTableViewCategory(processName) {
+    if (processName && processName.length > 10)
+      return processName.substr(0, 10) + '..';
+    return processName;
+  }
 
 }
