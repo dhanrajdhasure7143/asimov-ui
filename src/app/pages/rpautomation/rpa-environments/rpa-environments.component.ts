@@ -622,36 +622,22 @@ import { NgxSpinnerService } from "ngx-spinner";
     }
   }
   keypair(event){
-    debugger
+    
     this.isKeyValuePair=!this.isKeyValuePair;
     if(event.target.checked==true){
-      if(this.updateenvdata.password.password!=undefined){
-        this.password=this.updateenvdata.password.password
-      }
-      else{
+      if(this.password==''){
         this.password=''
       }
-      
+      else{
         if(this.keyValueFile==undefined){
           this.keyValueFile=undefined
         }
-        else{
-         
-          this.keyValueFile= this.updateenvdata.keyValue
-         
-        }
-      
+      }
      
     }
     else{
       if(this.keyValueFile==undefined){
         this.keyValueFile=undefined
-      }
-      if(this.updateenvdata.password.password!=undefined){
-        this.password=this.updateenvdata.password.password
-      }
-      else{
-        this.password=''
       }
       
     }
