@@ -433,13 +433,13 @@ export class MonitoringComponent implements OnInit {
 
   statschart()
   {
+    let chartData:any=[...this.runtimestats.filter((item:any)=>parseInt(item.value)>0)];
     am4core.useTheme(am4themes_animated);
     setTimeout(()=>{
       this.runtimestatschart = am4core.create("runtime-stats", am4charts.XYChart);
       this.runtimestatschart.hiddenState.properties.opacity = 0; // this creates initial fade-in
-      this.runtimestatschart.data=this.runtimestats;
+      this.runtimestatschart.data=chartData;
       this.runtimestatschart.zoomOutButton.disabled = true;
-
       this.runtimestatschart.colors.list = [
         am4core.color("#bf9d76"),
         am4core.color("#e99450"),
