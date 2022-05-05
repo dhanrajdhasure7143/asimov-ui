@@ -37,8 +37,8 @@
 .dbichart-block {
     background: #f4fafd;
     border: 1px solid #cfe1f7;
-    min-height: 67vh;
-    /* min-height: calc(100vh - 225px); */
+    /* min-height: 67vh; */
+    min-height: calc(100vh - 220px);
     margin-bottom: 0px !important;
 }
 
@@ -413,10 +413,10 @@ hr {
 
 /* properties overlay */
 
-.l2proccess-list {
+/* .l2process-list {
     overflow: auto;
     height: calc(100vh - 392px);
-}
+} */
 .vcm-leveldiv select.form-control.ng-dirty {
     background-color: #FFF9C7 !important;
     color: #001c47 !important;
@@ -467,10 +467,10 @@ span.polabel {
     font-size: 12px;
 }
 
-.l1processlistdiv {
+/* .l1processlistdiv {
     overflow: auto;
     height: calc(100vh - 279px);
-}
+} */
 
 .files span.fname {
     font-weight: 600;
@@ -617,4 +617,16 @@ p.podefault {
     margin-left: 7%;
     margin-top: 2%;
     width: 80%;
+}
+
+.dbichart-body {
+    height: 60vh;
+}
+.l1processlistdiv {
+    overflow: auto;
+    height: calc(67vh - 60px);
+}
+.l2process-list {
+    overflow: auto;
+    height: calc(67vh - 175px);
 }
