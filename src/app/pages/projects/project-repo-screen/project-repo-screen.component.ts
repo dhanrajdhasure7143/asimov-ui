@@ -74,7 +74,7 @@ this.route.queryParams.subscribe(data=>{​​​​​​​​
 
 
  this.spinner.show();
-this.getFileDetails();
+
 
 
 
@@ -301,10 +301,10 @@ this.getFileDetails();
       let loggedUser=localStorage.getItem("ProfileuserId")
       let responseArray=this.requestedFiledata
       this.filterdArray=[]
-      if(responseArray=[]){
-        this.dataSource5= new MatTableDataSource(this.requestedFiledata);
-        this.dataSource5.sort=this.sort13;
-      }
+      // if(responseArray=[]){
+      //   this.dataSource5= new MatTableDataSource(this.requestedFiledata);
+      //   this.dataSource5.sort=this.sort13;
+      // }
       responseArray.forEach(e=>{
         if(e.requestTo==loggedUser || e.requestFrom==loggedUser){
           this.filterdArray.push(e)
@@ -325,6 +325,7 @@ this.getFileDetails();
     this.api.getuserslist(tenantid).subscribe(item=>{
       let users:any=item
       this.userslist=users;
+      this.getFileDetails()
       
     })
   }
@@ -569,5 +570,10 @@ this.getFileDetails();
       this.uploadFileDescriptionFlag = false;
     }
      }
+     fitTableViewCategory(processName) {
+      if (processName && processName.length > 10)
+        return processName.substr(0, 10) + '..';
+      return processName;
+    }
 
 }
