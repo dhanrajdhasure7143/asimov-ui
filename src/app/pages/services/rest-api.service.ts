@@ -700,6 +700,11 @@ export class RestApiService{
       return this.http.get<any>('/api/user/tenants/'+tenantid +'/users');
     }
 
+    getusername(tenantId){
+      return this.http.get<any>('/api/user/tenants/'+tenantId +'/usersDetails');
+      
+    }
+
     getAllUsersByDept()
     {
       return this.http.get("/platform-service/project/getallUsersByDept");

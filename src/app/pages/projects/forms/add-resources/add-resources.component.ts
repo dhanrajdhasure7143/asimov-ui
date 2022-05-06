@@ -8,7 +8,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
 import { RestApiService } from '../../../services/rest-api.service';
 import { ProjectsProgramsTableComponent } from '../../projects-list-screen/projects-programs-table/projects-programs-table.component';
-
+import { Subscription } from 'rxjs';
+import { DataTransferService } from 'src/app/pages/services/data-transfer.service';
 @Component({
   selector: 'app-add-resources',
   templateUrl: './add-resources.component.html',
@@ -25,8 +26,9 @@ export class AddResourcesComponent implements OnInit {
   userslist: any = [];
   projectdetails: Object;
   selectedresources:any=[];
+  sub:Subscription;
   constructor(private formBuilder: FormBuilder,private spinner:NgxSpinnerService,private api:RestApiService,
-    private router: Router,) { }
+    private router: Router,private rpa:RestApiService,private dataTransfer: DataTransferService) { }
   ngOnInit() {
 
 
@@ -51,17 +53,31 @@ export class AddResourcesComponent implements OnInit {
  
 
 
-
-  getallusers()
-  {
-    let tenantid=localStorage.getItem("tenantName")
+  getallusers() {
     this.spinner.show();
-    this.api.getuserslist(tenantid).subscribe(item=>{
-      let users:any=item
-      this.userslist=users;
-      this.spinner.hide();
-    })
+    this.sub = this.dataTransfer.logged_userData.subscribe(res => {
+      if (res) {
+        let tenantid = res.tenantID;
+        if(res.tenantID)
+        //this.sub.unsubscribe();
+        this.rpa.getusername(tenantid).subscribe(res => {
+          this.userslist=res;
+         console.log(this.userslist)
+          this.spinner.hide();
+        })
+      }
+    });
   }
+  // getallusers()
+  // {
+  //   let tenantid=localStorage.getItem("tenantName")
+  //   this.spinner.show();
+  //   this.api.getuserslist(tenantid).subscribe(item=>{
+  //     let users:any=item
+  //     this.userslist=users;
+  //     this.spinner.hide();
+  //   })
+  // }
 
 
   getresource(userId)

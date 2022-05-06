@@ -109,7 +109,7 @@
                                 </div>
                                 <div class="status-data">
                                     <span class="tab-text" *ngIf="projectDetails.owner==null">-</span>
-                                    <span class="tab-text">{{projectDetails.owner| userPipe : users_list}}</span>
+                                    <span class="tab-text">{{getUserName(projectDetails.owner)}}</span>
                                     <label class="labeltit">Project Owner</label>
                                 </div>
                             </div>
@@ -178,7 +178,7 @@
                                     <span class="labeltit">Process Owner</span>
 
                                     <span class="tab-text" *ngIf="projectDetails.processOwner==null||projectDetails.processOwner==''|| projectDetails.processOwner==undefined">-</span>
-                                    <span *ngIf="projectDetails.processOwner!=null && projectDetails.processOwner!=''&& projectDetails.processOwner!=undefined" class="tab-text labelcont">{{projectDetails.processOwner | userPipe : users_list}}</span>
+                                    <span *ngIf="projectDetails.processOwner!=null && projectDetails.processOwner!=''&& projectDetails.processOwner!=undefined" class="tab-text labelcont">{{getUserName(projectDetails.processOwner)}}</span>
 
                                 </div>
                                 <div class="mainset" *ngIf="editdata==true">
