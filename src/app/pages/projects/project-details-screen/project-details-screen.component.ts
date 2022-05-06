@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MatMenuModule, MatButtonModule } from '@angular/material'; 
 import moment from 'moment';
-
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-project-details-screen',
@@ -147,12 +147,15 @@ percentageComplete: number;
   processOwnerFlag:boolean=false;
   uploadFileDescriptionFlag: boolean = false;
   processownername: any;
+  users_data:any=[];
+  sub:Subscription;
   constructor(private dt:DataTransferService,private route:ActivatedRoute, private rpa:RestApiService,
     private modalService: BsModalService,private formBuilder: FormBuilder,private router: Router,
     private spinner:NgxSpinnerService) { }
 
 
   ngOnInit() { 
+    this.getUsersInfo()
     this.processOwner=false
     localStorage.setItem('project_id',null);
     localStorage.setItem('bot_id',null);
@@ -1099,4 +1102,27 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
           this.uploadFileDescriptionFlag = false;
         }
          }
+         getUsersInfo() {
+          this.sub = this.dt.logged_userData.subscribe(res => {
+            if (res) {
+              let tenantid = res.tenantID;
+              if(res.tenantID)
+              //this.sub.unsubscribe();
+              this.rpa.getusername(tenantid).subscribe(res => {
+                this.users_data = res;
+                console.log(this.users_data)
+              })
+            }
+          });
+        }
+        
+        getUserName(event) {
+          var userName;
+          this.users_data.forEach(element => {
+            if (element.userId == event) {
+              userName = element.firstName + " " + element.lastName
+            }
+          });
+          return userName;
+        }
 }
