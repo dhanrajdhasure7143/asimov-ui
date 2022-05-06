@@ -1264,9 +1264,9 @@ loadpredefinedbot(botId, dropCoordinates)
               this.iterationsList.push(item.iterationId)    
           })
           this.iterationsList=[...this.iterationsList.sort(function(a, b){return a - b})];
-          this.selectedIterationId=iterationId;
-          if((this.selectedIterationId==0 || this.selectedIterationId==undefined )&& this.iterationsList.length!=0)
-            this.selectedIterationId=this.iterationsList[this.iterationsList.length-1];
+          this.selectedIterationId=this.iterationsList.length;
+          // if((this.selectedIterationId==0 || this.selectedIterationId==undefined )&& this.iterationsList.length!=0)
+          //   this.selectedIterationId=this.iterationsList[this.iterationsList.length-1];
           this.fileteredLoopIterations=[...this.loopIterations.filter(item=>(item.iterationId==this.selectedIterationId))];
           this.loopbyrunid = new MatTableDataSource(this.fileteredLoopIterations);
           this.changeDetector.detectChanges();

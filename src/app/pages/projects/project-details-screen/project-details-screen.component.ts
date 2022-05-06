@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { MatMenuModule, MatButtonModule } from '@angular/material'; 
 import moment from 'moment';
-
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-project-details-screen',
@@ -43,6 +43,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   dataSource9:MatTableDataSource<any>;
   categaoriesList: any;
   selected_process_names: any;
+  
   displayedColumns: string[] = ["taskCategory","taskName","resources","status","percentageComplete","lastModifiedTimestamp","lastModifiedBy", "createdBy","action"];
   dataSource6:MatTableDataSource<any>;
   displayedColumns6: string[] = ["check","firstName","displayName","user_Id","last_active"];
@@ -89,9 +90,7 @@ percentageComplete: number;
  editdata:Boolean=false;
  resources:any=[];
  processOwner:boolean=false;
-  
   userid: any;
- 
   rolelist: any=[];
   userrole: any=[];
   public rolename: any;
@@ -147,6 +146,8 @@ percentageComplete: number;
   processOwnerFlag:boolean=false;
   uploadFileDescriptionFlag: boolean = false;
   processownername: any;
+  users_data:any=[];
+  sub:Subscription;
   constructor(private dt:DataTransferService,private route:ActivatedRoute,private dataTransfer: DataTransferService, private rpa:RestApiService,
     private modalService: BsModalService,private formBuilder: FormBuilder,private router: Router,
     private spinner:NgxSpinnerService) { }
@@ -593,25 +594,11 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
         }
       }
 
-      getUsersInfo(){
-        
-        this.dataTransfer.logged_userData.subscribe(res=>{
-          if(res){
-          
-           let tenantid=res.tenantID;
-           this.rpa.getusername(tenantid).subscribe(res=>{
-             console.log(res)
-          })
-          }
-        });
-       
-      }
+    
       getallusers()
-      {
-        let tenantid=localStorage.getItem("tenantName")
-        this.rpa.getuserslist(tenantid).subscribe(response=>{
-     
-        
+      {      
+        let tenantid=localStorage.getItem("tenantName");      
+        this.rpa.getuserslist(tenantid).subscribe(response=>{        
           this.users_list=response;
           this.userslist=this.users_list.filter(x=>x.user_role_status=='ACTIVE')
           let users:any=[]
@@ -619,7 +606,7 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
               if(this.users_list.find(item2=>item2.userId.userId==item.resource)!=undefined)
                 users.push(this.users_list.find(item2=>item2.userId.userId==item.resource))
          })
-         this.resources_list=users
+         this.resources_list=users;
          if(this.resources_list.length>0){
           this.Resourcecheckeddisabled= false;
         }
@@ -1114,4 +1101,27 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
           this.uploadFileDescriptionFlag = false;
         }
          }
+  getUsersInfo() {
+    this.sub = this.dataTransfer.logged_userData.subscribe(res => {
+      if (res) {
+        let tenantid = res.tenantID;
+        if(res.tenantID)
+        //this.sub.unsubscribe();
+        this.rpa.getusername(tenantid).subscribe(res => {
+          this.users_data = res;
+          console.log(this.users_data)
+        })
+      }
+    });
+  }
+  
+  getUserName(event) {
+    var userName;
+    this.users_data.forEach(element => {
+      if (element.userId == event) {
+        userName = element.firstName + " " + element.lastName
+      }
+    });
+    return userName;
+  }
 }
