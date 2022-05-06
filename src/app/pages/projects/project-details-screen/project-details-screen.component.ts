@@ -147,12 +147,13 @@ percentageComplete: number;
   processOwnerFlag:boolean=false;
   uploadFileDescriptionFlag: boolean = false;
   processownername: any;
-  constructor(private dt:DataTransferService,private route:ActivatedRoute, private rpa:RestApiService,
+  constructor(private dt:DataTransferService,private route:ActivatedRoute,private dataTransfer: DataTransferService, private rpa:RestApiService,
     private modalService: BsModalService,private formBuilder: FormBuilder,private router: Router,
     private spinner:NgxSpinnerService) { }
 
 
   ngOnInit() { 
+    this.getUsersInfo()
     this.processOwner=false
     localStorage.setItem('project_id',null);
     localStorage.setItem('bot_id',null);
@@ -590,6 +591,20 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
             Swal.fire("Error","Unable to find process owner for selected process","error")
           }
         }
+      }
+
+      getUsersInfo(){
+        
+        this.dataTransfer.logged_userData.subscribe(res=>{
+          if(res){
+          
+           let tenantid=res.tenantID;
+           this.rpa.getusername(tenantid).subscribe(res=>{
+             console.log(res)
+          })
+          }
+        });
+       
       }
       getallusers()
       {
