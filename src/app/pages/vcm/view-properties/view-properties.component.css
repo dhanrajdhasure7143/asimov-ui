@@ -398,9 +398,7 @@ button.savecbtn .testplus1 {
     /* border: 1px solid #ddd; */
 }
 .level1row {
-    /* background-color: #ffecb3; */
-    background-color: #e6f7e2;
-    /* background: #fdf6d4 !important; */
+    background-color: #FDF4BB;
 }
 .cell.cell7 img.testplus, td img.testplus {
     margin-right: 10px !important;
@@ -414,7 +412,7 @@ button.savecbtn .testplus1 {
 .workspace-title .cell.cell7 {
     width: 25% !important;
 }
-.prop_docs button.tsttooltipbtn {
+.prop_docs .row button.tsttooltipbtn {
     margin-left: 8px;
 }
 
@@ -433,17 +431,23 @@ span.testtooltip.celltooltip::after {
 .inner-grid .l3grid .cons_grid_content {
     height: 35px !important;
 }
-/* //grid styles//
+/* grid styles */
+ 
 span.has-childlevels mat-expansion-panel.mat-expanded {
-    border: 2px solid #00a0e3;
+    border: 1px solid #dee2e6;
+    box-shadow: 0px 2px 6px #d7d7d7 !important;
+    border-top: none !important;
+    border-radius: 4px !important;
+    margin-bottom: 8px !important;
 }
 .new-bps-grid-data .inner-grid span.has-childlevels mat-expansion-panel.mat-expansion-panel.mat-expanded {
     border-top: 1px solid #dee2e6 !important;
     border: none;
+    width: 100% !important;
 }
 span.no-childlevels div.col-md-12{
     width: 99.25% !important;
-}
+} 
 span.has-childlevels div.col-md-12{
     width: 100% !important;
-} */
+}
