@@ -271,7 +271,7 @@ percentageComplete: number;
    if(res.message!=undefined)
    {
     
-    this.spinner.hide();
+    
     this.getLatestFiveAttachments(this.project_id)
 
      Swal.fire({
@@ -297,7 +297,7 @@ percentageComplete: number;
  this.uploadFileFormDetails.reset();
         this.listOfFiles = [];
         this.fileList=[];
- this.spinner.hide();
+ 
   }
   resetdocform() {
     
@@ -359,7 +359,7 @@ percentageComplete: number;
     
       
     })
-    this.spinner.hide();
+    
   }
   getreducedValue(value) {​​​​​​​​
     if (value.length > 15)
@@ -379,14 +379,14 @@ percentageComplete: number;
            link.href =(`data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,${response.encryptedString}`) ;
           link.click();
           Swal.fire("Success", response.message,"success");
-          this.spinner.hide();
+          
       }
       else
       {
         Swal.fire("Error", response.errorMessage,"error");
       }
     })
-    this.spinner.hide();
+    
   }
   checktodelete()
   {
@@ -488,7 +488,7 @@ let paramsdata:any=data
 this.project_id=paramsdata.id
 this.editdata=false;
 this.rpa.getProjectDetailsById(paramsdata.id).subscribe( res=>{​​​​​​
-this.spinner.hide();
+
 this.projectDetails=res
 this.processOwnerFlag=false
 this.projectenddate=moment(this.projectDetails.endDate).format("YYYY-MM-DD");
@@ -577,7 +577,7 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
           //let processOwner:any=this.userslist.find(item=>(`${item.userId.firstName} ${item.userId.lastName}`==process.createdBy))
           if(processOwner!=undefined)
           {
-            console.log("project details",this.projectDetails)
+           
            document.getElementById('processowner')['value']=processOwner.userId.userId;
            this.processownername=processOwner.userId.userId;
            this.processOwnerFlag=false;
@@ -595,16 +595,20 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
       }
 
     
-      getallusers()
-      {      
+      getallusers(){
         let tenantid=localStorage.getItem("tenantName");      
         this.rpa.getuserslist(tenantid).subscribe(response=>{        
           this.users_list=response;
           this.userslist=this.users_list.filter(x=>x.user_role_status=='ACTIVE')
           let users:any=[]
           this.projectDetails.resource.forEach(item=>{
-              if(this.users_list.find(item2=>item2.userId.userId==item.resource)!=undefined)
-                users.push(this.users_list.find(item2=>item2.userId.userId==item.resource))
+            this.users_list.forEach(item2=>{
+              if(item2.userId.userId == item.resource){
+                users.push(item2)
+              }
+            })
+              // if(this.users_list.find(item2=>item2.userId.userId==item.resource)!=undefined)
+              //   users.push(this.users_list.find(item2=>item2.userId.userId==item.resource))
          })
          this.resources_list=users;
          if(this.resources_list.length>0){
@@ -615,7 +619,8 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
           this.Resourcecheckeddisabled = true;
         }
         let users_updateddata=users
-         this.resourceslength=users.length
+         this.resourceslength=users.length;
+       
          users_updateddata.forEach(element => {
            element["firstName"]=element.userId.firstName
            element["lastName"]=element.userId.lastName
@@ -624,6 +629,7 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
          });
           this.dataSource6= new MatTableDataSource(users_updateddata);
           this.dataSource6.sort=this.sort14;
+          this.spinner.hide()
           this.dataSource6.paginator=this.paginator104;
           this.getTaskandCommentsData();
           this.getLatestFiveAttachments(this.project_id);
@@ -745,7 +751,7 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
             {
               Swal.fire("Success","Task Updated Successfully !!","success");
               this.getTaskandCommentsData();
-              this.spinner.hide();
+              
             }
             else
             {
@@ -791,7 +797,7 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
                         confirmButtonText: 'Ok'
                       }) 
                       this.getTaskandCommentsData();
-                      this.spinner.hide();
+                      
                       },err => {
                         Swal.fire({
                           icon: 'error',
@@ -822,7 +828,7 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
           this.getallusers();
           this.removeallchecks();
           this.checktodelete();
-          this.spinner.hide();
+          
           Swal.fire("Success",response.status,"success");
         }
         else
@@ -834,7 +840,7 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
     //    let response:any=data;
     //    if(response.errorMessage==undefined)
     //    {
-    //      this.spinner.hide();
+    //      
     //       this.projectDetails.resources=[...this.projectDetails.resources,...(JSON.parse(event))];
     //       Swal.fire("Success",response.status,"success");
     //    }
@@ -895,7 +901,7 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
             this.getallusers();
             this.removeallchecks();
             this.checktodelete();
-            this.spinner.hide();
+            
             },err => {
               Swal.fire({
                 icon: 'error',
@@ -910,8 +916,8 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
 
       addresource(createmodal){
         this.addresourcemodalref=this.modalService.show(createmodal,{class:"modal-md"})
-        this.getallusers();
-        this.projectdetails();
+        // this.getallusers();
+        // this.projectdetails();
       }
 
 
@@ -983,7 +989,7 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
    
      this.rpa.uploadProjectFile(fileData).subscribe(res => {
       
-      this.spinner.hide();
+      
       let message: any= res;
        
        //if(res.message!=undefined)
@@ -1018,7 +1024,6 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
       updateprojectDetails()
       {
         this.spinner.show()
-        console.log('project details',this.projectDetails)
         this.projectDetails["type"]="Project";
         this.projectDetails.processOwner=this.processownername
         this.projectDetails.endDate=this.projectenddate;
@@ -1109,7 +1114,7 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
         //this.sub.unsubscribe();
         this.rpa.getusername(tenantid).subscribe(res => {
           this.users_data = res;
-          console.log(this.users_data)
+         
         })
       }
     });

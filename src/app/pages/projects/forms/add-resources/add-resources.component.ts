@@ -22,8 +22,9 @@ export class AddResourcesComponent implements OnInit {
   @Input('addresourcemodalref') public addresouceref: BsModalRef;
   
   @Input('resources') public resourcesdata:any;
+  @Input('userslist') public userslist:any[];
   @Output() newItemEvent = new EventEmitter<String>();
-  userslist: any = [];
+  // userslist: any = [];
   projectdetails: Object;
   selectedresources:any=[];
   sub:Subscription;
@@ -38,7 +39,7 @@ export class AddResourcesComponent implements OnInit {
       
       })
 
-      this.getallusers();
+      // this.getallusers();
       
   }
 
