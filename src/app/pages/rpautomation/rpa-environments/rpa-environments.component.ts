@@ -261,12 +261,13 @@ import { NgxSpinnerService } from "ngx-spinner";
     }
     if(this.isKeyValuePair==false)
     {
-      let connectionDetails=formdata.value;
+      let connectionDetails=JSON.parse(JSON.stringify(formdata.value));
       connectionDetails["password"]=this.password;
-      
+     // Object.assign(connectionDetails,({"password":this.password}))
+       console.log("connection details",connectionDetails)
         
       this.spinner.show();
-      await this.api.testenvironment(formdata.value).subscribe( res =>
+      await this.api.testenvironment(connectionDetails).subscribe( res =>
         {
           this.spinner.hide();
           if(res.errorMessage==undefined){
@@ -524,11 +525,14 @@ import { NgxSpinnerService } from "ngx-spinner";
         Object.keys(updatFormValue).map(key => {
            
           return updateEnvData.append(String(key),String(updatFormValue[key]))
+          
         });
+        console.log("data",updateEnvData)
         updateEnvData.append("formValue","sample")
         if(this.isKeyValuePair==false)
         {
           updateEnvData.append("password",this.password);
+         // updateEnvData.append("password",this.updateenvdata.password.password)
           updateEnvData.append("key",null)
         }
         else
@@ -765,7 +769,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 
   deploybotenvironment()
   {
-    debugger
+    
     const selectedEnvironments = this.environments.filter(product => product.checked).map(p => p.environmentId);
     
     if(selectedEnvironments.length!=0)
