@@ -261,12 +261,14 @@ import { NgxSpinnerService } from "ngx-spinner";
     }
     if(this.isKeyValuePair==false)
     {
-      let connectionDetails=formdata.value;
+      let connectionDetails=JSON.parse(JSON.stringify(formdata.value));
       connectionDetails["password"]=this.password;
-      
+     // Object.assign(connectionDetails,({"password":this.password}))
+       console.log("connection details",connectionDetails)
+        
         
       this.spinner.show();
-      await this.api.testenvironment(formdata.value).subscribe( res =>
+      await this.api.testenvironment(connectionDetails).subscribe( res =>
         {
           this.spinner.hide();
           if(res.errorMessage==undefined){

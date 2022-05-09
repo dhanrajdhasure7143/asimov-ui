@@ -272,7 +272,7 @@ percentageComplete: number;
    if(res.message!=undefined)
    {
     
-    this.spinner.hide();
+   
     this.getLatestFiveAttachments(this.project_id)
 
      Swal.fire({
@@ -298,7 +298,7 @@ percentageComplete: number;
  this.uploadFileFormDetails.reset();
         this.listOfFiles = [];
         this.fileList=[];
- this.spinner.hide();
+ 
   }
   resetdocform() {
     
@@ -360,7 +360,7 @@ percentageComplete: number;
     
       
     })
-    this.spinner.hide();
+   
   }
   getreducedValue(value) {​​​​​​​​
     if (value.length > 15)
@@ -380,14 +380,14 @@ percentageComplete: number;
            link.href =(`data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,${response.encryptedString}`) ;
           link.click();
           Swal.fire("Success", response.message,"success");
-          this.spinner.hide();
+         
       }
       else
       {
         Swal.fire("Error", response.errorMessage,"error");
       }
     })
-    this.spinner.hide();
+   
   }
   checktodelete()
   {
@@ -489,7 +489,7 @@ let paramsdata:any=data
 this.project_id=paramsdata.id
 this.editdata=false;
 this.rpa.getProjectDetailsById(paramsdata.id).subscribe( res=>{​​​​​​
-this.spinner.hide();
+
 this.projectDetails=res
 this.processOwnerFlag=false
 this.projectenddate=moment(this.projectDetails.endDate).format("YYYY-MM-DD");
@@ -604,8 +604,13 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
           this.userslist=this.users_list.filter(x=>x.user_role_status=='ACTIVE')
           let users:any=[]
           this.projectDetails.resource.forEach(item=>{
-              if(this.users_list.find(item2=>item2.userId.userId==item.resource)!=undefined)
-                users.push(this.users_list.find(item2=>item2.userId.userId==item.resource))
+            this.users_list.forEach(item2=>{
+              if(item2.userId.userId == item.resource){
+                users.push(item2)
+              }
+            })
+              // if(this.users_list.find(item2=>item2.userId.userId==item.resource)!=undefined)
+              //   users.push(this.users_list.find(item2=>item2.userId.userId==item.resource))
          })
          this.resources_list=users
          if(this.resources_list.length>0){
@@ -746,7 +751,7 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
             {
               Swal.fire("Success","Task Updated Successfully !!","success");
               this.getTaskandCommentsData();
-              this.spinner.hide();
+            
             }
             else
             {
@@ -792,7 +797,7 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
                         confirmButtonText: 'Ok'
                       }) 
                       this.getTaskandCommentsData();
-                      this.spinner.hide();
+                     
                       },err => {
                         Swal.fire({
                           icon: 'error',
@@ -896,7 +901,7 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
             this.getallusers();
             this.removeallchecks();
             this.checktodelete();
-            this.spinner.hide();
+          
             },err => {
               Swal.fire({
                 icon: 'error',
@@ -911,8 +916,8 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
 
       addresource(createmodal){
         this.addresourcemodalref=this.modalService.show(createmodal,{class:"modal-md"})
-        this.getallusers();
-        this.projectdetails();
+        // this.getallusers();
+        // this.projectdetails();
       }
 
 
@@ -984,7 +989,7 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
    
      this.rpa.uploadProjectFile(fileData).subscribe(res => {
       
-      this.spinner.hide();
+     
       let message: any= res;
        
        //if(res.message!=undefined)
