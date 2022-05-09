@@ -204,7 +204,7 @@
     <mat-icon>more_vert</mat-icon>
  </button>
 </a> -->
-          <mat-list-item *ngIf="freetrail!=true" (click)="showadminSubmenu = !showadminSubmenu; selection()" [ngClass]="{'activeMenu' : showadminSubmenu}" id="expand_admin" class="link" [matTooltip]=" !obj.sideBarOpen ? 'Administration' : ''" matTooltipClass="sidebarTooltip" matTooltipPosition="right">
+          <mat-list-item *ngIf="freetrail!=true && this.userRoles.includes('System Admin')" (click)="showadminSubmenu = !showadminSubmenu; selection()" [ngClass]="{'activeMenu' : showadminSubmenu}" id="expand_admin" class="link" [matTooltip]=" !obj.sideBarOpen ? 'Administration' : ''" matTooltipClass="sidebarTooltip" matTooltipPosition="right">
               <!-- <span class="full-width" >Workspace</span>
   <mat-icon mat-list-icon>work</mat-icon> -->
               <span class="side-icon">
@@ -219,7 +219,7 @@
     </span>
               </span>
 
-              <span class="side-menu-font">Administration</span>
+              <span  class="side-menu-font">Administration</span>
               <mat-icon class="menu-button" [ngClass]="{'rotated' : showadminSubmenu}">&#xe5cf;
               </mat-icon>
           </mat-list-item>
@@ -242,12 +242,12 @@
     </span>
     <span class="side-menu-font">System Settings</span>
   </a> -->
-              <a mat-list-item class="link" id="support" (click)="hightlight('support','expand_admin')" routerLink="/pages/support/ticket-list">
+              <!-- <a mat-list-item class="link" id="support" (click)="hightlight('support','expand_admin')" routerLink="/pages/support/ticket-list">
                   <span class="side-icon">
       <mat-icon>settings</mat-icon>
     </span>
                   <span class="side-menu-font">Support</span>
-              </a>
+              </a> -->
           </div>
 
           <!-- <div class="link">
