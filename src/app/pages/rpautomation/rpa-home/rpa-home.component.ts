@@ -925,7 +925,7 @@ export class RpaHomeComponent implements OnInit {
   editbotoverlay(botdetails){
     this.botNamespace=false
     document.getElementById("edit-bot").style.display="block";
-   let category=botdetails.department;
+   let category=botdetails.categoryName;
    let selectedcategory=this.categaoriesList.find(item=>item.categoryName==category)
     this.rpaCategory=selectedcategory.categoryId;
     if(this.rpaCategory==="others"){
