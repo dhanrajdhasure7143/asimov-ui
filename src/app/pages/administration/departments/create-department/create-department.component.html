@@ -30,7 +30,7 @@
                                 <label class="label-control">Owner<span class="star">*</span></label>
                                 <select formControlName="owner" class="form-control data"
                                     [ngClass]="createDepartmentForm.get('owner').valid?'enteredfield-color':'inputfield-color'">
-                                    <option value="">Select Owner</option>
+                                    <option value="" hidden disabled>Select Owner</option>
                                     <option *ngFor="let user of users_list" [value]="user.userId.userId">
                                         {{user.userId.firstName|titlecase}} {{user.userId.lastName|titlecase}}</option>
                                 </select>
