@@ -64,12 +64,17 @@ export class CreateDepartmentComponent implements OnInit {
     this.createDepartmentForm.get("owner").setValue("");
   }
 
-  getallusers()
-  {
+  getallusers(){
+    this.users_list=[];
     let tenantid=localStorage.getItem("tenantName")
     this.api.getuserslist(tenantid).subscribe(item=>{
-      let users:any=item
-      this.users_list=users;
+      let users:any=item;
+      users.forEach(e=>{
+        if(e.user_role_status != "INACTIVE"){
+          this.users_list.push(e);
+        }
+      })
+      // this.users_list=users;
       this.spinner.hide();
     })
   }
