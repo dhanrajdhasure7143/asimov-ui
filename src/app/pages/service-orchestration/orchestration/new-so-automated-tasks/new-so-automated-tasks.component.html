@@ -15,7 +15,7 @@
                 <div *ngIf="process_names!=undefined" id="autoprocesssearch" class="col-md-3 pl-0">
                     <select class="rpa-control form-control" [value]="selectedvalue" (change)="applyFilter($event.target.value)">
             <option value="" disabled>Select Process</option>  
-            <option *ngFor="let process of selected_process_names" [value]="process.processId">{{process.processName}}
+            <option *ngFor="let process of selected_process_names" [selected]="process.processId==selectedvalue" [value]="process.processId">{{process.processName}}
               </option>
           </select>
                 </div>
