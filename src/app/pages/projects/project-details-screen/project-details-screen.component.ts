@@ -273,7 +273,7 @@ percentageComplete: number;
     
     
     this.getLatestFiveAttachments(this.project_id)
-
+ 
      Swal.fire({
        title: 'Success',
        text: "File Uploaded Successfully",
@@ -286,7 +286,7 @@ percentageComplete: number;
    }).then((result) => {
     // this.resettask();
     this.resetdocform();
-     
+     this.spinner.hide()
    }) 
      
    }
@@ -786,6 +786,7 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
                     this.spinner.show();
                     this.rpa.deleteTask(deletetask).subscribe( res =>{ 
                       let status:any = res;
+                      this.spinner.hide()
                       Swal.fire({
                         title: 'Success',
                         text: ""+status.message,
@@ -797,8 +798,9 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
                         confirmButtonText: 'Ok'
                       }) 
                       this.getTaskandCommentsData();
-                      
+                     
                       },err => {
+                        this.spinner.hide()
                         Swal.fire({
                           icon: 'error',
                           title: 'Oops...',
@@ -1008,7 +1010,7 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
            confirmButtonText: 'Ok'
        }).then((result) => {
         // this.resettask();
-         
+         this.spinner.hide()
          this.uploadtaskFileForm.reset();
        }) 
          
