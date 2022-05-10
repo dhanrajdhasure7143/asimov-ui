@@ -127,7 +127,7 @@
                                     </td>
                                     <td>
                                         <ng-container *ngFor="let doc of item.attachments;let j = index">
-                                            <div>{{doc.fileDescription}}</div>
+                                            <div>{{doc.fileDescription?doc.fileDescription:'-'}}</div>
                                         </ng-container>
                                     </td>
                                     <td>
