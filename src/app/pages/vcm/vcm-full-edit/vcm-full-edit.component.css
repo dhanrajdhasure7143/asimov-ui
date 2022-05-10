@@ -340,11 +340,6 @@ span.testtooltip:before {
     filter: brightness(10) grayscale(1) brightness(10);
 }
 
-
-/* .l1process-list {
-    height: 100px;
-} */
-
 hr {
     margin-bottom: 8px !important;
 }
@@ -410,13 +405,8 @@ hr {
     height: calc(100vh - 345px) !important;
 }
 
+/* properties overlay End */
 
-/* properties overlay */
-
-/* .l2process-list {
-    overflow: auto;
-    height: calc(100vh - 392px);
-} */
 .vcm-leveldiv select.form-control.ng-dirty {
     background-color: #FFF9C7 !important;
     color: #001c47 !important;
@@ -467,11 +457,6 @@ span.polabel {
     font-size: 12px;
 }
 
-/* .l1processlistdiv {
-    overflow: auto;
-    height: calc(100vh - 279px);
-} */
-
 .files span.fname {
     font-weight: 600;
     width: 100%;
@@ -482,7 +467,8 @@ span.polabel {
     margin:2px 15px 2px 18px;
     word-break: break-all;
 }
-/* Upload Popup */
+
+/* Upload Popup Start */
 
 .uploadfilebdiv {
     height: calc(100vh - 260px);
@@ -539,7 +525,7 @@ span.polabel {
     margin-top: 5px;
 }
 
-/* Upload Popup */
+/* Upload Popup End */
 
 .files button:hover img.hover-img {
     display: initial;

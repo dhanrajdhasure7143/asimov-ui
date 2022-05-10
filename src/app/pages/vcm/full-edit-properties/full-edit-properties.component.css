@@ -157,7 +157,7 @@ span.docpill:hover {
     width: 30%;
 }
 .prop_docs th:last-child {
-    width: 10%;
+    width: 6%;
 }
 .modelprfooter{
     z-index: 2000 !important;
@@ -195,4 +195,10 @@ span.testtooltip:before {
 }
 .tsttooltipbtn:hover .hover-img {
     display: initial;
+}
+.prop_owner .td_spocol {
+    width: 30% !important;
+}
+.prop_docs .td_docol {
+    width: 25% !important;
 }

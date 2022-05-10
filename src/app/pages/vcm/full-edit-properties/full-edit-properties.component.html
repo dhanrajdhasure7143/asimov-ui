@@ -20,7 +20,7 @@
                             <tr>
                                 <th>Process Name</th>
                                 <th>Level1 Name</th>
-                                <th>Process Owner</th>
+                                <th class="td_spocol">Process Owner</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -28,7 +28,7 @@
                                 <tr *ngFor="let each of prop.children;let i = index">
                                     <td *ngIf="each.title">{{prop.name}}</td>
                                     <td *ngIf="each.title">{{each.title}}</td>
-                                    <td *ngIf="each.title">
+                                    <td *ngIf="each.title" class="td_spocol">
                                         <select class="form-control" [(ngModel)]="each.processOwner" #ownerValue>
                                             <option value="" hidden disabled>Select Process Owner</option>
                                             <option *ngFor="let each_approver of processOwners_list;let i=index"
@@ -104,7 +104,7 @@
                         <thead>
                             <tr>
                                 <th>Process Name</th>
-                                <th>Documents</th>
+                                <th class="td_docol">Documents</th>
                                 <th>Description</th>
                                 <th>Actions</th>
                             </tr>
@@ -113,7 +113,7 @@
                             <ng-container *ngFor="let prop of vcmProperties">
                                 <tr *ngFor="let item of prop.children; let i = index">
                                     <td *ngIf="item.title">{{item.title}}</td>
-                                    <td>
+                                    <td class="td_docol">
                                         <ng-container *ngFor="let doc of item.attachments;let j = index">
                                             <div class="docpill">
                                                 {{j+1}} . {{doc.fileName}}
@@ -158,7 +158,7 @@
                             <tr>
                                 <th>Process Name</th>
                                 <th>Level2 Name</th>
-                                <th>Process Owner</th>
+                                <th class="td_spocol">Process Owner</th>
                                 <!-- <th>Process Description</th> -->
                             </tr>
                         </thead>
@@ -168,7 +168,7 @@
                                     <tr *ngFor="let level2 of name.children;let k = index">
                                         <td *ngIf="level2.title">{{prop.name}}</td>
                                         <td *ngIf="level2.title">{{level2.title}}</td>
-                                        <td *ngIf="level2.title">
+                                        <td *ngIf="level2.title" class="td_spocol">
                                             <select class="form-control" #ownerValue [(ngModel)]="level2.processOwner">
                                                 <option value="" hidden disabled>Select Process Owner</option>
                                                 <option *ngFor="let each_approver of processOwners_list;let i=index"
@@ -257,7 +257,7 @@
                             <tr>
                                 <!-- <th>Level</th> -->
                                 <th>Process Name</th>
-                                <th>Documents</th>
+                                <th class="td_docol">Documents</th>
                                 <th>Description</th>
                                 <th>Actions</th>
                             </tr>
@@ -268,7 +268,7 @@
                                     <tr *ngFor="let level2 of name.children">
                                         <!-- <td>{{level2.level}}</td> -->
                                         <td>{{level2.title}}</td>
-                                        <td>
+                                        <td class="td_docol">
                                             <ng-container *ngFor="let doc of level2.attachments;let j = index">
                                                 <div class="docpill">
                                                     {{j+1}} . {{doc.fileName}}

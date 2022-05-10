@@ -234,7 +234,7 @@ div#bpmn_list {
 }
 .new-bps-grid-data mat-expansion-panel {
     /* width: 100%; */
-    width: 99.25%;
+    width: 99.75%;
     position: relative;
     padding: 2px 0px !important;
     border-top: 1px solid #dee2e6 !important;
@@ -435,7 +435,7 @@ span.testtooltip.celltooltip::after {
  
 span.has-childlevels mat-expansion-panel.mat-expanded {
     border: 1px solid #dee2e6;
-    box-shadow: 0px 2px 6px #d7d7d7 !important;
+    box-shadow: 0px 2px 6px #dbdbdb !important;
     border-top: none !important;
     border-radius: 4px !important;
     margin-bottom: 8px !important;
@@ -446,7 +446,7 @@ span.has-childlevels mat-expansion-panel.mat-expanded {
     width: 100% !important;
 }
 span.no-childlevels div.col-md-12{
-    width: 99.25% !important;
+    width: 99.75% !important;
 } 
 span.has-childlevels div.col-md-12{
     width: 100% !important;
