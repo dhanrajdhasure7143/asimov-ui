@@ -60,6 +60,8 @@ import { ScheduledBotsComponent } from './orchestration/scheduled-bots/scheduled
 import { BotsComponent } from './orchestration/scheduled-bots/bots/bots.component';
 import { ProcessesComponent } from './orchestration/scheduled-bots/processes/processes.component';
 import { CheckResourcePipe } from './orchestration/new-so-automated-tasks/check-resource.pipe';
+import { RpaSoLogsComponent } from '../rpautomation/rpa-so-logs/rpa-so-logs.component';
+import { RpautomationModule } from '../rpautomation/rpautomation.module';
 @NgModule({
   declarations: [OrchestrationComponent,ipcustompipecreation,
     BotStatusComponent,
@@ -116,7 +118,8 @@ import { CheckResourcePipe } from './orchestration/new-so-automated-tasks/check-
     MatDialogModule,
     NgxPaginationModule,
     ModalModule.forRoot(),
-    NgSelectModule
+    NgSelectModule,
+    RpautomationModule,
 
   ],
   bootstrap: [SoDashboardComponent],

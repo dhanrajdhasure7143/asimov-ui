@@ -522,7 +522,7 @@ public slaupdate : boolean = false;
     this.viewlogid1=undefined;
     this.spinner.show();
     this.logflag="Loading";
-    this.rest.getviewlogdata(botid,version).subscribe((data:any) =>{
+    this.rest.getviewlogdata(botid).subscribe((data:any) =>{
       this.spinner.hide();
       if(data.errorMessage==undefined)
       {

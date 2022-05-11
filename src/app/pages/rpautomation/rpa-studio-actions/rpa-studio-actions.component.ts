@@ -681,7 +681,7 @@ export class RpaStudioActionsComponent implements OnInit {
     let response: any;
     let log:any=[];
     this.logresponse=[];
-    this.rest.getviewlogdata(this.savebotrespose.botId,this.savebotrespose.version).subscribe(data =>{
+    this.rest.getviewlogdata(this.savebotrespose.botId).subscribe(data =>{
         this.logresponse=data;
         if(this.logresponse.length >0)
         {

@@ -245,7 +245,7 @@ export class SoBotManagementComponent implements OnInit {
    this.logresponse=[];
    this.log_botid=botid;
    this.log_version=version
-   this.rest.getviewlogdata(botid,version).subscribe(data =>{
+   this.rest.getviewlogdata(botid).subscribe(data =>{
        this.logresponse=data;
        if(this.logresponse.length >0)
        {
