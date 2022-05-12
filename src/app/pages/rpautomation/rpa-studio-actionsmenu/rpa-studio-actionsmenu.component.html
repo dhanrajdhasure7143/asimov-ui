@@ -436,7 +436,11 @@
 
 
   <ng-template #logspopup>
-    <app-rpa-so-logs [savebotrespose]="savebotrespose" [AllVersionsList]="AllVersionsList" [filteredLogVersion]="filteredLogVersion"></app-rpa-so-logs>
+    <div>
+      <app-rpa-so-logs [savebotrespose]="savebotrespose" [logsmodalref]="logsmodalref" [AllVersionsList]="AllVersionsList" [filteredLogVersion]="filteredLogVersion"></app-rpa-so-logs>
+      
+    </div>
+ 
   </ng-template>
 
 

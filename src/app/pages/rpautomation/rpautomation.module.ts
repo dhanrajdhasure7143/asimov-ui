@@ -124,6 +124,7 @@ import { RpaSoLogsComponent } from './rpa-so-logs/rpa-so-logs.component';
     MatSlideToggleModule,
     Ng5SliderModule,
   ],
+  exports:[RpaSoLogsComponent],
   providers: [MatDatepickerModule,Rpa_Hints, BsModalRef, BsModalService,
     {
            provide: MatPaginatorIntl, 

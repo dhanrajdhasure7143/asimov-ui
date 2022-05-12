@@ -11,12 +11,13 @@ import Swal from 'sweetalert2';
   styleUrls: ['./rpa-so-logs.component.css']
 })
 export class RpaSoLogsComponent implements OnInit {
-  @ViewChild('logspopup' ,{static:false}) public logspopup:any;
+  @Input('logsmodalref') public logsmodal: BsModalRef;
   Viewloglist:MatTableDataSource<any>;
   @ViewChild("logsSort",{static:false}) logsSort:MatSort;
   @ViewChild("logsPaginator",{static:false}) logsPaginator:MatPaginator;
   displayedColumns: string[] = ['run_id','version','start_date','end_date', "bot_status"];
-  logsmodalref:BsModalRef;
+  displayedColumns1: string[] = ['task_name', 'status','start_date','end_date','error_info' ];
+  displayedloopColumns:string[]=['taskName','status','startTS','endTS',"errorMsg"];
   public viewlogid1:any;
   selectedIterationTask:any=undefined;
   public logsLoading:Boolean=false;
@@ -26,6 +27,7 @@ export class RpaSoLogsComponent implements OnInit {
   selectedIterationId:any=0;
   public logresponse:any=[];
   public respdata1:boolean = false;
+  fileteredLoopIterations:any=[];
   public selectedLogVersion:any;
   @Input ('savebotrespose') public savebotrespose:any;
   @Input ('filteredLogVersion') public filteredLogVersion:any;
@@ -35,34 +37,32 @@ export class RpaSoLogsComponent implements OnInit {
   allLogs:any=[];
  public botrunid:any;
   public allRuns:any=[];
-  public logflag:Boolean;
+  loopIterations:any=[];
   logbyrunid:MatTableDataSource<any>;
+  loopbyrunid:MatTableDataSource<any>;
   constructor( private modalService:BsModalService,
      private rest : RestApiService,
      private changeDetector:ChangeDetectorRef,
      private rpa_studio:RpaStudioComponent,private spinner:NgxSpinnerService) { }
 
   ngOnInit() {
-    this.logflag=false;
     this.viewlogdata()
    
   }
  
   viewlogdata(){
-    this.logsmodalref=this.modalService.show(this.logspopup, {class:"logs-modal"})
+  
     this.viewlogid1=undefined;
     //document.getElementById("filters").style.display = "none";
    let response: any;
    let log:any=[];
    this.logresponse=[];
-   this.rpa_studio.spinner.show()
    this.logsLoading=true;
   
     this.rest.getviewlogdata(this.savebotrespose.botId).subscribe(data =>{
       this.logresponse=data;
       console.log("res",this.logresponse)
       this.logsLoading=false;
-      this.rpa_studio.spinner.hide()
       if(this.logresponse.length >0)
       {
         this.respdata1 = false;
@@ -103,7 +103,6 @@ export class RpaSoLogsComponent implements OnInit {
      this.Viewloglist.sort=this.logsSort;
      this.Viewloglist.paginator=this.logsPaginator;
   },err=>{
-    this.spinner.hide();
     this.logsLoading=false;
     Swal.fire("Error","unable to get logs","error")
   });
@@ -129,14 +128,14 @@ export class RpaSoLogsComponent implements OnInit {
     let responsedata:any=[];
     let logbyrunidresp:any;
     let resplogbyrun:any=[];
-    this.rpa_studio.spinner.show();
+   
     this.logsLoading=true;
     this.rest.getViewlogbyrunid(this.savebotrespose.botId,version,runid).subscribe((data:any)=>{
       if(data.errorMessage==undefined)
       {
        responsedata = [...data];
        this.logsLoading=false;
-       this.rpa_studio.spinner.hide();
+      
        // if(responsedata.length >0)
        // {
        //   this.respdata2 = false;
@@ -169,9 +168,9 @@ export class RpaSoLogsComponent implements OnInit {
          else if(loopInsideArray.find(item3=>item3.task_id==rlog.task_id).task_name=="Loop-Start")
            resplogbyrun.push(logbyrunidresp)
        });
-       this.logflag=true;
        this.viewlogid1=runid;
        this.allRuns=[...resplogbyrun];
+       console.log("runs",this.allRuns)
        this.logbyrunid = new MatTableDataSource(resplogbyrun);
        this.changeDetector.detectChanges();
        this.logbyrunid.paginator=this.paginator2;
@@ -180,16 +179,15 @@ export class RpaSoLogsComponent implements OnInit {
      else
      {
        
-       this.spinner.hide();
+       
        this.logsLoading=false;
        Swal.fire("Error",data.errorMessage,"error")
      }
       
      }, err=>{
-       this.spinner.hide();
+      
        this.logsLoading=false;
-       
-      this.spinner.hide();
+        
       Swal.fire("Error","unable to get logs","error")
      })
    }
@@ -247,4 +245,75 @@ export class RpaSoLogsComponent implements OnInit {
        this.logbyrunid.paginator=this.logsPaginator
     }
   }
+
+  sortLoopsIteration(event){
+
+    this.fileteredLoopIterations=this.fileteredLoopIterations.sort(function(a,b){
+
+      let check_a=isNaN(a[event.active])?a[event.active].toUpperCase():a[event.active];
+
+      let check_b=isNaN(b[event.active])?b[event.active].toUpperCase():b[event.active];
+
+      if (event.direction=='asc')
+
+        return (check_a > check_b) ? 1 : -1;
+
+      else if(event.direction=='desc')
+
+        return (check_a < check_b) ? 1 : -1;
+
+    },this);
+
+    this.loopbyrunid = new MatTableDataSource(this.fileteredLoopIterations);
+
+    this.changeDetector.detectChanges();
+
+  }
+  
+  IterationId(event){
+
+     this.fileteredLoopIterations=[...this.loopIterations.filter(item=>item.iterationId==event.target.value)];
+
+     this.loopbyrunid = new MatTableDataSource(this.fileteredLoopIterations);
+
+     this.changeDetector.detectChanges();
+
+  }
+  
+  getLoopIterations(e, iterationId){
+    this.iterationsList=[]
+    this.logsLoading=true;
+    this.rest.getLooplogs(e.bot_id, e.version, e.run_id ).subscribe((response:any)=>{
+      this.logsLoading=false;
+      if(response.errorMessage==undefined)
+      {
+        this.loopIterations=[...response];
+        this.loopIterations=[...this.loopIterations.filter((item:any)=>item.taskName != 'Loop-End')]
+        this.selectedIterationTask=e;
+        this.loopIterations.forEach(item=>{
+          if(this.iterationsList.find(item2=>item2==item.iterationId)==undefined)
+            this.iterationsList.push(item.iterationId)    
+        })
+        this.iterationsList=[...this.iterationsList.sort(function(a, b){return a - b})];
+        this.selectedIterationId=this.iterationsList.length;
+        // if((this.selectedIterationId==0 || this.selectedIterationId==undefined )&& this.iterationsList.length!=0)
+        //   this.selectedIterationId=this.iterationsList[this.iterationsList.length-1];
+        this.fileteredLoopIterations=[...this.loopIterations.filter(item=>(item.iterationId==this.selectedIterationId))];
+        this.loopbyrunid = new MatTableDataSource(this.fileteredLoopIterations);
+        this.changeDetector.detectChanges();
+      }
+      else
+      {
+        this.logsLoading=false;
+        this.selectedIterationTask=undefined;
+        Swal.fire("Error",response.errorMessage,"error");
+      }
+       
+    },err=>{
+      this.logsLoading=false;
+      Swal.fire("Error","Unable to open loop logs","error");
+      console.log(err)
+    })
+  }
+
 }

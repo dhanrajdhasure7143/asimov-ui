@@ -70,10 +70,10 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
   @ViewChild('t', { static: false }) ngbTabset;
   @Input('tabsArray') public tabsArray: any[];
   @ViewChild(RpaStudioDesignerworkspaceComponent, { static: false }) childBotWorkspace: RpaStudioDesignerworkspaceComponent;
-  @ViewChild('logspopup' ,{static:false}) public logspopup:any;
   @ViewChild('auditLogsPopup',{static:false}) public auditLogsPopup:any;
+  @ViewChild('logspopup',{static:false}) public logspopup:any;
   public auditLogsModelRef:BsModalRef;
-  logsmodalref:BsModalRef
+  public logsmodalref:BsModalRef
   pause: any;
   resume: any;
   stop: any;
@@ -660,71 +660,8 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
    
    viewlogdata(log_popup_template,action){
     this.childBotWorkspace.addsquences();
-    this.viewlogid1=undefined;
-    //document.getElementById("filters").style.display = "none";
-   let response: any;
-   let log:any=[];
-   this.logresponse=[];
-   this.rpa_studio.spinner.show()
-   this.logsLoading=true;
-  
-   if(action=='open')
-    this.filteredLogVersion=this.savebotrespose.version;
-   this.rest.getviewlogdata(this.savebotrespose.botId).subscribe(data =>{
-       this.logresponse=data;
-       this.logsLoading=false;
-       this.rpa_studio.spinner.hide()
-       if(this.logresponse.length >0)
-       {
-         this.respdata1 = false;
-       }else
-       {
-         this.respdata1 = true;
-       }
-       if(this.logresponse.length>0)
-       this.logresponse.forEach(data=>{
-       response=data;
-       if(response.start_time != null)
-       {
-         let startdate=response.start_time.split("T");
-         response["start_date"]=startdate[0];
-         response.start_time=startdate[1].slice(0,8);
-       }else
-       {
-         response["start_date"]="-";
-         response.start_time="-";
-       }
-       if(response.end_time != null)
-       {
-         let enddate=response.end_time.split("T");
-         response["end_date"]=enddate[0];
-         response.end_time=enddate[1].slice(0,8);
-       }else
-       {
-         response["end_date"]="---";
-         response.end_time="---";
-
-       }
-       log.push(response)
-     });
-      log.sort((a,b) => a.run_id > b.run_id ? -1 : 1);
-      this.allLogs=log;
-      this.filteredLogs=[...this.allLogs.filter(item=>item.version==this.filteredLogVersion)];
-      this.Viewloglist = new MatTableDataSource(this.filteredLogs);
-      console.log("filteredLogs",this.filteredLogs)
-      this.changeDetector.detectChanges();
-      this.Viewloglist.sort=this.logsSort;
-      this.Viewloglist.paginator=this.logsPaginator;
-      if(action=='open')
-      this.logspopupopen=true
-     this.logsmodalref=this.modalService.show(this.logspopup, {class:"logs-modal"})
-        
-
-   },err=>{
-     this.spinner.hide();
-     this.logsLoading=false;
-     Swal.fire("Error","unable to get logs","error")
-   });
+    // this.modalService.show(log_popup_template, {class:"logs-modal"})
+      this.logsmodalref=this.modalService.show(log_popup_template, {class:"logs-modal"})
  }
 
 
