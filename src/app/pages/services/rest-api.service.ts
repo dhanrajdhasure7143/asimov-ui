@@ -256,11 +256,10 @@ export class RestApiService{
 
   //rest-api
 
-    getviewlogdata(botid)
-    {
-      return this.http.get("/rpa-service/logs/"+botid);
-    }
-
+  getviewlogdata(botid)
+  {
+    return this.http.get("/rpa-service/logs/"+botid);
+  }
     getViewlogbyrunid(botid,botverid,runid){
       return this.http.get("/rpa-service/logs/"+botid+"/"+botverid+"/"+runid);
     }
