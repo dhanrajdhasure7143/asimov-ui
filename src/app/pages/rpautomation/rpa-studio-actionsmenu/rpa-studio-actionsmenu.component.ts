@@ -105,9 +105,9 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
   public respdata2:boolean = false;
   public she:any;
  public selectedLogVersion:any;
- public filteredLogVersion:any;
  public logsLoading:Boolean=false;
   userRole;
+  logsbotid:any;
   isButtonVisible: boolean;
   slider: number = 0;
   options: any = {
@@ -147,6 +147,7 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
     {
       this.selectedversion=this.botState.version;
       this.savebotrespose=this.botState;
+      this.logsbotid=this.savebotrespose.botId
       this.getVersionlist();
     }
 
@@ -669,21 +670,7 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
 
 
 
- changeLogVersion(event)
- {
-   this.filteredLogVersion=event.target.value;
-    this.filteredLogs=[...this.allLogs.filter(item=>item.version==this.filteredLogVersion)];
-    let logs=[...this.filteredLogs]
-    this.Viewloglist = new MatTableDataSource(logs);
-    this.changeDetector.detectChanges();
-    // setTimeout(()=>{
-    //   console.log(this.Viewloglist)
-    //   console.log(this.logsPaginator)
-    //   console.log(this.logsSort)
-    //   this.Viewloglist.paginator=this.logsPaginator;
-    //   this.Viewloglist.sort=this.logsSort;
-    // },4000)
- }
+ 
 
 
  
@@ -761,60 +748,7 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
  }
 
 
-  sortasc(event)
-  {
-    let sortdes:Boolean
-    console.log(event)
-    if(this.viewlogid1==undefined)
-    {
-      if(event.direction=='asc')
-      sortdes=true;
-      else if(event.direction=='des')
-      sortdes=false;
-      if(event.direction!="")
-      {
-        if(event.active!='version')
-        this.filteredLogs=this.filteredLogs.sort(function(a,b){
-          let check_a=isNaN(a[event.active])?a[event.active].toUpperCase():a[event.active];
-          let check_b=isNaN(b[event.active])?b[event.active].toUpperCase():b[event.active];
-          if (sortdes==true)
-            return (check_a > check_b) ? 1 : -1;
-          else
-            return (check_a < check_b) ? 1 : -1;
-        },this);
-      }
-      else
-      {
-        this.filteredLogs=[...this.allLogs.filter((item:any)=>item.version=this.filteredLogVersion)];
-      }
-      this.Viewloglist = new MatTableDataSource(this.filteredLogs);
-      this.changeDetector.detectChanges();
-      this.Viewloglist.sort=this.logsSort;
-      this.Viewloglist.paginator=this.logsPaginator
-    }
-    else(this.viewlogid1!=undefined)
-    {
-      if(event.direction=='asc')
-        sortdes=true;
-      else if(event.direction=='des')
-        sortdes=false;
-      if(event.direction!="")
-      {
-        let allRuns=[...this.allRuns.sort(function(a,b){
-          let check_a=isNaN(a[event.active])?a[event.active].toUpperCase():a[event.active];
-          let check_b=isNaN(b[event.active])?b[event.active].toUpperCase():b[event.active];
-          if (sortdes==true)
-            return (check_a > check_b) ? 1 : -1;
-          else
-            return (check_a < check_b) ? 1 : -1;
-        },this)];
-      }
-      this.logbyrunid = new MatTableDataSource(this.allRuns)
-      this.changeDetector.detectChanges();
-       this.logbyrunid.sort=this.logsSort;
-       this.logbyrunid.paginator=this.logsPaginator
-    }
-  }
+ 
 
 
 

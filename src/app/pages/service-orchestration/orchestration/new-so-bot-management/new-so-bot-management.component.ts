@@ -45,6 +45,7 @@ public slaupdate : boolean = false;
     respdata2:Boolean;
     selectedcat:any="";
     search:any="";    
+    savebotrespose:any;
     public selected_source:any = "";
     public sla_bot:any
     public isDataSource: boolean;
@@ -77,11 +78,13 @@ public slaupdate : boolean = false;
     public sla_list:any=[];
     public datasourcelist : any = [];
     public timer:any;
-    public logs_modal:BsModalRef;
+    public logsmodalref:BsModalRef;
     public usersList:any=[];
     public allVersionsByBotId:any=[];
     public allLogs:any=[];
     public logTasks:any=[];
+    logsbotid:any;
+    selectedversion:any;
     @ViewChild("paginator1",{static:false}) paginator1: MatPaginator;
     @ViewChild("sort1",{static:false}) sort1: MatSort;
     @ViewChild("paginator4",{static:false}) paginator4: MatPaginator;
@@ -515,61 +518,63 @@ public slaupdate : boolean = false;
   }
 
   getEpsoftLogs(botid ,version, template, action){
-    this.getBotVerions(botid);
-    this.log_botid=botid;
-    this.log_version=version;
-    this.detectChanges.detectChanges()
-    this.viewlogid1=undefined;
-    this.spinner.show();
-    this.logflag="Loading";
-    this.rest.getviewlogdata(botid).subscribe((data:any) =>{
-      this.spinner.hide();
-      if(data.errorMessage==undefined)
-      {
-        this.logflag="Success"
-        let log=data.map((item:any)=>{
-          if(item.start_time != null)
-          {
-            let startdate=item.start_time.split("T");
-            item["start_date"]=startdate[0];
-            item.start_time=startdate[1].slice(0,8);
-          }else
-          {
-            item["start_date"]="-";
-            item.start_time="-";
-          }
-          if(item.end_time != null)
-          {
-            let enddate=item.end_time.split("T");
-            item["end_date"]=enddate[0];
-            item.end_time=enddate[1].slice(0,8);
-          }else
-          {
-            item["end_date"]="---";
-            item.end_time="---";
-          }
-          return item;
-        });
-        this.allLogs=[...log.sort((a,b) => a.run_id > b.run_id ? -1 : 1)];
-        this.filteredLogs=[...this.allLogs.filter((item:any)=>item.version==version)] 
-        if(action=="open")
-          this.logs_modal=this.modalService.show(template,{class:"logs-modal"});
-        this.Viewloglist = new MatTableDataSource(this.filteredLogs);
-        this.detectChanges.detectChanges()
-        this.Viewloglist.paginator=this.paginator4;
-        this.Viewloglist.sort=this.sort4;
-      }
-      else
-      {
-        this.logflag="Error";
-        Swal.fire("Error",data.errorMessage,"error");
-      }
-    },(err)=>{
-      console.log(err)
-      this.spinner.hide()
-      this.logflag="Error"
-      Swal.fire("Error","Unable to get logs","error")
-    });
+   // this.getBotVerions(botid);
+    
+   
+    // this.log_botid=botid;
+     this.log_version=version;
+    // this.detectChanges.detectChanges()
+    // this.viewlogid1=undefined;
+    // this.spinner.show();
+    // this.logflag="Loading";
+    // this.rest.getviewlogdata(botid).subscribe((data:any) =>{
+    //   this.spinner.hide();
+    //   if(data.errorMessage==undefined)
+    //   {
+    //     this.logflag="Success"
+    //     let log=data.map((item:any)=>{
+    //       if(item.start_time != null)
+    //       {
+    //         let startdate=item.start_time.split("T");
+    //         item["start_date"]=startdate[0];
+    //         item.start_time=startdate[1].slice(0,8);
+    //       }else
+    //       {
+    //         item["start_date"]="-";
+    //         item.start_time="-";
+    //       }
+    //       if(item.end_time != null)
+    //       {
+    //         let enddate=item.end_time.split("T");
+    //         item["end_date"]=enddate[0];
+    //         item.end_time=enddate[1].slice(0,8);
+    //       }else
+    //       {
+    //         item["end_date"]="---";
+    //         item.end_time="---";
+    //       }
+    //       return item;
+    //     });
+    //     this.allLogs=[...log.sort((a,b) => a.run_id > b.run_id ? -1 : 1)];
+    //     this.filteredLogs=[...this.allLogs.filter((item:any)=>item.version==version)] 
+    //     if(action=="open")
+    //       this.logs_modal=this.modalService.show(template,{class:"logs-modal"});
+    //     this.Viewloglist = new MatTableDataSource(this.filteredLogs);
+    //     this.detectChanges.detectChanges()
+    //     this.Viewloglist.paginator=this.paginator4;
+    //     this.Viewloglist.sort=this.sort4;
+    //   }
+    //   else
+    //   {
+    //     this.logflag="Error";
+    //     Swal.fire("Error",data.errorMessage,"error");
+    //   }
+    // },(err)=>{
+    //   console.log(err)
+    //   this.spinner.hide()
+    //   this.logflag="Error"
+    //   Swal.fire("Error","Unable to get logs","error")
+    // });
  }
 
 
@@ -586,12 +591,18 @@ public slaupdate : boolean = false;
 
 
  public AllVersions:any=[]
- getBotVerions(botId:number)
+ getBotVerions(botId:number,version,template)
  {
-   this.AllVersions=[]
+   this.AllVersions=[];
+   this.logsbotid=botId
+    console.log("botid",botId);
    this.rest.getBotVersion(botId).subscribe((data:any)=>{
-      if(data.errorMessage==undefined)
+      if(data.errorMessage==undefined){
         this.AllVersions=data;
+        this.selectedversion=version
+        this.logsmodalref=this.modalService.show(template, {class:"logs-modal"})
+      }
+       
       else
         Swal.fire("Error",data.errorMessage,"error");
    },err=>{
@@ -830,7 +841,7 @@ public slaupdate : boolean = false;
         this.uipathlogs.paginator=this.paginator6;
         this.spinner.hide();
         if(action=="closed")
-        this.logs_modal=this.modalService.show(template,{class:"logs-modal"});
+        this.logsmodalref=this.modalService.show(template,{class:"logs-modal"});
       },err=>{
         console.log(err)
         this.spinner.hide()
