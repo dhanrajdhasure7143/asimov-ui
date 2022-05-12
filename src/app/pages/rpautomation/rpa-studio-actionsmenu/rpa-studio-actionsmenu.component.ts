@@ -61,6 +61,7 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
   logbyrunid:MatTableDataSource<any>;
   allLogs:any=[];
   filteredLogs:any=[];
+  logspopupopen:boolean=false
   @ViewChild("logsSort",{static:false}) logsSort:MatSort;
   @ViewChild("logsPaginator",{static:false}) logsPaginator:MatPaginator;
   @ViewChild("paginator2",{static:false}) paginator2: MatPaginator;
@@ -72,6 +73,7 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
   @ViewChild('logspopup' ,{static:false}) public logspopup:any;
   @ViewChild('auditLogsPopup',{static:false}) public auditLogsPopup:any;
   public auditLogsModelRef:BsModalRef;
+  logsmodalref:BsModalRef
   pause: any;
   resume: any;
   stop: any;
@@ -103,7 +105,6 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
  public filteredLogVersion:any;
  public logsLoading:Boolean=false;
   userRole;
-  logsmodalref:BsModalRef
   isButtonVisible: boolean;
   slider: number = 0;
   options: any = {
@@ -669,10 +670,8 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
   
    if(action=='open')
     this.filteredLogVersion=this.savebotrespose.version;
-    this.rest.getviewlogdata(this.savebotrespose.botId,this.filteredLogVersion).subscribe((response:any) =>{
-     if(response.errorMessage==undefined)
-     {
-       this.logresponse=response;
+   this.rest.getviewlogdata(this.savebotrespose.botId).subscribe(data =>{
+       this.logresponse=data;
        this.logsLoading=false;
        this.rpa_studio.spinner.hide()
        if(this.logresponse.length >0)
@@ -712,17 +711,15 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
       this.allLogs=log;
       this.filteredLogs=[...this.allLogs.filter(item=>item.version==this.filteredLogVersion)];
       this.Viewloglist = new MatTableDataSource(this.filteredLogs);
+      console.log("filteredLogs",this.filteredLogs)
       this.changeDetector.detectChanges();
       this.Viewloglist.sort=this.logsSort;
       this.Viewloglist.paginator=this.logsPaginator;
       if(action=='open')
-      this.logsmodalref=this.modalService.show(this.logspopup, {class:"logs-modal"})
-     }
-     else{
-        this.spinner.hide(); 
-        Swal.fire("Error",response.errorMessage, "error")
-        this.logsLoading=false;
-     }
+      this.logspopupopen=true
+     this.logsmodalref=this.modalService.show(this.logspopup, {class:"logs-modal"})
+        
+
    },err=>{
      this.spinner.hide();
      this.logsLoading=false;

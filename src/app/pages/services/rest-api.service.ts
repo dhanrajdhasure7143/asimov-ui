@@ -256,7 +256,7 @@ export class RestApiService{
 
   //rest-api
 
-    getviewlogdata(botid,botverid)
+    getviewlogdata(botid)
     {
       return this.http.get("/rpa-service/logs/"+botid);
     }
