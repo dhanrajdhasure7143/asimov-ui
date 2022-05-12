@@ -3,7 +3,6 @@ import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { RestApiService } from '../../services/rest-api.service';
-import { RpaStudioComponent } from '../rpa-studio/rpa-studio.component';
 import Swal from 'sweetalert2';
 @Component({
   selector: 'app-rpa-so-logs',
@@ -29,9 +28,10 @@ export class RpaSoLogsComponent implements OnInit {
   public respdata1:boolean = false;
   fileteredLoopIterations:any=[];
   public selectedLogVersion:any;
-  @Input ('savebotrespose') public savebotrespose:any;
-  @Input ('filteredLogVersion') public filteredLogVersion:any;
+  filteredLogVersion:any;
+  @Input ('logsbotid') public logsbotid:any;
   @Input ('AllVersionsList') public AllVersionsList:any=[];
+  @Input('selectedversion') public selectedversion:any;
   @ViewChild("paginator2",{static:false}) paginator2: MatPaginator;
   @ViewChild("sort2",{static:false}) sort2: MatSort;
   allLogs:any=[];
@@ -42,10 +42,11 @@ export class RpaSoLogsComponent implements OnInit {
   loopbyrunid:MatTableDataSource<any>;
   constructor( private modalService:BsModalService,
      private rest : RestApiService,
-     private changeDetector:ChangeDetectorRef,
-     private rpa_studio:RpaStudioComponent,private spinner:NgxSpinnerService) { }
+     private changeDetector:ChangeDetectorRef,private spinner:NgxSpinnerService) { }
 
   ngOnInit() {
+    this.AllVersionsList=this.AllVersionsList.map(item=>{return item.vId});
+    this.filteredLogVersion=this.selectedversion
     this.viewlogdata()
    
   }
@@ -58,8 +59,7 @@ export class RpaSoLogsComponent implements OnInit {
    let log:any=[];
    this.logresponse=[];
    this.logsLoading=true;
-  
-    this.rest.getviewlogdata(this.savebotrespose.botId).subscribe(data =>{
+    this.rest.getviewlogdata(this.logsbotid).subscribe(data =>{
       this.logresponse=data;
       console.log("res",this.logresponse)
       this.logsLoading=false;
@@ -96,6 +96,7 @@ export class RpaSoLogsComponent implements OnInit {
     });
      log.sort((a,b) => a.run_id > b.run_id ? -1 : 1);
      this.allLogs=log;
+     console.log("filteredLogVersion",this.filteredLogVersion)
      this.filteredLogs=[...this.allLogs.filter(item=>item.version==this.filteredLogVersion)];
      console.log("filteredLogs",this.filteredLogs)
      this.Viewloglist = new MatTableDataSource(this.filteredLogs);
@@ -130,7 +131,7 @@ export class RpaSoLogsComponent implements OnInit {
     let resplogbyrun:any=[];
    
     this.logsLoading=true;
-    this.rest.getViewlogbyrunid(this.savebotrespose.botId,version,runid).subscribe((data:any)=>{
+    this.rest.getViewlogbyrunid(this.logsbotid,version,runid).subscribe((data:any)=>{
       if(data.errorMessage==undefined)
       {
        responsedata = [...data];

@@ -62,7 +62,7 @@
                       <th mat-header-cell *matHeaderCellDef> Version
                         <span >
                           <select class="logsVersionFilter clickable1" (change)="changeLogVersion($event)" [value]="filteredLogVersion" >
-                            <option [selected]="filteredLogVersion==version.vId" [value]="version.vId" *ngFor="let version of AllVersionsList">V {{version.vId}}</option>
+                            <option [selected]="filteredLogVersion==version" [value]="version" *ngFor="let version of AllVersionsList">V {{version}}</option>
                           </select>
                         </span>
                      </th>
