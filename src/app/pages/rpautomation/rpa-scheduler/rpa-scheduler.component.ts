@@ -321,6 +321,72 @@ export class RpaSchedulerComponent implements OnInit {
 
 
 
+  // async saveschedule()
+  // {
+  //   if(this.botid !=undefined && this.botid != "" && this.botid!="not_saved")
+  //   {
+  //     if(this.schedule_list.length==0)
+  //     {
+  //       this.botdata.botMainSchedulerEntity=null;
+  //     }
+  //     else
+  //     {
+  //       let schedules:any=[]
+  //       this.schedule_list.forEach(data=>{
+  //         if(data.save_status=="unsaved")
+  //         {
+  //           delete data.intervalId
+  //           schedules.push(data);
+  //         }
+  //         else if(data.save_status=="saved")
+  //         {
+  //           schedules.push(data)
+  //         }
+  //       })
+  //       if(this.botdata.botMainSchedulerEntity==null)
+  //       {
+  //         this.botdata.botMainSchedulerEntity={"scheduleIntervals":schedules};
+  //       }
+  //       else if(schedules.length==0)
+  //       {
+  //         this.botdata.botMainSchedulerEntity=null;
+  //       }
+  //     }
+  //     await (await this.rest.updateBot(this.botdata)).subscribe(data =>{
+  //       let resp:any=data;
+  //       if(resp.botMainSchedulerEntity.scheduleIntervals.length==0)
+  //       {
+  //         this.notifier.notify("success","Updated successfully")
+  //       }
+  //       else if(resp.botMainSchedulerEntity.scheduleIntervals.length==this.schedule_list.length)
+  //       {
+  //         //this.actions.schpop=false;
+  //         //this.close()
+
+  //         this.notifier.notify("success", "Schedules saved successfully");
+  //         //Swal.fire("Schedules saved successfully","","success");
+  //       }
+  //       this.get_schedule();
+  //     })
+  //   }
+  //   else
+  //   {
+  //     let schedules:any=[]
+  //       this.schedule_list.forEach(data=>{
+  //         if(data.save_status=="unsaved")
+  //         {
+  //           delete data.intervalId
+  //           schedules.push(data);
+  //         }
+  //       });
+  //     this.notifier.notify("success","Schedule configured successfully")
+  //     let sch:any={
+  //       scheduleIntervals:schedules,
+  //     }
+  //     this.actions.saveschedule(sch,this.schedule_list);
+  //   }
+  // }
+
   async saveschedule()
   {
     if(this.botid !=undefined && this.botid != "" && this.botid!="not_saved")
@@ -354,7 +420,10 @@ export class RpaSchedulerComponent implements OnInit {
       }
       await (await this.rest.updateBot(this.botdata)).subscribe(data =>{
         let resp:any=data;
-        if(resp.botMainSchedulerEntity.scheduleIntervals.length==0)
+        if(resp.errorMessage){
+          this.notifier.notify("error","Failed to save the scheduler")
+        }
+        else if(resp.botMainSchedulerEntity.scheduleIntervals.length==0)
         {
           this.notifier.notify("success","Updated successfully")
         }
@@ -366,6 +435,7 @@ export class RpaSchedulerComponent implements OnInit {
           this.notifier.notify("success", "Schedules saved successfully");
           //Swal.fire("Schedules saved successfully","","success");
         }
+       
         this.get_schedule();
       })
     }
@@ -386,8 +456,6 @@ export class RpaSchedulerComponent implements OnInit {
       this.actions.saveschedule(sch,this.schedule_list);
     }
   }
-
-
   getenvironments()
   {
     this.rest.listEnvironments().subscribe(response=>{

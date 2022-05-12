@@ -59,6 +59,7 @@ import { TaskPipe } from './custom-pipes/task.pipe';
 import { TasksearchPipe } from './custom-pipes/tasksearch.pipe';
 import {MatPaginatorIntl} from '@angular/material';
 import { CustomMatPaginatorIntl } from 'src/app/shared/custom-mat-paginator-int';
+import { RpaSoLogsComponent } from './rpa-so-logs/rpa-so-logs.component';
 
 @NgModule({
   declarations: [
@@ -86,7 +87,8 @@ import { CustomMatPaginatorIntl } from 'src/app/shared/custom-mat-paginator-int'
     EnvnameRpa,
 	RpaCredentialsComponent,
 	TaskPipe,
-	TasksearchPipe
+	TasksearchPipe,
+	RpaSoLogsComponent
   ],
   imports: [
     NgxMaterialTimepickerModule,
@@ -122,6 +124,7 @@ import { CustomMatPaginatorIntl } from 'src/app/shared/custom-mat-paginator-int'
     MatSlideToggleModule,
     Ng5SliderModule,
   ],
+  exports:[RpaSoLogsComponent],
   providers: [MatDatepickerModule,Rpa_Hints, BsModalRef, BsModalService,
     {
            provide: MatPaginatorIntl, 
