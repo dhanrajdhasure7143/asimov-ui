@@ -83,7 +83,6 @@
         </mat-tab> -->
 
                 <mat-tab label="Bots">
-
                     <ng-template mat-tab-label>
                         <mat-icon>android</mat-icon>
                         &nbsp;&nbsp; Bots
@@ -92,7 +91,7 @@
                         <app-new-so-bots></app-new-so-bots>
                     </div>
                 </mat-tab>
-               <!-- <mat-tab label="Bot Management">
+               <mat-tab label="Bot Management">
 
                     <ng-template mat-tab-label>
                         <mat-icon>desktop_windows</mat-icon>
@@ -101,9 +100,9 @@
                     <div class="h-100" *ngIf="check_tab==1">
                         <app-so-environments></app-so-environments>
                     </div>
-                </mat-tab>-->
+                </mat-tab>
 
-                <!--<mat-tab label="Bot Management">
+                <mat-tab label="Bot Management">
 
                     <ng-template mat-tab-label>
                         <i class="material-icons">inbox</i> &nbsp;&nbsp; Incident Management
@@ -111,14 +110,14 @@
                     <div class="h-100" *ngIf="check_tab==2">
                         <app-new-so-management></app-new-so-management>
                     </div>
-                </mat-tab>-->
+                </mat-tab>
 
                 <mat-tab label="Orchestrator">
                     <ng-template mat-tab-label>
                         <mat-icon>control_camera</mat-icon>
                         &nbsp;&nbsp; Orchestration
                     </ng-template>
-                    <div class="h-100" *ngIf="check_tab==1">
+                    <div class="h-100" *ngIf="check_tab==3">
                         <app-new-so-automated-tasks></app-new-so-automated-tasks>
                     </div>
                 </mat-tab>
@@ -128,11 +127,39 @@
                         <mat-icon>android</mat-icon>
                         &nbsp;&nbsp; Bot Management
                     </ng-template>
-                    <div class="h-100" *ngIf="check_tab==2">
+                    <div class="h-100" *ngIf="check_tab==4">
                         <app-new-so-bot-management></app-new-so-bot-management>
                     </div>
                 </mat-tab>
+                <mat-tab label="Monitoring">
+                    <ng-template mat-tab-label>
+                        <!-- <button (mouseover)="createPlanmenuTrigger.openMenu()" (mouseout)="$event.stopPropagation();createPlanmenuTrigger.openMenu()"   #createPlanmenuTrigger="matMenuTrigger"  [matMenuTriggerFor]="Menu" > -->
+                        <i class="fa fa-chart-area" style="font-size:20px"></i> &nbsp;&nbsp; Monitoring
 
+                        <!-- </button> -->
+
+                        <!-- <mat-menu #Menu="matMenu">
+              <button mat-menu-item (click)="option(0);selectedTab=6;check_tab=6">Health Status</button>
+              <button mat-menu-item>
+                <a style="color:black;text-decoration: none;"
+                href="https://www.site24x7.in/app/client#/home/monitors/9895000000009020/Device" target="_blank">Dashboard</a>
+              </button>
+              <button mat-menu-item (click)="option(1);selectedTab=6;check_Tab=6">Metrics</button>
+            </mat-menu> -->
+                    </ng-template>
+                    <div class="h-100" *ngIf="check_tab==5">
+                        <app-so-monitoring></app-so-monitoring>
+                    </div>
+                    <!-- <div *ngIf="options==0">
+            <br>
+            <app-so-health-status></app-so-health-status>
+          </div>
+          <div *ngIf="options==1">
+            <iframe src='https://www.site24x7.in/public/dashboard/pKHl5Tx2Kb8SZoqcmJDaF3ziM9MyghE1VrBRTQQpOj9Ryc96EyKu/oDHVjt8ZTmMvy2blPi5kZ4kSBRbVULvP0csw2a0rmiewwe3Qt39Ur/dqnq0NXu6kw==' (load)="spinner.hide()" scrolling='yes'  height='600' style="width:100%"  (load)="spinner.hide()" border='0' frameborder='0'></iframe>
+    
+          </div>-->
+
+                </mat-tab>
                 <!-- <mat-tab label="Monitoring">
                     <ng-template mat-tab-label> -->
                         <!-- <button (mouseover)="createPlanmenuTrigger.openMenu()" (mouseout)="$event.stopPropagation();createPlanmenuTrigger.openMenu()"   #createPlanmenuTrigger="matMenuTrigger"  [matMenuTriggerFor]="Menu" > -->
@@ -170,7 +197,7 @@
                         <mat-icon>inbox</mat-icon>
                         &nbsp;&nbsp; Inbox
                     </ng-template>
-                    <div class="h-100" *ngIf="check_tab==3">
+                    <div class="h-100" *ngIf="check_tab==6">
                         <app-so-inbox></app-so-inbox>
                     </div>
                 </mat-tab>
@@ -182,7 +209,7 @@
                         <mat-icon>event_note</mat-icon>
                         &nbsp;&nbsp; Scheduled Info
                     </ng-template>
-                    <div class="h-100" *ngIf="check_tab==4">
+                    <div class="h-100" *ngIf="check_tab==7">
                         <app-scheduled-bots></app-scheduled-bots>
                     </div>
                 </mat-tab>

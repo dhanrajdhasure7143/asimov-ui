@@ -63,29 +63,31 @@ export class NewSoManagementComponent implements OnInit {
   isTableHasData:Boolean=false;
   nodata:Boolean=false;
   ngOnInit(){
-    this.spinner.show();
 
-     $(".left_arrow_chart1").hide();
-              $('.chartdivbody').hide();
-              $('.ASSolvedPer').hide();
-              $('.AsClosedRes').hide();
-              $('.ASSolvedWA').hide();
-              $('.ASSolvedRemo').hide();
-              $('.ASNew').hide();
+    this.incident_flag=true;
+    // this.spinner.show();
+
+    //  $(".left_arrow_chart1").hide();
+    //           $('.chartdivbody').hide();
+    //           $('.ASSolvedPer').hide();
+    //           $('.AsClosedRes').hide();
+    //           $('.ASSolvedWA').hide();
+    //           $('.ASSolvedRemo').hide();
+    //           $('.ASNew').hide();
     
-    //this.urlSafe= this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
-    $('.ASSolvedPer').hide();
-    $('.AsClosedRes').hide();
-    $('.ASSolvedWA').hide();
-    $('.ASSolvedRemo').hide();
-    $('.ASNew').hide();
-    $('.left_arrow_chart4').hide();
-    $('.chart_div_High_4').hide();
-    $('.chart_div_Medium_4').hide();
-    $('.chart_div_Low_4').hide();
-    this.getIncidents();
+    // //this.urlSafe= this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
+    // $('.ASSolvedPer').hide();
+    // $('.AsClosedRes').hide();
+    // $('.ASSolvedWA').hide();
+    // $('.ASSolvedRemo').hide();
+    // $('.ASNew').hide();
+    // $('.left_arrow_chart4').hide();
+    // $('.chart_div_High_4').hide();
+    // $('.chart_div_Medium_4').hide();
+    // $('.chart_div_Low_4').hide();
+    // this.getIncidents();
   
-    //this.gettickets();
+    // //this.gettickets();
   }
   getIncidents()
   {
