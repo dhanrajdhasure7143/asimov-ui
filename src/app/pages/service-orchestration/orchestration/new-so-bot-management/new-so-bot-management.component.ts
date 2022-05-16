@@ -593,11 +593,13 @@ public slaupdate : boolean = false;
  public AllVersions:any=[]
  getBotVerions(botId:number,version,template)
  {
+  this.spinner.show()
    this.AllVersions=[];
    this.logsbotid=botId
     console.log("botid",botId);
    this.rest.getBotVersion(botId).subscribe((data:any)=>{
       if(data.errorMessage==undefined){
+        this.spinner.show()
         this.AllVersions=data;
         this.selectedversion=version
         this.logsmodalref=this.modalService.show(template, {class:"logs-modal"})
