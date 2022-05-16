@@ -178,11 +178,22 @@ span.testtooltip:before {
 .tsttooltipbtn:hover span.testtooltip {
     display: block;
 }
-
 .tsttooltipbtn:hover .default-img{
     display: none;
 }
-
 .tsttooltipbtn:hover .hover-img {
     display: initial;
+}
+
+.prop_owner .td_spocol {
+    width: 30% !important;
+}
+.prop_docs .td_docol {
+    width: 25% !important;
+}
+.prop_docs th:first-child {
+    width: 30%;
+}
+.prop_docs th:last-child {
+    width: 6%;
 }

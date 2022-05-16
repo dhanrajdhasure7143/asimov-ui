@@ -1,7 +1,7 @@
 .vcm-leveldiv {
     margin-top: 12px;
-    overflow: hidden;
-    height: calc(100vh - 142px);
+    /* overflow: hidden;
+    height: calc(100vh - 142px); */
 }
 
 .vcm-leveldiv h4 {
@@ -39,8 +39,8 @@
 .dbichart-block {
     background: #f4fafd;
     border: 1px solid #cfe1f7;
-    min-height: 67vh;
-    /* min-height: calc(100vh - 225px); */
+    /* min-height: 67vh; */
+    min-height: calc(100vh - 220px);
     margin-bottom: 0px !important;
 }
 
@@ -425,14 +425,14 @@ span.polabel {
 }
 /* properties overlay End*/
 
-.l2proccess-list {
+/* .l2proccess-list {
     overflow: auto;
     height: calc(100vh - 392px);
 }
 .l1processlistdiv {
     overflow: auto;
     height: calc(100vh - 279px);
-}
+} */
 .files span.fname {
     font-weight: 600;
     width: 100%;
@@ -547,4 +547,16 @@ p.podefault {
 }
 .pousersdiv p:hover {
    background-color: #f3f3f3;
+}
+
+.dbichart-body {
+    height: 60vh;
+}
+.l1processlistdiv {
+    overflow: auto;
+    height: calc(67vh - 60px);
+}
+.l2process-list {
+    overflow: auto;
+    height: calc(67vh - 175px);
 }
