@@ -461,7 +461,7 @@
       <h4><b>Your instance is hibernating</b></h4>
       <h4>Sign in to the service now to wake your instance</h4>
     
-      <a class="btn btn-primary" href="https://dev114035.service-now.com/api/now/table/incident" target="blank">Sign in</a>&nbsp;<button class="btn btn-default" (click)="ngOnInit()">Refresh</button>
+      <button [disabled]="true" class="btn btn-primary" href="https://dev114035.service-now.com/api/now/table/incident" target="blank">Sign in</button>&nbsp;<button disabled="true"  class="btn btn-default" (click)="ngOnInit()">Refresh</button>
 </div>
 
 <!-- <div class="text-center" >
