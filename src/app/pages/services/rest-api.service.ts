@@ -1395,5 +1395,11 @@ deleteSelectedvcmProcess(body){
   return this.http.post('/vcmv2/deleteVcmByLevel',body);
 }
 
+getBpmnNotationByIdandVersion(body){ //  bps workspace api
+  return this.http.post("/bpsprocess/fetchByBpmnModelandVersion",body);
+}
+getUserBpmnsListWithoutNotation(){ //  bps workspace api
+  return this.http.get("/bpsprocess/fetchByTenantwithoutNotation");
+}
 
 }
