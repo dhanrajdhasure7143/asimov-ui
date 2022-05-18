@@ -598,16 +598,19 @@ public slaupdate : boolean = false;
    this.logsbotid=botId
     console.log("botid",botId);
    this.rest.getBotVersion(botId).subscribe((data:any)=>{
+     this.spinner.hide();
       if(data.errorMessage==undefined){
-        this.spinner.show()
         this.AllVersions=data;
         this.selectedversion=version
         this.logsmodalref=this.modalService.show(template, {class:"logs-modal"})
       }
        
       else
+      {
         Swal.fire("Error",data.errorMessage,"error");
+      }
    },err=>{
+      this.spinner.hide()
       Swal.fire("Error","Unable to get versions","error")
    })
  }

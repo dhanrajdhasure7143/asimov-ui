@@ -1391,6 +1391,11 @@ getLooplogs(botId,version,runId){
   return this.http.get(`/rpa-service/loop-logs/${botId}/${version}/${runId}`);
 }
 
+getAutomationLogs(botId, version, runId)
+{
+  return this.http.get(`/rpa-service/automation-logs/${botId}/${version}/${runId}`);
+}
+
 deleteSelectedvcmProcess(body){
   return this.http.post('/vcmv2/deleteVcmByLevel',body);
 }

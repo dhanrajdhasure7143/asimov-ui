@@ -17,6 +17,7 @@ export class RpaSoLogsComponent implements OnInit {
   displayedColumns: string[] = ['run_id','version','start_date','end_date', "bot_status"];
   displayedColumns1: string[] = ['task_name', 'status','start_date','end_date','error_info' ];
   displayedloopColumns:string[]=['taskName','status','startTS','endTS',"errorMsg"];
+  automationLogColoumns:string[]=['internaltaskName','startTS','endTS', 'status','errorMsg']
   public viewlogid1:any;
   selectedIterationTask:any=undefined;
   public logsLoading:Boolean=false;
@@ -29,6 +30,7 @@ export class RpaSoLogsComponent implements OnInit {
   fileteredLoopIterations:any=[];
   public selectedLogVersion:any;
   filteredLogVersion:any;
+  public selectedAutomationTask:any=undefined;
   @Input ('logsbotid') public logsbotid:any;
   @Input ('AllVersionsList') public AllVersionsList:any=[];
   @Input('selectedversion') public selectedversion:any;
@@ -40,6 +42,8 @@ export class RpaSoLogsComponent implements OnInit {
   loopIterations:any=[];
   logbyrunid:MatTableDataSource<any>;
   loopbyrunid:MatTableDataSource<any>;
+  automationLogs:any=[];
+  automationLogsTable:MatTableDataSource<any>;
   constructor( private modalService:BsModalService,
      private rest : RestApiService,
      private changeDetector:ChangeDetectorRef,private spinner:NgxSpinnerService) { }
@@ -314,6 +318,29 @@ export class RpaSoLogsComponent implements OnInit {
       this.logsLoading=false;
       Swal.fire("Error","Unable to open loop logs","error");
       console.log(err)
+    })
+  }
+
+
+  getAutomationLogs(taskData:any)
+  {
+
+    this.selectedAutomationTask=taskData;
+    this.logsLoading=true;
+    this.rest.getAutomationLogs(taskData.bot_id, taskData.version, taskData.run_id).subscribe((response:any)=>{
+      this.logsLoading=false;
+      if(response.errorMessage==undefined)
+      {
+        this.automationLogs=response;
+        this.automationLogsTable=new MatTableDataSource([...this.automationLogs]);
+      }
+      else
+      {
+        Swal.fire("Error",response.errorMessage,"error");
+      }
+    },err=>{
+      this.logsLoading=false
+      Swal.fire("Error","Unable to get automation Logs","error")
     })
   }
 
