@@ -2,27 +2,21 @@ import { Component, Input, OnInit, Output, EventEmitter, ViewChild } from '@angu
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
-import { object } from '@amcharts/amcharts4/core';
 @Component({
   selector: 'app-dynamic-forms',
   template:`
     <form  [formGroup]="form" class="form-horizontal">
       <div class="container m-contanier form-body">
         <div class="col-md-12 p-0 form-group"  [id]="field.id+'_form_data'"  *ngFor="let field of fields; let i =index ">
-            <form-builder [field]="field" [form]="form"></form-builder>
+            <form-builder [field]="field" [fields]="fields" [form]="form"></form-builder>
         </div>
-
-
-
-        
+       
         <div *ngIf="isMultiForm==true">
           <br>
             <button class="btn btn-success" *ngIf="editfill==false" [disabled]="!form.valid" (click)="Push()" >Add</button>
             <button class="btn btn-success" *ngIf="editfill==true" [disabled]="!form.valid" (click)="Push()" >Update</button>
           <br><br>
         </div>
-
-
 
         <div class="mt-2" *ngIf="isMultiForm==true">
         <div class="tablmacl">
@@ -93,10 +87,41 @@ export class DynamicFormsComponent implements OnInit {
      
   }
   edit(obj){
-    
+    debugger
+    console.log("editobj",obj)
     this.editfill=true
-this.id=obj.id
-this.form.patchValue(obj)
+  this.id=obj.id;
+  if(obj.Action_525=='fill'){
+    this.fields.forEach(item=>{
+       if(item.visibility==false){
+         item.visibility=true;
+         item.required=true;
+       
+       } 
+       this.form.patchValue(obj)
+    })
+  }
+  else if(obj.Action_525=='click'){
+    this.fields.forEach(item=>{
+      let hideAttributes:any=item.options.find(item=>item.key==obj.Action_525)!=undefined?item.options.find(item=>item.key==obj.Action_525).hide_attributes:"";
+       let hideAttributesIds:any=hideAttributes!=null?hideAttributes.split(","):[];
+        hideAttributesIds.forEach(item=>{
+          if(this.fields.find(fieldItem=>fieldItem.id==parseInt(item))!=undefined){
+            this.fields.find(fieldItem=>fieldItem.id==parseInt(item)).visibility=false;
+            this.fields.find(fieldItem=>fieldItem.id==parseInt(item)).required=false;
+            this.form.patchValue(obj);
+           
+           
+          }
+            
+        });
+        
+    })
+   
+  }
+else{
+  this.form.patchValue(obj);
+}
   }
   delete(obj){
     
@@ -194,6 +219,7 @@ this.fillarray.splice(index, 1);
   }
 
   ngOnInit() {
+    console.log(this.fields)
     let fieldsCtrls = {};
     this.isMultiForm=(this.enableMultiForm.check)
   
