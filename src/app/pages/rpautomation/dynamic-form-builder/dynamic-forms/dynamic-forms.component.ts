@@ -2,6 +2,7 @@ import { Component, Input, OnInit, Output, EventEmitter, ViewChild } from '@angu
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { iter } from '@amcharts/amcharts4/core';
 @Component({
   selector: 'app-dynamic-forms',
   template:`
@@ -28,14 +29,13 @@ import { MatPaginator } from '@angular/material/paginator';
                </thead>
                 <tbody>
                     <tr *ngFor="let eachObj of fillarray  | paginate: { itemsPerPage: 2,currentPage: q }">
-                        
-                        <td *ngFor="let field of fields">
-                        {{eachObj[field.name+"_"+field.id]}}
-                        </td>
+                    <td *ngFor="let field of fields">
+                     {{eachObj[field.name+"_"+field.id]?eachObj[field.name+"_"+field.id]:'NA'}}
+                     </td>                    
                        <td>
                        <button tooltip="Edit" placement="bottom"  (click)="edit(eachObj)"><img src="../../../../assets/images/RPA/icon_latest/edit.svg" alt="" class="testplus">&nbsp;</button>
                      <button tooltip="Delete" placement="bottom"  (click)="delete(eachObj)"><img src="../../../../assets/images/RPA/icon_latest/delete.svg" alt="" class="testplus">&nbsp;</button>
-                       <td>
+                       </td>
                     </tr>
                 </tbody>
             </table>
@@ -71,144 +71,123 @@ export class DynamicFormsComponent implements OnInit {
   data: any=[]
   id: any;
   editfill:boolean=false;
-
   constructor() {
    }
   onSub(){
-
     if(this.enableMultiForm.check==true){
       this.Submit.emit(this.data)
     }
     else{
       this.onSubmit.emit(this.form.value)
-    }
-   
-     
-     
+    }    
   }
-  edit(obj){
-    debugger
-    console.log("editobj",obj)
-    this.editfill=true
-  this.id=obj.id;
-  if(obj.Action_525=='fill'){
-    this.fields.forEach(item=>{
-       if(item.visibility==false){
-         item.visibility=true;
-         item.required=true;
-       
-       } 
-       this.form.patchValue(obj)
-    })
-  }
-  else if(obj.Action_525=='click'){
-    this.fields.forEach(item=>{
-      let hideAttributes:any=item.options.find(item=>item.key==obj.Action_525)!=undefined?item.options.find(item=>item.key==obj.Action_525).hide_attributes:"";
-       let hideAttributesIds:any=hideAttributes!=null?hideAttributes.split(","):[];
-        hideAttributesIds.forEach(item=>{
-          if(this.fields.find(fieldItem=>fieldItem.id==parseInt(item))!=undefined){
-            this.fields.find(fieldItem=>fieldItem.id==parseInt(item)).visibility=false;
-            this.fields.find(fieldItem=>fieldItem.id==parseInt(item)).required=false;
-            this.form.patchValue(obj);
-           
-           
+  edit(obj) {
+    console.log("editobj", obj)
+    this.editfill = true
+    this.id = obj.id;
+    if (obj.Action_525 == 'fill') {
+      this.fields.forEach(item => {
+        if (item.visibility == false) {
+          item.visibility = true;
+          item.required = true;
+        }
+        setTimeout(() => {
+          this.form.patchValue(obj)
+        }, 100);
+      })
+    } else if (obj.Action_525 == 'click') {
+    this.fields.forEach(item => {
+        let hideAttributes: any = item.options.find(item => item.key == obj.Action_525) != undefined ? item.options.find(item => item.key == obj.Action_525).hide_attributes : "";
+        let hideAttributesIds: any = hideAttributes != null ? hideAttributes.split(",") : [];
+        hideAttributesIds.forEach(item => {
+          if (this.fields.find(fieldItem => fieldItem.id == parseInt(item)) != undefined) {
+            this.fields.find(fieldItem => fieldItem.id == parseInt(item)).visibility = false;
+            this.fields.find(fieldItem => fieldItem.id == parseInt(item)).required = false;
+            // this.form.patchValue(obj);
           }
-            
         });
-        
-    })
-   
+        if(!item.visibility){
+          console.log("item", this.form.get([item.name+'_'+item.id]))
+          console.log("fileds",this.fields)
+          this.form.get([item.name+'_'+item.id]).clearValidators();
+         }
+         this.form.get([item.name+'_'+item.id]).updateValueAndValidity()
+         this.form.patchValue(obj);
+
+      })
+    } else {
+      this.form.patchValue(obj);
+    }
   }
-else{
-  this.form.patchValue(obj);
-}
-  }
-  delete(obj){
-    
+  delete(obj) {
     var index = this.fillarray.indexOf(obj);
-
-this.fillarray.splice(index, 1); 
-    
+    this.fillarray.splice(index, 1);
   }
-  Push(){
-    
-    if(this.editfill==true){
-      let value=(this.form.value)
-      value.id=this.id
-
-    for(let i=0;i<this.fillarray.length;i++){
-      if(this.fillarray[i].id==this.id){
-        this.fillarray[i]=value;
-        this.editfill=false
+  Push() {
+    if (this.editfill == true) {
+      let value = (this.form.value)
+      value.id = this.id
+      for (let i = 0; i < this.fillarray.length; i++) {
+        if (this.fillarray[i].id == this.id) {
+          this.fillarray[i] = value;
+          this.editfill = false
+        }
       }
-    }
-    this.data=this.fillarray.map(p=>{
-      // return{
-      //   "webElementType":p.webElementType_223,
-      //   "webElementValue":p.webElementValue_224,
-      //   "fillValueType":p.fillValueType_222,
-      //   "fillValue":p.fillValue_225,
-      //   "id":p.id
-
-      // }
-      let filteredobject={};
-      let sample=(Object.keys(p));
-      sample.map(item=>{
-        if(item!="id")
-          filteredobject[item.split("_")[0]]=p[item];
-        else
-          filteredobject["id"]=p[item];
-      })    
-      console.log("object",filteredobject)
-      return filteredobject;
-    })
-    }
-    else{
-      let value=(this.form.value)
-   
-     
-      this.fillarray.push(this.form.value);
-      this.fillarray.forEach((item, i) => {
-        item.id = i + 1;
-      });
-       
-      this.data=this.fillarray.map(p=>{
-        
-        let filteredobject={};
-        let sample=(Object.keys(p));
-        sample.map(item=>{
-          if(item!="id")
-          filteredobject[item.split("_")[0]]=p[item];
-          else
-          filteredobject["id"]=p[item];
-        })    
-        console.log("object",filteredobject)
-        return filteredobject;
-        
-
+      this.data = this.fillarray.map(p => {
         // return{
         //   "webElementType":p.webElementType_223,
         //   "webElementValue":p.webElementValue_224,
         //   "fillValueType":p.fillValueType_222,
         //   "fillValue":p.fillValue_225,
         //   "id":p.id
-  
+
         // }
+        let filteredobject = {};
+        let sample = (Object.keys(p));
+        sample.map(item => {
+          if (item != "id")
+            filteredobject[item.split("_")[0]] = p[item];
+          else
+            filteredobject["id"] = p[item];
+        })
+        console.log("object", filteredobject)
+        return filteredobject;
       })
     }
-   
-  
-   
-    this.form.reset();
-   
-    // console.log(this.fields)
+    else {
+      let value = (this.form.value)
+      this.fillarray.push(this.form.value);
+      this.fillarray.forEach((item, i) => {
+        item.id = i + 1;
+      });
+      this.data = this.fillarray.map(p => {
+        let filteredobject = {};
+        let sample = (Object.keys(p));
+        sample.map(item => {
+          if (item != "id")
+            filteredobject[item.split("_")[0]] = p[item];
+          else
+            filteredobject["id"] = p[item];
+        })
+        console.log("object", filteredobject)
+        return filteredobject;
+        // return{
+        //   "webElementType":p.webElementType_223,
+        //   "webElementValue":p.webElementValue_224,
+        //   "fillValueType":p.fillValueType_222,
+        //   "fillValue":p.fillValue_225,
+        //   "id":p.id
+
+        // }
+      })
+    }  
+    this.form.reset();   
     for(let i=0;i<this.fields.length;i++){
       if(this.fields[i].type=="dropdown"){
         this.fields[i].value="";
         this.form.get([this.fields[i].name+'_'+this.fields[i].id]).setValue("")
       }
     }
-    // console.log(this.fields)
   }
   
   idGenerator() {
@@ -219,7 +198,6 @@ this.fillarray.splice(index, 1);
   }
 
   ngOnInit() {
-    console.log(this.fields)
     let fieldsCtrls = {};
     this.isMultiForm=(this.enableMultiForm.check)
   
@@ -284,7 +262,6 @@ this.fillarray.splice(index, 1);
 
     }
     this.form = new FormGroup(fieldsCtrls);
-    console.log(this.fields)
     this.userRole = localStorage.getItem("userRole");
       if(this.userRole=='Process Owner' || this.userRole=='RPA Developer'){
         this.isdisabled=null
