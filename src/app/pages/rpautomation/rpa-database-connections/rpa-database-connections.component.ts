@@ -61,9 +61,11 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
         hostAddress: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         categoryId:["0", Validators.compose([Validators.required])],
         password: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
-        portNumber: ["",  Validators.compose([Validators.required, Validators.maxLength(6)])],
+        portNumber: ["",  Validators.compose([ Validators.maxLength(6)])],
         schemaName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-        username: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],    
+        username: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        role:["",Validators.compose([Validators.maxLength(50)])],
+        warehouse:["",Validators.compose([Validators.maxLength(50)])],
         activeStatus: [true], 
     })
   
@@ -74,9 +76,11 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
         categoryId:["0", Validators.compose([Validators.required])],
         hostAddress: ["", Validators.compose([Validators.required,Validators.maxLength(50)])],
         password: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
-        portNumber: ["",  Validators.compose([Validators.required, Validators.maxLength(6)])],
+        portNumber: ["",  Validators.compose([ Validators.maxLength(6)])],
         schemaName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         username: ["", Validators.compose([Validators.required, Validators.maxLength(50)])], 
+        role:["",Validators.compose([Validators.maxLength(50)])],
+        warehouse:["",Validators.compose([Validators.maxLength(50)])],
         activeStatus: [""], 
       
     })
@@ -384,6 +388,8 @@ updatedbdata()
         this.updatedbForm.get("portNumber").setValue(this.dbupdatedata["portNumber"]);
         this.updatedbForm.get("schemaName").setValue(this.dbupdatedata["schemaName"]);
         this.updatedbForm.get("username").setValue(this.dbupdatedata["username"]);
+        this.updatedbForm.get("role").setValue(this.dbupdatedata["role"]);
+        this.updatedbForm.get("warehouse").setValue(this.dbupdatedata["warehouse"]);
         break;
       }
     }

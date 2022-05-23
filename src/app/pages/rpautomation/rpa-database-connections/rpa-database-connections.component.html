@@ -255,7 +255,8 @@
                                 <label class="label-control" for="dataBaseType">Database Type<span class="star">*</span></label>
                                 <select class="form-control" formControlName="dataBaseType">
                                     <option value="" [selected]="true">--Select Database Type--</option>
-                                    <option value="PostgreSQL">PostgreSQL</option>                      
+                                    <option value="PostgreSQL">PostgreSQL</option>  
+                                    <option value="Snowflake">Snowflake</option>                    
                                   </select>
                                 <span *ngIf="insertdbForm.get('dataBaseType').invalid && insertdbForm.get('dataBaseType').touched" class="errspan required"> Database Type Required*</span>
                             </div>
@@ -288,7 +289,9 @@
                         
                          
                             <div class="col-md-12 p-0 form-group">
-                                <label class="label-control" for="portNumber">Port<span class="star">*</span></label>
+                                <label class="label-control" for="portNumber">Port
+                                    <!-- <span class="star">*</span> -->
+                                </label>
                                 <input type="text" maxlength="7" class="form-control" onkeypress="return (event.charCode > 47 && event.charCode < 58)" formControlName="portNumber" value="" placeholder="Enter Port">    
                                 <span *ngIf="(insertdbForm.get('portNumber').invalid && insertdbForm.get('portNumber').touched) && !insertdbForm.controls['portNumber'].hasError('maxlength')" class="errspan required"> Port Required*</span>
                                 <div *ngIf="insertdbForm.controls['portNumber'].hasError('maxlength')" class="errspan required">
@@ -333,6 +336,31 @@
     
                                 <span *ngIf="(insertdbForm.get('schemaName').invalid && insertdbForm.get('schemaName').touched) && !insertdbForm.controls['schemaName'].hasError('maxlength')" class="errspan required"> Schema Required*</span>
                                 <div *ngIf="insertdbForm.controls['schemaName'].hasError('maxlength')" class="errspan required">
+                                    Maximum of 50 characters
+                                </div>  
+                            </div>
+
+
+                            <div class="col-md-12 p-0 form-group">
+                                <label class="label-control" for="role">Role</label>
+                                <input type="text" maxlength="51" class="form-control data" formControlName="role" #role value="" placeholder="Enter Role">
+    
+                                <!-- <span *ngIf="(insertdbForm.get('role').invalid && insertdbForm.get('role').touched) && !insertdbForm.controls['role'].hasError('maxlength')" class="errspan required"> Schema Required*</span> -->
+                                <div *ngIf="insertdbForm.controls['schemaName'].hasError('maxlength')" class="errspan required">
+                                    Maximum of 50 characters
+                                </div>  
+                            </div>
+
+
+
+
+                            
+                            <div class="col-md-12 p-0 form-group">
+                                <label class="label-control" for="warehouse">Warehouse</label>
+                                <input type="text" maxlength="51" class="form-control data" formControlName="warehouse" #role value="" placeholder="Enter Warehouse">
+    
+                                <!-- <span *ngIf="(insertdbForm.get('warehouse').invalid && insertdbForm.get('warehouse').touched) && !insertdbForm.controls['warehouse'].hasError('maxlength')" class="errspan required"> Ware Required*</span> -->
+                                <div *ngIf="insertdbForm.controls['warehouse'].hasError('maxlength')" class="errspan required">
                                     Maximum of 50 characters
                                 </div>  
                             </div>
@@ -382,7 +410,8 @@
                                 <label class="label-control" for="dataBaseType">Database Type<span class="star">*</span></label>
                                 <select class="form-control" formControlName="dataBaseType">
                                     <option value="" [selected]="true">--Select Database Type--</option>
-                                    <option value="PostgreSQL">PostgreSQL</option>                      
+                                    <option value="PostgreSQL">PostgreSQL</option> 
+                                    <option value="Snowflake">Snowflake</option>                                         
                                   </select>
                                 <span *ngIf="updatedbForm.get('dataBaseType').invalid && updatedbForm.get('dataBaseType').touched" class="errspan required"> Database Type Required*</span>
                             </div>
@@ -415,7 +444,9 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12 p-0 form-group">
-                                <label class="label-control" for="portNumber">Port<span class="star">*</span></label>
+                                <label class="label-control" for="portNumber">Port
+                                    <!-- <span class="star">*</span> -->
+                                </label>
                                 <input type="text" maxlength="7" class="form-control" onkeypress="return (event.charCode > 47 && event.charCode < 58)" formControlName="portNumber" value="" placeholder="Enter Port">       
     
                                 <span *ngIf="(updatedbForm.get('portNumber').invalid && updatedbForm.get('portNumber').touched) && !updatedbForm.controls['portNumber'].hasError('maxlength')" class="errspan required"> Port Required*</span>
@@ -466,6 +497,30 @@
                                     Maximum of 50 characters
                                 </div>  
                             </div>
+
+                            <div class="col-md-12 p-0 form-group">
+                                <label class="label-control" for="role">Role</label>
+                                <input type="text" maxlength="51" class="form-control data" formControlName="role" #role value="" placeholder="Enter Role">
+
+                                <!-- <span *ngIf="(insertdbForm.get('role').invalid && insertdbForm.get('role').touched) && !insertdbForm.controls['role'].hasError('maxlength')" class="errspan required"> Schema Required*</span> -->
+                                <div *ngIf="insertdbForm.controls['schemaName'].hasError('maxlength')" class="errspan required">
+                                    Maximum of 50 characters
+                                </div>  
+                            </div>
+
+
+
+
+                        
+                        <div class="col-md-12 p-0 form-group">
+                            <label class="label-control" for="warehouse">Warehouse</label>
+                            <input type="text" maxlength="51" class="form-control data" formControlName="warehouse" #role value="" placeholder="Enter Warehouse">
+
+                            <!-- <span *ngIf="(insertdbForm.get('warehouse').invalid && insertdbForm.get('warehouse').touched) && !insertdbForm.controls['warehouse'].hasError('maxlength')" class="errspan required"> Ware Required*</span> -->
+                            <div *ngIf="insertdbForm.controls['warehouse'].hasError('maxlength')" class="errspan required">
+                                Maximum of 50 characters
+                            </div>  
+                        </div>
                             
                         </div>
                         <div class="row">
