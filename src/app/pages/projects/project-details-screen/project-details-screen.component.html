@@ -1127,7 +1127,108 @@
 
                 </mat-card>
             </div>
+
+            <div class="col-md-12 p-0 process-understanding">
+                <mat-card id="">
+                    <div class="">
+                    <div class="row module-subheader-title">
+                        <div class="col-md-12 p-0">
+                            <mat-expansion-panel class="process-expansion">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title  disabled="true">
+                                        <span class="module-sub-header-title" style="font-size:15px">
+                                            <b>Process Undestanding</b>                
+                                        </span>
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="">
+                                    <div class="col-md-12 p-0 process-div">
+                                        <div class="process-under">
+                                            <form action="" #processForm="ngForm">
+                                                <div class="col-md-12 pl-0 form-fields">
+                                                    <label class="label-control">Business Challenge <!-- <span class="star">*</span> -->
+                                                    </label>
+                                                    <input type="text" name="business_challange" #business_challange="ngModel" id="business_challange" [(ngModel)]="businessChallange" class="form-control" placeholder="Enter Business Challenge" required>
+                                                    <span *ngIf="((business_challange.invalid && processForm.submitted) || (business_challange.errors && business_challange.touched) )" 
+                                                    class='errspan required'> business challenge is required </span>
+                                                </div>
+                                                <div class="col-md-12 pl-0 form-fields">
+                                                    <label class="label-control">Purpose</label>
+                                                    <input type="text" name="purpose" #purpose="ngModel" [(ngModel)]="businessPurpose" class="form-control" placeholder="Enter Purpose Name" required/>
+                                                    <span *ngIf="((purpose.invalid && processForm.submitted) || (purpose.errors && purpose.touched) )" 
+                                                            class='errspan required'> purpose is required </span>
+                                                </div>
+                                                <div class="col-md-12 pl-0 form-fields">
+                                                    <label class="label-control">Problem Statement</label>
+                                                    <input type="text" name="problem_statement" #problem_statement="ngModel" id="problem_statement" [(ngModel)]="problemStatement" class="form-control" placeholder="Enter Problem Statement" required>
+                                                    <span *ngIf="((problem_statement.invalid && processForm.submitted) || (problem_statement.errors && problem_statement.touched) )" 
+                                                            class='errspan required'> problem statement is required </span>
+                                                </div>
+                                                <span>
+                                                    <button class="btn btn-primary" disabled>Submit</button>
+                                                </span>
+                                                
+                                            </form>
+                                        <div class="col-md-12 pl-0">
+                                            <mat-expansion-panel class="process-expansion">
+                                                <mat-expansion-panel-header>
+                                                    <mat-panel-title disabled="true">
+                                                        <span class="module-sub-header-title" style="font-size:15px">
+                                                            <b>Process Questionnaire</b>
+                                                        </span>
+                                                    </mat-panel-title>
+                                                </mat-expansion-panel-header>
+                                                <div class="col-md-12 p-5 process-div">
+                                                    <div class="proc_deffield">
+                                                        <input type="text" name="" [(ngModel)]="haveQuestion" id="" class="form-control" placeholder="Have a Question?">
+                                                        <span class="procdesc_act" >
+                                                            <span class="tsttooltipbtn" (click)="qBtn()">
+                                                                <img src="../../../../assets/images/VCM/Green Tick.svg" class="testplus1"/>
+                                                                <!-- <span class="testtooltip">Save</span> -->
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                    <div>
+                                                        <p><strong>Q: What is the total number of recurring emails?</strong></p>
+                                                        <button *ngIf="!isShowAnswerInput" class="btn btn-primary" (click)="answerToQuestion()">Answer</button>
+                                                        <div class="proc_deffield1" *ngIf="isShowAnswerInput">
+                                                            <input type="text" name="" id="" [(ngModel)]="haveAnswer" class="form-control" placeholder="Have a Question?">
+                                                            <span class="procdesc_act" >
+                                                                <span class="tsttooltipbtn" (click)="answer()">
+                                                                    <img src="../../../../assets/images/VCM/Green Tick.svg" class="testplus1"/>
+                                                                    <!-- <img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2"/> -->
+                                                                </span>
+                                                                <span class="tsttooltipbtn" (click)="clearAnswer()">
+                                                                    <img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2"/>
+                                                                </span>
+                                                                
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <p><strong>Q: What is the total number of recurring emails ?</strong></p>
+                                                        <p>A: 2 - 3</p>
+                                                    </div>
+                                                    <div>
+                                                        <p><strong>Q: What is the total number of Contacts accessed by this process?</strong></p>
+                                                        <p>A: 100 - 200</p>
+                                                    </div>
+                                                </div>
+                                            </mat-expansion-panel>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                            </mat-expansion-panel>
+                        </div>
+                    </div>
+                    </div>
+                </mat-card>
+            <!-- </div> -->
+            </div>
         </div>
+
+
 
     </div>
 

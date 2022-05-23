@@ -680,3 +680,49 @@ span.projectdesc {
   opacity: 0.6;
   word-wrap: break-word;
 }
+.process-div{
+  border: 1px solid #cccccc;
+}
+.process-under{
+  padding: 10px;
+}
+.process-expansion{
+  padding: 10px 20px;
+}
+.process-understanding{
+  margin-top: 15px;
+}
+.proc_deffield input {
+  width: 94%;
+  margin: 3px 0px 10px 10px;
+}
+.proc_deffield, .proc_deffield1 {
+  position: relative;
+}
+.proc_deffield span.procdesc_act, .proc_deffield1 span.procdesc_act {
+  position: absolute;
+  right: 12px;
+  top: 8px;
+}
+.proc_deffield img.testplus1 {
+  width: 15px;
+  height: 15px;
+  margin-right: 10px;
+  /* margin-top: 8px; */
+  cursor: pointer;
+}
+.proc_deffield1 input {
+  width: 50%;
+  margin: 3px 0px 10px 10px;
+}
+.proc_deffield1 img.testplus2 {
+  width: 15px;
+  height: 15px;
+  /* margin-right: 10px; */
+  cursor: pointer;
+}
+.proc_deffield1 span.procdesc_act {
+  position: absolute;
+  left: 53%;
+  top: 8px;
+}

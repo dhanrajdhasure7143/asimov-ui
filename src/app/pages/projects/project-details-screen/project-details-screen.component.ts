@@ -148,6 +148,14 @@ percentageComplete: number;
   processownername: any;
   users_data:any=[];
   sub:Subscription;
+  isShowAnswerInput:boolean=false;
+  businessChallange:any;
+  businessPurpose:any;
+  problemStatement:any;
+  haveQuestion:any;
+  questionObj:any;
+  haveAnswer:any;
+  answerObj:any;
   constructor(private dt:DataTransferService,private route:ActivatedRoute,private dataTransfer: DataTransferService, private rpa:RestApiService,
     private modalService: BsModalService,private formBuilder: FormBuilder,private router: Router,
     private spinner:NgxSpinnerService) { }
@@ -1130,5 +1138,23 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
       }
     });
     return userName;
+  }
+  answerToQuestion(){
+    this.isShowAnswerInput = !this.isShowAnswerInput
+  }
+  qBtn(){
+    this.questionObj={
+      "haveQuestion":this.haveQuestion,
+    }
+    console.log(this.questionObj)
+  }
+  answer(){
+    this.answerObj={
+      "haveAnswer":this.haveAnswer,
+    }
+    console.log(this.answerObj)
+  }
+  clearAnswer(){
+    this.haveAnswer = ''
   }
 }
