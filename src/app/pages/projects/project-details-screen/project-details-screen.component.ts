@@ -1,3 +1,4 @@
+                                                        
 import { formatDate } from '@angular/common';
 import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
@@ -156,12 +157,42 @@ percentageComplete: number;
   questionObj:any;
   haveAnswer:any;
   answerObj:any;
+  processQuestions:any=[];
   constructor(private dt:DataTransferService,private route:ActivatedRoute,private dataTransfer: DataTransferService, private rpa:RestApiService,
     private modalService: BsModalService,private formBuilder: FormBuilder,private router: Router,
     private spinner:NgxSpinnerService) { }
 
 
   ngOnInit() { 
+    this.processQuestions=[
+      {question:"What is the total number of recurring emails",
+      q_createdUserName:"karthik pedd",
+      q_createdUserId:"karthik.peddinti@epsoftinc.com",
+      answer:"Sample",
+      a_createdUserName:"Sai Nookala",
+      a_createdUserId:"sai.nookala@epsoftinc.com",
+      created:"",
+      modified:""
+    },
+    {question:"What is the total number of recurring emails",
+      q_createdUserName:"karthik pedd",
+      q_createdUserId:"karthik.peddinti@epsoftinc.com",
+      answer:"Sample",
+      a_createdUserName:"Sai Nookala",
+      a_createdUserId:"sai.nookala@epsoftinc.com",
+      created:"",
+      modified:""
+    },
+    {question:"What is the total number of recurring emails",
+      q_createdUserName:"karthik pedd",
+      q_createdUserId:"karthik.peddinti@epsoftinc.com",
+      answer:"",
+      a_createdUserName:"Sai Nookala",
+      a_createdUserId:"sai.nookala@epsoftinc.com",
+      created:"",
+      modified:""
+    }
+    ]
     this.getUsersInfo()
     this.processOwner=false
     localStorage.setItem('project_id',null);
@@ -1156,5 +1187,9 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
   }
   clearAnswer(){
     this.haveAnswer = ''
+  }
+
+  submitProcess(){
+
   }
 }
