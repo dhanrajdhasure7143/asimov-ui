@@ -1144,20 +1144,20 @@
                                 <div class="">
                                     <div class="col-md-12 p-0 process-div">
                                         <div class="process-under">
-                                            <form action="" #processForm="ngForm">
+                                            <form action="" #processForm="ngForm" *ngIf="isProcessEdit">
                                                 <div class="col-md-12 pl-0 form-fields">
                                                     <label class="label-control"><b>Business Challenge</b> <!-- <span class="star">*</span> -->
                                                     </label>
                                                     <!-- <input type="text" name="business_challange" #business_challange="ngModel" id="business_challange" [(ngModel)]="businessChallange" class="form-control" placeholder="Enter Business Challenge" required> -->
                                                     <textarea  name="business_challange" #business_challange="ngModel" id="business_challange" [(ngModel)]="businessChallange" class="form-control" placeholder="Enter Business Challenge" required></textarea>
                                                     <span *ngIf="((business_challange.invalid && processForm.submitted) || (business_challange.errors && business_challange.touched) )" 
-                                                    class='errspan required'> business challenge is required </span>
+                                                    class='errspan required'> Business challenge is required </span>
                                                 </div>
                                                 <div class="col-md-12 pl-0 form-fields">
                                                     <label class="label-control"><b>Purpose</b></label>
                                                     <input type="text" name="purpose" #purpose="ngModel" [(ngModel)]="businessPurpose" class="form-control" placeholder="Enter Purpose Name" required/>
                                                     <span *ngIf="((purpose.invalid && processForm.submitted) || (purpose.errors && purpose.touched) )" 
-                                                            class='errspan required'> purpose is required </span>
+                                                            class='errspan required'> Purpose is required </span>
                                                 </div>
                                                 <!-- <div class="col-md-12 pl-0 form-fields">
                                                     <label class="label-control">Problem Statement</label>
@@ -1167,10 +1167,22 @@
                                                 </div> -->
                                                     <div class="col-md-12">
                                                         <div class="pull-right">
-                                                            <button class="btn btn-primary" (click)="submitProcess()">Submit</button>
+                                                            <button class="btn btn-secondary" (click)="cancelEditProcess()">cancel</button>
+                                                            <button class="btn btn-primary" [disabled]="processForm.invalid" (click)="submitProcess()">Save</button>
                                                         </div>
                                                     </div>
                                             </form>
+                                            <div *ngIf="!isProcessEdit">
+                                                <span class="pull-right"><button class="btn btn-primary" (click)="editBusinessProcess()">Edit</button></span>
+                                                <div class="col-md-12 pl-0">
+                                                    <label class="label-control"><b>Business Challenge</b></label>
+                                                    <p>{{processUnderstanding.business_Challange}}</p>
+                                                </div>
+                                                <div class="col-md-12 pl-0">
+                                                    <label class="label-control"><b>Purpose</b></label>
+                                                    <p>{{processUnderstanding.process_purpose}}</p>
+                                                </div>
+                                            </div>
                                         <div class="col-md-12 pl-0">
                                             <mat-expansion-panel class="process-expansion">
                                                 <mat-expansion-panel-header>
@@ -1190,25 +1202,50 @@
                                                             </span>
                                                         </span>
                                                     </div>
-                                                    <div>
+                                                    <div class="col-md-12">
                                                         <div *ngFor="let each of processQuestions">
-                                                            <p><strong>Q: {{each.question}}?</strong></p>
-                                                            <span *ngIf="!each.answer">
-                                                                <button *ngIf="!isShowAnswerInput" class="btn btn-primary" (click)="answerToQuestion()">Answer</button>
-                                                                <div class="proc_deffield1" *ngIf="isShowAnswerInput">
-                                                                    <input type="text" name="" id="" [(ngModel)]="haveAnswer" class="form-control" placeholder="Have a Question?">
-                                                                    <span class="procdesc_act">
-                                                                        <span class="tsttooltipbtn" (click)="answer()">
-                                                                            <img src="../../../../assets/images/VCM/Green Tick.svg" class="testplus1" />
-                                                                            <!-- <img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2"/> -->
+                                                            <div class="col-md-9">
+                                                                <p><strong>Q: {{each.question}}?</strong></p>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <p>Created at:24 April 2022 10:22 AM</p>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-10">
+                                                                    <span>
+                                                                        <p *ngIf="each.answer">A: {{each.answer}}</p>
+                                                                    </span>
+                                                                    <span *ngIf="!each.answer">
+                                                                        <button *ngIf="!isShowAnswerInput" class="btn btn-primary" (click)="answerToQuestion()">Answer</button>
+                                                                        <div class="proc_deffield1" *ngIf="isShowAnswerInput">
+                                                                            <input type="text" name="" id="" [(ngModel)]="haveAnswer" class="form-control" placeholder="Have a Question?">
+                                                                            <span class="procdesc_act">
+                                                                                <span class="tsttooltipbtn" (click)="answer()">
+                                                                                    <img src="../../../../assets/images/VCM/Green Tick.svg" class="testplus1" />
+                                                                                </span>
+                                                                                <span class="tsttooltipbtn" (click)="clearAnswer()">
+                                                                                    <img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2" />
+                                                                                </span>
+                                                                            </span>
+                                                                        </div>
+                                                                    </span>
+                                                                </div>
+                                                                <div class="col-md-2">
+                                                                    <span class="pull-right">
+                                                                        <span class="tsttooltipbtn">
+                                                                            <img src="../../../../assets/images/VCM/edit-plus-litblue.svg" class="testplus2 default-img" />
+                                                                            <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2 hover-img" (click)="editAnswer(each)" />
+                                                                            <span class="testtooltip">Edit</span>
                                                                         </span>
-                                                                        <span class="tsttooltipbtn" (click)="clearAnswer()">
-                                                                            <img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2" />
+                                                                        <span class="tsttooltipbtn">
+                                                                            <img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img" />
+                                                                            <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img"
+                                                                                (click)="removeAnswer(each)" />
+                                                                            <span class="testtooltip">Remove</span>
                                                                         </span>
                                                                     </span>
                                                                 </div>
-                                                            </span>
-                                                            <p>A: {{each.answer}}</p>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>

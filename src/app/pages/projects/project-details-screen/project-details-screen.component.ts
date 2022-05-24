@@ -158,12 +158,18 @@ percentageComplete: number;
   haveAnswer:any;
   answerObj:any;
   processQuestions:any=[];
+  processUnderstanding:any={};
+  isProcessEdit:boolean=false;
   constructor(private dt:DataTransferService,private route:ActivatedRoute,private dataTransfer: DataTransferService, private rpa:RestApiService,
     private modalService: BsModalService,private formBuilder: FormBuilder,private router: Router,
     private spinner:NgxSpinnerService) { }
 
 
   ngOnInit() { 
+    this.processUnderstanding={
+      "business_Challange":"Sample",
+      "process_purpose":"Testing"
+    }
     this.processQuestions=[
       {question:"What is the total number of recurring emails",
       q_createdUserName:"karthik pedd",
@@ -1170,6 +1176,7 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
     });
     return userName;
   }
+
   answerToQuestion(){
     this.isShowAnswerInput = !this.isShowAnswerInput
   }
@@ -1188,8 +1195,26 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
   clearAnswer(){
     this.haveAnswer = ''
   }
-
   submitProcess(){
+    let req_body={
+      id:this.project_id,
+      "business_Challange":this.businessChallange,
+      "businessPurpose":this.businessPurpose
+    }
+    console.log(req_body)
+  }
+  editAnswer(){
 
+  }
+  removeAnswer(){
+
+  }
+  cancelEditProcess(){
+    this.isProcessEdit=false;
+  }
+  editBusinessProcess(){
+    this.isProcessEdit=true;
+    this.businessChallange = this.processUnderstanding.business_Challange
+    this.businessPurpose = this.processUnderstanding.process_purpose
   }
 }
