@@ -744,8 +744,9 @@ img.testplus2 {
   margin-right: 0px !important;
 }
 
-.process-div .col-md-3 p {
+.process-div .col-md-5 span {
   font-size: 13px;
+  margin-left:10px;
 }
 
 .pques-actions .tsttooltipbtn {
