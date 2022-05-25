@@ -1167,8 +1167,9 @@
                                                 </div> -->
                                                     <div class="col-md-12 form-group">
                                                         <div class="pull-right">
-                                                            <button class="btn btn-default" (click)="cancelEditProcess()">Cancel</button>
-                                                            <button class="btn btn-primary" [disabled]="processForm.invalid" (click)="submitProcess()">Save</button>
+                                                            <button class="btn btn-default" *ngIf="businessDetails.length > 0" (click)="cancelEditProcess()">Cancel</button>
+                                                            <button class="btn btn-primary" *ngIf="businessDetails.length == 0" [disabled]="processForm.invalid" (click)="saveBusinessProcess()">Save</button>
+                                                            <button class="btn btn-primary" *ngIf="businessDetails.length > 0" [disabled]="processForm.invalid" (click)="updateBusinessDetails()">Update</button>
                                                         </div>
                                                     </div>
                                             </form>
@@ -1176,11 +1177,11 @@
                                                 <span class="pull-right"><button class="btn btn-primary" (click)="editBusinessProcess()">Edit</button></span>
                                                 <div class="col-md-12 pl-0">
                                                     <label class="label-control module-sub-header-title"><b>Business Challenge</b></label>
-                                                    <p>{{processUnderstanding.business_Challange}}</p>
+                                                    <p>{{processUnderstanding.businessChallenge}}</p>
                                                 </div>
                                                 <div class="col-md-12 pl-0">
                                                     <label class="label-control module-sub-header-title"><b>Purpose</b></label>
-                                                    <p>{{processUnderstanding.process_purpose}}</p>
+                                                    <p>{{processUnderstanding.purpose}}</p>
                                                 </div>
                                             </div>
                                         <div class="col-md-12 p-0 process-quesdiv">
@@ -1204,27 +1205,40 @@
                                                     </div>
                                                     <div class="col-md-12 p-0">
                                                         <div *ngFor="let each of processQuestions">
-                                                            <div class="col-md-7 pl-0">
+                                                            <div class="col-md-9 pl-0">
                                                                 <p><strong>Q: {{each.question}}?</strong></p>
                                                             </div>
-                                                            <div class="col-md-5 pr-0 text-right">
+                                                            <div class="col-md-3 pr-0 text-right">
                                                                 <span><b>Created By:</b> Karthik</span>
-                                                                <span><b>Created At:</b> 24 April 2022 10:22 AM</span>
+                                                                <p>Created at: {{each.createdAt | date}}</p>
                                                             </div>
                                                             <div class="row">
                                                                 <div class="col-md-10 pl-0">
-                                                                    <span>
-                                                                        <p *ngIf="each.answer">A: {{each.answer}}</p>
+                                                                    <span *ngIf="each.answer">
+                                                                        <p *ngIf="selected_questionId != each.questionId">A: {{each.answer}}</p>
+                                                                        <span *ngIf="selected_questionId == each.questionId">
+                                                                            <div class="proc_deffield1">
+                                                                                <input type="text" name="" id="" [(ngModel)]="selectedAnswerUpdate" class="form-control" placeholder="Have a Question?">
+                                                                                <span class="procdesc_act">
+                                                                                    <span class="tsttooltipbtn" (click)="updateAnswer()">
+                                                                                        <img src="../../../../assets/images/VCM/Green Tick.svg" class="testplus" />
+                                                                                    </span>
+                                                                                    <span class="tsttooltipbtn" (click)="cancelUpdate()">
+                                                                                        <img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2" />
+                                                                                    </span>
+                                                                                </span>
+                                                                            </div>
+                                                                        </span>
                                                                     </span>
                                                                     <span *ngIf="!each.answer">
                                                                         <button *ngIf="!isShowAnswerInput" class="btn btn-primary" (click)="answerToQuestion()">Answer</button>
                                                                         <div class="proc_deffield1" *ngIf="isShowAnswerInput">
-                                                                            <input type="text" name="" id="" [(ngModel)]="haveAnswer" class="form-control" placeholder="Have a Question?">
+                                                                            <input type="text" name="" id="" [(ngModel)]="haveAnswer" class="form-control" placeholder="Enter Answer">
                                                                             <span class="procdesc_act">
-                                                                                <span class="tsttooltipbtn" (click)="answer()">
+                                                                                <span class="tsttooltipbtn" (click)="saveAnswer()">
                                                                                     <img src="../../../../assets/images/VCM/Green Tick.svg" class="testplus" />
                                                                                 </span>
-                                                                                <span class="tsttooltipbtn" (click)="clearAnswer()">
+                                                                                <span class="tsttooltipbtn" (click)="cancelAnswer()">
                                                                                     <img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2" />
                                                                                 </span>
                                                                             </span>
@@ -1232,19 +1246,19 @@
                                                                     </span>
                                                                 </div>
                                                                 <div class="col-md-2 pr-0 text-right pques-actions">
-                                                                    
-                                                                    <span class="tsttooltipbtn">
-                                                                        <img src="../../../../assets/images/VCM/edit-plus-litblue.svg" class="testplus2 default-img" />
-                                                                        <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2 hover-img" (click)="editAnswer(each)" />
-                                                                        <span class="testtooltip">Edit</span>
+                                                                    <span *ngIf="selected_questionId != each.questionId && each.answer">
+                                                                        <span class="tsttooltipbtn">
+                                                                            <img src="../../../../assets/images/VCM/edit-plus-litblue.svg" class="testplus2 default-img" />
+                                                                            <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2 hover-img" (click)="editAnswer(each)" />
+                                                                            <span class="testtooltip">Edit</span>
+                                                                        </span>
+                                                                        <span class="tsttooltipbtn removeques">
+                                                                            <img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img" />
+                                                                            <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img"
+                                                                                (click)="removeAnswer(each)" />
+                                                                            <span class="testtooltip">Remove</span>
+                                                                        </span>
                                                                     </span>
-                                                                    <span class="tsttooltipbtn removeques">
-                                                                        <img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img" />
-                                                                        <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img"
-                                                                            (click)="removeAnswer(each)" />
-                                                                        <span class="testtooltip">Remove</span>
-                                                                    </span>
-                                                                    
                                                                 </div>
                                                             </div>
                                                         </div>

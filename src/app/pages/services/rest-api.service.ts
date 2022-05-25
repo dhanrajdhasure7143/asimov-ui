@@ -1402,4 +1402,16 @@ getUserBpmnsListWithoutNotation(){ //  bps workspace api
   return this.http.get("/bpsprocess/fetchByTenantwithoutNotation");
 }
 
+//Process understanding screen in project details
+businessDetailsSave(body){
+  return this.http.post("/platform-service/project/saveProcessUnderstanding",body)
+}
+businessDetailsUpdate(body){
+  return this.http.post("/platform-service/project/updateProcessUnderstanding",body)
+}
+
+getProcessUderstandingDetails(projectId){
+  return this.http.get("/platform-service/project/fetchProcessUnderstanding?projectId="+projectId);
+}
+
 }

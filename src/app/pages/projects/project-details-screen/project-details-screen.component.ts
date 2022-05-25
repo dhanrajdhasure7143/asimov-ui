@@ -160,44 +160,58 @@ percentageComplete: number;
   processQuestions:any=[];
   processUnderstanding:any={};
   isProcessEdit:boolean=false;
+  selected_questionId:number;
+  selectedAnswerUpdate:any;
+  businessDetails:any=[]
   constructor(private dt:DataTransferService,private route:ActivatedRoute,private dataTransfer: DataTransferService, private rpa:RestApiService,
     private modalService: BsModalService,private formBuilder: FormBuilder,private router: Router,
     private spinner:NgxSpinnerService) { }
 
 
   ngOnInit() { 
-    this.processUnderstanding={
-      "business_Challange":"Sample",
-      "process_purpose":"Testing"
-    }
+    
     this.processQuestions=[
-      {question:"What is the total number of recurring emails",
-      q_createdUserName:"karthik pedd",
-      q_createdUserId:"karthik.peddinti@epsoftinc.com",
-      answer:"Sample",
-      a_createdUserName:"Sai Nookala",
-      a_createdUserId:"sai.nookala@epsoftinc.com",
-      created:"",
-      modified:""
-    },
-    {question:"What is the total number of recurring emails",
-      q_createdUserName:"karthik pedd",
-      q_createdUserId:"karthik.peddinti@epsoftinc.com",
-      answer:"Sample",
-      a_createdUserName:"Sai Nookala",
-      a_createdUserId:"sai.nookala@epsoftinc.com",
-      created:"",
-      modified:""
-    },
-    {question:"What is the total number of recurring emails",
-      q_createdUserName:"karthik pedd",
-      q_createdUserId:"karthik.peddinti@epsoftinc.com",
-      answer:"",
-      a_createdUserName:"Sai Nookala",
-      a_createdUserId:"sai.nookala@epsoftinc.com",
-      created:"",
-      modified:""
-    }
+      {
+        "projectId": 23,
+        "questionId":34,
+        "question" : "how is the process",
+        "createdBy" : "sai nookala",
+        "createdUserId" : "sai.nookala@epsoftinc.com",
+        "answer" : "it's fine",
+        "answeredBy" : "karthik peddinti",
+        "answeredByUserId" : "karthik.peddinti@epsoftinc.com",
+        "createdAt" : "2022-05-11T11:31:47.477",
+        "modifiedAt" : "2022-05-11T11:31:47.477",
+        "convertedcreatedAt" : 213213213,
+        "convertedmodifiedAt" : 324343434
+        },
+        {
+          "projectId": 23,
+          "questionId":35,
+          "question" : "how is the process",
+          "createdBy" : "sai nookala",
+          "createdUserId" : "sai.nookala@epsoftinc.com",
+          "answer" : "it's fine",
+          "answeredBy" : "karthik peddinti",
+          "answeredByUserId" : "karthik.peddinti@epsoftinc.com",
+          "createdAt" : "2022-05-11T11:31:47.477",
+          "modifiedAt" : "2022-05-11T11:31:47.477",
+          "convertedcreatedAt" : 213213213,
+          "convertedmodifiedAt" : 324343434
+          },{
+            "projectId": 23,
+            "questionId":36,
+            "question" : "how is the process",
+            "createdBy" : "sai nookala",
+            "createdUserId" : "sai.nookala@epsoftinc.com",
+            "answer" : "",
+            "answeredBy" : "karthik peddinti",
+            "answeredByUserId" : "karthik.peddinti@epsoftinc.com",
+            "createdAt" : "2022-05-11T11:31:47.477",
+            "modifiedAt" : "2022-05-11T11:31:47.477",
+            "convertedcreatedAt" : 213213213,
+            "convertedmodifiedAt" : 324343434
+            },
     ]
     this.getUsersInfo()
     this.processOwner=false
@@ -265,12 +279,13 @@ percentageComplete: number;
     this.getallusers();
     this.projectdetails();
     this.getallprocesses();
+
     setTimeout(() => {
       this.getImage();
       this.profileName();
         },2000);
        
-      
+        this.getProcessUnderstandingDetails();
       //  this.getallusers();
         this.getInitiatives();
         this.Resourcedeleteflag=false;
@@ -1178,7 +1193,8 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
   }
 
   answerToQuestion(){
-    this.isShowAnswerInput = !this.isShowAnswerInput
+    this.isShowAnswerInput = !this.isShowAnswerInput;
+    this.selected_questionId = null;
   }
   qBtn(){
     this.questionObj={
@@ -1186,6 +1202,7 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
     }
     console.log(this.questionObj)
   }
+  
   answer(){
     this.answerObj={
       "haveAnswer":this.haveAnswer,
@@ -1195,26 +1212,108 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
   clearAnswer(){
     this.haveAnswer = ''
   }
-  submitProcess(){
-    let req_body={
-      id:this.project_id,
-      "business_Challange":this.businessChallange,
-      "businessPurpose":this.businessPurpose
-    }
-    console.log(req_body)
-  }
-  editAnswer(){
 
+  saveBusinessProcess(){
+    this.spinner.show()
+    let req_body={
+      "projectId":this.project_id,
+      "businessChallenge":this.businessChallange,
+      "purpose":this.businessPurpose,
+      "createdBy":localStorage.getItem("firstName")+" "+localStorage.getItem("lastName"),
+      "createdUserId":localStorage.getItem("ProfileuserId")
+        }
+    console.log(req_body)
+    this.rpa.businessDetailsSave(req_body).subscribe(res=>{
+      console.log(res)
+      this.spinner.hide();
+      Swal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: 'Saved Successfully !!',
+        heightAuto: false
+    }).then((result) => {
+      this.getProcessUnderstandingDetails()
+    })
+    },err=>{
+      this.spinner.hide();
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!',
+        heightAuto: false,
+      })
+    })
   }
+
+  updateBusinessDetails(){
+    this.spinner.show();
+    let req_body={
+      "processUnderstandingId":this.processUnderstanding.processUnderstandingId,
+      "businessChallenge":this.businessChallange,
+      "purpose":this.businessPurpose
+    }
+    this.rpa.businessDetailsUpdate(req_body).subscribe(res=>{
+      console.log(res)
+      this.spinner.hide();
+      Swal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: 'Updated Successfully !!',
+        heightAuto: false
+    }).then((result) => {
+      this.getProcessUnderstandingDetails()
+    })
+      this.isProcessEdit=false;
+    },err=>{
+      this.spinner.hide();
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!',
+        heightAuto: false,
+      })
+    })
+  }
+
+  editAnswer(item){
+    console.log(item)
+    this.selected_questionId = item.questionId;
+    this.selectedAnswerUpdate = item.answer;
+  }
+
   removeAnswer(){
 
+  }
+  cancelUpdate(){
+    this.selected_questionId = null;
   }
   cancelEditProcess(){
     this.isProcessEdit=false;
   }
+  cancelAnswer(){
+    this.isShowAnswerInput=false;
+  }
   editBusinessProcess(){
     this.isProcessEdit=true;
-    this.businessChallange = this.processUnderstanding.business_Challange
-    this.businessPurpose = this.processUnderstanding.process_purpose
+    this.businessChallange = this.processUnderstanding.businessChallenge
+    this.businessPurpose = this.processUnderstanding.purpose
+  }
+
+  getProcessUnderstandingDetails(){
+    this.isProcessEdit=false;
+    let res_data:any;
+    this.rpa.getProcessUderstandingDetails(this.project_id).subscribe(res=>{ res_data =res
+      console.log(res)
+      if(res_data.data){
+        this.spinner.hide()
+        this.businessDetails=res_data.data;
+        if (res_data.data.length > 0) {
+          this.processUnderstanding = res_data.data[0];
+        }
+      }
+      if(res_data.data.length == 0){
+        this.isProcessEdit=true;
+      }
+    })
   }
 }
