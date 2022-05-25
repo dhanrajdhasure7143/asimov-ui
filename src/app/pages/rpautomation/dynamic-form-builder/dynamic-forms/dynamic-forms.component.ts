@@ -21,7 +21,7 @@ import { iter } from '@amcharts/amcharts4/core';
 
         <div class="mt-2" *ngIf="isMultiForm==true">
         <div class="tablmacl">
-        <div class="innertabld">
+        <div class="col-md-12 innertabld">
             <table class="table">
                 <thead>
                     <th *ngFor="let tableHeader of fields">{{tableHeader.label}}</th>

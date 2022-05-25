@@ -38,7 +38,7 @@
     </div>
   </div>
 
-    <div *ngIf="hiddenPopUp" class="rpa-modal dynamic-forms-modal" style="display: block;">
+    <!-- <div *ngIf="hiddenPopUp" class="rpa-modal dynamic-forms-modal" style="display: block;">
       <div class="rpa-modal-content">
           <div class="rpa-modal-header">
             <span class="rpa-modal-close" (click)="closeFun()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
@@ -50,7 +50,29 @@
               
           </div>
       </div>
-  </div>
+  </div> -->
+
+<div class="own-overlay rpa-modal dynamic-forms-modal" *ngIf="hiddenPopUp" style="display: block;">
+    <as-split direction="horizontal">
+        <as-split-area [size]="70">
+            <!-- <p>LEFT</p> -->
+        </as-split-area>
+        <as-split-area [size]="30" minSize="200" maxSize="300">
+            <div class="right_split">
+                <div class="rpa-modal-header">
+                    <span class="rpa-modal-close" (click)="closeFun()"><img
+                            src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
+                    <h4>{{formHeader}}</h4>
+                </div>
+                <div class="modal-body actions-mbody" *ngIf="form_change">
+                    <app-dynamic-forms [fields]="getFields()" [multiarray]="multiarray" [formheader]="formHeader"
+                        [enableMultiForm]="enableMultiForm" (Submit)="submitform($event)"
+                        (onSubmit)="onFormSubmit($event)"></app-dynamic-forms>
+                </div>
+            </div>
+        </as-split-area>
+    </as-split>
+</div>
 
 <ng-template #outputboxModalRef>
   <div [id]="outputboxid">

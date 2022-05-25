@@ -202,10 +202,12 @@
 
 
 .dynamic-forms-modal{
-  left: unset !important;
-   top: unset !important; 
+  /* left: unset !important; */
+   /* top: unset !important;  */
    
-   width: unset !important;
+   /* width: unset !important; */
+   padding-left: 60px !important;
+   margin-top: 52px !important;
 }
 
 .dynamic-forms-modal .rpa-modal-content{
@@ -217,4 +219,22 @@
   width: 16px;
   height: 16px;
   margin-top: 16px;
+}
+.own-overlay {
+  position: fixed;
+  /* top: 0; */
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1040;
+  /* background-color: #333; */
+  /* opacity: 0.2; */
+}
+
+.right_split {
+  background-color: white !important;
+}
+
+.minimumwidth {
+  min-width: 300px !important;
 }
