@@ -768,3 +768,10 @@ img.testplus2 {
 .profile-table th, .projecttable.table th {
   z-index: 1 !important;
 }
+
+.pques-actions span.tsttooltipbtn:hover .default-img {
+  display: none;
+}
+.pques-actions span.tsttooltipbtn:hover .hover-img {
+  display: initial;
+}
