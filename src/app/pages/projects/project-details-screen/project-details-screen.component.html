@@ -694,7 +694,7 @@
         <mat-card class="new-prj-tasklist" id="projects_details_screen" *ngIf="projects_toggle==false">
             <div class="row module-subheader-title">
                 <div class="col-md-4 p-0">
-                    <span class="module-sub-header-title" style="font-size:15px">
+                    <span class="module-sub-header-title" >
                         <b> Tasks</b>             
           </span>
                 </div>
@@ -846,7 +846,7 @@
                 <mat-card id="projects_details_screen" class="new-resourcediv" *ngIf="projects_toggle==false">
                     <div class="row module-subheader-title">
                         <div class="col-md-6 p-0">
-                            <span class="module-sub-header-title" style="font-size:15px">
+                            <span class="module-sub-header-title" >
                                 <b> Resources</b>                 
               </span>
                         </div>
@@ -1012,7 +1012,7 @@
                 <mat-card id="projects_details_screen" class="new-docdiv" *ngIf="projects_toggle==false">
                     <div class="row module-subheader-title">
                         <div class="col-md-6 p-0">
-                            <span class="module-sub-header-title" style="font-size:15px">
+                            <span class="module-sub-header-title" >
                                 <b>Recently Added Documents</b>                
               </span>
                         </div>
@@ -1129,45 +1129,45 @@
             </div>
 
             <div class="col-md-12 p-0 process-understanding">
-                <mat-card id="">
+                <mat-card class="new-procundiv" id="projects_details_screen">
                     <div class="">
                     <div class="row module-subheader-title">
                         <div class="col-md-12 p-0">
                             <mat-expansion-panel class="process-expansion">
                                 <mat-expansion-panel-header>
                                     <mat-panel-title  disabled="true">
-                                        <span class="module-sub-header-title" style="font-size:15px">
-                                            <b>Process Undestanding</b>                
+                                        <span class="module-sub-header-title" >
+                                            <b>Process Understanding</b>                
                                         </span>
                                     </mat-panel-title>
                                 </mat-expansion-panel-header>
                                 <div class="">
-                                    <div class="col-md-12 p-0 process-div">
+                                    <div class="col-md-12 process-div">
                                         <div class="process-under">
                                             <form action="" #processForm="ngForm" *ngIf="isProcessEdit">
-                                                <div class="col-md-12 pl-0 form-fields">
-                                                    <label class="label-control"><b>Business Challenge</b> <!-- <span class="star">*</span> -->
+                                                <div class="col-md-12 pl-0 form-group">
+                                                    <label class="label-control module-sub-header-title"><b>Business Challenge</b> <!-- <span class="star">*</span> -->
                                                     </label>
                                                     <!-- <input type="text" name="business_challange" #business_challange="ngModel" id="business_challange" [(ngModel)]="businessChallange" class="form-control" placeholder="Enter Business Challenge" required> -->
                                                     <textarea  name="business_challange" #business_challange="ngModel" id="business_challange" [(ngModel)]="businessChallange" class="form-control" placeholder="Enter Business Challenge" required></textarea>
                                                     <span *ngIf="((business_challange.invalid && processForm.submitted) || (business_challange.errors && business_challange.touched) )" 
                                                     class='errspan required'> Business challenge is required </span>
                                                 </div>
-                                                <div class="col-md-12 pl-0 form-fields">
-                                                    <label class="label-control"><b>Purpose</b></label>
+                                                <div class="col-md-12 pl-0 form-group">
+                                                    <label class="label-control module-sub-header-title"><b>Purpose</b></label>
                                                     <input type="text" name="purpose" #purpose="ngModel" [(ngModel)]="businessPurpose" class="form-control" placeholder="Enter Purpose Name" required/>
                                                     <span *ngIf="((purpose.invalid && processForm.submitted) || (purpose.errors && purpose.touched) )" 
                                                             class='errspan required'> Purpose is required </span>
                                                 </div>
-                                                <!-- <div class="col-md-12 pl-0 form-fields">
-                                                    <label class="label-control">Problem Statement</label>
+                                                <!-- <div class="col-md-12 pl-0 form-group">
+                                                    <label class="label-control module-sub-header-title">Problem Statement</label>
                                                     <input type="text" name="problem_statement" #problem_statement="ngModel" id="problem_statement" [(ngModel)]="problemStatement" class="form-control" placeholder="Enter Problem Statement" required>
                                                     <span *ngIf="((problem_statement.invalid && processForm.submitted) || (problem_statement.errors && problem_statement.touched) )" 
                                                             class='errspan required'> problem statement is required </span>
                                                 </div> -->
-                                                    <div class="col-md-12">
+                                                    <div class="col-md-12 form-group">
                                                         <div class="pull-right">
-                                                            <button class="btn btn-secondary" (click)="cancelEditProcess()">cancel</button>
+                                                            <button class="btn btn-default" (click)="cancelEditProcess()">Cancel</button>
                                                             <button class="btn btn-primary" [disabled]="processForm.invalid" (click)="submitProcess()">Save</button>
                                                         </div>
                                                     </div>
@@ -1175,25 +1175,25 @@
                                             <div *ngIf="!isProcessEdit">
                                                 <span class="pull-right"><button class="btn btn-primary" (click)="editBusinessProcess()">Edit</button></span>
                                                 <div class="col-md-12 pl-0">
-                                                    <label class="label-control"><b>Business Challenge</b></label>
+                                                    <label class="label-control module-sub-header-title"><b>Business Challenge</b></label>
                                                     <p>{{processUnderstanding.business_Challange}}</p>
                                                 </div>
                                                 <div class="col-md-12 pl-0">
-                                                    <label class="label-control"><b>Purpose</b></label>
+                                                    <label class="label-control module-sub-header-title"><b>Purpose</b></label>
                                                     <p>{{processUnderstanding.process_purpose}}</p>
                                                 </div>
                                             </div>
-                                        <div class="col-md-12 pl-0">
+                                        <div class="col-md-12 p-0 process-quesdiv">
                                             <mat-expansion-panel class="process-expansion">
                                                 <mat-expansion-panel-header>
                                                     <mat-panel-title disabled="true">
-                                                        <span class="module-sub-header-title" style="font-size:15px">
+                                                        <span class="module-sub-header-title" >
                                                             <b>Process Questionnaire</b>
                                                         </span>
                                                     </mat-panel-title>
                                                 </mat-expansion-panel-header>
-                                                <div class="col-md-12 p-5 process-div">
-                                                    <div class="proc_deffield">
+                                                <div class="col-md-12 process-div">
+                                                    <div class="col-md-12 p-0 form-group proc_deffield">
                                                         <input type="text" name="" [(ngModel)]="haveQuestion" id="" class="form-control" placeholder="Have a Question?">
                                                         <span class="procdesc_act" >
                                                             <span class="tsttooltipbtn" (click)="qBtn()">
@@ -1202,16 +1202,16 @@
                                                             </span>
                                                         </span>
                                                     </div>
-                                                    <div class="col-md-12">
+                                                    <div class="col-md-12 p-0">
                                                         <div *ngFor="let each of processQuestions">
-                                                            <div class="col-md-9">
+                                                            <div class="col-md-9 pl-0">
                                                                 <p><strong>Q: {{each.question}}?</strong></p>
                                                             </div>
-                                                            <div class="col-md-3">
+                                                            <div class="col-md-3 pr-0 text-right">
                                                                 <p>Created at:24 April 2022 10:22 AM</p>
                                                             </div>
                                                             <div class="row">
-                                                                <div class="col-md-10">
+                                                                <div class="col-md-10 pl-0">
                                                                     <span>
                                                                         <p *ngIf="each.answer">A: {{each.answer}}</p>
                                                                     </span>
@@ -1221,7 +1221,7 @@
                                                                             <input type="text" name="" id="" [(ngModel)]="haveAnswer" class="form-control" placeholder="Have a Question?">
                                                                             <span class="procdesc_act">
                                                                                 <span class="tsttooltipbtn" (click)="answer()">
-                                                                                    <img src="../../../../assets/images/VCM/Green Tick.svg" class="testplus1" />
+                                                                                    <img src="../../../../assets/images/VCM/Green Tick.svg" class="testplus" />
                                                                                 </span>
                                                                                 <span class="tsttooltipbtn" (click)="clearAnswer()">
                                                                                     <img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2" />
@@ -1230,20 +1230,20 @@
                                                                         </div>
                                                                     </span>
                                                                 </div>
-                                                                <div class="col-md-2">
-                                                                    <span class="pull-right">
-                                                                        <span class="tsttooltipbtn">
-                                                                            <img src="../../../../assets/images/VCM/edit-plus-litblue.svg" class="testplus2 default-img" />
-                                                                            <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2 hover-img" (click)="editAnswer(each)" />
-                                                                            <span class="testtooltip">Edit</span>
-                                                                        </span>
-                                                                        <span class="tsttooltipbtn">
-                                                                            <img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img" />
-                                                                            <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img"
-                                                                                (click)="removeAnswer(each)" />
-                                                                            <span class="testtooltip">Remove</span>
-                                                                        </span>
+                                                                <div class="col-md-2 pr-0 text-right pques-actions">
+                                                                    
+                                                                    <span class="tsttooltipbtn">
+                                                                        <img src="../../../../assets/images/VCM/edit-plus-litblue.svg" class="testplus2 default-img" />
+                                                                        <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2 hover-img" (click)="editAnswer(each)" />
+                                                                        <span class="testtooltip">Edit</span>
                                                                     </span>
+                                                                    <span class="tsttooltipbtn removeques">
+                                                                        <img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img" />
+                                                                        <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img"
+                                                                            (click)="removeAnswer(each)" />
+                                                                        <span class="testtooltip">Remove</span>
+                                                                    </span>
+                                                                    
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1292,25 +1292,25 @@
                 <form [formGroup]="updatetaskForm" (ngSubmit)="updatetask()">
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="form-fields col-md-3 pl-0">
+                            <div class="form-group col-md-3 pl-0">
                                 <label id="assignee" for="assignee">Assignee</label>
                                 <span class="labelcont">{{selectedtaskdata.resources| userPipe : users_list}}</span>
                             </div>
-                            <div class="form-fields col-md-3 pr-0">
+                            <div class="form-group col-md-3 pr-0">
                                 <label id="startdate" for="startDate">Start Date</label>
                                 <span class="labelcont">{{selectedtaskdata.startDate | date}}</span>
                             </div>
-                            <div class="form-fields col-md-3 pr-0">
+                            <div class="form-group col-md-3 pr-0">
                                 <label id="enddate" for="endDate">End Date</label>
                                 <span class="labelcont">{{selectedtaskdata.endDate | date}}</span>
                             </div>
-                            <div class="form-fields col-md-3 pr-0">
+                            <div class="form-group col-md-3 pr-0">
                                 <label id="percentage" for="percentage">Percentage Completed</label>
                                 <ng5-slider [(value)]="slider" formControlName="percentageComplete" [options]="options"></ng5-slider>
                             </div>
                         </div>
                         <div class="col-md-12">
-                            <div class="form-fields col-md-6 pl-0">
+                            <div class="form-group col-md-6 pl-0">
                                 <label id="status" for="status">Status<span class="star">*</span></label>
                                 <select formControlName="status" class="form-control data">
                   <option value="">Select Status</option>
@@ -1321,7 +1321,7 @@
                  </select>
                                 <span *ngIf="updatetaskForm.get('status').invalid && updatetaskForm.get('status').touched" class="errspan required">Status Required*</span>
                             </div>
-                            <div class="form-fields col-md-6 pr-0">
+                            <div class="form-group col-md-6 pr-0">
                                 <label id="priority" for="priority">Priority<span class="star">*</span></label>
                                 <select formControlName="priority" class="form-control data">
                   <option value="">Select Priority</option>
@@ -1332,12 +1332,12 @@
                                 <span *ngIf="updatetaskForm.get('priority').invalid && updatetaskForm.get('priority').touched" class="errspan required">Priority Required*</span>
                             </div>
                         </div>
-                        <div class="form-fields col-md-12">
+                        <div class="form-group col-md-12">
                             <label id="summary" class="label-control">Summary</label>
                             <textarea class="form-control" maxlength="150" formControlName="summary" rows="3" placeholder="Enter Summary">
                         </textarea>
                         </div>
-                        <div class="form-fields col-md-12">
+                        <div class="form-group col-md-12">
                             <label id="description" class="label-control">Description</label>
                             <textarea class="form-control" maxlength="150" formControlName="description" rows="3" placeholder="Enter Description">
                         </textarea>
@@ -1352,7 +1352,7 @@
                                             <div *ngIf="profilePicture==true"><img class="res-circle-img " [src]="retrievedImage"></div>
                                             <div>
                                             </div>
-                                            <div class="form-fields col-md-12 pr-0 comment-input">
+                                            <div class="form-group col-md-12 pr-0 comment-input">
                                                 <input class=" form-control" maxlength="150" type="text" #commentInput id="addcomment" placeholder="Add a comment.." />
                                                 <div class="comment-send" id="sendcomment" (click)="postcomments(commentInput.value)">
                                                     <img src="../../../../assets/images/Projects/send.svg" class="default-img" />
@@ -1391,7 +1391,7 @@
 
 
                                                 <div class="updatecomments" *ngIf="(showeditcomment && i==commentnumber)">
-                                                    <div class="form-fields col-md-12 p-0">
+                                                    <div class="form-group col-md-12 p-0">
                                                         <input type="text" name="comment" maxlength="150" class="form-control" formControlName="editcomment" placeholder="Add Comment..." />
                                                     </div>
                                                     <div class="modal-footer modelprfooter">
@@ -1545,7 +1545,7 @@
             <div class="container p-0" style="width:100%">
                 <form [formGroup]="uploadtaskFileForm" (ngSubmit)="submitUploadFileForm()">
                     <div class="row">
-                        <div class="form-fields col-md-12">
+                        <div class="form-group col-md-12">
                             <label for="category">File Category<span class="star">*</span></label>
                             <select class="form-control" formControlName="category">
                 <option [value]="null" disabled hidden>Select File Category</option>
@@ -1555,7 +1555,7 @@
               </select>
                             <span *ngIf="uploadtaskFileForm.get('category').invalid && uploadtaskFileForm.get('category').touched" class="errspan required">File Category Required*</span>
                         </div>
-                        <div class="form-fields col-md-12">
+                        <div class="form-group col-md-12">
 
                             <label>Description<span class="star">*</span></label>
                             <textarea name="desc" class="form-control" rows="2" maxlength="151" formControlName="description" (keyup)="uploadFileDescriptionMaxLength($event.target.value)" placeholder="Enter Description...">
@@ -1567,7 +1567,7 @@
                               </span>
                         </div>
 
-                        <div class="form-fields col-md-12">
+                        <div class="form-group col-md-12">
                             <label>Upload<span class="star">*</span></label>
                             <div class="box-fileupload">
                                 <input type="file" name="file" (change)="chnagefileUploadForm($event)" id="file" class="inputfile" multiple/>
@@ -1631,7 +1631,7 @@
         <div class="container p-0" style="width:100%">
             <form [formGroup]="uploadFileFormDetails" (ngSubmit)="submitUploadFileFormattachment()">
                 <div class="row">
-                    <div class="form-fields col-md-12">
+                    <div class="form-group col-md-12">
                         <label for="fileCategory">File Category<span class="star">*</span></label>
                         <select class="form-control" formControlName="fileCategory" required>
                     <option  [value]="null" disabled hidden>Select Category</option>
@@ -1641,7 +1641,7 @@
                         <span *ngIf="uploadFileFormDetails.get('fileCategory').invalid && uploadFileFormDetails.get('fileCategory').touched" class="errspan required">File Category Required*</span>
                     </div>
                 </div>
-                <div class="form-fields col-md-12">
+                <div class="form-group col-md-12">
 
                     <label>Description<span class="star">*</span></label>
                     <textarea name="desc" class="form-control" maxlength="151" rows="2" formControlName="description" (keyup)="uploadFileDescriptionMaxLength($event.target.value)" placeholder="Enter Description...">
@@ -1652,7 +1652,7 @@
                         Maximum of 150 characters
                       </span>
                 </div>
-                <div class="form-fields col-md-12">
+                <div class="form-group col-md-12">
 
                     <label>Upload<span class="star">*</span></label>
                     <div class="box-fileupload">
