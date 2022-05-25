@@ -1133,7 +1133,7 @@
                     <div class="">
                     <div class="row module-subheader-title">
                         <div class="col-md-12 p-0">
-                            <mat-expansion-panel class="process-expansion">
+                            <mat-expansion-panel class="process-expansion" (opened)="onOpenProcess()">
                                 <mat-expansion-panel-header>
                                     <mat-panel-title  disabled="true">
                                         <span class="module-sub-header-title" >
@@ -1142,7 +1142,7 @@
                                     </mat-panel-title>
                                 </mat-expansion-panel-header>
                                 <div class="">
-                                    <div class="col-md-12 process-div">
+                                    <div class="col-md-12 process-div" id="business_Process">
                                         <div class="process-under">
                                             <form action="" #processForm="ngForm" *ngIf="isProcessEdit">
                                                 <div class="col-md-12 pl-0 form-group">

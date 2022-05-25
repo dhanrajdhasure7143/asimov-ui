@@ -1316,4 +1316,11 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
       }
     })
   }
+
+  onOpenProcess(){
+  var element = document.getElementById('business_Process');
+  setTimeout(() => {
+    element.scrollIntoView({behavior: "auto",block: "center", inline: "nearest"});
+    }, 100);
+  }
 }
