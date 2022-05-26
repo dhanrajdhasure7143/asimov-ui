@@ -127,7 +127,9 @@
                                     </td>
                                     <td>
                                         <ng-container *ngFor="let doc of item.attachments;let j = index">
-                                            <div>{{doc.fileDescription?doc.fileDescription:'-'}}</div>
+                                            <!-- <div>{{doc.fileDescription?doc.fileDescription:'-'}}</div> -->
+                                            <div [matTooltip]=doc.fileDescription matTooltipClass="bpsHeaderTooltip">{{doc.fileDescription?getsortDes(doc.fileDescription):'-'}}</div>
+
                                         </ng-container>
                                     </td>
                                     <td>
@@ -282,7 +284,9 @@
                                         </td>
                                         <td>
                                             <ng-container *ngFor="let doc of level2.attachments;let j = index">
-                                                <div>{{doc.fileDescription?doc.fileDescription:'-'}}</div>
+                                                <!-- <div>{{doc.fileDescription?doc.fileDescription:'-'}}</div> -->
+                                            <div [matTooltip]=doc.fileDescription matTooltipClass="bpsHeaderTooltip">{{doc.fileDescription?getsortDes(doc.fileDescription):'-'}}</div>
+
                                             </ng-container>
                                         </td>
                                         <td>
