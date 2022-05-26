@@ -238,3 +238,7 @@
 .minimumwidth {
   min-width: 300px !important;
 }
+
+.right_split .rpa-modal-close img.expandsvgimg {
+  margin-right: 10px;
+}

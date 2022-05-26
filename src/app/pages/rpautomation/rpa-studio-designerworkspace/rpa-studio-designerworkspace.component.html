@@ -60,8 +60,10 @@
         <as-split-area [size]="30" minSize="200" maxSize="300">
             <div class="right_split">
                 <div class="rpa-modal-header">
-                    <span class="rpa-modal-close" (click)="closeFun()"><img
-                            src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
+                    <span class="rpa-modal-close" (click)="closeFun()">
+                        <img src="../../../../assets/images/RPA/icon_latest/expand-2.svg" class="expandsvgimg">
+                        <img src="../../../../assets/images/RPA/icon_latest/close.svg" alt="">
+                    </span>
                     <h4>{{formHeader}}</h4>
                 </div>
                 <div class="modal-body actions-mbody actionsoverlay-mbody" *ngIf="form_change">
