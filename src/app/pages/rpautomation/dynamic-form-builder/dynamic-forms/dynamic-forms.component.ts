@@ -6,6 +6,8 @@ import { iter } from '@amcharts/amcharts4/core';
 @Component({
   selector: 'app-dynamic-forms',
   templateUrl: './dynamic-forms.component.html',
+  styleUrls: ['./dynamic-forms.component.css']
+
 })
 export class DynamicFormsComponent implements OnInit {
   @Output() onSubmit = new EventEmitter();
