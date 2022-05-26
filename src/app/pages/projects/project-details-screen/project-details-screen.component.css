@@ -738,6 +738,7 @@ img.testplus2 {
 .process-quesdiv {
   border: 1px solid #ccc;
   border-radius: 4px;
+  width: 99%;
 }
 
 .process-div button.btn.btn-primary {
