@@ -52,7 +52,7 @@
 }
 
 .mat-expansion-panel:last-child {
-    margin-bottom: 0px !important;
+    margin-bottom: 10px !important;
 }
 
 .content,
@@ -554,7 +554,7 @@ p.podefault {
 }
 .l1processlistdiv {
     overflow: auto;
-    height: calc(67vh - 60px);
+    height: calc(67vh - 63px);
 }
 .l2process-list {
     overflow: auto;

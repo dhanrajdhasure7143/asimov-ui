@@ -381,4 +381,11 @@ export class VcmPropertiesComponent implements OnInit {
 
     });
   }
+
+  getsortDes(processName){
+    if(processName && processName.length > 60)
+      return processName.substr(0,59)+'...';
+    return processName;
+  }
+
 }

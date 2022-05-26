@@ -283,4 +283,10 @@ export class FullEditPropertiesComponent implements OnInit {
       this.attachementsList=res_data.data
     })
   }
+
+  getsortDes(processName){
+    if(processName && processName.length > 60)
+      return processName.substr(0,59)+'...';
+    return processName;
+  }
 }
