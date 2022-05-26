@@ -5,55 +5,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { iter } from '@amcharts/amcharts4/core';
 @Component({
   selector: 'app-dynamic-forms',
-  template:`
-    <form  [formGroup]="form" class="form-horizontal">
-      <div class="container m-contanier form-body">
-        <div class="col-md-12 p-0 form-group"  [id]="field.id+'_form_data'"  *ngFor="let field of fields; let i =index ">
-            <form-builder [field]="field" [fields]="fields" [form]="form"></form-builder>
-        </div>
-       
-        <div *ngIf="isMultiForm==true">
-          <br>
-            <button class="btn btn-success" *ngIf="editfill==false" [disabled]="!form.valid" (click)="Push()" >Add</button>
-            <button class="btn btn-success" *ngIf="editfill==true" [disabled]="!form.valid" (click)="Push()" >Update</button>
-          <br><br>
-        </div>
-
-        <div class="mt-2" *ngIf="isMultiForm==true">
-        <div class="tablmacl">
-        <div class="col-md-12 innertabld">
-            <table class="table">
-                <thead>
-                    <th *ngFor="let tableHeader of fields">{{tableHeader.label}}</th>
-                    <th>Actions</th>     
-               </thead>
-                <tbody>
-                    <tr *ngFor="let eachObj of fillarray  | paginate: { itemsPerPage: 2,currentPage: q }">
-                    <td *ngFor="let field of fields">
-                     {{eachObj[field.name+"_"+field.id]?eachObj[field.name+"_"+field.id]:'NA'}}
-                     </td>                    
-                       <td>
-                       <button tooltip="Edit" placement="bottom"  (click)="edit(eachObj)"><img src="../../../../assets/images/RPA/icon_latest/edit.svg" alt="" class="testplus">&nbsp;</button>
-                     <button tooltip="Delete" placement="bottom"  (click)="delete(eachObj)"><img src="../../../../assets/images/RPA/icon_latest/delete.svg" alt="" class="testplus">&nbsp;</button>
-                       </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div class="pagicl float-right">
-    <pagination-controls (pageChange)="q = $event"></pagination-controls>
-</div>
-        
-        </div>
-        <div class="form-footer" *ngIf="!feilddisable">
-            <button *ngIf="isdisabled==null && isMultiForm==false" type="submit" (click)="onSub()" [disabled]="!form.valid" class="btn btn-primary">Save</button>
-            <button *ngIf="isdisabled==true" type="submit" (click)="onSub()" [disabled]="true" class="btn btn-primary">Save</button>
-            <button *ngIf="isdisabled==null &&  isMultiForm==true" type="submit" (click)="onSub()" [disabled]="fillarray.length==0"   class="btn btn-primary">Save</button>
-        </div>
-      </div>
-    </form>
-  `,
+  templateUrl: './dynamic-forms.component.html',
 })
 export class DynamicFormsComponent implements OnInit {
   @Output() onSubmit = new EventEmitter();

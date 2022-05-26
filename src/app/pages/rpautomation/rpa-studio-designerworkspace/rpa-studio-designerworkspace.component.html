@@ -64,7 +64,7 @@
                             src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
                     <h4>{{formHeader}}</h4>
                 </div>
-                <div class="modal-body actions-mbody" *ngIf="form_change">
+                <div class="modal-body actions-mbody actionsoverlay-mbody" *ngIf="form_change">
                     <app-dynamic-forms [fields]="getFields()" [multiarray]="multiarray" [formheader]="formHeader"
                         [enableMultiForm]="enableMultiForm" (Submit)="submitform($event)"
                         (onSubmit)="onFormSubmit($event)"></app-dynamic-forms>
