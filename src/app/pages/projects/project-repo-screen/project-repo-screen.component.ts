@@ -46,6 +46,7 @@ export class ProjectRepoScreenComponent implements OnInit {
   @ViewChild("sort11",{static:false}) sort11: MatSort;
   @ViewChild("paginator101",{static:false}) paginator101: MatPaginator;
   @ViewChild("paginator102",{static:false}) paginator102: MatPaginator;
+  @ViewChild("paginator105",{static:false}) paginator105: MatPaginator;
   multiFilesArray: any[] = [];
   fileId: any;
   filedeleteflag:Boolean;
@@ -322,6 +323,8 @@ this.route.queryParams.subscribe(data=>{​​​​​​​​
     
         this.dataSource5= new MatTableDataSource(this.filterdArray);
         this.dataSource5.sort=this.sort13;
+        this.dataSource5.paginator=this.paginator105;
+
       })
    
       
