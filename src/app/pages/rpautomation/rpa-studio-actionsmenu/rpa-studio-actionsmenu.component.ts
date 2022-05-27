@@ -664,6 +664,7 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
    
    viewlogdata(log_popup_template,action){
     this.childBotWorkspace.addsquences();
+    this.logsbotid = this.savebotrespose.botId;
     // this.modalService.show(log_popup_template, {class:"logs-modal"})
       this.logsmodalref=this.modalService.show(log_popup_template, {class:"logs-modal"})
  }
