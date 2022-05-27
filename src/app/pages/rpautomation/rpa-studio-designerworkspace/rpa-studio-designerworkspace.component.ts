@@ -918,6 +918,10 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       this.unsubcribe = this.form.valueChanges.subscribe((update) => {
         this.fields = JSON.parse(update.fields);
       })
+      this.areas = [
+        { size: 70, order: 1},
+        { size: 30, order: 2},
+      ];
       setTimeout(() => {
         this.splitEl.dragProgress$.subscribe(x => {
           this.ngZone.run(() =>{
@@ -1412,7 +1416,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   closeFun() {
     this.hiddenPopUp = false;
     this.hiddenCreateBotPopUp = false
-    this.fields = []
+    this.fields = [];
   }
 
   downloadPng()
