@@ -16,7 +16,7 @@
                                 </thead>
                             <tbody>
                                 <tr *ngFor="let bot of failedbots  | paginate: { itemsPerPage: 5,currentPage: q }">
-                                    <td>{{bot.botName}}</td><td>{{bot.last_modified_date | date : 'medium'}}</td>
+                                    <td>{{bot.botName}}</td><td>{{bot.end_timestamp | date : 'medium'}}</td>
                                 </tr>
                             </tbody>
                         </table>

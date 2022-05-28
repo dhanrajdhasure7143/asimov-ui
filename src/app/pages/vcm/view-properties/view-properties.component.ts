@@ -55,7 +55,7 @@ export class ViewPropertiesComponent implements OnInit {
   selectedIndex:number;
   selectedCollaboratorsObj:any;
   collaboratorsRoles=["Executive"]
-  collaboratorsInterests=["Informed","Accountable"];
+  collaboratorsInterests=["Responsible","Accountable","Consulted","Informed"];
   attachment_namesArray:any=[];
 
   constructor(private router: Router, private rest_api: RestApiService,

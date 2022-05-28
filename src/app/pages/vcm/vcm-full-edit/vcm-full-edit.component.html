@@ -177,12 +177,12 @@
                         <div class="col-md-6 col-lg-6 pr-0">
                             <div class="dbichart-block">
                                 <div class="dbichart-body">
-                                    <h4>Level 1 Process
+                                    <h4>Organization Group
                                        <span class="tsttooltipbtn">
                                             <img [ngClass]="(vcmProcess[0].children?.length != 0 || vcmProcess[1].children?.length != 0 || vcmProcess[2].children?.length != 0) ? 'view' : 'dis'"
                                                 (click)="goToProperties('level1')"
                                                 src="../../../../assets/images/VCM/Level 1.svg" class="testplus" alt="">
-                                            <span class="testtooltip">View L1 - Properties</span>
+                                            <span class="testtooltip">View Organization Group - Properties</span>
                                        </span>
                                     </h4>
                                     <div class="l1processlistdiv">
@@ -393,19 +393,19 @@
                             <div class="dbichart-block">
                                 <div class="dbichart-body">
                                     <h4>
-                                        Level 2 Process
+                                        Process Group
                                         <span class="tsttooltipbtn">
                                             <img [ngClass]="(vcmProcess[0].children?.length != 0 || vcmProcess[1].children?.length != 0 || vcmProcess[2].children?.length != 0) ? 'view' : 'dis'"
                                             (click)="goToProperties('level2')"
                                             src="../../../../assets/images/VCM/Level 1.svg" class="testplus" alt="">
-                                            <span class="testtooltip">View L2 - Properties</span>
+                                            <span class="testtooltip">View Process Group - Properties</span>
                                         </span>
                                     </h4>
                                     <div class="form-group">
                                         <select class="form-control" id="level1" name="Level1"
                                             [(ngModel)]="level1process" [ngModelOptions]="{standalone: true}">
-                                            <option value="undefined" hidden disabled>Select L1 Process</option>
-                                            <option value="" hidden disabled>Select L1 Process</option>
+                                            <option value="undefined" hidden disabled>Select Process Group Process</option>
+                                            <option value="" hidden disabled>Select Process Group Process</option>
                                             <ng-container *ngFor="let item of vcmProcess">
                                                 <option *ngFor="let name of item.children" [ngValue]=name>{{name.title}}
                                                 </option>

@@ -28,10 +28,10 @@ template:`
           <textbox [feilddisable]="isdisabled" *ngSwitchCase="'textarea'" [field]="field" [form]="form"></textbox>
         </div>
         <div *ngIf ="field.visibility">
-          <dropdown [feilddisable]="isdisabled" *ngSwitchCase="'dropdown'" [field]="field" [form]="form"></dropdown>
+          <dropdown [feilddisable]="isdisabled" *ngSwitchCase="'dropdown'" (newItemEvent)="getfields($event)" [fields]="fields"  [field]="field" [form]="form"></dropdown>
         </div>
         <div *ngIf ="field.visibility">
-          <dropdown [feilddisable]="isdisabled" *ngSwitchCase="'restapi'" [field]="field" [form]="form"></dropdown>
+          <dropdown [feilddisable]="isdisabled" *ngSwitchCase="'restapi'" [fields]="fields"  [field]="field" [form]="form"></dropdown>
         </div>
         <div *ngIf ="field.visibility">
           <checkbox [feilddisable]="isdisabled" *ngSwitchCase="'checkbox'" [field]="field" [form]="form"></checkbox>
@@ -64,18 +64,22 @@ styleUrls: ['./form-builder.component.css']
 
 export class FormBuilderComponent implements OnInit {
   @Input() field:any;
+  @Input() fields:any;
   @Input() form:any;
   isdisabled:boolean;
   userRole: string;
+  fieldinput:any;
   get isValid() { return this.form.controls[this.field.name+"_"+this.field.id].valid; }
   get isDirty() { return this.form.controls[this.field.name+"_"+this.field.id].dirty; }
   get istouched() { return this.form.controls[this.field.name+"_"+this.field.id].touched; }
-  get isRequired() {return this.form.controls[this.field.name+"_"+this.field.id].errors.required}
+  get isRequired() {return this.form.controls[this.field.name+"_"+this.field.id].errors.required?true:false}
   get isEmail() {return this.form.controls[this.field.name+"_"+this.field.id].errors.pattern}
 
   constructor() { }
 
   ngOnInit() {
+  
+    console.log("form",this.form.controls[this.field.name+"_"+this.field.id])
     this.userRole = localStorage.getItem("userRole");
       if(this.userRole=='Process Owner' || this.userRole=='RPA Developer'){
         this.isdisabled=null
@@ -84,7 +88,9 @@ export class FormBuilderComponent implements OnInit {
         this.isdisabled=true
       }
   }
-
+  getfields(event){
+     console.log("event",event)
+  }
 }
 
 // <div class="col-md-12 row"></div>
