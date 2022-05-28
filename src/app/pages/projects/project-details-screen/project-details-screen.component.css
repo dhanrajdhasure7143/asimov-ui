@@ -738,8 +738,8 @@ img.testplus2 {
 .process-quesdiv {
   border: 1px solid #ccc;
   border-radius: 4px;
+  width: 99%;
 }
-
 .process-div button.btn.btn-primary {
   margin-right: 0px !important;
 }
@@ -775,4 +775,7 @@ img.testplus2 {
 }
 .pques-actions span.tsttooltipbtn:hover .hover-img {
   display: initial;
+}
+.answer-btn{
+  margin: 0px 0px 10px 10px;
 }
