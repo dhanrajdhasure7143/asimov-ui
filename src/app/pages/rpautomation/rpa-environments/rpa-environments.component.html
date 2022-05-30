@@ -6,9 +6,15 @@
             <img src="../../../../assets/images/search.svg" matSuffix *ngIf="!isSearch" class="testplus1">
         </div>
         <div class="env-data-tool environment-tools">
-            <div class="env-btn environment-btntool">
+            <div *ngIf="!addflag" class="env-btn environment-btntool">
                 <button class="tsttooltipbtn"  id="addenvbtn" (click)="create()">
                     <img src='../../../../assets/images/RPA/icon_latest/new-blue.svg'> 
+                    <span class="testtooltip">New</span>
+                </button>
+            </div>
+            <div *ngIf="addflag" class="env-btn environment-btntool">
+                <button class="deleteenvbtn"  id="addenvbtn" disabled>
+                    <img src='../../../../assets/images/RPA/icon_latest/plus dis.svg'> 
                     <span class="testtooltip">New</span>
                 </button>
             </div>

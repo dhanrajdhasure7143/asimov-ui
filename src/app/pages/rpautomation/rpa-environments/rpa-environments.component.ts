@@ -56,6 +56,8 @@ import { NgxSpinnerService } from "ngx-spinner";
     public isKeyValuePair:Boolean=false;
     public password:any="";
     public keyValueFile:File;
+    addflag:boolean=false;
+    
   constructor(private api:RestApiService, 
     private router:Router, 
     private formBuilder: FormBuilder,
@@ -722,6 +724,11 @@ import { NgxSpinnerService } from "ngx-spinner";
   checktoupdate()
   {
     const selectedEnvironments = this.environments.filter(product => product.checked==true);
+    if(selectedEnvironments.length > 0){
+      this.addflag = true;
+    }else{
+      this.addflag = false;
+    }
     if(selectedEnvironments.length==1)
     {
       this.updateflag=true;
