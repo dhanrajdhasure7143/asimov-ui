@@ -55,6 +55,7 @@ import { IntitiativePipe } from './pipes/initiatives-pipe.pipe';
 import { NotifierService } from 'angular-notifier';
 import { BacklogsListComponent } from './backlogs-list/backlogs-list.component';
 import { BacklogsCreateComponent } from './backlogs-create/backlogs-create.component';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 const materialModules: any[] = [
     
@@ -85,7 +86,8 @@ const materialModules: any[] = [
     MatMenuModule,MatButtonModule,NgxSpinnerModule,NgxPaginationModule,
     ModalModule.forRoot(),
     MatProgressBarModule,NgSelectModule,Ng5SliderModule,
-    NgbModule
+    NgbModule,
+    MatExpansionModule
     
   ],
   providers:[

@@ -2881,3 +2881,8 @@ button.custom-popupbtn.mat-button {
   margin-top: 4px;
   border-bottom: 0px !important;
 }
+
+
+.process-expansion .mat-expansion-panel-body {
+  max-height: none !important;
+}
