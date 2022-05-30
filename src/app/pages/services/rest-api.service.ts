@@ -1407,4 +1407,30 @@ getUserBpmnsListWithoutNotation(){ //  bps workspace api
   return this.http.get("/bpsprocess/fetchByTenantwithoutNotation");
 }
 
+//Process understanding screen in project details
+businessDetailsSave(body){
+  return this.http.post("/platform-service/project/saveProcessUnderstanding",body)
+}
+businessDetailsUpdate(body){
+  return this.http.post("/platform-service/project/updateProcessUnderstanding",body)
+}
+
+getProcessUderstandingDetails(projectId){
+  return this.http.get("/platform-service/project/fetchProcessUnderstanding?projectId="+projectId);
+}
+
+
+getQuestionnaires(projectId){
+  return this.http.get("/platform-service/project/fetchProcessQuestionnaire?projectId="+projectId);
+}
+processQuestionSave(body){
+  return this.http.post("/platform-service/project/saveProcessQuestionnaire",body)
+}
+answerUpdate(body){
+  return this.http.post("/platform-service/project/updateProcessQuestionnaire",body)
+}
+
+answerDelete(body){
+  return this.http.post("/platform-service/project/deleteProcessQuestionnaire",body)
+}
 }

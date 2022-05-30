@@ -344,4 +344,18 @@ export class RpaSoLogsComponent implements OnInit {
     })
   }
 
+  updateLog(element: any,Logtemplate: any)
+   {
+    
+      this.spinner.show();
+     this.rest.updateBotLog(element.bot_id,element.version,element.run_id).subscribe(data=>{
+        let response:any=data;  
+        this.spinner.hide();
+        if(response.errorMessage==undefined)
+          this.viewlogdata();
+        else
+          Swal.fire("Error",response.errorMessage,"error");
+     });
+   }
+
 }

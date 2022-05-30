@@ -694,7 +694,7 @@
         <mat-card class="new-prj-tasklist" id="projects_details_screen" *ngIf="projects_toggle==false">
             <div class="row module-subheader-title">
                 <div class="col-md-4 p-0">
-                    <span class="module-sub-header-title" style="font-size:15px">
+                    <span class="module-sub-header-title" >
                         <b> Tasks</b>             
           </span>
                 </div>
@@ -846,7 +846,7 @@
                 <mat-card id="projects_details_screen" class="new-resourcediv" *ngIf="projects_toggle==false">
                     <div class="row module-subheader-title">
                         <div class="col-md-6 p-0">
-                            <span class="module-sub-header-title" style="font-size:15px">
+                            <span class="module-sub-header-title" >
                                 <b> Resources</b>                 
               </span>
                         </div>
@@ -1012,7 +1012,7 @@
                 <mat-card id="projects_details_screen" class="new-docdiv" *ngIf="projects_toggle==false">
                     <div class="row module-subheader-title">
                         <div class="col-md-6 p-0">
-                            <span class="module-sub-header-title" style="font-size:15px">
+                            <span class="module-sub-header-title" >
                                 <b>Recently Added Documents</b>                
               </span>
                         </div>
@@ -1127,7 +1127,149 @@
 
                 </mat-card>
             </div>
+
+            <div class="col-md-12 p-0 process-understanding">
+                <mat-card class="new-procundiv" id="projects_details_screen">
+                    <div class="">
+                    <div class="row module-subheader-title">
+                        <div class="col-md-12 p-0">
+                            <mat-expansion-panel class="process-expansion" (opened)="onOpenProcess('process')">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title  disabled="true">
+                                        <span class="module-sub-header-title" >
+                                            <b>Process Understanding</b>                
+                                        </span>
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="">
+                                    <div class="col-md-12 process-div">
+                                        <div class="process-under">
+                                            <form action="" #processForm="ngForm" *ngIf="isProcessEdit">
+                                                <div class="col-md-12 pl-0 form-group">
+                                                    <label class="label-control module-sub-header-title"><b>Business Challenge</b> <!-- <span class="star">*</span> -->
+                                                    </label>
+                                                    <!-- <input type="text" name="business_challange" #business_challange="ngModel" id="business_challange" [(ngModel)]="businessChallange" class="form-control" placeholder="Enter Business Challenge" required> -->
+                                                    <textarea  name="business_challange" #business_challange="ngModel" id="business_challange" [(ngModel)]="businessChallange" class="form-control" placeholder="Enter Business Challenge" required></textarea>
+                                                    <span *ngIf="((business_challange.invalid && processForm.submitted) || (business_challange.errors && business_challange.touched) )" 
+                                                    class='errspan required'> Business challenge is required </span>
+                                                </div>
+                                                <div class="col-md-12 pl-0 form-group">
+                                                    <label class="label-control module-sub-header-title"><b>Purpose</b></label>
+                                                    <input type="text" name="purpose" #purpose="ngModel" [(ngModel)]="businessPurpose" class="form-control" placeholder="Enter Purpose Name" required/>
+                                                    <span *ngIf="((purpose.invalid && processForm.submitted) || (purpose.errors && purpose.touched) )" 
+                                                            class='errspan required'> Purpose is required </span>
+                                                </div>
+                                                <!-- <div class="col-md-12 pl-0 form-group">
+                                                    <label class="label-control module-sub-header-title">Problem Statement</label>
+                                                    <input type="text" name="problem_statement" #problem_statement="ngModel" id="problem_statement" [(ngModel)]="problemStatement" class="form-control" placeholder="Enter Problem Statement" required>
+                                                    <span *ngIf="((problem_statement.invalid && processForm.submitted) || (problem_statement.errors && problem_statement.touched) )" 
+                                                            class='errspan required'> problem statement is required </span>
+                                                </div> -->
+                                                    <div class="col-md-12 form-group">
+                                                        <div class="pull-right">
+                                                            <button class="btn btn-default" *ngIf="businessDetails.length > 0" (click)="cancelEditProcess()">Cancel</button>
+                                                            <button class="btn btn-primary" *ngIf="businessDetails.length == 0" [disabled]="processForm.invalid" (click)="saveBusinessProcess()">Save</button>
+                                                            <button class="btn btn-primary" *ngIf="businessDetails.length > 0" [disabled]="processForm.invalid" (click)="updateBusinessDetails()">Update</button>
+                                                        </div>
+                                                    </div>
+                                            </form>
+                                            <div *ngIf="!isProcessEdit">
+                                                <span class="pull-right"><button class="btn btn-primary" (click)="editBusinessProcess()">Edit</button></span>
+                                                <div class="col-md-12 pl-0">
+                                                    <label class="label-control module-sub-header-title"><b>Business Challenge</b></label>
+                                                    <p>{{processUnderstanding.businessChallenge}}</p>
+                                                </div>
+                                                <div class="col-md-12 pl-0">
+                                                    <label class="label-control module-sub-header-title"><b>Purpose</b></label>
+                                                    <p>{{processUnderstanding.purpose}}</p>
+                                                </div>
+                                            </div>
+                                        <div class="col-md-12 p-0 process-quesdiv" id="business_Process">
+                                            <mat-expansion-panel class="process-expansion" (opened)="onOpenProcess('questions')">
+                                                <mat-expansion-panel-header>
+                                                    <mat-panel-title disabled="true">
+                                                        <span class="module-sub-header-title" >
+                                                            <b>Process Questionnaire</b>
+                                                        </span>
+                                                    </mat-panel-title>
+                                                </mat-expansion-panel-header>
+                                                <div class="col-md-12 process-div">
+                                                    <div class="col-md-12 p-0 form-group proc_deffield" id="question-div">
+                                                        <input type="text" name="havequestion" [(ngModel)]="haveQuestion" id="have_question" class="form-control" placeholder="Have a Question?">
+                                                        <span class="procdesc_act" >
+                                                            <span class="tsttooltipbtn" *ngIf="haveQuestion" (click)="saveQuestion()">
+                                                                <img src="../../../../assets/images/VCM/Green Tick.svg" class="testplus1"/>
+                                                                <!-- <span class="testtooltip">Save</span> -->
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                    <div class="col-md-12 p-0">
+                                                        <div *ngFor="let each of processQuestions">
+                                                            <div class="col-md-7 pl-0">
+                                                                <p><strong>Q: {{each.question}}?</strong></p>
+                                                            </div>
+                                                            <div class="col-md-5 p-0 text-right">
+                                                                <span><b>Created By:</b> {{each.createdBy}}</span>
+                                                                <span><b>Created At:</b> {{each.convertedcreatedAt*1000 | date:'medium'}}</span>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-10 pl-0">
+                                                                    <div>
+                                                                        <div *ngIf="each.answer">
+                                                                            <p *ngIf="selected_questionId != each.questionId">A: {{each.answer}}</p>
+                                                                        </div>
+                                                                        <div *ngIf="!each.answer" class="answer-btn">
+                                                                            <button *ngIf="selected_questionId != each.questionId" class="btn btn-primary" (click)="answerToQuestion(each)">Answer</button>
+                                                                        </div>
+                                                                            <div *ngIf="selected_questionId == each.questionId">
+                                                                            <div class="proc_deffield1">
+                                                                                <input type="text" name="answerUpdate" id="answer_update" [(ngModel)]="selectedAnswerUpdate" class="form-control" placeholder="Enter Answer">
+                                                                                <span class="procdesc_act">
+                                                                                    <span class="tsttooltipbtn" (click)="updateAnswer(each)">
+                                                                                        <img src="../../../../assets/images/VCM/Green Tick.svg" class="testplus" />
+                                                                                    </span>
+                                                                                    <span class="tsttooltipbtn" (click)="cancelUpdate()">
+                                                                                        <img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2" />
+                                                                                    </span>
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-2 pr-0 text-right pques-actions">
+                                                                    <span *ngIf="selected_questionId != each.questionId && each.answer">
+                                                                        <span class="tsttooltipbtn">
+                                                                            <img src="../../../../assets/images/VCM/edit-plus-litblue.svg" class="testplus2 default-img" (click)="updateAnswer()" />
+                                                                            <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2 hover-img" (click)="editAnswer(each)" />
+                                                                            <span class="testtooltip">Edit</span>
+                                                                        </span>
+                                                                        <span class="tsttooltipbtn removeques">
+                                                                            <img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img" />
+                                                                            <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img"
+                                                                                (click)="removeAnswer(each)" />
+                                                                            <span class="testtooltip">Remove</span>
+                                                                        </span>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </mat-expansion-panel>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                            </mat-expansion-panel>
+                        </div>
+                    </div>
+                    </div>
+                </mat-card>
+            <!-- </div> -->
+            </div>
         </div>
+
+
 
     </div>
 
@@ -1156,25 +1298,25 @@
                 <form [formGroup]="updatetaskForm" (ngSubmit)="updatetask()">
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="form-fields col-md-3 pl-0">
+                            <div class="form-group col-md-3 pl-0">
                                 <label id="assignee" for="assignee">Assignee</label>
                                 <span class="labelcont">{{selectedtaskdata.resources| userPipe : users_list}}</span>
                             </div>
-                            <div class="form-fields col-md-3 pr-0">
+                            <div class="form-group col-md-3 pr-0">
                                 <label id="startdate" for="startDate">Start Date</label>
                                 <span class="labelcont">{{selectedtaskdata.startDate | date}}</span>
                             </div>
-                            <div class="form-fields col-md-3 pr-0">
+                            <div class="form-group col-md-3 pr-0">
                                 <label id="enddate" for="endDate">End Date</label>
                                 <span class="labelcont">{{selectedtaskdata.endDate | date}}</span>
                             </div>
-                            <div class="form-fields col-md-3 pr-0">
+                            <div class="form-group col-md-3 pr-0">
                                 <label id="percentage" for="percentage">Percentage Completed</label>
                                 <ng5-slider [(value)]="slider" formControlName="percentageComplete" [options]="options"></ng5-slider>
                             </div>
                         </div>
                         <div class="col-md-12">
-                            <div class="form-fields col-md-6 pl-0">
+                            <div class="form-group col-md-6 pl-0">
                                 <label id="status" for="status">Status<span class="star">*</span></label>
                                 <select formControlName="status" class="form-control data">
                   <option value="">Select Status</option>
@@ -1185,7 +1327,7 @@
                  </select>
                                 <span *ngIf="updatetaskForm.get('status').invalid && updatetaskForm.get('status').touched" class="errspan required">Status Required*</span>
                             </div>
-                            <div class="form-fields col-md-6 pr-0">
+                            <div class="form-group col-md-6 pr-0">
                                 <label id="priority" for="priority">Priority<span class="star">*</span></label>
                                 <select formControlName="priority" class="form-control data">
                   <option value="">Select Priority</option>
@@ -1196,12 +1338,12 @@
                                 <span *ngIf="updatetaskForm.get('priority').invalid && updatetaskForm.get('priority').touched" class="errspan required">Priority Required*</span>
                             </div>
                         </div>
-                        <div class="form-fields col-md-12">
+                        <div class="form-group col-md-12">
                             <label id="summary" class="label-control">Summary</label>
                             <textarea class="form-control" maxlength="150" formControlName="summary" rows="3" placeholder="Enter Summary">
                         </textarea>
                         </div>
-                        <div class="form-fields col-md-12">
+                        <div class="form-group col-md-12">
                             <label id="description" class="label-control">Description</label>
                             <textarea class="form-control" maxlength="150" formControlName="description" rows="3" placeholder="Enter Description">
                         </textarea>
@@ -1216,7 +1358,7 @@
                                             <div *ngIf="profilePicture==true"><img class="res-circle-img " [src]="retrievedImage"></div>
                                             <div>
                                             </div>
-                                            <div class="form-fields col-md-12 pr-0 comment-input">
+                                            <div class="form-group col-md-12 pr-0 comment-input">
                                                 <input class=" form-control" maxlength="150" type="text" #commentInput id="addcomment" placeholder="Add a comment.." />
                                                 <div class="comment-send" id="sendcomment" (click)="postcomments(commentInput.value)">
                                                     <img src="../../../../assets/images/Projects/send.svg" class="default-img" />
@@ -1255,7 +1397,7 @@
 
 
                                                 <div class="updatecomments" *ngIf="(showeditcomment && i==commentnumber)">
-                                                    <div class="form-fields col-md-12 p-0">
+                                                    <div class="form-group col-md-12 p-0">
                                                         <input type="text" name="comment" maxlength="150" class="form-control" formControlName="editcomment" placeholder="Add Comment..." />
                                                     </div>
                                                     <div class="modal-footer modelprfooter">
@@ -1409,7 +1551,7 @@
             <div class="container p-0" style="width:100%">
                 <form [formGroup]="uploadtaskFileForm" (ngSubmit)="submitUploadFileForm()">
                     <div class="row">
-                        <div class="form-fields col-md-12">
+                        <div class="form-group col-md-12">
                             <label for="category">File Category<span class="star">*</span></label>
                             <select class="form-control" formControlName="category">
                 <option [value]="null" disabled hidden>Select File Category</option>
@@ -1419,7 +1561,7 @@
               </select>
                             <span *ngIf="uploadtaskFileForm.get('category').invalid && uploadtaskFileForm.get('category').touched" class="errspan required">File Category Required*</span>
                         </div>
-                        <div class="form-fields col-md-12">
+                        <div class="form-group col-md-12">
 
                             <label>Description<span class="star">*</span></label>
                             <textarea name="desc" class="form-control" rows="2" maxlength="151" formControlName="description" (keyup)="uploadFileDescriptionMaxLength($event.target.value)" placeholder="Enter Description...">
@@ -1431,7 +1573,7 @@
                               </span>
                         </div>
 
-                        <div class="form-fields col-md-12">
+                        <div class="form-group col-md-12">
                             <label>Upload<span class="star">*</span></label>
                             <div class="box-fileupload">
                                 <input type="file" name="file" (change)="chnagefileUploadForm($event)" id="file" class="inputfile" multiple/>
@@ -1495,7 +1637,7 @@
         <div class="container p-0" style="width:100%">
             <form [formGroup]="uploadFileFormDetails" (ngSubmit)="submitUploadFileFormattachment()">
                 <div class="row">
-                    <div class="form-fields col-md-12">
+                    <div class="form-group col-md-12">
                         <label for="fileCategory">File Category<span class="star">*</span></label>
                         <select class="form-control" formControlName="fileCategory" required>
                     <option  [value]="null" disabled hidden>Select Category</option>
@@ -1505,7 +1647,7 @@
                         <span *ngIf="uploadFileFormDetails.get('fileCategory').invalid && uploadFileFormDetails.get('fileCategory').touched" class="errspan required">File Category Required*</span>
                     </div>
                 </div>
-                <div class="form-fields col-md-12">
+                <div class="form-group col-md-12">
 
                     <label>Description<span class="star">*</span></label>
                     <textarea name="desc" class="form-control" maxlength="151" rows="2" formControlName="description" (keyup)="uploadFileDescriptionMaxLength($event.target.value)" placeholder="Enter Description...">
@@ -1516,7 +1658,7 @@
                         Maximum of 150 characters
                       </span>
                 </div>
-                <div class="form-fields col-md-12">
+                <div class="form-group col-md-12">
 
                     <label>Upload<span class="star">*</span></label>
                     <div class="box-fileupload">

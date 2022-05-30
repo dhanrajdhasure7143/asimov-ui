@@ -37,6 +37,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
     public DBdeleteflag:Boolean;
     public passwordtype1:Boolean;
     public passwordtype2:Boolean;
+    public snowflakeflag:boolean=true;
     public categoryList:any=[];
     customUserRole: any;
     enableDbconnection: boolean=false;
@@ -61,7 +62,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
         hostAddress: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         categoryId:["0", Validators.compose([Validators.required])],
         password: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
-        portNumber: ["",  Validators.compose([ Validators.maxLength(6)])],
+        portNumber: ["",  Validators.compose([Validators.required, Validators.maxLength(6)])],
         schemaName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         username: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         role:["",Validators.compose([Validators.maxLength(50)])],
@@ -96,7 +97,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
     this.getCategories()
     this.passwordtype1=false;
     this.passwordtype2=false;
-
+    
     this.userRole = localStorage.getItem("userRole")
     this.userRole = this.userRole.split(',');
     this.isButtonVisible = this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') || this.userRole.includes('RPA Admin') || this.userRole.includes('RPA Designer')
@@ -112,7 +113,19 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
       );
         })
   }
-
+  changeDatabaseType(event){
+     console.log("event",event.target.value);
+     if(event.target.value=='Snowflake'){
+       this.snowflakeflag=true;
+       this.insertdbForm.controls.portNumber.clearValidators();
+       this.insertdbForm.controls.portNumber.updateValueAndValidity()
+     }
+     else{
+       this.snowflakeflag=false;
+       this.insertdbForm.controls.portNumber.setValidators([Validators.required,Validators.maxLength(6)]);
+       this.insertdbForm.controls.portNumber.updateValueAndValidity()
+     }
+  }
   async getallDBConnection(){
     this.dbconnections= [];
     await this.api.listDBConnection().subscribe(
@@ -376,14 +389,20 @@ updatedbdata()
       {
         this.dbupdatedata=data;
         this.updatedbForm.get("connectiontName").setValue(this.dbupdatedata["connectiontName"]);
-        this.updatedbForm.get("categoryId").setValue(this.dbupdatedata["categoryId"]);
-        
-        this.updatedbForm.get("dataBaseType").setValue(this.dbupdatedata["dataBaseType"]);
-        
-        this.updatedbForm.get("databasename").setValue(this.dbupdatedata["databasename"]);
-        
-        this.updatedbForm.get("hostAddress").setValue(this.dbupdatedata["hostAddress"]);
-        
+        this.updatedbForm.get("categoryId").setValue(this.dbupdatedata["categoryId"]);      
+        this.updatedbForm.get("dataBaseType").setValue(this.dbupdatedata["dataBaseType"]);  
+        if(this.dbupdatedata["dataBaseType"]=='PostgreSQL'){
+          this.snowflakeflag=false;
+          this.updatedbForm.controls.portNumber.setValidators([Validators.required,Validators.maxLength(6)]);
+          this.updatedbForm.controls.portNumber.updateValueAndValidity()
+        } 
+        else if(this.dbupdatedata["dataBaseType"]=='Snowflake'){
+          this.snowflakeflag=true;
+          this.updatedbForm.controls.portNumber.clearValidators();
+          this.updatedbForm.controls.portNumber.updateValueAndValidity()
+        }    
+        this.updatedbForm.get("databasename").setValue(this.dbupdatedata["databasename"]);        
+        this.updatedbForm.get("hostAddress").setValue(this.dbupdatedata["hostAddress"]);      
         this.updatedbForm.get("password").setValue(this.dbupdatedata["password"]);
         this.updatedbForm.get("portNumber").setValue(this.dbupdatedata["portNumber"]);
         this.updatedbForm.get("schemaName").setValue(this.dbupdatedata["schemaName"]);

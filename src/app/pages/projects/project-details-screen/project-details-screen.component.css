@@ -80,7 +80,8 @@ mat-card#projects_details_screen {
   margin-bottom: 16px;
   border-radius: 2px;
 }
-.new-prj-tasklist , .resources .new-resourcediv{
+.new-prj-tasklist , .resources .new-resourcediv,
+.process-understanding .new-procundiv {
   padding: 8px 15px !important;
 }
 .projecttable.table, .projects-table-body{
@@ -107,8 +108,12 @@ mat-card#projects_details_screen {
 }
 .documents .new-docdiv {
   padding: 8px 15px !important;
-  margin-bottom: 0px !important;
+  /* margin-bottom: 0px !important; */
   /* min-height: 300px; */
+}
+.process-understanding .new-procundiv {
+  margin-bottom: 0px !important;
+  padding: 0px !important;
 }
 .resources .projects-table-body , .documents .projects-table-body {
   padding: 0px;
@@ -611,9 +616,10 @@ span.testtooltip:before {
   padding: 10px;
 }
 .profile-table td span.letter-image {
-  margin-right: 20px;
-position: relative;
-background-color: transparent;
+  margin-right: 5px;
+  padding: 5px 8px;
+/* position: relative;
+background-color: transparent; */
 }
 span.projectowner-letter-image{
   margin-right: 20px;
@@ -635,7 +641,7 @@ span.project-owner-letter{
 
 .profile-table td span.letter {
 
-  width: 30px;
+  /* width: 30px;
   height: 30px;
   position: absolute;
   color: #001c47;
@@ -643,7 +649,7 @@ span.project-owner-letter{
   border-radius: 50%;
   padding: 6px;
   top: 2px;
-  left:-3px;
+  left:-3px; */
   }
 .prjdetails-headerbuttons {
   margin-left: 10px;
@@ -679,4 +685,97 @@ span.projectdesc {
   font-size: 13px;
   opacity: 0.6;
   word-wrap: break-word;
+}
+.process-div{
+  padding:10px 15px;
+  color: #001c47 !important;
+}
+
+.process-expansion{
+  border: none;
+  border-top-left-radius: 4px !important;
+  border-top-right-radius: 4px !important;
+}
+.proc_deffield input {
+  width: 96%;
+}
+.proc_deffield, .proc_deffield1 {
+  position: relative;
+}
+.proc_deffield span.procdesc_act {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  cursor:pointer;
+}
+
+.proc_deffield1 input {
+  width: 70%;
+}
+
+.proc_deffield1 span.procdesc_act {
+  position: absolute;
+  right: 24%;
+  top: 5px;
+  cursor:pointer;
+}
+img.testplus2 {
+  width: 12px;
+  height: 12px;
+  margin-right: 8px;
+  cursor:pointer;
+}
+
+.process-expansion mat-panel-title.mat-expansion-panel-header-title {
+  padding: 0px !important;
+}
+
+.process-expansion .mat-expansion-panel-header {
+  padding: 26px 15px !important;
+  border-bottom: 1px solid #ccc;
+}
+
+.process-quesdiv {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 99%;
+}
+.process-div button.btn.btn-primary {
+  margin-right: 0px !important;
+}
+
+.process-div .col-md-5 span {
+  font-size: 13px;
+  margin-left:10px;
+}
+
+.pques-actions .tsttooltipbtn {
+  position: relative;
+}
+
+.pques-actions span.testtooltip {
+  top: -32px;
+  right: -7px;
+}
+
+.pques-actions span.testtooltip:before {
+  top: 21px;
+}
+
+.pques-actions .removeques img.testplus2 {
+  margin-right: 0px;
+}
+
+.profile-table th, .projecttable.table th {
+  z-index: 1 !important;
+}
+
+.pques-actions span.tsttooltipbtn:hover .default-img {
+  display: none;
+}
+.pques-actions span.tsttooltipbtn:hover .hover-img {
+  display: initial;
+}
+.answer-btn{
+  margin: 0px 0px 10px 10px;
 }

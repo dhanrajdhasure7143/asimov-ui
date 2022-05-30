@@ -2907,3 +2907,6 @@ button.custom-popupbtn.mat-button {
 .overaly-innertable .testcell {
   width: calc(100% / 7 );
 }
+.process-expansion .mat-expansion-panel-body {
+  max-height: none !important;
+}
