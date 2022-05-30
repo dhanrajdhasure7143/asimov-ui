@@ -43,7 +43,8 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
     enableDbconnection: boolean=false;
     userRole: any;
     public isButtonVisible = false;
-    
+    addflag:boolean=false;
+
     constructor(private api:RestApiService, 
       private router:Router,
       private hints:Rpa_Hints, 
@@ -95,6 +96,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
     this.dt.changeHints(this.hints.rpadbchints);
     //this.getallDBConnection();
     this.getCategories()
+    this.spinner.show();
     this.passwordtype1=false;
     this.passwordtype2=false;
     
@@ -130,6 +132,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
     this.dbconnections= [];
     await this.api.listDBConnection().subscribe(
       data1 => {
+        if(Array.isArray(data1)){
         this.dbconnections = data1;
         if(this.dbconnections.length>0)
          { 
@@ -148,6 +151,8 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
         setTimeout(() => {
           this.sortmethod(); 
         }, 80);
+        }
+        this.spinner.hide();
       });
     //     document.getElementById("filters").style.display='block'; 
   }
@@ -468,6 +473,11 @@ updatedbdata()
   DBchecktoupdate()
   {
     const selectedbdconnections = this.dbconnections.filter(product => product.checked==true);
+    if(selectedbdconnections.length > 0){
+      this.addflag = true;
+    }else{
+      this.addflag = false;
+    }
     if(selectedbdconnections.length==1)
     {
       this.DBupdateflag=true;

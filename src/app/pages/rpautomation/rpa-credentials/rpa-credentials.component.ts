@@ -41,6 +41,7 @@ export class RpaCredentialsComponent implements OnInit {
     enableCredential: boolean=false;
     userRole: any;
     public isButtonVisible = false;
+    addflag:boolean=false;
     
     constructor(private api:RestApiService, 
       private router:Router,
@@ -336,6 +337,11 @@ updatecreddata()
   Credchecktoupdate()
   {
     const selectedcredentials = this.credentials.filter(product => product.checked==true);
+    if(selectedcredentials.length > 0){
+      this.addflag = true;
+    }else{
+      this.addflag = false;
+    }
     if(selectedcredentials.length==1)
     {
       this.Credupdateflag=true;

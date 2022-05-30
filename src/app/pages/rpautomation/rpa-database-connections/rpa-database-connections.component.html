@@ -10,9 +10,15 @@
             <input class="toolbar-search" *ngIf="!isSearch" matInput (keyup)="applyFilter1($event.target.value)">
         </mat-form-field> -->
         <div class="env-data-tool credential-tools">
-            <div class="env-btn credential-btntool">
+            <div *ngIf="!addflag" class="env-btn credential-btntool">
                 <button class="tsttooltipbtn" value="Create" id="adddbbtn" (click)="createdbconnection()">
                     <img src='../../../../assets/images/RPA/icon_latest/new-blue.svg'>
+                    <span class="testtooltip">New</span>
+                </button>
+            </div>
+            <div *ngIf="addflag" class="env-btn credential-btntool">
+                <button class="tsttooltipbtn" value="Create" id="adddbbtn" disabled>
+                    <img src='../../../../assets/images/RPA/icon_latest/plus dis.svg'>
                     <span class="testtooltip">New</span>
                 </button>
             </div>
