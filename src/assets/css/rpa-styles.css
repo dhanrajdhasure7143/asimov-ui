@@ -263,17 +263,19 @@ padding-bottom: 70px;
   
   /* The Close Button */
   .rpa-modal-close {
-  opacity: 0.2;
-  float: right;
-  font-size: 24px;
+    float: right;
+    line-height: 35px;
   }
+  
   .rpa-modal-close img {
     width: 14px;
     height: 14px;
+    opacity: 0.2;
+    font-size: 24px;
   }
   
-  .rpa-modal-close:hover,
-  .rpa-modal-close:focus {
+  .rpa-modal-close img:hover,
+  .rpa-modal-close img:focus {
   color: #000;
   opacity: 0.5;
   text-decoration: none;
