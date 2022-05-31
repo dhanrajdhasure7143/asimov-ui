@@ -99,7 +99,7 @@ export class RpaHomeComponent implements OnInit {
   userCheck:boolean=false;
   @ViewChild(MatSort,{static:false}) sort: MatSort;
   totalRows$: Observable<number>;
-  @ViewChild(MatPaginator,{static:false}) paginator301: MatPaginator;
+  @ViewChild("paginator301",{static:false}) paginator301: MatPaginator;
   freetrail: string;
   botlistitems:any=[]
   constructor(
@@ -1051,25 +1051,21 @@ export class RpaHomeComponent implements OnInit {
         }
       }
 
-      assignPagination(data){
-      
-        const sortEvents$: Observable<Sort> = fromMatSort(this.sort);
-        const pageEvents$: Observable<PageEvent> = fromMatPaginator(this.paginator301);
-        const rows$ = of(data);
-        this.totalRows$ = rows$.pipe(map(rows => rows.length));
-        this.displayedRows$ = rows$.pipe(sortRows(sortEvents$), paginateRows(pageEvents$));
-        this.paginator301.firstPage();
-      }
+  assignPagination(data) {
+    const sortEvents$: Observable<Sort> = fromMatSort(this.sort);
+    const pageEvents$: Observable<PageEvent> = fromMatPaginator(this.paginator301);
+    const rows$ = of(data);
+    this.totalRows$ = rows$.pipe(map(rows => rows.length));
+    this.displayedRows$ = rows$.pipe(sortRows(sortEvents$), paginateRows(pageEvents$));
+    this.paginator301.firstPage();
+  }
 
-      applySearchFilter(v){  
-      const filterPipe = new SearchRpaPipe();   
-       const fiteredArr = filterPipe.transform(this.botslist,v);   
-            
-        this.assignPagination(fiteredArr)    
-  }
-
-
-      
+  applySearchFilter(v) {
+    const filterPipe = new SearchRpaPipe();
+    const fiteredArr = filterPipe.transform(this.botslist, v);
+    this.assignPagination(fiteredArr)
+  }
+     
 }
 
 export interface dataSource1 {
