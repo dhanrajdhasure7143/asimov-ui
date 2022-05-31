@@ -56,6 +56,8 @@ import { NgxSpinnerService } from "ngx-spinner";
     public isKeyValuePair:Boolean=false;
     public password:any="";
     public keyValueFile:File;
+    addflag:boolean=false;
+    
   constructor(private api:RestApiService, 
     private router:Router, 
     private formBuilder: FormBuilder,
@@ -722,6 +724,11 @@ import { NgxSpinnerService } from "ngx-spinner";
   checktoupdate()
   {
     const selectedEnvironments = this.environments.filter(product => product.checked==true);
+    if(selectedEnvironments.length > 0){
+      this.addflag = true;
+    }else{
+      this.addflag = false;
+    }
     if(selectedEnvironments.length==1)
     {
       this.updateflag=true;
@@ -778,11 +785,12 @@ import { NgxSpinnerService } from "ngx-spinner";
       this.api.deployenvironment(selectedEnvironments).subscribe( res =>{ 
         let data:any=res
         this.spinner.hide();   
-        if(data.errorMessage==undefined){
+
+        if(data[0].errorMessage==undefined){
           Swal.fire("Success",data[0].status,"success")
 
         }else{
-          Swal.fire("Error",data.errorMessage,"error")
+          Swal.fire("Error",data[0].errorMessage,"error")
         }
         this.removeallchecks();
         this.getallData(); 

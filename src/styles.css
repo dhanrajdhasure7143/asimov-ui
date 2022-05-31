@@ -1346,8 +1346,8 @@ mat-row {
 }
 
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 7px;
+  height: 7px;
   cursor: pointer;
 }
 
@@ -1358,7 +1358,8 @@ mat-row {
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
+  /* background: transparent; */
+  background: #fff;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -2880,4 +2881,32 @@ button.custom-popupbtn.mat-button {
   background-color: aliceblue;
   margin-top: 4px;
   border-bottom: 0px !important;
+}
+
+.actionsoverlay-mbody {
+  overflow: hidden !important;
+  padding: 0px !important;
+}
+.actionsoverlay-mbody .actions-datafields-div {
+  /* height: calc(100vh - 190px); */
+  height: calc(100vh - 160px);
+  overflow: auto;
+  padding: 15px;
+  width:100%;
+}
+.own-overlay as-split-area {
+  overflow: hidden !important;
+}
+.actionsoverlay-mbody .container.m-contanier.form-body {
+  height: 100vh;
+  overflow: hidden;
+}
+.overaly-innertable .testcell:nth-child(2) {
+  width: 30%;
+}
+.overaly-innertable .testcell {
+  width: calc(100% / 7 );
+}
+.process-expansion .mat-expansion-panel-body {
+  max-height: none !important;
 }
