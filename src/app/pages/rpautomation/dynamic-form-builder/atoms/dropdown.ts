@@ -12,7 +12,10 @@ import { RpaStudioDesignerworkspaceComponent } from '../../rpa-studio-designerwo
         <option  value="null" hidden disabled>{{field.placeholder}}</option>
         <option  value="undefined"  hidden disabled>{{field.placeholder}}</option>
         <option *ngFor="let opt of field.options" [value]="opt.key">{{opt.label}}</option>
-        <option  *ngIf="field.label=='Email'" value="New">New</option>
+        <option *ngIf="field.label=='Email'" value="New">New</option>
+        <option *ngIf="field.label=='Action' value='VerticalScrollbarPosition'>Vertical Scrollbar Position</option>
+        <option *ngIf="field.label=='Action' value='Close'>Close</option>
+       
         </select>
       </div>
     `,
