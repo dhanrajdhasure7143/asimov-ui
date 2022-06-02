@@ -324,10 +324,9 @@ export class RpaSoLogsComponent implements OnInit {
 
   getAutomationLogs(taskData:any)
   {
-
     this.selectedAutomationTask=taskData;
     this.logsLoading=true;
-    this.rest.getAutomationLogs(taskData.bot_id, taskData.version, taskData.run_id).subscribe((response:any)=>{
+    this.rest.getAutomationLogs(taskData.bot_id, taskData.version, taskData.run_id,taskData.task_id).subscribe((response:any)=>{
       this.logsLoading=false;
       if(response.errorMessage==undefined)
       {
@@ -357,5 +356,10 @@ export class RpaSoLogsComponent implements OnInit {
           Swal.fire("Error",response.errorMessage,"error");
      });
    }
+
+  sortAutomateSap()
+  {
+    
+  }
 
 }
