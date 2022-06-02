@@ -7,10 +7,8 @@ import { RpaStudioDesignerworkspaceComponent } from '../../rpa-studio-designerwo
     selector: 'dropdown',
     template: `
       <div [formGroup]="form">
-        <select [attr.disabled]="feilddisable" [required]="field.required==true" (change)="onChangeEmail($event,field.options)" class="form-control" [value]="field.value" [id]="field.id" [formControlName]="field.name+'_'+field.id">
-        <option  value="" hidden disabled>{{field.placeholder}}</option>
-        <option  value="null" hidden disabled>{{field.placeholder}}</option>
-        <option  value="undefined"  hidden disabled>{{field.placeholder}}</option>
+        <select [attr.disabled]="feilddisable" [required]="field.required==true" (change)="onChangeEmail($event, field.options)" class="form-control" [value]="field.value" [id]="field.id" [formControlName]="field.name+'_'+field.id">
+        <option  value="" >--{{field.placeholder}}--</option>
         <option *ngFor="let opt of field.options" [value]="opt.key">{{opt.label}}</option>
         <option *ngIf="field.label=='Email'" value="New">New</option>
         <option *ngIf="field.label=='Action' value='VerticalScrollbarPosition'>Vertical Scrollbar Position</option>
@@ -46,37 +44,37 @@ export class DropDownComponent implements OnInit {
       this.fieldsWithoutRef=[...this.designer.fields];
     }
 
-  onChangeEmail(event, options) {
-    if (event.target.value == 'New') {
-      this.designer.createcredentials();
-    }
-    if (event.target.value == 'fill' || event.target.value == 'click') {
-      this.fieldsWithoutRef = [...this.designer.fields];
-      let hideAttributes: any = options.find(item => item.key == event.target.value) != undefined ? options.find(item => item.key == event.target.value).hide_attributes : "";
-      let hideAttributesIds: any = hideAttributes != null ? hideAttributes.split(",") : [];
-      hideAttributesIds.forEach(item => {
-        if (this.fieldsWithRef.find(fieldItem => fieldItem.id == parseInt(item)) != undefined) {
-          this.fieldsWithRef.find(fieldItem => fieldItem.id == parseInt(item)).visibility = false;
-          this.fieldsWithRef.find(fieldItem => fieldItem.id == parseInt(item)).required = false;
+      onChangeEmail(event, options) {
+        if (event.target.value == 'New') {
+          this.designer.createcredentials();
         }
-      });
-      this.fieldsWithRef.forEach((item1, i) => {
-        if (!item1.visibility) {
-          this.form.get([this.fieldsWithRef[i].name + '_' + this.fieldsWithRef[i].id]).clearValidators();
+        if (event.target.value == 'fill' || event.target.value == 'click') {
+          this.fieldsWithoutRef = [...this.designer.fields];
+          let hideAttributes: any = options.find(item => item.key == event.target.value) != undefined ? options.find(item => item.key == event.target.value).hide_attributes : "";
+          let hideAttributesIds: any = hideAttributes != null ? hideAttributes.split(",") : [];
+          hideAttributesIds.forEach(item => {
+            if (this.fieldsWithRef.find(fieldItem => fieldItem.id == parseInt(item)) != undefined) {
+              this.fieldsWithRef.find(fieldItem => fieldItem.id == parseInt(item)).visibility = false;
+              this.fieldsWithRef.find(fieldItem => fieldItem.id == parseInt(item)).required = false;
+            }
+          });
+          this.fieldsWithRef.forEach((item1, i) => {
+            if (!item1.visibility) {
+              this.form.get([this.fieldsWithRef[i].name + '_' + this.fieldsWithRef[i].id]).clearValidators();
+            }
+            if (item1.id != 525) {
+              this.form.get([this.fieldsWithRef[i].name + '_' + this.fieldsWithRef[i].id]).reset();
+            }
+          })
+          this.fieldsWithoutRef.forEach(item => {
+            if (!hideAttributesIds.includes(String(item.id))) {
+              this.fieldsWithRef.find(item2 => item2.id == item.id).visibility = true;
+              this.fieldsWithRef.find(item2 => item2.id ==  item.id).required = true;
+            }
+          })
         }
-        if (item1.id != 525) {
-          this.form.get([this.fieldsWithRef[i].name + '_' + this.fieldsWithRef[i].id]).reset();
-        }
-      })
-      this.fieldsWithoutRef.forEach(item => {
-        if (!hideAttributesIds.includes(String(item.id))) {
-          this.fieldsWithRef.find(item2 => item2.id == item.id).visibility = true;
-          this.fieldsWithRef.find(item2 => item2.id ==  item.id).required = true;
-        }
-      })
-    }
 
-  }
+      }
    
     }
 
