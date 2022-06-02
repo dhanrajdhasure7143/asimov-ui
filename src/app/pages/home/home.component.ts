@@ -31,39 +31,6 @@ export class HomeComponent implements OnInit {
   expiry: any;
   
   constructor(private router: Router, private dt:DataTransferService, private rpa: RestApiService, private route: ActivatedRoute, private hints:PagesHints) {
-
-    this.route.queryParams.subscribe(params => {
-      var acToken=params['accessToken']
-      var refToken = params['refreshToken']
-      this.firstName=params['firstName']
-      this.lastName=params['lastName']
-      this.ProfileuserId=params['ProfileuserId']
-      this.tenantName=params['tenantName']
-      var authKey = params['authKey']
-      var ipadd = params['userIp']
-      var loginType = params['loginType']
-      if(acToken && refToken){
-        var accessToken=atob(acToken);
-        var refreshToken=atob(refToken);
-        localStorage.setItem("accessToken", accessToken);
-        localStorage.setItem("refreshToken", refreshToken);
-        localStorage.setItem("firstName", this.firstName);
-        localStorage.setItem("lastName", this.lastName);
-        localStorage.setItem("ProfileuserId", this.ProfileuserId);
-        localStorage.setItem("tenantName", this.tenantName);
-        localStorage.setItem("authKey", authKey);
-        var ipp = atob(ipadd)
-        localStorage.setItem('ipAddress', ipp);
-      }
-      if(loginType){
-        var officeUser = atob(loginType);
-        localStorage.setItem("officeUser", officeUser);
-      }  
-    });
-    this.rpa.getNewAccessToken().subscribe(resp=>{
-      this.newAccessToken=resp;
-      localStorage.setItem('accessToken', this.newAccessToken.accessToken);
-  });
   }
 
   ngOnInit() {
