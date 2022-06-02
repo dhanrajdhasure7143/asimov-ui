@@ -1145,7 +1145,7 @@
                                     <div class="col-md-12 process-div">
                                         <div class="process-under">
                                             <form action="" #processForm="ngForm" *ngIf="isProcessEdit">
-                                                <div class="col-md-12 pl-0 form-group">
+                                                <div class="col-md-12 p-0 form-group">
                                                     <label class="label-control module-sub-header-title"><b>Business Challenge</b> <!-- <span class="star">*</span> -->
                                                     </label>
                                                     <!-- <input type="text" name="business_challange" #business_challange="ngModel" id="business_challange" [(ngModel)]="businessChallange" class="form-control" placeholder="Enter Business Challenge" required> -->
@@ -1153,7 +1153,7 @@
                                                     <span *ngIf="((business_challange.invalid && processForm.submitted) || (business_challange.errors && business_challange.touched) )" 
                                                     class='errspan required'> Business challenge is required </span>
                                                 </div>
-                                                <div class="col-md-12 pl-0 form-group">
+                                                <div class="col-md-12 p-0 form-group">
                                                     <label class="label-control module-sub-header-title"><b>Purpose</b></label>
                                                     <input type="text" name="purpose" #purpose="ngModel" [(ngModel)]="businessPurpose" class="form-control" placeholder="Enter Purpose Name" required/>
                                                     <span *ngIf="((purpose.invalid && processForm.submitted) || (purpose.errors && purpose.touched) )" 
@@ -1165,7 +1165,7 @@
                                                     <span *ngIf="((problem_statement.invalid && processForm.submitted) || (problem_statement.errors && problem_statement.touched) )" 
                                                             class='errspan required'> problem statement is required </span>
                                                 </div> -->
-                                                    <div class="col-md-12 form-group">
+                                                    <div class="col-md-12 p-0 form-group">
                                                         <div class="pull-right">
                                                             <button class="btn btn-default" *ngIf="businessDetails.length > 0" (click)="cancelEditProcess()">Cancel</button>
                                                             <button class="btn btn-primary" *ngIf="businessDetails.length == 0" [disabled]="processForm.invalid" (click)="saveBusinessProcess()">Save</button>
@@ -1175,11 +1175,11 @@
                                             </form>
                                             <div *ngIf="!isProcessEdit">
                                                 <span class="pull-right"><button class="btn btn-primary" (click)="editBusinessProcess()">Edit</button></span>
-                                                <div class="col-md-12 pl-0">
+                                                <div class="col-md-12 p-0">
                                                     <label class="label-control module-sub-header-title"><b>Business Challenge</b></label>
                                                     <p>{{processUnderstanding.businessChallenge}}</p>
                                                 </div>
-                                                <div class="col-md-12 pl-0">
+                                                <div class="col-md-12 p-0">
                                                     <label class="label-control module-sub-header-title"><b>Purpose</b></label>
                                                     <p>{{processUnderstanding.purpose}}</p>
                                                 </div>
@@ -1204,13 +1204,13 @@
                                                         </span>
                                                     </div>
                                                     <div class="col-md-12 p-0">
-                                                        <div *ngFor="let each of processQuestions">
+                                                        <div *ngFor="let each of processQuestions" class="ques-block">
                                                             <div class="col-md-7 pl-0">
-                                                                <p><strong>Q: {{each.question}}?</strong></p>
+                                                                <p class="p-questions"><strong>Q: {{each.question}}?</strong></p>
                                                             </div>
                                                             <div class="col-md-5 p-0 text-right">
-                                                                <span><b>Created By:</b> {{each.createdBy}}</span>
-                                                                <span><b>Created At:</b> {{each.convertedcreatedAt*1000 | date:'medium'}}</span>
+                                                                <span>{{each.createdBy}}</span>
+                                                                <span> {{each.convertedcreatedAt*1000 | date:'medium'}}</span>
                                                             </div>
                                                             <div class="row">
                                                                 <div class="col-md-10 pl-0">
@@ -1227,9 +1227,11 @@
                                                                                 <span class="procdesc_act">
                                                                                     <span class="tsttooltipbtn" (click)="updateAnswer(each)">
                                                                                         <img src="../../../../assets/images/VCM/Green Tick.svg" class="testplus" />
+                                                                                        <span class="testtooltip">Save</span>
                                                                                     </span>
                                                                                     <span class="tsttooltipbtn" (click)="cancelUpdate()">
                                                                                         <img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2" />
+                                                                                        <span class="testtooltip">Cancel</span>
                                                                                     </span>
                                                                                 </span>
                                                                             </div>
