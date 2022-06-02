@@ -1136,9 +1136,19 @@
                             <mat-expansion-panel class="process-expansion" (opened)="onOpenProcess('process')">
                                 <mat-expansion-panel-header>
                                     <mat-panel-title  disabled="true">
-                                        <span class="module-sub-header-title" >
-                                            <b>Process Understanding</b>                
-                                        </span>
+                                        <div class="col-md-12 p-0">
+                                            <div class="col-md-4 pl-0">
+                                                <span class="module-sub-header-title" >
+                                                    <b>Process Understanding</b>                
+                                                </span>
+                                            </div>
+                                            <div class="col-md-8 text-right">
+                                                <button class="btn btn-primary" *ngIf="!isProcessEdit" (click)="editBusinessProcess()">Edit</button>
+                                                <button class="btn btn-default" *ngIf="businessDetails.length > 0 && isProcessEdit" (click)="cancelEditProcess()">Cancel</button>                                                
+                                                <button class="btn btn-primary" *ngIf="businessDetails.length == 0 && isProcessEdit" (click)="saveBusinessProcess()">Save</button>
+                                                <button class="btn btn-primary" style="margin-right: 0px !important;" *ngIf="businessDetails.length > 0 && isProcessEdit" (click)="updateBusinessDetails()">Update</button>
+                                            </div>
+                                        </div>
                                     </mat-panel-title>
                                 </mat-expansion-panel-header>
                                 <div class="">
@@ -1165,16 +1175,17 @@
                                                     <span *ngIf="((problem_statement.invalid && processForm.submitted) || (problem_statement.errors && problem_statement.touched) )" 
                                                             class='errspan required'> problem statement is required </span>
                                                 </div> -->
-                                                    <div class="col-md-12 p-0 form-group">
+
+                                                    <!-- <div class="col-md-12 p-0 form-group">
                                                         <div class="pull-right">
                                                             <button class="btn btn-default" *ngIf="businessDetails.length > 0" (click)="cancelEditProcess()">Cancel</button>
                                                             <button class="btn btn-primary" *ngIf="businessDetails.length == 0" [disabled]="processForm.invalid" (click)="saveBusinessProcess()">Save</button>
                                                             <button class="btn btn-primary" *ngIf="businessDetails.length > 0" [disabled]="processForm.invalid" (click)="updateBusinessDetails()">Update</button>
                                                         </div>
-                                                    </div>
+                                                    </div> -->
                                             </form>
                                             <div *ngIf="!isProcessEdit">
-                                                <span class="pull-right"><button class="btn btn-primary" (click)="editBusinessProcess()">Edit</button></span>
+                                                <!-- <span class="pull-right"><button class="btn btn-primary" (click)="editBusinessProcess()">Edit</button></span> -->
                                                 <div class="col-md-12 p-0">
                                                     <label class="label-control module-sub-header-title"><b>Business Challenge</b></label>
                                                     <p>{{processUnderstanding.businessChallenge}}</p>
@@ -1195,7 +1206,8 @@
                                                 </mat-expansion-panel-header>
                                                 <div class="col-md-12 process-div">
                                                     <div class="col-md-12 p-0 form-group proc_deffield" id="question-div">
-                                                        <input type="text" name="havequestion" [(ngModel)]="haveQuestion" id="have_question" class="form-control" placeholder="Have a Question?">
+                                                        <!-- <input type="text" name="havequestion" [(ngModel)]="haveQuestion" id="have_question" class="form-control" placeholder="Have a Question?"> -->
+                                                        <textarea  name="havequestion" id="have_question" [(ngModel)]="haveQuestion" class="form-control" placeholder="Have a Question?" ></textarea>
                                                         <span class="procdesc_act" >
                                                             <span class="tsttooltipbtn" *ngIf="haveQuestion" (click)="saveQuestion()">
                                                                 <img src="../../../../assets/images/VCM/Green Tick.svg" class="testplus1"/>
@@ -1209,11 +1221,22 @@
                                                                 <p class="p-questions"><strong>Q: {{each.question}}?</strong></p>
                                                             </div>
                                                             <div class="col-md-5 p-0 text-right">
-                                                                <span>{{each.createdBy}} </span>
+                                                                <span class="tsttooltipbtn">
+                                                                    <img src="../../../../assets/images/VCM/edit-plus-litblue.svg" class="testplus2 default-img" />
+                                                                    <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2 hover-img" />
+                                                                    <span class="testtooltip">Edit</span>
+                                                                </span>
+                                                                <span class="tsttooltipbtn removeques">
+                                                                    <img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img" />
+                                                                    <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" />
+                                                                    <span class="testtooltip">Remove</span>
+                                                                </span>
+                                                                <span class="labelcont">{{each.createdBy}} </span>
+                                                                <!-- <span class="testuser">KP</span> -->
                                                                 <span>{{each.convertedmodifiedAt*1000 | date:'medium'}}</span>
                                                             </div>
                                                             <div class="row">
-                                                                <div class="col-md-10 pl-0">
+                                                                <div class="col-md-7 pl-0">
                                                                     <div>
                                                                         <div *ngIf="each.answer">
                                                                             <p *ngIf="selected_questionId != each.questionId">A: {{each.answer}}</p>
@@ -1238,7 +1261,7 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-md-2 pr-0 text-right pques-actions">
+                                                                <div class="col-md-5 p-0 text-right pques-actions">
                                                                     <span *ngIf="userRole == 'System Admin' || userRole == 'Process Owner' || userRole == 'Process Architect' || loggedUserData.userId == each.createdUserId">
                                                                         <span *ngIf="selected_questionId != each.questionId && each.answer">
                                                                             <span class="tsttooltipbtn">
@@ -1254,6 +1277,9 @@
                                                                                     (click)="removeAnswer(each)" />
                                                                                 <span class="testtooltip">Remove</span>
                                                                             </span>
+                                                                            <span class="labelcont">{{each.createdBy}} </span>
+                                                                            <!-- <span class="testuser">KP</span> -->
+                                                                            <span>{{each.convertedmodifiedAt*1000 | date:'medium'}}</span>
                                                                         </span>
                                                                     </span>
                                                                 </div>

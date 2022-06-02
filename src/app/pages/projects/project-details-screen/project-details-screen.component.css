@@ -696,7 +696,8 @@ span.projectdesc {
   border-top-left-radius: 4px !important;
   border-top-right-radius: 4px !important;
 }
-.proc_deffield input {
+.proc_deffield input ,
+.proc_deffield textarea {
   width: 96%;
 }
 .proc_deffield, .proc_deffield1 {
@@ -705,7 +706,8 @@ span.projectdesc {
 .proc_deffield span.procdesc_act {
   position: absolute;
   right: 5px;
-  top: 5px;
+  /* top: 5px; */
+  top: 14px;
   cursor:pointer;
 }
 
@@ -715,7 +717,7 @@ span.projectdesc {
 
 .proc_deffield1 span.procdesc_act {
   position: absolute;
-  right: 24%;
+  right: 20%;
   top: 5px;
   cursor:pointer;
 }
@@ -749,31 +751,31 @@ img.testplus2 {
   margin-left:10px;
 }
 
-.pques-actions .tsttooltipbtn {
+.ques-block .tsttooltipbtn {
   position: relative;
 }
 
-.pques-actions span.testtooltip {
+.ques-block span.testtooltip {
   top: -32px;
   right: -7px;
 }
 
-.pques-actions span.testtooltip:before {
+.ques-block span.testtooltip:before {
   top: 21px;
 }
 
-.pques-actions .removeques img.testplus2 {
+/* .ques-block .removeques img.testplus2 {
   margin-right: 0px;
-}
+} */
 
 .profile-table th, .projecttable.table th {
   z-index: 1 !important;
 }
 
-.pques-actions span.tsttooltipbtn:hover .default-img {
+.ques-block span.tsttooltipbtn:hover .default-img {
   display: none;
 }
-.pques-actions span.tsttooltipbtn:hover .hover-img {
+.ques-block span.tsttooltipbtn:hover .hover-img {
   display: initial;
 }
 
@@ -792,4 +794,18 @@ img.testplus2 {
 }
 .p-questions {
   margin-bottom: 18px;
+}
+.process-div span.labelcont {
+  display: inline-block;
+}
+
+span.testuser {
+  background-color: #00a0e3;
+  color: #fff;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  padding: 5px 6px;
+  font-size: 12px !important;
+  margin: 0px !important;
 }
