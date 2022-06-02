@@ -159,7 +159,8 @@ export class ProjectDetailsScreenComponent implements OnInit {
   isProcessEdit: boolean = false;
   selected_questionId: number;
   selectedAnswerUpdate: any;
-  businessDetails: any = []
+  businessDetails: any = [];
+  loggedUserData:any;
   constructor(private dt: DataTransferService, private route: ActivatedRoute, private dataTransfer: DataTransferService, private rpa: RestApiService,
     private modalService: BsModalService, private formBuilder: FormBuilder, private router: Router,
     private spinner: NgxSpinnerService) { }
@@ -243,6 +244,12 @@ export class ProjectDetailsScreenComponent implements OnInit {
     this.getInitiatives();
     this.Resourcedeleteflag = false;
     this.freetrail = localStorage.getItem("freetrail")
+
+    this.dataTransfer.logged_userData.subscribe(res=>{
+      console.log(res)
+      if(res)
+      this.loggedUserData = res
+    });
   }
 
 
@@ -1323,6 +1330,8 @@ export class ProjectDetailsScreenComponent implements OnInit {
     let res_data: any;
     this.rpa.getQuestionnaires(this.project_id).subscribe(res => {
       res_data = res
+      console.log(res_data.data,this.userRole)
+      // System Admin
       this.processQuestions = res_data.data
       this.processQuestions.sort(function (a, b) {
         return b.convertedcreatedAt - a.convertedcreatedAt;
