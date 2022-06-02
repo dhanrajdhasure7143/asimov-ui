@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { DataTransferService } from '../services/data-transfer.service';
 import { RestApiService } from '../services/rest-api.service';
 import { APP_CONFIG } from 'src/app/app.config';
@@ -54,14 +54,55 @@ export class HeaderComponent implements OnInit, OnDestroy {
   user_lName:any
   user_fName:any;
 
+  lastName:any;
+  firstName:any;
+  tenantName:any;
+  ProfileuserId:any;
+  newAccessToken:any;
+
   constructor(
     private router: Router,
     private page_obj: PagesComponent,
     private dataTransfer: DataTransferService,
     private rpa: RestApiService,
     private spinner: NgxSpinnerService,
-    private jwtHelper: JwtHelperService,
-    @Inject(APP_CONFIG) private config) { }
+    private jwtHelper: JwtHelperService,private route: ActivatedRoute,
+    @Inject(APP_CONFIG) private config) {
+    this.route.queryParams.subscribe(params => {
+      if (params['accessToken']) {
+        var acToken = params['accessToken']
+        var refToken = params['refreshToken']
+        this.firstName = params['firstName']
+        this.lastName = params['lastName']
+        this.ProfileuserId = params['ProfileuserId']
+        this.tenantName = params['tenantName']
+        var authKey = params['authKey']
+        var ipadd = params['userIp']
+        var loginType = params['loginType']
+        if (acToken && refToken) {
+          var accessToken = atob(acToken);
+          var refreshToken = atob(refToken);
+          localStorage.setItem("accessToken", accessToken);
+          localStorage.setItem("refreshToken", refreshToken);
+          localStorage.setItem("firstName", this.firstName);
+          localStorage.setItem("lastName", this.lastName);
+          localStorage.setItem("ProfileuserId", this.ProfileuserId);
+          localStorage.setItem("tenantName", this.tenantName);
+          localStorage.setItem("authKey", authKey);
+          var ipp = atob(ipadd)
+          localStorage.setItem('ipAddress', ipp);
+        }
+        if (loginType) {
+          var officeUser = atob(loginType);
+          localStorage.setItem("officeUser", officeUser);
+        }
+      }
+    });
+    this.rpa.getNewAccessToken().subscribe(resp => {
+      this.newAccessToken = resp;
+      localStorage.setItem('accessToken', this.newAccessToken.accessToken);
+    });
+  }
 
   ngOnInit() {
     this.parent_subscription = this.dataTransfer.current_parent_module.subscribe(res => this.parent_link = res);
