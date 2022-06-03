@@ -1217,14 +1217,15 @@
                                                     </div>
                                                     <div class="col-md-12 p-0">
                                                         <div *ngFor="let each of processQuestions" class="ques-block">
-                                                            <div class="col-md-7 pl-0" *ngIf="selectedQuestionEdit != each.questionId">
+                                                            <div class="col-md-8 pl-0" *ngIf="selectedQuestionEdit != each.questionId">
                                                                 <!-- <span *ngIf="selectedQuestionEdit != each.questionId"> -->
                                                                     <p class="p-questions" [ngClass]="each.answer ? 'qwith-ans' : '' ">
-                                                                        <strong>Q: <span class="pqut">{{each.question}}</span></strong>
+                                                                        <strong>Q:</strong>
+                                                                        <span class="pqut">{{each.question}}</span>
                                                                     </p>
                                                                 <!-- </span>-->
                                                             </div>
-                                                            <div class="col-md-5 p-0 text-right" *ngIf="selectedQuestionEdit != each.questionId">
+                                                            <div class="col-md-4 p-0 text-right" *ngIf="selectedQuestionEdit != each.questionId">
                                                                 <span class="tsttooltipbtn" (click)="onEditQA(each,'question')">
                                                                     <img src="../../../../assets/images/VCM/edit-plus-litblue.svg" class="testplus2 default-img" />
                                                                     <img src="../../../../assets/images/VCM/edit-3.svg" class="testplus2 hover-img" />
@@ -1259,7 +1260,7 @@
                                                             </div>
 
                                                             <div class="row">
-                                                                <div class="col-md-7 pl-0 form-group answeredcontent" *ngIf="each.answer && selected_questionId != each.questionId">
+                                                                <div class="col-md-11 p-0 form-group answeredcontent" *ngIf="each.answer && selected_questionId != each.questionId">
                                                                         <!-- <div *ngIf="each.answer">
                                                                             <p *ngIf="selected_questionId != each.questionId"> -->
                                                                                 <div class="leftan-cont">
@@ -1277,7 +1278,7 @@
                                                                     <!-- *ngIf="selected_questionId != each.questionId" -->
                                                                     <button  class="btn btn-primary" (click)="answerToQuestion(each)">Answer</button>
                                                                 </div>
-                                                                <div class="col-md-5 p-0 text-right pques-actions" *ngIf="selected_questionId != each.questionId" >
+                                                                <div class="col-md-1 p-0 text-right pques-actions" *ngIf="selected_questionId != each.questionId" >
                                                                     <span *ngIf="userRole == 'System Admin' || userRole == 'Process Owner' || userRole == 'Process Architect' || loggedUserData.userId == each.createdUserId">
                                                                         <span *ngIf="selected_questionId != each.questionId && each.answer">
                                                                             <span class="tsttooltipbtn">
