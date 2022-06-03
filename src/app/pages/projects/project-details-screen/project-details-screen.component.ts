@@ -1341,4 +1341,8 @@ export class ProjectDetailsScreenComponent implements OnInit {
     }, 100);
   }
 
+  rpaDesign(){
+    this.router.navigate(['pages/projects/repdesign'])
+  }
+
 }
