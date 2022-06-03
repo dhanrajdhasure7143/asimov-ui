@@ -810,8 +810,11 @@
                                     <img src="../../../../../assets/images/Projects/eye-show.svg" class="default-img">
                                     <img src="../../../../../assets/images/Projects/eye-show-blue.svg" class="hover-img">
                                 </a>
-                                <button class="btn btn-primary" (click)="rpaDesign()">RPA Design</button>
-                                <a *ngIf="element.taskCategory =='Analysis' || element.correlationID.length==0">
+                                <a class="clickable text-dark" *ngIf="element.taskCategory =='RPA Design'" (click)="navigateToWorkspace(element)" matTooltip="View Task">
+                                    <img src="../../../../../assets/images/Projects/eye-show.svg" class="default-img">
+                                    <img src="../../../../../assets/images/Projects/eye-show-blue.svg" class="hover-img">
+                                </a>
+                                <a *ngIf="(element.taskCategory =='Analysis' || element.correlationID.length==0) && element.taskCategory !='RPA Design'">
                                     <img src="../../../../../assets/images/Projects/eye-hide.svg" class="icon-disabled">
 
                                 </a>

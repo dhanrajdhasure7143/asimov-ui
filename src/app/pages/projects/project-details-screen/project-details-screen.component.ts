@@ -427,6 +427,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   getTaskandCommentsData() {
     this.rpa.gettaskandComments(this.project_id).subscribe(data => {
       this.tasks = data;
+      console.log(data)
       this.dataSource2 = new MatTableDataSource(this.tasks);
       this.dataSource2.sort = this.sort10;
       this.dataSource2.paginator = this.paginator101;
@@ -693,6 +694,10 @@ export class ProjectDetailsScreenComponent implements OnInit {
       this.router.navigate(['pages/businessProcess/uploadProcessModel'],
         { queryParams: { "bpsId": data.correlationID.split(":")[0], "ver": data.correlationID.split(":")[1], "ntype": "bpmn" } })
     }
+    if (data.taskCategory == "RPA Design") {
+      this.router.navigate(['pages/projects/repdesign'])
+    }
+
     if (data.taskCategory == "Process Mining") {
       this.router.navigate(['pages/processIntelligence/flowChart'], { queryParams: { "wpiId": data.correlationID } })
     }
