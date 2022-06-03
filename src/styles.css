@@ -2909,6 +2909,7 @@ button.custom-popupbtn.mat-button {
 }
 .process-expansion .mat-expansion-panel-body {
   max-height: none !important;
+  overflow: hidden !important;
 }
 
 .process-expansion span.mat-content .module-sub-header-title {

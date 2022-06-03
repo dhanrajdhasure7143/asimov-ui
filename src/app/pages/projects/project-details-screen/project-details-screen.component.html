@@ -1156,7 +1156,7 @@
                                         <div class="process-under">
                                             <form action="" #processForm="ngForm" *ngIf="isProcessEdit">
                                                 <div class="col-md-12 p-0 form-group">
-                                                    <label class="label-control module-sub-header-title"><b>Business Challenge</b> <!-- <span class="star">*</span> -->
+                                                    <label class="label-control">Business Challenge
                                                     </label>
                                                     <!-- <input type="text" name="business_challange" #business_challange="ngModel" id="business_challange" [(ngModel)]="businessChallange" class="form-control" placeholder="Enter Business Challenge" required> -->
                                                     <textarea  name="business_challange" #business_challange="ngModel" id="business_challange" [(ngModel)]="businessChallange" class="form-control" placeholder="Enter Business Challenge" required></textarea>
@@ -1164,7 +1164,7 @@
                                                     class='errspan required'> Business challenge is required </span>
                                                 </div>
                                                 <div class="col-md-12 p-0 form-group">
-                                                    <label class="label-control module-sub-header-title"><b>Purpose</b></label>
+                                                    <label class="label-control">Purpose</label>
                                                     <input type="text" name="purpose" #purpose="ngModel" [(ngModel)]="businessPurpose" class="form-control" placeholder="Enter Purpose Name" required/>
                                                     <span *ngIf="((purpose.invalid && processForm.submitted) || (purpose.errors && purpose.touched) )" 
                                                             class='errspan required'> Purpose is required </span>
@@ -1184,14 +1184,14 @@
                                                         </div>
                                                     </div> -->
                                             </form>
-                                            <div *ngIf="!isProcessEdit">
+                                            <div *ngIf="!isProcessEdit" class="pu-content">
                                                 <!-- <span class="pull-right"><button class="btn btn-primary" (click)="editBusinessProcess()">Edit</button></span> -->
-                                                <div class="col-md-12 p-0">
-                                                    <label class="label-control module-sub-header-title"><b>Business Challenge</b></label>
+                                                <div class="col-md-12 p-0 form-group">
+                                                    <label class="label-control">Business Challenge</label>
                                                     <p>{{processUnderstanding.businessChallenge}}</p>
                                                 </div>
-                                                <div class="col-md-12 p-0">
-                                                    <label class="label-control module-sub-header-title"><b>Purpose</b></label>
+                                                <div class="col-md-12 p-0 form-group">
+                                                    <label class="label-control">Purpose</label>
                                                     <p>{{processUnderstanding.purpose}}</p>
                                                 </div>
                                             </div>
@@ -1211,31 +1211,18 @@
                                                         <span class="procdesc_act" >
                                                             <span class="tsttooltipbtn" *ngIf="haveQuestion" (click)="saveQuestion()">
                                                                 <img src="../../../../assets/images/VCM/Green Tick.svg" class="testplus1"/>
-                                                                <!-- <span class="testtooltip">Save</span> -->
+                                                                <span class="testtooltip">Save Question</span>
                                                             </span>
                                                         </span>
                                                     </div>
                                                     <div class="col-md-12 p-0">
                                                         <div *ngFor="let each of processQuestions" class="ques-block">
-                                                            <div class="col-md-7 pl-0">
-                                                                <span *ngIf="selectedQuestionEdit != each.questionId"> <p class="p-questions"><strong>Q: {{each.question}}</strong></p> </span>
-                                                                
-                                                                <div *ngIf="selectedQuestionEdit == each.questionId">
-                                                                    <div class="proc_deffield1">
-                                                                        <input type="text" name="answerUpdate" id="answer_update" [(ngModel)]="selectedQuestionUpdate" class="form-control" placeholder="Enter Answer">
-                                                                        <span class="procdesc_act">
-                                                                            <span class="tsttooltipbtn" (click)="updateAnswer_Question(each,'question')" *ngIf="selectedQuestionUpdate">
-                                                                                <img src="../../../../assets/images/VCM/Green Tick.svg" class="testplus" />
-                                                                                <span class="testtooltip">Save</span>
-                                                                            </span>
-                                                                            <span class="tsttooltipbtn" (click)="cancelUpdate('question')">
-                                                                                <img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2" />
-                                                                                <span class="testtooltip">Cancel</span>
-                                                                            </span>
-                                                                        </span>
-                                                                    </div>
-                                                                </div>
-
+                                                            <div class="col-md-7 pl-0" *ngIf="selectedQuestionEdit != each.questionId">
+                                                                <!-- <span *ngIf="selectedQuestionEdit != each.questionId"> -->
+                                                                    <p class="p-questions" [ngClass]="each.answer ? 'qwith-ans' : '' ">
+                                                                        <strong>Q: <span class="pqut">{{each.question}}</span></strong>
+                                                                    </p>
+                                                                <!-- </span>-->
                                                             </div>
                                                             <div class="col-md-5 p-0 text-right" *ngIf="selectedQuestionEdit != each.questionId">
                                                                 <span class="tsttooltipbtn" (click)="onEditQA(each,'question')">
@@ -1249,36 +1236,48 @@
                                                                     <span class="testtooltip">Remove</span>
                                                                 </span>
                                                                 <span class="labelcont">{{each.createdBy}} </span>
-                                                                <!-- <span class="testuser">KP</span> -->
-                                                                <span>{{each.convertedmodifiedAt*1000 | date:'medium'}}</span>
+                                                                <span class="modif-date">{{each.convertedmodifiedAt*1000 | date:'medium'}}</span>
                                                             </div>
+                                                                
+                                                            <div class="col-md-12 p-0 form-group proc_deffield1" *ngIf="selectedQuestionEdit == each.questionId">
+                                                                <span>
+                                                                    <strong>Q:</strong>
+                                                                    <!-- <input type="text" name="answerUpdate" id="question_update" [(ngModel)]="selectedQuestionUpdate" 
+                                                                        class="form-control"> -->
+                                                                    <textarea  name="answerUpdate" id="question_update" [(ngModel)]="selectedQuestionUpdate" class="form-control" ></textarea>
+                                                                </span>                                                                    
+                                                                <span class="procdesc_act">
+                                                                    <span class="tsttooltipbtn" (click)="updateAnswer_Question(each,'question')" *ngIf="selectedQuestionUpdate">
+                                                                        <img src="../../../../assets/images/VCM/Green Tick.svg" class="testplus" />
+                                                                        <span class="testtooltip">Update</span>
+                                                                    </span>
+                                                                    <span class="tsttooltipbtn" (click)="cancelUpdate('question')">
+                                                                        <img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2" />
+                                                                        <span class="testtooltip">Cancel</span>
+                                                                    </span>
+                                                                </span>
+                                                            </div>
+
                                                             <div class="row">
-                                                                <div class="col-md-7 pl-0">
-                                                                    <div>
-                                                                        <div *ngIf="each.answer">
-                                                                            <p *ngIf="selected_questionId != each.questionId">A: {{each.answer}}</p>
-                                                                        </div>
-                                                                        <div *ngIf="!each.answer" class="answer-btn">
-                                                                            <button *ngIf="selected_questionId != each.questionId" class="btn btn-primary" (click)="answerToQuestion(each)">Answer</button>
-                                                                        </div>
-                                                                            <div *ngIf="selected_questionId == each.questionId">
-                                                                            <div class="proc_deffield1">
-                                                                                <input type="text" name="answerUpdate" id="answer_update" [(ngModel)]="selectedAnswerUpdate" class="form-control" placeholder="Enter Answer">
-                                                                                <span class="procdesc_act">
-                                                                                    <span class="tsttooltipbtn" (click)="updateAnswer_Question(each,'answer')" *ngIf="selectedAnswerUpdate">
-                                                                                        <img src="../../../../assets/images/VCM/Green Tick.svg" class="testplus" />
-                                                                                        <span class="testtooltip">Save</span>
-                                                                                    </span>
-                                                                                    <span class="tsttooltipbtn" (click)="cancelUpdate()">
-                                                                                        <img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2" />
-                                                                                        <span class="testtooltip">Cancel</span>
-                                                                                    </span>
-                                                                                </span>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
+                                                                <div class="col-md-7 pl-0 form-group answeredcontent" *ngIf="each.answer && selected_questionId != each.questionId">
+                                                                        <!-- <div *ngIf="each.answer">
+                                                                            <p *ngIf="selected_questionId != each.questionId"> -->
+                                                                                <div class="leftan-cont">
+                                                                                    <span class="testuser">KP</span>
+                                                                                </div>
+                                                                                <div class="rightan-cont">
+                                                                                    <span class="labelcont">{{each.createdBy}} </span>
+                                                                                    <span class="modif-date">{{each.convertedmodifiedAt*1000 | date:'medium'}}</span> 
+                                                                                    <p>{{each.answer}}</p>
+                                                                                </div>
+                                                                            <!-- </p>
+                                                                        </div> -->
                                                                 </div>
-                                                                <div class="col-md-5 p-0 text-right pques-actions">
+                                                                <div *ngIf="!each.answer && selected_questionId != each.questionId" class="col-md-7 pl-0 form-group answer-btn">
+                                                                    <!-- *ngIf="selected_questionId != each.questionId" -->
+                                                                    <button  class="btn btn-primary" (click)="answerToQuestion(each)">Answer</button>
+                                                                </div>
+                                                                <div class="col-md-5 p-0 text-right pques-actions" *ngIf="selected_questionId != each.questionId" >
                                                                     <span *ngIf="userRole == 'System Admin' || userRole == 'Process Owner' || userRole == 'Process Architect' || loggedUserData.userId == each.createdUserId">
                                                                         <span *ngIf="selected_questionId != each.questionId && each.answer">
                                                                             <span class="tsttooltipbtn">
@@ -1293,9 +1292,21 @@
                                                                                     (click)="onDeleteQA(each,'answer')" />
                                                                                 <span class="testtooltip">Remove</span>
                                                                             </span>
-                                                                            <span class="labelcont">{{each.createdBy}} </span>
-                                                                            <!-- <span class="testuser">KP</span> -->
-                                                                            <span>{{each.convertedmodifiedAt*1000 | date:'medium'}}</span>
+                                                                        </span>
+                                                                    </span>
+                                                                </div>
+                                                                <div class="col-md-12 p-0 form-group proc_deffield1" *ngIf="selected_questionId == each.questionId">
+                                                                    <strong>A:</strong>
+                                                                    <!-- <input type="text" name="answerUpdate" id="answer_update" [(ngModel)]="selectedAnswerUpdate" class="form-control" placeholder="Enter Answer"> -->
+                                                                    <textarea  name="answerUpdate" id="answer_update" [(ngModel)]="selectedAnswerUpdate" class="form-control" placeholder="Enter Answer" ></textarea>
+                                                                    <span class="procdesc_act">
+                                                                        <span class="tsttooltipbtn" (click)="updateAnswer_Question(each,'answer')" *ngIf="selectedAnswerUpdate">
+                                                                            <img src="../../../../assets/images/VCM/Green Tick.svg" class="testplus" />
+                                                                            <span class="testtooltip">Save</span>
+                                                                        </span>
+                                                                        <span class="tsttooltipbtn" (click)="cancelUpdate()">
+                                                                            <img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2" />
+                                                                            <span class="testtooltip">Cancel</span>
                                                                         </span>
                                                                     </span>
                                                                 </div>

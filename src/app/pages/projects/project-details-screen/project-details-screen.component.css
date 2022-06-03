@@ -241,14 +241,11 @@ span.labelcont b {
   font-weight: 400;
 }
 
-  .letter-image,.projectowner-letter-image{
-    border-radius: 100%;
-    color: #001c47;
-    background-color: #ddd;
-    padding: 7px;
-    text-align: center;
-    letter-spacing: 0.5px;
-    font-size: 15px;
+  .letter-image {
+    margin-right: 15px;
+    position: relative;
+    background-color: transparent;
+    padding: 10px;
   }
   
   .commentsadded {
@@ -616,10 +613,10 @@ span.testtooltip:before {
   padding: 10px;
 }
 .profile-table td span.letter-image {
-  margin-right: 5px;
-  padding: 5px 8px;
-/* position: relative;
-background-color: transparent; */
+  /*margin-right: 5px;
+    padding: 5px 8px;
+    position: relative;
+    background-color: transparent; */
 }
 span.projectowner-letter-image{
   margin-right: 20px;
@@ -628,29 +625,32 @@ span.projectowner-letter-image{
   padding: 10px;
   }
 span.project-owner-letter{
-  width: 41px;
+  width: 40px;
   height: 40px;
   position: absolute;
   color: #001c47;
-  background-color: #ddd;
+  background-color: #e4eaef;
   border-radius: 50%;
   padding: 10px;
   top: 1px;
   left: 4px;
+  letter-spacing: 1.5px;
 }
 
 .profile-table td span.letter {
-
-  /* width: 30px;
+  width: 30px;
   height: 30px;
   position: absolute;
   color: #001c47;
   background-color: #ddd;
   border-radius: 50%;
   padding: 6px;
-  top: 2px;
-  left:-3px; */
-  }
+  top: 4px;
+  left: 0px;
+  text-align: center;
+  font-size: 13px;
+  letter-spacing: 1.5px;
+}
 .prjdetails-headerbuttons {
   margin-left: 10px;
 }
@@ -711,15 +711,27 @@ span.projectdesc {
   cursor:pointer;
 }
 
-.proc_deffield1 input {
-  width: 70%;
+.proc_deffield1 input ,
+.proc_deffield1 textarea {
+  /* width: 70%; */
+  width: 94%;
+  display: inline;
+  /* margin-left: 10px; */
+  margin-left: 2.5%;
 }
 
 .proc_deffield1 span.procdesc_act {
   position: absolute;
-  right: 20%;
+  /* right: 20%; */
+  right: -7px;
   top: 5px;
   cursor:pointer;
+}
+.procdesc_act img.testplus {
+  margin-right: 8px;
+}
+.procdesc_act img.testplus2 {
+  margin-right: 5px;
 }
 img.testplus2 {
   width: 12px;
@@ -746,8 +758,8 @@ img.testplus2 {
   margin-right: 0px !important;
 }
 
-.process-div .col-md-5 span {
-  font-size: 13px;
+.process-div span.modif-date {
+  font-size: 12px;
   margin-left:10px;
 }
 
@@ -782,7 +794,7 @@ img.testplus2 {
 .ques-block {
   border-bottom: 1px solid #d1d1d1;
   margin-bottom: 10px;
-  padding-bottom: 10px;
+  /* padding-bottom: 10px; */
 }
 .ques-block:last-child {
   border: none;
@@ -790,22 +802,64 @@ img.testplus2 {
   margin: 0px;
 }
 .proc_deffield {
-  margin-bottom: 30px !important;
+  margin-bottom: 25px !important;
 }
 .p-questions {
   margin-bottom: 18px;
 }
 .process-div span.labelcont {
   display: inline-block;
+  font-size: 12px;
+  margin-left: 15px;
 }
 
 span.testuser {
-  background-color: #00a0e3;
-  color: #fff;
-  width: 30px;
-  height: 30px;
+  background-color: #e4eaef;
+  color: #001c47;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   padding: 5px 6px;
-  font-size: 12px !important;
   margin: 0px !important;
+}
+
+.process-under .label-control {
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+.pu-content p {
+  font-weight: 400;
+  font-size: 14px;
+  margin: 0px;
+}
+span.pqut {
+  font-weight: 700;
+  margin-left: 12px;
+}
+
+.answeredcontent {
+  display: flex;
+}
+
+.leftan-cont {
+  line-height: 3;
+}
+
+.rightan-cont span.labelcont {
+  margin-left: 10px;
+}
+.rightan-cont p {
+  margin: 0px 0px 0px 10px;
+}
+p.p-questions.qwith-ans {
+  margin-left: 8px;
+}
+.removeques img.testplus2 {
+  margin-right: 0px ;
+}
+.proc_deffield1 strong {
+  position: absolute;
+  top: 0;
+  margin-right: 10px;
+  left: 0;
 }
