@@ -540,6 +540,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
       this.getTaskandCommentsData();
       this.getLatestFiveAttachments(this.project_id)
       paramsdata.programId == undefined ? this.programId = undefined : this.programId = paramsdata.programId;
+
     });
 
   }
@@ -1138,6 +1139,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
     this.spinner.show();
     let req_body = {
       "projectId": this.project_id,
+      "programId":this.programId?this.programId:'',
       "question": this.haveQuestion,
       "createdBy": localStorage.getItem("firstName") + " " + localStorage.getItem("lastName"),
       "createdUserId": localStorage.getItem("ProfileuserId"),
@@ -1172,6 +1174,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
     this.spinner.show()
     let req_body = {
       "projectId": this.project_id,
+      "programId": this.programId?this.programId:'',
       "businessChallenge": this.businessChallange,
       "purpose": this.businessPurpose,
       "createdBy": localStorage.getItem("firstName") + " " + localStorage.getItem("lastName"),
@@ -1383,6 +1386,17 @@ export class ProjectDetailsScreenComponent implements OnInit {
     setTimeout(() => {
       element.scrollIntoView({ behavior: "auto", block: "center", inline: "nearest" });
     }, 100);
+  }
+
+  getuserLetters(data) {
+    if (data) {
+      let user = data.split(' ')
+      var fname_fLetter = user[0].charAt(0);
+      var lname_fLetter = user[1].charAt(0);
+      return fname_fLetter + lname_fLetter;
+    } else {
+      return '-'
+    }
   }
 
 }

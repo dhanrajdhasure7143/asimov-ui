@@ -1145,8 +1145,8 @@
                                             <div class="col-md-8 text-right" *ngIf="isOpenedState == 1">
                                                 <button class="btn btn-primary" *ngIf="!isProcessEdit" (click)="editBusinessProcess($event)">Edit</button>
                                                 <button class="btn btn-default" *ngIf="businessDetails.length > 0 && isProcessEdit" (click)="cancelEditProcess($event)">Cancel</button>                                                
-                                                <button class="btn btn-primary" *ngIf="businessDetails.length == 0 && isProcessEdit" (click)="saveBusinessProcess($event)">Save</button>
-                                                <button class="btn btn-primary" style="margin-right: 0px !important;" *ngIf="businessDetails.length > 0 && isProcessEdit" (click)="updateBusinessDetails($event)">Update</button>
+                                                <button class="btn btn-primary" *ngIf="businessDetails.length == 0 && isProcessEdit" [disabled]="!businessChallange || !businessPurpose" (click)="saveBusinessProcess($event)">Save</button>
+                                                <button class="btn btn-primary" style="margin-right: 0px !important;" [disabled]="!businessChallange || !businessPurpose" *ngIf="businessDetails.length > 0 && isProcessEdit" (click)="updateBusinessDetails($event)">Update</button>
                                             </div>
                                         </div>
                                     </mat-panel-title>
@@ -1165,7 +1165,7 @@
                                                 </div>
                                                 <div class="col-md-12 p-0 form-group">
                                                     <label class="label-control">Purpose</label>
-                                                    <input type="text" name="purpose" #purpose="ngModel" [(ngModel)]="businessPurpose" class="form-control" placeholder="Enter Purpose Name" required/>
+                                                    <input type="text" name="purpose" #purpose="ngModel" [(ngModel)]="businessPurpose" class="form-control" placeholder="Enter Purpose" required/>
                                                     <span *ngIf="((purpose.invalid && processForm.submitted) || (purpose.errors && purpose.touched) )" 
                                                             class='errspan required'> Purpose is required </span>
                                                 </div>
@@ -1263,11 +1263,11 @@
                                                                         <!-- <div *ngIf="each.answer">
                                                                             <p *ngIf="selected_questionId != each.questionId"> -->
                                                                                 <div class="leftan-cont">
-                                                                                    <span class="testuser">KP</span>
+                                                                                    <span class="testuser">{{getuserLetters(each.createdBy)}}</span>
                                                                                 </div>
                                                                                 <div class="rightan-cont">
                                                                                     <span class="labelcont">{{each.createdBy}} </span>
-                                                                                    <span class="modif-date">{{each.convertedmodifiedAt*1000 | date:'medium'}}</span> 
+                                                                                    <span class="modif-date">{{each.convertedansweredAt*1000 | date:'medium'}}</span> 
                                                                                     <p>{{each.answer}}</p>
                                                                                 </div>
                                                                             <!-- </p>
