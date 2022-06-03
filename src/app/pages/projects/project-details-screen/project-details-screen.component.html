@@ -1224,7 +1224,7 @@
                                                                     <div class="proc_deffield1">
                                                                         <input type="text" name="answerUpdate" id="answer_update" [(ngModel)]="selectedQuestionUpdate" class="form-control" placeholder="Enter Answer">
                                                                         <span class="procdesc_act">
-                                                                            <span class="tsttooltipbtn" (click)="updateAnswer_Question(each,'question')">
+                                                                            <span class="tsttooltipbtn" (click)="updateAnswer_Question(each,'question')" *ngIf="selectedQuestionUpdate">
                                                                                 <img src="../../../../assets/images/VCM/Green Tick.svg" class="testplus" />
                                                                                 <span class="testtooltip">Save</span>
                                                                             </span>
@@ -1265,7 +1265,7 @@
                                                                             <div class="proc_deffield1">
                                                                                 <input type="text" name="answerUpdate" id="answer_update" [(ngModel)]="selectedAnswerUpdate" class="form-control" placeholder="Enter Answer">
                                                                                 <span class="procdesc_act">
-                                                                                    <span class="tsttooltipbtn" (click)="updateAnswer_Question(each,'answer')">
+                                                                                    <span class="tsttooltipbtn" (click)="updateAnswer_Question(each,'answer')" *ngIf="selectedAnswerUpdate">
                                                                                         <img src="../../../../assets/images/VCM/Green Tick.svg" class="testplus" />
                                                                                         <span class="testtooltip">Save</span>
                                                                                     </span>
