@@ -21,5 +21,8 @@
   padding-right: 3px;
 }
 span img{
-cursor: pointer;
+  cursor: pointer;
+}
+.confi-div{
+  white-space: pre-line
 }
