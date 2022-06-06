@@ -287,7 +287,7 @@
                                     Invalid IP Address format
                                 </div>
                             </div>                                         
-                            <div class="col-md-12 p-0 form-group">
+                            <div class="col-md-12 p-0 form-group" *ngIf="!snowflakeflag">
                                 <label class="label-control" for="portNumber">Port<span *ngIf="!snowflakeflag" class="star">*</span> 
                                 </label>
                                 <input type="text" maxlength="7" class="form-control" onkeypress="return (event.charCode > 47 && event.charCode < 58)" formControlName="portNumber" value="" placeholder="Enter Port">    
@@ -425,7 +425,7 @@
                             
                         </div>
                         <div class="row">
-                            <div class="col-md-12 p-0 form-group">
+                            <div class="col-md-12 p-0 form-group"  *ngIf="!snowflakeflag">
                                 <label class="label-control" for="portNumber">Port
                                  <span *ngIf="!snowflakeflag" class="star">*</span> 
                                 </label>

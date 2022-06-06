@@ -27,6 +27,13 @@
           </option>
         </select>
                 </div>
+                <div id="autoenvsearch" class="col-md-3 pl-0">
+                    <select class="rpa-control form-control" name="executiontype" [(ngModel)]="selectedexecutiontype">
+          <option value="" hidden disabled>Execution Type</option>  
+             <option value="Serial">Serial</option>
+             <option value="Parallel">Parallel</option>
+        </select>
+                </div>
                 <!-- <div id="autoreset" class="comncl resecl">
     <button (click)="reset_all()" tooltip="Reset"><i class="fa fa-undo"></i></button>
     </div> -->

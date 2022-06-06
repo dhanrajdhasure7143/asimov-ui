@@ -92,6 +92,7 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
   isbotloading:any="loading";
   isHumanLoading:any="Loading"
   taskslist: any;
+  selectedexecutiontype:any="Serial"
   constructor(
     private route: ActivatedRoute,
     private rest:RestApiService,
@@ -852,7 +853,7 @@ resetsla(){
     if(this.selectedvalue!=undefined)
     {
       this.spinner.show();
-    this.rest.startprocess(this.selectedvalue,this.selectedEnvironment).subscribe(data=>{
+    this.rest.startprocess(this.selectedvalue,this.selectedEnvironment,this.selectedexecutiontype).subscribe(data=>{
       let response:any=data;
       this.spinner.hide();
       if(response.errorMessage==undefined){
