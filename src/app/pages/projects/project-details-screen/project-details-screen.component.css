@@ -804,6 +804,9 @@ img.testplus2 {
 .proc_deffield {
   margin-bottom: 25px !important;
 }
+.proc_deffield.proc-noques {
+  margin-bottom: 0px !important;
+}
 .p-questions {
   margin-bottom: 18px;
 }
