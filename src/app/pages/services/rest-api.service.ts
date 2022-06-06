@@ -1435,4 +1435,8 @@ answerUpdate(body){
 answerDelete(body){
   return this.http.post("/platform-service/project/deleteProcessQuestionnaire",body)
 }
+
+saveRpaDesign(body){
+  return this.http.post("/platform-service/project/saveRpaDesign",body)
+}
 }
