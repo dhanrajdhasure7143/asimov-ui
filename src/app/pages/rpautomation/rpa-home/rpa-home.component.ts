@@ -684,7 +684,7 @@ export class RpaHomeComponent implements OnInit {
     if(this.selectedvalue!=undefined)
     {
     //this.rpa_studio.spinner.show();
-    this.rest.startprocess(this.selectedvalue,this.selectedEnvironment).subscribe(data=>{
+    this.rest.startprocess(this.selectedvalue,this.selectedEnvironment,'Serial').subscribe(data=>{
       let response:any=data;
       Swal.fire({
         position: 'top-end',
