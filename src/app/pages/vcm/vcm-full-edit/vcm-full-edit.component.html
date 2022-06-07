@@ -162,8 +162,8 @@
                                 </div>
                                 <div class="selectedpodiv">
                                     <p class="poundef"  (click)="showProcessOwnerList()" >{{selected_procName}}</p>
-                                    <p class="podefault" *ngIf="selected_procName == ''  " >Select Process Owner</p>
-                                    <span class="polabel" *ngIf="selected_procName" >Process Owner</span>
+                                    <p class="podefault" *ngIf="selected_procName == ''  " >Select Owner</p>
+                                    <span class="polabel" *ngIf="selected_procName" >Owner</span>
                                 </div>                                
 
                                 <button class="poarbtn" (click)="showProcessOwnerList()" > 
@@ -177,12 +177,12 @@
                         <div class="col-md-6 col-lg-6 pr-0">
                             <div class="dbichart-block">
                                 <div class="dbichart-body">
-                                    <h4>Organization Group
+                                    <h4>Process Hierarchy
                                        <span class="tsttooltipbtn">
                                             <img [ngClass]="(vcmProcess[0].children?.length != 0 || vcmProcess[1].children?.length != 0 || vcmProcess[2].children?.length != 0) ? 'view' : 'dis'"
                                                 (click)="goToProperties('level1')"
                                                 src="../../../../assets/images/VCM/Level 1.svg" class="testplus" alt="">
-                                            <span class="testtooltip">View Organization Group - Properties</span>
+                                            <span class="testtooltip">View Process Hierarchy - Properties</span>
                                        </span>
                                     </h4>
                                     <div class="l1processlistdiv">
@@ -404,8 +404,8 @@
                                     <div class="form-group">
                                         <select class="form-control" id="level1" name="Level1"
                                             [(ngModel)]="level1process" [ngModelOptions]="{standalone: true}">
-                                            <option value="undefined" hidden disabled>Select Process Group Process</option>
-                                            <option value="" hidden disabled>Select Process Group Process</option>
+                                            <option value="undefined" hidden disabled>Select Process Hierarchy</option>
+                                            <option value="" hidden disabled>Select Process Hierarchy</option>
                                             <ng-container *ngFor="let item of vcmProcess">
                                                 <option *ngFor="let name of item.children" [ngValue]=name>{{name.title}}
                                                 </option>

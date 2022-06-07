@@ -26,9 +26,9 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Process Name</th>
-                                <th>Organization Group Name</th>
-                                <th class="td_spocol">Process Owner</th>
+                                <th>Category</th>
+                                <th>Process Hierarchy</th>
+                                <th class="td_spocol">Owner</th>
                                 <!-- <th>Process Description</th> -->
                             </tr>
                         </thead>
@@ -39,7 +39,7 @@
                                     <td *ngIf="each.title">{{each.title}}</td>
                                     <td *ngIf="each.title" class="td_spocol">
                                         <select class="form-control" [(ngModel)]="each.processOwner" #ownerValue>
-                                            <option value="" hidden disabled>Select Process Owner</option>
+                                            <option value="" hidden disabled>Select Owner</option>
                                             <!-- <option value="ranjith@epsoft" >ranjith</option> -->
                                             <option *ngFor="let each_approver of processOwners_list;let i=index" [value]="each_approver.firstName+' '+each_approver.lastName">
                                                 {{(each_approver.firstName | titlecase) +" "+(each_approver.lastName==undefined?"":each_approver.lastName)}}</option>
@@ -200,9 +200,9 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Process Name</th>
-                                <th>Process Group Name</th>
-                                <th class="td_spocol">Process Owner</th>
+                                <th>Process Hierarchy</th>
+                                <th>Process Group</th>
+                                <th class="td_spocol">Owner</th>
                                 <!-- <th>Process Description</th> -->
                             </tr>
                         </thead>
@@ -214,7 +214,7 @@
                                         <td *ngIf="level2.title">{{level2.title}}</td>
                                         <td *ngIf="level2.title" class="td_spocol">
                                             <select class="form-control" #ownerValue [(ngModel)]="level2.processOwner">
-                                                    <option value="" hidden disabled>Select Process Owner</option>
+                                                    <option value="" hidden disabled>Select Owner</option>
                                                     <option *ngFor="let each_approver of processOwners_list;let i=index" [value]="each_approver.firstName+' '+each_approver.lastName">
                                                         {{(each_approver.firstName | titlecase) +" "+(each_approver.lastName==undefined?"":each_approver.lastName)}}</option>
                                                 </select>

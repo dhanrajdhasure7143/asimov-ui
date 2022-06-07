@@ -213,7 +213,7 @@ export class VcmStructureComponent implements OnInit {
   viewProperties(node) {
     this.node_data = [];
     if (node == 'all') {
-      this.propType="Consolidated"
+      this.propType=""
       this.vcmData.forEach(element => {
         this.node_data.push(element)
       });
