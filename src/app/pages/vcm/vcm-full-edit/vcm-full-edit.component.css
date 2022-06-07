@@ -85,7 +85,7 @@
 }
 
 .overflowcontent span.l2c-process_title {
-    width: 80%;
+    width: 78%;
     margin-left: 3%;
 }
 
@@ -166,7 +166,7 @@ li.overflowcontent {
 .vcname button {
     position: absolute;
     top: 32px;
-    right: 13px;
+    right: 10px;
     min-width: auto !important;
     padding: 0px !important;
     margin: 0px !important;
@@ -175,7 +175,7 @@ li.overflowcontent {
 
 .actimg {
     text-align: right;
-    width: 20%;
+    width: 22%;
     cursor: pointer;
 }
 
@@ -184,7 +184,7 @@ li.childHover span.l1c-process_title {
 }
 
 .vcmprop.mat-drawer-opened {
-    width: 25% !important;
+    width: 27% !important;
 }
 
 .propfooter button.btn.btn-primary {
@@ -591,18 +591,21 @@ p.podefault {
     text-align: right;
 }
 .l3pname-div {
-    padding-top: 1%;
+    padding-top: 2%;
+    margin-left: 2%;
     display: flex;
     width:100%;
+    position: relative;
 }
 .save-l3btn {
-    position: relative;
-    right: 4%;
+    position: absolute;
+    right: 2%;
+    bottom: 8px;
 }
 .l3-process_title {
-    margin-left: 7%;
+    margin-left: 8%;
     margin-top: 2%;
-    width: 80%;
+    width: 78%;
 }
 
 .dbichart-body {
@@ -615,4 +618,18 @@ p.podefault {
 .l2process-list {
     overflow: auto;
     height: calc(67vh - 175px);
+}
+
+.l2title-edit {
+    display: flex;
+    width: 100%;
+    margin-left: 3.5%;
+}
+.l2title-editbtn {
+    position: relative;
+    right: 4.5%;
+    bottom: 3%;
+}
+.l3pname-div input {
+    margin-left: 6.5%;
 }

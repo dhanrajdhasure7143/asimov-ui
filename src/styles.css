@@ -1358,8 +1358,8 @@ mat-row {
 }
 
 ::-webkit-scrollbar-track {
-  /* background: transparent; */
-  background: #fff;
+  background: transparent;
+  /* background: #fff; */
 }
 
 ::-webkit-scrollbar-thumb {
@@ -2907,7 +2907,9 @@ button.custom-popupbtn.mat-button {
 .overaly-innertable .testcell {
   width: calc(100% / 7 );
 }
-.process-expansion .mat-expansion-panel-body {
+.process-expansion .mat-expansion-panel-body,
+.new-bps-grid-data span.no-childlevels .mat-expansion-panel-body,
+.new-bps-grid-data span.has-childlevels .mat-expansion-panel-body {
   max-height: none !important;
   overflow: hidden !important;
 }
