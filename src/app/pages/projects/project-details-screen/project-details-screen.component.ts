@@ -695,7 +695,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
         { queryParams: { "bpsId": data.correlationID.split(":")[0], "ver": data.correlationID.split(":")[1], "ntype": "bpmn" } })
     }
     if (data.taskCategory == "RPA Design") {
-      this.router.navigate(['pages/projects/repdesign'])
+      this.router.navigate(['pages/projects/repdesign'],{ queryParams: {projectId: data.projectId,taskId:data.id,programId:this.programId}})
     }
 
     if (data.taskCategory == "Process Mining") {

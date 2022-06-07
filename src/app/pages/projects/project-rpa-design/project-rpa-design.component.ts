@@ -2,25 +2,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { RestApiService } from '../../services/rest-api.service';
 
-export interface data {
-  steps: string;
-  description: string;
-  configuration: string;
-  // isEdit: boolean;
-  id:Number
-  }
 
-const COLUMNS_SCHEMA = [
-  {key: 'sNo',label: 'Steps No',type:'number',},
-  {key: 'steps',label: 'Steps',type:'text',},
-  {key: 'description',label: 'Description',type:'text',},
-  {key: 'configuration',label: 'Configuration',type:'textarea'},
-  {key: 'isEdit',type: 'isEdit',label: 'Action'},
-  
-];
 
 @Component({
   selector: 'app-project-rpa-design',
@@ -30,55 +16,51 @@ const COLUMNS_SCHEMA = [
 export class ProjectRpaDesignComponent implements OnInit {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild("paginator", { static: false }) paginator: MatPaginator;
-  data:any=[];
 
-  displayedColumns: string[] = ['sNo', 'steps', 'description', 'configuration',  'Action'];
-
+  displayedColumns: string[] = ['stepNo', 'steps', 'description', 'configuration',  'Action'];
   dataSource: MatTableDataSource<any[]>;
-  // displayedColumns: string[] = COLUMNS_SCHEMA.map((col) => col.key);
-  columnsSchema: any = COLUMNS_SCHEMA;
-  USER_DATA:any[]= [
-    {steps:"Login to Satuit",description:"Testing Description", configuration:"a.test\nB.liuFHUW",id:123},
-    {steps:"Download",description:"This action is apply search  criteria and export the result to excel", configuration:"a.HR\nEg.testing\nb.test",id:133},
-    {steps:"Login to seismic",description:"Testing 123", configuration:"a.Client ID",id:20},
-    {steps:"Tetsing",description:" DEscription", configuration:"a.User",id:22}
-  ];
+  USER_DATA:any[]= []
   public myDataArray: any;
   selectedId: any;
+  projectId:any;
+  programId:any;
+  taskId:any;
 
 
-  constructor(private rest_api:RestApiService) { }
+  constructor(private rest_api:RestApiService,private router : Router, private route : ActivatedRoute) {
+    this.route.queryParams.subscribe(params=>{
+      console.log(params)
+      // id=2892&programId=2896
+      this.projectId = params.projectId
+      this.taskId = params.taskId
+      this.programId = params.programId
+    })
+   }
 
   ngOnInit(): void {
-    // this.myDataArray = [...this.USER_DATA];
-    // this.dataSource.sort=this.sort;
+this.getRPAdesignData()
 
-    this.dataSource = new MatTableDataSource(this.USER_DATA);
-    setTimeout(() => {
-      this.dataSource.paginator=this.paginator;
-    }, 2000);
+  }
+
+  getRPAdesignData(){
+    let res_data:any
+    this.rest_api.getRPAdesignData(this.taskId).subscribe(res=>{res_data = res
+      console.log(res);
+      this.USER_DATA = res_data.data
+      this.dataSource = new MatTableDataSource(this.USER_DATA);
+      setTimeout(() => {
+        this.dataSource.paginator=this.paginator;
+      // this.dataSource.sort=this.sort;
+  
+      }, 2000);
+    })
   }
 
   addUser() {
     let newUser1 ={steps:"",description:"", configuration:"",id:122,new:true};
     this.USER_DATA.splice(0,0,newUser1)
-    const newUsersArray = this.USER_DATA;
-    // newUsersArray.push(newUser1);
-    // this.myDataArray = [...newUsersArray];
     this.dataSource = new MatTableDataSource(this.USER_DATA);
-
     }
-
-  onSave(e){
-  let req_body={
-    
-  }
-  // this.rest_api.saveRpaDesign(e).subscribe(res=>{res_data=res
-
-  // })
-    console.log(e)
-    this.selectedId = null;
-  }
   
   cancelUpdaterow(){
     this.selectedId = null;
@@ -93,17 +75,62 @@ export class ProjectRpaDesignComponent implements OnInit {
     // Swal.fire('Deleted successfully..!')
     }
 
-    cancelCreateNewrow(i){
-      console.log("index:",i);
-      this.USER_DATA.splice(i,1);
+  cancelCreateNewrow(i) {
+    console.log("index:", i);
+    this.USER_DATA.splice(i, 1);
     this.dataSource = new MatTableDataSource(this.USER_DATA);
-    this.myDataArray.paginator=this.paginator;
+    this.myDataArray.paginator = this.paginator;
 
-      // this.myDataArray = [...this.USER_DATA];
+    // this.myDataArray = [...this.USER_DATA];
+  }
+
+  onEdit(item) {
+    this.selectedId = item.id;
+  }
+
+  backToProjects() {
+    this.router.navigate(['/pages/projects/projectdetails'],{queryParams:{id:this.projectId,programId:this.programId}})
+  }
+
+  saveConfiguration(element,i){
+    let req_body = {
+      "projectId": this.projectId,
+      "taskId": this.taskId,
+      "stepNo": i,
+      "steps": element.steps,
+      "description": element.description,
+      "configuration": element.configuration,
+      "createdBy": localStorage.getItem("firstName") + " " + localStorage.getItem("lastName"),
+      "createdUserId": localStorage.getItem("ProfileuserId"),
     }
 
-    onEdit(item){
-      this.selectedId=item.id;
+    this.rest_api.saveRpaDesign([req_body]).subscribe(res=>{
+      console.log(res)
+      this.getRPAdesignData();
+    })
+  }
+
+  updateConfiguration(item){
+    let req_body = {
+      "id": item.id,
+      "steps": item.steps,
+      "description": item.description,
+      "configuration": item.configuration,
     }
 
+    this.rest_api.updateRPADesignData([req_body]).subscribe(res=>{
+      console.log(res)
+      this.getRPAdesignData();
+    })
+
+  }
+  deleteConfiguration(item){
+    let req_body={
+      "id": item.id,
+    }
+    this.rest_api.deleteRpaDesign([req_body]).subscribe(res=>{
+      console.log(res)
+      this.getRPAdesignData();
+    })
+  }
 }
