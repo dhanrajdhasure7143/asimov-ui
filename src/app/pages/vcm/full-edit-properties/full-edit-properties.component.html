@@ -168,7 +168,7 @@
                             <ng-container *ngFor="let prop of vcmProperties;let i = index">
                                 <ng-container *ngFor="let name of prop.children;let j = index">
                                     <tr *ngFor="let level2 of name.children;let k = index">
-                                        <td *ngIf="level2.title">{{prop.name}}</td>
+                                        <td *ngIf="level2.title">{{name.title}}</td>
                                         <td *ngIf="level2.title">{{level2.title}}</td>
                                         <td *ngIf="level2.title" class="td_spocol">
                                             <select class="form-control" #ownerValue [(ngModel)]="level2.processOwner">
