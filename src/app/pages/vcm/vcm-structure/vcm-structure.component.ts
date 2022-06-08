@@ -194,8 +194,8 @@ export class VcmStructureComponent implements OnInit {
     this.treeControl.expand(this.treeControl.dataNodes[0]);
     this.treeControl.expand(this.treeControl.dataNodes[1]);
     this.treeControl.expand(this.treeControl.dataNodes[2]);
-    // this.treeControl.expandAll();
-    // this.tree.treeControl.expandAll();
+    this.treeControl.expandAll();
+    this.tree.treeControl.expandAll();
   }
 
   collapse() {
