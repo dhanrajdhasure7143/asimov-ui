@@ -41,14 +41,14 @@
                                 <mat-panel-description>
                                     <div class="container p-0 prop-content">
                                         <div class="editcontent">
-                                            <div class="col-md-12 p-0 form-group">
-                                                <label class="label-control">Process Name</label>
+                                            <div class="col-md-12 form-group">
+                                                <label class="label-control">{{propertiesLevelName}}</label>
                                                 <input type="text" disabled class="form-control" [(ngModel)]="processName1">
                                             </div>
-                                            <div class="col-md-12 p-0 form-group">
-                                                <label class="label-control">Process Owner</label>
+                                            <div class="col-md-12 form-group">
+                                                <label class="label-control">Owner</label>
                                                 <select class="form-control" [disabled]="isPropDisabled" [(ngModel)]="processOwner">
-                                                    <option value="" hidden disabled>Select Process Owner</option>
+                                                    <option value="" hidden disabled>Select Owner</option>
                                                     <option *ngFor="let each_approver of processOwners_list;let i=index" [value]="each_approver.firstName+' '+each_approver.lastName">
                                                         {{(each_approver.firstName | titlecase) +"
                                                         "+(each_approver.lastName==undefined?"":each_approver.lastName)}}</option>
