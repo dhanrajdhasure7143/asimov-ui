@@ -24,7 +24,7 @@
             <div class="table_responsive graph_table">
                 <table mat-table [dataSource]="dataSource" matSort class="PI table w-100">
                     <ng-container matColumnDef="stepNo">
-                        <th mat-sort-header mat-header-cell *matHeaderCellDef>Step No</th>
+                        <th mat-sort-header mat-header-cell *matHeaderCellDef>S No</th>
                         <td mat-cell *matCellDef="let element;let i=index">{{element.stepNo}}</td>
                     </ng-container>
                     <ng-container matColumnDef="steps">
@@ -63,7 +63,7 @@
                                     <img src="../../../../assets/images/Projects/edit-black.svg" class="default-img">
                                     <img src="../../../../../assets/images/Projects/Edit-blue.svg" class="hover-img">
                                 </span>
-                                <span *ngIf="element.id != selectedId" (click)="deleteConfiguration()" class="delete-icon">
+                                <span *ngIf="element.id != selectedId" (click)="deleteConfiguration(element)" class="delete-icon">
                                     <img src="../../../../assets/images/Projects/delete-black.svg" matTooltip="Delete"
                                         matTooltipPosition="left" class="default-img">
                                     <img src="../../../../assets/images/Projects/delete-red.svg" matTooltip="Delete"

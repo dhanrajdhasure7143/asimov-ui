@@ -5,6 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { RestApiService } from '../../services/rest-api.service';
+import Swal from 'sweetalert2';
 
 
 
@@ -27,7 +28,7 @@ export class ProjectRpaDesignComponent implements OnInit {
   taskId:any;
 
 
-  constructor(private rest_api:RestApiService,private router : Router, private route : ActivatedRoute) {
+  constructor(private rest_api:RestApiService,private router : Router, private route : ActivatedRoute,private spinner: NgxSpinnerService) {
     this.route.queryParams.subscribe(params=>{
       console.log(params)
       // id=2892&programId=2896
@@ -128,9 +129,43 @@ this.getRPAdesignData()
     let req_body={
       "id": item.id,
     }
-    this.rest_api.deleteRpaDesign([req_body]).subscribe(res=>{
-      console.log(res)
-      this.getRPAdesignData();
-    })
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
+        this.spinner.show();
+        this.rest_api.deleteRpaDesign(req_body).subscribe(res=>{
+          let status: any = res;
+          this.spinner.hide()
+          Swal.fire({
+            title: 'Success',
+            text: "" + status.message,
+            position: 'center',
+            icon: 'success',
+            showCancelButton: false,
+            confirmButtonColor: '#007bff',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ok'
+          })
+          this.getRPAdesignData();
+        }, err => {
+          this.spinner.hide()
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!',
+          })
+
+        })
+      }
+    });
+
+
   }
 }
