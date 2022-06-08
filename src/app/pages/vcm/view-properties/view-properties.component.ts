@@ -60,7 +60,9 @@ export class ViewPropertiesComponent implements OnInit {
   collaboratorsRoles=["Executive"]
   collaboratorsInterests=["Responsible","Accountable","Consulted","Informed"];
   attachment_namesArray:any=[];
-  addcollabProcName: any;
+  collabHeader:any;
+  isaddCollab:boolean=false;
+  isviewCollab:boolean=false;
 
   constructor(private router: Router, private rest_api: RestApiService,
     private route: ActivatedRoute, private modalService: BsModalService) {
@@ -371,6 +373,9 @@ downloadAllFiles(){
 
   addCollaboratorsrightframe (obj) {
     this.drawer.open();
+    this.collabHeader = "Add Collaborators";
+    this.isaddCollab = true;
+    this.isviewCollab = false;
     this.selectedCollaboratorsObj=obj
     this.collaboratorsArray=[
       {
@@ -381,11 +386,27 @@ downloadAllFiles(){
         "uniqueId": obj.uniqueId
         },
     ];
-    this.addcollabProcName = this.vcm_process;
+   
   }
 
   closeOverlay(){
     this.drawer.close()
   }
+
+  viewCollaboratorsrightframe(obj){  
+    this.drawer.open(); 
+    this.collabHeader = "Collaborators";
+    this.isviewCollab = true;
+    this.isaddCollab = false;
+    this.isLoading=true;
+    // obj.uniqueId="90f813c9-6964-1b9d-a5a1-f5585fd4d31f"
+    let res_data:any;
+    this.rest_api.getCollaborators(obj.uniqueId).subscribe(res =>{res_data=res
+      this.isLoading=false;
+      this.collaboratorsList=res_data.data;
+    })
+   
+   }
+  
 
 }

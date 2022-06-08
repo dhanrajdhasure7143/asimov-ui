@@ -234,7 +234,7 @@ div#bpmn_list {
 }
 .new-bps-grid-data mat-expansion-panel {
     /* width: 100%; */
-    width: 99.87%;
+    width: 99.8%;
     position: relative;
     padding: 2px 0px !important;
     border-top: 1px solid #dee2e6 !important;
@@ -524,6 +524,7 @@ img.addnewIcon {
 
 /* properties overlay End */
 
+.cell.cell7 button.tddel img.testplus,
 td button.tddel img.testplus {
     margin-right: 0px !important;
 }
