@@ -39,11 +39,11 @@
                                     <div class="container p-0 prop-content">
                                         <div class="editcontent">
                                             <div class="col-md-12 p-0 form-group">
-                                                <label class="label-control">Process Name</label>
+                                                <label class="label-control">{{propertiesLevelName}}</label>
                                                 <input type="text" disabled class="form-control" [(ngModel)]="editProcessName">
                                             </div>
                                             <div class="col-md-12 p-0 form-group">
-                                                <label class="label-control">Process Owner</label>
+                                                <label class="label-control">Owner</label>
                                                 <select class="form-control" [(ngModel)]="editProcessOwner">
                                                     <option value="" hidden disabled>Select Owner</option>
                                                     <option *ngFor="let each_approver of processOwners_list;let i=index" [value]="each_approver.firstName+' '+each_approver.lastName">
@@ -317,7 +317,7 @@
                                 </select>
                                     </div>
                                     <div class="level1process form-group">
-                                        <input placeholder="Enter Process Group Name" class="form-control" type="text" name="levelName" autocomplete="off" [(ngModel)]="addLevel2">
+                                        <input placeholder="Enter Process Group" class="form-control" type="text" name="levelName" autocomplete="off" [(ngModel)]="addLevel2">
                                         <button [disabled]="addLevel2 == '' || !level1process" type="submit" class="btn" (click)="addLevel2Process()">
                                     <img src="../../../../assets/images/VCM/Green Tick.svg" class="testplus1" />
                                 </button>
