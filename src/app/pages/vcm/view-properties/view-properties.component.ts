@@ -14,12 +14,15 @@ import * as JSZip from 'jszip';
 import { saveAs } from "file-saver";
 import * as FileSaver from 'file-saver';
 
+import { MatDrawer } from '@angular/material/sidenav';
 @Component({
   selector: 'app-view-properties',
   templateUrl: './view-properties.component.html',
   styleUrls: ['./view-properties.component.css']
 })
 export class ViewPropertiesComponent implements OnInit {
+
+  @ViewChild('drawer', { static: false }) drawer: MatDrawer;
 
   @Input() vcm_data:any;
   @Input() processOwners_list:any=[];
@@ -57,6 +60,7 @@ export class ViewPropertiesComponent implements OnInit {
   collaboratorsRoles=["Executive"]
   collaboratorsInterests=["Responsible","Accountable","Consulted","Informed"];
   attachment_namesArray:any=[];
+  addcollabProcName: any;
 
   constructor(private router: Router, private rest_api: RestApiService,
     private route: ActivatedRoute, private modalService: BsModalService) {
@@ -74,7 +78,7 @@ export class ViewPropertiesComponent implements OnInit {
   }
 
   ngOnChanges(){
-    if(this.vcm_process != "all"){
+    if (this.vcm_process != "all"){
       let filteredData=[]
       this.vcm_data.forEach(element => {
         if(!element.bpsId){
@@ -365,5 +369,23 @@ downloadAllFiles(){
   });
 }
 
+  addCollaboratorsrightframe (obj) {
+    this.drawer.open();
+    this.selectedCollaboratorsObj=obj
+    this.collaboratorsArray=[
+      {
+        "stakeholder": "",
+        "stakeholderEmail":"",
+        "interest": "",
+        "role": "",
+        "uniqueId": obj.uniqueId
+        },
+    ];
+    this.addcollabProcName = this.vcm_process;
+  }
+
+  closeOverlay(){
+    this.drawer.close()
+  }
 
 }

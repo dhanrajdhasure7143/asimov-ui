@@ -592,15 +592,15 @@ p.podefault {
 }
 .l3pname-div {
     padding-top: 2%;
-    margin-left: 2%;
+    /* margin-left: 2%; */
     display: flex;
     width:100%;
     position: relative;
 }
 .save-l3btn {
     position: absolute;
-    right: 2%;
-    bottom: 8px;
+    right: 6.5%;
+    bottom: 7px;
 }
 .l3-process_title {
     margin-left: 8%;
@@ -632,4 +632,8 @@ p.podefault {
 }
 .l3pname-div input {
     margin-left: 6.5%;
+    width: 92%;
+}
+.overflowcontent .l3pname-div .save-l3btn {
+    right: 3%;
 }
