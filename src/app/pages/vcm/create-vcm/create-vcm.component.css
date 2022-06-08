@@ -156,7 +156,7 @@ li.overflowcontent {
 .vcname button {
     position: absolute;
     top: 32px;
-    right: 13px;
+    right: 10px;
     min-width: auto !important;
     padding: 0px !important;
     margin: 0px !important;
@@ -175,7 +175,7 @@ li.childHover span.l1c-process_title {
 }
 
 .vcmprop.mat-drawer-opened {
-    width: 25% !important;
+    width: 27% !important;
 }
 
 .propfooter button.btn.btn-primary {
