@@ -94,6 +94,7 @@ this.getRPAdesignData()
   }
 
   saveConfiguration(element,i){
+    this.spinner.show();
     let req_body = {
       "projectId": this.projectId,
       "taskId": this.taskId,
@@ -106,25 +107,59 @@ this.getRPAdesignData()
     }
 
     this.rest_api.saveRpaDesign([req_body]).subscribe(res=>{
-      console.log(res)
+      this.spinner.hide();
+      Swal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: 'Created Successfully !!',
+        heightAuto: false
+      }).then((result) => {
       this.getRPAdesignData();
+      })
+      console.log(res)
+    }, err =>{
+      this.spinner.hide();
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!',
+        heightAuto: false,
+      })
     })
   }
 
-  updateConfiguration(item){
+  updateConfiguration(element){
+    this.spinner.show();
     let req_body = {
-      "id": item.id,
-      "steps": item.steps,
-      "description": item.description,
-      "configuration": item.configuration,
+      "id": element.id,
+      "steps": element.steps,
+      "description": element.description,
+      "configuration": element.configuration,
     }
 
-    this.rest_api.updateRPADesignData([req_body]).subscribe(res=>{
+    this.rest_api.updateRPADesignData(req_body).subscribe(res=>{
+      this.spinner.hide();
+      Swal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: 'Updated Successfully !!',
+        heightAuto: false
+      }).then((result) => {
+        this.getRPAdesignData();
+      })
+      this.selectedId = null
       console.log(res)
-      this.getRPAdesignData();
+    }, err => {
+      this.spinner.hide();
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!',
+        heightAuto: false,
+      })
     })
-
   }
+
   deleteConfiguration(item){
     let req_body={
       "id": item.id,
