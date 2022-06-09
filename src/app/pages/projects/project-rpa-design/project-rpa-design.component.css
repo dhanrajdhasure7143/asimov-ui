@@ -26,3 +26,15 @@ span img{
 .confi-div{
   white-space: pre-line
 }
+
+.Support-tktlist-body {
+  padding: 10px 10px 0px 10px;
+  height: calc(100% - 44px);
+  overflow: auto;
+}
+.table_responsive.graph_table {
+  /* height: 420px !important; */
+  height: calc(100% - 44px);
+  overflow: auto;
+  width: 100%;
+}
