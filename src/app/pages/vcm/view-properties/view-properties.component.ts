@@ -221,7 +221,8 @@ export class ViewPropertiesComponent implements OnInit {
    this.addCollaboratorsOverlay = this.modalService.show(template,{class:"modal-lr"});
  }
 
- addNewcollabratorsObj(){
+ addNewcollabratorsObj(event){
+   event.stopPropagation();
    let object= {
     "stakeholder": "",
     "stakeholderEmail":"",

@@ -15,10 +15,10 @@
                                     <div class="accordionHeaderToggle">
                                         <img src="../../../../assets/images/VCM/Add-Collaborator-Icon.svg" alt="menuToggleIcon" class="menuToggleIcon">
                                         <label class="accordionHeader">{{collabHeader}}</label>
-                                        <!-- <span class="tsttooltipbtn">
-                                            <img src="../../../../assets/images/VCM/Collaborator-Add-icon.svg" alt="addnewIcon" class="addnewIcon" (click)="addNewcollabratorsObj()" >
-                                            <span class="testtooltip">Add New</span>
-                                        </span> -->
+                                        <span class="tsttooltipbtn" *ngIf="collabHeader == 'Add Collaborators'">
+                                            <img src="../../../../assets/images/VCM/Collaborator-Add-icon.svg" alt="addnewIcon" class="addnewIcon" (click)="addNewcollabratorsObj($event)" >
+                                            <!-- <span class="testtooltip">Add New</span> -->
+                                        </span>
                                     </div>
                                 </mat-panel-title>
                             </mat-expansion-panel-header>
