@@ -63,6 +63,7 @@ export class ViewPropertiesComponent implements OnInit {
   collabHeader:any;
   isaddCollab:boolean=false;
   isviewCollab:boolean=false;
+  selectedProcessName='';
 
   constructor(private router: Router, private rest_api: RestApiService,
     private route: ActivatedRoute, private modalService: BsModalService) {
@@ -375,7 +376,9 @@ downloadAllFiles(){
   });
 }
 
-  addCollaboratorsrightframe (obj) {
+  addCollaboratorsrightframe (obj,event) {
+    this.selectedProcessName=obj.title;
+    event.stopPropagation();
     this.drawer.open();
     this.collabHeader = "Add Collaborators";
     this.isaddCollab = true;
@@ -397,7 +400,9 @@ downloadAllFiles(){
     this.drawer.close()
   }
 
-  viewCollaboratorsrightframe(obj){  
+  viewCollaboratorsrightframe(obj,event){  
+    event.stopPropagation();
+    this.selectedProcessName=obj.title;
     this.drawer.open(); 
     this.collabHeader = "Collaborators";
     this.isviewCollab = true;
