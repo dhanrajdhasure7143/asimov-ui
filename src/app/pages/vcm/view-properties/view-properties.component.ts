@@ -57,7 +57,7 @@ export class ViewPropertiesComponent implements OnInit {
   stackHolders_list:any=[];
   selectedIndex:number;
   selectedCollaboratorsObj:any;
-  collaboratorsRoles=["Executive"]
+  collaboratorsRoles=[localStorage.getItem("userRole")]
   collaboratorsInterests=["Responsible","Accountable","Consulted","Informed"];
   attachment_namesArray:any=[];
   collabHeader:any;
@@ -244,6 +244,7 @@ export class ViewPropertiesComponent implements OnInit {
 }
 
 saveCollabrators(){
+  this.isLoading=true;
   let req_body=[]
   this.collaboratorsArray.forEach(element => {
     this.stackHolders_list.forEach(e => {
@@ -254,6 +255,7 @@ saveCollabrators(){
     req_body.push(element)  
   });
     this.rest_api.createCollaborators(req_body).subscribe((res:any)=>{
+      this.isLoading=false;
       if(res){
       Swal.fire({
         title: 'Success',
@@ -303,9 +305,11 @@ editCollaborator(obj,index){
 }
 
 viewDeleteCollaborator(obj,index){
+  this.isLoading=true;
   let req_body=[{"id": obj.id}]
   this.rest_api.deleteCollaborators(req_body).subscribe((res:any)=>{
     this.collaboratorsList.splice(index,1);
+    this.isLoading=false;
     Swal.fire({
       title: 'Success',
       text: res.message,
