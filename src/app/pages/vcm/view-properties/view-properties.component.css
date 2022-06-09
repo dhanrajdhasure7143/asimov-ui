@@ -39,7 +39,8 @@ img {
     right: 0px;
     top: 18px;
 }
-.proc_deffield img.testplus2 {
+.proc_deffield img.testplus2,
+.tsttooltipbtn img.testplus2 {
     width: 12px;
     height: 12px;
     margin-right: 10px;
@@ -232,9 +233,10 @@ div#bpmn_list {
     height: 70%;
     padding-bottom: 10px;
 }
+
 .new-bps-grid-data mat-expansion-panel {
     /* width: 100%; */
-    width: 99.8%;
+    width: 99.87%;
     position: relative;
     padding: 2px 0px !important;
     border-top: 1px solid #dee2e6 !important;
@@ -275,6 +277,7 @@ div#bpmn_list {
     }
     .cell span{
         cursor: pointer;
+        font-size: 13px;
     }
 
     .bps-labcls, .bps-serwksp {
@@ -409,6 +412,10 @@ span.has-childlevels mat-expansion-panel.mat-expanded {
     border-top: none !important;
     border-radius: 4px !important;
 }
+
+.new-bps-grid-data mat-expansion-panel span.has-childlevels {
+    border-top: none !important;
+}
 .new-bps-grid-data .inner-grid span.has-childlevels mat-expansion-panel.mat-expansion-panel.mat-expanded {
     border-top: 1px solid #dee2e6 !important;
     border: none;
@@ -488,7 +495,7 @@ span.has-childlevels.l3childs div.row.col-md-12.p-0.cons_grid_content {
 }
 
 mat-drawer {
-    width: 32%;
+    width: 31%;
 }
 
 .close-btn h3 {
@@ -498,6 +505,7 @@ mat-drawer {
     font-weight: 600;
     width: 90%;
     color: #fff;
+    text-transform:capitalize;
 }
 .close-btn img {
     width: 12px;
@@ -521,32 +529,43 @@ img.addnewIcon {
 td button.tddel img.testplus {
     margin-right: 0px !important;
 }
-
-.cell.cell2, .workspace-title .cell.cell2 {
-    width: 35% !important;
+.rgtpanelopened
+.cell.cell2, .rgtpanelopened
+ .workspace-title .cell.cell2 {
+    width: 40% !important;
     margin-right: 10px;
 }
-.cell.cell3 , 
+.rgtpanelopened
+.cell.cell3 , .rgtpanelopened
 .workspace-title .cell.cell3 {
     width: 55% !important;
 }
-.cell.cell4 , 
+.rgtpanelopened
+.cell.cell4 , .rgtpanelopened
 .workspace-title .cell.cell4 {
     width: 75% !important;
 }
-.cell.cell5 , 
+.rgtpanelopened
+.cell.cell5 , .rgtpanelopened
 .workspace-title .cell.cell5 {
     width: 60% !important;
 }
-.cell.cell6 {
+.rgtpanelopened .cell.cell6 {
     width: 85% !important;
 }
-.workspace-title .cell.cell6 {
+.rgtpanelopened .workspace-title .cell.cell6 {
     width: 85% !important;
 }
-.cell.cell7 {
+.rgtpanelopened .cell.cell7 {
     width: 27%;
 }
-.workspace-title .cell.cell7 {
+.rgtpanelopened .workspace-title .cell.cell7 {
     width: 24% !important;
+}
+.rgtpanelopened .new-bps-grid-data mat-expansion-panel {  
+     width: 99.7%;
+}
+.cell.cell7 ,
+.workspace-title .cell.cell7 {
+    width: 25% !important;
 }

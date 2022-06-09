@@ -2920,6 +2920,6 @@ button.custom-popupbtn.mat-button {
 }
 
 .vcmprop.vcm-nrt-prop .propertiesContainer .mat-expansion-panel-body {
-  height: calc(100vh - 219px) !important;
-  max-height: calc(100vh - 219px) !important;
+  height: calc(100vh - 218px) !important;
+  max-height: calc(100vh - 218px) !important;
 }
