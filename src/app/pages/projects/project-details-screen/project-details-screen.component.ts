@@ -15,6 +15,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { MatMenuModule, MatButtonModule } from '@angular/material';
 import moment from 'moment';
 import { Subscription } from 'rxjs';
+import * as BpmnJS from './../../../bpmn-modeler.development.js';
 
 @Component({
   selector: 'app-project-details-screen',
@@ -164,6 +165,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   isOpenedState : number =0;
   selectedQuestionEdit:number;
   selectedQuestionUpdate:any;
+  selectedProcessBpmn:any;
 
   constructor(private dt: DataTransferService, private route: ActivatedRoute, private dataTransfer: DataTransferService, private rpa: RestApiService,
     private modalService: BsModalService, private formBuilder: FormBuilder, private router: Router,
@@ -502,14 +504,14 @@ export class ProjectDetailsScreenComponent implements OnInit {
       this.project_id = paramsdata.id
       this.editdata = false;
       this.rpa.getProjectDetailsById(paramsdata.id).subscribe(res => {
-
         this.projectDetails = res
         this.processOwnerFlag = false
         this.projectenddate = moment(this.projectDetails.endDate).format("YYYY-MM-DD");
         this.projectStartDate = moment(this.projectDetails.startDate).format("YYYY-MM-DD");
-
+        console.log("projects Details", res);
 
         if (this.projectDetails) {
+          this.getBPMNbyProcessId();
           let usr_name = this.projectDetails.owner.split('@')[0].split('.');
           // this.owner_letters=usr_name[0].charAt(0)+usr_name[1].charAt(0);
           if (usr_name.length > 1) {
@@ -517,7 +519,6 @@ export class ProjectDetailsScreenComponent implements OnInit {
           } else {
             this.owner_letters = usr_name[0].charAt(0);
           }
-
         }
 
         //this.project_id=this.projectDetails.id
@@ -527,22 +528,17 @@ export class ProjectDetailsScreenComponent implements OnInit {
             users.push(item.resource)
           })
           this.resources = users
-
           this.loginresourcecheck = this.resources.find(item2 => item2 == userid);
-
         }
         else {
           this.resources = this.users_list
-
         }
       })
 
       this.getTaskandCommentsData();
       this.getLatestFiveAttachments(this.project_id)
       paramsdata.programId == undefined ? this.programId = undefined : this.programId = paramsdata.programId;
-
     });
-
   }
 
   profileName() {
@@ -650,6 +646,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
       resp = processnames
       this.processes = resp.filter(item => item.status == "APPROVED");
       this.selected_process_names = resp.sort((a, b) => (a.processName.toLowerCase() > b.processName.toLowerCase()) ? 1 : ((b.processName.toLowerCase() > a.processName.toLowerCase()) ? -1 : 0));
+    console.log(this.processes)
     })
   }
 
@@ -1397,6 +1394,78 @@ export class ProjectDetailsScreenComponent implements OnInit {
     } else {
       return '-'
     }
+  }
+
+  getBPMNbyProcessId() {
+    let res_data: any;
+    let _self = this;
+    this.rpa.getBPMNbyProcessId(this.projectDetails.process).subscribe((res: any) => {
+      res_data = res
+      if (res_data.length > 0) {
+        this.selectedProcessBpmn = res_data[0];
+        let binaryXMLContent = this.selectedProcessBpmn.bpmnXmlNotation
+        let xmlData: any = atob(binaryXMLContent)
+        this.createBpmn(xmlData)
+      }
+    })
+  }
+
+  createBpmn(byteBpmn) {
+    let modeler_obj = "bpmnModeler";
+    let notationJson = {
+      container: '#canvas1',
+      keyboard: {
+        bindTo: window
+      }
+    }
+    this[modeler_obj] = new BpmnJS(notationJson);
+    this[modeler_obj].importXML(byteBpmn, function (err) {
+      if (err) {
+        this.notifier.show({
+          type: "error",
+          message: "Could not import Bpmn notation!"
+        });
+      }
+    })
+    setTimeout(() => {
+      this.xmlConvertToImageformate()
+    }, 5000);
+  }
+
+
+  xmlConvertToImageformate(){
+    let modeler_obj ="bpmnModeler";
+      let _self = this;
+        let modelerExp = this[modeler_obj];
+          modelerExp.saveSVG(function(err, svgContent) {
+          var blob = new Blob([svgContent], { type: "image/svg+xml;charset=utf-8" });
+          var url = window.URL.createObjectURL(blob);
+            let canvasEl = document.createElement("canvas");
+            let canvasContext = canvasEl.getContext("2d", {alpha: false});
+            let img = new Image();
+            img.onload=()=>{
+              canvasEl.width = img.width;
+              canvasEl.height = img.height;
+              canvasContext.fillStyle = "#fff";
+              canvasContext.fillRect(0, 0, canvasEl.width, canvasEl.height);
+              canvasContext.drawImage(img,0,0,img.width, img.height, 0, 0, canvasEl.width, canvasEl.height);
+              let imgUrl;
+                imgUrl = canvasEl.toDataURL("image/png");
+              _self.getPDDFile(imgUrl)
+            }
+            img.src = url;
+        });
+  }
+
+  getPDDFile(url){
+    console.log(url)
+    let res_body={
+        "projectId": this.project_id,
+        "processImage":url
+    }
+    this.rpa.processDocumentDownload(res_body).subscribe(res=>{
+      console.log(res)
+    });
   }
 
 }
