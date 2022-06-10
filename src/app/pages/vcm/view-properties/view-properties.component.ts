@@ -421,6 +421,12 @@ downloadAllFiles(){
     })
    
    }
+
+   fitTableView(processName){
+    if(processName && processName.length > 24)
+      return processName.substr(0,25)+'...';
+    return processName;
+  }
   
 
 }
