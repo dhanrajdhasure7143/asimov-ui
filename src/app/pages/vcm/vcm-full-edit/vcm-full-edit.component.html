@@ -37,11 +37,11 @@
                                     <div class="container p-0 prop-content">
                                         <div class="editcontent">
                                             <div class="col-md-12 p-0 form-group">
-                                                <label class="label-control">Process Name</label>
+                                                <label class="label-control">{{propertiesLevelName}}</label>
                                                 <input type="text" disabled class="form-control" [(ngModel)]="editProcessName">
                                             </div>
                                             <div class="col-md-12 p-0 form-group">
-                                                <label class="label-control">Process Owner</label>
+                                                <label class="label-control">Owner</label>
                                                 <select class="form-control" [(ngModel)]="editProcessOwner">
                                                     <option value="" hidden disabled>Select Owner</option>
                                                     <option *ngFor="let each_approver of processOwners_list;let i=index"
@@ -118,7 +118,7 @@
                 <div class="row maincontent h-100">
                     <div class="col-md-12 pl-0 vcm-leveldiv">
                         <div class="row">
-                            <div class="col-md-4 pr-0 form-group vcname">
+                            <div class="col-md-12 pr-0 form-group vcname">
                                 <label class="label-control">Value Chain Name</label>
                                 <input type="text" class="form-control" [(ngModel)]="vcmName"
                                     placeholder="Enter Value Chain Name">
@@ -147,7 +147,8 @@
                                 </div>
                             </div> -->
 
-                            <div class="col-md-4 pr-0 form-group powner">
+                            <!--
+                                <div class="col-md-4 pr-0 form-group powner">
                                 
                                 <button  (click)="showProcessOwnerList()" *ngIf="selected_procName == '' " > 
                                     <img src="../../../../assets/images/VCM/pc-def.svg" class="default-img"/>
@@ -162,27 +163,27 @@
                                 </div>
                                 <div class="selectedpodiv">
                                     <p class="poundef"  (click)="showProcessOwnerList()" >{{selected_procName}}</p>
-                                    <p class="podefault" *ngIf="selected_procName == ''  " >Select Process Owner</p>
-                                    <span class="polabel" *ngIf="selected_procName" >Process Owner</span>
+                                    <p class="podefault" *ngIf="selected_procName == ''  " >Select Owner</p>
+                                    <span class="polabel" *ngIf="selected_procName" >Owner</span>
                                 </div>                                
 
                                 <button class="poarbtn" (click)="showProcessOwnerList()" > 
                                     <img src="../../../../assets/images/VCM/small-right.svg"  class="poarr" />
                                 </button>
                                                                 
-                            </div>
+                            </div> -->
 
                         </div>
 
                         <div class="col-md-6 col-lg-6 pr-0">
                             <div class="dbichart-block">
                                 <div class="dbichart-body">
-                                    <h4>Organization Group
+                                    <h4>Process Hierarchy
                                        <span class="tsttooltipbtn">
                                             <img [ngClass]="(vcmProcess[0].children?.length != 0 || vcmProcess[1].children?.length != 0 || vcmProcess[2].children?.length != 0) ? 'view' : 'dis'"
                                                 (click)="goToProperties('level1')"
                                                 src="../../../../assets/images/VCM/Level 1.svg" class="testplus" alt="">
-                                            <span class="testtooltip">View Organization Group - Properties</span>
+                                            <span class="testtooltip">View Process Hierarchy - Properties</span>
                                        </span>
                                     </h4>
                                     <div class="l1processlistdiv">
@@ -219,7 +220,7 @@
                                                                         placeholder="Enter Process Name"
                                                                         [(ngModel)]="name.title">
                                                                     <button
-                                                                        style="position: relative;right: 6%;bottom: 7%;"
+                                                                        style="position: relative;right: 4.5%;bottom: 7%;"
                                                                         (click)="editTitleName(name)">
                                                                         <img class="testplus1"
                                                                             src="../../../../assets/images/VCM/Green Tick.svg">
@@ -288,7 +289,7 @@
                                                                         placeholder="Enter Process Name"
                                                                         [(ngModel)]="name.title">
                                                                     <button
-                                                                        style="position: relative;right: 6%;bottom: 7%;"
+                                                                        style="position: relative;right: 4.5%;bottom: 7%;"
                                                                         (click)="editTitleName(name)">
                                                                         <img class="testplus1"
                                                                             src="../../../../assets/images/VCM/Green Tick.svg">
@@ -355,7 +356,7 @@
                                                                         placeholder="Enter Process Name"
                                                                         [(ngModel)]="name.title">
                                                                     <button
-                                                                        style="position: relative;right: 6%;bottom: 7%;"
+                                                                        style="position: relative;right: 4.5%;bottom: 7%;"
                                                                         (click)="editTitleName(name)">
                                                                         <img class="testplus1"
                                                                             src="../../../../assets/images/VCM/Green Tick.svg">
@@ -404,8 +405,8 @@
                                     <div class="form-group">
                                         <select class="form-control" id="level1" name="Level1"
                                             [(ngModel)]="level1process" [ngModelOptions]="{standalone: true}">
-                                            <option value="undefined" hidden disabled>Select Process Group Process</option>
-                                            <option value="" hidden disabled>Select Process Group Process</option>
+                                            <option value="undefined" hidden disabled>Select Process Hierarchy</option>
+                                            <option value="" hidden disabled>Select Process Hierarchy</option>
                                             <ng-container *ngFor="let item of vcmProcess">
                                                 <option *ngFor="let name of item.children" [ngValue]=name>{{name.title}}
                                                 </option>
@@ -438,7 +439,7 @@
                                                                     <img src="../../../../assets/images/VCM/small-right.svg" class="testplus2" />{{level2.title}}
                                                                 </span>
                                                                 <div *ngIf="uniqueId1 == level2.uniqueId"
-                                                                    style="display: flex;width: 110%;">
+                                                                    class="l2title-edit">
                                                                     <img style="margin-top: 2%;"
                                                                         src="../../../../assets/images/VCM/small-right.svg"
                                                                         class="testplus2" />
@@ -446,7 +447,7 @@
                                                                         placeholder="Enter Process Name"
                                                                         [(ngModel)]="level2.title">
                                                                     <button
-                                                                        style="position: relative;right: 6%; bottom: 3%;"
+                                                                        class="l2title-editbtn"
                                                                         (click)="editTitleName(level2)">
                                                                         <img class="testplus1"
                                                                             src="../../../../assets/images/VCM/Green Tick.svg">
@@ -489,7 +490,7 @@
                                                             <li
                                                                 *ngIf="inputUniqueId == level2.uniqueId && item.name == 'Management Process'">
                                                                 <div class="l3pname-div" >
-                                                                    <input style="width: 95%;" type="text"
+                                                                    <input  type="text"
                                                                         class="form-control"
                                                                         placeholder="Enter Process Name"
                                                                         [(ngModel)]="l3ProcessName">
@@ -510,7 +511,7 @@
                                                                         >{{l3.title}}</span>
                                                                     <!-- <span *ngIf="l3.uniqueId == uniqueIdL3"> -->
                                                                         <div class="l3pname-div" *ngIf="l3.uniqueId == uniqueIdL3">
-                                                                            <input style="width: 95%;" type="text" class="form-control" placeholder="Enter Process Name" [(ngModel)]="l3.title">
+                                                                            <input  type="text" class="form-control" placeholder="Enter Process Name" [(ngModel)]="l3.title">
                                                                             <button [hidden]="!l3.title" (click)="updateL3Process(level2,item)" class="save-l3btn">
                                                                                 <img class="testplus1" src="../../../../assets/images/VCM/Green Tick.svg">
                                                                             </button>
@@ -571,8 +572,7 @@
                                                                 <span *ngIf="uniqueId1 != level2.uniqueId" class="l2c-process_title">
                                                                     <img src="../../../../assets/images/VCM/small-right.svg" class="testplus2" />{{level2.title}}
                                                                 </span>
-                                                                <div *ngIf="uniqueId1 == level2.uniqueId"
-                                                                    style="display: flex;width: 110%;">
+                                                                <div *ngIf="uniqueId1 == level2.uniqueId" class="l2title-edit" >
                                                                     <img style="margin-top: 2%;"
                                                                         src="../../../../assets/images/VCM/small-right.svg"
                                                                         class="testplus2" />
@@ -580,7 +580,7 @@
                                                                         placeholder="Enter Process Name"
                                                                         [(ngModel)]="level2.title">
                                                                     <button
-                                                                        style="position: relative;right: 6%; bottom: 3%;"
+                                                                        class="l2title-editbtn"
                                                                         (click)="editTitleName(level2)">
                                                                         <img class="testplus1"
                                                                             src="../../../../assets/images/VCM/Green Tick.svg">
@@ -622,7 +622,7 @@
                                                             <li
                                                                 *ngIf="inputUniqueId == level2.uniqueId && item.name == 'Core Process'">
                                                                 <div class="l3pname-div">
-                                                                    <input style="width: 95%;" type="text"
+                                                                    <input  type="text"
                                                                         class="form-control"
                                                                         placeholder="Enter Process Name"
                                                                         [(ngModel)]="l3ProcessName">
@@ -643,7 +643,7 @@
                                                                         >{{l3.title}}</span>
                                                                     <!-- <span *ngIf="l3.uniqueId == uniqueIdL3"> -->
                                                                         <div class="l3pname-div" *ngIf="l3.uniqueId == uniqueIdL3">
-                                                                            <input style="width: 95%;" type="text"
+                                                                            <input  type="text"
                                                                                 class="form-control"
                                                                                 placeholder="Enter Process Name"
                                                                                 [(ngModel)]="l3.title">
@@ -710,7 +710,7 @@
                                                                     <img src="../../../../assets/images/VCM/small-right.svg" class="testplus2" />{{level2.title}}
                                                                 </span>
                                                                 <div *ngIf="uniqueId1 == level2.uniqueId"
-                                                                    style="display: flex;width: 110%;">
+                                                                    class="l2title-edit">
                                                                     <img style="margin-top: 2%;"
                                                                         src="../../../../assets/images/VCM/small-right.svg"
                                                                         class="testplus2" />
@@ -718,7 +718,7 @@
                                                                         placeholder="Enter Process Name"
                                                                         [(ngModel)]="level2.title">
                                                                     <button
-                                                                        style="position: relative;right: 6%; bottom: 3%;"
+                                                                        class="l2title-editbtn"
                                                                         (click)="editTitleName(level2)">
                                                                         <img class="testplus1"
                                                                             src="../../../../assets/images/VCM/Green Tick.svg">
@@ -759,7 +759,7 @@
                                                             <li
                                                                 *ngIf="inputUniqueId == level2.uniqueId && item.name == 'Support Process'">
                                                                 <div class="l3pname-div" >
-                                                                    <input style="width: 95%;" type="text"
+                                                                    <input  type="text"
                                                                         class="form-control"
                                                                         placeholder="Enter Process Name"
                                                                         [(ngModel)]="l3ProcessName">
@@ -780,7 +780,7 @@
                                                                         >{{l3.title}}</span>
                                                                     <!-- <span *ngIf="l3.uniqueId == uniqueIdL3"> -->
                                                                         <div class="l3pname-div" *ngIf="l3.uniqueId == uniqueIdL3">
-                                                                            <input style="width: 95%;" type="text"
+                                                                            <input  type="text"
                                                                                 class="form-control"
                                                                                 placeholder="Enter Process Name"
                                                                                 [(ngModel)]="l3.title">

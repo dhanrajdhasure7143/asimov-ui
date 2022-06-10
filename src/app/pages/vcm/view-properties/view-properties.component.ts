@@ -14,12 +14,15 @@ import * as JSZip from 'jszip';
 import { saveAs } from "file-saver";
 import * as FileSaver from 'file-saver';
 
+import { MatDrawer } from '@angular/material/sidenav';
 @Component({
   selector: 'app-view-properties',
   templateUrl: './view-properties.component.html',
   styleUrls: ['./view-properties.component.css']
 })
 export class ViewPropertiesComponent implements OnInit {
+
+  @ViewChild('drawer', { static: false }) drawer: MatDrawer;
 
   @Input() vcm_data:any;
   @Input() processOwners_list:any=[];
@@ -54,9 +57,14 @@ export class ViewPropertiesComponent implements OnInit {
   stackHolders_list:any=[];
   selectedIndex:number;
   selectedCollaboratorsObj:any;
-  collaboratorsRoles=["Executive"]
+  collaboratorsRoles=[localStorage.getItem("userRole")]
   collaboratorsInterests=["Responsible","Accountable","Consulted","Informed"];
   attachment_namesArray:any=[];
+  collabHeader:any;
+  isaddCollab:boolean=false;
+  isviewCollab:boolean=false;
+  isrtpopened:boolean=false;
+  selectedProcessName='';
 
   constructor(private router: Router, private rest_api: RestApiService,
     private route: ActivatedRoute, private modalService: BsModalService) {
@@ -74,7 +82,7 @@ export class ViewPropertiesComponent implements OnInit {
   }
 
   ngOnChanges(){
-    if(this.vcm_process != "all"){
+    if (this.vcm_process != "all"){
       let filteredData=[]
       this.vcm_data.forEach(element => {
         if(!element.bpsId){
@@ -214,7 +222,8 @@ export class ViewPropertiesComponent implements OnInit {
    this.addCollaboratorsOverlay = this.modalService.show(template,{class:"modal-lr"});
  }
 
- addNewcollabratorsObj(){
+ addNewcollabratorsObj(event){
+   event.stopPropagation();
    let object= {
     "stakeholder": "",
     "stakeholderEmail":"",
@@ -238,6 +247,7 @@ export class ViewPropertiesComponent implements OnInit {
 }
 
 saveCollabrators(){
+  this.isLoading=true;
   let req_body=[]
   this.collaboratorsArray.forEach(element => {
     this.stackHolders_list.forEach(e => {
@@ -248,6 +258,7 @@ saveCollabrators(){
     req_body.push(element)  
   });
     this.rest_api.createCollaborators(req_body).subscribe((res:any)=>{
+      this.isLoading=false;
       if(res){
       Swal.fire({
         title: 'Success',
@@ -297,9 +308,11 @@ editCollaborator(obj,index){
 }
 
 viewDeleteCollaborator(obj,index){
+  this.isLoading=true;
   let req_body=[{"id": obj.id}]
   this.rest_api.deleteCollaborators(req_body).subscribe((res:any)=>{
     this.collaboratorsList.splice(index,1);
+    this.isLoading=false;
     Swal.fire({
       title: 'Success',
       text: res.message,
@@ -365,5 +378,55 @@ downloadAllFiles(){
   });
 }
 
+  addCollaboratorsrightframe (obj,event) {
+    this.selectedProcessName=obj.title;
+    event.stopPropagation();
+    this.drawer.open();
+    this.collabHeader = "Add Collaborators";
+    this.isaddCollab = true;
+    this.isrtpopened = true;
+    this.isviewCollab = false;
+    this.selectedCollaboratorsObj=obj
+    this.collaboratorsArray=[
+      {
+        "stakeholder": "",
+        "stakeholderEmail":"",
+        "interest": "",
+        "role": "",
+        "uniqueId": obj.uniqueId
+        },
+    ];
+   
+  }
+
+  closeOverlay(){
+    this.drawer.close();
+    this.isrtpopened = false;
+  }
+
+  viewCollaboratorsrightframe(obj,event){  
+    event.stopPropagation();
+    this.selectedProcessName=obj.title;
+    this.drawer.open(); 
+    this.collabHeader = "Collaborators";
+    this.isviewCollab = true;
+    this.isrtpopened = true;
+    this.isaddCollab = false;
+    this.isLoading=true;
+    // obj.uniqueId="90f813c9-6964-1b9d-a5a1-f5585fd4d31f"
+    let res_data:any;
+    this.rest_api.getCollaborators(obj.uniqueId).subscribe(res =>{res_data=res
+      this.isLoading=false;
+      this.collaboratorsList=res_data.data;
+    })
+   
+   }
+
+   fitTableView(processName){
+    if(processName && processName.length > 24)
+      return processName.substr(0,25)+'...';
+    return processName;
+  }
+  
 
 }
