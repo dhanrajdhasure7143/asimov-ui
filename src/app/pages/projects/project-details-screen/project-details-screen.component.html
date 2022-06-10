@@ -1139,7 +1139,14 @@
                                         <div class="col-md-12 p-0">
                                             <div class="col-md-4 pl-0">
                                                 <span class="module-sub-header-title" >
-                                                    <b>Process Understanding</b>                
+                                                    <b>Process Understanding</b>
+                                                    <span class="deleteattachment tsttooltipbtn" (click)="downloadFile($event)">
+                                                        <a href="data:image/png;base64,{{downloadData.data}}" download="{{projectDetails.projectName}}.doc">
+                                                        <img src="../../../../assets/images/Admin/download-black.svg" class="default-img testplus" >
+                                                        <img src="../../../../assets/images/Admin/download-blue.svg" class="hover-img testplus" >
+                                                        </a>
+                                                        <span class="testtooltip">Download</span>
+                                                    </span>               
                                                 </span>
                                             </div>
                                             <div class="col-md-8 text-right" *ngIf="isOpenedState == 1">

@@ -166,6 +166,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   selectedQuestionEdit:number;
   selectedQuestionUpdate:any;
   selectedProcessBpmn:any;
+  downloadData:any={};
 
   constructor(private dt: DataTransferService, private route: ActivatedRoute, private dataTransfer: DataTransferService, private rpa: RestApiService,
     private modalService: BsModalService, private formBuilder: FormBuilder, private router: Router,
@@ -1403,6 +1404,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
       res_data = res
       if (res_data.length > 0) {
         this.selectedProcessBpmn = res_data[0];
+        console.log(this.selectedProcessBpmn)
         let binaryXMLContent = this.selectedProcessBpmn.bpmnXmlNotation
         let xmlData: any = atob(binaryXMLContent)
         this.createBpmn(xmlData)
@@ -1429,7 +1431,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
     })
     setTimeout(() => {
       this.xmlConvertToImageformate()
-    }, 5000);
+    }, 1000);
   }
 
 
@@ -1461,11 +1463,17 @@ export class ProjectDetailsScreenComponent implements OnInit {
     console.log(url)
     let res_body={
         "projectId": this.project_id,
-        "processImage":url
+        "processImage":url,
+        "version": this.selectedProcessBpmn.version,
+        "processName": this.selectedProcessBpmn.bpmnProcessName,
     }
-    this.rpa.processDocumentDownload(res_body).subscribe(res=>{
+    this.rpa.processDocumentDownload(res_body).subscribe(res=>{ this.downloadData = res
       console.log(res)
     });
+  }
+ 
+  downloadFile(e){
+    e.stopPropagation()
   }
 
 }
