@@ -84,6 +84,7 @@ export class VcmStructureComponent implements OnInit {
   uploadFilemodalref: BsModalRef;
   attachementsList=[];
   user_details: any;
+  propertiesLevelName:any;
 
   constructor(private router: Router, private bpmnservice: SharebpmndiagramService,
     private rest_api: RestApiService,
@@ -194,8 +195,8 @@ export class VcmStructureComponent implements OnInit {
     this.treeControl.expand(this.treeControl.dataNodes[0]);
     this.treeControl.expand(this.treeControl.dataNodes[1]);
     this.treeControl.expand(this.treeControl.dataNodes[2]);
-    // this.treeControl.expandAll();
-    // this.tree.treeControl.expandAll();
+    this.treeControl.expandAll();
+    this.tree.treeControl.expandAll();
   }
 
   collapse() {
@@ -213,7 +214,7 @@ export class VcmStructureComponent implements OnInit {
   viewProperties(node) {
     this.node_data = [];
     if (node == 'all') {
-      this.propType="Consolidated"
+      this.propType=""
       this.vcmData.forEach(element => {
         this.node_data.push(element)
       });
@@ -698,6 +699,16 @@ export class VcmStructureComponent implements OnInit {
     }else{
       this.listOfAttachemnts=[]
     }
+    if(node.level == "L1"){
+      this.propertiesLevelName ="Process Hierarchy"
+    }
+    if(node.level == "L2"){
+      this.propertiesLevelName ="Process Group"
+    }
+    if(node.level == "L3"){
+      this.propertiesLevelName ="Process"
+    }
+ 
   }
 
   saveProperties(val){

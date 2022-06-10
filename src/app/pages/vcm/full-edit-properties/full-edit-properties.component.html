@@ -4,7 +4,7 @@
             <span class="module-back-button" (click)="backToFullEdit()">
                 <i aria-hidden="true" class="fas fa-arrow-left"></i>
             </span>
-            <span class="module-header-title">{{propertiesLevel=='level1'?"Organization Group":"Process Group"}} - Properties</span>
+            <span class="module-header-title">{{propertiesLevel=='level1'?"Process Hierarchy":"Process Group"}} - Properties</span>
         </div>
         <div class="ml-auto submit">
             <button class="btn btn-primary" (click)="updateProperties()">Update</button>
@@ -18,9 +18,9 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Process Name</th>
-                                <th>Organization Group Name</th>
-                                <th class="td_spocol">Process Owner</th>
+                                <th>Category</th>
+                                <th>Process Hierarchy</th>
+                                <th class="td_spocol">Owner</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -30,7 +30,7 @@
                                     <td *ngIf="each.title">{{each.title}}</td>
                                     <td *ngIf="each.title" class="td_spocol">
                                         <select class="form-control" [(ngModel)]="each.processOwner" #ownerValue>
-                                            <option value="" hidden disabled>Select Process Owner</option>
+                                            <option value="" hidden disabled>Select Owner</option>
                                             <option *ngFor="let each_approver of processOwners_list;let i=index"
                                                 [value]="each_approver.firstName+' '+each_approver.lastName">
                                                 {{(each_approver.firstName | titlecase) +"
@@ -158,9 +158,9 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Process Name</th>
-                                <th>Process Group Name</th>
-                                <th class="td_spocol">Process Owner</th>
+                                <th>Process Hierarchy</th>
+                                <th>Process Group</th>
+                                <th class="td_spocol">Owner</th>
                                 <!-- <th>Process Description</th> -->
                             </tr>
                         </thead>
@@ -168,7 +168,7 @@
                             <ng-container *ngFor="let prop of vcmProperties;let i = index">
                                 <ng-container *ngFor="let name of prop.children;let j = index">
                                     <tr *ngFor="let level2 of name.children;let k = index">
-                                        <td *ngIf="level2.title">{{prop.name}}</td>
+                                        <td *ngIf="level2.title">{{name.title}}</td>
                                         <td *ngIf="level2.title">{{level2.title}}</td>
                                         <td *ngIf="level2.title" class="td_spocol">
                                             <select class="form-control" #ownerValue [(ngModel)]="level2.processOwner">
