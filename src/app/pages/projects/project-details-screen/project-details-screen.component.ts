@@ -1347,7 +1347,11 @@ export class ProjectDetailsScreenComponent implements OnInit {
     event.stopPropagation();
     this.isProcessEdit = true;
     this.businessChallange = this.processUnderstanding.businessChallenge
-    this.businessPurpose = this.processUnderstanding.purpose
+    this.businessPurpose = this.processUnderstanding.purpose;
+    setTimeout(() => {
+      this.autoGrowcommentsBox();
+      this.autoGrowcommentsBox1();
+    }, 100);
   }
 
   getProcessUnderstandingDetails() {
@@ -1406,6 +1410,18 @@ export class ProjectDetailsScreenComponent implements OnInit {
     } else {
       return '-'
     }
+  }
+
+  autoGrowcommentsBox() {
+    let element =document.getElementById("business_challange")
+      element.style.height ="5px";
+      element.style.height = (element.scrollHeight+10)+"px";
+  }
+
+  autoGrowcommentsBox1() {
+    let element =document.getElementById("purpose")
+      element.style.height ="5px";
+      element.style.height = (element.scrollHeight+10)+"px";
   }
 
 }

@@ -867,3 +867,6 @@ p.p-questions.qwith-ans {
   margin-right: 10px;
   left: 0;
 }
+.nextLine-text{
+  white-space: pre-line
+}

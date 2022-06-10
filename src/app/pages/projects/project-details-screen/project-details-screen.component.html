@@ -1162,13 +1162,14 @@
                                                     <label class="label-control">Business Challenge
                                                     </label>
                                                     <!-- <input type="text" name="business_challange" #business_challange="ngModel" id="business_challange" [(ngModel)]="businessChallange" class="form-control" placeholder="Enter Business Challenge" required> -->
-                                                    <textarea  name="business_challange" #business_challange="ngModel" id="business_challange" [(ngModel)]="businessChallange" class="form-control" placeholder="Enter Business Challenge" required></textarea>
+                                                    <textarea  name="business_challange" id="business_challange" (keyup)="autoGrowcommentsBox()" #business_challange="ngModel" [(ngModel)]="businessChallange" class="form-control" placeholder="Enter Business Challenge" required></textarea>
                                                     <span *ngIf="((business_challange.invalid && processForm.submitted) || (business_challange.errors && business_challange.touched) )" 
                                                     class='errspan required'> Business challenge is required </span>
                                                 </div>
                                                 <div class="col-md-12 p-0 form-group">
-                                                    <label class="label-control">Purpose</label>
-                                                    <input type="text" name="purpose" #purpose="ngModel" [(ngModel)]="businessPurpose" class="form-control" placeholder="Enter Purpose" required/>
+                                                    <label class="label-control">Purpose of Automation</label>
+                                                    <textarea  name="purpose" id="purpose" (keyup)="autoGrowcommentsBox1()" #purpose="ngModel" [(ngModel)]="businessPurpose" class="form-control" placeholder="Enter Purpose" required></textarea>
+                                                    <!-- <input type="text" name="purpose" #purpose="ngModel" [(ngModel)]="businessPurpose" class="form-control" placeholder="Enter Purpose" required/> -->
                                                     <span *ngIf="((purpose.invalid && processForm.submitted) || (purpose.errors && purpose.touched) )" 
                                                             class='errspan required'> Purpose is required </span>
                                                 </div>
@@ -1191,11 +1192,11 @@
                                                 <!-- <span class="pull-right"><button class="btn btn-primary" (click)="editBusinessProcess()">Edit</button></span> -->
                                                 <div class="col-md-12 p-0 form-group">
                                                     <label class="label-control">Business Challenge</label>
-                                                    <p>{{processUnderstanding.businessChallenge}}</p>
+                                                    <p class="nextLine-text">{{processUnderstanding.businessChallenge}}</p>
                                                 </div>
                                                 <div class="col-md-12 p-0 form-group">
-                                                    <label class="label-control">Purpose</label>
-                                                    <p>{{processUnderstanding.purpose}}</p>
+                                                    <label class="label-control">Purpose of Automation</label>
+                                                    <p class="nextLine-text">{{processUnderstanding.purpose}}</p>
                                                 </div>
                                             </div>
                                         <div class="col-md-12 p-0 process-quesdiv" id="business_Process">
