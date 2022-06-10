@@ -15,7 +15,7 @@
                                     <div class="accordionHeaderToggle">
                                         <img src="../../../../assets/images/VCM/Add-Collaborator-Icon.svg" alt="menuToggleIcon" class="menuToggleIcon">
                                         <label class="accordionHeader">{{collabHeader}}</label>
-                                        <span class="tsttooltipbtn" *ngIf="collabHeader == 'Add Collaborators'">
+                                        <span class="tsttooltipbtn" *ngIf="isaddCollab" >
                                             <img src="../../../../assets/images/VCM/Collaborator-Add-icon.svg" alt="addnewIcon" class="addnewIcon" (click)="addNewcollabratorsObj($event)" >
                                             <!-- <span class="testtooltip">Add New</span> -->
                                         </span>
@@ -82,7 +82,7 @@
                                             </div>
                                         </div>
                                         <div class="col-md-12 p-0" *ngIf="!isaddCollab" >
-                                            <div class="collab-grid">
+                                            <div class="collab-grid viewgrid">
                                                 <table class="table w-100">
                                                     <thead>
                                                         <tr>
@@ -134,8 +134,13 @@
                                                                     <span class="testtooltip">Delete</span>
                                                                 </button>
                                                                 <button *ngIf="selectedIndex == i" class="savecbtn tsttooltipbtn" (click)="updateCollabrators(each)">
-                                                                    <img src="../../../../assets/images/VCM/Green Tick.svg" class="testplus1" />
-                                                                    <span class="testtooltip">Save</span>
+                                                                    <img src="../../../../assets/images/VCM/Green Tick.svg" class="testplus" />
+                                                                    <span class="testtooltip">Update</span>
+                                                                </button>
+                                                                <button *ngIf="selectedIndex == i" class="tsttooltipbtn" >
+                                                                    <img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img" />
+                                                                    <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" />
+                                                                    <span class="testtooltip">Cancel</span>
                                                                 </button>
                                                             </td>
                                                         </tr>
@@ -527,11 +532,11 @@
 
 
 
-<div class="spinoverlay" *ngIf="isLoading">
+<!-- <div class="spinoverlay" *ngIf="isLoading">
     <div class="spincenter">
         <img src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader" />
     </div>
-</div>
+</div> -->
 
 
 <ng-template class="modal-up" #collaborators>

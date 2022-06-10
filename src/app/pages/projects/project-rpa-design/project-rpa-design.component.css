@@ -58,7 +58,8 @@ span.testtooltip:after {
 }
 
 .table_responsive.graph_table tr td {
-  /* vertical-align: top !important; */
+  vertical-align: top !important;
+  white-space: pre-line;
 }
 
 .table_responsive.graph_table tr th.sno ,
@@ -79,7 +80,3 @@ span.testtooltip:after {
 .table_responsive.graph_table tr td.gdescrip {
     width:35%;
 }
-
-/* .confi-div{
-  white-space: pre-line
-} */
