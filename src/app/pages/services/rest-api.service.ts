@@ -407,9 +407,10 @@ export class RestApiService{
     return this.http.get("/rpa-service/load-process-info/"+id);
   }
 
-  startprocess(processid,envid)
+  startprocess(processid,envid,executiontype)
   {
-    return this.http.post("/rpa-service/start-process/"+processid+"/"+envid,"");
+    return this.http.post("/rpa-service/start-process/"+processid+"/"+envid+"/"+executiontype,'');
+
   }
 
   fetchBpmnNotationFromPI(pid){

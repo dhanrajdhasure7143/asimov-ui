@@ -159,7 +159,12 @@ export class ProjectDetailsScreenComponent implements OnInit {
   isProcessEdit: boolean = false;
   selected_questionId: number;
   selectedAnswerUpdate: any;
-  businessDetails: any = []
+  businessDetails: any = [];
+  loggedUserData:any;
+  isOpenedState : number =0;
+  selectedQuestionEdit:number;
+  selectedQuestionUpdate:any;
+
   constructor(private dt: DataTransferService, private route: ActivatedRoute, private dataTransfer: DataTransferService, private rpa: RestApiService,
     private modalService: BsModalService, private formBuilder: FormBuilder, private router: Router,
     private spinner: NgxSpinnerService) { }
@@ -243,6 +248,12 @@ export class ProjectDetailsScreenComponent implements OnInit {
     this.getInitiatives();
     this.Resourcedeleteflag = false;
     this.freetrail = localStorage.getItem("freetrail")
+
+    this.dataTransfer.logged_userData.subscribe(res=>{
+      console.log(res)
+      if(res)
+      this.loggedUserData = res
+    });
   }
 
 
@@ -530,6 +541,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
       this.getTaskandCommentsData();
       this.getLatestFiveAttachments(this.project_id)
       paramsdata.programId == undefined ? this.programId = undefined : this.programId = paramsdata.programId;
+
     });
 
   }
@@ -1127,10 +1139,12 @@ export class ProjectDetailsScreenComponent implements OnInit {
     this.selected_questionId = item.questionId;
     this.selectedAnswerUpdate='';
   }
+
   saveQuestion(){    
     this.spinner.show();
     let req_body = {
       "projectId": this.project_id,
+      "programId":this.programId?this.programId:'',
       "question": this.haveQuestion,
       "createdBy": localStorage.getItem("firstName") + " " + localStorage.getItem("lastName"),
       "createdUserId": localStorage.getItem("ProfileuserId"),
@@ -1160,10 +1174,12 @@ export class ProjectDetailsScreenComponent implements OnInit {
     })
   }
 
-  saveBusinessProcess() {
+  saveBusinessProcess(event) {
+    event.stopPropagation();
     this.spinner.show()
     let req_body = {
       "projectId": this.project_id,
+      "programId": this.programId?this.programId:'',
       "businessChallenge": this.businessChallange,
       "purpose": this.businessPurpose,
       "createdBy": localStorage.getItem("firstName") + " " + localStorage.getItem("lastName"),
@@ -1190,7 +1206,8 @@ export class ProjectDetailsScreenComponent implements OnInit {
     })
   }
 
-  updateBusinessDetails() {
+  updateBusinessDetails(event) {
+    event.stopPropagation();
     this.spinner.show();
     let req_body = {
       "processUnderstandingId": this.processUnderstanding.processUnderstandingId,
@@ -1219,20 +1236,37 @@ export class ProjectDetailsScreenComponent implements OnInit {
     })
   }
 
-  editAnswer(item) {
-    this.selected_questionId = item.questionId;
-    this.selectedAnswerUpdate = item.answer;
+  onEditQA(item,type) {
+    if(type == 'answer'){
+      this.selected_questionId = item.questionId;
+      this.selectedAnswerUpdate = item.answer;
+      this.selectedQuestionEdit = null;
+    }else{
+      this.selectedQuestionEdit = item.questionId;
+      this.selectedQuestionUpdate = item.question;
+      this.selected_questionId = null;
+    }
   }
 
-  updateAnswer(item) {
+  updateAnswer_Question(item,type) {
     this.spinner.show();
-    let req_body = {
+    let req_body ={};
+  if(type == "answer"){
+    req_body = {
       "questionId": item.questionId,
-      "question": item.question,
       "answer": this.selectedAnswerUpdate,
       "answeredBy": localStorage.getItem("firstName") + " " + localStorage.getItem("lastName"),
       "answeredByUserId": localStorage.getItem("ProfileuserId"),
     }
+  }else{
+    req_body = {
+      "questionId": item.questionId,
+      "question": this.selectedQuestionUpdate,
+      "createdBy": localStorage.getItem("firstName") + " " + localStorage.getItem("lastName"),
+      "createdUserId": localStorage.getItem("ProfileuserId"),
+      }
+  }
+
     this.rpa.answerUpdate(req_body).subscribe(res => {
       this.spinner.hide();
       Swal.fire({
@@ -1241,22 +1275,25 @@ export class ProjectDetailsScreenComponent implements OnInit {
         text: 'Updated Successfully !!',
         heightAuto: false
       }).then((result) => {
-        this.getQuestionnaire()
-      })
-      this.selected_questionId = null;
+        this.getQuestionnaire();
+        this.cancelUpdate();
+      });
     }, err => {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
         text: 'Something went wrong!',
         heightAuto: false,
-      })
+      });
     })
   }
-  removeAnswer(item) {
+
+  onDeleteQA(item,type) {
     let req_body = {
       "questionId": item.questionId,
-    }
+      "deleteType" : type
+    };
+
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -1273,10 +1310,11 @@ export class ProjectDetailsScreenComponent implements OnInit {
           Swal.fire({
             icon: 'success',
             title: 'Success',
-            text: 'Answer Deleted Successfully!',
+            text: 'Deleted Successfully!',
             heightAuto: false
           }).then((result) => {
-            this.getQuestionnaire()
+            this.getQuestionnaire();
+            this.cancelUpdate();
           })
           this.spinner.hide();
         }, err => {
@@ -1293,14 +1331,20 @@ export class ProjectDetailsScreenComponent implements OnInit {
 
   cancelUpdate() {
     this.selected_questionId = null;
+    this.selectedQuestionEdit= null;
   }
-  cancelEditProcess() {
+
+  cancelEditProcess(event) {
+    event.stopPropagation();
     this.isProcessEdit = false;
   }
+
   cancelAnswer() {
     this.isShowAnswerInput = false;
   }
-  editBusinessProcess() {
+
+  editBusinessProcess(event) {
+    event.stopPropagation();
     this.isProcessEdit = true;
     this.businessChallange = this.processUnderstanding.businessChallenge
     this.businessPurpose = this.processUnderstanding.purpose
@@ -1328,6 +1372,8 @@ export class ProjectDetailsScreenComponent implements OnInit {
     let res_data: any;
     this.rpa.getQuestionnaires(this.project_id).subscribe(res => {
       res_data = res
+      console.log(res_data.data,this.userRole)
+      // System Admin
       this.processQuestions = res_data.data
       this.processQuestions.sort(function (a, b) {
         return b.convertedcreatedAt - a.convertedcreatedAt;
@@ -1339,6 +1385,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
     if(value == "questions"){
       var element = document.getElementById('question-div');
     }else{
+      this.isOpenedState = 1
       var element = document.getElementById('business_Process');
     }
     setTimeout(() => {
@@ -1348,6 +1395,17 @@ export class ProjectDetailsScreenComponent implements OnInit {
 
   rpaDesign(){
     this.router.navigate(['pages/projects/repdesign'])
+  }
+  
+  getuserLetters(data) {
+    if (data) {
+      let user = data.split(' ')
+      var fname_fLetter = user[0].charAt(0);
+      var lname_fLetter = user[1].charAt(0);
+      return fname_fLetter + lname_fLetter;
+    } else {
+      return '-'
+    }
   }
 
 }

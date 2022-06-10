@@ -8,11 +8,13 @@ import { RpaStudioDesignerworkspaceComponent } from '../../rpa-studio-designerwo
     template: `
       <div [formGroup]="form">
         <select [attr.disabled]="feilddisable" [required]="field.required==true" (change)="onChangeEmail($event, field.options)" class="form-control" [value]="field.value" [id]="field.id" [formControlName]="field.name+'_'+field.id">
-        <option  value="" >--{{field.placeholder}}--</option>
+        <option  value="" hidden disabled>{{field.placeholder}}</option>
+        <option  value="null" hidden disabled>{{field.placeholder}}</option>
+        <option  value="undefined"  hidden disabled>{{field.placeholder}}</option>
         <option *ngFor="let opt of field.options" [value]="opt.key">{{opt.label}}</option>
         <option *ngIf="field.label=='Email'" value="New">New</option>
-        <option *ngIf="field.label=='Action' value='VerticalScrollbarPosition'>Vertical Scrollbar Position</option>
-        <option *ngIf="field.label=='Action' value='Close'>Close</option>
+        <option *ngIf="field.label=='Action'" value='VerticalScrollbarPosition'>Vertical Scrollbar Position</option>
+        <option *ngIf="field.label=='Action'" value='Close'>Close</option>
        
         </select>
       </div>

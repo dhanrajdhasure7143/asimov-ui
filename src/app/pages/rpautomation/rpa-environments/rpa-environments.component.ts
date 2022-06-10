@@ -239,6 +239,7 @@ import { NgxSpinnerService } from "ngx-spinner";
     this.updateForm.reset();
     this.password=null;
     this.isKeyValuePair=false;
+    this.updateenvdata.keyValue=null;
     this.updateForm.get("portNumber").setValue("22");
     this.updateForm.get("connectionType").setValue("SSH");
     this.updateForm.get("environmentType").setValue("");
@@ -596,7 +597,7 @@ import { NgxSpinnerService } from "ngx-spinner";
           this.toggle=false;
           this.updateForm.get("activeStatus").setValue(false);
         }
-        this.updateenvdata=data;
+        this.updateenvdata=Object.create(data);
         if(data.password.password==undefined)
         {
           this.isKeyValuePair=true

@@ -343,7 +343,7 @@ export class SoAutomatedTasksComponent implements OnInit, OnDestroy {
 
     if(this.selectedvalue!=undefined)
     {
-    this.rest.startprocess(this.selectedvalue,this.selectedEnvironment).subscribe(data=>{
+    this.rest.startprocess(this.selectedvalue,this.selectedEnvironment,'Serial').subscribe(data=>{
       let response:any=data;
       if(response.errorMessage==undefined){
       Swal.fire({
