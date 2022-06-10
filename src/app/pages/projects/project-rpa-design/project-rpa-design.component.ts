@@ -123,7 +123,7 @@ this.getRPAdesignData()
         icon: 'error',
         title: 'Oops...',
         text: 'Something went wrong!',
-        heightAuto: false,
+        heightAuto: false
       })
     })
   }
@@ -155,7 +155,7 @@ this.getRPAdesignData()
         icon: 'error',
         title: 'Oops...',
         text: 'Something went wrong!',
-        heightAuto: false,
+        heightAuto: false
       })
     })
   }
@@ -169,6 +169,7 @@ this.getRPAdesignData()
       text: "You won't be able to revert this!",
       icon: 'warning',
       showCancelButton: true,
+      heightAuto: false,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, delete it!'
@@ -184,6 +185,7 @@ this.getRPAdesignData()
             position: 'center',
             icon: 'success',
             showCancelButton: false,
+            heightAuto: false,
             confirmButtonColor: '#007bff',
             cancelButtonColor: '#d33',
             confirmButtonText: 'Ok'
@@ -195,6 +197,7 @@ this.getRPAdesignData()
             icon: 'error',
             title: 'Oops...',
             text: 'Something went wrong!',
+            heightAuto: false
           })
 
         })
