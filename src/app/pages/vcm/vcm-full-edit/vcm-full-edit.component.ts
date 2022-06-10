@@ -93,6 +93,7 @@ export class VcmFullEditComponent implements OnInit {
 
   showList: boolean = false; 
   selected_procName = '';
+  propertiesLevelName:any;
 
   constructor(private router: Router,private rest_api : RestApiService, private dt: DataTransferService,
     private route:ActivatedRoute, private modalService: BsModalService, private bpmnservice: SharebpmndiagramService) {
@@ -263,6 +264,15 @@ export class VcmFullEditComponent implements OnInit {
       this.listOfAttachemnts = obj.attachments;
     }
     this.editProcessName = obj.title;
+    if(level == 1){
+        this.propertiesLevelName ="Process Hierarchy"
+    }
+    if(level == 2){
+        this.propertiesLevelName ="Process Group"
+    }
+    if(level == 3){
+        this.propertiesLevelName ="Process"
+    }
   }
 
   convertFileSize(e) {

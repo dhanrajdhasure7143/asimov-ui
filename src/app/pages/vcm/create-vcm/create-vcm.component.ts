@@ -72,7 +72,7 @@ export class CreateVcmComponent implements OnInit {
   listOfFiles:any=[];
   uploadFilemodalref: BsModalRef;
   attachementsList:any=[];
-  
+  propertiesLevelName:any;
   showList: boolean = false; 
   selected_procName = '';  
 
@@ -277,6 +277,7 @@ export class CreateVcmComponent implements OnInit {
       this.listOfAttachemnts = name.attachments;
     }
     this.editProcessName = name.title;
+    this.propertiesLevelName = "Process Hierarchy"
   }
 
 
@@ -297,6 +298,7 @@ export class CreateVcmComponent implements OnInit {
       this.listOfAttachemnts = level2.attachments;
     }
     this.editProcessName = level2.title;
+    this.propertiesLevelName = "Process Group"
   }
 
 

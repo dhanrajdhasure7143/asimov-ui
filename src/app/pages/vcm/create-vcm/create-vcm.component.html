@@ -39,11 +39,11 @@
                                     <div class="container p-0 prop-content">
                                         <div class="editcontent">
                                             <div class="col-md-12 p-0 form-group">
-                                                <label class="label-control">Process Name</label>
+                                                <label class="label-control">{{propertiesLevelName}}</label>
                                                 <input type="text" disabled class="form-control" [(ngModel)]="editProcessName">
                                             </div>
                                             <div class="col-md-12 p-0 form-group">
-                                                <label class="label-control">Process Owner</label>
+                                                <label class="label-control">Owner</label>
                                                 <select class="form-control" [(ngModel)]="editProcessOwner">
                                                     <option value="" hidden disabled>Select Owner</option>
                                                     <option *ngFor="let each_approver of processOwners_list;let i=index" [value]="each_approver.firstName+' '+each_approver.lastName">
@@ -106,7 +106,7 @@
                 <div class="row maincontent h-100">
                     <div class="col-md-12 pl-0 vcm-leveldiv">
                         <div class="row">
-                            <div class="col-md-4 pr-0 form-group vcname">
+                            <div class="col-md-12 pr-0 form-group vcname">
                                 <label class="label-control">Value Chain Name</label>
                                 <input type="text" class="form-control" [(ngModel)]="vcmName" placeholder="Enter Value Chain Name">
                                 <!-- <button class="btn" (click)="vcmHeading()">
@@ -131,6 +131,7 @@
                                 </div>
                             </div> -->
 
+                        <!--                             
                             <div class="col-md-4 pr-0 form-group powner">
                                 
                                 <button  (click)="showProcessOwnerList()" *ngIf="selected_procName == '' " > 
@@ -146,15 +147,15 @@
                                 </div>
                                 <div class="selectedpodiv">
                                     <p class="poundef" >{{selected_procName}}</p>
-                                    <p class="podefault" *ngIf="selected_procName == ''  " >Select Process Owner</p>
-                                    <span class="polabel" *ngIf="selected_procName" >Process Owner</span>
+                                    <p class="podefault" *ngIf="selected_procName == ''  " >Select Owner</p>
+                                    <span class="polabel" *ngIf="selected_procName" >Owner</span>
                                 </div>                                
 
                                 <button class="poarbtn" (click)="showProcessOwnerList()" > 
                                     <img src="../../../../assets/images/VCM/small-right.svg"  class="poarr" />
                                 </button>
                                                                 
-                            </div>
+                            </div> -->
                             
                         </div>
                         
@@ -162,10 +163,10 @@
                             <div class="dbichart-block">
                                 <div class="dbichart-body">
                                     <h4>
-                                        Organization Group
+                                        Process Hierarchy
                                         <span class="tsttooltipbtn">
                                             <img [ngClass]="(vcmProcess[0].children?.length != 0 || vcmProcess[1].children?.length != 0 || vcmProcess[2].children?.length != 0) ? 'view' : 'dis'" (click)="goToProperties('level1')" src="../../../../assets/images/VCM/Level 1.svg" class="testplus" alt="">
-                                            <span class="testtooltip">View Organization Group - Properties</span>
+                                            <span class="testtooltip">View Process Hierarchy - Properties</span>
                                         </span>
                                     </h4>
                                     <div class="l1processlistdiv">
@@ -308,15 +309,15 @@
                                     </h4>
                                     <div class="form-group">
                                         <select class="form-control" id="level1" name="Level1" [(ngModel)]="level1process" [ngModelOptions]="{standalone: true}">
-                                    <option value="undefined" hidden disabled>Select Process Group</option>
-                                    <option value="" hidden disabled>Select Process Group</option>
+                                    <option value="undefined" hidden disabled>Select Process Hierarchy</option>
+                                    <option value="" hidden disabled>Select Process Hierarchy</option>
                                     <ng-container *ngFor="let item of vcmProcess">
                                         <option *ngFor="let name of item.children" [ngValue]=name>{{name.title}}</option>
                                     </ng-container>
                                 </select>
                                     </div>
                                     <div class="level1process form-group">
-                                        <input placeholder="Enter Process Group Name" class="form-control" type="text" name="levelName" autocomplete="off" [(ngModel)]="addLevel2">
+                                        <input placeholder="Enter Process Group" class="form-control" type="text" name="levelName" autocomplete="off" [(ngModel)]="addLevel2">
                                         <button [disabled]="addLevel2 == '' || !level1process" type="submit" class="btn" (click)="addLevel2Process()">
                                     <img src="../../../../assets/images/VCM/Green Tick.svg" class="testplus1" />
                                 </button>
