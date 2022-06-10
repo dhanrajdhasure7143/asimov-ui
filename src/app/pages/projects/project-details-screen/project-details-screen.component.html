@@ -1158,15 +1158,15 @@
                                     <div class="col-md-12 process-div">
                                         <div class="process-under">
                                             <form action="" #processForm="ngForm" *ngIf="isProcessEdit">
-                                                <div class="col-md-12 p-0 form-group">
+                                                <div class="col-md-12 form-group">
                                                     <label class="label-control">Business Challenge
                                                     </label>
                                                     <!-- <input type="text" name="business_challange" #business_challange="ngModel" id="business_challange" [(ngModel)]="businessChallange" class="form-control" placeholder="Enter Business Challenge" required> -->
                                                     <textarea  name="business_challange" id="business_challange" (keyup)="autoGrowcommentsBox()" #business_challange="ngModel" [(ngModel)]="businessChallange" class="form-control" placeholder="Enter Business Challenge" required></textarea>
                                                     <span *ngIf="((business_challange.invalid && processForm.submitted) || (business_challange.errors && business_challange.touched) )" 
-                                                    class='errspan required'> Business challenge is required </span>
+                                                    class='errspan required'> Business Challenge is required </span>
                                                 </div>
-                                                <div class="col-md-12 p-0 form-group">
+                                                <div class="col-md-12 form-group">
                                                     <label class="label-control">Purpose of Automation</label>
                                                     <textarea  name="purpose" id="purpose" (keyup)="autoGrowcommentsBox1()" #purpose="ngModel" [(ngModel)]="businessPurpose" class="form-control" placeholder="Enter Purpose" required></textarea>
                                                     <!-- <input type="text" name="purpose" #purpose="ngModel" [(ngModel)]="businessPurpose" class="form-control" placeholder="Enter Purpose" required/> -->
@@ -1190,11 +1190,11 @@
                                             </form>
                                             <div *ngIf="!isProcessEdit" class="pu-content">
                                                 <!-- <span class="pull-right"><button class="btn btn-primary" (click)="editBusinessProcess()">Edit</button></span> -->
-                                                <div class="col-md-12 p-0 form-group">
+                                                <div class="col-md-12 form-group">
                                                     <label class="label-control">Business Challenge</label>
                                                     <p class="nextLine-text">{{processUnderstanding.businessChallenge}}</p>
                                                 </div>
-                                                <div class="col-md-12 p-0 form-group">
+                                                <div class="col-md-12 form-group">
                                                     <label class="label-control">Purpose of Automation</label>
                                                     <p class="nextLine-text">{{processUnderstanding.purpose}}</p>
                                                 </div>

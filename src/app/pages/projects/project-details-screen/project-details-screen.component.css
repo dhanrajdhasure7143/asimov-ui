@@ -687,7 +687,8 @@ span.projectdesc {
   word-wrap: break-word;
 }
 .process-div{
-  padding:10px 15px;
+  /* padding:10px 15px; */
+  padding:10px 0px;
   color: #001c47 !important;
 }
 
@@ -748,10 +749,17 @@ img.testplus2 {
   padding: 26px 15px !important;
   border-bottom: 1px solid #ccc;
 }
-
+.process-quesdiv .process-expansion .mat-expansion-panel-header {
+  border-bottom: none;
+}
+.process-quesdiv .process-expansion .mat-expansion-panel-header.mat-expanded {
+  border-bottom: 1px solid #ccc;
+}
 .process-quesdiv {
-  border: 1px solid #ccc;
+  /* border: 1px solid #ccc; */
+  border-top: 1px solid #ccc;
   border-radius: 4px;
+  margin-top: 15px;
   /* width: 99%; */
 }
 .process-div button.btn.btn-primary {
@@ -797,7 +805,7 @@ img.testplus2 {
   /* padding-bottom: 10px; */
 }
 .ques-block:last-child {
-  border: none;
+  /* border: none; */
   padding: 0px;
   margin: 0px;
 }
@@ -827,13 +835,14 @@ span.testuser {
 }
 
 .process-under .label-control {
-  font-weight: 600;
-  margin-bottom: 5px;
+  font-weight: 650;
+  margin-bottom: 10px;
 }
 .pu-content p {
   font-weight: 400;
   font-size: 14px;
   margin: 0px;
+  color: #4b5e7a;
 }
 span.pqut {
   font-weight: 700;
@@ -868,5 +877,10 @@ p.p-questions.qwith-ans {
   left: 0;
 }
 .nextLine-text{
-  white-space: pre-line
+  /* white-space: pre-line */
+  white-space: break-spaces;
+}
+
+.process-quesdiv .process-div {
+  padding: 10px 15px;
 }
