@@ -1429,13 +1429,14 @@ export class ProjectDetailsScreenComponent implements OnInit {
         });
       }
     })
-    setTimeout(() => {
-      this.xmlConvertToImageformate()
-    }, 1000);
+    // setTimeout(() => {
+    //   this.xmlConvertToImageformate()
+    // }, 1000);
   }
 
 
-  xmlConvertToImageformate(){
+  xmlConvertToImageformate(e){
+    e.stopPropagation();
     let modeler_obj ="bpmnModeler";
       let _self = this;
         let modelerExp = this[modeler_obj];
@@ -1469,11 +1470,19 @@ export class ProjectDetailsScreenComponent implements OnInit {
     }
     this.rpa.processDocumentDownload(res_body).subscribe(res=>{ this.downloadData = res
       console.log(res)
+      this.downloadFile()
     });
   }
  
-  downloadFile(e){
-    e.stopPropagation()
+  downloadFile(){
+    var link = document.createElement("a");
+    link.href = 'data:image/jpeg;base64,'+this.downloadData.data;
+    let fileName = "test"
+    if(fileName.trim().length == 0 ) fileName = "newDiagram";
+    link.download = this.projectDetails.projectName+".doc";
+    link.innerHTML = "Click here to download the notation";
+    link.click();
   }
+
 
 }
