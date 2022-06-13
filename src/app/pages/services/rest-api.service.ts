@@ -1444,4 +1444,16 @@ getBPMNbyProcessId(id){
 processDocumentDownload(body){
   return this.http.post("/platform-service/program/exportProcessDesignDocument",body);
 }
+saveRpaDesign(body){
+  return this.http.post("/platform-service/project/saveRpaDesign",body)
+}
+getRPAdesignData(taskId){
+  return this.http.get("/platform-service/project/fetchRpaDesign?taskId="+taskId);
+}
+updateRPADesignData(body){
+  return this.http.post("/platform-service/project/updateRpaDesign",body)
+}
+deleteRpaDesign(body){
+  return this.http.post("/platform-service/project/deleteRpaDesign",body)
+}
 }
