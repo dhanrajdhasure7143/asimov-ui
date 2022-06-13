@@ -1436,6 +1436,14 @@ answerUpdate(body){
 answerDelete(body){
   return this.http.post("/platform-service/project/deleteProcessQuestionnaire",body)
 }
+
+getBPMNbyProcessId(id){
+  return this.http.get("/bpsprocess/getById?id="+id);
+}
+
+processDocumentDownload(body){
+  return this.http.post("/platform-service/program/exportProcessDesignDocument",body);
+}
 saveRpaDesign(body){
   return this.http.post("/platform-service/project/saveRpaDesign",body)
 }

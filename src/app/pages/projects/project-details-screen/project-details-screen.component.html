@@ -1142,14 +1142,23 @@
                                         <div class="col-md-12 p-0">
                                             <div class="col-md-4 pl-0">
                                                 <span class="module-sub-header-title" >
-                                                    <b>Process Understanding</b>                
+                                                    <b>Process Understanding</b>              
                                                 </span>
                                             </div>
-                                            <div class="col-md-8 text-right" *ngIf="isOpenedState == 1">
-                                                <button class="btn btn-primary" *ngIf="!isProcessEdit" (click)="editBusinessProcess($event)">Edit</button>
-                                                <button class="btn btn-default" *ngIf="businessDetails.length > 0 && isProcessEdit" (click)="cancelEditProcess($event)">Cancel</button>                                                
-                                                <button class="btn btn-primary" *ngIf="businessDetails.length == 0 && isProcessEdit" [disabled]="!businessChallange || !businessPurpose" (click)="saveBusinessProcess($event)">Save</button>
-                                                <button class="btn btn-primary" style="margin-right: 0px !important;" [disabled]="!businessChallange || !businessPurpose" *ngIf="businessDetails.length > 0 && isProcessEdit" (click)="updateBusinessDetails($event)">Update</button>
+                                            <div class="col-md-8 text-right">
+                                                <span class="deleteattachment tsttooltipbtn" (click)="xmlConvertToImageformate($event)">
+                                                    <!-- <a href="data:image/png;base64,{{downloadData.data}}" download="{{projectDetails.projectName}}.doc"> -->
+                                                    <img src="../../../../assets/images/Admin/download-black.svg" class="default-img testplus" >
+                                                    <img src="../../../../assets/images/Admin/download-blue.svg" class="hover-img testplus" >
+                                                    <!-- </a> -->
+                                                    <span class="testtooltip">Download</span>
+                                                </span> 
+                                                <span  *ngIf="isOpenedState == 1">
+                                                    <button class="btn btn-primary" *ngIf="!isProcessEdit" (click)="editBusinessProcess($event)">Edit</button>
+                                                    <button class="btn btn-default" *ngIf="businessDetails.length > 0 && isProcessEdit" (click)="cancelEditProcess($event)">Cancel</button>                                                
+                                                    <button class="btn btn-primary" *ngIf="businessDetails.length == 0 && isProcessEdit" [disabled]="!businessChallange || !businessPurpose" (click)="saveBusinessProcess($event)">Save</button>
+                                                    <button class="btn btn-primary" style="margin-right: 0px !important;" [disabled]="!businessChallange || !businessPurpose" *ngIf="businessDetails.length > 0 && isProcessEdit" (click)="updateBusinessDetails($event)">Update</button>
+                                                </span>
                                             </div>
                                         </div>
                                     </mat-panel-title>
@@ -1773,3 +1782,4 @@
         </div>
     </div>
 </ng-template>
+<div id="canvas1"></div>

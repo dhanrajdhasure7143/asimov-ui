@@ -884,3 +884,8 @@ p.p-questions.qwith-ans {
 .process-quesdiv .process-div {
   padding: 10px 15px;
 }
+#canvas1{
+  width: 0.1px;
+  height: 0.1px;
+  z-index: 0;
+}
