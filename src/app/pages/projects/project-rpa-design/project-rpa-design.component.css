@@ -1,0 +1,83 @@
+.prj-rpadesign-body {
+  padding: 10px 10px 0px 10px;
+  height: calc(100% - 44px);
+  overflow: hidden auto;
+}
+
+.table_responsive.graph_table {
+  height: calc(100% - 44px);
+  overflow: hidden auto;
+  width: 100%;
+}
+
+img.testplus {
+  width: 16px;
+  height: 16px;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.tsttooltipbtn:hover img.default-img,
+.tsttooltipbtn img.hover-img {
+  display: none;
+}
+
+.tsttooltipbtn:hover img.hover-img {
+  display: initial;
+}
+
+.tsttooltipbtn {
+  position: relative;
+}
+
+.tsttooltipbtn:hover span.testtooltip {
+  display: block;
+}
+
+span.testtooltip {
+  position: absolute;
+  bottom: 25px;
+  right: 0px;
+  background-color: #001c47;
+  color: #fff;
+  width: max-content;
+  padding: 6px 10px;
+  border-radius: 4px;
+  display: none;
+  z-index: 2;
+}
+span.testtooltip:after {
+  content: "";
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  bottom: -4px;
+  background-color: #001c47;
+  transform: rotate(45deg);
+  right: 10px;
+}
+
+.table_responsive.graph_table tr td {
+  vertical-align: top !important;
+  /* white-space: pre-line; */
+  white-space: break-spaces;
+}
+
+.table_responsive.graph_table tr th.sno ,
+.table_responsive.graph_table tr td.sno,
+.table_responsive.graph_table tr th.gactions ,
+.table_responsive.graph_table tr td.gactions {
+  width: 5%;
+  z-index: 1;
+}
+
+.table_responsive.graph_table tr th.gsteps, .table_responsive.graph_table tr td.gsteps {
+  width: 20%;
+}
+
+.table_responsive.graph_table tr th.gconfig ,
+.table_responsive.graph_table tr td.gconfig ,
+.table_responsive.graph_table tr th.gdescrip ,
+.table_responsive.graph_table tr td.gdescrip {
+    width:35%;
+}

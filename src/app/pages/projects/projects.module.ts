@@ -56,6 +56,7 @@ import { NotifierService } from 'angular-notifier';
 import { BacklogsListComponent } from './backlogs-list/backlogs-list.component';
 import { BacklogsCreateComponent } from './backlogs-create/backlogs-create.component';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { ProjectRpaDesignComponent } from './project-rpa-design/project-rpa-design.component';
 
 const materialModules: any[] = [
     
@@ -65,7 +66,8 @@ const materialModules: any[] = [
 @NgModule({
   declarations: [ProjectsComponent, ProjectsListScreenComponent, ProjectsProgramsTableComponent, CreateProjectsComponent, FileSizePipe,UserImagePipe,
     ProjectDetailsScreenComponent,ProjectDetailsHeaderComponent, ProjectsDashboardComponent, ProcessNamePipe,IntitiativePipe, UserPipePipe, ProjectRepoScreenComponent,CreateTasksComponent, AddResourcesComponent,ProgramDetailsComponent, UserDetialsPipe,RequestFileComponent, CreateProjectFormComponent, EditTaskComponent, BacklogsListComponent,
-     BacklogsCreateComponent],
+     BacklogsCreateComponent,
+     ProjectRpaDesignComponent],
   imports: [
     CommonModule,
     ProjectsRoutingModule,

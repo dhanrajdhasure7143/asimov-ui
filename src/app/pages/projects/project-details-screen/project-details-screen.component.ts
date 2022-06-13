@@ -438,6 +438,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   getTaskandCommentsData() {
     this.rpa.gettaskandComments(this.project_id).subscribe(data => {
       this.tasks = data;
+      console.log(data)
       this.dataSource2 = new MatTableDataSource(this.tasks);
       this.dataSource2.sort = this.sort10;
       this.dataSource2.paginator = this.paginator101;
@@ -705,6 +706,10 @@ export class ProjectDetailsScreenComponent implements OnInit {
       this.router.navigate(['pages/businessProcess/uploadProcessModel'],
         { queryParams: { "bpsId": data.correlationID.split(":")[0], "ver": data.correlationID.split(":")[1], "ntype": "bpmn" } })
     }
+    if (data.taskCategory == "RPA Design") {
+      this.router.navigate(['pages/projects/repdesign'],{ queryParams: {projectId: data.projectId,taskId:data.id,programId:this.programId}})
+    }
+
     if (data.taskCategory == "Process Mining") {
       this.router.navigate(['pages/processIntelligence/flowChart'], { queryParams: { "wpiId": data.correlationID } })
     }
@@ -1342,7 +1347,11 @@ export class ProjectDetailsScreenComponent implements OnInit {
     event.stopPropagation();
     this.isProcessEdit = true;
     this.businessChallange = this.processUnderstanding.businessChallenge
-    this.businessPurpose = this.processUnderstanding.purpose
+    this.businessPurpose = this.processUnderstanding.purpose;
+    setTimeout(() => {
+      this.autoGrowcommentsBox();
+      this.autoGrowcommentsBox1();
+    }, 100);
   }
 
   getProcessUnderstandingDetails() {
@@ -1388,6 +1397,10 @@ export class ProjectDetailsScreenComponent implements OnInit {
     }, 100);
   }
 
+  rpaDesign(){
+    this.router.navigate(['pages/projects/repdesign'])
+  }
+  
   getuserLetters(data) {
     if (data) {
       let user = data.split(' ')
@@ -1397,6 +1410,18 @@ export class ProjectDetailsScreenComponent implements OnInit {
     } else {
       return '-'
     }
+  }
+
+  autoGrowcommentsBox() {
+    let element =document.getElementById("business_challange")
+      element.style.height ="5px";
+      element.style.height = (element.scrollHeight+10)+"px";
+  }
+
+  autoGrowcommentsBox1() {
+    let element =document.getElementById("purpose")
+      element.style.height ="5px";
+      element.style.height = (element.scrollHeight+10)+"px";
   }
 
 }
