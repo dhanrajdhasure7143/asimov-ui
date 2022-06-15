@@ -45,7 +45,7 @@
                             <option value="" disabled hidden>Select Task Category</option>
                             <option value="null" disabled hidden>Select Task Category</option>
                             <option value="" disabled hidden>Select Task Category</option>
-                            <option *ngFor="let categories of taskcategories" [value]="categories.category">{{categories.category}}</option>
+                            <option *ngFor="let categories of taskcategoriesList" [value]="categories.category" [disabled]="categories.display == 'false'">{{categories.category}}</option>
                             </select>
                         </div>
                         <div class=" col-md-6 pr-0">
@@ -112,7 +112,7 @@
                         <span *ngIf="updatetaskForm.get('priority').invalid && updatetaskForm.get('priority').touched" class="errspan required">Priority Required*</span>
                     </div>
 
-                    <div class="form-group col-md-6 pl-0" *ngIf="optionValue == 'BPMN Design'">
+                    <div class="form-group col-md-6 pl-0" *ngIf="optionValue == 'BPMN Design' ||optionValue == 'As-Is Process' || optionValue == 'To-Be Process'">
                         <span class="labeltit" for="correlationID">Process</span>
                         <select formControlName="correlationID" class="form-control data enteredfield-color">
                             <option value="" disabled hidden>Select Process</option>

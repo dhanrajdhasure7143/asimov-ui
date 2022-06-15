@@ -167,6 +167,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   selectedQuestionUpdate:any;
   selectedProcessBpmn:any;
   downloadData:any={};
+  file_Category:any;
 
   constructor(private dt: DataTransferService, private route: ActivatedRoute, private dataTransfer: DataTransferService, private rpa: RestApiService,
     private modalService: BsModalService, private formBuilder: FormBuilder, private router: Router,
@@ -334,6 +335,10 @@ export class ProjectDetailsScreenComponent implements OnInit {
 
   }
   chnagefileUploadForm(e) {
+      if(this.file_Category == "Template"){
+        this.fileList=[];
+        this.listOfFiles=[];
+      }
     for (var i = 0; i <= e.target.files.length - 1; i++) {
       var selectedFile = e.target.files[i];
       this.fileList.push(selectedFile);
@@ -513,7 +518,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
         console.log("projects Details", res);
 
         if (this.projectDetails) {
-          this.getBPMNbyProcessId();
+          // this.getBPMNbyProcessId();
           let usr_name = this.projectDetails.owner.split('@')[0].split('.');
           // this.owner_letters=usr_name[0].charAt(0)+usr_name[1].charAt(0);
           if (usr_name.length > 1) {
@@ -972,6 +977,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   }
   getFileCategories() {
     this.rpa.getFileCategories().subscribe(data => {
+      console.log(data)
       this.filecategories = data;
     })
   }
@@ -1410,20 +1416,20 @@ export class ProjectDetailsScreenComponent implements OnInit {
     }
   }
 
-  getBPMNbyProcessId() {
-    let res_data: any;
-    let _self = this;
-    this.rpa.getBPMNbyProcessId(this.projectDetails.process).subscribe((res: any) => {
-      res_data = res
-      if (res_data.length > 0) {
-        this.selectedProcessBpmn = res_data[0];
-        console.log(this.selectedProcessBpmn)
-        let binaryXMLContent = this.selectedProcessBpmn.bpmnXmlNotation
-        let xmlData: any = atob(binaryXMLContent)
-        this.createBpmn(xmlData)
-      }
-    })
-  }
+  // getBPMNbyProcessId() {
+  //   let res_data: any;
+  //   let _self = this;
+  //   this.rpa.getBPMNbyProcessId(this.projectDetails.process).subscribe((res: any) => {
+  //     res_data = res
+  //     if (res_data.length > 0) {
+  //       this.selectedProcessBpmn = res_data[0];
+  //       console.log(this.selectedProcessBpmn)
+  //       let binaryXMLContent = this.selectedProcessBpmn.bpmnXmlNotation
+  //       let xmlData: any = atob(binaryXMLContent)
+  //       this.createBpmn(xmlData)
+  //     }
+  //   })
+  // }
 
   createBpmn(byteBpmn) {
     let modeler_obj = "bpmnModeler";
