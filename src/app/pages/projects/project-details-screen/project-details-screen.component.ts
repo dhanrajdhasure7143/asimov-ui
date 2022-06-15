@@ -441,7 +441,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   getTaskandCommentsData() {
     this.rpa.gettaskandComments(this.project_id).subscribe(data => {
       this.tasks = data;
-      console.log(data)
+      console.log("tasks",data)
       this.dataSource2 = new MatTableDataSource(this.tasks);
       this.dataSource2.sort = this.sort10;
       this.dataSource2.paginator = this.paginator101;
@@ -700,7 +700,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
     if (data.taskCategory == "RPA Implementation") {
       this.router.navigate(['/pages/rpautomation/designer'], { queryParams: { projectId: this.projectDetails.id, botId: data.correlationID } })
     }
-    if (data.taskCategory == "BPMN Design") {
+    if (data.taskCategory == "BPMN Design" || data.taskCategory == "As-Is Process" || data.taskCategory == "To-Be Process") {
       this.router.navigate(['pages/businessProcess/uploadProcessModel'],
         { queryParams: { "bpsId": data.correlationID.split(":")[0], "ver": data.correlationID.split(":")[1], "ntype": "bpmn" } })
     }
