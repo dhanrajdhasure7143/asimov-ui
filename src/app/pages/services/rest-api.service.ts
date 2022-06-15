@@ -1456,4 +1456,7 @@ updateRPADesignData(body){
 deleteRpaDesign(body){
   return this.http.post("/platform-service/project/deleteRpaDesign",body)
 }
+getTaskCategoriesByProject(projectid){
+  return this.http.get("/platform-service/task/fetchTaskCategoriesByProject?projectId="+projectid)
+}
 }

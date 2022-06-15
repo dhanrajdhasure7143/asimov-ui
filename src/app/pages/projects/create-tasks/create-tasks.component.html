@@ -30,8 +30,11 @@
                                 <label class="label-control" for="taskCategory">Task Category<span class="star">*</span></label>
                                 <select class="form-control enteredfield-color"  formControlName="taskCategory" [(ngModel)]="optionValue">
                                     <option  [value]="null" disabled hidden>Select Task Category</option>
-                                    <option value="" [selected]="true">Select Task Category</option>
-                                    <option *ngFor="let categories of taskcategories" >{{categories.category}}</option>
+                                    <option  [value]="undefined" disabled hidden>Select Task Category</option>
+                                    <option  [value]="" disabled hidden>Select Task Category</option>
+                                    <option  value="" disabled hidden>Select Task Category</option>
+                                    <!-- <option value="" [selected]="true">Select Task Category</option> -->
+                                    <option *ngFor="let categories of task_categoriesList" [disabled]="categories.display == 'false'">{{categories.category}}</option>
                                     </select>
                                     <span *ngIf="createtaskForm.get('taskCategory').invalid && createtaskForm.get('taskCategory').touched"
                                     class="errspan required">Task Category Required*</span>
@@ -52,10 +55,14 @@
                             <div class="form-fields col-md-6 pl-0">                         
                                 <label class="label-control" for="priority">Priority <span class="star">*</span></label>
                                 <select formControlName="priority" class="form-control data enteredfield-color">
-                                    <option value="">Select Priority</option>
-                                    <option value="High">High</option>
+                                    <!-- <option value="">Select Priority</option> -->
+                                    <option  [value]="null" disabled hidden>Select Priority</option>
+                                    <option  [value]="undefined" disabled hidden>Select Priority</option>
+                                    <option  value="" disabled hidden>Select Priority</option>
+                                    <option [value]="item" *ngFor="let item of _priority">{{item}}</option>
+                                    <!-- <option value="High">High</option>
                                     <option value="Medium">Medium</option>
-                                    <option value="Low">Low</option>
+                                    <option value="Low">Low</option> -->
                                 </select>
                                 <span *ngIf="createtaskForm.get('priority').invalid && createtaskForm.get('priority').touched"
                                     class="errspan required">Priority Required*</span>
@@ -91,7 +98,11 @@
                             <div class="form-fields col-md-6 pl-0">                         
                                 <label class="label-control" for="resources">Resource<span class="star">*</span></label>
                                 <select formControlName="resources" class="form-control data enteredfield-color">
-                                    <option value="">Select Resource</option>
+                                    <option  [value]="null" disabled hidden>Select Resource</option>
+                                    <option  [value]="undefined" disabled hidden>Select Resource</option>
+                                    <option  [value]="" disabled hidden>Select Resource</option>
+                                    <option  value="" disabled hidden>Select Resource</option>
+                                    <!-- <option value="">Select Resource</option> -->
                                     <option *ngFor="let user of userslist" [value]="user.userId.userId">
                                         {{user.userId.firstName|titlecase}} {{user.userId.lastName|titlecase}}</option>   
                                 </select>
@@ -108,7 +119,11 @@
                             <div class="form-fields col-md-6 pr-0" *ngIf="freetrail!='true'">
                                 <label class="label-control" for="approvers">Approver<span class="star">*</span></label>
                                 <select class="form-control enteredfield-color"  formControlName="approvers">
-                                    <option value="">Select Approver</option>
+                                    <!-- <option value="">Select Approver</option> -->
+                                    <option  [value]="null" disabled hidden>Select Approver</option>
+                                    <option  [value]="undefined" disabled hidden>Select Approver</option>
+                                    <option  [value]="" disabled hidden>Select Approver</option>
+                                    <option  value="" disabled hidden>Select Approver</option>
                                     <option *ngFor="let user of approverslist" [value]="user.userId.id">
                                         {{user.userId.firstName|titlecase}} {{user.userId.lastName|titlecase}}</option>    
                                 </select>
@@ -123,20 +138,28 @@
                             <div class="form-fields col-md-6 pr-0" *ngIf="freetrail=='true'">
                                 <label class="label-control" for="approvers">Approver</label>
                                 <select class="form-control enteredfield-color"  [attr.disabled]="true" formControlName="approvers">
-                                    <option value="">Select Approver</option>
+                                    <!-- <option value="">Select Approver</option> -->
+                                    <option  [value]="null" disabled hidden>Select Approver</option>
+                                    <option  [value]="undefined" disabled hidden>Select Approver</option>
+                                    <option  [value]="" disabled hidden>Select Approver</option>
+                                    <option  value="" disabled hidden>Select Approver</option>
                                     <option *ngFor="let user of approverslist" [value]="user.userId.id">
                                         {{user.userId.firstName|titlecase}} {{user.userId.lastName|titlecase}}</option>    
                                 </select>
                             </div>
                         </div>
                     
-                    <div class="col-md-12" *ngIf="optionValue == 'BPMN Design'">
+                    <div class="col-md-12" *ngIf="optionValue == 'BPMN Design'||optionValue == 'As-Is Process' || optionValue == 'To-Be Process'">
                             <div class="form-fields col-md-6 pl-0">                         
                                             
                           <span class="labeltit" for="correlationID">Process</span>
           
                           <select formControlName="correlationID" class="form-control data enteredfield-color" >
-                                    <option value="">Select Process</option>
+                                    <!-- <option value="">Select Process</option> -->
+                                    <option  [value]="null" disabled hidden>Select Process</option>
+                                    <option  [value]="undefined" disabled hidden>Select Process</option>
+                                    <option  [value]="" disabled hidden>Select Process</option>
+                                    <option  value="" disabled hidden>Select Process</option>
                                     <option *ngFor="let process of bpm_process_list" [value]="process.correlationID">
                                     {{process.processName}}</option>   
                                 </select>
@@ -150,7 +173,11 @@
                           <span class="labeltit" for="correlationID">Process</span>
           
                           <select formControlName="correlationID" class="form-control data enteredfield-color" >
-                                    <option value="">Select Process</option>
+                                    <!-- <option value="">Select Process</option> -->
+                                    <option  [value]="null" disabled hidden>Select Process</option>
+                                    <option  [value]="undefined" disabled hidden>Select Process</option>
+                                    <option  [value]="" disabled hidden>Select Process</option>
+                                    <option  value="" disabled hidden>Select Process</option>
                                     <option *ngFor="let process of pi_process_list" [value]="process.piId">
                                     {{process.piName}}</option>   
                                 </select>
@@ -165,7 +192,11 @@
                           <span class="labeltit" for="correlationID">Bot</span>
           
                           <select formControlName="correlationID" class="form-control data enteredfield-color">
-                                    <option value="">Select Bot</option>
+                                    <!-- <option value="">Select Bot</option> -->
+                                    <option  [value]="null" disabled hidden>Select Bot</option>
+                                    <option  [value]="undefined" disabled hidden>Select Bot</option>
+                                    <option  [value]="" disabled hidden>Select Bot</option>
+                                    <option  value="" disabled hidden>Select Bot</option>
                                     <option *ngFor="let bot of bot_list" [value]="bot.botId">
                                     {{bot.botName}}</option>   
                                 </select>
