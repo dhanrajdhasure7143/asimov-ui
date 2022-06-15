@@ -25,10 +25,12 @@ export class CreateTasksComponent implements OnInit {
   bot_list: any;
   projectdetails: Object;
   taskcategories: Object;
+  task_categoriesList: any;
   approverslist: any=[];
   project_id:number;
   taskDescriptionFlag: boolean = false;
   freetrail: string;
+  _priority:any[]=["High","Medium","Low"];
   constructor(private formBuilder: FormBuilder,private spinner:NgxSpinnerService,private api:RestApiService,
     private router: Router, private route:ActivatedRoute) { }
 
@@ -54,6 +56,7 @@ export class CreateTasksComponent implements OnInit {
         this.project_id=response.project_id
         this.getallusers();
         this.getTaskCategories();
+        this.getTaskCategoriesByProject();
         this.getallpiprocess();
         this.getallbpmprocess();
         this.getallbots();
@@ -193,5 +196,12 @@ taskDescriptionMaxLength(value){
     this.taskDescriptionFlag = false;
   }
    }
+   
+   getTaskCategoriesByProject(){
+    this.api.getTaskCategoriesByProject(this.project_id).subscribe(res=>{this.task_categoriesList = res
+      console.log(res)
 
+    })
+    
+   }
 }
