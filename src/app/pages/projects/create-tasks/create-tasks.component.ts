@@ -86,6 +86,9 @@ export class CreateTasksComponent implements OnInit {
     this.createtaskForm.value.percentageComplete=0;
     this.createtaskForm.value.projectId=this.project_id;
     let data=this.createtaskForm.value;
+    if(this.createtaskForm.value.taskCategory == 'As-Is Process' || this.createtaskForm.value.taskCategory == 'To-Be Process'){
+      data["process"] = this.bpm_process_list.find(each=>each.correlationID == this.createtaskForm.value.correlationID).processId
+    }
     this.api.createTask(data).subscribe(data=>{
       let response:any=data;
       this.spinner.hide();

@@ -805,7 +805,7 @@
                                     <img src="../../../../../assets/images/Projects/delete-red.svg" class="hover-img">
                                 </a>
                                 <!-- <span class="actions-seperator">|</span> -->
-                                <a class="clickable text-dark" *ngIf="(element.taskCategory =='RPA Implementation'|| element.taskCategory =='BPMN Design'|| element.taskCategory =='Process Mining') && element.correlationID.length!=0" (click)="navigateToWorkspace(element)" matTooltip="View Task">
+                                <a class="clickable text-dark" *ngIf="(element.taskCategory =='RPA Implementation'|| element.taskCategory =='BPMN Design'|| element.taskCategory =='Process Mining' || element.taskCategory =='As-Is Process' || element.taskCategory =='To-Be Process') && element.correlationID.length!=0" (click)="navigateToWorkspace(element)" matTooltip="View Task">
                                     <!-- <img src="../../../../../assets/images/Projects/eye-show.svg" /> -->
                                     <img src="../../../../../assets/images/Projects/eye-show.svg" class="default-img">
                                     <img src="../../../../../assets/images/Projects/eye-show-blue.svg" class="hover-img">
@@ -1783,3 +1783,4 @@
     </div>
 </ng-template>
 <div id="canvas1"></div>
+<div id="canvas2"></div>

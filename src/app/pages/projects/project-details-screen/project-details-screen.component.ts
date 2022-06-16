@@ -165,8 +165,12 @@ export class ProjectDetailsScreenComponent implements OnInit {
   isOpenedState : number =0;
   selectedQuestionEdit:number;
   selectedQuestionUpdate:any;
-  selectedProcessBpmn:any;
+  toBeProcessBpmn:any;
+  asIsProcessBpmn:any;
   downloadData:any={};
+  bpmnList:any[]=[];
+  asIsProcessId:any;
+  toBeProcessId:any;
 
   constructor(private dt: DataTransferService, private route: ActivatedRoute, private dataTransfer: DataTransferService, private rpa: RestApiService,
     private modalService: BsModalService, private formBuilder: FormBuilder, private router: Router,
@@ -441,7 +445,8 @@ export class ProjectDetailsScreenComponent implements OnInit {
   getTaskandCommentsData() {
     this.rpa.gettaskandComments(this.project_id).subscribe(data => {
       this.tasks = data;
-      console.log(data)
+      console.log("tasks",data)
+      this.getBPMNbyProcessId()
       this.dataSource2 = new MatTableDataSource(this.tasks);
       this.dataSource2.sort = this.sort10;
       this.dataSource2.paginator = this.paginator101;
@@ -513,7 +518,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
         console.log("projects Details", res);
 
         if (this.projectDetails) {
-          this.getBPMNbyProcessId();
+          // this.getBPMNbyProcessId();
           let usr_name = this.projectDetails.owner.split('@')[0].split('.');
           // this.owner_letters=usr_name[0].charAt(0)+usr_name[1].charAt(0);
           if (usr_name.length > 1) {
@@ -700,7 +705,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
     if (data.taskCategory == "RPA Implementation") {
       this.router.navigate(['/pages/rpautomation/designer'], { queryParams: { projectId: this.projectDetails.id, botId: data.correlationID } })
     }
-    if (data.taskCategory == "BPMN Design") {
+    if (data.taskCategory == "BPMN Design" || data.taskCategory == "As-Is Process" || data.taskCategory == "To-Be Process") {
       this.router.navigate(['pages/businessProcess/uploadProcessModel'],
         { queryParams: { "bpsId": data.correlationID.split(":")[0], "ver": data.correlationID.split(":")[1], "ntype": "bpmn" } })
     }
@@ -1413,16 +1418,52 @@ export class ProjectDetailsScreenComponent implements OnInit {
   getBPMNbyProcessId() {
     let res_data: any;
     let _self = this;
-    this.rpa.getBPMNbyProcessId(this.projectDetails.process).subscribe((res: any) => {
-      res_data = res
-      if (res_data.length > 0) {
-        this.selectedProcessBpmn = res_data[0];
-        console.log(this.selectedProcessBpmn)
-        let binaryXMLContent = this.selectedProcessBpmn.bpmnXmlNotation
-        let xmlData: any = atob(binaryXMLContent)
-        this.createBpmn(xmlData)
+    let filter_data = [];
+    this.tasks.forEach(e => {
+      if (e.taskCategory == "As-Is Process") {
+        filter_data.push(e.process)
+        this.asIsProcessId = e.process
       }
-    })
+      if (e.taskCategory == "To-Be Process") {
+        filter_data.push(e.process)
+        this.toBeProcessId = e.process
+      }
+    });
+    if (filter_data.length > 0) {
+      this.rpa.getBPMNbyProcessId(filter_data).subscribe((res: any) => {
+        res_data = res;
+        this.bpmnList = res_data;
+        if (res_data.length > 0) {
+          if (res_data.length == 1) {
+            res_data.forEach(element => {
+              if (element.id == this.asIsProcessId) {
+                this.asIsProcessBpmn = element;
+              }
+              if (element.id == this.toBeProcessId) {
+                this.toBeProcessBpmn = element;
+              }
+            });
+            let binaryXMLContent = this.toBeProcessBpmn ? this.toBeProcessBpmn.bpmnXmlNotation : this.asIsProcessBpmn.bpmnXmlNotation
+            let xmlData: any = atob(binaryXMLContent)
+            this.createBpmn(xmlData)
+          }
+
+          if (res_data.length == 2) {
+            res_data.forEach(element => {
+              if (element.id == this.asIsProcessId) {
+                this.asIsProcessBpmn = element;
+              }
+              if (element.id == this.toBeProcessId) {
+                this.toBeProcessBpmn = element;
+              }
+            });
+            let asIsxmlData: any = atob(this.asIsProcessBpmn.bpmnXmlNotation)
+            let toBexmlData1: any = atob(this.toBeProcessBpmn.bpmnXmlNotation)
+            this.createBpmn1(asIsxmlData, toBexmlData1)
+          }
+        }
+      });
+    };
   }
 
   createBpmn(byteBpmn) {
@@ -1447,67 +1488,198 @@ export class ProjectDetailsScreenComponent implements OnInit {
     // }, 1000);
   }
 
-
-  xmlConvertToImageformate(e){
-    e.stopPropagation();
-    let modeler_obj ="bpmnModeler";
-      let _self = this;
-        let modelerExp = this[modeler_obj];
-          modelerExp.saveSVG(function(err, svgContent) {
-          var blob = new Blob([svgContent], { type: "image/svg+xml;charset=utf-8" });
-          var url = window.URL.createObjectURL(blob);
-            let canvasEl = document.createElement("canvas");
-            let canvasContext = canvasEl.getContext("2d", {alpha: false});
-            let img = new Image();
-            img.onload=()=>{
-              canvasEl.width = img.width;
-              canvasEl.height = img.height;
-              canvasContext.fillStyle = "#fff";
-              canvasContext.fillRect(0, 0, canvasEl.width, canvasEl.height);
-              canvasContext.drawImage(img,0,0,img.width, img.height, 0, 0, canvasEl.width, canvasEl.height);
-              let imgUrl;
-                imgUrl = canvasEl.toDataURL("image/png");
-              _self.getPDDFile(imgUrl)
-            }
-            img.src = url;
+  createBpmn1(byteBpmn, byteBpmn1) {
+    console.log(byteBpmn, byteBpmn1)
+    let modeler_obj = "bpmnModeler";
+    let modeler_obj1 = "bpmnModeler1";
+    let notationJson = {
+      container: '#canvas1',
+      keyboard: {
+        bindTo: window
+      }
+    }
+    let notationJson1 = {
+      container: '#canvas2',
+      keyboard: {
+        bindTo: window
+      }
+    }
+    this[modeler_obj] = new BpmnJS(notationJson);
+    this[modeler_obj].importXML(byteBpmn, function (err) {
+      if (err) {
+        this.notifier.show({
+          type: "error",
+          message: "Could not import Bpmn notation!"
         });
+      }
+    })
+
+    this[modeler_obj1] = new BpmnJS(notationJson1);
+    this[modeler_obj1].importXML(byteBpmn1, function (err) {
+      if (err) {
+        this.notifier.show({
+          type: "error",
+          message: "Could not import Bpmn notation!"
+        });
+      }
+    })
+    // setTimeout(() => {
+    //   this.xmlConvertToImageformate()
+    // }, 1000);
   }
 
-  getPDDFile(url){
-    console.log(url)
-    let res_body={
-        "projectId": this.project_id,
-        "processImage":url,
-        "version": this.selectedProcessBpmn.version,
-        "processName": this.selectedProcessBpmn.bpmnProcessName,
+
+  xmlConvertToImageformate(e) {
+    e.stopPropagation();
+    if (this.bpmnList.length > 0) {
+      if (this.bpmnList.length == 1) {
+        let modeler_obj = "bpmnModeler";
+        let _self = this;
+        let modelerExp = this[modeler_obj];
+        modelerExp.saveSVG(function (err, svgContent) {
+          var blob = new Blob([svgContent], { type: "image/svg+xml;charset=utf-8" });
+          var url = window.URL.createObjectURL(blob);
+          let canvasEl = document.createElement("canvas");
+          let canvasContext = canvasEl.getContext("2d", { alpha: false });
+          let img = new Image();
+          img.onload = () => {
+            canvasEl.width = img.width;
+            canvasEl.height = img.height;
+            canvasContext.fillStyle = "#fff";
+            canvasContext.fillRect(0, 0, canvasEl.width, canvasEl.height);
+            canvasContext.drawImage(img, 0, 0, img.width, img.height, 0, 0, canvasEl.width, canvasEl.height);
+            let imgUrl;
+            imgUrl = canvasEl.toDataURL("image/png");
+            _self.getPDDFile(imgUrl)
+          }
+          img.src = url;
+        });
+      }
+
+
+      if (this.bpmnList.length == 2) {
+        let imgUrl;
+        let imgUrl_1;
+
+        let modeler_obj = "bpmnModeler";
+        let _self = this;
+        let modelerExp = this[modeler_obj];
+        modelerExp.saveSVG(function (err, svgContent) {
+          var blob = new Blob([svgContent], { type: "image/svg+xml;charset=utf-8" });
+          var url = window.URL.createObjectURL(blob);
+          let canvasEl = document.createElement("canvas");
+          let canvasContext = canvasEl.getContext("2d", { alpha: false });
+          let img = new Image();
+          img.onload = () => {
+            canvasEl.width = img.width;
+            canvasEl.height = img.height;
+            canvasContext.fillStyle = "#fff";
+            canvasContext.fillRect(0, 0, canvasEl.width, canvasEl.height);
+            canvasContext.drawImage(img, 0, 0, img.width, img.height, 0, 0, canvasEl.width, canvasEl.height);
+            imgUrl = canvasEl.toDataURL("image/png");
+            // _self.getPDDFile(imgUrl)
+          }
+          img.src = url;
+        });
+
+        let modeler_obj1 = "bpmnModeler1";
+        let _self1 = this;
+        let modelerExp1 = this[modeler_obj1];
+        modelerExp1.saveSVG(function (err, svgContent) {
+          var blob1 = new Blob([svgContent], { type: "image/svg+xml;charset=utf-8" });
+          var url_1 = window.URL.createObjectURL(blob1);
+          let canvasEl_1 = document.createElement("canvas");
+          let canvasContext_1 = canvasEl_1.getContext("2d", { alpha: false });
+          let img_1 = new Image();
+          img_1.onload = () => {
+            canvasEl_1.width = img_1.width;
+            canvasEl_1.height = img_1.height;
+            canvasContext_1.fillStyle = "#fff";
+            canvasContext_1.fillRect(0, 0, canvasEl_1.width, canvasEl_1.height);
+            canvasContext_1.drawImage(img_1, 0, 0, img_1.width, img_1.height, 0, 0, canvasEl_1.width, canvasEl_1.height);
+            // let imgUrl_1;
+            imgUrl_1 = canvasEl_1.toDataURL("image/png");
+          }
+          img_1.src = url_1;
+        });
+        setTimeout(() => {
+          console.log(imgUrl, imgUrl_1)
+          _self1.getPDDFile_1(imgUrl, imgUrl_1)
+        }, 300);
+      }
+    } else {
+      this.getPDDFile()
     }
-    this.rpa.processDocumentDownload(res_body).subscribe(res=>{ this.downloadData = res
+  }
+
+  getPDDFile(url?) {
+    let res_body = {};
+    if (url) {
+      if (this.asIsProcessId) {
+        res_body = {
+          "projectId": this.project_id,
+          "asisprocessImage": url,
+          "asisprocessName": this.asIsProcessBpmn.bpmnProcessName,
+          "version": this.asIsProcessBpmn.version
+        }
+      } else {
+        res_body = {
+          "projectId": this.project_id,
+          "tobeprocessImage": url,
+          "tobeprocessName": this.toBeProcessBpmn.bpmnProcessName,
+          "version": this.toBeProcessBpmn.version
+        }
+      }
+    } else {
+      res_body = {
+        "projectId": this.project_id,
+      }
+    }
+    this.rpa.processDocumentDownload(res_body).subscribe(res => {
+      this.downloadData = res
+      console.log(res)
+      this.downloadFile();
+    });
+  }
+
+  getPDDFile_1(url, url_1) {
+    console.log("2", url, url_1)
+    let res_body = {
+      "projectId": this.project_id,
+      "asisprocessImage": url,
+      "asisprocessName": this.asIsProcessBpmn.bpmnProcessName,
+      "tobeprocessImage": url_1,
+      "tobeprocessName": this.toBeProcessBpmn.bpmnProcessName,
+      "version": 0,
+    }
+    this.rpa.processDocumentDownload(res_body).subscribe(res => {
+      this.downloadData = res
       console.log(res)
       this.downloadFile()
     });
   }
- 
-  downloadFile(){
+
+  downloadFile() {
     var link = document.createElement("a");
-    link.href = 'data:image/jpeg;base64,'+this.downloadData.data;
+    link.href = 'data:image/jpeg;base64,' + this.downloadData.data;
     let fileName = "test"
-    if(fileName.trim().length == 0 ) fileName = "newDiagram";
-    link.download = this.projectDetails.projectName+".doc";
+    if (fileName.trim().length == 0) fileName = "newDiagram";
+    link.download = this.projectDetails.projectName + ".doc";
     link.innerHTML = "Click here to download the notation";
     link.click();
   }
 
 
   autoGrowcommentsBox() {
-    let element =document.getElementById("business_challange")
-      element.style.height ="5px";
-      element.style.height = (element.scrollHeight+10)+"px";
+    let element = document.getElementById("business_challange")
+    element.style.height = "5px";
+    element.style.height = (element.scrollHeight + 10) + "px";
   }
 
   autoGrowcommentsBox1() {
-    let element =document.getElementById("purpose")
-      element.style.height ="5px";
-      element.style.height = (element.scrollHeight+10)+"px";
+    let element = document.getElementById("purpose")
+    element.style.height = "5px";
+    element.style.height = (element.scrollHeight + 10) + "px";
   }
 
 }
