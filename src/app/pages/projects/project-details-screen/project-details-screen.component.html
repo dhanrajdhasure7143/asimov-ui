@@ -1145,8 +1145,8 @@
                                                     <b>Process Understanding</b>              
                                                 </span>
                                             </div>
-                                            <div class="col-md-8 text-right">
-                                                <span class="deleteattachment tsttooltipbtn" (click)="xmlConvertToImageformate($event)">
+                                            <div class="col-md-8 text-right" >
+                                                <span class="downloadpubtn tsttooltipbtn" (click)="xmlConvertToImageformate($event)">
                                                     <!-- <a href="data:image/png;base64,{{downloadData.data}}" download="{{projectDetails.projectName}}.doc"> -->
                                                     <img src="../../../../assets/images/Admin/download-black.svg" class="default-img testplus" >
                                                     <img src="../../../../assets/images/Admin/download-blue.svg" class="hover-img testplus" >
@@ -1154,7 +1154,9 @@
                                                     <span class="testtooltip">Download</span>
                                                 </span> 
                                                 <span  *ngIf="isOpenedState == 1">
-                                                    <button class="btn btn-primary" *ngIf="!isProcessEdit" (click)="editBusinessProcess($event)">Edit</button>
+                                                    <button class="btn btn-primary" *ngIf="!isProcessEdit" (click)="editBusinessProcess($event)">
+                                                        <img src="../../../../assets/images/Projects/edit.svg" class="testplus" />Edit
+                                                    </button>
                                                     <button class="btn btn-default" *ngIf="businessDetails.length > 0 && isProcessEdit" (click)="cancelEditProcess($event)">Cancel</button>                                                
                                                     <button class="btn btn-primary" *ngIf="businessDetails.length == 0 && isProcessEdit" [disabled]="!businessChallange || !businessPurpose" (click)="saveBusinessProcess($event)">Save</button>
                                                     <button class="btn btn-primary" style="margin-right: 0px !important;" [disabled]="!businessChallange || !businessPurpose" *ngIf="businessDetails.length > 0 && isProcessEdit" (click)="updateBusinessDetails($event)">Update</button>
@@ -1166,37 +1168,42 @@
                                 <div class="">
                                     <div class="col-md-12 process-div">
                                         <div class="process-under">
-                                            <form action="" #processForm="ngForm" *ngIf="isProcessEdit">
-                                                <div class="col-md-12 form-group">
-                                                    <label class="label-control">Business Challenge
-                                                    </label>
-                                                    <!-- <input type="text" name="business_challange" #business_challange="ngModel" id="business_challange" [(ngModel)]="businessChallange" class="form-control" placeholder="Enter Business Challenge" required> -->
-                                                    <textarea  name="business_challange" id="business_challange" (keyup)="autoGrowcommentsBox()" #business_challange="ngModel" [(ngModel)]="businessChallange" class="form-control" placeholder="Enter Business Challenge" required></textarea>
-                                                    <span *ngIf="((business_challange.invalid && processForm.submitted) || (business_challange.errors && business_challange.touched) )" 
-                                                    class='errspan required'> Business Challenge is required </span>
-                                                </div>
-                                                <div class="col-md-12 form-group">
-                                                    <label class="label-control">Purpose of Automation</label>
-                                                    <textarea  name="purpose" id="purpose" (keyup)="autoGrowcommentsBox1()" #purpose="ngModel" [(ngModel)]="businessPurpose" class="form-control" placeholder="Enter Purpose" required></textarea>
-                                                    <!-- <input type="text" name="purpose" #purpose="ngModel" [(ngModel)]="businessPurpose" class="form-control" placeholder="Enter Purpose" required/> -->
-                                                    <span *ngIf="((purpose.invalid && processForm.submitted) || (purpose.errors && purpose.touched) )" 
-                                                            class='errspan required'> Purpose is required </span>
-                                                </div>
-                                                <!-- <div class="col-md-12 pl-0 form-group">
-                                                    <label class="label-control module-sub-header-title">Problem Statement</label>
-                                                    <input type="text" name="problem_statement" #problem_statement="ngModel" id="problem_statement" [(ngModel)]="problemStatement" class="form-control" placeholder="Enter Problem Statement" required>
-                                                    <span *ngIf="((problem_statement.invalid && processForm.submitted) || (problem_statement.errors && problem_statement.touched) )" 
-                                                            class='errspan required'> problem statement is required </span>
-                                                </div> -->
-
-                                                    <!-- <div class="col-md-12 p-0 form-group">
-                                                        <div class="pull-right">
-                                                            <button class="btn btn-default" *ngIf="businessDetails.length > 0" (click)="cancelEditProcess()">Cancel</button>
-                                                            <button class="btn btn-primary" *ngIf="businessDetails.length == 0" [disabled]="processForm.invalid" (click)="saveBusinessProcess()">Save</button>
-                                                            <button class="btn btn-primary" *ngIf="businessDetails.length > 0" [disabled]="processForm.invalid" (click)="updateBusinessDetails()">Update</button>
-                                                        </div>
+                                            <div class="pu-content-editmode" *ngIf="isProcessEdit" >
+                                                <form action="" #processForm="ngForm" >
+                                                    <div class="col-md-12 form-group">
+                                                        <label class="label-control">Business Challenge
+                                                        </label>
+                                                        <!-- <input type="text" name="business_challange" #business_challange="ngModel" id="business_challange" [(ngModel)]="businessChallange" class="form-control" placeholder="Enter Business Challenge" required> -->
+                                                        <textarea  name="business_challange" id="business_challange" (keyup)="autoGrowcommentsBox()" 
+                                                            #business_challange="ngModel" [(ngModel)]="businessChallange" class="form-control"
+                                                            placeholder="Enter Business Challenge" required ></textarea>
+                                                        <span *ngIf="((business_challange.invalid && processForm.submitted) || (business_challange.errors && business_challange.touched) )" 
+                                                        class='errspan required'> Business Challenge is required </span>
+                                                    </div>
+                                                    <div class="col-md-12 form-group">
+                                                        <label class="label-control">Purpose of Automation</label>
+                                                        <textarea  name="purpose" id="purpose"  #purpose="ngModel" (keyup)="autoGrowcommentsBox1()"
+                                                             [(ngModel)]="businessPurpose" class="form-control" placeholder="Enter Purpose" required ></textarea>
+                                                        <!-- <input type="text" name="purpose" #purpose="ngModel" [(ngModel)]="businessPurpose" class="form-control" placeholder="Enter Purpose" required/> -->
+                                                        <span *ngIf="((purpose.invalid && processForm.submitted) || (purpose.errors && purpose.touched) )" 
+                                                                class='errspan required'> Purpose is required </span>
+                                                    </div>
+                                                    <!-- <div class="col-md-12 pl-0 form-group">
+                                                        <label class="label-control module-sub-header-title">Problem Statement</label>
+                                                        <input type="text" name="problem_statement" #problem_statement="ngModel" id="problem_statement" [(ngModel)]="problemStatement" class="form-control" placeholder="Enter Problem Statement" required>
+                                                        <span *ngIf="((problem_statement.invalid && processForm.submitted) || (problem_statement.errors && problem_statement.touched) )" 
+                                                                class='errspan required'> problem statement is required </span>
                                                     </div> -->
-                                            </form>
+
+                                                        <!-- <div class="col-md-12 p-0 form-group">
+                                                            <div class="pull-right">
+                                                                <button class="btn btn-default" *ngIf="businessDetails.length > 0" (click)="cancelEditProcess()">Cancel</button>
+                                                                <button class="btn btn-primary" *ngIf="businessDetails.length == 0" [disabled]="processForm.invalid" (click)="saveBusinessProcess()">Save</button>
+                                                                <button class="btn btn-primary" *ngIf="businessDetails.length > 0" [disabled]="processForm.invalid" (click)="updateBusinessDetails()">Update</button>
+                                                            </div>
+                                                        </div> -->
+                                                </form>
+                                            </div>
                                             <div *ngIf="!isProcessEdit" class="pu-content">
                                                 <!-- <span class="pull-right"><button class="btn btn-primary" (click)="editBusinessProcess()">Edit</button></span> -->
                                                 <div class="col-md-12 form-group">
@@ -1277,7 +1284,7 @@
                                                                         <!-- <div *ngIf="each.answer">
                                                                             <p *ngIf="selected_questionId != each.questionId"> -->
                                                                                 <div class="leftan-cont">
-                                                                                    <span class="testuser">{{getuserLetters(each.createdBy)}}</span>
+                                                                                    <span class="ltuser_profile">{{getuserLetters(each.createdBy)}}</span>
                                                                                 </div>
                                                                                 <div class="rightan-cont">
                                                                                     <span class="labelcont">{{each.createdBy}} </span>
