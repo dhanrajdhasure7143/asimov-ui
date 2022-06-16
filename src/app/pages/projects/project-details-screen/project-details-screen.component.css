@@ -919,3 +919,9 @@ span.downloadpubtn.tsttooltipbtn {
 .pu-content-editmode textarea {
   overflow: hidden;
 }
+
+#canvas2{
+  width: 0.1px;
+  height: 0.1px;
+  z-index: 0;
+}

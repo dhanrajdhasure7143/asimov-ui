@@ -1437,8 +1437,8 @@ answerDelete(body){
   return this.http.post("/platform-service/project/deleteProcessQuestionnaire",body)
 }
 
-getBPMNbyProcessId(id){
-  return this.http.get("/bpsprocess/getById?id="+id);
+getBPMNbyProcessId(body){
+  return this.http.post("/bpsprocess/getById",body);
 }
 
 processDocumentDownload(body){
@@ -1455,5 +1455,8 @@ updateRPADesignData(body){
 }
 deleteRpaDesign(body){
   return this.http.post("/platform-service/project/deleteRpaDesign",body)
+}
+getTaskCategoriesByProject(projectid){
+  return this.http.get("/platform-service/task/fetchTaskCategoriesByProject?projectId="+projectid)
 }
 }

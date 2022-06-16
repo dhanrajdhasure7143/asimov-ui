@@ -37,7 +37,7 @@ export class ProcessinsightsComponent implements OnInit {
     piechart2: any;
     isvariantListOpen: boolean = true;
     isEventGraph: boolean = true;
-    input1: any = 20;
+    input1: any = 100;
     input2: any = 1;
     robotinput:any = 8;
     workingHours:any = {
@@ -215,6 +215,9 @@ yScaleMin_duration: number = 0;
      }
 
     ngOnInit() {
+        if(localStorage.getItem("humanCost")){
+            this.input1 = localStorage.getItem("humanCost");
+        }
         this.dt.changeParentModule({ "route": "/pages/processIntelligence/upload", "title": "Process Intelligence" });
         this.dt.changeChildModule({ "route": "/pages/processIntelligence/insights", "title": "Insights" });
         this.dt.changeHints(this.hints.insightsHints);
@@ -1454,6 +1457,7 @@ series2.stroke = am4core.color("#fc8d45");
     }
 
     getAllGraphsPriceCalculation() {
+        localStorage.setItem("humanCost",this.input1)
         this.getTotalNoOfCases('fullgraph');
         this.getActivityMetrics('fullgraph');
         this.getHumanBotCost('fullgraph');

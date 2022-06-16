@@ -44,11 +44,13 @@ this.getRPAdesignData()
   }
 
   getRPAdesignData(){
+    this.spinner.show();
     let res_data:any
     this.rest_api.getRPAdesignData(this.taskId).subscribe(res=>{res_data = res
       console.log(res);
       this.USER_DATA = res_data.data
       this.dataSource = new MatTableDataSource(this.USER_DATA);
+      this.spinner.hide();
       setTimeout(() => {
         this.dataSource.paginator=this.paginator;
       // this.dataSource.sort=this.sort;
