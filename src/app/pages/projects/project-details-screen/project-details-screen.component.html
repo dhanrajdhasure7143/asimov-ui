@@ -1639,7 +1639,7 @@
                     <div class="row">
                         <div class="form-group col-md-12">
                             <label for="category">File Category<span class="star">*</span></label>
-                            <select class="form-control" formControlName="category">
+                            <select class="form-control" formControlName="category" [(ngModel)]="file_Category">
                 <option [value]="null" disabled hidden>Select File Category</option>
                 <option value="" disabled hidden>Select File Category</option>
                 <option *ngFor="let categories of filecategoriesList" [disabled]="categories.display == 'false'">{{categories.category}}</option>
@@ -1662,7 +1662,7 @@
                         <div class="form-group col-md-12">
                             <label>Upload<span class="star">*</span></label>
                             <div class="box-fileupload">
-                                <input type="file" name="file" (change)="chnagefileUploadForm($event)" id="file" class="inputfile" multiple/>
+                                <input type="file" name="file" (change)="chnagefileUploadForm($event)" id="file" class="inputfile" [multiple]='file_Category != "Template"'/>
                                 <label for="file" matTooltip="Upload File" (change)="chnagefileUploadForm($event)">
                 <img src="../../../../assets/images/Projects/fileupload.svg" class="testplusupload">
                 

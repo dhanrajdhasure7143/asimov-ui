@@ -57,6 +57,8 @@ export class ProjectRepoScreenComponent implements OnInit {
   listOfFiles: any[] = [];
   uploadFileDescriptionFlag: boolean = false;
   // resources_list: any=[];
+  filecategoriesList:any[]=[];
+  file_Category:any;
 
   constructor(private modalService: BsModalService, private formBuilder: FormBuilder, private api:RestApiService, private route: ActivatedRoute, private spinner:NgxSpinnerService) { 
     
@@ -213,7 +215,7 @@ this.route.queryParams.subscribe(data=>{​​​​​​​​
     this.denyFileRequestForm.reset();
   }
   uploadFile(template: TemplateRef<any>){
-
+    this.getFileCategoriesList();
     this.getFileCategories();
     this.uploadFilemodalref = this.modalService.show(template,{class:"modal-lr"});
   }
@@ -270,7 +272,10 @@ this.route.queryParams.subscribe(data=>{​​​​​​​​
   }
 
   chnagefileUploadForm(e){
-
+    if(this.file_Category == 'Template'){
+      this.listOfFiles=[];
+      this.fileList=[];
+    }
     for (var i = 0; i <= e.target.files.length - 1; i++) {
       var selectedFile = e.target.files[i];
       this.fileList.push(selectedFile);
@@ -586,6 +591,12 @@ this.route.queryParams.subscribe(data=>{​​​​​​​​
     if (processName && processName.length > 10)
       return processName.substr(0, 10) + '..';
     return processName;
+  }
+
+  getFileCategoriesList(){
+    this.api.getFileCategoriesList(this.projectid).subscribe((res:any)=>{
+      this.filecategoriesList = res
+    })
   }
 
 }

@@ -260,7 +260,6 @@ export class ProjectDetailsScreenComponent implements OnInit {
     this.freetrail = localStorage.getItem("freetrail")
 
     this.dataTransfer.logged_userData.subscribe(res=>{
-      console.log(res)
       if(res)
       this.loggedUserData = res
     });
@@ -469,7 +468,6 @@ export class ProjectDetailsScreenComponent implements OnInit {
   getLatestFiveAttachments(projectid) {
     this.rpa.getLatestfiveAttachments(projectid, "UTC").subscribe(data => {
       this.latestFiveDocs = data;
-      console.log(data)
       this.dataSource9 = new MatTableDataSource(this.latestFiveDocs);
       this.dataSource9.sort = this.sort16;
       this.dataSource9.paginator = this.paginator109;
@@ -523,7 +521,6 @@ export class ProjectDetailsScreenComponent implements OnInit {
         this.processOwnerFlag = false
         this.projectenddate = moment(this.projectDetails.endDate).format("YYYY-MM-DD");
         this.projectStartDate = moment(this.projectDetails.startDate).format("YYYY-MM-DD");
-        console.log("projects Details", res);
 
         if (this.projectDetails) {
           // this.getBPMNbyProcessId();
@@ -661,7 +658,6 @@ export class ProjectDetailsScreenComponent implements OnInit {
       resp = processnames
       this.processes = resp.filter(item => item.status == "APPROVED");
       this.selected_process_names = resp.sort((a, b) => (a.processName.toLowerCase() > b.processName.toLowerCase()) ? 1 : ((b.processName.toLowerCase() > a.processName.toLowerCase()) ? -1 : 0));
-    console.log(this.processes)
     })
   }
 
@@ -985,7 +981,6 @@ export class ProjectDetailsScreenComponent implements OnInit {
   }
   getFileCategories() {
     this.rpa.getFileCategories().subscribe(data => {
-      console.log(data)
       this.filecategories = data;
     })
   }
@@ -1388,7 +1383,6 @@ export class ProjectDetailsScreenComponent implements OnInit {
     let res_data: any;
     this.rpa.getQuestionnaires(this.project_id).subscribe(res => {
       res_data = res
-      console.log(res_data.data,this.userRole)
       // System Admin
       this.processQuestions = res_data.data
       this.processQuestions.sort(function (a, b) {
@@ -1424,20 +1418,6 @@ export class ProjectDetailsScreenComponent implements OnInit {
     }
   }
 
-  // getBPMNbyProcessId() {
-  //   let res_data: any;
-  //   let _self = this;
-  //   this.rpa.getBPMNbyProcessId(this.projectDetails.process).subscribe((res: any) => {
-  //     res_data = res
-  //     if (res_data.length > 0) {
-  //       this.selectedProcessBpmn = res_data[0];
-  //       console.log(this.selectedProcessBpmn)
-  //       let binaryXMLContent = this.selectedProcessBpmn.bpmnXmlNotation
-  //       let xmlData: any = atob(binaryXMLContent)
-  //       this.createBpmn(xmlData)
-  //     }
-  //   })
-  // }
   getBPMNbyProcessId() {
     let res_data: any;
     let _self = this;
@@ -1452,6 +1432,9 @@ export class ProjectDetailsScreenComponent implements OnInit {
         this.toBeProcessId = e.process
       }
     });
+    console.log(filter_data,this.tasks);
+    this.asIsProcessBpmn ={};
+    this.toBeProcessBpmn ={};
     if (filter_data.length > 0) {
       this.rpa.getBPMNbyProcessId(filter_data).subscribe((res: any) => {
         res_data = res;
@@ -1509,7 +1492,6 @@ export class ProjectDetailsScreenComponent implements OnInit {
   }
 
   createBpmn1(byteBpmn, byteBpmn1) {
-    console.log(byteBpmn, byteBpmn1)
     let modeler_obj = "bpmnModeler";
     let modeler_obj1 = "bpmnModeler1";
     let notationJson = {
@@ -1623,7 +1605,6 @@ export class ProjectDetailsScreenComponent implements OnInit {
           img_1.src = url_1;
         });
         setTimeout(() => {
-          console.log(imgUrl, imgUrl_1)
           _self1.getPDDFile_1(imgUrl, imgUrl_1)
         }, 300);
       }
@@ -1634,6 +1615,8 @@ export class ProjectDetailsScreenComponent implements OnInit {
 
   getPDDFile(url?) {
     let res_body = {};
+    console.log(this.asIsProcessBpmn,this.asIsProcessId)
+    console.log(this.toBeProcessBpmn,this.toBeProcessId)
     if (url) {
       if (this.asIsProcessId) {
         res_body = {
@@ -1661,13 +1644,11 @@ export class ProjectDetailsScreenComponent implements OnInit {
     }
     this.rpa.processDocumentDownload(res_body).subscribe(res => {
       this.downloadData = res
-      console.log(res)
       this.downloadFile();
     });
   }
 
   getPDDFile_1(url, url_1) {
-    console.log("2", url, url_1)
     let res_body = {
       "projectId": this.project_id,
       "asisprocessImage": url,
@@ -1735,7 +1716,6 @@ export class ProjectDetailsScreenComponent implements OnInit {
 
   getFileCategoriesList(){
     this.rpa.getFileCategoriesList(this.project_id).subscribe((res:any)=>{
-      console.log("test",res)
       this.filecategoriesList = res
     })
   }
