@@ -1628,8 +1628,8 @@
                             <label for="category">File Category<span class="star">*</span></label>
                             <select class="form-control" formControlName="category">
                 <option [value]="null" disabled hidden>Select File Category</option>
-                <option value="" [selected]="true">Select File Category</option>
-                <option *ngFor="let categories of filecategories">{{categories.category}}</option>
+                <option value="" disabled hidden>Select File Category</option>
+                <option *ngFor="let categories of filecategoriesList" [disabled]="categories.display == 'false'">{{categories.category}}</option>
 
               </select>
                             <span *ngIf="uploadtaskFileForm.get('category').invalid && uploadtaskFileForm.get('category').touched" class="errspan required">File Category Required*</span>
@@ -1712,10 +1712,10 @@
                 <div class="row">
                     <div class="form-group col-md-12">
                         <label for="fileCategory">File Category<span class="star">*</span></label>
-                        <select class="form-control" formControlName="fileCategory" required>
+                        <select class="form-control" name="file_cate" [(ngModel)]="file_Category" formControlName="fileCategory" required>
                     <option  [value]="null" disabled hidden>Select Category</option>
-                    <option value="" [selected]="true">Select Category</option>
-                    <option *ngFor="let categories of filecategories" >{{categories.category}}</option>
+                    <option value="" disabled hidden>Select Category</option>
+                    <option *ngFor="let categories of filecategoriesList" [disabled]="categories.display == 'false'">{{categories.category}}</option>
                   </select>
                         <span *ngIf="uploadFileFormDetails.get('fileCategory').invalid && uploadFileFormDetails.get('fileCategory').touched" class="errspan required">File Category Required*</span>
                     </div>
@@ -1735,7 +1735,7 @@
 
                     <label>Upload<span class="star">*</span></label>
                     <div class="box-fileupload">
-                        <input type="file" name="file" (change)="chnagefileUploadForm($event)" id="file" class="inputfile" multiple/>
+                        <input type="file" name="file" (change)="chnagefileUploadForm($event)" id="file" class="inputfile" [multiple]='file_Category != "Template"'/>
                         <label for="file" matTooltip="Upload File" (change)="chnagefileUploadForm($event)">
                   <img src="../../../../assets/images/Projects/fileupload.svg" class="testplusupload">
                   

@@ -168,6 +168,8 @@ export class ProjectDetailsScreenComponent implements OnInit {
   toBeProcessBpmn:any;
   asIsProcessBpmn:any;
   downloadData:any={};
+  file_Category:any;
+  filecategoriesList:any[]=[]
   bpmnList:any[]=[];
   asIsProcessId:any;
   toBeProcessId:any;
@@ -248,7 +250,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
       this.getImage();
       this.profileName();
     }, 2000);
-
+    this.getFileCategoriesList();
     this.getProcessUnderstandingDetails();
     this.getQuestionnaire();
     //  this.getallusers();
@@ -338,6 +340,10 @@ export class ProjectDetailsScreenComponent implements OnInit {
 
   }
   chnagefileUploadForm(e) {
+      if(this.file_Category == "Template"){
+        this.fileList=[];
+        this.listOfFiles=[];
+      }
     for (var i = 0; i <= e.target.files.length - 1; i++) {
       var selectedFile = e.target.files[i];
       this.fileList.push(selectedFile);
@@ -977,6 +983,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   }
   getFileCategories() {
     this.rpa.getFileCategories().subscribe(data => {
+      console.log(data)
       this.filecategories = data;
     })
   }
@@ -1415,6 +1422,20 @@ export class ProjectDetailsScreenComponent implements OnInit {
     }
   }
 
+  // getBPMNbyProcessId() {
+  //   let res_data: any;
+  //   let _self = this;
+  //   this.rpa.getBPMNbyProcessId(this.projectDetails.process).subscribe((res: any) => {
+  //     res_data = res
+  //     if (res_data.length > 0) {
+  //       this.selectedProcessBpmn = res_data[0];
+  //       console.log(this.selectedProcessBpmn)
+  //       let binaryXMLContent = this.selectedProcessBpmn.bpmnXmlNotation
+  //       let xmlData: any = atob(binaryXMLContent)
+  //       this.createBpmn(xmlData)
+  //     }
+  //   })
+  // }
   getBPMNbyProcessId() {
     let res_data: any;
     let _self = this;
@@ -1680,6 +1701,13 @@ export class ProjectDetailsScreenComponent implements OnInit {
     let element = document.getElementById("purpose")
     element.style.height = "5px";
     element.style.height = (element.scrollHeight + 10) + "px";
+  }
+
+  getFileCategoriesList(){
+    this.rpa.getFileCategoriesList(this.project_id).subscribe((res:any)=>{
+      console.log("test",res)
+      this.filecategoriesList = res
+    })
   }
 
 }
