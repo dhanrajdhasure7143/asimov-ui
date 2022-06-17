@@ -824,7 +824,7 @@ img.testplus2 {
   margin-left: 15px;
 }
 
-span.testuser {
+span.ltuser_profile {
   background-color: #e4eaef;
   color: #001c47;
   width: 28px;
@@ -889,6 +889,37 @@ p.p-questions.qwith-ans {
   height: 0.1px;
   z-index: 0;
 }
+
+.process-expansion .mat-expansion-panel-header.mat-expanded span.downloadpubtn.tsttooltipbtn {
+  margin-right: 10px;
+}
+span.downloadpubtn.tsttooltipbtn {
+  position: relative;
+  line-height: 32px;
+}
+
+.downloadpubtn span.testtooltip {
+  top: -5px;
+  left: -108px;
+  padding: 0px 12px;
+  line-height: 2;
+}
+
+.downloadpubtn span.testtooltip:before {
+  right: -5px;
+  top: 10px;
+}
+
+.pu-content-editmode {
+  margin-right: 10px;
+  max-height: 200px;
+  overflow: hidden auto;
+}
+
+.pu-content-editmode textarea {
+  overflow: hidden;
+}
+
 #canvas2{
   width: 0.1px;
   height: 0.1px;
