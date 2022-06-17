@@ -16,6 +16,7 @@ import { MatMenuModule, MatButtonModule } from '@angular/material';
 import moment from 'moment';
 import { Subscription } from 'rxjs';
 import * as BpmnJS from './../../../bpmn-modeler.development.js';
+import { verifyHostBindings } from '@angular/compiler';
 
 @Component({
   selector: 'app-project-details-screen',
@@ -1693,16 +1694,43 @@ export class ProjectDetailsScreenComponent implements OnInit {
   }
 
 
+  // autoGrowcommentsBox() {
+  //   let element =document.getElementById("business_challange")
+  //     element.style.height ="5px";
+  //     element.style.height = (element.scrollHeight+10)+"px";
+  // }
+  // autoGrowcommentsBox1() {
+  //   let element =document.getElementById("purpose")
+  //     element.style.height ="5px";
+  //     element.style.height = (element.scrollHeight+10)+"px";
+  //   }
   autoGrowcommentsBox() {
-    let element = document.getElementById("business_challange")
-    element.style.height = "5px";
-    element.style.height = (element.scrollHeight + 10) + "px";
+    let element =document.getElementById("business_challange");
+    element.style.height = (element.scrollHeight)+"px";
+    let resizeTextarea = function( element ) {       
+      let scrollLeft = window.pageXOffset || (document.documentElement).scrollLeft;
+      let scrollTop  = window.pageYOffset || (document.documentElement).scrollTop;
+      element.style.height ="1px";
+      element.style.height = (element.scrollHeight)+"px";
+      window.scrollTo(scrollLeft, scrollTop);
+    };
+    element.oninput= () => {
+      resizeTextarea( element );
+    }
   }
-
   autoGrowcommentsBox1() {
-    let element = document.getElementById("purpose")
-    element.style.height = "5px";
-    element.style.height = (element.scrollHeight + 10) + "px";
+    let element = document.getElementById("purpose");
+    element.style.height = (element.scrollHeight)+"px";
+    let resizeTextarea = function( element ) {       
+      let scrollLeft = window.pageXOffset || (document.documentElement).scrollLeft;
+      let scrollTop  = window.pageYOffset || (document.documentElement).scrollTop;
+      element.style.height ="1px";
+      element.style.height = (element.scrollHeight)+"px";
+      window.scrollTo(scrollLeft, scrollTop);
+    };
+    element.oninput= () => {
+      resizeTextarea( element );
+    }
   }
 
   getFileCategoriesList(){
