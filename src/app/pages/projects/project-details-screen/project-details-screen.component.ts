@@ -52,7 +52,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   @ViewChild("sort14", { static: false }) sort14: MatSort;
   @ViewChild("sort11", { static: false }) sort11: MatSort;
   @ViewChild("paginator104", { static: false }) paginator104: MatPaginator;
-  displayedColumns9: string[] = ["fileName", "uploadedBy", "uploadedDate", "fileSize"];
+  displayedColumns9: string[] = ["fileName","category", "uploadedBy", "uploadedDate", "fileSize"];
   @ViewChild("sort16", { static: false }) sort16: MatSort;
   @ViewChild("paginator109", { static: false }) paginator109: MatPaginator;
   @ViewChild("sort12", { static: false }) sort12: MatSort;
@@ -468,6 +468,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   getLatestFiveAttachments(projectid) {
     this.rpa.getLatestfiveAttachments(projectid, "UTC").subscribe(data => {
       this.latestFiveDocs = data;
+      console.log(data)
       this.dataSource9 = new MatTableDataSource(this.latestFiveDocs);
       this.dataSource9.sort = this.sort16;
       this.dataSource9.paginator = this.paginator109;
@@ -1504,9 +1505,6 @@ export class ProjectDetailsScreenComponent implements OnInit {
         });
       }
     })
-    // setTimeout(() => {
-    //   this.xmlConvertToImageformate()
-    // }, 1000);
   }
 
   createBpmn1(byteBpmn, byteBpmn1) {
@@ -1641,19 +1639,23 @@ export class ProjectDetailsScreenComponent implements OnInit {
           "projectId": this.project_id,
           "asisprocessImage": url,
           "asisprocessName": this.asIsProcessBpmn.bpmnProcessName,
-          "version": this.asIsProcessBpmn.version
+          "asisprocessversion": this.asIsProcessBpmn.version,
+          "tobeprocessName" :null
         }
       } else {
         res_body = {
           "projectId": this.project_id,
           "tobeprocessImage": url,
           "tobeprocessName": this.toBeProcessBpmn.bpmnProcessName,
-          "version": this.toBeProcessBpmn.version
+          "tobeprocessversion": this.toBeProcessBpmn.version,
+          "asisprocessName": null,
         }
       }
     } else {
       res_body = {
         "projectId": this.project_id,
+        "tobeprocessName" :null,
+        "asisprocessName": null
       }
     }
     this.rpa.processDocumentDownload(res_body).subscribe(res => {
@@ -1669,13 +1671,13 @@ export class ProjectDetailsScreenComponent implements OnInit {
       "projectId": this.project_id,
       "asisprocessImage": url,
       "asisprocessName": this.asIsProcessBpmn.bpmnProcessName,
+      "asisprocessversion": this.asIsProcessBpmn.version,
       "tobeprocessImage": url_1,
       "tobeprocessName": this.toBeProcessBpmn.bpmnProcessName,
-      "version": 0,
+      "tobeprocessversion": this.toBeProcessBpmn.version,
     }
     this.rpa.processDocumentDownload(res_body).subscribe(res => {
       this.downloadData = res
-      console.log(res)
       this.downloadFile()
     });
   }
