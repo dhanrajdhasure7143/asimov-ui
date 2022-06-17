@@ -1459,4 +1459,8 @@ deleteRpaDesign(body){
 getTaskCategoriesByProject(projectid){
   return this.http.get("/platform-service/task/fetchTaskCategoriesByProject?projectId="+projectid)
 }
+getFileCategoriesList(id){
+  return this.http.get("/platform-service/document/fileCategoriesbyProject?projectId="+id)
+}
+
 }
