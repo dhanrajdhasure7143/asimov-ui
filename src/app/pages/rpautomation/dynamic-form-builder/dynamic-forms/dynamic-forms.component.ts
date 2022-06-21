@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { iter } from '@amcharts/amcharts4/core';
+import { Base64 } from 'js-base64';
 @Component({
   selector: 'app-dynamic-forms',
   templateUrl: './dynamic-forms.component.html',
@@ -36,9 +37,16 @@ export class DynamicFormsComponent implements OnInit {
     }    
   }
   edit(obj) {
-    console.log("editobj", obj)
     this.editfill = true
     this.id = obj.id;
+    let key=Object.keys(obj).find(item=>item.split("_")[0]=="fillValueType")
+    let valueKey=Object.keys(obj).find(item=>item.split("_")[0]=="fillValue");
+    if(valueKey != undefined && key != undefined) 
+      if(obj[key]=="password")
+      {
+        this.fields.find(item=>item.name=="fillValue").type="password"
+        obj[valueKey]=Base64.decode(obj[valueKey]);
+      }
     if (obj.Action_525 == 'fill') {
       this.fields.forEach(item => {
         if (item.visibility == false) {
@@ -57,19 +65,17 @@ export class DynamicFormsComponent implements OnInit {
           if (this.fields.find(fieldItem => fieldItem.id == parseInt(item)) != undefined) {
             this.fields.find(fieldItem => fieldItem.id == parseInt(item)).visibility = false;
             this.fields.find(fieldItem => fieldItem.id == parseInt(item)).required = false;
-            // this.form.patchValue(obj);
           }
         });
         if(!item.visibility){
-          console.log("item", this.form.get([item.name+'_'+item.id]))
-          console.log("fileds",this.fields)
           this.form.get([item.name+'_'+item.id]).clearValidators();
          }
          this.form.get([item.name+'_'+item.id]).updateValueAndValidity()
          this.form.patchValue(obj);
 
       })
-    } else {
+    }
+    else {
       this.form.patchValue(obj);
     }
   }
@@ -77,9 +83,26 @@ export class DynamicFormsComponent implements OnInit {
     var index = this.fillarray.indexOf(obj);
     this.fillarray.splice(index, 1);
   }
+  checkRecord(record, field)
+  {
+      let key=(Object.keys(record).find((item:any)=>item.split("_")[0]=="fillValueType"))
+      if(key!=undefined)
+        if(record[key]=="password"&& field.name=="fillValue")
+            return true;
+      return false;
+  }  
   Push() {
-    if (this.editfill == true) {
+    let fillValueTypeId=this.fields.find((item:any)=>item.name=="fillValueType")!=undefined?this.fields.find((item:any)=>item.name=="fillValueType").id:"";
+    let fillValueId=this.fields.find((item:any)=>item.name=="fillValue")!=undefined?this.fields.find((item:any)=>item.name=="fillValue").id:"";
+    if(this.editfill == true) {
       let value = (this.form.value)
+      if(value["fillValueType_"+fillValueTypeId] != undefined)
+      {
+        if(value["fillValueType_"+fillValueTypeId]=="password")
+        {
+          value["fillValue_"+fillValueId]=Base64.encode(value["fillValue_"+fillValueId])
+        }
+      }
       value.id = this.id
       for (let i = 0; i < this.fillarray.length; i++) {
         if (this.fillarray[i].id == this.id) {
@@ -88,14 +111,6 @@ export class DynamicFormsComponent implements OnInit {
         }
       }
       this.data = this.fillarray.map(p => {
-        // return{
-        //   "webElementType":p.webElementType_223,
-        //   "webElementValue":p.webElementValue_224,
-        //   "fillValueType":p.fillValueType_222,
-        //   "fillValue":p.fillValue_225,
-        //   "id":p.id
-
-        // }
         let filteredobject = {};
         let sample = (Object.keys(p));
         sample.map(item => {
@@ -104,13 +119,19 @@ export class DynamicFormsComponent implements OnInit {
           else
             filteredobject["id"] = p[item];
         })
-        console.log("object", filteredobject)
         return filteredobject;
       })
     }
     else {
-      let value = (this.form.value)
-      this.fillarray.push(this.form.value);
+      let value = (this.form.value);
+      if(value["fillValueType_"+fillValueTypeId] != undefined)
+      {
+        if(value["fillValueType_"+fillValueTypeId]=="password")
+        {
+          value["fillValue_"+fillValueId]=Base64.encode(value["fillValue_"+fillValueId])
+        }
+      }
+      this.fillarray.push(value);
       this.fillarray.forEach((item, i) => {
         item.id = i + 1;
       });
@@ -123,16 +144,7 @@ export class DynamicFormsComponent implements OnInit {
           else
             filteredobject["id"] = p[item];
         })
-        console.log("object", filteredobject)
         return filteredobject;
-        // return{
-        //   "webElementType":p.webElementType_223,
-        //   "webElementValue":p.webElementValue_224,
-        //   "fillValueType":p.fillValueType_222,
-        //   "fillValue":p.fillValue_225,
-        //   "id":p.id
-
-        // }
       })
     }  
     this.form.reset();   
