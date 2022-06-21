@@ -174,6 +174,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   bpmnList:any[]=[];
   asIsProcessId:any;
   toBeProcessId:any;
+  business_benefits:any;
 
   constructor(private dt: DataTransferService, private route: ActivatedRoute, private dataTransfer: DataTransferService, private rpa: RestApiService,
     private modalService: BsModalService, private formBuilder: FormBuilder, private router: Router,
@@ -331,14 +332,11 @@ export class ProjectDetailsScreenComponent implements OnInit {
 
   }
   resetdocform() {
-
-
     this.uploadFileFormDetails.reset();
     this.uploadFileFormDetails.get("category").setValue("");
     this.uploadFileFormDetails.get("comments").setValue("");
-
-
   }
+
   chnagefileUploadForm(e) {
       if(this.file_Category == "Template"){
         this.fileList=[];
@@ -361,19 +359,18 @@ export class ProjectDetailsScreenComponent implements OnInit {
     // this.multiFilesArray.push(
     //   e.target.files[0]
     // )
-
-
   }
+
   removeSelectedFile(index) {
     // Delete the item from fileNames list
     this.listOfFiles.splice(index, 1);
     // delete file from FileList
     this.fileList.splice(index, 1);
   }
+
   getFileDetails() {
     this.rpa.getFileDetails(this.projectid).subscribe(data => {
       this.uploadedFiledata = data.uploadedFiles.reverse();
-
       this.dataSource3 = new MatTableDataSource(this.uploadedFiledata);
       this.dataSource3.sort = this.sort11;
       this.dataSource3.paginator = this.paginator101;
@@ -396,14 +393,15 @@ export class ProjectDetailsScreenComponent implements OnInit {
     })
 
   }
+
   getreducedValue(value) {
     if (value.length > 15)
       return value.substring(0, 16) + '...';
     else
       return value;
   }
-  downloadExcel() {
 
+  downloadExcel() {
     this.spinner.show();
     this.rpa.exportproject(this.project_id).subscribe(data => {
       let response: any = data;
@@ -413,14 +411,13 @@ export class ProjectDetailsScreenComponent implements OnInit {
         link.href = (`data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,${response.encryptedString}`);
         link.click();
         Swal.fire("Success", response.message, "success");
-
       }
       else {
         Swal.fire("Error", response.errorMessage, "error");
       }
     })
-
   }
+
   checktodelete() {
     const selectedresourcedata = this.resources_list.filter(product => product.checked).map(p => p.id);
     if (selectedresourcedata.length > 0) {
@@ -441,6 +438,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
     this.resources_list.find(data => data.id == id).checked = event.target.checked;
     this.checktodelete();
   }
+
   inputNumberOnly(event) {
     let numArray = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "Backspace", "Tab"]
     let temp = numArray.includes(event.key); //gives true or false
@@ -448,10 +446,10 @@ export class ProjectDetailsScreenComponent implements OnInit {
       event.preventDefault();
     }
   }
+
   getTaskandCommentsData() {
     this.rpa.gettaskandComments(this.project_id).subscribe(data => {
       this.tasks = data;
-      console.log("tasks",data)
       this.getBPMNbyProcessId()
       this.dataSource2 = new MatTableDataSource(this.tasks);
       this.dataSource2.sort = this.sort10;
@@ -481,13 +479,9 @@ export class ProjectDetailsScreenComponent implements OnInit {
       this.userrole = data
       for (let index = 0; index <= this.userrole.message.length; index++) {
         this.rolename = this.userrole.message[index];
-
         this.rolelist.push(this.rolename.name)
         this.roles = this.rolelist.join(',')
-
       }
-      //this.rolename=this.userrole.message[0].name
-
     })
   }
 
@@ -564,7 +558,6 @@ export class ProjectDetailsScreenComponent implements OnInit {
   }
 
   getImage() {
-
     const userid = localStorage.getItem('ProfileuserId');
     this.rpa.getUserDetails(userid).subscribe(res => {
       this.retrieveResonse = res;
@@ -584,22 +577,17 @@ export class ProjectDetailsScreenComponent implements OnInit {
       this.retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;
     }
     );
-
-
   }
 
   onProcessChange(processId: number) {
-
     let process = this.selected_process_names.find(process => process.processId == processId);
     if (process != undefined) {
       let processOwner: any = this.users_list.find(item => (item.userId.userId == process.ProcessOwner))
       //let processOwner:any=this.userslist.find(item=>(`${item.userId.firstName} ${item.userId.lastName}`==process.createdBy))
       if (processOwner != undefined) {
-
         document.getElementById('processowner')['value'] = processOwner.userId.userId;
         this.processownername = processOwner.userId.userId;
         this.processOwnerFlag = false;
-
         // this.createprogram.get("processOwner").setValue(processOwner.userId.userId);
         // this.processOwner=false;
       } else {
@@ -630,8 +618,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
       this.resources_list = users;
       if (this.resources_list.length > 0) {
         this.Resourcecheckeddisabled = false;
-      }
-      else {
+      } else {
         this.Resourcecheckeddisabled = true;
       }
       let users_updateddata = users
@@ -704,7 +691,6 @@ export class ProjectDetailsScreenComponent implements OnInit {
   }
 
   navigateToWorkspace(data) {
-
     localStorage.setItem('project_id', this.projectDetails.id);
     if (data.taskCategory == "RPA Implementation") {
       this.router.navigate(['/pages/rpautomation/designer'], { queryParams: { projectId: this.projectDetails.id, botId: data.correlationID } })
@@ -735,12 +721,13 @@ export class ProjectDetailsScreenComponent implements OnInit {
     this.updatetaskForm.get("editcomment").setValue("");
     //  this.taskcomments=this.taskcomments;
   }
+
   canceltaskform() {
     this.commentnumber = null
     this.updatetaskForm.get("editcomment").setValue("");
     this.updatetaskmodalref.hide();
-
   }
+
   postcomments(comments: string) {
     if (comments != "") {
       let now = new Date().getTime();
@@ -753,6 +740,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
     }
     (<HTMLInputElement>document.getElementById("addcomment")).value = '';
   }
+
   updatetask() {
     if (this.updatetaskForm.valid) {
       this.spinner.show();
@@ -767,17 +755,14 @@ export class ProjectDetailsScreenComponent implements OnInit {
         if (status.errorMessage == undefined) {
           Swal.fire("Success", "Task Updated Successfully !!", "success");
           this.getTaskandCommentsData();
-
         }
         else {
           Swal.fire("Error", status.errorMessage, "error");
         }
-
       }, err => {
         Swal.fire("Error", "Something Went Wrong", "error");
       });
-    }
-    else {
+    } else {
       alert("please fill all details");
     }
   }
@@ -825,7 +810,6 @@ export class ProjectDetailsScreenComponent implements OnInit {
       }
     });
   }
-
 
   addresources(event) {
     let item_data = {
@@ -938,6 +922,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
     this.commentnumber = null
     this.updatetaskForm.get("editcomment").setValue("");
   }
+
   navigateToProjectRepo() {
     if (localStorage.getItem('project_id') == "null") {
       this.router.navigate(["/pages/projects/projectreposcreen"], { queryParams: { "id": this.projectDetails.id } })
@@ -954,31 +939,27 @@ export class ProjectDetailsScreenComponent implements OnInit {
     this.updatetaskForm.get("editcomment").setValue(comments);
     this.showeditcomment = true;
     this.commentnumber = i
-
   }
+
   updatecomment(id) {
     this.commentnumber = null
     for (let i = 0; i < this.taskcomments.length; i++) {
       if (this.taskcomments[i].id == id) {
         this.taskcomments[i].comments = this.updatetaskForm.get("editcomment").value
-
       }
     }
-
-
   }
 
   onFileSelected(e) {
-
     this.fileUploadData = <File>e.target.files[0]
-
-
   }
+
   uploadtaskfile(createmodal, data) {
     this.getFileCategories();
     this.selectedtaskfileupload = data
     this.uploadtaskFilemodalref = this.modalService.show(createmodal, { class: "modal-lr" })
   }
+
   getFileCategories() {
     this.rpa.getFileCategories().subscribe(data => {
       this.filecategories = data;
@@ -998,16 +979,8 @@ export class ProjectDetailsScreenComponent implements OnInit {
     fileData.append("projectId", this.selectedtaskfileupload.projectId)
     fileData.append("taskId", this.selectedtaskfileupload.id)
     fileData.append("description", this.uploadtaskFileForm.get("description").value)
-
-
     this.rpa.uploadProjectFile(fileData).subscribe(res => {
-
-
       let message: any = res;
-
-      //if(res.message!=undefined)
-      //{
-
       this.getTaskandCommentsData();
       this.getLatestFiveAttachments(this.selectedtaskfileupload.projectId)
       Swal.fire({
@@ -1024,16 +997,12 @@ export class ProjectDetailsScreenComponent implements OnInit {
         this.spinner.hide()
         this.uploadtaskFileForm.reset();
       })
-
-      //  }
-      //  else
-      //  Swal.fire("Error",res.message,"error");
-
     })
     this.uploadtaskFileForm.reset();
     this.listOfFiles = [];
     this.fileList = [];
   }
+
   updateprojectDetails() {
     this.spinner.show()
     this.projectDetails["type"] = "Project";
@@ -1041,8 +1010,6 @@ export class ProjectDetailsScreenComponent implements OnInit {
     this.projectDetails.endDate = this.projectenddate;
     this.projectDetails.startDate = this.projectStartDate;
     this.projectDetails.effortsSpent = parseInt(this.projectDetails.effortsSpent)
-
-
     this.rpa.update_project(this.projectDetails).subscribe(res => {
       this.spinner.hide()
       let response: any = res;
@@ -1055,7 +1022,6 @@ export class ProjectDetailsScreenComponent implements OnInit {
     });
   }
 
-
   downloadTaskAttachment(attachment) {
     let data = [attachment.fileName]
     this.rpa.downloadTaskAttachment(data).subscribe(data => {
@@ -1067,18 +1033,19 @@ export class ProjectDetailsScreenComponent implements OnInit {
       link.click();
     })
   }
+
   uploadtaskFilemodalCancel() {
     this.uploadtaskFileForm.reset();
     this.listOfFiles = [];
     this.fileList = [];
     this.uploadtaskFilemodalref.hide();
   }
+
   uploadFilemodalCancel() {
     this.uploadFileFormDetails.reset();
     this.listOfFiles = [];
     this.fileList = [];
     this.uploadFilemodalref.hide();
-
   }
 
   endDateMethod() {
@@ -1096,6 +1063,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
       this.initiatives = response;
     })
   }
+
   projectNameMaxLength(value) {
     if (value.length > 50) {
       this.projectNameFlag = true;
@@ -1103,6 +1071,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
       this.projectNameFlag = false;
     }
   }
+
   projectPurposeMaxLength(value) {
     if (value.length > 150) {
       this.projectPurposeFlag = true;
@@ -1110,6 +1079,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
       this.projectPurposeFlag = false;
     }
   }
+
   uploadFileDescriptionMaxLength(value) {
     if (value.length > 150) {
       this.uploadFileDescriptionFlag = true;
@@ -1117,6 +1087,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
       this.uploadFileDescriptionFlag = false;
     }
   }
+
   getUsersInfo() {
     this.sub = this.dataTransfer.logged_userData.subscribe(res => {
       if (res) {
@@ -1125,11 +1096,10 @@ export class ProjectDetailsScreenComponent implements OnInit {
           //this.sub.unsubscribe();
           this.rpa.getusername(tenantid).subscribe(res => {
             this.users_data = res;
-
           })
       }
     });
-  }uestion
+  }
 
   getUserName(event) {
     var userName;
@@ -1189,6 +1159,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
       "programId": this.programId?this.programId:'',
       "businessChallenge": this.businessChallange,
       "purpose": this.businessPurpose,
+      "benefits": this.business_benefits,
       "createdBy": localStorage.getItem("firstName") + " " + localStorage.getItem("lastName"),
       "createdUserId": localStorage.getItem("ProfileuserId")
     }
@@ -1219,7 +1190,8 @@ export class ProjectDetailsScreenComponent implements OnInit {
     let req_body = {
       "processUnderstandingId": this.processUnderstanding.processUnderstandingId,
       "businessChallenge": this.businessChallange,
-      "purpose": this.businessPurpose
+      "purpose": this.businessPurpose,
+      "benefits": this.business_benefits
     }
     this.rpa.businessDetailsUpdate(req_body).subscribe(res => {
       this.spinner.hide();
@@ -1353,11 +1325,13 @@ export class ProjectDetailsScreenComponent implements OnInit {
   editBusinessProcess(event) {
     event.stopPropagation();
     this.isProcessEdit = true;
-    this.businessChallange = this.processUnderstanding.businessChallenge
+    this.businessChallange = this.processUnderstanding.businessChallenge;
     this.businessPurpose = this.processUnderstanding.purpose;
+    this.business_benefits =  this.processUnderstanding.benefits;
     setTimeout(() => {
       this.autoGrowcommentsBox();
       this.autoGrowcommentsBox1();
+      this.autoGrowcommentsBox2();
     }, 100);
   }
 
@@ -1432,7 +1406,6 @@ export class ProjectDetailsScreenComponent implements OnInit {
         this.toBeProcessId = e.process
       }
     });
-    console.log(filter_data,this.tasks);
     this.asIsProcessBpmn ={};
     this.toBeProcessBpmn ={};
     if (filter_data.length > 0) {
@@ -1525,13 +1498,10 @@ export class ProjectDetailsScreenComponent implements OnInit {
         });
       }
     })
-    // setTimeout(() => {
-    //   this.xmlConvertToImageformate()
-    // }, 1000);
   }
 
-
   xmlConvertToImageformate(e) {
+    this.spinner.show();
     e.stopPropagation();
     if (this.bpmnList.length > 0) {
       if (this.bpmnList.length == 1) {
@@ -1615,8 +1585,6 @@ export class ProjectDetailsScreenComponent implements OnInit {
 
   getPDDFile(url?) {
     let res_body = {};
-    console.log(this.asIsProcessBpmn,this.asIsProcessId)
-    console.log(this.toBeProcessBpmn,this.toBeProcessId)
     if (url) {
       if (this.asIsProcessId) {
         res_body = {
@@ -1665,6 +1633,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   }
 
   downloadFile() {
+    this.spinner.hide();
     var link = document.createElement("a");
     link.href = 'data:image/jpeg;base64,' + this.downloadData.data;
     let fileName = "test"
@@ -1674,33 +1643,22 @@ export class ProjectDetailsScreenComponent implements OnInit {
     link.click();
   }
 
-
-  // autoGrowcommentsBox() {
-  //   let element =document.getElementById("business_challange")
-  //     element.style.height ="5px";
-  //     element.style.height = (element.scrollHeight+10)+"px";
-  // }
-  // autoGrowcommentsBox1() {
-  //   let element =document.getElementById("purpose")
-  //     element.style.height ="5px";
-  //     element.style.height = (element.scrollHeight+10)+"px";
-  //   }
   autoGrowcommentsBox() {
     let element =document.getElementById("business_challange");
-    element.style.height = (element.scrollHeight)+"px";
-    let resizeTextarea = function( element ) {       
-      let scrollLeft = window.pageXOffset || (document.documentElement).scrollLeft;
-      let scrollTop  = window.pageYOffset || (document.documentElement).scrollTop;
-      element.style.height ="1px";
-      element.style.height = (element.scrollHeight)+"px";
-      window.scrollTo(scrollLeft, scrollTop);
-    };
-    element.oninput= () => {
-      resizeTextarea( element );
-    }
+    this.textAreaAutoAdjust(element);
   }
+
   autoGrowcommentsBox1() {
     let element = document.getElementById("purpose");
+    this.textAreaAutoAdjust(element);
+  }
+
+  autoGrowcommentsBox2() {
+    let element = document.getElementById("_benefits");
+    this.textAreaAutoAdjust(element);
+  }
+
+  textAreaAutoAdjust(element){
     element.style.height = (element.scrollHeight)+"px";
     let resizeTextarea = function( element ) {       
       let scrollLeft = window.pageXOffset || (document.documentElement).scrollLeft;

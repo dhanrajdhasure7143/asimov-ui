@@ -107,6 +107,7 @@ this.route.queryParams.subscribe(data=>{​​​​​​​​
   
 
   createUploadRequest(createmodal){
+    this.getFileCategoriesList();
     this.createRequestmodalref=this.modalService.show(createmodal,{class:"modal-lr"})
   }
   
