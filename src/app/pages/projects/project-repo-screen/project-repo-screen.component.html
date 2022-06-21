@@ -490,7 +490,7 @@
           </mat-card>
       </div>
       <ng-template class="modal-lr" #createRequestmodal>
-        <app-request-file [createRequestmodalref]="createRequestmodalref" [projectid]="projectid" (onrequest)="onrequestFileData($event)"></app-request-file>
+        <app-request-file [createRequestmodalref]="createRequestmodalref" [projectid]="projectid" [filecategoriesList]="filecategoriesList" (onrequest)="onrequestFileData($event)"></app-request-file>
       </ng-template>
 
       <ng-template #denyFileRequestmodal>
@@ -550,7 +550,9 @@
                     <div class="form-fields col-md-12">
                         <label for="fileCategory">File Category<span class="star">*</span></label>
                         <select class="form-control"  formControlName="fileCategory" name="file_cate1" [(ngModel)]="file_Category" required>
-                          <option  [value]="null" disabled hidden>Select Category</option>
+                          <option [value]="undefined" disabled hidden>Select Category</option>
+                          <option [value]="null" disabled hidden>Select Category</option>
+                          <option [value]="" disabled hidden>Select Category</option>
                           <option value="" disabled hidden>Select Category</option>
                           <option *ngFor="let categories of filecategoriesList" [disabled]="categories.display == 'false'">{{categories.category}}</option>
                         </select>
