@@ -62,6 +62,8 @@ export class DropDownComponent implements OnInit {
           this.form.get([this.fieldsWithRef[i].name + '_' + this.fieldsWithRef[i].id]).clearValidators();
         }
         //Need to update code
+         //for prod id is 580
+         //for dev 525
         if (item1.id != 580) {
           this.form.get([this.fieldsWithRef[i].name + '_' + this.fieldsWithRef[i].id]).reset();
         }

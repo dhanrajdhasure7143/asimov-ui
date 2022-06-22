@@ -84,8 +84,12 @@ export class DynamicFormsComponent implements OnInit {
   edit(obj) {
     console.log("editobj", obj)
     this.editfill = true
-    this.id = obj.id;
-    if (obj.Action_525 == 'fill') {
+    this.id = obj.id
+     // //dev code
+    // let action_id= obj.Action_525
+    //prod code for id
+    let action_id= obj.Action_580
+    if (action_id == 'fill') {
       this.fields.forEach(item => {
         if (item.visibility == false) {
           item.visibility = true;
@@ -95,9 +99,9 @@ export class DynamicFormsComponent implements OnInit {
           this.form.patchValue(obj)
         }, 100);
       })
-    } else if (obj.Action_525 == 'click') {
+    } else if (action_id == 'click') {
     this.fields.forEach(item => {
-        let hideAttributes: any = item.options.find(item => item.key == obj.Action_525) != undefined ? item.options.find(item => item.key == obj.Action_525).hide_attributes : "";
+        let hideAttributes: any = item.options.find(item => item.key == action_id) != undefined ? item.options.find(item => item.key == action_id).hide_attributes : "";
         let hideAttributesIds: any = hideAttributes != null ? hideAttributes.split(",") : [];
         hideAttributesIds.forEach(item => {
           if (this.fields.find(fieldItem => fieldItem.id == parseInt(item)) != undefined) {
