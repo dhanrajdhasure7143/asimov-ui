@@ -81,7 +81,8 @@ export class DynamicFormsComponent implements OnInit {
       this.onSubmit.emit(this.form.value)
     }    
   }
-  edit(obj) {
+  edit(webAutomationObject) {
+    let obj=Object.assign({}, webAutomationObject);
     console.log("editobj", obj)
     this.editfill = true
     this.id = obj.id
