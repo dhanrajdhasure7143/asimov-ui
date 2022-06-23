@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { iter } from '@amcharts/amcharts4/core';
+import { Base64 } from 'js-base64';
 @Component({
   selector: 'app-dynamic-forms',
   template:`
@@ -30,8 +31,13 @@ import { iter } from '@amcharts/amcharts4/core';
                 <tbody>
                     <tr *ngFor="let eachObj of fillarray  | paginate: { itemsPerPage: 2,currentPage: q }">
                     <td *ngFor="let field of fields">
-                     {{eachObj[field.name+"_"+field.id]?eachObj[field.name+"_"+field.id]:'NA'}}
-                     </td>                    
+                    <span *ngIf="checkRecord(eachObj, field)==false">
+                        {{eachObj[field.name+"_"+field.id]?eachObj[field.name+"_"+field.id]:'NA'}}
+                    </span>
+                    <span *ngIf="checkRecord(eachObj,field)==true">
+                      *******
+                    </span>
+                    </td>                    
                        <td>
                        <button tooltip="Edit" placement="bottom"  (click)="edit(eachObj)"><img src="../../../../assets/images/RPA/icon_latest/edit.svg" alt="" class="testplus">&nbsp;</button>
                      <button tooltip="Delete" placement="bottom"  (click)="delete(eachObj)"><img src="../../../../assets/images/RPA/icon_latest/delete.svg" alt="" class="testplus">&nbsp;</button>
@@ -81,16 +87,25 @@ export class DynamicFormsComponent implements OnInit {
       this.onSubmit.emit(this.form.value)
     }    
   }
-  edit(webAutomationObject) {
-    let obj=Object.assign({}, webAutomationObject);
+  edit(obj) {
     console.log("editobj", obj)
     this.editfill = true
-    this.id = obj.id
-     // //dev code
-    // let action_id= obj.Action_525
-    //prod code for id
-    let action_id= obj.Action_580
-    if (action_id == 'fill') {
+    this.id = obj.id;
+    let key=Object.keys(obj).find(item=>item.split("_")[0]=="fillValueType")
+    let valueKey=Object.keys(obj).find(item=>item.split("_")[0]=="fillValue");
+    if(valueKey != undefined && key != undefined) 
+      if(obj[key]=="password")
+      {
+        this.fields.find(item=>item.name=="fillValue").type="password"
+        this.fields.find(item=>item.name=="fillValueType").value="password"
+        
+        obj[valueKey]=Base64.decode(obj[valueKey]);
+      }
+      else
+      {
+        this.fields.find(item=>item.name=="fillValue").type="textarea"
+      }
+    if (obj.Action_525 == 'fill') {
       this.fields.forEach(item => {
         if (item.visibility == false) {
           item.visibility = true;
@@ -100,9 +115,9 @@ export class DynamicFormsComponent implements OnInit {
           this.form.patchValue(obj)
         }, 100);
       })
-    } else if (action_id == 'click') {
+    } else if (obj.Action_525 == 'click') {
     this.fields.forEach(item => {
-        let hideAttributes: any = item.options.find(item => item.key == action_id) != undefined ? item.options.find(item => item.key == action_id).hide_attributes : "";
+        let hideAttributes: any = item.options.find(item => item.key == obj.Action_525) != undefined ? item.options.find(item => item.key == obj.Action_525).hide_attributes : "";
         let hideAttributesIds: any = hideAttributes != null ? hideAttributes.split(",") : [];
         hideAttributesIds.forEach(item => {
           if (this.fields.find(fieldItem => fieldItem.id == parseInt(item)) != undefined) {
@@ -128,9 +143,28 @@ export class DynamicFormsComponent implements OnInit {
     var index = this.fillarray.indexOf(obj);
     this.fillarray.splice(index, 1);
   }
+
+
+  checkRecord(record, field)
+  {
+      let key=(Object.keys(record).find((item:any)=>item.split("_")[0]=="fillValueType"))
+      if(key!=undefined)
+        if(record[key]=="password"&& field.name=="fillValue")
+            return true;
+      return false;
+  }  
   Push() {
+    let fillValueTypeId=this.fields.find((item:any)=>item.name=="fillValueType")!=undefined?this.fields.find((item:any)=>item.name=="fillValueType").id:"";
+    let fillValueId=this.fields.find((item:any)=>item.name=="fillValue")!=undefined?this.fields.find((item:any)=>item.name=="fillValue").id:"";
     if (this.editfill == true) {
       let value = (this.form.value)
+      if(value["fillValueType_"+fillValueTypeId] != undefined)
+      {
+        if(value["fillValueType_"+fillValueTypeId]=="password")
+        {
+          value["fillValue_"+fillValueId]=Base64.encode(value["fillValue_"+fillValueId])
+        }
+      }
       value.id = this.id
       for (let i = 0; i < this.fillarray.length; i++) {
         if (this.fillarray[i].id == this.id) {
@@ -161,6 +195,13 @@ export class DynamicFormsComponent implements OnInit {
     }
     else {
       let value = (this.form.value)
+      if(value["fillValueType_"+fillValueTypeId] != undefined)
+      {
+        if(value["fillValueType_"+fillValueTypeId]=="password")
+        {
+          value["fillValue_"+fillValueId]=Base64.encode(value["fillValue_"+fillValueId])
+        }
+      }
       this.fillarray.push(this.form.value);
       this.fillarray.forEach((item, i) => {
         item.id = i + 1;
