@@ -106,7 +106,8 @@ export class DynamicFormsComponent implements OnInit {
       {
         this.fields.find(item=>item.name=="fillValue").type="textarea"
       }
-    if (obj.Action_525 == 'fill') {
+      let action_id= obj.Action_580
+    if (action_id == 'fill') {
       this.fields.forEach(item => {
         if (item.visibility == false) {
           item.visibility = true;
@@ -116,9 +117,9 @@ export class DynamicFormsComponent implements OnInit {
           this.form.patchValue(obj)
         }, 100);
       })
-    } else if (obj.Action_525 == 'click') {
+    } else if (action_id == 'click') {
     this.fields.forEach(item => {
-        let hideAttributes: any = item.options.find(item => item.key == obj.Action_525) != undefined ? item.options.find(item => item.key == obj.Action_525).hide_attributes : "";
+        let hideAttributes: any = item.options.find(item => item.key == action_id) != undefined ? item.options.find(item => item.key == action_id).hide_attributes : "";
         let hideAttributesIds: any = hideAttributes != null ? hideAttributes.split(",") : [];
         hideAttributesIds.forEach(item => {
           if (this.fields.find(fieldItem => fieldItem.id == parseInt(item)) != undefined) {
