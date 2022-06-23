@@ -13,6 +13,7 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatPaginatorIntl} from '@angular/material';
 import { CustomMatPaginatorIntl } from 'src/app/shared/custom-mat-paginator-int';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { DragDropModule } from "@angular/cdk/drag-drop";
 @NgModule({
   declarations: [
     DynamicFormsComponent, 
@@ -28,7 +29,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     ReactiveFormsModule,
     MatTableModule,
     MatPaginatorModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    DragDropModule
   ],
   exports: [DynamicFormsComponent],
   providers: [{

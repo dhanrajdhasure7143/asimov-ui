@@ -19,9 +19,10 @@
                                 <th class="testcell">Actions</th> 
                             </tr>    
                         </thead>
-                        <tbody>
-                            <tr *ngFor="let eachObj of fillarray  | paginate: { itemsPerPage: 2,currentPage: q }">
-                                <td *ngFor="let field of fields"  class="testcell">
+                        <tbody cdkDropList (cdkDropListDropped)="drop($event)">
+                            <tr *ngFor="let eachObj of fillarray | paginate: { itemsPerPage: 2,currentPage: q }"                           
+                            cdkDrag>
+                              <td *ngFor="let field of fields"  class="testcell">
                                     {{eachObj[field.name+"_"+field.id]?eachObj[field.name+"_"+field.id]:'NA'}}
                                 </td>                    
                                <td class="testcell">
@@ -37,7 +38,7 @@
                     </table>
                 </div>
                 <div class="col-md-12 p-0 pagicl text-right">
-                    <pagination-controls (pageChange)="q = $event"></pagination-controls>
+                     <pagination-controls  (pageChange)="q = $event"></pagination-controls> 
                 </div>      
             </div>
         </div>
