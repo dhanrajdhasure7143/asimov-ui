@@ -7,12 +7,14 @@ import { RpaStudioDesignerworkspaceComponent } from '../../rpa-studio-designerwo
     selector: 'dropdown',
     template: `
       <div [formGroup]="form">
-        <select [attr.disabled]="feilddisable" [required]="field.required==true" (change)="onChangeEmail($event,field.options)" class="form-control" [value]="field.value" [id]="field.id" [formControlName]="field.name+'_'+field.id">
+        <select [attr.disabled]="feilddisable" [required]="field.required==true" (change)="onChangeEmail($event,field.options, field)" class="form-control" [value]="field.value" [id]="field.id" [formControlName]="field.name+'_'+field.id">
         <option  value="" hidden disabled>{{field.placeholder}}</option>
         <option  value="null" hidden disabled>{{field.placeholder}}</option>
         <option  value="undefined"  hidden disabled>{{field.placeholder}}</option>
         <option *ngFor="let opt of field.options" [value]="opt.key">{{opt.label}}</option>
         <option  *ngIf="field.label=='Email'" value="New">New</option>
+        <option *ngIf="field.name=='fillValueType'" value="password">Password</option>
+       
         </select>
       </div>
     `,
@@ -43,7 +45,7 @@ export class DropDownComponent implements OnInit {
       this.fieldsWithoutRef=[...this.designer.fields];
     }
 
-  onChangeEmail(event, options) {
+  onChangeEmail(event, options, field) {
     if (event.target.value == 'New') {
       this.designer.createcredentials();
     }
@@ -61,10 +63,7 @@ export class DropDownComponent implements OnInit {
         if (!item1.visibility) {
           this.form.get([this.fieldsWithRef[i].name + '_' + this.fieldsWithRef[i].id]).clearValidators();
         }
-        //Need to update code
-         //for prod id is 580
-         //for dev 525
-        if (item1.id != 580) {
+        if (item1.id != 525) {
           this.form.get([this.fieldsWithRef[i].name + '_' + this.fieldsWithRef[i].id]).reset();
         }
       })
@@ -74,6 +73,19 @@ export class DropDownComponent implements OnInit {
           this.fieldsWithRef.find(item2 => item2.id ==  item.id).required = true;
         }
       })
+    }
+
+
+    if(field.name=="fillValueType")
+    {
+      if(event.target.value=="password")
+      {
+        this.fieldsWithRef.find((item:any)=>item.name=="fillValue").type="password"
+      }
+      else
+      {
+        this.fieldsWithRef.find((item:any)=>item.name=="fillValue").type="textarea"
+      }
     }
 
   }
