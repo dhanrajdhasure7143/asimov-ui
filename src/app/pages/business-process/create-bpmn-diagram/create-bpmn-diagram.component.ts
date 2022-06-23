@@ -30,6 +30,8 @@ import minimapModule from "diagram-js-minimap";
 declare var require:any;
 import BpmnColorPickerModule from 'bpmn-js-color-picker';
 import { Subscription } from 'rxjs';
+import { ComponentCanDeactivate } from './../../../guards/bps-data-save.guard'
+import { Observable } from 'rxjs/Observable';
 
 
 @Component({
@@ -38,7 +40,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./create-bpmn-diagram.component.css'],
   providers:[BpmnShortcut]
 })
-export class CreateBpmnDiagramComponent implements OnInit {
+export class CreateBpmnDiagramComponent implements OnInit, ComponentCanDeactivate {
   bpmnModeler:any;
   oldXml;
   newXml;
@@ -111,6 +113,10 @@ export class CreateBpmnDiagramComponent implements OnInit {
   @ViewChild('wrongXMLcontent', { static: true}) wrongXMLcontent: TemplateRef<any>;
   constructor(private rest:RestApiService, private spinner:NgxSpinnerService, private dt:DataTransferService,private modalService: BsModalService,
     private router:Router, private route:ActivatedRoute, private bpmnservice:SharebpmndiagramService, private global:GlobalScript, private hints:BpsHints, public dialog:MatDialog,private shortcut:BpmnShortcut) {}
+    
+  canDeactivate(): Observable<boolean> | boolean {
+    return !this.isDiagramChanged
+  }
 
   ngOnInit(){
     localStorage.setItem("isheader","true")
@@ -400,6 +406,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
         text: 'Your current changes will be lost on changing notation.',
         icon: 'warning',
         showCancelButton: true,
+        heightAuto: false,
         confirmButtonText: 'Save and Continue',
         cancelButtonText: 'Discard'
       }).then((res) => {
@@ -535,10 +542,12 @@ export class CreateBpmnDiagramComponent implements OnInit {
   automate(){
     let selected_id = this.saved_bpmn_list[this.selected_notation].id;
     this.rest.getautomatedtasks(selected_id).subscribe((automatedtasks)=>{
-      Swal.fire(
-        'Tasks automated successfully!',
-        '',
-        'success'
+      Swal.fire({
+        title: 'Success',
+        text: 'Tasks automated successfully!',
+        icon: 'success',
+        heightAuto: false,
+      }
       );
     })
   }
@@ -689,7 +698,12 @@ export class CreateBpmnDiagramComponent implements OnInit {
   submitDiagramForApproval(e){
     this.selected_approver=e
     if((!this.selected_approver && this.selected_approver != 0) || this.selected_approver <= -1){
-      Swal.fire("No approver", "Please select approver from the list given above", "error");
+      Swal.fire({
+        icon: 'error',
+        title: 'No approver',
+        text: 'Please select approver from the list given above !',
+        heightAuto: false,
+      });
       return;
     }
     this.isStartProcessBtn=false;
@@ -726,18 +740,20 @@ export class CreateBpmnDiagramComponent implements OnInit {
             "isShowConformance":false,"isStartProcessBtn":_self.isStartProcessBtn,"autosaveTime":_self.updated_date_time,
             "isFromcreateScreen":false,'process_name':_self.currentNotation_name,'isSavebtn':true}
             _self.dt.bpsNotationaScreenValues(_self.push_Obj);
-          Swal.fire(
-            'Saved!',
-            'Your changes has been saved and submitted for approval successfully.',
-            'success'
-          );
+          Swal.fire({
+            icon: 'success',
+            title: 'Saved',
+            text: 'Your changes has been saved and submitted for approval successfully!',
+            heightAuto: false,
+          });
         },err => {
           _self.isLoading = false;
-          Swal.fire(
-            'Oops!',
-            'Something went wrong. Please try again',
-            'error'
-          )
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops!',
+            text: 'Something went wrong. Please try again!',
+            heightAuto: false,
+          });
         })
     })
   }
@@ -785,11 +801,12 @@ export class CreateBpmnDiagramComponent implements OnInit {
             _self.getUserBpmnList();
           }
           _self.isLoading = false;
-          Swal.fire(
-            'Saved!',
-            'Your changes has been saved successfully.',
-            'success'
-          )
+          Swal.fire({
+            icon: 'success',
+            title: 'Saved',
+            text: 'Your changes has been saved successfully!',
+            heightAuto: false,
+          });
           if(newVal){
             _self.selected_notation = newVal;
             let current_bpmn_info = _self.saved_bpmn_list[_self.selected_notation];
@@ -895,11 +912,12 @@ export class CreateBpmnDiagramComponent implements OnInit {
       "variableList":this.variables
     };
     this.rest.startBpmnProcess(reqBody).subscribe(res=>{
-      Swal.fire(
-        'Success!',
-        'Process started successfully',
-        'success'
-      )
+      Swal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: 'Process started successfully!',
+        heightAuto: false,
+      });
       this.cancelProcess();
       this.isStartProcessBtn=false;
     })    
