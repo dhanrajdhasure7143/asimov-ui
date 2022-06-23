@@ -209,7 +209,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            cancelButtonText: 'Fasle',
+            cancelButtonText: 'False',
             confirmButtonText: 'True'
           }).then((result) => {
             if (result.value) {
