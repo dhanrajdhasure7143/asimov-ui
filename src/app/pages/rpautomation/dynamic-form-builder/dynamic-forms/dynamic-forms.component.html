@@ -19,11 +19,15 @@
                                 <th class="testcell">Actions</th> 
                             </tr>    
                         </thead>
-                        <tbody cdkDropList (cdkDropListDropped)="drop($event)">
-                            <tr *ngFor="let eachObj of fillarray | paginate: { itemsPerPage: 2,currentPage: q }"                           
-                            cdkDrag>
-                              <td *ngFor="let field of fields"  class="testcell">
-                                    {{eachObj[field.name+"_"+field.id]?eachObj[field.name+"_"+field.id]:'NA'}}
+                        <tbody>
+                            <tr *ngFor="let eachObj of fillarray  | paginate: { itemsPerPage: 2,currentPage: q }">
+                                <td *ngFor="let field of fields"  class="testcell">
+                                    <span *ngIf="checkRecord(eachObj, field)==false">
+                                        {{eachObj[field.name+"_"+field.id]?eachObj[field.name+"_"+field.id]:'NA'}}
+                                    </span>
+                                    <span *ngIf="checkRecord(eachObj,field)==true">
+                                       *******
+                                    </span>
                                 </td>                    
                                <td class="testcell">
                                     <button tooltip="Edit" placement="bottom"  (click)="edit(eachObj)">

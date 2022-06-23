@@ -34,7 +34,10 @@ import { DeployNotationComponent } from 'src/app/shared/deploy-notation/deploy-n
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import minimapModule from "diagram-js-minimap";
 import BpmnColorPickerModule from 'bpmn-js-color-picker';
+import { ComponentCanDeactivate } from './../../../guards/bps-data-save.guard'
+import { Observable } from 'rxjs/Observable';
 declare var require:any;
+
 
 @Component({
   selector: 'app-upload-process-model',
@@ -42,7 +45,7 @@ declare var require:any;
   styleUrls: ['./upload-process-model.component.css'],
   providers:[BpmnShortcut]
 })
-export class UploadProcessModelComponent implements OnInit,OnDestroy {
+export class UploadProcessModelComponent implements ComponentCanDeactivate,OnInit,OnDestroy {
   isShowConformance:boolean = false;
   hideUploadContainer:boolean=false;
   hideCreateContainer:boolean=false;
@@ -148,6 +151,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
   process_owner:any;
   showconsfromanceModal:any;
   vcmId:any;
+
   @ViewChild('variabletemplate',{ static: true }) variabletemplate: TemplateRef<any>;
   @ViewChild('keyboardShortcut',{ static: true }) keyboardShortcut: TemplateRef<any>;
   @ViewChild('dmnTabs',{ static: true }) dmnTabs: ElementRef<any>;
@@ -157,6 +161,10 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
   @ViewChild('processowner_template',{ static: true }) processowner_template: TemplateRef<any>;
    constructor(private rest:RestApiService, private bpmnservice:SharebpmndiagramService,private router:Router, private spinner:NgxSpinnerService, private modalService: BsModalService,
       private dt:DataTransferService, private route:ActivatedRoute, private global:GlobalScript, private hints:BpsHints,public dialog:MatDialog,private shortcut:BpmnShortcut) { }
+
+  canDeactivate(): Observable<boolean> | boolean {
+    return !this.isDiagramChanged 
+  }
 
    ngOnInit() {
     localStorage.setItem("isheader","true")
@@ -1050,7 +1058,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
       canvas.zoom('fit-viewport');
       this[modeler_obj].get("minimap").open();
     }
-    this[modeler_obj].on('element.changed', function(){
+    this[modeler_obj].on('element.changed', function(){     
       _self.isDiagramChanged = true;
       let now = new Date().getTime();
       if(now - _self.last_updated_time > 10*1000){
