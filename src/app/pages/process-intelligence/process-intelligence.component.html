@@ -1,15 +1,3 @@
-<!-- <div class="main-content">
-    <div class="row content-area">
-      <div class="module-heading title">                  
-        <span class="module-header-title">Process Intelligence</span>
-        <span class="insight-back-button" *ngIf="isShow"> <a href="javascript:void(0);" (click)="gotoProcessgraph()">Go Back</a> </span>
-      </div>
-      <div class="module-body">
-      <router-outlet></router-outlet>
-      </div>
-    </div>
-  </div> -->
-
   <div class="main-content" [class.main-content1]="isPIHeaderShow">
     <div class="row content-area">
       <div class=" row module-heading title">
@@ -19,15 +7,11 @@
               <span *ngIf="isPIHeaderShow" class="module-back-button" (click)='backtoWorkspace()'><i aria-hidden="true" class="fas fa-arrow-left"></i></span>
               <span *ngIf="isProjDetails" class="module-back-button" (click)='gotoProjectDetails()'><i aria-hidden="true" class="fas fa-arrow-left"></i></span>
               <span class="module-header-title">Process Intelligence
-                <!-- <span *ngIf="isHeaderShow == 'true'"> / {{currentNotation_name | titlecase}}</span> -->
               </span>
-
             </span>
-
           </div>
           <div class="col-md-7 new-bps-icons p-0" *ngIf="isPIHeaderShow || isProjDetails">
             <div class="row bps-float">
-
               <button mat-button [matMenuTriggerFor]="download" class="tsttooltipbtn">
                 <img src="../../../assets/images/PI/download.svg">
                 <span class="testtooltip">Download</span>
@@ -38,8 +22,6 @@
                   <button mat-menu-item (click)="downloadNotaton('jpg')">JPEG</button>
                   <button mat-menu-item (click)="downloadNotaton('pdf')">PDF</button>
                 </mat-menu>
-              <!-- <button><img src="../../../assets/images/BPMS/Forward.svg" matTooltip="Forward" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below"></button> -->
-
               <button (click)="playAnimation()" id="play_btn" class="tsttooltipbtn" *ngIf="!isplay">
                 <img src="../../../assets/images/PI/play.svg">
                 <span class="testtooltip">Play</span>
@@ -48,7 +30,6 @@
                 <img src="../../../assets/images/PI/stop.svg">
                 <span class="testtooltip">Stop</span>
               </button>
-              <!-- <span class="bpsbtnsep">|</span> -->
               <button class="tsttooltipbtn" id="kpi_btn"(click)="viewInsights()" >
                 <img src="../../../assets/images/PI/insight.svg">
                 <span class="testtooltip">PI Insights</span>
@@ -101,7 +82,6 @@
                             <option value="Sat">Saturday</option>
                           </select>
                         </div>
-                        <!-- <span class="p_warning">*Please select business start time and end time</span> -->
                         <div class="col-sm-6 pl-0">
                           <label class="label-control" for="">Shift Start Time</label>
                           <ngx-timepicker-field [controlOnly]="true" [defaultTime]="'23:11'" [format]="24" name="shiftStartTime" [(ngModel)]="workingHours.shiftStartTime"></ngx-timepicker-field>
@@ -110,7 +90,6 @@
                           <label class="label-control" for="">Shift End Time</label>
                           <ngx-timepicker-field [controlOnly]="true" name="shiftEndTime" [(ngModel)]="workingHours.shiftEndTime"  [format]="24"></ngx-timepicker-field>
                         </div>
-                        <!-- <div class="col-sm-12 dropdown-divider"></div> -->
                       </div>
                       <div class="timefeed-footer">
                           <button type="submit" class="btn btn-default" (click)="resetWorkingHours()">Reset</button>
@@ -127,7 +106,6 @@
                 <img src="../../../assets/images/PI/varaintlist.svg">
                 <span class="testtooltip">Variant List</span>
               </button>
-
             </div>  
           </div>
           <div class="col-md-7 new-bps-icons p-0" *ngIf="insights_header">
@@ -172,7 +150,6 @@
                             <option value="Sat">Saturday</option>
                           </select>
                         </div>
-                        <!-- <span class="p_warning">*Please select business start time and end time</span> -->
                         <div class="col-sm-6 pl-0">
                           <label class="label-control" for="">Shift Start Time</label>
                           <ngx-timepicker-field [controlOnly]="true" [defaultTime]="'23:11'" [format]="24" name="shiftStartTime" [(ngModel)]="workingHours1.shiftStartTime"></ngx-timepicker-field>
@@ -181,7 +158,6 @@
                           <label class="label-control" for="">Shift End Time</label>
                           <ngx-timepicker-field [controlOnly]="true" name="shiftEndTime" [(ngModel)]="workingHours1.shiftEndTime"  [format]="24"></ngx-timepicker-field>
                         </div>
-                        <!-- <div class="col-sm-12 dropdown-divider"></div> -->
                       </div>
                       <div class="timefeed-footer">
                           <button type="submit" class="btn btn-default" (click)="resetWorkingHours1()">Reset</button>
@@ -190,12 +166,10 @@
                       </div>  
                     </form>
                 </div>
-
               <button class="tsttooltipbtn" (click)="openInsightsVaraintOverLay()">
                 <img src="../../../assets/images/PI/varaintlist.svg">
                 <span class="testtooltip">Variant List</span>
               </button>
-
             </div>  
           </div>
       </div>    

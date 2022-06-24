@@ -32,13 +32,10 @@ span.testtooltip:before {
     position: absolute; 
     transform: translate(253px, 42px);
     position: absolute;
-    /* top: 100%; */
-    /* left: 0; */
     width:500px ;
     z-index: 1000;
     float: left;
     padding: 15px;
-    /* margin: 2px 0 0; */
     font-size: 14px;
     text-align: left;
     list-style: none;
@@ -58,9 +55,7 @@ span.testtooltip:before {
     border-width: 8px;
     border-style: solid;
     border-color: transparent transparent #ccc transparent;
-  }
-  
-  
+  }  
   .hrsInput input{
     border: 1px solid lightgray !important;
     border-radius: 5px !important;
@@ -88,10 +83,6 @@ span.testtooltip:before {
     color: red;
     font-size: 12px;
   }
-  #dropdownForm2{
-    /* padding: 20px !important; */
-  }
-
 .main-content1 .module-heading.title {
   background-color: #F3F3F3;
   padding: 12px 15px 8px !important;
@@ -100,7 +91,6 @@ span.testtooltip:before {
   font-weight: 600;
   font-size: 18px;
   color: #001c47;
-  /* line-height: 0px !important; */
 }
 .new-bps-icons .bps-float {
   float: right;

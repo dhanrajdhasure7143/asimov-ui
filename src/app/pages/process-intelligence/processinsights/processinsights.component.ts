@@ -244,12 +244,6 @@ yScaleMin_duration: number = 0;
         this.variant_list = Object.keys(VariantList).filter(val => isNaN(VariantList[val]));
         this.variant_list_options = VariantList;
         this.table1 = [{ value1: "value1", value2: "value2", value3: "value3" }, { value1: "value1", value2: "value2", value3: "value3" }, { value1: "value1", value2: "value2", value3: "value3" }, { value1: "value1", value2: "value2", value3: "value3" }]
-        // this.addcharts();
-        // this.addchart2();
-        //this.verticleBarGraph();
-        // this.addpiechart1([]);
-        // this.addpiechart2([]);
-        //this.getDonutChart();
         this.getBusinessInsights();
         this.getAllVariantList()
         this.getDurationCall();
@@ -276,13 +270,10 @@ yScaleMin_duration: number = 0;
             return;
         }
         this.getTotalNoOfCases('fullgraph');
-        //this.getActivityMetrics('fullgraph');
-        //this.getHumanBotCost('fullgraph');
         this.onResourceSelect(false);
         this.getDurationCall();
         this.canceladdHrs();
         this.getBusinessInsights();
-
     }
 
     resetWorkingHours(){    
@@ -299,29 +290,20 @@ yScaleMin_duration: number = 0;
             data_type: 'variant_metrics',
             "workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+this.workingHours.shiftEndTime+":00"
         }
-       // this.spinner.show();
         this.rest.getPIInsightMeanMedianDuration(reqObj)
             .subscribe((res: any) => {
                 this.variant_Duration_list = res.data;
                 this.totalMeanDuration = res.totalMeanDuration;
                 this.bkp_totalMedianDuration = res["data"]["total"]["totalDuration"];
-                //this.bkp_totalMedianDuration = res["data"]["total"]["totalDuration"]/3;
                 this.totalMedianDuration = this.bkp_totalMedianDuration;
-             //   this.spinner.hide();
-
             },
                 (err => {
-                 //   this.spinner.hide();
-                    // console.log("Internal server error, Please try again later.")
                 }))
 
     }
 
     calculateSavings(val) {
         if (val && this.input1 && this.input2) {
-            //assume robo cost per hr is 4$
-            //let roboCost = val*60*8/(1000 * 100 * 60 * 60);
-            //let totalCost = (val*this.input1)/(1000 * 60 * 60);
             let roboCost = Math.round(this.getHours(val) * 60 / 100 * this.robotinput);
             let totalCost = Math.round(this.getHours(val) * this.input1);
             return Number((totalCost - roboCost));
@@ -334,7 +316,6 @@ yScaleMin_duration: number = 0;
         if (val) {
             let vv =  Math.round(Number(val))
             return vv;
-            //return (vv).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');  // 12,345.67
         }
     }
 
@@ -349,35 +330,25 @@ yScaleMin_duration: number = 0;
         })
         this.top10_activityData = tmp.slice(0, 5);
         var dd = this.timeConversion(7187760000);
-
     }
 
-    //   getSlowestThroughPut(){
-    //     let actual_data = this.varaint_data.data;
-    //     let percent = Math.floor(actual_data.length*20/100);
-    //     return actual_data.splice(0,percent-1);
-    //   }
     getHumanBotCost(from: string, varinatArray?: any) {
         var reqObj: any;
         if (from == 'fullgraph') {
             reqObj = {
-                //pid:'610283',
                 pid: this.graphIds,
                 flag: false,
                 data_type: "human_bot",
                 "workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+this.workingHours.shiftEndTime+":00"
-                //variants:[] //if flag is true
             }
         } else {
             reqObj = {
-                //pid:'610283',
                 pid: this.graphIds,
                 flag: true,
                 data_type: "human_bot",
                 variants: varinatArray //if flag is true
             }
         }
-       // this.spinner.show();
         this.rest.getPIInsightMeanMedianDuration(reqObj)
             .subscribe((res: any) => {
                 this.insight_human_robot_cost = res.data;
@@ -385,9 +356,7 @@ yScaleMin_duration: number = 0;
                 if (from == 'fullgraph') {
                     this.getResources(this.insight_human_robot_cost);
                 }
-              //  this.spinner.hide();
             })
-
     }
 
     showTop10Rec() {
@@ -410,10 +379,6 @@ yScaleMin_duration: number = 0;
             return 0;
         })
         this.resourcesList = resources;
-        // this.selectedResources.forEach(each_sel => {
-        //     if(tmp.indexOf(each_sel) != -1) tmp2.push(each_sel)
-        // })
-        // this.selectedResources = tmp2;
     }
 
     onResourceSelect(isAllSelect?: boolean) {
@@ -425,7 +390,6 @@ yScaleMin_duration: number = 0;
          aResources = this.resourcesList;
         } 
         if (aResources.length == 0 || isAllSelect == false) {
-
             this.totalMedianDuration = this.bkp_totalMedianDuration;
             this.getActivityMetrics('fullgraph');
             this.getHumanBotCost('fullgraph');
@@ -437,19 +401,14 @@ yScaleMin_duration: number = 0;
             var reqObj: any = {
                 "data_type": "metrics_resources",
                 "pid": this.graphIds,
-                //"pid":610283,
                 "resourceFlag": r_flag,
                 "variants": selected_variants,
                 "resources": selected_resources,
                 "workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+this.workingHours.shiftEndTime+":00"
             }
-           // this.spinner.show();
             this.rest.getPIInsightResourceSelection(reqObj)
                 .subscribe((res: any) => {
-                    //dashboard metrics
-                    //this.totalMedianDuration = res.data.total.totalDuration / 3;
                     this.totalMedianDuration = res.data.total.totalDuration;
-                    //activity data
                     this.activity_Metrics = res.data.activiees;
                     let adata = [];
                     let activityCost = [];
@@ -463,15 +422,6 @@ yScaleMin_duration: number = 0;
                             let obj3 = {}
                         this.activity_Metrics.forEach((e, m) => {
                             let duration = e.Duration_range / (1000 * 60 * 60);
-                            // let obj = {
-                            //     name: e.Activity,
-                            //     y: duration
-                            // }
-                            // let obj2 = {
-                            //     name: e.Activity,
-                            //     y: duration * this.input1
-                            // }
-
                             let obj = {
                                 name: e.Activity,
                                 value: Math.round(duration),
@@ -492,9 +442,6 @@ yScaleMin_duration: number = 0;
                             tmp2.push(obj2);
                             adata.push({ x: e.Activity, y: e.Frequency, r: e.Frequency, name: e.Activity, fullname: e.Activity.split(/\s/).reduce((response, word) => response += word.slice(0, 1), ''), title: 'No of Events', event_duration: e.Frequency });
                         });
-                         //tmp.push(obj1);
-
-                         //   tmp2.push(obj3);
                         this.activityData = adata;
                         this.bubbleData = [{name:"", series: this.activityData}];
                         this.colorScheme1 = {
@@ -506,7 +453,6 @@ yScaleMin_duration: number = 0;
                         activityCost = tmp2;
                         this.dChart1 = activityDuration;
                         this.dChart2 = activityCost;
-                        //this.addchart2();
                         this.ActivityTimeChart();
                         this.resourceCostByActivity();
                         this.getActivityWiseHumanvsBotCost(this.activity_Metrics);
@@ -516,16 +462,8 @@ yScaleMin_duration: number = 0;
                         this.getActivityMetrics('fullgraph');
                         this.getHumanBotCost('fullgraph');
                     }
-
                     //human vs bot
                     this.getHumanvsBotCost(res.data)
-
-                    //Activity - Duration Pie chart
-                    // this.addpiechart1(activityDuration);
-                    // this.addpiechart2(activityCost);
-                    //this.getDonutChart1(activityDuration);
-                    //this.getDonutChart2(activityCost);
-                 //   this.spinner.hide();
                 })
         }
     }
@@ -549,93 +487,55 @@ yScaleMin_duration: number = 0;
             return dateA - dateB;
         });
 
-       
         vData.dates_data.forEach(e => {
-
             dateArray.push(moment(new Date(e.date)).format('DD/MM/YYYY'));
-            // 
             var humanCost = Math.round(this.getHours(e.median_value) * this.input1);
             hCost.push(humanCost);
             var rDuration = Math.round(this.getHours(e.median_value) * 60 / 100);
             var rHours = Math.round(rDuration);
             var rFinalCost = rHours * this.robotinput;
             rCost.push(rFinalCost);
-            d1.push({name:moment(new Date(e.date)).format('DD/MM/YYYY'), value:humanCost})
-            d2.push({name:moment(new Date(e.date)).format('DD/MM/YYYY'), value:rFinalCost})
-            d3.push({value1:humanCost,name1:"Human Cost",name2:"Bot Cost", value2:rFinalCost, date:moment(new Date(e.date)).format('yyyy,MM,DD'),date1:moment(new Date(e.date)).format('DD/MM/YYYY'),})
+            d1.push({ name: moment(new Date(e.date)).format('DD/MM/YYYY'), value: humanCost })
+            d2.push({ name: moment(new Date(e.date)).format('DD/MM/YYYY'), value: rFinalCost })
+            d3.push({ value1: humanCost, name1: "Human Cost", name2: "Bot Cost", value2: rFinalCost, date: moment(new Date(e.date)).format('yyyy,MM,DD'), date1: moment(new Date(e.date)).format('DD/MM/YYYY'), })
         });
 
-        //this.caseIDs = this.removeDuplicate(this.caseIDs);
         this.caseIDs = dateArray;
         this.humanCost = hCost;
         this.robotCost = rCost;
 
-        this.multi = [{name:"Human Cost", series: d1},{name:'Bot Cost', series:d2}];
+        this.multi = [{ name: "Human Cost", series: d1 }, { name: 'Bot Cost', series: d2 }];
+        let chart = am4core.create("linechart1", am4charts.XYChart);
 
-    //    this.addcharts();
-    let chart = am4core.create("linechart1", am4charts.XYChart);
-
-// Add data
-chart.data = d3
-// Create axes
-let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
-// Set date label formatting
-// dateAxis.dateFormats.setKey("day", "MMMM dt");
-// dateAxis.dateFormatter.dateFormat = "yyyy-MM-dd HH:mm";
-dateAxis.renderer.minGridDistance = 50;
-dateAxis.renderer.labels.template.text="date1"
-dateAxis.title.text = "Duration";
-let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-valueAxis.title.text = "Price";
-// Create series
-let series = chart.series.push(new am4charts.LineSeries());
-series.dataFields.valueY = "value1";
-series.dataFields.dateX = "date";
-series.strokeWidth = 2;
-series.minBulletDistance = 3;
-series.tooltipText = "[bold]Date: {date1}[/]\n{name1}: {value1}\n{name2}:{value2}";
-series.tooltip.pointerOrientation = "vertical";
-
-// Create series
-let series2 = chart.series.push(new am4charts.LineSeries());
-series2.dataFields.valueY = "value2";
-series2.dataFields.dateX = "date";
-series2.strokeWidth = 2;
-series2.strokeDasharray = "3,4";
-series2.stroke = series.stroke;
-// Add cursor
-chart.cursor = new am4charts.XYCursor();
-chart.cursor.xAxis = dateAxis;
-series2.stroke = am4core.color("#fc8d45");
-
-// // add ranges
-// var minRange = dateAxis.axisRanges.create();
-// // this overrides minLabelPosition/maxLabelPosition so that the range labels would be visible
-// minRange.maxPosition = 1;
-// minRange.minPosition = 0;
-// minRange.label.horizontalCenter = "left"
-// minRange.label.paddingLeft = 0;
-
-
-// var maxRange = dateAxis.axisRanges.create();
-// // this overrides minLabelPosition/maxLabelPosition so that the range labels would be visible
-// maxRange.maxPosition = 1;
-// maxRange.minPosition = 0;
-// maxRange.label.horizontalCenter = "right"
-// maxRange.label.paddingRight = 0;
-
-// dateAxis.events.on("startendchanged", updateRangeLabels)
-// dateAxis.events.on("extremeschanged", updateRangeLabels)
-
-// function updateRangeLabels() {
-//   minRange.value = dateAxis.min + dateAxis.start * (dateAxis.max - dateAxis.min);
-//   minRange.label.text = dateAxis.dateFormatter.format(minRange.value, "yyyy-MM-dd");
-
-//   maxRange.value = dateAxis.min + dateAxis.end * (dateAxis.max - dateAxis.min);
-//   maxRange.label.text = dateAxis.dateFormatter.format(maxRange.value, "yyyy-MM-dd");
-// }
-
-    $('g:has(> g[stroke="#3cabff"])').hide();
+        // Add data
+        chart.data = d3
+        // Create axes
+        let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+        dateAxis.renderer.minGridDistance = 50;
+        dateAxis.renderer.labels.template.text = "date1"
+        dateAxis.title.text = "Duration";
+        let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+        valueAxis.title.text = "Price";
+        // Create series
+        let series = chart.series.push(new am4charts.LineSeries());
+        series.dataFields.valueY = "value1";
+        series.dataFields.dateX = "date";
+        series.strokeWidth = 2;
+        series.minBulletDistance = 3;
+        series.tooltipText = "[bold]Date: {date1}[/]\n{name1}: {value1}\n{name2}:{value2}";
+        series.tooltip.pointerOrientation = "vertical";
+        // Create series
+        let series2 = chart.series.push(new am4charts.LineSeries());
+        series2.dataFields.valueY = "value2";
+        series2.dataFields.dateX = "date";
+        series2.strokeWidth = 2;
+        series2.strokeDasharray = "3,4";
+        series2.stroke = series.stroke;
+        // Add cursor
+        chart.cursor = new am4charts.XYCursor();
+        chart.cursor.xAxis = dateAxis;
+        series2.stroke = am4core.color("#fc8d45");
+        $('g:has(> g[stroke="#3cabff"])').hide();
     }
 
     getHours(millisec) {
@@ -652,6 +552,7 @@ series2.stroke = am4core.color("#fc8d45");
         return Math.round(hours);
         }
     }
+
     getHours1(millisec) {
         var hours: any = Math.round(millisec / (1000 * 60 * 60));
         return hours;
@@ -668,7 +569,6 @@ series2.stroke = am4core.color("#fc8d45");
     }
 
     getPointX(cases) {
-
         this.variant_Duration_list.data.forEach(e => {
             if (e.Cases == cases) {
                 return this.getHours(e.median_duration);
@@ -681,7 +581,6 @@ series2.stroke = am4core.color("#fc8d45");
         this.activityData = [];
         if (type == 'fullgraph') {
             reqObj = {
-                //pid:'920036',
                 pid: this.graphIds,
                 data_type: 'variant_activity_metrics',
                 flag: false,
@@ -689,15 +588,12 @@ series2.stroke = am4core.color("#fc8d45");
             }
         } else {
             reqObj = {
-                // pid:'920036',
                 pid: this.graphIds,
                 data_type: 'variant_activity_metrics',
                 flag: true,
                 variants: selected_variants //if flag is true
             }
-
         }
-      //  this.spinner.show();
         this.rest.getPIVariantActivity(reqObj)
             .subscribe((res: any) => {
                 var aData = res.data;
@@ -709,10 +605,6 @@ series2.stroke = am4core.color("#fc8d45");
                 let obj3 = {}
                 aData.data.forEach((e, m) => {
                     let duration = e.Duration_range / (1000 * 60 * 60);
-                    // let obj = {
-                    //     name: e.Activity,
-                    //     y: duration
-                    // }
                     let obj = {
                          name:e.Activity,
                          value:Math.round(duration),
@@ -732,33 +624,20 @@ series2.stroke = am4core.color("#fc8d45");
                     }
                     activityDuration.push(obj);
                     activityCost.push(obj2);
-
-                  
-
                     this.activityData.push({ x: e.Activity, y: e.Frequency, r: e.Frequency, name: e.Activity, fullname: e.Activity.split(/\s/).reduce((response, word) => response += word.slice(0, 1), ''), title: 'No of Events', event_duration: e.Frequency });
-                    //this.activityData.push({name: e.Activity, x: Number(e.Frequency), y: Number(e.Frequency), r: Number(e.Frequency)});
-                   
                 });
                 this.bubbleData = [{name:"", series: this.activityData}];
                 this.colorScheme1 = {
                     domain: ['#fc8d45']
                   };
-
                 this.dChart1 = activityDuration;
                 this.dChart2 = activityCost;
                 this.ActivityTimeChart();
                 this.resourceCostByActivity();
-                //this.addchart2();
                 this.getActivityWiseHumanvsBotCost(this.activity_Metrics);
                 this.getActivityTableData(this.activity_Metrics);
                 this.isEventGraph = true;
-                //this.addpiechart1(activityDuration);
-                //this.addpiechart2(activityCost);
-                //this.getDonutChart1(activityDuration);
-                //this.getDonutChart2(activityCost);
-              //  this.spinner.hide();
             })
-
     }
 
     pieChartLabel(series: any, name: string): string {
@@ -768,6 +647,7 @@ series2.stroke = am4core.color("#fc8d45");
         }
         return name;
     }
+
     pieChartLabel1(series: any, name: string): string {
         const item = series.filter(data => data.name === name);
         if (item.length > 0) {
@@ -780,29 +660,17 @@ series2.stroke = am4core.color("#fc8d45");
         var hCost = [];
         var rCost = [];
         var ac_list = [];
-
         activityMetrics.forEach(e => {
             ac_list.push(e.Activity);
             var humanCost = Math.round(this.getHours(e.Duration_range) * this.input1);
-            //hCost.push(humanCost);
-            // var length = 20;
-            // var trimmedString = e.Activity.length > length ? 
-            // e.Activity.substring(0, length - 3) + "..." : 
-            // e.Activity;
             hCost.push({name:e.Activity, value:humanCost});
             var rDuration = Math.round(this.getHours(e.Duration_range) * 60 / 100);
             var rHours = Math.round(rDuration);
             var rFinalCost = rHours * this.robotinput;
-            //rCost.push(rFinalCost);
             rCost.push({name:e.Activity, value:rFinalCost});
         });
-        // this.activityHumanCost = hCost;
-        // this.activityBotCost = rCost;
-        // this.list_Activites = ac_list;
-        //this.verticleBarGraph();
         this.barChart = hCost;
         this.lineChartSeries = [{name:"Bot Cost",series:rCost}];
-
     }
 
     getEventBubboleGraph(type) {
@@ -824,7 +692,6 @@ series2.stroke = am4core.color("#fc8d45");
                 this.isduration_chart=true;
                 this.isevents_chart=false;
                 this.activity_Metrics.forEach((e, m) => {
-                
                 this.activityData.push({ x: e.Activity, y: Number(this.getHours(e.Duration_range)), r: Number(this.getHours(e.Duration_range)), name: e.Activity, fullname: e.Activity.split(/\s/).reduce((response, word) => response += word.slice(0, 1), ''), title: 'Duration', event_duration: this.timeConversion(e.Duration_range) });
                 this.bubbleColor = '#008080';
                 this.isEventGraph = false;
@@ -839,33 +706,30 @@ series2.stroke = am4core.color("#fc8d45");
             }
            // this.addchart2();
     }
- getHours3(millisec) {
+
+    getHours3(millisec) {
         var hours: any = (millisec / (1000 * 60 * 60)).toFixed(1);
-        if(String(hours).indexOf('.') != -1){
-            let week=hours.toString().split('.')
-              hours=week[0];
-            }else{
-              hours=hours;
-            }
+        if (String(hours).indexOf('.') != -1) {
+            let week = hours.toString().split('.')
+            hours = week[0];
+        } else {
+            hours = hours;
+        }
         return hours;
     }
+
     getTotalNoOfCases(type) {
         var noofcases = 0;
         this.totalCases = 0;
-
         if (type == 'fullgraph') {
             this.varaint_data.data.forEach(e => {
-
                 noofcases += e.case_value;
             });
-            
-            
             this.totalCases = noofcases;
             return this.totalCases;
         } else {
             noofcases = 0;
             this.totalCases = 0;
-
             this.totalVariantList.forEach(e => {
                 noofcases = noofcases + e.case_value;
             });
@@ -893,13 +757,10 @@ series2.stroke = am4core.color("#fc8d45");
                 align: 'center'
             },
             xAxis: {
-                // type: 'number',
                 labels: {
                     overflow: 'justify'
                 },
                 categories: this.caseIDs
-                //   categories: [
-                //    10,50,100,150,200,250,300,350,400,450,500]
             },
             yAxis: {
                 title: {
@@ -911,16 +772,11 @@ series2.stroke = am4core.color("#fc8d45");
                 minorGridLineWidth: 0,
                 gridLineWidth: 1,
                 alternateGridColor: null,
-                // left:1,
-                // plotBands: []
             },
             tooltip: {
-                //valueSuffix: '$',
                 valuePrefix: '$',
                 crosshairs: true,
                 shared: true,
-                // headerFormat: '<b>{series.name}</b><br />',
-                //pointFormat: 'x = {this.getPointX(point.x)}, y = {point.y}'
             },
             plotOptions: {
                 spline: {
@@ -933,19 +789,14 @@ series2.stroke = am4core.color("#fc8d45");
                     marker: {
                         enabled: true
                     },
-                    // pointInterval: 3600000, // one hour
-                    // pointStart: Date.UTC(2018, 1, 13, 0, 0, 0)
                 }
             },
             series: [{
                 name: 'Human Cost',
-                //data: [20, 50, 100, 250, 280, 320, 370, 430,500]
                 data: this.humanCost
-
             }, {
                 name: 'Bot Cost',
                 data: this.robotCost
-                //data: [10, 70, 180, 250, 290, 300, 390, 460,500]
             }],
             navigation: {
                 menuItemStyle: {
@@ -953,7 +804,6 @@ series2.stroke = am4core.color("#fc8d45");
                 }
             }
         }
-
         Highcharts.chart('costprojection', this.chart1);
     }
 
@@ -967,19 +817,8 @@ series2.stroke = am4core.color("#fc8d45");
                 categories: this.list_Activites,
 
                 labels: {
-                    // rotation: -45,
-                    //skew3d:true
                     staggerLines: 2
-
                 }
-                // type: 'category',
-                // labels: {
-                //     rotation: -45,
-                //     style: {
-                //         fontSize: '13px',
-                //         fontFamily: 'Verdana, sans-serif'
-                //     }
-                // }
             },
             yAxis: {
                 title: {
@@ -991,7 +830,6 @@ series2.stroke = am4core.color("#fc8d45");
             },
             labels: {
                 items: [{
-                    //html: 'Total fruit consumption',
                     style: {
                         left: '50px',
                         top: '18px',
@@ -1038,30 +876,15 @@ series2.stroke = am4core.color("#fc8d45");
             title: {
                 text: 'Activity vs Occurences'
             },
-
             subtitle: {
                 // text: 'Source: <a href="http://www.euromonitor.com/">Euromonitor</a> and <a href="https://data.oecd.org/">OECD</a>'
             },
-
-            // accessibility: {
-            //     point: {
-            //       //  valueDescriptionFormat: '{index}. {point.name}, fat: {point.x}g, sugar: {point.y}g, obesity: {point.z}%.'
-            //     }
-            // },
-
             xAxis: {
-                // gridLineWidth: 1,
                 title: {
                     text: 'Activity'
                 },
-                // labels: {
-                //     format: '{value} gr'
-                // },
                 plotLines: [{
-                    // color: 'black',
-                    // dashStyle: 'dot',
                     width: 2,
-                    // value: 65,
                     label: {
                         rotation: 0,
                         y: 15,
@@ -1072,9 +895,6 @@ series2.stroke = am4core.color("#fc8d45");
                     },
                     zIndex: 3
                 }],
-                // accessibility: {
-                //     rangeDescription: 'Range: 60 to 100 grams.'
-                // }
             },
 
             yAxis: {
@@ -1083,28 +903,19 @@ series2.stroke = am4core.color("#fc8d45");
                 title: {
                     text: 'Occurance'
                 },
-                // labels: {
-                //     format: '{value} gr'
-                // },
                 maxPadding: 0.2,
                 plotLines: [{
                     color: 'black',
-                    // dashStyle: 'dot',
                     width: 2,
-                    // value: 50,
                     label: {
                         align: 'right',
                         style: {
                             fontStyle: 'italic'
                         },
-                        // text: 'Safe sugar intake 50g/day',
                         x: -10
                     },
                     zIndex: 3
                 }],
-                // accessibility: {
-                //     rangeDescription: 'Range: 0 to 160 grams.'
-                // }
             },
 
             tooltip: {
@@ -1112,8 +923,6 @@ series2.stroke = am4core.color("#fc8d45");
                 headerFormat: '<table>',
                 pointFormat: '<tr><th colspan="2"><small>{point.name}</small></th></tr>' +
                     '<tr><th>{point.title}:</th><td>{point.event_duration}</td></tr>',
-                // '<tr><th>Sugar intake:</th><td>{point.y}g</td></tr>' +
-                // '<tr><th>Obesity (adults):</th><td>{point.z}%</td></tr>',
                 footerFormat: '</table>',
                 followPointer: true
             },
@@ -1130,42 +939,16 @@ series2.stroke = am4core.color("#fc8d45");
                         fontSize: '14px'
                     },
                     allowDecimals: true,
-
                     color: this.bubbleColor
-                    //fillColor: '#008080'
-
-
                 }
             },
 
             series: [{
                 data: this.activityData,
-                // data: [
-                //     { x: 95, y: 95, z: 13.8, name: 'BE', country: 'Belgium' },
-                //     { x: 86.5, y: 102.9, z: 14.7, name: 'DE', country: 'Germany' },
-                //     { x: 80.8, y: 91.5, z: 15.8, name: 'FI', country: 'Finland' },
-                //     { x: 80.4, y: 102.5, z: 12, name: 'NL', country: 'Netherlands' },
-                //     { x: 80.3, y: 86.1, z: 11.8, name: 'SE', country: 'Sweden' },
-                //     { x: 78.4, y: 70.1, z: 16.6, name: 'ES', country: 'Spain' },
-                //     { x: 74.2, y: 68.5, z: 14.5, name: 'FR', country: 'France' },
-                //     { x: 73.5, y: 83.1, z: 10, name: 'NO', country: 'Norway' },
-                //     { x: 71, y: 93.2, z: 24.7, name: 'UK', country: 'United Kingdom' },
-                //     { x: 69.2, y: 57.6, z: 10.4, name: 'IT', country: 'Italy' },
-                //     { x: 68.6, y: 20, z: 16, name: 'RU', country: 'Russia' },
-                //     { x: 65.5, y: 126.4, z: 35.3, name: 'US', country: 'United States' },
-                //     { x: 65.4, y: 50.8, z: 28.5, name: 'HU', country: 'Hungary' },
-                //     { x: 63.4, y: 51.8, z: 15.4, name: 'PT', country: 'Portugal' },
-                //     { x: 64, y: 82.9, z: 31.3, name: 'NZ', country: 'New Zealand' }
-                // ]
             }
             ]
-
         }
-
-
         Highcharts.chart('scatter', this.chart2);
-
-
     }
 
     addpiechart1(content) {
@@ -1204,9 +987,7 @@ series2.stroke = am4core.color("#fc8d45");
             }]
         }
         Highcharts.chart('piechart1', this.piechart1);
-
     }
-
 
     addpiechart2(content) {
         this.piechart2 = {
@@ -1244,21 +1025,14 @@ series2.stroke = am4core.color("#fc8d45");
                 data: content
             }]
         }
-
-
-        //Highcharts.chart('piechart2', this.piechart2);
-
     }
+
     openVariantListNav() {   //variant list open
         document.getElementById("mySidenav").style.width = "310px";
-        // document.getElementById("main").style.marginRight = "310px";
-        // this.isvariantListOpen=false;
     }
 
     closeNav() { // Variant list Close
         document.getElementById("mySidenav").style.width = "0px";
-        // document.getElementById("main").style.marginRight= "0px";
-        // this.isvariantListOpen=true;
     }
 
     getAllVariantList() {
@@ -1267,18 +1041,17 @@ series2.stroke = am4core.color("#fc8d45");
         this.finalVariants = JSON.parse(atob(localStorage.getItem("variants")))
         this.onchangeVaraint('0');
         this.updatePartialVariantData();
-
     }
 
     caseParcent(parcent) {       // case persent value in variant list
         if (String(parcent).indexOf('.') != -1) {
             let perc = parcent.toString().split('.')
-            // return parcent.toString().slice(0,5);
             return perc[0] + '.' + perc[1].slice(0, 2);
         } else {
             return parcent;
         }
     }
+
     timeConversion(millisec) {
         var seconds: any = (millisec / 1000).toFixed(1);
         var minutes: any = (millisec / (1000 * 60)).toFixed(1);
@@ -1294,6 +1067,7 @@ series2.stroke = am4core.color("#fc8d45");
             return days + " days"
         }
     }
+
     onchangeVaraint(datavariant) {      // Variant List sorting 
         switch (datavariant) {
             case "0":
@@ -1317,7 +1091,6 @@ series2.stroke = am4core.color("#fc8d45");
                 });
                 break;
         }
-        //this.updatePartialVariantData();
     }
 
     updatePartialVariantData() {
@@ -1326,11 +1099,7 @@ series2.stroke = am4core.color("#fc8d45");
         vdata.sort(function (a, b) {
             return b.days - a.days;
         });
-
-
         let cutoff = Math.floor(vdata.length * 40 / 100);
-
-
         let pVData = [];
         for (var i = 0; i < vdata.length; i++) {
             if (cutoff <= i) break;
@@ -1345,13 +1114,10 @@ series2.stroke = am4core.color("#fc8d45");
         }
         else if (selectedVariants.length != this.varaint_data.data.length) {
             let full_median_value = 0;
-
-
             for (var i = 0; i < selectedVariants.length; i++) {
                 var milliseconds = selectedVariants[i]["total_duration"] * 60 * 60 * 1000;
                 full_median_value += milliseconds;
             }
-
             this.totalMedianDuration = full_median_value;
         } else {
             this.totalMedianDuration = this.bkp_totalMedianDuration;
@@ -1359,7 +1125,6 @@ series2.stroke = am4core.color("#fc8d45");
     }
 
     caseIdSelect(selectedData, index) { // Case selection on Variant list
-
         if (this.varaint_data.data[index].selected == "inactive") {
             var select = {
                 case: selectedData.case,
@@ -1396,29 +1161,22 @@ series2.stroke = am4core.color("#fc8d45");
         let selectedVariantIds = [];
         this.totalVariantList = [];
         this.s_variants = [];
-        // this.selectedTraceNumbers = [];
         for (var i = 0; i < this.varaint_data.data.length; i++) {
             if (this.varaint_data.data[i].selected == "active") {
-                // var casevalue = this.varaint_data.data[i].case
                 this.totalVariantList.push(this.varaint_data.data[i]);
                 var index_v = i;
                 var index_v2 = i+1;
                 this.s_variants.push('Variant ' +index_v2);
                 this.selectedCaseArry.push('Variant ' + index_v);
-                // this.selectedTraceNumbers.push(this.varaint_data.data[i].trace_number)
-
                 selectedVariantIds.push(this.varaint_data.data[i]);
             }
         };
         this.getVariantMedianDuration(selectedVariantIds);
         this.caselength = this.selectedCaseArry.length;
-
         if (this.selectedCaseArry.length == this.varaint_data.data.length) {
             this.checkboxValue = true
-            // this.options = Object.assign({}, this.options, {disabled: false});
         } else {
             this.checkboxValue = false
-            // this.options = Object.assign({}, this.options, {disabled: true});
         }
         this.selectedResources = [];
         if (this.selectedCaseArry.length == 0) {
@@ -1429,14 +1187,13 @@ series2.stroke = am4core.color("#fc8d45");
             this.getHumanBotCost('variant', this.s_variants);
             this.getActivityMetrics('variant', this.selectedCaseArry);
             this.getTotalNoOfCases('variant');
-            //this.onResourceSelect();
         }
     }
+
     selectAllVariants() {   // Select all variant list
         let selectedIndices = [];
         if (this.checkboxValue == true) {
             for (var i = 0; i < this.varaint_data.data.length; i++) {
-
                 selectedIndices.push(this.varaint_data.data[i]);
                 this.varaint_data.data[i].selected = "active";
             }
