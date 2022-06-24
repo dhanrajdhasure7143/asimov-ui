@@ -1,258 +1,115 @@
-<!-- <div class="s1">
-    <section class="header">
-        <div class="container-fluid">
-            <nav class="navbar navbar-fixed-top" id="nv1">
-                <div class=" c1">
-                    <div class="abrand">
-                        <div class="row">
-                            <div class="col-md-2">
-                                <div class="abrand_div" routerLink="/pages/home">
-                                    <img src="assets/images/ezflow-header-logo.png">
-                                </div>
-                            </div>
-                            <div class="col-md-10 header_nav">
-                                <ul class="nav navbar-nav  navbar-right ">
-                                    <li class="breadcrumb_li">
-                                        <div class="breadcrumb">
-                                            <span *ngIf="(parent_link && parent_link.length != 0)||(child_link && child_link.length != 0)" id="home" routerLink="/pages/home" (click)="selectedIndex=pages.length">Home</span>
-                                            <span *ngIf="parent_link && parent_link.length != 0" [routerLink]="parent_link.route" (click)="removenodes()" id="parent">&nbsp;|&nbsp;<u><b>{{parent_link.title}}</b></u></span>
-                                            <span *ngIf="child_link && child_link.length != 0" [routerLink]="child_link.route" id="child">&nbsp;<i class="fa fa-arrow-right"></i>&nbsp;{{child_link.title}}</span>
-                                        </div>
-                                    </li>
-                                    <li class="icon_middle" [ngClass]="selectedIndex==i?'active': ''" (click)="selectedIndex=i" [id]="'nav-link-'+i" *ngFor="let each_page of pages;let i=index;trackBy:loopTrackBy" [routerLink]="each_page.link">
-                                        <a *ngIf="parent_link" [id]="'header'+i"> <img [src]="each_page.img">
-                                            <label>{{each_page.title}}</label> </a>
-                                    </li>
-                                    <li class="notification-icon" style="padding-left:3px;" (click)='slideUp("notifications")'>
-                                        
-                                        <li class="notification-icon" style="padding-left:3px;" (click)='slideUp("notifications")'>
-                                           <img src="assets/images/Notification_Bell.svg">
-                                            <div *ngIf="this.notificationscount!=0" class="notification-count" style = "position:absolute; left:66px; top:2px;">
-                                            <span>{{notificationscount}}</span>
-                                         </div>
-                                       </li>
-                                    <li class="text-center">
-                                       
-                                        <div  class="res-circle " *ngIf="profilePicture==false">{{firstletter|uppercase}}</div>
-                                        <div   *ngIf="profilePicture==true"><img class="res-circle " [src]="retrievedImage" ></div>
-                                        <div class="dropdown">
-                                            <span class="dropdown-toggle" data-toggle="dropdown"><i class="fas fa-chevron-down"></i></span>
-                                            <div class="dropdown-menu drop_down" aria-labelledby="dropdownMenuButton">
-                                                
-                                                <a  (click)='myAccount()'><i class="far fa-user hd_icon"></i> My Account</a>
-                                                <a *ngIf="this.userRole.includes('Admin') || this.userRole.includes('SuperAdmin')" (click)='userManagement()'><img class="header_icon" src="..\assets\icons\user_management_icon.svg">User Management</a>
-                                                <a *ngIf="this.userRole.includes('Admin')" (click)='configAlerts()'><img class="header_icon" src="..\assets\icons\alert_icon.svg">Configuration</a>
-                                                <a *ngIf="this.userRole.includes('Admin')" (click)='inviteUser()'><img class="header_icon" src="..\assets\icons\invite_user_icon.svg">Invite User</a>
-                                                <a (click)='logout()'><i class="fas fa-sign-out-alt"></i>Signout</a>
-
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </nav>
-        </div>
-    </section>
-</div>
-<app-header-dropdown-overlay [overlay_notifications_dt]="overlay_notifications_model" [overlay_acc_dt]="overlay_acc_model" [overlay_user_manage_dt]="overlay_user_manage_model" [overlay_config_alert_dt]="overlay_config_alert_model" [overlay_invite_user_dt]="overlay_invite_user_model"></app-header-dropdown-overlay> -->
-<!-- <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#3385ff" type = "ball-spin-clockwise-fade-rotating" [fullScreen] = "true"><p style="color:white" ></p></ngx-spinner> -->
-
 <mat-toolbar class="ep-header-white ep-header-new">
   <div class="header-logdiv">
     <span>
-      <button mat-icon-button class="example-icon txt-wh" (click)="page_obj.onToolbarMenuToggle()" aria-label="Example icon-button with menu icon">
-        <img src="../../../assets/images/menu-line.svg" *ngIf="page_obj.sideBarOpen==false" [ngClass]="{sidebarclose: page_obj.sideBarOpen==false}">
-        <img src="../../../assets/images/menu-line.svg" *ngIf="page_obj.sideBarOpen==true" [ngClass]="{sidebaropen: page_obj.sideBarOpen==true}">
-        <!-- <em *ngIf="page_obj.sideBarOpen==false" [ngClass]="{sidebarclose: page_obj.sideBarOpen==false}" class="fa fa-bars"></em> -->
-        <!-- <em *ngIf="page_obj.sideBarOpen==true" [ngClass]="{sidebaropen: page_obj.sideBarOpen==true}" class="fa fa-bars"></em> -->
+      <button mat-icon-button class="example-icon txt-wh" (click)="page_obj.onToolbarMenuToggle()"
+        aria-label="Example icon-button with menu icon">
+        <img src="../../../assets/images/menu-line.svg" *ngIf="page_obj.sideBarOpen==false"
+          [ngClass]="{sidebarclose: page_obj.sideBarOpen==false}">
+        <img src="../../../assets/images/menu-line.svg" *ngIf="page_obj.sideBarOpen==true"
+          [ngClass]="{sidebaropen: page_obj.sideBarOpen==true}">
       </button>
     </span>
-  <span class="headerlogo">
-    <img src="assets/images/EZFlow_Logo.svg" class="header-logo" alt="EZFlow Logo">
-   </span>
+    <span class="headerlogo">
+      <img src="assets/images/EZFlow_Logo.svg" class="header-logo" alt="EZFlow Logo">
+    </span>
   </div>
-
-   <span class="txt-wh bread-crumb">
-    <span *ngIf="(parent_link && parent_link.length != 0)||(child_link && child_link.length != 0)" routerLink="/pages/home" (click)="selectedIndex=pages.length"></span>
-    <span *ngIf="(parent_link && parent_link.length != 0)||(child_link && child_link.length != 0)" class="breadcrumb-home" id="home" routerLink="/pages/home" (click)="selectedIndex=pages.length">Home</span>
-    <span *ngIf="parent_link && parent_link.length != 0" [routerLink]="parent_link.route" style="font-weight: 400;" (click)="removenodes()" id="parent">&nbsp;|&nbsp;<u>{{parent_link.title}}</u></span>
-    <span *ngIf="child_link && child_link.length != 0" [routerLink]="child_link.route" id="child">&nbsp;<i class="fa fa-arrow-right"></i>&nbsp;{{child_link.title}}</span>
-   </span>
-   <span class="example-spacer"></span>
-   <button mat-icon-button class="txt-wh" aria-label="Example icon-button with heart icon">
+  <span class="txt-wh bread-crumb">
+    <span *ngIf="(parent_link && parent_link.length != 0)||(child_link && child_link.length != 0)"
+      routerLink="/pages/home" (click)="selectedIndex=pages.length"></span>
+    <span *ngIf="(parent_link && parent_link.length != 0)||(child_link && child_link.length != 0)"
+      class="breadcrumb-home" id="home" routerLink="/pages/home" (click)="selectedIndex=pages.length">Home</span>
+    <span *ngIf="parent_link && parent_link.length != 0" [routerLink]="parent_link.route" style="font-weight: 400;"
+      (click)="removenodes()" id="parent">&nbsp;|&nbsp;<u>{{parent_link.title}}</u></span>
+    <span *ngIf="child_link && child_link.length != 0" [routerLink]="child_link.route" id="child">&nbsp;<i
+        class="fa fa-arrow-right"></i>&nbsp;{{child_link.title}}</span>
+  </span>
+  <span class="example-spacer"></span>
+  <button mat-icon-button class="txt-wh" aria-label="Example icon-button with heart icon">
     <img src="../../../assets/images/search.svg">
-   </button>
-   <button mat-icon-button class="txt-wh" aria-label="Example icon-button with heart icon">
+  </button>
+  <button mat-icon-button class="txt-wh" aria-label="Example icon-button with heart icon">
     <img src="../../../assets/images/plus-square.svg">
-   </button>
-   <!-- <button mat-icon-button class="txt-wh"  (click)='slideUp("notifications")' aria-label="Example icon-button with heart icon">
-    <i style="font-size: 18px;opacity: 0.5;" class="fa fa-bell"></i>
-    <div *ngIf="this.notificationscount!=0" class="notification-count" >
-      <span>{{notificationscount}}</span>
-   </div>
-   </button> -->
-   <div class="dropdown">
-    <!-- <a id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="/page.html">
-      <i class="glyphicon glyphicon-bell"></i>
-    </a> -->
-    <!-- <button mat-icon-button class="txt-wh" (click)="getNotificationsList()" data-toggle="dropdown"  aria-label="Example icon-button with heart icon">
+  </button>
+  <div class="dropdown">
+    <button mat-icon-button type="button" [outsideClick]="false" class="clr-hvr txt-wh" (click)="getNotificationsList()"
+      #pop2="bs-popover" [popover]="shareTemplate" placement="bottom">
       <i style="font-size: 18px;opacity: 0.5;" class="fa fa-bell"></i>
-      <div *ngIf="notificationscount!=0" class="notification-count" >
+      <div *ngIf="notificationscount!=0" class="notification-count">
         <span>{{notificationscount}}</span>
-     </div>
-     </button> -->
-      <button mat-icon-button type="button" [outsideClick]="false" class="clr-hvr txt-wh" (click)="getNotificationsList()" #pop2="bs-popover" [popover]="shareTemplate" placement="bottom">
-        <i style="font-size: 18px;opacity: 0.5;" class="fa fa-bell"></i>
-        <div *ngIf="notificationscount!=0" class="notification-count">
-          <span>{{notificationscount}}</span>
-        </div>
-      </button>
-    <!-- <ul class="dropdown-menu notifications" role="menu" style="left: -160px;" aria-labelledby="dLabel">
-      
-      <div class="notification-heading"><h4 class="menu-title"><b>Notifications</b></h4>
       </div>
-      <div class="divider"></div>
-     <div class="notifications-wrapper" *ngIf="!error ">
-      
-         <div class="notification-item" [id]="'ntf_'+messageList.id" [ngClass]="messageList.status === 'read'?'isRead':'unread'" 
-             *ngFor="let messageList of notificationsList">
-          <h4 class="item-title">Notification Message</h4>
-          <p class="notification-created" [id]="'date_'+messageList.id">{{messageList.createdAt | date}} {{messageList.createdAt.split("T")[1].split(".")[0]}}</p>
-          <p class="item-info" [id]="'msg_'+messageList.id"  
-          (click)="notificationclick(messageList.id)" style="cursor: pointer;">{{messageList.notificationAuditId[0].contentType}}</p>
-        <span class="notification_action_cell pull-right">
-          <button aria-hidden="true" (click)='deletnotification(messageList.id)' class="cross_delet">&times;
-            <div id="myid" [ngClass]="messageList.id == dataid?'isdelet':''" class="deletconfm">
-              <div class="container-fluid deletefrm">
-            <h5 class="pull-left">Confirmation</h5>
-            <p class="pull-left">Are you sure you want to delete the notification ?</p>
-            <button class="pull-left confm" aria-label="Close" (click)="deleteNotification(messageList.id,i)">Yes</button>
-            <button class="confm pull-left" (click)="canceldeleteNotification(i)">No</button>
-            </div>
-            </div>
-          </button>
-          <button class="subsc"   (click)="deleteNotification(messageList.id)" matTooltip="Delete Notification"> 
-            <img src="./../../../assets/images/unsubscribe.svg" >
-          </button>
-          </span>
-         
-      </div>
-     
-       
-     </div>
-      <li class="divider"></li>
-      <div class="notification-footer" *ngIf="error ">
-        <h4 class="menu-title">View all<i class="glyphicon glyphicon-circle-arrow-right"></i></h4>
-       <h4><b>{{error}}</b></h4>
-        </div> 
-    </ul> -->
-    
-  </div>
-
-   <app-header-dropdown-overlay [overlay_notifications_dt]="overlay_notifications_model" [overlay_acc_dt]="overlay_acc_model" [overlay_user_manage_dt]="overlay_user_manage_model" [overlay_config_alert_dt]="overlay_config_alert_model" [overlay_invite_user_dt]="overlay_invite_user_model"></app-header-dropdown-overlay>
-  
-  <!-- <span class="txt-wh header-seperator">|</span> -->
- 
-  <!-- <span class="header-demotxt">
-    <img src="../../../assets/images/Demo.svg">
-    <span class="txt-u" >Demo</span>
-    <button mat-icon-button class="txt-wh" aria-label="Example icon-button with heart icon">
-      <mat-icon class="menu-button header-dropicon">&#xe5cf;
-      </mat-icon>
-     </button>
-  </span> -->
-    <!-- <button mat-icon-button class="txt-wh" aria-label="Example icon-button with heart icon">
-      <i class="fa fa-caret-down text-white"></i>
-     </button> -->
-
-  <!-- <span class="header-demotxt">
-    <button mat-button [matMenuTriggerFor]="demo" >
-      <img src="../../../assets/images/Demo.svg">
-      <span class="txt-u" >Demo</span>
-      <mat-icon class="menu-button header-dropicon">&#xe5cf;</mat-icon>
     </button>
-  </span>  -->
+  </div>
+  <app-header-dropdown-overlay [overlay_notifications_dt]="overlay_notifications_model"
+    [overlay_acc_dt]="overlay_acc_model" [overlay_user_manage_dt]="overlay_user_manage_model"
+    [overlay_config_alert_dt]="overlay_config_alert_model" [overlay_invite_user_dt]="overlay_invite_user_model">
+  </app-header-dropdown-overlay>
   <mat-menu #demo="matMenu">
-   <button class="demodp">
-    <div class="levelsubblock">
+    <button class="demodp">
+      <div class="levelsubblock">
         <div class="levelsubblock-img">
-            <img alt="" src="../../../assets/images/Projects/process_icon.svg">
+          <img alt="" src="../../../assets/images/Projects/process_icon.svg">
         </div>
         <div class="p-0 levelcont">
-            <label class="label-title">Extract Invoice</label>
-            <span class="label-content">IT | Account Payable | <span class="greentxt">Inreview</span></span>
+          <label class="label-title">Extract Invoice</label>
+          <span class="label-content">IT | Account Payable | <span class="greentxt">Inreview</span></span>
         </div>
-    </div>
-  </button>
-  <button class="demodp">
-    <div class="levelsubblock">
+      </div>
+    </button>
+    <button class="demodp">
+      <div class="levelsubblock">
         <div class="levelsubblock-img">
-            <img alt="" src="../../../assets/images/Projects/process_icon.svg">
+          <img alt="" src="../../../assets/images/Projects/process_icon.svg">
         </div>
         <div class="p-0 levelcont">
-            <label class="label-title">Extract Invoice</label>
-            <span class="label-content">IT | Account Payable | <span class="greentxt">Inreview</span></span>
+          <label class="label-title">Extract Invoice</label>
+          <span class="label-content">IT | Account Payable | <span class="greentxt">Inreview</span></span>
         </div>
-    </div>
-  </button>
-  <button class="demodp">
-    <div class="levelsubblock">
+      </div>
+    </button>
+    <button class="demodp">
+      <div class="levelsubblock">
         <div class="levelsubblock-img">
-            <img alt="" src="../../../assets/images/Projects/process_icon.svg">
+          <img alt="" src="../../../assets/images/Projects/process_icon.svg">
         </div>
         <div class="p-0 levelcont">
-            <label class="label-title">Extract Invoice</label>
-            <span class="label-content">IT | Account Payable | <span class="greentxt">Inreview</span></span>
+          <label class="label-title">Extract Invoice</label>
+          <span class="label-content">IT | Account Payable | <span class="greentxt">Inreview</span></span>
         </div>
-    </div>
-  </button>
+      </div>
+    </button>
   </mat-menu>
-
   <span class="txt-wh header-seperator">|</span>
- 
   <div style="line-height: 7px;margin-right: 13px;margin-top:6px;">
-    <span class="txt-u header-rgttext" *ngIf="user_fName != null">{{user_fName | titlecase}} {{user_lName |titlecase}}</span><br>
+    <span class="txt-u header-rgttext" *ngIf="user_fName != null">{{user_fName | titlecase}} {{user_lName
+      |titlecase}}</span><br>
     <span class="txt-u header-rgttext" *ngIf="user_fName == null">- -</span><br>
     <span class="txt-u header-userrole">{{userRole}}</span>
   </div>
-  
-  
-  
   <span>
-  
-    <div   *ngIf="profilePicture==true && user_fName!='null'">
-       <img class="res-circle-img" [src]="retrievedImage" >
-     </div>
-     <div  class="res-circle" *ngIf="profilePicture==false && user_fName!='null'">
-       <span>{{user_firstletter|uppercase}}</span>
-     </div>
-     <div  *ngIf=" user_fName =='null'">
+    <div *ngIf="profilePicture==true && user_fName!='null'">
+      <img class="res-circle-img" [src]="retrievedImage">
+    </div>
+    <div class="res-circle" *ngIf="profilePicture==false && user_fName!='null'">
+      <span>{{user_firstletter|uppercase}}</span>
+    </div>
+    <div *ngIf=" user_fName =='null'">
       <span><img class="res-circle-img" src="../../../../assets/images/pro1.png" /></span>
     </div>
   </span>
-
-    <span class="text-white">
-      <button mat-icon-button [matMenuTriggerFor]="menu" class="txt-wh" style="vertical-align: middle;" aria-label="Example icon-button with a menu">
-        <mat-icon class="menu-button" style="opacity: 0.5;">&#xe5cf;
-        </mat-icon>
-      </button>
-    </span>
+  <span class="text-white">
+    <button mat-icon-button [matMenuTriggerFor]="menu" class="txt-wh" style="vertical-align: middle;"
+      aria-label="Example icon-button with a menu">
+      <mat-icon class="menu-button" style="opacity: 0.5;">&#xe5cf;
+      </mat-icon>
+    </button>
+  </span>
   <mat-menu #menu="matMenu">
-      <!-- <button class="ep-pad" (click)='myAccount()'><i class="far fa-user text-primary hd_icon"></i> My Account</button>
-      <button  class="ep-pad" *ngIf="this.userRole.includes('Admin') || this.userRole.includes('SuperAdmin')" (click)='userManagement()'><img class="header_icon" src="..\assets\icons\user_management_icon.svg">User Management</button>
-      <button  class="ep-pad" *ngIf="this.userRole.includes('Admin')" (click)='configAlerts()'><img class="header_icon" src="..\assets\icons\alert_icon.svg">Configuration</button>
-      <button  class="ep-pad" *ngIf="this.userRole.includes('Admin')" (click)='inviteUser()'><img class="header_icon" src="..\assets\icons\invite_user_icon.svg">Invite User</button> -->
-      <button class="ep-pad" (click)='myAccount()'><i class="far fa-user text-primary hd_icon"></i> My Account</button>
-      <button class="ep-pad" (click)='changepassword()'><i class="fas fa-lock text-primary hd_icon"></i> Change password</button>
-      <button  class="ep-pad" (click)='logout()'><i class="fas fa-sign-out-alt  text-primary hd_icon"></i>Signout</button>
-  
-    <!-- <app-header-dropdown-overlay [overlay_notifications_dt]="overlay_notifications_model" [overlay_acc_dt]="overlay_acc_model" [overlay_user_manage_dt]="overlay_user_manage_model" [overlay_config_alert_dt]="overlay_config_alert_model" [overlay_invite_user_dt]="overlay_invite_user_model"></app-header-dropdown-overlay> -->
+    <button class="ep-pad" (click)='myAccount()'><i class="far fa-user text-primary hd_icon"></i> My Account</button>
+    <button class="ep-pad" (click)='changepassword()'><i class="fas fa-lock text-primary hd_icon"></i> Change
+      password</button>
+    <button class="ep-pad" (click)='logout()'><i class="fas fa-sign-out-alt  text-primary hd_icon"></i>Signout</button>
   </mat-menu>
-  
-  </mat-toolbar>
+</mat-toolbar>
 <ng-template #shareTemplate>
   <div class="notification-heading">
     <h4 class="menu-title"><b>Notifications</b></h4>

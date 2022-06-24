@@ -111,69 +111,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.rpa.getUserRole(2).subscribe(res => {
       this.userRole = res.message;
       localStorage.setItem('userRole', this.userRole);
-      if (this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') || this.userRole.includes('User')) {
-        this.pages = [
-          { "img": "assets/images/pi.svg", "title": "Process Intelligence", "link": "/pages/processIntelligence/upload" },
-          { "img": "assets/images/busstudioicon1.svg", "title": "Business Process Studio", "link": "/pages/businessProcess/home" },
-          { "img": "assets/images/robothand.svg", "title": "RPA Studio", "link": "/pages/rpautomation/home" },
-          { "img": "assets/images/settingsicon.svg", "title": "Service Orchestration", "link": "/pages/serviceOrchestration/home" }
-        ];
-      }
-      if (this.userRole.includes('RPA Admin')) {
-        if (this.pages.filter(f => f.title === 'RPA Studio').length <= 0) {
-          this.pages.push({ "img": "assets/images/robothand.svg", "title": "RPA Studio", "link": "/pages/rpautomation/home" })
-        }
-        if (this.pages.filter(f => f.title === 'Service Orchestration').length <= 0) {
-          this.pages.push({ "img": "assets/images/settingsicon.svg", "title": "Service Orchestration", "link": "/pages/serviceOrchestration/home" })
-        }
-        // this.pages = [
-        //   {"img":"assets/images/robothand.svg", "title":"RPA Studio", "link":"/pages/rpautomation/home"},
-        //   {"img":"assets/images/settingsicon.svg", "title":"Service Orchestration", "link":"/pages/serviceOrchestration/home"}
-
-        // ];
-      }
-      if (this.userRole.includes('RPA Designer')) {
-        if (this.pages.filter(f => f.title === 'RPA Studio').length <= 0) {
-          this.pages.push({ "img": "assets/images/robothand.svg", "title": "RPA Studio", "link": "/pages/rpautomation/home" })
-        }
-        // this.pages = [
-        //   {"img":"assets/images/robothand.svg", "title":"RPA Studio", "link":"/pages/rpautomation/home"},
-
-        // ];
-
-      }
-      if (this.userRole.includes('Data Architect') || this.userRole.includes('Process Designer') || this.userRole.includes('Automation Designer')) {
-        if (this.pages.filter(f => f.title === 'Business Process Studio').length <= 0) {
-          this.pages.push({ "img": "assets/images/busstudioicon1.svg", "title": "Business Process Studio", "link": "/pages/businessProcess/home" })
-        }
-
-        // this.pages = [
-        //   {"img":"assets/images/busstudioicon1.svg", "title":"Business Process Studio", "link":"/pages/businessProcess/home"},
-
-        // ];
-
-      }
-      if (this.userRole.includes('Process Analyst')) {
-        if (this.pages.filter(f => f.title === 'Process Intelligence').length <= 0) {
-          this.pages.push({ "img": "assets/images/pi.svg", "title": "Process Intelligence", "link": "/pages/processIntelligence/upload" })
-        }
-
-        // this.pages = [
-        //   {"img":"assets/images/pi.svg", "title":"Process Intelligence", "link":"/pages/processIntelligence/upload"},
-
-        // ];
-
-      }
-      if (this.userRole.includes('Process Architect')) {
-        if (this.pages.filter(f => f.title === 'Business Process Studio').length <= 0) {
-          this.pages.push({ "img": "assets/images/busstudioicon1.svg", "title": "Business Process Studio", "link": "/pages/businessProcess/home" })
-        }
-        // this.pages = [
-        //   {"img":"assets/images/busstudioicon1.svg", "title":"Business Process Studio", "link":"/pages/approvalWorkflow/home"}
-        // ];
-
-      }
-
     }, error => {
       //this.error = "Please complete your registration process";
 
@@ -181,7 +118,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.spinner.show();    
     setTimeout(() => {
       this.userDetails();
-      // this.getAllNotifications();
     }, 1000);
     setTimeout(() => {
       this.spinner.hide();
@@ -192,7 +128,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.addUserName(res);
       }
     });
-
   }
 
   loopTrackBy(index, term) {
@@ -202,65 +137,45 @@ export class HeaderComponent implements OnInit, OnDestroy {
   removenodes() {
     $(".bot-close").click();
   }
-  closeAllModules() {
-    this.overlay_user_manage_model = false;
-    this.overlay_config_alert_model = false;
-    this.overlay_invite_user_model = false;
-    this.overlay_acc_model = false;
-    this.overlay_notifications_model = false;
-  }
-
-  slideUp(e) {
-    this.closeAllModules();
-    this.overlay_acc_model = e == "my_acc";
-    this.overlay_user_manage_model = e == "user_manage";
-    this.overlay_config_alert_model = e == "config_alert";
-    this.overlay_invite_user_model = e == "invite_user";
-    if (e != "my_acc" && e != "user_manage" && e != "config_alert" && e != "invite_user")
-      this.overlay_notifications_model = true;
-    var modal = document.getElementById('header_overlay');
-    modal.style.display = "block";
-  }
 
   ngOnDestroy() {
     this.parent_subscription.unsubscribe();
     this.child_subscription.unsubscribe();
   }
+
   myAccount() {
-    // var input = btoa("myAccount")
-    // window.location.href=this.config.logoutRedirectionURL+'?input='+input;
     this.router.navigate(['/pages/admin/myaccount'])
   }
+
   changepassword() {
     this.router.navigate(['/pages/admin/changepassword'])
   }
+
   userManagement() {
     var input = btoa("userManagement")
     window.location.href = this.config.logoutRedirectionURL + '?input=' + input;
   }
+
   configAlerts() {
     var input = btoa("alertsConfig")
     window.location.href = this.config.logoutRedirectionURL + '?input=' + input;
   }
+
   inviteUser() {
     var input = btoa("invite")
     window.location.href = this.config.logoutRedirectionURL + '?input=' + input;
   }
-  logout() {
 
+  logout() {
     this.logintype = localStorage.getItem('userRole');
     clearTimeout(this.stopnotificationsapicall)
     localStorage.clear();
     sessionStorage.clear();
-
     if (this.logintype == 'User') {
-
       window.location.href = 'https://login.microsoftonline.com/common/oauth2/logout?post_logout_redirect_uri=' + this.config.socialLoginRedirectURL
     }
 
     var input = btoa("Signout")
-    //window.location.href=this.config.logoutRedirectionURL+'?input='+input;
-    // window.location.href=this.config.logoutRedirectionURL+'?input='+input;
     this.router.navigate(['/redirect']);
   }
 
@@ -280,8 +195,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.addUserName(this.user_details);
         if (this.retrieveResonse.image == null || this.retrieveResonse.image == "") {
           this.profilePicture = false;
-        }
-        else {
+        } else {
           this.profilePicture = true;
         }
         this.base64Data = this.retrieveResonse.image;
@@ -349,7 +263,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
             confirmButtonText: 'Ok'
           }).then((result) => {
             if (result.value) {
-              // window.location.reload();
               this.getNotificationsList();
             }
           })
@@ -388,21 +301,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.rpa.getReadNotificaionCount(this.role, userId, id, this.notificationbody).subscribe(data => {
         this.notificationreadlist = data
         this.notificationsList.find(ntf => ntf.id == id).status = 'read'
-        // document.getElementById('ntf_'+id).style.color="grey"
-        //document.getElementById('date_'+id).style.color="grey"
-        //document.getElementById(id).style.cursor="none"
-        // window.location.reload();
-        // console.log(this.notificationreadlist)
         this.getNotificationsList();
       })
-
     }
   }
 
   addUserName(data){
     this.user_fName=data.firstName;
         this.user_lName=data.lastName;
-
         var fname_fLetter = data.firstName.charAt(0);
         var lname_fLetter = data.lastName.charAt(0);
         this.user_firstletter = fname_fLetter + lname_fLetter;
