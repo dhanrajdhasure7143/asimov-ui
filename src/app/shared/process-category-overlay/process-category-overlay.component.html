@@ -1,7 +1,6 @@
 <div id="myModal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
-            <!-- <span class="close" (click)="slideDown(processCategoryForm);">&times;</span> -->
             <span class="rpa-modal-close" (click)="slideDown(processCategoryForm);">
                 <img src="../../../../assets/images/RPA/icon_latest/close.svg" alt="">
             </span>
@@ -18,20 +17,9 @@
                             <option value="undefined" disabled hidden>Select Category</option>
                             <option *ngFor="let categories of categories_list;let i=index;trackBy:loopTrackBy" [value]="categories.categoryName">
                                 {{categories.categoryName}}</option>
-                            <!-- <option value="other">Other</option> -->
                         </select>
                         <span *ngIf="((category.invalid && processCategoryForm.submitted) || (category.errors && category.touched) )" 
                         class='errspan required'> Please select a category </span>
-                    </div>
-                    <div *ngIf='isotherCategory'>
-                        <div class="col-md-12 p-0 from-group">
-                           <label>Enter Category<span class="star">*</span></label>
-                            <input type="text" name="other_category" [(ngModel)]="othercategory" #other_category="ngModel" pattern="[a-zA-Z0-9 _-]+" required class="form-group" (keypress)="lettersOnly($event)" placeholder="Enter Category" class="form-control">
-                            <span *ngIf="((other_category.invalid && processCategoryForm.submitted) || (other_category.errors && other_category.touched) )">
-                                <span class='errspan required' *ngIf="other_category.errors.required"> Please Enter category</span>
-                                <span class='errspan required' *ngIf="other_category.errors.pattern"> Alphanumerics with _- are allowed having 4 - 25 characters</span>
-                            </span>
-                        </div>                         
                     </div>
                     <div *ngIf='isBpmnModule'>
                         <div class="col-md-12 p-0 form-group">
@@ -84,90 +72,14 @@
                         <input type="text"  maxlength="50" name="process_name" [(ngModel)]="processName" #process_name="ngModel" (keypress)="lettersOnly($event)" class="form-control" placeholder="Enter Process Name" required>
                         <span *ngIf="((process_name.invalid && processCategoryForm.submitted) || (process_name.errors && process_name.touched) )">
                             <span class='errspan required' *ngIf="process_name.errors.required"> Please Enter process name</span>
-                            <!-- <span class='errspan required' *ngIf="process_name.errors.pattern"> Alphanumerics with _- are allowed having 4 - 25 characters</span> -->
                         </span>
                         <span class='errspan required' *ngIf="processName && isValidName"> Invalid Process name</span>
-                        <!-- <span class='errspan required' *ngIf="process_name_error"> Alphanumerics with _- are allowed having 4 - 25 characters</span> -->
                     </div>
-<!-- previous Code -->
-                    <!-- <mat-form-field class="col-md-12 p-0">
-                        <mat-label>Select Category</mat-label>
-                        <mat-select  name="category" (selectionChange)="onchangeCategories(categoryName)" #category="ngModel" [(ngModel)]="categoryName" required panelClass="overlayMatSelect" [disabled]="data" >
-                            <mat-option *ngFor="let categories of categoriesList.data;let i=index;trackBy:loopTrackBy" [value]="categories.categoryName">
-                                {{categories.categoryName}}</mat-option>
-                            <mat-option value="other">Other</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                    <span class="error_msg" [class.show]="category.dirty && category.invalid">Please select a category</span> -->
-                    <!-- <div *ngIf='isotherCategory'>
-                        <mat-form-field class="col-md-12 p-0">
-                            <mat-label>Enter Category</mat-label>
-                            <input type="text" matInput name="otherCategory" [(ngModel)]="othercategory" #other_category="ngModel" pattern="[a-zA-Z0-9 _-]+" required>
-                        </mat-form-field>
-                        <span class="error_msg" [class.show]="other_category.dirty && other_category.invalid">Alphanumerics with _- are allowed</span>
-                    </div> -->
-                    <!-- <div *ngIf='isBpmnModule'>
-                        <mat-form-field class="col-md-12 p-0">
-                            <mat-label>Select Notation Type</mat-label>
-                            <mat-select name="notation" #notation="ngModel" [(ngModel)]="notationType" required [disabled]="uploadedFileExtension">
-                                <mat-option value="bpmn">BPMN</mat-option>
-                                <mat-option value="cmmn">CMMN</mat-option>
-                                <mat-option value="dmn">DMN</mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </div> -->
-                    <!-- <mat-form-field class="col-md-12 p-0">
-                        <mat-label>Enter Process Name</mat-label>
-                        <input type="text" matInput name="processName" [(ngModel)]="processName" #process_name="ngModel" pattern="^[a-zA-Z0-9 _-]{4,25}$" required  [disabled]="data">
-                    </mat-form-field>
-                    <span class="error_msg" [class.show]="process_name.dirty && process_name.invalid">Alphanumerics with _- are allowed having 4 - 25 characters</span> -->
-                
-<!-- previous Code -->
                 </div>
                 <div class="form-footer">
                     <button class="btn btn-primary eiap-btn" type="submit" (click)="proceedChanges(processCategoryForm);" [disabled]="(!data && !processCategoryForm.valid )">{{buttonName}}</button>
                 </div>
-                <!-- <div class="container m-contanier" *ngIf="isRpa=='true'">
-                    <div class="row">
-                        <mat-form-field class="col-md-6">
-                            <mat-label>Bot Name</mat-label>
-                            <input type="text" matInput name="botName" [(ngModel)]="botName" required>
-                        </mat-form-field>
-                        <mat-form-field class="col-md-6">
-                            <mat-label>Bot Type</mat-label>
-                            <mat-select  name="botType" [(ngModel)]="botType" required panelClass="overlayMatSelect">
-                                <mat-option value=1>Attended</mat-option>
-                                <mat-option value=0>Unattended</mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                      </div>
-                      <div class="row">
-                        <mat-form-field class="col-md-6">
-                            <mat-label>Select Category</mat-label>
-                            <mat-select  name="category" (selectionChange)="onchangeCategories(categoryName)" [(ngModel)]="categoryName" required panelClass="overlayMatSelect">
-                                <mat-option *ngFor="let categories of categoriesList.data;let i=index;trackBy:loopTrackBy" [value]="categories.categoryName">
-                                    {{categories.categoryName}}</mat-option>
-                                <mat-option value="other">Other</mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                        <mat-form-field class="col-md-12 p-0" *ngIf='isotherCategory'>
-                            <mat-label>Enter Category</mat-label>
-                            <input type="text" matInput name="otherCategory" [(ngModel)]="othercategory" required>
-                        </mat-form-field>
-                        <mat-form-field class="col-md-6">
-                            <mat-label>Bot Description</mat-label>
-                            <textarea matInput name="botDescription" [(ngModel)]="botDescription" placeholder="Enter Bot Description" maxlength="500"></textarea>
-                        </mat-form-field>
-                      </div>
-                      <div class="center">
-                        <button class="btn btn-primary eiap-btn" (click)="proceedChanges();processCategoryForm.reset()" [disabled]="processCategoryForm.invalid" >Submit</button>
-                      </div>
-                </div> -->
             </form>
-
-
-
-
 
             <form autocomplete="off" #processCategoryForm="ngForm" *ngIf="overlay_data.type == 'edit'">
                 <div class="container m-contanier form-body">
