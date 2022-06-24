@@ -19,8 +19,8 @@
                                 <th class="testcell">Actions</th> 
                             </tr>    
                         </thead>
-                        <tbody>
-                            <tr *ngFor="let eachObj of fillarray  | paginate: { itemsPerPage: 2,currentPage: q }">
+                        <tbody cdkDropList (cdkDropListDropped)="drop($event)">
+                            <tr *ngFor="let eachObj of fillarray  | paginate: { itemsPerPage: 2,currentPage: q }" cdkDrag>
                                 <td *ngFor="let field of fields"  class="testcell">
                                     <span *ngIf="checkRecord(eachObj, field)==false">
                                         {{eachObj[field.name+"_"+field.id]?eachObj[field.name+"_"+field.id]:'NA'}}

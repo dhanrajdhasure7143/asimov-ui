@@ -170,8 +170,6 @@ export class DynamicFormsComponent implements OnInit {
   ngOnInit() {
     let fieldsCtrls = {};
     this.isMultiForm = (this.enableMultiForm.check)
-
-
     if (this.multiarray != undefined) {
       this.multiFormValue = [...this.enableMultiForm.value]
       let modifiedArray: any = [...this.multiarray.map((item: any) => {
@@ -243,7 +241,8 @@ export class DynamicFormsComponent implements OnInit {
   }
 
   drop(event: CdkDragDrop<[]>) {
-      moveItemInArray(this.fillarray, (this.q - 1) * 2 + event.previousIndex, (this.q - 1) * 2 + event.currentIndex);  
+      moveItemInArray(this.fillarray, (this.q - 1) * 2 + event.previousIndex, (this.q - 1) * 2 + event.currentIndex);
+     this.data=this.fillarray
   }
 
 }
