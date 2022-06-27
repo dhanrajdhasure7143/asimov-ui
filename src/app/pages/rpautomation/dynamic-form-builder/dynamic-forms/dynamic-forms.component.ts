@@ -157,7 +157,7 @@ export class DynamicFormsComponent implements OnInit {
         this.fields[i].value = "";
         this.form.get([this.fields[i].name + '_' + this.fields[i].id]).setValue("")
       }
-    }
+    } 
   }
 
   idGenerator() { 
