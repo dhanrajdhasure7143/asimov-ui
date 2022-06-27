@@ -167,6 +167,7 @@ export class DynamicFormsComponent implements OnInit {
           if(data !=undefined)
             if(data["fillValue_"+fillValueId]!=value["fillValue_"+fillValueId])
               value["fillValue_"+fillValueId]=Base64.encode(value["fillValue_"+fillValueId])
+            
         }
       }
       value.id = this.id
