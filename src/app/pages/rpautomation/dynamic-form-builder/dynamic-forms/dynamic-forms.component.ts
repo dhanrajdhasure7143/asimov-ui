@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { iter } from '@amcharts/amcharts4/core';
+import { CdkDragDrop, CdkDragStart, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Base64 } from 'js-base64';
 @Component({
   selector: 'app-dynamic-forms',
@@ -13,28 +14,31 @@ import { Base64 } from 'js-base64';
 export class DynamicFormsComponent implements OnInit {
   @Output() onSubmit = new EventEmitter();
   @Output() Submit = new EventEmitter();
-  @Input() enableMultiForm:any;
+  @Input() enableMultiForm: any;
   @Input() fields: any[] = [];
-  @Input() formheader:any;
-  @Input() multiarray:any=[]
+  @Input() formheader: any;
+  @Input() multiarray: any = []
   form: FormGroup;
-  isdisabled:boolean;
+  isdisabled: boolean;
   userRole: string;
-  fillarray:any=[]
-  isMultiForm:Boolean=false;
-  multiFormValue=[];
-  data: any=[]
+  fillarray: any = []
+  isMultiForm: Boolean = false;
+  dragging: boolean;
+  multiFormValue = [];
+  data: any = []
   id: any;
-  editfill:boolean=false;
+  selections: any = []
+  editfill: boolean = false;
+  q = 1
   constructor() {
-   }
-  onSub(){
-    if(this.enableMultiForm.check==true){
+  }
+  onSub() {
+    if (this.enableMultiForm.check == true) {
       this.Submit.emit(this.data)
     }
-    else{
+    else {
       this.onSubmit.emit(this.form.value)
-    }    
+    }
   }
   edit(obj) {
     this.editfill = true
@@ -58,7 +62,7 @@ export class DynamicFormsComponent implements OnInit {
         }, 100);
       })
     } else if (obj.Action_525 == 'click') {
-    this.fields.forEach(item => {
+      this.fields.forEach(item => {
         let hideAttributes: any = item.options.find(item => item.key == obj.Action_525) != undefined ? item.options.find(item => item.key == obj.Action_525).hide_attributes : "";
         let hideAttributesIds: any = hideAttributes != null ? hideAttributes.split(",") : [];
         hideAttributesIds.forEach(item => {
@@ -146,17 +150,17 @@ export class DynamicFormsComponent implements OnInit {
         })
         return filteredobject;
       })
-    }  
-    this.form.reset();   
-    for(let i=0;i<this.fields.length;i++){
-      if(this.fields[i].type=="dropdown"){
-        this.fields[i].value="";
-        this.form.get([this.fields[i].name+'_'+this.fields[i].id]).setValue("")
-      }
     }
+    this.form.reset();
+    for (let i = 0; i < this.fields.length; i++) {
+      if (this.fields[i].type == "dropdown") {
+        this.fields[i].value = "";
+        this.form.get([this.fields[i].name + '_' + this.fields[i].id]).setValue("")
+      }
+    } 
   }
-  
-  idGenerator() {
+
+  idGenerator() { 
     var S4 = function () {
       return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
     };
@@ -165,30 +169,28 @@ export class DynamicFormsComponent implements OnInit {
 
   ngOnInit() {
     let fieldsCtrls = {};
-    this.isMultiForm=(this.enableMultiForm.check)
-  
-
-    if(this.multiarray!=undefined){
-      this.multiFormValue=[...this.enableMultiForm.value]
-      let modifiedArray:any=[...this.multiarray.map((item:any)=>{
-          let objectKeys=Object.keys(item);
-          let fieldData={}
-          objectKeys.forEach((key:any)=>{
-            let obj=this.fields.find(field=>field.name==key)
-            if(obj!=undefined)
-              fieldData[key+"_"+obj.id]=item[key];
-          })
-          fieldData["id"]=item.id;
-          return fieldData;
+    this.isMultiForm = (this.enableMultiForm.check)
+    if (this.multiarray != undefined) {
+      this.multiFormValue = [...this.enableMultiForm.value]
+      let modifiedArray: any = [...this.multiarray.map((item: any) => {
+        let objectKeys = Object.keys(item);
+        let fieldData = {}
+        objectKeys.forEach((key: any) => {
+          let obj = this.fields.find(field => field.name == key)
+          if (obj != undefined)
+            fieldData[key + "_" + obj.id] = item[key];
+        })
+        fieldData["id"] = item.id;
+        return fieldData;
       })]
-      this.fillarray=modifiedArray;
+      this.fillarray = modifiedArray;
     }
 
-  
+
     // if(this.multiarray!=undefined){
     //   this.fillarray=this.multiarray.map(p=>{
-    
-        
+
+
     //     let filteredobject={};
     //     let sample=(Object.keys(p));
     //     console.log(sample)
@@ -196,7 +198,7 @@ export class DynamicFormsComponent implements OnInit {
     //       if(item!="id")
     //       {
     //           this.fields.forEach((data,index)=>{
-              
+
     //       //  filteredobject[this.fields[i].name+'_'+this.fields[i].id]=p[item]
     //           filteredobject[this.fields[index].name+'_'+this.fields[index].id]=p[item]
     //        })
@@ -210,32 +212,37 @@ export class DynamicFormsComponent implements OnInit {
     //   console.log("--------------",this.fillarray)
     //   this.data=this.fillarray;
     // }
-    
+
     for (let f of this.fields) {
-    //  if (f.type != 'checkbox') {
-      if(f.type=='email')
-        fieldsCtrls[f.name+'_'+f.id] = new FormControl(f.value || '', f.required && f.dependency == ''  ? [Validators.pattern("[a-zA-Z0-9.-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{3,}")] : [Validators.pattern("[a-zA-Z0-9.-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{3,}")])
+      //  if (f.type != 'checkbox') {
+      if (f.type == 'email')
+        fieldsCtrls[f.name + '_' + f.id] = new FormControl(f.value || '', f.required && f.dependency == '' ? [Validators.pattern("[a-zA-Z0-9.-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{3,}")] : [Validators.pattern("[a-zA-Z0-9.-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{3,}")])
       else
-        fieldsCtrls[f.name+'_'+f.id] = new FormControl(f.value || '', f.required && f.dependency == ''  ? [Validators.required] : [])
+        fieldsCtrls[f.name + '_' + f.id] = new FormControl(f.value || '', f.required && f.dependency == '' ? [Validators.required] : [])
       //  console.log(f);
-     /* } else {
-        let opts = {};
-        for (let opt of f.options) {
-          opts[opt.key] = new FormControl(opt.value);
-        }
-        fieldsCtrls[f.name] = new FormGroup(opts)
-      }*/
+      /* } else {
+         let opts = {};
+         for (let opt of f.options) {
+           opts[opt.key] = new FormControl(opt.value);
+         }
+         fieldsCtrls[f.name] = new FormGroup(opts)
+       }*/
 
     }
     this.form = new FormGroup(fieldsCtrls);
     this.userRole = localStorage.getItem("userRole");
-      if(this.userRole=='Process Owner' || this.userRole=='RPA Developer'){
-        this.isdisabled=null
-      }
-      else{ 
-        this.isdisabled=true
-      }
-     
+    if (this.userRole == 'Process Owner' || this.userRole == 'RPA Developer') {
+      this.isdisabled = null
+    }
+    else {
+      this.isdisabled = true
+    }
+
+  }
+
+  drop(event: CdkDragDrop<[]>) {
+      moveItemInArray(this.fillarray, (this.q - 1) * 2 + event.previousIndex, (this.q - 1) * 2 + event.currentIndex);
+     this.data=this.fillarray
   }
 
 }

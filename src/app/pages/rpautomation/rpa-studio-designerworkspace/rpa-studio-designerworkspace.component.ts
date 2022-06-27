@@ -1899,6 +1899,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     this.areas[1].size = e.sizes[1];
     if(e.sizes[1] < 30){
      this.splitAreamin_size="200";
+    }else{
+      this.splitAreamin_size="null";
     }
   }
 }
