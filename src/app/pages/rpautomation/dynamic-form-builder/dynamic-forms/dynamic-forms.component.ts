@@ -89,7 +89,6 @@ export class DynamicFormsComponent implements OnInit {
   }
   edit(webAutomationObject) {
     let obj=Object.assign({}, webAutomationObject);
-    console.log("editobj", obj)
     this.editfill = true
     this.id = obj.id;
     let key=Object.keys(obj).find(item=>item.split("_")[0]=="fillValueType")
@@ -99,8 +98,7 @@ export class DynamicFormsComponent implements OnInit {
       {
         this.fields.find(item=>item.name=="fillValue").type="password"
         this.fields.find(item=>item.name=="fillValueType").value="password"
-        
-        obj[valueKey]=Base64.decode(obj[valueKey]);
+        //obj[valueKey]=Base64.decode(obj[valueKey]);
       }
       else
       {
@@ -164,7 +162,7 @@ export class DynamicFormsComponent implements OnInit {
       {
         if(value["fillValueType_"+fillValueTypeId]=="password")
         {
-          value["fillValue_"+fillValueId]=Base64.encode(value["fillValue_"+fillValueId])
+        //  value["fillValue_"+fillValueId]=Base64.encode(value["fillValue_"+fillValueId])
         }
       }
       value.id = this.id
