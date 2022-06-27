@@ -1512,16 +1512,23 @@ export class ProjectDetailsScreenComponent implements OnInit {
           var blob = new Blob([svgContent], { type: "image/svg+xml;charset=utf-8" });
           var url = window.URL.createObjectURL(blob);
           let canvasEl = document.createElement("canvas");
-          let canvasContext = canvasEl.getContext("2d", { alpha: false });
+          let canvasContext = canvasEl.getContext("2d");
+          // let canvasContext = canvasEl.getContext("2d", { alpha: false });
           let img = new Image();
           img.onload = () => {
-            canvasEl.width = img.width;
-            canvasEl.height = img.height;
+            canvasEl.width = img.height;
+            canvasEl.height = img.width;
             canvasContext.fillStyle = "#fff";
-            canvasContext.fillRect(0, 0, canvasEl.width, canvasEl.height);
-            canvasContext.drawImage(img, 0, 0, img.width, img.height, 0, 0, canvasEl.width, canvasEl.height);
+            // canvasContext.fillRect(0, 0, canvasEl.width, canvasEl.height);
+            // canvasContext.drawImage(img, 0, 0, img.width, img.height, 0, 0, canvasEl.width, canvasEl.height);
+
+            // rotate and draw source image into verticle
+            canvasContext.rotate(90 * Math.PI / 180);
+            canvasContext.translate(0, -canvasEl.width);
+            canvasContext.drawImage(img, 0, 0);
+
             let imgUrl;
-            imgUrl = canvasEl.toDataURL("image/png");
+            imgUrl = canvasEl.toDataURL("image/png",100);
             _self.getPDDFile(imgUrl)
           }
           img.src = url;
@@ -1540,16 +1547,23 @@ export class ProjectDetailsScreenComponent implements OnInit {
           var blob = new Blob([svgContent], { type: "image/svg+xml;charset=utf-8" });
           var url = window.URL.createObjectURL(blob);
           let canvasEl = document.createElement("canvas");
-          let canvasContext = canvasEl.getContext("2d", { alpha: false });
+          let canvasContext = canvasEl.getContext("2d");
           let img = new Image();
           img.onload = () => {
-            canvasEl.width = img.width;
-            canvasEl.height = img.height;
+            canvasEl.width = img.height;
+            canvasEl.height = img.width;
+            // canvasContext.translate(img.height,img.width);
+
+            // rotate and draw source image into verticle:
+            canvasContext.rotate(90 * Math.PI / 180);
+            canvasContext.translate(0, -canvasEl.width);
+            canvasContext.drawImage(img, 0, 0);
             canvasContext.fillStyle = "#fff";
-            canvasContext.fillRect(0, 0, canvasEl.width, canvasEl.height);
-            canvasContext.drawImage(img, 0, 0, img.width, img.height, 0, 0, canvasEl.width, canvasEl.height);
-            imgUrl = canvasEl.toDataURL("image/png");
-            // _self.getPDDFile(imgUrl)
+
+            // canvasContext.fillRect(0, 0, canvasEl.height, canvasEl.width);
+            // canvasContext.drawImage(img, 0, 0, img.width, img.height, 0, 0, canvasEl.width, canvasEl.height);
+            imgUrl = canvasEl.toDataURL("image/png",100);
+            // _self.test(imgUrl)
           }
           img.src = url;
         });
@@ -1561,16 +1575,23 @@ export class ProjectDetailsScreenComponent implements OnInit {
           var blob1 = new Blob([svgContent], { type: "image/svg+xml;charset=utf-8" });
           var url_1 = window.URL.createObjectURL(blob1);
           let canvasEl_1 = document.createElement("canvas");
-          let canvasContext_1 = canvasEl_1.getContext("2d", { alpha: false });
+          let canvasContext_1 = canvasEl_1.getContext("2d");
+          // let canvasContext_1 = canvasEl_1.getContext("2d", { alpha: false });
           let img_1 = new Image();
           img_1.onload = () => {
-            canvasEl_1.width = img_1.width;
-            canvasEl_1.height = img_1.height;
+            canvasEl_1.width = img_1.height;
+            canvasEl_1.height = img_1.width;
+            // canvasContext_1.fillRect(0, 0, canvasEl_1.width, canvasEl_1.height);
+            // canvasContext_1.drawImage(img_1, 0, 0, img_1.width, img_1.height, 0, 0, canvasEl_1.width, canvasEl_1.height);
+
+           // rotate and draw source image into verticle:
+            canvasContext_1.rotate(90 * Math.PI / 180);
+            canvasContext_1.translate(0, -canvasEl_1.width);
+            canvasContext_1.drawImage(img_1, 0, 0);
             canvasContext_1.fillStyle = "#fff";
-            canvasContext_1.fillRect(0, 0, canvasEl_1.width, canvasEl_1.height);
-            canvasContext_1.drawImage(img_1, 0, 0, img_1.width, img_1.height, 0, 0, canvasEl_1.width, canvasEl_1.height);
+
             // let imgUrl_1;
-            imgUrl_1 = canvasEl_1.toDataURL("image/png");
+            imgUrl_1 = canvasEl_1.toDataURL("image/png",100);
           }
           img_1.src = url_1;
         });
