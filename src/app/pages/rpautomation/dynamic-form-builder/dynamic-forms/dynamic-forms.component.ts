@@ -244,7 +244,5 @@ export class DynamicFormsComponent implements OnInit {
       moveItemInArray(this.fillarray, (this.q - 1) * 2 + event.previousIndex, (this.q - 1) * 2 + event.currentIndex);
      this.data=this.fillarray
   }
-
 }
- // <div class="form-row"></div>
- // <div class="col-md-3"></div>
+

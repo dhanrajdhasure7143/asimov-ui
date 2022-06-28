@@ -254,7 +254,10 @@ export class RpaStudioComponent implements OnInit {
     this.userFilter.name = "";
     document.getElementById("create-bot").style.display ="none";
     this.model=this.insertbot.value;
-    
+    let createbot={
+      "botName":this.model.botName,
+      "department":this.model.botDepartment
+     }
     if(this.model.botDepartment=="others"){
       let rpaCategory:any={"categoryName":this.insertbot.value.newCategoryName,"categoryId":0, "createdAt":""};
       this.rest.addCategory(rpaCategory).subscribe(data=>{
@@ -262,11 +265,26 @@ export class RpaStudioComponent implements OnInit {
         catResponse=data;
         this.model.botDepartment=catResponse.data.categoryId;
         this.tabsArray.push(this.model);
+        this.spinner.show();
+          this.rest.createBot(createbot).subscribe((res:any)=>{
+            this.spinner.hide()     
+           },err=>{
+            this.spinner.hide();
+            Swal.fire("Error","error");
+          });
+       
       });
     }else{
         
         this.tabsArray.push(this.model);
         localStorage.setItem("isHeader","true");
+        this.spinner.show();
+        this.rest.createBot(createbot).subscribe((res:any)=>{
+          this.spinner.hide()     
+         },err=>{
+          this.spinner.hide();
+          Swal.fire("Error","error");
+        });
     }
     this.tabActiveId = this.model.botName;
     this.insertbot.reset();
