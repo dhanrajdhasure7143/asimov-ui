@@ -346,9 +346,6 @@ span.labelcont {
   font-weight: 600;
   color: #00a0e3;
 }
-span.tab-number.h3.clickable {
-  /* margin: 10px 0px; */
-}
 .comment-name {
   margin-left: 8px;
 }
@@ -611,12 +608,6 @@ span.testtooltip:before {
 }
 .user-owner-div span.letter-image {
   padding: 10px;
-}
-.profile-table td span.letter-image {
-  /*margin-right: 5px;
-    padding: 5px 8px;
-    position: relative;
-    background-color: transparent; */
 }
 span.projectowner-letter-image{
   margin-right: 20px;
