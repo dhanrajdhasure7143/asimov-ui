@@ -195,7 +195,9 @@ export class RestApiService{
   {
     return await this.http.post('/rpa-service/update-bot',data)
   }
-
+  createBot(data:any){  
+    return this.http.post('/rpa-service/create-bot',data)
+  }
   async uploadfile(data:any,envids:any[])
   {
     let  url="/rpa-service/agent/file-upload-environments";
