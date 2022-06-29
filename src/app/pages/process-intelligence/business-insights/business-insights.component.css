@@ -14,7 +14,6 @@ h1,h2,h3,h4,h5,h6,a,ul,li,ol,p,span{
 }
 .main {
     background-color: #F1F0F0;
-    /* margin: 40px 0px; */
 }
 .secone h1, .chartssc h2, .varienanal h1 {
     font-size: 18px;
@@ -104,9 +103,6 @@ span.smalfon {
     color: #000000DE;
     font-size: 16px;
     font-weight: 600;
-    /* position: relative;
-    top: 50%;
-    transform: translateY(-50%); */
 }
 .chartinnsec select {
     border: 1px solid #D7DAE2;
@@ -153,9 +149,6 @@ span.smalfon {
 }
 
 .new-PI-layout {
-    /* overflow: hidden auto;
-    height: calc(100% - 50px);
-    position: relative; */
     padding: 15px 10px 10px;
 }
 .bpspaginationdiv {

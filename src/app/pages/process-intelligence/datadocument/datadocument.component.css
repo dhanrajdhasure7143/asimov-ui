@@ -1,20 +1,4 @@
-/* 
-.inner-addon i{
-    position: absolute;
-    padding-left: 90%;
-    pointer-events: none;
-    width: 50px;
-    margin-top: 10px
-}
-.right-addon input{ padding-right: 20px !important; }
-input[type="text"]{
-    padding:4px !important;
-  } */
-
 .new-PI-layout {
-    /* overflow: hidden auto;
-    height: calc(100% - 50px);
-    position: relative; */
     padding: 15px 10px 10px;
 }
 

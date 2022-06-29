@@ -6,35 +6,24 @@
                     <div class="col-md-3 pl-0">
                         <div class="innersecone d-flex">
                             <div class="leftinsec"><h2><span class="smalfon">{{getTimeConversion(this.b_metrics.slowestCase)}}</span></h2></div>
-                           <!-- <div class="leftinsec"><h2>{{getTimeConversion(this.b_metrics.fastestCase)}}</h2></div> -->
                             <div class="rightinsec"><p class="heading">Fastest Case</p></div>
                         </div>
                     </div>
                     <div class="col-md-3 pl-0">
                         <div class="innersecone d-flex">
                             <div class="leftinsec"><h2><span class="smalfon">{{getTimeConversion(this.b_metrics.fastestCase)}}</span></h2></div>
-                            <!-- <div class="leftinsec"><h2>{{getTimeConversion(this.b_metrics.slowestCase)}}</h2></div> -->
                             <div class="rightinsec"><p class="heading">Slowest case</p></div>
                         </div>
                     </div>
                     <div class="col-md-3 p-0">
                         <div class="innersecone d-flex">
                             <div class="leftinsec"><h2><span class="smalfon">{{getTimeConversion(this.b_metrics.avgTurnAround)}}</span></h2></div>
-                            <!-- <div class="leftinsec"><h2>{{getTimeConversion(this.b_metrics.avgTurnAround)}}</h2></div> -->
                             <div class="rightinsec"><p class="heading">Average Turn Around Time</p></div>
                         </div>
                     </div>
-                    <!-- <div class="col-md-3">
-                        <div class="innersecone d-flex">
-                            <div class="leftinsec"><h2><span class="smalfon">59%</span></h2></div>
-                            <div class="rightinsec"><p class="heading">Rework Rate</p></div>
-                        </div>
-                    </div> -->
                 </div>
             </div>
-            <div class="chartssc">
-                <!-- <h2>Process Step Completion</h2> -->
-                
+            <div class="chartssc">                
                 <h2 class="heading">Time Analysis</h2>
                 <div class="row">
                     <div class="col-md-6 pl-0">
@@ -57,15 +46,6 @@
             </div>
             <div class="varienanal chartinnsec">
                     <label>Variant Analysis</label>
-                    <!-- <div class="maintx d-flex">
-                        <div class="leftyext">
-                            <h4>Variant 1</h4>
-                        </div>
-                        <div class="leftyight">
-                          <h5>18% cases take 37 days on an average to complete the process</h5>
-                        </div>
-                    </div> -->
-
                     <div class="maintx" *ngFor="let element of displayedRows$ | async;let i=index;trackBy:loopTrackBy">
                         <div class="maintx d-flex">
                             <div class="leftyext">

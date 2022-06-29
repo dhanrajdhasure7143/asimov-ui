@@ -1,4 +1,3 @@
-
 <div class="row new-PI-layout ">
                 <div class='col-md-12 PI-uploadgrid p-0'>
                   <div class="row">
@@ -9,7 +8,6 @@
                                         <a (click)="downloadCSV()">Download Sample Template</a>
                                 </span>
                         </h4>
-                        
                    </div>     
                    <div class="col-md-3 p-0 upload_zone" id="upload_xl" >
                         <ngx-dropzone (change)="onUpload($event,0)" [multiple]=false [accept]="xlsx_csv_mime" >
@@ -20,7 +18,6 @@
                            </div>
                            <div class="model-text">         
                                 <h3>XLSX/CSV</h3>
-                                <!-- <h5>Upload</h5> -->
                            </div>
                            <div class="model-uploadhvr">
                                 <img src="../../../../assets/images/PI/upload.svg">
@@ -36,7 +33,6 @@
                            </div>
                            <div class="model-text">
                                 <h3>XES</h3>
-                                <!-- <h5>Upload</h5> -->
                            </div>
                            <div class="model-uploadhvr">
                                    <img src="../../../../assets/images/PI/upload.svg">
@@ -52,16 +48,12 @@
                            </div>
                            <div class="model-text">
                                 <h3>DB File</h3>
-                                <!-- <h5>Create New</h5> -->
                            </div>
                            <div class="model-uploadhvr">
                                 <img src="../../../../assets/images/PI/db-plus.svg">
                            </div>
                         </ngx-dropzone>
                    </div>
-                   <!-- <div class="col-md-2 download_link" id="download_template">
-                        <a (click)="downloadCSV()">Download Sample Template</a>
-                   </div> -->
                   </div>
                 </div>
                 <div class="col-md-12 PI-workspace-table p-0" id="my_workspace">
@@ -71,7 +63,6 @@
                         </div>
                         <form action="" class="col-md-6 p-0 tableControls">
                                         <div class="col-md-6 form-group pr-0 offset-4">
-                                                <!-- <label>Select Category</label> -->
                                                 <select  name="category" (change)="searchByCategory(categoryName)" [disabled]="categories_list.length == 1" #category="ngModel" [(ngModel)]="categoryName" panelClass="overlayMatSelect" class="form-control bps-home-fileds">
                                                         <option value="" disabled hidden >Select Category</option>
                                                         <option value="null" disabled hidden >Select Category</option>
@@ -82,11 +73,9 @@
                                                 </select>
                                         </div>
                                         <div class="col-md-6 form-group pr-0 PI-serwksp">
-                                                <!-- <label>Search Workspace</label> -->
                                                 <input (keyup)="applyFilter($event)" class="form-control toolbar-search bps-home-fileds" placeholder="Search Workspace">
                                                 <img src="../../../../assets/images/search.svg" alt="" class="testplus1">
-                                        </div>
-                                        
+                                        </div>        
                         </form>
                     </div>
                     <div class="test1">
@@ -128,15 +117,11 @@
                                                         <img src="../../../../../assets/images/Projects/Edit-blue.svg" class="hover-img">
                                                 </span> 
                                                 <span>
-                                                        <!-- *ngIf="element.status !='Inprogress'" -->
                                                         <span (click)="onDeleteSelectedProcess(element.piId,element)" class="delete-icon">
                                                                 <!-- <img matTooltip="Delete Process" matTooltipPosition="left" src="../../../../assets/images/BPMS/delete-red.svg"  > -->
                                                                 <img src="../../../../assets/images/Projects/delete-black.svg" matTooltip="Delete Process" matTooltipPosition="left" class="default-img">
                                                                 <img src="../../../../assets/images/Projects/delete-red.svg" matTooltip="Delete Process" matTooltipPosition="left" class="hover-img">
                                                         </span>
-                                                        <!-- <span *ngIf="element.status=='Inprogress'" class="delete-icon delete-icon-disabled">
-                                                                <img matTooltip="Delete Process" matTooltipPosition="left" src="../../../../assets/images/PI/delete_disabled.svg"  >
-                                                        </span> -->
                                                 </span>
 
                                         </td>
@@ -217,9 +202,6 @@
                                                         <span *ngIf="((hostname.invalid && database.submitted) || (hostname.errors && hostname.touched) )" 
                                                                 class='errspan required'> Host Name/IPis required </span>
                                                 </div>
-                                        <!-- </div>
-                                        <div class="col-md-12 p-0 form-group">
-                                           <div [hidden]="!isTableEnable"> -->
                                               <div class="col-md-6 p-0" [hidden]="!isTableEnable">
                                                 <label class="label-control" for="tablename">Table Name<span class="star">*</span></label>
                                                 <select [disabled]="!dbDetails.hostName" class="form-control" name="tablename" id="tablename" #tablename='ngModel' [(ngModel)]="dbDetails.tableName" (change)="onChangeTable()" required>
@@ -243,23 +225,8 @@
                                                         <span *ngIf="((increase.invalid && database.submitted) || (increase.errors && increase.touched) )" 
                                                         class='errspan required'> Mode is required </span>
                                                 </div>
-                                        <!-- </div>       -->
                                         
-                                        <!-- <div *ngIf="isTableEnable"> -->
                                            <div class="col-md-12 p-0 form-group" *ngIf="isTableEnable">
-                                              <!-- <div class="col-md-6">
-                                                <label class="label-control" for="increase">Mode<span class="star">*</span></label>
-                                                <select [disabled]="!dbDetails.tableName" name="increase"  id="" class="form-control" (change)="onChangeMode($event.target.value)" #increase="ngModel" [(ngModel)]="dbDetails.mode" required>
-                                                        <option [value]="undefined" disabled hidden>Select Mode</option>
-                                                        <option [value]="null" disabled hidden>Select Mode</option>
-                                                        <option value="incrementing">Incrementing</option>
-                                                        <option value="timestamp">Timestamp</option>
-                                                        <option value="timestamp+incrementing">Incrementing with Timestamp</option>
-                                                </select> 
-                                                <span *ngIf="((increase.invalid && database.submitted) || (increase.errors && increase.touched) )" 
-                                                class='errspan required'> Mode is required </span>
-                                              </div> -->
-                                              <!-- <div > -->
                                                 <div class="col-md-6 pl-0" *ngIf="isIncrement" >
                                                         <label class="label-control" for="increment">Increment Column Name<span class="star">*</span></label>
                                                         <input type="text" name="increment" class="form-control" #increment [(ngModel)]='dbDetails.increment' placeholder="Enter increment column name" required/>
@@ -272,8 +239,6 @@
                                                         <span *ngIf="((timestamp.invalid && database.submitted) || (timestamp.errors && timestamp.touched) )" 
                                                              class='errspan required'> Timestamp column name is required </span>
                                                 </div>
-                                              <!-- </div> -->
-                                           <!-- </div> -->
                                         </div>         
                                 </div>
                                 <div class="form-footer">
@@ -293,7 +258,6 @@
 
 
 <process-category-overlay headerTitle="Save Process" [overlay_data]="overlay_data" buttonName="Save & Generate" (proceed)="generateGraph($event)" class="bpmnCreate"></process-category-overlay>
-<!-- <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "ball-spin-clockwise-fade-rotating" [fullScreen] = "true"><p style="color: white" ></p></ngx-spinner> -->
 
 
 

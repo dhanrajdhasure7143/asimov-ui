@@ -1,6 +1,3 @@
-
-
-
 import { Component, OnInit, AfterViewInit,ViewChild,EventEmitter,ElementRef, Renderer2,Output ,HostListener} from '@angular/core';
 import { Options } from 'ng5-slider';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -38,8 +35,6 @@ enum VariantList {
   providers: [ProcessGraphModel]
 })
 export class FlowchartComponent implements OnInit {
-  // @ViewChild('toggleButton') toggleButton: ElementRef;
-
   public select_varaint: any = 0;
   public model1;
   public model2;
@@ -55,7 +50,6 @@ export class FlowchartComponent implements OnInit {
   activityValue: number = 1;
   public checkboxValue: boolean = false;
   public selectedCaseArry: any[]=[];
-  // public isfrequency: boolean = false;
   public caselength: number;
   public isdownloadsvg: boolean = false;
   public isdownloadpdf: boolean = false;
@@ -72,7 +66,6 @@ export class FlowchartComponent implements OnInit {
     step:0.1,
     floor: 0,
     ceil: 1,
-    // translate: (value: number): string => `${value}%`,
     translate: (value: number): string => `${value*100}`,
     hideLimitLabels: true,
     hidePointerLabels: false,
@@ -192,7 +185,6 @@ pi_fullGraph_data:any=[];
     this.isplay=false;
     let res_data
     this.Pi_header_functions=this.dt.pi_headerChanges.subscribe(res=>{res_data=res
-      // console.log(res);
       if(res){
         let element=document.getElementById("tipsy_div");
         if(element){
@@ -218,7 +210,6 @@ pi_fullGraph_data:any=[];
         this.openVariantListNav()
       }else if(res_data instanceof Object){
         this.workingHours=res_data
-        // console.log(res_data)
         this.addWorkingHours();
       }
     });
@@ -231,7 +222,6 @@ pi_fullGraph_data:any=[];
     this.process_graph_options = ProcessGraphList;
     this.variant_list_options = VariantList;
     this.variant_list = Object.keys(VariantList).filter(val => isNaN(VariantList[val]));
-    
     var piId;
     this.route.queryParams.subscribe(params => {
       if(params['wpiId']!=undefined){
@@ -283,21 +273,8 @@ pi_fullGraph_data:any=[];
     this.isNodata=true;
     let self = this;
     this.varaint_data=[];
-    // this.route.queryParams.subscribe(params => {
-    //   let token = params['wpiId'];
-    //   if (token) {
-    //       let url=this.router.url.split('?')
-    //       this.location.replaceState(url[0]+'?wpiId='+selectedpiId);
-    //   }else{
-    //     let url=this.router.url.split('?')
-    //     this.location.replaceState(url[0]+'?piId='+selectedpiId);
-    //   }
-    // });
-
     let params1= {"wpiId":selectedpiId};
-
     this.router.navigate([],{ relativeTo:this.route, queryParams:params1 });
-
     let piId=selectedpiId
     let endTime:any
     if(this.workingHours.shiftEndTime=='23:59'){
@@ -313,7 +290,6 @@ pi_fullGraph_data:any=[];
        } 
     this.rest.getAllVaraintList(variantListbody).subscribe(data=>{this.varaint_data=data // variant List call
       this.performanceFilterInput = data;
-      // console.log(this.performanceFilterInput);
       for(var i=0; i<this.varaint_data.data.length; i++){
           this.varaint_data.data[i].selected= "inactive";
       }
@@ -330,7 +306,6 @@ pi_fullGraph_data:any=[];
       this.rest.getfullGraph(fullGraphbody).subscribe(data=>{this.fullgraph=data //process graph full data call
         if(this.fullgraph.hasOwnProperty('is_kafka_failure')){
           if(this.fullgraph.is_kafka_failure == 'Y'){
-           
             Swal.fire({
               title: 'Oops!',
               text: ""+this.fullgraph.display_msg.info,
@@ -389,7 +364,6 @@ pi_fullGraph_data:any=[];
           })
 
           this.spinner.hide();
-         // this.redirectToWorkspace()
           this.model1=[];
           this.model2=[];
         } else{
@@ -448,12 +422,10 @@ pi_fullGraph_data:any=[];
             this.processGraphName=e.piName;
             }
           })
-        // this.filterOverlay()
         }, 7000);
   }
 
   onchangegenerategraphId(selectedpiId){  // change process  graps in dropdown
-    //this.isLoading=true;
     this.isNodata=true;
     this.route.queryParams.subscribe(params => {
       let token = params['wpiId'];
@@ -463,7 +435,6 @@ pi_fullGraph_data:any=[];
       }else{
         let url=this.router.url.split('?')
         this.location.replaceState(url[0]+'?piId='+selectedpiId);
-
       }
   });
   let endTime:any;
@@ -482,7 +453,6 @@ pi_fullGraph_data:any=[];
        } 
     this.rest.getAllVaraintList(variantListbody).subscribe(data=>{this.varaint_data=data // variant List call
       this.performanceFilterInput = data;
-      // console.log(this.performanceFilterInput);
       if(this.varaint_data.data){ 
       for(var i=0; i<this.varaint_data.data.length; i++){
           this.varaint_data.data[i].selected= "inactive";
@@ -589,10 +559,6 @@ pi_fullGraph_data:any=[];
                }
         this.rest.getSliderVariantGraph(sliderGraphbody).subscribe(data=>{this.sliderVariant=data
         })
-        setTimeout(() => {
-        // this.filterOverlay()
-          
-        }, 7000);
   }
 
   onchangeVaraint(datavariant) {      // Variant List sorting 
@@ -623,7 +589,6 @@ pi_fullGraph_data:any=[];
   caseIdSelect(selectedData, index) { // Case selection on Variant list
     this.performanceValue=false
     this.isplay=false;
-    // this.dt.piHeaderValues(null);
     this.activityValue=1;
     this.pathvalue=1;
     this.activity_value=[];
@@ -804,7 +769,6 @@ pi_fullGraph_data:any=[];
 
   playAnimation() {   // Process graph animation
     this.isplay = !this.isplay
-    // console.log(this.isplay)
   }
 
   downloadSvg() { // Process graph download as SVG
@@ -905,7 +869,6 @@ pi_fullGraph_data:any=[];
       var link=[]
       var linktool=[]
       var label = this.nodeArray[i].name;
-      
       for(var j=0; j< datalink.length; j++){
         var obj = {};
         if ( this.nodeArray.some(e => e.name === datalink[j].linkNode)) {​​
@@ -920,7 +883,6 @@ pi_fullGraph_data:any=[];
            if(datalink[j].toolCount[0]>100){
             obj['highData']=true
            }
-
           this.linkdataArray.push(obj);
     }
   }
@@ -1281,12 +1243,6 @@ flowchartDataOne(dataArray,index) {   //Links generate from responce for perform
         }
       });
     }
-    // if(this.selectedActivities1.length>1){
-    //   this.readSelectedFilterValues(this.combofilterObject);
-    // }
-    // if(this.selectedCaseArry.length>=1){
-      // this.generatevarientFilterGraph();
-    // }else{
     this.model1 = this.model3;
     this.filterPerformData = this.fullgraph_model;
     this.model2 = this.flowchartData(this.model1)
@@ -1308,9 +1264,6 @@ flowchartDataOne(dataArray,index) {   //Links generate from responce for perform
     this.spinMetrics0="absoluteFrequency";
     this.activityValue=1;
     this.pathvalue=1;
-    // for (var i = 0; i < this.varaint_data.data.length; i++) {
-    //   this.varaint_data.data[i].selected = "inactive";
-    // }
     this.isPerformance=false;
       //  BPMN Boolean Variables
       this.isFullGraphBPMN = true;
@@ -1341,7 +1294,6 @@ flowchartDataOne(dataArray,index) {   //Links generate from responce for perform
   caseParcent(parcent){       // case persent value in variant list
       if(String(parcent).indexOf('.') != -1){
       let perc=parcent.toString().split('.')
-    // return parcent.toString().slice(0,5);
     return perc[0]+'.'+perc[1].slice(0,2);
       }else{
         return parcent;
@@ -1452,8 +1404,7 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
 
   readselectedNodes(SelectedActivities){    //read selected nodes from filter overlay
     if(SelectedActivities.length==0){
-      this.resetActivityFiltermetrics();
-     
+      this.resetActivityFiltermetrics();     
     }else{
       this.filterByActivity(SelectedActivities)
     }
@@ -1615,7 +1566,6 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
         return days
   }
 
-
   filterOverlay(){
     this.dataValues = [];
     let vv = this.filterPerformData;
@@ -1650,8 +1600,6 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
       }
       this.model1 = fullgraphOne.allSelectData.nodeDataArraycase;
       this.model3 = fullgraphOne.allSelectData.nodeDataArraycase;
-      // this.model1 = this.fullgraph_model;
-      // this.model3 = this.fullgraph_model;
       this.model2 = this.flowchartData(this.model1);
             this.startArray=[];
             this.endArray=[];
@@ -1676,7 +1624,6 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
         this.loaderImgSrc = "/assets/images/PI/Loader_Retrieving-Generated-Graph.gif";
         this.spinner.show();;
         this.selectedActivities1=object.activity;
-        // console.log(this.selectedActivities1);
           var reqObj={
             "data_type":"endpoint_activity_filter",
             "pid":this.graphIds,
@@ -1753,7 +1700,6 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
       for (var i = 0; i < this.varaint_data.data.length; i++) {
         this.varaint_data.data[i].selected = "inactive";
       }
-      // this.resetspinnermetrics();
       this.spinMetrics0="absoluteFrequency";
       var seletedVariant1=[];
       var reqObj={}
@@ -1831,19 +1777,13 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
   }
 
   viewInsights(){
-    //var token=localStorage.getItem('accessToken');
-    //window.location.href="http://localhost:8080/camunda/app/welcome/424d2067/#!/login?accessToken="+token+"&userID=karthik.peddinti@epsoftinc.com&tenentID=424d2067-41dc-44c1-b9a3-221efda06681"
     this.router.navigate(["/pages/processIntelligence/insights"],{queryParams:{wpid:this.graphIds}})
-    
   }
-
- 
 
   readselectedNodes1(activies){    
     this.filterdNodes=[]
     this.filterdNodes=activies
     this.isClearFilter=false;
-       
   }
 
   openHersOverLay(){
@@ -1857,7 +1797,6 @@ addWorkingHours(){
   }else{
     this.isTimeChange=true;
   }
-
     let endTime:any;
   if(this.workingHours.shiftEndTime=='23:59'){
     endTime="24:00"
@@ -1921,7 +1860,6 @@ addWorkingHours(){
             }else{                
               this.model2 = this.flowchartData(this.model1)
             }
-        // this.model2 = this.flowchartData(this.model1)
         let fullModel2=this.model2
         this.startArray=[]
         this.endArray=[]
@@ -2138,69 +2076,49 @@ addWorkingHours(){
     }
      ,(err=>{
       this.spinner.hide();
-      //  console.log(err);
      }));
   }
+
    viewbusinessinsights(){
     this.router.navigate(["/pages/processIntelligence/business-insights"],{queryParams:{wpid:this.graphIds}})
   }
 
-  generatevarientFilterGraph(){
-    this.model1=[];
-  if (this.selectedCaseArry.length == 1) {
-    this.isvariantSelectedOne=true;
-    this.issliderDisabled=true;
-    this.isDefaultData = false;
-    if (this.keyExists(this.selectedCaseArry[0], this.varaint_GraphData.data) == true) {
-      var modalData = this.varaint_GraphData.data[0][this.selectedCaseArry[0]] 
-      this.model1 = modalData.nodeDataArraycase;
+  generatevarientFilterGraph() {
+    this.model1 = [];
+    if (this.selectedCaseArry.length == 1) {
+      this.isvariantSelectedOne = true;
+      this.issliderDisabled = true;
+      this.isDefaultData = false;
+      if (this.keyExists(this.selectedCaseArry[0], this.varaint_GraphData.data) == true) {
+        var modalData = this.varaint_GraphData.data[0][this.selectedCaseArry[0]]
+        this.model1 = modalData.nodeDataArraycase;
+        this.model2 = this.flowchartData(this.model1);
+      }
+      /**
+  * BPMN Boolean Variables
+  */
+      this.isFullGraphBPMN = false;
+      this.isSingleTraceBPMN = true;
+      this.isMultiTraceBPMN = false;
+      this.isSliderBPMN = false;
+      this.isWorkingHrsBtn = false;
+      this.dt.pi_buttonValues({ "isPlaybtn": false, "isTimefeed_btn": this.isWorkingHrsBtn });
+    } else {
+      this.issliderDisabled = true;
+      this.isvariantSelectedOne = false;
+      this.model1 = this.model3;
       this.model2 = this.flowchartData(this.model1);
+
+      /**
+    * BPMN Boolean Variables
+    */
+      this.isFullGraphBPMN = false;
+      this.isSingleTraceBPMN = false;
+      this.isMultiTraceBPMN = true;
+      this.isSliderBPMN = false;
+      this.isWorkingHrsBtn = false;
+      this.dt.pi_buttonValues({ "isPlaybtn": false, "isTimefeed_btn": this.isWorkingHrsBtn });
     }
-         /**
-     * BPMN Boolean Variables
-     */
-    this.isFullGraphBPMN = false;
-    this.isSingleTraceBPMN = true;
-    this.isMultiTraceBPMN = false;
-    this.isSliderBPMN = false;
-    this.isWorkingHrsBtn=false;
-    this.dt.pi_buttonValues({"isPlaybtn":false,"isTimefeed_btn":this.isWorkingHrsBtn});
-  }else{
-    this.issliderDisabled=true;
-    this.isvariantSelectedOne=false;
-  //   let endTime:any
-  //   if(this.workingHours.shiftEndTime=='23:59'){
-  //     endTime="24:00"
-  //   }else{
-  //     endTime=this.workingHours.shiftEndTime
-  //   }
-  //   this.loaderImgSrc = "/assets/images/PI/Loader_Retrieving-Generated-Graph.gif";
-  //   this.spinner.show();;
-  //   const variantComboBody={
-  //     "data_type":"variant_combo",
-  //     "pid":this.graphIds,
-  //     "cases" : this.selectedCaseArry,
-  //     'timeChange':this.isTimeChange,
-  //     "workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+endTime+":00"
-  //       }
-  // this.rest.getVariantGraphCombo(variantComboBody).subscribe(res=>{this.variantCombo=res
-  //   this.model1=this.variantCombo.data[0].nodeDataArraycase;
-    this.model1=this.model3;
-  //   this.filterPerformData = this.variantCombo.data[0].nodeDataArraycase;
-               
-          this.model2 = this.flowchartData(this.model1);
-  //         this.model2 = this.flowchartData(this.model1);
-  //       this.spinner.hide();
-  // })
-       /**
-     * BPMN Boolean Variables
-     */
-    this.isFullGraphBPMN = false;
-    this.isSingleTraceBPMN = false;
-    this.isMultiTraceBPMN = true;
-    this.isSliderBPMN = false;
-    this.isWorkingHrsBtn=false;
-    this.dt.pi_buttonValues({"isPlaybtn":false,"isTimefeed_btn":this.isWorkingHrsBtn});
   }
-  }
+
 }

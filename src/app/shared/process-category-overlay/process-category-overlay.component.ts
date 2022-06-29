@@ -46,7 +46,6 @@ export class ProcessCategoryOverlayComponent implements OnInit {
     private cdRef: ChangeDetectorRef, private dt: DataTransferService) { }
 
   ngOnChanges(changes: SimpleChanges) {
-    // console.log("this.ovrlayData",this.overlay_data)
     if(this.overlay_data.type=="edit"){
       this.isValidName=false;
       if(this.overlay_data.module=="pi"){
@@ -55,7 +54,6 @@ export class ProcessCategoryOverlayComponent implements OnInit {
       }else{
         this.categoryName=this.overlay_data.selectedObj.category;
         this.notationType=this.overlay_data.selectedObj.ntype;
-        // this.process_owner=this.overlay_data.selectedObj.processOwner;
         this.processName=this.overlay_data.selectedObj.bpmnProcessName;
         this.approver_list.forEach((e,i)=>{
           if(this.overlay_data.selectedObj.processOwner==e.userId){
@@ -73,7 +71,6 @@ export class ProcessCategoryOverlayComponent implements OnInit {
       this.processName='';
       this.categoryName=undefined;
       this.isValidName=false;
-     
       if(this.overlay_data.module !="pi"){
         this.process_owner=undefined;
         this.notationType='';
@@ -92,6 +89,7 @@ export class ProcessCategoryOverlayComponent implements OnInit {
     }
   }
   }
+
   ngAfterViewChecked(){
     if(this.categories_list.length==1){
       this.categoryName=this.categories_list[0].categoryName
@@ -217,53 +215,14 @@ export class ProcessCategoryOverlayComponent implements OnInit {
         event.preventDefault();
         return false;
       }
-
-    // this.process_name_error = false;
-    // if (event.target.value.length == 0) {
-    //   this.process_name_error = false;
-    // }
-    // if (event.target.value.includes(' ')) {
-    //   this.process_name_error = true;
-    //   return;
-    // }
-    // if ((event.target.value.length != 0 && event.target.value.length < 4) || (event.target.value.length > 25) ) {
-    //   this.process_name_error = true;
-    // }
-
-
-
-
-    // this.process_name_error=false;
-    // if(event.target.value.length==0 && event.code=="Space"){
-    //   event.preventDefault();
-    //   return false;
-    // }
-    // console.log(event.code)
-    
-    // let count1;
-    // if(event.code=="Space"){
-    //   count1=this.count++;
-    //   this.process_name_error=true;
-    // }else{
-    //   this.count=0;
-    // }
-    // console.log(count1)
-    // if(count1>=1){
-    //   event.preventDefault();
-    //   return false;
-    // }
-
-    // var str=event.target.value
-    // console.log("othercategory",this.othercategory);
-    // console.log(str.replace(/\s\s/g, " "))
-
   }
+
   async getApproverList(){
     let roles={
       "roleNames": ["Process Owner"]
-    }
+  }
 
-    await this.rest.getmultipleApproverforusers(roles).subscribe( res =>  {//Process Architect
+  await this.rest.getmultipleApproverforusers(roles).subscribe( res =>  {//Process Architect
      if(Array.isArray(res))
        this.approver_list = res;
    });
@@ -293,7 +252,6 @@ export class ProcessCategoryOverlayComponent implements OnInit {
             this.dt.processDetailsUpdateSuccess({"isRfresh":true});
           }
         });
-
         this.slideDown(null);
       });
     }else{
@@ -362,13 +320,9 @@ export class ProcessCategoryOverlayComponent implements OnInit {
             });
             this.slideDown(null);
           })
-
         }
-
       })
-
-    
-
     }
   }
+
 }

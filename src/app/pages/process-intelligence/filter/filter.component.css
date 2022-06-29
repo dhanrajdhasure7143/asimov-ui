@@ -60,10 +60,6 @@
   width: 6px;
   height: 16px;
 }
-/* ::-webkit-scrollbar{
-    width:10px !important;
-    height: 0px !important;
-} */
 .data_values{
     border: 1px solid #e5e5e5;
     border-radius: 3px;
@@ -72,10 +68,6 @@
     cursor:pointer;
     padding: 8px 10px;
     margin-bottom: 7px;
-}
-.data_values:hover{
-    /* background-color: #00a0e3 !important;
-    color: #fff; */
 }
 .inner-addon i{
     position: absolute;
@@ -95,12 +87,8 @@
 .pill {
   background: #012e4c;
   color: #ffff;
-  /* margin-top: 1px;
-  margin-bottom: 1px; */
   padding: 6px 8px;
   width: 125px;
-  /* text-align: center; */
-  /* margin-left: 4px; */
   border-radius: 3px;
   margin-right: 10px;
 }
@@ -113,8 +101,6 @@
 }
 
 .barchart_graph{
-  /* border: 1px solid #f8f8f8;
-  box-shadow: 0px 2px 5px rgb(0 0 0 / 20%); */
   background: #07051d;
   height: 200px;
   border-radius: 10px;
@@ -128,22 +114,11 @@
   width: 160px;
   height: 85px;
   border-radius: 4px;
-  /* display: flex; */
   align-items: center;
   margin: 0px auto;
 }
-/* .max_time_select{
-  position: relative;
-  left: 290px;
-  top: 20px;
-}
-.min_time_select{
-  position: relative;
-  top: 20px;
-} */
+
 .pie_label{
-  /* position: relative;
-    top: 30px; */
     font-weight: 600;
     margin-top: 20px;
 }
@@ -155,8 +130,8 @@
 }
 .pp_chart {
   position: relative;
-  /* left:70px */
 }
+
 .arrows {
   appearance: none;
   background-image: url('../../../../assets/images/PI/dual-arrow.svg');
@@ -204,10 +179,7 @@
   .apply-btn{
     margin-top: 240px;
   }
-
-
   .container.m-contanier.form-body {
-    /* height: calc(100% - 38px); */
     padding: 0px;
     width: 100%;
 }
@@ -281,13 +253,7 @@ img.hover-img {
 .timestamp-header span:hover img.hover-img, .pill span:hover img.hover-img {
   display: initial;
 }
-/* ::ng-deep popover-container{
-  background-color: #eeeeee !important;
-} */
 .setvalue-btn button{
   margin-top: 10px;
   margin-bottom: 10px;
 }
-/* ::ng-deep .popover-content{
-  padding: 9px 0px !important;
-} */

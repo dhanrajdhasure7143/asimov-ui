@@ -110,15 +110,11 @@ export class BusinessInsightsComponent implements OnInit {
       chart.legend.scrollable = true;
       chart.legend.fontSize = 12;
       chart.legend.reverseOrder = false;
-      // chart.data=data;
       chart.data=this.activitytime_data;
-
       chart.legend.position = "right";
       chart.legend.valign = "middle";
       chart.innerRadius = 70;
-      // chart.tooltip="test";
       var label = chart.seriesContainer.createChild(am4core.Label);
-        // label.text = "230,900 Sales";
       label.horizontalCenter = "middle";
       label.verticalCenter = "middle";
       label.fontSize = 18;
@@ -126,21 +122,8 @@ export class BusinessInsightsComponent implements OnInit {
       series.dataFields.value = "totalDuration";
       series.dataFields.category = "activity";
       series.labels.template.disabled = true;
-      // series.slices.template.cornerRadius = 0;
-      // series.tooltip.horizontalCenter = "middle";
-      // series.tooltip.verticalCenter = "middle";
-      // series.tooltip.fontSize=18;
-      // series.tooltipText = ' {name} ({_dataContext.totalDuration1})';
-      // series.slices.template.tooltipText = "{parent.parent.name} {parent.name} > {name} ({value})";
-      // series.columns.template.tooltipText = " caseId : {categoryX} \n  Duration : {valueY}[/] ";
-      // series.tooltip.text = " caseId";
-      // series.adapter.add("tooltipText", function(text, target) {
-      //   return "{_dataContext.activity} \n {_dataContext.totalDuration1}";
-      // });
       var _self=this;
       series.slices.template.adapter.add("tooltipText", function(text, target) {
-        // var text=_self.getTimeConversion('{_dataContext.totalDuration}');
-        //return "{_dataContext.activity} \n {_dataContext.convertedDuration}";
         return "{_dataContext.activity} \n {value.percent.formatNumber('#.#')}% [/]"
       });
       $('g:has(> g[stroke="#3cabff"])').hide();
@@ -169,116 +152,45 @@ export class BusinessInsightsComponent implements OnInit {
       ];
   }
 
-
-  thoughtputTimeChart(){
-    this.valueType=this.throughtime_data[0].unitOfTime
-    let _me=this
-
-    // am4core.ready(function() {
-    //   // Themes begin
-    //   am4core.useTheme(am4themes_animated);
-    //   // Themes end
-    //   // Create chart instance
-    //   var chart = am4core.create("chartdiv2", am4charts.XYChart);
-    //   // Add data
-
-    //   chart.data=_me.throughtime_data
-      
-    //   // Create axes
-  
-    //   var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
-    //   // categoryAxis.dataFields.category = "country";
-    //   categoryAxis.dataFields.category = "param";
-    //   categoryAxis.renderer.grid.template.location = 0;
-    //   categoryAxis.renderer.minGridDistance = 30;
-    //   // categoryAxis.title.text="Days"
-    //   // categoryAxis.title.text="Median Activity Duration"
-    //   // categoryAxis.title.fontWeight="bold"
-    //   // categoryAxis.renderer.labels.template.adapter.add("dy", function(dy, target) {
-    //   //   if (target.dataItem && target.dataItem.index && 2 == 2) {
-    //   //     return dy + 25;
-    //   //   }
-    //   //   return dy;
-    //   // });
-
-
-    
-    //   var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-    //   // valueAxis.title.text = "No.of.Cases";
-    //   valueAxis.title.text = "No of Cases";
-    //   //valueAxis.title.fontWeight="bold"
-    //   // Create series
-    //   var series = chart.series.push(new am4charts.ColumnSeries());
-    //   series.dataFields.valueY = "value";
-    //   series.dataFields.categoryX = "param";
-    //   // series.dataFields.valueY = "medianActivityDuration";
-    //   // series.dataFields.categoryX = "caseId";
-    //   series.name = "value";
-    //   series.columns.template.tooltipText = " Duration : {categoryX} \n  No of Cases : {valueY}[/] ";
-    //   series.columns.template.fillOpacity = 1;
-    //   series.columns.template.adapter.add("fill", function(fill, target) {
-    //       return am4core.color("#4d72be");
-    //     });
-      
-    //   // chart.colors.list = [
-        
-    //   //   am4core.color("rgba(85, 216, 254, 0.9)"),
-    //   // ];
-      
-    //   var columnTemplate = series.columns.template;
-    //   columnTemplate.strokeWidth = 0;
-    //   columnTemplate.strokeOpacity = 1;
-      
-    //   }); // end am4core.ready()
-   
-am4core.useTheme(am4themes_animated);
-
-// Create chart instance
-var chart = am4core.create("chartdiv2", am4charts.XYChart);
-
-chart.data=_me.throughtime_data
-
-var categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
-categoryAxis.dataFields.category = "param";
-categoryAxis.renderer.grid.template.location = 1;
-// categoryAxis.renderer.grid.template.strokeOpacity = 1;
-// categoryAxis.renderer.grid.template.location = 1;
-categoryAxis.renderer.minGridDistance = 20;
-categoryAxis.title.text="Throughput Time ("+_me.valueType+")"
-
-var valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
-valueAxis.title.text="No of Cases"
-var series = chart.series.push(new am4charts.ColumnSeries());
-series.dataFields.valueX = "value";
-series.dataFields.categoryY = "param";
-
-      series.columns.template.tooltipText = " Duration : {categoryY} \n  No of Cases : {valueX}[/] ";
-
-var valueLabel = series.bullets.push(new am4charts.LabelBullet());
-series.columns.template.adapter.add("fill", function(fill, target) {
-        return am4core.color("#4d72be");
-      });
-// valueLabel.label.text = "Hello";
-valueLabel.label.fontSize = 20;
-$('g:has(> g[stroke="#3cabff"])').hide();
-    
+  thoughtputTimeChart() {
+    this.valueType = this.throughtime_data[0].unitOfTime
+    let _me = this
+    am4core.useTheme(am4themes_animated);
+    // Create chart instance
+    var chart = am4core.create("chartdiv2", am4charts.XYChart);
+    chart.data = _me.throughtime_data
+    var categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
+    categoryAxis.dataFields.category = "param";
+    categoryAxis.renderer.grid.template.location = 1;
+    categoryAxis.renderer.minGridDistance = 20;
+    categoryAxis.title.text = "Throughput Time (" + _me.valueType + ")"
+    var valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
+    valueAxis.title.text = "No of Cases"
+    var series = chart.series.push(new am4charts.ColumnSeries());
+    series.dataFields.valueX = "value";
+    series.dataFields.categoryY = "param";
+    series.columns.template.tooltipText = " Duration : {categoryY} \n  No of Cases : {valueX}[/] ";
+    var valueLabel = series.bullets.push(new am4charts.LabelBullet());
+    series.columns.template.adapter.add("fill", function (fill, target) {
+      return am4core.color("#4d72be");
+    });
+    valueLabel.label.fontSize = 20;
+    $('g:has(> g[stroke="#3cabff"])').hide();
   }
+
   parseMillisecondsIntoReadableTime(milliseconds){
     //Get hours from milliseconds
     var hours = milliseconds / (1000*60*60);
     var absoluteHours = Math.floor(hours);
     var h = absoluteHours > 9 ? absoluteHours : '0' + absoluteHours;
-  
     //Get remainder from hours and convert to minutes
     var minutes = (hours - absoluteHours) * 60;
     var absoluteMinutes = Math.floor(minutes);
     var m = absoluteMinutes > 9 ? absoluteMinutes : '0' +  absoluteMinutes;
-
     //Get remainder from minutes and convert to seconds
     var seconds = (minutes - absoluteMinutes) * 60;
     var absoluteSeconds = Math.floor(seconds);
     var s = absoluteSeconds > 9 ? absoluteSeconds : '0' + absoluteSeconds;
-  
     return h + '.' + m + '.' + s;
   }
 

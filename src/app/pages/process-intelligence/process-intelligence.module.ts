@@ -17,7 +17,6 @@ import { SearchPipe } from './pipes/search.pipe';
 import { PiHints } from './model/process-intelligence-module-hints';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { DataselectionComponent } from './dataselection/dataselection.component';
-import { PibpmnfilterComponent } from './pibpmnfilter/pibpmnfilter.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import {DataTablesModule} from 'angular-datatables';
@@ -52,7 +51,6 @@ import { PopoverModule } from 'ngx-bootstrap/popover';
     FlowchartComponent,
     SearchPipe,
     DataselectionComponent,
-    PibpmnfilterComponent,
     XesdocumentComponent,
     D3flowchartComponent,
     ProcessinsightsComponent,

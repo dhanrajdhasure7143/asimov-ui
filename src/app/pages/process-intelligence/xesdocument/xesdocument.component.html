@@ -48,14 +48,11 @@
                         <td>{{dataResource(data)}}</td>
                         <td>{{dataName}}</td>
                         <td>{{dataTime| date:'MM/dd/yyyy hh:mm a' }}</td>
-                        <!-- <td>{{getDateFormat(dataTime)}}</td> -->
-                        <!-- <td>{{dataTime| date:"MM/dd/yyyy HH:mm:ss":'UTC' }}</td> -->
                     </tr>
                 </tbody>
             </table>
             <div class="bpspaginationdiv">
                 <mat-paginator class="newpaginationdiv mat-paginator" #paginator [length]="totalRows$ | async" [pageIndex]="0" [pageSize]="50" [showFirstLastButtons]="true" [pageSizeOptions]="[50, 100, 200, 500]"></mat-paginator>
-            <!-- <pagination-controls (pageChange)="p = $event"></pagination-controls></div> -->
             </div>
         </div>
     </div>
