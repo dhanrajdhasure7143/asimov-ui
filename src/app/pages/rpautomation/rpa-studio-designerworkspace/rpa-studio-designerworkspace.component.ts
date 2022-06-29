@@ -1578,6 +1578,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     let actualTasks:any=this.actualTaskValue;
     let firstName=localStorage.getItem("firstName");
     let lastName=localStorage.getItem("lastName")
+    console.log("finaltasks",finalTasks)
     finalTasks.forEach((item:any)=>{
       if(actualTasks.find(item2=>item.nodeId==item2.nodeId)==undefined)
       {
@@ -1762,7 +1763,11 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   add_order(object) {
 
     let end = this.stopNodeId;
-    this.final_tasks.push(object);
+    console.log("object",object)
+    if(object!=undefined){
+      this.final_tasks.push(object);
+    }
+ 
     if(object==undefined)
     {
       this.checkorderflag=false;
@@ -1899,6 +1904,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     this.areas[1].size = e.sizes[1];
     if(e.sizes[1] < 30){
      this.splitAreamin_size="200";
+    }else{
+      this.splitAreamin_size="null";
     }
   }
 }

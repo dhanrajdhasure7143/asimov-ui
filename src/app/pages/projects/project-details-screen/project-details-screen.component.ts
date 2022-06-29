@@ -175,6 +175,8 @@ export class ProjectDetailsScreenComponent implements OnInit {
   asIsProcessId:any;
   toBeProcessId:any;
   business_benefits:any;
+  bpmnModeler;
+  bpmnModeler1;
 
   constructor(private dt: DataTransferService, private route: ActivatedRoute, private dataTransfer: DataTransferService, private rpa: RestApiService,
     private modalService: BsModalService, private formBuilder: FormBuilder, private router: Router,
@@ -634,7 +636,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
       this.dataSource6.sort = this.sort14;
       this.spinner.hide()
       this.dataSource6.paginator = this.paginator104;
-      this.getTaskandCommentsData();
+      // this.getTaskandCommentsData();
       this.getLatestFiveAttachments(this.project_id);
     })
   }
@@ -1464,7 +1466,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
     })
   }
 
-  createBpmn1(byteBpmn, byteBpmn1) {
+  async createBpmn1(byteBpmn, byteBpmn1) {
     let modeler_obj = "bpmnModeler";
     let modeler_obj1 = "bpmnModeler1";
     let notationJson = {
@@ -1480,24 +1482,24 @@ export class ProjectDetailsScreenComponent implements OnInit {
       }
     }
     this[modeler_obj] = new BpmnJS(notationJson);
-    this[modeler_obj].importXML(byteBpmn, function (err) {
-      if (err) {
-        this.notifier.show({
-          type: "error",
-          message: "Could not import Bpmn notation!"
-        });
+      try{
+        this.bpmnModeler.importXML(byteBpmn);
+      }catch(err){
+        console.error('could not import BPMN EZFlow notation', err);
       }
-    })
+    setTimeout(() => {
+    //  this[modeler_obj].get('canvas').zoom('fit-viewport');
+      }, 1000);
 
     this[modeler_obj1] = new BpmnJS(notationJson1);
-    this[modeler_obj1].importXML(byteBpmn1, function (err) {
-      if (err) {
-        this.notifier.show({
-          type: "error",
-          message: "Could not import Bpmn notation!"
-        });
-      }
-    })
+    try{
+      this.bpmnModeler1.importXML(byteBpmn1);
+    }catch(err){
+      console.error('could not import BPMN EZFlow notation', err);
+    }
+  setTimeout(() => {
+    // this[modeler_obj1].get('canvas').zoom('fit-viewport');
+    }, 1000);
   }
 
   xmlConvertToImageformate(e) {
@@ -1523,8 +1525,13 @@ export class ProjectDetailsScreenComponent implements OnInit {
             // canvasContext.drawImage(img, 0, 0, img.width, img.height, 0, 0, canvasEl.width, canvasEl.height);
 
             // rotate and draw source image into verticle
-            canvasContext.rotate(90 * Math.PI / 180);
-            canvasContext.translate(0, -canvasEl.width);
+            // canvasContext.rotate(90 * Math.PI / 180);
+            // canvasContext.translate(0, -canvasEl.width);
+
+             // anti clock wise
+             canvasContext.rotate(-90 * Math.PI / 180);
+             canvasContext.translate(-canvasEl.height, 0);
+             
             canvasContext.drawImage(img, 0, 0);
 
             let imgUrl;
@@ -1547,7 +1554,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
           var blob = new Blob([svgContent], { type: "image/svg+xml;charset=utf-8" });
           var url = window.URL.createObjectURL(blob);
           let canvasEl = document.createElement("canvas");
-          let canvasContext = canvasEl.getContext("2d");
+          let canvasContext = canvasEl.getContext("2d", {alpha: false});
           let img = new Image();
           img.onload = () => {
             canvasEl.width = img.height;
@@ -1555,8 +1562,12 @@ export class ProjectDetailsScreenComponent implements OnInit {
             // canvasContext.translate(img.height,img.width);
 
             // rotate and draw source image into verticle:
-            canvasContext.rotate(90 * Math.PI / 180);
-            canvasContext.translate(0, -canvasEl.width);
+            // clock wise
+            // canvasContext.rotate(90 * Math.PI / 180);
+            // canvasContext.translate(0, -canvasEl.width);
+            // anti clock wise
+            canvasContext.rotate(-90 * Math.PI / 180);
+            canvasContext.translate(-canvasEl.height, 0);
             canvasContext.drawImage(img, 0, 0);
             canvasContext.fillStyle = "#fff";
 
@@ -1585,23 +1596,37 @@ export class ProjectDetailsScreenComponent implements OnInit {
             // canvasContext_1.drawImage(img_1, 0, 0, img_1.width, img_1.height, 0, 0, canvasEl_1.width, canvasEl_1.height);
 
            // rotate and draw source image into verticle:
-            canvasContext_1.rotate(90 * Math.PI / 180);
-            canvasContext_1.translate(0, -canvasEl_1.width);
+           // clock wise
+            // canvasContext_1.rotate(90 * Math.PI / 180);
+            // canvasContext_1.translate(0, -canvasEl_1.width);
+
+            // anti clock wise
+            canvasContext_1.rotate(-90 * Math.PI / 180);
+            canvasContext_1.translate(-canvasEl_1.height, 0);
+            
             canvasContext_1.drawImage(img_1, 0, 0);
             canvasContext_1.fillStyle = "#fff";
-
-            // let imgUrl_1;
-            imgUrl_1 = canvasEl_1.toDataURL("image/png",100);
+            imgUrl_1 = canvasEl_1.toDataURL("image/jpg",100);
           }
           img_1.src = url_1;
         });
         setTimeout(() => {
           _self1.getPDDFile_1(imgUrl, imgUrl_1)
+          // _self.donloadImage(imgUrl_1)
         }, 300);
       }
     } else {
       this.getPDDFile()
     }
+  }
+
+  donloadImage(url){
+    var link = document.createElement("a");
+    link.href = url;
+    let fileName = "testing";
+    link.download = fileName+".jpg";
+    link.innerHTML = "Click here to download the notation";
+    link.click();
   }
 
   getPDDFile(url?) {
