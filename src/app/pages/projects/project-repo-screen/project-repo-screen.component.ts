@@ -569,5 +569,10 @@ this.getFileDetails();
       this.uploadFileDescriptionFlag = false;
     }
      }
+     fitTableViewCategory(processName) {
+      if (processName && processName.length > 10)
+        return processName.substr(0, 10) + '..';
+      return processName;
+    }
 
 }
