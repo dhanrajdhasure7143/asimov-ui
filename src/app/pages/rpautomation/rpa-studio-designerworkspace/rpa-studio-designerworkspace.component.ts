@@ -518,8 +518,10 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       // node.selectedNodeId = "";
       const nodeWithCoordinates = Object.assign({}, node, dropCoordinates);
       this.nodes.push(nodeWithCoordinates);
+      console.log("node",nodeWithCoordinates)
       setTimeout(() => {
         this.populateNodes(nodeWithCoordinates);
+        this.autoSaveLoopEnd(nodeWithCoordinates)
       }, 240);
 
       if (this.nodes.length == 1) {
@@ -559,6 +561,19 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     }
   }
 
+  autoSaveLoopEnd(node){
+   if(node.selectedNodeTask=='Loop-End'){
+    this.rest.attribute(node.selectedNodeId).subscribe((res:any)=>{        
+         let data=res;       
+           let obj={}
+        data.map(ele=>{
+            obj[ele.name+'_'+ele.id]=ele.value;
+         })   
+         this.onFormSubmit(obj)
+    })
+     
+   }
+  }
   idGenerator() {
     var S4 = function () {
       return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
@@ -1120,6 +1135,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
   onFormSubmit(event) {
     
+    console.log("event",event)
     this.fieldValues = event
     if (this.fieldValues['file1']) {
       this.fieldValues['file1'] = this.fieldValues['file1'].substring(12)
