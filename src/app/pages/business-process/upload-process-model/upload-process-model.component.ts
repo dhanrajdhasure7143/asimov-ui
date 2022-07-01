@@ -376,7 +376,7 @@ export class UploadProcessModelComponent implements ComponentCanDeactivate,OnIni
 
    getSelectedNotation(){
      let user_role=localStorage.getItem('userRole')
-     if(user_role=='Process Architect'){
+     if(user_role=='Process Architect' || user_role == 'Process Owner'){
       this.isLoading = true;
       if(this.selected_modelId){
         this.rest.getBPMNProcessArchNotations(this.selected_modelId).subscribe(res=>{
@@ -422,7 +422,7 @@ export class UploadProcessModelComponent implements ComponentCanDeactivate,OnIni
    getSelectedApprover(){
     let user_role=localStorage.getItem('userRole')
     let current_bpmn_info
-    if(user_role=='Process Architect'){
+    if(user_role=='Process Architect' || user_role == 'Process Owner'){
       current_bpmn_info = this.saved_bpmn_list[this.selected_notation];
       
     }else{
