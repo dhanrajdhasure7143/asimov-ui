@@ -9,10 +9,8 @@ import { FormGroup } from '@angular/forms';
 
 
 
-      <input [attr.disabled]="feilddisable" autocomplete="off" [required]="field.required==true" *ngIf="field.type=='password'"  [id]="field.id" [minlength]="field.attributeMin" [maxlength]="field.attributeMax" [value]="field.value" [attr.type]="showpassword==true?'text':'password'" [attr.placeholder]="field.placeholder" class="form-control"  [name]="field.name" [formControlName]="field.name+'_'+field.id">
+      <input [attr.disabled]="feilddisable" autocomplete="off" [required]="field.required" *ngIf="field.type=='password'"  [id]="field.id" [minlength]="field.attributeMin" [maxlength]="field.attributeMax" [value]="field.value" [attr.type]="showpassword==true?'text':'password'" [attr.placeholder]="field.placeholder" class="form-control"  [name]="field.name" [formControlName]="field.name+'_'+field.id">
           <span type="button" class="password-btn" *ngIf="field.type=='password'" (click)="showpassword==true?showpassword=false:showpassword=true;">
-            <i *ngIf="showpassword==true" class="fa fa-eye"></i>
-            <i *ngIf="showpassword==false" class="fa fa-eye-slash"></i>
           </span>
 
           <input [attr.disabled]="feilddisable" *ngIf="!field.multiline && field.type!='password' && field.type!='textarea'" [id]="field.id" [minlength]="field.attributeMin" [maxlength]="field.attributeMax" (keydown)="stope($event)" autocomplete="off" [required]="field.required==true"  [value]="field.value" [attr.type]="field.type" [attr.placeholder]="field.placeholder" class="form-control" [name]="field.name" [formControlName]="field.name+'_'+field.id">

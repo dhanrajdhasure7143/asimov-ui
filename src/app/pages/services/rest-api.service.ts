@@ -1374,4 +1374,10 @@ getLooplogs(botId,version,runId){
     return this.http.get(`/rpa-service/loop-logs/${botId}/${version}/${runId}`);
 }
 
+
+getMultiFormAttributes(dependencyApi)
+{
+  return this.http.get(dependencyApi);
+}
+
 }

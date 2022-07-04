@@ -8,6 +8,7 @@ import { DropDownComponent } from './atoms/dropdown';
 import { RadioComponent } from './atoms/radio';
 import { TextBoxComponent } from './atoms/textbox';
 import { FileComponent } from './atoms/file.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 
@@ -23,7 +24,8 @@ import { FileComponent } from './atoms/file.component';
   ],
   imports: [
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxPaginationModule,
   ],
   exports: [DynamicFormsComponent],
   providers: []
