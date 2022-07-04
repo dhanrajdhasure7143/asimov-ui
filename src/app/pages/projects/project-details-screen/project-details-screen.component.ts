@@ -17,6 +17,8 @@ import moment from 'moment';
 import { Subscription } from 'rxjs';
 import * as BpmnJS from './../../../bpmn-modeler.development.js';
 import { verifyHostBindings } from '@angular/compiler';
+import * as CmmnJS from 'cmmn-js/dist/cmmn-modeler.production.min.js';
+import * as DmnJS from 'dmn-js/dist/dmn-modeler.development.js';
 
 @Component({
   selector: 'app-project-details-screen',
@@ -1425,8 +1427,9 @@ export class ProjectDetailsScreenComponent implements OnInit {
               }
             });
             let binaryXMLContent = this.toBeProcessBpmn ? this.toBeProcessBpmn.bpmnXmlNotation : this.asIsProcessBpmn.bpmnXmlNotation
+            let bpmObj = this.toBeProcessBpmn ? this.toBeProcessBpmn: this.asIsProcessBpmn
             let xmlData: any = atob(binaryXMLContent)
-            this.createBpmn(xmlData)
+            this.createBpmn(xmlData,bpmObj)
           }
 
           if (res_data.length == 2) {
@@ -1440,65 +1443,94 @@ export class ProjectDetailsScreenComponent implements OnInit {
             });
             let asIsxmlData: any = atob(this.asIsProcessBpmn.bpmnXmlNotation)
             let toBexmlData1: any = atob(this.toBeProcessBpmn.bpmnXmlNotation)
-            this.createBpmn1(asIsxmlData, toBexmlData1)
+            this.createBpmn1(asIsxmlData, toBexmlData1,this.asIsProcessBpmn,this.toBeProcessBpmn)
           }
         }
       });
     };
   }
 
-  createBpmn(byteBpmn) {
+  createBpmn(byteBpmn, bpmObj) {
     let modeler_obj = "bpmnModeler";
-    let notationJson = {
-      container: '#canvas1',
-      keyboard: {
-        bindTo: window
+    if (bpmObj.ntype == "cmmn") {
+      this[modeler_obj] = new CmmnJS({
+        container: '#canvas1',
+      });
+    } else if (bpmObj.ntype == "dmn") {
+      this[modeler_obj] = new DmnJS({
+        container: '#canvas1',
+      });
+    } else {
+      let notationJson = {
+        container: '#canvas1',
+        keyboard: {
+          bindTo: window
+        }
       }
+      this[modeler_obj] = new BpmnJS(notationJson);
     }
-    this[modeler_obj] = new BpmnJS(notationJson);
-    this[modeler_obj].importXML(byteBpmn, function (err) {
-      if (err) {
-        this.notifier.show({
-          type: "error",
-          message: "Could not import Bpmn notation!"
-        });
-      }
-    })
-  }
-
-  async createBpmn1(byteBpmn, byteBpmn1) {
-    let modeler_obj = "bpmnModeler";
-    let modeler_obj1 = "bpmnModeler1";
-    let notationJson = {
-      container: '#canvas1',
-      keyboard: {
-        bindTo: window
-      }
-    }
-    let notationJson1 = {
-      container: '#canvas2',
-      keyboard: {
-        bindTo: window
-      }
-    }
-    this[modeler_obj] = new BpmnJS(notationJson);
-      try{
-        this.bpmnModeler.importXML(byteBpmn);
-      }catch(err){
-        console.error('could not import BPMN EZFlow notation', err);
-      }
-    setTimeout(() => {
-    //  this[modeler_obj].get('canvas').zoom('fit-viewport');
-      }, 1000);
-
-    this[modeler_obj1] = new BpmnJS(notationJson1);
-    try{
-      this.bpmnModeler1.importXML(byteBpmn1);
-    }catch(err){
+    try {
+      this.bpmnModeler.importXML(byteBpmn);
+    } catch (err) {
       console.error('could not import BPMN EZFlow notation', err);
     }
-  setTimeout(() => {
-    // this[modeler_obj1].get('canvas').zoom('fit-viewport');
+  }
+
+  async createBpmn1(byteBpmn, byteBpmn1, bpmObj, bpmObj1) {
+    let modeler_obj = "bpmnModeler";
+    let modeler_obj1 = "bpmnModeler1";
+    if (bpmObj.ntype == "cmmn") {
+      this[modeler_obj] = new CmmnJS({
+        container: '#canvas1',
+      });
+    } else if (bpmObj.ntype == "dmn") {
+      this[modeler_obj] = new DmnJS({
+        container: '#canvas1',
+      });
+    } else {
+      let notationJson = {
+        container: '#canvas1',
+        keyboard: {
+          bindTo: window
+        }
+      }
+      this[modeler_obj] = new BpmnJS(notationJson);
+    }
+
+    if (bpmObj1.ntype == "cmmn") {
+      this[modeler_obj1] = new CmmnJS({
+        container: '#canvas2',
+      });
+    } else if (bpmObj1.ntype == "dmn") {
+      this[modeler_obj1] = new DmnJS({
+        container: '#canvas2',
+      });
+    } else {
+      let notationJson1 = {
+        container: '#canvas2',
+        keyboard: {
+          bindTo: window
+        }
+      }
+      this[modeler_obj1] = new BpmnJS(notationJson1);
+    }
+    // this[modeler_obj] = new BpmnJS(notationJson);
+    try {
+      this.bpmnModeler.importXML(byteBpmn);
+    } catch (err) {
+      console.error('could not import BPMN EZFlow notation', err);
+    }
+    setTimeout(() => {
+      //  this[modeler_obj].get('canvas').zoom('fit-viewport');
+    }, 1000);
+    // this[modeler_obj1] = new BpmnJS(notationJson1);
+    try {
+      this.bpmnModeler1.importXML(byteBpmn1);
+    } catch (err) {
+      console.error('could not import BPMN EZFlow notation', err);
+    }
+    setTimeout(() => {
+      // this[modeler_obj1].get('canvas').zoom('fit-viewport');
     }, 1000);
   }
 
@@ -1554,7 +1586,8 @@ export class ProjectDetailsScreenComponent implements OnInit {
           var blob = new Blob([svgContent], { type: "image/svg+xml;charset=utf-8" });
           var url = window.URL.createObjectURL(blob);
           let canvasEl = document.createElement("canvas");
-          let canvasContext = canvasEl.getContext("2d", {alpha: false});
+          // let canvasContext = canvasEl.getContext("2d", {alpha: false});
+          let canvasContext = canvasEl.getContext("2d");
           let img = new Image();
           img.onload = () => {
             canvasEl.width = img.height;
