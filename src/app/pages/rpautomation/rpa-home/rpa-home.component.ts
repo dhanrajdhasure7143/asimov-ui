@@ -1030,10 +1030,10 @@ export class RpaHomeComponent implements OnInit {
        
        this.rest.modifybotdetails(modbotdetails).subscribe(data=>{
         if(data.message==="Bot details updated successfully"){
-          Swal.fire("Bot Details Updated Successfully","","success");
+          Swal.fire("Success","Bot Details Updated Successfully","success");
            this.getallbots();
         }else {
-          Swal.fire("Failed to update bot details","","error");
+          Swal.fire("Error","Failed to update bot details","error");
         }
           })
           document.getElementById("edit-bot").style.display="none";
@@ -1041,10 +1041,10 @@ export class RpaHomeComponent implements OnInit {
       } else {
       this.rest.modifybotdetails(botdetails).subscribe(data=>{
         if(data.message==="Bot details updated successfully"){
-          Swal.fire("Bot Details Updated Successfully","","success");
+          Swal.fire("Success","Bot Details Updated Successfully","success");
           this.getallbots();
         }else {
-          Swal.fire("Failed to update bot details","","error");
+          Swal.fire("Error","Failed to update bot details","error");
         }
           })
           document.getElementById("edit-bot").style.display="none";
