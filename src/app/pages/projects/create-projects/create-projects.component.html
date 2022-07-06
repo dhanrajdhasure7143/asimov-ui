@@ -83,7 +83,7 @@
                                         <div class="form-fields col-md-6 pl-0">
                                             <label class="label-control" for="programpurpose">Add Program Purpose<span
                                                     class="star">*</span></label>
-                                            <input type="text" maxlength="51" class="form-control data"
+                                            <input type="text" maxlength="256" class="form-control data"
                                                 formControlName="purpose" value="" placeholder="Enter Program Purpose"
                                                 [ngClass]="createprogram.get('purpose').valid?'enteredfield-color':'inputfield-color'">
                                             <span
@@ -91,7 +91,7 @@
                                                 class="errspan required">Program Purpose Required*</span>
                                             <span *ngIf="createprogram.controls['purpose'].hasError('maxlength')"
                                                 class="errspan required">
-                                                Maximum of 50 characters exceeded
+                                                Maximum of 255 characters exceeded
                                             </span>
                                         </div>
                                         <div class="form-fields col-md-6 pr-0">
