@@ -41,7 +41,7 @@
                                         <div class="form-fields col-md-6 pl-0">
                                             <label class="label-control" for="programname">Program Name<span
                                                     class="star">*</span></label>
-                                            <input type="text" maxlength="51" class="form-control data"
+                                            <input type="text" maxlength="256" class="form-control data"
                                                 formControlName="programName" value="" placeholder="Enter Program Name"
                                                 [ngClass]="createprogram.get('programName').valid?'enteredfield-color':'inputfield-color'">
                                             <span
@@ -49,7 +49,7 @@
                                                 class="errspan required">Program Name Required*</span>
                                             <span *ngIf="createprogram.controls['programName'].hasError('maxlength')"
                                                 class="errspan required">
-                                                Maximum of 50 characters exceeded
+                                                Maximum of 255 characters exceeded
                                             </span>
                                         </div>
                                         <div class="form-fields col-md-6 pr-0">
