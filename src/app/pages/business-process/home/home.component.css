@@ -81,9 +81,11 @@ span.comment {
     color: #212529;
     align-items: center;
 }
-.bps_overlay div {
+.bps_overlay1 {
     border-radius: 4px;
     height: 450px;
+    border: 1px solid #00a0e3;
+    border-radius: 10px;
 }
 .new-bps-grid-data .bps_overlay span.info.ng-star-inserted {
     border-radius: 4px;
@@ -280,3 +282,7 @@ div#bpmn_list {
         padding-left: 3px;
         padding-right: 3px;
     }
+    .logs-loader{
+        margin-top:12%;
+        text-align: center;
+      }

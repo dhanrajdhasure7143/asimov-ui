@@ -34,6 +34,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 // document.defaultView['hljs'] = hljs;
 import { PopoverModule } from 'ngx-bootstrap/popover'
 import { MatSortModule } from '@angular/material';
+import { BpsDataSaveGuard } from 'src/app/guards/bps-data-save.guard';
 
 @NgModule({
   declarations: [BusinessProcessComponent, CreateBpmnDiagramComponent, BpsHomeComponent, UploadProcessModelComponent, ListOfChangesComponent,FilterPipe],
@@ -59,7 +60,7 @@ import { MatSortModule } from '@angular/material';
     MatSortModule
     // HighlightModule
   ],
-  providers: [
+  providers: [BpsDataSaveGuard,
     // {
     //   provide: HIGHLIGHT_OPTIONS,
     //   useValue: {

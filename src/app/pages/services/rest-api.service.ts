@@ -1383,4 +1383,12 @@ getMultiFormAttributes(dependencyApi)
   return this.http.get(dependencyApi);
 }
 
+getUserBpmnsListWithoutNotation(){ //  bps workspace api
+  return this.http.get("/bpsprocess/fetchByTenantwithoutNotation");
+}
+
+getBpmnNotationByIdandVersion(body){ //  bps workspace api
+  return this.http.post("/bpsprocess/fetchByBpmnModelandVersion",body);
+}
+
 }
