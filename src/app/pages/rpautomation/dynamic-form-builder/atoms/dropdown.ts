@@ -73,7 +73,7 @@ export class DropDownComponent implements OnInit {
           this.fieldsWithRef.find(item2 => item2.id == item.id).visibility = true;
           this.fieldsWithRef.find(item2 => item2.id ==  item.id).required = true;
         }
-      })
+      }) 
     }
 
 
