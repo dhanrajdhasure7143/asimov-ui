@@ -204,7 +204,7 @@
     <mat-icon>more_vert</mat-icon>
  </button>
 </a> -->
-          <mat-list-item *ngIf="freetrail!=true" (click)="showadminSubmenu = !showadminSubmenu; selection()" [ngClass]="{'activeMenu' : showadminSubmenu}" id="expand_admin" class="link" [matTooltip]=" !obj.sideBarOpen ? 'Administration' : ''" matTooltipClass="sidebarTooltip" matTooltipPosition="right">
+          <mat-list-item  *ngIf="freetrail!=true && this.userRoles.includes('System Admin')"  (click)="showadminSubmenu = !showadminSubmenu; selection()" [ngClass]="{'activeMenu' : showadminSubmenu}" id="expand_admin" class="link" [matTooltip]=" !obj.sideBarOpen ? 'Administration' : ''" matTooltipClass="sidebarTooltip" matTooltipPosition="right">
               <!-- <span class="full-width" >Workspace</span>
   <mat-icon mat-list-icon>work</mat-icon> -->
               <span class="side-icon">
