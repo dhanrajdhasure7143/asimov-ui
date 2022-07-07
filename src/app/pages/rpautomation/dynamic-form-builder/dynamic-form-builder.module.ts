@@ -9,6 +9,7 @@ import { RadioComponent } from './atoms/radio';
 import { TextBoxComponent } from './atoms/textbox';
 import { FileComponent } from './atoms/file.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { DragDropModule } from "@angular/cdk/drag-drop";
 
 
 
@@ -26,6 +27,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     CommonModule,
     ReactiveFormsModule,
     NgxPaginationModule,
+    DragDropModule,
   ],
   exports: [DynamicFormsComponent],
   providers: []

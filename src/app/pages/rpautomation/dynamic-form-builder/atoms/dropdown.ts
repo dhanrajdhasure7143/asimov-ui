@@ -50,6 +50,7 @@ export class DropDownComponent implements OnInit {
       this.designer.createcredentials();
     }
     if (event.target.value == 'fill' || event.target.value == 'click') {
+      debugger
       this.fieldsWithoutRef = [...this.designer.fields];
       let hideAttributes: any = options.find(item => item.key == event.target.value) != undefined ? options.find(item => item.key == event.target.value).hide_attributes : "";
       let hideAttributesIds: any = hideAttributes != null ? hideAttributes.split(",") : [];
@@ -63,7 +64,7 @@ export class DropDownComponent implements OnInit {
         if (!item1.visibility) {
           this.form.get([this.fieldsWithRef[i].name + '_' + this.fieldsWithRef[i].id]).clearValidators();
         }
-        if (item1.id != 580) {
+        if (item1.id != 536) {
           this.form.get([this.fieldsWithRef[i].name + '_' + this.fieldsWithRef[i].id]).reset();
         }
       })
