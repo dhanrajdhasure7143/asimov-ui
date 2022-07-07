@@ -74,7 +74,7 @@ export class CreateProjectsComponent implements OnInit {
       access: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
   })
   this.createprogram=this.formBuilder.group({
-    programName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+    programName: ["", Validators.compose([Validators.required, Validators.maxLength(255)])],
     initiatives: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     purpose: ["", Validators.compose([Validators.required, Validators.maxLength(255)])],
     priority: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
