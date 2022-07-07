@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { iter } from '@amcharts/amcharts4/core';
+import { CdkDragDrop, CdkDragStart, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Base64 } from 'js-base64';
 @Component({
   selector: 'app-dynamic-forms',
@@ -28,8 +29,8 @@ import { Base64 } from 'js-base64';
                     <th *ngFor="let tableHeader of fields">{{tableHeader.label}}</th>
                     <th>Actions</th>     
                </thead>
-                <tbody>
-                    <tr *ngFor="let eachObj of fillarray  | paginate: { itemsPerPage: 2,currentPage: q }">
+                <tbody cdkDropList (cdkDropListDropped)="drop($event)">
+                    <tr *ngFor="let eachObj of fillarray  | paginate: { itemsPerPage: 2,currentPage: q }" cdkDrag>
                     <td *ngFor="let field of fields">
                     <span *ngIf="checkRecord(eachObj, field)==false">
                         {{eachObj[field.name+"_"+field.id]?eachObj[field.name+"_"+field.id]:'NA'}}
@@ -70,6 +71,7 @@ export class DynamicFormsComponent implements OnInit {
   @Input() multiarray:any=[]
   form: FormGroup;
   isdisabled:boolean;
+  q = 1
   userRole: string;
   fillarray:any=[]
   isMultiForm:Boolean=false;
@@ -322,6 +324,10 @@ export class DynamicFormsComponent implements OnInit {
       }
      
   }
+  drop(event: CdkDragDrop<[]>) {
+    moveItemInArray(this.fillarray, (this.q - 1) * 2 + event.previousIndex, (this.q - 1) * 2 + event.currentIndex);  
+}
+
 
 }
  // <div class="form-row"></div>
