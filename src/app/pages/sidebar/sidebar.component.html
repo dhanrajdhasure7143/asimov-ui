@@ -1,7 +1,6 @@
 <div *ngIf="expiry>=0" class="nav-main">
   <section class="sidebar-main">
       <mat-nav-list class="ep-nav-font">
-
           <!-- <a mat-list-item ><i class="fa fa-area-chart"></i> &nbsp; &nbsp; Dashboard</a> -->
           <a mat-list-item *ngIf="!freetrail" class="link" id="eiap-home" (click)="hightlight('eiap-home',null)"
             routerLink="/pages/home" [matTooltip]=" !obj.sideBarOpen ? 'Dashboard' : ''" matTooltipClass="sidebarTooltip"
