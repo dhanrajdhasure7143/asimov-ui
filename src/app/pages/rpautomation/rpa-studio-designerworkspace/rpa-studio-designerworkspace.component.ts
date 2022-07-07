@@ -1742,6 +1742,10 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
     let end = this.stopNodeId;
     this.final_tasks.push(object);
+    if(object!=undefined){
+      this.final_tasks.push(object);
+    }
+
     if(object==undefined)
     {
       this.checkorderflag=false;

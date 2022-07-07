@@ -38,7 +38,7 @@ export class CreateProjectFormComponent implements OnInit {
       resource: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       owner: [this.loggedInUserId, Validators.compose([Validators.required, Validators.maxLength(50)])],
       mapValueChain: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      endDate: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      endDate: [""],
       startDate: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       priority: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       measurableMetrics: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],

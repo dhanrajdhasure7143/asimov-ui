@@ -962,7 +962,10 @@ save_blueprism_config(data)
     {
       return this.http.get("/platform-service/project/findByProgramId?programId="+id);
     }
-
+    createBot(data:any){  
+      return this.http.post('/rpa-service/create-bot',data)
+    }
+  
 
 
 
