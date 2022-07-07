@@ -219,7 +219,7 @@ percentageComplete: number;
 
         
     this.getallusers();
-    this.projectdetails();
+ 
     this.getallprocesses();
     setTimeout(() => {
       this.getImage();
@@ -497,7 +497,40 @@ this.projectenddate=moment(this.projectDetails.endDate).format("YYYY-MM-DD");
 this.projectStartDate = moment(this.projectDetails.startDate).format("YYYY-MM-DD");
 
 
-if(this.projectDetails){​​​​​​
+if(this.projectDetails){
+  
+  ​​​​​​let users:any=[]
+  this.projectDetails.resource.forEach(item=>{
+    this.users_list.forEach(item2=>{
+      if(item2.userId.userId == item.resource){
+        users.push(item2)
+      }
+    })
+      // if(this.users_list.find(item2=>item2.userId.userId==item.resource)!=undefined)
+      //   users.push(this.users_list.find(item2=>item2.userId.userId==item.resource))
+ })
+ this.resources_list=users
+ if(this.resources_list.length>0){
+  this.Resourcecheckeddisabled= false;
+}
+else
+{
+  this.Resourcecheckeddisabled = true;
+}
+let users_updateddata=users
+ this.resourceslength=users.length
+ users_updateddata.forEach(element => {
+   element["firstName"]=element.userId.firstName
+   element["lastName"]=element.userId.lastName
+   element["displayName"]=element.roleID.displayName
+   element["user_Id"]=element.userId.userId
+ });
+  this.dataSource6= new MatTableDataSource(users_updateddata);
+  this.dataSource6.sort=this.sort14;
+  this.spinner.hide()
+  this.dataSource6.paginator=this.paginator104;
+  this.getTaskandCommentsData();
+  this.getLatestFiveAttachments(this.project_id);
 let usr_name=this.projectDetails.owner.split('@')[0].split('.');
 // this.owner_letters=usr_name[0].charAt(0)+usr_name[1].charAt(0);
 if(usr_name.length > 1){
@@ -604,37 +637,7 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
           this.users_list=response;
           this.userslist=this.users_list.filter(x=>x.user_role_status=='ACTIVE')
           let users:any=[]
-          this.projectDetails.resource.forEach(item=>{
-            this.users_list.forEach(item2=>{
-              if(item2.userId.userId == item.resource){
-                users.push(item2)
-              }
-            })
-              // if(this.users_list.find(item2=>item2.userId.userId==item.resource)!=undefined)
-              //   users.push(this.users_list.find(item2=>item2.userId.userId==item.resource))
-         })
-         this.resources_list=users
-         if(this.resources_list.length>0){
-          this.Resourcecheckeddisabled= false;
-        }
-        else
-        {
-          this.Resourcecheckeddisabled = true;
-        }
-        let users_updateddata=users
-         this.resourceslength=users.length
-         users_updateddata.forEach(element => {
-           element["firstName"]=element.userId.firstName
-           element["lastName"]=element.userId.lastName
-           element["displayName"]=element.roleID.displayName
-           element["user_Id"]=element.userId.userId
-         });
-          this.dataSource6= new MatTableDataSource(users_updateddata);
-          this.dataSource6.sort=this.sort14;
-          this.spinner.hide()
-          this.dataSource6.paginator=this.paginator104;
-          this.getTaskandCommentsData();
-          this.getLatestFiveAttachments(this.project_id);
+          this.projectdetails()
         })
       }
 

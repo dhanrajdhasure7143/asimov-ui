@@ -261,10 +261,12 @@ export class RpaHomeComponent implements OnInit {
         }).then((result) => {
         if (result.value) {
           let response;
+          this.spinner.show()
           this.rest.getDeleteBot(botId).subscribe(data=>{
             response= data;
             if(response.status!=undefined)
             {
+              this.spinner.hide()
               Swal.fire("Success",response.status,"success");
               this.getallbots();
               // Swal.fire({
@@ -275,6 +277,7 @@ export class RpaHomeComponent implements OnInit {
               //   timer:2000})
             }else
             {
+              this.spinner.hide()
               Swal.fire("Error",response.errorMessage,"error");
                 // Swal.fire({
                 //   position:'center',
@@ -576,7 +579,11 @@ export class RpaHomeComponent implements OnInit {
    
     document.getElementById("create-bot").style.display ="none";
     var createBotFormValue=this.insertbot.value;
-    
+    let createbot={
+      "botName":createBotFormValue.botName,
+      "department":createBotFormValue.botDepartment
+     }
+
     if(createBotFormValue.botDepartment=="others"){
       let rpaCategory:any={"categoryName":this.insertbot.value.newCategoryName,"categoryId":0, "createdAt":""};
       this.rest.addCategory(rpaCategory).subscribe(data=>{
@@ -587,6 +594,18 @@ export class RpaHomeComponent implements OnInit {
           createBotFormValue.botDepartment=catResponse.data.categoryId;  
           let botId=Base64.encode(JSON.stringify(createBotFormValue));
           this.router.navigate(["/pages/rpautomation/designer"],{queryParams:{botId:botId}})
+          this.spinner.show();
+          this.rest.createBot(createbot).subscribe((res:any)=>{
+            console.log("res",res)
+            let botId=res.botId;
+            this.spinner.hide()
+            this.router.navigate(["/pages/rpautomation/designer"],{queryParams:{botId:botId}});
+         
+           },err=>{
+            this.spinner.hide();
+            Swal.fire("Error",catResponse.errorMessage,"error");
+          });
+
         }
         else
         {
@@ -599,6 +618,17 @@ export class RpaHomeComponent implements OnInit {
       let botId=Base64.encode(JSON.stringify(createBotFormValue));
    
       this.router.navigate(["/pages/rpautomation/designer"],{queryParams:{botId:botId}})
+      this.spinner.show();
+     // let botId=Base64.encode(JSON.stringify(createBotFormValue));
+      this.rest.createBot(createbot).subscribe((res:any)=>{
+        this.spinner.hide();
+        let botId=res.botId
+        this.router.navigate(["/pages/rpautomation/designer"],{queryParams:{botId:botId}});
+       },err=>{
+        this.spinner.hide();
+        Swal.fire("Error","error");
+       })
+
        
     }
     this.insertbot.reset();
@@ -1030,10 +1060,10 @@ export class RpaHomeComponent implements OnInit {
        
        this.rest.modifybotdetails(modbotdetails).subscribe(data=>{
         if(data.message==="Bot details updated successfully"){
-          Swal.fire("Bot Details Updated Successfully","","success");
+          Swal.fire("Success","Bot Details Updated Successfully","success");
            this.getallbots();
         }else {
-          Swal.fire("Failed to update bot details","","error");
+          Swal.fire("Error","Failed to update bot details","error");
         }
           })
           document.getElementById("edit-bot").style.display="none";
@@ -1041,10 +1071,10 @@ export class RpaHomeComponent implements OnInit {
       } else {
       this.rest.modifybotdetails(botdetails).subscribe(data=>{
         if(data.message==="Bot details updated successfully"){
-          Swal.fire("Bot Details Updated Successfully","","success");
+          Swal.fire("Success","Bot Details Updated Successfully","success");
           this.getallbots();
         }else {
-          Swal.fire("Failed to update bot details","","error");
+          Swal.fire("Error","Failed to update bot details","error");
         }
           })
           document.getElementById("edit-bot").style.display="none";

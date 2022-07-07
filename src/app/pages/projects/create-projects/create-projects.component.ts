@@ -74,9 +74,9 @@ export class CreateProjectsComponent implements OnInit {
       access: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
   })
   this.createprogram=this.formBuilder.group({
-    programName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+    programName: ["", Validators.compose([Validators.required, Validators.maxLength(255)])],
     initiatives: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-    purpose: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+    purpose: ["", Validators.compose([Validators.required, Validators.maxLength(255)])],
     priority: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     measurableMetrics: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     //programHealth: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
@@ -87,7 +87,7 @@ export class CreateProjectsComponent implements OnInit {
     owner: [this.loggedInUserId, Validators.compose([Validators.required, Validators.maxLength(50)])],
    // process: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
    // access: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-    description: ["", Validators.compose([Validators.maxLength(200)])],
+    description: ["", Validators.compose([Validators.maxLength(255)])],
    // status: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     })
 
