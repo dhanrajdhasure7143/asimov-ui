@@ -87,7 +87,7 @@ export class CreateProjectsComponent implements OnInit {
     owner: [this.loggedInUserId, Validators.compose([Validators.required, Validators.maxLength(50)])],
    // process: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
    // access: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-    description: ["", Validators.compose([Validators.maxLength(200)])],
+    description: ["", Validators.compose([Validators.maxLength(255)])],
    // status: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     })
 
