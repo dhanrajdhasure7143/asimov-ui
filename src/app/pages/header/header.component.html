@@ -94,7 +94,8 @@
       <span>{{notificationscount}}</span>
    </div>
    </button> -->
-   <div class="dropdown">
+   <!--As per requirement-->
+   <!-- <div class="dropdown"> -->
     <!-- <a id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="/page.html">
       <i class="glyphicon glyphicon-bell"></i>
     </a> -->
@@ -104,12 +105,13 @@
         <span>{{notificationscount}}</span>
      </div>
      </button> -->
-      <button mat-icon-button type="button" [outsideClick]="false" class="clr-hvr txt-wh" (click)="getNotificationsList()" #pop2="bs-popover" [popover]="shareTemplate" placement="bottom">
+        <!--As per requirement-->
+      <!-- <button mat-icon-button type="button" [outsideClick]="false" class="clr-hvr txt-wh" (click)="getNotificationsList()" #pop2="bs-popover" [popover]="shareTemplate" placement="bottom">
         <i style="font-size: 18px;opacity: 0.5;" class="fa fa-bell"></i>
         <div *ngIf="notificationscount!=0" class="notification-count">
           <span>{{notificationscount}}</span>
         </div>
-      </button>
+      </button> -->
     <!-- <ul class="dropdown-menu notifications" role="menu" style="left: -160px;" aria-labelledby="dLabel">
       
       <div class="notification-heading"><h4 class="menu-title"><b>Notifications</b></h4>
@@ -149,8 +151,8 @@
        <h4><b>{{error}}</b></h4>
         </div> 
     </ul> -->
-    
-  </div>
+       <!--As per requirement-->
+  <!-- </div> -->
 
    <app-header-dropdown-overlay [overlay_notifications_dt]="overlay_notifications_model" [overlay_acc_dt]="overlay_acc_model" [overlay_user_manage_dt]="overlay_user_manage_model" [overlay_config_alert_dt]="overlay_config_alert_model" [overlay_invite_user_dt]="overlay_invite_user_model"></app-header-dropdown-overlay>
   
