@@ -1464,5 +1464,7 @@ getTaskCategoriesByProject(projectid){
 getFileCategoriesList(id){
   return this.http.get("/platform-service/document/fileCategoriesbyProject?projectId="+id)
 }
-
+getFilteredEnvironment(id){
+  return this.http.get("/rpa-service/agent/get-environments/"+id)
+}
 }
