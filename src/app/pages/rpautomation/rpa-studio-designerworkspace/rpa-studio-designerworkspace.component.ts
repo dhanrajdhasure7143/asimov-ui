@@ -1741,7 +1741,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   add_order(object) {
 
     let end = this.stopNodeId;
-    this.final_tasks.push(object);
     if(object!=undefined){
       this.final_tasks.push(object);
     }
