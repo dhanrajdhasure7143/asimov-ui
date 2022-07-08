@@ -487,7 +487,7 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
 
 
   getEnvironmentlist() {
-    this.rest.listEnvironments().subscribe(data => {
+    this.rest.getFilteredEnvironment(this.botState.categoryId).subscribe(data => {
       let response:any=data
       if(response.errorMessage==undefined)
       {
@@ -500,9 +500,12 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
             return item;
           })
           if(this.botState.botId!=undefined)
-             this.botState.envIds.forEach(envdata=>{
-                this.environment.find(data=>data.environmentId==envdata).checked=true;
-              })
+          this.botState.envIds.forEach(envdata=>{            
+            let data= this.environment.find(data=>data.environmentId==envdata)
+            if(data!=undefined){
+             this.environment.find(data=>data.environmentId==envdata).checked=true
+            }           
+           })
           let length:any=this.environment.filter(data=>data.checked==true).length
           if(length>0)
           {
