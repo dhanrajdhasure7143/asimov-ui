@@ -30,7 +30,7 @@
   <button mat-icon-button class="txt-wh" aria-label="Example icon-button with heart icon">
     <img src="../../../assets/images/plus-square.svg">
   </button>
-  <div class="dropdown">
+  <!-- <div class="dropdown">
     <button mat-icon-button type="button" [outsideClick]="false" class="clr-hvr txt-wh" (click)="getNotificationsList()"
       #pop2="bs-popover" [popover]="shareTemplate" placement="bottom">
       <i style="font-size: 18px;opacity: 0.5;" class="fa fa-bell"></i>
@@ -38,7 +38,7 @@
         <span>{{notificationscount}}</span>
       </div>
     </button>
-  </div>
+  </div> -->
   <app-header-dropdown-overlay [overlay_notifications_dt]="overlay_notifications_model"
     [overlay_acc_dt]="overlay_acc_model" [overlay_user_manage_dt]="overlay_user_manage_model"
     [overlay_config_alert_dt]="overlay_config_alert_model" [overlay_invite_user_dt]="overlay_invite_user_model">
