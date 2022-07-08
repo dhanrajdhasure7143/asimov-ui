@@ -1390,5 +1390,7 @@ getUserBpmnsListWithoutNotation(){ //  bps workspace api
 getBpmnNotationByIdandVersion(body){ //  bps workspace api
   return this.http.post("/bpsprocess/fetchByBpmnModelandVersion",body);
 }
-
+getFilteredEnvironment(id){
+  return this.http.get("/rpa-service/agent/get-environments/"+id)
+}
 }
