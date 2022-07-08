@@ -444,7 +444,7 @@ export class RpaStudioActionsComponent implements OnInit {
   {
     this.listEnvironmentData=[];
     this.environment=[];
-    this.rest.getFilteredEnvironment(this.botState.categoryId).subscribe(data => {
+    this.rest.listEnvironments().subscribe(data => {
     this.listEnvironmentData=data;
       this.listEnvironmentData.forEach(env=>{
         env["checked"]=false;
@@ -453,10 +453,7 @@ export class RpaStudioActionsComponent implements OnInit {
       if(this.botState.botId!=undefined)
       {
         this.botState.envIds.forEach(envdata=>{
-          let data= this.environment.find(data=>data.environmentId==envdata)
-          if(data!=undefined){
-           this.environment.find(data=>data.environmentId==envdata).checked=true
-          } 
+            this.environment.find(data=>data.environmentId==envdata).checked=true;
         })
       }
       this.environment.filter(data =>{
