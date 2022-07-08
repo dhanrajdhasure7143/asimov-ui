@@ -237,36 +237,7 @@
                 <div class="col-sm-2 p-0">
     
                   <div class="programdetmain">
-                                  <!-- <div class="process-img ">
-                      <img src="..\assets\images\Projects\process_icon.svg" alt="" >
-                    </div> -->
                     <div class="mainset">
-                      <span class="labeltit">Program Purpose</span>
-    
-                      <div *ngIf="editdata==false">
-                        <span class="labelcont" [matTooltip]="program_detials.purpose">{{getreducedValue(program_detials.purpose)}}</span>
-                        <span
-                          *ngIf="program_detials.purpose == null || program_detials.purpose == undefined || program_detials.purpose =='' "
-                          class="labelcont">-</span>
-                      </div>
-                      <div *ngIf="editdata==true">
-                        <input type="text" maxlength="50" (change)="program_detials.purpose=$event.target.value"
-                          [value]="(program_detials.purpose==undefined||program_detials.purpose==null)?'':program_detials.purpose"
-                          class="small-input" placeholder="Enter Program Purpose">
-                      </div>
-                      </div>
-                  </div>
-    
-                </div>
-            </div>
-            <div class="row">                  
-              <div class="col-sm-2 p-0">
-  
-                <div class="programdetmain">
-                  <!-- <div class="process-img ">
-                    <img src="..\assets\images\Projects\process_icon.svg" alt="" >
-                  </div> -->
-                  <div class="mainset">
                       <span class="labeltit">Program Priority</span>
                   
                       <div *ngIf="editdata==false">
@@ -284,8 +255,38 @@
                         </select>
                       </div>
                   </div>
+                                  <!-- <div class="process-img ">
+                      <img src="..\assets\images\Projects\process_icon.svg" alt="" >
+                    </div> -->
+                    <!-- <div class="mainset">
+                      <span class="labeltit">Program Purpose</span>
+    
+                      <div *ngIf="editdata==false">
+                        <span class="labelcont" [matTooltip]="program_detials.purpose">{{getreducedValue(program_detials.purpose)}}</span>
+                        <span
+                          *ngIf="program_detials.purpose == null || program_detials.purpose == undefined || program_detials.purpose =='' "
+                          class="labelcont">-</span>
+                      </div>
+                      <div *ngIf="editdata==true">
+                        <input type="text" maxlength="50" (change)="program_detials.purpose=$event.target.value"
+                          [value]="(program_detials.purpose==undefined||program_detials.purpose==null)?'':program_detials.purpose"
+                          class="small-input" placeholder="Enter Program Purpose">
+                      </div>
+                      </div> -->
+                  </div>
+    
+                </div>
+            </div>
+            <div class="row">                  
+              <!-- <div class="col-sm-2 p-0">
+  
+                <div class="programdetmain">
+                  <div class="process-img ">
+                    <img src="..\assets\images\Projects\process_icon.svg" alt="" >
+                  </div>
+                  
                 </div>  
-              </div>
+              </div> -->
               <div class="col-sm-2 p-0">
                 <div class="programdetmain">
                   <!-- <div class="process-img ">
@@ -691,7 +692,7 @@
               <div class="process-img py-5">
                 <img src="..\assets\images\Projects\process_icon.svg" alt="" >
               </div>
-              <div class="value py-5">
+              <!-- <div class="value py-5">
                 <p>Program Purpose</p>
 
                 <div *ngIf="editdata==false">
@@ -705,7 +706,7 @@
                     class="small-input" placeholder="Enter Program Purpose">
                 </div>
 
-              </div>
+              </div> -->
             </div>
             <div class="item1 d-flex w-100  py-10">
               <div class="process-img py-5">
