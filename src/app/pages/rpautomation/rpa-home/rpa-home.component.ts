@@ -1040,6 +1040,7 @@ export class RpaHomeComponent implements OnInit {
     }
   }
   onEditBot() {
+    this.spinner.show()
     let botdetails = this.editbot.value;
     if(botdetails.department==="others"){
       this.saveRpaCategory().subscribe(data=>{
@@ -1055,22 +1056,31 @@ export class RpaHomeComponent implements OnInit {
        
        this.rest.modifybotdetails(modbotdetails).subscribe(data=>{
         if(data.message==="Bot details updated successfully"){
-          Swal.fire("Bot Details Updated Successfully","","success");
+          Swal.fire("Success","Bot Details Updated Successfully","success");
            this.getallbots();
         }else {
-          Swal.fire("Failed to update bot details","","error");
+          Swal.fire("Error","Failed to update bot details","error");
         }
           })
           document.getElementById("edit-bot").style.display="none";
+       },err=>{
+        console.log(err)
+        this.spinner.hide();
+        Swal.fire("Error","Unable to update bot details","error")
        });
       } else {
       this.rest.modifybotdetails(botdetails).subscribe(data=>{
+        this.spinner.hide();
         if(data.message==="Bot details updated successfully"){
-          Swal.fire("Bot Details Updated Successfully","","success");
+          Swal.fire("Success","Bot Details Updated Successfully","success");
           this.getallbots();
         }else {
-          Swal.fire("Failed to update bot details","","error");
+          Swal.fire("Error","Failed to update bot details","error");
         }
+          },err=>{
+            console.log(err)
+            this.spinner.hide();
+            Swal.fire("Error","Unable to update bot details","error")
           })
           document.getElementById("edit-bot").style.display="none";
         }

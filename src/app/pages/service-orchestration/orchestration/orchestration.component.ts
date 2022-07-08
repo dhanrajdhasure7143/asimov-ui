@@ -35,7 +35,6 @@ export class OrchestrationComponent implements OnInit {
 
     this.route.queryParams.subscribe(params => {
         processId=params;
-        console.log("processId",processId)
       if(this.isEmpty(processId))
       {
         this.selectedTab=0;
@@ -47,7 +46,7 @@ export class OrchestrationComponent implements OnInit {
         this.selectedTab=1;
        // this.selectedTab=3;
         this.param=processId.processid;
-        this.check_tab=3;
+        this.check_tab=1;
       // this.check_tab=3;
        
       }
