@@ -231,8 +231,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.retrieveResonse = res;
       if (res) {
         this.user_details = this.retrieveResonse;
-        this.getAllNotifications();
-        this.getNotificationsList();
+        // this.getAllNotifications(); // Enable this method to show the notifications
+        // this.getNotificationsList(); // Enable this method to show the notifications
         this.user_name = this.retrieveResonse.firstName;
         this.user_designation = this.retrieveResonse.designation;
         this.dataTransfer.userDetails(this.user_details);
@@ -273,7 +273,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.notificationscount = 0;
       }
     })
-    this.getCount();
+    // this.getCount(); // Enable this method to show the notifications
   }
 
   deletnotification(id) {

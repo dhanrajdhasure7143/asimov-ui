@@ -22,7 +22,7 @@
                         Endpoint Configuration
                     </h4>
                     <label class="modal-label">REST Endpoint </label>
-                    <span class="fa fa-info-circle info" matTooltip="Should point to a running Camunda Engine REST API endpoint"></span>
+                    <span class="fa fa-info-circle info" matTooltip="Should point to a running Workflow Engine REST API endpoint"></span>
                     <input type="text" name="endPoint"  class="form-control" [(ngModel)]="endPoint" #end_point="ngModel" required  disabled>
                     <!-- <mat-icon class="info" matTooltip="Should point to a running Camunda Engine REST API endpoint" matSuffix>info</mat-icon> -->   
                 </div>
@@ -47,3 +47,9 @@
 <mat-dialog-actions>
     <button class="mat-raised-button" (click)="close()">Close</button>
 </mat-dialog-actions> -->
+
+<div class="spinoverlay" *ngIf="isLoading">
+    <div class="spincenter">
+        <img src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader" />
+    </div>
+</div>
