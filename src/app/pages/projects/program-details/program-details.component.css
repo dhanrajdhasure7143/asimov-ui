@@ -299,6 +299,7 @@ input.small-input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .percentage {
+
   float: left;
   width: 38px;
 }
