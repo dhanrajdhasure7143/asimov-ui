@@ -39,10 +39,10 @@ export const environment = {
 // Data upload path
   data_path:"/usr/share/confluent-ftp-data",
 
-  camunda_url : "https://ezcamunda.demo.epsoftinc.com",
+  camunda_url : "https://ezworkflow.demo.epsoftinc.com",
 
   //BPMN Platform URL
-  bpmnplatformUrl : "https://ezcamunda.demo.epsoftinc.com"
+  bpmnplatformUrl : "https://ezworkflow.demo.epsoftinc.com"
 
 
  //  * QA ENV URl's

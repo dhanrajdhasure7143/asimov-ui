@@ -104,7 +104,7 @@ import { RpaSoLogsComponent } from './rpa-so-logs/rpa-so-logs.component';
     FilterPipeModule,
     DataTablesModule,
     NgbModule,MatExpansionModule,
-    ContextMenuModule.forRoot(),
+    // ContextMenuModule.forRoot(),
     DynamicFormBuilderModule,
     ReactiveFormsModule,
     CronEditorModule,
