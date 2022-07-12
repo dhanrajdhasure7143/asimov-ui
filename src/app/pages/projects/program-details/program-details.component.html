@@ -136,7 +136,7 @@
                 <span class="module-sub-header-title">PROGRAM INFO</span>
             </div> -->
             <div class="row">
-                <div class="col-sm-2 p-0">
+                <div class="col-sm-2 p-0 form-group">
     
                 <div class="programdetmain">
                   <!-- <div class="process-img">
@@ -166,7 +166,7 @@
                 </div>
 
                 </div>
-                <div class="col-sm-2 p-0">
+                <div class="col-sm-2 p-0 form-group">
                     <div class="programdetmain">
                       <!-- <div class="process-img ">
                         <img src="..\assets\images\Projects\document.svg" alt="" >
@@ -188,7 +188,7 @@
                   </div>
               </div>
             </div> -->
-                <div class="col-sm-2 p-0">
+                <div class="col-sm-2 p-0 form-group">
                     <div class="programdetmain">
                       <!-- <div class="process-img ">
                         <img src="..\assets\images\Projects\process_icon.svg" alt="" >
@@ -199,7 +199,7 @@
                       </div>
                     </div>
                 </div>    
-                <div class="col-sm-2 p-0">
+                <div class="col-sm-2 p-0 form-group">
     
                   <div class="programdetmain">
                     <!-- <div class="process-img">
@@ -234,7 +234,7 @@
                   </div>
     
                 </div>    
-                <div class="col-sm-2 p-0">
+                <div class="col-sm-2 p-0 form-group">
     
                   <div class="programdetmain">
                     <div class="mainset">
@@ -287,7 +287,7 @@
                   
                 </div>  
               </div> -->
-              <div class="col-sm-2 p-0">
+              <div class="col-sm-2 p-0 form-group">
                 <div class="programdetmain">
                   <!-- <div class="process-img ">
                     <img src="..\assets\images\Projects\process_icon.svg" alt="" >
@@ -314,7 +314,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-sm-2 p-0">
+              <div class="col-sm-2 p-0 form-group">
                 <div class="programdetmain">
                   <!-- <div class="process-img ">
                     <img src="..\assets\images\Projects\process_icon.svg" alt="" >
@@ -325,7 +325,7 @@
                   </div>
                 </div>
               </div>    
-              <div class="col-sm-2 p-0">
+              <div class="col-sm-2 p-0 form-group">
               
                 <div class="programdetmain">
                   <!-- <div class="process-img ">
@@ -362,7 +362,7 @@
       <div class="row module-subheader-title">
         <div class="col-md-4 p-0">
           <span class="module-sub-header-title">
-            Projects
+            <b>Projects</b>
           </span>
         </div>
         <div class="col-md-8 pr-0">
@@ -375,7 +375,7 @@
               </span>
             </span>
             <span class="">
-              <button type="button" class="btn btn-primary" (click)="createproject(template)" >
+              <button type="button" class="btn btn-primary crtprj-btn" (click)="createproject(template)" >
                 Create Project
               </button>
             </span>
@@ -490,8 +490,12 @@
             <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['Loading']" [ngClass]="{'hide':dataSource8!=null}"></tr>
             <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(dataSource8!=null && dataSource8.data.length==0)}"></tr>
         </table>
-        <mat-paginator class="newpaginationdiv" #paginator104 [pageSize]="3" [pageSizeOptions]="[3, 5, 10, 25, 50]" [showFirstLastButtons]="true">
+      </div>
+      <div class="newpaginationdiv prgm-prjpgdiv">
+        <mat-paginator  #paginator104 [pageSize]="3" [pageSizeOptions]="[3, 5, 10, 25, 50]" [showFirstLastButtons]="true">
         </mat-paginator>
+      </div>
+        
         <!-- <table  class="table">
           <thead >
             <th class="py-10">Initiative</th>
@@ -558,7 +562,7 @@
             <h3 class="text-center">No Items to display</h3>
         </div>
         <pagination-controls class="pull-right" (pageChange)="p = $event"></pagination-controls> -->
-      </div>
+      
     </div>
   </div>
 
