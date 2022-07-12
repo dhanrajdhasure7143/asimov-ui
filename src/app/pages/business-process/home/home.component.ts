@@ -161,7 +161,6 @@ export class BpsHomeComponent implements OnInit {
   }
 
   openDiagram(){
-    console.log()
     // if(bpmnDiagram.bpmnProcessStatus && bpmnDiagram.bpmnProcessStatus =="PENDING" ) return;
     // let binaryXMLContent = bpmnDiagram.eachObj.bpmnXmlNotation; 
     let binaryXMLContent = this.selected_notation.bpmnXmlNotation;
@@ -393,12 +392,14 @@ this.dt.bpsHeaderValues('');
       cancelButtonText: 'Cancel'
     }).then((res) => {
       if(res.isConfirmed){
+        this.isLoading = true;
         let data = {
           "bpmnModelId":bpmNotation.bpmnModelId,
           "version": bpmNotation.version
         }
         this.rest.deleteBPMNProcess(data).subscribe(res => {
           // console.log(res)
+          this.isLoading = false;
           if(res == "It is an ongoing project.Please contact Project Owner(s)"){
             Swal.fire({
               icon: 'info',
@@ -418,6 +419,7 @@ this.dt.bpsHeaderValues('');
           }
           // this.global.notify(bpmNotation.bpmnProcessName+' V1.'+bpmNotation.version+' deleted','success')
         }, err => {
+          this.isLoading = false;
           Swal.fire({
             icon: 'error',
             title: 'Oops...',
