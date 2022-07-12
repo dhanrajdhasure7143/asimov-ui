@@ -371,7 +371,7 @@ createproject(event)
 
   descriptionMaxLength(value){
     console.log(value)
- if(value.length > 255){
+ if(value.length > 150){
  this.descptionFlag = true;
  }else{
    this.descptionFlag = false;
