@@ -595,8 +595,14 @@ export class RpaHomeComponent implements OnInit {
           this.rest.createBot(createbot).subscribe((res:any)=>{
             console.log("res",res)
             let botId=res.botId;
-            this.spinner.hide()
-            this.router.navigate(["/pages/rpautomation/designer"],{queryParams:{botId:botId}});
+            if(res.errorMessage==undefined){
+              this.spinner.hide()
+              this.router.navigate(["/pages/rpautomation/designer"],{queryParams:{botId:botId}});
+            }
+            else{
+              this.spinner.hide();
+              Swal.fire("Error",res.errorMessage,"error");
+            }        
          
            },err=>{
             this.spinner.hide();
@@ -616,9 +622,15 @@ export class RpaHomeComponent implements OnInit {
       this.spinner.show();
      // let botId=Base64.encode(JSON.stringify(createBotFormValue));
       this.rest.createBot(createbot).subscribe((res:any)=>{
-        this.spinner.hide();
         let botId=res.botId
-        this.router.navigate(["/pages/rpautomation/designer"],{queryParams:{botId:botId}});
+        if(res.errorMessage==undefined){
+          this.spinner.hide()
+          this.router.navigate(["/pages/rpautomation/designer"],{queryParams:{botId:botId}});
+        }
+        else{
+          this.spinner.hide();
+          Swal.fire("Error",res.errorMessage,"error");
+        }        
        },err=>{
         this.spinner.hide();
         Swal.fire("Error","error");
