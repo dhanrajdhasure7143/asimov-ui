@@ -269,10 +269,11 @@ this.dt.bpsHeaderValues('');
       this.bpmnModeler = new CmmnJS(notationJson);
     else if(eachBPMN.ntype == "dmn")
       this.bpmnModeler = new DmnJS(notationJson); 
-    if(eachBPMN.bpmnProcessStatus != "APPROVED" && eachBPMN.bpmnProcessStatus != "REJECTED")
+    if(eachBPMN.bpmnProcessStatus != "APPROVED" && eachBPMN.bpmnProcessStatus != "REJECTED" && eachBPMN.bpmnProcessStatus != "PENDING")
       this.filterAutoSavedDiagrams(eachBPMN.bpmnModelId);
     if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"])
       byteBpmn = atob(this.autosavedDiagramVersion[0]["bpmnProcessMeta"]);
+      else byteBpmn = atob(xml_data);
       if(byteBpmn == "undefined"){
         this.rest.getBPMNFileContent("assets/resources/newDiagram.bpmn").subscribe(res => {
           this.bpmnModeler.importXML(res, function(err){
