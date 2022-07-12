@@ -592,19 +592,23 @@ export class RpaHomeComponent implements OnInit {
         {
           catResponse=data;
           createBotFormValue.botDepartment=catResponse.data.categoryId;  
-          let botId=Base64.encode(JSON.stringify(createBotFormValue));
-          this.router.navigate(["/pages/rpautomation/designer"],{queryParams:{botId:botId}})
           this.spinner.show();
           this.rest.createBot(createbot).subscribe((res:any)=>{
             console.log("res",res)
             let botId=res.botId;
-            this.spinner.hide()
-            this.router.navigate(["/pages/rpautomation/designer"],{queryParams:{botId:botId}});
+            if(res.errorMessage==undefined){
+              this.spinner.hide()
+              this.router.navigate(["/pages/rpautomation/designer"],{queryParams:{botId:botId}});
+            }
+            else{
+              this.spinner.hide();
+              Swal.fire("Error",res.errorMessage,"error");
+            }   
          
            },err=>{
             this.spinner.hide();
             Swal.fire("Error",catResponse.errorMessage,"error");
-          });
+          },);
 
         }
         else
@@ -614,16 +618,18 @@ export class RpaHomeComponent implements OnInit {
        
       });
     }else{
-
-      let botId=Base64.encode(JSON.stringify(createBotFormValue));
-   
-      this.router.navigate(["/pages/rpautomation/designer"],{queryParams:{botId:botId}})
-      this.spinner.show();
      // let botId=Base64.encode(JSON.stringify(createBotFormValue));
       this.rest.createBot(createbot).subscribe((res:any)=>{
         this.spinner.hide();
         let botId=res.botId
-        this.router.navigate(["/pages/rpautomation/designer"],{queryParams:{botId:botId}});
+        if(res.errorMessage==undefined){
+          this.spinner.hide()
+          this.router.navigate(["/pages/rpautomation/designer"],{queryParams:{botId:botId}});
+        }
+        else{
+          this.spinner.hide();
+          Swal.fire("Error",res.errorMessage,"error");
+        }   
        },err=>{
         this.spinner.hide();
         Swal.fire("Error","error");
