@@ -613,14 +613,15 @@ export class RpaHomeComponent implements OnInit {
         }
         else
         {
+          this.spinner.hide()
           Swal.fire("Error",catResponse.errorMessage,"error");
         }
        
       });
     }else{
      // let botId=Base64.encode(JSON.stringify(createBotFormValue));
+     this.spinner.show()
       this.rest.createBot(createbot).subscribe((res:any)=>{
-        this.spinner.hide();
         let botId=res.botId
         if(res.errorMessage==undefined){
           this.spinner.hide()
