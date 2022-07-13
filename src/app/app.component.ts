@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserIdleService } from 'angular-user-idle';
 import { APP_CONFIG } from './app.config';
@@ -16,7 +16,7 @@ export class AppComponent {
   newAccessToken: any;
   constructor(private userIdle: UserIdleService, private apiservice: RestApiService,
      private authservice: AuthenticationService, @Inject(APP_CONFIG) private config,
-     private router: Router,private toastr: ToastrService) { }
+     private router: Router,private toastr: ToastrService, private cdRef: ChangeDetectorRef) { }
 
   ngOnInit() {
     addEventListener("offline",(e)=>{
@@ -63,6 +63,14 @@ export class AppComponent {
  
   restart() {
     this.userIdle.resetTimer();
+  }
+
+  ngAfterViewChecked() {
+    setTimeout(() => {
+      if(!localStorage.getItem("accessToken"))
+      this.router.navigate(['/redirect'])
+    }, 6000);
+    this.cdRef.detectChanges();
   }
 
 }
