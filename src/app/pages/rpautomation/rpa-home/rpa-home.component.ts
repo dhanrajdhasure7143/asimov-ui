@@ -101,7 +101,8 @@ export class RpaHomeComponent implements OnInit {
   totalRows$: Observable<number>;
   @ViewChild(MatPaginator,{static:false}) paginator301: MatPaginator;
   freetrail: string;
-  botlistitems:any=[]
+  botlistitems:any=[];
+  isLoading:boolean = false;
   constructor(
     private route: ActivatedRoute, 
     private rest:RestApiService, 
@@ -583,56 +584,57 @@ export class RpaHomeComponent implements OnInit {
       "botName":createBotFormValue.botName,
       "department":createBotFormValue.botDepartment
      }
-
+      
     if(createBotFormValue.botDepartment=="others"){
       let rpaCategory:any={"categoryName":this.insertbot.value.newCategoryName,"categoryId":0, "createdAt":""};
+      this.isLoading=true;
       this.rest.addCategory(rpaCategory).subscribe(data=>{
         let catResponse : any;
         if(catResponse.errorMessage==undefined)
         {
           catResponse=data;
           createBotFormValue.botDepartment=catResponse.data.categoryId;  
-          this.spinner.show();
+         
           this.rest.createBot(createbot).subscribe((res:any)=>{
             console.log("res",res)
             let botId=res.botId;
             if(res.errorMessage==undefined){
-              this.spinner.hide()
+              this.isLoading=false;
               this.router.navigate(["/pages/rpautomation/designer"],{queryParams:{botId:botId}});
             }
             else{
-              this.spinner.hide();
+              this.isLoading=false;
               Swal.fire("Error",res.errorMessage,"error");
             }   
          
            },err=>{
-            this.spinner.hide();
+            this.isLoading=false
             Swal.fire("Error",catResponse.errorMessage,"error");
           },);
 
         }
         else
         {
-          this.spinner.hide()
+          this.isLoading=false
           Swal.fire("Error",catResponse.errorMessage,"error");
         }
        
       });
     }else{
      // let botId=Base64.encode(JSON.stringify(createBotFormValue));
-     this.spinner.show()
+    this.isLoading=true;
       this.rest.createBot(createbot).subscribe((res:any)=>{
         let botId=res.botId
         if(res.errorMessage==undefined){
-          this.spinner.hide()
+          this.isLoading=false
           this.router.navigate(["/pages/rpautomation/designer"],{queryParams:{botId:botId}});
         }
         else{
-          this.spinner.hide();
+          this.isLoading=false
           Swal.fire("Error",res.errorMessage,"error");
         }   
        },err=>{
-        this.spinner.hide();
+        this.isLoading=false
         Swal.fire("Error","error");
        })
 
