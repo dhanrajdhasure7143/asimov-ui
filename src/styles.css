@@ -2410,6 +2410,7 @@ th.mat-header-cell {
 
 .actions-mbody .form-group {
   margin: 0px 0px 15px !important;
+  margin-bottom: 10px !important;
 }
 .actions-mbody .drop-container.dropzone {
   margin-bottom: 5px !important;
