@@ -1289,8 +1289,10 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
               _self.router.navigate([],{ relativeTo:_self.route, queryParams:params });
               // new added
               _self.saved_bpmn_list = res;
-              _self.rejectedOrApproved = _self.saved_bpmn_list[inprogress_version]['bpmnProcessStatus'];
-              _self.updated_date_time = _self.saved_bpmn_list[inprogress_version]["modifiedTimestamp"];
+              let filterList = _self.saved_bpmn_list.filter(ele=>{return ele.version == inprogress_version})
+              console.log(filterList,filterList[0]['bpmnProcessStatus'])
+                _self.rejectedOrApproved = filterList[0]['bpmnProcessStatus'];
+                _self.updated_date_time = filterList[0]["modifiedTimestamp"];
               _self.push_Obj={"rejectedOrApproved":_self.rejectedOrApproved,"isfromApprover":_self.isfromApprover,
               "isShowConformance":_self.isShowConformance,"isStartProcessBtn":_self.isStartProcessBtn,"autosaveTime":_self.updated_date_time,
               "isFromcreateScreen":false,'process_name':_self.currentNotation_name,'isSavebtn':true,"hasConformance":_self.hasConformance,"resize":_self.reSize,isUploaded:_self.isUploaded}
