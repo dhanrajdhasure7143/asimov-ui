@@ -1273,7 +1273,10 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
             });
           }else{
             if( !_self.isShowConformance && (status == "APPROVED" || status == "REJECTED")){
-              let all_bpmns = _self.saved_bpmn_list.filter(each => { return each.bpmnModelId == sel_List["bpmnModelId"]})
+              _self.rest.getBpmnNotationById(sel_List["bpmnModelId"]).subscribe(res=>{
+                let all_bpmns
+                all_bpmns = res
+              // let all_bpmns = _self.saved_bpmn_list.filter(each => { return each.bpmnModelId == sel_List["bpmnModelId"]})
               let inprogress_version = 0;
               all_bpmns.forEach(each => {
                 if(inprogress_version < each.version)
@@ -1284,6 +1287,16 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
                 params['vcmId']=_self.vcmId
               }
               _self.router.navigate([],{ relativeTo:_self.route, queryParams:params });
+              // new added
+              _self.saved_bpmn_list = res;
+              _self.rejectedOrApproved = _self.saved_bpmn_list[inprogress_version]['bpmnProcessStatus'];
+              _self.updated_date_time = _self.saved_bpmn_list[inprogress_version]["modifiedTimestamp"];
+              _self.push_Obj={"rejectedOrApproved":_self.rejectedOrApproved,"isfromApprover":_self.isfromApprover,
+              "isShowConformance":_self.isShowConformance,"isStartProcessBtn":_self.isStartProcessBtn,"autosaveTime":_self.updated_date_time,
+              "isFromcreateScreen":false,'process_name':_self.currentNotation_name,'isSavebtn':true,"hasConformance":_self.hasConformance,"resize":_self.reSize,isUploaded:_self.isUploaded}
+              _self.dt.bpsNotationaScreenValues(_self.push_Obj)
+            })
+            
             }
             if(_self.isShowConformance)
             _self.modalRef.hide();
