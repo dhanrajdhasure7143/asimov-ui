@@ -140,7 +140,9 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
     this.resumebot=false;
     this.logflag=false;
     this.getCategories();
-    this.getEnvironmentlist();
+    setTimeout(() => {
+      this.getEnvironmentlist();
+    }, 2000);
     this.getpredefinedbotlist();
     this.viewlogid="viewlog-"+this.botState.botName;
     if(this.botState.botId!=undefined)
