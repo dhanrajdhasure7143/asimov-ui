@@ -29,8 +29,8 @@ import { Base64 } from 'js-base64';
                     <th *ngFor="let tableHeader of fields">{{tableHeader.label}}</th>
                     <th>Actions</th>     
                </thead>
-                <tbody cdkDropList (cdkDropListDropped)="drop($event)">
-                    <tr *ngFor="let eachObj of fillarray  | paginate: { itemsPerPage: 2,currentPage: q }" cdkDrag>
+                <tbody cdkDropList (cdkDropListDropped)="drop($event)" >
+                    <tr *ngFor="let eachObj of fillarray" cdkDrag height="100px">
                     <td *ngFor="let field of fields">
                     <span *ngIf="checkRecord(eachObj, field)==false">
                         {{eachObj[field.name+"_"+field.id]?eachObj[field.name+"_"+field.id]:'NA'}}
@@ -48,9 +48,7 @@ import { Base64 } from 'js-base64';
             </table>
         </div>
     </div>
-    <div class="pagicl float-right">
-    <pagination-controls (pageChange)="q = $event"></pagination-controls>
-</div>
+   
         
         </div>
         <div class="form-footer" *ngIf="!feilddisable">
@@ -79,10 +77,23 @@ export class DynamicFormsComponent implements OnInit {
   data: any=[]
   id: any;
   editfill:boolean=false;
+  drag:boolean
   constructor() {
    }
   onSub(){
     if(this.enableMultiForm.check==true){
+      this.data = this.fillarray.map(p => {
+        let filteredobject = {};
+        let sample = (Object.keys(p));
+        sample.map(item => {
+          if (item != "id")
+            filteredobject[item.split("_")[0]] = p[item];
+          else
+            filteredobject["id"] = p[item];
+        })
+        console.log("object", filteredobject)
+        return filteredobject;
+      });
       this.Submit.emit(this.data)
     }
     else{
@@ -97,7 +108,7 @@ export class DynamicFormsComponent implements OnInit {
     let valueKey=Object.keys(obj).find(item=>item.split("_")[0]=="fillValue");
     if(valueKey != undefined && key != undefined) 
       if(obj[key]=="password")
-      {
+      { 
         this.fields.find(item=>item.name=="fillValueType").value="password"
         this.fields.find(item=>item.name=="fillValue").type="password";
         this.fields.find(item=>item.name=="fillValue").value=obj[valueKey]  
@@ -107,7 +118,7 @@ export class DynamicFormsComponent implements OnInit {
       {
         this.fields.find(item=>item.name=="fillValue").type="textarea"
       }
-      let action_id= obj.Action_580
+      let action_id= obj.Action_536
     if (action_id == 'fill') {
       this.fields.forEach(item => {
         if (item.visibility == false) {
@@ -253,8 +264,6 @@ export class DynamicFormsComponent implements OnInit {
   ngOnInit() {
     let fieldsCtrls = {};
     this.isMultiForm=(this.enableMultiForm.check)
-  
-
     if(this.multiarray!=undefined){
       this.multiFormValue=[...this.enableMultiForm.value]
       let modifiedArray:any=[...this.multiarray.map((item:any)=>{
@@ -269,6 +278,9 @@ export class DynamicFormsComponent implements OnInit {
           return fieldData;
       })]
       this.fillarray=modifiedArray;
+      console.log("fillarray",modifiedArray)
+
+      //this.data=modifiedArray
     }
 
   
@@ -325,7 +337,10 @@ export class DynamicFormsComponent implements OnInit {
      
   }
   drop(event: CdkDragDrop<[]>) {
+    this.drag=true
     moveItemInArray(this.fillarray, (this.q - 1) * 2 + event.previousIndex, (this.q - 1) * 2 + event.currentIndex);  
+    this.data=this.fillarray;
+
 }
 
 
