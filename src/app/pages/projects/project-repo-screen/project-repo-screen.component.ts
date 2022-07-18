@@ -342,48 +342,34 @@ this.route.queryParams.subscribe(data=>{​​​​​​​​
     });
     return userName;
   }
-  uploadRequetedFile(evnt, data){
-
+  
+  uploadRequetedFile(evnt, data) {
     var fileData = new FormData();
-    
     fileData.append("category", data.category)
-     fileData.append("comments", data.comments)
-     fileData.append("id", data.id)
-     fileData.append("filePath", evnt.target.files[0])
-     fileData.append("projectId", this.projectid)
-  
-
-    
- this.api.uploadProjectFile(fileData).subscribe(res => {
-   //message: "Resource Added Successfully
-  
-   
-   this.getFileDetails();
-   if(res.message!=undefined)
-   {
-    
-     Swal.fire({
-       title: 'Success',
-       text: "File Uploaded Successfully",
-       position: 'center',
-       icon: 'success',
-       showCancelButton: false,
-       confirmButtonColor: '#007bff',
-       cancelButtonColor: '#d33',
-       confirmButtonText: 'Ok'
-   }).then((result) => {
-    // this.resettask();
-     
-     
-   }) 
-     
-   }
-   else
-   Swal.fire("Error",res.message,"error");
-   
- })
-
+    fileData.append("comments", data.comments)
+    fileData.append("id", data.id)
+    fileData.append("filePath", evnt.target.files[0])
+    fileData.append("projectId", this.projectid)
+    this.api.uploadProjectFile(fileData).subscribe(res => {
+      //message: "Resource Added Successfully
+      this.getFileDetails();
+      if (res.message != undefined) {
+        Swal.fire({
+          title: 'Success',
+          text: "File Uploaded Successfully",
+          position: 'center',
+          icon: 'success',
+          confirmButtonText: 'Ok',
+          heightAuto: false,
+        }).then((result) => {
+          // this.resettask();
+        })
+      }
+      else
+        Swal.fire("Error", res.message, "error");
+    })
   }
+
   onrequestFileData(en){
 
 
