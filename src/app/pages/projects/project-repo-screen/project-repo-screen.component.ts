@@ -46,6 +46,7 @@ export class ProjectRepoScreenComponent implements OnInit {
   @ViewChild("sort11",{static:false}) sort11: MatSort;
   @ViewChild("paginator101",{static:false}) paginator101: MatPaginator;
   @ViewChild("paginator102",{static:false}) paginator102: MatPaginator;
+  @ViewChild("paginator105",{static:false}) paginator105: MatPaginator;
   multiFilesArray: any[] = [];
   fileId: any;
   filedeleteflag:Boolean;
@@ -299,6 +300,7 @@ this.route.queryParams.subscribe(data=>{​​​​​​​​
       if(responseArray=[]){
         this.dataSource5= new MatTableDataSource(this.requestedFiledata);
         this.dataSource5.sort=this.sort13;
+        this.dataSource5.paginator=this.paginator105;
       }else{
       responseArray.forEach(e=>{
         if(e.requestTo==loggedUser || e.requestFrom==loggedUser){
@@ -306,7 +308,8 @@ this.route.queryParams.subscribe(data=>{​​​​​​​​
         }
       })
       this.dataSource5= new MatTableDataSource(this.filterdArray);
-      this.dataSource5.sort=this.sort13; 
+      this.dataSource5.sort=this.sort13;
+      this.dataSource5.paginator=this.paginator105;
       };
     })
     this.spinner.hide();
@@ -331,48 +334,34 @@ this.route.queryParams.subscribe(data=>{​​​​​​​​
     });
     return userName;
   }
-  uploadRequetedFile(evnt, data){
 
+  uploadRequetedFile(evnt, data) {
     var fileData = new FormData();
-    
     fileData.append("category", data.category)
-     fileData.append("comments", data.comments)
-     fileData.append("id", data.id)
-     fileData.append("filePath", evnt.target.files[0])
-     fileData.append("projectId", this.projectid)
-  
-
-    
- this.api.uploadProjectFile(fileData).subscribe(res => {
-   //message: "Resource Added Successfully
-  
-   
-   this.getFileDetails();
-   if(res.message!=undefined)
-   {
-    
-     Swal.fire({
-       title: 'Success',
-       text: "File Uploaded Successfully",
-       position: 'center',
-       icon: 'success',
-       showCancelButton: false,
-       confirmButtonColor: '#007bff',
-       cancelButtonColor: '#d33',
-       confirmButtonText: 'Ok'
-   }).then((result) => {
-    // this.resettask();
-     
-     
-   }) 
-     
-   }
-   else
-   Swal.fire("Error",res.message,"error");
-   
- })
-
+    fileData.append("comments", data.comments)
+    fileData.append("id", data.id)
+    fileData.append("filePath", evnt.target.files[0])
+    fileData.append("projectId", this.projectid)
+    this.api.uploadProjectFile(fileData).subscribe(res => {
+      //message: "Resource Added Successfully
+      this.getFileDetails();
+      if (res.message != undefined) {
+        Swal.fire({
+          title: 'Success',
+          text: "File Uploaded Successfully",
+          position: 'center',
+          icon: 'success',
+          confirmButtonText: 'Ok',
+          heightAuto: false,
+        }).then((result) => {
+          // this.resettask();
+        })
+      }
+      else
+        Swal.fire("Error", res.message, "error");
+    })
   }
+
   onrequestFileData(en){
 
 
