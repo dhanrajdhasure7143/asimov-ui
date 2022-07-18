@@ -248,13 +248,10 @@ this.route.queryParams.subscribe(data=>{​​​​​​​​
        position: 'center',
        icon: 'success',
        showCancelButton: false,
-       confirmButtonColor: '#007bff',
-       cancelButtonColor: '#d33',
-       confirmButtonText: 'Ok'
+       confirmButtonText: 'Ok',
+       heightAuto: false,
    }).then((result) => {
     // this.resettask();
-    
-     
    }) 
      
    }
@@ -289,38 +286,33 @@ this.route.queryParams.subscribe(data=>{​​​​​​​​
   getFileDetails(){
     this.api.getFileDetails(this.projectid).subscribe(data =>{
       this.uploadedFiledata=data.uploadedFiles.reverse();
-     
       this.dataSource3= new MatTableDataSource(this.uploadedFiledata);
       this.dataSource3.sort=this.sort11;
       this.dataSource3.paginator=this.paginator101;
       this.requestedFiledata=data.requestedFiles.reverse();
-    
       this.dataSource4= new MatTableDataSource(this.requestedFiledata);
       this.dataSource4.sort=this.sort12;
       this.dataSource4.paginator=this.paginator102;
       let loggedUser=localStorage.getItem("ProfileuserId")
       let responseArray=this.requestedFiledata
       this.filterdArray=[]
-      // if(responseArray=[]){
-      //   this.dataSource5= new MatTableDataSource(this.requestedFiledata);
-      //   this.dataSource5.sort=this.sort13;
-      // }
+      if(responseArray=[]){
+        this.dataSource5= new MatTableDataSource(this.requestedFiledata);
+        this.dataSource5.sort=this.sort13;
+      }else{
       responseArray.forEach(e=>{
         if(e.requestTo==loggedUser || e.requestFrom==loggedUser){
           this.filterdArray.push(e)
-          
         }
-    
-        this.dataSource5= new MatTableDataSource(this.filterdArray);
-        this.dataSource5.sort=this.sort13;
       })
-   
-      
+      this.dataSource5= new MatTableDataSource(this.filterdArray);
+      this.dataSource5.sort=this.sort13; 
+      };
     })
     this.spinner.hide();
   }
-  getallusers()
-  {
+
+  getallusers(){
     let tenantid=localStorage.getItem("tenantName")
     this.api.getuserslist(tenantid).subscribe(item=>{
       let users:any=item
