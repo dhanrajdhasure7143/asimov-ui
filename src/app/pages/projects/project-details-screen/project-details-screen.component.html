@@ -166,7 +166,8 @@
                                     </div>
                                     <div *ngIf="editdata==true">
                                         <select class="small-input" (change)="onProcessChange($event.target.value)" (change)="projectDetails.process=$event.target.value" [value]="(projectDetails.process==undefined||projectDetails.process==null)?'':projectDetails.process">
-                          <option value="">Select Process</option>
+                          <option value="" disabled hidden>Select Process</option>
+                          <option value="null" disabled hidden>Select Process</option>
                           <option *ngFor="let process of processes" [value]="process.processId">{{process.processName}}</option>
                         </select>
                                     </div>
