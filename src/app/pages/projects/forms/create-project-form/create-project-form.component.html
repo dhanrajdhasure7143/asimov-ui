@@ -42,7 +42,7 @@
                     </select> -->
 
                         <ng-select formControlName="resource" [multiple]="true" placeholder="Select Resources" [(ngModel)]="selectedresources" required>
-                            <ng-option *ngFor="let user of users_list" [value]="user.userId.userId">{{user.userId.firstName|titlecase}} {{user.userId.lastName|titlecase}}</ng-option>
+                            <ng-option *ngFor="let user of resources_list" [value]="user.userId.userId">{{user.userId.firstName|titlecase}} {{user.userId.lastName|titlecase}}</ng-option>
                         </ng-select>
 
                         <span *ngIf="insertForm2.get('resource').invalid && insertForm2.get('resource').touched" class="errspan required">Resources Required*</span>
