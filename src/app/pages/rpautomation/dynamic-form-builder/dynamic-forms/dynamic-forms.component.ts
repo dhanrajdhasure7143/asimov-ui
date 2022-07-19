@@ -34,6 +34,18 @@ export class DynamicFormsComponent implements OnInit {
   }
   onSub() {
     if (this.enableMultiForm.check == true) {
+      this.data = this.fillarray.map(p => {
+        let filteredobject = {};
+        let sample = (Object.keys(p));
+        sample.map(item => {
+          if (item != "id")
+            filteredobject[item.split("_")[0]] = p[item];
+          else
+            filteredobject["id"] = p[item];
+        })
+        console.log("object", filteredobject)
+        return filteredobject;
+      });
       this.Submit.emit(this.data)
     }
     else {
