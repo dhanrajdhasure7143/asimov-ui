@@ -71,7 +71,8 @@
                                             fitTableView(each_diag.processOwnerName) : '-'}}</div>
                                         <div class="cell cell6">{{each_diag.bpmnProcessName ? " V1."+each_diag.version+"
                                             ": '-'}}</div>
-                                        <div class="cell cell7">{{each_diag.convertedModifiedTime*1000 | date:'medium'}}
+                                            <!-- <div class="cell cell7">{{each_diag.convertedModifiedTime*1000 | date:'medium'}} -->
+                                                <div class="cell cell7">{{each_diag.convertedModifiedTime}}
                                         </div>
                                         <div class="cell cell8" [matTooltip]=each_diag.approverName
                                             matTooltipClass="bpsHeaderTooltip">{{each_diag.approverName ?
