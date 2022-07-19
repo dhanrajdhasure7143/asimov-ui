@@ -7,6 +7,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-departments',
@@ -41,6 +42,10 @@ export class DepartmentsComponent implements OnInit {
   getAllDepartments(){
     this.api.getDepartmentsList().subscribe(resp => {
       this.departments = resp
+      this.departments.data.map(item=>{
+        item["createdTimeStamp_converted"] = moment(new Date(item.createdAt)).format('LLL')
+        return item
+      })
       this.dataSource2 = new MatTableDataSource(this.departments.data);
       this.dataSource2.paginator=this.paginator;
       this.dataSource2.sort = this.sort;    
