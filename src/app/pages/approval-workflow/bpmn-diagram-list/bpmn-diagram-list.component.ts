@@ -16,7 +16,7 @@ import { of  } from 'rxjs/observable/of';
 import { map } from 'rxjs/operators';
 import {MatTableDataSource} from '@angular/material/table';
 import { MatSort, Sort } from '@angular/material';
-
+import * as moment from 'moment';
 @Component({
   selector: 'app-bpmn-diagram-list',
   templateUrl: './bpmn-diagram-list.component.html',
@@ -183,7 +183,8 @@ this.selectedrow =i;
       this.griddata.forEach(ele=>{
         ele["processIntelligenceId"]=ele.bpmnProcessInfo[0].processIntelligenceId;
         ele["bpmnProcessName"]=ele.bpmnProcessInfo[0].bpmnProcessName;
-        ele["convertedModifiedTime"]=ele.bpmnProcessInfo[0].convertedModifiedTime;
+        // ele["convertedModifiedTime"]=ele.bpmnProcessInfo[0].convertedModifiedTime;
+        ele["convertedModifiedTime"]=moment(new Date(ele.bpmnProcessInfo[0].convertedModifiedTime*1000)).format('LLL');
         ele["userName"]=ele.bpmnProcessInfo[0].userName;
         ele["role"]=ele.role;
 
