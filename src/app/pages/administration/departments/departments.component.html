@@ -113,7 +113,8 @@
               <ng-container matColumnDef="createdAt">
                   <th mat-header-cell *matHeaderCellDef mat-sort-header>Created At</th>
                   <td mat-cell *matCellDef="let element"> 
-                    <span *ngIf="element.createdAt!=null" >{{element.createdAt | date:'MMM d, y, HH:mm'}}</span>
+                    <!-- <span *ngIf="element.createdAt!=null" >{{element.createdAt | date:'MMM d, y, HH:mm'}}</span> -->
+                    <span *ngIf="element.createdAt!=null" >{{element.createdTimeStamp_converted'}}</span>
                       <span *ngIf="element.createdAt==''">-</span> 
                       <span *ngIf=" element.createdAt==null">-</span> 
                   </td>
