@@ -30,6 +30,7 @@ export class CreateProjectFormComponent implements OnInit {
   categoriesList:any=[];
   freetrail: string;
   processOwner:boolean;
+  public resources_list:any[]=[];
   ngOnInit(): void {
     this.loggedInUserId=localStorage.getItem("ProfileuserId")
     this.insertForm2=this.formBuilder.group({
@@ -73,6 +74,13 @@ export class CreateProjectFormComponent implements OnInit {
     });
 
    
+  }
+
+  ngOnChanges(){
+    this.users_list.forEach((element)=>{  
+      if(element.userId.userId!=this.loggedInUserId)
+     this.resources_list.push(element)
+   });
   }
 
   getprocessnames()
