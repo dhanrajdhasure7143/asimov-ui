@@ -40,7 +40,7 @@
             </div>
             <div class="text-cell" *ngIf="each_diag.bpmnProcessInfo">{{each_diag.bpmnProcessInfo[0].processIntelligenceId ? each_diag.processIntelligenceId : '-' }}</div>
             <div class="text-cell" *ngIf="each_diag.bpmnProcessInfo">{{each_diag.bpmnProcessInfo[0].bpmnProcessName ? each_diag.bpmnProcessName : '-'}}</div>
-            <div class="text-cell" *ngIf="each_diag.bpmnProcessInfo">{{each_diag.bpmnProcessInfo[0].convertedModifiedTime*1000 | date:'medium'}}</div>
+            <div class="text-cell" *ngIf="each_diag.bpmnProcessInfo">{{each_diag.convertedModifiedTime}}</div>
             <div class="text-cell" *ngIf="each_diag.bpmnProcessInfo">{{each_diag.bpmnProcessInfo[0].userName  ? formatApproverName(each_diag.bpmnProcessInfo[0].userName) : '-'}}</div>
             <div class="text-cell">{{each_diag.role ? each_diag.role : '-'}}</div>
             <div class="text-cell-last" *ngIf="each_diag.bpmnProcessInfo" [ngStyle]="{'color':getColor(each_diag.bpmnProcessInfo[0].bpmnProcessStatus)}"><div *ngIf="each_diag.bpmnProcessInfo[0].bpmnProcessStatus=='PENDING';else status"><span class="pending_value_properties">{{pendingStatus}}</span></div> <ng-template #status>{{each_diag.bpmnProcessInfo[0].bpmnProcessStatus}}</ng-template></div>
