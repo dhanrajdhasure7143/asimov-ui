@@ -21,6 +21,7 @@ import { MatSort, Sort } from '@angular/material';;
 import { fromMatSort, sortRows } from './../model/datasource-utils';
 import {FilterPipe} from './../custom_filter.pipe';
 import { Subscription } from 'rxjs';
+import * as moment from 'moment';
 @Component({
   selector: 'app-bpshome',
   templateUrl: './home.component.html',
@@ -107,7 +108,10 @@ export class BpsHomeComponent implements OnInit {
     await this.rest.getUserBpmnsListWithoutNotation().subscribe( (res:any[]) =>  {
       this.saved_diagrams = res; 
       this.saved_diagramsList=res;
-      this.saved_diagrams.map(item => {item.xpandStatus = false;return item;})
+      this.saved_diagrams.map(item => {item.xpandStatus = false;
+        item.convertedModifiedTime = moment(new Date(item.convertedModifiedTime*1000)).format('LLL')
+        return item;
+      })
       this.saved_diagrams.forEach(ele => {
         ele['eachObj']={
           // "bpmnXmlNotation":ele.bpmnXmlNotation,
