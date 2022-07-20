@@ -526,9 +526,11 @@ mat-paginator button:disabled{
 }
 .tablmacl {
   overflow: scroll;
+  height: 220px;
 }
 .innertabld{
   width: 500px;
+  
 }
 .pagicl {
   margin-top: 10px;
