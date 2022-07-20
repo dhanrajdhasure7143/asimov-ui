@@ -10,7 +10,7 @@
                 <button class="btn btn-success" *ngIf="editfill==true" [disabled]="!form.valid" (click)="Push()" >Update</button>            
             </div>
 
-            <div class="col-md-12 p-0" *ngIf="isMultiForm==true">
+            <div class="col-md-12 p-0 tablmacl" *ngIf="isMultiForm==true">
                 <div class="table-responsive overaly-innertable">
                     <table class="table">
                         <thead>
@@ -20,7 +20,7 @@
                             </tr>    
                         </thead>
                         <tbody cdkDropList (cdkDropListDropped)="drop($event)">
-                            <tr *ngFor="let eachObj of fillarray  | paginate: { itemsPerPage: 2,currentPage: q }" cdkDrag>
+                            <tr *ngFor="let eachObj of fillarray" cdkDrag>
                                 <td *ngFor="let field of fields"  class="testcell">
                                     <span *ngIf="checkRecord(eachObj, field)==false">
                                         {{eachObj[field.name+"_"+field.id]?eachObj[field.name+"_"+field.id]:'NA'}}
@@ -41,9 +41,9 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="col-md-12 p-0 pagicl text-right">
+                <!-- <div class="col-md-12 p-0 pagicl text-right">
                      <pagination-controls  (pageChange)="q = $event"></pagination-controls> 
-                </div>      
+                </div>       -->
             </div>
         </div>
         <div class="form-footer" *ngIf="!feilddisable">
