@@ -152,6 +152,7 @@
                                                 <label class="label-control" for="type">Type<span class="star">*</span></label>
                                                 <select class="form-control" name="type" id="type" #type="ngModel" (change)="changeType()" [(ngModel)]="dbDetails.dbType" required>
                                                         <option [value]="undefined" disabled hidden>Select Type</option>
+                                                        <option value="null" disabled hidden>Select Type</option>
                                                         <option value="postgresql">Postgres SQL</option>
                                                 </select>
                                                 <span *ngIf="((type.invalid && database.submitted) || (type.errors && type.touched) )" 
@@ -167,14 +168,14 @@
                                         <div class="col-md-12 p-0 form-group">
                                                 <div class="col-md-6 pl-0">
                                                         <label class="label-control" for="dbname">DB Name<span class="star">*</span></label>
-                                                        <input type="text" name="dbname" #dbname='ngModel' [(ngModel)]="dbDetails.dbName" class="form-control" placeholder="Enter DB Name" required/>
+                                                        <input type="text" name="dbname" #dbname='ngModel' (keyup)="onChangeValues()" [(ngModel)]="dbDetails.dbName" class="form-control" placeholder="Enter DB Name" required/>
                                                         <span *ngIf="((dbname.invalid && database.submitted) || (dbname.errors && dbname.touched) )" 
                                                         class='errspan required'> DB Name is required </span>
                                                 </div>
                                           
                                            <div class="col-md-6 p-0">
                                                 <label class="label-control" for="otherPort">Port Number<span class="star">*</span></label>
-                                                <input type="text" name="otherPort" #otherPort='ngModel' [(ngModel)]="dbDetails.portNumber" class="form-control" placeholder="Enter Port Number" required/>
+                                                <input type="text" name="otherPort" #otherPort='ngModel' (keyup)="onChangeValues()" [(ngModel)]="dbDetails.portNumber" class="form-control" placeholder="Enter Port Number" required/>
                                                 <span *ngIf="((otherPort.invalid && database.submitted) || (otherPort.errors && otherPort.touched) )" 
                                                 class='errspan required'>Port Number is required </span>
                                            </div>
@@ -183,7 +184,7 @@
                                         <div class="col-md-12 p-0 form-group">
                                                 <div class="col-md-6 pl-0">
                                                         <label class="label-control" for="username">User Name<span class="star">*</span></label>
-                                                        <input type="text" name="username" #username='ngModel' class="form-control" [(ngModel)]='dbDetails.userName' placeholder="Enter User Name" required/>
+                                                        <input type="text" name="username" #username='ngModel' (keyup)="onChangeValues()" class="form-control" [(ngModel)]='dbDetails.userName' placeholder="Enter User Name" required/>
                                                         <span *ngIf="((username.invalid && database.submitted) || (username.errors && username.touched) )" 
                                                                 class='errspan required'> User Name is required </span>
                                                 </div>
@@ -199,7 +200,7 @@
                                                         <label class="label-control" for="hostname">Host Name / IP<span class="star">*</span></label>
                                                         <input type="text" name="hostname" #hostname="ngModel" [(ngModel)]="dbDetails.hostName" class="form-control" placeholder="Enter Host Name" required 
                                                         [readonly]="!dbDetails.dbType || !dbDetails.portNumber || !dbDetails.dbName || !dbDetails.userName || !dbDetails.password"/>
-                                                        <span *ngIf="((hostname.invalid && database.submitted) || (hostname.errors && hostname.touched) )" 
+                                                        <span *ngIf="hostname.errors && hostname.touched" 
                                                                 class='errspan required'> Host Name/IPis required </span>
                                                 </div>
                                               <div class="col-md-6 p-0" [hidden]="!isTableEnable">
@@ -207,6 +208,7 @@
                                                 <select [disabled]="!dbDetails.hostName" class="form-control" name="tablename" id="tablename" #tablename='ngModel' [(ngModel)]="dbDetails.tableName" (change)="onChangeTable()" required>
                                                         <option [value]="undefined" disabled hidden>Select Table Name</option>
                                                         <option [value]="null" disabled hidden>Select Table Name</option>
+                                                        <option value="" disabled hidden>Select Table Name</option>
                                                         <option *ngFor="let tName of tableList" value="{{tName}}">{{tName}}</option>
                                                 </select>
                                                 <span *ngIf="tablename.errors && tablename.touched" class='errspan required'> Table Name is required </span>
@@ -218,25 +220,24 @@
                                                         <select [disabled]="!dbDetails.tableName" name="increase"  id="" class="form-control" (change)="onChangeMode($event.target.value)" #increase="ngModel" [(ngModel)]="dbDetails.mode" required>
                                                                 <option [value]="undefined" disabled hidden>Select Mode</option>
                                                                 <option [value]="null" disabled hidden>Select Mode</option>
-                                                                <option value="incrementing">Incrementing</option>
-                                                                <option value="timestamp">Timestamp</option>
-                                                                <option value="timestamp+incrementing">Incrementing with Timestamp</option>
+                                                                <option value="" disabled hidden>Select Mode</option>
+                                                                <option *ngFor="let each of modesList" [value]="each.value">{{each.name}}</option>
                                                         </select> 
-                                                        <span *ngIf="((increase.invalid && database.submitted) || (increase.errors && increase.touched) )" 
+                                                        <span *ngIf="increase.errors && increase.touched" 
                                                         class='errspan required'> Mode is required </span>
                                                 </div>
                                         
                                            <div class="col-md-12 p-0 form-group" *ngIf="isTableEnable">
                                                 <div class="col-md-6 pl-0" *ngIf="isIncrement" >
                                                         <label class="label-control" for="increment">Increment Column Name<span class="star">*</span></label>
-                                                        <input type="text" name="increment" class="form-control" #increment [(ngModel)]='dbDetails.increment' placeholder="Enter increment column name" required/>
-                                                        <span *ngIf="((increment.invalid && database.submitted) || (increment.errors && increment.touched) )" 
+                                                        <input type="text" name="increment" class="form-control" #increment="ngModel" [(ngModel)]='dbDetails.increment' placeholder="Enter increment column name" required/>
+                                                        <span *ngIf="increment.errors && increment.touched" 
                                                              class='errspan required'> Increment column name is required </span>
                                                 </div>
                                                 <div class="col-md-6 p-0" *ngIf="isTimestammp">
                                                         <label class="label-control" for="timestamp">Timestamp Column Name<span class="star">*</span></label>
-                                                        <input type="text" name="timestamp" #timestamp class="form-control" [(ngModel)]='dbDetails.timestamp' placeholder="Enter Timestamp column name" required/>
-                                                        <span *ngIf="((timestamp.invalid && database.submitted) || (timestamp.errors && timestamp.touched) )" 
+                                                        <input type="text" name="timestamp" #timestamp="ngModel" class="form-control" [(ngModel)]='dbDetails.timestamp' placeholder="Enter Timestamp column name" required/>
+                                                        <span *ngIf="timestamp.errors && timestamp.touched" 
                                                              class='errspan required'> Timestamp column name is required </span>
                                                 </div>
                                         </div>         
