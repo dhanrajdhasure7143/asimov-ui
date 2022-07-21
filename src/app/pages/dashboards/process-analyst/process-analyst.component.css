@@ -60,9 +60,9 @@ table td {
     padding-left: 5%;
 }
 
-* {
+/* * {
     text-transform: capitalize;
-}
+} */
 
 .selectsize {
     width: 135%;
@@ -123,9 +123,9 @@ mat-drawer {
     bottom: 23px;
     width: 97%;
 }
-::ng-deep .mat-paginator-range-label{
+/* ::ng-deep .mat-paginator-range-label{
     display: none !important;
-}
+} */
 
 
 #prjchartdiv {
