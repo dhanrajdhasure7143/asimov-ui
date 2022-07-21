@@ -30,7 +30,7 @@ import { Base64 } from 'js-base64';
                     <th>Actions</th>     
                </thead>
                 <tbody cdkDropList (cdkDropListDropped)="drop($event)">
-                    <tr *ngFor="let eachObj of fillarray  | paginate: { itemsPerPage: 2,currentPage: q }" cdkDrag>
+                    <tr *ngFor="let eachObj of fillarray" cdkDrag>
                     <td *ngFor="let field of fields">
                     <span *ngIf="checkRecord(eachObj, field)==false">
                         {{eachObj[field.name+"_"+field.id]?eachObj[field.name+"_"+field.id]:'NA'}}
@@ -48,9 +48,7 @@ import { Base64 } from 'js-base64';
             </table>
         </div>
     </div>
-    <div class="pagicl float-right">
-    <pagination-controls (pageChange)="q = $event"></pagination-controls>
-</div>
+   
         
         </div>
         <div class="form-footer" *ngIf="!feilddisable">
