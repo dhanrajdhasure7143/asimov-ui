@@ -513,6 +513,9 @@ export class UploadComponent implements OnInit {
         return a > b ? -1 : a < b ? 1 : 0;
       });
       this.process_graph_list = this.process_List.data
+      this.process_graph_list.forEach(element => {
+        element['convertedTime_new']= moment(new Date(element.convertedTime)).format('LLL')
+      });
       this.dataSource= new MatTableDataSource(this.process_graph_list);
       this.dataSource.sort=this.sort;
       this.dataSource.paginator=this.paginator;

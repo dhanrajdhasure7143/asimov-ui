@@ -21,6 +21,7 @@ import { MatSort, Sort } from '@angular/material';;
 import { fromMatSort, sortRows } from './../model/datasource-utils';
 import {FilterPipe} from './../custom_filter.pipe';
 import { Subscription } from 'rxjs';
+import * as moment from 'moment';
 @Component({
   selector: 'app-bpshome',
   templateUrl: './home.component.html',
@@ -107,7 +108,10 @@ export class BpsHomeComponent implements OnInit {
     await this.rest.getUserBpmnsListWithoutNotation().subscribe( (res:any[]) =>  {
       this.saved_diagrams = res; 
       this.saved_diagramsList=res;
-      this.saved_diagrams.map(item => {item.xpandStatus = false;return item;})
+      this.saved_diagrams.map(item => {item.xpandStatus = false;
+        item.convertedModifiedTime = moment(new Date(item.convertedModifiedTime*1000)).format('LLL')
+        return item;
+      })
       this.saved_diagrams.forEach(ele => {
         ele['eachObj']={
           // "bpmnXmlNotation":ele.bpmnXmlNotation,
@@ -161,7 +165,6 @@ export class BpsHomeComponent implements OnInit {
   }
 
   openDiagram(){
-    console.log()
     // if(bpmnDiagram.bpmnProcessStatus && bpmnDiagram.bpmnProcessStatus =="PENDING" ) return;
     // let binaryXMLContent = bpmnDiagram.eachObj.bpmnXmlNotation; 
     let binaryXMLContent = this.selected_notation.bpmnXmlNotation;
@@ -269,10 +272,11 @@ this.dt.bpsHeaderValues('');
       this.bpmnModeler = new CmmnJS(notationJson);
     else if(eachBPMN.ntype == "dmn")
       this.bpmnModeler = new DmnJS(notationJson); 
-    if(eachBPMN.bpmnProcessStatus != "APPROVED" && eachBPMN.bpmnProcessStatus != "REJECTED")
+    if(eachBPMN.bpmnProcessStatus != "APPROVED" && eachBPMN.bpmnProcessStatus != "REJECTED" && eachBPMN.bpmnProcessStatus != "PENDING")
       this.filterAutoSavedDiagrams(eachBPMN.bpmnModelId);
     if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"])
       byteBpmn = atob(this.autosavedDiagramVersion[0]["bpmnProcessMeta"]);
+      else byteBpmn = atob(xml_data);
       if(byteBpmn == "undefined"){
         this.rest.getBPMNFileContent("assets/resources/newDiagram.bpmn").subscribe(res => {
           this.bpmnModeler.importXML(res, function(err){
@@ -392,12 +396,14 @@ this.dt.bpsHeaderValues('');
       cancelButtonText: 'Cancel'
     }).then((res) => {
       if(res.isConfirmed){
+        this.isLoading = true;
         let data = {
           "bpmnModelId":bpmNotation.bpmnModelId,
           "version": bpmNotation.version
         }
         this.rest.deleteBPMNProcess(data).subscribe(res => {
           // console.log(res)
+          this.isLoading = false;
           if(res == "It is an ongoing project.Please contact Project Owner(s)"){
             Swal.fire({
               icon: 'info',
@@ -417,6 +423,7 @@ this.dt.bpsHeaderValues('');
           }
           // this.global.notify(bpmNotation.bpmnProcessName+' V1.'+bpmNotation.version+' deleted','success')
         }, err => {
+          this.isLoading = false;
           Swal.fire({
             icon: 'error',
             title: 'Oops...',

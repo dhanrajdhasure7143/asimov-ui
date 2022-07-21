@@ -349,7 +349,7 @@ export class UploadProcessModelComponent implements ComponentCanDeactivate,OnIni
   async getUserBpmnList(isFromConf) {
     this.isLoading = true;
     this.saved_bpmn_list = [];
-    if (!this.isShowConformance) {
+    if (!this.isShowConformance && this.isfromApprover) {
       let req_body = {
         "bpmnModelId": this.selected_modelId,
         "version": this.selected_version
@@ -374,9 +374,14 @@ export class UploadProcessModelComponent implements ComponentCanDeactivate,OnIni
     } else {
       await this.rest.getUserBpmnsList().subscribe((res: any[]) => {
         this.full_saved_bpmn_list = res;
+        console.log(res)
+        if (this.isShowConformance) {
         this.saved_bpmn_list = res.filter(each_bpmn => {
           return each_bpmn.processIntelligenceId && each_bpmn.processIntelligenceId.toString() == this.pid.toString();
         });
+      }else{
+        this.saved_bpmn_list = res
+      }
 
         if (isFromConf) this.isUploaded = true;
         else this.getSelectedNotation();

@@ -60,9 +60,9 @@ table td {
     padding-left: 5%;
 }
 
-* {
+/* * {
     text-transform: capitalize;
-}
+} */
 
 .selectsize {
     width: 135%;
@@ -129,9 +129,9 @@ mat-drawer {
     color: #6c757d;
 }
 
-::ng-deep .mat-paginator-range-label{
+/* ::ng-deep .mat-paginator-range-label{
     display: none !important;
-}
+} */
 .pipaginationdiv1{
     position: absolute;
     /* bottom: 0px; */

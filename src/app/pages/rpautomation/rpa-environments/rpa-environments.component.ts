@@ -11,6 +11,7 @@ import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import { NgxSpinnerService } from "ngx-spinner";
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-environments',
@@ -151,6 +152,7 @@ import { NgxSpinnerService } from "ngx-spinner";
         this.environments.sort((a,b) => a.activeTimeStamp > b.activeTimeStamp ? -1 : 1);
         this.environments=this.environments.map(item=>{
            item["categoryName"]=this.categoryList.find(item2=>item2.categoryId==item.categoryId).categoryName;
+          item["createdTimeStamp_converted"] = moment(new Date(item.createdTimeStamp)).format('LLL')
             if(item.keyValue!=null)
             {
               item["password"]={
@@ -760,7 +762,6 @@ import { NgxSpinnerService } from "ngx-spinner";
 
   deploybotenvironment()
   {
-    debugger
     const selectedEnvironments = this.environments.filter(product => product.checked).map(p => p.environmentId);
     
     if(selectedEnvironments.length!=0)
@@ -769,11 +770,11 @@ import { NgxSpinnerService } from "ngx-spinner";
       this.api.deployenvironment(selectedEnvironments).subscribe( res =>{ 
         let data:any=res
         this.spinner.hide();   
-        if(data.errorMessage==undefined){
+        if(data[0].errorMessage==undefined){
           Swal.fire("Success",data[0].status,"success")
 
         }else{
-          Swal.fire("Error",data.errorMessage,"error")
+          Swal.fire("Error",data[0].errorMessage,"error")
         }
         this.removeallchecks();
         this.getallData(); 

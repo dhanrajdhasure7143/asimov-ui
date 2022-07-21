@@ -13,7 +13,7 @@ export const environment = {
   auth_url: "https://ezflow.demo.epsoftinc.com/authservices",
   pi_node_url: "https://ezflow.demo.epsoftinc.com/pinode",
   platform_url:'https://ezflow.demo.epsoftinc.com/aiotalplatform',
-  schema_registry_url:"http://schemademo-registry:8081",
+  schema_registry_url:"http://schema-demo-registry:8081",
   alerts_url:'https://ezflow.demo.epsoftinc.com/alerts',
   socialLoginRedirectURL: 'https://ezflow.demo.epsoftinc.com/#/user',
 
@@ -39,10 +39,10 @@ export const environment = {
 // Data upload path
   data_path:"/usr/share/confluent-ftp-data",
 
-  camunda_url : "https://ezcamunda.demo.epsoftinc.com",
+  camunda_url : "https://ezworkflow.demo.epsoftinc.com",
 
   //BPMN Platform URL
-  bpmnplatformUrl : "https://ezcamunda.demo.epsoftinc.com"
+  bpmnplatformUrl : "https://ezworkflow.demo.epsoftinc.com"
 
 
  //  * QA ENV URl's

@@ -43,7 +43,9 @@ import { ProcessAnalystComponent } from './dashboards/process-analyst/process-an
 import { MatTableModule } from '@angular/material/table';  
 import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
-import { PopoverModule } from 'ngx-bootstrap/popover'
+import { PopoverModule } from 'ngx-bootstrap/popover';
+import {MatPaginatorIntl} from '@angular/material';
+import {CustomMatPaginatorIntl} from './../shared/custom-mat-paginator-int';
 @NgModule({
   declarations: [
     PagesComponent,
@@ -86,7 +88,11 @@ import { PopoverModule } from 'ngx-bootstrap/popover'
     MatPaginatorModule,
     PopoverModule.forRoot()
   ],
-  providers: [SharebpmndiagramService, PagesHints,sohints
+  providers: [SharebpmndiagramService, PagesHints,sohints,
+    {
+      provide: MatPaginatorIntl, 
+      useClass: CustomMatPaginatorIntl
+    }
   //  LoaderService,
   //  { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },
 ]
