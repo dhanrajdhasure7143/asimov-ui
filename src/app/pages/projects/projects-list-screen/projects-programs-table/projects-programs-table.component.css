@@ -65,6 +65,12 @@
 .tablacs button, .tablacs a {
   margin: 0px 6px;
 }  
+.tablacs button, .tablacs a:first-child {
+  margin-left: 0px;
+}  
+.tablacs button, .tablacs a:last-child {
+  margin-right: 0px;
+}  
 .disable-bg{
   /* background-color: gainsboro;
   border-radius: 5px; */
@@ -82,4 +88,17 @@ img.hover-img {
 
 .newinntalx a:hover img.hover-img {
   display: initial;
+}
+
+.pcell1, .pcell2, .pcell10, .pcell7, .pcell8{
+  width: 5%;
+}
+.pcell3, .pcell4 {
+  width: 14%;
+}
+.pcell5, .pcell9 {
+  width: 16%;
+}
+.pcell6{
+  width: 15%;
 }
