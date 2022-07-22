@@ -95,22 +95,36 @@
                 
 
                 <ng-container matColumnDef="processName">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Process Name</th>
-                    <td mat-cell [matTooltip]="element.processName" *matCellDef="let element">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="cell1">Process Name</th>
+                    <td mat-cell [matTooltip]="element.processName" *matCellDef="let element" class="cell1">
                         <!-- <mat-icon style="cursor: pointer;"cdkDragHandle>reorder</mat-icon>     -->
                         {{(element.processName.length >5) ? ((element.processName).slice(0, 5) + '...') : element.processName}}</td>
                 </ng-container>
 
                 <ng-container matColumnDef="taskName">
-                    <th mat-header-cell mat-sort-header *matHeaderCellDef>Task</th>
-                    <td mat-cell *matCellDef="let element">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef class="cell2">Task</th>
+                    <td mat-cell *matCellDef="let element" class="cell2">
                         <span *ngIf="element.taskName!=null" [matTooltip]="element.taskName">{{(element.taskName.length > 5) ? ((element.taskName).slice(0, 5) + '...') : element.taskName}}</span>
                         <span *ngIf="element.taskName==null">---</span>
                     </td>
                 </ng-container>
+                <ng-container matColumnDef="createdBy">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="cell3">Process Owner</th>
+                    <td mat-cell *matCellDef="let element" [matTooltip]="element.createdBy" class="cell3">
+                       
+                        {{(element.createdBy.length > 8) ? ((element.createdBy).slice(0, 8) + '...') : element.createdBy}}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="taskOwner">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header class="cell4">Task Owner</th>
+                    <td mat-cell *matCellDef="let element" [matTooltip]="element.taskOwner" class="cell4">
+                        {{(element.taskOwner.length > 8) ? ((element.taskOwner).slice(0, 8) + '...') : element.taskOwner}}
+                    </td>
+                </ng-container>
                 <ng-container matColumnDef="taskType">
-                    <th mat-header-cell mat-sort-header *matHeaderCellDef>Task Type </th>
-                    <td mat-cell *matCellDef="let element">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef class="cell5">Task Type </th>
+                    <td mat-cell *matCellDef="let element" class="cell5">
                         <span *ngIf="element.taskType!=null" [matTooltip]="element.taskType">
                             {{(element.taskType.length > 5) ? ((element.taskType).slice(0, 5) + '...') : element.taskType}}
                         </span>
@@ -119,15 +133,15 @@
                 </ng-container>
 
                 <ng-container matColumnDef="category">
-                    <th mat-header-cell mat-sort-header *matHeaderCellDef>Category </th>
-                    <td mat-cell *matCellDef="let element">
+                    <th mat-header-cell mat-sort-header *matHeaderCellDef class="cell6">Category </th>
+                    <td mat-cell *matCellDef="let element" class="cell6">
                         <span *ngIf="element.category!=null">{{element.category}}</span>
                         <span *ngIf="element.category==null">---</span>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="sourceType">
-                    <th mat-header-cell *matHeaderCellDef >Bot Source</th>
-                    <td mat-cell *matCellDef="let element" class="text-center">
+                    <th mat-header-cell *matHeaderCellDef class="cell7">Bot Source</th>
+                    <td mat-cell *matCellDef="let element" class="text-center cell7">
                         <span *ngIf="element.taskType=='Bot' || element.taskType=='Automated'">
             <select class="form-control" style="width:140px;padding:0px" [value]="element.sourceType" (change)="changesource($event.target.value,element.taskId)">
                 <option [value]="null" disabled hidden>Select Bot Source</option>
@@ -144,23 +158,10 @@
           </span>
                     </td>
                 </ng-container>
-                <ng-container matColumnDef="createdBy">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Process Owner</th>
-                    <td mat-cell *matCellDef="let element" [matTooltip]="element.createdBy">
-                       
-                        {{(element.createdBy.length > 8) ? ((element.createdBy).slice(0, 8) + '...') : element.createdBy}}
-                    </td>
-                </ng-container>
 
-                <ng-container matColumnDef="taskOwner">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Task Owner</th>
-                    <td mat-cell *matCellDef="let element" [matTooltip]="element.taskOwner">
-                        {{(element.taskOwner.length > 8) ? ((element.taskOwner).slice(0, 8) + '...') : element.taskOwner}}
-                    </td>
-                </ng-container>
                 <ng-container matColumnDef="Assign">
-                    <th mat-header-cell *matHeaderCellDef>Assign Resource</th>
-                    <td mat-cell *matCellDef="let element">
+                    <th mat-header-cell *matHeaderCellDef class="cell8">Assign Resource</th>
+                    <td mat-cell *matCellDef="let element" class="cell8">
                         <span *ngIf="element.taskType=='Bot' || element.taskType=='Automated'">
                       
                             <span *ngIf="isbotloading=='loading'">
@@ -211,8 +212,8 @@
                 </ng-container>
 
                 <ng-container matColumnDef="status">
-                    <th mat-header-cell   *matHeaderCellDef>Status</th>
-                    <td mat-cell *matCellDef="let element">
+                    <th mat-header-cell   *matHeaderCellDef class="cell9">Status</th>
+                    <td mat-cell *matCellDef="let element" class="cell9">
                         <span  [matTooltip]="element.status">
                         <span *ngIf="element.status!='null'" [id]="element.taskId+'__status'">
                             <span  *ngIf="element.status=='Pending'" class="text-warning" >
@@ -293,8 +294,8 @@
       </ng-container>-->
 
                 <ng-container matColumnDef="Operations">
-                    <th mat-header-cell *matHeaderCellDef>Actions</th>
-                    <td mat-cell class="Actions-column" *matCellDef="let element">
+                    <th mat-header-cell *matHeaderCellDef class="cell10">Actions</th>
+                    <td mat-cell class="Actions-column cell10" *matCellDef="let element">
                         <div *ngIf="element.taskType=='Automated'">
                             <span>
                 <button [disabled]="element.taskType=='Human' || element.taskType==null" [class]="(element.taskType=='Human' || element.taskType==null)?'undobtn':''" (click)="createtaskbotoverlay(element.taskId)" matTooltip="Create and Assign Resource">
