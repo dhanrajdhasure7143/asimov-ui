@@ -157,5 +157,12 @@ export class UsersComponent implements OnInit {
     return value.substring(0,16) + '...';
     else
     return value;
-  }​​​​​​​​
+  }
+    getreducedValue1(value) {​​​​​​​​
+    if (value.length > 15)
+    return value.substring(0,16) + '...';
+    else
+    return value;
+  }
+​​​​​​​​
 }
