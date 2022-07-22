@@ -318,3 +318,20 @@ img.hover-img {
     padding-left: 3px;
     padding-right: 3px;
   }
+
+  .pcell1 {
+    width: 12%;
+  } 
+  .pcell2, .pcell3 {
+    width: 25%;
+  }
+  .pcell4 {
+    width: 15%;
+  }
+  .pcell5  {
+    width: 13%;
+  }
+  .pcell6 {
+    width: 10%;
+  }
+  
