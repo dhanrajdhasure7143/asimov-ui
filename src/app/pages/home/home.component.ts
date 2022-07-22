@@ -216,9 +216,9 @@ export class HomeComponent implements OnInit {
       this.expiry = data.Expiresin;
       console.log("left over days ----",this.expiry)
       localStorage.setItem('expiresIn',this.expiry)
-      // if(this.expiry<0){
-      //   this.router.navigate(['/pages/subscriptions'])
-      // }
+      if(this.expiry<0){
+        this.router.navigate(['/pages/subscriptions'])
+      }
   
   
     this.rpa.getProductPlans("EZFlow", this.tenantId).subscribe(data => {
