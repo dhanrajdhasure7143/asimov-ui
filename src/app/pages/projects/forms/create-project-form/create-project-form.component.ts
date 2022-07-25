@@ -186,7 +186,7 @@ export class CreateProjectFormComponent implements OnInit {
   }
   onchangeDate(){
     if(this.insertForm2.get("endDate").value)
-    this.insertForm2.get("endDate").setValue("0000-00-00");
+   // this.insertForm2.get("endDate").setValue("0000-00-00");
     this.mindate=this.insertForm2.get("startDate").value;
   }
 
