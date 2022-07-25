@@ -52,9 +52,14 @@ span.testtooltip {
     cursor: no-drop;
     margin:0px;
   }
-  .newinntalx1 a {
-    margin-right: 10px;
+  .newinntalx1 a, .newinntalx a  {
+    margin-right: 8px;
   }
+  .newinntalx1 a:last-child,
+  .newinntalx a:last-child {
+    margin-right: 0px;
+  }
+
   .userssearch {
     position: relative;
   }
@@ -63,3 +68,23 @@ span.testtooltip {
     right: 20px;
     top: 8px;
   }
+
+  .pcell1 {
+    width: 18%;
+  }
+  .pcell2 {
+    width: 15%;
+  }
+  .pcell3, .pcell4, .pcell5 {
+    width: 13%;
+  }
+  .pcell6 {
+    width: 17%;
+  }
+  .pcell7 {
+    width: 6%;
+  }
+  .pcell8 {
+    width: 4%;
+  }
+

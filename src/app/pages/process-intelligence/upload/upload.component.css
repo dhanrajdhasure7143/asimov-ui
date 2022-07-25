@@ -76,18 +76,7 @@
     }
     
 .databaseForm{
-    /* margin-top: 15px; */
-}
-.databaseForm label{
-    /* font-size: 12px; */
-}
-.databaseForm input,.databaseForm select{
-    /* border-left: 0px;
-    border-right: 0px;
-    border-top: 0px !important;
-    box-shadow: none;
-    border-radius: 0px;
-    border-bottom: 1px solid rgb(121, 118, 118); */
+    padding: 10px;
 }
 .errspan{
     position: relative;
@@ -110,8 +99,6 @@
     overflow:scroll; 
 }
 
-.pilist_table{
-}
 .process_view span{
     cursor: pointer;
 }
@@ -143,12 +130,6 @@ input[type="text"]{
 .table_header{
     cursor: pointer;
 }
-
-/* table.tableBodyScroll tbody {
-    display: block;
-    max-height: 400px;
-    overflow-y: scroll;
-  } */
   
   table.tableBodyScroll thead, table.tableBodyScroll tbody tr {
     display: table;
@@ -161,7 +142,6 @@ input[type="text"]{
   .search_btn{
       font-size: 16px;
       margin-bottom: 10px;
-      /* margin-left: 30px; */
       margin-top: 10px;
   }
   .search-cat{
@@ -180,10 +160,6 @@ input[type="text"]{
       height: 62vh;
       overflow: hidden auto;
   }
-  /* .workspace-table{   
-    margin-left: -8%;
-    width: 58%;
-  } */
   .pi-Name-wrap{
       word-wrap: break-word !important;
   }
@@ -194,10 +170,7 @@ input[type="text"]{
       height: 118px;
   }
   .connection_btn{
-      margin-top: 15px;
-  }
-  .featchTbale-btn{
-      /* margin-top: 20px; */
+      margin-top: 8px;
   }
     .asc, .desc{
         font-size: 23px;
@@ -210,16 +183,13 @@ input[type="text"]{
     .table_header{
         font-size: 16px;
         color: #fff;
-        /* font-weight: 700 !important; */
     }
 tr.mat-header-row {
     background-color: #4AB0F5;
 }
 
 .box-heading {
-    /* font-weight: bold; */
     color: #5b5b5b;
-    /* margin: 20px 0; */
     margin: 0px;
     line-height: 2;
 }
@@ -242,10 +212,6 @@ tr.mat-header-row {
 }
 .PI-uploadgrid {
     margin-bottom: 24px;
-    /* border-right: 1px solid #e5e5e5;
-    width: 20.7% !important;
-    padding: 10px;
-    height: 100vh; */
 }
 .PI-uploadgrid ngx-dropzone{
     height: 90px;
@@ -263,10 +229,6 @@ tr.mat-header-row {
     color:#00a0e3 !important;
     font-weight: 500 !important;
 }
-/* .PI-workspace-table {
-    width: 79.3% !important;
-    padding: 15px;
-} */
 img.hover-img {
     display: none;
 }
@@ -284,12 +246,16 @@ img.hover-img {
     margin-right: 0px !important;
 }
 .bpmnCreate .container.m-contanier.form-body {
-    height: calc(100% - 90px) !important;
+    overflow: auto;
+    padding: 10px 10px 10px 5px;
+}
+.bpmnCreate .container.m-contanier.form-body.hasthreebtns {
+    height: calc(100% - 85px) !important; 
+}
+.bpmnCreate .container.m-contanier.form-body.hastwobtns {
+    height: calc(100% - 50px) !important;
 }
 .new-PI-layout {
-    /* overflow: hidden auto;
-    height: calc(100% - 50px);
-    position: relative; */
     padding: 15px 10px 10px;
 }
 .upload_zone {
@@ -351,4 +317,20 @@ img.hover-img {
     width: 20px;
     padding-left: 3px;
     padding-right: 3px;
+  }
+
+  .pcell1 {
+    width: 12%;
+  } 
+  .pcell2, .pcell3 {
+    width: 25%;
+  }
+  .pcell4 {
+    width: 15%;
+  }
+  .pcell5  {
+    width: 13%;
+  }
+  .pcell6 {
+    width: 10%;
   }

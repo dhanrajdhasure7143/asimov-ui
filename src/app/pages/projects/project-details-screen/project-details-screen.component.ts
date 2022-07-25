@@ -305,8 +305,8 @@ percentageComplete: number;
     
 
     this.uploadFileFormDetails.reset();
-    this.uploadFileFormDetails.get("category").setValue("");
-    this.uploadFileFormDetails.get("comments").setValue("");
+    this.uploadFileFormDetails.get("fileCategory").setValue("");
+    this.uploadFileFormDetails.get("description").setValue("");
 
     
       }
@@ -526,10 +526,12 @@ let users_updateddata=users
    element["user_Id"]=element.userId.userId
  });
   this.dataSource6= new MatTableDataSource(users_updateddata);
-  this.dataSource6.sort=this.sort14;
+  setTimeout(() => {
+    this.dataSource6.sort=this.sort14;
+    this.dataSource6.paginator=this.paginator104;
+  }, 500);
   this.spinner.hide()
-  this.dataSource6.paginator=this.paginator104;
-  this.getTaskandCommentsData();
+ this.getTaskandCommentsData();
   this.getLatestFiveAttachments(this.project_id);
 let usr_name=this.projectDetails.owner.split('@')[0].split('.');
 // this.owner_letters=usr_name[0].charAt(0)+usr_name[1].charAt(0);

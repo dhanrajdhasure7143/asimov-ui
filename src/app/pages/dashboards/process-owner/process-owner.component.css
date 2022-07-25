@@ -69,9 +69,9 @@ table td {
     padding-left: 5%;
 }
 
-* {
+/* * {
     text-transform: capitalize;
-}
+} */
 
 .selectsize {
     width: 135%;
@@ -141,9 +141,9 @@ mat-drawer {
 height: 300px !important;
 overflow: auto !important;
 } */
-::ng-deep .mat-paginator-range-label{
+/* ::ng-deep .mat-paginator-range-label{
     display: none !important;
-}
+} */
 .pipaginationdiv1{
     position: absolute;
     /* bottom: 0px; */
