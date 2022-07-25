@@ -2557,6 +2557,7 @@ th.mat-header-cell {
 }
 th .mat-sort-header-button {
   font-size: 14px !important;
+  text-align: left;
 }
 td.mat-cell span {
   font-size: 13px;
