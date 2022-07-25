@@ -46,6 +46,7 @@ export class ProjectRepoScreenComponent implements OnInit {
   @ViewChild("sort11",{static:false}) sort11: MatSort;
   @ViewChild("paginator101",{static:false}) paginator101: MatPaginator;
   @ViewChild("paginator102",{static:false}) paginator102: MatPaginator;
+  @ViewChild("paginator105",{static:false}) paginator105: MatPaginator;
   multiFilesArray: any[] = [];
   fileId: any;
   filedeleteflag:Boolean;
@@ -248,13 +249,10 @@ this.route.queryParams.subscribe(data=>{​​​​​​​​
        position: 'center',
        icon: 'success',
        showCancelButton: false,
-       confirmButtonColor: '#007bff',
-       cancelButtonColor: '#d33',
-       confirmButtonText: 'Ok'
+       confirmButtonText: 'Ok',
+       heightAuto: false,
    }).then((result) => {
     // this.resettask();
-    
-     
    }) 
      
    }
@@ -289,38 +287,35 @@ this.route.queryParams.subscribe(data=>{​​​​​​​​
   getFileDetails(){
     this.api.getFileDetails(this.projectid).subscribe(data =>{
       this.uploadedFiledata=data.uploadedFiles.reverse();
-     
       this.dataSource3= new MatTableDataSource(this.uploadedFiledata);
       this.dataSource3.sort=this.sort11;
       this.dataSource3.paginator=this.paginator101;
       this.requestedFiledata=data.requestedFiles.reverse();
-    
       this.dataSource4= new MatTableDataSource(this.requestedFiledata);
       this.dataSource4.sort=this.sort12;
       this.dataSource4.paginator=this.paginator102;
       let loggedUser=localStorage.getItem("ProfileuserId")
       let responseArray=this.requestedFiledata
       this.filterdArray=[]
-      // if(responseArray=[]){
-      //   this.dataSource5= new MatTableDataSource(this.requestedFiledata);
-      //   this.dataSource5.sort=this.sort13;
-      // }
+      if(responseArray=[]){
+        this.dataSource5= new MatTableDataSource(this.requestedFiledata);
+        this.dataSource5.sort=this.sort13;
+        this.dataSource5.paginator=this.paginator105;
+      }else{
       responseArray.forEach(e=>{
         if(e.requestTo==loggedUser || e.requestFrom==loggedUser){
           this.filterdArray.push(e)
-          
         }
-    
-        this.dataSource5= new MatTableDataSource(this.filterdArray);
-        this.dataSource5.sort=this.sort13;
       })
-   
-      
+      this.dataSource5= new MatTableDataSource(this.filterdArray);
+      this.dataSource5.sort=this.sort13;
+      this.dataSource5.paginator=this.paginator105;
+      };
     })
     this.spinner.hide();
   }
-  getallusers()
-  {
+
+  getallusers(){
     let tenantid=localStorage.getItem("tenantName")
     this.api.getuserslist(tenantid).subscribe(item=>{
       let users:any=item
@@ -339,48 +334,34 @@ this.route.queryParams.subscribe(data=>{​​​​​​​​
     });
     return userName;
   }
-  uploadRequetedFile(evnt, data){
 
+  uploadRequetedFile(evnt, data) {
     var fileData = new FormData();
-    
     fileData.append("category", data.category)
-     fileData.append("comments", data.comments)
-     fileData.append("id", data.id)
-     fileData.append("filePath", evnt.target.files[0])
-     fileData.append("projectId", this.projectid)
-  
-
-    
- this.api.uploadProjectFile(fileData).subscribe(res => {
-   //message: "Resource Added Successfully
-  
-   
-   this.getFileDetails();
-   if(res.message!=undefined)
-   {
-    
-     Swal.fire({
-       title: 'Success',
-       text: "File Uploaded Successfully",
-       position: 'center',
-       icon: 'success',
-       showCancelButton: false,
-       confirmButtonColor: '#007bff',
-       cancelButtonColor: '#d33',
-       confirmButtonText: 'Ok'
-   }).then((result) => {
-    // this.resettask();
-     
-     
-   }) 
-     
-   }
-   else
-   Swal.fire("Error",res.message,"error");
-   
- })
-
+    fileData.append("comments", data.comments)
+    fileData.append("id", data.id)
+    fileData.append("filePath", evnt.target.files[0])
+    fileData.append("projectId", this.projectid)
+    this.api.uploadProjectFile(fileData).subscribe(res => {
+      //message: "Resource Added Successfully
+      this.getFileDetails();
+      if (res.message != undefined) {
+        Swal.fire({
+          title: 'Success',
+          text: "File Uploaded Successfully",
+          position: 'center',
+          icon: 'success',
+          confirmButtonText: 'Ok',
+          heightAuto: false,
+        }).then((result) => {
+          // this.resettask();
+        })
+      }
+      else
+        Swal.fire("Error", res.message, "error");
+    })
   }
+
   onrequestFileData(en){
 
 

@@ -8,6 +8,7 @@ import { element } from 'protractor';
 import { APP_CONFIG } from 'src/app/app.config';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
 import Swal from 'sweetalert2';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-users',
@@ -55,7 +56,8 @@ export class UsersComponent implements OnInit {
           // "product": "EZFlow",
           "roles": roles,
           // "roles": "Admin",
-          "created_at": element.created_at,
+          // "created_at": element.created_at,
+          "created_at": moment(new Date(element.created_at)).format('LLL'),
           "status":element.user_role_status
         }
         this.userslist.push(userdata);
@@ -155,5 +157,12 @@ export class UsersComponent implements OnInit {
     return value.substring(0,16) + '...';
     else
     return value;
-  }​​​​​​​​
+  }
+    getreducedValue1(value) {​​​​​​​​
+    if (value.length > 15)
+    return value.substring(0,16) + '...';
+    else
+    return value;
+  }
+​​​​​​​​
 }

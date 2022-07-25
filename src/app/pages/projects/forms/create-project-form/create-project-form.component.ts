@@ -30,6 +30,7 @@ export class CreateProjectFormComponent implements OnInit {
   categoriesList:any=[];
   freetrail: string;
   processOwner:boolean;
+  resources_list:any[]=[];
   ngOnInit(): void {
     this.loggedInUserId=localStorage.getItem("ProfileuserId")
     this.insertForm2=this.formBuilder.group({
@@ -71,9 +72,9 @@ export class CreateProjectFormComponent implements OnInit {
       //   this.categoryName=this.categories_list[0].categoryName
       // }
     });
-
    
   }
+
 
   getprocessnames()
   {
@@ -95,6 +96,13 @@ export class CreateProjectFormComponent implements OnInit {
       //     return process;})]
     })
   }
+
+  ngOnChanges(){
+    this.users_list.forEach((element)=>{  
+      if(element.userId.userId!=this.loggedInUserId)
+     this.resources_list.push(element)
+   });
+}
 
  
   createproject()
@@ -178,7 +186,7 @@ export class CreateProjectFormComponent implements OnInit {
   }
   onchangeDate(){
     if(this.insertForm2.get("endDate").value)
-    this.insertForm2.get("endDate").setValue("0000-00-00");
+   // this.insertForm2.get("endDate").setValue("0000-00-00");
     this.mindate=this.insertForm2.get("startDate").value;
   }
 

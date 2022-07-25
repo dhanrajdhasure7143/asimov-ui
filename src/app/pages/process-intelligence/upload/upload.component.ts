@@ -19,6 +19,7 @@ import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
+import { NgForm } from '@angular/forms';
 
 declare var target: any;
 @Component({
@@ -81,6 +82,8 @@ export class UploadComponent implements OnInit {
   freetrail: string;
   overlay_data:any={};
   refreshSubscription:Subscription;
+  @ViewChild('database',{static:false}) mytemplateForm : NgForm;
+  modesList=[{name:"Incrementing",value:"incrementing"},{name:"Timestamp",value:"timestamp"},{name:"Incrementing with Timestamp",value:"timestamp+incrementing"}]
 
   constructor(private router: Router,
     private dt: DataTransferService,
@@ -470,6 +473,8 @@ export class UploadComponent implements OnInit {
     modal.style.display = "block";
     // this.dbDetails={};
     this.rest.fileName.next(null);
+    this.mytemplateForm.resetForm();
+    this.isDisabled=true;
   }
 
   closePopup() {    // close overlay
@@ -508,6 +513,9 @@ export class UploadComponent implements OnInit {
         return a > b ? -1 : a < b ? 1 : 0;
       });
       this.process_graph_list = this.process_List.data
+      this.process_graph_list.forEach(element => {
+        element['convertedTime_new']= moment(new Date(element.convertedTime)).format('LLL')
+      });
       this.dataSource= new MatTableDataSource(this.process_graph_list);
       this.dataSource.sort=this.sort;
       this.dataSource.paginator=this.paginator;
@@ -632,6 +640,13 @@ export class UploadComponent implements OnInit {
       this.isTimestammp=true;
       this.isIncrement=true;
     }
+    this.dbDetails.increment='';
+    this.dbDetails.timestamp='';
+    if(this.mytemplateForm.controls["increment"])
+    this.mytemplateForm.controls["increment"].markAsUntouched();
+    if(this.mytemplateForm.controls["timestamp"])
+    this.mytemplateForm.controls["timestamp"].markAsUntouched();
+
   }
 
 testDbConnection(){     // check DB connection with port id and psw
@@ -865,28 +880,22 @@ getDBTables(){      //get DB tables list
 }
 
   onChangeTable(){
-    if(this.dbDetails.mode){
-      this.dbDetails.mode=null
-    }
-    if(this.dbDetails.increment){
-      this.dbDetails.increment='';
-      this.isTimestammp=false;
-    this.isIncrement=false;
-    }
-    if(this.dbDetails.timestamp){
-      this.dbDetails.timestamp=undefined;
+      this.dbDetails.mode="";
+      this.mytemplateForm.controls["increase"].markAsUntouched();
+      this.dbDetails.increment="";
+      if(this.mytemplateForm.controls["increment"])
+      this.mytemplateForm.controls["increment"].markAsUntouched();
+      this.dbDetails.timestamp="";
+      if(this.mytemplateForm.controls["timestamp"])
+      this.mytemplateForm.controls["timestamp"].markAsUntouched();
       this.isTimestammp=false;
       this.isIncrement=false;
-    }
   }
 
   onKeyUpPassword(){
-    if(this.dbDetails.hostName){
-      this.dbDetails.hostName=''
-    }else{
-
-    }
-
+    this.dbDetails.hostName=''
+    this.mytemplateForm.controls["hostname"].markAsUntouched();
+    this.onChangeValues();
   }
 
   applyFilter(event: Event) {       // search entered process ids from search input
@@ -1056,6 +1065,24 @@ getDBTables(){      //get DB tables list
     this.overlay_data={"type":"edit","module":"pi","selectedObj":obj};
     var modal = document.getElementById('myModal');
     modal.style.display="block";
+  }
+
+  onChangeValues(){
+    this.isTableEnable = false;
+    this.dbDetails.tableName = "";
+    this.dbDetails.mode = "";
+    this.isDisabled=true;
+    this.dbDetails.increment='';
+    this.dbDetails.timestamp='';
+    this.isIncrement=false;
+    this.isTimestammp=false;
+    this.mytemplateForm.controls["tablename"].markAsUntouched();
+    if(this.mytemplateForm.controls["increase"])
+    this.mytemplateForm.controls["increase"].markAsUntouched();
+    if(this.mytemplateForm.controls["increment"])
+    this.mytemplateForm.controls["increment"].markAsUntouched();
+    if(this.mytemplateForm.controls["timestamp"])
+    this.mytemplateForm.controls["timestamp"].markAsUntouched();
   }
 
 }
