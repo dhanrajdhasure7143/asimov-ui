@@ -40,7 +40,6 @@ export class DynamicFormsComponent implements OnInit {
           else
             filteredobject["id"] = p[item];
         })
-        console.log("object", filteredobject)
         return filteredobject;
       });
       this.Submit.emit(this.data)
@@ -91,8 +90,6 @@ export class DynamicFormsComponent implements OnInit {
           }
         });
         if(!item.visibility){
-          console.log("item", this.form.get([item.name+'_'+item.id]))
-          console.log("fileds",this.fields)
           this.form.get([item.name+'_'+item.id]).clearValidators();
          }
          this.form.get([item.name+'_'+item.id]).updateValueAndValidity()
@@ -156,7 +153,6 @@ export class DynamicFormsComponent implements OnInit {
           else
             filteredobject["id"] = p[item];
         })
-        console.log("object", filteredobject)
         return filteredobject;
       });
     }
@@ -182,7 +178,6 @@ export class DynamicFormsComponent implements OnInit {
           else
             filteredobject["id"] = p[item];
         })
-        console.log("object", filteredobject)
         return filteredobject;
         // return{
         //   "webElementType":p.webElementType_223,
@@ -227,7 +222,6 @@ export class DynamicFormsComponent implements OnInit {
           return fieldData;
       })]
       this.fillarray=modifiedArray;
-      console.log("fillarray",modifiedArray)
 
       //this.data=modifiedArray
     }

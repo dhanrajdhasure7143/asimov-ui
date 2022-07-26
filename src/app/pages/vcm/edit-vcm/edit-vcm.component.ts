@@ -67,9 +67,7 @@ export class EditVcmComponent implements OnInit {
   }
 
   ngOnChanges() {
-    console.log(this.vcmData);
     this.dataSource.data = this.vcmData;
-    console.log(this.dataSource.data)
     this.treeControl.dataNodes = this.dataSource.data;
     // this.treeControl.expand(this.treeControl.dataNodes[0]);
     // this.treeControl.expand(this.treeControl.dataNodes[1]);
@@ -78,7 +76,6 @@ export class EditVcmComponent implements OnInit {
   }
 
   navigateToNoytation(v) {
-    console.log(v)
     let pathValues = v.bpsId + "&ver=0&ntype=" + v.ntype
     this.router.navigateByUrl('/pages/businessProcess/uploadProcessModel?bpsId=' + pathValues);
     // http://localhost:4300/#/pages/businessProcess/uploadProcessModel?bpsId=5831e9ea-2fcf-af70-a460-7c9623cba4bd&ver=0&ntype=bpmn
@@ -97,7 +94,6 @@ export class EditVcmComponent implements OnInit {
   }
 
   uploadCreateBpmn(e) {
-    console.log(e)
     this.randomId = UUID.UUID();
     // this.create_editor=false;
     this.bpmnModel.bpmnProcessName = e.processName;
@@ -138,7 +134,6 @@ export class EditVcmComponent implements OnInit {
     // diagramModel.createdTimestamp = new Date();
     // diagramModel.modifiedTimestamp = new Date();
     this.rest_api.saveBPMNprocessinfofromtemp(diagramModel).subscribe(res => {
-      console.log(res)
       // if(res['errorCode']!="2005"){
       //   let isBPSHome = this.router.url == "/pages/businessProcess/home";
 
@@ -181,8 +176,6 @@ export class EditVcmComponent implements OnInit {
     this.selectedNode = node
   }
   editLevel3() {
-    console.log("vcmData",this.vcmData);
-    console.log("this.selectedNode",this.selectedNode)
     this.uniqueId=UUID.UUID();
     this.isShowInput=false
 
@@ -202,7 +195,6 @@ export class EditVcmComponent implements OnInit {
           attachments:[]
         }
       );
-    console.log("vcmData",this.vcmData);
     // this.uniqueId=null;
 
     setTimeout(() => {
@@ -219,7 +211,6 @@ export class EditVcmComponent implements OnInit {
     // this.uniqueId=null;
   }
   onSelectedNode(node) {
-    console.log(node);
     this.selectedNode = node
   }
 
@@ -231,7 +222,6 @@ export class EditVcmComponent implements OnInit {
   }
 
   editLevelName(node) {
-    console.log(node);
     this.levelNameTitle = node.title;
     this.levelNameChild = node.childParent;
     this.lavelNameParent = node.parent;
@@ -239,14 +229,11 @@ export class EditVcmComponent implements OnInit {
     this.drawer.close();
   }
   editTitle(node) {
-    console.log(node);
-    console.log(this.vcmData);
     this.levelNameShow = false;
     this.drawer.close();
   }
 
   openNodeProperties(node) {
-    console.log(node);
     // this.getAttachements(node);
     this.description = node.description;
     this.editTitleName = node.title;

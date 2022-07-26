@@ -220,7 +220,6 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
                 Swal.fire("Error",response.errorMessage,"error")
             }
           },err=>{
-            console.log(err)
             this.spinner.hide();
             Swal.fire("Error","Unable to delete bot","error")
           })
@@ -286,7 +285,6 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
                Swal.fire("Error",data.errorMessage,"error")
             }
           },err=>{
-            console.log(err)
             this.rpa_studio.spinner.hide();
             Swal.fire("Error","Unable to add audit logs","error")
           })
@@ -349,7 +347,6 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
                  Swal.fire("Error",data.errorMessage,"error")
               }
             },err=>{
-              console.log(err)
               this.rpa_studio.spinner.hide();
               Swal.fire("Error","Unable to add audit logs","error")
             })
@@ -377,7 +374,6 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
            
           }
         },err=>{
-          console.log(err)
           this.spinner.hide()
           Swal.fire("Error","Unable to update bot","error")
         });
@@ -581,7 +577,6 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
         Swal.fire("Error",data.errorMessage,"error")
       }
     },err=>{
-      console.log(err);
       this.spinner.hide();
       Swal.fire("Error","Unable to get predefined bots","error")
     });
@@ -605,7 +600,6 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
           Swal.fire("Error",response.errorMessage,"error")
         }
       },err=>{
-        console.log(err)
         this.rpa_studio.spinner.hide();
         Swal.fire("Error","Unable to get version bot","error")
       })
@@ -763,7 +757,6 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
 loadpredefinedbot(botId, dropCoordinates)
 {
 
-  console.log(dropCoordinates)
   let droppedXcoordinate=dropCoordinates.x.split("px")[0]
   
   let droppedYcoordinate=dropCoordinates.y.split("px")[0]
@@ -1162,7 +1155,6 @@ loadpredefinedbot(botId, dropCoordinates)
       },err=>{
         this.logsLoading=false;
         Swal.fire("Error","Unable to open loop logs","error");
-        console.log(err)
       })
     }
   

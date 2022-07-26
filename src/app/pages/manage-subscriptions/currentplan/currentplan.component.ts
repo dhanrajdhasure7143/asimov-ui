@@ -267,7 +267,6 @@ export class CurrentplanComponent implements OnInit {
   expiryInfo(){
     this.api.expiryInfo().subscribe(data => {
       this.expiry = data.Expiresin;
-      console.log("left over days ----",this.expiry)
     })
   }
 

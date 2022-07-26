@@ -20,12 +20,9 @@ export class ViewPropertiesComponent implements OnInit {
   constructor(private rest_api: RestApiService) { }
 
   ngOnInit(): void {
-    console.log(this.edit);
   }
 
   ngOnChanges(){
-    console.log("this.vcm_data",this.vcm_data)
-    console.log("this.vcm_resData",this.vcm_resData)
     this.getAttachements();
     this.vcm_data.forEach(element => {
       if(element.processOwner){
@@ -44,7 +41,6 @@ export class ViewPropertiesComponent implements OnInit {
       let res_data
       this.attachments=[];
     this.rest_api.getvcmAttachements(reqBody).subscribe(res=>{res_data=res
-      console.log(res)
       this.attachments=res_data.data
       this.isLoading=false;
     })
