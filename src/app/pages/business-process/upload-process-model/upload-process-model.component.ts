@@ -1273,10 +1273,12 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
             });
           }else{
             if( !_self.isShowConformance && (status == "APPROVED" || status == "REJECTED")){
-              _self.rest.getBpmnNotationById(sel_List["bpmnModelId"]).subscribe(res=>{
-                let all_bpmns
-                all_bpmns = res
-              // let all_bpmns = _self.saved_bpmn_list.filter(each => { return each.bpmnModelId == sel_List["bpmnModelId"]})
+              
+              _self.rest.getBpmnNotationById(sel_List["bpmnModelId"]).subscribe(res=>{ // new added code
+                let all_bpmns  // new added code 
+                all_bpmns = res  // new added code
+
+              // let all_bpmns = _self.saved_bpmn_list.filter(each => { return each.bpmnModelId == sel_List["bpmnModelId"]})   // uncomment if above code removed
               let inprogress_version = 0;
               all_bpmns.forEach(each => {
                 if(inprogress_version < each.version)
@@ -1287,7 +1289,8 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
                 params['vcmId']=_self.vcmId
               }
               _self.router.navigate([],{ relativeTo:_self.route, queryParams:params });
-              // new added
+              
+              // new added code start
               _self.saved_bpmn_list = res;
               let filterList = _self.saved_bpmn_list.filter(ele=>{return ele.version == inprogress_version})
               console.log(filterList,filterList[0]['bpmnProcessStatus'])
@@ -1298,6 +1301,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
               "isFromcreateScreen":false,'process_name':_self.currentNotation_name,'isSavebtn':true,"hasConformance":_self.hasConformance,"resize":_self.reSize,isUploaded:_self.isUploaded}
               _self.dt.bpsNotationaScreenValues(_self.push_Obj)
             })
+            // new added code end
             
             }
             if(_self.isShowConformance)
