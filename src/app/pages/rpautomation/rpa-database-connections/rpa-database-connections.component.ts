@@ -92,6 +92,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
     }
 
   ngOnInit() {
+    this.spinner.show();
   //   //     document.getElementById("filters").style.display='block';
     this.dt.changeHints(this.hints.rpadbchints);
     //this.getallDBConnection();
@@ -146,6 +147,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
           return item;
         })
         this.dataSource2= new MatTableDataSource(this.dbconnections);
+        this.spinner.hide();
         setTimeout(() => {
           this.sortmethod(); 
         }, 80);
