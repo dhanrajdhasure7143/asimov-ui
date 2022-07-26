@@ -60,6 +60,7 @@ import { TasksearchPipe } from './custom-pipes/tasksearch.pipe';
 import {MatPaginatorIntl} from '@angular/material';
 import { CustomMatPaginatorIntl } from 'src/app/shared/custom-mat-paginator-int';
 import { RpaSoLogsComponent } from './rpa-so-logs/rpa-so-logs.component';
+import { AngularSplitModule } from 'angular-split';
 
 @NgModule({
   declarations: [
@@ -123,6 +124,7 @@ import { RpaSoLogsComponent } from './rpa-so-logs/rpa-so-logs.component';
     NgxSpinnerModule,
     MatSlideToggleModule,
     Ng5SliderModule,
+    AngularSplitModule.forRoot()
   ],
   exports:[RpaSoLogsComponent],
   providers: [MatDatepickerModule,Rpa_Hints, BsModalRef, BsModalService,
