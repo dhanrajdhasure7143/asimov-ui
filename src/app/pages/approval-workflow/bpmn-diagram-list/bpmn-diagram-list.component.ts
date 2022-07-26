@@ -190,7 +190,6 @@ this.selectedrow =i;
         ele["role"]=ele.role;
 
       })
-      console.log(this.griddata)
       this.assignPagenation(this.griddata);
       this.griddata.map(item => {item.xpandStatus = false;return item;})
       this.disable_panels();

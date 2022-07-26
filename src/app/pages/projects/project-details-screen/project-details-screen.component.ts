@@ -490,7 +490,6 @@ let paramsdata:any=data
 this.project_id=paramsdata.id
 this.editdata=false;
 this.rpa.getProjectDetailsById(paramsdata.id).subscribe( res=>{​​​​​​
-console.log("res",res)
 this.projectDetails=res
 this.processOwnerFlag=false
 //this.projectenddate=moment(this.projectDetails.endDate).format("YYYY-MM-DD");
@@ -614,7 +613,6 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
           //let processOwner:any=this.userslist.find(item=>(`${item.userId.firstName} ${item.userId.lastName}`==process.createdBy))
           if(processOwner!=undefined)
           {
-            console.log("project details",this.projectDetails)
            document.getElementById('processowner')['value']=processOwner.userId.userId;
            this.processownername=processOwner.userId.userId;
            this.processOwnerFlag=false;
@@ -1071,7 +1069,6 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
       updateprojectDetails()
       {
         this.spinner.show()
-        console.log('project details',this.projectDetails)
         this.projectDetails["type"]="Project";
         this.projectDetails.processOwner=this.processownername
         this.projectDetails.endDate=this.projectenddate;
@@ -1162,7 +1159,6 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
               //this.sub.unsubscribe();
               this.rpa.getusername(tenantid).subscribe(res => {
                 this.users_data = res;
-                console.log(this.users_data)
               })
             }
           });

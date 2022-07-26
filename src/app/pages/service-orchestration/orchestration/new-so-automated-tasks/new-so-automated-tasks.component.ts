@@ -1303,7 +1303,6 @@ resetsla(){
   }
 
   delete(taskid, processId){
-    console.log("processid======",processId,"and ",this.selectedvalue)
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",

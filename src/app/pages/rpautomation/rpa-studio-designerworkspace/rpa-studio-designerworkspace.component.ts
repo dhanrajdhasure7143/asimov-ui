@@ -279,7 +279,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       let inseq=String(element.inSeqId);
       let outseq=String(element.outSeqId);
       if(inseq.split("_")[0]=="START"){
-        console.log(element.x.split("|").length)
         if(element.x.split("|").length==3)
         {
 
@@ -732,7 +731,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           let finalattributes: any = [];
           this.rest.attribute(node.selectedNodeId).subscribe((data) => {
             finalattributes = data
-            console.log(finalattributes)
             this.multiformdata=finalattributes
             if(finalattributes.length==1 && finalattributes[0].type=="multiform")
             {
@@ -827,7 +825,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   openMultiForm(attr_data, node,value)
   {
     this.rest.getMultiFormAttributes(attr_data[0].dependency).subscribe(attributes=>{
-      console.log(attributes);
       this.enableMultiForm.value=value;
      
        this.multiarray=value
@@ -1065,7 +1062,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     //  }
      });
   
- console.log("filteredarray",this.fileterdarray)
  
   let cutedata = {
 
@@ -1194,7 +1190,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     this.arrange_task_order(this.startNodeId);
     this.get_coordinates();
     await this.getsvg();
-    console.log("-----------------------------",this.final_tasks)
       this.saveBotdata = {
         "botName": botProperties.botName,
         "botType": botProperties.botType,

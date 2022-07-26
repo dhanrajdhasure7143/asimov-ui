@@ -144,7 +144,6 @@ public slaupdate : boolean = false;
 
 
   ngAfterViewInit(): void {
-    console.log(this.sort5)
   }
   method(){
     let result: any = [];
@@ -464,7 +463,6 @@ public slaupdate : boolean = false;
         this.spinner.hide();
     }
     },(err)=>{
-      console.log(err)
       this.spinner.hide();
       Swal.fire("Error","Unable to get bots data","error")
     })
@@ -511,7 +509,6 @@ public slaupdate : boolean = false;
        else
          Swal.fire("Error",response.errorMessage,"error");
     },err=>{
-      console.log(err)
       this.spinner.hide();
       Swal.fire("Error","Unable to update logs","error")
     });
@@ -596,7 +593,6 @@ public slaupdate : boolean = false;
    this.spinner.show()
    this.AllVersions=[];
    this.logsbotid=botId
-    console.log("botid",botId);
    this.rest.getBotVersion(botId).subscribe((data:any)=>{
       if(data.errorMessage==undefined){
         this.spinner.hide()
@@ -643,7 +639,6 @@ public slaupdate : boolean = false;
         Swal.fire("Error",data.errorMessage,"error")
       }
     },(err)=>{
-      console.log(err)
       this.spinner.hide();
       this.logflag="Error";
       Swal.fire("Error","Failed to get bot logs","error");
@@ -846,8 +841,6 @@ public slaupdate : boolean = false;
         if(action=="closed")
         this.logsmodalref=this.modalService.show(template,{class:"logs-modal"});
       },err=>{
-        console.log(err)
-        this.spinner.hide()
         Swal.fire("Error","Unable to get uipath bots","error");
       });
 
@@ -970,7 +963,6 @@ public slaupdate : boolean = false;
         Swal.fire("Error","Unable to get users list","error");
       }
     },err=>{
-      console.log(err);
       Swal.fire("Error","Unable to get users list","error");
     })
   }

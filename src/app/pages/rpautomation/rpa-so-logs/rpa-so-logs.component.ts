@@ -61,7 +61,6 @@ export class RpaSoLogsComponent implements OnInit {
    this.logsLoading=true;
     this.rest.getviewlogdata(this.logsbotid).subscribe(data =>{
       this.logresponse=data;
-      console.log("res",this.logresponse)
       this.logsLoading=false;
       if(this.logresponse.length >0)
       {
@@ -96,9 +95,7 @@ export class RpaSoLogsComponent implements OnInit {
     });
      log.sort((a,b) => a.run_id > b.run_id ? -1 : 1);
      this.allLogs=log;
-     console.log("filteredLogVersion",this.filteredLogVersion)
      this.filteredLogs=[...this.allLogs.filter(item=>item.version==this.filteredLogVersion)];
-     console.log("filteredLogs",this.filteredLogs)
      this.Viewloglist = new MatTableDataSource(this.filteredLogs);
      this.changeDetector.detectChanges();
      this.Viewloglist.sort=this.logsSort;
@@ -171,7 +168,6 @@ export class RpaSoLogsComponent implements OnInit {
        });
        this.viewlogid1=runid;
        this.allRuns=[...resplogbyrun];
-       console.log("runs",this.allRuns)
        this.logbyrunid = new MatTableDataSource(resplogbyrun);
        this.changeDetector.detectChanges();
        this.logbyrunid.paginator=this.paginator2;
@@ -195,7 +191,6 @@ export class RpaSoLogsComponent implements OnInit {
   sortasc(event)
   {
     let sortdes:Boolean
-    console.log(event)
     if(this.viewlogid1==undefined)
     {
       if(event.direction=='asc')
@@ -313,7 +308,6 @@ export class RpaSoLogsComponent implements OnInit {
     },err=>{
       this.logsLoading=false;
       Swal.fire("Error","Unable to open loop logs","error");
-      console.log(err)
     })
   }
 

@@ -61,7 +61,6 @@ export class AddResourcesComponent implements OnInit {
         //this.sub.unsubscribe();
         this.rpa.getusername(tenantid).subscribe(res => {
           this.userslist=res;
-         console.log(this.userslist)
           this.spinner.hide();
         })
       }
