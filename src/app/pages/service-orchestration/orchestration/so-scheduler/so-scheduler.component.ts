@@ -238,7 +238,6 @@ export class SoSchedulerComponent implements OnInit {
         "scheduleInterval":checked_schedule.scheduleInterval,
         "intervalId":checked_schedule.intervalId,
       }
-      console.log("schedule",schedule)
       this.rest.start_schedule(schedule).subscribe(data=>{
         let resp:any=data
         if(resp.errorMessage!=undefined)

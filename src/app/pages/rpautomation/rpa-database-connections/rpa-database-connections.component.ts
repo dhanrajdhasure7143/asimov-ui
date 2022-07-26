@@ -115,7 +115,6 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
         })
   }
   changeDatabaseType(event){
-     console.log("event",event.target.value);
      if(event.target.value=='Snowflake'){
        this.snowflakeflag=true;
        this.insertdbForm.controls.portNumber.clearValidators();

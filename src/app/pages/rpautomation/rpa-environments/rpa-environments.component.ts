@@ -225,7 +225,6 @@ import * as moment from 'moment';
   
     this.insertForm.reset();
     this.password=null;
-    console.log("keyvaluepair",this.isKeyValuePair)
     this.isKeyValuePair=false;
     this.insertForm.get("portNumber").setValue("22");
     this.insertForm.get("connectionType").setValue("SSH");
@@ -266,7 +265,6 @@ import * as moment from 'moment';
       let connectionDetails=JSON.parse(JSON.stringify(formdata.value));
       connectionDetails["password"]=this.password;
      // Object.assign(connectionDetails,({"password":this.password}))
-       console.log("connection details",connectionDetails)
         
         
       this.spinner.show();
@@ -465,7 +463,6 @@ import * as moment from 'moment';
       updatFormValue["environmentId"]= this.updateenvdata.environmentId;
       updatFormValue["createdBy"]= this.updateenvdata.createdBy;
       updatFormValue["deployStatus"]= this.updateenvdata.deployStatus;
-      console.log(this.updateflag)
       // if(this.updateflag==false)
       // {
         if(this.isKeyValuePair==false)
@@ -488,7 +485,6 @@ import * as moment from 'moment';
               Swal.fire("Error",response.errorMessage,"error")
             }
           },err=>{
-            console.log(err);
             this.spinner.hide();
             Swal.fire("Error","Unable to update environment details","error")
           });
@@ -561,7 +557,6 @@ import * as moment from 'moment';
               Swal.fire("Error",response.errorMessage,"error")
             }
           },err=>{
-            console.log(err);
             this.spinner.hide();
             Swal.fire("Error","Unable to update environment details","error")
           });

@@ -18,6 +18,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { RpaStudioDesignerComponent } from '../rpa-studio-designer/rpa-studio-designer.component';
 import { ItemsList } from '@ng-select/ng-select/ng-select/items-list';
+import { SplitComponent } from 'angular-split'
 
 @Component({
   selector: 'app-rpa-studio-designerworkspace',
@@ -96,6 +97,9 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     check:false,
     value:[],
   };
+  isShowExpand:boolean=false;
+  splitAreamin_size="200";
+
   @ViewChild('template', { static: false }) template: TemplateRef<any>;
   public nodedata: any;
   categoryList:any=[];
@@ -104,7 +108,16 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   fieldvaluetype_array:{"Id":any;"value":any;}[];
   fieldvalue_array:{"Id":any;"value":any;}[];
   multiformdata: any=[]
-  multiarray;any=[]
+  multiarray;any=[];
+  spilt_size=70;
+  spilt_size1=30;
+  public areas = [
+    { size: 70, order: 1},
+    { size: 30, order: 2},
+  ];
+  @ViewChild('splitEl', { static: false }) splitEl: SplitComponent;
+  area_splitSize: any = {}
+
   constructor(private rest: RestApiService,
     private notifier: NotifierService,
     private hints: Rpa_Hints,
@@ -117,6 +130,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private modalService: BsModalService,
     private changesDecorator:ChangeDetectorRef,
+    private ngZone: NgZone
     ) {
 
       this.insertForm=this.formBuilder.group({
@@ -236,7 +250,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   
       else{
         let connectionNodeForSource=this.nodes.find((item:any)=>item.id==info.sourceId);
-        // console.log(connectionNodeForSource);
         if(connectionNodeForSource!=undefined)
         {
           if(connectionNodeForSource.selectedNodeTask=='If condition')
@@ -269,6 +282,9 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
     }
 
+
+
+
   }
 
 
@@ -279,7 +295,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       let inseq=String(element.inSeqId);
       let outseq=String(element.outSeqId);
       if(inseq.split("_")[0]=="START"){
-        console.log(element.x.split("|").length)
         if(element.x.split("|").length==3)
         {
 
@@ -503,8 +518,10 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       // node.selectedNodeId = "";
       const nodeWithCoordinates = Object.assign({}, node, dropCoordinates);
       this.nodes.push(nodeWithCoordinates);
+      console.log("node",nodeWithCoordinates)
       setTimeout(() => {
         this.populateNodes(nodeWithCoordinates);
+        this.autoSaveLoopEnd(nodeWithCoordinates)
       }, 240);
 
       if (this.nodes.length == 1) {
@@ -544,6 +561,19 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     }
   }
 
+  autoSaveLoopEnd(node){
+   if(node.selectedNodeTask=='Loop-End'){
+    this.rest.attribute(node.selectedNodeId).subscribe((res:any)=>{        
+         let data=res;       
+           let obj={}
+        data.map(ele=>{
+            obj[ele.name+'_'+ele.id]=ele.value;
+         })   
+         this.onFormSubmit(obj)
+    })
+     
+   }
+  }
   idGenerator() {
     var S4 = function () {
       return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
@@ -732,7 +762,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           let finalattributes: any = [];
           this.rest.attribute(node.selectedNodeId).subscribe((data) => {
             finalattributes = data
-            console.log(finalattributes)
             this.multiformdata=finalattributes
             if(finalattributes.length==1 && finalattributes[0].type=="multiform")
             {
@@ -827,7 +856,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   openMultiForm(attr_data, node,value)
   {
     this.rest.getMultiFormAttributes(attr_data[0].dependency).subscribe(attributes=>{
-      console.log(attributes);
       this.enableMultiForm.value=value;
      
        this.multiarray=value
@@ -905,6 +933,21 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       this.unsubcribe = this.form.valueChanges.subscribe((update) => {
         this.fields = JSON.parse(update.fields);
       })
+      this.areas = [
+        { size: 70, order: 1},
+        { size: 30, order: 2},
+      ];
+      setTimeout(() => {
+        this.splitEl.dragProgress$.subscribe(x => {
+          this.ngZone.run(() =>{
+             this.area_splitSize = x
+             this.isShowExpand=false;
+             if(x.sizes[1] < 30){
+              this.splitAreamin_size="200";
+             }
+            });
+        });
+      }, 500);
     }
   }
 
@@ -1065,7 +1108,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     //  }
      });
   
- console.log("filteredarray",this.fileterdarray)
  
   let cutedata = {
 
@@ -1093,6 +1135,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
   onFormSubmit(event) {
     
+    console.log("event",event)
     this.fieldValues = event
     if (this.fieldValues['file1']) {
       this.fieldValues['file1'] = this.fieldValues['file1'].substring(12)
@@ -1194,7 +1237,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     this.arrange_task_order(this.startNodeId);
     this.get_coordinates();
     await this.getsvg();
-    console.log("-----------------------------",this.final_tasks)
       this.saveBotdata = {
         "botName": botProperties.botName,
         "botType": botProperties.botType,
@@ -1304,7 +1346,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
      return false;
     else
     {
-      //console.log(JSON.stringify(this.saveBotdata))
       return this.rest.updateBot(this.saveBotdata)
       //return false;
     } 
@@ -1391,7 +1432,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   closeFun() {
     this.hiddenPopUp = false;
     this.hiddenCreateBotPopUp = false
-    this.fields = []
+    this.fields = [];
   }
 
   downloadPng()
@@ -1407,7 +1448,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         link.click();
       })
       .catch(function (error) {
-          console.error('oops, something went wrong!', error);
       });
   }
 
@@ -1423,7 +1463,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       link.click();
     })
     .catch(function (error) {
-        console.error('oops, something went wrong!', error);
     });
   }
 
@@ -1444,13 +1483,11 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       doc.save(`${botName}.pdf`);
       })
       .catch(function (error) {
-          console.error('oops, something went wrong!', error);
       });
   }
 
 
-  async getsvg()
-  {
+  async getsvg(){
     let data= await domtoimage.toPng(document.getElementById(this.dragareaid))
     this.svg=data;
   }
@@ -1557,6 +1594,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     let actualTasks:any=this.actualTaskValue;
     let firstName=localStorage.getItem("firstName");
     let lastName=localStorage.getItem("lastName")
+    console.log("finaltasks",finalTasks)
     finalTasks.forEach((item:any)=>{
       if(actualTasks.find(item2=>item.nodeId==item2.nodeId)==undefined)
       {
@@ -1741,6 +1779,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   add_order(object) {
 
     let end = this.stopNodeId;
+    console.log("object",object)
     if(object!=undefined){
       this.final_tasks.push(object);
     }
@@ -1848,8 +1887,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
    } 
   }
 
-  getCategories()
-  {
+  getCategories(){
     this.rest.getCategoriesList().subscribe(data=>{
       let response:any=data;
       if(response.errorMessage==undefined)
@@ -1857,6 +1895,34 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         this.categoryList=response.data;
       }
     })
+  }
+
+  minimizeFullScreen(){
+    this.isShowExpand=false;
+    this.splitAreamin_size="200";
+    this.areas = [
+      { size: 70, order: 1},
+      { size: 30, order: 2},
+    ];
+  }
+
+  expandFullScreen(){
+    this.isShowExpand=true;
+    this.splitAreamin_size="null";
+    this.areas = [
+      { size: 0, order: 1},
+      { size: 100, order: 2},
+    ];
+  }
+  
+  onDragEnd(e: {gutterNum: number; sizes: number[]}) {
+    this.areas[0].size = e.sizes[0];
+    this.areas[1].size = e.sizes[1];
+    if(e.sizes[1] < 30){
+     this.splitAreamin_size="200";
+    }else{
+      this.splitAreamin_size="null";
+    }
   }
 }
 

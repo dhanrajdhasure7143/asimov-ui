@@ -140,9 +140,7 @@ export class EditTaskComponent implements OnInit {
         this.taskresource=task.resources
         this.startDate=task.startDate
         this.endDate=moment(task.endDate).format("YYYY-MM-DD")
-        this.mindate=moment(this.startDate).format("YYYY-MM-DD")
-        console.log(this.endDate)
-       
+        this.mindate=moment(this.startDate).format("YYYY-MM-DD")       
           this.updatetaskdata(task);
        
         
@@ -188,8 +186,6 @@ export class EditTaskComponent implements OnInit {
       this.taskcomments_list=this.selectedtask.comments
 
       this.taskhistory=this.selectedtask.history
-    console.log("taskhistory",this.taskhistory)
-    console.log("taskcomment",this.taskcomments,this.taskcomments_list)
     this.getTaskAttachments();
     // setTimeout(() => {
     //   let user=this.users_list.find(item=>item.userId.userId==this.selectedtask.resources);
@@ -337,7 +333,6 @@ else
       this.userid=user.userId.userId
       this.rest.getRole(this.userid).subscribe(data =>{
         this.userrole=data
-        console.log("userdata",this.userrole)
         for (let index = 0; index <= this.userrole.message.length; index++) {
           this.rolename =  this.userrole.message[index];
           if(this.rolename!=undefined){
@@ -506,7 +501,6 @@ this.spinner.hide();
         "id": p.id,
         "fileName": p.fileName
       }
-      console.log(obj)
       selectedFiles.push(obj);
       });
       

@@ -596,7 +596,6 @@ export class RpaHomeComponent implements OnInit {
           createBotFormValue.botDepartment=catResponse.data.categoryId;  
          
           this.rest.createBot(createbot).subscribe((res:any)=>{
-            console.log("res",res)
             let botId=res.botId;
             if(res.errorMessage==undefined){
               this.isLoading=false;
