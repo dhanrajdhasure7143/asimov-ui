@@ -196,3 +196,35 @@ button:disabled {
   text-decoration: underline !important;
   font-size: small;
 }
+
+.cell1, .cell7 {
+  width: 5%;
+}
+.cell2 {
+  width: 10%;
+}
+.cell3 {
+  width: 8%;
+}
+.cell4 {
+  width: 12%;
+}
+.cell5 {
+  width: 8%;
+}
+.cell6 {
+  width: 8%;
+}
+
+.cell8 {
+  width: 8%;
+}
+.cell9 {
+  width: 8%;
+}
+.cell10, .cell11 {
+  width: 5%;
+}
+.cell12, .cell13 {
+  width: 9%;
+}
