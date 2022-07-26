@@ -12,7 +12,7 @@ services:
   asimov-uinew:
     image: ${DOCKER_REGISTRY_URL}/asimov-uinew:${DOCKER_TAG}
     deploy:
-      mode: global
+      replicas: 1
     networks:
       - eps_net
     ports:
