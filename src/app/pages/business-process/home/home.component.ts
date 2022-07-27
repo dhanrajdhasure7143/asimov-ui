@@ -145,11 +145,14 @@ export class BpsHomeComponent implements OnInit {
       this.assignPagenation(this.saved_diagrams);
 
       let selected_category=localStorage.getItem("bps_search_category");
-      if(this.categories_list.length == 1){
-        this.categoryName=this.categories_list[0].categoryName;
-      }else{
-        this.categoryName=selected_category?selected_category:'allcategories';
-      }
+      setTimeout(() => {
+        if(this.categories_list.length == 1){
+          this.categoryName=this.categories_list[0].categoryName;
+        }else{
+          this.categoryName=selected_category?selected_category:'allcategories';
+        }
+      }, 1000);
+     
       this.searchByCategory(this.categoryName);
     },
     
