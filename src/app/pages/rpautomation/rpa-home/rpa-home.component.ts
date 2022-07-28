@@ -103,6 +103,7 @@ export class RpaHomeComponent implements OnInit {
   freetrail: string;
   botlistitems:any=[];
   isLoading:boolean = false;
+  categoryName:any;
   constructor(
     private route: ActivatedRoute, 
     private rest:RestApiService, 
@@ -196,11 +197,12 @@ export class RpaHomeComponent implements OnInit {
         description:true,
       }
     this.dt.changeHints(this.datahints.rpahomehints );
+     this.getallbots();
     this.getCategoryList();
     this.getenvironments();
     
       
-      this.getallbots();
+     
 
 
     if(localStorage.getItem("taskId")!=undefined)
@@ -381,6 +383,13 @@ export class RpaHomeComponent implements OnInit {
       {
         this.respdata1 = true;
       }
+      let selected_category=localStorage.getItem("rpa_search_category");
+      if(this.categaoriesList.length == 1){
+        this.categoryName=this.categaoriesList[0].categoryName;
+      }else{
+        this.categoryName=selected_category?selected_category:'allcategories';
+      }
+      this.searchByCategory(this.categoryName);
       //response.sort((a,b) => a.createdAt > b.createdAt ? -1 : 1);
       
       //response=response.reverse();
@@ -930,9 +939,14 @@ export class RpaHomeComponent implements OnInit {
       let catResponse : any;
       catResponse=data
       this.categaoriesList=catResponse.data;
-      //console.log(this.categaoriesList)
-      if(this.categaoriesList.length==1)
+    
+      console.log(this.categaoriesList)
+      if(this.categaoriesList.length==1){
         this.rpaCategory=this.categaoriesList[0].categoryId;
+        this.categoryName=this.categaoriesList[0].categoryName
+      }
+       
+     
     });
   }
 
@@ -1033,10 +1047,11 @@ export class RpaHomeComponent implements OnInit {
      rpaCategory["categoryName"] =this.editbot.value.newCategoryName;
    return this.rest.addCategory(rpaCategory);
   }
-  searchByCategory(category) {      // Filter table data based on selected categories
+  searchByCategory(category) { 
+    localStorage.setItem('rpa_search_category',category);     // Filter table data based on selected categories
     var filter_saved_diagrams= []
     this.botslist=[]
-    if (category == "") {
+    if (category == "allcategories") {
      this.botslist=this.botlistitems;
      this.assignPagination(this.botslist);
       // this.dataSource.filter = fulldata;
