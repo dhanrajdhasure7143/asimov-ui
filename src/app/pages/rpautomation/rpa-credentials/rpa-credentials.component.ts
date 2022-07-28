@@ -85,7 +85,7 @@ export class RpaCredentialsComponent implements OnInit {
     this.spinner.show();
    // document.getElementById("filters").style.display='block';
     this.dt.changeHints(this.hints.rpadbchints);
-    this.getallCredentials();
+   // this.getallCredentials();
     this.getCategories();
     this.passwordtype1=false;
     this.passwordtype2=false;
@@ -401,7 +401,7 @@ updatecreddata()
       let response:any=data;
      
         this.categoryList=response.data;
-      
+      this.getallCredentials();
     })
   }
 }
