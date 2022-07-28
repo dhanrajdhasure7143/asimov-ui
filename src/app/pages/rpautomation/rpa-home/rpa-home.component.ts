@@ -324,15 +324,16 @@ export class RpaHomeComponent implements OnInit {
     this.bot_list=[];
     let response:any=[];
     this.spinner.show();
+   // this.isLoading=true
     this.loadflag=true;
     //spinner.show();
     //http://192.168.0.7:8080/rpa-service/get-all-bots
     this.rest.getAllActiveBots().subscribe(botlist =>
     {
       setTimeout(()=>{
-        this.spinner.hide();
+        
         this.loadflag=false;
-      },1000)
+      },2000)
       response=botlist;
       this.botlistitems=botlist;
       this.botslist=botlist
@@ -1112,6 +1113,7 @@ export class RpaHomeComponent implements OnInit {
         this.totalRows$ = rows$.pipe(map(rows => rows.length));
         this.displayedRows$ = rows$.pipe(sortRows(sortEvents$), paginateRows(pageEvents$));
         this.paginator301.firstPage();
+        this.spinner.hide();
       }
 
       applySearchFilter(v){  

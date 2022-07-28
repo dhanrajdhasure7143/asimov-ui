@@ -118,7 +118,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.spinner.show();    
     setTimeout(() => {
       this.userDetails();
-    }, 1000);
+    }, 2000);
     setTimeout(() => {
       this.spinner.hide();
     }, 900);
