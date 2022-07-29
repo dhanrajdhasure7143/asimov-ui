@@ -308,8 +308,12 @@
                             <div class="col-md-12 p-0 form-group">
                                 <label class="label-control" for="botDepartment">Category<span class="star">*</span></label>
 
-                                <select [(ngModel)]="rpaCategory" class="form-control" [disabled]="categaoriesList.length==1" [value]="categaoriesList.length==1?categaoriesList[0].categoryId:''" formControlName="botDepartment" name="botDepartment">
-                                    <option  value="">Select Category</option>
+                                <select [(ngModel)]="rpaCategory" class="form-control" 
+                                 [value]="categaoriesList.length==1?categaoriesList[0].categoryId:''"
+                                  formControlName="botDepartment" name="botDepartment">
+                                    <option value="" disabled hidden>Select Category</option>
+                                    <option value="null" disabled hidden>Select Category</option>
+                                    <option value="undefined" disabled hidden>Select Category</option>
                                     <option *ngFor ="let category of categaoriesList" [value]="category.categoryId">{{category.categoryName}}</option>
                                 </select>
                               

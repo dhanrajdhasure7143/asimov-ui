@@ -570,14 +570,35 @@ export class RpaHomeComponent implements OnInit {
       }
       else {
         this.insertbot.reset();
-        this.insertbot.get("botDepartment").setValue("");
         document.getElementById("create-bot").style.display = "block";
+        if(this.categaoriesList.length==1){
+          this.rpaCategory=this.categaoriesList[0].categoryId;
+          let Id=this.categaoriesList[0].categoryId
+          this.categoryName=this.categaoriesList[0].categoryName;       
+            this.insertbot.get('botDepartment').setValue(Id)
+           this.insertbot.controls.botDepartment.disable();   
+        }
+        else{
+          this.insertbot.get('botDepartment').setValue('')
+          this.insertbot.controls.botDepartment.enable();
+        }
       }
     }
     else{
+     
       this.insertbot.reset();
-      this.insertbot.get("botDepartment").setValue("");
       document.getElementById("create-bot").style.display = "block";
+      if(this.categaoriesList.length==1){
+        this.rpaCategory=this.categaoriesList[0].categoryId;
+        let Id=this.categaoriesList[0].categoryId
+        this.categoryName=this.categaoriesList[0].categoryName;       
+          this.insertbot.get('botDepartment').setValue(Id)
+         this.insertbot.controls.botDepartment.disable();   
+      }
+      else{
+        this.insertbot.get('botDepartment').setValue('')
+        this.insertbot.controls.botDepartment.enable();
+      }
     }
   }
 
@@ -944,19 +965,12 @@ export class RpaHomeComponent implements OnInit {
       console.log(this.categaoriesList)
       if(this.categaoriesList.length==1){
         this.rpaCategory=this.categaoriesList[0].categoryId;
-        this.categoryName=this.categaoriesList[0].categoryName
+        let Id=this.categaoriesList[0].categoryId
+        this.categoryName=this.categaoriesList[0].categoryName;  
       }
-       
      
     });
   }
-
-
-
-
-
-
-
 
   public sortkey:any;
 
@@ -996,6 +1010,13 @@ export class RpaHomeComponent implements OnInit {
         description:botdetails.description,
         newCategoryName:this.rpaCategory})
     }
+    
+   if(this.categaoriesList.length==1){
+     this.editbot.controls.department.disable()     
+  }
+  else{
+    this.editbot.controls.department.enable()
+  }
   }
 
   validate(code,event){
