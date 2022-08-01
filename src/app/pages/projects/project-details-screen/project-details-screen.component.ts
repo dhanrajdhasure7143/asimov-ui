@@ -647,8 +647,11 @@ export class ProjectDetailsScreenComponent implements OnInit {
     this.rpa.getprocessnames().subscribe(processnames => {
       let resp: any = []
       resp = processnames
-      this.processes = resp.filter(item => item.status == "APPROVED");
-      this.selected_process_names = resp.sort((a, b) => (a.processName.toLowerCase() > b.processName.toLowerCase()) ? 1 : ((b.processName.toLowerCase() > a.processName.toLowerCase()) ? -1 : 0));
+      let approved_processes = resp.filter(item => item.status == "APPROVED");
+      // this.processes = resp.filter(item => item.status == "APPROVED");
+      this.processes = approved_processes.sort((a, b) => (a.processName.toLowerCase() > b.processName.toLowerCase()) ? 1 : ((b.processName.toLowerCase() > a.processName.toLowerCase()) ? -1 : 0));
+      // this.selected_process_names = resp.sort((a, b) => (a.processName.toLowerCase() > b.processName.toLowerCase()) ? 1 : ((b.processName.toLowerCase() > a.processName.toLowerCase()) ? -1 : 0));
+      this.selected_process_names = this.processes;
     })
   }
 
