@@ -296,7 +296,7 @@
                       (change)="projectenddate=$event.target.value"
                       [value]="projectenddate | date:'yyyy-mm-dd'" class="small-input"
                       [ngClass]="projectenddate?'enteredfield-color':'inputfield-color'" > -->
-                                        <input type="date" class="small-input" (change)="projectenddate=$event.target.value" [value]="projectenddate">
+                                        <input type="date" class="small-input" [min]="mindate" (change)="projectenddate=$event.target.value" [value]="projectenddate">
                                     </div>
                                 </div>
                             </div>
