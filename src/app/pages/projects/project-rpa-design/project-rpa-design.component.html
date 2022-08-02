@@ -1,0 +1,119 @@
+<div class="prj-rpadesign-main h-100">
+    <div class="h-100" id="my_workspace">
+        <div class="module-heading title">
+            <div class="col-md-2 p-0">
+                <span class="module-header-title">
+                    <span class="module-back-button" (click)="backToProjects()">
+                        <i aria-hidden="true" class="fas fa-arrow-left"></i>
+                    </span>
+                    <span class="module-parent-title">Rpa Design</span>
+                </span>
+            </div>
+            <div class="col-md-10 p-0">
+                <div class="tktlist-body-header">
+                    <div class="tktlist-fields">
+                        <button class="btn btn-primary pull-right" (click)="addUser()">
+                            <img src="../../../../assets/images/Projects/White-plus.svg" class="testplus">
+                            Add New
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="prj-rpadesign-body">
+            <div class="table_responsive graph_table">
+                <table mat-table [dataSource]="dataSource" matSort class="PI table w-100">
+                    <ng-container matColumnDef="stepNo">
+                        <th mat-sort-header mat-header-cell *matHeaderCellDef class="sno" >S.No</th>
+                        <td mat-cell *matCellDef="let element;let i=index"  class="sno" >{{i+1}}</td>
+                    </ng-container>
+                    <ng-container matColumnDef="steps">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header  class="gsteps" >Steps</th>
+                        <td mat-cell *matCellDef="let element"  class="gsteps" >
+                            <span *ngIf="element.id != selectedId && !element.new">{{element.steps}}</span>
+                            <span *ngIf="element.id == selectedId || element.new">
+                                <input type="text" class="form-control" placeholder="Enter Steps" [(ngModel)]="element.steps" name="_steps" #_steps>
+                            </span>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="description">
+                        <th mat-sort-header mat-header-cell *matHeaderCellDef  class="gdescrip" >Description</th>
+                        <td mat-cell *matCellDef="let element"  class="gdescrip" >
+                            <span *ngIf="element.id != selectedId && !element.new" >{{element.description}}</span>
+                            <span *ngIf="element.id == selectedId || element.new">
+                                <!-- <input type="text" class="form-control" [(ngModel)]="element.description" name="descr" #descr placeholder="Enter Description"> -->
+                                <textarea cols="10" rows="3" class="form-control" [(ngModel)]="element.description" name="descr" #descr  placeholder="Enter Description"></textarea>
+                            </span>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="configuration">
+                        <th mat-sort-header mat-header-cell *matHeaderCellDef  class="gconfig" >Configuration</th>
+                        <td mat-cell *matCellDef="let element"  class="gconfig" > 
+                            <span *ngIf="element.id != selectedId && !element.new" class="confi-div">{{element.configuration}}</span>
+                            <span *ngIf="element.id == selectedId || element.new">
+                                <textarea cols="10" rows="3" class="form-control" [(ngModel)]="element.configuration" name="config" #config  placeholder="Enter Configuration"></textarea>
+                            </span>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="Action">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="gactions" >Actions</th>
+                        <td mat-cell *matCellDef="let element;let i = index" class="gactions">
+                            <span *ngIf="!element.new">
+                                <span class="tsttooltipbtn" *ngIf="element.id != selectedId" (click)="onEdit(element)">
+                                    <img src="../../../../assets/images/Projects/edit-black.svg" class="testplus default-img">
+                                    <img src="../../../../../assets/images/Projects/Edit-blue.svg" class="testplus hover-img">
+                                    <span class="testtooltip">Edit</span>
+                                </span>
+                                <span *ngIf="element.id != selectedId" (click)="deleteConfiguration(element)" class="tsttooltipbtn">
+                                    <img src="../../../../assets/images/Projects/delete-black.svg" class="testplus default-img">
+                                    <img src="../../../../assets/images/Projects/delete-red.svg"  class="testplus hover-img">
+                                    <span class="testtooltip">Delete</span>
+                                </span>
+                            </span>
+
+                            <span *ngIf="element.id == selectedId">
+                                    <span class="tsttooltipbtn" (click)="updateConfiguration(element,i)">
+                                        <img src="../../../../assets/images/VCM/Green Tick.svg" class="testplus" />
+                                        <span class="testtooltip">Update</span>
+                                    </span>
+                                    <span class="tsttooltipbtn"  (click)="cancelUpdaterow(i)">
+                                        <img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img" />
+                                        <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" />
+                                        <span class="testtooltip">Cancel</span>
+                                    </span>
+                            </span>
+
+                            <span *ngIf="element.new ">
+                                <span class="tsttooltipbtn" (click)="saveConfiguration(element,i)">
+                                    <img src="../../../../assets/images/VCM/Green Tick.svg" class="testplus" />
+                                    <span class="testtooltip">Save</span>
+                                </span>
+                                <span class="tsttooltipbtn" (click)="cancelCreateNewrow(i)">
+                                    <img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img" />
+                                    <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" />
+                                    <span class="testtooltip">Cancel</span>
+                                </span>
+                            </span>
+
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="pList"></tr>
+                </table>
+            </div>
+            <div class="supportpaginationdiv">
+                <mat-paginator class="newpaginationdiv" #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]"
+                    [showFirstLastButtons]="true"></mat-paginator>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="spinoverlay" *ngIf="isLoading">
+        <div class="spincenter">
+            <img src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader" />
+        </div>
+    </div>
+</div>

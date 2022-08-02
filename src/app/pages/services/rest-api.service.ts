@@ -156,17 +156,24 @@ export class RestApiService{
 
   getRestAttributes(attribute, taskId, attrId){
     let all_attr_data = JSON.parse(localStorage.getItem("attributes"))
+    if(attribute)
     this.http.get(attribute.dependency).subscribe(
-      (res:any[]) => {
+      (res:any) => {
+        if(res){
+        if(!res.errorMessage ){
         let tmpOpt = [];
+        if(res.length> 0){
         let keys = Object.keys(res[0])
         res.forEach(eachOpt => {
           let tmp_op = {key: eachOpt[keys[0]], label: eachOpt[keys[1]]};
           tmpOpt.push(tmp_op);
         })
         attribute.options = tmpOpt;
+      }
+      }
         all_attr_data[taskId][attrId] = attribute;
         localStorage.setItem("attributes", JSON.stringify(all_attr_data))
+    }
       }
     )
   }
@@ -1383,12 +1390,72 @@ getMultiFormAttributes(dependencyApi)
   return this.http.get(dependencyApi);
 }
 
-getUserBpmnsListWithoutNotation(){ //  bps workspace api
-  return this.http.get("/bpsprocess/fetchByTenantwithoutNotation");
+getAutomationLogs(botId, version, runId,taskId)
+{
+  return this.http.get(`/rpa-service/automation-logs/${botId}/${version}/${runId}/${taskId}`);
+}
+deleteSelectedvcmProcess(body){
+  return this.http.post('/vcmv2/deleteVcmByLevel',body);
 }
 
 getBpmnNotationByIdandVersion(body){ //  bps workspace api
   return this.http.post("/bpsprocess/fetchByBpmnModelandVersion",body);
+}
+getUserBpmnsListWithoutNotation(){ //  bps workspace api
+  return this.http.get("/bpsprocess/fetchByTenantwithoutNotation");
+}
+
+//Process understanding screen in project details
+businessDetailsSave(body){
+  return this.http.post("/platform-service/project/saveProcessUnderstanding",body)
+}
+businessDetailsUpdate(body){
+  return this.http.post("/platform-service/project/updateProcessUnderstanding",body)
+}
+
+getProcessUderstandingDetails(projectId){
+  return this.http.get("/platform-service/project/fetchProcessUnderstanding?projectId="+projectId);
+}
+
+
+getQuestionnaires(projectId){
+  return this.http.get("/platform-service/project/fetchProcessQuestionnaire?projectId="+projectId);
+}
+processQuestionSave(body){
+  return this.http.post("/platform-service/project/saveProcessQuestionnaire",body)
+}
+answerUpdate(body){
+  return this.http.post("/platform-service/project/updateProcessQuestionnaire",body)
+}
+
+answerDelete(body){
+  return this.http.post("/platform-service/project/deleteProcessQuestionnaire",body)
+}
+
+getBPMNbyProcessId(body){
+  return this.http.post("/bpsprocess/getById",body);
+}
+
+processDocumentDownload(body){
+  return this.http.post("/platform-service/program/exportProcessDesignDocument",body);
+}
+saveRpaDesign(body){
+  return this.http.post("/platform-service/project/saveRpaDesign",body)
+}
+getRPAdesignData(taskId){
+  return this.http.get("/platform-service/project/fetchRpaDesign?taskId="+taskId);
+}
+updateRPADesignData(body){
+  return this.http.post("/platform-service/project/updateRpaDesign",body)
+}
+deleteRpaDesign(body){
+  return this.http.post("/platform-service/project/deleteRpaDesign",body)
+}
+getTaskCategoriesByProject(projectid){
+  return this.http.get("/platform-service/task/fetchTaskCategoriesByProject?projectId="+projectid)
+}
+getFileCategoriesList(id){
+  return this.http.get("/platform-service/document/fileCategoriesbyProject?projectId="+id)
 }
 getFilteredEnvironment(id){
   return this.http.get("/rpa-service/agent/get-environments/"+id)
