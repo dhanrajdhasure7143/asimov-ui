@@ -519,7 +519,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
         this.processOwnerFlag = false
         this.projectenddate = moment(this.projectDetails.endDate).format("YYYY-MM-DD");
         this.projectStartDate = moment(this.projectDetails.startDate).format("YYYY-MM-DD");
-
+        this.mindate = this.projectStartDate;
         if (this.projectDetails) {
           // this.getBPMNbyProcessId();
           let usr_name = this.projectDetails.owner.split('@')[0].split('.');
