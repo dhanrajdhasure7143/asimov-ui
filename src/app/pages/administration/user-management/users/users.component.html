@@ -82,7 +82,7 @@
                 <th mat-header-cell *matHeaderCellDef mat-sort-header class="pcell6">Created At</th>
                 <td mat-cell *matCellDef="let element" class="pcell6"> 
                   <!-- <span *ngIf="element.created_at!=null" >{{element.created_at | date:'MMM d, y, HH:mm'}}</span> -->
-                  <span *ngIf="element.created_at!=null" >{{element.created_at}}</span>
+                  <span *ngIf="element.created_at!=null" >{{element.created_at_modified}}</span>
                     <span *ngIf="element.created_at==''">-</span> 
                     <span *ngIf=" element.created_at==null">-</span> 
                 </td>
