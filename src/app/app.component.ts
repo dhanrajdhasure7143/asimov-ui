@@ -46,6 +46,17 @@ export class AppComponent {
     // window.location.href=this.config.logoutRedirectionURL+'?input='+input;
     this.router.navigate(['/redirect'])
     });
+
+    window.addEventListener('storage', (event) => {
+      if (event.storageArea == localStorage) {
+           let token = localStorage.getItem('accessToken');
+           if(token == undefined) { 
+             // Perform logout
+             //Navigate to login/home
+             this.router.navigate(['/redirect']);
+           }
+      }
+  });
   }
   
  
