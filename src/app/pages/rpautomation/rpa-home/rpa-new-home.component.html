@@ -42,8 +42,12 @@
                         
                         <div class="col-md-6 p-0">
                             <div class="col-md-6 form-group pr-0 rpa-searchip">
-                                <select class="form-control" (change)="searchByCategory($event.target.value)">
-                                    <option value="" >All Categories</option>
+                                <select class="form-control" (change)="searchByCategory(categoryName)"  [disabled]="categaoriesList.length == 1"
+                                 #category="ngModel" [(ngModel)]="categoryName">
+                                    <option value="" disabled hidden>Select Category</option>
+                                <option value="null" disabled hidden>Select Category</option>
+                                <option value="undefined" disabled hidden>Select Category</option>
+                                <option value="allcategories" *ngIf="categaoriesList.length > 1">All Categories</option>
                                     <option [value]="category.categoryName" *ngFor="let category of categaoriesList;let i=index;trackBy:loopTrackBy">{{category.categoryName | titlecase}}</option>
                                 </select>
                             </div>
@@ -176,11 +180,11 @@
                                 </div>
 
                             </mat-expansion-panel>
-                            <div class="text-center" *ngIf="bot_list.length==0">
+                            <!-- <div class="text-center" *ngIf="bot_list.length==0">
                                 <img class="no-item-img" src="../../../../assets/images/RPA/No-Items.svg">
                                 <h4 class="text-center" *ngIf="loadflag==false">No Items To Display</h4>
-                                <h4 class="text-center" *ngIf="loadflag==true">Loading</h4>
-                            </div>
+                                <h4 class="text-center" *ngIf="loadflag==true">Loading</h4>       
+                            </div> -->
                         </div>
                     </mat-accordion>
 
@@ -304,8 +308,12 @@
                             <div class="col-md-12 p-0 form-group">
                                 <label class="label-control" for="botDepartment">Category<span class="star">*</span></label>
 
-                                <select [(ngModel)]="rpaCategory" class="form-control" [disabled]="categaoriesList.length==1" [value]="categaoriesList.length==1?categaoriesList[0].categoryId:''" formControlName="botDepartment" name="botDepartment">
-                                    <option  value="">Select Category</option>
+                                <select [(ngModel)]="rpaCategory" class="form-control" 
+                                 [value]="categaoriesList.length==1?categaoriesList[0].categoryId:''"
+                                  formControlName="botDepartment" name="botDepartment">
+                                    <option value="" disabled hidden>Select Category</option>
+                                    <option value="null" disabled hidden>Select Category</option>
+                                    <option value="undefined" disabled hidden>Select Category</option>
                                     <option *ngFor ="let category of categaoriesList" [value]="category.categoryId">{{category.categoryName}}</option>
                                 </select>
                               

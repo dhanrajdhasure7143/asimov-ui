@@ -102,9 +102,11 @@ updateUser(){
       "department":this.departments.toString(),
       "rolesList": roles_list
   }
+  this.spinner.show()
 
   this.api.updateUserRoleDepartment(body).subscribe(resp=> {
     if(resp.message === "Successfuly updated role of an user for particular application"){
+      this.spinner.hide()
       Swal.fire({
         title: 'Success',
         text: "User details updated Successfully !!",
@@ -119,6 +121,7 @@ updateUser(){
       this.router.navigate(['/pages/admin/user-management'])
     })
     }else {
+      this.spinner.hide()
       Swal.fire("Error",resp.message,"error");
     }
 
