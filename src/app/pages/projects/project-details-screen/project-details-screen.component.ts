@@ -337,8 +337,8 @@ export class ProjectDetailsScreenComponent implements OnInit {
   }
   resetdocform() {
     this.uploadFileFormDetails.reset();
-    this.uploadFileFormDetails.get("category").setValue("");
-    this.uploadFileFormDetails.get("comments").setValue("");
+    this.uploadFileFormDetails.get("fileCategory").setValue("");
+    this.uploadFileFormDetails.get("description").setValue("");
   }
 
   chnagefileUploadForm(e) {
@@ -507,49 +507,91 @@ export class ProjectDetailsScreenComponent implements OnInit {
   }
 
 
-  projectdetails() {
-    const userid = localStorage.getItem('ProfileuserId');
-    this.spinner.show()
-    this.route.queryParams.subscribe(data => {
-      let paramsdata: any = data
-      this.project_id = paramsdata.id
-      this.editdata = false;
-      this.rpa.getProjectDetailsById(paramsdata.id).subscribe(res => {
-        this.projectDetails = res
-        this.processOwnerFlag = false
-        this.projectenddate = moment(this.projectDetails.endDate).format("YYYY-MM-DD");
-        this.projectStartDate = moment(this.projectDetails.startDate).format("YYYY-MM-DD");
-        this.mindate = this.projectStartDate;
-        if (this.projectDetails) {
-          // this.getBPMNbyProcessId();
-          let usr_name = this.projectDetails.owner.split('@')[0].split('.');
-          // this.owner_letters=usr_name[0].charAt(0)+usr_name[1].charAt(0);
-          if (usr_name.length > 1) {
-            this.owner_letters = usr_name[0].charAt(0) + usr_name[1].charAt(0);
-          } else {
-            this.owner_letters = usr_name[0].charAt(0);
-          }
-        }
+projectdetails(){​​​​​​
+  const userid=localStorage.getItem('ProfileuserId');
+this.spinner.show()
+this.route.queryParams.subscribe(data=>{​​​​​​
+let paramsdata:any=data
+this.project_id=paramsdata.id
+this.editdata=false;
+this.rpa.getProjectDetailsById(paramsdata.id).subscribe( res=>{​​​​​​
+this.projectDetails=res
+this.processOwnerFlag=false
+this.projectenddate=moment(this.projectDetails.endDate).format("YYYY-MM-DD");
+this.projectStartDate = moment(this.projectDetails.startDate).format("YYYY-MM-DD");
+this.mindate = this.projectStartDate;
 
-        //this.project_id=this.projectDetails.id
-        let users: any = []
-        if (this.projectDetails.resource.length != 0) {
-          this.projectDetails.resource.forEach(item => {
-            users.push(item.resource)
-          })
-          this.resources = users
-          this.loginresourcecheck = this.resources.find(item2 => item2 == userid);
-        }
-        else {
-          this.resources = this.users_list
-        }
-      })
-
-      this.getTaskandCommentsData();
-      this.getLatestFiveAttachments(this.project_id)
-      paramsdata.programId == undefined ? this.programId = undefined : this.programId = paramsdata.programId;
-    });
+if(this.projectDetails){
+  
+  ​​​​​​let users:any=[]
+  this.projectDetails.resource.forEach(item=>{
+    this.users_list.forEach(item2=>{
+      if(item2.userId.userId == item.resource){
+        users.push(item2)
+      }
+    })
+      // if(this.users_list.find(item2=>item2.userId.userId==item.resource)!=undefined)
+      //   users.push(this.users_list.find(item2=>item2.userId.userId==item.resource))
+ })
+ this.resources_list=users
+ if(this.resources_list.length>0){
+  this.Resourcecheckeddisabled= false;
+}
+else
+{
+  this.Resourcecheckeddisabled = true;
+}
+let users_updateddata=users
+ this.resourceslength=users.length
+ users_updateddata.forEach(element => {
+   element["firstName"]=element.userId.firstName
+   element["lastName"]=element.userId.lastName
+   element["displayName"]=element.roleID.displayName
+   element["user_Id"]=element.userId.userId
+ });
+  this.dataSource6= new MatTableDataSource(users_updateddata);
+  setTimeout(() => {
+    this.dataSource6.sort=this.sort14;
+    this.dataSource6.paginator=this.paginator104;
+  }, 500);
+  this.spinner.hide()
+ this.getTaskandCommentsData();
+  this.getLatestFiveAttachments(this.project_id);
+let usr_name=this.projectDetails.owner.split('@')[0].split('.');
+// this.owner_letters=usr_name[0].charAt(0)+usr_name[1].charAt(0);
+if(usr_name.length > 1){
+  this.owner_letters=usr_name[0].charAt(0)+usr_name[1].charAt(0);
+  }else{
+    this.owner_letters=usr_name[0].charAt(0);
   }
+
+}​​​​​​
+
+//this.project_id=this.projectDetails.id
+let users:any=[]
+if(this.projectDetails.resource.length!=0){​​​​​​
+this.projectDetails.resource.forEach(item=>{​​​​​​
+users.push(item.resource)
+ }​​​​​​)
+this.resources=users
+
+this.loginresourcecheck=this.resources.find(item2=>item2==userid);
+
+ }​​​​​​
+else{​​​​​​
+this.resources=this.users_list
+
+ }​​​​​​ 
+ }​​​​​​)
+ 
+this.getTaskandCommentsData();
+this.getLatestFiveAttachments(this.project_id)
+paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsdata.programId;
+ }​​​​​​);
+
+}
+​​​​​​
+
 
   profileName() {
     setTimeout(() => {
