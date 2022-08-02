@@ -1,4 +1,3 @@
-import { formatDate } from '@angular/common';
 import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -11,7 +10,6 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { MatMenuModule, MatButtonModule } from '@angular/material'; 
 import moment from 'moment';
 import { Subscription } from 'rxjs';
 
@@ -492,9 +490,9 @@ this.editdata=false;
 this.rpa.getProjectDetailsById(paramsdata.id).subscribe( res=>{​​​​​​
 this.projectDetails=res
 this.processOwnerFlag=false
-//this.projectenddate=moment(this.projectDetails.endDate).format("YYYY-MM-DD");
+this.projectenddate=moment(this.projectDetails.endDate).format("YYYY-MM-DD");
 this.projectStartDate = moment(this.projectDetails.startDate).format("YYYY-MM-DD");
-
+this.mindate = this.projectStartDate;
 
 if(this.projectDetails){
   
@@ -564,7 +562,8 @@ this.getLatestFiveAttachments(this.project_id)
 paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsdata.programId;
  }​​​​​​);
 
-}​​​​​​
+}
+​​​​​​
 
   profileName(){
     setTimeout(() => {
