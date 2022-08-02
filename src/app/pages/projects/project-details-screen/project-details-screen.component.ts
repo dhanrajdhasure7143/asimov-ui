@@ -1,4 +1,3 @@
-import { formatDate } from '@angular/common';
 import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -11,7 +10,6 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { MatMenuModule, MatButtonModule, throwMatDialogContentAlreadyAttachedError } from '@angular/material'; 
 import moment from 'moment';
 import { Subscription } from 'rxjs';
 
@@ -566,14 +564,6 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
 
 }
 ​​​​​​
-// onchangedate(){
-
-//   this.projectenddate = "0000-00-00";
-// this.mindate = this.projectStartDate;
-
-
-
-// }
 
   profileName(){
     setTimeout(() => {
