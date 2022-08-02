@@ -56,8 +56,8 @@ export class UsersComponent implements OnInit {
           // "product": "EZFlow",
           "roles": roles,
           // "roles": "Admin",
-          // "created_at": element.created_at,
-          "created_at": moment(new Date(element.created_at)).format('LLL'),
+          "created_at": element.created_at,
+          "created_at_modified": moment(new Date(element.created_at)).format('LLL'),
           "status":element.user_role_status
         }
         this.userslist.push(userdata);
