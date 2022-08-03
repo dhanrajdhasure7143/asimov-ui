@@ -331,7 +331,7 @@
                                     Maximum of 50 characters
                                 </div>  
                             </div>
-                            <div class="col-md-12 p-0 form-group" *ngIf="snowflakeflag">
+                            <div class="col-md-12 p-0 form-group" *ngIf="(snowflakeflag) || !(h2flag)">
                                 <label class="label-control" for="role">Role</label>
                                 <input type="text" maxlength="51" class="form-control data" formControlName="role"  value="" placeholder="Enter Role">
     
@@ -340,7 +340,7 @@
                                     Maximum of 50 characters
                                 </div>  
                             </div>                
-                            <div class="col-md-12 p-0 form-group" *ngIf="snowflakeflag">
+                            <div class="col-md-12 p-0 form-group" *ngIf="snowflakeflag || !(h2flag)">
                                 <label class="label-control" for="warehouse">Warehouse</label>
                                 <input type="text" maxlength="51" class="form-control data" formControlName="warehouse"  value="" placeholder="Enter Warehouse">    
                                 <!-- <span *ngIf="(insertdbForm.get('warehouse').invalid && insertdbForm.get('warehouse').touched) && !insertdbForm.controls['warehouse'].hasError('maxlength')" class="errspan required"> Ware Required*</span> -->
@@ -386,7 +386,7 @@
                             
                             <div class="col-md-12 p-0 form-group">
                                 <label class="label-control" for="dataBaseType">Database Type<span class="star">*</span></label>
-                                <select class="form-control" formControlName="dataBaseType">
+                                <select class="form-control"  (change)="changeDatabaseType($event)" formControlName="dataBaseType">
                                     <option value="" [selected]="true">--Select Database Type--</option>
                                     <option value="PostgreSQL">PostgreSQL</option> 
                                     <option value="Snowflake">Snowflake</option>   
@@ -477,7 +477,7 @@
                                 </div>  
                             </div>
 
-                            <div class="col-md-12 p-0 form-group" *ngIf="snowflakeflag">
+                            <div class="col-md-12 p-0 form-group" *ngIf="(snowflakeflag || !(h2flag))">
                                 <label class="label-control" for="role">Role</label>
                                 <input type="text" maxlength="51" class="form-control data" formControlName="role" #role value="" placeholder="Enter Role">
 
