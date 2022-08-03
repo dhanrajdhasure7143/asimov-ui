@@ -952,8 +952,8 @@
                                                     </span>
                                                 </div>
                                                 <div class="col-md-8 text-right">
-                                                    <span class="downloadpubtn tsttooltipbtn"
-                                                        (click)="xmlConvertToImageformate($event)">
+                                                    <!-- <span class="downloadpubtn tsttooltipbtn" (click)="xmlConvertToImageformate($event)"> -->
+                                                        <span class="downloadpubtn tsttooltipbtn" (click)="downloadFile()">
                                                         <!-- <a href="data:image/png;base64,{{downloadData.data}}" download="{{projectDetails.projectName}}.doc"> -->
                                                         <img src="../../../../assets/images/Admin/download-black.svg"
                                                             class="default-img testplus">
@@ -973,11 +973,11 @@
                                                             (click)="cancelEditProcess($event)">Cancel</button>
                                                         <button class="btn btn-primary"
                                                             *ngIf="businessDetails.length == 0 && isProcessEdit"
-                                                            [disabled]="!businessChallange || !businessPurpose"
+                                                            [disabled]="!businessChallange || !businessPurpose || !business_benefits"
                                                             (click)="saveBusinessProcess($event)">Save</button>
                                                         <button class="btn btn-primary"
                                                             style="margin-right: 0px !important;"
-                                                            [disabled]="!businessChallange || !businessPurpose"
+                                                            [disabled]="!businessChallange || !businessPurpose || !business_benefits"
                                                             *ngIf="businessDetails.length > 0 && isProcessEdit"
                                                             (click)="updateBusinessDetails($event)">Update</button>
                                                     </span>
