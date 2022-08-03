@@ -1845,6 +1845,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
   createcredentials()
   {
+    this.hiddenPopUp=false
    // this.modalRef = this.modalService.show(this.template);
     document.getElementById("createcredentials").style.display='block';
     this.insertForm.get("categoryId").setValue(this.categoryList.length==1?this.categoryList[0].categoryId:"0")
