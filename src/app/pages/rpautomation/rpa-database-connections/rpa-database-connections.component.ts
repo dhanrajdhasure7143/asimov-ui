@@ -44,6 +44,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
     enableDbconnection: boolean=false;
     userRole: any;
     public isButtonVisible = false;
+    pwdflag:boolean=false;
     
     constructor(private api:RestApiService, 
       private router:Router,
@@ -118,13 +119,30 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
   changeDatabaseType(event){
      if(event.target.value=='Snowflake'){
        this.snowflakeflag=true;
+       this.pwdflag=false;
        this.insertdbForm.controls.portNumber.clearValidators();
        this.insertdbForm.controls.portNumber.updateValueAndValidity()
      }
+     else if(event.target.value=='H2'){
+      this.pwdflag=true;
+      this.snowflakeflag=true;
+      this.insertdbForm.controls.portNumber.clearValidators();
+      this.insertdbForm.controls.portNumber.updateValueAndValidity();
+      this.insertdbForm.controls.password.clearValidators();
+      this.insertdbForm.controls.password.updateValueAndValidity();
+      this.insertdbForm.controls.schemaName.clearValidators();
+      this.insertdbForm.controls.schemaName.updateValueAndValidity();
+
+     }
      else{
        this.snowflakeflag=false;
+       this.pwdflag=false;
        this.insertdbForm.controls.portNumber.setValidators([Validators.required,Validators.maxLength(6)]);
-       this.insertdbForm.controls.portNumber.updateValueAndValidity()
+       this.insertdbForm.controls.portNumber.updateValueAndValidity();
+       this.insertdbForm.controls.password.setValidators([Validators.required , Validators.maxLength(50)]) 
+       this.insertdbForm.controls.password.updateValueAndValidity();
+       this.insertdbForm.controls.schemaName.setValidators([Validators.required , Validators.maxLength(50)]);
+       this.insertdbForm.controls.schemaName.updateValueAndValidity();
      }
   }
   async getallDBConnection(){
@@ -397,13 +415,24 @@ updatedbdata()
         if(this.dbupdatedata["dataBaseType"]=='PostgreSQL'){
           this.snowflakeflag=false;
           this.updatedbForm.controls.portNumber.setValidators([Validators.required,Validators.maxLength(6)]);
-          this.updatedbForm.controls.portNumber.updateValueAndValidity()
+          this.updatedbForm.controls.password.setValidators([Validators.required,Validators.maxLength(50)]);
+          this.updatedbForm.controls.schemaName.setValidators([Validators.required,Validators.maxLength(50)]);
+          this.updatedbForm.controls.portNumber.updateValueAndValidity();
+          this.updatedbForm.controls.password.updateValueAndValidity()
+          this.updatedbForm.controls.schemaName.updateValueAndValidity()
         } 
         else if(this.dbupdatedata["dataBaseType"]=='Snowflake'){
           this.snowflakeflag=true;
           this.updatedbForm.controls.portNumber.clearValidators();
           this.updatedbForm.controls.portNumber.updateValueAndValidity()
-        }    
+        } 
+        else if(this.dbupdatedata["dataBaseType"]=='H2')   {
+          this.pwdflag=true;
+          this.updatedbForm.controls.password.clearValidators();
+          this.updatedbForm.controls.password.updateValueAndValidity()
+          this.updatedbForm.controls.schemaName.clearValidators();
+          this.updatedbForm.controls.schemaName.updateValueAndValidity()
+        }
         this.updatedbForm.get("databasename").setValue(this.dbupdatedata["databasename"]);        
         this.updatedbForm.get("hostAddress").setValue(this.dbupdatedata["hostAddress"]);      
         this.updatedbForm.get("password").setValue(this.dbupdatedata["password"]);
