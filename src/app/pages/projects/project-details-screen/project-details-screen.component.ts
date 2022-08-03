@@ -1760,12 +1760,8 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
   getDocumentforDowanload( ) {
     let res_body = {
       "projectId": this.project_id,
-      "asisprocessImage": '',
-      "asisprocessName": '',
-      "asisprocessversion": '',
-      "tobeprocessImage": '',
-      "tobeprocessName": '',
-      "tobeprocessversion": '',
+      "asisprocessName": null,
+      "tobeprocessName": null,
     }
     this.rpa.processDocumentDownload(res_body).subscribe(res => {
       this.downloadData = res
