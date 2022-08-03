@@ -268,6 +268,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
       if(res)
       this.loggedUserData = res
     });
+      this.getDocumentforDowanload();
   }
 
 
@@ -454,7 +455,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   getTaskandCommentsData() {
     this.rpa.gettaskandComments(this.project_id).subscribe(data => {
       this.tasks = data;
-      this.getBPMNbyProcessId()
+      // this.getBPMNbyProcessId()  // enable this method to PDD with bpmn
       this.dataSource2 = new MatTableDataSource(this.tasks);
       this.dataSource2.sort = this.sort10;
       this.dataSource2.paginator = this.paginator101;
@@ -1753,6 +1754,18 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
     this.rpa.processDocumentDownload(res_body).subscribe(res => {
       this.downloadData = res
       this.downloadFile()
+    });
+  }
+
+  getDocumentforDowanload( ) {
+    let res_body = {
+      "projectId": this.project_id,
+      "asisprocessName": null,
+      "tobeprocessName": null,
+    }
+    this.rpa.processDocumentDownload(res_body).subscribe(res => {
+      this.downloadData = res
+      // this.downloadFile() // enable this methis for download pdd with as-is and to-be process
     });
   }
 
