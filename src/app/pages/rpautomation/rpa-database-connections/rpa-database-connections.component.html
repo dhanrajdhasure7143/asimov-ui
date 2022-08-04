@@ -72,7 +72,7 @@
                 </ng-container>
                 <ng-container matColumnDef="password">
                     <th mat-header-cell *matHeaderCellDef>Password</th>
-                    <td mat-cell *matCellDef="let element"> <span *ngIf="element.password!=null">*******</span> <span *ngIf="element.password==''">-</span> </td>
+                    <td mat-cell *matCellDef="let element"> <span *ngIf="element.password!=null && element.password !='' ">*******</span> <span *ngIf="element.password=='' || element.password==null">-</span> </td>
                 </ng-container>
                 <ng-container matColumnDef="dataBaseType">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Database Type</th>
@@ -255,7 +255,8 @@
                                 <select class="form-control" formControlName="dataBaseType" (change)="changeDatabaseType($event)">
                                     <option value="" [selected]="true">--Select Database Type--</option>
                                     <option value="PostgreSQL">PostgreSQL</option>  
-                                    <option value="Snowflake">Snowflake</option>                    
+                                    <option value="Snowflake">Snowflake</option>   
+                                    <option value="H2">H2</option>                    
                                   </select>
                                 <span *ngIf="insertdbForm.get('dataBaseType').invalid && insertdbForm.get('dataBaseType').touched" class="errspan required"> Database Type Required*</span>
                             </div>   
@@ -307,8 +308,8 @@
                                     Maximum of 50 characters
                                 </div>     
                             </div>                    
-                            <div class="col-md-12 p-0 form-group">
-                                <label class="label-control" for="password">Password<span class="star">*</span></label>
+                            <div class="col-md-12 p-0 form-group" *ngIf="!pwdflag">
+                                <label class="label-control" for="password">Password<span *ngIf="!pwdflag" class="star">*</span></label>
                                 <input [type]="passwordtype1 ? 'text': 'password'" maxlength="51" class="form-control" formControlName="password" value="" placeholder="Enter Password" passwordToggle>
                                 <span *ngIf="passwordtype1==false" (click)="passwordtype1 =!passwordtype1"class="pdicon">
                                     <img src="../../../../../assets/images/Projects/eye-show.svg"  class="testplus1">
@@ -321,8 +322,8 @@
                                     Maximum of 50 characters
                                 </div>  
                             </div>                           
-                            <div class="col-md-12 p-0 form-group">
-                                <label class="label-control" for="schemaName">Schema<span class="star">*</span></label>
+                            <div class="col-md-12 p-0 form-group" *ngIf="!pwdflag">
+                                <label class="label-control" for="schemaName">Schema<span *ngIf="!pwdflag" class="star">*</span></label>
                                 <input type="text" maxlength="51" class="form-control data" formControlName="schemaName" #schemaName value="" placeholder="Enter Schema">
     
                                 <span *ngIf="(insertdbForm.get('schemaName').invalid && insertdbForm.get('schemaName').touched) && !insertdbForm.controls['schemaName'].hasError('maxlength')" class="errspan required"> Schema Required*</span>
@@ -330,7 +331,7 @@
                                     Maximum of 50 characters
                                 </div>  
                             </div>
-                            <div class="col-md-12 p-0 form-group" *ngIf="snowflakeflag">
+                            <div class="col-md-12 p-0 form-group" *ngIf="(snowflakeflag) || !(h2flag)">
                                 <label class="label-control" for="role">Role</label>
                                 <input type="text" maxlength="51" class="form-control data" formControlName="role"  value="" placeholder="Enter Role">
     
@@ -339,7 +340,7 @@
                                     Maximum of 50 characters
                                 </div>  
                             </div>                
-                            <div class="col-md-12 p-0 form-group" *ngIf="snowflakeflag">
+                            <div class="col-md-12 p-0 form-group" *ngIf="snowflakeflag || !(h2flag)">
                                 <label class="label-control" for="warehouse">Warehouse</label>
                                 <input type="text" maxlength="51" class="form-control data" formControlName="warehouse"  value="" placeholder="Enter Warehouse">    
                                 <!-- <span *ngIf="(insertdbForm.get('warehouse').invalid && insertdbForm.get('warehouse').touched) && !insertdbForm.controls['warehouse'].hasError('maxlength')" class="errspan required"> Ware Required*</span> -->
@@ -385,10 +386,11 @@
                             
                             <div class="col-md-12 p-0 form-group">
                                 <label class="label-control" for="dataBaseType">Database Type<span class="star">*</span></label>
-                                <select class="form-control" formControlName="dataBaseType">
+                                <select class="form-control"  (change)="changeDatabaseType($event)" formControlName="dataBaseType">
                                     <option value="" [selected]="true">--Select Database Type--</option>
                                     <option value="PostgreSQL">PostgreSQL</option> 
-                                    <option value="Snowflake">Snowflake</option>                                         
+                                    <option value="Snowflake">Snowflake</option>   
+                                    <option value="H2">H2</option>                                       
                                   </select>
                                 <span *ngIf="updatedbForm.get('dataBaseType').invalid && updatedbForm.get('dataBaseType').touched" class="errspan required"> Database Type Required*</span>
                             </div>
@@ -450,8 +452,8 @@
                                     Maximum of 50 characters
                                 </div>       
                             </div>
-                            <div class="col-md-12 p-0 form-group">
-                                <label class="label-control" for="password">Password<span class="star">*</span></label>
+                            <div class="col-md-12 p-0 form-group" *ngIf="!pwdflag">
+                                <label class="label-control" for="password">Password<span *ngIf="!pwdflag" class="star">*</span></label>
                                 <input [type]="passwordtype1 ? 'text': 'password'" maxlength="51" class="form-control" formControlName="password" value="" placeholder="Enter Password" passwordToggle>
                                 <span *ngIf="passwordtype1==false" (click)="passwordtype1 =!passwordtype1" class="pdicon">
                                     <img src="../../../../../assets/images/Projects/eye-show.svg"  class="testplus1">
@@ -465,8 +467,8 @@
                                 </div>  
                             </div>
                             
-                            <div class="col-md-12 p-0 form-group">
-                                <label class="label-control" for="schemaName">Schema<span class="star">*</span></label>
+                            <div class="col-md-12 p-0 form-group" *ngIf="!pwdflag">
+                                <label class="label-control" for="schemaName">Schema<span *ngIf="!pwdflag" class="star">*</span></label>
                                 <input type="text" maxlength="51" class="form-control data" formControlName="schemaName" #schemaName value="" placeholder="Enter Schema">
     
                                 <span *ngIf="(updatedbForm.get('schemaName').invalid && updatedbForm.get('schemaName').touched) && !updatedbForm.controls['schemaName'].hasError('maxlength')" class="errspan required"> Schema Required*</span>
@@ -475,7 +477,7 @@
                                 </div>  
                             </div>
 
-                            <div class="col-md-12 p-0 form-group" *ngIf="snowflakeflag">
+                            <div class="col-md-12 p-0 form-group" *ngIf="(snowflakeflag || !(h2flag))">
                                 <label class="label-control" for="role">Role</label>
                                 <input type="text" maxlength="51" class="form-control data" formControlName="role" #role value="" placeholder="Enter Role">
 

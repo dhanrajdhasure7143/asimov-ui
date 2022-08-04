@@ -19,6 +19,7 @@ export class RequestFileComponent implements OnInit {
   mindate: string;
   @Input('createRequestmodalref') public createRequestmodalref: BsModalRef;
   @Input('projectid') public projectid: BsModalRef;
+  @Input('filecategoriesList') public filecategoriesList:any[]=[];
   userslist: any;
   projectdetails: Object;
   onupdate: any;

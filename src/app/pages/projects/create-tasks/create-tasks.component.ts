@@ -25,10 +25,12 @@ export class CreateTasksComponent implements OnInit {
   bot_list: any;
   projectdetails: Object;
   taskcategories: Object;
+  task_categoriesList: any;
   approverslist: any=[];
   project_id:number;
   taskDescriptionFlag: boolean = false;
   freetrail: string;
+  _priority:any[]=["High","Medium","Low"];
   constructor(private formBuilder: FormBuilder,private spinner:NgxSpinnerService,private api:RestApiService,
     private router: Router, private route:ActivatedRoute) { }
 
@@ -54,6 +56,7 @@ export class CreateTasksComponent implements OnInit {
         this.project_id=response.project_id
         this.getallusers();
         this.getTaskCategories();
+        this.getTaskCategoriesByProject();
         this.getallpiprocess();
         this.getallbpmprocess();
         this.getallbots();
@@ -83,6 +86,9 @@ export class CreateTasksComponent implements OnInit {
     this.createtaskForm.value.percentageComplete=0;
     this.createtaskForm.value.projectId=this.project_id;
     let data=this.createtaskForm.value;
+    if(this.createtaskForm.value.taskCategory == 'As-Is Process' || this.createtaskForm.value.taskCategory == 'To-Be Process'){
+      data["process"] = this.bpm_process_list.find(each=>each.correlationID == this.createtaskForm.value.correlationID).processId
+    }
     this.api.createTask(data).subscribe(data=>{
       let response:any=data;
       this.spinner.hide();
@@ -193,5 +199,12 @@ taskDescriptionMaxLength(value){
     this.taskDescriptionFlag = false;
   }
    }
+   
+   getTaskCategoriesByProject(){
+    this.api.getTaskCategoriesByProject(this.project_id).subscribe(res=>{this.task_categoriesList = res
+      console.log(res)
 
+    })
+    
+   }
 }
