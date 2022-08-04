@@ -27,6 +27,7 @@
    /* padding:10px;  */
    width:260px !important;
    margin: auto;
+   height: 100%;
 }
 .left-panel-header{
   padding: 10px 10px;
@@ -242,11 +243,13 @@ background-color: white;
   margin-top: -3px;
 }
 .dragicons {
-  padding: 0px 10px;
+  /* padding: 0px 10px;
   overflow-y: scroll;
-  /* max-height: 60vh; */
-  max-height: 57vh;
-  white-space: nowrap; 
+  max-height: 57vh;*/
+  padding: 0px 5px 0px 12px;
+  white-space: nowrap;
+  height: calc(100% - 90px);
+  overflow: hidden auto;
 }
 span.con-text {
   font-size: 14px;

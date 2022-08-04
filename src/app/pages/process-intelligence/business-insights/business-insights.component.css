@@ -161,6 +161,7 @@ span.smalfon {
 .bpspaginationdiv {
     position: relative;
     width: 100%;
+    bottom: 0px;
 }
 .varienanal label {
     color: #000000DE;
@@ -170,5 +171,5 @@ span.smalfon {
 }
 
 .varienanal.chartinnsec {
-    height: 230px;
+    /* height: 230px; */
 }

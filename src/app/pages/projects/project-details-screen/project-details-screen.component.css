@@ -601,6 +601,7 @@ span.testtooltip:before {
 .status-data span.tab-text {
   font-size: 17px !important;
   font-weight: 500;
+  text-transform: capitalize;
 }
 .status-data span.labeltit {
   font-size: 13px !important;

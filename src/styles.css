@@ -374,6 +374,7 @@ th {
   background: #e8f7fd;
   font-size: 14px !important;
   vertical-align: middle !important;
+  text-align: left;
 }
 thead  tr,tbody tr {
   height: 40px;
@@ -2361,7 +2362,7 @@ th.mat-header-cell {
 /* RPA Module New Styles */
 .rpa-content-div {
   /* padding: 10px; */
-  overflow:  auto;
+  overflow:  hidden;
   height: calc(100% - 0px);
 }
 /* RPA Module New Styles */
