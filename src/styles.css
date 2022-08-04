@@ -2762,3 +2762,10 @@ span.pdicon {
 .overaly-innertable .testcell {
   width: calc(100% / 7 );
 }
+.process-expansion .mat-expansion-panel-body {
+  max-height: none !important;
+}
+
+.process-expansion span.mat-content .module-sub-header-title {
+  line-height: 32px !important;
+}
