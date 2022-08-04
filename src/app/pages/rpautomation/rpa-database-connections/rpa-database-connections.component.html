@@ -72,7 +72,7 @@
                 </ng-container>
                 <ng-container matColumnDef="password">
                     <th mat-header-cell *matHeaderCellDef>Password</th>
-                    <td mat-cell *matCellDef="let element"> <span *ngIf="element.password!=null">*******</span> <span *ngIf="element.password==''">-</span> </td>
+                    <td mat-cell *matCellDef="let element"> <span *ngIf="element.password!=null && element.password !='' ">*******</span> <span *ngIf="element.password=='' || element.password==null">-</span> </td>
                 </ng-container>
                 <ng-container matColumnDef="dataBaseType">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Database Type</th>
