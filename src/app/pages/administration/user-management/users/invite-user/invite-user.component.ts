@@ -96,7 +96,7 @@ form.form.markAsUntouched();
   this.spinner.show();
   let body = {
     "inviterMailId": localStorage.getItem('ProfileuserId'),
-    "inviteeMailId": this.inviteeMail,
+    "inviteeMailId": this.inviteeMail.toLowerCase( ),
     "departmentId": this.departments.toString(),
     "office365User": false,
     "redirectionUrl": this.config.platform_home_url,
@@ -110,7 +110,7 @@ form.form.markAsUntouched();
   if(office != undefined && office != null && office === 'officeUser'){
    body = {
       "inviterMailId": localStorage.getItem('ProfileuserId'),
-      "inviteeMailId": this.inviteeMail,
+      "inviteeMailId": this.inviteeMail.toLowerCase( ),
       "departmentId": this.departments.toString(),
       "office365User": true,
       "redirectionUrl": this.config.platform_home_url,
@@ -124,7 +124,7 @@ form.form.markAsUntouched();
    
    var domianArr = this.inviteeMail.split('@');
    console.log(domianArr[1]);
-   this.api.getWhiteListedDomain(domianArr[1]).subscribe(res => {
+   this.api.getWhiteListedDomain(domianArr[1].toLowerCase()).subscribe(res => {
      if(res.Message && res.Message === "White listed domain.. Please proceed with invite"){
       this.api.inviteUserwithoutReg(body).subscribe(resp => {
         if(resp.message==="User invited Successfully !!"){
