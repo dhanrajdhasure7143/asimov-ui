@@ -90,34 +90,16 @@
               <button class='icon-disabled' *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && isSave_disabled && !iscreate_notation" >
                 <img src="../../../assets/images/BPMS/Savedisabled.svg" alt="" class="defaultimg">
               </button>
-              
-              <!-- <button class="clr-hvr tsttooltipbtn" (click)="saveandSubmitApproval()" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && !isSave_disabled && !iscreate_notation">
-                <img src="../../../assets/images/BPMS/submit-for-approval.svg">
-                <span class="testtooltip">Save & Submit for approval</span>
-              </button> -->
+            
               <button class="clr-hvr tsttooltipbtn" [outsideClick]="true" *ngIf="iscreate_notation && (freetrail != 'true')" (click)="onsaveOverlayOpen()" [popover]="popTemplate" placement="bottom">
                 <img src="../../../assets/images/BPMS/submit-for-approval.svg">
                 <span class="testtooltip">Save & Submit for approval</span>
               </button>
-              <!-- <button mat-button [matMenuTriggerFor]="menu" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && !isSave_disabled && !iscreate_notation" class="clr-hvr tsttooltipbtn"><img alt=""
-                src="../../../assets/images/BPMS/submit-for-approval.svg"><span class="testtooltip">Save & Submit for
-                approval</span></button> -->
                 <button type="button" [outsideClick]="true" (click)="onsaveOverlayOpen()" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && !isSave_disabled && !iscreate_notation && (freetrail != 'true')" class="clr-hvr tsttooltipbtn"
         [popover]="popTemplate" placement="bottom">
         <img alt="" src="../../../assets/images/BPMS/submit-for-approval.svg">
         <span class="testtooltip">Save & Submit for approval</span>
 </button>
-            <!-- <mat-menu #menu="matMenu" class="custom-content">
-              <div class="form-group">
-                <label for="" class="label-control">Approval</label>
-                <select [(ngModel)]="selected_approver" [disabled]="rejectedOrApproved=='PENDING'" class="form-control">
-                  <option value="undefined" disabled hidden>Select Approver</option>
-                  <option *ngFor="let each_approver of approver_list;let i=index" [value]=i>
-                      {{each_approver.firstName+" "+each_approver.lastName}}</option>
-              </select>
-              </div>
-              <button class="btn btn-primary" (click)="onchange()">Save & Submit for Approval</button>
-            </mat-menu> -->
               <button class="icon-disabled" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && isSave_disabled && !iscreate_notation && (freetrail != 'true')">
                 <img src="../../../assets/images/BPMS/submit-for-approvaldisabled.svg">
               </button>
@@ -141,15 +123,10 @@
                     <img src="../../../assets/images/BPMS/difference.svg">
                     <span class="testtooltip">Show Differences</span>
                   </button>
-              
-              <!-- <button class="clr-hvr" matTooltip="Refresh" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below"><img src="../../../assets/images/BPMS/refresh.svg"></button>
-              <button class="clr-hvr" matTooltip="Delete" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below"><img src="../../../assets/images/BPMS/Delete.svg"></button> -->
-              <!-- <button class="upload-btn bps-upload"><img src="../../../assets/images/BPMS/upload.svg">Upload Again</button> -->
               <ngx-dropzone *ngIf="(!isShowConformance && rejectedOrApproved !='PENDING') || (isShowConformance && ((reSize && isConfNavigation)||hasConformance)) && rejectedOrApproved !='PENDING' || (isUploaded && rejectedOrApproved !='PENDING')" class="upload_again_btn" (change)="UploadFile($event)" [multiple]=false [accept]="'.'+selectedNotationType">
                 <ngx-dropzone-label>
                   <button class="upload-btn bps-upload" *ngIf="!isfromApprover && !iscreate_notation"><img src="../../../assets/images/BPMS/upload.svg" *ngIf="!isfromApprover">Upload Again</button>  
                   <button class="upload-btn bps-upload" *ngIf="!isfromApprover && iscreate_notation"><img src="../../../assets/images/BPMS/upload.svg" *ngIf="!isfromApprover">Upload</button>  
-                  <!-- <button class="btn btn-primary eiap-btn"  *ngIf="!isfromApprover">Upload Again</button> -->
                 </ngx-dropzone-label>
               </ngx-dropzone>
             </div>  
@@ -183,8 +160,6 @@
           <option *ngFor="let each_approver of processowner_list;let i=index" [value]=i>
               {{each_approver.firstName|titlecase}}  {{each_approver.lastName?each_approver.lastName:''}}</option>
       </select>
-      <!-- <span *ngIf="((powner.invalid && processOwner.submitted) || (powner.errors && powner.touched) )" 
-      class='errspan required'> Please Select Process Owner </span> -->
   </div>
   
     <div class="form-group">
@@ -197,7 +172,6 @@
     </select>
     </div>
     <div class="custom-footer-content">
-      <!-- <button class="btn btn-default">Cancel</button> -->
       <button class="btn btn-primary" (click)="saveandSubmit()">Save & Submit for Approval</button>
     </div>  
   </div>

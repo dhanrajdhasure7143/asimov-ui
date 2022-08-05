@@ -511,7 +511,6 @@ export class UploadComponent implements OnInit {
   }
 
   onGraphSelection(selectedpiIdData) {    // View selected graph on workspace
-    console.log(selectedpiIdData)
     if(selectedpiIdData.status == "Inprogress"){
       Swal.fire({
         position: 'center',

@@ -3,11 +3,8 @@ import * as Highcharts from 'highcharts';
 import { RestApiService } from '../../services/rest-api.service';
 import HC_more from 'highcharts/highcharts-more' //module
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
-
 import { Router, ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
-import * as d3 from 'd3';
-import {curveBasis} from 'd3-shape';
 import { DataTransferService } from '../../services/data-transfer.service';
 import { PiHints } from '../model/process-intelligence-module-hints';
 import { GlobalScript } from 'src/app/shared/global-script';
@@ -115,7 +112,6 @@ export class ProcessinsightsComponent implements OnInit {
   rotateXAxisTicks:boolean = true;
   trimXAxisTicks:boolean = true;
   autoScale: boolean = true;
-  curve:any = curveBasis;
 
 
 //   bubble chart
@@ -221,9 +217,6 @@ yScaleMin_duration: number = 0;
         if(localStorage.getItem("robotCost")){
             this.robotinput = localStorage.getItem("robotCost");
         }
-        this.dt.changeParentModule({ "route": "/pages/processIntelligence/upload", "title": "Process Intelligence" });
-        this.dt.changeChildModule({ "route": "/pages/processIntelligence/insights", "title": "Insights" });
-        this.dt.changeHints(this.hints.insightsHints);
         var piId;
         this.route.queryParams.subscribe(params => {
             if (params['wpid'] != undefined) {
@@ -286,7 +279,6 @@ yScaleMin_duration: number = 0;
     getDurationCall() {
         var reqObj = {
             pid: this.graphIds,
-            //pid:'671229',
             data_type: 'variant_metrics',
             "workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+this.workingHours.shiftEndTime+":00"
         }
@@ -704,7 +696,6 @@ yScaleMin_duration: number = 0;
                 this.bubbleData1 = [{name:"", series: this.activityData}];
                 }, 500);
             }
-           // this.addchart2();
     }
 
     getHours3(millisec) {
@@ -743,289 +734,6 @@ yScaleMin_duration: number = 0;
         return this.timeConversion(milliseconds);
     }
 
-    addcharts() {
-        this.chart1 = {
-            chart: {
-                type: 'spline',
-                scrollablePlotArea: {
-                    minWidth: 600,
-                    scrollPositionX: 1
-                }
-            },
-            title: {
-                text: 'Human Cost Vs Bot Cost',
-                align: 'center'
-            },
-            xAxis: {
-                labels: {
-                    overflow: 'justify'
-                },
-                categories: this.caseIDs
-            },
-            yAxis: {
-                title: {
-                    text: '',
-                    labels: {
-                        overflow: 'justify'
-                    }
-                },
-                minorGridLineWidth: 0,
-                gridLineWidth: 1,
-                alternateGridColor: null,
-            },
-            tooltip: {
-                valuePrefix: '$',
-                crosshairs: true,
-                shared: true,
-            },
-            plotOptions: {
-                spline: {
-                    lineWidth: 4,
-                    states: {
-                        hover: {
-                            lineWidth: 5
-                        }
-                    },
-                    marker: {
-                        enabled: true
-                    },
-                }
-            },
-            series: [{
-                name: 'Human Cost',
-                data: this.humanCost
-            }, {
-                name: 'Bot Cost',
-                data: this.robotCost
-            }],
-            navigation: {
-                menuItemStyle: {
-                    fontSize: '10px'
-                }
-            }
-        }
-        Highcharts.chart('costprojection', this.chart1);
-    }
-
-    verticleBarGraph() {
-        this.verticleGraph = {
-            title: {
-                text: 'Activity Based Human and Bot Cost'
-            },
-            xAxis: {
-                type: 'category',
-                categories: this.list_Activites,
-
-                labels: {
-                    staggerLines: 2
-                }
-            },
-            yAxis: {
-                title: {
-                    text: 'Price'
-                }
-            },
-            tooltip: {
-                valuePrefix: '$'
-            },
-            labels: {
-                items: [{
-                    style: {
-                        left: '50px',
-                        top: '18px',
-                        color: ( // theme
-                            Highcharts.defaultOptions.title.style &&
-                            Highcharts.defaultOptions.title.style.color
-                        ) || 'black'
-                    }
-                }]
-            },
-            series: [{
-                type: 'column',
-                name: 'Human Cost',
-                data: this.activityHumanCost
-            }, {
-                type: 'spline',
-                name: 'Bot Cost',
-                data: this.activityBotCost,
-                marker: {
-                    lineWidth: 2,
-                    lineColor: Highcharts.getOptions().colors[3],
-                    fillColor: 'white'
-                }
-            }
-            ]
-        };
-
-        Highcharts.chart('barGraph', this.verticleGraph);
-    }
-
-
-    addchart2() {
-        this.chart2 = {
-            chart: {
-                type: 'bubble',
-                plotBorderWidth: 1,
-                zoomType: 'xy'
-            },
-
-            legend: {
-                enabled: false
-            },
-
-            title: {
-                text: 'Activity vs Occurences'
-            },
-            subtitle: {
-                // text: 'Source: <a href="http://www.euromonitor.com/">Euromonitor</a> and <a href="https://data.oecd.org/">OECD</a>'
-            },
-            xAxis: {
-                title: {
-                    text: 'Activity'
-                },
-                plotLines: [{
-                    width: 2,
-                    label: {
-                        rotation: 0,
-                        y: 15,
-                        style: {
-                            fontStyle: 'italic'
-                        },
-                        // text: 'Safe fat intake 65g/day'
-                    },
-                    zIndex: 3
-                }],
-            },
-
-            yAxis: {
-                startOnTick: false,
-                endOnTick: false,
-                title: {
-                    text: 'Occurance'
-                },
-                maxPadding: 0.2,
-                plotLines: [{
-                    color: 'black',
-                    width: 2,
-                    label: {
-                        align: 'right',
-                        style: {
-                            fontStyle: 'italic'
-                        },
-                        x: -10
-                    },
-                    zIndex: 3
-                }],
-            },
-
-            tooltip: {
-                useHTML: true,
-                headerFormat: '<table>',
-                pointFormat: '<tr><th colspan="2"><small>{point.name}</small></th></tr>' +
-                    '<tr><th>{point.title}:</th><td>{point.event_duration}</td></tr>',
-                footerFormat: '</table>',
-                followPointer: true
-            },
-
-            plotOptions: {
-                series: {
-                    dataLabels: {
-                        enabled: true,
-                        format: '<small>{point.fullname}</small>',
-                        color: '#ffffff'
-
-                    },
-                    style: {
-                        fontSize: '14px'
-                    },
-                    allowDecimals: true,
-                    color: this.bubbleColor
-                }
-            },
-
-            series: [{
-                data: this.activityData,
-            }
-            ]
-        }
-        Highcharts.chart('scatter', this.chart2);
-    }
-
-    addpiechart1(content) {
-        this.piechart1 = {
-            chart: {
-                plotBackgroundColor: null,
-                plotBorderWidth: null,
-                plotShadow: false,
-                type: 'pie'
-            },
-            title: {
-                text: 'Total Resource Duration By Activity'
-            },
-            tooltip: {
-                pointFormat: '{series.name}: <b>{point.y:.1f} Hrs</b>'
-            },
-            accessibility: {
-                point: {
-                    valueSuffix: '%'
-                }
-            },
-            plotOptions: {
-                pie: {
-                    allowPointSelect: true,
-                    cursor: 'pointer',
-                    dataLabels: {
-                        enabled: true,
-                        format: '<b>{point.name}</b>: {point.y:.1f} Hrs'
-                    }
-                }
-            },
-            series: [{
-                name: 'Activity Frequency',
-                colorByPoint: true,
-                data: content
-            }]
-        }
-        Highcharts.chart('piechart1', this.piechart1);
-    }
-
-    addpiechart2(content) {
-        this.piechart2 = {
-            chart: {
-                plotBackgroundColor: null,
-                plotBorderWidth: null,
-                plotShadow: false,
-                type: 'pie'
-            },
-            title: {
-                text: 'Total Resource Cost By Activity',
-                center: true
-            },
-            tooltip: {
-                pointFormat: '{series.name}: <b>${point.y:.1f}</b>'
-            },
-            accessibility: {
-                point: {
-                    valueSuffix: '%'
-                }
-            },
-            plotOptions: {
-                pie: {
-                    allowPointSelect: true,
-                    cursor: 'pointer',
-                    dataLabels: {
-                        enabled: true,
-                        format: '<b>{point.name}</b>: ${point.y:.1f}'
-                    }
-                }
-            },
-            series: [{
-                name: 'Activity Cost',
-                colorByPoint: true,
-                data: content
-            }]
-        }
-    }
 
     openVariantListNav() {   //variant list open
         document.getElementById("mySidenav").style.width = "310px";
@@ -1225,533 +933,6 @@ yScaleMin_duration: number = 0;
         this.selectedResources=[];
     }
 
-    switch1(data) {
-        if (data == "bar") {
-            this.flag1 = 0
-            this.verticleBarGraph();
-        } else if (data == "pie") {
-            this.flag1 = 1;
-            this.swithToPeiCart()
-        }
-    }
-
-    swithToPeiCart() {
-        this.piechart3 = {
-            chart: {
-                plotBackgroundColor: null,
-                plotBorderWidth: null,
-                plotShadow: false,
-                type: 'pie'
-            },
-            title: {
-                text: 'Browser market shares in January, 2018'
-            },
-            tooltip: {
-                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-            },
-            accessibility: {
-                point: {
-                    valueSuffix: '%'
-                }
-            },
-            plotOptions: {
-                pie: {
-                    allowPointSelect: true,
-                    cursor: 'pointer',
-                    dataLabels: {
-                        enabled: true,
-                        format: '<b>{point.name}</b>: {point.percentage:.1f} %'
-                    }
-                }
-            },
-            series: [{
-                name: 'Brands',
-                colorByPoint: true,
-                data: [{
-                    name: 'Chrome',
-                    y: 61.41,
-                    sliced: true,
-                    selected: true
-                }, {
-                    name: 'Internet Explorer',
-                    y: 11.84
-                }, {
-                    name: 'Firefox',
-                    y: 10.85
-                }, {
-                    name: 'Edge',
-                    y: 4.67
-                }, {
-                    name: 'Safari',
-                    y: 4.18
-                }, {
-                    name: 'Sogou Explorer',
-                    y: 1.64
-                }, {
-                    name: 'Opera',
-                    y: 1.6
-                }, {
-                    name: 'QQ',
-                    y: 1.2
-                }, {
-                    name: 'Other',
-                    y: 2.61
-                }]
-            }]
-        }
-        Highcharts.chart('barGraph', this.piechart3);
-    }
-    switchTostackedBar(value) {
-        if (value == "stackedbar") {
-            this.isstackedbarChart = true
-            this.scatterBarchart()
-        } else {
-            this.isstackedbarChart = false
-        }
-    }
-
-    switchTostackedBar1(value) {
-        if (value == "stackedbar") {
-            this.isstackedbarChart1 = true
-            this.scatterBarchart1()
-        } else {
-            this.isstackedbarChart1 = false
-            // this.addpiechart2([])
-        }
-    }
-    scatterBarchart() {
-        this.stackedChart = {
-            chart: {
-                type: 'column'
-            },
-            title: {
-                text: 'Stacked column chart'
-            },
-            xAxis: {
-                categories: ['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas']
-            },
-            yAxis: {
-                min: 0,
-                title: {
-                    text: 'Total fruit consumption'
-                },
-                stackLabels: {
-                    enabled: true,
-                    style: {
-                        fontWeight: 'bold',
-                        color: ( // theme
-                            Highcharts.defaultOptions.title.style &&
-                            Highcharts.defaultOptions.title.style.color
-                        ) || 'gray'
-                    }
-                }
-            },
-            legend: {
-                align: 'right',
-                x: -30,
-                verticalAlign: 'top',
-                y: 25,
-                floating: true,
-                backgroundColor:
-                    Highcharts.defaultOptions.legend.backgroundColor || 'white',
-                borderColor: '#CCC',
-                borderWidth: 1,
-                shadow: false
-            },
-            tooltip: {
-                headerFormat: '<b>{point.x}</b><br/>',
-                pointFormat: '{series.name}: {point.y}<br/>Total: {point.stackTotal}'
-            },
-            plotOptions: {
-                column: {
-                    stacking: 'normal',
-                    dataLabels: {
-                        enabled: true
-                    }
-                }
-            },
-            series: [{
-                name: 'John',
-                data: [5, 3, 4, 7, 2]
-            }, {
-                name: 'Jane',
-                data: [2, 2, 3, 2, 1]
-            }, {
-                name: 'Joe',
-                data: [3, 4, 4, 2, 5]
-            }]
-        }
-        Highcharts.chart('piechart1', this.stackedChart);
-    }
-    scatterBarchart1() {
-        this.stackedChart = {
-            chart: {
-                type: 'column'
-            },
-            title: {
-                text: 'Stacked column chart'
-            },
-            xAxis: {
-                categories: ['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas']
-            },
-            yAxis: {
-                min: 0,
-                title: {
-                    text: 'Total fruit consumption'
-                },
-                stackLabels: {
-                    enabled: true,
-                    style: {
-                        fontWeight: 'bold',
-                        color: ( // theme
-                            Highcharts.defaultOptions.title.style &&
-                            Highcharts.defaultOptions.title.style.color
-                        ) || 'gray'
-                    }
-                }
-            },
-            legend: {
-                align: 'right',
-                x: -30,
-                verticalAlign: 'top',
-                y: 25,
-                floating: true,
-                backgroundColor:
-                    Highcharts.defaultOptions.legend.backgroundColor || 'white',
-                borderColor: '#CCC',
-                borderWidth: 1,
-                shadow: false
-            },
-            tooltip: {
-                headerFormat: '<b>{point.x}</b><br/>',
-                pointFormat: '{series.name}: {point.y}<br/>Total: {point.stackTotal}'
-            },
-            plotOptions: {
-                column: {
-                    stacking: 'normal',
-                    dataLabels: {
-                        enabled: true
-                    }
-                }
-            },
-            series: [{
-                name: 'John',
-                data: [5, 3, 4, 7, 2]
-            }, {
-                name: 'Jane',
-                data: [2, 2, 3, 2, 1]
-            }, {
-                name: 'Joe',
-                data: [3, 4, 4, 2, 5]
-            }]
-        }
-        Highcharts.chart('piechart2', this.stackedChart);
-    }
-
-
-    getDonutChart2(data){
-        this.dChart2 = {
-            chart: {
-                type: 'pie',
-                options3d: {
-                    enabled: true,
-                    alpha: 45
-                }
-            },
-            title: {
-                text: 'Total Resource Cost By Activity'
-            },
-            subtitle: {
-                text: ''
-            },
-            plotOptions: {
-                pie: {
-                    innerSize: 60,
-                    depth: 45
-                }
-            },
-            series: [{
-                name: 'Activity Cost',
-                data: data
-            }]
-        }
-        Highcharts.chart('piechart2', this.dChart2);
-    }
-
-    getDonutChart1(data){
-        this.dChart1 = {
-            chart: {
-                type: 'pie',
-                options3d: {
-                    enabled: true,
-                    alpha: 45
-                }
-            },
-            title: {
-                text: 'Total Resource Duration By Activity'
-            },
-            subtitle: {
-                text: ''
-            },
-            plotOptions: {
-                pie: {
-                    innerSize: 60,
-                    depth: 45
-                }
-            },
-            series: [{
-                name: 'Activity Duration(hrs)',
-                data: data
-            }]
-        }
-        Highcharts.chart('piechart1', this.dChart1);
-    }
-
-    loadPeiChart1(data1,colorValues){
-        var width = 450
-        var height = 350
-        var margin = 80
-    
-    // The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
-    var radius = Math.min(width, height) / 2 - margin
-    
-    // append the svg object to the div called 'my_dataviz'
-    d3.select("#piechart1").select('svg').remove()
-    var svg = d3.select("#piechart1")
-      .append("svg")
-        .attr("width", width)
-        .attr("height", height)
-      .append("g")
-        .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-    
-    // Create dummy data
-    var data = data1[0]
-    
-    // set the color scale
-    var color = d3.scaleOrdinal()
-      .domain(colorValues)
-      .range(d3.schemeDark2);
-    
-    // Compute the position of each group on the pie:
-    var pie = d3.pie()
-      .sort(null) // Do not sort group by size
-      .value(function(d) {return d.value; })
-    var data_ready = pie(d3.entries(data))
-    
-    // The arc generator
-    var arc = d3.arc()
-      .innerRadius(radius * 0.5)         // This is the size of the donut hole
-      .outerRadius(radius * 0.8)
-    
-    // Another arc that won't be drawn. Just for labels positioning
-    var outerArc = d3.arc()
-      .innerRadius(radius * 0.9)
-      .outerRadius(radius * 0.9)
-    
-    // Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
-    svg
-      .selectAll('allSlices')
-      .data(data_ready)
-      .enter()
-      .append('path')
-      .attr('d', arc)
-      .attr('fill', function(d){ return(color(d.data.key)) })
-      .attr("stroke", "white")
-      .style("stroke-width", "2px")
-      .style("opacity", 0.7)
-      .on("mouseover", function (d) {
-        
-    d3.select("#pietooltip")
-        .style("left", (d3.event.pageX) + "px")
-        .style("top", (d3.event.pageY) + "px")
-        .style("display", "block")
-        .select("#value")
-        .text(d.data.value);
-
-         d3.select("#tooltip_head")
-        .text(d.data.key)
-    })
-    .on("mouseout", function () {
-    // Hide the tooltip
-    d3.select("#pietooltip")
-        .style("display", "none");
-    });
-    
-    // Add the polylines between chart and labels:
-    svg
-      .selectAll('allPolylines')
-      .data(data_ready)
-      .enter()
-      .append('polyline')
-        .attr("stroke", "black")
-        .style("fill", "none")
-        .attr("stroke-width", 1)
-        .attr('points', function(d) {
-          var posA = arc.centroid(d) // line insertion in the slice
-          var posB = outerArc.centroid(d) // line break: we use the other arc generator that has been built only for that
-          var posC = outerArc.centroid(d); // Label position = almost the same as posB
-          var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2 // we need the angle to see if the X position will be at the extreme right or extreme left
-          posC[0] = radius * 0.95 * (midangle < Math.PI ? 1 : -1); // multiply by 1 or -1 to put it on the right or on the left
-          return [posA, posB, posC]
-        })
-    
-    // Add the polylines between chart and labels:
-    svg
-      .selectAll('allLabels')
-      .data(data_ready)
-      .enter()
-      .append('text')
-        .text( function(d) { return d.data.key } )
-        .attr('transform', function(d) {
-            var pos = outerArc.centroid(d);
-            var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
-            pos[0] = radius * 0.99 * (midangle < Math.PI ? 1 : -1);
-            return 'translate(' + pos + ')';
-        })
-        .style('text-anchor', function(d) {
-            var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
-            return (midangle < Math.PI ? 'start' : 'end')
-        }).on("mouseover", function (d) {
-            
-        d3.select("#pietooltip")
-            .style("left", (d3.event.pageX) + "px")
-            .style("top", (d3.event.pageY) + "px")
-            .style("display", "block")
-            .select("#value")
-            .text(d.data.value);
-
-             d3.select("#tooltip_head")
-            .text(d.data.key)
-        })
-        .on("mouseout", function () {
-        // Hide the tooltip
-        d3.select("#pietooltip")
-            .style("display", "none");
-        });
-        
-            }
-
-loadPeiChart2(data1,colorValues){
-    var width = 450
-    var height = 340
-    var margin = 80
-
-// The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
-var radius = Math.min(width, height) / 2 - margin
-
-// append the svg object to the div called 'my_dataviz'
-d3.select("#piechart2").select('svg').remove()
-var svg = d3.select("#piechart2")
-  .append("svg")
-    .attr("width", width)
-    .attr("height", height)
-  .append("g")
-    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-
-// Create dummy data
-var data = data1[0]
-
-// set the color scale
-var color = d3.scaleOrdinal()
-  .domain(colorValues)
-  .range(d3.schemeDark2);
-
-// Compute the position of each group on the pie:
-var pie = d3.pie()
-  .sort(null) // Do not sort group by size
-  .value(function(d) {return d.value; })
-var data_ready = pie(d3.entries(data))
-
-// The arc generator
-var arc = d3.arc()
-  .innerRadius(radius * 0.5)         // This is the size of the donut hole
-  .outerRadius(radius * 0.8)
-
-// Another arc that won't be drawn. Just for labels positioning
-var outerArc = d3.arc()
-  .innerRadius(radius * 0.9)
-  .outerRadius(radius * 0.9)
-
-// Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
-svg
-  .selectAll('allSlices')
-  .data(data_ready)
-  .enter()
-  .append('path')
-  .attr('d', arc)
-  .attr('fill', function(d){ return(color(d.data.key)) })
-  .attr("stroke", "white")
-  .style("stroke-width", "2px")
-  .style("opacity", 0.7)
-  .on("mouseover", function (d) {
-    d3.select("#pietooltip1")
-    .style("left", (d3.event.pageX) + "px")
-    .style("top", (d3.event.pageY) + "px")
-    .style("display", "block")
-    .select("#value1")
-    .text(d.data.value);
-
-     d3.select("#tooltip_head1")
-    .text(d.data.key)
-})
-.on("mouseout", function () {
-// Hide the tooltip
-d3.select("#pietooltip1")
-    .style("display", "none");
-});
-
-// Add the polylines between chart and labels:
-svg
-  .selectAll('allPolylines')
-  .data(data_ready)
-  .enter()
-  .append('polyline')
-    .attr("stroke", "black")
-    .style("fill", "none")
-    .attr("stroke-width", 1)
-    .attr('points', function(d) {
-      var posA = arc.centroid(d) // line insertion in the slice
-      var posB = outerArc.centroid(d) // line break: we use the other arc generator that has been built only for that
-      var posC = outerArc.centroid(d); // Label position = almost the same as posB
-      var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2 // we need the angle to see if the X position will be at the extreme right or extreme left
-      posC[0] = radius * 0.95 * (midangle < Math.PI ? 1 : -1); // multiply by 1 or -1 to put it on the right or on the left
-      return [posA, posB, posC]
-    })
-
-// Add the polylines between chart and labels:
-svg
-  .selectAll('allLabels')
-  .data(data_ready)
-  .enter()
-  .append('text')
-    .text( function(d) { return d.data.key } )
-    .attr('transform', function(d) {
-        var pos = outerArc.centroid(d);
-        var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
-        pos[0] = radius * 0.99 * (midangle < Math.PI ? 1 : -1);
-        return 'translate(' + pos + ')';
-    })
-    .style('text-anchor', function(d) {
-        var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
-        return (midangle < Math.PI ? 'start' : 'end')
-    })
-    .on("mouseover", function (d) {
-        d3.select("#pietooltip1")
-        .style("left", (d3.event.pageX) + "px")
-        .style("top", (d3.event.pageY) + "px")
-        .style("display", "block")
-        .select("#value1")
-        .text(d.data.value);
-    
-         d3.select("#tooltip_head1")
-        .text(d.data.key)
-        })
-        .on("mouseout", function () {
-        // Hide the tooltip
-        d3.select("#pietooltip1")
-            .style("display", "none");
-        });
-    }
     openHrsOverLay(){
         this.isAddHrs=!this.isAddHrs
     }
@@ -1767,10 +948,8 @@ svg
             "workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+this.workingHours.shiftEndTime+":00"
             }
             let bi_data:any
-           // this.spinner.show();
         this.rest.getBIinsights(reqObj).subscribe((res: any) => {
         bi_data=res
-        // if(bi_data.data){
             let bi_data1=bi_data.data.maximumDays;
             let bi_data2=bi_data.data.minimumDays;
             this.biDataMaxDays=bi_data1.max_days
@@ -1788,22 +967,16 @@ svg
             }else{
                 this.biDataMinPerct=bi_data2.min_percent
             }
-        // }
-       // this.spinner.hide();
             
         })
     }
 
-    // loopTrackBy(index, term){
-    //     return index;
-    //   }
     ActivityTimeChart(){
         this.dChart1.sort(function (a,b){
             return b.value - a.value
         })
         am4core.useTheme(am4themes_animated);
         // Themes end
-        
         var chart = am4core.create("pie_chart1", am4charts.PieChart);
         chart.hiddenState.properties.opacity = 0; // this creates initial fade-in
         chart.legend = new am4charts.Legend();
@@ -1811,42 +984,23 @@ svg
         var marker = chart.legend.markers.template.children.getIndex(0);
         marker.width = 18;
         marker.height = 18;
-        // marker.cornerRadius(0, 0, 0, 0);
         marker.strokeWidth = 2;
         marker.strokeOpacity = 1;        
         marker.stroke = am4core.color("#ccc");
         chart.legend.scrollable = true;
         chart.legend.fontSize = 12;
-  
-        // chart.data=data;
         chart.data=this.dChart1;
-  
         chart.legend.position = "right";
         chart.legend.valign = "middle";
         chart.innerRadius = 70;
         var label = chart.seriesContainer.createChild(am4core.Label);
-          // label.text = "230,900 Sales";
-        // label.horizontalCenter = "middle";
-        // label.verticalCenter = "middle";
         label.fontSize = 18;
         var series = chart.series.push(new am4charts.PieSeries());
         series.dataFields.value = "value";
         series.dataFields.category = "name";
         series.labels.template.disabled = true;
-        // series.slices.template.cornerRadius = 0;
-        // series.tooltip.horizontalCenter = "middle";
-        // series.tooltip.verticalCenter = "middle";
-        // series.tooltip.fontSize=18;
-        // series.tooltipText = ' {name} ({_dataContext.totalDuration1})';
-        // series.slices.template.tooltipText = "{parent.parent.name} {parent.name} > {name} ({value})";
-        // series.columns.template.tooltipText = " caseId : {categoryX} \n  Duration : {valueY}[/] ";
-        // series.tooltip.text = " caseId";
-        // series.adapter.add("tooltipText", function(text, target) {
-        //   return "{_dataContext.activity} \n {_dataContext.totalDuration1}";
-        // });
         var _self=this;
         series.slices.template.adapter.add("tooltipText", function(text, target) {
-          // var text=_self.getTimeConversion('{_dataContext.totalDuration}');
           return "{_dataContext.name} \n {_dataContext.label}";
         });
         $('g:has(> g[stroke="#3cabff"])').hide();
@@ -1882,7 +1036,6 @@ svg
         })
         am4core.useTheme(am4themes_animated);
         // Themes end
-        
         var chart = am4core.create("pie_chart2", am4charts.PieChart);
         chart.hiddenState.properties.opacity = 0; // this creates initial fade-in
         chart.legend = new am4charts.Legend();
@@ -1890,42 +1043,23 @@ svg
         var marker = chart.legend.markers.template.children.getIndex(0);
         marker.width = 18;
         marker.height = 18;
-        // marker.cornerRadius(0, 0, 0, 0);
         marker.strokeWidth = 2;        
         marker.strokeOpacity = 1;
         marker.stroke = am4core.color("#fff");
         chart.legend.scrollable = true;
         chart.legend.fontSize = 12;
-  
-        // chart.data=data;
         chart.data=this.dChart2;
-  
         chart.legend.position = "right";
         chart.legend.valign = "middle";
         chart.innerRadius = 70;
         var label = chart.seriesContainer.createChild(am4core.Label);
-          // label.text = "230,900 Sales";
-        // label.horizontalCenter = "middle";
-        // label.verticalCenter = "middle";
         label.fontSize = 18;
         var series = chart.series.push(new am4charts.PieSeries());
         series.dataFields.value = "value";
         series.dataFields.category = "name";
         series.labels.template.disabled = true;
-        // series.slices.template.cornerRadius = 0;
-       // series.tooltip.horizontalCenter = "middle";
-        // series.tooltip.verticalCenter = "middle";
-        // series.tooltip.fontSize=18;
-        // series.tooltipText = ' {name} ({_dataContext.totalDuration1})';
-        // series.slices.template.tooltipText = "{parent.parent.name} {parent.name} > {name} ({value})";
-        // series.columns.template.tooltipText = " caseId : {categoryX} \n  Duration : {valueY}[/] ";
-        // series.tooltip.text = " caseId";
-        // series.adapter.add("tooltipText", function(text, target) {
-        //   return "{_dataContext.activity} \n {_dataContext.totalDuration1}";
-        // });
         var _self=this;
         series.slices.template.adapter.add("tooltipText", function(text, target) {
-          // var text=_self.getTimeConversion('{_dataContext.totalDuration}');
           return "{_dataContext.name} \n {_dataContext.label}";
         });
         series.labels.template.text = "{_dataContext.label}";
