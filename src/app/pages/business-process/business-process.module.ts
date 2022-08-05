@@ -26,13 +26,6 @@ import { NgbModalDraggableModule } from 'ngb-modal-draggable'
 import {MatPaginatorModule} from '@angular/material/paginator';
 import{FilterPipe} from './custom_filter.pipe';
 import { ModalModule } from 'ngx-bootstrap/modal';
-// import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
-// import 'highlightjs-line-numbers.js';
-// import hljs from 'highlight.js/lib/core';
-// import xml from 'highlight.js/lib/languages/xml';
-// hljs.registerLanguage('xml', xml);
-// import hljs from '../../../../node_modules/highlight.js/lib/core';
-// document.defaultView['hljs'] = hljs;
 import { PopoverModule } from 'ngx-bootstrap/popover'
 import { MatSortModule } from '@angular/material';
 import { BpsDataSaveGuard } from 'src/app/guards/bps-data-save.guard';
@@ -60,19 +53,8 @@ import { BpsDataSaveGuard } from 'src/app/guards/bps-data-save.guard';
     PopoverModule.forRoot(),
     MatSortModule,
     NgbModalDraggableModule
-    // HighlightModule
   ],
-  providers: [BpsDataSaveGuard,
-    // {
-    //   provide: HIGHLIGHT_OPTIONS,
-    //   useValue: {
-    //     coreLibraryLoader: () => import('highlight.js/lib/core'),
-    //     lineNumbersLoader: () => import('highlightjs-line-numbers.js'), // Optional, only if you want the line numbers
-    //     languages: {
-    //       xml: () => import('highlight.js/lib/languages/xml')}
-    //   }
-    // },
-    BpsHints, 
+  providers: [BpsDataSaveGuard,BpsHints, 
     {
       provide: MatPaginatorIntl, 
       useClass: CustomMatPaginatorIntl

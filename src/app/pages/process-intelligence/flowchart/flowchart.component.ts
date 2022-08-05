@@ -1,7 +1,6 @@
 import { Component, OnInit, AfterViewInit,ViewChild,EventEmitter,ElementRef, Renderer2,Output ,HostListener} from '@angular/core';
 import { Options } from 'ng5-slider';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ProcessGraphModel } from '../model/process-graph-flowchart-model';
 import { DataTransferService } from '../../services/data-transfer.service';
 import { SharebpmndiagramService } from '../../services/sharebpmndiagram.service';
 import { PiHints } from '../model/process-intelligence-module-hints';
@@ -32,14 +31,11 @@ enum VariantList {
   selector: 'app-flowchart',
   templateUrl: './flowchart.component.html',
   styleUrls: ['./flowchart.component.css'],
-  providers: [ProcessGraphModel]
 })
 export class FlowchartComponent implements OnInit {
   public select_varaint: any = 0;
   public model1;
   public model2;
-  public data = (this.pgModel.data);
-  public reports = this.pgModel.reports;
   public filterLength: number;
   public dataValues: any=[];
   public varaint_data: any=[];
@@ -159,7 +155,6 @@ pi_fullGraph_data:any=[];
   constructor(private dt: DataTransferService,
     private router: Router,
     private bpmnservice: SharebpmndiagramService,
-    private pgModel: ProcessGraphModel,
     private hints: PiHints,
     private spinner: NgxSpinnerService,
     private rest:RestApiService,
