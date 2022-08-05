@@ -8,16 +8,7 @@
                 <span *ngIf="node.name!='START' && node.name !='STOP'" class="node-delete" (click)="deletenode(node)"><img src="../../../../assets/images/RPA/close-circle-fill.svg"></span>
                 <div class="connector-name" *ngIf="node.selectedNodeTask==''">{{node.name}} </div>
                 <div class="connector-name" *ngIf="node.selectedNodeTask!=''">{{node.selectedNodeTask}}</div>
-                <!--This is task menu which is disabled for now, If we get any requirment we can enable it-->
-                <!-- <div *ngIf="selectedNode.id==node.id && optionsVisible" class="node_tooltip">
-                    <nav id="context-menu" class="context-menu contextmenu">
-                        <div class="context-menu1">
-                            <div class="context-menu__item" *ngFor="let menu of stud">
-                                <a class="context-menu__link" id="{{menu.name}}" (click)="callFunction(menu,node)" data-action="View">{{menu.name}}</a>
-                            </div>
-                        </div>
-                    </nav>
-                </div> -->
+              
                 <div [id]="'output_'+node.id" *ngIf="finalbot.botId!=undefined && node.selectedNodeTask=='Output Box' && (node | Checkoutputbox : finalbot) " style="display:none" class="node_tooltip">
                     <nav id="context-menu" class="context-menu contextmenu">
                         <div class="context-menu1">
@@ -38,24 +29,7 @@
     </div>
   </div>
 
-    <!-- <div *ngIf="hiddenPopUp" class="rpa-modal dynamic-forms-modal" style="display: block;">
-      <div class="rpa-modal-content">
-          <div class="rpa-modal-header">
-            <span class="rpa-modal-close" (click)="closeFun()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
-            <h4>{{formHeader}}</h4>
-          </div>
-          <div class="modal-body actions-mbody"  *ngIf="form_change">
 
-            <app-dynamic-forms [fields]="getFields()" [multiarray]="multiarray" [formheader]="formHeader" [enableMultiForm]="enableMultiForm" (Submit)="submitform($event)"  (onSubmit)="onFormSubmit($event)"></app-dynamic-forms>
-              
-          </div>
-      </div>
-  </div> -->
-
-  <!-- <as-split direction="horizontal" (gutterClick)="onFullScreen($event)" [useTransition]="true">
-    <as-split-area [size]="spilt_size">
-    </as-split-area>
-    <as-split-area [size]="spilt_size1" minSize="200"> -->
 
 <div class="own-overlay rpa-modal dynamic-forms-modal" *ngIf="hiddenPopUp" style="display: block;">
     <as-split direction="horizontal" [useTransition]="true" (dragEnd)="onDragEnd($event)" #splitEl>
@@ -117,11 +91,7 @@
             </div>
 
             <div class="row" *ngIf="SelectedOutputType=='Table' && outputboxresult!=undefined">
-                <!-- <div class="col-md-12">
-                    <button class="btn btn-primary eiap-btn" style="float: right" (click)="outputlayoutback()">
-                        <i class="fa fa-arrow-left" aria-hidden="true"></i> back
-                    </button>
-                </div> -->
+           
                 <div class="col-md-12">
                     <table class="table logs-table">
                         <thead>
@@ -144,11 +114,7 @@
             </div>
 
             <div class="row" *ngIf="SelectedOutputType=='Text' && outputboxresult!=undefined">
-                <!-- <div class="col-md-12">
-                    <button style="float: right" class="btn btn-primary eiap-btn" data-placement="bottom" tooltip="Back" (click)="outputlayoutback()">
-                        <i class="fa fa-arrow-left"></i>&nbsp;back
-                    </button>
-                </div> -->
+             
                 <div class="col-md-12 form-group">
                     <textarea [id]="'text_'+outputboxid" disabled class="form-control" rows="6" style="resize:none;"></textarea>                       
                 </div>
@@ -159,9 +125,7 @@
                     <a [href]="Image" download data-placement="bottom" tooltip="Download" style="float: right;margin-bottom: 5px;">
                         <img src="../../../../assets/images/Projects/Download.svg" class="testplus">
                     </a>
-                     <!-- <button class="btn btn-primary eiap-btn" style="float: right" (click)="outputlayoutback()">
-                         <i class="fa fa-arrow-left" aria-hidden="true"></i> back
-                     </button> -->                    
+                                  
                 </div>
                 
                 <div class="col-md-12 text-center">
@@ -197,122 +161,12 @@
                     <button class='btn btn-primary' (click)="recording('stop')">Stop Recording</button>
                     <button class="btn btn-primary" (click)="submitcode()">Save code</button>
                 </div>
-           
-              <!-- <div class="container" *ngIf="recordedcode==undefined">
-                  <br>
-                  <b>Url</b>
-                  <input type='url' [(ngModel)]="rp_url" class="form-control">
-                  <br>
-                  <button class='btn btn-primary' [disabled]="rp_url == undefined" (click)="recording('start')">Start Recording</button>
-                  <button class='btn btn-primary' (click)="recording('stop')">Stop Recording</button><br><br>
-
-                  <textarea id="record_n_play" name='codeSnippet' [(ngModel)]="finalcode" style="width:100%;height:250px;"></textarea>
-                  <button class="btn btn-primary" (click)="submitcode()">Save code</button>
-
-              </div> -->
+       
           </div>
       </div>
   </div>
 
-  <!--
 
-    --------For Credentials Modal Popup---------
-
-   <ng-template #template class="credentialmodal">
-    <div id="createcredentials" class="modal-header">
-        <div><h3 class="modal-title pull-left" style="padding:7px">Create Credentials</h3></div>
-            <button type="button" style="padding:7px" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="container-fluid">
-        <form [formGroup]="insertForm" (ngSubmit)="savedata()">
-            <div class="row">
-                <div class="col-md-4 formelement">
-                    <label for="userName">Email<span class="star">*</span></label>
-                    <input type="text" maxlength="51" class="form-control data" formControlName="userName" #userName value="" placeholder="Enter Email">
-                    <span *ngIf="(insertForm.get('userName').invalid && insertForm.get('userName').touched) && !insertForm.controls['userName'].hasError('maxlength')"  class="errspan required">Email Required*</span>
-                    <div *ngIf="insertForm.controls['userName'].hasError('maxlength')"  class="errspan required">
-                        Maximum of 50 characters
-                    </div>
-                </div>
-                
-                <div class="col-md-4 formelement">
-                    <label for="password">Password<span class="star">*</span></label>
-                    <input [type]="passwordtype1 ? 'text': 'password'" maxlength="51" class="form-control" formControlName="password" value="" placeholder="Enter Password" passwordToggle>
-                    <span *ngIf="passwordtype1==false" class="fa fa-fw fa-eye field-icon" (click)="passwordtype1 =!passwordtype1"></span>
-                    <span *ngIf="passwordtype1==true" class="fa fa-fw fa-eye-slash field-icon" (click)="passwordtype1 =!passwordtype1"></span>
-    
-                    <span *ngIf="(insertForm.get('password').invalid && insertForm.get('password').touched) && !insertForm.controls['password'].hasError('maxlength')"  class="errspan required"> Password Required*</span>
-                    <div *ngIf="insertForm.controls['password'].hasError('maxlength')"  class="errspan required">
-                        Maximum of 50 characters
-                    </div> 
-                </div>
-
-                <div class="col-md-4 formelement">
-                    <label for="serverName">Mail Server<span class="star">*</span></label>
-                    <select class="form-control" formControlName="serverName">
-                        <option value="" [selected]="true">--Select Mail Server--</option>
-                        <option value="Office365">Office365</option>
-                        <option value="G-mail">G-mail</option>            
-                      </select>
-                    <span *ngIf="insertForm.get('serverName').invalid && insertForm.get('serverName').touched"  class="errspan required"> Server Type Required*</span>
-                </div>
-      
-              
-            </div>
-            <div class="row">  
-                <div class="col-md-4 formelement">
-                    <label for="inBoundAddress">In Bound Address<span class="star">*</span></label>
-                    <input type="text" maxlength="51" class="form-control data" formControlName="inBoundAddress" #inBoundAddress value="" placeholder="Enter In Bound Address">
-                    <span *ngIf="(insertForm.get('inBoundAddress').invalid && insertForm.get('inBoundAddress').touched) && !insertForm.controls['inBoundAddress'].hasError('maxlength')"  class="errspan required">In Bound Address is required*</span>
-                    <div *ngIf="insertForm.controls['inBoundAddress'].hasError('maxlength')"  class="errspan required">
-                        Maximum of 50 characters
-                    </div>
-                </div>
-
-                <div class="col-md-4 formelement">
-                    <label for="inBoundAddressPort">In Bound Address Port<span class="star">*</span></label>
-                    <input type="text" maxlength="51" class="form-control data" formControlName="inBoundAddressPort" #inBoundAddressPort value="" placeholder="Enter In Bound Address Port">
-                    <span *ngIf="(insertForm.get('inBoundAddressPort').invalid && insertForm.get('inBoundAddressPort').touched) && !insertForm.controls['inBoundAddressPort'].hasError('maxlength')"  class="errspan required">In Bound Address Port is required*</span>
-                    <div *ngIf="insertForm.controls['inBoundAddressPort'].hasError('maxlength')"  class="errspan required">
-                        Maximum of 50 characters
-                    </div>
-                </div>
-
-                <div class="col-md-4 formelement">
-                    <label for="outBoundAddress">Out Bound Address<span class="star">*</span></label>
-                    <input type="text" maxlength="51" class="form-control data" formControlName="outBoundAddress" #outBoundAddress value="" placeholder="Enter Out Bound Address">
-                    <span *ngIf="(insertForm.get('outBoundAddress').invalid && insertForm.get('outBoundAddress').touched) && !insertForm.controls['outBoundAddress'].hasError('maxlength')"  class="errspan required">Out Bound Address is required*</span>
-                    <div *ngIf="insertForm.controls['outBoundAddress'].hasError('maxlength')"  class="errspan required">
-                        Maximum of 50 characters
-                    </div>
-                </div>
-                
-            </div>
-            <div class="row">
-                <div class="col-md-4 formelement">
-                    <label for="outboundAddressPort">Out Bound Address Port<span class="star">*</span></label>
-                    <input type="text" maxlength="51" class="form-control data" formControlName="outboundAddressPort" #outboundAddressPort value="" placeholder="Enter Out Bound Address Port">
-                    <span *ngIf="(insertForm.get('outboundAddressPort').invalid && insertForm.get('outboundAddressPort').touched) && !insertForm.controls['outboundAddressPort'].hasError('maxlength')"  class="errspan required">Out Bound Address Port is required*</span>
-                    <div *ngIf="insertForm.controls['outboundAddressPort'].hasError('maxlength')"  class="errspan required">
-                        Maximum of 50 characters
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4 formelement">
-                    
-                </div>
-            </div>
-            <input type="button" class="btn btn-primary" value="Save" (click)="saveCredentials()" [disabled]="insertForm.invalid || submitted">
-            <input type="button" class="btn btn-primary" value="Reset" (click)="resetCredForm()">
-        </form>
-        <br> <br>
-        </div>
-      </div>
-    </ng-template> -->
 
     <div id="createcredentials" class="rpa-modal">
         <div class="rpa-modal-content">
@@ -414,12 +268,6 @@
                         </div>
 
                         
-                      
-                    <!-- </div>
-                    <div class="row">  
-                        
-                        
-                    </div> -->
                         <div class=" formelement">
                             <input type="button" class="btn btn-primary" value="Save" (click)="saveCredentials()" [disabled]="insertForm.invalid || submitted">
                             &nbsp;&nbsp;

@@ -119,13 +119,6 @@ export class RpaSoLogsComponent implements OnInit {
      let logs=[...this.filteredLogs]
      this.Viewloglist = new MatTableDataSource(logs);
      this.changeDetector.detectChanges();
-     // setTimeout(()=>{
-     //   console.log(this.Viewloglist)
-     //   console.log(this.logsPaginator)
-     //   console.log(this.logsSort)
-     //   this.Viewloglist.paginator=this.logsPaginator;
-     //   this.Viewloglist.sort=this.logsSort;
-     // },4000)
   }
   ViewlogByrunid(runid,version){
     this.botrunid=runid;

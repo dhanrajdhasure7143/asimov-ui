@@ -335,7 +335,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         }
       }
       if(outseq.split("_")[0]=="STOP"){
-          //let coordinates=(this.finaldataobjects[0].nodeId.split("|")!=undefined)?this.finaldataobjects[0].nodeId.split("|"):undefined;
+       
        
         let stopnode = {
           id: outseq,
@@ -343,10 +343,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           selectedNodeTask: "",
           selectedNodeId: "",
           path: "/assets/images/RPA/Stop.png",
-          // x: "900px",
-          // y: "396px",
-          // x: (this.coordinates[3]!=undefined)?(this.coordinates[3]+"px"):"900px",
-          // y: (this.coordinates[4]!=undefined)?(this.coordinates[4]+"px"):"300px",
 
         }
         if(this.coordinates!=undefined)
@@ -417,14 +413,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
             detachable: true,
             
             paintStyle: {  stroke: "#404040",  strokeWidth: 2 },
-            // connectorStyle: {
-            //   lineWidth: 3,
-            //   strokeStyle: "red"
-            // },
-          //   Connector: ["Flowchart", { curviness: 90, cornerRadius: 5 }],
-          //   connectorClass: "path",
-          //  // connectorStyle: { stroke: '#404040', strokeWidth: 2 },
-          //   connectorHoverStyle: { lineWidth: 3 },
             overlays: [["Arrow", { width: 12, length: 12, location: 1 }],],
           })
 
@@ -876,10 +864,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
   addoptions(attributes,node)
   {
-    /*
-      let token={​​​​​
-        headers: new HttpHeaders().set('Authorization', 'Bearer '+ localStorage.getItem('accessToken')),
-      }​​​*/
+
       let options:any=[];​​
       let restapi_attr=attributes.find(attr => attr.type=='restapi');
       this.rest.get_dynamic_data(restapi_attr.dependency).subscribe(data=>
@@ -1078,34 +1063,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
        "metaAttrValue": p.name,
       "attrValue":JSON.stringify(this.fieldValues)
     }
-    //   if(p.name=='webElementType'){
-    //     return{
-    //       "metaAttrId": p.id,
-    //       "metaAttrValue": p.name,
-    //       "attrValue":this.Webelementtype_array
-    //     }
-    //   }
-    //  if(p.name=='webElementValue'){
-    //    return{
-    //     "metaAttrId": p.id,
-    //     "metaAttrValue": p.name,
-    //     "attrValue":this.Webelementvalue_array
-    //    }
-    //  }
-    //  if(p.name=='fillValueType'){
-    //    return{
-    //     "metaAttrId": p.id,
-    //     "metaAttrValue": p.name,
-    //     "attrValue":this.fieldvaluetype_array
-    //    }
-    //  }
-    //  if(p.name=='fillValue'){
-    //   return{
-    //     "metaAttrId": p.id,
-    //     "metaAttrValue": p.name,
-    //     "attrValue":this.fieldvalue_array
-    //    }
-    //  }
+  
      });
   
  
