@@ -2924,3 +2924,7 @@ button.custom-popupbtn.mat-button {
   height: calc(100vh - 218px) !important;
   max-height: calc(100vh - 218px) !important;
 }
+
+.cursor-all-scroll{
+  cursor:all-scroll
+}

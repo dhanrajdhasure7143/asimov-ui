@@ -1,4 +1,6 @@
-<div class="modal-header modelprhead">
+<div ngb-modal-draggable [ngbModalDraggableHandle]="draggableHandle" class="cursor-all-scroll">
+<div #draggableHandle class="modal-header modelprhead">
+<!-- <div class="modal-header modelprhead"> -->
     <h4 class="modal-title pull-left">Add Resources</h4>
     <button type="button" class="close pull-right" aria-label="Close" (click)="addresouceref.hide()">
       <span aria-hidden="true"><img alt="" src="../../../../../assets/images/Projects/circle-close.svg"></span>
@@ -32,4 +34,5 @@
         <button (click)="resetresources()" class="btn btn-default">Reset</button>
         <button [disabled]="addresourcesForm.invalid" (click)="save()" class="btn btn-primary btn-update">Save</button>
     </div>
+</div>
 </div>

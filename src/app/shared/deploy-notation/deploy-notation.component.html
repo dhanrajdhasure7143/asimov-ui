@@ -1,4 +1,6 @@
-<div class="modal-header modelprhead">
+<div ngb-modal-draggable [ngbModalDraggableHandle]="draggableHandle" class="cursor-all-scroll">
+    <div #draggableHandle class="modal-header modelprhead">
+<!-- <div class="modal-header modelprhead"> -->
     <h4 class="modal-title pull-left">Deploy Notation</h4>
 </div>
 <div class="modal-body modelprbody resourcescreen">
@@ -34,6 +36,7 @@
         <button class="btn btn-primary" (click)="closedeplyNonation()" >Cancel</button>
         <button class="btn btn-primary btn-update" [disabled]="!depName || !endPoint || deploy_success" (click)="deployNotation()">Deploy</button>
     </div>
+</div>
 </div>
 
 <!--

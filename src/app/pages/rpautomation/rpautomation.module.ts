@@ -61,7 +61,7 @@ import {MatPaginatorIntl} from '@angular/material';
 import { CustomMatPaginatorIntl } from 'src/app/shared/custom-mat-paginator-int';
 import { RpaSoLogsComponent } from './rpa-so-logs/rpa-so-logs.component';
 import { AngularSplitModule } from 'angular-split';
-
+import { NgbModalDraggableModule } from 'ngb-modal-draggable'
 @NgModule({
   declarations: [
     RpautomationComponent,
@@ -125,6 +125,7 @@ import { AngularSplitModule } from 'angular-split';
     MatSlideToggleModule,
     Ng5SliderModule,
     AngularSplitModule.forRoot(),
+    NgbModalDraggableModule
   ],
   exports:[RpaSoLogsComponent],
   providers: [MatDatepickerModule,Rpa_Hints, BsModalRef, BsModalService,

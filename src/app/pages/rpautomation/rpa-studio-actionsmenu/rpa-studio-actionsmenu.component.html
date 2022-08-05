@@ -578,7 +578,8 @@
 
 
 <ng-template #auditLogsPopup>
-  <div class="modal-header modelprhead newmodelcla">
+  <div ngb-modal-draggable [ngbModalDraggableHandle]="draggableHandle" class="cursor-all-scroll">
+  <div #draggableHandle class="modal-header modelprhead newmodelcla">
     Audit Logs  
     <span class="pull-right">
       <span class=" clickable" (click)="auditLogsModelRef.hide()">
@@ -640,7 +641,7 @@
     </div>
 
   </div>
-
+</div>
 
 
 </ng-template>

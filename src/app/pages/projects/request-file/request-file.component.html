@@ -1,4 +1,6 @@
-<div class="modal-header modelprhead">
+<div ngb-modal-draggable [ngbModalDraggableHandle]="draggableHandle" class="cursor-all-scroll">
+    <div #draggableHandle class="modal-header modelprhead">
+<!-- <div class="modal-header modelprhead"> -->
     <h4 class="modal-title pull-left">Request File</h4>
     <button type="button" class="close pull-right" aria-label="Close" (click)="createRequestmodalref.hide()">
       <span aria-hidden="true"><img alt="" src="../../../../../assets/images/Projects/circle-close.svg"></span>
@@ -49,5 +51,6 @@
     <div class="pull-right">
         <button (click)="createRequestmodalref.hide()" class="btn btn-default">Cancel</button>
         <button [disabled]="requestFileForm.invalid || uploadFileDescriptionFlag" (click)="saveRequestedfile()" class="btn btn-primary btn-update">Submit</button>
+    </div>
     </div>
 </div>
