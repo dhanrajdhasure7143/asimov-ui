@@ -36,7 +36,6 @@
 .dataValues{
     margin-top: 10px;
     overflow: hidden auto;
-    /* height: 325px;    */
     height: calc(100vh - 310px);
 }
 ::-webkit-scrollbar {

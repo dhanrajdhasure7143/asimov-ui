@@ -118,15 +118,6 @@
     }
 
     /* Set a style for all buttons */
-
-
-
-
-    /* Add padding to container elements */
-    /* .container {
-    padding: 16px;
-    } */
-
     .m-contanier {
     padding: 16px;
     width: 35%;
@@ -154,10 +145,6 @@
     .reset_btn:hover{
         font-weight: bold !important;
         /* font-size: 14px; */
-    }
-
-    textarea{
-        
     }
     .deploy-menu{
         display: none;
@@ -222,7 +209,6 @@
     }
     
     img.menuToggleIcon {
-        /* height: 14px; */
         vertical-align: bottom;
         margin-right: 10px;
     }
@@ -243,7 +229,6 @@
         height: calc(100% - 40px);
         position: absolute;
         top: 40px;
-        /* top: 40px; */
         overflow: auto;
         width: 100%;
     }
@@ -262,8 +247,6 @@
     
     .propertiesContainer mat-expansion-panel {
         background-color: #607088;
-        /* border-top: 1px solid #8694A9; */
-        /* border-bottom: 1px solid #8c94a0; */
         margin: 0px;
     }
     .propertiesContainer mat-expansion-panel-header:hover {
@@ -333,7 +316,6 @@
     }
     textarea.msgip {
         width: 75%;
-        /* height: 45px; */
         margin-right: 15px;
         margin-right: 10px;
         border: 1px solid #607088;

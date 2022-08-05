@@ -15,22 +15,13 @@
 .main-content1 .module-heading.title .value span {
     color: #001c47;
     font-size: 12px;
-    /* font-weight: 300; */
 }
-/* .module-heading.title span {
-    padding-left: 10px;
-} */
 
 .value {
     color: #001C47;
     font-weight: 400;
     font-size: 13px;
     padding-top: 8px;
-}
-span.level3 {
-   /* padding-right: 8px !important;
-    margin-right: 8px !important;
-     border-right: 1px solid #ccc; */
 }
 .level3sep {
     color:#ddd;
@@ -58,32 +49,12 @@ span.level3 {
 .bps-upload img {
     padding-right: 8px;
 }
-.bps-save-icon {
-    /* border-left: 1px solid #ccc; */
-}
+
 .new-bps-header-title {
     padding: 0px;
 }
 .new-bps-icons .bps-float {
     float: right;
-}
-/* select.dowload-images {
-    background-image: url('../../../assets/images/BPMS/download.svg');
-    background-repeat: no-repeat;
-    border: unset;
-    outline: unset;
-    color: transparent;
-    width: 34px;
-    background-color: #f8f8f8;
-    padding: 10px 0px;
-    background-position: top 12px center;
-}
-select.dowload-images option {
-    color: #000;
-} */
-button.editprimary {
-    /* background-color: #00a1e3;
-    border-radius: 3px; */
 }
 .bpsbtnsep {
     color:#ddd;
@@ -120,9 +91,6 @@ span.label_icon.inpro-label {
 }
 .bps-float .clr-hvr:hover img {
     filter: brightness(10) !important;
-}
-button.upload-btn.bps-upload:hover img, button.editprimary:hover img {
-    /* filter: unset !important; */
 }
 
 .bps-float span.label_icon {

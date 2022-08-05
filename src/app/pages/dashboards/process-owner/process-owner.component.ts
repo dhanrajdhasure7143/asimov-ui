@@ -77,14 +77,6 @@ export class ProcessOwnerComponent implements OnInit {
           this.isLoading = false;
         });
 
-
-      // this.apiService.getActivityStream(this.userRoles, this.userEmail, this.userName).subscribe(res => {
-      //   this.activityStreamRecent = res['Recent Approvals : '];
-      //   this.activityStreamPending = res['Pending Approvals : '];
-      //   this.activityStream = res['Recent Approvals : '];
-      //   console.log(res);
-      // });
-
       this.apiService.getUpcomingDueDates(this.userRoles, this.userEmail, this.userName)
         .subscribe(res => {
           this.upcomingDueDates = res;
@@ -232,67 +224,6 @@ export class ProcessOwnerComponent implements OnInit {
   }
 
   allProjectStatusChart(data) {
-    // setTimeout(() => {
-    //   var chart = am4core.create("projectstatus-chart", am4charts.PieChart);
-    //   chart.innerRadius = am4core.percent(30);
-    //   chart.logo.__disabled = true;
-    //   var pieSeries = chart.series.push(new am4charts.PieSeries());
-    //   var colorSet = new am4core.ColorSet();
-    //   colorSet.list = ["#ce3779", "#575fcd", "#d89f59", "#ff5b4f", "#74c7b8"
-    //   ].map(function (color: any) {
-    //     return am4core.color(color);
-    //   });
-    //   pieSeries.colors = colorSet;
-    //   pieSeries.dataFields.value = "value";
-    //   pieSeries.dataFields.category = "project";
-    //   pieSeries.slices.template.propertyFields.fill = "color";
-    //   pieSeries.slices.template.stroke = am4core.color("#fff");
-    //   pieSeries.slices.template.strokeWidth = 2;
-    //   pieSeries.slices.template.strokeOpacity = 1;
-    //   pieSeries.slices.template
-    //     // change the cursor on hover to make it apparent the object can be interacted with
-    //     .cursorOverStyle = [
-    //       {
-    //         "property": "cursor",
-    //         "value": "pointer"
-    //       }
-    //     ];
-    //   pieSeries.labels.template.maxWidth = 130;
-    //   pieSeries.labels.template.wrap = true;
-    //   pieSeries.labels.template.fontSize = 18;
-    //   pieSeries.labels.template.bent = false;
-    //   pieSeries.labels.template.padding(0, 0, 0, 0);
-    //   pieSeries.ticks.template.disabled = true;
-    //   pieSeries.alignLabels = false;
-    //   pieSeries.labels.template.text = "{value}";
-    //   pieSeries.labels.template.radius = am4core.percent(-40);
-    //   pieSeries.labels.template.fill = am4core.color("white");
-    //   // Create a base filter effect (as if it's not there) for the hover to return to
-    //   //var shadow = pieSeries.slices.template.filters.push(new am4core.DropShadowFilter);
-    //   //shadow.opacity = 0;
-
-    //   // Create hover state
-    //   var hoverState = pieSeries.slices.template.states.getKey("hover"); // normally we have to create the hover state, in this case it already exists
-
-    //   // Slightly shift the shadow and make it more prominent on hover
-    //   var hoverShadow = hoverState.filters.push(new am4core.DropShadowFilter);
-    //   hoverShadow.opacity = 0.7;
-    //   hoverShadow.blur = 5;
-
-    //   // Add a legend
-
-    //   chart.legend = new am4charts.Legend();
-    //   chart.legend.fontSize = 13;
-    //   let markerTemplate = chart.legend.markers.template;
-    //   markerTemplate.width = 10;
-    //   markerTemplate.height = 10;
-    //   chart.innerRadius = am4core.percent(0);
-    //   chart.data = data;
-
-    //   chart.legend = new am4charts.Legend();
-    //   chart.legend.fontSize = 13;
-    //   chart.legend.labels.template.text = "{category} - {value}";
-    // }, 50);
     setTimeout(() => {
       this.status_donutChart(data)
     }, 100);
@@ -305,7 +236,6 @@ export class ProcessOwnerComponent implements OnInit {
 
     am4core.useTheme(am4themes_animated);
     // Themes end
-
     var chart = am4core.create("projectstatus-chart", am4charts.PieChart);
     chart.hiddenState.properties.opacity = 0; // this creates initial fade-in
     chart.legend = new am4charts.Legend();
@@ -317,15 +247,12 @@ export class ProcessOwnerComponent implements OnInit {
     chart.legend.scrollable = true;
     chart.legend.fontSize = 12;
     chart.legend.reverseOrder = false;
-    // chart.data=data;
     chart.data = data;
 
     chart.legend.position = "right";
     chart.legend.valign = "middle";
     chart.innerRadius = 70;
-    // chart.tooltip="test";
     var label = chart.seriesContainer.createChild(am4core.Label);
-    // label.text = "230,900 Sales";
     label.horizontalCenter = "middle";
     label.verticalCenter = "middle";
     label.fontSize = 18;
@@ -335,8 +262,6 @@ export class ProcessOwnerComponent implements OnInit {
     series.labels.template.disabled = true;
     var _self = this;
     series.slices.template.adapter.add("tooltipText", function (text, target) {
-      // var text=_self.getTimeConversion('{_dataContext.totalDuration}');
-      //return "{_dataContext.activity} \n {_dataContext.convertedDuration}";
       return "Projects: {value} \n {project} : {value.percent.formatNumber('#.#')}% [/]"
     });
     $('g:has(> g[stroke="#3cabff"])').hide();
@@ -389,7 +314,6 @@ export class ProcessOwnerComponent implements OnInit {
       return text + "%";
     });
     var columnTemplate = series.columns.template;
-    // columnTemplate.width = 45;
     columnTemplate.column.cornerRadiusTopLeft = 10;
     columnTemplate.column.cornerRadiusTopRight = 10;
     columnTemplate.strokeOpacity = 0;
@@ -443,12 +367,8 @@ export class ProcessOwnerComponent implements OnInit {
       categoryAxis.renderer.minGridDistance = 30;
       categoryAxis.renderer.labels.template.horizontalCenter = "right";
       categoryAxis.renderer.labels.template.verticalCenter = "middle";
-      // categoryAxis.renderer.labels.template.rotation = 270;
       categoryAxis.tooltip.disabled = true;
-      // categoryAxis.renderer.minHeight = 110;
       categoryAxis.title.text = "Projects";
-
-
       var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
       valueAxis.renderer.minWidth = 50;
       valueAxis.title.text = "Project Completion Days";
