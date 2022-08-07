@@ -6,6 +6,7 @@
       <span aria-hidden="true"><img alt="" src="../../../../../assets/images/Projects/circle-close.svg"></span>
     </button>
 </div>
+</div>
 <div class="modal-body modelprbody">
     <div class="container p-0" style="width:100%">
         <form [formGroup]="requestFileForm" (ngSubmit)="saveRequestedfile()">
@@ -51,6 +52,5 @@
     <div class="pull-right">
         <button (click)="createRequestmodalref.hide()" class="btn btn-default">Cancel</button>
         <button [disabled]="requestFileForm.invalid || uploadFileDescriptionFlag" (click)="saveRequestedfile()" class="btn btn-primary btn-update">Submit</button>
-    </div>
     </div>
 </div>

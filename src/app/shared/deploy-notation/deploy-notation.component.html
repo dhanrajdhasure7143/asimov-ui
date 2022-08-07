@@ -3,6 +3,7 @@
 <!-- <div class="modal-header modelprhead"> -->
     <h4 class="modal-title pull-left">Deploy Notation</h4>
 </div>
+</div>
 <div class="modal-body modelprbody resourcescreen">
     <div class="successful-deploy" *ngIf="deploy_success">
         <mat-icon class="success-info" matSuffix>info</mat-icon><p><i> Notation has been deployed successfully.
@@ -36,5 +37,4 @@
         <button class="btn btn-primary" (click)="closedeplyNonation()" >Cancel</button>
         <button class="btn btn-primary btn-update" [disabled]="!depName || !endPoint || deploy_success" (click)="deployNotation()">Deploy</button>
     </div>
-</div>
 </div>
