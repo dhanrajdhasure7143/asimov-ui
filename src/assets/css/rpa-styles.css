@@ -418,7 +418,7 @@ mat-paginator button:disabled{
 }
 
 .rpa-home-table{
-  height: calc(100vh - 295px);
+  height: calc(100vh - 433px);
   overflow-y: scroll;
 }
 .open-btn-click {
@@ -545,10 +545,10 @@ mat-paginator button:disabled{
   padding: 10px 10px 0px 10px;
 }
 .con-envr {
-  padding: 10px !important;
+  padding: 10px 10px 0px !important;
 }
 .environment-tablegrid, .credential-tablegrid {
   width: 100%;
-  overflow-x: scroll;
-  height: calc(100vh - 280px);
+  overflow: auto;
+  height: calc(100vh - 270px);
 }

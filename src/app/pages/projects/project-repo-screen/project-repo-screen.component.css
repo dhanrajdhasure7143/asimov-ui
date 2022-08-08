@@ -87,8 +87,11 @@ td span:hover img.testplus.hover-img {
   overflow: auto;
   padding: 10px;
 }
-span.projects-menu-item {
+/* span.projects-menu-item {
   margin-left: 10px;
+} */
+span.projects-menu-item.gridicon {
+  margin: 0px 2px 0px 10px;
 }
 .projects-table-body {
   margin-top:5px;
@@ -184,7 +187,7 @@ span.file-size {
   padding: 10px;
 }
 .delete-icon img{
-width: 20px;
+width: 18px;
 }
 .deleteSpan{
   padding-left: 10px;
