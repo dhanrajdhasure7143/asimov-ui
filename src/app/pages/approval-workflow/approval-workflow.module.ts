@@ -14,11 +14,8 @@ import {MatInputModule, MatIconModule, MatFormFieldModule, MatOptionModule, MatS
 import { OrderByPipe } from './oerderby-pipe';
 import {CustomMatPaginatorIntl} from './../../shared/custom-mat-paginator-int';
 import {MatPaginatorIntl} from '@angular/material';
-
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material';
-
-
 
 
 @NgModule({

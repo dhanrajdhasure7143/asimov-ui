@@ -30,7 +30,7 @@ declare var $:any;
 
 @Component({
   selector: 'app-rpa-home',
-  templateUrl: './rpa-new-home.component.html',
+  templateUrl: './rpa-home.component.html',
   styleUrls: ['./rpa-home.component.css']
 })
 export class RpaHomeComponent implements OnInit {
@@ -122,7 +122,6 @@ export class RpaHomeComponent implements OnInit {
       botName: ["", Validators.compose([Validators.required, Validators.maxLength(30)])],
       botDepartment:["", Validators.required],
       botDescription:["", Validators.compose([Validators.maxLength(500)])],
-      //botType:["", Validators.required],
       taskId:[""],
       predefinedBot:[false],
       newCategoryName:[""]
@@ -171,10 +170,7 @@ export class RpaHomeComponent implements OnInit {
     $('#rpa').addClass("active"); 
     $('#expand_menu').addClass("active");   
 
-//     @Input() id: string;
-// @Input() maxSize: number;
-// @Output() pageChange: EventEmitter<number>;
-// @Output() pageBoundsCorrection: EventEmitter<number>;
+
     this.userRole = localStorage.getItem("userRole")
     this.userRole = this.userRole.split(',');
     localStorage.setItem("isHeader","false");
@@ -224,24 +220,7 @@ export class RpaHomeComponent implements OnInit {
 
     );
 
-    // this.rest.getCustomUserRole(2).subscribe(role=>{
-    //   this.customUserRole=role.message[0].permission;
-    //   this.customUserRole.forEach(element => {
-    //     if(element.permissionName.includes('RPA_Bot_Configuration_full')){
-    //       this.enableConfiguration=true;
-    //     } if(element.permissionName.includes('RPA_Bot_Create')){
-    //       this.enablecreatebot=true;
-    //     }if(element.permissionName.includes('RPA_Workspace_full')){
-    //       this.showWorkspace=true;
-    //     }
-    //   }
-    //       );
-    //     })
-
-
-          // if(localStorage.getItem('project_id')!="null" && localStorage.getItem('bot_id')!="null"){
-          //   this.loadbotdata(localStorage.getItem('bot_id'));
-          // }
+  
           this.freetrail=localStorage.getItem('freetrail')
      }
 
@@ -270,24 +249,13 @@ export class RpaHomeComponent implements OnInit {
               this.spinner.hide()
               Swal.fire("Success",response.status,"success");
               this.getallbots();
-              // Swal.fire({
-              //   position:'center',
-              //   icon:"success",
-              //   title:response.status,
-              //   showConfirmButton:false,
-              //   timer:2000})
+           
             }else
             {
               this.spinner.hide()
               Swal.fire("Error",response.errorMessage,"error");
                 // Swal.fire({
-                //   position:'center',
-                //   icon:"error",
-                //   title:response.errorMessage,
-                //   showConfirmButton:false,
-                //   timer:2000})
-                  //this.rpa_tabs.closeTab(this.botState);
-
+            
             }
           })
           this.getCategoryList();
@@ -296,8 +264,7 @@ export class RpaHomeComponent implements OnInit {
             this.getallbots();
             }, 550);
     
-          //this.nodes = this.nodes.filter((node): boolean => nodeId !== node.id);
-          //this.jsPlumbInstance.removeAllEndpoints(nodeId);
+      
         }
 
       })
@@ -323,8 +290,7 @@ export class RpaHomeComponent implements OnInit {
     let response:any=[];
     this.spinner.show();
     this.loadflag=true;
-    //spinner.show();
-    //http://192.168.0.7:8080/rpa-service/get-all-bots
+  
     this.rest.getAllActiveBots().subscribe(botlist =>
     {
       setTimeout(()=>{
@@ -334,24 +300,7 @@ export class RpaHomeComponent implements OnInit {
       response=botlist;
       this.botlistitems=botlist;
       this.botslist=botlist
-     // response=response.reverse();
-      // if(response.length==0)
-      // {
-      //   //this.rpa_studio.spinner.hide(); 
-      // }
-      // response.forEach(data=>{
-      //   let object:any=data;
-      //   if(data.botType==0)
-      //   {
-      //     object.botType='Attended'
-      //   }
-      //   else if(data.botType==1)
-      //   {
-      //     object.botType='Unattended';
-      //   }
-      //   this.bot_list.push(object)
-      //   this.assignPagination( this.bot_list);
-      // })
+   
       response.forEach(data=>{ 
         let object:any=data;
       if(this.categaoriesList.find(resp => resp.categoryId==data.department)!=undefined)
@@ -388,68 +337,15 @@ export class RpaHomeComponent implements OnInit {
         this.categoryName=selected_category?selected_category:'allcategories';
       }
       this.searchByCategory(this.categoryName);
-      //response.sort((a,b) => a.createdAt > b.createdAt ? -1 : 1);
-      
-      //response=response.reverse();
-    //   this.dataSource1= new MatTableDataSource(response);
-    //   this.isDataSource = true;
-    //   this.dataSource1.sort=this.sort1;
-    //   this.dataSource1.paginator=this.paginator1;
-    //  this.dataSource1.data = response;
-     this.allbots=response;
-    //  this.departmentFilter.valueChanges.subscribe((departmentFilterValue) => {
-    //   if(departmentFilterValue != ""){
-    // let category=this.categaoriesList.find(val=>departmentFilterValue ==val.categoryId);
-    //   this.filteredValues['department'] = category;
-    //   }
-    //   else{
-    //     this.filteredValues['department'] = departmentFilterValue;
-    //   }
-    //   this.dataSource1.filter = JSON.stringify(this.filteredValues);
-    //   if(this.dataSource1.filteredData.length > 0){
-    //     this.isTableHasData = true;
-    //   } else {
-    //     this.isTableHasData = false;
-    //   }
    
-    //   },(err)=>{
-
-    //     this.spinner.hide();
-    //   });
-
-    //     this.botNameFilter.valueChanges.subscribe((botNameFilterValue) => {
-    //       this.filteredValues['botName'] = botNameFilterValue;
-    //       this.dataSource1.filter = JSON.stringify(this.filteredValues);
-    //       if(this.dataSource1.filteredData.length > 0){
-    //         this.isTableHasData = true;
-    //       } else {
-    //         this.isTableHasData = false;
-    //       }
-    //     });
-
-    //   this.dataSource1.filterPredicate = this.customFilterPredicate();
+     this.allbots=response;
+  
     },(err)=>{
       this.spinner.hide();
     })
   }
 
-  // customFilterPredicate() {
-  //   const myFilterPredicate = (data: dataSource1, filter: string): boolean => {
-  //     let searchString = JSON.parse(filter);
-  //     if(searchString.department != ''){
-  //     return data.department.toString().trim().indexOf(searchString.department.categoryName) !== -1 &&
-  //       data.botName.toString().trim().toLowerCase().indexOf(searchString.botName.toLowerCase()) !== -1;
-  //   }
-  //   else
-  //   {
-  //     return true &&
-  //       data.botName.toString().trim().toLowerCase().indexOf(searchString.botName.toLowerCase()) !== -1;
-  //   }
-  // }
-  //   return myFilterPredicate;
-  // }
-
-
+  
 
   applyFilter2(filterValue: string) {
     alert(filterValue)
@@ -669,11 +565,6 @@ export class RpaHomeComponent implements OnInit {
     this.insertbot.reset();
 
   }
-  /*openload()
-  {
-
-    document.getElementById("load-bot").style.display ="block";
-  }*/
 
 
   close()
@@ -720,8 +611,7 @@ export class RpaHomeComponent implements OnInit {
 
   loadbotdata(botId)
   {
-    //localStorage.setItem("botId",botId)
-    //this.rpa_studio.getloadbotdata(botId);
+ 
     this.router.navigateByUrl(`./designer?botId=${botId}`)
   }
 

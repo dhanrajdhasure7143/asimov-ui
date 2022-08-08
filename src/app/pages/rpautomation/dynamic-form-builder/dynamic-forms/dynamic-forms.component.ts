@@ -199,46 +199,13 @@ export class DynamicFormsComponent implements OnInit {
     }
 
 
-    // if(this.multiarray!=undefined){
-    //   this.fillarray=this.multiarray.map(p=>{
-
-
-    //     let filteredobject={};
-    //     let sample=(Object.keys(p));
-    //     console.log(sample)
-    //     sample.forEach(item=>{
-    //       if(item!="id")
-    //       {
-    //           this.fields.forEach((data,index)=>{
-
-    //       //  filteredobject[this.fields[i].name+'_'+this.fields[i].id]=p[item]
-    //           filteredobject[this.fields[index].name+'_'+this.fields[index].id]=p[item]
-    //        })
-    //       }
-    //       else
-    //         filteredobject["id"]=p[item];
-    //     })
-    //     console.log("----------------------------", filteredobject)    
-    //     return filteredobject;
-    //   })
-    //   console.log("--------------",this.fillarray)
-    //   this.data=this.fillarray;
-    // }
-
     for (let f of this.fields) {
       //  if (f.type != 'checkbox') {
       if (f.type == 'email')
         fieldsCtrls[f.name + '_' + f.id] = new FormControl(f.value || '', f.required && f.dependency == '' ? [Validators.pattern("[a-zA-Z0-9.-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{3,}")] : [Validators.pattern("[a-zA-Z0-9.-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{3,}")])
       else
         fieldsCtrls[f.name + '_' + f.id] = new FormControl(f.value || '', f.required && f.dependency == '' ? [Validators.required] : [])
-      //  console.log(f);
-      /* } else {
-         let opts = {};
-         for (let opt of f.options) {
-           opts[opt.key] = new FormControl(opt.value);
-         }
-         fieldsCtrls[f.name] = new FormGroup(opts)
-       }*/
+
 
     }
     this.form = new FormGroup(fieldsCtrls);

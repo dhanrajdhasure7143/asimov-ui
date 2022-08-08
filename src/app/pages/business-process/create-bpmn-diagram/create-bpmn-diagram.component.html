@@ -1,38 +1,6 @@
-<div class="row col-md-12 header_addon">
-    <!-- <div class="col-md-6"></div> -->
-    <!-- <div class="col-md-1">
-        <div *ngIf="rejectedOrApproved" class="label_icon" [class.bg-red]="rejectedOrApproved=='REJECTED'" [class.bg-orange]="rejectedOrApproved=='INPROGRESS'" [class.bg-green]="rejectedOrApproved=='APPROVED'">
-            {{rejectedOrApproved}}</div>
-    </div> -->
-    <!-- <div class="col-md-2">
-        <mat-form-field id="bpmnNotationList">
-            <mat-label>BPMN Notation</mat-label>
-            <mat-select [(ngModel)]="selected_notation" (selectionChange)="displayBPMN()" panelClass="myPanelDownClass" disableOptionCentering>
-                <mat-option *ngFor="let each_bpmn of saved_bpmn_list;let bpmnIndex = index" [value]="bpmnIndex">
-                    {{each_bpmn.bpmnProcessName+" ( V1."+each_bpmn.version+" )"}}</mat-option>
-            </mat-select>
-        </mat-form-field>
-    </div> -->
-    <!-- <div class="col-md-2">
-        <mat-form-field id="approversList">
-            <mat-label>Approver List</mat-label>
-            <mat-select [(ngModel)]="selected_approver" panelClass="myPanelDownClass" disableOptionCentering>
-                <mat-option *ngFor="let each_approver of approver_list;let i=index" [value]=i>
-                    {{each_approver.firstName+" "+each_approver.lastName}}</mat-option>
-            </mat-select>
-        </mat-form-field>
-    </div> -->
-    <!-- <div class="functionality-icons">
-        <span class="fa fa-upload" (click)="openDeployDialog()" *ngIf="rejectedOrApproved == 'APPROVED'"></span>&nbsp;&nbsp;
-        <span class="start-instance">
-            <span class="fa fa-play" (click)="openVariableDialog()" *ngIf="isStartProcessBtn"></span>&nbsp;&nbsp;
-        </span>
-        <span class="fa fa-keyboard" (click)="displayShortcut()"></span>&nbsp;&nbsp;
-        <span class="fa fa-crosshairs" (click)="fitNotationView()"></span>
-        </div> -->
+<div class="row col-md-12 header_addon">   
 </div>
 <div class="canvas-container-main">
-    <!-- <span class="update_info" *ngIf="updated_date_time">Autosaved @ <b>{{updated_date_time | date:"MM/dd/yyyy HH:mm:ss"}}</b></span> -->
     <div class='h-100'>
         <span class="err-msg"></span>
         <mat-tab-group class="h-100 canvas-container" headerPosition="below" (selectedTabChange)="displayXML($event)" #notationXMLTab>
@@ -180,10 +148,6 @@
                             
                         </div>
                     </div>
-                    <!-- <div class="propertiesContainer">
-                        <div class="propertiesTitle" (click)="togglePosition()"><div>Properties Panel</div></div>
-                        <div id="properties" class="slide-right"></div>
-                    </div> -->
                     <div #dmnTabs id="dmn-tabs" *ngIf="selectedNotationType=='dmn'"></div>
                 </div>
                 <ng-template #wrongXMLcontent>
@@ -207,43 +171,15 @@
             </mat-tab>
         </mat-tab-group>
     </div>
-    <!-- <div class="row btn_row">
-        <button class="right btn btn-primary eiap-btn" id="approvalSubmit" (click)="submitDiagramForApproval()">Save & Submit for Approval</button>
-        <button class="right btn btn-primary eiap-btn" id="save" (click)="saveprocess(null)">Save Process</button>
-        <button *ngIf="isApprovedNotation" class="right btn btn-primary eiap-btn"  id="automate" (click)="automate()">Automate</button>
-        <span class="right">
-            <select [(ngModel)]="fileType">
-                <option value="svg">SVG</option>
-                <option value="png">PNG</option>
-                <option value="jpg">JPG</option>
-                <option [value]="selectedNotationType">{{selectedNotationType | uppercase }}</option>
-            </select>
-            <button id="download" (click)="downloadBpmn(false)"><img class="action-btn" src="..\assets\downloadimage.svg"></button>
-        </span>
-        <div class="zoom_btns">
-            <button (click)="zoomIn()" class="btn btn1 zoom btn-primary" id="zoom_in"><i class="fas fa-search-plus"></i></button>
-            <button (click)="zoomOut()" class="btn btn1 zoom-out btn-primary" id="zoom_out"><i class="fas fa-search-minus"></i></button>
-        </div>
-    </div> -->
     <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">
         <p style="color: white">Auto Saving... </p>
     </ngx-spinner>
 </div>
 <div class="spinoverlay" *ngIf="isLoading">
     <div class="spincenter">
-        <!-- <mat-progress-spinner diameter=50  mode="indeterminate"></mat-progress-spinner> -->
         <img  src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader"/>
     </div>
 </div>
-<ng-template #keyboardShortcut>
- <!-- <div><label for="" class="keyboard_header_shortcuts">Keyboard Shortcuts</label></div>
- <table>
-        <tr *ngFor="let keyboardLabels of keyboardLabels" >
-            <td><span  class="keyboard_label_style">{{keyboardLabels.labelName}}</span></td>
-             <td><div [innerHtml]="keyboardLabels.labelValue" class="keyboard_label_style"></div></td>
-        </tr>
-    </table> -->
-</ng-template>
 
 
 <ng-template #variabletemplate>

@@ -22,17 +22,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
       </div>
     </div>
     `
-    /*
-      <div [formGroup]="form">
-        <div style="display:flex" [formGroupName]="field.name" >
-          <div *ngFor="let opt of field.options" class="form-check form-check">
-          <label style="color: #615f5f;padding: 0px 10px;" class="form-check-label">
-             <input  [formControlName]="opt.key" class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" />
-             {{opt.label}}</label>
-          </div>
-        </div>
-      </div>
-    */
+ 
 })
 export class CheckBoxComponent implements OnInit  {
     @Input() field:any = {};
@@ -59,14 +49,7 @@ export class CheckBoxComponent implements OnInit  {
           
           this.dynamic_forms.fields.find(data=>parseInt(data.id)==parseInt(dependency2[0])).value="";
         },500);
-      //  let disablefield:any= this.dynamic_forms.fields.find(data=>parseInt(data.id)==parseInt(dependency2[0]));
-      //   this.form.removeControl(disablefield.name+"_"+disablefield.id)
-        // this.dynamic_forms.fields.find(data=>parseInt(data.id)==parseInt(dependency2[0])).required=false;
-        // this.dynamic_forms.fields.find(data=>parseInt(data.id)==parseInt(dependency2[0])).value="";
-        // this.dynamic_forms.fields.find(data=>parseInt(data.id)==parseInt(dependency2[0])).visibility=false;
-        // this.dynamic_forms.fields.find(data=>parseInt(data.id)==parseInt(dependency1[0])).visibility=true;
-        //let enablefield:any=this.dynamic_forms.fields.find(data=>parseInt(data.id)==parseInt(dependency1[0]));
-        //this.form.addControl(enablefield.name+"_"+enablefield.id,new FormControl(enablefield.value || '', enablefield.required && enablefield.dependency == ''  ? Validators.required : []));
+     
        
       }
       else
@@ -78,14 +61,7 @@ export class CheckBoxComponent implements OnInit  {
           
           this.dynamic_forms.fields.find(data=>parseInt(data.id)==parseInt(dependency1[0])).value="";
         },500)
-        //let disablefield:any= this.dynamic_forms.fields.find(data=>parseInt(data.id)==parseInt(dependency1[0]));
-        //this.form.removeControl(disablefield.name+"_"+disablefield.id)
-        // this.dynamic_forms.fields.find(data=>parseInt(data.id)==parseInt(dependency1[0])).value="";
-        // this.dynamic_forms.fields.find(data=>parseInt(data.id)==parseInt(dependency1[0])).visibility=false;
-        // this.dynamic_forms.fields.find(data=>parseInt(data.id)==parseInt(dependency2[0])).visibility=true;
-        // this.dynamic_forms.fields.find(data=>parseInt(data.id)==parseInt(dependency1[0])).required=false;
-        //let enablefield:any=this.dynamic_forms.fields.find(data=>parseInt(data.id)==parseInt(dependency2[0]));
-        //this.form.addControl(enablefield.name+"_"+enablefield.id,new FormControl(enablefield.value || '', enablefield.required && enablefield.dependency == ''  ? Validators.required : []));
+     
 
       }
     }
@@ -106,14 +82,7 @@ export class CheckBoxComponent implements OnInit  {
         $("#"+dependency2[0]+"_form_data").hide();
         
         this.dynamic_forms.fields.find(data=>parseInt(data.id)==parseInt(dependency2[0])).value="";
-      //  let disablefield:any= this.dynamic_forms.fields.find(data=>parseInt(data.id)==parseInt(dependency2[0]));
-      //   this.form.removeControl(disablefield.name+"_"+disablefield.id)
-        // this.dynamic_forms.fields.find(data=>parseInt(data.id)==parseInt(dependency2[0])).required=false;
-        // this.dynamic_forms.fields.find(data=>parseInt(data.id)==parseInt(dependency2[0])).value="";
-        // this.dynamic_forms.fields.find(data=>parseInt(data.id)==parseInt(dependency2[0])).visibility=false;
-        // this.dynamic_forms.fields.find(data=>parseInt(data.id)==parseInt(dependency1[0])).visibility=true;
-        //let enablefield:any=this.dynamic_forms.fields.find(data=>parseInt(data.id)==parseInt(dependency1[0]));
-        //this.form.addControl(enablefield.name+"_"+enablefield.id,new FormControl(enablefield.value || '', enablefield.required && enablefield.dependency == ''  ? Validators.required : []));
+     
        
       }
       else
@@ -122,14 +91,7 @@ export class CheckBoxComponent implements OnInit  {
         $("#"+dependency2[0]+"_form_data").show();
         $("#"+dependency1[0]+"_form_data").hide();
         this.dynamic_forms.fields.find(data=>parseInt(data.id)==parseInt(dependency1[0])).value="";
-        //let disablefield:any= this.dynamic_forms.fields.find(data=>parseInt(data.id)==parseInt(dependency1[0]));
-        //this.form.removeControl(disablefield.name+"_"+disablefield.id)
-        // this.dynamic_forms.fields.find(data=>parseInt(data.id)==parseInt(dependency1[0])).value="";
-        // this.dynamic_forms.fields.find(data=>parseInt(data.id)==parseInt(dependency1[0])).visibility=false;
-        // this.dynamic_forms.fields.find(data=>parseInt(data.id)==parseInt(dependency2[0])).visibility=true;
-        // this.dynamic_forms.fields.find(data=>parseInt(data.id)==parseInt(dependency1[0])).required=false;
-        //let enablefield:any=this.dynamic_forms.fields.find(data=>parseInt(data.id)==parseInt(dependency2[0]));
-        //this.form.addControl(enablefield.name+"_"+enablefield.id,new FormControl(enablefield.value || '', enablefield.required && enablefield.dependency == ''  ? Validators.required : []));
+      
 
       }
         
