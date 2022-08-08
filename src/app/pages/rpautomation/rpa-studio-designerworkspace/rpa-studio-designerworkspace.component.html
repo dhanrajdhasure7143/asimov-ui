@@ -3,12 +3,21 @@
     <div [id]="dragareaid" class="drag-area" dndDropzone  (contextmenu)="$event.preventDefault()" (dndDrop)="onDrop($event,$event)" (click)="closemenu()" [ngClass]="{ 'workspace': disable, 'dndDropzoneDisabled': false, 'lightTheme': lightTheme }">
   
       <ng-container *ngFor="let node of nodes; let i = index">
-        <div id="{{node.id}}" class="dndDropzone" (mouseover)="openoutputmenu(node)" (dblclick)="formNodeFunc(node)" (contextmenu)="onRightClick(node, $event,i);$event.prevent" [ngStyle]="{'left': node.x, 'top' : node.y,'background-image' :  'url(' + node.path + ')'  }">
+        <div id="{{node.id}}" class="dndDropzone" (mouseover)="openoutputmenu(node)" (dblclick)="getTaskForm(node)" (contextmenu)="onRightClick(node, $event,i);$event.prevent" [ngStyle]="{'left': node.x, 'top' : node.y,'background-image' :  'url(' + node.path + ')'  }">
 
                 <span *ngIf="node.name!='START' && node.name !='STOP'" class="node-delete" (click)="deletenode(node)"><img src="../../../../assets/images/RPA/close-circle-fill.svg"></span>
                 <div class="connector-name" *ngIf="node.selectedNodeTask==''">{{node.name}} </div>
                 <div class="connector-name" *ngIf="node.selectedNodeTask!=''">{{node.selectedNodeTask}}</div>
-              
+                <!--This is task menu which is disabled for now, If we get any requirment we can enable it-->
+                <!-- <div *ngIf="selectedNode.id==node.id && optionsVisible" class="node_tooltip">
+                    <nav id="context-menu" class="context-menu contextmenu">
+                        <div class="context-menu1">
+                            <div class="context-menu__item" *ngFor="let menu of stud">
+                                <a class="context-menu__link" id="{{menu.name}}" (click)="callFunction(menu,node)" data-action="View">{{menu.name}}</a>
+                            </div>
+                        </div>
+                    </nav>
+                </div> -->
                 <div [id]="'output_'+node.id" *ngIf="finalbot.botId!=undefined && node.selectedNodeTask=='Output Box' && (node | Checkoutputbox : finalbot) " style="display:none" class="node_tooltip">
                     <nav id="context-menu" class="context-menu contextmenu">
                         <div class="context-menu1">
@@ -21,6 +30,27 @@
                 </div>
         </div>
       </ng-container>
+      <!--Added Grouping Task in RPA Designer-->
+      <ng-container *ngFor="let group of groupsData; let i = index">
+        <div [id]="group.id"    mwlResizable
+        [enableGhostResize]="true"
+        (resizeEnd)="onResizeEnd($event, group.id)"
+        [resizeEdges]="{ bottom: true, right: true, top: false, left: false }" [ngStyle]="{'left': group.x, 'top' : group.y, 'height':group.height, 'width':group.width}" class="groupElement">
+            <div class="groupHeader">
+                <span class="groupTitle" *ngIf="group.edit==false">{{group.groupName}}</span>
+                <span class="groupTitle clickable" (click)="removeGroup(group.id)" *ngIf="group.edit==false">
+                    <i class="ri-delete-bin-line text-danger"></i>
+                </span>
+                <span class="groupTitle clickable" (click)="group.edit=true" *ngIf="group.edit==false">
+                    <i class="ri-pencil-line text-primary"></i>
+                </span>
+                <span class="groupTitle clickable" *ngIf="group.edit==true">
+                    <input type="text" (keyup)="group.groupName=$event.target.value" [value]="group.groupName">
+                </span>
+                <span class="text-suuccess groupTitle clickable" *ngIf="group.edit==true" (click)="group.edit=false" ><i class="ri-check-line"></i></span>
+            </div>
+        </div>
+        </ng-container>
       <div *ngIf="nodes.length==0" class="dragactionsdiv">        
             <!-- <img src="../../../../assets/images/RPA/icon_latest/dragdrop.svg" /> --> 
              <img src="../../../../assets/images/RPA/dragarea.png" />
@@ -91,7 +121,11 @@
             </div>
 
             <div class="row" *ngIf="SelectedOutputType=='Table' && outputboxresult!=undefined">
-           
+                <!-- <div class="col-md-12">
+                    <button class="btn btn-primary eiap-btn" style="float: right" (click)="outputlayoutback()">
+                        <i class="fa fa-arrow-left" aria-hidden="true"></i> back
+                    </button>
+                </div> -->
                 <div class="col-md-12">
                     <table class="table logs-table">
                         <thead>
@@ -114,7 +148,11 @@
             </div>
 
             <div class="row" *ngIf="SelectedOutputType=='Text' && outputboxresult!=undefined">
-             
+                <!-- <div class="col-md-12">
+                    <button style="float: right" class="btn btn-primary eiap-btn" data-placement="bottom" tooltip="Back" (click)="outputlayoutback()">
+                        <i class="fa fa-arrow-left"></i>&nbsp;back
+                    </button>
+                </div> -->
                 <div class="col-md-12 form-group">
                     <textarea [id]="'text_'+outputboxid" disabled class="form-control" rows="6" style="resize:none;"></textarea>                       
                 </div>
@@ -125,7 +163,9 @@
                     <a [href]="Image" download data-placement="bottom" tooltip="Download" style="float: right;margin-bottom: 5px;">
                         <img src="../../../../assets/images/Projects/Download.svg" class="testplus">
                     </a>
-                                  
+                     <!-- <button class="btn btn-primary eiap-btn" style="float: right" (click)="outputlayoutback()">
+                         <i class="fa fa-arrow-left" aria-hidden="true"></i> back
+                     </button> -->                    
                 </div>
                 
                 <div class="col-md-12 text-center">
@@ -161,7 +201,20 @@
                     <button class='btn btn-primary' (click)="recording('stop')">Stop Recording</button>
                     <button class="btn btn-primary" (click)="submitcode()">Save code</button>
                 </div>
-       
+           
+                <!--Added for record and playback-->
+                <!-- <div class="container" *ngIf="recordedcode==undefined">
+                  <br>
+                  <b>Url</b>
+                  <input type='url' [(ngModel)]="rp_url" class="form-control">
+                  <br>
+                  <button class='btn btn-primary' [disabled]="rp_url == undefined" (click)="recording('start')">Start Recording</button>
+                  <button class='btn btn-primary' (click)="recording('stop')">Stop Recording</button><br><br>
+
+                  <textarea id="record_n_play" name='codeSnippet' [(ngModel)]="finalcode" style="width:100%;height:250px;"></textarea>
+                  <button class="btn btn-primary" (click)="submitcode()">Save code</button>
+
+              </div> -->
           </div>
       </div>
   </div>
