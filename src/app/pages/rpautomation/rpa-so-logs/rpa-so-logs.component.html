@@ -46,12 +46,13 @@
       
       <span class="pull-right">
      
-      <span class="clickable1" (click)="logsmodal.hide();selectedIterationTask=undefined">
+      <span class="clickable" (click)="logsmodal.hide();selectedIterationTask=undefined">
         <img src="../../../../assets/images/Projects/circle-close.svg" alt="">
       </span>
      
     </span>
     </div>
+</div>
     <div class="modal-body newmodelbodycl" *ngIf="viewlogid1==undefined && selectedIterationTask==undefined && selectedAutomationTask==undefined" [id]="viewlogid" >
      
       <div class="logs-container" *ngIf="logsLoading==false" style="background: white;">
@@ -482,6 +483,5 @@
         </div>
       </div>
      
-    </div>
     </div>
   
