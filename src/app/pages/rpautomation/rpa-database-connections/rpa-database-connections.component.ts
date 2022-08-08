@@ -155,7 +155,6 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
         }
         this.spinner.hide();
       });
-    //     document.getElementById("filters").style.display='block'; 
   }
 
   sortmethod(){
@@ -172,14 +171,12 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
   
   createdbconnection()
   {
-  //     document.getElementById("filters").style.display='none;
     document.getElementById("createdbconnection").style.display='block';
     this.insertdbForm.get("categoryId").setValue(this.categoryList.length==1?this.categoryList[0].categoryId:"0")
     document.getElementById("Updatedbconnection").style.display='none';
   }
 
   Updatedbconnection(){
-  //     document.getElementById("filters").style.display='none;
     document.getElementById("createdbconnection").style.display='none';
     document.getElementById("Updatedbconnection").style.display='block';
   }
@@ -205,23 +202,8 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
       {
         this.spinner.hide();
         if(res.errorMessage==undefined){
-        // Swal.fire({
-        //   position: 'center',
-        //   icon: 'success',
-        //   title: "Successfully Connected",
-        //   showConfirmButton: false,
-        //   timer: 2000
-        // })
         Swal.fire("Success","Successfully Connected","success")
-        }else{
-          // Swal.fire({
-          //   position: 'center',
-          //   icon: 'error',
-          //   title: 'Connection Failed',
-          //   showConfirmButton: false,
-          //   timer: 2000
-          // })
-          
+        }else{   
         Swal.fire("Error","Connection Failed","error")
         }
     },err=>{
@@ -233,7 +215,6 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
   else
   {
     this.spinner.hide();
-     //alert("Invalid Form");
      this.activestatus();
   }
 
@@ -271,19 +252,10 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
 
     this.insertdbForm.value.createdBy="admin";
     this.submitted=true;
-    //this.insertdbForm.value.databasename = this.insertdbForm.value.dataBaseType;
     let DBConnection = this.insertdbForm.value;
     this.api.addDBConnection(DBConnection).subscribe( res =>{
       let status:any=res;
       this.spinner.hide();
-    // Swal.fire({
-    //         position: 'center',
-    //         icon: 'success',
-    //         title: status.status,
-    //         showConfirmButton: false,
-    //         timer: 2000
-    //       })
-
           if(status.errorMessage==undefined)
           {
             
@@ -339,19 +311,11 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
         this.updatedbForm.value.activeStatus=8
       }
     let dbupdatFormValue =  this.updatedbForm.value;
-    //dbupdatFormValue["databasename"]= this.dbupdatedata.dataBaseType;
     dbupdatFormValue["connectionId"]= this.dbupdatedata.connectionId;
     dbupdatFormValue["createdBy"]= this.dbupdatedata.createdBy;
     this.api.updateDBConnection(dbupdatFormValue).subscribe( res => {
       let status: any= res;
       this.spinner.hide();
-      // Swal.fire({
-      //   position: 'center',
-      //   icon: 'success',
-      //   title: status.status,
-      //   showConfirmButton: false,
-      //   timer: 2000
-      // });
       if(status.errorMessage==undefined)
       {
         Swal.fire("Success",status.status,"success")
@@ -379,7 +343,6 @@ else
 
 updatedbdata()
   {    
-  //     document.getElementById("filters").style.display='none;
     document.getElementById('Updatedbconnection').style.display='block';
     let data:any;
     for(data of this.dbconnections)
@@ -422,7 +385,6 @@ updatedbdata()
 
   closedbconnection()
   {     
-  //     document.getElementById("filters").style.display='block';
     document.getElementById('createdbconnection').style.display='none';
     document.getElementById('Updatedbconnection').style.display='none';
     this.resetDBForm();
@@ -444,13 +406,6 @@ updatedbdata()
         this.api.deleteDBConnection(selecteddbconnection).subscribe( res =>{ 
           let status:any = res;
           this.spinner.hide();
-          // Swal.fire({
-          //   position: 'center',
-          //   icon: 'success',
-          //   title: status.status,
-          //   showConfirmButton: false,
-          //   timer: 2000    
-          // });
           if(status.errorMessage==undefined)
           {
             Swal.fire("Success",status.status,"success")

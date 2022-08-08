@@ -78,13 +78,9 @@ import * as moment from 'moment';
         hostAddress: ["", Validators.compose([Validators.required,  Validators.maxLength(50)])],
         categoryId:["0", Validators.compose([Validators.required])],
         username: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-        
-        // isKeyValuePair: [false, Validators.compose([Validators.required])],
-        // password: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
         connectionType: ["SSH",Validators.compose([Validators.required,, Validators.maxLength(50), Validators.pattern("[A-Za-z]*")])],
         portNumber: ["22",  Validators.compose([Validators.required, Validators.maxLength(6)])],
-        activeStatus: [true]
-       
+        activeStatus: [true] 
     })
 
     this.updateForm=this.formBuilder.group({
@@ -439,10 +435,6 @@ import * as moment from 'moment';
       element.style.display = 'none';
       document.body.appendChild(element);
       element.click();
-      // var a = document.createElement("a"); //Create <a>
-      // a.href = "data:file/ppk;base64," + fileData; //Image Base64 Goes here
-      // a.download =; //File name Here
-      // a.click(); //Downloaded file
     }
     else
     {
@@ -694,13 +686,6 @@ import * as moment from 'moment';
           this.spinner.show();
           this.api.deleteenvironment(selectedEnvironments).subscribe( (res:any) =>{ 
             this.spinner.hide();
-            // Swal.fire({
-            //   position: 'center',
-            //   icon: 'success',
-            //   title: res.status,
-            //   showConfirmButton: false,
-            //   timer: 2000    
-            //( })
             if(res.errorMessage==undefined)
             {
             Swal.fire("Success",res.status,"success")

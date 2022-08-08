@@ -42,15 +42,6 @@
                             <input type="date" (change)="dateChange($event,'enddate')" class="rpa-control form-control form-group" [(ngModel)]="enddate" id="enddatepicker"  >
                             <ngx-timepicker-field  [controlOnly]="true" [defaultTime]="'23:11'"(timeChanged)="onChangeHour($event,'endtime')"  [format]="24" [(ngModel)]="endtime" ></ngx-timepicker-field>
                                <span  class='errspan required' *ngIf="aftertime">{{endtimeerror}}</span>
-                        </div>
-                <!-- <div class="col-md-6 pl-0">
-                    <input type="date" (change)="dateChange($event,'startdate')" class="rpa-control form-control form-group" [(ngModel)]="startdate" [min]="startdate" >
-                    <ngx-timepicker-field [controlOnly]="true" [defaultTime]="'23:11'" [format]="24" [(ngModel)]="starttime"></ngx-timepicker-field>
-                </div>
-                <div class="col-md-6 pr-0">
-                    <input type="date"(change)="dateChange($event,'enddate')"  class="rpa-control form-control form-group" [(ngModel)]="enddate" [min]="startdate">
-                    <ngx-timepicker-field [controlOnly]="true" [defaultTime]="'23:11'" [format]="24" [(ngModel)]="endtime"></ngx-timepicker-field>
-                </div> -->
             </div>
             <div class="RPA-scheduletimer-footer">
                 <button class="btn btn-primary" [disabled]="beforetime==true || aftertime==true" (click)="add_sch()">Add</button>
