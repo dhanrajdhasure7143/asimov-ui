@@ -30,7 +30,7 @@ declare var $:any;
 
 @Component({
   selector: 'app-rpa-home',
-  templateUrl: './rpa-new-home.component.html',
+  templateUrl: './rpa-home.component.html',
   styleUrls: ['./rpa-home.component.css']
 })
 export class RpaHomeComponent implements OnInit {
