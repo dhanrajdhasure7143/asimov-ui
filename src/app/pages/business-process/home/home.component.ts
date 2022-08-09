@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import * as BpmnJS from './../../../bpmn-modeler.development.js';
 import * as CmmnJS from 'cmmn-js/dist/cmmn-modeler.production.min.js';
 import * as DmnJS from 'dmn-js/dist/dmn-modeler.development.js';
-
 import { SharebpmndiagramService } from '../../services/sharebpmndiagram.service';
 import { DataTransferService } from '../../services/data-transfer.service';
 import { RestApiService } from '../../services/rest-api.service';
@@ -11,7 +10,6 @@ import { BpsHints } from '../model/bpmn-module-hints';
 import Swal from 'sweetalert2';
 import { GlobalScript } from 'src/app/shared/global-script';
 import {MatTableDataSource} from '@angular/material/table';
-
 import { MatPaginator, PageEvent } from '@angular/material';
 import { fromMatPaginator, paginateRows } from './../model/datasource-utils';
 import { Observable  } from 'rxjs/Observable';
@@ -109,7 +107,7 @@ export class BpsHomeComponent implements OnInit {
       this.saved_diagrams = res; 
       this.saved_diagramsList=res;
       this.saved_diagrams.map(item => {item.xpandStatus = false;
-        item.convertedModifiedTime = moment(new Date(item.convertedModifiedTime*1000)).format('LLL')
+        item.convertedModifiedTime_new = moment(new Date(item.convertedModifiedTime*1000)).format('LLL')
         return item;
       })
       this.saved_diagrams.forEach(ele => {
@@ -229,14 +227,6 @@ this.dt.bpsHeaderValues('');
     if(apprName && apprName.length > 15)
       return apprName.substr(0,15)+'..';
     return apprName;
-    // let appr_arr = apprName.split('.');
-    // let fName = appr_arr[0];
-    // let lName = appr_arr[1];
-    // if(fName)
-    //   fName = fName.charAt(0).toUpperCase()+fName.substr(1);
-    // if(lName)
-    //   lName = lName.charAt(0).toUpperCase()+lName.substr(1);
-    // return fName&&lName?fName+" "+lName:fName?fName:lName?lName:'-';
    }
 
    getSelectedNotation(eachBPMN,id){
@@ -470,10 +460,6 @@ var filtered = test.reduce((filtered, item) => {
   return filtered
 }, [])
 this.assignPagenation(filtered)
-// const pageEvents$: Observable<PageEvent> = fromMatPaginator(this.paginator);
-//     const rows$ = of(filtered);
-//     this.totalRows$ = rows$.pipe(map(rows => rows.length));
-//     this.displayedRows$ = rows$.pipe(paginateRows(pageEvents$));
   }
  
   assignPagenation(data){

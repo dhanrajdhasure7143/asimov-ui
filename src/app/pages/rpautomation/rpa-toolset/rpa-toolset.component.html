@@ -17,18 +17,11 @@
           
         </div>
         <div class="toolset-mainheader" *ngIf="true" >
-          <!-- <div class="actionsheaderdiv">
-            <span class="module-sub-header-title">
-              <img src="../../../../assets/images/RPA/icon_latest/menu-line.svg" class="testplus" />Toolset & Actions
-            </span>
-            <button type="button" class="close toolset-close" (click)="sidenavbutton=false" aria-label="Close">
-                <span aria-hidden="true"><img src="../../../../assets/images/RPA/icon_latest/close.svg"></span>
-            </button>
-          </div> -->
+        
          
           <div class="search-content">
 
-              <!-- onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)" -->
+         
 
             <input type="text" *ngIf="true" [(ngModel)]="userFilter.name" name="node" placeholder="Search"
                 class="search form-control" autocomplete="off">
@@ -43,10 +36,7 @@
         </button>
       </div>
         <div id="dragicons" class="dragicons">
-        <!-- <button type="button"class="scroll top">
-          <img (click)="scrolltop()"style="width:18px;text-align:center;"src="..\\assets\images\RPA\UpArrow.svg">
-        </button> -->
-
+    
        
         <div #section class="section">
             <mat-accordion  multi>
@@ -75,12 +65,9 @@
               
           </div>
         </mat-accordion>
-    <!--<div class="slice-icon" *ngIf="show < templateNodes.length" (click)="increaseShow()"><i class="fa fa-ellipsis-v more-icon" aria-hidden="true"></i>
-                    </div>-->
+ 
         </div>
-        <!-- <button (click)="scrollbottom()"type="button"class="scroll bottom">
-          <img style="width:18px;text-align:center;"src="..\\assets\images\RPA\DownArrow.svg">
-        </button> -->
+     
       </div>
 
     </div>

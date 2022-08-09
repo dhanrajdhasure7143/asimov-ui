@@ -10,7 +10,6 @@ import { ProcessIntelligenceRoutingModule } from './process-intelligence-routing
 import { ProcessIntelligenceComponent } from './process-intelligence.component';
 import { UploadComponent } from './upload/upload.component';
 import { DatadocumentComponent } from './datadocument/datadocument.component';
-import { PiflowchartComponent } from './piflowchart/piflowchart.component';
 import { FilterComponent } from './filter/filter.component'
 import { FlowchartComponent } from './flowchart/flowchart.component';
 import { SearchPipe } from './pipes/search.pipe';
@@ -46,7 +45,6 @@ import { PopoverModule } from 'ngx-bootstrap/popover';
     ProcessIntelligenceComponent, 
     UploadComponent, 
     DatadocumentComponent, 
-    PiflowchartComponent, 
     FilterComponent,
     FlowchartComponent,
     SearchPipe,

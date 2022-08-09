@@ -140,28 +140,7 @@
                                             <div class="paginationdiv1">
                                                 <mat-paginator class="newpaginationdiv" #paginator1 [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons]="true"></mat-paginator>
                                            </div>
-                                        <!-- <table class="table table-responsive">
-                                            <thead>
-                                                <tr>
-                                                    <th>Process Name</th>
-                                                    <th>Created Date</th>
-                                                    <th>Submitted To</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr *ngFor="let item of pendingApprovals  | paginate: {id:'paginator2' , itemsPerPage: 4,currentPage: q }">
-                                                    <td>{{item['Process Name'] }}</td>
-                                                    <td>{{item['Created Date'] | date: 'medium' }}</td>
-                                                    <td>{{item['Submitted by'] }}</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                        <div class="no-item" *ngIf="pendingApprovals.length==0">No items to display</div>-->
                                         </div>
-                                        <!-- <div class="text-right" style="margin-top: 3%;">
-                                            <pagination-controls id="paginator2" (pageChange)="q = $event">
-                                            </pagination-controls>
-                                        </div> -->
                                     </div>
                                 </div>
                             </div>
@@ -198,7 +177,6 @@
                                             </span>
                                         </div>
                                         <div class="dbichart-body">
-                                            <!-- <div id="runtimestatistics-piechart" class="amart"></div> -->
                                             <div id="prjchartdiv"></div>
                                             <div id="legenddiv"></div>
                                         </div>
@@ -254,25 +232,8 @@
                                                 <div class="paginationdiv1">
                                                     <mat-paginator class="newpaginationdiv" #paginator3 [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons]="true"></mat-paginator>
                                                </div>
-                                            <!-- <table class="table table-responsive">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Project Name</th>
-                                                        <th>Days Spent</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr *ngFor="let item of topEffortsSpent  | paginate: {id:'paginator4' , itemsPerPage: 5,currentPage: a }">
-                                                        <td>{{item.prj_name}}</td>
-                                                        <td style="text-transform: lowercase;">{{item.days}}</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                            <div class="no-item" *ngIf="topEffortsSpent.length==0">No items to display</div> -->
                                             </div>
                                             <div class="text-right" style="margin-top: 3%;">
-                                                <!-- <pagination-controls id="paginator4" (pageChange)="a = $event">
-                                                </pagination-controls> -->
                                             </div>
                                         </div>
                                     </div>

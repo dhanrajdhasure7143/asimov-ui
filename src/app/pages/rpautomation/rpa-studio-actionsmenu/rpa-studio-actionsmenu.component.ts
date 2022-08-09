@@ -290,17 +290,6 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
             this.rpa_studio.spinner.hide();
             Swal.fire("Error","Unable to add audit logs","error")
           })
-          // let coordinates=(this.childBotWorkspace.finaldataobjects[0].x.split("|")!=undefined)?this.childBotWorkspace.finaldataobjects[0].nodeId.split("|"):undefined;
-          // if(coordinates!=undefined)
-          // {
-          //   this.childBotWorkspace.finaldataobjects[0].nodeId=coordinates[0];
-          // }
-          // this.childBotWorkspace.uploadfile(this.finalenv);
-
-          // if(bottask.taskId!=0 && bottask.taskId!=undefined)
-          // {
-          //   this.rpa_assignbot(this.savebotrespose.botId, bottask.taskId);
-          // }
         }
         else
         {
@@ -353,15 +342,6 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
               this.rpa_studio.spinner.hide();
               Swal.fire("Error","Unable to add audit logs","error")
             })
-            // if(this.childBotWorkspace.finaldataobjects.find(item=>item.inSeqId.split("_")=="START")!=undefined)
-            // {
-            //   let firstTask=this.childBotWorkspace.finaldataobjects.find(item=>item.inSeqId.split("_")=="START")
-            //   let coordinates=(firstTask.nodeId.split("|")!=undefined)?firstTask.nodeId.split("|"):undefined;
-            //   if(coordinates!=undefined)
-            //   {
-            //     this.childBotWorkspace.finaldataobjects.find(item=>item.inSeqId.split("_")=="START").nodeId=coordinates[0];
-            //   }
-            // }
               this.childBotWorkspace.uploadfile(this.finalenv);
           
           }
@@ -696,14 +676,6 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
      responsedata = [...data];
      this.logsLoading=false;
      this.rpa_studio.spinner.hide();
-     // if(responsedata.length >0)
-     // {
-     //   this.respdata2 = false;
-     // }else
-     // {
-     //   this.respdata2 = true;
-     // }
-    
      
      var flag=0;
      var loopInsideArray:any=[]
@@ -804,26 +776,6 @@ loadpredefinedbot(botId, dropCoordinates)
 
 
 
-
-
-      // for(var i=0; i<responsedata.sequences.length; i++)
-      // {
-      //   if(responsedata.sequences[i].sourceTaskId!=undefined )
-      //   {
-      //     if(responsedata.sequences[i].sourceTaskId==nodeid)
-      //     {
-      //       responsedata.sequences[i].sourceTaskId=node.id;
-      //     }
-      //   }
-      //   if(responsedata.sequences[i].targetTaskId!=undefined )
-      //   {
-
-      //     if( responsedata.sequences[i].targetTaskId==nodeid)
-      //     {
-      //       responsedata.sequences[i].targetTaskId=node.id;
-      //     }
-      //   }
-      // }
       element.nodeId=nodename+"__"+node.id;
       this.childBotWorkspace.nodes.push(node);
      // this.childBotWorkspace.finaldataobjects.push(element);
@@ -834,13 +786,8 @@ loadpredefinedbot(botId, dropCoordinates)
 
       })
      
-      // console.log(this.childBotWorkspace.nodes);
-      // console.log(responsedata.sequences)
       responsedata.sequences.splice((responsedata.sequences.length-1),1)
       responsedata.sequences.splice(0,1)
-      // setTimeout(()=>{
-
-      // },(responsedata.sequences.length*240))
      
         this.childBotWorkspace.addconnections(responsedata.sequences);
         this.rpa_studio.spinner.hide();
@@ -1147,8 +1094,6 @@ loadpredefinedbot(botId, dropCoordinates)
           })
           this.iterationsList=[...this.iterationsList.sort(function(a, b){return a - b})];
           this.selectedIterationId=this.iterationsList.length;
-          // if((this.selectedIterationId==0 || this.selectedIterationId==undefined )&& this.iterationsList.length!=0)
-          //   this.selectedIterationId=this.iterationsList[this.iterationsList.length-1];
           this.fileteredLoopIterations=[...this.loopIterations.filter(item=>(item.iterationId==this.selectedIterationId))];
           this.loopbyrunid = new MatTableDataSource(this.fileteredLoopIterations);
           this.changeDetector.detectChanges();
