@@ -77,7 +77,7 @@ export class RestApiService{
         });
        }
      }
-  
+
   getInbox(){
     return this.http.get('/rpa-service/inbox');
   }
@@ -1466,5 +1466,8 @@ getFileCategoriesList(id){
 }
 getFilteredEnvironment(id){
   return this.http.get("/rpa-service/agent/get-environments/"+id)
+}
+getTimeZone(){
+  return this.http.get('/rpa-service/getTimeZones');
 }
 }
