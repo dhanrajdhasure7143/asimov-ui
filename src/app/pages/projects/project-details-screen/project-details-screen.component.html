@@ -1228,10 +1228,8 @@
 
 
     <ng-template #addresourcemodal>
-        <div>
-            <app-add-resources (newItemEvent)="addresources($event)" [resources]="resources"
+        <app-add-resources (newItemEvent)="addresources($event)" [resources]="resources"
                 [addresourcemodalref]="addresourcemodalref" [userslist]="userslist"></app-add-resources>
-        </div>
     </ng-template>
 
     <ng-template class="modal-lg" #updatetaskmodal>

@@ -179,11 +179,11 @@
 </div>
 
 
-  <ng-template #logspopup>
-    <div *ngIf="savebotrespose!=undefined">
+  <ng-template #logspopup *ngIf="savebotrespose!=undefined">
+    <!-- <div *ngIf="savebotrespose!=undefined"> -->
       <app-rpa-so-logs [logsbotid]="logsbotid" [logsmodalref]="logsmodalref" [AllVersionsList]="AllVersionsList" [selectedversion]="savebotrespose.version"></app-rpa-so-logs>
       
-    </div>
+    <!-- </div> -->
  
   </ng-template>
 

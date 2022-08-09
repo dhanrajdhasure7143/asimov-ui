@@ -1334,7 +1334,7 @@ mat-row {
     margin: 0px auto !important;
     display: flex;
     align-items: center;
-    overflow: hidden;
+    /* overflow: hidden; */
   }
 }
 
