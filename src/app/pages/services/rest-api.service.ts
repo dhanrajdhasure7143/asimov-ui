@@ -1467,4 +1467,7 @@ getFileCategoriesList(id){
 getFilteredEnvironment(id){
   return this.http.get("/rpa-service/agent/get-environments/"+id)
 }
+getDatabaselist(){
+  return this.http.get("/rpa-service-databasetypes/database/getdatabasetypes")
+}
 }
