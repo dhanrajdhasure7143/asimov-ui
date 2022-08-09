@@ -28,7 +28,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
   @ViewChild("paginator4",{static:false}) paginator4: MatPaginator;
   @ViewChild("sort2",{static:false}) sort2: MatSort;
   public button:string;
-  public dbconnections:any;
+  public dbconnections:any=[]
   public checkeddisabled:boolean =false;
   public DBcheckeddisabled:boolean =false;
   public dbupdatedata:any;
