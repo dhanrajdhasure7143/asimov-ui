@@ -17,6 +17,7 @@ import * as moment from 'moment';
 })
 
 export class RpaDatabaseConnectionsComponent implements OnInit {
+  public databaselist:any;
   displayedColumns1: string[] = ["check","connectiontName","categoryName","dataBaseType","hostAddress","portNumber","username","password","databasename","schemaName","activeStatus","createdTimeStamp","createdBy"];
   public toggle:boolean;
   dataSource2:MatTableDataSource<any>;
@@ -27,7 +28,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
   @ViewChild("paginator4",{static:false}) paginator4: MatPaginator;
   @ViewChild("sort2",{static:false}) sort2: MatSort;
   public button:string;
-  public dbconnections:any=[];
+  public dbconnections:any;
   public checkeddisabled:boolean =false;
   public DBcheckeddisabled:boolean =false;
   public dbupdatedata:any;
@@ -92,6 +93,11 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
     }
 
   ngOnInit() {
+    this.api.getDatabaselist().subscribe(res=>{
+      this.databaselist=res;
+    })
+
+
   //   //     document.getElementById("filters").style.display='block';
     this.dt.changeHints(this.hints.rpadbchints);
     //this.getallDBConnection();
@@ -115,6 +121,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
       );
         })
   }
+
   changeDatabaseType(event){
      console.log("event",event.target.value);
      if(event.target.value=='Snowflake'){
