@@ -7,7 +7,7 @@
                         <span>
                 <select  class="rpa-control form-control"  (change)="onTimeZoneChange($event.target.value)"  [(ngModel)]="timezone">
                   <option value="" disabled>Select Timezone</option>
-                  <option *ngFor="let timeZone of timesZones" [value]="timeZone">{{timeZone}}</option>
+                  <option *ngFor="let timeZone of timesZones" [value]="timeZone.timezoneName">{{timeZone.timezoneName}}</option>
                 </select>
               </span>&nbsp;&nbsp;
                         <span *ngIf="processid!='' && processid !=undefined">

@@ -22,7 +22,8 @@ export class RpaSchedulerComponent implements OnInit {
   processid:any;
   beforetime:boolean=false;
   public Environments:any;
-  public timesZones: any[] = ["UTC","Asia/Dubai","America/New_York","America/Los_Angeles","Asia/Kolkata","Canada/Atlantic","Canada/Central","Canada/Eastern","GMT"];
+  // public timesZones: any = ["UTC","Asia/Dubai","America/New_York","America/Los_Angeles","Asia/Kolkata","Canada/Atlantic","Canada/Central","Canada/Eastern","GMT"];
+  public timesZones: any = [];
   i="";
   public cronOptions: CronOptions = {
     formInputClass: 'form-control cron-editor-input',
@@ -120,8 +121,8 @@ export class RpaSchedulerComponent implements OnInit {
     console.log("todaytime",this.todaytime);
 
     this.starttime=(new Date).getHours()+":"+(new Date).getMinutes();
-   
-  }
+     this.getAlltimezones();
+  }  
 gettime(){
  
   this.todaytime=(new Date).getHours()+":"+(new Date).getMinutes();
@@ -690,6 +691,13 @@ gettime(){
   {
     this.selectedEnvironment="";
     this.timezone="";
+  }
+  
+  getAlltimezones(){
+    this.rest.getTimeZone().subscribe(res =>{
+      console.log(res);
+        this.timesZones=res;
+     })
   }
 
 }

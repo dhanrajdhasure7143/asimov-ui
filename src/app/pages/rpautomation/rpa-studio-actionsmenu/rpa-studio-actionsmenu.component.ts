@@ -676,7 +676,7 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
      responsedata = [...data];
      this.logsLoading=false;
      this.rpa_studio.spinner.hide();
-
+     
      var flag=0;
      var loopInsideArray:any=[]
      responsedata=responsedata.sort((a,b) => a.task_id > b.task_id ? 1 : -1);
@@ -788,7 +788,7 @@ loadpredefinedbot(botId, dropCoordinates)
      
       responsedata.sequences.splice((responsedata.sequences.length-1),1)
       responsedata.sequences.splice(0,1)
-   
+     
         this.childBotWorkspace.addconnections(responsedata.sequences);
         this.rpa_studio.spinner.hide();
     }else

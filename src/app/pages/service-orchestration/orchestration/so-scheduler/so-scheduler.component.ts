@@ -17,7 +17,8 @@ export class SoSchedulerComponent implements OnInit {
   h:any;
   processid:any;
   public Environments:any;
-  public timesZones: any[] = ["UTC","Asia/Dubai","America/New_York","America/Los_Angeles","Asia/Kolkata","Canada/Atlantic","Canada/Central","Canada/Eastern","GMT"];
+  // public timesZones: any[] = ["UTC","Asia/Dubai","America/New_York","America/Los_Angeles","Asia/Kolkata","Canada/Atlantic","Canada/Central","Canada/Eastern","GMT"];
+  public timesZones: any = [];
   i="";
   public cronOptions: CronOptions = {
     formInputClass: 'form-control cron-editor-input',
@@ -130,6 +131,7 @@ export class SoSchedulerComponent implements OnInit {
     }
     this.todaytime=firstchar1+ ":" +firstchar2
     console.log("todaytime",this.todaytime)
+    this.getAlltimezones();
   }
 
   get_schedule()
@@ -898,7 +900,12 @@ export class SoSchedulerComponent implements OnInit {
     this.selectedEnvironment="";
     this.timezone="";
   }
-
+  getAlltimezones(){
+    this.rest.getTimeZone().subscribe(res =>{
+      console.log(res);
+        this.timesZones=res;
+     })
+  }
 }
 
 

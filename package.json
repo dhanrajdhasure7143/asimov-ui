@@ -34,6 +34,7 @@
     "angular-datatables": "^8.1.0",
     "angular-disable-browser-back-button": "^1.0.1",
     "angular-notifier": "^6.0.1",
+    "angular-resizable-element": "^3.3.0",
     "angular-split": "^3.0.3",
     "angular-user-idle": "^2.2.4",
     "angular2-uuid": "^1.1.1",

@@ -242,3 +242,69 @@
 .right_split .rpa-modal-close img.expandsvgimg {
   margin-right: 10px;
 }
+
+
+.groupElement{
+  border:2px solid #001c47;
+  height:150px;
+  width: 600px;
+  border-radius: 20px;
+  position: absolute;
+}
+
+
+.groupHeader{
+  color:black;
+  font-weight: 300;
+  margin-top:-13px;
+  text-align: center;
+}
+
+
+.groupTitle{
+  
+  background-color: white;
+}
+/* .groupElement.jtk-dragged {
+  position: fixed;
+} */
+
+::ng-deep
+.resize-handle-left,
+.resize-handle-right {
+  position: absolute;
+  height: 100%;
+  width: 10px;
+}
+
+.resize-handle-left {
+  left: 0;
+}
+
+::ng-deep
+.resize-right-hover{
+  cursor:context-menu !important;
+}
+
+
+::ng-deep
+.resize-bottom-hover{
+  cursor:context-menu !important;
+}
+
+
+::ng-deep
+.resize-active:hover{
+  cursor:grabbing !important;
+}
+
+::ng-deep
+.resize-right-hover
+{
+  /* width: 10px !important; */
+}
+
+::ng-deep
+.resize-handle-right {
+  right: 2 !important;
+}

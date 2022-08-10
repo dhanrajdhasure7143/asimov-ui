@@ -165,10 +165,13 @@
                             </div>                          
                             <div class="col-md-12 p-0 form-group">
                                 <label class="label-control" for="dataBaseType">Database Type<span class="star">*</span></label>
-                                <select class="form-control" formControlName="dataBaseType" (change)="changeDatabaseType($event)">
+                                <select name="Databaselist" class="form-control" formControlName="dataBaseType" (change)="changeDatabaseType($event)">
                                     <option value="" [selected]="true">--Select Database Type--</option>
-                                    <option value="PostgreSQL">PostgreSQL</option>  
-                                    <option value="Snowflake">Snowflake</option>                    
+                                    <option *ngFor="let dblist of databaselist" [value]="dblist.databaseName">
+                                        {{dblist.databaseName}}
+                                    </option>
+                                    <!-- <option value="PostgreSQL">PostgreSQL</option>  
+                                    <option value="Snowflake">Snowflake</option>                     -->
                                   </select>
                                 <span *ngIf="insertdbForm.get('dataBaseType').invalid && insertdbForm.get('dataBaseType').touched" class="errspan required"> Database Type Required*</span>
                             </div>   
@@ -298,8 +301,11 @@
                                 <label class="label-control" for="dataBaseType">Database Type<span class="star">*</span></label>
                                 <select class="form-control" formControlName="dataBaseType">
                                     <option value="" [selected]="true">--Select Database Type--</option>
-                                    <option value="PostgreSQL">PostgreSQL</option> 
-                                    <option value="Snowflake">Snowflake</option>                                         
+                                    <option *ngFor="let dblist of databaselist" [value]="dblist.databaseName">
+                                        {{dblist.databaseName}}
+                                    </option>
+                                    <!-- <option value="PostgreSQL">PostgreSQL</option> 
+                                    <option value="Snowflake">Snowflake</option>                                          -->
                                   </select>
                                 <span *ngIf="updatedbForm.get('dataBaseType').invalid && updatedbForm.get('dataBaseType').touched" class="errspan required"> Database Type Required*</span>
                             </div>
