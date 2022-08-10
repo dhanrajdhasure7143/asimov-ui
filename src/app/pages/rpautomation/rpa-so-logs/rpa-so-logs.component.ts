@@ -100,11 +100,10 @@ export class RpaSoLogsComponent implements OnInit, OnDestroy {
       }
       log.push(response)
     });
-     log.sort((a,b) => a.run_id > b.run_id ? -1 : 1);
-     this.allLogs=log;
-     console.log("filteredLogVersion",this.filteredLogVersion)
-     this.filteredLogs=[...this.allLogs.filter(item=>item.version==this.filteredLogVersion)];
-     console.log("filteredLogs",this.filteredLogs)
+    log.sort((a,b) => a.version > b.version ? -1 : 1);
+    this.allLogs=log;
+   //  this.filteredLogs=[...this.allLogs.filter(item=>item.version==this.filteredLogVersion)];
+   this.filteredLogs=[...this.allLogs];
      this.Viewloglist = new MatTableDataSource(this.filteredLogs);
      this.changeDetector.detectChanges();
      this.Viewloglist.sort=this.logsSort;
@@ -121,13 +120,13 @@ export class RpaSoLogsComponent implements OnInit, OnDestroy {
      let logs=[...this.filteredLogs]
      this.Viewloglist = new MatTableDataSource(logs);
      this.changeDetector.detectChanges();
-     setTimeout(()=>{
+     // setTimeout(()=>{
      //   console.log(this.Viewloglist)
      //   console.log(this.logsPaginator)
      //   console.log(this.logsSort)
-       this.Viewloglist.paginator=this.logsPaginator;
-       this.Viewloglist.sort=this.logsSort;
-     },4000)
+     //   this.Viewloglist.paginator=this.logsPaginator;
+     //   this.Viewloglist.sort=this.logsSort;
+     // },4000)
   }
   ViewlogByrunid(runid,version){
     this.stopRefresh();   
@@ -226,7 +225,8 @@ export class RpaSoLogsComponent implements OnInit, OnDestroy {
       }
       else
       {
-        this.filteredLogs=[...this.allLogs.filter((item:any)=>item.version=this.filteredLogVersion)];
+       // this.filteredLogs=[...this.allLogs.filter((item:any)=>item.version=this.filteredLogVersion)];
+       this.filteredLogs=[...this.allLogs];
       }
       this.Viewloglist = new MatTableDataSource(this.filteredLogs);
       this.changeDetector.detectChanges();

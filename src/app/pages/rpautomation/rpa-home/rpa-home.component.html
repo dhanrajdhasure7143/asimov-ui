@@ -1,330 +1,390 @@
-
-
-<div class="header_addon" style="padding-right:40px;padding-top:7px;">
-    <!--
-      <mat-slide-toggle
-      style="float:right;height:20px;padding-right:30px"
-      class="example-margin"
-      color="primary"
-      *ngIf="tabsArray.length > 0"
-      [checked]="change_rpa_screen"
-      [(ngModel)]="changescreen_rpa_model"
-      (change)="checkchange()"
-      tooltip="change screen"
-      placement="bottom"
-      >
-    </mat-slide-toggle> -->
-    
-      <button  type="button" class="btn btn-primary" style="float:right;" aria-hidden="true" placement="bottom" id="Load_Bot" (click)="onLoad()">
-        <i class="fa fa-list"></i>&nbsp;&nbsp;Load
-      </button>
-    
-      <button  type="button"    class="btn btn-primary"  style="float:right;"  aria-hidden="true" placement="bottom" id="Create_Bot" (click)="onCreate(0)">
-        <i class="fa fa-plus"></i>&nbsp;&nbsp;Create
-      </button>
-    
-    
-    </div>
-
-<div class="row">
-
-    
-    <div class="col-md-3">
-
-        <h2 class="title-font" style="margin-top:10px !important;margin-bottom: 0px !important">Let’s Automate !</h2><br>
-        <h5 class="subtitle" style="margin-top:0px !important;font-size: 13.8px !important;">Create and configure bots that suit your needs</h5><br/>
-
-        <div class="rpa-home">
-            <!--<div class="rpa-home-block" id="createbot-Home">
-                <button type="button" (click)="createoverlay()" aria-hidden="true" placement="bottom">
-                <img src="../../../../assets/images/RPA/create.svg" style="height:80px;">
-                <br><br>
-                <h6 class="rpa-home-btn-title">Create</h6>
-              </button>
-            </div>-->
-            <!-- <div class="rpa-home-block" id="createbot-Home" style="border-radius: 5px;" *ngIf="this.isButtonVisible || enablecreatebot"> -->
-                <div class="rpa-home-block" id="createbot-Home" style="border-radius: 5px;">
-                <img src="../../../../assets/images/RPA/create.svg"style="height:80px;">
-                <!--<h4 style="font-weight: 600;line-height: 1.1;">Create Bot</h4>
-                <h5 style="color:gray">Click to Create New Bot</h5>-->
-                <br><br>
-                <button class="btn btn-primary rpa-home-btn-title eiap-btn" id="create_newbot" style="margin-left:17px;" (click)="createoverlay()" aria-hidden="true" placement="bottom">Create</button>
-            </div>
-
-            <!--<div class="rpa-home-block" id="loadbot-Home">
-          <button  type="button" (click)="openload()"  aria-hidden="true" placement="bottom">
-
-              <img src="../../../../assets/images/RPA/Load.svg" style="height:80px;" >
-              <br><br>
-              <h6 class="rpa-home-btn-title">Load</h6>
-          </button>
-        </div>-->
-            <br>
-            <!--<div class="rpa-home-block py-5" id="environment-Home" *ngIf="this.isButtonVisible">
-                <button type="button" aria-hidden="true" [routerLink]="[ '/pages/rpautomation/configurations']" placement="bottom">
-          <img src="../../../../assets/images/RPA/Environments.svg"style="height:80px;" >
-          <br><br>
-          <h6 class="rpa-home-btn-title">Configurations</h6>
-        </button>
-            </div>-->
-            <!-- <div class="rpa-home-block py-5" id="Configuration_Home" style="border-radius: 5px;" *ngIf="this.isButtonVisible || enableConfiguration"> -->
-                <div class="rpa-home-block py-5" id="Configuration_Home" style="border-radius: 5px;">
-                <img src="../../../../assets/images/RPA/Environments.svg"style="height:80px;">
-               <!-- <h4 style="font-weight: 600;line-height: 1.1;">Configutions</h4>
-                <h5 style="color:gray">Click to View Bot Configurations</h5>-->
-                <br>
-                <br>
-                <button class="btn btn-primary rpa-home-btn-title eiap-btn" id="create_Configuration" style="margin-left:17px;" [routerLink]="[ '/pages/rpautomation/configurations']" placement="bottom">Configurations</button>
-            </div>
+<div class="main-content ">
+    <div class="row content-area">
+        <div class="module-heading title">
+           <span class="module-header-title">Robotic Process Automation</span>
         </div>
+        <div class="row rpa-content-home">
+            <div class="main-subheader">
+                <div class="main-subheaderTitle">
+                    <label class="main-subtitle">Let’s Automate !</label>
+                    <label class="subtitle-tag">Create and configure bots that suit your needs</label>
+                    <div class="main-subheaderBtns">
+                        <div class="rpa-home-block" id="createbot-Home" *ngIf="!this.userRole.includes('Process Owner') && !this.userRole.includes('RPA Developer')">
+                            <button [disabled]="true" class="btn btn-primary rpa-home-btn-title" id="create_newbot" (click)="createoverlay()" aria-hidden="true" placement="bottom">Create</button>
+                        </div>
+                        <div class="rpa-home-block" id="createbot-Home" *ngIf="this.userRole.includes('Process Owner') || this.userRole.includes('RPA Developer')">
+                            <button  class="btn btn-primary rpa-home-btn-title" id="create_newbot" (click)="createoverlay()" aria-hidden="true" placement="bottom">Create</button>
+                        </div>
+                        <div class="rpa-home-block" id="Configuration_Home">
+                            <button class="btn btn-primary rpa-home-btn-title" id="create_Configuration" [routerLink]="[ '/pages/rpautomation/configurations']" placement="bottom">Configurations</button>
+                        </div>
+                    </div>
+                </div>
+                <img src="../../../../assets/images/RPA/icon_latest/bot_new.svg" />
+                <div class="rpa-home" style="display:none">
+                    <div class="rpa-home-block" id="createbot-Home" style="border-radius: 5px;" *ngIf="this.isButtonVisible || enablecreatebot">
+                        <img src="../../../../assets/images/RPA/create.svg" style="height:10vh;">
+                        <button class="btn btn-primary rpa-home-btn-title eiap-btn" id="create_newbot" style="margin-left:17px;" (click)="createoverlay()" aria-hidden="true" placement="bottom">Create</button>
+                    </div>
+                    <div class="rpa-home-block py-5" id="Configuration_Home" style="border-radius: 5px;" *ngIf="this.isButtonVisible || enableConfiguration">
+                        <img src="../../../../assets/images/RPA/Environments.svg" style="height:10vh;">
+                        <button class="btn btn-primary rpa-home-btn-title eiap-btn" id="create_Configuration" style="margin-left:17px;" [routerLink]="[ '/pages/rpautomation/configurations']" placement="bottom">Configurations</button>
+                    </div>
+                </div>
 
-    </div>
-    <div class="col-md-9" style="padding-right:25px;" *ngIf="this.isButtonVisible || showWorkspace">
-            <div class="mat-elevation-z8 rpa-home-bots" id="botdetails-Home" style=" border-radius: 4px;">
-
-
-               <!-- <mat-tab-group mat-align-tabs="start" [selectedIndex]="selectedTab">
-                    <mat-tab label="Bot Details">
-                        <hr>-->
-                        <div class="row rpa-home-header">
-                            <div class="col-sm-7 col-md-7" style="float:left !important;padding-left:37px;">
-                                <h3 class="box-heading  rpa-home-heading">My Workspace</h3>
-                            </div>
-                            <div class="col-sm-5 col-md-5"  style="margin-right:8px;padding-top:3px;text-align: right;;">
-                            <mat-form-field class="filter departmentFilterclass ">
-                                <select matNativeControl id="departmentselect" [formControl]="departmentFilter">
-                                    <option value="" selected>Select Category</option>
-                                    <option [value]="department.categoryId" *ngFor="let department of categaoriesList">{{department.categoryName}}
-                                    </option>
+            </div>
+            <div class="col-md-12 p-0">
+                <div>
+                    <div class="row">
+                        <div class="col-md-6 pl-0">
+                            <h4 class="gridHeader">My Workspace</h4>
+                        </div>
+                        
+                        <div class="col-md-6 p-0">
+                            <div class="col-md-6 form-group pr-0 rpa-searchip">
+                                <select class="form-control" (change)="searchByCategory(categoryName)" [disabled]="categaoriesList.length == 1"
+                                #category="ngModel" [(ngModel)]="categoryName">
+                                <option value="" disabled hidden>Select Category</option>
+                                <option value="null" disabled hidden>Select Category</option>
+                                <option value="undefined" disabled hidden>Select Category</option>
+                                <option value="allcategories" *ngIf="categaoriesList.length > 1">All Categories</option>
+                                    <option [value]="category.categoryName" *ngFor="let category of categaoriesList;let i=index;trackBy:loopTrackBy">{{category.categoryName | titlecase}}</option>
                                 </select>
-                            </mat-form-field>&nbsp;&nbsp;&nbsp;
-                            <mat-form-field class="filter" floatLabel="never" style="width:142px;">
-                                <mat-label>Search</mat-label>
-                                <input matInput autocomplete="off" id="botNameFilter" [formControl]="botNameFilter">
-                                <mat-icon matSuffix>search</mat-icon>
-                              </mat-form-field>
-                              &nbsp;
-                              <button class="undobtn" style="font-size:16px;text-align: center;vertical-align: center;" tooltip="Reset" (click)="Resetfilters()"><i class="fa fa-undo"></i></button>
+                            </div>
+                            <div class="col-md-6 form-group pr-0 rpa-searchip">
+                                <input class="form-control toolbar-search" type="text"  (keyup)="applySearchFilter($event.target.value)" placeholder="Search Workspace">
+                                <img src="../../../../assets/images/search.svg" alt="" class="testplus1">
                             </div>
                         </div>
-                        <div class="bots-container" style="width:100%;overflow: auto;">
 
-                            <table mat-table #sort1="matSort" [dataSource]="dataSource1" matSort class=" table">
+                    </div>
 
-                                <ng-container matColumnDef="botName">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header style="width:18%;">Bot Name </th>
-                                    <td mat-cell *matCellDef="let element" style="width:18%;">
-                                        <button *ngIf="element.botName!=null" class="btnbot"  [tooltip]="element.botName" placement="bottom" (click)=loadbotdata(element.botId)>{{(element.botName.length > 15) ? ((element.botName).slice(0, 15) + '...') : element.botName}}</button>
-                                        <!--<div class="BotNameelement">{{element.botName}}</div>  -->
-                                        <span *ngIf="element.botName==''">-</span> </td>
-                                </ng-container>
+                    <mat-accordion>
+                        <div class="flex-row Tabletype">
+                            <div class="TabletypeHeader" matSort>
+                                <div class="flex-col header gridheader-th">
+                                    <div class="cell cell1"></div>
+                                </div>
+                                <div class="flex-col header gridheader-th">
+                                    <button mat-sort-header="botName">
+                                        <span >Bot Name</span>
+                                    </button>
+                                </div>
 
-                                <ng-container matColumnDef="version">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Version </th>
-                                    <td mat-cell *matCellDef="let element">
-                                        <button *ngIf="element.version!=null">V{{element.version}}</button>
-                                        <span *ngIf="element.version==''">-</span> </td>
-                                </ng-container>
+                                <div class="flex-col header gridheader-th">
+                                    <button mat-sort-header="description">
+                                        <span >Description</span>
+                                    </button>
+                                </div>
 
-                                <!-- <ng-container matColumnDef="botType">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Type</th>
-                                    <td mat-cell *matCellDef="let element">
-                                        <span *ngIf="element.botType!=null">{{element.botType}}</span>
-                                        <span *ngIf="element.botType==null">---</span>
-                                    </td>
-                                </ng-container> -->
+                                <div class="flex-col header gridheader-th">
+                                    <button mat-sort-header="department">
+                                      <span >Category</span>
+                                    </button>
+                                </div>
 
-                                <ng-container matColumnDef="department">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
-                                    <td mat-cell *matCellDef="let element">
-                                        <span *ngIf="element.department!=null">{{element.department}}</span>
-                                        <span *ngIf="element.department==null">---</span>
-                                    </td>
-                                </ng-container>
-
-
-
-                                <ng-container matColumnDef="botStatus">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Status </th>
-                                    <td mat-cell *matCellDef="let element">
-
-                                        <span *ngIf="element.botStatus=='Running'" class="text-primary" ><span><img src="../../../../assets/images/RPA/DotSpin.gif" style="filter: none; width: 19px;"></span>&nbsp;{{element.botStatus}}</span>
-
-                                        <span *ngIf="element.botStatus=='Success'" class="text-success"><span><li class="fa fa-check-circle"style="font-size:19px"></span>&nbsp;<span>{{element.botStatus}}</span></span>
-
-                                        <span *ngIf="element.botStatus=='Failure'" class="text-danger"><span><li class="fa fa-times-circle" style="font-size:19px"></span>&nbsp;<span>{{element.botStatus}}</span></span>
-                                        <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
-                                        <span *ngIf="element.botStatus=='New'" class="text-primary"><span style="background-color:#0062cf;border-radius: 50%;color:white;padding-right:5px;padding-left:4px;padding-top:5px;padding-bottom:5px;font-size:10px;text-align: center;align-content: center;align-items: center;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><i class="fas fa-robot text-light"></i></span>&nbsp;<span>{{element.botStatus}}</span></span>
-
-                                        <span *ngIf="element.botStatus=='Stop'" ><span class="bg-danger" ><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">-->
-                                        
-                                                <img src="../../../../assets/images/RPA/icon_latest/stop.svg" style="filter: none; width: 19px;">
-                                        </span>&nbsp;<span>{{element.botStatus}}</span></span>
-
-                                        <span *ngIf="element.botStatus=='Pause'||element.botStatus=='Paused'" ><span class="text-primary" style="font-size:19px;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><i class="fas fa-pause-circle text-primary"></i></span>&nbsp;<span>{{element.botStatus}}</span></span>
-
-
-                                        <span *ngIf="element.botStatus==null">---</span> </td>
-                                </ng-container>
-                                <ng-container matColumnDef="description">
-                                    <th mat-header-cell *matHeaderCellDef style="width:25%;">Description </th>
-                                    <td mat-cell *matCellDef="let element" style="width:25%;">
-                                        <span *ngIf="element.description!=null" placement="bottom" [tooltip]="element.description" class="btndes"> {{(element.description.length > 30) ? ((element.description).slice(0, 30) + '...') : element.description}}</span>
-                                        <span *ngIf="element.description==null">-</span>
-                                    </td>
-                                </ng-container>
-                                <!--<ng-container matColumnDef="description">
-                              <th mat-header-cell *matHeaderCellDef mat-sort-header>Description</th>
-                              <td mat-cell *matCellDef="let element">
-                                  <button *ngIf="element.description!=null">{{element.description}}</button>
-                                  <span *ngIf="element.description==''">-</span> </td>
-                          </ng-container>-->
-                                <ng-container matColumnDef="Loading">
-                                    <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="6">
-                                        Loading
-                                    </td>
-                                </ng-container>
-                                <ng-container matColumnDef="noData">
-                                    <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="6">
-                                        No Records Found
-                                    </td>
-                                </ng-container>
-                                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                                <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                                <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['Loading']" [ngClass]="{'hide':dataSource1!=null}"></tr>
-                                <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': !respdata1 && isTableHasData}"></tr>
-                            </table>
-                            <!--<div [hidden]="isTableHasData" style="text-align:center;font-style:italic">
-                              No Record Found
-                             </div>-->
-                        </div>
-                        <mat-paginator #paginator1 [pageSize]="8" [showFirstLastButtons]="true"></mat-paginator>
-                   <!-- </mat-tab>
-                    <mat-tab *ngIf="false" label="Automated Tasks">
-                        <div class="rpa-home-header">-->
-                            <!-- <h4 class="box-heading  rpa-home-heading">My Workspace</h4>-->
-
-
-
-                           <!-- <div class="box-heading rpa-home-process">
-
-                                <span class="run-process">
-                  <button [disabled]="selectedvalue=='' || selectedEnvironment==''" (click)="startprocess()" class="btn btn-primary" style="float:right;padding-right:10px;padding-left:10px" title="Run Process"><i  class="fas fa-play"></i></button>
-              </span>
-                                <span class="run-process">
-                  <select class="form-control" style="width:250px;float:right" [value]="selectedvalue" (change)="applyFilter($event.target.value)" >
-                  <option value="" [selected]="true">Select Process</option>
-                  <option *ngFor="let process of process_names" [value]="process.processId">{{process.processName}}</option>
-
-                </select>
-              </span>
-                                <span class="run-process">
-                  <select class="form-control" style="width:250px;float:right"  [(ngModel)]="selectedEnvironment">
-                      <option value="" selected=true>Select Environment</option>
-                      <option  *ngFor="let environment of environments" [value]="environment.environmentId" >{{environment.environmentName}}</option>
-
-                  </select>
-
-
-                  
-              </span>
-
+                                <div class="flex-col header gridheader-th">
+                                    <button mat-sort-header="version">
+                                        <span>Version</span> 
+                                    </button>
+                                </div>
+                                <div class="flex-col header gridheader-th">
+                                    <button >
+                                        <span>Status</span>
+                                    </button>
+                                </div>
+                                <div class="flex-col header gridheader-th">
+                                    <button >
+                                        <span>Actions</span>
+                                    </button>
+                                </div>
                             </div>
-
-
-
                         </div>
-                        <div class="bots-container" *ngIf="" id="automatedtasks-Home">
-                            <table mat-table #sort2="matSort" [dataSource]="dataSource2" matSort class=" table">
+                        <div class="rpa-home-table">
+                            <mat-expansion-panel [hideToggle]="true" #botpanel1 (opened)="getBotImage(bot.botId,bot.version,$event)" *ngFor="let bot of (displayedRows$  | async ) ;let i=index;">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        <div class="flex-row">
+                                            <div class="">
+                                                <div class="cell cell1">
+                                                    <i class="material-icons expand-open">chevron_right</i>
+                                                    <i class="material-icons expand-close">expand_less</i>
+                                                </div>
+                                            </div>
+                                            <div class="flex-col">
 
-                                <ng-container matColumnDef="processName">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Process Name</th>
-                                    <td mat-cell *matCellDef="let element"> {{element.processName}}</td>
-                                </ng-container>
+                                                <span [tooltip]=bot.botName placement="bottom"> {{(bot.botName.length > 20) ? ((bot.botName).slice(0, 20) + '...') : bot.botName}}</span>
+                                            </div>
+                                            <div class="flex-col">
+                                                <span *ngIf="bot.description!=null" placement="bottom" [tooltip]="bot.description" class="btndes"> {{(bot.description.length > 20) ? ((bot.description).slice(0, 20) + '...') : bot.description}}</span>
+                                                <span *ngIf="bot.description==null">-</span>
+                                            </div>
+                                            <div class="flex-col">{{bot.categoryName}}</div>
+                                            <div class="flex-col">V{{bot.version}}</div>
+                                            <div class="flex-col">
+                                                <span *ngIf="bot.botStatus=='Running'" class="text-primary">
+                                                    <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus1">
+                                                </span>
+                                                <span *ngIf="bot.botStatus=='Success'">
+                                                    <img src="../../../../assets/images/RPA/icon_latest/Success.svg" tooltip="Success" placement="right"class="testplus1">
+                                                </span>
 
-                                <ng-container matColumnDef="taskName">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Task</th>
-                                    <td mat-cell *matCellDef="let element">
-                                        <span *ngIf="element.taskName!=null">{{element.taskName}}</span>
-                                        <span *ngIf="element.taskName==null">---</span>
-                                    </td>
-                                </ng-container>
+                                                <span *ngIf="bot.botStatus=='Failure'">
+                                                    <img src="../../../../assets/images/RPA/icon_latest/close-red.svg" tooltip="Failed" placement="right" class="testplus1">
+                                                </span>
+                                                <span *ngIf="bot.botStatus=='New'" class="text-primary">
+                                                    <img src="../../../../assets/images/RPA/userobot.png"  tooltip="New" placement="right" class="testplus1">
+                                                </span>
 
-                                <ng-container matColumnDef="Assign">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Assigned Bot</th>
-                                    <td mat-cell *matCellDef="let element">
+                                                <span *ngIf="bot.botStatus=='Stop' || bot.botStatus=='Stopped'">
+                                                    <img src="../../../../assets/images/RPA/icon_latest/stop.svg" tooltip="Stopped" placement="right"class="testplus1">
+                                                </span>
 
-                                        <span>
-                              <select class="form-control" style="width:200px;"  [value]="element.botId" [id]="element.taskId+'__select'">
-                                  <option value="0" >Select Bot</option>
-                                  <option *ngFor="let bot of bot_list" [value]="bot.botId"  [selected]="bot.botId == element.botId">{{bot.botName}}</option>
-                              </select>
-                      </span>
-                                    </td>
-                                </ng-container>
+                                                <span *ngIf="bot.botStatus=='Pause'||bot.botStatus=='Paused'" class="text-primary">
+                                                    <img src="../../../../assets/images/SO/pause-circle.svg" class="testplus1">
+                                                </span>
+                                                <span *ngIf="bot.botStatus==null">---</span>
+                                    
+                                            </div>
+                                            <div class="flex-col" *ngIf="!this.userRole.includes('Process Owner') && !this.userRole.includes('RPA Developer')">
+                                                <button tooltip="Edit Bot" placement="bottom" [disabled]="true" (click)="editbotoverlay(bot);botpanel1.toggle()"><img src="../../../../assets/images/RPA/icon_latest/edit.svg" alt="" class="testplus">&nbsp;</button>
+                                                <button tooltip="Delete Bot" placement="bottom" [disabled]="isButtonVisible==true" (click)="botdelete(bot.botId);botpanel1.toggle()"><img src="../../../../assets/images/RPA/icon_latest/delete.svg" alt="" class="testplus">&nbsp;</button>
+                                            </div>
+                                            <div class="flex-col" *ngIf="this.userRole.includes('Process Owner') || this.userRole.includes('RPA Developer')">
+                                                <button tooltip="Edit Bot" placement="bottom" [disabled]="!((isButtonVisible==true && userName==bot.createdBy)||(isButtonVisible==false))" (click)="editbotoverlay(bot);botpanel1.toggle()"><img src="../../../../assets/images/RPA/icon_latest/edit.svg" alt="" class="testplus">&nbsp;</button>
+                                                <button tooltip="Delete Bot" placement="bottom" [disabled]="isButtonVisible==true" (click)="botdelete(bot.botId);botpanel1.toggle()"><img src="../../../../assets/images/RPA/icon_latest/delete.svg" alt="" class="testplus">&nbsp;</button>
+                                            </div>
+                                        </div>
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="diagram_container">
 
-                                <ng-container matColumnDef="status">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
-                                    <td mat-cell *matCellDef="let element">
-                                        <span *ngIf="element.status!='null'" [id]="element.taskId+'__status'">
-                                          <span *ngIf="element.status=='InProgress'" class="text-primary" ><span><img src='../../../../assets/images/RPA/processloading.svg' style='height:25px'></span>&nbsp;<span>{{element.status}}</span></span>
-                                        <span *ngIf="element.status=='Success'" class="text-success"><span><li class="fa fa-check"></span>&nbsp;<span>{{element.status}}</span></span>
-                                        <span *ngIf="element.status=='New'" class="text-primary"><span><img src="/assets/images/RPA/newicon.png" style="height:20px;"></span>&nbsp;<span>{{element.status}}</span></span>
-                                        <span *ngIf="element.status=='Failed'" class="text-danger"><span><li class="fa fa-times"></span>&nbsp;<span>{{element.status}}</span></span>
-                                        </span>
+                                    <a class="btn open-btn-click btn-xs" routerLink="/pages/rpautomation/designer" [queryParams]="{botId:bot.botId }">
+                                        Click to open
+                                    </a>
+                                    <div *ngIf="botImage !=undefined">
+                                        <div class="rpa_botdiv" *ngIf="botImage.errorMessage==undefined">
+                                            <img [src]="botImage.svg" style="width:100%">
+                                        </div>
+                                        <div *ngIf="botImage.errorMessage != undefined" style="width:100%" class=" text-center">
+                                            <img src="../../../../assets/images/RPA/No-Items.svg" class="no-item-img">
+                                            <br>
+                                            <span>{{botImage.errorMessage}}</span>
+                                        </div>
+                                    </div>
+                                    <div *ngIf="botImage ==undefined">
+                                        <div class="text-center">
+                                            Loading
+                                        </div>
+                                    </div>
+                                </div>
 
-                                        <span *ngIf="element.status=='null'">---</span>
-                                    </td>
-                                </ng-container>
-
-                                <ng-container matColumnDef="successTask">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Success</th>
-                                    <td mat-cell *matCellDef="let element">
-                                        <span *ngIf="element.successTask!='null'" [id]="element.taskId+'__success'">{{element.successTask}}</span>
-                                        <span *ngIf="element.successTask=='null'">---</span>
-                                    </td>
-                                </ng-container>
-
-                                <ng-container matColumnDef="failureTask">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Failure</th>
-                                    <td mat-cell *matCellDef="let element">
-                                        <span *ngIf="element.failureTask!='null'" [id]="element.taskId+'__failed'">{{element.failureTask}}</span>
-                                        <span *ngIf="element.failureTask=='null'">---</span>
-                                    </td>
-                                </ng-container>
-
-                                <ng-container matColumnDef="Operations">
-                                    <th mat-header-cell *matHeaderCellDef></th>
-                                    <td mat-cell *matCellDef="let element">
-
-                                        <span>
-                      <button (click)="createtaskbotoverlay(element.taskId)" title="Create and Assign Bot">
-                        <img style="width:15px" src="../../../../assets/images/RPA/rpa-env-add-btn.svg">
-                      </button>
-                  </span>
-
-                                        <span>
-                      <button (click)="assignbot(element.taskId)" title="Assign Bot"><img style="width:15px" src="../../../../assets/images/iconfinder_check_2561355.svg"></button>
-                  </span>
-
-                                        <span>
-                      <button (click)="resetbot(element.taskId)" title="Create and Assign Bot"><i  class="fas fa-sync-alt"></i></button>
-                  </span>
-                                    </td>
-                                </ng-container>
-                                <ng-container matColumnDef="noData">
-                                    <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="6">
-                                        No Records Found
-                                    </td>
-                                </ng-container>
-                                <tr mat-header-row *matHeaderRowDef="displayedColumns2; sticky: true"></tr>
-                                <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
-                                <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(dataSource2!=null && dataSource2.data.length==0)}"></tr>
-                            </table>
-
+                            </mat-expansion-panel>
+                          
                         </div>
-                        <mat-paginator #paginator2 [pageSize]="5" [showFirstLastButtons]="true"></mat-paginator>
-                    </mat-tab>
-                </mat-tab-group>-->
+                    </mat-accordion>
+
+
+                </div>
+                <div class="newpaginationdiv">
+                    <mat-paginator #paginator301 [length]="totalRows$ | async" [pageIndex]="0" [pageSize]="10" [showFirstLastButtons]="true" [pageSizeOptions]="[5, 10, 25, 50]"></mat-paginator>
+                </div>
+            </div>
+
         </div>
+
+
+
+        <!--Edit Bot UI Bot-->
+        <div id="edit-bot" class="modal rpa-modal">
+            <div class="rpa-modal-content">
+                <div class="rpa-modal-header">
+                    <span class="rpa-modal-close" (click)="editclose()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
+                    <h4>Edit Bot Details</h4>
+                </div>
+                <div class="modal-body">
+
+                    <form [formGroup]="editbot" (ngSubmit)="onEditBot()">
+
+                        <div class="container m-contanier form-body">
+
+                            <div class="col-md-12 p-0 form-group">
+
+                                <label class="label-control" for="botName">Bot Name<span class="star">*</span></label>
+                                <input type="text" formControlName="botName" autocomplete="off" placeholder="Enter Bot Name" [(ngModel)]="botName"  maxlength="31" (input)="validate(botName,$event)" class="form-control" name="botName" (change)="checkBotnamevalidation()" required/>
+                                <div *ngIf="(editbot.get('botName').hasError('required') && editbot.get('botName').touched) && !editbot.controls['botName'].hasError('maxlength')" class="errspan required">
+                                    Bot Name Required*
+                                </div>
+                                <div *ngIf="checkbotname && editbot.get('botName').touched" class="errspan required">
+                                    Bot Name is already exists*
+                                </div>
+                                <div *ngIf="botNamespace" class="errspan required">special characters are not allowed Excluding( _ & - )</div>
+
+                                <div *ngIf="editbot.controls['botName'].hasError('maxlength')" class="errspan required">
+                                    Maximum of 30 characters exceeded.
+                                </div>
+                             
+                            </div>
+
+                            <div class="col-md-12 p-0 form-group">
+                                <label class="label-control" for="botDepartment">Category<span class="star">*</span></label>
+
+                                <select [(ngModel)]="rpaCategory" class="form-control" formControlName="department" name="botDepartment" [disabled]="categaoriesList.length==1" [value]="categaoriesList.length==1?categaoriesList[0].categoryId:''">
+                                    <option  value="">--Select Category--</option>
+                                    <option *ngFor ="let category of categaoriesList" [value]="category.categoryId">{{category.categoryName}}</option>
+                                </select>
+                                <div *ngIf="rpaCategory==='others'">
+                                    <input type="text" class="form-control" formControlName="newCategoryName" onkeypress="return (event.charCode !== 32)" placeholder="Enter Category Name" [(ngModel)]="newRpaCategory">
+                                </div>
+                                <div *ngIf="editbot.get('department').invalid && editbot.get('department').touched" class="errspan required">
+                                    Category Required*
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-12 p-0 form-group">
+                                <label class="label-control" for="botDescription">Bot Description</label>
+                                <textarea type="text" autocomplete="off" formControlName="description" placeholder="Enter Bot Description" ngModel maxlength="151" rows="3" class="form-control" name="botDescription"></textarea>
+
+                                <div *ngIf="editbot.controls['description'].hasError('maxlength')" class="errspan required">
+                                    Maximum of 150 characters exceeded.
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-footer">
+                            <button class="btn btn-primary edit-bot-button" [disabled]="editbot.invalid || botNamespace || checkbotname">Save</button>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+        <!--Create Bot Ui Template-->
+        <div id="create-bot" class="rpa-modal">
+            <div class="rpa-modal-content">
+                <div class="rpa-modal-header">
+                    <span class="rpa-modal-close" (click)="close()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
+                    <h4>Create Bot</h4>
+                </div>
+                <div class="modal-body">
+
+                    <form [formGroup]="insertbot" (ngSubmit)="onCreateSubmit()">
+
+                        <div class="container m-contanier form-body">
+                            <div class="col-md-12 p-0 form-group">
+
+                                <label class="label-control" for="botName">Bot Name<span class="star">*</span></label>
+                                <input type="text" formControlName="botName" autocomplete="off" placeholder="Enter Bot Name" [(ngModel)]="botName"  ngModel maxlength="31" (input)="validate(botName,$event)" class="form-control" name="botName" (change)="checkBotnamevalidation()" required/>
+                                <div *ngIf="(insertbot.get('botName').hasError('required') && insertbot.get('botName').touched) && !insertbot.controls['botName'].hasError('maxlength')" class="errspan required">
+                                    Bot Name Required*
+                                </div>
+                                <div *ngIf="checkbotname " class="errspan required">
+                                    Bot Name is already exists*
+                                </div>
+                                <div *ngIf="botNamespace" class="errspan required">special characters are not allowed Excluding( _ & - )</div>
+
+                                <div *ngIf="insertbot.controls['botName'].hasError('maxlength')" class="errspan required">
+                                    Maximum of 30 characters exceeded
+                                </div>
+                                <!-- <div *ngIf="insertbot.controls['botName'].hasError('minlength')" class="errspan required">
+                                    Minimum 2 characters required
+                                </div> -->
+                            </div>
+
+
+                         
+
+                            <div class="col-md-12 p-0 form-group">
+                                <label class="label-control" for="botDepartment">Category<span class="star">*</span></label>
+
+                                <select [(ngModel)]="rpaCategory" class="form-control" [disabled]="categaoriesList.length==1" [value]="categaoriesList.length==1?categaoriesList[0].categoryId:''" formControlName="botDepartment" name="botDepartment">
+                                    <option  value="">Select Category</option>
+                                    <option *ngFor ="let category of categaoriesList" [value]="category.categoryId">{{category.categoryName}}</option>
+                                </select>
+                              
+                                <div *ngIf="insertbot.get('botDepartment').invalid && insertbot.get('botDepartment').touched" class="errspan required">
+                                    Category Required*
+                                </div>
+
+                            </div>
+                            <div class="col-md-12 p-0 form-group">
+                                <label class="label-control" for="botDescription">Bot Description</label>
+                                <textarea type="text" autocomplete="off" formControlName="botDescription" placeholder="Enter Bot Description" ngModel maxlength="151" rows="3" class="form-control" name="botDescription"></textarea>
+                                <div *ngIf="insertbot.controls['botDescription'].hasError('maxlength')" class="errspan required">
+                                    Maximum of 150 characters exceeded
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 p-0 form-group">
+                                <input type="checkbox" formControlName="predefinedBot" (click)="predefined($event)" name="predefinedBot">&nbsp; <span>Predefined Bot</span>
+                            </div>
+                        </div>
+                        <div class="form-footer">
+                            <button class="btn btn-primary" [disabled]="insertbot.invalid || botNamespace || checkbotname">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+
+
+<!--Import Bot Code-->
+
+<ng-template #template>
+    <div class="modal-header modelprhead">
+        <h4 class="modal-title pull-left">Import Bot</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true"><img alt="" src="../../../../../assets/images/Projects/circle-close.svg"></span>
+      </button>
+    </div>
+    <div class="modal-body modelprbody">
+        <div class="container p-0" style="width:100%">
+            <div class="row">
+                <div class="form-fields col-md-12">
+                    <label>Select Environment</label>
+                    <select class="form-control" value="" [(ngModel)]="importenv">                        
+                      <option value="">Select Environment</option>
+                      <option *ngFor="let env of environments" [value]="env.environmentId">{{env.environmentName}}</option>
+                  </select>
+                </div>
+                <div class="form-fields col-md-12">
+                    <label>Select Category</label>
+                    <select class="form-control" value="" [(ngModel)]="importcat">                        
+                    <option value="">Select Category</option>
+                    <option *ngFor="let cat of categaoriesList" [value]="cat.categoryId">{{cat.categoryName}}</option>
+                  </select>
+                </div>
+                <div class="form-fields col-md-12">
+                    <label>Browse File</label>
+                    <div class="text-center">
+                        <input class="form-control custom-file-input" (change)="upload($event.target.files[0])" type="file">
+                    </div>
+                    <span class="required">{{file_error}}</span>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer modelprfooter">
+        <div class="pull-right">
+            <button (click)="importfile='';importcat='';importenv='';file_error='';modalRef.hide()" class="btn btn-default">Cancel</button>
+            <button class="btn btn-primary btn-update" [disabled]="importfile=='' || importcat=='' || importenv=='' || file_error!=''" (click)="importbotfile()">Import</button>
+        </div>
+    </div>
+
+</ng-template>
+
+<ngx-spinner bdColor="#bebcbc66" type="">
+    <img src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader" />
+  
+  </ngx-spinner>
+  

@@ -22,7 +22,8 @@ export class RpaSchedulerComponent implements OnInit {
   processid:any;
   beforetime:boolean=false;
   public Environments:any;
-  public timesZones: any[] = ["UTC","Asia/Dubai","America/New_York","America/Los_Angeles","Asia/Kolkata","Canada/Atlantic","Canada/Central","Canada/Eastern","GMT"];
+  // public timesZones: any = ["UTC","Asia/Dubai","America/New_York","America/Los_Angeles","Asia/Kolkata","Canada/Atlantic","Canada/Central","Canada/Eastern","GMT"];
+  public timesZones: any = [];
   i="";
   public cronOptions: CronOptions = {
     formInputClass: 'form-control cron-editor-input',
@@ -120,8 +121,8 @@ export class RpaSchedulerComponent implements OnInit {
     console.log("todaytime",this.todaytime);
 
     this.starttime=(new Date).getHours()+":"+(new Date).getMinutes();
-   
-  }
+     this.getAlltimezones();
+  }  
 gettime(){
  
   this.todaytime=(new Date).getHours()+":"+(new Date).getMinutes();
@@ -390,8 +391,7 @@ gettime(){
           scheduleInterval:this.cronExpression,
           startDate:parseInt(startdate[0])+","+parseInt(startdate[1])+","+parseInt(startdate[2])+","+starttimeparse+","+starttime[1],
           endDate:parseInt(enddate[0])+","+parseInt(enddate[1])+","+parseInt(enddate[2])+","+ endtimeparse+","+ endtime[1],
-          // startDate:this.startdate.getFullYear()+","+(this.startdate.getMonth()+1)+","+this.startdate.getDate()+","+starttime[0]+","+starttime[1],
-          // endDate:this.enddate.getFullYear()+","+(this.enddate.getMonth()+1)+","+this.enddate.getDate()+","+ endtime[0]+","+ endtime[1],
+         
         
           timeZone:this.timezone,
           save_status:"unsaved",
@@ -404,7 +404,7 @@ gettime(){
     {
 
       this.notifier.notify("error", "Please fill all inputs");
-      //Swal.fire("Please fill all details","","error");
+     
     }
   }
 
@@ -446,8 +446,7 @@ gettime(){
         {
          
           this.notifier.notify("success",resp.status)
-          // this.schedule_list.find(data=>data.check==true).run_status="started";
-          // this.updateflags();
+        
           this.get_schedule();
         }
         else
@@ -476,8 +475,7 @@ gettime(){
         if(resp.errorMessage==undefined)
         {
           this.notifier.notify("success",resp.status)
-          // this.schedule_list.find(data=>data.check==true).run_status="pause";
-          // this.updateflags();
+        
           this.get_schedule();
         }
         else
@@ -503,8 +501,6 @@ gettime(){
       if(resp.errorMessage==undefined)
       {
         this.notifier.notify("success", resp.status);
-        // this.schedule_list.find(data=>data.check==true).run_status="resume";
-        // this.updateflags();
         this.get_schedule();
       }
       else
@@ -532,72 +528,7 @@ gettime(){
 
 
 
-  // async saveschedule()
-  // {
-  //   if(this.botid !=undefined && this.botid != "" && this.botid!="not_saved")
-  //   {
-  //     if(this.schedule_list.length==0)
-  //     {
-  //       this.botdata.botMainSchedulerEntity=null;
-  //     }
-  //     else
-  //     {
-  //       let schedules:any=[]
-  //       this.schedule_list.forEach(data=>{
-  //         if(data.save_status=="unsaved")
-  //         {
-  //           delete data.intervalId
-  //           schedules.push(data);
-  //         }
-  //         else if(data.save_status=="saved")
-  //         {
-  //           schedules.push(data)
-  //         }
-  //       })
-  //       if(this.botdata.botMainSchedulerEntity==null)
-  //       {
-  //         this.botdata.botMainSchedulerEntity={"scheduleIntervals":schedules};
-  //       }
-  //       else if(schedules.length==0)
-  //       {
-  //         this.botdata.botMainSchedulerEntity=null;
-  //       }
-  //     }
-  //     await (await this.rest.updateBot(this.botdata)).subscribe(data =>{
-  //       let resp:any=data;
-  //       if(resp.botMainSchedulerEntity.scheduleIntervals.length==0)
-  //       {
-  //         this.notifier.notify("success","Updated successfully")
-  //       }
-  //       else if(resp.botMainSchedulerEntity.scheduleIntervals.length==this.schedule_list.length)
-  //       {
-  //         //this.actions.schpop=false;
-  //         //this.close()
-
-  //         this.notifier.notify("success", "Schedules saved successfully");
-  //         //Swal.fire("Schedules saved successfully","","success");
-  //       }
-  //       this.get_schedule();
-  //     })
-  //   }
-  //   else
-  //   {
-  //     let schedules:any=[]
-  //       this.schedule_list.forEach(data=>{
-  //         if(data.save_status=="unsaved")
-  //         {
-  //           delete data.intervalId
-  //           schedules.push(data);
-  //         }
-  //       });
-  //     this.notifier.notify("success","Schedule configured successfully")
-  //     let sch:any={
-  //       scheduleIntervals:schedules,
-  //     }
-  //     this.actions.saveschedule(sch,this.schedule_list);
-  //   }
-  // }
-
+  
   async saveschedule()
   {
     if(this.botid !=undefined && this.botid != "" && this.botid!="not_saved")
@@ -640,11 +571,10 @@ gettime(){
         }
         else if(resp.botMainSchedulerEntity.scheduleIntervals.length==this.schedule_list.length)
         {
-          //this.actions.schpop=false;
-          //this.close()
+        
 
           this.notifier.notify("success", "Schedules saved successfully");
-          //Swal.fire("Schedules saved successfully","","success");
+          
         }
        
         this.get_schedule();
@@ -761,6 +691,13 @@ gettime(){
   {
     this.selectedEnvironment="";
     this.timezone="";
+  }
+  
+  getAlltimezones(){
+    this.rest.getTimeZone().subscribe(res =>{
+      console.log(res);
+        this.timesZones=res;
+     })
   }
 
 }

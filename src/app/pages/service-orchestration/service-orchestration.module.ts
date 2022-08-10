@@ -63,6 +63,7 @@ import { CheckResourcePipe } from './orchestration/new-so-automated-tasks/check-
 import { RpaSoLogsComponent } from '../rpautomation/rpa-so-logs/rpa-so-logs.component';
 import { RpautomationModule } from '../rpautomation/rpautomation.module';
 import { CustomMatPaginatorIntl } from 'src/app/shared/custom-mat-paginator-int';
+import { NgbModalDraggableModule } from 'ngb-modal-draggable';
 @NgModule({
   declarations: [OrchestrationComponent,ipcustompipecreation,
     BotStatusComponent,
@@ -103,6 +104,7 @@ import { CustomMatPaginatorIntl } from 'src/app/shared/custom-mat-paginator-int'
     MatPaginatorModule,
     MatSortModule,
     MatTableModule,
+    NgbModalDraggableModule,
     MatTabsModule,
     CronEditorModule,
     MatNativeDateModule,

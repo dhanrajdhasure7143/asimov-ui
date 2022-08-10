@@ -3,7 +3,6 @@
     <div class="col-md-3 p-0">
       <div class="actionsmenu-left">
         <button class="action-item" placement="bottom" tooltip="Toolset & Actions" *ngIf="rpa_toolset.sidenavbutton==false" (click)="rpa_toolset.sidenavbutton=true">
-            <!-- <span><i class="ri-function-line"></i></span>&nbsp;Toolset -->
             <span class="pull-left">
               <img src="../../../../assets/images/RPA/icon_latest/menu-line.svg" class="toolset-menuicon" />Toolset & Actions
             </span>
@@ -16,7 +15,6 @@
             <button class=" dropdown-action-item clickable dropdown-toggle" id="Versions" dropdownToggle type="button"
             placement="bottom" tooltip="Versions" aria-controls="versions">
               <img src="../../../../assets/images/RPA/icon_latest/layer.svg" />
-              <!-- <span><i class="ri-stack-line"></i></span> -->
               &nbsp;Version &nbsp;{{selectedversion}} &nbsp;<span class="caret"></span>
           </button>
           <ul id="versions" style="max-width:300px;max-height:250px;overflow:auto;left:auto;" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
@@ -30,7 +28,6 @@
           <button class= "dropdown-action-item clickable dropdown-toggle" id="Environments" placement="bottom" tooltip="Environments" dropdownToggle type="button"
           aria-controls="environments">
           <img src="../../../../assets/images/RPA/icon_latest/desktop.svg" />
-            <!-- <span><i class="ri-mac-line"></i></span> -->
             &nbsp;
             <span *ngIf="selectedEnvironments.length==0">Environment</span>
             <span *ngIf="selectedEnvironments.length>=1">{{selectedEnvironments[0].environmentName}}<span *ngIf="selectedEnvironments.length>1">...({{selectedEnvironments.length}})</span></span>
@@ -45,40 +42,32 @@
               <span class="clickable"  (click)="create_env();">
                 <img src="../../../../assets/images/RPA/icon_latest/pluse-blue.svg" class="testplus"/>
                 New
-                <!-- <i class="fa  fa-plus"></i>&nbsp;&nbsp;New -->
+               
               </span>
             </li>
           </ul>
         </div>
        
         <div class="action-item" placement="bottom" tooltip="Save Bot" (click)="saveBotFunAct()">
-          <img src="../../../../assets/images/RPA/icon_latest/save.svg" />
-          <!-- <i class="ri-save-line"></i> -->
+          <img src="../../../../assets/images/RPA/icon_latest/save.svg" />         
         </div>
-        <!-- <div class="action-item" >
-            <i class="ri-play-line"></i>
-        </div> -->
+      
 
         <div class="action-item"  placement="bottom" tooltip="Start Bot"  (click)="executionAct()">
-          <img src="../../../../assets/images/RPA/icon_latest/play.svg" />
-            <!-- <i class="ri-play-circle-line"></i> -->
+        <img src="../../../../assets/images/RPA/icon_latest/play.svg" />         
         </div>
         <div class="action-item"  placement="bottom" tooltip="Stop Bot" (click)="stopBot()">
-          <img src="../../../../assets/images/RPA/icon_latest/pause.svg" />
-            <!-- <i class="ri-stop-circle-line"></i> -->
+          <img src="../../../../assets/images/RPA/icon_latest/pause.svg" />      
         </div>
       
         <div class="action-item" placement="bottom" tooltip="Predefined Bots">
           <img src="../../../../assets/images/RPA/icon_latest/duplicate.svg" />
-            <!-- <i class="ri-file-copy-line"></i> -->
         </div>
         <div class="action-item" placement="bottom" tooltip="View Logs" (click)="viewlogdata(logspopup,'open')">
           <img src="../../../../assets/images/RPA/icon_latest/artboard.svg" />
-            <!-- <i class="ri-clipboard-line"></i> -->
         </div>
         <div class="action-item" placement="bottom" tooltip="Scheduler" (click)="openschedule()">
           <img src="../../../../assets/images/RPA/icon_latest/time.svg" />
-            <!-- <i class="ri-history-line"></i> -->
         </div>
         <div class="action-item"  >
           <button type="button" placement="bottom" tooltip="Download" id="dropdownMenuButton" class="downloadBtn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -93,7 +82,6 @@
         <div class="action-item" placement="bottom" tooltip="Reset">
           <button (click)="childBotWorkspace.reset('');slider=0;">
             <img src="../../../../assets/images/RPA/icon_latest/repeat.svg" />
-            <!-- <i class="fa fa-sync-alt" style="font-size:18px;font-weight: 700;"></i> -->
           </button>
         </div>
         <div class="action-item" dropdown>
@@ -101,7 +89,6 @@
             <button class="clickable  text-primary dropdown-toggle" placement="bottom" tooltip="More" id="otherActions" dropdownToggle type="button"
             aria-controls="other_actions">
             <img src="../../../../assets/images/RPA/icon_latest/more.svg" />
-            <!-- <i class="ri-more-2-fill"></i> -->
             </button>
             <ul id="other_actions" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
               <li class="clickable" class="clickable action-item-data" >
@@ -134,7 +121,7 @@
     <div class="col-md-12 p-0">
       <app-rpa-studio-designerworkspace [bot]="botState"></app-rpa-studio-designerworkspace>
       <div class="rpa-custom-slider">
-          <!-- <ng5-slider id="zoominzoomout" [value]="slider" [(ngModel)]="slider" [options]="options" (mouseup)="sliderEvent()"></ng5-slider> -->
+      
           <button class="action-item hovericon" placement="left" tooltip="Zoom in"(click)="childBotWorkspace.zoomin('')">
               <img src="../../../../assets/images/RPA/icon_latest/Zoom In.svg"/>
           </button>
@@ -145,7 +132,7 @@
             
               <button class="action-item hovericon" placement="left" tooltip="Fit to screen" (click)="childBotWorkspace.reset('');slider=0;">
                 <img src="../../../../assets/images/RPA/icon_latest/Fit screen.svg" />
-                <!-- <i class="fa fa-sync-alt" style="font-size:18px;font-weight: 700;"></i> -->
+              
               </button>
          
         </div>
@@ -153,259 +140,16 @@
 
     <div *ngIf="false" class="col-md-1 p-0">
     <div class="rpa-custom-slider">
-      <!-- <ng5-slider id="zoominzoomout" [value]="slider" [(ngModel)]="slider" [options]="options" (mouseup)="sliderEvent()"></ng5-slider> -->
+   
 
     </div>
-  
-  <!-- <button style="width: 45px; display: none;" tooltip="Reset" placement="bottom" (click)="childBotWorkspace.reset('');slider=0;"><i class="fa fa-sync-alt text-primary"></i></button>
-    <div class="download" style="display:none;">
-      <button type="button" placement="bottom" id="dropdownMenuButton" class="downloadBtn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <img style="filter: none; width: 100%" src="../../../../assets/downloadimage.svg">
-      </button>
-      <div class="rpa-dropdown dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <div><a class="dropdown-item clickable" (click)="childBotWorkspace.downloadJpeg()"><i class="fas fa-file-image"> </i>&nbsp;<span>JPEG</span></a></div>
-        <div><a class="dropdown-item clickable" (click)="childBotWorkspace.downloadPng()"><i class="fas fa-file-image"></i>&nbsp;<span>PNG</span></a></div>
-        <div><a class="dropdown-item clickable" (click)="childBotWorkspace.downloadPdf()"><i class="fas fa-file-pdf"></i>&nbsp;<span>PDF</span></a></div>
-      </div>
-    </div> -->
+
     </div>
 
   </div>
 
   
-      <!--
-        <div style="margin: 1px -2px 0px 0px;border: 1px solid lightgray;text-align:center; width:50px"id="dragicons">
-          <!-- <button type="button"class="scroll top">
-            <img style="width:18px;text-align:center;"src="..\\assets\images\RPA\UpArrow.svg">
-          </button> -->
-<!--
-
-          <div class="nodes" tooltip="Scheduler" >
-            <div class="" >
-              <span>
-                <button class="text-center" (click)="openschedule()" >
-                  <img class="imageI1" src="/assets/images/RPA/rpa-actions/schedule.svg">
-                </button>
-              </span>
-            </div>
-          </div>
-          <div class="nodes"  tooltip="Bot Store">
-            <div class="" >
-              <span>
-                <img src="/assets/images/RPA/rpa-actions/botStore.svg" class="imageI1">
-              </span>
-            </div>
-          </div>
-          <div class="nodes" tooltip="Environments">
-            <div class="" >
-              <span>
-                <img src="/assets/images/RPA/rpa-actions/environments.svg" class="imageI1">
-              </span>
-            </div>
-          </div>
-          <div class="nodes">
-            <div class="" tooltip="Save Bot">
-              <span>
-                <img class="imageI1" src="/assets/images/RPA/rpa-actions/save.svg">
-              </span>
-            </div>
-          </div>
-          <div class="nodes">
-            <div class=""  tooltip="Edit Bot">
-              <span>
-                <img class="imageI1" src="/assets/images/RPA/rpa-actions/edit.svg">
-              </span>
-            </div>
-          </div>
-
-
-          <div class="nodes">
-            <div class=""  tooltip="Start Bot">
-              <span>
-                <img class="imageI1" src="/assets/images/RPA/rpa-actions/play.svg">
-              </span>
-            </div>
-          </div>
-
-
-          <div class="nodes">
-            <div class=""  tooltip="Stop Bot" >
-              <span>
-                <img class="imageI1" src="/assets/images/RPA/stop (1).svg">
-              </span>
-            </div>
-          </div>
-
-          <div class="nodes">
-            <div class=""  tooltip="Versions">
-              <span>
-                <img src="/assets/images/RPA/rpa-actions/version.svg" class="imageI1">
-              </span>
-            </div>
-          </div>
-          <!-- <button (click)="scrollbottom()"type="button"class="scroll bottom">
-            <img style="width:18px;text-align:center;"src="..\\assets\images\RPA\DownArrow.svg">
-          </button> -->
-
-          <!--
-        </div>-->
-
-
-        <!-- <div id="menuicons" class="menuicons_rpa">
     
-
-
-          <div class="nodes ">
-            <div class="clickable  text-primary" id="schedule" tooltip="Scheduler" placement="bottom" >
-              <span>
-                <button class="text-center" (click)="openschedule()" >
-                  <i class="fa fa-calendar"></i>
-                </button>
-              </span>
-            </div>
-          </div>
-          <div class="nodes" dropdown [insideClick]="true"  >
-
-            <button class="clickable  text-primary dropdown-toggle"  id="bots" dropdownToggle type="button"
-            aria-controls="bot-store" >
-              <span  tooltip="Bot Store" placement="bottom" >
-                <i class="fa fa-robot text-primary"></i>
-              </span>
-
-            </button>
-
-            <ul id="bot-store" style="max-width:300px;max-height:250px;overflow:auto;"   *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="button-basic" >
-                <li role="menuitem" class="clickable" style="white-space: nowrap;"  *ngFor="let bot of predefinedbotsData"  >
-                  <a   class="clickable"  (click)="loadpredefinedbot(bot.botId)"> {{bot.botName}}</a>
-                </li>
-            </ul>
-
-          </div>
-          <div class="nodes" dropdown  #dropdown="bs-dropdown"   [insideClick]="true" >
-            <button class="clickable  text-primary dropdown-toggle" id="Environments" dropdownToggle type="button"
-            aria-controls="environments" >
-              <span placement="bottom" tooltip="Environments" >
-                <i class="fa fa-desktop"></i>
-              </span>
-
-            </button>
-            <ul id="environments" style="max-width:300px;max-height:250px;overflow:auto;" *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="button-basic">
-              <li  role="menuitem" class="clickable"  *ngFor="let env of environment" style="white-space: nowrap;" >
-                <input type="checkbox" [checked]="env.checked==true" (change)="checkuncheckenv(env.environmentId)" >
-                &nbsp; {{env.environmentName}}
-              </li>
-              <li role="menuitem" class="clickable"  >
-                <span class="clickable"  (click)="create_env();"><i class="fa  fa-plus"></i>&nbsp;&nbsp;New</span>
-              </li>
-            </ul>
-
-          </div>
-          <div class="nodes">
-            <div class="clickable  text-primary" *ngIf="childBotWorkspace!=undefined" >
-              <button  placement="bottom" id="savebot" [disabled]="envflag==false || childBotWorkspace.finaldataobjects.length==0" tooltip="Save Bot" (click)="saveBotFunAct()">
-                <i class="fa fa-save"></i>
-              </button>
-            </div>
-          </div>
-
-
-          <div class="nodes" >
-            <div class="clickable text-primary" >
-              <button [disabled]="savebotrespose == undefined"  id="startbot"  placement="bottom" tooltip="Start Bot"  (click)="executionAct()">
-                <i class="fas fa-play "></i>
-              </button>
-            </div>
-          </div>
-
-
-          <div class="nodes">
-            <div class="clickable text-primary" >
-              <button placement="bottom" [disabled]="(pausebot==false && resumebot==false)"  id="stopbot"   tooltip="Stop Bot"   (click)="stopBot()">
-                <i class="fas fa-stop "></i>
-              </button>
-            </div>
-          </div>
-
-
-          <div class="nodes" *ngIf="resumebot==false">
-            <div class="clickable text-primary">
-              <button   placement="bottom"  [disabled]="savebotrespose == undefined || pausebot==false" tooltip="Pause Bot" (click)="pauseBot()">
-                <i class="fas fa-pause"></i>
-              </button>
-            </div>
-          </div>
-
-          <div class="nodes" *ngIf="resumebot==true">
-            <div class="clickable text-primary">
-              <button   placement="bottom"  [disabled]="savebotrespose == undefined && resumebot==true" tooltip="Resume Bot" (click)="resumeBot()">
-                <i class="fa fa-play-circle" aria-hidden="true"></i>
-              </button>
-            </div>
-          </div>
-
-          <div class="nodes">
-            <div class="clickable text-primary"  id="Logs" >
-              <button  placement="bottom" [disabled]="savebotrespose == undefined" tooltip="View Logs" (click)="viewlogdata()">
-                <i class="fas fa-list"></i>
-              </button>
-            </div>
-          </div>
-
-          <div class="nodes">
-            <div class="clickable text-primary"  id="delete"   >
-              <button  placement="bottom" [disabled]="savebotrespose == undefined" tooltip="Delete Bot" (click)="delete()">
-                <i class="fas fa-trash"></i>
-              </button>
-            </div>
-          </div>
-          <div class="nodes">
-            <div class="clickable text-primary"  id="reset"  >
-              <button  placement="bottom" tooltip="Reset Bot" (click)="reset()" >
-                <i class="fas fa-sync-alt "></i>
-              </button>
-            </div>
-          </div>
-          <div class="nodes">
-            <div class="clickable text-primary"  id="reset"  >
-              <button  placement="bottom" tooltip="Export Bot" (click)="exportbot(botState)" >
-                <i class="fas fa-file-export "></i>
-              </button>
-            </div>
-          </div>
-       
-
-
-        </div> -->
-
-
-    <!-- <div >
-
-
-      <select class="form-control versions"  id="versions"  [(ngModel)]="selectedversion" (change)="switchversion($event.target.value)">
-        <option *ngIf="savebotrespose==undefined" [value]="undefined" >V 1</option>
-        <option *ngFor="let version of versionsList" [value]="version.vId">V {{version.vId}}</option>
-      </select>
-      <br>
-      <div style="height:200px" class="rpa-custom-slider">
-        <ng5-slider id="zoominzoomout" [value]="slider" [(ngModel)]="slider" [options]="options" (mouseup)="sliderEvent()"></ng5-slider>
-
-      </div>
-      <br>
-      <button style="width: 45px;" tooltip="Reset" placement="bottom" (click)="childBotWorkspace.reset('');slider=0;"><i class="fa fa-sync-alt text-primary"></i></button><br>
-      <br><br>
-      <br><br><br>
-      <div class="download">
-        <button type="button" placement="bottom" id="dropdownMenuButton" class="downloadBtn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <img style="filter: none; width: 30px;" src="../../../../assets/downloadimage.svg">
-        </button>
-        <div class="rpa-dropdown dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <div><a class="dropdown-item clickable" (click)="childBotWorkspace.downloadJpeg()"><i class="fas fa-file-image"> </i>&nbsp;<span>JPEG</span></a></div>
-          <div><a class="dropdown-item clickable" (click)="childBotWorkspace.downloadPng()"><i class="fas fa-file-image"></i>&nbsp;<span>PNG</span></a></div>
-          <div><a class="dropdown-item clickable" (click)="childBotWorkspace.downloadPdf()"><i class="fas fa-file-pdf"></i>&nbsp;<span>PDF</span></a></div>
-        </div>
-      </div>
-    </div> -->
-
 </div>
 
 
@@ -435,11 +179,11 @@
 </div>
 
 
-  <ng-template #logspopup>
-    <div *ngIf="savebotrespose!=undefined">
+  <ng-template #logspopup *ngIf="savebotrespose!=undefined">
+    <!-- <div *ngIf="savebotrespose!=undefined"> -->
       <app-rpa-so-logs [logsbotid]="logsbotid" [logsmodalref]="logsmodalref" [AllVersionsList]="AllVersionsList" [selectedversion]="savebotrespose.version"></app-rpa-so-logs>
       
-    </div>
+    <!-- </div> -->
  
   </ng-template>
 
@@ -467,8 +211,6 @@
           </div>
           <div class="col-md-12 p-0 form-group">
             <label class="label-control" for="environmentType">Type<span class="star">*</span></label>
-            <!--<input type="text" class="form-control" formControlName="environmentType" value=""
-                        placeholder="Enter Environment Type" >-->
             <select class="form-control" formControlName="environmentType" (change)="EnvType1()">
                 <option value="" [selected]="true">--Select Type--</option>
                 <option value="Windows">Windows</option>
@@ -500,10 +242,6 @@
             <label class="label-control" for="hostAddress"> IP Address/Host<span class="star">*</span></label>
             <input type="text" maxlength="51" class="form-control" formControlName="hostAddress" value="" placeholder="Enter IP Address/Host">
             <span *ngIf="(insertForm.get('hostAddress').invalid && insertForm.get('hostAddress').touched) && !insertForm.controls['hostAddress'].hasError('maxlength') && !insertForm.controls['hostAddress'].hasError('pattern')" class="errspan required"> IP Address/Host Required*</span>
-
-            <!--<div *ngIf="insertForm.controls['hostAddress'].hasError('maxlength')" class="errspan required">
-                Maximum of 50 characters
-            </div>-->
             <div *ngIf="(insertForm.controls['hostAddress'].hasError('pattern') && !insertForm.controls['hostAddress'].hasError('maxlength')) && insertForm.get('hostAddress').touched" class="errspan required">
                 Invalid IP Address format
             </div>
@@ -563,11 +301,7 @@
           <button type="button" class="btn btn-primary"  (click)="testConnection('insert')" [disabled]="insertForm.invalid">Test Connection</button>   
           <button type="button" class="btn btn-primary"  (click)="saveEnvironment()" [disabled]="insertForm.invalid || submitted">Save</button>
         </div>
-        <!-- <div class="form-footer">
-          <input type="button" class="btn btn-primary" value="Save" (click)="saveEnvironment()" [disabled]="insertForm.invalid || submitted">
-          <input type="button" class="btn btn-primary" value="Test Connection" (click)="testConnection('insert')" [disabled]="insertForm.invalid">
-          <input type="button" class="btn btn-primary" value="Reset" (click)="resetEnvForm()">
-        </div> -->
+  
 
       </form>
 
@@ -578,13 +312,15 @@
 
 
 <ng-template #auditLogsPopup>
-  <div class="modal-header modelprhead newmodelcla">
+  <div ngb-modal-draggable [ngbModalDraggableHandle]="draggableHandle" class="cursor-all-scroll">
+  <div #draggableHandle class="modal-header modelprhead newmodelcla">
     Audit Logs  
     <span class="pull-right">
       <span class=" clickable" (click)="auditLogsModelRef.hide()">
         <img src="../../../../assets/images/Projects/circle-close.svg" alt="">
       </span>
     </span>
+  </div>
   </div>
   <div class="modal-body newmodelbodycl" >
     <div class="logs-container" style="background: white;">
@@ -640,7 +376,6 @@
     </div>
 
   </div>
-
 
 
 </ng-template>

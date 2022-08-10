@@ -19,6 +19,8 @@ export class DynamicFormsComponent implements OnInit {
   @Input() formheader: any;
   @Input() multiarray: any = []
   form: FormGroup;
+  otherAttributesForm:FormGroup;
+  otherAttributes:any=[];
   isdisabled: boolean;
   userRole: string;
   fillarray: any = []
@@ -37,16 +39,15 @@ export class DynamicFormsComponent implements OnInit {
       this.data = this.fillarray.map(p => {
         let filteredobject = {};
         let sample = (Object.keys(p));
-        sample.map(item => {
+        sample.forEach(item => {
           if (item != "id")
             filteredobject[item.split("_")[0]] = p[item];
           else
             filteredobject["id"] = p[item];
         })
-        console.log("object", filteredobject)
         return filteredobject;
       });
-      this.Submit.emit(this.data)
+      this.Submit.emit({multiform:this.data, otherFormData:this.otherAttributesForm.value})
     }
     else {
       this.onSubmit.emit(this.form.value)
@@ -135,6 +136,7 @@ export class DynamicFormsComponent implements OnInit {
           else
             filteredobject["id"] = p[item];
         })
+        
         return filteredobject;
       })
     }
@@ -196,57 +198,32 @@ export class DynamicFormsComponent implements OnInit {
         return fieldData;
       })]
       this.fillarray = modifiedArray;
+      let otherAttributes:any[]=this.enableMultiForm.additionalAttributesList;
+      let otherFieldsCtrls:any=[];
+
+      otherAttributes.forEach((other_attr:any)=>{
+        if (other_attr.type == 'email')
+          otherFieldsCtrls[other_attr.name + '_' + other_attr.id] = new FormControl(other_attr.value || '', other_attr.required && other_attr.dependency == '' ? [Validators.pattern("[a-zA-Z0-9.-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{3,}")] : [Validators.pattern("[a-zA-Z0-9.-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{3,}")])
+        else
+          otherFieldsCtrls[other_attr.name + '_' + other_attr.id] = new FormControl(other_attr.value || '', other_attr.required && other_attr.dependency == '' ? [Validators.required] : [])
+      })
+      this.otherAttributes=otherAttributes;
+      this.otherAttributesForm=new FormGroup(otherFieldsCtrls);
     }
-
-
-    // if(this.multiarray!=undefined){
-    //   this.fillarray=this.multiarray.map(p=>{
-
-
-    //     let filteredobject={};
-    //     let sample=(Object.keys(p));
-    //     console.log(sample)
-    //     sample.forEach(item=>{
-    //       if(item!="id")
-    //       {
-    //           this.fields.forEach((data,index)=>{
-
-    //       //  filteredobject[this.fields[i].name+'_'+this.fields[i].id]=p[item]
-    //           filteredobject[this.fields[index].name+'_'+this.fields[index].id]=p[item]
-    //        })
-    //       }
-    //       else
-    //         filteredobject["id"]=p[item];
-    //     })
-    //     console.log("----------------------------", filteredobject)    
-    //     return filteredobject;
-    //   })
-    //   console.log("--------------",this.fillarray)
-    //   this.data=this.fillarray;
-    // }
-
     for (let f of this.fields) {
-      //  if (f.type != 'checkbox') {
       if (f.type == 'email')
         fieldsCtrls[f.name + '_' + f.id] = new FormControl(f.value || '', f.required && f.dependency == '' ? [Validators.pattern("[a-zA-Z0-9.-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{3,}")] : [Validators.pattern("[a-zA-Z0-9.-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{3,}")])
       else
         fieldsCtrls[f.name + '_' + f.id] = new FormControl(f.value || '', f.required && f.dependency == '' ? [Validators.required] : [])
-      //  console.log(f);
-      /* } else {
-         let opts = {};
-         for (let opt of f.options) {
-           opts[opt.key] = new FormControl(opt.value);
-         }
-         fieldsCtrls[f.name] = new FormGroup(opts)
-       }*/
-
     }
     this.form = new FormGroup(fieldsCtrls);
     this.userRole = localStorage.getItem("userRole");
-    if (this.userRole == 'Process Owner' || this.userRole == 'RPA Developer') {
+    if (this.userRole == 'Process Owner' || this.userRole == 'RPA Developer') 
+    {
       this.isdisabled = null
     }
-    else {
+    else 
+    {
       this.isdisabled = true
     }
 

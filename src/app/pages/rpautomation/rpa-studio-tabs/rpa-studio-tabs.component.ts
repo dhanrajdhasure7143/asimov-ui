@@ -23,19 +23,15 @@ export class RpaStudioTabsComponent implements OnInit {
     let i = this.tabsArray.findIndex(item => item.botName === bot.botName);
     if (i >= this.tabsArray.length - 1) {
       if(i == 0){
-        // this.projectService.sendCurrentPipeline(this.tabsArray[0]);
         this.tabActiveId = this.tabsArray[0].id;
-      }else{
-        // this.projectService.sendCurrentPipeline(this.tabsArray[i - 1]);
+      }else{   
         this.tabActiveId = this.tabsArray[i - 1].id;
       }
      
     } else {
       if(i == 0){
-        // this.projectService.sendCurrentPipeline(this.tabsArray[i + 1]);
       this.tabActiveId = this.tabsArray[i + 1].id;
       }else{
-        // this.projectService.sendCurrentPipeline(this.tabsArray[i - 1]);
         this.tabActiveId = this.tabsArray[i - 1].id;
       }
       

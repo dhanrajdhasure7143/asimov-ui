@@ -73,7 +73,6 @@
                     <button  class="btn btn-success" id="btn_app" (click)="approveDiagram(each_past_process)"[disabled]="checkStatus(each_past_process) || each_past_process.isDisabled || ((each_past_process.reviewComments && each_past_process.reviewComments.length == 0) || !each_past_process.reviewComments)"><img src="../../../../assets/images/BPMS/approve-black.svg" alt="" class="testplus1"></button><!-- approval_msg.length==0 ||  -->
                     <button  class="btn btn-danger" id="btn_deny" (click)="denyDiagram(each_past_process, each_diag)" [disabled]="checkStatus(each_past_process) || each_past_process.isDisabled  || ((each_past_process.reviewComments && each_past_process.reviewComments.length == 0) || !each_past_process.reviewComments)"><img src="../../../../assets/images/BPMS/deny-black.svg" alt="" class="testplus1"></button><!-- approval_msg.length==0 || -->
                     <img src="../../../../assets/images/BPMS/eye-show.svg" alt="" class="testplus1" (click)="expandPanel(i, each_past_process)">
-                    <!-- <i class="fa fa-eye" (click)="expandPanel(i, each_past_process)"></i> -->
                   </div>  
                 </td>
               </tr>
@@ -111,11 +110,9 @@
   </div>
 </div>
   <div *ngIf="griddata.length>0">
-    <!-- <pagination-controls (pageChange)="p = $event"></pagination-controls> -->
   </div>
 </div>
 <div class="spinoverlay" *ngIf="isLoading"><div class="spincenter">
-  <!-- <mat-progress-spinner diameter=50  mode="indeterminate"></mat-progress-spinner>  -->
   <img  src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader"/>
   </div></div>
 

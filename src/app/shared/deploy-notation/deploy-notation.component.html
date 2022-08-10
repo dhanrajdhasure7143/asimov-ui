@@ -1,5 +1,8 @@
-<div class="modal-header modelprhead">
+<div ngb-modal-draggable [ngbModalDraggableHandle]="draggableHandle" class="cursor-all-scroll">
+    <div #draggableHandle class="modal-header modelprhead">
+<!-- <div class="modal-header modelprhead"> -->
     <h4 class="modal-title pull-left">Deploy Notation</h4>
+</div>
 </div>
 <div class="modal-body modelprbody resourcescreen">
     <div class="successful-deploy" *ngIf="deploy_success">
@@ -35,15 +38,3 @@
         <button class="btn btn-primary btn-update" [disabled]="!depName || !endPoint || deploy_success" (click)="deployNotation()">Deploy</button>
     </div>
 </div>
-
-<!--
-<h2 mat-dialog-title>This is a Dialog title</h2>
-
-<mat-dialog-content>
-
-<p> Place content here </p>
-</mat-dialog-content>
-
-<mat-dialog-actions>
-    <button class="mat-raised-button" (click)="close()">Close</button>
-</mat-dialog-actions> -->

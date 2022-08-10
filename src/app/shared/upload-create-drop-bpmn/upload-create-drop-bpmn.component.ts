@@ -89,7 +89,6 @@ export class UploadCreateDropBpmnComponent implements OnInit {
     this.overlay_data={"type":"create","module":"bps"};
     if (this.freetrail == 'true') {
       if (this.bpmn_list.length == this.config.bpsprocessfreetraillimit) {
-        // Swal.fire("Error","You have limited access to this product. Please contact EZFlow support team for more details.","error");
         Swal.fire({
           title: 'Error',
           text: "You have limited access to this product. Please contact EZFlow support team for more details.",
@@ -161,8 +160,6 @@ export class UploadCreateDropBpmnComponent implements OnInit {
 
   initialSave(diagramModel:BpmnModel, target:string){
     let message;
-   // diagramModel.createdTimestamp = new Date();
-   // diagramModel.modifiedTimestamp = new Date();
     this.rest.saveBPMNprocessinfofromtemp(diagramModel).subscribe(res=>{
       if(res['errorCode']!="2005"){
         let isBPSHome = this.router.url == "/pages/businessProcess/home";

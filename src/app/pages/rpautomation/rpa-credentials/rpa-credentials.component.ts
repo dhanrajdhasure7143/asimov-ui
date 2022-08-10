@@ -83,9 +83,7 @@ export class RpaCredentialsComponent implements OnInit {
 
   ngOnInit() {
     this.spinner.show();
-   // document.getElementById("filters").style.display='block';
     this.dt.changeHints(this.hints.rpadbchints);
-   // this.getallCredentials();
     this.getCategories();
     this.passwordtype1=false;
     this.passwordtype2=false;
@@ -146,7 +144,6 @@ inputNumberOnly(event){
         this.dataSource2= new MatTableDataSource(this.credentials);
         this.spinner.hide();
       });
-     // document.getElementById("filters").style.display='block'; 
   }
 
   sortmethod(){
@@ -163,14 +160,12 @@ inputNumberOnly(event){
   
   createcredentials()
   {
-   // document.getElementById("filters").style.display='none';
     document.getElementById("createcredentials").style.display='block';
     this.insertForm.get("categoryId").setValue(this.categoryList.length==1?this.categoryList[0].categoryId:"0")
     document.getElementById("Updatecredntials").style.display='none';
   }
 
   Updatecredntials(){
-   // document.getElementById("filters").style.display='none';
     document.getElementById("createcredentials").style.display='none';
     document.getElementById("Updatecredntials").style.display='block';
   }
@@ -181,19 +176,11 @@ inputNumberOnly(event){
     if(this.insertForm.valid)
    {
     this.spinner.show();
-   // this.insertForm.value.createdBy="admin";
     this.submitted=true;
     let Credentials = this.insertForm.value;
     this.api.save_credentials(Credentials).subscribe( res =>{
       let status:any=res;
       this.spinner.hide();
-    // Swal.fire({
-    //         position: 'center',
-    //         icon: 'success',
-    //         title: status.status,
-    //         showConfirmButton: false,
-    //         timer: 2000
-    //       })
       if(status.errorMessage==undefined)
       {
         Swal.fire("Success",status.status,"success");
@@ -268,7 +255,6 @@ else
 
 updatecreddata()
   {    
-   // document.getElementById("filters").style.display='none';
     document.getElementById('Updatecredntials').style.display='block';
     let data:any;
     for(data of this.credentials)
@@ -291,7 +277,6 @@ updatecreddata()
 
   closecredentials()
   {     
-   // document.getElementById("filters").style.display='block';
     document.getElementById('createcredentials').style.display='none';
     document.getElementById('Updatecredntials').style.display='none';
     this.resetCredForm();

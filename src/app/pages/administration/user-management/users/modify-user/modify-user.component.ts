@@ -136,8 +136,8 @@ onchangeRole(value){
     });
     this.isdprtDisabled=true;
   }else{
-    
-   this.departments=this.depts;
+    this.departments = [];
+   //this.departments=this.depts;
     this.isdprtDisabled=false;
   }
 }

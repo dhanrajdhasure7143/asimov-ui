@@ -1,5 +1,5 @@
-
-    <div class="modal-header modelprhead newmodelcla">
+<div ngb-modal-draggable [ngbModalDraggableHandle]="draggableHandle" class="cursor-all-scroll">
+  <div #draggableHandle class="modal-header modelprhead newmodelcla">
      
       <span *ngIf="viewlogid1!=undefined && selectedIterationTask==undefined && selectedAutomationTask==undefined" class="module-back-button" (click)="backtoPage()">
         <i class="fas fa-arrow-left" aria-hidden="true"></i>
@@ -46,12 +46,13 @@
       
       <span class="pull-right">
      
-      <span class="clickable1" (click)="logsmodal.hide();selectedIterationTask=undefined">
+      <span class="clickable" (click)="logsmodal.hide();selectedIterationTask=undefined">
         <img src="../../../../assets/images/Projects/circle-close.svg" alt="">
       </span>
      
     </span>
     </div>
+</div>
     <div class="modal-body newmodelbodycl" *ngIf="viewlogid1==undefined && selectedIterationTask==undefined && selectedAutomationTask==undefined" [id]="viewlogid" >
      
       <div class="logs-container" *ngIf="logsLoading==false" style="background: white;">
@@ -67,12 +68,12 @@
   
                   <!-- Version Column -->
                   <ng-container matColumnDef="version">
-                      <th mat-header-cell *matHeaderCellDef> Version
-                        <span >
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header> Version 
+                        <!-- <span >
                           <select class="logsVersionFilter clickable1" (change)="changeLogVersion($event)" [value]="filteredLogVersion" >
                             <option [selected]="filteredLogVersion==version" [value]="version" *ngFor="let version of AllVersionsList">V {{version}}</option>
                           </select>
-                        </span>
+                        </span> -->
                      </th>
                       <td mat-cell *matCellDef="let element">
                           <span *ngIf="element.version!=null">V{{element.version}}</span>
