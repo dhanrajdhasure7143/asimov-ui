@@ -21,6 +21,8 @@ import {MatInputModule, MatIconModule, MatFormFieldModule, MatOptionModule, MatS
 import {MatMenuModule} from '@angular/material/menu';
 import {CustomMatPaginatorIntl} from './../../shared/custom-mat-paginator-int';
 import {MatPaginatorIntl} from '@angular/material';
+import { NgbModalDraggableModule } from 'ngb-modal-draggable'
+
 import {MatPaginatorModule} from '@angular/material/paginator';
 import{FilterPipe} from './custom_filter.pipe';
 import { ModalModule } from 'ngx-bootstrap/modal';
@@ -49,7 +51,8 @@ import { BpsDataSaveGuard } from 'src/app/guards/bps-data-save.guard';
     ModalModule.forRoot(),
     MatPaginatorModule,
     PopoverModule.forRoot(),
-    MatSortModule
+    MatSortModule,
+    NgbModalDraggableModule
   ],
   providers: [BpsDataSaveGuard,BpsHints, 
     {

@@ -1,5 +1,5 @@
-
-    <div class="modal-header modelprhead newmodelcla">
+<div ngb-modal-draggable [ngbModalDraggableHandle]="draggableHandle" class="cursor-all-scroll">
+  <div #draggableHandle class="modal-header modelprhead newmodelcla">
      
       <span *ngIf="viewlogid1!=undefined && selectedIterationTask==undefined && selectedAutomationTask==undefined" class="module-back-button" (click)="viewlogid1=undefined">
         <i class="fas fa-arrow-left" aria-hidden="true"></i>
@@ -46,12 +46,13 @@
       
       <span class="pull-right">
      
-      <span class="clickable1" (click)="logsmodal.hide();selectedIterationTask=undefined">
+      <span class="clickable" (click)="logsmodal.hide();selectedIterationTask=undefined">
         <img src="../../../../assets/images/Projects/circle-close.svg" alt="">
       </span>
      
     </span>
     </div>
+</div>
     <div class="modal-body newmodelbodycl" *ngIf="viewlogid1==undefined && selectedIterationTask==undefined && selectedAutomationTask==undefined" [id]="viewlogid" >
      
       <div class="logs-container" *ngIf="logsLoading==false" style="background: white;">

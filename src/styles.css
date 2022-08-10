@@ -1334,7 +1334,7 @@ mat-row {
     margin: 0px auto !important;
     display: flex;
     align-items: center;
-    overflow: hidden;
+    /* overflow: hidden; */
   }
 }
 
@@ -2923,4 +2923,8 @@ button.custom-popupbtn.mat-button {
 .vcmprop.vcm-nrt-prop .propertiesContainer .mat-expansion-panel-body {
   height: calc(100vh - 218px) !important;
   max-height: calc(100vh - 218px) !important;
+}
+
+.cursor-all-scroll{
+  cursor:all-scroll
 }

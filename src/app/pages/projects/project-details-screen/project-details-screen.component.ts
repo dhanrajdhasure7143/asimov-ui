@@ -961,7 +961,7 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
   }
 
   addresource(createmodal) {
-    this.addresourcemodalref = this.modalService.show(createmodal, { class: "modal-md" })
+    this.addresourcemodalref = this.modalService.show(createmodal, { class: "modal-lr" })
     // this.getallusers();
     // this.projectdetails();
   }

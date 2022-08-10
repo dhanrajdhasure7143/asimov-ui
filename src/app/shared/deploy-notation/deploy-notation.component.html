@@ -1,5 +1,8 @@
-<div class="modal-header modelprhead">
+<div ngb-modal-draggable [ngbModalDraggableHandle]="draggableHandle" class="cursor-all-scroll">
+    <div #draggableHandle class="modal-header modelprhead">
+<!-- <div class="modal-header modelprhead"> -->
     <h4 class="modal-title pull-left">Deploy Notation</h4>
+</div>
 </div>
 <div class="modal-body modelprbody resourcescreen">
     <div class="successful-deploy" *ngIf="deploy_success">
