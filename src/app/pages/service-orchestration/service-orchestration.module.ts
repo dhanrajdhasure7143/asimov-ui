@@ -12,7 +12,7 @@ import { BotStatusComponent } from './orchestration/bot-status/bot-status.compon
 import { BotManagementComponent } from './orchestration/bot-management/bot-management.component';
 import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
-import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatPaginatorIntl, MatPaginatorModule} from '@angular/material/paginator';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatInputModule, MatIconModule, MatFormFieldModule, MatNativeDateModule, MatSlideToggleModule} from '@angular/material';
 import {MatTabsModule} from '@angular/material/tabs';
@@ -62,6 +62,7 @@ import { ProcessesComponent } from './orchestration/scheduled-bots/processes/pro
 import { CheckResourcePipe } from './orchestration/new-so-automated-tasks/check-resource.pipe';
 import { RpaSoLogsComponent } from '../rpautomation/rpa-so-logs/rpa-so-logs.component';
 import { RpautomationModule } from '../rpautomation/rpautomation.module';
+import { CustomMatPaginatorIntl } from 'src/app/shared/custom-mat-paginator-int';
 @NgModule({
   declarations: [OrchestrationComponent,ipcustompipecreation,
     BotStatusComponent,
@@ -124,7 +125,11 @@ import { RpautomationModule } from '../rpautomation/rpautomation.module';
   ],
   bootstrap: [SoDashboardComponent],
   entryComponents: [FilterBy],
-  providers:[MatDatepickerModule,sohints, BsModalRef, BsModalService],
+  providers:[MatDatepickerModule,sohints, BsModalRef, BsModalService,
+    {
+      provide: MatPaginatorIntl, 
+      useClass: CustomMatPaginatorIntl
+    }]
 })
 export class ServiceOrchestrationModule {
 }
