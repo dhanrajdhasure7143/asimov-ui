@@ -197,3 +197,9 @@ span.testtooltip:before {
 .prop_docs th:last-child {
     width: 6%;
 }
+
+.cursor-all-scroll{
+
+    cursor:all-scroll
+  
+  }

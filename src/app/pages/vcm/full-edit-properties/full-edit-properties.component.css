@@ -202,3 +202,9 @@ span.testtooltip:before {
 .prop_docs .td_docol {
     width: 25% !important;
 }
+
+.cursor-all-scroll{
+
+    cursor:all-scroll
+  
+  }

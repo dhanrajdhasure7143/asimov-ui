@@ -18,7 +18,7 @@ import { ModalModule, BsModalRef  } from 'ngx-bootstrap/modal';
 import { FullEditPropertiesComponent } from './full-edit-properties/full-edit-properties.component';
 import {CustomMatPaginatorIntl} from './../../shared/custom-mat-paginator-int';
 import {MatPaginatorIntl} from '@angular/material';
-
+import { NgbModalDraggableModule } from 'ngb-modal-draggable'
 
 @NgModule({
   declarations: [ViewVcmComponent, CreateVcmComponent, VcmComponent, VcmPropertiesComponent, VcmStructureComponent, ViewPropertiesComponent, VcmFullEditComponent, FullEditPropertiesComponent],
@@ -39,6 +39,7 @@ import {MatPaginatorIntl} from '@angular/material';
     PopoverModule.forRoot(),
     SharedModule,
     NgxDropzoneModule,
+    NgbModalDraggableModule,
     ModalModule.forRoot(),
   ],
   providers:[BsModalRef,{
