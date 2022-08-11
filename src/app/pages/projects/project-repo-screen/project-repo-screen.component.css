@@ -198,3 +198,6 @@ width: 18px;
 .uploadfilebdiv {
   height: calc(100vh - 260px);
 }
+.upload-filesdiv {
+  margin-top: 15px;
+}
