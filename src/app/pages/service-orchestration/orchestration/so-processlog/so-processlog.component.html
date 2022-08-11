@@ -1,8 +1,8 @@
 <div id="viewlogid1" class="newmodelcla">
-    <div class="text-left">
+    <!-- <div class="text-left">
         <button class="refecls" (click)="getprocesslog()" matTooltip="Refresh"><i class="fas fa-sync-alt"></i>&nbsp; Refresh</button>
-    </div>
-    <div class="logs-overlay" *ngIf="!(loadLogsFlag)">
+    </div> -->
+    <div class="logs-overlay" >
         <div class="logs-container">
             <table mat-table [dataSource]="dataSourcep1" #sortp1="matSort" matSort class="logs-table">
                 <ng-container matColumnDef="processRunId">
@@ -93,6 +93,7 @@
                 <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumnsp1;"></tr>
                 <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': !respdata1}"></tr>
             </table>
+            <mat-paginator #paginator1 class="newpaginationdiv pageData" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons] ="true" ></mat-paginator>  
 
         </div>
     </div>
@@ -218,6 +219,7 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumnsp2;"></tr>
                 <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': !respdata2}"></tr>
             </table>
+        <mat-paginator #paginator2 class="newpaginationdiv pageData" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons]="true"></mat-paginator>
 
         </div>
     </div>
@@ -327,6 +329,7 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumnsp3;"></tr>
                 <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': !respdata3}"></tr>
             </table>
+            <mat-paginator #paginator3 class="newpaginationdiv pageData" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons]="true"></mat-paginator>
         </div>
     </div>
     <div class="logs-overlay text-center w-100" *ngIf="loadLogsFlag">

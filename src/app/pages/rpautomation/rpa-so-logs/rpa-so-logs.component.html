@@ -1,15 +1,15 @@
 <div ngb-modal-draggable [ngbModalDraggableHandle]="draggableHandle" class="cursor-all-scroll">
   <div #draggableHandle class="modal-header modelprhead newmodelcla">
      
-      <span *ngIf="viewlogid1!=undefined && selectedIterationTask==undefined && selectedAutomationTask==undefined" class="module-back-button" (click)="viewlogid1=undefined">
+      <span *ngIf="viewlogid1!=undefined && selectedIterationTask==undefined && selectedAutomationTask==undefined" class="module-back-button" (click)="backtoPage()">
         <i class="fas fa-arrow-left" aria-hidden="true"></i>
       </span>
   
   
-      <span *ngIf="selectedIterationTask!=undefined && selectedAutomationTask==undefined" class="module-back-button"  (click)="selectedIterationTask=undefined;selectedIterationId=0">
+      <span *ngIf="selectedIterationTask!=undefined && selectedAutomationTask==undefined" class="module-back-button"  (click)="backtoRunid()">
       <i class="fas fa-arrow-left" aria-hidden="true"></i>
     </span>
-    <span *ngIf="selectedAutomationTask!=undefined" class="module-back-button"  (click)="selectedAutomationTask=undefined">
+    <span *ngIf="selectedAutomationTask!=undefined" class="module-back-button"  (click)="backtoRunpage()">
       <i class="fas fa-arrow-left" aria-hidden="true"></i>
     </span>
       Logs  
@@ -27,13 +27,13 @@
             </select>
             <span *ngIf="iterationsList.length==0">-</span>
         </span>
-      <span (click)="viewlogdata(logspopup,'update')" *ngIf="viewlogid1==undefined && selectedIterationTask==undefined  && selectedAutomationTask==undefined" class="clickable1 refecls"  >
+       <!-- <span (click)="viewlogdata(logspopup,'update')" *ngIf="viewlogid1==undefined && selectedIterationTask==undefined  && selectedAutomationTask==undefined" class="clickable1 refecls"  >
         Refresh
-      </span>
+      </span> -->
   
-      <span (click)="ViewlogByrunid(viewlogid1, filteredLogVersion)" *ngIf="viewlogid1!=undefined && selectedIterationTask==undefined  && selectedAutomationTask==undefined" class="clickable1 refecls">
+      <!-- <span (click)="ViewlogByrunid(viewlogid1, filteredLogVersion)" *ngIf="viewlogid1!=undefined && selectedIterationTask==undefined  && selectedAutomationTask==undefined" class="clickable1 refecls">
         Refresh
-        </span>
+        </span>  -->
   
         <span (click)="getLoopIterations(selectedIterationTask, selectedIterationId)" *ngIf="selectedIterationTask!=undefined && selectedAutomationTask==undefined" class="clickable1 refecls">
             Refresh
@@ -169,7 +169,7 @@
           <img src="../../../../assets/images/EZFlow_Loader.gif">
         </div>
       </div>
-      <!-- <mat-paginator #logsPaginator [pageSize]="5" [showFirstLastButtons]="true"></mat-paginator>-->
+      <mat-paginator #logsPaginator class="newpaginationdiv" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons] ="true"></mat-paginator>
     </div>
    
     <div [id]="viewlogid1" *ngIf="viewlogid1!=undefined && selectedIterationTask==undefined && selectedAutomationTask==undefined" class="modal-body modelprbody">
@@ -297,6 +297,7 @@
         </div>
       </div>
       <!-- <mat-paginator #paginator2 [pageSize]="5" [showFirstLastButtons]="true"></mat-paginator> -->
+      <mat-paginator #paginator2 class="newpaginationdiv" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons] ="true"></mat-paginator>
     </div>
   
   
@@ -387,7 +388,7 @@
           <img src="../../../../assets/images/EZFlow_Loader.gif">
         </div>
       </div>
-     
+      <mat-paginator #paginator2 class="newpaginationdiv" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons] ="true"></mat-paginator>
     </div>
 
 
@@ -482,6 +483,6 @@
           <img src="../../../../assets/images/EZFlow_Loader.gif">
         </div>
       </div>
-     
+      <mat-paginator #paginator2 class="newpaginationdiv" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons] ="true"></mat-paginator>
     </div>
   
