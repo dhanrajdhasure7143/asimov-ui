@@ -79,7 +79,7 @@
                         </form>
                     </div>
                     <div class="test1">
-                        <div class="col-sm-12 graph_table">
+                        <div class="col-sm-12 graph_table" *ngIf="!isLoading">
                            <table mat-table [dataSource]="dataSource" matSort class="PI table w-100">
                                 <ng-container matColumnDef="piId">
                                         <th mat-header-cell *matHeaderCellDef mat-sort-header class="table_header pcell1">Process ID </th>
@@ -129,6 +129,12 @@
                                         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                                         <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="pList"></tr>
                            </table>
+                           <div>
+                                <div *ngIf="process_graph_list.length==0" class="text-center">
+                                  <img  src="../../../../../assets/images/RPA/No-Items.svg" class="no-item-img">
+                                  <h3 class="text-center">No Items to display</h3>
+                                </div>
+                              </div>
                         </div>
                         <div class="pipaginationdiv">
                              <mat-paginator class="newpaginationdiv" #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons]="true"></mat-paginator>

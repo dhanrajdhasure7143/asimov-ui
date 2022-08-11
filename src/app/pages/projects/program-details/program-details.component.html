@@ -908,12 +908,14 @@
 
 
     <ng-template  #linkprojecttemplate>
-      <div class="modal-header modelprhead">
+      <div ngb-modal-draggable [ngbModalDraggableHandle]="draggableHandle" class="cursor-all-scroll">
+      <div #draggableHandle class="modal-header modelprhead">
         <h4 class="modal-title pull-left">Add Project</h4>
           <button type="button" class="close pull-right" aria-label="Close" (click)="modalref.hide()">
             <span aria-hidden="true"><img src="../../../../assets/images/Projects/circle-close.svg" alt=""></span>
           </button>
         </div>
+      </div>
 
         <div class="modal-body modelprbody resourcescreen">
              <form [formGroup]="addprojectsForm">
@@ -942,11 +944,13 @@
 
     </ng-template>
     <ng-template class="modal-lg" #template>
-      <div class="modal-header modelprhead">
+      <div ngb-modal-draggable [ngbModalDraggableHandle]="draggableHandle" class="cursor-all-scroll">
+      <div #draggableHandle class="modal-header modelprhead">
         <h4 class="modal-title pull-left">Add New Project</h4>
         <button type="button" class="close pull-right" aria-label="Close" (click)="modalref.hide()">
           <span aria-hidden="true"><img src="../../../../assets/images/Projects/circle-close.svg" alt=""></span>
         </button>
+      </div>
       </div>
 
       <div class="h-scroll">

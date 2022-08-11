@@ -1,4 +1,4 @@
-import { Component, OnInit,Input, ViewChild, Pipe, PipeTransform, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit,Input, ViewChild, Pipe, PipeTransform, ChangeDetectorRef, OnDestroy} from '@angular/core';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
@@ -11,7 +11,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
   templateUrl: './so-processlog.component.html',
   styleUrls: ['./so-processlog.component.css']
 })
-export class SoProcesslogComponent implements OnInit {
+export class SoProcesslogComponent implements OnInit, OnDestroy{
 
   @Input('processId') public processId: any;
   public logresponse: any;
@@ -20,10 +20,10 @@ export class SoProcesslogComponent implements OnInit {
   public runidresponse:any;
   public respdata2: boolean = false;
   public respdata3: boolean = false;
-  public loadLogsFlag:Boolean=false;
-  @ViewChild("paginatorp1",{static:false}) paginatorp1: MatPaginator;
-  @ViewChild("paginatorp2",{static:false}) paginatorp2: MatPaginator;
-  @ViewChild("paginatorp3",{static:false}) paginatorp3: MatPaginator;
+  public loadLogsFlag:boolean=false;
+  @ViewChild("paginator1",{static:false}) paginator1: MatPaginator;
+  @ViewChild("paginator2",{static:false}) paginator2: MatPaginator;
+  @ViewChild("paginator3",{static:false}) paginator3: MatPaginator;
   @ViewChild("sortp1",{static:false}) sortp1: MatSort;
   @ViewChild("sortp2",{static:false}) sortp2: MatSort;
   @ViewChild("sortp3",{static:false}) sortp3: MatSort;
@@ -32,6 +32,7 @@ export class SoProcesslogComponent implements OnInit {
   public Environments:any;
   public dataSourcep3: MatTableDataSource<any>;
   public respdata1: boolean = false;
+  interval: any = 0;
   displayedColumnsp1: string[] = ["processRunId","Environment","processStartDate","processEndDate","runStatus"];
   displayedColumnsp2: string[] = ['bot_name','version','run_id','start_date','end_date', "bot_status"]; //,'log_statement'
   displayedColumnsp3: string[] = ['task_name','start_date','end_date', 'status','error_info' ];
@@ -42,8 +43,8 @@ export class SoProcesslogComponent implements OnInit {
     document.getElementById("plogrunid").style.display="none";
     document.getElementById("pbotrunid").style.display="none";
     this.Environments=this.automated.environments;
-    this.getprocesslog();
-
+    // this.getprocesslog();
+    this.setProcesslog();
   }
 
   getprocesslog(){
@@ -85,7 +86,7 @@ export class SoProcesslogComponent implements OnInit {
         this.changeDetectorRef.detectChanges();
         this.dataSourcep1.sort=this.sortp1;
        
-        this.dataSourcep1.paginator=this.paginatorp1;
+        this.dataSourcep1.paginator=this.paginator1;
 
     });
     }
@@ -151,7 +152,7 @@ export class SoProcesslogComponent implements OnInit {
       this.changeDetectorRef.detectChanges();
       this.dataSourcep2 = new MatTableDataSource(this.runidresponse);
       this.dataSourcep2.sort=this.sortp2;
-      this.dataSourcep2.paginator=this.paginatorp2;
+      this.dataSourcep2.paginator=this.paginator2;
     });
     //console.log(processRunId);
   }
@@ -193,7 +194,7 @@ export class SoProcesslogComponent implements OnInit {
       this.dataSourcep3 = new MatTableDataSource(resplogbyrun1);
       this.changeDetectorRef.detectChanges();
       this.dataSourcep3.sort=this.sortp3;
-      this.dataSourcep3.paginator=this.paginatorp3;
+      this.dataSourcep3.paginator=this.paginator3;
 
         })
     }
@@ -211,6 +212,20 @@ export class SoProcesslogComponent implements OnInit {
       this.rest.kill_process_log(processid, runid).subscribe(data=>{
         this.getprocesslog();
       })
+    }
+
+    setProcesslog(){
+      this.getprocesslog()
+      this.interval  = setInterval(()=> { 
+        this.getprocesslog()
+      }, 3000);
+      
+    }
+
+    ngOnDestroy(){
+      if(this.interval){
+        clearInterval(this.interval)
+      }
     }
 }
 

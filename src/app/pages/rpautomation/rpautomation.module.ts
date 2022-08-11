@@ -61,6 +61,7 @@ import {MatPaginatorIntl} from '@angular/material';
 import { CustomMatPaginatorIntl } from 'src/app/shared/custom-mat-paginator-int';
 import { RpaSoLogsComponent } from './rpa-so-logs/rpa-so-logs.component';
 import { AngularSplitModule } from 'angular-split';
+import { NgbModalDraggableModule } from 'ngb-modal-draggable';
 import { ResizableModule } from 'angular-resizable-element';
 @NgModule({
   declarations: [
@@ -125,6 +126,7 @@ import { ResizableModule } from 'angular-resizable-element';
     MatSlideToggleModule,
     Ng5SliderModule,
     AngularSplitModule.forRoot(),
+    NgbModalDraggableModule,
     ResizableModule
   ],
   exports:[RpaSoLogsComponent],

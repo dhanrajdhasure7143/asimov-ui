@@ -87,6 +87,7 @@
     "ng2-search-filter": "^0.5.1",
     "ng2-tel-input": "^2.3.0",
     "ng5-slider": "^1.2.4",
+    "ngb-modal-draggable": "^2.0.0",
     "ngx-bootstrap": "^5.6.1",
     "ngx-contextmenu": "^5.4.0",
     "ngx-credit-cards": "^1.0.9",

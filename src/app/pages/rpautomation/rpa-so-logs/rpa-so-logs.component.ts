@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
   templateUrl: './rpa-so-logs.component.html',
   styleUrls: ['./rpa-so-logs.component.css']
 })
-export class RpaSoLogsComponent implements OnInit {
+export class RpaSoLogsComponent implements OnInit, OnDestroy {
   @Input('logsmodalref') public logsmodal: BsModalRef;
   Viewloglist:MatTableDataSource<any>;
   @ViewChild("logsSort",{static:false}) logsSort:MatSort;
@@ -20,7 +20,7 @@ export class RpaSoLogsComponent implements OnInit {
   automationLogColoumns:string[]=['internaltaskName','startTS','endTS', 'status','errorMsg']
   public viewlogid1:any;
   selectedIterationTask:any=undefined;
-  public logsLoading:Boolean=false;
+  public logsLoading:boolean=false;
   filteredLogs:any=[];
   iterationsList:any=[];
   public viewlogid:any;
@@ -44,6 +44,8 @@ export class RpaSoLogsComponent implements OnInit {
   loopbyrunid:MatTableDataSource<any>;
   automationLogs:any=[];
   automationLogsTable:MatTableDataSource<any>;
+  interval: any = 0;
+  timeInterval : any = 0;
   constructor( private modalService:BsModalService,
      private rest : RestApiService,
      private changeDetector:ChangeDetectorRef,private spinner:NgxSpinnerService) { }
@@ -51,8 +53,8 @@ export class RpaSoLogsComponent implements OnInit {
   ngOnInit() {
     this.AllVersionsList=this.AllVersionsList.map(item=>{return item.vId});
     this.filteredLogVersion=this.selectedversion
-    this.viewlogdata()
-   
+    // this.viewlogdata()
+    this.autoRefresh()
   }
  
   viewlogdata(){
@@ -62,11 +64,11 @@ export class RpaSoLogsComponent implements OnInit {
    let response: any;
    let log:any=[];
    this.logresponse=[];
-   this.logsLoading=true;
+   
     this.rest.getviewlogdata(this.logsbotid).subscribe(data =>{
       this.logresponse=data;
       console.log("res",this.logresponse)
-      this.logsLoading=false;
+ 
       if(this.logresponse.length >0)
       {
         this.respdata1 = false;
@@ -118,8 +120,16 @@ export class RpaSoLogsComponent implements OnInit {
      let logs=[...this.filteredLogs]
      this.Viewloglist = new MatTableDataSource(logs);
      this.changeDetector.detectChanges();
+     // setTimeout(()=>{
+     //   console.log(this.Viewloglist)
+     //   console.log(this.logsPaginator)
+     //   console.log(this.logsSort)
+     //   this.Viewloglist.paginator=this.logsPaginator;
+     //   this.Viewloglist.sort=this.logsSort;
+     // },4000)
   }
   ViewlogByrunid(runid,version){
+    this.stopRefresh();   
     this.botrunid=runid;
     this.selectedLogVersion=version
     let responsedata:any=[];
@@ -127,6 +137,7 @@ export class RpaSoLogsComponent implements OnInit {
     let resplogbyrun:any=[];
    
     this.logsLoading=true;
+    this.interval= setInterval(()=>{
     this.rest.getViewlogbyrunid(this.logsbotid,version,runid).subscribe((data:any)=>{
       if(data.errorMessage==undefined)
       {
@@ -172,6 +183,7 @@ export class RpaSoLogsComponent implements OnInit {
        this.changeDetector.detectChanges();
        this.logbyrunid.paginator=this.paginator2;
        this.logbyrunid.sort=this.sort2
+        resplogbyrun = [];      
      }
      else
      {
@@ -185,8 +197,9 @@ export class RpaSoLogsComponent implements OnInit {
       
        this.logsLoading=false;
         
-      Swal.fire("Error","unable to get logs","error")
-     })
+      Swal.fire("Error","unable to get logs","error")       
+    })
+    }, 3000)
    }
   sortasc(event)
   {
@@ -351,9 +364,52 @@ export class RpaSoLogsComponent implements OnInit {
      });
    }
 
-  sortAutomateSap()
+
+   stopRefresh(){
+    if(this.timeInterval){
+      clearInterval(this.timeInterval)
+    }
+   }
+
+
+stopAutoRefersh(){
+  if(this.interval){
+    clearInterval(this.interval)
+  }
+}
+
+  autoRefresh()
   {
-    
+    this.viewlogdata()
+   
+    this.timeInterval = setInterval(() => {
+      this.viewlogdata()
+    }, 3000)
   }
 
+  backtoPage(){
+    this.viewlogid1=undefined
+    this.stopAutoRefersh();
+    this.autoRefresh();
+  }
+
+  backtoRunid(){
+    this.selectedIterationTask=undefined;
+    this.selectedIterationId=0;
+    this.stopAutoRefersh();
+    this.autoRefresh();
+  }
+
+  backtoRunpage(){
+    this.selectedAutomationTask=undefined;
+    this.stopAutoRefersh();
+    this.autoRefresh();
+    
+  }
+  
+  ngOnDestroy(){
+    this.stopRefresh()
+   
+  }
+  
 }
