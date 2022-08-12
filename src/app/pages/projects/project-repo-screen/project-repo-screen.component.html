@@ -542,7 +542,7 @@
           </button> -->
         </div>
 
-        <div class="modal-body modelprbody">
+        <div class="modal-body modelprbody uploadfilebdiv">
           <div class="container p-0" style="width:100%">
             <form [formGroup]="uploadFileForm" (ngSubmit)="submitUploadFileForm()">
                 <div class="row">
@@ -584,7 +584,7 @@
 
                     
                       <!-- <input type="file" class="form-control" (change)="chnagefileUploadForm($event)" formControlName="uploadFile" name="Upload-File"  placeholder="choose file" required multiple="true"> -->
-                      <div >
+                      <div class="upload-filesdiv">
                         <div class="row">
                           <div class="col-md-4 pl-0" *ngFor="let selected of listOfFiles"> 
                             <div class ="project-card">
