@@ -268,7 +268,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
       if(res)
       this.loggedUserData = res
     });
-      this.getDocumentforDowanload();
+      // this.getDocumentforDowanload();
   }
 
 
@@ -1757,7 +1757,9 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
     });
   }
 
-  getDocumentforDowanload( ) {
+  getDocumentforDowanload(e) {
+    e.stopPropagation();
+    this.spinner.show();
     let res_body = {
       "projectId": this.project_id,
       "asisprocessName": null,
@@ -1765,7 +1767,10 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
     }
     this.rpa.processDocumentDownload(res_body).subscribe(res => {
       this.downloadData = res
-      // this.downloadFile() // enable this methis for download pdd with as-is and to-be process
+      this.downloadFile()
+    },err=>{
+    this.spinner.hide();
+        Swal.fire("Error", "Failed to download", "error");
     });
   }
 

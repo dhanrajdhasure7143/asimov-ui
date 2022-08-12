@@ -17,6 +17,8 @@ export class DynamicFormsComponent implements OnInit {
   @Input() formheader:any;
   @Input() multiarray:any=[]
   form: FormGroup;
+  otherAttributesForm:FormGroup;
+  otherAttributes:any=[];
   isdisabled:boolean;
   q = 1
   userRole: string;
@@ -42,7 +44,7 @@ export class DynamicFormsComponent implements OnInit {
         })
         return filteredobject;
       });
-      this.Submit.emit(this.data)
+      this.Submit.emit({multiform:this.data, otherFormData:this.otherAttributesForm.value})
     }
     else{
       this.onSubmit.emit(this.form.value)
@@ -222,7 +224,17 @@ export class DynamicFormsComponent implements OnInit {
           return fieldData;
       })]
       this.fillarray=modifiedArray;
+      let otherAttributes:any[]=this.enableMultiForm.additionalAttributesList;
+      let otherFieldsCtrls:any=[];
 
+      otherAttributes.forEach((other_attr:any)=>{
+        if (other_attr.type == 'email')
+          otherFieldsCtrls[other_attr.name + '_' + other_attr.id] = new FormControl(other_attr.value || '', other_attr.required && other_attr.dependency == '' ? [Validators.pattern("[a-zA-Z0-9.-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{3,}")] : [Validators.pattern("[a-zA-Z0-9.-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{3,}")])
+        else
+          otherFieldsCtrls[other_attr.name + '_' + other_attr.id] = new FormControl(other_attr.value || '', other_attr.required && other_attr.dependency == '' ? [Validators.required] : [])
+      })
+      this.otherAttributes=otherAttributes;
+      this.otherAttributesForm=new FormGroup(otherFieldsCtrls);
       //this.data=modifiedArray
     }
 
