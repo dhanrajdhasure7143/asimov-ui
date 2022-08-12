@@ -4,9 +4,10 @@
             <div class="row  module-heading title ">
                 <div class="col-md-6 rpa-header-data p-0">
                     <div>
-                        <span *ngIf="current_instance != undefined">
-            <span class="clickable module-back-button rpa-header-back-button"  (click)="removenodes()">
-              <i class="fas fa-arrow-left"></i></span>
+                        <span >
+                            <button class="clickable module-back-button rpa-header-back-button" [disabled]="current_instance == undefined"  (click)="removenodes()">
+                              <i class="fas fa-arrow-left"></i>
+                            </button>
                         </span>
                         <span class="rpa-main-title">RPA Studio</span>
                         <span class="rpatitsep">/</span>
@@ -172,11 +173,10 @@
             </div>
             <div class="toolsetmenuicon">
                 <span class="module-sub-header-title clickable">
-        <span  class="toolset-text" *ngIf="toolset_instance != undefined" (click)="toolset_instance.sidenavbutton=!(toolset_instance.sidenavbutton)">
-          <img src="../../../../assets/images/RPA/icon_latest/menu-line.svg" *ngIf="toolset_instance.sidenavbutton==false" class="testplus" />
-          <img src="../../../../assets/images/RPA/icon_latest/menu-line.svg" *ngIf="toolset_instance.sidenavbutton==true" class="testplus" />
+        <button  class="toolset-text" [disabled]="toolset_instance == undefined" (click)="toolset_instance.sidenavbutton=!(toolset_instance.sidenavbutton)">
+          <img src="../../../../assets/images/RPA/icon_latest/menu-line.svg"  class="testplus" />
           <!-- Toolset & Actions -->
-        </span>
+        </button>
                 </span>
             </div>
             <!-- <div class="col-md-3">
