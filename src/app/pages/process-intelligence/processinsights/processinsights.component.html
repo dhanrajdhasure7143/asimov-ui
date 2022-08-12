@@ -293,18 +293,20 @@
                 <span class='event2'>Time Taken</span>
             </div>   
         </div>
-        <div class='col-sm-12 variant_border' [ngClass]="isselected ==i?'activevaraint':''||data.selected ==='active'?'activevaraint':''" *ngFor="let data of this.varaint_data.data; let i=index">
-            <div (click)="caseIdSelect(data,i)"  class='event3'>Variant
-                <span>{{i+1}}</span>
-            </div>
-            <div class='variant_parcent'>
-                <div (click)="caseIdSelect(data,i)" class=''>Cases Covered
-                    <span>{{data.case_value}} ({{caseParcent(data.casepercent)}}%)</span>
+        <div class="variant-body">
+            <div class='col-sm-12 variant_border' [ngClass]="isselected ==i?'activevaraint':''||data.selected ==='active'?'activevaraint':''" *ngFor="let data of this.varaint_data.data; let i=index">
+                <div (click)="caseIdSelect(data,i)"  class='event3'>Variant
+                    <span>{{i+1}}</span>
                 </div>
-                <div (click)="caseIdSelect(data,i)" class=''></div>
+                <div class='variant_parcent'>
+                    <div (click)="caseIdSelect(data,i)" class=''>Cases Covered
+                        <span>{{data.case_value}} ({{caseParcent(data.casepercent)}}%)</span>
+                    </div>
+                    <div (click)="caseIdSelect(data,i)" class=''></div>
+                </div>
+                <div class='varaint-days' (click)="caseIdSelect(data,i)">{{timeConversion(data.days)}}</div>
             </div>
-            <div class='varaint-days' (click)="caseIdSelect(data,i)">{{timeConversion(data.days)}}</div>
         </div>
-        </div>
+    </div>
         
 </div>

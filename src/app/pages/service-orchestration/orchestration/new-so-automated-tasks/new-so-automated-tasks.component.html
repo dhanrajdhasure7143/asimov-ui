@@ -305,75 +305,79 @@
                     <td mat-cell class="Actions-column" *matCellDef="let element"  class="cell10">
                         <div *ngIf="element.taskType=='Automated'">
                             <span>
-                <button [disabled]="element.taskType=='Human' || element.taskType==null" [class]="(element.taskType=='Human' || element.taskType==null)?'undobtn':''" (click)="createtaskbotoverlay(element.taskId)" matTooltip="Create and Assign Resource">
-                  <img src="../../../../../assets/images/RPA/icon_latest/new-blue.svg" class="testplus"/>
-                </button>
-              </span>
+                                <button [disabled]="element.taskType=='Human' || element.taskType==null" [class]="(element.taskType=='Human' || element.taskType==null)?'undobtn':''" (click)="createtaskbotoverlay(element.taskId)" matTooltip="Create and Assign Resource">
+                                    <img src="../../../../../assets/images/RPA/icon_latest/new-blue.svg" class="testplus"/>
+                                </button>
+                            </span>
                             <span>
-                <button  (click)="assignbot(element.taskId, element.processId)" *ngIf="element.taskType == 'Automated'" matTooltip="Assign Bot">
-                  <!-- <i  class="fas fa-check text-success"></i> -->
-                  <img src="../../../../../assets/images/SO/check-success.svg" class="testplus"/>
-                </button>
-                <button (click)="assignbot(element.taskId, element.processId)" *ngIf="element.taskType == 'Human'" matTooltip="Assign Resource">
-                  <!-- <i  class="fas fa-check text-success"></i> -->
-                  <img src="../../../../../assets/images/SO/check-success.svg" class="testplus"/>
-                </button>
-              </span>
+                                <button  (click)="assignbot(element.taskId, element.processId)" *ngIf="element.taskType == 'Automated'" matTooltip="Assign Bot">
+                                    <!-- <i  class="fas fa-check text-success"></i> -->
+                                    <img src="../../../../../assets/images/SO/check-success.svg" class="testplus"/>
+                                </button>
+                                <button (click)="assignbot(element.taskId, element.processId)" *ngIf="element.taskType == 'Human'" matTooltip="Assign Resource">
+                                    <!-- <i  class="fas fa-check text-success"></i> -->
+                                    <img src="../../../../../assets/images/SO/check-success.svg" class="testplus"/>
+                                </button>
+                            </span>
                             <span>
-                <button (click)="resetbot(element.taskId)" matTooltip="Reset">
-                  <img src="../../../../../assets/images/RPA/icon_latest/repeat-blue.svg" class="testplus"/>
-                </button>
-              </span>
+                                <button (click)="resetbot(element.taskId)" matTooltip="Reset">
+                                  <img src="../../../../../assets/images/RPA/icon_latest/repeat-blue.svg" class="testplus"/>
+                                </button>
+                            </span>
                             <span>
-                <button [disabled]="element.botId==0"  [class]="element.botId==0?'undobtn':''" (click)="loadbotdatadesign(element.botId)" [disabled]="element.sourceType!='EPSoft'" *ngIf="element.taskType =='Automated'||element.taskType =='Bot'" matTooltip="View Bot">
-                  <img src="../../../../../assets/images/Projects/eye-show.svg" class="testplus" />
-                </button>
-                <button  *ngIf="element.taskType !='Automated'" class="undobtn" >
+                                <button  (click)="loadbotdatadesign(element.botId)"  *ngIf="element.sourceType == 'EPSoft'" matTooltip="View Bot">
+                                  <img src="../../../../../assets/images/Projects/eye-show.svg" class="testplus" />
+                                </button>
+                                <button  *ngIf="element.sourceType != 'EPSoft'" disabled class="undobtn">
+                                  <img src="../../../../../assets/images/SO/eye-show dis.svg" class="testplus" />
+                                </button>
+                                <!-- <button [disabled]="element.botId==0"  [class]="element.botId==0?'undobtn':''" (click)="loadbotdatadesign(element.botId)"  [disabled]="element.sourceType!='EPSoft'" *ngIf="element.taskType =='Automated'||element.taskType =='Bot'" matTooltip="View             Bot">
+                                  <img src="../../../../../assets/images/Projects/eye-show.svg" class="testplus" />
+                                </button> -->
+                                <button  *ngIf="element.taskType !='Automated'" class="undobtn" >                                
+                                  <img src="../../../../../assets/images/Projects/eye-hide.svg" class="testplus" />
+                                </button>
 
-                  <img src="../../../../../assets/images/Projects/eye-hide.svg" class="testplus" />
-
-                </button>
-
-              </span>
+                            </span>
                             <span>
-                    <button  matTooltip="Delete Task" class="undobtn" (click)="delete(element.taskId, element.processId)">
-                        <img src="../../../../../assets/images/Projects/delete-black.svg" class="testplus1"/>
-                    </button>
-              </span>
+                                <button  matTooltip="Delete Task" class="undobtn" (click)="delete(element.taskId, element.processId)">
+                                    <img src="../../../../../assets/images/Projects/delete-black.svg" class="testplus1"/>
+                                </button>
+                            </span>
                         </div>
                         <div *ngIf="element.taskType=='Human'">
                             <span>
-                <button [disabled]="element.taskType=='Human' || element.taskType==null" [class]="(element.taskType=='Human' || element.taskType==null)?'undobtn':''" (click)="createtaskbotoverlay(element.taskId)" matTooltip="Create and Assign Resource">
-                  <img src="../../../../../assets/images/SO/plus dis.svg" class="testplus"/>
-                </button>
-              </span>
+                                <button [disabled]="element.taskType=='Human' || element.taskType==null" [class]="(element.taskType=='Human' || element.                taskType==null)?'undobtn':''" (click)="createtaskbotoverlay(element.taskId)" matTooltip="Create and Assign Resource">
+                                  <img src="../../../../../assets/images/SO/plus dis.svg" class="testplus"/>
+                                </button>
+                            </span>
                             <span>
-                <button (click)="assignhuman(element)" matTooltip="Assign Resource">
-                  <img src="../../../../../assets/images/SO/check-success.svg" class="testplus"/>
-                </button>
-              </span>
+                                <button (click)="assignhuman(element)" matTooltip="Assign Resource">
+                                  <img src="../../../../../assets/images/SO/check-success.svg" class="testplus"/>
+                                </button>
+                            </span>
                             <span>
-                <button (click)="resetbot(element.taskId)" matTooltip="Reset">
-                  <img src="../../../../../assets/images/RPA/icon_latest/repeat-blue.svg" class="testplus"/>
-                </button>
-              </span>
+                                <button (click)="resetbot(element.taskId)" matTooltip="Reset">
+                                  <img src="../../../../../assets/images/RPA/icon_latest/repeat-blue.svg" class="testplus"/>
+                                </button>
+                            </span>
                             <span>
-                <button (click)="loadbotdatadesign(element.botId)" *ngIf="element.taskType =='Automated'||element.taskType =='Bot'" matTooltip="View Bot">
-                  <!-- <i class="fa fa-eye"></i> -->
-                  <img src="../../../../../assets/images/Projects/eye-show.svg" class="testplus" />
-                </button>
-                <button  *ngIf="element.taskType !='Automated'" >
-                  <!-- <i class="fa fa-eye-slash"></i> class="undobtn"-->
-                  <img src="../../../../../assets/images/Projects/eye-hide.svg" class="testplus" />
-                </button>
-              </span>
+                                <button (click)="loadbotdatadesign(element.botId)" *ngIf="element.taskType =='Automated'||element.taskType =='Bot'" matTooltip="View Bot">
+                                  <!-- <i class="fa fa-eye"></i> -->
+                                  <img src="../../../../../assets/images/Projects/eye-show.svg" class="testplus" />
+                                </button>
+                                <button  *ngIf="element.taskType !='Automated'" >
+                                  <!-- <i class="fa fa-eye-slash"></i> class="undobtn"-->
+                                  <img src="../../../../../assets/images/Projects/eye-hide.svg" class="testplus" />
+                                </button>
+                            </span>
                             <span>
-                              <button  tooltip="Delete Task" (click)="delete(element.taskId)">
-                                <img src="../../../../../assets/images/Projects/delete-black.svg" class="testplus"/>
-                              </button>
-                <!-- <button (click)="SLACon(element.botId)" matTooltip="SLA Configuration"><i class="fa fa-cog" aria-hidden="true"></i></button> -->
-                <!-- <button (click)="SLACon(element)" matTooltip="SLA Configuration"><i class="fa fa-cog" aria-hidden="true"></i></button> -->
-              </span>
+                                <button  tooltip="Delete Task" (click)="delete(element.taskId)">
+                                  <img src="../../../../../assets/images/Projects/delete-black.svg" class="testplus"/>
+                                </button>
+                                <!-- <button (click)="SLACon(element.botId)" matTooltip="SLA Configuration"><i class="fa fa-cog" aria-hidden="true"></i></button> -->
+                                <!-- <button (click)="SLACon(element)" matTooltip="SLA Configuration"><i class="fa fa-cog" aria-hidden="true"></i></button> -->
+                            </span>
                         </div>
                     </td>
                 </ng-container>

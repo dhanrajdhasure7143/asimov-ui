@@ -106,8 +106,8 @@
 
 
 .env-btn{
-  margin-left: 5px !important;
-  margin-right: 5px !important;
+  /* margin-left: 5px !important;
+  margin-right: 5px !important; */
 }
 
 .environment-search {
@@ -125,7 +125,7 @@
 }
 .environment-btntool {
   position: relative;
-  padding: 3px 6px;
+  padding: 6px;
   margin: 0px !important;
 }
 .environment-btntool img {

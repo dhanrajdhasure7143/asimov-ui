@@ -144,8 +144,8 @@ input:disabled{
     padding-top: 10px;
   }
   .variants_slider{
-    max-height: 700px;
-    overflow: scroll;
+    /* max-height: 700px;
+    overflow: scroll; */
   }
   .closebtn img {
     vertical-align: top !important;
@@ -180,10 +180,6 @@ input:disabled{
     margin: 0px;
 }
 
-  .variants_slider{
-    max-height: 700px;
-    overflow: scroll;
-  }
   .varaint-button{
       margin-bottom: 5px;
   }
@@ -529,4 +525,10 @@ img.hover-img {
 .insigntsoccurtable table thead th, .insigntsoccurtable table tbody td {
   border-left: medium none;
   border-right: medium none;
+}
+
+.variant-body {
+  height: calc(100vh - 240px);
+  display: inline-block;
+  overflow: hidden auto;
 }
