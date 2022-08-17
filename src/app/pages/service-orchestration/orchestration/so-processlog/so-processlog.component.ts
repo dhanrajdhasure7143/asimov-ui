@@ -36,6 +36,7 @@ export class SoProcesslogComponent implements OnInit, OnDestroy{
   displayedColumnsp1: string[] = ["processRunId","Environment","processStartDate","processEndDate","runStatus"];
   displayedColumnsp2: string[] = ['bot_name','version','run_id','start_date','end_date', "bot_status"]; //,'log_statement'
   displayedColumnsp3: string[] = ['task_name','start_date','end_date', 'status','error_info' ];
+  interval1: any = 0;
   constructor( private rest:RestApiService, private changeDetectorRef: ChangeDetectorRef,private automated:NewSoAutomatedTasksComponent, private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
@@ -108,6 +109,8 @@ export class SoProcesslogComponent implements OnInit, OnDestroy{
     this.getprocesslog()
     document.getElementById("plogrunid").style.display = "none";
     document.getElementById("viewlogid1").style.display = "block";
+    this.stopRefresh()
+    this.setProcesslog()
   }
 
   backpbotrunid(){
@@ -115,9 +118,12 @@ export class SoProcesslogComponent implements OnInit, OnDestroy{
     this.getprocessrunid(this.selected_processRunId)
     document.getElementById("pbotrunid").style.display = "none";
     document.getElementById("plogrunid").style.display = "block";
+    this.stopRefresh()
+    this.setProcesslog()
   }
   public selected_processRunId:any;
   getprocessrunid(processRunId){
+    clearInterval(this.interval)
     this.selected_processRunId=processRunId;
     let logbyrunidresp: any;
     let resplogbyrun = [];
@@ -170,6 +176,7 @@ export class SoProcesslogComponent implements OnInit, OnDestroy{
     document.getElementById("plogrunid").style.display="none";
     document.getElementById("pbotrunid").style.display="block";
     this.loadLogsFlag=true
+    this.interval1 = setInterval (()=>{
     this.rest.getViewlogbyrunid(PbotId,pversion,runid).subscribe((data)=>{
       this.spinner.hide();
       this.loadLogsFlag=false;
@@ -195,8 +202,9 @@ export class SoProcesslogComponent implements OnInit, OnDestroy{
       this.changeDetectorRef.detectChanges();
       this.dataSourcep3.sort=this.sortp3;
       this.dataSourcep3.paginator=this.paginator3;
-
+      resplogbyrun1 = [];
         })
+      }, 3000)
     }
 
     kill_bot_run(bot)
@@ -222,10 +230,23 @@ export class SoProcesslogComponent implements OnInit, OnDestroy{
       
     }
 
-    ngOnDestroy(){
+    refreshButton(){
       if(this.interval){
         clearInterval(this.interval)
       }
+    }
+
+    stopRefresh(){
+      if(this.interval1){
+        clearInterval(this.interval1)
+      }
+    }
+    
+
+    ngOnDestroy(){
+      this.refreshButton()
+      this.stopRefresh()
+     
     }
 }
 

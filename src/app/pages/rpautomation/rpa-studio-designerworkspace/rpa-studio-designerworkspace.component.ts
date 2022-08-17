@@ -1550,7 +1550,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     var element=document.getElementById(this.dragareaid)
     
     var botName=this.finalbot.botName;
-    domtoimage.toPng(element)
+    domtoimage.toPng(element, { quality : 1,bgcolor : "white"})
       .then(function (dataUrl) {
         var link = document.createElement('a');
         link.download = botName+".png";
@@ -1565,7 +1565,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
     var element=document.getElementById(this.dragareaid)
     var botName=this.finalbot.botName;
-    domtoimage.toPng(element,{ quality: 1,background: "white"})
+    domtoimage.toPng(element,{ quality: 1,bgcolor : "white"})
     .then(function (dataUrl) {
       var link = document.createElement('a');
       link.download = `${botName}.jpeg`;
