@@ -519,7 +519,7 @@ this.projectDetails=res
 this.processOwnerFlag=false
 this.projectenddate=moment(this.projectDetails.endDate).format("YYYY-MM-DD");
 this.projectStartDate = moment(this.projectDetails.startDate).format("YYYY-MM-DD");
-this.mindate = this.projectStartDate;
+//this.mindate = this.projectStartDate;
 
 if(this.projectDetails){
   
