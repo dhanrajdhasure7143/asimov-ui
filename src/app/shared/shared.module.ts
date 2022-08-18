@@ -10,7 +10,7 @@ import { CronEditorModule } from './cron-editor/cron-editor.module';
 import { ProcessCategoryOverlayComponent } from './process-category-overlay/process-category-overlay.component';
 import { SearchPipe } from './pipes/search.pipe';
 import { DeployNotationComponent } from './deploy-notation/deploy-notation.component';
-
+import { NgbModalDraggableModule } from 'ngb-modal-draggable'
 
 @NgModule({
   declarations: [UploadCreateDropBpmnComponent, BpmnDiagramComponent, ProcessCategoryOverlayComponent, SearchPipe, DeployNotationComponent, ],
@@ -21,7 +21,7 @@ import { DeployNotationComponent } from './deploy-notation/deploy-notation.compo
     FormsModule,
     MatInputModule, MatIconModule, MatFormFieldModule,MatDialogModule,
     MatOptionModule, MatSelectModule,
-    MatTooltipModule
+    MatTooltipModule,NgbModalDraggableModule,
   ],
   providers: [],
   exports: [UploadCreateDropBpmnComponent, BpmnDiagramComponent, ProcessCategoryOverlayComponent,  SearchPipe, DeployNotationComponent],

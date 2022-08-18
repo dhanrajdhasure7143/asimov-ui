@@ -493,12 +493,15 @@
       </ng-template>
 
       <ng-template #denyFileRequestmodal>
-        <div class="modal-header modelprhead">
+        <div ngb-modal-draggable [ngbModalDraggableHandle]="draggableHandle" class="cursor-all-scroll">
+          <div #draggableHandle class="modal-header modelprhead">
+        <!-- <div class="modal-header modelprhead"> -->
           <h4 class="modal-title pull-left" *ngIf="isDeny">Reason to deny file request</h4>
           <h4 class="modal-title pull-left" *ngIf="!isDeny">Reason to revoke file request</h4>
           <button type="button" class="close pull-right deny-serve" aria-label="Close" (click)="denyFileRequestmodalref.hide();denyFileRequestForm.reset()">
               <img alt="" src="../../../../../assets/images/Projects/circle-close.svg">
           </button>
+        </div>
         </div>
         <div class="modal-body modelprbody">
           <div class="container p-0" style="width:100%">          
@@ -532,7 +535,9 @@
             <span aria-hidden="true">&times;</span>
         </button>
         </div> -->
-        <div class="modal-header modelprhead">
+        <div ngb-modal-draggable [ngbModalDraggableHandle]="draggableHandle" class="cursor-all-scroll">
+          <div #draggableHandle class="modal-header modelprhead">
+        <!-- <div class="modal-header modelprhead"> -->
           <h4 class="modal-title pull-left">Upload File</h4>
           <button type="button" class="close pull-right" aria-label="Close" (click)="uploadFilemodalCancel()">
             <img alt="" src="../../../../../assets/images/Projects/circle-close.svg">
@@ -540,6 +545,7 @@
           <!-- <button type="button" class="close pull-right" aria-label="Close" (click)="uploadFilemodalref.hide()">
             <span aria-hidden="true">&times;</span>
           </button> -->
+        </div>
         </div>
 
         <div class="modal-body modelprbody uploadfilebdiv">

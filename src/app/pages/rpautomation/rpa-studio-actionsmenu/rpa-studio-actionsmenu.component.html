@@ -435,12 +435,8 @@
 </div>
 
 
-  <ng-template #logspopup>
-    <div>
+  <ng-template #logspopup *ngIf="savebotrespose!=undefined">
       <app-rpa-so-logs [logsbotid]="logsbotid" [logsmodalref]="logsmodalref" [AllVersionsList]="AllVersionsList" [selectedversion]="selectedversion"></app-rpa-so-logs>
-      
-    </div>
- 
   </ng-template>
 
 
@@ -578,13 +574,15 @@
 
 
 <ng-template #auditLogsPopup>
-  <div class="modal-header modelprhead newmodelcla">
+  <div ngb-modal-draggable [ngbModalDraggableHandle]="draggableHandle" class="cursor-all-scroll">
+  <div #draggableHandle class="modal-header modelprhead newmodelcla">
     Audit Logs  
     <span class="pull-right">
       <span class=" clickable" (click)="auditLogsModelRef.hide()">
         <img src="../../../../assets/images/Projects/circle-close.svg" alt="">
       </span>
     </span>
+  </div>
   </div>
   <div class="modal-body newmodelbodycl" >
     <div class="logs-container" style="background: white;">

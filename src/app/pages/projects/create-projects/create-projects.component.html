@@ -429,11 +429,14 @@
 
 
     <ng-template class="modal-lg" #template>
-        <div class="modal-header modelprhead">
+        <div ngb-modal-draggable [ngbModalDraggableHandle]="draggableHandle" class="cursor-all-scroll">
+            <div #draggableHandle class="modal-header modelprhead">
+        <!-- <div class="modal-header modelprhead"> -->
             <h4 class="modal-title pull-left">Add New Project</h4>
             <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
                 <span aria-hidden="true"><img src="../../../../assets/images/Projects/circle-close.svg" alt=""></span>
             </button>
+        </div>
         </div>
         <div class="h-scroll-1">
             <app-create-project-form [users_list]="userslist" [initiatives_list]="initiatives" (oncreate)="linkcreateproject($event)" [processes]="selected_process_names"></app-create-project-form>
