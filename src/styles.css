@@ -2929,3 +2929,7 @@ button.custom-popupbtn.mat-button {
 .cursor-all-scroll{
   cursor:all-scroll
 }
+
+/* .pg-newpopup .logs-container {
+  height: calc(100vh - 365px) !important;
+} */

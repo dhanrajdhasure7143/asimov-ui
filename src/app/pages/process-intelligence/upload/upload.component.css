@@ -216,6 +216,7 @@ tr.mat-header-row {
 .PI-uploadgrid ngx-dropzone{
     height: 90px;
     padding: 0px 15px;
+    cursor: pointer;
 }
 .PI-uploadgrid h5{
     margin-bottom: 0px !important;
