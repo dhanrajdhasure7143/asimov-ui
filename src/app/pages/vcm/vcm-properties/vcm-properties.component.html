@@ -395,8 +395,8 @@
 </div>
 
 <ng-template class="modal-up" #uploadFilemodal>
-    <div  ngb-modal-draggable [ngbModalDraggableHandle]="file" class="cursor-all-scroll">
-    <div class="modal-header modelprhead" #file>
+    <div  ngb-modal-draggable [ngbModalDraggableHandle]="draggableHandle">
+    <div class="modal-header modelprhead cursor-all-scroll" #draggableHandle>
         <h4 class="modal-title pull-left">Upload File</h4>
         <button type="button" class="close pull-right" aria-label="Close" (click)="uploadFilemodalCancel()">
             <span aria-hidden="true"><img alt="" src="../../../../../assets/images/Projects/circle-close.svg"></span>
