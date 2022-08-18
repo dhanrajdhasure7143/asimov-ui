@@ -1,5 +1,5 @@
-
-    <div class="modal-header modelprhead newmodelcla">
+<div ngb-modal-draggable [ngbModalDraggableHandle]="draggableHandle" class="cursor-all-scroll">
+    <div #draggableHandle class="modal-header modelprhead newmodelcla">
      
       <span *ngIf="viewlogid1!=undefined && selectedIterationTask==undefined" class="module-back-button" (click)="viewlogid1=undefined">
         <i class="fas fa-arrow-left" aria-hidden="true"></i>
@@ -43,6 +43,7 @@
       </span>
      
     </span>
+    </div>
     </div>
     <div class="modal-body newmodelbodycl" *ngIf="viewlogid1==undefined && selectedIterationTask==undefined" [id]="viewlogid" >
      

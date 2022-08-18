@@ -516,11 +516,15 @@
     
       
     <ng-template #processowner_template>
-        <div class="modal-header">
+        <div ngb-modal-draggable [ngbModalDraggableHandle]="draggableHandle" class="cursor-all-scroll">
+            <div #draggableHandle class="modal-header modelprhead">
+        <!-- <div class="modal-header"> -->
           <h4 class="modal-title pull-left">Process</h4>
-          <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="closeprocessOwnerModal()">
-            <span aria-hidden="true" class="visually-hidden">&times;</span>
+          <button type="button" class="btn-close pull-right" aria-label="Close" (click)="closeprocessOwnerModal()">
+            <img alt="" src="../../../../../assets/images/Projects/circle-close.svg">
+            <!-- <span aria-hidden="true" class="visually-hidden">&times;</span> -->
           </button>
+        </div>
         </div>
         <div class="modal-body">
           <div>

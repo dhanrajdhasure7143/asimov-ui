@@ -1228,10 +1228,8 @@
 
 
     <ng-template #addresourcemodal>
-        <div>
             <app-add-resources (newItemEvent)="addresources($event)" [resources]="resources"
                 [addresourcemodalref]="addresourcemodalref" [userslist]="userslist"></app-add-resources>
-        </div>
     </ng-template>
 
     <ng-template class="modal-lg" #updatetaskmodal>
@@ -1507,12 +1505,15 @@
     </ng-template>
 
     <ng-template class="modal-up" #uploadtaskfilemodal>
-        <div class="modal-header modelprhead">
+        <div ngb-modal-draggable [ngbModalDraggableHandle]="draggableHandle" class="cursor-all-scroll">
+            <div #draggableHandle class="modal-header modelprhead">
+        <!-- <div class="modal-header modelprhead"> -->
             <h4 class="modal-title pull-left">Upload File</h4>
             <button type="button" class="close pull-right" aria-label="Close" (click)="uploadtaskFilemodalCancel()">
                 <span aria-hidden="true"><img alt=""
                         src="../../../../../assets/images/Projects/circle-close.svg"></span>
             </button>
+        </div>
         </div>
         <div class="modal-body modelprbody uploadfilebdiv">
             <div class="container p-0" style="width:100%">
@@ -1602,12 +1603,14 @@
 
 </div>
 <ng-template class="modal-up" #uploadFilemodal>
-
-    <div class="modal-header modelprhead">
+    <div ngb-modal-draggable [ngbModalDraggableHandle]="draggableHandle" class="cursor-all-scroll">
+        <div #draggableHandle class="modal-header modelprhead">
+    <!-- <div class="modal-header modelprhead"> -->
         <h4 class="modal-title pull-left">Upload File</h4>
         <button type="button" class="close pull-right" aria-label="Close" (click)="uploadFilemodalCancel()">
             <span aria-hidden="true"><img alt="" src="../../../../../assets/images/Projects/circle-close.svg"></span>
         </button>
+    </div>
     </div>
     <div class="modal-body modelprbody uploadfilebdiv">
         <div class="container p-0" style="width:100%">

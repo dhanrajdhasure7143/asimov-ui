@@ -1334,7 +1334,7 @@ mat-row {
     margin: 0px auto !important;
     display: flex;
     align-items: center;
-    overflow: hidden;
+    /* overflow: hidden; */
   }
 }
 
@@ -2768,4 +2768,7 @@ span.pdicon {
 
 .process-expansion span.mat-content .module-sub-header-title {
   line-height: 32px !important;
+}
+.cursor-all-scroll{
+  cursor: all-scroll;
 }

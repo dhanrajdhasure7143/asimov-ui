@@ -57,6 +57,7 @@ import { BacklogsListComponent } from './backlogs-list/backlogs-list.component';
 import { BacklogsCreateComponent } from './backlogs-create/backlogs-create.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { ProjectRpaDesignComponent } from './project-rpa-design/project-rpa-design.component';
+import { NgbModalDraggableModule } from 'ngb-modal-draggable';
 
 const materialModules: any[] = [
     
@@ -89,7 +90,8 @@ const materialModules: any[] = [
     ModalModule.forRoot(),
     MatProgressBarModule,NgSelectModule,Ng5SliderModule,
     NgbModule,
-    MatExpansionModule
+    MatExpansionModule,
+    NgbModalDraggableModule,
     
   ],
   providers:[
