@@ -1025,7 +1025,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
   downloadPng()
   {
     var element=document.getElementById(this.dragareaid)
-    domtoimage.toPng(element)
+    domtoimage.toPng(element,{ quality : 1,bgcolor : "white"})
       .then(function (dataUrl) {
         var link = document.createElement('a');
         link.download = 'bot_image.png';
@@ -1040,7 +1040,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
   downloadJpeg() {
 
     var element=document.getElementById(this.dragareaid)
-    domtoimage.toPng(element,{ quality: 0.95,background: "white"})
+    domtoimage.toPng(element,{ quality : 1,bgcolor : "white"})
     .then(function (dataUrl) {
       var link = document.createElement('a');
       link.download = 'bot_image.jpeg';

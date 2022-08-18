@@ -89,7 +89,9 @@
 
 <ng-template #outputboxModalRef>
   <div [id]="outputboxid">
-        <div  class="modal-header modelprhead">            
+    <div ngb-modal-draggable [ngbModalDraggableHandle]="draggableHandle" class="cursor-all-scroll">
+        <div #draggableHandle class="modal-header modelprhead">
+        <!-- <div  class="modal-header modelprhead">             -->
             <h4 class="modal-title pull-left">
                 <span *ngIf="outputboxresult!=undefined" class="module-back-button" (click)="outputlayoutback()">
                     <i class="fas fa-arrow-left" aria-hidden="true"></i>
@@ -102,6 +104,7 @@
                 </span>  
             </button>          
         </div>
+    </div>
         <div class="modal-body modelprbody">
 
             <div class="row" *ngIf="outputboxresult==undefined">
