@@ -53,7 +53,7 @@
                 </span>-->
                         <span *ngIf="element.runStatus=='Running'" class="text-primary">
                 <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus">{{element.runStatus}}&nbsp;&nbsp;
-                <span class="clickable btn btn-xs btn-primary" (click)="kill_process_run(element.processId,element.processRunId)">Kill</span>
+                <span class="clickable btn btn-xs btn-primary" (click)="kill_process_run(element.processId,element.envId,element.processRunId)">Kill</span>
                         </span>
 
                         <span *ngIf="element.runStatus=='Success'">

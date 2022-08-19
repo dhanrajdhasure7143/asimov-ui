@@ -290,9 +290,9 @@ export class RestApiService{
   }
 
 
-  kill_process_log(processid, runid)
+  kill_process_log(processid,envid,runid)
   {
-    return this.http.post(`/rpa-service/updateProcessLog/${processid}/${runid}`,"")
+    return this.http.post(`/rpa-service/kill-process/${processid}/${envid}/${runid}`,"")
   }
 
   getbotlist(botType, botDepartment)
