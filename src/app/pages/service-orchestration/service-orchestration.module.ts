@@ -62,6 +62,7 @@ import { ProcessesComponent } from './orchestration/scheduled-bots/processes/pro
 import { CheckResourcePipe } from './orchestration/new-so-automated-tasks/check-resource.pipe';
 import { RpaSoLogsComponent } from '../rpautomation/rpa-so-logs/rpa-so-logs.component';
 import { RpautomationModule } from '../rpautomation/rpautomation.module';
+import { NgbModalDraggableModule } from 'ngb-modal-draggable';
 @NgModule({
   declarations: [OrchestrationComponent,ipcustompipecreation,
     BotStatusComponent,
@@ -120,7 +121,7 @@ import { RpautomationModule } from '../rpautomation/rpautomation.module';
     ModalModule.forRoot(),
     NgSelectModule,
     RpautomationModule,
-
+    NgbModalDraggableModule,
   ],
   bootstrap: [SoDashboardComponent],
   entryComponents: [FilterBy],

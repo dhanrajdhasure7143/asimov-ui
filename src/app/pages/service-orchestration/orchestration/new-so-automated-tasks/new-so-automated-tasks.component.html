@@ -417,7 +417,9 @@
 
 <ng-template #process_logs>
     <div id='logsid'>
-        <div class="modal-header modelprhead">
+        <div ngb-modal-draggable [ngbModalDraggableHandle]="draggableHandle" class="cursor-all-scroll">
+            <div #draggableHandle class="modal-header modelprhead">
+        <!-- <div class="modal-header modelprhead"> -->
             <!-- <span *ngIf="viewlogid1!=undefined" class="module-back-button" (click)="viewlogid1=undefined">
       <i class="fas fa-arrow-left" aria-hidden="true"></i>
     </span> -->
@@ -429,6 +431,7 @@
       </button>
 
             <!-- <span class="pull-right clickable" (click)="logs_modal.hide()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span> -->
+        </div>
         </div>
         <div class="process-logs modal-body">
             <app-so-processlog [processId]="processId1"></app-so-processlog>
@@ -869,13 +872,15 @@
 
 
         <ng-template class="modal-lg"  #addTask>
-           
-                    <div class="modal-header modelprhead">
+            <div ngb-modal-draggable [ngbModalDraggableHandle]="draggableHandle" class="cursor-all-scroll">
+                <div #draggableHandle class="modal-header modelprhead">
+                    <!-- <div class="modal-header modelprhead"> -->
                             <h4 class="modal-title pull-left">Add Task</h4>
                             <button type="button" class="close pull-right" aria-label="Close" (click)="logs_modal.hide();">
                               <span aria-hidden="true"><img src="../../../../assets/images/Projects/circle-close.svg" alt=""></span>
                           </button>
                         </div>
+                     </div>
                             <div class="modal-body addTasksBlock">
                                 <form [formGroup]="addTaskForm" #addtask="ngForm" (ngSubmit)="addexistingtasks()">
                                     <div class="col-md-12 p-0 form-fields">
