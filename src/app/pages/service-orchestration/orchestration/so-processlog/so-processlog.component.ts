@@ -37,6 +37,7 @@ export class SoProcesslogComponent implements OnInit, OnDestroy{
   displayedColumnsp2: string[] = ['bot_name','version','run_id','start_date','end_date', "bot_status"]; //,'log_statement'
   displayedColumnsp3: string[] = ['task_name','start_date','end_date', 'status','error_info' ];
   interval1: any = 0;
+  interval2: any = 0;
   constructor( private rest:RestApiService, private changeDetectorRef: ChangeDetectorRef,private automated:NewSoAutomatedTasksComponent, private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
@@ -49,20 +50,20 @@ export class SoProcesslogComponent implements OnInit, OnDestroy{
   }
 
   getprocesslog(){
-    
+     clearInterval(this.interval2)
     let logbyrunidresp1:any;
     let resplogbyrun1: any = [];
 
     if(this.processId != '' && this.processId != undefined)
     {
     this.logresponse=[];
-    this.spinner.show()
+    //this.spinner.show()
     
     document.getElementById("viewlogid1").style.display = "block";
-    this.loadLogsFlag=true;
+   // this.loadLogsFlag=true;
     this.rest.getProcesslogsdata(this.processId).subscribe(data =>{
-      this.spinner.hide();
-      this.loadLogsFlag=false
+    //  this.spinner.hide();
+     // this.loadLogsFlag=false
         this.logresponse = data;
         if(this.logresponse.length >0)
         {
@@ -106,7 +107,7 @@ export class SoProcesslogComponent implements OnInit, OnDestroy{
   }
 
   backplogrid(){
-    this.getprocesslog()
+   // this.getprocesslog()
     document.getElementById("plogrunid").style.display = "none";
     document.getElementById("viewlogid1").style.display = "block";
     this.stopRefresh()
@@ -119,11 +120,12 @@ export class SoProcesslogComponent implements OnInit, OnDestroy{
     document.getElementById("pbotrunid").style.display = "none";
     document.getElementById("plogrunid").style.display = "block";
     this.stopRefresh()
-    this.setProcesslog()
+    // this.setProcesslog()
+    this.interval1
   }
   public selected_processRunId:any;
   getprocessrunid(processRunId){
-    clearInterval(this.interval)
+     this.refreshButton()
     this.selected_processRunId=processRunId;
     let logbyrunidresp: any;
     let resplogbyrun = [];
@@ -133,7 +135,7 @@ export class SoProcesslogComponent implements OnInit, OnDestroy{
     document.getElementById("viewlogid1").style.display="none";
     document.getElementById("plogrunid").style.display="block";
     this.loadLogsFlag=true
-
+    this.interval2 = setInterval(() => {
     this.rest.getprocessruniddata(processId,processRunId).subscribe(data =>{
       this.spinner.hide();
       this.loadLogsFlag=false;
@@ -159,13 +161,17 @@ export class SoProcesslogComponent implements OnInit, OnDestroy{
       this.dataSourcep2 = new MatTableDataSource(this.runidresponse);
       this.dataSourcep2.sort=this.sortp2;
       this.dataSourcep2.paginator=this.paginator2;
+      resplogbyrun = [];
     });
+  },3000)
     //console.log(processRunId);
   }
 
   public selected_runid:any;
   ViewlogByrunid(runid){
-    
+    if(this.interval2){
+      clearInterval(this.interval2)
+    }
     this.selected_runid=runid;
     let responsedata:any=[];
     let logbyrunidresp1:any;
