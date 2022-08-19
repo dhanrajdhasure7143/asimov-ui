@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
   templateUrl: './rpa-so-logs.component.html',
   styleUrls: ['./rpa-so-logs.component.css']
 })
-export class RpaSoLogsComponent implements OnInit {
+export class RpaSoLogsComponent implements OnInit, OnDestroy {
   @Input('logsmodalref') public logsmodal: BsModalRef;
   Viewloglist:MatTableDataSource<any>;
   @ViewChild("logsSort",{static:false}) logsSort:MatSort;
@@ -17,9 +17,10 @@ export class RpaSoLogsComponent implements OnInit {
   displayedColumns: string[] = ['run_id','version','start_date','end_date', "bot_status"];
   displayedColumns1: string[] = ['task_name', 'status','start_date','end_date','error_info' ];
   displayedloopColumns:string[]=['taskName','status','startTS','endTS',"errorMsg"];
+  automationLogColoumns:string[]=['internaltaskName','startTS','endTS', 'status','errorMsg']
   public viewlogid1:any;
   selectedIterationTask:any=undefined;
-  public logsLoading:Boolean=false;
+  public logsLoading:boolean=false;
   filteredLogs:any=[];
   iterationsList:any=[];
   public viewlogid:any;
@@ -29,6 +30,7 @@ export class RpaSoLogsComponent implements OnInit {
   fileteredLoopIterations:any=[];
   public selectedLogVersion:any;
   filteredLogVersion:any;
+  public selectedAutomationTask:any=undefined;
   @Input ('logsbotid') public logsbotid:any;
   @Input ('AllVersionsList') public AllVersionsList:any=[];
   @Input('selectedversion') public selectedversion:any;
@@ -40,6 +42,10 @@ export class RpaSoLogsComponent implements OnInit {
   loopIterations:any=[];
   logbyrunid:MatTableDataSource<any>;
   loopbyrunid:MatTableDataSource<any>;
+  automationLogs:any=[];
+  automationLogsTable:MatTableDataSource<any>;
+  interval: any = 0;
+  timeInterval : any = 0;
   constructor( private modalService:BsModalService,
      private rest : RestApiService,
      private changeDetector:ChangeDetectorRef,private spinner:NgxSpinnerService) { }
@@ -47,21 +53,22 @@ export class RpaSoLogsComponent implements OnInit {
   ngOnInit() {
     this.AllVersionsList=this.AllVersionsList.map(item=>{return item.vId});
     this.filteredLogVersion=this.selectedversion
-    this.viewlogdata()
-   
+    // this.viewlogdata()
+    this.autoRefresh()
   }
  
   viewlogdata(){
-  
+    this.stopAutoRefersh();   
     this.viewlogid1=undefined;
     //document.getElementById("filters").style.display = "none";
    let response: any;
    let log:any=[];
    this.logresponse=[];
-   this.logsLoading=true;
+   
     this.rest.getviewlogdata(this.logsbotid).subscribe(data =>{
       this.logresponse=data;
-      this.logsLoading=false;
+      console.log("res",this.logresponse)
+ 
       if(this.logresponse.length >0)
       {
         this.respdata1 = false;
@@ -93,9 +100,10 @@ export class RpaSoLogsComponent implements OnInit {
       }
       log.push(response)
     });
-     log.sort((a,b) => a.run_id > b.run_id ? -1 : 1);
-     this.allLogs=log;
-     this.filteredLogs=[...this.allLogs.filter(item=>item.version==this.filteredLogVersion)];
+    log.sort((a,b) => a.version > b.version ? -1 : 1);
+    this.allLogs=log;
+   //  this.filteredLogs=[...this.allLogs.filter(item=>item.version==this.filteredLogVersion)];
+   this.filteredLogs=[...this.allLogs];
      this.Viewloglist = new MatTableDataSource(this.filteredLogs);
      this.changeDetector.detectChanges();
      this.Viewloglist.sort=this.logsSort;
@@ -121,6 +129,7 @@ export class RpaSoLogsComponent implements OnInit {
      // },4000)
   }
   ViewlogByrunid(runid,version){
+    this.stopRefresh()
     this.botrunid=runid;
     this.selectedLogVersion=version
     let responsedata:any=[];
@@ -128,6 +137,7 @@ export class RpaSoLogsComponent implements OnInit {
     let resplogbyrun:any=[];
    
     this.logsLoading=true;
+    this.interval= setInterval(()=>{
     this.rest.getViewlogbyrunid(this.logsbotid,version,runid).subscribe((data:any)=>{
       if(data.errorMessage==undefined)
       {
@@ -168,10 +178,12 @@ export class RpaSoLogsComponent implements OnInit {
        });
        this.viewlogid1=runid;
        this.allRuns=[...resplogbyrun];
+       console.log("runs",this.allRuns)
        this.logbyrunid = new MatTableDataSource(resplogbyrun);
        this.changeDetector.detectChanges();
        this.logbyrunid.paginator=this.paginator2;
        this.logbyrunid.sort=this.sort2
+        resplogbyrun = [];      
      }
      else
      {
@@ -185,12 +197,14 @@ export class RpaSoLogsComponent implements OnInit {
       
        this.logsLoading=false;
         
-      Swal.fire("Error","unable to get logs","error")
-     })
+      Swal.fire("Error","unable to get logs","error")       
+    })
+    }, 3000)
    }
   sortasc(event)
   {
     let sortdes:Boolean
+    console.log(event)
     if(this.viewlogid1==undefined)
     {
       if(event.direction=='asc')
@@ -211,7 +225,8 @@ export class RpaSoLogsComponent implements OnInit {
       }
       else
       {
-        this.filteredLogs=[...this.allLogs.filter((item:any)=>item.version=this.filteredLogVersion)];
+       // this.filteredLogs=[...this.allLogs.filter((item:any)=>item.version=this.filteredLogVersion)];
+       this.filteredLogs=[...this.allLogs];
       }
       this.Viewloglist = new MatTableDataSource(this.filteredLogs);
       this.changeDetector.detectChanges();
@@ -308,7 +323,97 @@ export class RpaSoLogsComponent implements OnInit {
     },err=>{
       this.logsLoading=false;
       Swal.fire("Error","Unable to open loop logs","error");
+      console.log(err)
     })
   }
 
+
+  getAutomationLogs(taskData:any)
+  {
+    this.selectedAutomationTask=taskData;
+    this.logsLoading=true;
+    this.rest.getAutomationLogs(taskData.bot_id, taskData.version, taskData.run_id,taskData.task_id).subscribe((response:any)=>{
+      this.logsLoading=false;
+      if(response.errorMessage==undefined)
+      {
+        this.automationLogs=response;
+        this.automationLogsTable=new MatTableDataSource([...this.automationLogs]);
+      }
+      else
+      {
+        Swal.fire("Error",response.errorMessage,"error");
+      }
+    },err=>{
+      this.logsLoading=false
+      Swal.fire("Error","Unable to get automation Logs","error")
+    })
+  }
+
+  updateLog(element: any,Logtemplate: any)
+   {
+    
+    this.logsLoading=true;
+     this.rest.updateBotLog(element.bot_id,element.version,element.run_id).subscribe(data=>{
+        let response:any=data;  
+        this.logsLoading=false;
+        if(response.status==undefined)
+          this.viewlogdata();
+        else
+          Swal.fire("Success",response.status,"success");
+          this.viewlogdata();
+     });
+   }
+
+
+   stopRefresh(){
+    if(this.timeInterval){
+      clearInterval(this.timeInterval)
+    }
+   }
+
+
+stopAutoRefersh(){
+  if(this.interval){
+    clearInterval(this.interval)
+  }
+}
+
+  autoRefresh()
+  {
+    this.viewlogdata()
+   
+    this.timeInterval = setInterval(() => {
+      this.viewlogdata()
+    }, 3000)
+  }
+
+  backtoPage(){
+    
+    this.viewlogid1=undefined
+    this.stopAutoRefersh();
+    this.autoRefresh();
+  }
+
+  backtoRunid(){
+    //this.viewlogid1=undefined
+    this.selectedIterationTask=undefined;
+    this.selectedIterationId=0;
+    this.stopAutoRefersh();
+    this.ViewlogByrunid(this.botrunid,this.selectedLogVersion)
+    //this.autoRefresh();
+  }
+
+  backtoRunpage(){
+    this.viewlogid1=undefined
+    this.selectedAutomationTask=undefined;
+    this.stopAutoRefersh();
+    this.autoRefresh();
+    
+  }
+  
+  ngOnDestroy(){
+    this.stopRefresh()
+    this.stopAutoRefersh()
+  }
+  
 }

@@ -279,9 +279,9 @@ export class RestApiService{
   }
 
 
-  kill_process_log(processid, runid)
+  kill_process_log(processid,envid,runid)
   {
-    return this.http.post(`/rpa-service/updateProcessLog/${processid}/${runid}`,"")
+    return this.http.post(`/rpa-service/kill-process/${processid}/${envid}/${runid}`,"")
   }
 
   getbotlist(botType, botDepartment)
@@ -1460,5 +1460,10 @@ getFileCategoriesList(id){
 getFilteredEnvironment(id){
   return this.http.get("/rpa-service/agent/get-environments/"+id)
 }
-
+getDatabaselist(){
+  return this.http.get("/rpa-service-databasetypes/database/getdatabasetypes")
+}
+getTimeZone(){
+  return this.http.get('/rpa-service/getTimeZones');
+}
 }

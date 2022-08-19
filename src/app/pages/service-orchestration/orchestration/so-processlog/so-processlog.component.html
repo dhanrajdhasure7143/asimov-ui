@@ -1,8 +1,8 @@
 <div id="viewlogid1" class="newmodelcla">
-    <div class="text-left">
+    <!-- <div class="text-left">
         <button class="refecls" (click)="getprocesslog()" matTooltip="Refresh"><i class="fas fa-sync-alt"></i>&nbsp; Refresh</button>
-    </div>
-    <div class="logs-overlay" *ngIf="!(loadLogsFlag)">
+    </div> -->
+    <div class="logs-overlay" >
         <div class="logs-container">
             <table mat-table [dataSource]="dataSourcep1" #sortp1="matSort" matSort class="logs-table">
                 <ng-container matColumnDef="processRunId">
@@ -53,7 +53,7 @@
                 </span>-->
                         <span *ngIf="element.runStatus=='Running'" class="text-primary">
                 <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus">{{element.runStatus}}&nbsp;&nbsp;
-                <span class="clickable btn btn-xs btn-primary" (click)="kill_process_run(element.processId,element.processRunId)">Kill</span>
+                <span class="clickable btn btn-xs btn-primary" (click)="kill_process_run(element.processId,element.envId,element.processRunId)">Kill</span>
                         </span>
 
                         <span *ngIf="element.runStatus=='Success'">
@@ -93,8 +93,8 @@
                 <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumnsp1;"></tr>
                 <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': !respdata1}"></tr>
             </table>
-
         </div>
+        <mat-paginator #paginator1 class="newpaginationdiv pageData" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons] ="true" ></mat-paginator>  
     </div>
 
     <div class="logs-overlay text-center w-100" *ngIf="loadLogsFlag">
@@ -108,13 +108,11 @@
 <div id="plogrunid" class="newmodelcla">
 
     <div class="text-left">
-        <button (click)="backplogrid()" class="refecls" matTooltip="Back"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp; Back</button> &nbsp;&nbsp;
-        <button (click)="getprocessrunid(selected_processRunId)" class="refecls" matTooltip="Refresh"><i class="fas fa-sync-alt"></i>&nbsp; Refresh</button>
+        <button (click)="backplogrid()" class="refecls" ><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp; Back</button> &nbsp;&nbsp;
+        <!-- <button (click)="getprocessrunid(selected_processRunId)" class="refecls" matTooltip="Refresh"><i class="fas fa-sync-alt"></i>&nbsp; Refresh</button> -->
     </div>
     <div class="logs-overlay" *ngIf="!(loadLogsFlag)">
         <div class="logs-container">
-
-
             <table mat-table class="logs-table" [dataSource]="dataSourcep2" #sortp2="matSort" matSort>
 
 
@@ -218,8 +216,8 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumnsp2;"></tr>
                 <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': !respdata2}"></tr>
             </table>
-
         </div>
+        <mat-paginator #paginator2 class="newpaginationdiv pageData" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons]="true"></mat-paginator>
     </div>
     <div class="logs-overlay text-center w-100" *ngIf="loadLogsFlag">
         <img  src="../../../../../assets/images/EZFlow_Loader.gif">
@@ -229,13 +227,12 @@
 </div>
 <div id="pbotrunid" class="newmodelcla">
     <div class="text-left">
-        <button (click)="backpbotrunid()" class="refecls" matTooltip="Back"><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp; Back</button>&nbsp;&nbsp;
-        <button (click)="ViewlogByrunid(selected_runid)" class="refecls" matTooltip="Refresh"><i class="fas fa-sync-alt"></i>&nbsp; Refresh</button>
+        <button (click)="backpbotrunid()" class="refecls" ><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp; Back</button>&nbsp;&nbsp;
+        <!-- <button (click)="ViewlogByrunid(selected_runid)" class="refecls" matTooltip="Refresh"><i class="fas fa-sync-alt"></i>&nbsp; Refresh</button> -->
 
     </div>
     <div class="logs-overlay" *ngIf="!(loadLogsFlag)">
         <div class="logs-container">
-
             <table mat-table class="logs-table" [dataSource]="dataSourcep3" #sortp3="matSort" matSort>
 
                 <ng-container matColumnDef="task_name">
@@ -326,8 +323,9 @@
                 <tr mat-header-row *matHeaderRowDef="displayedColumnsp3; sticky: true"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumnsp3;"></tr>
                 <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': !respdata3}"></tr>
-            </table>
+            </table>            
         </div>
+        <mat-paginator #paginator3 class="newpaginationdiv pageData" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons]="true"></mat-paginator>
     </div>
     <div class="logs-overlay text-center w-100" *ngIf="loadLogsFlag">
         <img  src="../../../../../assets/images/EZFlow_Loader.gif">

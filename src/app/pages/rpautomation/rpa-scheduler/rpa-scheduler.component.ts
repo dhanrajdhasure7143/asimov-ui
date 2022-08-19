@@ -121,7 +121,7 @@ export class RpaSchedulerComponent implements OnInit {
     console.log("todaytime",this.todaytime);
 
     this.starttime=(new Date).getHours()+":"+(new Date).getMinutes();
-    // this.getAlltimezones();
+     this.getAlltimezones();
   }  
 gettime(){
  
@@ -692,7 +692,12 @@ gettime(){
     this.selectedEnvironment="";
     this.timezone="";
   }
-  
+  getAlltimezones(){
+    this.rest.getTimeZone().subscribe(res =>{
+      console.log(res);
+        this.timesZones=res;
+     })
+  }
 
 }
 
