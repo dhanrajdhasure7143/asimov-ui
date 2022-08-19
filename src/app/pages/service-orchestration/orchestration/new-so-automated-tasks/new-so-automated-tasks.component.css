@@ -192,8 +192,8 @@ span.logrefresh {
 
 
 .Actions-column button:disabled{
-    background-color: white !important;
-    opacity: 0.4 !important;
+    /* background-color: white !important;
+    opacity: 0.4 !important; */
     cursor: not-allowed;
 }
 
