@@ -416,8 +416,8 @@ mat-paginator button:disabled{
 }
 
 .rpa-home-table{
-  /* height: calc(100vh - 295px); */
-  height: calc(100vh - 433px);
+  height: calc(100vh - 295px);
+  /* height: calc(100vh - 433px); */
   overflow-y: scroll;
 }
 .open-btn-click {

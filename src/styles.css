@@ -2530,7 +2530,7 @@ th.mat-header-cell {
 
 .logs-modal .logs-container
 {
-  height:400px  !important;
+  height: 395px  !important;
   overflow:auto;
 }
 .logs-table{
@@ -2718,7 +2718,9 @@ span.pdicon {
   height: 310px;
   overflow: auto;
 }
-
+.edit-task-tabs .mat-tab-body-wrapper {
+  height: calc(100vh - 340px) !important;
+}
 .workspace-title button.mat-sort-header-button {
   font-size: 14px !important;
 }
@@ -2772,3 +2774,25 @@ span.pdicon {
 .cursor-all-scroll{
   cursor: all-scroll;
 }
+
+.prj_activities_block .mat-tab-label {
+  height: 36px;
+  padding: 0px 15px !important;
+  background-color: aliceblue !important;
+  color: #001c47 !important;
+}
+.prj_activities_block .mat-tab-label-active {
+  opacity: 1;
+}
+.prj_activities_block .mat-tab-label:first-child {
+  justify-content: flex-start;
+  background-color: aliceblue !important;
+}
+.prj_activities_block mat-tab-header.mat-tab-header {
+  background-color: aliceblue;
+  margin-top: 4px;
+  border-bottom: 0px !important;
+}
+/* .pg-newpopup .logs-container {
+  height: calc(100vh - 365px) !important;
+} */
