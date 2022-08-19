@@ -281,8 +281,8 @@ export class ProjectDetailsScreenComponent implements OnInit {
     this.checktodelete();
   }
   uploadFile(template: TemplateRef<any>) {
-
-    this.getFileCategories();
+    this.getFileCategoriesList()
+    // this.getFileCategories();
     this.uploadFilemodalref = this.modalService.show(template, { class: "modal-lr" });
   }
 
@@ -1004,7 +1004,8 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
   }
 
   uploadtaskfile(createmodal, data) {
-    this.getFileCategories();
+    this.getFileCategoriesList();
+    // this.getFileCategories();
     this.selectedtaskfileupload = data
     this.uploadtaskFilemodalref = this.modalService.show(createmodal, { class: "modal-lr" })
   }

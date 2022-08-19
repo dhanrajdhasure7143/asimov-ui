@@ -221,9 +221,9 @@ export class SoProcesslogComponent implements OnInit, OnDestroy{
     }
 
 
-    kill_process_run(processid, runid)
+    kill_process_run(processid,envid,runid)
     {
-      this.rest.kill_process_log(processid, runid).subscribe(data=>{
+      this.rest.kill_process_log(processid,envid,runid).subscribe(data=>{
         this.getprocesslog();
       })
     }
