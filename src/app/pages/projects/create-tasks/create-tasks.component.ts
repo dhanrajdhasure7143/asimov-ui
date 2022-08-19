@@ -202,8 +202,6 @@ taskDescriptionMaxLength(value){
    
    getTaskCategoriesByProject(){
     this.api.getTaskCategoriesByProject(this.project_id).subscribe(res=>{this.task_categoriesList = res
-      console.log(res)
-
     })
     
    }
