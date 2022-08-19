@@ -2530,7 +2530,7 @@ th.mat-header-cell {
 
 .logs-modal .logs-container
 {
-  height:400px  !important;
+  height: 395px  !important;
   overflow:auto;
 }
 .logs-table{
