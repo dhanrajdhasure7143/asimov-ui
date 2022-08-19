@@ -58,7 +58,7 @@ export class RpaSoLogsComponent implements OnInit, OnDestroy {
   }
  
   viewlogdata(){
-  
+    this.stopAutoRefersh();   
     this.viewlogid1=undefined;
     //document.getElementById("filters").style.display = "none";
    let response: any;
@@ -129,7 +129,7 @@ export class RpaSoLogsComponent implements OnInit, OnDestroy {
      // },4000)
   }
   ViewlogByrunid(runid,version){
-    this.stopRefresh();   
+    this.stopRefresh()
     this.botrunid=runid;
     this.selectedLogVersion=version
     let responsedata:any=[];
@@ -409,7 +409,7 @@ stopAutoRefersh(){
   
   ngOnDestroy(){
     this.stopRefresh()
-   
+    this.stopAutoRefersh()
   }
   
 }
