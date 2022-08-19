@@ -327,7 +327,13 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
             this.selectedversion=response.version;
             this.rpa_studio.spinner.hide();
             this.getVersionlist();
-            Swal.fire("Success","Bot updated successfully","success")
+            //Swal.fire("Success","Bot updated successfully","success")
+            Swal.fire({
+              title: 'Success',
+              text: "Bot Updated Successfully",
+              icon: 'success',
+              heightAuto: false,
+            })
             let auditLogs=[...this.childBotWorkspace.auditLogs];
             if(auditLogs.length!=0)
             this.rest.addAuditLogs(auditLogs).subscribe((data:any)=>{

@@ -78,7 +78,7 @@
       <span class="testtooltip">Open Scheduler</span>
     </button>
 
-    <button dsiabled *ngIf="selectedvalue==''" id="autoViewLogs" class="tsttooltipbtn">
+    <button disabled *ngIf="selectedvalue==''" id="autoViewLogs" class="tsttooltipbtn">
       <img src="../../../../../assets/images/file.svg" alt="" class="testplus"> 
     </button>
 
@@ -302,7 +302,7 @@
 
                 <ng-container matColumnDef="Operations">
                     <th mat-header-cell *matHeaderCellDef class="cell10">Actions</th>
-                    <td mat-cell class="Actions-column" *matCellDef="let element"  class="cell10">
+                    <td mat-cell class="Actions-column cell10" *matCellDef="let element" >
                         <div *ngIf="element.taskType=='Automated'">
                             <span>
                                 <button [disabled]="element.taskType=='Human' || element.taskType==null" [class]="(element.taskType=='Human' || element.taskType==null)?'undobtn':''" (click)="createtaskbotoverlay(element.taskId)" matTooltip="Create and Assign Resource">
@@ -435,11 +435,10 @@
 
             <!-- <span class="pull-right clickable" (click)="logs_modal.hide()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span> -->
         </div>
+    </div>
         <div class="process-logs modal-body">
             <app-so-processlog [processId]="processId1"></app-so-processlog>
         </div>
-
-    </div>
 
 </ng-template>
 
