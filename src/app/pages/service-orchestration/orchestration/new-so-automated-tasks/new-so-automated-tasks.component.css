@@ -182,20 +182,19 @@ span.logrefresh {
     margin-left: 8px;
 }
 
-.tsttooltipbtn:disabled {
+button:disabled {
     cursor: not-allowed !important;
 }
 
 .process-logs.modal-body {
     /* height: calc(100vh - 300px); */
-    height: calc(100vh - 195px);
+    padding-top: 5px;
 }
 
 
 .Actions-column button:disabled{
     /* background-color: white !important;
     opacity: 0.4 !important; */
-    cursor: not-allowed;
 }
 
 
