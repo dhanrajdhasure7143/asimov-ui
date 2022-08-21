@@ -562,6 +562,16 @@ export class RestApiService{
 
 
 
+  getbotSchedules(data)
+  {
+    return this.http.post(`/rpa-service/getschedulesintervals-bot/${data.botid}?version=${data.version}`,{})
+  }
+
+  addbotSchedules(payload)
+  {
+    return this.http.post(`/rpa-service/specifiedscheduled-savebot`,payload)
+  }
+  
   start_schedule(data)
   {
     return this.http.post("/rpa-service/specifiedscheduled-startbot", data);
@@ -569,7 +579,7 @@ export class RestApiService{
 
   stop_schedule(data)
   {
-    return this.http.post("/rpa-service/specifiedscheduled-stopbot", data);
+    return this.http.post("/rpa-service/deleete-each-schedule-bot", data);
   }
 
   pause_schedule(data)

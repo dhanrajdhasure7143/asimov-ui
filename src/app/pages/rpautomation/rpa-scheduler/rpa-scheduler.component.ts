@@ -6,8 +6,7 @@ import cronstrue from 'cronstrue';
 import moment from 'moment';
 import { NotifierService } from 'angular-notifier';
 import { RpaStudioActionsmenuComponent } from '../rpa-studio-actionsmenu/rpa-studio-actionsmenu.component'
-import { first } from 'rxjs/operators';
-import { any } from '@amcharts/amcharts4/.internal/core/utils/Array';
+
 
 @Component({
   selector: 'app-rpa-scheduler',
@@ -22,7 +21,6 @@ export class RpaSchedulerComponent implements OnInit {
   processid:any;
   beforetime:boolean=false;
   public Environments:any;
-  // public timesZones: any = ["UTC","Asia/Dubai","America/New_York","America/Los_Angeles","Asia/Kolkata","Canada/Atlantic","Canada/Central","Canada/Eastern","GMT"];
   public timesZones: any = [];
   i="";
   public cronOptions: CronOptions = {
@@ -89,7 +87,6 @@ export class RpaSchedulerComponent implements OnInit {
   constructor(private rest:RestApiService, private notifier: NotifierService, private actions:RpaStudioActionsmenuComponent) { }
 
   ngOnInit() {
-    
     var dtToday = new Date();
     this.selecteddate=new Date()
    // this.startdate=this.startdate.getFullYear()+"-"+(this.startdate.getMonth()+1)+"-"+this.startdate.getDate();
@@ -100,21 +97,23 @@ export class RpaSchedulerComponent implements OnInit {
         this.month = '0' + this.month.toString();
     if(day < 10)
         this.day = '0' + day.toString();
-    
     var minDate= year + '-' + this.month + '-' + day;
     $('#txtDate').attr('min', minDate);
     $('#enddatepicker').attr('min', minDate);
-    if(this.data.botid!=undefined && this.data.botid !="not_saved")
+    if(this.data.botid!=undefined)
     {
+      console.log(this.data)
       this.botid=this.data.botid;
+  
       this.get_schedule()
       this.getenvironments();
 
-    }else if(this.data.botid=="not_saved")
-    {
-      this.botid=this.data.botid;
-      this.schedule_list=this.data.schedule_list;
     }
+    // else if(this.data.botid=="not_saved")
+    // {
+    //   this.botid=this.data.botid;
+    //   this.schedule_list=this.data.schedule_list;
+    // }
     this.enddate=this.startdate;
    this.gettime();
 
@@ -146,31 +145,26 @@ gettime(){
 }
   get_schedule()
   {
-    this.schedule_list=[];
-    if(this.botid!="" && this.botid!=undefined && this.botid!="not_saved")
+    if(this.data!=undefined)
     {
-      this.rest.getbotdata(this.botid).subscribe(data=>{
-        let response:any=data;
-        this.botdata=data
-        if(response.botMainSchedulerEntity!=null)
+      this.rest.getbotSchedules(this.data).subscribe((response:any)=>{
+        if(response.errorMessage==undefined)
         {
-          this.schedule_list=response.botMainSchedulerEntity.scheduleIntervals;
-          this.schedule_list.forEach((sch,index)=>{
-            this.schedule_list[index].check=false;
-            this.schedule_list[index].save_status="saved";
-            this.schedule_list[index].run_status="not_started";
-          })
-          this.actions.updatesavedschedules(response.botMainSchedulerEntity);
-          this.updateflags()
+          this.schedule_list=[...response];
+          this.flags={
+            startflag:false,
+            stopflag:false,
+            pauseflag:false,
+            resumeflag:false,
+            deleteflag:false,
+          }
         }
+        else
+          Swal.fire("Error",response.errorMessage, "error");
+      },err=>{
+        console.log(err)
+        Swal.fire("Error","Unable to load schedules","error");
       })
-    }
-    else if(this.botid=="not_saved")
-    {
-      this.schedule_list=[];
-    }
-    let sch:any={
-      scheduleIntervals:this.schedule_list
     }
   }
 
@@ -197,9 +191,6 @@ gettime(){
     
     if(this.isDateToday(this.selecteddate)){
       if(time=='starttime'){
-     
-
-
         this.currenttime=this.tConv24(this.todaytime)
         this.end_time=this.tConv24(this.endtime)
          let a=moment(event,'h:mma')
@@ -384,34 +375,50 @@ gettime(){
         let startdate=this.startdate.split("-");
         let enddate=this.enddate.split("-");
          let data:any;
-      if(this.botid!="" && this.botid!=undefined )
+      if(this.data.botid!=undefined )
       {
+
         data={
-          intervalId:this.generateid(),
+          scheduledIntervalid:27,
           scheduleInterval:this.cronExpression,
           startDate:parseInt(startdate[0])+","+parseInt(startdate[1])+","+parseInt(startdate[2])+","+starttimeparse+","+starttime[1],
           endDate:parseInt(enddate[0])+","+parseInt(enddate[1])+","+parseInt(enddate[2])+","+ endtimeparse+","+ endtime[1],
-         
-        
           timeZone:this.timezone,
-          save_status:"unsaved",
-          check:false,
+          botSource:"EPSoft",
+          botName:this.data.botName,
+          botId:this.data.botid,
+          botVersion:this.data.version,
+          botActionStatus:"New",
+          modifiedBy:`${localStorage.getItem("firstName")} ${localStorage.getItem("lastName")} `,
         }
         this.schedule_list.push(data);
+
+        console.log(this.schedule_list);
+        this.rest.addbotSchedules(this.schedule_list).subscribe((response:any)=>{
+          if(response.errorMessage == undefined)
+          {
+            Swal.fire("Success","Schedule saved successfully","success");
+            this.get_schedule();
+          }  
+          else
+            Swal.fire("Error",response.errorMessage,"error");
+        },err=>{
+          console.log(err)
+          Swal.fire("Error","Unable to save schedule","error");
+        })
       }
     }
     else
     {
-
       this.notifier.notify("error", "Please fill all inputs");
-     
     }
   }
 
   check_all(event)
   {
-    this.schedule_list.forEach((sch,index)=>{
-      this.schedule_list[index].check=event.target.checked;
+    this.schedule_list=this.schedule_list.map((sch)=>{
+      sch.check=event.target.checked;
+      return sch;
     })
     this.updateflags();
   }
@@ -439,22 +446,14 @@ gettime(){
         "scheduleInterval":checked_schedule.scheduleInterval,
         "intervalId":checked_schedule.intervalId,
       }
-      this.rest.start_schedule(schedule).subscribe(data=>{
-        let resp:any=data;
-      
+      this.rest.start_schedule(schedule).subscribe((resp:any)=>{
         if(resp.errorMessage==undefined)
         {
-         
           this.notifier.notify("success",resp.status)
-        
           this.get_schedule();
         }
         else
-        {
           this.notifier.notify("error", resp.errorMessage);
-         
-        }
-
       })
     }
   }
@@ -462,10 +461,8 @@ gettime(){
   pause_schedule()
   {
     let checked_schedule=this.schedule_list.find(data=>data.check==true)
-    if(this.botid!="" && this.botid!=undefined)
-    {
       let schedule={
-        botId:this.botid,
+        botId:this.data.botid,
         "botVersion": checked_schedule.botVersion,
         "scheduleInterval":checked_schedule.scheduleInterval,
         "intervalId":checked_schedule.intervalId,
@@ -475,7 +472,6 @@ gettime(){
         if(resp.errorMessage==undefined)
         {
           this.notifier.notify("success",resp.status)
-        
           this.get_schedule();
         }
         else
@@ -484,14 +480,13 @@ gettime(){
           this.notifier.notify("error",resp.errorMessage)
         }
       })
-    }
   }
 
   resume_schedule()
   {
     let checked_schedule=this.schedule_list.find(data=>data.check==true)
     let schedule={
-      botId:this.botid,
+      botId:this.data.botid,
       "botVersion": checked_schedule.botVersion,
       "scheduleInterval":checked_schedule.scheduleInterval,
       "intervalId":checked_schedule.intervalId,
@@ -504,9 +499,7 @@ gettime(){
         this.get_schedule();
       }
       else
-      {
         this.notifier.notify("error", resp.errorMessage);
-      }
     })
 
   }
@@ -521,7 +514,19 @@ gettime(){
         let index2=this.schedule_list.findIndex(scheduleitem=>scheduleitem.intervalId==data.intervalId);
         this.schedule_list.splice(index2,1);
       })
-      this.updateflags();
+
+      this.rest.stop_schedule(list).subscribe((response:any)=>{
+        if(response.errorMessage==undefined)
+        {
+          Swal.fire("Success",response.status, "success");
+          this.get_schedule();
+        }
+        else
+        {
+          Swal.fire("Error",response.errorMessage,"error");
+        }
+      })
+      // this.updateflags();
       this.notifier.notify("success", "Schedules Deleted Sucessfully");
     }
   }
@@ -529,74 +534,74 @@ gettime(){
 
 
   
-  async saveschedule()
-  {
-    if(this.botid !=undefined && this.botid != "" && this.botid!="not_saved")
-    {
-      if(this.schedule_list.length==0)
-      {
-        this.botdata.botMainSchedulerEntity=null;
-      }
-      else
-      {
-        let schedules:any=[]
-        this.schedule_list.forEach(data=>{
-          if(data.save_status=="unsaved")
-          {
-            delete data.intervalId
-            schedules.push(data);
-          }
-          else if(data.save_status=="saved")
-          {
-            schedules.push(data)
-          }
-        })
-        if(this.botdata.botMainSchedulerEntity==null)
-        {
-          this.botdata.botMainSchedulerEntity={"scheduleIntervals":schedules};
-        }
-        else if(schedules.length==0)
-        {
-          this.botdata.botMainSchedulerEntity=null;
-        }
-      }
-      await (await this.rest.updateBot(this.botdata)).subscribe(data =>{
-        let resp:any=data;
-        if(resp.errorMessage){
-          this.notifier.notify("error","Failed to save the scheduler")
-        }
-        else if(resp.botMainSchedulerEntity.scheduleIntervals.length==0)
-        {
-          this.notifier.notify("success","Updated successfully")
-        }
-        else if(resp.botMainSchedulerEntity.scheduleIntervals.length==this.schedule_list.length)
-        {
+  // async saveschedule()
+  // {
+  //   if(this.botid !=undefined && this.botid != "" && this.botid!="not_saved")
+  //   {
+  //     if(this.schedule_list.length==0)
+  //     {
+  //       this.botdata.botMainSchedulerEntity=null;
+  //     }
+  //     else
+  //     {
+  //       let schedules:any=[]
+  //       this.schedule_list.forEach(data=>{
+  //         if(data.save_status=="unsaved")
+  //         {
+  //           delete data.intervalId
+  //           schedules.push(data);
+  //         }
+  //         else if(data.save_status=="saved")
+  //         {
+  //           schedules.push(data)
+  //         }
+  //       })
+  //       if(this.botdata.botMainSchedulerEntity==null)
+  //       {
+  //         this.botdata.botMainSchedulerEntity={"scheduleIntervals":schedules};
+  //       }
+  //       else if(schedules.length==0)
+  //       {
+  //         this.botdata.botMainSchedulerEntity=null;
+  //       }
+  //     }
+  //     await (await this.rest.updateBot(this.botdata)).subscribe(data =>{
+  //       let resp:any=data;
+  //       if(resp.errorMessage){
+  //         this.notifier.notify("error","Failed to save the scheduler")
+  //       }
+  //       else if(resp.botMainSchedulerEntity.scheduleIntervals.length==0)
+  //       {
+  //         this.notifier.notify("success","Updated successfully")
+  //       }
+  //       else if(resp.botMainSchedulerEntity.scheduleIntervals.length==this.schedule_list.length)
+  //       {
         
 
-          this.notifier.notify("success", "Schedules saved successfully");
+  //         this.notifier.notify("success", "Schedules saved successfully");
           
-        }
+  //       }
        
-        this.get_schedule();
-      })
-    }
-    else
-    {
-      let schedules:any=[]
-        this.schedule_list.forEach(data=>{
-          if(data.save_status=="unsaved")
-          {
-            delete data.intervalId
-            schedules.push(data);
-          }
-        });
-      this.notifier.notify("success","Schedule configured successfully")
-      let sch:any={
-        scheduleIntervals:schedules,
-      }
-      this.actions.saveschedule(sch,this.schedule_list);
-    }
-  }
+  //       this.get_schedule();
+  //     })
+  //   }
+  //   else
+  //   {
+  //     let schedules:any=[]
+  //       this.schedule_list.forEach(data=>{
+  //         if(data.save_status=="unsaved")
+  //         {
+  //           delete data.intervalId
+  //           schedules.push(data);
+  //         }
+  //       });
+  //     this.notifier.notify("success","Schedule configured successfully")
+  //     let sch:any={
+  //       scheduleIntervals:schedules,
+  //     }
+  //     //this.actions.saveschedule(sch,this.schedule_list);
+  //   }
+  // }
   getenvironments()
   {
     this.rest.listEnvironments().subscribe(response=>{

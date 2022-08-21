@@ -163,6 +163,7 @@ ul#environments li img {
 .rpa-layout-header {
     background-color: #F3F3F3;
     padding: 5px 15px !important;
+    height: 97px !important;
 }
 
 .rpa-layout-header .module-heading {
@@ -318,6 +319,7 @@ ul#versions li.clickable:hover {
     padding: 10px !important;
     border-top: 1px solid lightgray;
     text-align: end !important;
+    height: 45px !important;
 }
 
 .bot-img {

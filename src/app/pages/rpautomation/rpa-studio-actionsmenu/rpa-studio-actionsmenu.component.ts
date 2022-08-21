@@ -824,26 +824,15 @@ loadpredefinedbot(botId, dropCoordinates)
 
 
 
- openschedule()
+  openschedule()
   {
-    if(this.savebotrespose==undefined)
-    {
-      this.schedule={
-        botid:"not_saved",
-        schedule_list:this.schedule_list_scheduler,
-      }
-    }
-    else
-    {
-      this.schedule={
-        botid:this.savebotrespose.botId
-      }
-
+    this.schedule={
+      botid:this.savebotrespose.botId,
+      version:this.savebotrespose.version,
+      botName:this.savebotrespose.botName
     }
     this.schpop=true;
-    document.getElementById("filters").style.display = "none";
   }
-
   closesch()
   {
     this.schpop=false;
@@ -851,18 +840,18 @@ loadpredefinedbot(botId, dropCoordinates)
   }
 
 
-  saveschedule(schedule,schedule_list)
-  {
-    //this.scheduleLists=schedule;
-    this.schedule_list_scheduler=schedule_list;
-    this.childBotWorkspace.saveCron(schedule);
-  }
+  // saveschedule(schedule,schedule_list)
+  // {
+  //   //this.scheduleLists=schedule;
+  //   this.schedule_list_scheduler=schedule_list;
+  //   this.childBotWorkspace.saveCron(schedule);
+  // }
 
 
-  updatesavedschedules(schedules)
-  {
-    this.childBotWorkspace.saveCron(schedules)
-  }
+  // updatesavedschedules(schedules)
+  // {
+  //   this.childBotWorkspace.saveCron(schedules)
+  // }
 
   displayenv()
   {
