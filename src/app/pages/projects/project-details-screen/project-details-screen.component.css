@@ -917,3 +917,14 @@ width: 0.1px;
 height: 0.1px;
 z-index: 0;
 }
+
+
+.s_ques span.testtooltip {
+  top: -2px;
+  right: 25px;
+}
+
+.s_ques span.testtooltip::before {
+  right: -4px;
+  top: 8px;
+}

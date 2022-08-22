@@ -66,3 +66,30 @@ span.testtooltip:before {
     border-radius: 10px;
     margin-left: 8px;
 }
+
+.no-item-img{
+    height: calc(100vh - 500px);
+}
+
+
+::ng-deep .cdk-overlay-container{
+    z-index: 1200 !important;
+    }
+    ::ng-deep .mat-select-panel {
+    position: absolute !important;
+     bottom: -5%;
+     transform-origin: bottom !important;
+     transform: none !important;
+    }
+    ::ng-deep .cdk-overlay-pane {
+     top: unset !important;
+     transform: none !important;
+     bottom: 19% !important;
+     right: 27% !important;
+     left: unset !important;
+    }
+
+/* .pageData{
+    margin-top: 20rem;
+    position: relative;
+}    */
