@@ -1417,10 +1417,10 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       })
     }
       this.groupsData=[];
-      let savedGroupsData=[...this.finalbot.groups];
+      let savedGroups=[...this.finalbot.groups];
       this.savedGroupsData=[...this.finalbot.groups];
       let i=0;
-      savedGroupsData.forEach(item=>{
+      savedGroups.forEach(item=>{
         let GroupData:any={
           id:item.groupId,
           el:undefined,
@@ -2087,29 +2087,30 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
   getGroupsInfo()
   {
-      let groupsPayLoad=[...this.groupsData.map((item:any)=>{
+      return [...this.groupsData.map((item:any)=>{
+      let tempGroupData={...{},...item};
       let connectedNodes=this.jsPlumbInstance.getGroup(item.id).getMembers();
-      item["groupId"]=item.id
-      
+      if(this.savedGroupsData.find((group:any)=>group.groupId==item.id)!=undefined) 
+        tempGroupData["id"]=this.savedGroupsData.find((group:any)=>group.groupId==item.id).id;   
+      tempGroupData["groupId"]=item.id
       if(connectedNodes.length!=0)
       {
-        item["nodeIds"]=connectedNodes.map((item2:any)=>{
+        tempGroupData["nodeIds"]=connectedNodes.map((item2:any)=>{
           return item2.id;
         })
         let pn:any=$("#"+item.id).first();
         let position:any = pn.position();
-        item.x=position.left + "px";
-        item.y=position.top+"px";
-        delete item.edit;
-        delete item.el;
-        delete item.id;
-        return item;
+        tempGroupData.x=position.left + "px";
+        tempGroupData.y=position.top+"px";
+        delete tempGroupData.edit;
+        delete tempGroupData.el;
+        if(this.savedGroupsData.find((group:any)=>group.groupId==item.id)==undefined) 
+          delete tempGroupData.id;
+        return tempGroupData;
       }
     })]
-    return groupsPayLoad;
   }
 }
-
 
 
 @Pipe({name: 'Checkoutputbox'})
