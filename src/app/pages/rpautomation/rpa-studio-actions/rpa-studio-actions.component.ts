@@ -1086,20 +1086,10 @@ checkEnableDisableBtn(id, event)
 
   openschedule()
   {
-    if(this.savebotrespose==undefined)
-    {
-
-      this.schedule={
-        botid:"not_saved",
-        schedule_list:this.schedule_list_scheduler,
-      }
-    }
-    else
-    {
-      this.schedule={
-        botid:this.savebotrespose.botId
-      }
-
+    this.schedule={
+      botid:this.savebotrespose.botId,
+      version:this.savebotrespose.version,
+      botName:this.savebotrespose.botName
     }
     this.schpop=true;
   }
@@ -1110,17 +1100,7 @@ checkEnableDisableBtn(id, event)
   }
 
 
-  saveschedule(schedule,schedule_list)
-  {
-    //this.scheduleLists=schedule;
-    this.schedule_list_scheduler=schedule_list;
-    this.childBotWorkspace.saveCron(schedule);
-  }
+  
 
-
-  updatesavedschedules(schedules)
-  {
-    this.childBotWorkspace.saveCron(schedules)
-  }
 
 }

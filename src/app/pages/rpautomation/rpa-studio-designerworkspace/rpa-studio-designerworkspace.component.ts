@@ -1383,7 +1383,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       "botType": botProperties.botType,
       "description": botProperties.botDescription,
       "department": botProperties.botDepartment,
-      "botMainSchedulerEntity": this.scheduler,
+      "botMainSchedulerEntity":null,
       "envIds": env,
       "isPredefined": botProperties.predefinedBot,
       "tasks": this.final_tasks,
