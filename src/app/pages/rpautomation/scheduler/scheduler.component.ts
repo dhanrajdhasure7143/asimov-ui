@@ -104,7 +104,7 @@ export class SchedulerComponent implements OnInit {
             this.schedule_list[index].save_status="saved";
             this.schedule_list[index].run_status="not_started";
           })
-          this.actions.updatesavedschedules(response.botMainSchedulerEntity);
+          //this.actions.updatesavedschedules(response.botMainSchedulerEntity);
         }
       })
     }
@@ -339,7 +339,7 @@ export class SchedulerComponent implements OnInit {
       let sch:any={
         scheduleIntervals:schedules,
       }
-      this.actions.saveschedule(sch,this.schedule_list);
+      //this.actions.saveschedule(sch,this.schedule_list);
     }
   }
 
