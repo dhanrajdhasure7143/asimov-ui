@@ -88,6 +88,7 @@ export class SchedulerComponent implements OnInit {
 
   }
 
+ 
   get_schedule()
   {
     this.schedule_list=[];

@@ -2114,6 +2114,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
 
 
+
+
 @Pipe({name: 'Checkoutputbox'})
 export class Checkoutputbox implements PipeTransform {
   transform(value: any,arg:any)
