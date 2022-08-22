@@ -917,3 +917,6 @@ width: 0.1px;
 height: 0.1px;
 z-index: 0;
 }
+.line-break{
+  word-break: break-word;
+}
