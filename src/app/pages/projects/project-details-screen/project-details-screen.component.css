@@ -917,6 +917,17 @@ span.downloadpubtn.tsttooltipbtn {
   height: 0.1px;
   z-index: 0;
 }
+
 .line-break{
   word-break: break-word;
+}
+
+.s_ques span.testtooltip {
+  top: -2px;
+  right: 25px;
+}
+
+.s_ques span.testtooltip::before {
+  right: -4px;
+  top: 8px;
 }
