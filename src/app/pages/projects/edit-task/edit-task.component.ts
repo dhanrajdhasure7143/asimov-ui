@@ -82,6 +82,7 @@ export class EditTaskComponent implements OnInit {
   taskDescriptionFlag: boolean = false;
   taskcategories: Object;
   optionValue:any;
+  taskcategoriesList:any[]=[]
   constructor(private formBuilder:FormBuilder,
     private router:ActivatedRoute,
     private route:Router,
@@ -121,6 +122,7 @@ export class EditTaskComponent implements OnInit {
         this.getallpiprocess();
         this.getallbpmprocess();
         this.getallbots();
+        this.getTaskCategoriesByProject();
         this.getTaskCategories();
   }
 
@@ -140,7 +142,7 @@ export class EditTaskComponent implements OnInit {
         this.taskresource=task.resources
         this.startDate=task.startDate
         this.endDate=moment(task.endDate).format("YYYY-MM-DD")
-        this.mindate=moment(this.startDate).format("YYYY-MM-DD")       
+        this.mindate=moment(this.startDate).format("YYYY-MM-DD")
           this.updatetaskdata(task);
        
         
@@ -219,6 +221,9 @@ export class EditTaskComponent implements OnInit {
       taskupdatFormValue["history"]=this.taskhistory
       taskupdatFormValue["endDate"]=this.endDate
       taskupdatFormValue["taskName"]=this.taskname
+      if(this.optionValue == 'As-Is Process' || this.optionValue == 'To-Be Process'){
+        taskupdatFormValue["process"] = this.bpm_process_list.find(each=>each.correlationID == this.updatetaskForm.value.correlationID).processId
+      }
      // taskupdatFormValue["taskCategory"]=this.taskcategory
       this.spinner.show();
       this.rest.updateTask(taskupdatFormValue).subscribe( res =>{
@@ -577,5 +582,11 @@ this.spinner.hide();
       }else{
         this.taskDescriptionFlag = false;
       }
+       }
+  getTaskCategoriesByProject() {
+    this.rest.getTaskCategoriesByProject(this.project_id).subscribe((res:any) => {
+      this.taskcategoriesList = res
+    })
+
        }
 }

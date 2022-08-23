@@ -1261,6 +1261,8 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
         bpmnModel.processOwnerName = _self.saved_bpmn_list[_self.selected_notation]['processOwnerName'];
       }
       bpmnModel.role=localStorage.getItem("userRole");
+      if(_self.isShowConformance)
+            _self.modalRef.hide();
       _self.rest.saveBPMNprocessinfofromtemp(bpmnModel).subscribe(
         data=>{
           _self.isLoading = false;

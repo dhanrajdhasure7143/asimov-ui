@@ -38,31 +38,34 @@
                  -->
                 <div class="col-md-12 p-0">
                     <div class="d-flex">
-                        <!-- <div class="task-name">{{taskcategory}} / &nbsp;</div> -->
-                        <div class="col-md-6 pl-0">
-                            <label class="label-control" id="taskcategory" for="taskcategory">Task Category</label>
-                            <select class="form-control rpa-control" formControlName="taskCategory"  [(ngModel)]="optionValue" (change)="OnChangeTaskCategory($event)">
-                                <option value="" disabled hidden>Select Task Category</option>
-                                <option value="null" disabled hidden>Select Task Category</option>
-                                <option value="" disabled hidden>Select Task Category</option>
-                                <option *ngFor="let categories of taskcategories" [value]="categories.category">{{categories.category}}</option>
+                        <!-- <div class="task-name">{{taskcategory}} / </div> -->
+                        <div class=" col-md-6 pl-0">
+                        <label class="label-control" id="taskcategory" for="taskcategory">Task Category</label>
+                        <select class="form-control rpa-control" formControlName="taskCategory"  [(ngModel)]="optionValue" (change)="OnChangeTaskCategory($event)">
+                            <option value="" disabled hidden>Select Task Category</option>
+                            <option value="null" disabled hidden>Select Task Category</option>
+                            <option value="" disabled hidden>Select Task Category</option>
+                            <option *ngFor="let categories of taskcategoriesList" [value]="categories.category" [disabled]="categories.display == 'false'">{{categories.category}}</option>
                             </select>
                         </div>
-                        <div class="col-md-6 pr-0">
+                        <div class=" col-md-6 pr-0">
                             <label class="label-control" id="taskname" for="taskname">Task Name</label>
                             <input type="text" maxlength="50" class="form-control rpa-control task-name-input" (change)="taskname=$event.target.value" [value]="taskname">
                         </div>
                     </div>
                     <div class="d-flex">
-                        <div class="value">
-                            <span class="level3">Start Date : </span>
-                            <span class="labelcont">{{startDate  | date}}</span>
-                        </div>
-                        <div class="value">
-                            <span class="level3">Last Modified By : {{lastModifiedBy}} </span>
-                            <!-- <span>|</span>&nbsp; -->
-                            <span class="level3 lmtime">{{lastModifiedTimestamp |  date:'MMM dd, y, HH:mm:ss'}}</span>
-                        </div>
+                        
+                            <div class="value">
+                                <span class="level3">Start Date : </span>
+                                <span class="labelcont">{{startDate  | date}}</span>
+                            </div>
+                        
+                            <div class="value">
+                                <span class="level3">Last Modified By : {{lastModifiedBy}} </span>
+                                <!-- <span> | </span> -->
+                                <span class="level3 lmtime"> {{lastModifiedTimestamp |  date:'MMM dd, y, HH:mm:ss'}}</span>
+                            </div>
+                        
                     </div>
                 </div>
                 <!-- <div class="pull-right">
@@ -71,17 +74,16 @@
                 </div> -->
         
             </div>
-            <div class="row">
-                <div class="col-md-5">               
-
+        <div class="row">
+            <div class="col-md-5">
                     <div class="form-group col-md-6 pl-0">
                         <label class="label-control" id="assignee" for="assignee">Assignee</label>
                         <!-- <span class="labelcont">{{taskresource| userPipe : users_list}}</span> -->
                         <select [value]="taskresource" formControlName="resources" class="form-control rpa-control">
-                            <option value="" disabled hidden>Select Assignee</option>
-                            <option value="null" disabled >Select Assignee</option>
-                            <option *ngFor="let user of users_list" [value]="user.userId.userId">{{user.userId.firstName}} {{user.userId.lastName}}</option>
-                        </select>
+                    <option value="" disabled hidden>Select Assignee</option>
+                    <option value="null" disabled >Select Assignee</option>
+                    <option *ngFor="let user of users_list" [value]="user.userId.userId">{{user.userId.firstName}} {{user.userId.lastName}}</option>
+                  </select>
                     </div>
                     <div class="form-group col-md-6 pr-0">
                         <label class="label-control" id="enddate" for="endDate">Task Completion Date</label><br>
@@ -91,50 +93,50 @@
                     <div class="form-group col-md-6 pl-0">
                         <label id="status" class="label-control" for="status">Status<span class="star">*</span></label>
                         <select formControlName="status" class="form-control data">
-                            <option value="">Select Status</option>
-                            <option value="New">New</option>
-                            <option value="In Progress">In Progress</option>
-                            <option value="In Review">In Review</option>
-                            <option value="Done">Done</option>
-                        </select>
+                    <option value="">Select Status</option>
+                    <option value="New">New</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="In Review">In Review</option>
+                    <option value="Done">Done</option>
+                  </select>
                         <span *ngIf="updatetaskForm.get('status').invalid && updatetaskForm.get('status').touched" class="errspan required">Status Required*</span>
                     </div>
                     <div class="form-group col-md-6 pr-0">
                         <label id="priority" class="label-control" for="priority">Priority<span class="star">*</span></label>
                         <select formControlName="priority" class="form-control data">
-                            <option value="">Select Priority</option>
-                            <option value="High">High</option>
-                            <option value="Medium">Medium</option>
-                            <option value="Low">Low</option>
-                        </select>
+                    <option value="">Select Priority</option>
+                    <option value="High">High</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Low">Low</option>
+                  </select>
                         <span *ngIf="updatetaskForm.get('priority').invalid && updatetaskForm.get('priority').touched" class="errspan required">Priority Required*</span>
                     </div>
 
-                    <div class="form-group col-md-6 pl-0" *ngIf="optionValue == 'BPMN Design'">
+                    <div class="form-group col-md-6 pl-0" *ngIf="optionValue == 'BPMN Design' ||optionValue == 'As-Is Process' || optionValue == 'To-Be Process'">
                         <span class="labeltit" for="correlationID">Process</span>
                         <select formControlName="correlationID" class="form-control data enteredfield-color">
                             <option value="" disabled hidden>Select Process</option>
-                            <option *ngFor="let process of bpm_process_list" [value]="process.correlationID">
-                            {{process.processName}}</option>   
-                        </select>
+                    <option *ngFor="let process of bpm_process_list" [value]="process.correlationID">
+                      {{process.processName}}</option>   
+                  </select>
                     </div>
                     <div class="form-group col-md-6 pl-0" *ngIf="optionValue === 'Process Mining'">
                         <span class="labeltit" for="correlationID">Process</span>
                         <select formControlName="correlationID" class="form-control data enteredfield-color">
                             <option value="" disabled hidden>Select Process</option>
                             <option value="null" disabled hidden>Select Process</option>
-                            <option *ngFor="let process of pi_process_list" [value]="process.piId">
-                            {{process.piName}}</option>   
-                        </select>
+                    <option *ngFor="let process of pi_process_list" [value]="process.piId">
+                      {{process.piName}}</option>   
+                  </select>
                     </div>
                     <div class="form-group col-md-6 pl-0" *ngIf="optionValue == 'RPA Implementation'">
                         <span class="labeltit" for="correlationID">Bot</span>
                         <select formControlName="correlationID" class="form-control data enteredfield-color">
                             <option value="" disabled hidden>Select Bot</option>
                             <option value="null" disabled hidden>Select Bot</option>
-                            <option *ngFor="let bot of bot_list" [value]="bot.botId">
-                            {{bot.botName}}</option>   
-                        </select>
+                    <option *ngFor="let bot of bot_list" [value]="bot.botId">
+                      {{bot.botName}}</option>   
+                  </select>
                     </div>
 
                     <div class="form-group col-md-6 pr-0">
@@ -153,18 +155,20 @@
                         
                     </div>
                     <div class="col-md-12 p-0">
-                        <label class="h6" id="description" class="label-control">Description</label>
+                        <label class="label-control" id="description">Description</label>
                         <textarea class="form-control" maxlength="151" formControlName="description" rows="2" (keyup)="taskDescriptionMaxLength($event.target.value)" style=" resize: none;" placeholder="Enter Description">
                               </textarea>
                               <span *ngIf="taskDescriptionFlag" class="errspan required">
                                 Maximum of 150 characters
                               </span>
                     </div>
+
+
                
             </div>
             <div class="col-md-7 prj_activities_block">
-                <h4 class="module-sub-header-title">Activity</h4>
-                <mat-tab-group id="Project-dashboard-tabs" class="edit-task-tabs">
+                <h4 class="module-sub-header-title">Activities</h4>
+                <mat-tab-group id="Project-dashboard-tabs" class="edit-task-tabs h-100">
                     <mat-tab label="Comment">
                         <div class="t-comments-box">
                             <div class="add-comment">
@@ -209,8 +213,10 @@
                                                 </div>
                                                 <div class="col-md-2 pr-0 comment-action" *ngIf="i!=commentnumber">
                                                     <button type="button" (click)="editComments(c.comments,i)">
-                                  Edit
-                                </button>
+                                                        <!-- Edit -->
+                                                        <img src="../../../../assets/images/Projects/edit-black.svg" class="testplus default-img" />
+                                                        <img src="../../../../assets/images/Projects/Edit-blue.svg" class="testplus hover-img" />
+                                                    </button>
                                                 </div>
                                             </div>
                                             <div class="commentsadded" *ngIf="i!=commentnumber">
@@ -385,7 +391,7 @@
                                 <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(dataSource3!=null && dataSource3.data.length==0)}"></tr>
                             </table>
                             <div class="paginationdiv1">
-                                <mat-paginator class="newpaginationdiv" #paginator101 [pageSize]="2" [showFirstLastButtons]="true">
+                                <mat-paginator class="newpaginationdiv" #paginator101 [pageSize]="5" [showFirstLastButtons]="true">
                                 </mat-paginator>
                             </div>
                         </div>
