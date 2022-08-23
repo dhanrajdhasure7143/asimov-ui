@@ -518,7 +518,9 @@ this.editdata=false;
 this.rpa.getProjectDetailsById(paramsdata.id).subscribe( res=>{​​​​​​
 this.projectDetails=res
 this.processOwnerFlag=false
+if(this.projectDetails.endDate){
 this.projectenddate=moment(this.projectDetails.endDate).format("YYYY-MM-DD");
+}
 this.projectStartDate = moment(this.projectDetails.startDate).format("YYYY-MM-DD");
 //this.mindate = this.projectStartDate;
 
