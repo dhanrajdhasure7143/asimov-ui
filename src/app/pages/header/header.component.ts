@@ -187,7 +187,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.retrieveResonse = res;
       if (res) {
         this.user_details = this.retrieveResonse;
-        this.getAllNotifications();
+        // this.getAllNotifications();
         // this.getNotificationsList();
         this.user_name = this.retrieveResonse.firstName;
         this.user_designation = this.retrieveResonse.designation;
@@ -228,7 +228,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.notificationscount = 0;
       }
     })
-    this.getCount();
+    // this.getCount();
   }
 
   deletnotification(id) {
