@@ -34,7 +34,7 @@ export class RpaSoLogsComponent implements OnInit, OnDestroy {
   @Input ('logsbotid') public logsbotid:any;
   @Input ('AllVersionsList') public AllVersionsList:any=[];
   @Input('selectedversion') public selectedversion:any;
-  @ViewChild("paginator2",{static:false}) paginator2: MatPaginator;
+   @ViewChild("paginator2",{static:false}) paginator2: MatPaginator;
   @ViewChild("sort2",{static:false}) sort2: MatSort;
   allLogs:any=[];
  public botrunid:any;
@@ -181,7 +181,7 @@ export class RpaSoLogsComponent implements OnInit, OnDestroy {
        console.log("runs",this.allRuns)
        this.logbyrunid = new MatTableDataSource(resplogbyrun);
        this.changeDetector.detectChanges();
-       this.logbyrunid.paginator=this.paginator2;
+      //  this.logbyrunid.paginator=this.paginator2;
        this.logbyrunid.sort=this.sort2
         resplogbyrun = [];      
      }
@@ -231,7 +231,7 @@ export class RpaSoLogsComponent implements OnInit, OnDestroy {
       this.Viewloglist = new MatTableDataSource(this.filteredLogs);
       this.changeDetector.detectChanges();
       this.Viewloglist.sort=this.logsSort;
-      this.Viewloglist.paginator=this.logsPaginator
+      // this.Viewloglist.paginator=this.logsPaginator
     }
     else(this.viewlogid1!=undefined)
     {
@@ -253,7 +253,7 @@ export class RpaSoLogsComponent implements OnInit, OnDestroy {
       this.logbyrunid = new MatTableDataSource(this.allRuns)
       this.changeDetector.detectChanges();
        this.logbyrunid.sort=this.logsSort;
-       this.logbyrunid.paginator=this.logsPaginator
+      //  this.logbyrunid.paginator=this.logsPaginator
     }
   }
 
