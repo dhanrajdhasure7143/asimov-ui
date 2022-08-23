@@ -1,4 +1,4 @@
-import { Component, OnInit,Input, ViewChild, Pipe, PipeTransform, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit,Input, ViewChild, Pipe, PipeTransform, ChangeDetectorRef, OnDestroy} from '@angular/core';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
@@ -11,7 +11,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
   templateUrl: './so-processlog.component.html',
   styleUrls: ['./so-processlog.component.css']
 })
-export class SoProcesslogComponent implements OnInit {
+export class SoProcesslogComponent implements OnInit, OnDestroy{
 
   @Input('processId') public processId: any;
   public logresponse: any;
@@ -20,10 +20,10 @@ export class SoProcesslogComponent implements OnInit {
   public runidresponse:any;
   public respdata2: boolean = false;
   public respdata3: boolean = false;
-  public loadLogsFlag:Boolean=false;
-  @ViewChild("paginatorp1",{static:false}) paginatorp1: MatPaginator;
-  @ViewChild("paginatorp2",{static:false}) paginatorp2: MatPaginator;
-  @ViewChild("paginatorp3",{static:false}) paginatorp3: MatPaginator;
+  public loadLogsFlag:boolean=false;
+  @ViewChild("paginator1",{static:false}) paginator1: MatPaginator;
+  @ViewChild("paginator2",{static:false}) paginator2: MatPaginator;
+  @ViewChild("paginator3",{static:false}) paginator3: MatPaginator;
   @ViewChild("sortp1",{static:false}) sortp1: MatSort;
   @ViewChild("sortp2",{static:false}) sortp2: MatSort;
   @ViewChild("sortp3",{static:false}) sortp3: MatSort;
@@ -32,9 +32,12 @@ export class SoProcesslogComponent implements OnInit {
   public Environments:any;
   public dataSourcep3: MatTableDataSource<any>;
   public respdata1: boolean = false;
+  interval: any = 0;
   displayedColumnsp1: string[] = ["processRunId","Environment","processStartDate","processEndDate","runStatus"];
   displayedColumnsp2: string[] = ['bot_name','version','run_id','start_date','end_date', "bot_status"]; //,'log_statement'
   displayedColumnsp3: string[] = ['task_name','start_date','end_date', 'status','error_info' ];
+  interval1: any = 0;
+  interval2: any = 0;
   constructor( private rest:RestApiService, private changeDetectorRef: ChangeDetectorRef,private automated:NewSoAutomatedTasksComponent, private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
@@ -42,25 +45,25 @@ export class SoProcesslogComponent implements OnInit {
     document.getElementById("plogrunid").style.display="none";
     document.getElementById("pbotrunid").style.display="none";
     this.Environments=this.automated.environments;
-    this.getprocesslog();
-
+    // this.getprocesslog();
+    this.setProcesslog();
   }
 
   getprocesslog(){
-    
+     clearInterval(this.interval2)
     let logbyrunidresp1:any;
     let resplogbyrun1: any = [];
 
     if(this.processId != '' && this.processId != undefined)
     {
     this.logresponse=[];
-    this.spinner.show()
+    //this.spinner.show()
     
     document.getElementById("viewlogid1").style.display = "block";
-    this.loadLogsFlag=true;
+   // this.loadLogsFlag=true;
     this.rest.getProcesslogsdata(this.processId).subscribe(data =>{
-      this.spinner.hide();
-      this.loadLogsFlag=false
+    //  this.spinner.hide();
+     // this.loadLogsFlag=false
         this.logresponse = data;
         if(this.logresponse.length >0)
         {
@@ -85,7 +88,7 @@ export class SoProcesslogComponent implements OnInit {
         this.changeDetectorRef.detectChanges();
         this.dataSourcep1.sort=this.sortp1;
        
-        this.dataSourcep1.paginator=this.paginatorp1;
+        this.dataSourcep1.paginator=this.paginator1;
 
     });
     }
@@ -104,9 +107,11 @@ export class SoProcesslogComponent implements OnInit {
   }
 
   backplogrid(){
-    this.getprocesslog()
+   // this.getprocesslog()
     document.getElementById("plogrunid").style.display = "none";
     document.getElementById("viewlogid1").style.display = "block";
+    this.stopRefresh()
+    this.setProcesslog()
   }
 
   backpbotrunid(){
@@ -114,21 +119,25 @@ export class SoProcesslogComponent implements OnInit {
     this.getprocessrunid(this.selected_processRunId)
     document.getElementById("pbotrunid").style.display = "none";
     document.getElementById("plogrunid").style.display = "block";
+    this.stopRefresh()
+    // this.setProcesslog()
+    this.interval1
   }
   public selected_processRunId:any;
   getprocessrunid(processRunId){
+     this.refreshButton()
     this.selected_processRunId=processRunId;
     let logbyrunidresp: any;
     let resplogbyrun = [];
     let processId = this.logresponse.find(data =>data.processRunId == processRunId).processId;
-    this.spinner.show();
+    // this.spinner.show();
     
     document.getElementById("viewlogid1").style.display="none";
     document.getElementById("plogrunid").style.display="block";
     this.loadLogsFlag=true
-
+    this.interval2 = setInterval(() => {
     this.rest.getprocessruniddata(processId,processRunId).subscribe(data =>{
-      this.spinner.hide();
+      // this.spinner.hide();
       this.loadLogsFlag=false;
       this.runidresponse = data;
       if(this.runidresponse.length >0)
@@ -151,26 +160,31 @@ export class SoProcesslogComponent implements OnInit {
       this.changeDetectorRef.detectChanges();
       this.dataSourcep2 = new MatTableDataSource(this.runidresponse);
       this.dataSourcep2.sort=this.sortp2;
-      this.dataSourcep2.paginator=this.paginatorp2;
+      this.dataSourcep2.paginator=this.paginator2;
+      resplogbyrun = [];
     });
+  },3000)
     //console.log(processRunId);
   }
 
   public selected_runid:any;
   ViewlogByrunid(runid){
-    
+    if(this.interval2){
+      clearInterval(this.interval2)
+    }
     this.selected_runid=runid;
     let responsedata:any=[];
     let logbyrunidresp1:any;
     let resplogbyrun1:any=[];
     let PbotId = this.runidresponse.find(data =>data.run_id == runid).bot_id;
     let pversion = this.runidresponse.find(data =>data.run_id == runid).version;
-    this.spinner.show()
+    // this.spinner.show()
     document.getElementById("plogrunid").style.display="none";
     document.getElementById("pbotrunid").style.display="block";
     this.loadLogsFlag=true
+    this.interval1 = setInterval (()=>{
     this.rest.getViewlogbyrunid(PbotId,pversion,runid).subscribe((data)=>{
-      this.spinner.hide();
+      // this.spinner.hide();
       this.loadLogsFlag=false;
       responsedata = data;
       if(responsedata.length >0)
@@ -193,9 +207,10 @@ export class SoProcesslogComponent implements OnInit {
       this.dataSourcep3 = new MatTableDataSource(resplogbyrun1);
       this.changeDetectorRef.detectChanges();
       this.dataSourcep3.sort=this.sortp3;
-      this.dataSourcep3.paginator=this.paginatorp3;
-
+      this.dataSourcep3.paginator=this.paginator3;
+      resplogbyrun1 = [];
         })
+      }, 3000)
     }
 
     kill_bot_run(bot)
@@ -206,11 +221,38 @@ export class SoProcesslogComponent implements OnInit {
     }
 
 
-    kill_process_run(processid, runid)
+    kill_process_run(processid,envid,runid)
     {
-      this.rest.kill_process_log(processid, runid).subscribe(data=>{
+      this.rest.kill_process_log(processid,envid,runid).subscribe(data=>{
         this.getprocesslog();
       })
+    }
+
+    setProcesslog(){
+      this.getprocesslog()
+      this.interval  = setInterval(()=> { 
+        this.getprocesslog()
+      }, 3000);
+      
+    }
+
+    refreshButton(){
+      if(this.interval){
+        clearInterval(this.interval)
+      }
+    }
+
+    stopRefresh(){
+      if(this.interval1){
+        clearInterval(this.interval1)
+      }
+    }
+    
+
+    ngOnDestroy(){
+      this.refreshButton()
+      this.stopRefresh()
+     
     }
 }
 

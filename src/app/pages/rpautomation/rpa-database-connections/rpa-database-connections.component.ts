@@ -18,6 +18,7 @@ import * as moment from 'moment';
 })
 
 export class RpaDatabaseConnectionsComponent implements OnInit {
+  public databaselist:any;
   displayedColumns1: string[] = ["check","connectiontName","categoryName","dataBaseType","hostAddress","portNumber","username","password","databasename","schemaName","activeStatus","createdTimeStamp","createdBy"];
   public toggle:boolean;
   dataSource2:MatTableDataSource<any>;
@@ -45,7 +46,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
     userRole: any;
     public isButtonVisible = false;
     pwdflag:boolean=false;
-    
+    addflag:boolean=false;
     constructor(private api:RestApiService, 
       private router:Router,
       private hints:Rpa_Hints, 
@@ -93,11 +94,15 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
     }
 
   ngOnInit() {
-    this.spinner.show();
+    this.api.getDatabaselist().subscribe(res=>{
+      this.databaselist=res;
+    })
+  
   //   //     document.getElementById("filters").style.display='block';
     this.dt.changeHints(this.hints.rpadbchints);
     //this.getallDBConnection();
     this.getCategories()
+    this.spinner.show();
     this.passwordtype1=false;
     this.passwordtype2=false;
     
@@ -518,6 +523,11 @@ updatedbdata()
   DBchecktoupdate()
   {
     const selectedbdconnections = this.dbconnections.filter(product => product.checked==true);
+    if(selectedbdconnections.length > 0){
+      this.addflag = true;
+    }else{
+      this.addflag = false;
+    }
     if(selectedbdconnections.length==1)
     {
       this.DBupdateflag=true;
