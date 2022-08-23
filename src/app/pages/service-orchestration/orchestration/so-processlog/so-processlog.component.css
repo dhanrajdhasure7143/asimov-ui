@@ -72,7 +72,7 @@ span.testtooltip:before {
 }
 
 
-::ng-deep .cdk-overlay-container{
+/* ::ng-deep .cdk-overlay-container{
     z-index: 1200 !important;
     }
     ::ng-deep .mat-select-panel {
@@ -87,7 +87,7 @@ span.testtooltip:before {
      bottom: 19% !important;
      right: 27% !important;
      left: unset !important;
-    }
+    } */
 
 /* .pageData{
     margin-top: 20rem;
