@@ -130,14 +130,14 @@ export class SoProcesslogComponent implements OnInit, OnDestroy{
     let logbyrunidresp: any;
     let resplogbyrun = [];
     let processId = this.logresponse.find(data =>data.processRunId == processRunId).processId;
-    this.spinner.show();
+    // this.spinner.show();
     
     document.getElementById("viewlogid1").style.display="none";
     document.getElementById("plogrunid").style.display="block";
     this.loadLogsFlag=true
     this.interval2 = setInterval(() => {
     this.rest.getprocessruniddata(processId,processRunId).subscribe(data =>{
-      this.spinner.hide();
+      // this.spinner.hide();
       this.loadLogsFlag=false;
       this.runidresponse = data;
       if(this.runidresponse.length >0)
@@ -178,13 +178,13 @@ export class SoProcesslogComponent implements OnInit, OnDestroy{
     let resplogbyrun1:any=[];
     let PbotId = this.runidresponse.find(data =>data.run_id == runid).bot_id;
     let pversion = this.runidresponse.find(data =>data.run_id == runid).version;
-    this.spinner.show()
+    // this.spinner.show()
     document.getElementById("plogrunid").style.display="none";
     document.getElementById("pbotrunid").style.display="block";
     this.loadLogsFlag=true
     this.interval1 = setInterval (()=>{
     this.rest.getViewlogbyrunid(PbotId,pversion,runid).subscribe((data)=>{
-      this.spinner.hide();
+      // this.spinner.hide();
       this.loadLogsFlag=false;
       responsedata = data;
       if(responsedata.length >0)

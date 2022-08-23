@@ -398,7 +398,7 @@ ul#versions li:hover {
   border:none !important;
 }
 
-::ng-deep .cdk-overlay-container{
+/* ::ng-deep .cdk-overlay-container{
   z-index: 1200 !important;
 }
 ::ng-deep .mat-select-panel {
@@ -413,4 +413,4 @@ ul#versions li:hover {
   bottom: 19% !important;
   right: 27% !important;
   left: unset !important;
-}
+} */
