@@ -1461,7 +1461,7 @@ getFilteredEnvironment(id){
   return this.http.get("/rpa-service/agent/get-environments/"+id)
 }
 getDatabaselist(){
-  return this.http.get("/rpa-service/get-databasetypes/database")
+  return this.http.get("/rpa-service/get-databasetypes")
 }
 getTimeZone(){
   return this.http.get('/rpa-service/getTimeZones');
