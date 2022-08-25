@@ -1176,7 +1176,6 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
     // this.isShowAnswerInput = !this.isShowAnswerInput;
     this.selected_questionId = item.questionId;
     this.selectedAnswerUpdate='';
-    this.selectedQuestionEdit=null;
   }
 
   saveQuestion(){    
