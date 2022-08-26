@@ -1148,7 +1148,7 @@
                                                                         </div>
                                                                         <div *ngIf="!each.answer && selected_questionId != each.questionId"
                                                                             class="col-md-7 pl-0 form-group answer-btn">
-                                                                            <button class="btn btn-primary"
+                                                                            <button [disabled]="selectedQuestionEdit" class="btn btn-primary"
                                                                                 (click)="answerToQuestion(each)">Answer</button>
                                                                         </div>
                                                                         <div class="col-md-1 p-0 text-right pques-actions"
