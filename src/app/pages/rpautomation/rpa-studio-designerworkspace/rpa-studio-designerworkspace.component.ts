@@ -1208,12 +1208,21 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     let obj: any = [];
     this.formVales.forEach((ele, i) => {
       if (ele.visibility == true) {
-        let objKeys = Object.keys(this.fieldValues);
+        //let objKeys = Object.keys(this.fieldValues);
+        console.log(ele);
         objAttr = {
           "metaAttrId": ele.id,
           "metaAttrValue": ele.name,
           "attrValue": '',
           "label":ele.label
+        }
+
+        let index = this.finaldataobjects.findIndex(sweetdata => sweetdata.nodeId == (this.selectedNode.name + "__" + this.selectedNode.id))
+        if (index != undefined && index >= 0) {
+          if(this.finaldataobjects[index].attributes.find((attrItem:any)=>attrItem.metaAttrId==ele.id)!=undefined)          
+            objAttr["attrId"]=this.finaldataobjects[index].attributes.find((attrItem:any)=>attrItem.metaAttrId==ele.id).attrId;
+          //this.finaldataobjects[index] = cutedata;
+        console.log(index)
         }
         if(ele.type=="checkbox" && this.fieldValues[ele.name+"_"+ele.id]=="")
         {
