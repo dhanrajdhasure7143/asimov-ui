@@ -389,14 +389,15 @@ gettime(){
         data={
           intervalId:this.generateid(),
           scheduleInterval:this.cronExpression,
-          startDate:parseInt(startdate[0])+","+parseInt(startdate[1])+","+parseInt(startdate[2])+","+starttimeparse+","+starttime[1],
-          endDate:parseInt(enddate[0])+","+parseInt(enddate[1])+","+parseInt(enddate[2])+","+ endtimeparse+","+ endtime[1],
+          startDate:parseInt(startdate[0])+","+parseInt(startdate[1])+","+parseInt(startdate[2])+","+starttimeparse+","+parseInt(starttime[1]),
+          endDate:parseInt(enddate[0])+","+parseInt(enddate[1])+","+parseInt(enddate[2])+","+ endtimeparse+","+ parseInt(endtime[1]),
          
         
           timeZone:this.timezone,
           save_status:"unsaved",
           check:false,
         }
+        console.log(data)
         this.schedule_list.push(data);
       }
     }
@@ -554,12 +555,31 @@ gettime(){
         if(this.botdata.botMainSchedulerEntity==null)
         {
           this.botdata.botMainSchedulerEntity={"scheduleIntervals":schedules};
+          
+
         }
         else if(schedules.length==0)
         {
           this.botdata.botMainSchedulerEntity=null;
         }
       }
+      // delete this.botdata.bpmnProcessName
+      // delete this.botdata.bpmnProcessId
+      // delete this.botdata.processIntelligenceId
+      // delete this.botdata.orgId
+      // delete this.botdata.predefined
+      // delete this.botdata.botVersionConfig
+      // delete this.botdata.botStatus;
+      // delete this.botdata.botType;
+      // delete this.botdata.categoryId;
+      // delete this.botdata.categoryName;
+      // delete this.botdata.lastSubmittedTS;
+      // delete this.botdata.botEnvVersionId;
+      // delete this.botdata.isPredefined;
+      // delete this.botdata.createdTs;
+      // delete this.botdata.isPredefined;
+      // delete this.botdata.categoryName;
+      // delete this.botdata.categoryId;
       await (await this.rest.updateBot(this.botdata)).subscribe(data =>{
         let resp:any=data;
         if(resp.errorMessage){
