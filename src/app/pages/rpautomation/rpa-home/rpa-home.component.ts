@@ -502,7 +502,7 @@ export class RpaHomeComponent implements OnInit {
     this.userFilter.name = "";
    
     document.getElementById("create-bot").style.display ="none";
-    var createBotFormValue=this.insertbot.value;
+    var createBotFormValue=this.insertbot.getRawValue();
      let createbot={
       "botName":createBotFormValue.botName,
       "department":createBotFormValue.botDepartment
