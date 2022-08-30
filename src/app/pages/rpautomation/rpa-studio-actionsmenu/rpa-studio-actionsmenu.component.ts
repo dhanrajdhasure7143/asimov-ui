@@ -491,7 +491,12 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
 
 
   getEnvironmentlist() {
-    this.rest.getFilteredEnvironment(this.botState.categoryId).subscribe(data => {
+    let id=this.botState.categoryId;
+    if(id==undefined){                                        
+      id=this.botState.botDepartment
+    }
+    this.rest.getFilteredEnvironment(id).subscribe(data => {
+      
       let response:any=data
       if(response.errorMessage==undefined)
       {
@@ -886,13 +891,13 @@ loadpredefinedbot(botId, dropCoordinates)
 
     }
     this.schpop=true;
-    document.getElementById("filters").style.display = "none";
+    //document.getElementById("filters").style.display = "none";
   }
 
   closesch()
   {
     this.schpop=false;
-    document.getElementById("filters").style.display = "block";
+    //document.getElementById("filters").style.display = "block";
   }
 
 

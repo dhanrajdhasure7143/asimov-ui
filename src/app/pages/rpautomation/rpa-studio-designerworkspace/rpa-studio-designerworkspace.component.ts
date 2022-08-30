@@ -117,7 +117,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   ];
   @ViewChild('splitEl', { static: false }) splitEl: SplitComponent;
   area_splitSize: any = {}
-
+  show_loopend:any;
   constructor(private rest: RestApiService,
     private notifier: NotifierService,
     private hints: Rpa_Hints,
@@ -518,7 +518,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       // node.selectedNodeId = "";
       const nodeWithCoordinates = Object.assign({}, node, dropCoordinates);
       this.nodes.push(nodeWithCoordinates);
-      console.log("node",nodeWithCoordinates)
       setTimeout(() => {
         this.populateNodes(nodeWithCoordinates);
         this.autoSaveLoopEnd(nodeWithCoordinates)
@@ -562,6 +561,10 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   autoSaveLoopEnd(node){
+    this.selectedTask = {
+      name: node.selectedNodeTask,
+      id: node.selectedNodeId
+    }
    if(node.selectedNodeTask=='Loop-End'){
     this.rest.attribute(node.selectedNodeId).subscribe((res:any)=>{        
          let data=res;       
@@ -569,6 +572,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         data.map(ele=>{
             obj[ele.name+'_'+ele.id]=ele.value;
          })   
+         this.formVales=data;
+        this.formNodeFunc(node,'drag')
          this.onFormSubmit(obj)
     })
      
@@ -744,8 +749,14 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     this.unsubcribe();
   }
 
-  formNodeFunc(node) {
-    this.nodedata=node
+  formNodeFunc(node,type) {
+    this.nodedata=node;
+    if(type=='dbclick'){
+      this.show_loopend=false;
+    }
+    else if(type=='drag'){
+      this.show_loopend=true;
+    }   
     this.form_change=false;
     this.enableMultiForm.check=false;
     if (node.selectedNodeTask != "") 
@@ -757,7 +768,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       this.formHeader = node.name + " - " + node.selectedNodeTask;
       this.selectedNode = node;
       let taskdata = this.finaldataobjects.find(data => data.nodeId == node.name + "__" + node.id);
-      console.log("---", taskdata)
       if (taskdata != undefined) 
       {
         if (taskdata.tMetaId == node.selectedNodeId) 
@@ -922,7 +932,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
 
   response(data,node) {
-    
     if (data.error == "No Data Found") {
       this.fields = [];
       let type = "info";
@@ -930,7 +939,19 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       this.notifier.notify(type, message);
     } else {
       this.fields = [];
-      this.hiddenPopUp = true;
+      if(node.selectedNodeTask=='Loop-End'){
+        this.hiddenPopUp = false;
+        if(this.show_loopend==false){
+          let type = "info";
+          let message = "No Configurations for this task"
+          this.notifier.notify(type, message);
+        }
+       
+      }
+      else{
+         this.hiddenPopUp = true;
+      }
+     
       this.form_change=true;
       data.forEach(element => {
         element.nodeId=node.id;
@@ -954,17 +975,20 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         { size: 70, order: 1},
         { size: 30, order: 2},
       ];
-      setTimeout(() => {
-        this.splitEl.dragProgress$.subscribe(x => {
-          this.ngZone.run(() =>{
-             this.area_splitSize = x
-             this.isShowExpand=false;
-             if(x.sizes[1] < 30){
-              this.splitAreamin_size="200";
-             }
-            });
-        });
-      }, 500);
+      if(this.splitEl!=undefined){
+        setTimeout(() => {
+          this.splitEl.dragProgress$.subscribe(x => {
+            this.ngZone.run(() =>{
+               this.area_splitSize = x
+               this.isShowExpand=false;
+               if(x.sizes[1] < 30){
+                this.splitAreamin_size="200";
+               }
+              });
+          });
+        }, 500);
+      }
+     
     }
   }
 
@@ -1150,8 +1174,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   onFormSubmit(event) {
-    
-    console.log("event",event)
     this.fieldValues = event
     if (this.fieldValues['file1']) {
       this.fieldValues['file1'] = this.fieldValues['file1'].substring(12)
@@ -1334,6 +1356,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   async updateBotFun(botProperties, env) {
+
     this.checkorderflag=true;
     this.addsquences();
     this.arrange_task_order(this.startNodeId);
@@ -1362,6 +1385,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
      return false;
     else
     {
+    
       return this.rest.updateBot(this.saveBotdata)
       //return false;
     } 
@@ -1610,7 +1634,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     let actualTasks:any=this.actualTaskValue;
     let firstName=localStorage.getItem("firstName");
     let lastName=localStorage.getItem("lastName")
-    console.log("finaltasks",finalTasks)
     finalTasks.forEach((item:any)=>{
       if(actualTasks.find(item2=>item.nodeId==item2.nodeId)==undefined)
       {
@@ -1793,9 +1816,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
 
   add_order(object) {
-
     let end = this.stopNodeId;
-    console.log("object",object)
     if(object!=undefined){
       this.final_tasks.push(object);
     }
@@ -1884,7 +1905,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
             showConfirmButton: false,
             timer: 2000
           })
-        this.formNodeFunc(this.nodedata)
+        this.formNodeFunc(this.nodedata,'save')
          // this.modalRef.hide();
           document.getElementById('createcredentials').style.display= "none";
           this.resetCredForm();

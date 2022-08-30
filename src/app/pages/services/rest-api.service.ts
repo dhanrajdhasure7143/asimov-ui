@@ -273,11 +273,12 @@ export class RestApiService{
 
 
 
-  updateBotLog(botid,version, runid)
-  {
-    return this.http.get(`/rpa-service/updateLog/${botid}/${version}/${runid}`)
-  }
-
+ 
+    updateBotLog(botid,version, runid)
+    {
+      return this.http.post(`/rpa-service/kill-bot/${botid}/${version}/${runid}`,"")
+    }
+  
 
   kill_process_log(processid,envid,runid)
   {

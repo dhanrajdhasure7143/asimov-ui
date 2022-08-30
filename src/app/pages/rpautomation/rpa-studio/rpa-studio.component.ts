@@ -253,7 +253,7 @@ export class RpaStudioComponent implements OnInit {
     // alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.model))
     this.userFilter.name = "";
     document.getElementById("create-bot").style.display ="none";
-    this.model=this.insertbot.value;
+    this.model=this.insertbot.getRawValue();
     let createbot={
       "botName":this.model.botName,
       "department":this.model.botDepartment
