@@ -415,8 +415,10 @@ export class ProjectDetailsScreenComponent implements OnInit {
         link.href = (`data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,${response.encryptedString}`);
         link.click();
         Swal.fire("Success", response.message, "success");
+        this.spinner.hide();
       }
       else {
+        this.spinner.hide();
         Swal.fire("Error", response.errorMessage, "error");
       }
     })
@@ -454,7 +456,13 @@ export class ProjectDetailsScreenComponent implements OnInit {
   getTaskandCommentsData() {
     this.rpa.gettaskandComments(this.project_id).subscribe(data => {
       this.tasks = data;
-      this.getBPMNbyProcessId()
+      this.tasks.map(item=>{item["timeStamp_converted"] = moment(item.lastModifiedTimestamp).valueOf();
+        return item;
+      })
+        this.tasks.sort(function (a, b) {
+          return b.timeStamp_converted - a.timeStamp_converted;
+      });
+      // this.getBPMNbyProcessId()  // enable this method to PDD with bpmn
       this.dataSource2 = new MatTableDataSource(this.tasks);
       this.dataSource2.sort = this.sort10;
       this.dataSource2.paginator = this.paginator101;
