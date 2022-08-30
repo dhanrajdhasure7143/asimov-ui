@@ -962,8 +962,7 @@ export class RpaHomeComponent implements OnInit {
       let catResponse : any;
       catResponse=data
       this.categaoriesList=catResponse.data;
-    
-      console.log(this.categaoriesList)
+
       if(this.categaoriesList.length==1){
         this.rpaCategory=this.categaoriesList[0].categoryId;
         let Id=this.categaoriesList[0].categoryId
