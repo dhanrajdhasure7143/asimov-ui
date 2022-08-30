@@ -394,10 +394,12 @@ stopAutoRefersh(){
   }
 
   backtoRunid(){
+    //this.viewlogid1=undefined
     this.selectedIterationTask=undefined;
     this.selectedIterationId=0;
     this.stopAutoRefersh();
-    this.autoRefresh();
+    this.ViewlogByrunid(this.botrunid,this.selectedLogVersion)
+    //this.autoRefresh();
   }
 
   backtoRunpage(){

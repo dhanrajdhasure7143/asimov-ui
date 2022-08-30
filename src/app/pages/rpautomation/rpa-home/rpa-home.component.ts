@@ -505,7 +505,8 @@ export class RpaHomeComponent implements OnInit {
     var createBotFormValue=this.insertbot.value;
      let createbot={
       "botName":createBotFormValue.botName,
-      "department":createBotFormValue.botDepartment
+     // "department":createBotFormValue.botDepartment
+     "department":String(this.rpaCategory)
      }
     if(createBotFormValue.botDepartment=="others"){
       let rpaCategory:any={"categoryName":this.insertbot.value.newCategoryName,"categoryId":0, "createdAt":""};
