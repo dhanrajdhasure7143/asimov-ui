@@ -443,7 +443,7 @@ gettime(){
         if(resp.errorMessage==undefined)
         {
          
-          this.notifier.notify("success",resp.status)
+          this.notifier.notify("success","Schedule started successfully")
         
           this.get_schedule();
         }
@@ -515,9 +515,14 @@ gettime(){
     if(this.botid!="" && this.botid!=undefined)
     {
       let list=this.schedule_list.filter(data=>data.check==true);
-      list.forEach(data=>{
-        let index2=this.schedule_list.findIndex(scheduleitem=>scheduleitem.intervalId==data.intervalId);
-        this.schedule_list.splice(index2,1);
+        list.forEach(data=>{
+          this.rest.pause_schedule(data).subscribe((response:any)=>{
+            if(response.errorMessage==undefined)
+            {            
+              let index2=this.schedule_list.findIndex(scheduleitem=>scheduleitem.intervalId==data.intervalId);
+              this.schedule_list.splice(index2,1);
+            }
+          })
       })
       this.updateflags();
      // this.notifier.notify("success", "Schedules Deleted Sucessfully");
@@ -584,14 +589,13 @@ gettime(){
         }
         else if(resp.botMainSchedulerEntity==null)
         {
-          this.notifier.notify("success","Updated successfully")
+          this.notifier.notify("success", "Schedules Deleted Sucessfully");
+        
+          //this.notifier.notify("success","Updated successfully")
         }
         else if(resp.botMainSchedulerEntity.scheduleIntervals.length==this.schedule_list.length)
         {
-        
-
-          this.notifier.notify("success", "Schedules saved successfully");
-          
+          this.notifier.notify("success", "Schedules saved successfully"); 
         }
        
         this.get_schedule();
