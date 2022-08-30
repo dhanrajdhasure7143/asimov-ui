@@ -118,7 +118,6 @@ export class RpaSchedulerComponent implements OnInit {
     this.enddate=this.startdate;
    this.gettime();
 
-    console.log("todaytime",this.todaytime);
 
     this.starttime=(new Date).getHours()+":"+(new Date).getMinutes();
      this.getAlltimezones();
@@ -235,7 +234,6 @@ gettime(){
        
         let e=(c.isBefore(d))
        let starttime_error=(c.isBefore(currenttime))
-        console.log(e)
         if(e==false ){
           this.aftertime=true;
           this.endtimeerror="end time should not be before than or equal to start time"
@@ -397,7 +395,6 @@ gettime(){
           save_status:"unsaved",
           check:false,
         }
-        console.log(data)
         this.schedule_list.push(data);
       }
     }
@@ -523,7 +520,7 @@ gettime(){
         this.schedule_list.splice(index2,1);
       })
       this.updateflags();
-      this.notifier.notify("success", "Schedules Deleted Sucessfully");
+     // this.notifier.notify("success", "Schedules Deleted Sucessfully");
     }
   }
 
@@ -585,7 +582,7 @@ gettime(){
         if(resp.errorMessage){
           this.notifier.notify("error","Failed to save the scheduler")
         }
-        else if(resp.botMainSchedulerEntity.scheduleIntervals.length==0)
+        else if(resp.botMainSchedulerEntity==null)
         {
           this.notifier.notify("success","Updated successfully")
         }
@@ -714,7 +711,6 @@ gettime(){
   }
   getAlltimezones(){
     this.rest.getTimeZone().subscribe(res =>{
-      console.log(res);
         this.timesZones=res;
      })
   }
