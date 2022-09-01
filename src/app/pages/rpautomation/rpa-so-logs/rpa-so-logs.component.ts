@@ -319,6 +319,7 @@ export class RpaSoLogsComponent implements OnInit, OnDestroy {
       if(response.errorMessage==undefined)
       {
         this.loopIterations=[...response];
+        this.loopIterations=this.loopIterations.sort((a,b) => b.iterationId > a.iterationId ? 1 : -1);
         this.loopIterations=[...this.loopIterations.filter((item:any)=>item.taskName != 'Loop-End')]
         this.selectedIterationTask=e;
         this.loopIterations.forEach(item=>{
