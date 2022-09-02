@@ -4,6 +4,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { RestApiService } from '../../services/rest-api.service';
 import Swal from 'sweetalert2';
+import { clear } from 'console';
 @Component({
   selector: 'app-rpa-so-logs',
   templateUrl: './rpa-so-logs.component.html',
@@ -13,10 +14,11 @@ export class RpaSoLogsComponent implements OnInit, OnDestroy {
   @Input('logsmodalref') public logsmodal: BsModalRef;
   Viewloglist:MatTableDataSource<any>;
   @ViewChild("logsSort",{static:false}) logsSort:MatSort;
+  @ViewChild("loopsort",{static:false}) loopsort:MatSort;
   @ViewChild("logsPaginator",{static:false}) logsPaginator:MatPaginator;
   displayedColumns: string[] = ['run_id','version','start_date','end_date', "bot_status"];
   displayedColumns1: string[] = ['task_name', 'status','start_date','end_date','error_info' ];
-  displayedloopColumns:string[]=['taskName','status','startTS','endTS',"errorMsg"];
+  displayedloopColumns:string[]=['taskName','iterationId','status','startTS','endTS',"errorMsg"];
   automationLogColoumns:string[]=['internaltaskName','startTS','endTS', 'status','errorMsg']
   public viewlogid1:any;
   selectedIterationTask:any=undefined;
@@ -37,7 +39,7 @@ export class RpaSoLogsComponent implements OnInit, OnDestroy {
   @ViewChild("paginator2",{static:false}) paginator2: MatPaginator;
   @ViewChild("sort2",{static:false}) sort2: MatSort;
   allLogs:any=[];
- public botrunid:any;
+  public botrunid:any;
   public allRuns:any=[];
   loopIterations:any=[];
   logbyrunid:MatTableDataSource<any>;
@@ -46,6 +48,11 @@ export class RpaSoLogsComponent implements OnInit, OnDestroy {
   automationLogsTable:MatTableDataSource<any>;
   interval: any = 0;
   timeInterval : any = 0;
+  public interval2:any =0;
+  public interval3:any = 0;
+  public logStatus:any;
+  public id:any
+
   constructor( private modalService:BsModalService,
      private rest : RestApiService,
      private changeDetector:ChangeDetectorRef,private spinner:NgxSpinnerService) { }
@@ -58,16 +65,14 @@ export class RpaSoLogsComponent implements OnInit, OnDestroy {
   }
  
   viewlogdata(){
-    this.stopAutoRefersh();   
-    this.viewlogid1=undefined;
-    //document.getElementById("filters").style.display = "none";
+    clearInterval(this.interval) 
    let response: any;
    let log:any=[];
    this.logresponse=[];
-   
+
     this.rest.getviewlogdata(this.logsbotid).subscribe(data =>{
       this.logresponse=data;
-      console.log("res",this.logresponse)
+      this.logsLoading = false;
  
       if(this.logresponse.length >0)
       {
@@ -113,8 +118,8 @@ export class RpaSoLogsComponent implements OnInit, OnDestroy {
     Swal.fire("Error","unable to get logs","error")
   });
   }
-  changeLogVersion(event)
-  {
+
+  changeLogVersion(event){
     this.filteredLogVersion=event.target.value;
      this.filteredLogs=[...this.allLogs.filter(item=>item.version==this.filteredLogVersion)];
      let logs=[...this.filteredLogs]
@@ -128,16 +133,33 @@ export class RpaSoLogsComponent implements OnInit, OnDestroy {
      //   this.Viewloglist.sort=this.logsSort;
      // },4000)
   }
+
+  showLogsByRunId(runid,version,bot_status){
+    this.viewlogid1!=undefined
+    clearInterval(this.timeInterval);
+    this.logsLoading=true;
+    this.logStatus= bot_status
+    this.ViewlogByrunid(runid,version);
+    if(bot_status == "Running" || bot_status == "New" ){
+   this.interval= setInterval(()=>{
+      this.ViewlogByrunid(runid,version)
+    },3000)
+  }else{
+    setTimeout(() => {
+      this.ViewlogByrunid(runid,version)
+    }, 5000);
+  }
+
+  }
+
   ViewlogByrunid(runid,version){
-    this.stopRefresh()
+   clearInterval(this.timeInterval)
+   clearInterval(this.interval2)
     this.botrunid=runid;
     this.selectedLogVersion=version
     let responsedata:any=[];
     let logbyrunidresp:any;
-    let resplogbyrun:any=[];
-   
-    this.logsLoading=true;
-    this.interval= setInterval(()=>{
+    let resplogbyrun:any=[]; 
     this.rest.getViewlogbyrunid(this.logsbotid,version,runid).subscribe((data:any)=>{
       if(data.errorMessage==undefined)
       {
@@ -151,8 +173,8 @@ export class RpaSoLogsComponent implements OnInit, OnDestroy {
        // {
        //   this.respdata2 = true;
        // }
-      
-       
+
+
        var flag=0;
        var loopInsideArray:any=[]
        responsedata=responsedata.sort((a,b) => a.task_id > b.task_id ? 1 : -1);
@@ -178,7 +200,7 @@ export class RpaSoLogsComponent implements OnInit, OnDestroy {
        });
        this.viewlogid1=runid;
        this.allRuns=[...resplogbyrun];
-       console.log("runs",this.allRuns)
+
        this.logbyrunid = new MatTableDataSource(resplogbyrun);
        this.changeDetector.detectChanges();
       //  this.logbyrunid.paginator=this.paginator2;
@@ -187,24 +209,22 @@ export class RpaSoLogsComponent implements OnInit, OnDestroy {
      }
      else
      {
-       
-       
+
+
        this.logsLoading=false;
        Swal.fire("Error",data.errorMessage,"error")
-     }
-      
+     }  
+
      }, err=>{
-      
+
        this.logsLoading=false;
-        
+       
       Swal.fire("Error","unable to get logs","error")       
     })
-    }, 3000)
    }
-  sortasc(event)
-  {
+
+  sortasc(event){
     let sortdes:Boolean
-    console.log(event)
     if(this.viewlogid1==undefined)
     {
       if(event.direction=='asc')
@@ -239,8 +259,7 @@ export class RpaSoLogsComponent implements OnInit, OnDestroy {
         sortdes=true;
       else if(event.direction=='des')
         sortdes=false;
-      if(event.direction!="")
-      {
+      if(event.direction!=""){
         let allRuns=[...this.allRuns.sort(function(a,b){
           let check_a=isNaN(a[event.active])?a[event.active].toUpperCase():a[event.active];
           let check_b=isNaN(b[event.active])?b[event.active].toUpperCase():b[event.active];
@@ -258,47 +277,49 @@ export class RpaSoLogsComponent implements OnInit, OnDestroy {
   }
 
   sortLoopsIteration(event){
-
-    this.fileteredLoopIterations=this.fileteredLoopIterations.sort(function(a,b){
-
+    this.loopIterations=this.loopIterations.sort(function(a,b){
       let check_a=isNaN(a[event.active])?a[event.active].toUpperCase():a[event.active];
-
       let check_b=isNaN(b[event.active])?b[event.active].toUpperCase():b[event.active];
-
       if (event.direction=='asc')
-
         return (check_a > check_b) ? 1 : -1;
-
       else if(event.direction=='desc')
-
         return (check_a < check_b) ? 1 : -1;
-
     },this);
-
-    this.loopbyrunid = new MatTableDataSource(this.fileteredLoopIterations);
-
+    this.loopbyrunid = new MatTableDataSource(this.loopIterations);
     this.changeDetector.detectChanges();
-
+    this.loopbyrunid.sort = this.loopsort
   }
   
-  IterationId(event){
+  // IterationId(value){
+  //  //clearInterval(this.interval2)
+  //     this.fileteredLoopIterations=[...this.loopIterations.filter(item=>item.iterationId==value)];
 
-     this.fileteredLoopIterations=[...this.loopIterations.filter(item=>item.iterationId==event.target.value)];
+  //    this.loopbyrunid = new MatTableDataSource(this.fileteredLoopIterations);
 
-     this.loopbyrunid = new MatTableDataSource(this.fileteredLoopIterations);
+  //    this.changeDetector.detectChanges();
+  //   console.log( this.selectedIterationId,this.iterationsList)
 
-     this.changeDetector.detectChanges();
 
-  }
+  // }
   
+  showLoopIteration(e,iterationId){
+    clearInterval(this.interval)
+    clearInterval(this.timeInterval)
+    this.logsLoading=true;
+    this.getLoopIterations(e,iterationId);
+    this.interval2= setInterval(()=>{
+    this.getLoopIterations(e,iterationId);
+    },3000)
+  }
+
   getLoopIterations(e, iterationId){
     this.iterationsList=[]
-    this.logsLoading=true;
     this.rest.getLooplogs(e.bot_id, e.version, e.run_id ).subscribe((response:any)=>{
-      this.logsLoading=false;
+      this.logsLoading= false;
       if(response.errorMessage==undefined)
       {
         this.loopIterations=[...response];
+        this.loopIterations=this.loopIterations.sort((a,b) => b.iterationId > a.iterationId ? 1 : -1);
         this.loopIterations=[...this.loopIterations.filter((item:any)=>item.taskName != 'Loop-End')]
         this.selectedIterationTask=e;
         this.loopIterations.forEach(item=>{
@@ -309,8 +330,8 @@ export class RpaSoLogsComponent implements OnInit, OnDestroy {
         this.selectedIterationId=this.iterationsList.length;
         // if((this.selectedIterationId==0 || this.selectedIterationId==undefined )&& this.iterationsList.length!=0)
         //   this.selectedIterationId=this.iterationsList[this.iterationsList.length-1];
-        this.fileteredLoopIterations=[...this.loopIterations.filter(item=>(item.iterationId==this.selectedIterationId))];
-        this.loopbyrunid = new MatTableDataSource(this.fileteredLoopIterations);
+        // this.fileteredLoopIterations=[...this.loopIterations.filter(item=>(item.iterationId==this.selectedIterationId))];
+        this.loopbyrunid = new MatTableDataSource(this.loopIterations);
         this.changeDetector.detectChanges();
       }
       else
@@ -318,18 +339,21 @@ export class RpaSoLogsComponent implements OnInit, OnDestroy {
         this.logsLoading=false;
         this.selectedIterationTask=undefined;
         Swal.fire("Error",response.errorMessage,"error");
-      }
-       
+      }      
     },err=>{
       this.logsLoading=false;
       Swal.fire("Error","Unable to open loop logs","error");
-      console.log(err)
     })
   }
 
+  showAutomatedLogs(taskData:any){
+    this.getAutomationLogs(taskData)
+    this.interval3=setInterval(()=>{
+    this.getAutomationLogs(taskData)
+    },3000)
+  }
 
-  getAutomationLogs(taskData:any)
-  {
+  getAutomationLogs(taskData:any){
     this.selectedAutomationTask=taskData;
     this.logsLoading=true;
     this.rest.getAutomationLogs(taskData.bot_id, taskData.version, taskData.run_id,taskData.task_id).subscribe((response:any)=>{
@@ -349,9 +373,7 @@ export class RpaSoLogsComponent implements OnInit, OnDestroy {
     })
   }
 
-  updateLog(element: any,Logtemplate: any)
-   {
-    
+  updateLog(element: any,Logtemplate: any){
     this.logsLoading=true;
      this.rest.updateBotLog(element.bot_id,element.version,element.run_id).subscribe(data=>{
         let response:any=data;  
@@ -365,55 +387,41 @@ export class RpaSoLogsComponent implements OnInit, OnDestroy {
    }
 
 
-   stopRefresh(){
-    if(this.timeInterval){
-      clearInterval(this.timeInterval)
-    }
-   }
-
-
-stopAutoRefersh(){
-  if(this.interval){
-    clearInterval(this.interval)
-  }
-}
-
-  autoRefresh()
-  {
+  autoRefresh(){
+    this.viewlogid1=undefined;
     this.viewlogdata()
-   
+    this.logsLoading = true;
     this.timeInterval = setInterval(() => {
-      this.viewlogdata()
-    }, 3000)
+    this.viewlogdata()
+      }, 3000)   
   }
 
   backtoPage(){
-    
     this.viewlogid1=undefined
-    this.stopAutoRefersh();
+    clearInterval(this.interval)
     this.autoRefresh();
   }
 
   backtoRunid(){
-    //this.viewlogid1=undefined
     this.selectedIterationTask=undefined;
     this.selectedIterationId=0;
-    this.stopAutoRefersh();
-    this.ViewlogByrunid(this.botrunid,this.selectedLogVersion)
-    //this.autoRefresh();
+    clearInterval(this.interval)
+    this.showLogsByRunId(this.botrunid,this.selectedLogVersion,this.logStatus)
+    clearInterval(this.interval2)
   }
 
   backtoRunpage(){
     this.viewlogid1=undefined
     this.selectedAutomationTask=undefined;
-    this.stopAutoRefersh();
-    this.autoRefresh();
-    
+    clearInterval(this.interval)
+    this.autoRefresh();   
   }
-  
-  ngOnDestroy(){
-    this.stopRefresh()
-    this.stopAutoRefersh()
-  }
+
+ngOnDestroy(): void {
+  clearInterval(this.interval)
+  clearInterval(this.timeInterval)
+  clearInterval(this.interval3)
+  clearInterval(this.interval2)
+}
   
 }
