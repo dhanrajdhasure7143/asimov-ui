@@ -847,7 +847,7 @@ export class RpaHomeComponent implements OnInit {
     this.rest.getCategoriesList().subscribe(data=>{
       let catResponse : any;
       catResponse=data
-      this.categaoriesList=catResponse.data;
+      this.categaoriesList=catResponse.data.sort((a, b) => (a.categoryName.toLowerCase() > b.categoryName.toLowerCase()) ? 1 : ((b.categoryName.toLowerCase() > a.categoryName.toLowerCase()) ? -1 : 0));
       //console.log(this.categaoriesList)
       if(this.categaoriesList.length==1)
         this.rpaCategory=this.categaoriesList[0].categoryId;
