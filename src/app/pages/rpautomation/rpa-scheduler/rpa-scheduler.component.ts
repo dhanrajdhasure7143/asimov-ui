@@ -8,6 +8,7 @@ import { NotifierService } from 'angular-notifier';
 import { RpaStudioActionsmenuComponent } from '../rpa-studio-actionsmenu/rpa-studio-actionsmenu.component'
 import { first } from 'rxjs/operators';
 import { any } from '@amcharts/amcharts4/.internal/core/utils/Array';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-rpa-scheduler',
@@ -86,7 +87,7 @@ export class RpaSchedulerComponent implements OnInit {
   end_time:any;
   starttimeerror:any;
   aftertime:boolean=false;
-  constructor(private rest:RestApiService, private notifier: NotifierService, private actions:RpaStudioActionsmenuComponent) { }
+  constructor(private rest:RestApiService, private notifier: NotifierService, private actions:RpaStudioActionsmenuComponent, private spinner:NgxSpinnerService) { }
 
   ngOnInit() {
     
@@ -146,11 +147,13 @@ gettime(){
   get_schedule()
   {
     this.schedule_list=[];
+    this.spinner.show();
     if(this.botid!="" && this.botid!=undefined && this.botid!="not_saved")
     {
       this.rest.getbotdata(this.botid).subscribe(data=>{
         let response:any=data;
         this.botdata=data
+        this.spinner.hide();
         if(response.botMainSchedulerEntity!=null)
         {
           this.schedule_list=response.botMainSchedulerEntity.scheduleIntervals;
@@ -162,6 +165,9 @@ gettime(){
           this.actions.updatesavedschedules(response.botMainSchedulerEntity);
           this.updateflags()
         }
+      }, err=>{
+        console.log(err);
+        this.spinner.hide()
       })
     }
     else if(this.botid=="not_saved")
@@ -582,6 +588,8 @@ gettime(){
       // delete this.botdata.isPredefined;
       // delete this.botdata.categoryName;
       // delete this.botdata.categoryId;
+      
+      this.spinner.show();
       await (await this.rest.updateBot(this.botdata)).subscribe(data =>{
         let resp:any=data;
         if(resp.errorMessage){
@@ -599,6 +607,9 @@ gettime(){
         }
        
         this.get_schedule();
+      },err=>{
+        console.log(err)
+        this.spinner.hide();
       })
     }
     else

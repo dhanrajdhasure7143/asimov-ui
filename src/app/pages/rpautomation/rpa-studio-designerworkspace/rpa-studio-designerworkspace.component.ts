@@ -1637,12 +1637,14 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     finalTasks.forEach((item:any)=>{
       if(actualTasks.find(item2=>item.nodeId==item2.nodeId)==undefined)
       {
+        if(this.auditLogs.find(auditItem=>auditItem.nodeId==item.nodeId)==undefined)
         this.auditLogs.push(
           {
             "botId": this.finalbot.botId,
             "botName": `${this.finalbot.botName}|AddedTask` ,
             "changeActivity":'-',
             "changedBy": `${firstName} ${lastName}` ,
+            "nodeId":item.nodeId,
             //"changedDate":(new Date().toLocaleDateString()+", "+new Date().toLocaleTimeString()),
             "newValue":'-',
             "previousValue":'-',
@@ -1654,49 +1656,53 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       else
       {
         let actualTask:any=(actualTasks.find(item2=>item.nodeId==item2.nodeId))
-        for(let i=0;i<item.attributes.length;i++)
-        {
-          let actualTaskAttribute=actualTask.attributes.find((att:any)=>att.metaAttrId==item.attributes[i].metaAttrId);
-          if(actualTaskAttribute != undefined)
+        if(this.auditLogs.find(auditItem=>auditItem.nodeId==item.nodeId)==undefined)
+          for(let i=0;i<item.attributes.length;i++)
           {
-            if(item.attributes[i].attrValue!=actualTaskAttribute.attrValue)
+            let actualTaskAttribute=actualTask.attributes.find((att:any)=>att.metaAttrId==item.attributes[i].metaAttrId);
+            if(actualTaskAttribute != undefined)
             {
-              this.auditLogs.push(
-                {
-                  "botId": this.finalbot.botId,
-                  "botName": `${this.finalbot.botName}|UpdatedConfig` ,
-                  "changeActivity":item.attributes[i].label,
-                  "changedBy": `${firstName} ${lastName}` ,
-                  //"changedDate":(new Date().toLocaleDateString()+", "+new Date().toLocaleTimeString()),
-                  "newValue":item.attributes[i].attrValue,
-                  "previousValue": actualTaskAttribute.attrValue,
-                  "taskName": actualTask.taskName,
-                  "version": this.finalbot.version
-                }
-              )
+              if((item.attributes[i].attrValue!=actualTaskAttribute.attrValue))
+              {
+                this.auditLogs.push(
+                  {
+                    "botId": this.finalbot.botId,
+                    "botName": `${this.finalbot.botName}|UpdatedConfig` ,
+                    "changeActivity":item.attributes[i].label,
+                    "changedBy": `${firstName} ${lastName}` ,
+                    "nodeId":item.nodeId,
+                    //"changedDate":(new Date().toLocaleDateString()+", "+new Date().toLocaleTimeString()),
+                    "newValue":item.attributes[i].attrValue,
+                    "previousValue": actualTaskAttribute.attrValue,
+                    "taskName": actualTask.taskName,
+                    "version": this.finalbot.version
+                  }
+                )
+              }
             }
+          
           }
-         
-        }
       }
     })
     let RemovedTasks:any=[]
     actualTasks.forEach((item:any)=>{
-      if(finalTasks.find((item2:any)=>item2.nodeId==item.nodeId)==undefined)
+      if(finalTasks.find((item2:any)=>item2.nodeId==item.nodeId)==undefined )
       {
-        this.auditLogs.push(
-          {
-            "botId": this.finalbot.botId,
-            "botName": `${this.finalbot.botName}|RemovedTask` ,
-            "changeActivity":'-',
-            "changedBy": `${firstName} ${lastName}` ,
-           // "changedDate":(new Date().toLocaleDateString()+", "+new Date().toLocaleTimeString()),
-            "newValue":'-',
-            "previousValue":'-',
-            "taskName": item.taskName,
-            "version": this.finalbot.version
-          }
-        )
+        if((this.auditLogs.find(auditItem=>auditItem.nodeId==item.nodeId)==undefined))
+          this.auditLogs.push(
+            {
+              "botId": this.finalbot.botId,
+              "botName": `${this.finalbot.botName}|RemovedTask` ,
+              "changeActivity":'-',
+              "changedBy": `${firstName} ${lastName}` ,
+              "nodeId":item.nodeId,
+            // "changedDate":(new Date().toLocaleDateString()+", "+new Date().toLocaleTimeString()),
+              "newValue":'-',
+              "previousValue":'-',
+              "taskName": item.taskName,
+              "version": this.finalbot.version
+            }
+          )
       }
     })
 
