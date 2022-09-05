@@ -974,6 +974,7 @@ resetsla(){
         if(this.categaoriesList.length==1)
           this.environments=this.environmentsData.filter(item=>this.categaoriesList[0].categoryId==item.categoryId)
 
+          this.environments=this.environments.sort((a, b) => (a.environmentName.toLowerCase() > b.environmentName.toLowerCase()) ? 1 : ((b.environmentName.toLowerCase() > a.environmentName.toLowerCase()) ? -1 : 0));
       }
     })
   }

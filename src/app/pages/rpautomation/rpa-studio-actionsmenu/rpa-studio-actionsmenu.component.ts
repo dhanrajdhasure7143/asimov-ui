@@ -481,6 +481,7 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
     }
     this.rest.getFilteredEnvironment(id).subscribe(data => {
       let response:any=data
+     response=response.sort((a, b) => (a.environmentName.toLowerCase() > b.environmentName.toLowerCase()) ? 1 : ((b.environmentName.toLowerCase() > a.environmentName.toLowerCase()) ? -1 : 0));
       if(response.errorMessage==undefined)
       {
         let environments:any=[];
