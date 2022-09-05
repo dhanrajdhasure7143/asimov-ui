@@ -17,16 +17,16 @@
       <span *ngIf="viewlogid1!=undefined">
         - Run ID - {{viewlogid1}}
       </span>
-      <span *ngIf="selectedIterationTask!=undefined">
-          - Iteration ID -
-          <select *ngIf="iterationsList.length!=0" class="logsVersionFilter clickable1" style="width:50px" (change)="IterationId($event)"  [value]="selectedIterationId" >
+      <!-- <span *ngIf="selectedIterationTask!=undefined">
+           Iteration ID 
+          <select *ngIf="iterationsList.length!=0" class="logsVersionFilter clickable1" [(ngModel)]="Iditeration" style="width:50px" (change)="IterationId($event.target.value)"  [value]="selectedIterationId" >
              
               <option *ngFor="let iteration of iterationsList" [selected]="selectedIterationId==iteration" [value]="iteration">
                    {{iteration}}
               </option>
-            </select>
-            <span *ngIf="iterationsList.length==0">-</span>
-        </span>
+            </select> 
+            <span *ngIf="iterationsList.length==0">-</span> 
+        </span> -->
        <!-- <span (click)="viewlogdata(logspopup,'update')" *ngIf="viewlogid1==undefined && selectedIterationTask==undefined  && selectedAutomationTask==undefined" class="clickable1 refecls"  >
         Refresh
       </span> -->
@@ -35,18 +35,18 @@
         Refresh
         </span>  -->
   
-        <span (click)="getLoopIterations(selectedIterationTask, selectedIterationId)" *ngIf="selectedIterationTask!=undefined && selectedAutomationTask==undefined" class="clickable1 refecls">
+        <!-- <span (click)="getLoopIterations(selectedIterationTask, selectedIterationId)" *ngIf="selectedIterationTask!=undefined && selectedAutomationTask==undefined" class="clickable1 refecls">
             Refresh
         </span>
   
         <span (click)="getAutomationLogs(selectedAutomationTask)" *ngIf="selectedAutomationTask!=undefined" class="clickable1 refecls">
           Refresh
-      </span>
+      </span> -->
 
       
       <span class="pull-right">
      
-      <span class="clickable" (click)="logsmodal.hide();selectedIterationTask=undefined">
+      <span class="clickable" (click)="logsmodal.hide();selectedIterationTask==undefined">
         <img src="../../../../assets/images/Projects/circle-close.svg" alt="">
       </span>
      
@@ -63,7 +63,7 @@
                   <!-- Run Id Column -->
                   <ng-container matColumnDef="run_id">
                       <th mat-header-cell  *matHeaderCellDef mat-sort-header style="padding-left:55px;width:13%"> Run ID </th>
-                      <td mat-cell *matCellDef="let element" style="padding-left:55px;width:13%"><button style="color:#00a1e3; text-decoration: underline;" (click)="ViewlogByrunid(element.run_id,element.version)">{{element.run_id}}</button></td>
+                      <td mat-cell *matCellDef="let element" style="padding-left:55px;width:13%"><button style="color:#00a1e3; text-decoration: underline;" (click)="showLogsByRunId(element.run_id,element.version,element.bot_status)">{{element.run_id}}</button></td>
                   </ng-container>
   
                   <!-- Version Column -->
@@ -186,11 +186,11 @@
                           {{(element.task_name.length > 25) ? ((element.task_name).slice(0, 25) + '...') : element.task_name}}
                        </span>
                         <span *ngIf="element.task_name=='Loop-Start'">
-                            <button style="color:#00a1e3; text-decoration: underline;" (click)="getLoopIterations(element)">{{element.task_name}}</button>
+                            <button style="color:#00a1e3; text-decoration: underline;" (click)="showLoopIteration(element)">{{element.task_name}}</button>
                         </span>
 
                         <span *ngIf="element.task_name=='Automate SAP'">
-                          <button style="color:#00a1e3; text-decoration: underline;" (click)="getAutomationLogs(element)">{{element.task_name}}</button>
+                          <button style="color:#00a1e3; text-decoration: underline;" (click)="showAutomatedLogs(element)">{{element.task_name}}</button>
                       </span>
                       <span *ngIf="element.task_name == undefined">-</span>
                   </td>
@@ -251,7 +251,7 @@
               <ng-container   matColumnDef="start_date">
                   <th mat-header-cell  mat-sort-header *matHeaderCellDef style="width:18%"> Start Date </th>
                   <td mat-cell *matCellDef="let element" style="width:18%">
-                      <span *ngIf="element.start_date != null">{{element.start_date.split('T')[0] | date:'EEE MMM d, yyyy' }},{{element.start_time.slice(11,19)}}</span>
+                      <span *ngIf="element.start_date != null">{{element.start_date|date: 'MMM d, y, H:mm:ss'}}</span>
                       <span *ngIf="element.start_date == undefined">--</span>
                   </td>
               </ng-container>
@@ -263,7 +263,7 @@
               <ng-container matColumnDef="end_date">
                   <th mat-header-cell  mat-sort-header  *matHeaderCellDef style="width:18%"> End Date </th>
                   <td mat-cell *matCellDef="let element" style="width:18%">
-                      <span *ngIf="element.end_date != null||element.end_date != undefined">{{element.end_date.split('T')[0] | date:'EEE MMM d, yyyy' }},{{element.end_time.slice(11,19)}}</span>
+                      <span *ngIf="element.end_date != null||element.end_date != undefined">{{element.end_date|date: 'MMM d, y, H:mm:ss'}}</span>
                       <span *ngIf="element.end_date == undefined">--</span>
                   </td>
               </ng-container>
@@ -311,17 +311,24 @@
                 <span *ngIf="element.taskName == undefined">--</span>
             </td>
           </ng-container>
+          <ng-container matColumnDef="iterationId">
+            <th mat-header-cell  mat-sort-header  *matHeaderCellDef style="width:18%">Iteration Id </th>
+            <td mat-cell *matCellDef="let element" style="width:18%">
+                <span *ngIf="element.iterationId">{{element.iterationId}}</span>
+                <span *ngIf="element.iterationId == undefined">--</span>
+            </td>
+          </ng-container>
           <ng-container matColumnDef="startTS">
             <th mat-header-cell  mat-sort-header  *matHeaderCellDef style="width:18%">Start Time </th>
             <td mat-cell *matCellDef="let element" style="width:18%">
-                <span *ngIf="element.startTS != null||element.startTS != undefined">{{element.startTS.split('T')[0] | date:'EEE MMM d, yyyy' }},{{element.startTS.slice(11,19)}}</span>
+                <span *ngIf="element.startTS != null||element.startTS != undefined">{{element.startTS|date: 'MMM d, y, H:mm:ss'}}</span>
                 <span *ngIf="element.startTS == undefined">--</span>
             </td>
           </ng-container>
           <ng-container matColumnDef="endTS">
             <th mat-header-cell  mat-sort-header  *matHeaderCellDef style="width:18%">End Time </th>
             <td mat-cell *matCellDef="let element" style="width:18%">
-                <span *ngIf="element.endTS != null||element.endTS != undefined">{{element.endTS.split('T')[0] | date:'EEE MMM d, yyyy' }},{{element.endTS.slice(11,19)}}</span>
+                <span *ngIf="element.endTS != null||element.endTS != undefined">{{element.endTS|date: 'MMM d, y, H:mm:ss'}}</span>
                 <span *ngIf="element.endTS == undefined">--</span>
             </td>
           </ng-container>
@@ -378,7 +385,7 @@
           <tr mat-header-row *matHeaderRowDef="displayedloopColumns; sticky: true"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedloopColumns;"></tr>
       </table>
-        <div *ngIf="fileteredLoopIterations.length==0" class="text-center">
+        <div *ngIf="loopIterations.length==0" class="text-center">
           <img src="../../../../assets/images/RPA/No-Items.svg" style="height:250px">
           <h5>No Items To Display</h5>
         </div>
@@ -409,14 +416,14 @@
           <ng-container matColumnDef="startTS">
             <th mat-header-cell  mat-sort-header  *matHeaderCellDef style="width:18%">Start Time </th>
             <td mat-cell *matCellDef="let element" style="width:18%">
-                <span *ngIf="element.startTS != null||element.startTS != undefined">{{element.startTS.split('T')[0] | date:'EEE MMM d, yyyy' }},{{element.startTS.slice(11,19)}}</span>
+                <span *ngIf="element.startTS != null||element.startTS != undefined">{{element.startTS|date: 'MMM d, y, H:mm:ss'}}</span>
                 <span *ngIf="element.startTS == undefined">--</span>
             </td>
           </ng-container>
           <ng-container matColumnDef="endTS">
             <th mat-header-cell  mat-sort-header  *matHeaderCellDef style="width:18%">End Time </th>
             <td mat-cell *matCellDef="let element" style="width:18%">
-                <span *ngIf="element.endTS != null||element.endTS != undefined">{{element.endTS.split('T')[0] | date:'EEE MMM d, yyyy' }},{{element.endTS.slice(11,19)}}</span>
+                <span *ngIf="element.endTS != null||element.endTS != undefined">{{element.endTS|date: 'MMM d, y, H:mm:ss'}}</span>
                 <span *ngIf="element.endTS == undefined">--</span>
             </td>
           </ng-container>
