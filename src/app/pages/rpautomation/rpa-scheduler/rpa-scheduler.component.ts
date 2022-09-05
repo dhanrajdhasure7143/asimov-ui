@@ -1,4 +1,4 @@
-import {Input, Component, OnInit ,Pipe, PipeTransform } from '@angular/core';
+import {Input, Component, OnInit ,Pipe, PipeTransform, Output, EventEmitter } from '@angular/core';
 import { CronOptions } from 'src/app/shared/cron-editor/CronOptions';
 import {RestApiService} from 'src/app/pages/services/rest-api.service';
 import Swal from 'sweetalert2';
@@ -19,6 +19,7 @@ export class RpaSchedulerComponent implements OnInit {
 
 
   @Input('data') public data: any;
+  @Output() emitSchedule=new EventEmitter<any>();
   botid:any;
   processid:any;
   beforetime:boolean=false;
@@ -162,8 +163,13 @@ gettime(){
             this.schedule_list[index].save_status="saved";
             this.schedule_list[index].run_status="not_started";
           })
-          this.actions.updatesavedschedules(response.botMainSchedulerEntity);
+          //this.actions.updatesavedschedules(response.botMainSchedulerEntity);
+          this.emitSchedule.emit(response.botMainSchedulerEntity);
           this.updateflags()
+        }
+        else
+        {
+          this.emitSchedule.emit(null);
         }
       }, err=>{
         console.log(err);
