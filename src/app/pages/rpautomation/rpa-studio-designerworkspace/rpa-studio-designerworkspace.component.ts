@@ -1442,8 +1442,9 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           width:item.width,
           edit:false,
         }
-        this.groupsData.push(GroupData)
+        this.groupsData.push(GroupData);
         setTimeout(()=>{
+          
           let element:any=document.getElementById(GroupData.id);
           this.groupsData.find((item:any)=>item.id==GroupData.id).el=element;
           let  groupIds:any=[];
