@@ -429,9 +429,9 @@ getCategoryList(){
     let catResponse : any;
     catResponse=data
     this.categaoryList=catResponse.data;
-     this.categaoryList=this.categaoryList.sort((a, b) => (a.categoryName.toLowerCase() > b.categoryName.toLowerCase()) ? 1 : ((b.categoryName.toLowerCase() > a.categoryName.toLowerCase()) ? -1 : 0));   if(this.categaoryList.length==1){
-    if(this.categaoryList.length==1){
-      this.rpaCategory=this.categaoryList[0].categoryId;
+     this.categaoryList=this.categaoryList.sort((a, b) => (a.categoryName.toLowerCase() > b.categoryName.toLowerCase()) ? 1 : ((b.categoryName.toLowerCase() > a.categoryName.toLowerCase()) ? -1 : 0));   
+     if(this.categaoryList.length==1){
+     this.rpaCategory=this.categaoryList[0].categoryId;
       let Id=this.categaoryList[0].categoryId
      // this.categoryName=this.categaoriesList[0].categoryName;       
         this.insertbot.get('botDepartment').setValue(Id)
