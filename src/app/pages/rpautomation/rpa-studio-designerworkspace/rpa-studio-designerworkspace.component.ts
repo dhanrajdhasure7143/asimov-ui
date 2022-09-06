@@ -1272,6 +1272,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         obj.push(objAttr);
       }
     })
+
     let cutedata = {
       "taskName": this.selectedTask.name,
       "tMetaId": this.selectedTask.id,
@@ -1285,6 +1286,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     }
     let index = this.finaldataobjects.findIndex(sweetdata => sweetdata.nodeId == cutedata.nodeId)
     if (index != undefined && index >= 0) {
+      cutedata["botTId"]=this.finaldataobjects[index].botTId;
       this.finaldataobjects[index] = cutedata;
     } else {
       this.finaldataobjects.push(cutedata);
