@@ -57,6 +57,7 @@ export class MyAccountComponent implements OnInit {
   }
 
   updateAccount() {
+    this.spinner.show();
     if (this.formOne.department == "Others") {
 
       this.formOne.department = this.otherdepartment;
@@ -77,11 +78,13 @@ export class MyAccountComponent implements OnInit {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Ok'
     });
+    this.spinner.hide();
     this.addDepartment=false;
     this.getAllDepartments();
     this.userDetails();
     
     }, err => {
+      this.spinner.hide();
       Swal.fire("Error","Please try again!","error");
      
     });

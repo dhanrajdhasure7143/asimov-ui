@@ -289,7 +289,7 @@
                                 <div *ngIf="(insertbot.get('botName').hasError('required') && insertbot.get('botName').touched) && !insertbot.controls['botName'].hasError('maxlength')" class="errspan required">
                                     Bot Name Required*
                                 </div>
-                                <div *ngIf="checkbotname " class="errspan required">
+                                <div *ngIf="checkbotname && insertbot.get('botName').value" class="errspan required">
                                     Bot Name is already exists*
                                 </div>
                                 <div *ngIf="botNamespace" class="errspan required">special characters are not allowed Excluding( _ & - )</div>

@@ -683,8 +683,10 @@ export class RpaHomeComponent implements OnInit {
 
   close()
   {
+    this.checkbotname = false;
     document.getElementById("create-bot").style.display ="none";
     document.getElementById("edit-bot").style.display="none";
+    if(document.getElementById("load-bot"))
     document.getElementById("load-bot").style.display ="none";
   }
   editclose(){
