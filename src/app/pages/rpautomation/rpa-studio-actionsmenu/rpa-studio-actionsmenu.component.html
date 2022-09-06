@@ -428,7 +428,7 @@
               <h4>Scheduler</h4>
           </div>
           <div class="modal-body actions-mbody">
-            <app-rpa-scheduler [data]="schedule"></app-rpa-scheduler>
+            <app-rpa-scheduler (emitSchedule)="updatesavedschedules($event)" [data]="schedule"></app-rpa-scheduler>
           </div>
       </div>
   </div>

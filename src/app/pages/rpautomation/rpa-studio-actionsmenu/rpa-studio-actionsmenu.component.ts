@@ -911,7 +911,7 @@ loadpredefinedbot(botId, dropCoordinates)
 
   updatesavedschedules(schedules)
   {
-    this.childBotWorkspace.saveCron(schedules)
+    this.childBotWorkspace.scheduler=schedules;
   }
 
   displayenv()
