@@ -32,6 +32,7 @@ export class CreateDepartmentComponent implements OnInit {
       "categoryName": this.createDepartmentForm.value.departmentName,
       "owner":this.createDepartmentForm.value.owner
     }
+    this.spinner.show();
     this.api.createDepartment(body).subscribe(resp => {
       if(resp.message === "Successfully created the category"){
         Swal.fire({
@@ -47,14 +48,14 @@ export class CreateDepartmentComponent implements OnInit {
       }).then((result) => {
         this.resetdepartment();
         this.router.navigate(['/pages/admin/user-management'])
-      }) 
+      })
       }
       else if(resp.message==="Category already exists"){
         Swal.fire("Error","Department already exists","error");
-      }
-      else {
+      } else {
         Swal.fire("Error",resp.message,"error");
       }
+      this.spinner.hide();
     })
   }
 
