@@ -1363,6 +1363,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     this.get_coordinates();
     await this.getsvg();
     this.rpaAuditLogs(env);
+    let bot_schedule=JSON.parse(localStorage.getItem("botSchedulePayload_"+this.finalbot.botId))
     this.saveBotdata = {
       "version": botProperties.version,
       "botId": botProperties.botId,
@@ -1370,7 +1371,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       "botType": botProperties.botType,
       "description": botProperties.botDescription,
       "department": botProperties.botDepartment,
-      "botMainSchedulerEntity": this.scheduler,
+      "botMainSchedulerEntity": bot_schedule,
       "envIds": env,
       "isPredefined": botProperties.predefinedBot,
       "tasks": this.final_tasks,
@@ -1968,6 +1969,12 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       this.splitAreamin_size="null";
     }
   }
+  
+  ngOnDestroy(): void {
+    //localStorage.removeItem("")
+    localStorage.removeItem("botSchedulePayload_"+this.finalbot.botId)
+         
+  }
 }
 
 
@@ -1990,4 +1997,6 @@ export class Checkoutputbox implements PipeTransform {
       return false;
     }
   }
+
+
 }
