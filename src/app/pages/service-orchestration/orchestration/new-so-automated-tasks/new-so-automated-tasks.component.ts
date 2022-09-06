@@ -514,8 +514,9 @@ resetsla(){
         this.bot_list=botlist;
         this.isbotloading='Success'
         if(this.selectedvalue!=null){
-       
-          this.checkTaskAssigned(this.selectedvalue)
+       setTimeout(() => {
+        this.checkTaskAssigned(this.selectedvalue)
+       }, 2000);
         }
       }
 
@@ -588,7 +589,8 @@ resetsla(){
       let resp:any=[]
       resp=processnames
       this.process_names=resp.filter(item=>item.status=="APPROVED");
-      this.selected_process_names=resp.filter(item=>item.status=="APPROVED");
+      let filtered_selected_process=resp.filter(item=>item.status=="APPROVED");
+      this.selected_process_names = filtered_selected_process.sort((a, b) => (a.processName.toLowerCase() > b.processName.toLowerCase()) ? 1 : ((b.processName.toLowerCase() > a.processName.toLowerCase()) ? -1 : 0));
       let processnamebyid;
       if(processId != undefined)
       {
