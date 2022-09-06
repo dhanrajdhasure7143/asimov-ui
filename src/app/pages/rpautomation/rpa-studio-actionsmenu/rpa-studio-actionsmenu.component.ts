@@ -840,6 +840,7 @@ loadpredefinedbot(botId, dropCoordinates)
   closesch()
   {
     this.schpop=false;
+    if(document.getElementById("filters"))
     document.getElementById("filters").style.display = "block";
   }
 
