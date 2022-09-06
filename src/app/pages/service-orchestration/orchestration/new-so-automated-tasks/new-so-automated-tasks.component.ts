@@ -969,14 +969,15 @@ resetsla(){
   {
     this.rest.listEnvironments().subscribe(response=>{
       let resp:any=response
+      let response1:any
       if(resp.errorCode == undefined)
       {
         this.environments=response;
         this.environmentsData=response;
         if(this.categaoriesList.length==1)
           this.environments=this.environmentsData.filter(item=>this.categaoriesList[0].categoryId==item.categoryId)
-
-          this.environments=this.environments.sort((a, b) => (a.environmentName.toLowerCase() > b.environmentName.toLowerCase()) ? 1 : ((b.environmentName.toLowerCase() > a.environmentName.toLowerCase()) ? -1 : 0));
+          response1=this.environments;
+          this.environments=response1.sort((a, b) => (a.environmentName.toLowerCase() > b.environmentName.toLowerCase()) ? 1 : ((b.environmentName.toLowerCase() > a.environmentName.toLowerCase()) ? -1 : 0));
       }
     })
   }
