@@ -1378,7 +1378,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     this.finaldataobjects = [];
   }
 
-  async updateBotFun(botProperties, env) {
+  async updateBotFun(botProperties, env,version_type,comments) {
     this.checkorderflag=true;
     this.addsquences();
     this.arrange_task_order(this.startNodeId);
@@ -1386,6 +1386,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     await this.getsvg();
     this.rpaAuditLogs(env);
     this.saveBotdata = {
+      "versionType":version_type,
+      "comments":comments,
       "version": botProperties.version,
       "botId": botProperties.botId,
       "botName": botProperties.botName,
@@ -1408,7 +1410,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
      return false;
     else
     {
-      return this.rest.updateBot(this.saveBotdata)
+      console.log("savebotdata",this.saveBotdata)
+     // return this.rest.updateBot(this.saveBotdata)
       //return false;
     } 
 

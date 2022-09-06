@@ -911,7 +911,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     this.finaldataobjects = [];
   }
 
-  async updateBotFun(botProperties, env) {
+  async updateBotFun(botProperties, env,) {
     this.checkorderflag=true;
     this.addsquences();
     this.get_coordinates();

@@ -20,6 +20,8 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   checkCreate:Boolean=false; 
   freetrail: string;
   isProcessAnalyst:Boolean=false;
+  version_type:any;
+  comments:any;
   constructor(private rpa_studio:RpaStudioComponent, 
     private router:Router,
     private activeRoute:ActivatedRoute) { }
@@ -150,6 +152,12 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
     }
   }
 
+  auditLogs(){
+    let botId=this.current_instance.savebotrespose.botId;
+    let catergoryId=this.current_instance.savebotrespose.categoryId
+    this.router.navigate(["/pages/rpautomation/auditlogs"],{queryParams:{botId:botId,catergoryId:catergoryId}})
+    //this.current_instance.getAuditLogs()
+  }
 
   navigateToBack()
   {
@@ -170,5 +178,7 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   {
     localStorage.removeItem("bot_id")
   }
-  
+  SaveBot(){
+    this.current_instance.saveBotFunAct(this.version_type,this.comments)
+  }
 }

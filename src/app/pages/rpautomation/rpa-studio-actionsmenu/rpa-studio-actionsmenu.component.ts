@@ -70,7 +70,7 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
   @ViewChild('t', { static: false }) ngbTabset;
   @Input('tabsArray') public tabsArray: any[];
   @ViewChild(RpaStudioDesignerworkspaceComponent, { static: false }) childBotWorkspace: RpaStudioDesignerworkspaceComponent;
-  @ViewChild('auditLogsPopup',{static:false}) public auditLogsPopup:any;
+ // @ViewChild('auditLogsPopup',{static:false}) public auditLogsPopup:any;
   @ViewChild('logspopup',{static:false}) public logspopup:any;
   public auditLogsModelRef:BsModalRef;
   public logsmodalref:BsModalRef
@@ -231,7 +231,7 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
 
 
 
-  async saveBotFunAct() {
+  async saveBotFunAct(version_type,comments) {
     this.rpa_studio.spinner.show();
     this.finalenv=[];
     this.environment.forEach(data=>{
@@ -310,7 +310,7 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
     }
     else
     {
-       let checkbot:any=await this.childBotWorkspace.updateBotFun(this.savebotrespose,this.finalenv)
+       let checkbot:any=await this.childBotWorkspace.updateBotFun(this.savebotrespose,this.finalenv,version_type,comments)
        if(checkbot==false)
        {
         this.rpa_studio.spinner.hide();
@@ -628,7 +628,7 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
             }
             return item;
           })].reverse();
-          this.auditLogsModelRef=this.modalService.show(this.auditLogsPopup, {class:"logs-modal"});
+        //  this.auditLogsModelRef=this.modalService.show(this.auditLogsPopup, {class:"logs-modal"});
         }
         else{
           Swal.fire("Error",data.errorMessage,"error")

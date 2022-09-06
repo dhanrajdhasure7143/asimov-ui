@@ -1,0 +1,98 @@
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { RestApiService } from '../../services/rest-api.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+import Swal from 'sweetalert2';
+import {MatSort} from '@angular/material/sort';
+import {MatTableDataSource} from '@angular/material/table';
+import {MatPaginator} from '@angular/material/paginator';
+import { cpuUsage } from 'process';
+import moment from 'moment';
+@Component({
+  selector: 'app-rpa-auditlogs',
+  templateUrl: './rpa-auditlogs.component.html',
+  styleUrls: ['./rpa-auditlogs.component.css']
+})
+export class RpaAuditlogsComponent implements OnInit {
+
+  constructor(private activatedRoute:ActivatedRoute,private router: Router, private rest:RestApiService,private spinner:NgxSpinnerService) { }
+  botId:any;
+  auditLogsData:any=[];
+  displayedColumns1: string[] = ["changedDate",'botName',"changedBy",];
+  dataSource2:MatTableDataSource<any>;
+  @ViewChild("paginator4",{static:false}) paginator4: MatPaginator;
+  @ViewChild("sort2",{static:false}) sort2: MatSort;
+  ngOnInit(): void {
+
+    this.activatedRoute.queryParams.subscribe((params:any)=>{
+      console.log("params",params)
+      if(params==undefined)
+      {
+        this.router.navigate(["home"])
+      }
+      else
+      {
+        this.botId=params.botId;
+        this.getEnvironments(params.catergoryId)
+      }
+    })
+
+}
+getEnvironments(categoryId:number){
+  this.rest.getFilteredEnvironment(categoryId).subscribe(data=>{
+    let response:any=data
+    if(response.errorMessage==undefined)
+    {
+      let environments:any=[];
+      environments=response.filter(item=>item.activeStatus==7);
+      this.getAuditLogs(environments)
+    }
+    else
+    {
+    }
+  })
+
+}
+getAuditLogs(environments)
+{
+
+  this.rest.getAuditLogs(this.botId).subscribe((data:any)=>{
+    console.log("data",data)
+     if(data.errorMessage==undefined)
+     {
+      this.dataSource2= new MatTableDataSource(data.Status);
+       this.auditLogsData=[...data.Status.map((item:any)=>{
+         if(item.botName.split("|")[1]!=undefined)
+         {
+          item["changedDate"] = moment(new Date(item.changedDate)).format('LLL')
+           item["Status"]=item.botName.split("|")[1];
+           if(item["Status"]=='AddedEnv'|| item['Status']=='RemovedEnv')
+           {
+             let envId=parseInt(item.taskName);
+             item["taskName"]=environments.find((envItem:any)=>envItem.environmentId==envId)==undefined?'Deleted Environment':environments.find((envItem:any)=>envItem.environmentId==envId).environmentName;
+           }
+         }
+         else
+         {
+           item["Status"]="UpdatedConfig"
+         }
+         return item;
+       })].reverse();
+     //  this.auditLogsModelRef=this.modalService.show(this.auditLogsPopup, {class:"logs-modal"});
+     }
+     else{
+       Swal.fire("Error",data.errorMessage,"error")
+     }
+  },err=>{
+    this.spinner.hide();
+    Swal.fire("Error","Unable to get audit logs","error")
+  })
+}
+sortmethod(){
+  this.dataSource2.sort = this.sort2;   
+  this.dataSource2.paginator=this.paginator4; 
+}
+open(){
+  this.router.navigate(["/pages/rpautomation/designer"],{queryParams:{botId:this.botId}})
+}
+}
