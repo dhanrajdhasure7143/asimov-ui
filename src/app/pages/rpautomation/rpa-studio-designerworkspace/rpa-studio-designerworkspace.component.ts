@@ -1272,6 +1272,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         obj.push(objAttr);
       }
     })
+
     let cutedata = {
       "taskName": this.selectedTask.name,
       "tMetaId": this.selectedTask.id,
@@ -1285,6 +1286,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     }
     let index = this.finaldataobjects.findIndex(sweetdata => sweetdata.nodeId == cutedata.nodeId)
     if (index != undefined && index >= 0) {
+      cutedata["botTId"]=this.finaldataobjects[index].botTId;
       this.finaldataobjects[index] = cutedata;
     } else {
       this.finaldataobjects.push(cutedata);
@@ -1440,8 +1442,9 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           width:item.width,
           edit:false,
         }
-        this.groupsData.push(GroupData)
+        this.groupsData.push(GroupData);
         setTimeout(()=>{
+          
           let element:any=document.getElementById(GroupData.id);
           this.groupsData.find((item:any)=>item.id==GroupData.id).el=element;
           let  groupIds:any=[];
