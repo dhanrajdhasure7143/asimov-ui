@@ -1411,7 +1411,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     else
     {
       console.log("savebotdata",this.saveBotdata)
-     // return this.rest.updateBot(this.saveBotdata)
+     return this.rest.updateBot(this.saveBotdata)
       //return false;
     } 
 

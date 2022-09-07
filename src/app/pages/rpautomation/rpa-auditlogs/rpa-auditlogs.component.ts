@@ -14,14 +14,13 @@ import moment from 'moment';
   styleUrls: ['./rpa-auditlogs.component.css']
 })
 export class RpaAuditlogsComponent implements OnInit {
-
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
   constructor(private activatedRoute:ActivatedRoute,private router: Router, private rest:RestApiService,private spinner:NgxSpinnerService) { }
   botId:any;
   auditLogsData:any=[];
-  displayedColumns1: string[] = ["changedDate",'botName',"changedBy",];
-  dataSource2:MatTableDataSource<any>;
-  @ViewChild("paginator4",{static:false}) paginator4: MatPaginator;
-  @ViewChild("sort2",{static:false}) sort2: MatSort;
+  displayedColumns: string[] = ["changedDate",'botName',"changedBy",];
+  dataSource:MatTableDataSource<any>;
+  @ViewChild("paginator",{static:false}) paginator: MatPaginator;
   ngOnInit(): void {
 
     this.activatedRoute.queryParams.subscribe((params:any)=>{
@@ -60,7 +59,9 @@ getAuditLogs(environments)
     console.log("data",data)
      if(data.errorMessage==undefined)
      {
-      this.dataSource2= new MatTableDataSource(data.Status);
+      this.dataSource= new MatTableDataSource(data.Status);
+      this.dataSource.paginator=this.paginator;
+      this.dataSource.sort=this.sort;
        this.auditLogsData=[...data.Status.map((item:any)=>{
          if(item.botName.split("|")[1]!=undefined)
          {
@@ -88,10 +89,7 @@ getAuditLogs(environments)
     Swal.fire("Error","Unable to get audit logs","error")
   })
 }
-sortmethod(){
-  this.dataSource2.sort = this.sort2;   
-  this.dataSource2.paginator=this.paginator4; 
-}
+
 open(){
   this.router.navigate(["/pages/rpautomation/designer"],{queryParams:{botId:this.botId}})
 }

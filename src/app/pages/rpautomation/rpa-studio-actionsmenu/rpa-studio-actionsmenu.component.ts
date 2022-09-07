@@ -334,7 +334,12 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
               icon: 'success',
               heightAuto: false,
             })
-            let auditLogs=[...this.childBotWorkspace.auditLogs];
+            let auditLogs=[...this.childBotWorkspace.auditLogs].map(item=>{
+              item["version_new"]=this.savebotrespose.version_new;
+              item['comments']=this.savebotrespose.comments;
+              return item
+            });
+            console.log("auditlogs",auditLogs)
             if(auditLogs.length!=0)
             this.rest.addAuditLogs(auditLogs).subscribe((data:any)=>{
               this.childBotWorkspace.actualTaskValue=[...this.savebotrespose.tasks.filter(item=>item.version==this.savebotrespose.version)];
