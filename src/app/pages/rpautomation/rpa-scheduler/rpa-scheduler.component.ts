@@ -149,6 +149,7 @@ gettime(){
   {
     this.schedule_list=[];
     this.spinner.show();
+    
     if(this.botid!="" && this.botid!=undefined && this.botid!="not_saved")
     {
       this.rest.getbotdata(this.botid).subscribe(data=>{
