@@ -123,7 +123,7 @@ this.email=localStorage.getItem('ProfileuserId');
     this.getInitiatives();
     this.api.getCategoriesList().subscribe(res=> {
       this.categoriesList=res
-      this.categories_list=this.categoriesList.data
+      this.categories_list=this.categoriesList.data.sort((a, b) => (a.categoryName.toLowerCase() > b.categoryName.toLowerCase()) ? 1 : ((b.categoryName.toLowerCase() > a.categoryName.toLowerCase()) ? -1 : 0));
       // if(this.categories_list.length==1){
       //   this.categoryName=this.categories_list[0].categoryName
       // }

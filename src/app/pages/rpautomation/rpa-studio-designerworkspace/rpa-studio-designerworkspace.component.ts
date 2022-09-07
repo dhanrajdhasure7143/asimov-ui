@@ -1124,20 +1124,27 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
  
   
   this.fileterdarray = this.multiformdata.map(p=>{
+    let responseData={}
     if(p.type=="multiform")
-      return{
+      responseData={
         "metaAttrId": p.id,
         "metaAttrValue": p.name,
         "attrValue":JSON.stringify(multiformResult.multiform)
       }
     else
     {
-      return {
+      responseData={
         "metaAttrId": p.id,
         "metaAttrValue": p.name,
         "attrValue":multiformResult.otherFormData[p.name+'_'+p.id]
       }
     }
+
+    let index = this.finaldataobjects.findIndex(sweetdata => sweetdata.nodeId == this.selectedNode.name + "__" + this.selectedNode.id,)
+    if (index != undefined && index >= 0) {
+      responseData["attrId"]=this.finaldataobjects[index].attributes.find((attrItem:any)=>attrItem.metaAttrId==p.id).attrId;
+    }
+    return responseData;
     //   if(p.name=='webElementType'){
     //     return{
     //       "metaAttrId": p.id,
@@ -1174,15 +1181,17 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       "taskName": this.selectedTask.name,
       "tMetaId": this.selectedTask.id,
       "inSeqId": 1,
+      "taskId":'',
       "taskSubCategoryId": "1",
       "outSeqId": 2,
       "nodeId": this.selectedNode.name + "__" + this.selectedNode.id,
       "x": this.selectedNode.x,
       "y": this.selectedNode.y,
-      "attributes": this.fileterdarray ,
+      "attributes": this.fileterdarray,
     }
     let index = this.finaldataobjects.findIndex(sweetdata => sweetdata.nodeId == cutedata.nodeId)
     if (index != undefined && index >= 0) {
+      cutedata["botTId"]=this.finaldataobjects[index].botTId;
       this.finaldataobjects[index] = cutedata;
     } else {
       this.finaldataobjects.push(cutedata);
@@ -1209,7 +1218,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     this.formVales.forEach((ele, i) => {
       if (ele.visibility == true) {
         //let objKeys = Object.keys(this.fieldValues);
-        console.log(ele);
         objAttr = {
           "metaAttrId": ele.id,
           "metaAttrValue": ele.name,
@@ -1221,8 +1229,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         if (index != undefined && index >= 0) {
           if(this.finaldataobjects[index].attributes.find((attrItem:any)=>attrItem.metaAttrId==ele.id)!=undefined)          
             objAttr["attrId"]=this.finaldataobjects[index].attributes.find((attrItem:any)=>attrItem.metaAttrId==ele.id).attrId;
-          //this.finaldataobjects[index] = cutedata;
-        console.log(index)
         }
         if(ele.type=="checkbox" && this.fieldValues[ele.name+"_"+ele.id]=="")
         {
@@ -1272,6 +1278,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         obj.push(objAttr);
       }
     })
+
     let cutedata = {
       "taskName": this.selectedTask.name,
       "tMetaId": this.selectedTask.id,
@@ -1285,6 +1292,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     }
     let index = this.finaldataobjects.findIndex(sweetdata => sweetdata.nodeId == cutedata.nodeId)
     if (index != undefined && index >= 0) {
+      cutedata["botTId"]=this.finaldataobjects[index].botTId;
       this.finaldataobjects[index] = cutedata;
     } else {
       this.finaldataobjects.push(cutedata);
@@ -1443,8 +1451,9 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           width:item.width,
           edit:false,
         }
-        this.groupsData.push(GroupData)
+        this.groupsData.push(GroupData);
         setTimeout(()=>{
+
           let element:any=document.getElementById(GroupData.id);
           this.groupsData.find((item:any)=>item.id==GroupData.id).el=element;
           let  groupIds:any=[];
