@@ -48,6 +48,9 @@ export class ChangePasswordComponent implements OnInit {
     }else if(res.errorMessage === "The new password must be different from your previous used passwords"){
       Swal.fire("Error",res.errorMessage,"error");
      
+    }else if(res.errorMessage === "The new password must be different from your current password"){
+      Swal.fire("Error",res.errorMessage,"error");
+     
     }
   }, err => {
     this.spinner.hide();
