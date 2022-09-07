@@ -170,7 +170,7 @@ gettime(){
         }
         else
         {
-          localStorage.set("botSchedulePayload_"+this.botid,null);
+          localStorage.setItem("botSchedulePayload_"+this.botid,null);
           this.emitSchedule.emit(null);
         }
       }, err=>{
