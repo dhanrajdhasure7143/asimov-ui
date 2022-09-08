@@ -47,6 +47,9 @@
                 <span class="groupTitle clickable" *ngIf="group.edit==true">
                     <input type="text" (keyup)="group.groupName=$event.target.value" [value]="group.groupName">
                 </span>
+                <span class="groupTitle clickable" *ngIf="group.edit==true">
+                    <input type="color" (keyup)="group.color=$event.target.value" [value]="group.color">
+                </span>
                 <span class="text-suuccess groupTitle clickable" *ngIf="group.edit==true" (click)="group.edit=false" ><i class="ri-check-line"></i></span>
             </div>
         </div>
