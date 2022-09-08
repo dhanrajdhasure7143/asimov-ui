@@ -77,9 +77,9 @@ import * as moment from 'moment';
         agentPath: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         hostAddress: ["", Validators.compose([Validators.required,  Validators.maxLength(50)])],
         categoryId:["0", Validators.compose([Validators.required])],
-        username: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        username: ["", Validators.compose([Validators.required,Validators.pattern('^[a-zA-Z \-\']+') ,Validators.maxLength(50)])],
         connectionType: ["SSH",Validators.compose([Validators.required,, Validators.maxLength(50), Validators.pattern("[A-Za-z]*")])],
-        portNumber: ["22",  Validators.compose([Validators.required, Validators.maxLength(6)])],
+        portNumber: ["22",  Validators.compose([Validators.required, Validators.maxLength(4)])],
         activeStatus: [true] 
     })
 
@@ -831,6 +831,25 @@ import * as moment from 'moment';
       }
     })
   }
+
+  
+
+  onlyAlphabetsAllowed(event): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode
+    if(charCode > 31 && charCode != 32 && (charCode < 65 || charCode > 90) && (charCode < 97 || charCode > 122)){
+      return false
+    }
+    return true
+  }
+
+
+ onlyNumbersAllowed(event): boolean {
+  const charCode = (event.which) ? event.which : event.keyCode
+  if(charCode != 43 && charCode != 45 && charCode != 46 && charCode != 69 && charCode != 101){
+    return true 
+  }
+  return false 
+ }
 
 }
 

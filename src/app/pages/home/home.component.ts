@@ -61,11 +61,12 @@ export class HomeComponent implements OnInit {
     this.tenantId = localStorage.getItem('tenantName');
     this.rest_api.expiryInfo().subscribe(data => {
       this.expiry = data.Expiresin;
+      this.expiry = 1;
       console.log("left over days ----",this.expiry)
       localStorage.setItem('expiresIn',this.expiry)
-      if(this.expiry<0){
-        this.router.navigate(['/pages/subscriptions'])
-      }  
+      // if(this.expiry<0){
+      //   this.router.navigate(['/pages/subscriptions'])
+      // }  
     this.rest_api.getProductPlans("EZFlow", this.tenantId).subscribe(data => {
       this.plansList = data
       if(this.plansList.length > 1){

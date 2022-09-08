@@ -32,12 +32,15 @@ export class SoProcesslogComponent implements OnInit, OnDestroy{
   public Environments:any;
   public dataSourcep3: MatTableDataSource<any>;
   public respdata1: boolean = false;
-  interval: any = 0;
-  displayedColumnsp1: string[] = ["processRunId","Environment","processStartDate","processEndDate","runStatus"];
-  displayedColumnsp2: string[] = ['bot_name','version','run_id','start_date','end_date', "bot_status"]; //,'log_statement'
-  displayedColumnsp3: string[] = ['task_name','start_date','end_date', 'status','error_info' ];
-  interval1: any = 0;
-  interval2: any = 0;
+  public interval: any = 0;
+  public displayedColumnsp1: string[] = ["processRunId","Environment","processStartDate","processEndDate","runStatus"];
+  public displayedColumnsp2: string[] = ['bot_name','version','run_id','start_date','end_date', "bot_status"]; //,'log_statement'
+  public displayedColumnsp3: string[] = ['task_name','start_date','end_date', 'status','error_info' ];
+  public interval1: any = 0;
+  public interval2: any = 0;
+  public selected_processRunId:any;
+  public selected_runid:any;
+  public logstatus:any;
   constructor( private rest:RestApiService, private changeDetectorRef: ChangeDetectorRef,private automated:NewSoAutomatedTasksComponent, private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
@@ -45,31 +48,31 @@ export class SoProcesslogComponent implements OnInit, OnDestroy{
     document.getElementById("plogrunid").style.display="none";
     document.getElementById("pbotrunid").style.display="none";
     this.Environments=this.automated.environments;
-    // this.getprocesslog();
     this.setProcesslog();
   }
 
+  setProcesslog(){
+    clearInterval(this.interval2)
+    this.getprocesslog()
+    this.loadLogsFlag=true;
+    this.interval  = setInterval(()=> { 
+      this.getprocesslog()
+    }, 3000);
+    
+  }
+
   getprocesslog(){
-     clearInterval(this.interval2)
     let logbyrunidresp1:any;
     let resplogbyrun1: any = [];
-
-    if(this.processId != '' && this.processId != undefined)
-    {
+    if(this.processId != '' && this.processId != undefined){
     this.logresponse=[];
-    //this.spinner.show()
-    
     document.getElementById("viewlogid1").style.display = "block";
-   // this.loadLogsFlag=true;
     this.rest.getProcesslogsdata(this.processId).subscribe(data =>{
-    //  this.spinner.hide();
-     // this.loadLogsFlag=false
         this.logresponse = data;
-        if(this.logresponse.length >0)
-        {
+        this.loadLogsFlag=false
+        if(this.logresponse.length >0){
           this.respdata1 = false;
-        }else
-        {
+        }else {
           this.respdata1 = true;
         }
         this.logresponse.forEach(rlog=>{
@@ -78,18 +81,14 @@ export class SoProcesslogComponent implements OnInit, OnDestroy{
           logbyrunidresp1["processEndDate"]=logbyrunidresp1.processEndTime;
           logbyrunidresp1.processStartTime=logbyrunidresp1.processStartTime;
           logbyrunidresp1.processEndTime=logbyrunidresp1.processEndTime;
-
           resplogbyrun1.push(logbyrunidresp1)
         });
         this.runidresponse = resplogbyrun1;
-
         this.runidresponse.sort((a,b) => a.processRunId > b.processRunId ? -1 : 1);
         this.dataSourcep1 =  new MatTableDataSource(this.runidresponse);
         this.changeDetectorRef.detectChanges();
         this.dataSourcep1.sort=this.sortp1;
-       
-        // this.dataSourcep1.paginator=this.paginator1;
-
+        this.dataSourcep1.paginator=this.paginator1;
     });
     }
   }
@@ -107,110 +106,106 @@ export class SoProcesslogComponent implements OnInit, OnDestroy{
   }
 
   backplogrid(){
-   // this.getprocesslog()
     document.getElementById("plogrunid").style.display = "none";
     document.getElementById("viewlogid1").style.display = "block";
-    this.stopRefresh()
+    clearInterval(this.interval1)
     this.setProcesslog()
   }
 
   backpbotrunid(){
-    
-    this.getprocessrunid(this.selected_processRunId)
+    this.setProcessByRunID(this.selected_processRunId,this.logstatus)
     document.getElementById("pbotrunid").style.display = "none";
     document.getElementById("plogrunid").style.display = "block";
-    this.stopRefresh()
-    // this.setProcesslog()
-    this.interval1
+    clearInterval(this.interval1)
   }
-  public selected_processRunId:any;
+
+  setProcessByRunID(processRunId,runStatus){
+    clearInterval(this.interval)
+    this.getprocessrunid(processRunId)
+    this.logstatus=runStatus
+    this.loadLogsFlag=true
+    if(runStatus == "Running" || runStatus == "New" ){
+    this.interval2=setInterval(()=>{
+    this.getprocessrunid(processRunId)
+    },3000)
+  }
+  }
+
+
   getprocessrunid(processRunId){
-     this.refreshButton()
     this.selected_processRunId=processRunId;
     let logbyrunidresp: any;
     let resplogbyrun = [];
     let processId = this.logresponse.find(data =>data.processRunId == processRunId).processId;
-    // this.spinner.show();
-    
     document.getElementById("viewlogid1").style.display="none";
     document.getElementById("plogrunid").style.display="block";
-    this.loadLogsFlag=true
-    this.interval2 = setInterval(() => {
     this.rest.getprocessruniddata(processId,processRunId).subscribe(data =>{
-      // this.spinner.hide();
-      this.loadLogsFlag=false;
       this.runidresponse = data;
-      if(this.runidresponse.length >0)
-        {
+      this.loadLogsFlag=false;
+      if(this.runidresponse.length >0) {
           this.respdata2 = false;
-        }else
-        {
+        }else{
           this.respdata2 = true;
         }
       this.runidresponse.forEach(rlog=>{
         logbyrunidresp=rlog;
-       logbyrunidresp["start_date"]=logbyrunidresp.start_time;
+        logbyrunidresp["start_date"]=logbyrunidresp.start_time;
         logbyrunidresp["end_date"]=logbyrunidresp.end_time;
         logbyrunidresp.start_time=logbyrunidresp.start_time;
         logbyrunidresp.end_time=logbyrunidresp.end_time;
-
         resplogbyrun.push(logbyrunidresp)
       });
       this.runidresponse = resplogbyrun;
       this.changeDetectorRef.detectChanges();
       this.dataSourcep2 = new MatTableDataSource(this.runidresponse);
       this.dataSourcep2.sort=this.sortp2;
-      // this.dataSourcep2.paginator=this.paginator2;
+      this.dataSourcep2.paginator=this.paginator2;
       resplogbyrun = [];
     });
-  },3000)
-    //console.log(processRunId);
   }
 
-  public selected_runid:any;
+  setLogByRunID(runid,bot_status){
+    clearInterval(this.interval2)
+    this.ViewlogByrunid(runid)
+    this.loadLogsFlag=true
+    if(bot_status == "Running" || bot_status == "New" ){
+    this.interval1=  setInterval(()=>{
+      this.ViewlogByrunid(runid)
+    },3000)
+  }
+  }
+
   ViewlogByrunid(runid){
-    if(this.interval2){
-      clearInterval(this.interval2)
-    }
     this.selected_runid=runid;
     let responsedata:any=[];
     let logbyrunidresp1:any;
     let resplogbyrun1:any=[];
     let PbotId = this.runidresponse.find(data =>data.run_id == runid).bot_id;
     let pversion = this.runidresponse.find(data =>data.run_id == runid).version;
-    // this.spinner.show()
     document.getElementById("plogrunid").style.display="none";
     document.getElementById("pbotrunid").style.display="block";
-    this.loadLogsFlag=true
-    this.interval1 = setInterval (()=>{
     this.rest.getViewlogbyrunid(PbotId,pversion,runid).subscribe((data)=>{
-      // this.spinner.hide();
-      this.loadLogsFlag=false;
       responsedata = data;
-      if(responsedata.length >0)
-      {
+      this.loadLogsFlag=false;
+      if(responsedata.length >0){
         this.respdata2 = false;
-      }else
-      {
+      }else{
         this.respdata2 = true;
       }
-      responsedata.forEach(rlog=>{
+        responsedata.forEach(rlog=>{
         logbyrunidresp1=rlog;
         logbyrunidresp1["start_date"]=logbyrunidresp1.start_time;
         logbyrunidresp1["end_date"]=logbyrunidresp1.end_time;
         logbyrunidresp1.start_time=logbyrunidresp1.start_time;
         logbyrunidresp1.end_time=logbyrunidresp1.end_time;
-
         resplogbyrun1.push(logbyrunidresp1)
       });
-      //this.logflag=true;
       this.dataSourcep3 = new MatTableDataSource(resplogbyrun1);
       this.changeDetectorRef.detectChanges();
       this.dataSourcep3.sort=this.sortp3;
-      // this.dataSourcep3.paginator=this.paginator3;
+      this.dataSourcep3.paginator=this.paginator3;
       resplogbyrun1 = [];
         })
-      }, 3000)
     }
 
     kill_bot_run(bot)
@@ -228,31 +223,10 @@ export class SoProcesslogComponent implements OnInit, OnDestroy{
       })
     }
 
-    setProcesslog(){
-      this.getprocesslog()
-      this.interval  = setInterval(()=> { 
-        this.getprocesslog()
-      }, 3000);
-      
-    }
-
-    refreshButton(){
-      if(this.interval){
-        clearInterval(this.interval)
-      }
-    }
-
-    stopRefresh(){
-      if(this.interval1){
-        clearInterval(this.interval1)
-      }
-    }
-    
-
-    ngOnDestroy(){
-      this.refreshButton()
-      this.stopRefresh()
-     
+    ngOnDestroy(): void {
+      clearInterval(this.interval)
+      clearInterval(this.interval1)
+      clearInterval(this.interval2)
     }
 }
 

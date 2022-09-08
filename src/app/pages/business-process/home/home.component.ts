@@ -293,7 +293,7 @@ this.dt.bpsHeaderValues('');
   getAllCategories() {    // get all categories list for dropdown
     this.rest.getCategoriesList().subscribe(res => {
     this.categoryList = res;
-    this.categories_list=this.categoryList.data
+    this.categories_list=this.categoryList.data.sort((a, b) => (a.categoryName.toLowerCase() > b.categoryName.toLowerCase()) ? 1 : ((b.categoryName.toLowerCase() > a.categoryName.toLowerCase()) ? -1 : 0));
     })
   }
   searchByCategory(category) {      // Filter table data based on selected categories
