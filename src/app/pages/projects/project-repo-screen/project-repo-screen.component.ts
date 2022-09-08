@@ -286,8 +286,8 @@ this.route.queryParams.subscribe(data=>{​​​​​​​​
   }
   getFileDetails(){
     this.api.getFileDetails(this.projectid).subscribe(data =>{
-      console.log("res",data);
-      console.log("userlist",this.userslist)
+
+
       data.uploadedFiles.forEach(e=>{
         this.userslist.forEach(ele=>{
           // if(){
@@ -450,13 +450,18 @@ this.route.queryParams.subscribe(data=>{​​​​​​​​
   }
 
   filecheckAll(ev) {
-    // this.uploadedFiledata.forEach(x =>
-    //    x.checked = ev.target.checked);
-    
-    if(this.filecheckeddisabled==false)
-      this.uploadedFiledata=this.uploadedFiledata.map(item=>{item.checked=true; return item});
-    if(this.filecheckeddisabled==true)
-      this.uploadedFiledata=this.uploadedFiledata.map(item=>{item.checked=false; return item});
+    this.uploadedFiledata.forEach(x =>
+       x.checked = ev.target.checked);
+       if(this.uploadedFiledata.filter(data => data.checked == true).length == this.uploadedFiledata.length){
+        this.filecheckeddisabled = true;
+      }else{
+        this.filecheckeddisabled = false
+      }
+    // if(this.filecheckeddisabled==false)
+    //   this.uploadedFiledata=this.uploadedFiledata.map(item=>{item.checked=true; return item});
+    // if(this.filecheckeddisabled==true)
+    //   this.uploadedFiledata=this.uploadedFiledata.map(item=>{item.checked=false; return item});
+
     this.checktodelete();
   }
 
@@ -488,6 +493,11 @@ this.route.queryParams.subscribe(data=>{​​​​​​​​
   filechecktoggle(id, event)
   {
     this.uploadedFiledata.find(data=>data.id==id).checked=event.target.checked;
+    if(this.uploadedFiledata.filter(data => data.checked == true).length == this.uploadedFiledata.length){
+      this.filecheckeddisabled = true;
+    }else{
+      this.filecheckeddisabled = false
+    }
     this.checktodelete();
   }
   onDeleteSelectedItems(event){

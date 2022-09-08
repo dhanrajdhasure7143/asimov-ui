@@ -84,6 +84,7 @@ export class RpaSchedulerComponent implements OnInit {
   end_time:any;
   starttimeerror:any;
   aftertime:boolean=false;
+  checkScheduler : boolean = false;
   constructor(private rest:RestApiService, private notifier: NotifierService, private actions:RpaStudioActionsmenuComponent) { }
 
   ngOnInit() {
@@ -102,7 +103,7 @@ export class RpaSchedulerComponent implements OnInit {
     $('#enddatepicker').attr('min', minDate);
     if(this.data.botid!=undefined)
     {
-      console.log(this.data)
+
       this.botid=this.data.botid;
   
       this.get_schedule()
@@ -117,7 +118,7 @@ export class RpaSchedulerComponent implements OnInit {
     this.enddate=this.startdate;
    this.gettime();
 
-    console.log("todaytime",this.todaytime);
+    
 
     this.starttime=(new Date).getHours()+":"+(new Date).getMinutes();
      this.getAlltimezones();
@@ -162,7 +163,7 @@ gettime(){
         else
           Swal.fire("Error",response.errorMessage, "error");
       },err=>{
-        console.log(err)
+        
         Swal.fire("Error","Unable to load schedules","error");
       })
     }
@@ -226,7 +227,7 @@ gettime(){
        
         let e=(c.isBefore(d))
        let starttime_error=(c.isBefore(currenttime))
-        console.log(e)
+        
         if(e==false ){
           this.aftertime=true;
           this.endtimeerror="end time should not be before than or equal to start time"
@@ -393,7 +394,7 @@ gettime(){
         }
         this.schedule_list.push(data);
 
-        console.log(this.schedule_list);
+        
         this.rest.addbotSchedules(this.schedule_list).subscribe((response:any)=>{
           if(response.errorMessage == undefined)
           {
@@ -403,7 +404,7 @@ gettime(){
           else
             Swal.fire("Error",response.errorMessage,"error");
         },err=>{
-          console.log(err)
+          
           Swal.fire("Error","Unable to save schedule","error");
         })
       }
@@ -417,16 +418,27 @@ gettime(){
   check_all(event)
   {
     this.schedule_list=this.schedule_list.map((sch)=>{
-      sch.check=event.target.checked;
+      sch.checked=event.target.checked;
+      if(this.schedule_list.filter(data=>data.checked == true).length == this.schedule_list.length){
+        this.checkScheduler = true;
+      }else{
+        this.checkScheduler = false;
+      }
       return sch;
     })
+   
     this.updateflags();
   }
 
 
   check_schedule(event,intervalid)
   {
-    this.schedule_list.find(data=>data.intervalId==intervalid).check=event.target.checked
+    this.schedule_list.find(data=>data.intervalId==intervalid).checked=event.target.checked;
+    if(this.schedule_list.filter(data=>data.checked == true).length == this.schedule_list.length){
+      this.checkScheduler = true;
+    }else{
+      this.checkScheduler = false;
+    }
     this.updateflags();
   }
 
@@ -700,7 +712,7 @@ gettime(){
   
   getAlltimezones(){
     this.rest.getTimeZone().subscribe(res =>{
-      console.log(res);
+      
         this.timesZones=res;
      })
   }

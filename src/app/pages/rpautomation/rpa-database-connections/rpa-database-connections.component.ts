@@ -21,7 +21,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
   displayedColumns1: string[] = ["check","connectiontName","categoryName","dataBaseType","hostAddress","portNumber","username","password","databasename","schemaName","activeStatus","createdTimeStamp","createdBy"];
   public toggle:boolean;
   dataSource2:MatTableDataSource<any>;
-  public dbupdateflag: boolean;
+  public dbupdateflag: boolean = false;
   public submitted:Boolean;
   public DBcheckflag:boolean = false;
   public dbupdateid : any;
@@ -124,7 +124,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
   }
 
   // changeDatabaseType(event){
-  //    console.log("event",event.target.value);
+
   //    if(event.target.value=='Snowflake'){
   //      this.snowflakeflag=true;
   //      this.insertdbForm.controls.portNumber.clearValidators();
@@ -210,6 +210,13 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
   DBcheckAllCheckBox(ev) {
     this.dbconnections.forEach(x =>
        x.checked = ev.target.checked);
+       if(this.dbconnections.filter(data=>data.checked==true).length==this.dbconnections.length)
+       {
+         this.DBcheckflag=true;
+       }else
+       {
+         this.DBcheckflag=false;  
+       }
     this.DBchecktoupdate();
     this.checktodelete();
   }
@@ -515,10 +522,10 @@ updatedbdata()
     this.dbconnections.find(data=>data.connectionId==id).checked=event.target.checked;
     if(this.dbconnections.filter(data=>data.checked==true).length==this.dbconnections.length)
     {
-      this.dbupdateflag=true;
+      this.DBcheckflag=true;
     }else
     {
-      this.dbupdateflag=false;  
+      this.DBcheckflag=false;  
     }
     this.DBchecktoupdate();
     this.checktodelete();
