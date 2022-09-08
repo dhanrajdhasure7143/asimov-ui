@@ -43,7 +43,7 @@ import * as moment from 'moment';
     private updateid:number;
     public term:string;
     public submitted:Boolean;
-    public checkflag:Boolean;
+    public checkflag:Boolean = false;
     public toggle:Boolean;
     public passwordtype1:Boolean;
     public passwordtype2:Boolean;
@@ -194,7 +194,14 @@ import * as moment from 'moment';
 
 
   checkAllCheckBox(ev) {
-    this.environments.forEach(x => x.checked = ev.target.checked)
+     this.environments.forEach(x => x.checked = ev.target.checked)
+     if(this.environments.filter(data=>data.checked==true).length==this.environments.length)
+     {
+       this.checkflag=true;
+     }else
+     {
+       this.checkflag=false;  
+     }
     this.checktoupdate();
     this.checktodelete();
 
@@ -223,7 +230,7 @@ import * as moment from 'moment';
   
     this.insertForm.reset();
     this.password=null;
-    console.log("keyvaluepair",this.isKeyValuePair)
+
     this.isKeyValuePair=false;
     this.insertForm.get("portNumber").setValue("22");
     this.insertForm.get("connectionType").setValue("SSH");
@@ -265,7 +272,7 @@ import * as moment from 'moment';
       let connectionDetails=JSON.parse(JSON.stringify(formdata.value));
       connectionDetails["password"]=this.password;
      // Object.assign(connectionDetails,({"password":this.password}))
-       console.log("connection details",connectionDetails)
+      
         
       this.spinner.show();
       await this.api.testenvironment(connectionDetails).subscribe( res =>
@@ -459,7 +466,7 @@ import * as moment from 'moment';
       updatFormValue["environmentId"]= this.updateenvdata.environmentId;
       updatFormValue["createdBy"]= this.updateenvdata.createdBy;
       updatFormValue["deployStatus"]= this.updateenvdata.deployStatus;
-      console.log(this.updateflag)
+
       // if(this.updateflag==false)
       // {
         if(this.isKeyValuePair==false)
@@ -482,7 +489,7 @@ import * as moment from 'moment';
               Swal.fire("Error",response.errorMessage,"error")
             }
           },err=>{
-            console.log(err);
+
             this.spinner.hide();
             Swal.fire("Error","Unable to update environment details","error")
           });
@@ -524,7 +531,7 @@ import * as moment from 'moment';
           return updateEnvData.append(String(key),String(updatFormValue[key]))
           
         });
-        console.log("data",updateEnvData)
+
         updateEnvData.append("formValue","sample")
         if(this.isKeyValuePair==false)
         {
@@ -558,7 +565,7 @@ import * as moment from 'moment';
               Swal.fire("Error",response.errorMessage,"error")
             }
           },err=>{
-            console.log(err);
+
             this.spinner.hide();
             Swal.fire("Error","Unable to update environment details","error")
           });

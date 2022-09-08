@@ -107,12 +107,24 @@ export class DepartmentsComponent implements OnInit {
   DepartmentscheckAllCheckBox(ev) {
     this.departments.data.forEach(x =>
        x.checked = ev.target.checked);
+      if(this.departments.data.filter(data=>data.checked==true).length == this.departments.data.length){
+        this.Departmentcheckflag = true;
+      } 
+      else{
+        this.Departmentcheckflag = false;
+      }
     this.checktodelete();
   }
 
   DepartmentscheckEnableDisableBtn(id, event)
   {
     this.departments.data.find(data=>data.categoryId==id).checked=event.target.checked;
+      if(this.departments.data.filter(data=>data.checked==true).length==this.departments.data.length){
+        this.Departmentcheckflag = true;
+      }
+      else{
+        this.Departmentcheckflag = false;
+      }
     this.checktodelete();
   }
 
@@ -178,7 +190,7 @@ export class DepartmentsComponent implements OnInit {
   
   applyFilter(filterValue: string) {
     this.dataSource2.filter = filterValue.trim().toLowerCase();
-    //console.log(this.dataSource2.filter);
+
     if (this.dataSource2.paginator) {
       this.dataSource2.paginator.firstPage();
     }
