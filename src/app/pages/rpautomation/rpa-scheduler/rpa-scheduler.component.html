@@ -78,7 +78,10 @@
                         <div class="innertabld">
                             <table class="table">
                                 <thead>
-                                    <th class="text-center"><input type="checkbox" (click)="check_all($event)"></th>
+                                    <th class="text-center">
+                                        <!-- <input type="checkbox" (click)="check_all($event)"> -->
+                                        #
+                                    </th>
                                     <th>Schedule Interval</th>
                                     <th>Timezone</th>
                                     <th>Start Date</th>
@@ -90,7 +93,7 @@
                                     <th>Status</th>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let schedule of schedule_list  | paginate: { itemsPerPage: 4,currentPage: q }">
+                                    <tr *ngFor="let schedule of (schedule_list)  | paginate: { itemsPerPage: 4,currentPage: q }" >
                                         <td class="text-center">
                                             <input type="checkbox" (click)="check_schedule($event,schedule.intervalId)" [checked]="schedule.check"></td>
                                         <td>{{convertcron(schedule.scheduleInterval)}}</td>
@@ -115,7 +118,7 @@
                     </div>
                 </div>
                 <div class="text-right">
-                    <button class="btn btn-primary eiap-btn" (click)="saveschedule()">Save</button>
+                    <button  class="btn btn-primary eiap-btn" (click)="saveschedule()">Save</button>
                 </div>
             </div>
         </div>
