@@ -559,7 +559,7 @@ export class UploadComponent implements OnInit {
   getAllCategories() {    // get all categories list for dropdown
     this.rest.getCategoriesList().subscribe(res => {
     this.categoryList = res
-    this.categories_list=this.categoryList.data
+    this.categories_list=this.categoryList.data.sort((a, b) => (a.categoryName.toLowerCase() > b.categoryName.toLowerCase()) ? 1 : ((b.categoryName.toLowerCase() > a.categoryName.toLowerCase()) ? -1 : 0));
     let selected_category=localStorage.getItem("pi_search_category");
       // console.log(this.categories_list)
       if(this.categories_list.length == 1){
