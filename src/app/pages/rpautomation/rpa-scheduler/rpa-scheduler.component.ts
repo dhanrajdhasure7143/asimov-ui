@@ -149,6 +149,7 @@ gettime(){
   {
     this.schedule_list=[];
     this.spinner.show();
+    
     if(this.botid!="" && this.botid!=undefined && this.botid!="not_saved")
     {
       this.rest.getbotdata(this.botid).subscribe(data=>{
@@ -164,11 +165,13 @@ gettime(){
             this.schedule_list[index].run_status="not_started";
           })
           //this.actions.updatesavedschedules(response.botMainSchedulerEntity);
+          localStorage.setItem("botSchedulePayload_"+this.botid,JSON.stringify(response.botMainSchedulerEntity))
           this.emitSchedule.emit(response.botMainSchedulerEntity);
           this.updateflags()
         }
         else
         {
+          localStorage.setItem("botSchedulePayload_"+this.botid,null);
           this.emitSchedule.emit(null);
         }
       }, err=>{
