@@ -82,12 +82,12 @@
     <span *ngIf="child_link && child_link.length != 0" [routerLink]="child_link.route" id="child">&nbsp;<i class="fa fa-arrow-right"></i>&nbsp;{{child_link.title}}</span>
    </span>
    <span class="example-spacer"></span>
-   <button mat-icon-button class="txt-wh" aria-label="Example icon-button with heart icon">
+   <!-- <button mat-icon-button class="txt-wh" aria-label="Example icon-button with heart icon">
     <img src="../../../assets/images/search.svg">
-   </button>
-   <button mat-icon-button class="txt-wh" aria-label="Example icon-button with heart icon">
+   </button> -->
+   <!-- <button mat-icon-button class="txt-wh" aria-label="Example icon-button with heart icon">
     <img src="../../../assets/images/plus-square.svg">
-   </button>
+   </button> -->
    <!-- <button mat-icon-button class="txt-wh"  (click)='slideUp("notifications")' aria-label="Example icon-button with heart icon">
     <i style="font-size: 18px;opacity: 0.5;" class="fa fa-bell"></i>
     <div *ngIf="this.notificationscount!=0" class="notification-count" >
@@ -213,7 +213,7 @@
   </button>
   </mat-menu>
 
-  <span class="txt-wh header-seperator">|</span>
+  <!-- <span class="txt-wh header-seperator">|</span> -->
  
   <div style="line-height: 7px;margin-right: 13px;margin-top:6px;">
     <span class="txt-u header-rgttext" *ngIf="user_fName != null">{{user_fName | titlecase}} {{user_lName |titlecase}}</span><br>
