@@ -108,6 +108,7 @@ export class RpaSchedulerComponent implements OnInit {
     $('#enddatepicker').attr('min', minDate);
     if(this.data.botid!=undefined && this.data.botid !="not_saved")
     {
+      console.log("schedules-",this.data)
       this.botid=this.data.botid;
       this.get_schedule()
       this.getenvironments();
@@ -149,13 +150,14 @@ gettime(){
   {
     this.schedule_list=[];
     this.spinner.show();
-    
+
     if(this.botid!="" && this.botid!=undefined && this.botid!="not_saved")
     {
       this.rest.getbotdata(this.botid).subscribe(data=>{
         let response:any=data;
         this.botdata=data
         this.spinner.hide();
+      
         if(response.botMainSchedulerEntity!=null)
         {
           this.schedule_list=response.botMainSchedulerEntity.scheduleIntervals;
@@ -192,8 +194,6 @@ gettime(){
   {
     document.getElementById("sch").style.display="none";
   }
-
-
   onTimeZoneChange(timezone)
   {
     let d:any = new Date(new Date().toLocaleString("en-US", {timeZone: timezone}));
@@ -211,9 +211,6 @@ gettime(){
     
     if(this.isDateToday(this.selecteddate)){
       if(time=='starttime'){
-     
-
-
         this.currenttime=this.tConv24(this.todaytime)
         this.end_time=this.tConv24(this.endtime)
          let a=moment(event,'h:mma')
@@ -404,8 +401,6 @@ gettime(){
           scheduleInterval:this.cronExpression,
           startDate:parseInt(startdate[0])+","+parseInt(startdate[1])+","+parseInt(startdate[2])+","+starttimeparse+","+parseInt(starttime[1]),
           endDate:parseInt(enddate[0])+","+parseInt(enddate[1])+","+parseInt(enddate[2])+","+ endtimeparse+","+ parseInt(endtime[1]),
-         
-        
           timeZone:this.timezone,
           save_status:"unsaved",
           check:false,
@@ -531,15 +526,33 @@ gettime(){
     {
       let list=this.schedule_list.filter(data=>data.check==true);
         list.forEach(data=>{
-          this.rest.pause_schedule(data).subscribe((response:any)=>{
-            if(response.errorMessage==undefined)
-            {            
-              let index2=this.schedule_list.findIndex(scheduleitem=>scheduleitem.intervalId==data.intervalId);
-              this.schedule_list.splice(index2,1);
-            }
-          })
+          if(data.save_status=="unsaved")
+          {
+            let index2=this.schedule_list.findIndex(scheduleitem=>scheduleitem.intervalId==data.intervalId);
+            this.schedule_list.splice(index2,1);              
+            this.flags.startflag=false;
+            this.flags.pauseflag=false;
+            this.flags.resumeflag=false;
+            this.flags.stopflag=false;
+            this.flags.deleteflag=false;
+          }
+          else
+          {
+            this.rest.pause_schedule(data).subscribe((response:any)=>{
+              if(response.errorMessage==undefined)
+              {            
+                let index2=this.schedule_list.findIndex(scheduleitem=>scheduleitem.intervalId==data.intervalId);
+                this.schedule_list.splice(index2,1);              
+                this.flags.startflag=false;
+                this.flags.pauseflag=false;
+                this.flags.resumeflag=false;
+                this.flags.stopflag=false;
+                this.flags.deleteflag=false;
+              }
+            })
+          }
       })
-      this.updateflags();
+      //this.updateflags();
      // this.notifier.notify("success", "Schedules Deleted Sucessfully");
     }
   }
