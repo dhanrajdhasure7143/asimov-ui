@@ -123,7 +123,7 @@ export class SoProcesslogComponent implements OnInit, OnDestroy{
     clearInterval(this.interval)
     this.getprocessrunid(processRunId)
     this.logstatus=runStatus
-    this.loadLogsFlag=true
+    this.loadLogsFlag=true 
     if(runStatus == "Running" || runStatus == "New" ){
     this.interval2=setInterval(()=>{
     this.getprocessrunid(processRunId)
