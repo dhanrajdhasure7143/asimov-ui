@@ -32,12 +32,12 @@ export class SoProcesslogComponent implements OnInit, OnDestroy{
   public Environments:any;
   public dataSourcep3: MatTableDataSource<any>;
   public respdata1: boolean = false;
-  interval: any = 0;
-  displayedColumnsp1: string[] = ["processRunId","Environment","processStartDate","processEndDate","runStatus"];
-  displayedColumnsp2: string[] = ['bot_name','version','run_id','start_date','end_date', "bot_status"]; //,'log_statement'
-  displayedColumnsp3: string[] = ['task_name','start_date','end_date', 'status','error_info' ];
-  interval1: any = 0;
-  interval2: any = 0;
+  public interval: any = 0;
+  public displayedColumnsp1: string[] = ["processRunId","Environment","processStartDate","processEndDate","runStatus"];
+  public displayedColumnsp2: string[] = ['bot_name','version','run_id','start_date','end_date', "bot_status"]; //,'log_statement'
+  public displayedColumnsp3: string[] = ['task_name','start_date','end_date', 'status','error_info' ];
+  public interval1: any = 0;
+  public interval2: any = 0;
   public selected_processRunId:any;
   public selected_runid:any;
   public logstatus:any;
@@ -48,7 +48,6 @@ export class SoProcesslogComponent implements OnInit, OnDestroy{
     document.getElementById("plogrunid").style.display="none";
     document.getElementById("pbotrunid").style.display="none";
     this.Environments=this.automated.environments;
-    // this.getprocesslog();
     this.setProcesslog();
   }
 
@@ -107,7 +106,6 @@ export class SoProcesslogComponent implements OnInit, OnDestroy{
   }
 
   backplogrid(){
-       // this.getprocesslog()
     document.getElementById("plogrunid").style.display = "none";
     document.getElementById("viewlogid1").style.display = "block";
     clearInterval(this.interval1)
@@ -125,15 +123,11 @@ export class SoProcesslogComponent implements OnInit, OnDestroy{
     clearInterval(this.interval)
     this.getprocessrunid(processRunId)
     this.logstatus=runStatus
-    this.loadLogsFlag=true
+    this.loadLogsFlag=true 
     if(runStatus == "Running" || runStatus == "New" ){
     this.interval2=setInterval(()=>{
     this.getprocessrunid(processRunId)
     },3000)
-  }else{
-    setTimeout(() => {
-      this.getprocessrunid(processRunId)
-    }, 5000);
   }
   }
 
@@ -148,7 +142,7 @@ export class SoProcesslogComponent implements OnInit, OnDestroy{
     this.rest.getprocessruniddata(processId,processRunId).subscribe(data =>{
       this.runidresponse = data;
       this.loadLogsFlag=false;
-      if(this.runidresponse.length >0){
+      if(this.runidresponse.length >0) {
           this.respdata2 = false;
         }else{
           this.respdata2 = true;
@@ -178,10 +172,6 @@ export class SoProcesslogComponent implements OnInit, OnDestroy{
     this.interval1=  setInterval(()=>{
       this.ViewlogByrunid(runid)
     },3000)
-  }else{
-    setTimeout(() => {
-      this.ViewlogByrunid(runid);
-    }, 5000);
   }
   }
 
