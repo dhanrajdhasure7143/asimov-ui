@@ -1140,9 +1140,9 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       }
     }
 
-    let index = this.finaldataobjects.findIndex(sweetdata => sweetdata.nodeId == this.selectedNode.name + "__" + this.selectedNode.id,)
+    let index = this.actualTaskValue.findIndex(sweetdata => sweetdata.nodeId == this.selectedNode.name + "__" + this.selectedNode.id,)
     if (index != undefined && index >= 0) {
-      responseData["attrId"]=this.finaldataobjects[index].attributes.find((attrItem:any)=>attrItem.metaAttrId==p.id).attrId;
+      responseData["attrId"]=this.actualTaskValue[index].attributes.find((attrItem:any)=>attrItem.metaAttrId==p.id).attrId;
     }
     return responseData;
     //   if(p.name=='webElementType'){
@@ -1190,8 +1190,9 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       "attributes": this.fileterdarray,
     }
     let index = this.finaldataobjects.findIndex(sweetdata => sweetdata.nodeId == cutedata.nodeId)
+    let savedTaskIndex=this.actualTaskValue.findIndex(sweetdata => sweetdata.nodeId == cutedata.nodeId)
     if (index != undefined && index >= 0) {
-      cutedata["botTId"]=this.finaldataobjects[index].botTId;
+      cutedata["botTId"]=this.actualTaskValue[savedTaskIndex].botTId;
       this.finaldataobjects[index] = cutedata;
     } else {
       this.finaldataobjects.push(cutedata);
@@ -1226,9 +1227,10 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         }
 
         let index = this.finaldataobjects.findIndex(sweetdata => sweetdata.nodeId == (this.selectedNode.name + "__" + this.selectedNode.id))
-        if (index != undefined && index >= 0) {
-          if(this.finaldataobjects[index].attributes.find((attrItem:any)=>attrItem.metaAttrId==ele.id)!=undefined)          
-            objAttr["attrId"]=this.finaldataobjects[index].attributes.find((attrItem:any)=>attrItem.metaAttrId==ele.id).attrId;
+        let savedTaskIndex=this.actualTaskValue.findIndex(sweetdata => sweetdata.nodeId == (this.selectedNode.name + "__" + this.selectedNode.id))
+        if (index != undefined && index >= 0 && savedTaskIndex != undefined && savedTaskIndex >= 0 ) {
+          if(this.actualTaskValue[savedTaskIndex].attributes.find((attrItem:any)=>attrItem.metaAttrId==ele.id)!=undefined)          
+            objAttr["attrId"]=this.actualTaskValue[savedTaskIndex].attributes.find((attrItem:any)=>attrItem.metaAttrId==ele.id).attrId;
         }
         if(ele.type=="checkbox" && this.fieldValues[ele.name+"_"+ele.id]=="")
         {
@@ -1291,8 +1293,9 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       "attributes": obj,
     }
     let index = this.finaldataobjects.findIndex(sweetdata => sweetdata.nodeId == cutedata.nodeId)
-    if (index != undefined && index >= 0) {
-      cutedata["botTId"]=this.finaldataobjects[index].botTId;
+    let savedTaskIndex=this.actualTaskValue.findIndex(sweetdata => sweetdata.nodeId == cutedata.nodeId)
+    if (index != undefined && index >= 0 && savedTaskIndex != undefined && savedTaskIndex >= 0) {
+      cutedata["botTId"]=this.actualTaskValue[savedTaskIndex].botTId;
       this.finaldataobjects[index] = cutedata;
     } else {
       this.finaldataobjects.push(cutedata);
