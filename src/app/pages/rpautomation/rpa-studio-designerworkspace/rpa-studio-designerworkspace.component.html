@@ -1,45 +1,44 @@
-<div [id]="dragareaid">
+
+  <div [id]="dragareaid">
   <div class="main" id="screen">
-    
-        <div  class="drag-area" dndDropzone  (contextmenu)="$event.preventDefault()" (dndDrop)="onDrop($event,$event)" (click)="closemenu()" [ngClass]="{ 'workspace': disable, 'dndDropzoneDisabled': false, 'lightTheme': lightTheme }">
+    <div class="drag-area" dndDropzone  (contextmenu)="$event.preventDefault()" (dndDrop)="onDrop($event,$event)" (click)="closemenu()" [ngClass]="{ 'workspace': disable, 'dndDropzoneDisabled': false, 'lightTheme': lightTheme }">
   
-            <ng-container *ngFor="let node of nodes; let i = index">
-              <div id="{{node.id}}" class="dndDropzone" (mouseover)="openoutputmenu(node)" (dblclick)="formNodeFunc(node,'dbclick')" (contextmenu)="onRightClick(node, $event,i);$event.prevent" [ngStyle]="{'left': node.x, 'top' : node.y,'background-image' :  'url(' + node.path + ')'  }">
-      
-                      <span *ngIf="node.name!='START' && node.name !='STOP'" class="node-delete" (click)="deletenode(node)"><img src="../../../../assets/images/RPA/close-circle-fill.svg"></span>
-                      <div class="connector-name" *ngIf="node.selectedNodeTask==''">{{node.name}} </div>
-                      <div class="connector-name" *ngIf="node.selectedNodeTask!=''">{{node.selectedNodeTask}}</div>
-                      <!--This is task menu which is disabled for now, If we get any requirment we can enable it-->
-                      <!-- <div *ngIf="selectedNode.id==node.id && optionsVisible" class="node_tooltip">
-                          <nav id="context-menu" class="context-menu contextmenu">
-                              <div class="context-menu1">
-                                  <div class="context-menu__item" *ngFor="let menu of stud">
-                                      <a class="context-menu__link" id="{{menu.name}}" (click)="callFunction(menu,node)" data-action="View">{{menu.name}}</a>
-                                  </div>
-                              </div>
-                          </nav>
-                      </div> -->
-                      <div [id]="'output_'+node.id" *ngIf="finalbot.botId!=undefined && node.selectedNodeTask=='Output Box' && (node | Checkoutputbox : finalbot) " style="display:none" class="node_tooltip">
-                          <nav id="context-menu" class="context-menu contextmenu">
-                              <div class="context-menu1">
-                                  <div class="context-menu__item">
-                                      <a class="context-menu__link" (click)="outputbox(node, outputboxModalRef)" data-action="View">Open Output Box
-                                      </a>
-                                  </div>
-                              </div>
-                          </nav>
-                      </div>
-              </div>
-            </ng-container>
-            <div *ngIf="nodes.length==0" class="dragactionsdiv">        
-                  <!-- <img src="../../../../assets/images/RPA/icon_latest/dragdrop.svg" /> --> 
-                   <img src="../../../../assets/images/RPA/dragarea.png" />
-                  <span>Drag an action here...</span>
-          </div>
-          </div>
+      <ng-container *ngFor="let node of nodes; let i = index">
+        <div id="{{node.id}}" class="dndDropzone" (mouseover)="openoutputmenu(node)" (dblclick)="formNodeFunc(node,'dbclick')" (contextmenu)="onRightClick(node, $event,i);$event.prevent" [ngStyle]="{'left': node.x, 'top' : node.y,'background-image' :  'url(' + node.path + ')'  }">
+
+                <span *ngIf="node.name!='START' && node.name !='STOP'" class="node-delete" (click)="deletenode(node)"><img src="../../../../assets/images/RPA/close-circle-fill.svg"></span>
+                <div class="connector-name" *ngIf="node.selectedNodeTask==''">{{node.name}} </div>
+                <div class="connector-name" *ngIf="node.selectedNodeTask!=''">{{node.selectedNodeTask}}</div>
+                <!--This is task menu which is disabled for now, If we get any requirment we can enable it-->
+                <!-- <div *ngIf="selectedNode.id==node.id && optionsVisible" class="node_tooltip">
+                    <nav id="context-menu" class="context-menu contextmenu">
+                        <div class="context-menu1">
+                            <div class="context-menu__item" *ngFor="let menu of stud">
+                                <a class="context-menu__link" id="{{menu.name}}" (click)="callFunction(menu,node)" data-action="View">{{menu.name}}</a>
+                            </div>
+                        </div>
+                    </nav>
+                </div> -->
+                <div [id]="'output_'+node.id" *ngIf="finalbot.botId!=undefined && node.selectedNodeTask=='Output Box' && (node | Checkoutputbox : finalbot) " style="display:none" class="node_tooltip">
+                    <nav id="context-menu" class="context-menu contextmenu">
+                        <div class="context-menu1">
+                            <div class="context-menu__item">
+                                <a class="context-menu__link" (click)="outputbox(node, outputboxModalRef)" data-action="View">Open Output Box
+                                </a>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
         </div>
-    
+      </ng-container>
+      <div *ngIf="nodes.length==0" class="dragactionsdiv">        
+            <!-- <img src="../../../../assets/images/RPA/icon_latest/dragdrop.svg" /> --> 
+             <img src="../../../../assets/images/RPA/dragarea.png" />
+            <span>Drag an action here...</span>
+    </div>
+    </div>
   </div>
+</div>
 
     <!-- <div *ngIf="hiddenPopUp" class="rpa-modal dynamic-forms-modal" style="display: block;">
       <div class="rpa-modal-content">
