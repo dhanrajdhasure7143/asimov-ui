@@ -2796,3 +2796,10 @@ span.pdicon {
 /* .pg-newpopup .logs-container {
   height: calc(100vh - 365px) !important;
 } */
+.innersform.card-form .mat-tab-body-wrapper {
+  overflow: hidden !important;
+  width: 100%;
+}
+.innersform.card-form .mat-tab-header-pagination-controls-enabled .mat-tab-header-pagination {
+  display: none;
+}
