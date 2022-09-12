@@ -374,7 +374,6 @@ export class UploadProcessModelComponent implements ComponentCanDeactivate,OnIni
     } else {
       await this.rest.getUserBpmnsList().subscribe((res: any[]) => {
         this.full_saved_bpmn_list = res;
-        console.log(res)
         if (this.isShowConformance) {
         this.saved_bpmn_list = res.filter(each_bpmn => {
           return each_bpmn.processIntelligenceId && each_bpmn.processIntelligenceId.toString() == this.pid.toString();
