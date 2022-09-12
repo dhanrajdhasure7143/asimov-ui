@@ -73,9 +73,11 @@ label.label-control {
 .prj-crt-form {
   margin-right: -15px !important;
   margin-left: -15px !important;
-  padding-top: 15px !important;
+  /* padding-top: 15px !important; */
 }
-
+button.btn.btn-primary.btn-update {
+  margin-right: 0px !important;
+}
 
 .maindivfoprm {
   width: 800px;
