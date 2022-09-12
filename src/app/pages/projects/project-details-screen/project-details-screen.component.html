@@ -1008,14 +1008,14 @@
                                                             </span>
                                                         </div>
                                                         <div class="col-md-12 form-group">
-                                                            <label class="label-control">Propose Solution</label>
+                                                            <label class="label-control">Proposed Solution</label>
                                                             <textarea name="purpose" id="purpose" #purpose="ngModel"
                                                                 (keyup)="autoGrowcommentsBox1()"
                                                                 [(ngModel)]="businessPurpose" class="form-control"
                                                                 placeholder="Enter Purpose" required></textarea>
                                                             <span
                                                                 *ngIf="((purpose.invalid && processForm.submitted) || (purpose.errors && purpose.touched) )"
-                                                                class='errspan required'> Propose is required </span>
+                                                                class='errspan required'> Proposed Solution is required </span>
                                                         </div>
                                                         <div class="col-md-12 form-group">
                                                             <label class="label-control">Benefits</label>
