@@ -30,7 +30,6 @@ export class ProjectRpaDesignComponent implements OnInit {
 
   constructor(private rest_api:RestApiService,private router : Router, private route : ActivatedRoute,private spinner: NgxSpinnerService) {
     this.route.queryParams.subscribe(params=>{
-      console.log(params)
       // id=2892&programId=2896
       this.projectId = params.projectId
       this.taskId = params.taskId
@@ -47,7 +46,6 @@ this.getRPAdesignData()
     this.spinner.show();
     let res_data:any
     this.rest_api.getRPAdesignData(this.taskId).subscribe(res=>{res_data = res
-      console.log(res);
       this.USER_DATA = res_data.data
       this.dataSource = new MatTableDataSource(this.USER_DATA);
       this.spinner.hide();
@@ -70,7 +68,6 @@ this.getRPAdesignData()
   }
 
   deleteRow(index){
-    console.log(index,this.USER_DATA)
     // this.USER_DATA = this.USER_DATA.filter((value,key)=>{
     // return value.email != row_obj.email;
     // });
@@ -79,7 +76,6 @@ this.getRPAdesignData()
     }
 
   cancelCreateNewrow(i) {
-    console.log("index:", i);
     this.USER_DATA.splice(i, 1);
     this.dataSource = new MatTableDataSource(this.USER_DATA);
     this.myDataArray.paginator = this.paginator;
@@ -118,7 +114,6 @@ this.getRPAdesignData()
       }).then((result) => {
       this.getRPAdesignData();
       })
-      console.log(res)
     }, err =>{
       this.spinner.hide();
       Swal.fire({
@@ -150,7 +145,6 @@ this.getRPAdesignData()
         this.getRPAdesignData();
       })
       this.selectedId = null
-      console.log(res)
     }, err => {
       this.spinner.hide();
       Swal.fire({
