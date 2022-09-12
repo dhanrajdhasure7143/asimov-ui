@@ -1006,24 +1006,24 @@
                                                             </span>
                                                         </div>
                                                         <div class="col-md-12 form-group">
-                                                            <label class="label-control">Purpose of Automation</label>
+                                                            <label class="label-control">Proposed Solution</label>
                                                             <textarea name="purpose" id="purpose" #purpose="ngModel"
                                                                 (keyup)="autoGrowcommentsBox1()"
                                                                 [(ngModel)]="businessPurpose" class="form-control"
                                                                 placeholder="Enter Purpose" required></textarea>
                                                             <span
                                                                 *ngIf="((purpose.invalid && processForm.submitted) || (purpose.errors && purpose.touched) )"
-                                                                class='errspan required'> Purpose is required </span>
+                                                                class='errspan required'> Proposed Solution is required </span>
                                                         </div>
                                                         <div class="col-md-12 form-group">
-                                                            <label class="label-control">Benefits of Automation</label>
+                                                            <label class="label-control">Benefits</label>
                                                             <textarea name="_benefits" id="_benefits"
                                                                 #_benefits="ngModel" (keyup)="autoGrowcommentsBox2()"
                                                                 [(ngModel)]="business_benefits" class="form-control"
                                                                 placeholder="Enter Benefits" required></textarea>
                                                             <span
                                                                 *ngIf="((purpose.invalid && processForm.submitted) || (purpose.errors && purpose.touched) )"
-                                                                class='errspan required'> Purpose is required </span>
+                                                                class='errspan required'> Benefits is required </span>
                                                         </div>
                                                     </form>
                                                 </div>
