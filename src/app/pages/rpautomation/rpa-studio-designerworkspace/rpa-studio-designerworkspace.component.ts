@@ -167,7 +167,9 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     if (this.finalbot.botId != undefined) {
       this.finaldataobjects = this.finalbot.tasks;
       this.actualTaskValue=[...this.finalbot.tasks];
-      this.actualEnv=[...this.finalbot.envIds]
+      this.actualEnv=[...this.finalbot.envIds];
+      localStorage.setItem("botSchedulePayload_"+this.finalbot.botId,this.finalbot.botMainSchedulerEntity!=null?JSON.stringify({...{},...this.finalbot.botMainSchedulerEntity}):null);
+      this.reloadScheduleInterval();
       this.loadnodes();
     }
     this.dragareaid = "dragarea__" + this.finalbot.botName;
@@ -1355,7 +1357,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     this.finaldataobjects = [];
   }
 
-  async updateBotFun(botProperties, env) {
+  async updateBotFun(botProperties, env, latestSchedules) {
 
     this.checkorderflag=true;
     this.addsquences();
@@ -1363,7 +1365,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     this.get_coordinates();
     await this.getsvg();
     this.rpaAuditLogs(env);
-    let bot_schedule=JSON.parse(localStorage.getItem("botSchedulePayload_"+this.finalbot.botId))
+    let bot_schedule:any=latestSchedules=="NORMAL"?JSON.parse(localStorage.getItem("botSchedulePayload_"+this.finalbot.botId)):latestSchedules;
     this.saveBotdata = {
       "version": botProperties.version,
       "botId": botProperties.botId,
@@ -1971,10 +1973,26 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
   
   ngOnDestroy(): void {
-    //localStorage.removeItem("")
     localStorage.removeItem("botSchedulePayload_"+this.finalbot.botId)
-         
+    clearInterval(this.rescheduleInterval);
   }
+
+  public rescheduleInterval:any;
+  reloadScheduleInterval()
+  {
+      // this.rescheduleInterval=setInterval(()=>{
+      //   if(this.actualTaskValue.find((item:any)=>item.taskName=="Reschedule"))
+      //   {
+      //     this.rest.getbotdata(this.finalbot.botId).subscribe((response:any)=>{
+      //       localStorage.setItem("botSchedulePayload_"+response.botId,JSON.stringify({...{},...response.botMainSchedulerEntity}));
+      //     },(err:any)=>{
+      //       console.log("fail to get schedules");
+      //     })
+      //   }
+      // }, 5000)
+    
+  }
+
 }
 
 

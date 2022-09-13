@@ -319,72 +319,100 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
     }
     else
     {
-       let checkbot:any=await this.childBotWorkspace.updateBotFun(this.savebotrespose,this.finalenv)
+      if(this.savebotrespose.tasks.find((item:any)=>item.taskName=="Reschedule"))
+      {
+        this.rest.getbotdata(this.savebotrespose.botId).subscribe(async (scheduleResponse:any)=>{
+          let latestSchedules:any=null;
+          if(scheduleResponse.botMainSchedulerEntity==null)
+          {
+            latestSchedules=null;
+          }
+          else
+          {
+            latestSchedules={...{},...scheduleResponse.botMainSchedulerEntity}; 
+          }
+          this.updateBot(latestSchedules);
+        },err=>{
+          this.spinner.hide();
+          Swal.fire("Error","Failed to get schedule details","error")
+        });
+      }
+      else
+      {
+        this.updateBot("NORMAL")
+      }
+    }
+  }
+
+
+
+  async updateBot(latestSchedules:any)
+  {
+    let checkbot:any=await this.childBotWorkspace.updateBotFun(this.savebotrespose,this.finalenv, latestSchedules)
        if(checkbot==false)
        {
         this.rpa_studio.spinner.hide();
         Swal.fire("Warning","Please check connections","warning");
        }else
        {
-         await checkbot.subscribe(data=>{
-          let response:any=data
-          if(response.errorMessage== undefined)
-          {
-            //this.childBotWorkspace.successCallBack(data);
-            this.savebotrespose=data;
-            this.botState=data;
-            this.selectedversion=response.version;
-            this.rpa_studio.spinner.hide();
-            this.getVersionlist();
-            //Swal.fire("Success","Bot updated successfully","success")
-            Swal.fire({
-              title: 'Success',
-              text: "Bot Updated Successfully",
-              icon: 'success',
-              heightAuto: false,
-            })
-            let auditLogs=[...this.childBotWorkspace.auditLogs];
-            if(auditLogs.length!=0)
-            this.rest.addAuditLogs(auditLogs).subscribe((data:any)=>{
-              this.childBotWorkspace.actualTaskValue=[...this.savebotrespose.tasks.filter(item=>item.version==this.savebotrespose.version)];
-              this.childBotWorkspace.actualEnv=[...this.savebotrespose.envIds]
-              if(data.errorMessage!=undefined)
-              {
-                 Swal.fire("Error",data.errorMessage,"error")
-              }
-            },err=>{
-              this.rpa_studio.spinner.hide();
-              Swal.fire("Error","Unable to add audit logs","error")
-            })
-            // if(this.childBotWorkspace.finaldataobjects.find(item=>item.inSeqId.split("_")=="START")!=undefined)
-            // {
-            //   let firstTask=this.childBotWorkspace.finaldataobjects.find(item=>item.inSeqId.split("_")=="START")
-            //   let coordinates=(firstTask.nodeId.split("|")!=undefined)?firstTask.nodeId.split("|"):undefined;
-            //   if(coordinates!=undefined)
-            //   {
-            //     this.childBotWorkspace.finaldataobjects.find(item=>item.inSeqId.split("_")=="START").nodeId=coordinates[0];
-            //   }
-            // }
-              this.childBotWorkspace.uploadfile(this.finalenv);
-          
-          }
-          else
-          {
-            this.rpa_studio.spinner.hide();
-            Swal.fire("Error",response.errorMessage,"error");
-            let coordinates=(this.childBotWorkspace.finaldataobjects[0].x.split("|")!=undefined)?this.childBotWorkspace.finaldataobjects[0].nodeId.split("|"):undefined;
-            if(coordinates!=undefined)
+          await checkbot.subscribe(data=>{
+            let response:any=data
+            if(response.errorMessage== undefined)
             {
-              this.childBotWorkspace.finaldataobjects[0].nodeId=coordinates[0];
+              //this.childBotWorkspace.successCallBack(data);
+              this.savebotrespose=data;
+              this.botState=data;
+              this.selectedversion=response.version;
+              this.rpa_studio.spinner.hide();
+              this.getVersionlist();
+              //Swal.fire("Success","Bot updated successfully","success")
+              Swal.fire({
+                title: 'Success',
+                text: "Bot Updated Successfully",
+                icon: 'success',
+                heightAuto: false,
+              })
+              let auditLogs=[...this.childBotWorkspace.auditLogs];
+              if(auditLogs.length!=0)
+              this.rest.addAuditLogs(auditLogs).subscribe((data:any)=>{
+                this.childBotWorkspace.actualTaskValue=[...this.savebotrespose.tasks.filter(item=>item.version==this.savebotrespose.version)];
+                this.childBotWorkspace.actualEnv=[...this.savebotrespose.envIds]
+                if(data.errorMessage!=undefined)
+                {
+                  Swal.fire("Error",data.errorMessage,"error")
+                }
+              },err=>{
+                this.rpa_studio.spinner.hide();
+                Swal.fire("Error","Unable to add audit logs","error")
+              })
+              // if(this.childBotWorkspace.finaldataobjects.find(item=>item.inSeqId.split("_")=="START")!=undefined)
+              // {
+              //   let firstTask=this.childBotWorkspace.finaldataobjects.find(item=>item.inSeqId.split("_")=="START")
+              //   let coordinates=(firstTask.nodeId.split("|")!=undefined)?firstTask.nodeId.split("|"):undefined;
+              //   if(coordinates!=undefined)
+              //   {
+              //     this.childBotWorkspace.finaldataobjects.find(item=>item.inSeqId.split("_")=="START").nodeId=coordinates[0];
+              //   }
+              // }
+                this.childBotWorkspace.uploadfile(this.finalenv);
+            
             }
-           
-          }
-        },err=>{
-          this.spinner.hide()
-          Swal.fire("Error","Unable to update bot","error")
-        });
-      }
-    }
+            else
+            {
+              this.rpa_studio.spinner.hide();
+              Swal.fire("Error",response.errorMessage,"error");
+              let coordinates=(this.childBotWorkspace.finaldataobjects[0].x.split("|")!=undefined)?this.childBotWorkspace.finaldataobjects[0].nodeId.split("|"):undefined;
+              if(coordinates!=undefined)
+              {
+                this.childBotWorkspace.finaldataobjects[0].nodeId=coordinates[0];
+              }
+            
+            }
+          },err=>{
+            this.spinner.hide()
+            Swal.fire("Error","Unable to update bot","error")
+          });
+        }
   }
 
 
@@ -496,7 +524,6 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
       id=this.botState.botDepartment
     }
     this.rest.getFilteredEnvironment(id).subscribe(data => {
-      
       let response:any=data
       let response1:any=data;
      response=response1.sort((a, b) => (a.environmentName.toLowerCase() > b.environmentName.toLowerCase()) ? 1 : ((b.environmentName.toLowerCase() > a.environmentName.toLowerCase()) ? -1 : 0));
@@ -785,7 +812,6 @@ loadpredefinedbot(botId, dropCoordinates)
         //this.childBotWorkspace.finaldataobjects.push(element)
         let nodename=  element.nodeId.split("__")[0];
         let nodeid=(element.nodeId.split("__")[1]).split("|")[0];
-       
         let node={
           id:this.childBotWorkspace.idGenerator(),
           name:nodename,
@@ -835,8 +861,6 @@ loadpredefinedbot(botId, dropCoordinates)
       setTimeout(() => {
         this.childBotWorkspace.populateNodes(node);
       }, 240);
-
-
       })
      
       // console.log(this.childBotWorkspace.nodes);
