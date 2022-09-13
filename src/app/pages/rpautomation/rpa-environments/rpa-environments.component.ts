@@ -779,6 +779,11 @@ import * as moment from 'moment';
          // Swal.fire("Error","Failed to deploy bot in selected evironment","error")
          Swal.fire("Success","Agent Deployed Successfully !!","success")
           this.spinner.hide(); 
+          this.removeallchecks();
+        this.getallData(); 
+        this.checktoupdate();
+        this.checktodelete();  
+          
       })
     }
   }
