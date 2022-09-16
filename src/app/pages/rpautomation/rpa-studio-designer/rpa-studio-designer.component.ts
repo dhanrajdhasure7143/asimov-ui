@@ -119,7 +119,10 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
     
     
   }
-
+  clear(){
+    this.version_type='';
+    this.comments=''
+  }
   version_change(versionId)
   {
     this.current_instance.switchversion(versionId);

@@ -335,7 +335,7 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
               heightAuto: false,
             })
             let auditLogs=[...this.childBotWorkspace.auditLogs].map(item=>{
-              item["version_new"]=this.savebotrespose.version_new;
+              item["versionNew"]=this.savebotrespose.versionNew;
               item['comments']=this.savebotrespose.comments;
               return item
             });

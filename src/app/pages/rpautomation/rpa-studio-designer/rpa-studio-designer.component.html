@@ -60,7 +60,7 @@
                       </div>
                       <span class="bpsbtnsep">|</span>
                       <div class="action-item hovericon" *ngIf="current_instance != undefined ">
-                        <button class="clr-hvr tsttooltipbtn"  [disabled]="current_instance.selectedEnvironments.length==0 " [outsideClick]="true"  [popover]="popTemplate" placement="bottom">
+                        <button class="clr-hvr tsttooltipbtn"  [disabled]="current_instance.selectedEnvironments.length==0 " [outsideClick]="true" (click)="clear()" [popover]="popTemplate" placement="bottom">
                           <img src="../../../../assets/images/RPA/icon_latest/save.svg" class="testplus1">
                           <span class="testtooltip">Save Bot</span>
                         </button>

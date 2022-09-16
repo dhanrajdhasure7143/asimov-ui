@@ -18,7 +18,7 @@ export class RpaAuditlogsComponent implements OnInit {
   constructor(private activatedRoute:ActivatedRoute,private router: Router, private rest:RestApiService,private spinner:NgxSpinnerService) { }
   botId:any;
   auditLogsData:any=[];
-  displayedColumns: string[] = ["changedDate",'botName',"changedBy",];
+  displayedColumns: string[] = ["versionNew","changedDate",'botName',"changedBy","comments"];
   dataSource:MatTableDataSource<any>;
   @ViewChild("paginator",{static:false}) paginator: MatPaginator;
   ngOnInit(): void {
@@ -65,6 +65,11 @@ getAuditLogs(environments)
        this.auditLogsData=[...data.Status.map((item:any)=>{
          if(item.botName.split("|")[1]!=undefined)
          {
+           if(item.versionNew!=null){
+            item["versionNew"]= parseFloat(item.versionNew)
+            item["versionNew"]=item.versionNew.toFixed(1)
+           }
+        
           item["changedDate"] = moment(new Date(item.changedDate)).format('LLL')
            item["Status"]=item.botName.split("|")[1];
            if(item["Status"]=='AddedEnv'|| item['Status']=='RemovedEnv')
