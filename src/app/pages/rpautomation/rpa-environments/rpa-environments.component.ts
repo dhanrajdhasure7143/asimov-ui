@@ -43,7 +43,7 @@ import * as moment from 'moment';
     private updateid:number;
     public term:string;
     public submitted:Boolean;
-    public checkflag:Boolean;
+    public checkflag:Boolean = false;
     public toggle:Boolean;
     public passwordtype1:Boolean;
     public passwordtype2:Boolean;
@@ -77,9 +77,9 @@ import * as moment from 'moment';
         agentPath: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         hostAddress: ["", Validators.compose([Validators.required,  Validators.maxLength(50)])],
         categoryId:["0", Validators.compose([Validators.required])],
-        username: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        username: ["", Validators.compose([Validators.required,Validators.pattern('^[a-zA-Z \-\']+') ,Validators.maxLength(50)])],
         connectionType: ["SSH",Validators.compose([Validators.required,, Validators.maxLength(50), Validators.pattern("[A-Za-z]*")])],
-        portNumber: ["22",  Validators.compose([Validators.required, Validators.maxLength(6)])],
+        portNumber: ["22",  Validators.compose([Validators.required, Validators.maxLength(4)])],
         activeStatus: [true] 
     })
 
@@ -194,7 +194,14 @@ import * as moment from 'moment';
 
 
   checkAllCheckBox(ev) {
-    this.environments.forEach(x => x.checked = ev.target.checked)
+     this.environments.forEach(x => x.checked = ev.target.checked)
+     if(this.environments.filter(data=>data.checked==true).length==this.environments.length)
+     {
+       this.checkflag=true;
+     }else
+     {
+       this.checkflag=false;  
+     }
     this.checktoupdate();
     this.checktodelete();
 
@@ -223,7 +230,7 @@ import * as moment from 'moment';
   
     this.insertForm.reset();
     this.password=null;
-    console.log("keyvaluepair",this.isKeyValuePair)
+
     this.isKeyValuePair=false;
     this.insertForm.get("portNumber").setValue("22");
     this.insertForm.get("connectionType").setValue("SSH");
@@ -265,7 +272,7 @@ import * as moment from 'moment';
       let connectionDetails=JSON.parse(JSON.stringify(formdata.value));
       connectionDetails["password"]=this.password;
      // Object.assign(connectionDetails,({"password":this.password}))
-       console.log("connection details",connectionDetails)
+      
         
       this.spinner.show();
       await this.api.testenvironment(connectionDetails).subscribe( res =>
@@ -459,7 +466,7 @@ import * as moment from 'moment';
       updatFormValue["environmentId"]= this.updateenvdata.environmentId;
       updatFormValue["createdBy"]= this.updateenvdata.createdBy;
       updatFormValue["deployStatus"]= this.updateenvdata.deployStatus;
-      console.log(this.updateflag)
+
       // if(this.updateflag==false)
       // {
         if(this.isKeyValuePair==false)
@@ -482,7 +489,7 @@ import * as moment from 'moment';
               Swal.fire("Error",response.errorMessage,"error")
             }
           },err=>{
-            console.log(err);
+
             this.spinner.hide();
             Swal.fire("Error","Unable to update environment details","error")
           });
@@ -524,7 +531,7 @@ import * as moment from 'moment';
           return updateEnvData.append(String(key),String(updatFormValue[key]))
           
         });
-        console.log("data",updateEnvData)
+
         updateEnvData.append("formValue","sample")
         if(this.isKeyValuePair==false)
         {
@@ -558,7 +565,7 @@ import * as moment from 'moment';
               Swal.fire("Error",response.errorMessage,"error")
             }
           },err=>{
-            console.log(err);
+
             this.spinner.hide();
             Swal.fire("Error","Unable to update environment details","error")
           });
@@ -824,6 +831,25 @@ import * as moment from 'moment';
       }
     })
   }
+
+  
+
+  onlyAlphabetsAllowed(event): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode
+    if(charCode > 31 && charCode != 32 && (charCode < 65 || charCode > 90) && (charCode < 97 || charCode > 122)){
+      return false
+    }
+    return true
+  }
+
+
+ onlyNumbersAllowed(event): boolean {
+  const charCode = (event.which) ? event.which : event.keyCode
+  if(charCode != 43 && charCode != 45 && charCode != 46 && charCode != 69 && charCode != 101){
+    return true 
+  }
+  return false 
+ }
 
 }
 

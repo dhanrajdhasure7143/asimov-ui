@@ -278,6 +278,12 @@ export class ProjectDetailsScreenComponent implements OnInit {
   ResourcecheckAllCheckBox(ev) {
     this.resources_list.forEach(x =>
       x.checked = ev.target.checked);
+    if(this.resources_list.filter(data => data.checked == true).length == this.resources_list.length){
+      this.Resourcecheckflag = true;
+    }
+    else{
+      this.Resourcecheckflag = false;
+    }
     this.checktodelete();
   }
   uploadFile(template: TemplateRef<any>) {
@@ -442,6 +448,12 @@ export class ProjectDetailsScreenComponent implements OnInit {
 
   ResourcecheckEnableDisableBtn(id, event) {
     this.resources_list.find(data => data.id == id).checked = event.target.checked;
+    if(this.resources_list.filter(data => data.checked == true).length == this.resources_list.length){
+      this.Resourcecheckflag = true;
+    }
+    else{
+      this.Resourcecheckflag = false;
+    }
     this.checktodelete();
   }
 

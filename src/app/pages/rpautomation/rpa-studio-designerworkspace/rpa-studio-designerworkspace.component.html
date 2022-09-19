@@ -1,6 +1,6 @@
-
+<div [id]="dragareaid">
   <div class="main" id="screen">
-    <div [id]="dragareaid" class="drag-area" dndDropzone  (contextmenu)="$event.preventDefault()" (dndDrop)="onDrop($event,$event)" (click)="closemenu()" [ngClass]="{ 'workspace': disable, 'dndDropzoneDisabled': false, 'lightTheme': lightTheme }">
+    <div  class="drag-area" dndDropzone  (contextmenu)="$event.preventDefault()" (dndDrop)="onDrop($event,$event)" (click)="closemenu()" [ngClass]="{ 'workspace': disable, 'dndDropzoneDisabled': false, 'lightTheme': lightTheme }">
   
       <ng-container *ngFor="let node of nodes; let i = index">
         <div id="{{node.id}}" class="dndDropzone" (mouseover)="openoutputmenu(node)" (dblclick)="getTaskForm(node)" (contextmenu)="onRightClick(node, $event,i);$event.prevent" [ngStyle]="{'left': node.x, 'top' : node.y,'background-image' :  'url(' + node.path + ')'  }">
@@ -62,7 +62,7 @@
     </div>
   </div>
 
-
+</div>
 
 <div class="own-overlay rpa-modal dynamic-forms-modal" *ngIf="hiddenPopUp" style="display: block;">
     <as-split direction="horizontal" [useTransition]="true" (dragEnd)="onDragEnd($event)" #splitEl>

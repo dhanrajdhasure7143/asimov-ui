@@ -154,6 +154,12 @@ inputNumberOnly(event){
   CredcheckAllCheckBox(ev) {
     this.credentials.forEach(x =>
        x.checked = ev.target.checked);
+       if(this.credentials.filter(data=>data.checked==true).length==this.credentials.length){
+         this.Credcheckflag=true;
+       }
+       else{
+         this.Credcheckflag=false;  
+       }
     this.Credchecktoupdate();
     this.checktodelete();
   }
@@ -343,10 +349,10 @@ updatecreddata()
     this.credentials.find(data=>data.credentialId==id).checked=event.target.checked;
     if(this.credentials.filter(data=>data.checked==true).length==this.credentials.length)
     {
-      this.updateflag=true;
+      this.Credcheckflag=true;
     }else
     {
-      this.updateflag=false;  
+      this.Credcheckflag=false;  
     }
     this.Credchecktoupdate();
     this.checktodelete();
