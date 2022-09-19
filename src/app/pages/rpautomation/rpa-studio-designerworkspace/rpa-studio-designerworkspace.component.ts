@@ -1120,7 +1120,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   
 //  }
 
- 
+
  
   
   this.fileterdarray = this.multiformdata.map(p=>{
@@ -1143,7 +1143,10 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     let index = this.actualTaskValue.findIndex(sweetdata => sweetdata.nodeId == this.selectedNode.name + "__" + this.selectedNode.id,)
     if (index != undefined && index >= 0) {
       responseData["attrId"]=this.actualTaskValue[index].attributes.find((attrItem:any)=>attrItem.metaAttrId==p.id).attrId;
+      responseData["botTaskId"]=this.actualTaskValue[index].attributes.find((attrItem:any)=>attrItem.metaAttrId==p.id).botTaskId;
+    
     }
+    
     return responseData;
     //   if(p.name=='webElementType'){
     //     return{
@@ -1231,7 +1234,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         if (index != undefined && index >= 0 && savedTaskIndex != undefined && savedTaskIndex >= 0 ) {
           if(this.actualTaskValue[savedTaskIndex].attributes.find((attrItem:any)=>attrItem.metaAttrId==ele.id)!=undefined)          
             objAttr["attrId"]=this.actualTaskValue[savedTaskIndex].attributes.find((attrItem:any)=>attrItem.metaAttrId==ele.id).attrId;
-        }
+            objAttr["botTaskId"]=this.actualTaskValue[savedTaskIndex].attributes.find((attrItem:any)=>attrItem.metaAttrId==ele.id).botTaskId; 
+          }
         if(ele.type=="checkbox" && this.fieldValues[ele.name+"_"+ele.id]=="")
         {
           objAttr["attrValue"]="false";
