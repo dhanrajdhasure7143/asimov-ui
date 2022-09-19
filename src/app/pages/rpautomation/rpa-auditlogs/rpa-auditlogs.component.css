@@ -75,9 +75,18 @@
   }
   
   .table_responsive.graph_table tr th.gconfig ,
-  .table_responsive.graph_table tr td.gconfig ,
-  .table_responsive.graph_table tr th.gdescrip ,
-  .table_responsive.graph_table tr td.gdescrip {
-      width:10%;
+  .table_responsive.graph_table tr td.gconfig 
+  {
+      width:1%;
+  }
+  .table_responsive.graph_table tr th.gchangedby ,
+  .table_responsive.graph_table tr td.gchangedby 
+  {
+      width:3%;
+  }
+  .table_responsive.graph_table tr th.gdescrip,
+  .table_responsive.graph_table tr td.gdescrip 
+  {
+    width:5%;
   }
   
