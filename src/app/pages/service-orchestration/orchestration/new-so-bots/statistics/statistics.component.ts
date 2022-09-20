@@ -222,7 +222,6 @@ this.getEnvironments();
     // hide zero values in chart
      pieSeries.events.on("datavalidated", function(ev) {
       ev.target.dataItems.each((di) => {
-        console.log(di)
           if (di.values.value.value === 0 ) {
             di.hide();
           }
