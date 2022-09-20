@@ -46,10 +46,8 @@ this.getEnvironments();
 
 
 
-  getslametrics()
-  {
+  getslametrics(){
     this.rest.getslametrics().subscribe(metrics=>{
-     //console.log(metrics);
     
     })
   }
@@ -120,13 +118,13 @@ this.getEnvironments();
 
 
   chart1(pieData){
-    let data:any=pieData.map((item:any)=>{
-       //console.log(item);
-      if(item.litres!=0)
-      {
-        return item;
-      }
-    })
+    let data:any=pieData
+    // let data:any=pieData.map((item:any)=>{
+    //   if(item.litres=0)
+    //   {
+    //     return item;
+    //   }
+    // })
     // Themes begin
     am4core.useTheme(am4themes_animated);
     // Themes end
@@ -221,6 +219,15 @@ this.getEnvironments();
     chart.innerRadius = am4core.percent(0);
     chart.data = data;
 
+    // hide zero values in chart
+     pieSeries.events.on("datavalidated", function(ev) {
+      ev.target.dataItems.each((di) => {
+        console.log(di)
+          if (di.values.value.value === 0 ) {
+            di.hide();
+          }
+      })
+    })
 
   }
 
@@ -981,7 +988,6 @@ pieSeries.labels.template.fontSize = 18;
         {
           let filteredCoordinates:any=filteredbot.coordinates;
           //.filter(item=>moment(item.startTime,"x").format("D-MM-YYYY")==moment(today).format("D-MM-YYYY")||moment(item.startTime,"x").format("D-MM-YYYY")==moment(yesterday).format("D-MM-YYYY"));
-         //console.log("---------check--------",filteredCoordinates)
           if(filteredCoordinates.length>0)
           {
               let timedur:any=0;
@@ -997,9 +1003,7 @@ pieSeries.labels.template.fontSize = 18;
           }
         }
       });
-     //console.log(this.runtimestats)
       this.runtimestats=runtimestats.sort(function(a, b){return b.value - a.value});
-     //console.log(this.runtimestats)
       if(runtimestats.length!=0)
       {
         this.statschart();
@@ -1093,7 +1097,6 @@ pieSeries.labels.template.fontSize = 18;
   {
     this.rest.getUserBpmnsList().subscribe(data=>{
       let response:any=data;
-      //console.log(response);
       this.approved_processes=response.filter(data=>data.bpmnProcessStatus=="APPROVED");
       this.getprocessstatistics();
     })
