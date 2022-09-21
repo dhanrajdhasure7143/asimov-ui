@@ -66,11 +66,11 @@
               <span class="tab-text">{{program_detials.programName  | titlecase}}</span>
             </div>
             <div class="prg-title" *ngIf="editdata==true">
-              <input type="text" maxlength="51" (change)="program_detials.programName=$event.target.value"
+              <input type="text" maxlength="256" (change)="program_detials.programName=$event.target.value"
                 [value]="(program_detials.programName==undefined||program_detials.programName==null)?'':program_detials.programName"
                 class="small-input" (keyup)="programeNameMaxLength($event.target.value)" placeholder="Enter Program Name">
                 <span *ngIf="programeNameFlag" class="errspan required">
-                  Maximum of 50 characters
+                  Maximum of 255 characters
                 </span>
             </div>
 
@@ -81,11 +81,11 @@
             </div>
 
             <div *ngIf="editdata==true">
-              <textarea maxlength="151" (change)="program_detials.description=$event.target.value" style=" resize: none;"
+              <textarea maxlength="256" (change)="program_detials.description=$event.target.value" style=" resize: none;"
               [value]="(program_detials.description==undefined||program_detials.description==null)?'':program_detials.description"
               class="small-input" (keyup)="programePurposeMaxLength($event.target.value)" placeholder="Enter Program Description"></textarea>
               <span *ngIf="programePurposeFlag" class="errspan required">
-                Maximum of 150 characters
+                Maximum of 255 characters
               </span>
             </div>
   
