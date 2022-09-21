@@ -98,4 +98,9 @@ getAuditLogs(environments)
 open(){
   this.router.navigate(["/pages/rpautomation/designer"],{queryParams:{botId:this.botId}})
 }
+fitTableViewCategory(processName) {
+  if (processName && processName.length > 10)
+    return processName.substr(0, 30) + '..';
+  return processName;
+}
 }
