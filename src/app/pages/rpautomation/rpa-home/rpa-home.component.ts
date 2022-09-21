@@ -37,7 +37,7 @@ export class RpaHomeComponent implements OnInit {
   public isTableHasData = true;
   public respdata1=false;
 
-   displayedColumns: string[] = ["botName","description","department","version","actions"];
+   displayedColumns: string[] = ["botName","description","department","version_new","actions"];
   displayedColumns2: string[] = ["processName","taskName","Assign","status","successTask","failureTask","Operations"];
   departmentlist :string[] = ['Development','QA','HR'];
   botNameFilter = new FormControl('');
@@ -298,6 +298,12 @@ export class RpaHomeComponent implements OnInit {
         this.loadflag=false;
       },1000)
       response=botlist;
+     response.map(item=>{
+      if(item.version_new!=null){
+        item["version_new"]= parseFloat(item.version_new)
+        item["version_new"]=item.version_new.toFixed(1)
+       }
+     })
       this.botlistitems=botlist;
       this.botslist=botlist
    

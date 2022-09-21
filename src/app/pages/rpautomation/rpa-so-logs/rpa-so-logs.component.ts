@@ -16,7 +16,7 @@ export class RpaSoLogsComponent implements OnInit, OnDestroy {
   @ViewChild("logsSort",{static:false}) logsSort:MatSort;
   @ViewChild("loopsort",{static:false}) loopsort:MatSort;
   @ViewChild("logsPaginator",{static:false}) logsPaginator:MatPaginator;
-  displayedColumns: string[] = ['run_id','version','start_date','end_date', "bot_status"];
+  displayedColumns: string[] = ['run_id','version_new','start_date','end_date', "bot_status"];
   displayedColumns1: string[] = ['task_name', 'status','start_date','end_date','error_info' ];
   displayedloopColumns:string[]=['taskName','iterationId','status','startTS','endTS',"errorMsg"];
   automationLogColoumns:string[]=['internaltaskName','startTS','endTS', 'status','errorMsg']
@@ -70,7 +70,12 @@ export class RpaSoLogsComponent implements OnInit, OnDestroy {
     this.rest.getviewlogdata(this.logsbotid).subscribe(data =>{
       this.logresponse=data;
       this.logsLoading = false;
- 
+      this.logresponse.map(item=>{
+        if(item.version_new!=null){
+          item["version_new"]= parseFloat(item.version_new)
+          item["version_new"]=item.version_new.toFixed(1)
+         }
+       })
       if(this.logresponse.length >0)
       {
         this.respdata1 = false;
@@ -107,9 +112,11 @@ export class RpaSoLogsComponent implements OnInit, OnDestroy {
    //  this.filteredLogs=[...this.allLogs.filter(item=>item.version==this.filteredLogVersion)];
    this.filteredLogs=[...this.allLogs];
      this.Viewloglist = new MatTableDataSource(this.filteredLogs);
+
      this.changeDetector.detectChanges();
      this.Viewloglist.sort=this.logsSort;
      this.Viewloglist.paginator=this.logsPaginator;
+    
   },err=>{
     this.logsLoading=false;
     Swal.fire("Error","unable to get logs","error")
