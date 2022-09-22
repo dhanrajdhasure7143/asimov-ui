@@ -525,6 +525,7 @@ this.project_id=paramsdata.id
 this.editdata=false;
 this.rpa.getProjectDetailsById(paramsdata.id).subscribe( res=>{​​​​​​
 this.projectDetails=res
+this.processownername = this.projectDetails.processOwner
 this.processOwnerFlag=false
 if(this.projectDetails.endDate){
 this.projectenddate=moment(this.projectDetails.endDate).format("YYYY-MM-DD");
@@ -639,16 +640,19 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
   onProcessChange(processId: number) {
     let process = this.selected_process_names.find(process => process.processId == processId);
     if (process != undefined) {
-      let processOwner: any = this.users_list.find(item => (item.userId.userId == process.ProcessOwner))
+      let processOwner: any = this.users_data.find(item => (item.userId == process.ProcessOwner))
+
       //let processOwner:any=this.userslist.find(item=>(`${item.userId.firstName} ${item.userId.lastName}`==process.createdBy))
       if (processOwner != undefined) {
-        document.getElementById('processowner')['value'] = processOwner.userId.userId;
-        this.processownername = processOwner.userId.userId;
+      this.processownername='';
+        // document.getElementById('processowner')['value'] = processOwner.userId.userId;
+        this.processownername = processOwner.userId;
         this.processOwnerFlag = false;
         // this.createprogram.get("processOwner").setValue(processOwner.userId.userId);
         // this.processOwner=false;
       } else {
-        document.getElementById('processowner')['value'] = '';
+        // document.getElementById('processowner')['value'] = '';
+        this.processownername='';
         this.processOwnerFlag = true;
         //this.createprogram.get("processOwner").setValue("")
         Swal.fire("Error", "Unable to find process owner for selected process", "error")
