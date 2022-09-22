@@ -109,7 +109,7 @@ export class BpsHomeComponent implements OnInit {
       this.saved_diagrams = res; 
       this.saved_diagramsList=res;
       this.saved_diagrams.map(item => {item.xpandStatus = false;
-        item.convertedModifiedTime_new = moment(new Date(item.convertedModifiedTime*1000)).format('LLL')
+        item.convertedModifiedTime_new = moment(new Date(item.convertedModifiedTime*1000)).format('lll')
         return item;
       })
       this.saved_diagrams.forEach(ele => {
