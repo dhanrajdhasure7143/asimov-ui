@@ -15,14 +15,13 @@ import moment from 'moment';
 })
 export class RpaAuditlogsComponent implements OnInit {
   @ViewChild(MatSort, { static: false }) sort: MatSort;
-  constructor(private activatedRoute:ActivatedRoute,private router: Router, private rest:RestApiService,private spinner:NgxSpinnerService) { }
   botId:any;
   auditLogsData:any=[];
   displayedColumns: string[] = ["versionNew","changedDate",'botName',"changedBy","comments"];
   dataSource:MatTableDataSource<any>;
   @ViewChild("paginator",{static:false}) paginator: MatPaginator;
+  constructor(private activatedRoute:ActivatedRoute,private router: Router, private rest:RestApiService,private spinner:NgxSpinnerService) { }
   ngOnInit(): void {
-
     this.activatedRoute.queryParams.subscribe((params:any)=>{
       console.log("params",params)
       if(params==undefined)
@@ -50,13 +49,9 @@ getEnvironments(categoryId:number){
     {
     }
   })
-
 }
-getAuditLogs(environments)
-{
-
+getAuditLogs(environments){
   this.rest.getAuditLogs(this.botId).subscribe((data:any)=>{
-    console.log("data",data)
      if(data.errorMessage==undefined)
      {
       this.dataSource= new MatTableDataSource(data.Status);
