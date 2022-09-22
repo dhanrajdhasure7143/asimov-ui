@@ -14,20 +14,18 @@
                 </div>
                 <div class="prj-rpadesign-body">
                     <div class="table_responsive graph_table">
-                        <table mat-table [dataSource]="dataSource" matSort class="PI table w-100">
+                        <table mat-table [dataSource]="dataSource" matSort class="PI table w-100 h-100">
                             <ng-container matColumnDef="versionNew">
                                 <th mat-sort-header mat-header-cell *matHeaderCellDef  class="gconfig" >Version</th>
                                 <td mat-cell *matCellDef="let element"  class="gconfig" >
                                   
-                                    <span *ngIf="element.versionNew!=null">  V{{element.versionNew}}</span> 
+                                    <span *ngIf="element.versionNew!=null">V{{element.versionNew}}</span> 
                                     <span *ngIf="element.versionNew==null">-</span> 
                                 </td>
                             </ng-container> 
                             <ng-container matColumnDef="changedDate">
                                 <th mat-sort-header mat-header-cell *matHeaderCellDef  class="gdescrip" >Timestamp</th>
-                                <td mat-cell *matCellDef="let element"  class="gdescrip" >
-                                    {{element.changedDate}}
-                                </td>
+                                <td mat-cell *matCellDef="let element"  class="gdescrip" >{{element.changedDate}}</td>
                             </ng-container>
         
                          
@@ -37,26 +35,17 @@
                                 <td mat-cell *matCellDef="let element" class="gactions">
                                 
                                     <span *ngIf="element.Status=='UpdatedConfig'">
-                                        Updated <b>{{element.taskName}}</b> task input field <b>{{element.changeActivity}}</b> from <b>{{element.previousValue}}</b> to <b>{{element.newValue}}</b> 
-                                    </span>
+                                        Updated <b>{{element.taskName}}</b> task input field <b>{{element.changeActivity}}</b> from <b>{{element.previousValue}}</b> to <b>{{element.newValue}}</b></span>
                                     <span *ngIf="element.Status=='AddedTask'">
-                                        Added task <b>{{element.taskName}}</b> 
-                                        
-                                    </span>
+                                        Added task <b>{{element.taskName}}</b></span>
                                     <span *ngIf="element.Status=='BotCreated'">
-                                        Created Bot <b>{{element.taskName}}</b> 
-                                        
-                                    </span>
+                                        Created Bot <b>{{element.taskName}}</b></span>
                                     <span *ngIf="element.Status=='RemovedTask'">
-                                      Removed task <b>{{element.taskName}}</b>
-                                    </span>
+                                      Removed task <b>{{element.taskName}}</b></span>
                                     <span *ngIf="element.Status=='AddedEnv'">
-                                       Added environment <b>{{element.taskName}}</b>
-                                    </span>
+                                       Added environment <b>{{element.taskName}}</b></span>
                                     <span *ngIf="element.Status=='RemovedEnv'">
-                                         Removed environment <b>{{element.taskName}}</b> 
-                                    </span>
-        
+                                         Removed environment <b>{{element.taskName}}</b></span>        
                                 </td>
                             </ng-container>
                             <ng-container matColumnDef="changedBy">
@@ -67,8 +56,8 @@
                                 </td>
                             </ng-container>
                              <ng-container matColumnDef="comments">
-                                <th mat-sort-header mat-header-cell *matHeaderCellDef  class="gactions" >Comments</th>
-                                <td mat-cell *matCellDef="let element"  class="gactions" >
+                                <th mat-sort-header mat-header-cell *matHeaderCellDef  class="gcmnts" >Comments</th>
+                                <td mat-cell *matCellDef="let element"  class="gcmnts" >
                                     <span *ngIf="element.comments!=null" [matTooltip]="element.comments">{{fitTableViewCategory(element.comments)}}</span> 
                                     <span *ngIf="element.comments==null">-</span> 
                                     <span *ngIf="element.comments==''">-</span> 

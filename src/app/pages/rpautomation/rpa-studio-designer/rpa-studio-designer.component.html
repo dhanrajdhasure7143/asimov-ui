@@ -59,7 +59,7 @@
                           </ul>
                       </div>
                       <span class="bpsbtnsep">|</span>
-                      <div class="action-item hovericon" *ngIf="current_instance != undefined ">
+                      <div class="action-item hovericon bvcsave" *ngIf="current_instance != undefined ">
                         <button class="clr-hvr tsttooltipbtn"  [disabled]="current_instance.selectedEnvironments.length==0 " [outsideClick]="true" (click)="clear()" [popover]="popTemplate" placement="bottom">
                           <img src="../../../../assets/images/RPA/icon_latest/save.svg" class="testplus1">
                           <span class="testtooltip">Save Bot</span>
@@ -260,16 +260,15 @@
               <option value="undefined" disabled hidden>Select Version</option>
               <option value="Major Version">Major Version</option>
               <option value="Minor Version">Minor Version</option>
-          </select> 
-
+            </select>   
+          </div>
           <div class="form-group">
             <label for="" class="label-control">Comments</label>
             <textarea class="form-control" maxlength="255"  [(ngModel)]="comments"></textarea>
           </div>
           <div class="custom-footer-content">
             <button class="btn btn-primary" (click)="SaveBot()">Save</button>
-          </div>  
-        </div>
+          </div>
         </div>
       </ng-template>
  

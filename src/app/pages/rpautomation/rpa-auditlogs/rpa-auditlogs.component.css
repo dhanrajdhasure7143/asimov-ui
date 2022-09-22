@@ -55,38 +55,26 @@
     background-color: #001c47;
     transform: rotate(45deg);
     right: 10px;
-  }
-  
-  .table_responsive.graph_table tr td {
-    vertical-align: top !important;
-    /* white-space: pre-line; */
-    white-space: break-spaces;
-  }
-  
+}
 
-  .table_responsive.graph_table tr th.gactions ,
-  .table_responsive.graph_table tr td.gactions {
-    width: 11%;
-    z-index: 1;
-  }
-  
-  .table_responsive.graph_table tr th.gsteps, .table_responsive.graph_table tr td.gsteps {
-    width: 20%;
-  }
-  
-  .table_responsive.graph_table tr th.gconfig ,
-  .table_responsive.graph_table tr td.gconfig 
-  {
-      width:1%;
-  }
-  .table_responsive.graph_table tr th.gchangedby ,
-  .table_responsive.graph_table tr td.gchangedby 
-  {
-      width:5%;
-  }
-  .table_responsive.graph_table tr th.gdescrip,
-  .table_responsive.graph_table tr td.gdescrip 
-  {
-    width:6%;
-  }
-  
+th.gconfig, td.gconfig {
+    width: 1%;
+}
+
+th.gdescrip, td.gdescrip {
+    width: 16%;
+}
+
+th.gactions, td.gactions {
+    width: 35%;
+    word-break: break-word;
+}
+
+th.gchangedby, td.gchangedby {
+    width: 18%;
+}
+
+th.gcmnts, td.gcmnts  {
+    width: 30%;
+    word-break: break-word;
+}
