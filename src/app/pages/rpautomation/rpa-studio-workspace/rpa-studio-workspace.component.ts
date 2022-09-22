@@ -1033,7 +1033,6 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
         link.click();
       })
       .catch(function (error) {
-          console.error('oops, something went wrong!', error);
       });
   }
 
@@ -1048,7 +1047,6 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
       link.click();
     })
     .catch(function (error) {
-        console.error('oops, something went wrong!', error);
     });
   }
 
@@ -1068,7 +1066,6 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
       doc.save('bot_image.pdf');
       })
       .catch(function (error) {
-          console.error('oops, something went wrong!', error);
       });
   }
 
@@ -1197,7 +1194,6 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
           {
             let image=this.outputboxresult[0].Value;
             //let obj=JSON.parse(this.outputboxresult[0].Value);
-            //console.log("000000000000000000000000000000000000>",obj)
             //let image=data[1].slice(0, -2);
             this.Image= 'data:' + 'image/png' + ';base64,' +image;
           }

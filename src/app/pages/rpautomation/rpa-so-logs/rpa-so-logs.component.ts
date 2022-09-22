@@ -4,7 +4,6 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { RestApiService } from '../../services/rest-api.service';
 import Swal from 'sweetalert2';
-import { clear } from 'console';
 @Component({
   selector: 'app-rpa-so-logs',
   templateUrl: './rpa-so-logs.component.html',
@@ -129,13 +128,6 @@ export class RpaSoLogsComponent implements OnInit, OnDestroy {
      let logs=[...this.filteredLogs]
      this.Viewloglist = new MatTableDataSource(logs);
      this.changeDetector.detectChanges();
-     // setTimeout(()=>{
-     //   console.log(this.Viewloglist)
-     //   console.log(this.logsPaginator)
-     //   console.log(this.logsSort)
-     //   this.Viewloglist.paginator=this.logsPaginator;
-     //   this.Viewloglist.sort=this.logsSort;
-     // },4000)
   }
 
   showLogsByRunId(runid,version,bot_status){
@@ -290,7 +282,6 @@ export class RpaSoLogsComponent implements OnInit, OnDestroy {
   //    this.loopbyrunid = new MatTableDataSource(this.fileteredLoopIterations);
 
   //    this.changeDetector.detectChanges();
-  //   console.log( this.selectedIterationId,this.iterationsList)
 
 
   // }

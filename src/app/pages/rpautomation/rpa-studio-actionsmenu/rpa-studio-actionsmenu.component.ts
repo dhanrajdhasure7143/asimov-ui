@@ -220,7 +220,6 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
                 Swal.fire("Error",response.errorMessage,"error")
             }
           },err=>{
-            console.log(err)
             this.spinner.hide();
             Swal.fire("Error","Unable to delete bot","error")
           })
@@ -286,7 +285,6 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
                Swal.fire("Error",data.errorMessage,"error")
             }
           },err=>{
-            console.log(err)
             this.rpa_studio.spinner.hide();
             Swal.fire("Error","Unable to add audit logs","error")
           })
@@ -339,7 +337,6 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
               item['comments']=this.savebotrespose.comments;
               return item
             });
-            console.log("auditlogs",auditLogs)
             if(auditLogs.length!=0)
             this.rest.addAuditLogs(auditLogs).subscribe((data:any)=>{
               this.childBotWorkspace.actualTaskValue=[...this.savebotrespose.tasks.filter(item=>item.version==this.savebotrespose.version)];
@@ -349,7 +346,6 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
                  Swal.fire("Error",data.errorMessage,"error")
               }
             },err=>{
-              console.log(err)
               this.rpa_studio.spinner.hide();
               Swal.fire("Error","Unable to add audit logs","error")
             })
@@ -368,7 +364,6 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
            
           }
         },err=>{
-          console.log(err)
           this.spinner.hide()
           Swal.fire("Error","Unable to update bot","error")
         });
@@ -578,7 +573,6 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
         Swal.fire("Error",data.errorMessage,"error")
       }
     },err=>{
-      console.log(err);
       this.spinner.hide();
       Swal.fire("Error","Unable to get predefined bots","error")
     });
@@ -602,7 +596,6 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
           Swal.fire("Error",response.errorMessage,"error")
         }
       },err=>{
-        console.log(err)
         this.rpa_studio.spinner.hide();
         Swal.fire("Error","Unable to get version bot","error")
       })
@@ -752,8 +745,6 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
 
 loadpredefinedbot(botId, dropCoordinates)
 {
-
-  console.log(dropCoordinates)
   let droppedXcoordinate=dropCoordinates.x.split("px")[0]
   
   let droppedYcoordinate=dropCoordinates.y.split("px")[0]
@@ -1115,7 +1106,6 @@ loadpredefinedbot(botId, dropCoordinates)
       },err=>{
         this.logsLoading=false;
         Swal.fire("Error","Unable to open loop logs","error");
-        console.log(err)
       })
     }
   

@@ -38,21 +38,6 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
 
   ngAfterViewInit()
   {
-    // console.log(this.tabsArray.length)
-    // localStorage.setItem("isHeader","true");
-    // console.log("check")
-    //   setTimeout(()=>{
-    //   console.log(this.bot_instances)
-    //    localStorage.setItem("isHeader","true");
-    //     this.bot_instances.forEach((instance,index)=>{
-    //       console.log(instance)
-    //       this.current_instance=instance.rpa_actions_menu;
-    //       this.toolset_instance=instance;
-    //       this.selected_tab_instance=instance;
-    //       });
-    //   },2500)
-     
-  
     // localStorage.setItem("isHeader","true");
   }
 
