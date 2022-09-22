@@ -41,21 +41,22 @@ export class RpaAuditlogsComponent implements OnInit {
         this.getAuditLogs(environments)
       }
       else {
+        Swal.fire("Error", response.errorMessage, "error")
       }
     })
   }
 
   getAuditLogs(environments) {  // api to get audit logs
     this.rest.getAuditLogs(this.botId).subscribe((data: any) => {
-      if (data.errorMessage == undefined) {
-        this.dataSource = new MatTableDataSource(data.Status);
+      let response: any = data
+      if (response.errorMessage == undefined) {
+        this.dataSource = new MatTableDataSource(response.Status);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
-        this.auditLogsData = [...data.Status.map((item: any) => {
+        this.auditLogsData = [...response.Status.map((item: any) => {
           if (item.botName.split("|")[1] != undefined) {
             if (item.versionNew != null) {
-              item["versionNew"] = parseFloat(item.versionNew)
-              item["versionNew"] = item.versionNew.toFixed(1)
+              item["versionNew"] = parseFloat(item.versionNew).toFixed(1)
             }
             item["changedDate"] = moment(new Date(item.changedDate)).format('lll')
             item["Status"] = item.botName.split("|")[1];
@@ -71,7 +72,7 @@ export class RpaAuditlogsComponent implements OnInit {
         //  this.auditLogsModelRef=this.modalService.show(this.auditLogsPopup, {class:"logs-modal"});
       }
       else {
-        Swal.fire("Error", data.errorMessage, "error")
+        Swal.fire("Error", response.errorMessage, "error")
       }
     }, err => {
       this.spinner.hide();
@@ -84,7 +85,7 @@ export class RpaAuditlogsComponent implements OnInit {
   }
 
   fitTableViewCategory(processName) {
-    if (processName && processName.length > 10)
+    if (processName && processName.length > 30)
       return processName.substr(0, 30) + '..';
     return processName;
   }
