@@ -76,6 +76,7 @@ export class DepartmentsComponent implements OnInit {
       this.spinner.show();
       this.api.deleteDepartments(delbody).subscribe(resp => {
         let value: any = resp
+        this.spinner.hide();
         if (value.message === "Successfully deleted the category") {
           Swal.fire({
             title: 'Success',
@@ -88,7 +89,6 @@ export class DepartmentsComponent implements OnInit {
             heightAuto: false,
             confirmButtonText: 'Ok'
         })
-          this.spinner.hide();
           this.getAllDepartments();
           this.removeallchecks();
           this.checktodelete();
@@ -96,6 +96,15 @@ export class DepartmentsComponent implements OnInit {
         else {
           Swal.fire("Error", value.message, "error");
         }
+      },err=>{
+        this.spinner.hide();
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Something went wrong!',
+          heightAuto: false,
+        })
+
       })
     }
     })
