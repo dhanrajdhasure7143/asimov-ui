@@ -73,7 +73,7 @@ export class DepartmentsComponent implements OnInit {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.value) {
-        this.spinner.show();
+      this.spinner.show();
       this.api.deleteDepartments(delbody).subscribe(resp => {
         let value: any = resp
         this.spinner.hide();
@@ -97,6 +97,15 @@ export class DepartmentsComponent implements OnInit {
           this.spinner.hide();
           Swal.fire("Error", value.message, "error");
         }
+      },err=>{
+        this.spinner.hide();
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Something went wrong!',
+          heightAuto: false,
+        })
+
       })
     }
     })

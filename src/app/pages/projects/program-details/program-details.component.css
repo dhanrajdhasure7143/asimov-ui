@@ -293,7 +293,7 @@ input.small-input[type="date"]::-webkit-calendar-picker-indicator {
   width: 100%;
 }
 .program-info .prg-title {
-  width: 30%;
+  word-wrap: break-word;
 }
 .status-data span.labeltit {
   font-size: 13px !important;

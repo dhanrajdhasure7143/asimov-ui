@@ -39,7 +39,7 @@
                         <button class="btn btn-default">Cancel</button>
                     </span>
                     <span *ngIf="editdata==true" (click)="updateprojectDetails()">
-                        <button [disabled]="projectNameFlag || projectPurposeFlag || processOwnerFlag"
+                        <button [disabled]="projectNameFlag || projectPurposeFlag || processOwnerFlag ||!projectStartDate"
                             class="btn btn-primary">Save</button>
                     </span>
                     <span class="prjdetails-headerbuttons" *ngIf="editdata==false">
@@ -177,12 +177,12 @@
                                 </div>
                                 <div class="mainset" *ngIf="editdata==true">
                                     <span class="labeltit">Process Owner</span>
-                                    <select class="small-input" id="processowner" [value]="projectDetails.processOwner"
+                                    <select class="small-input" id="processowner" [(ngModel)]="processownername" name="process_ownerField"
                                         [attr.disabled]="processOwner==false">
-                                        <option [value]="projectDetails.processOwner">{{projectDetails.processOwner |
-                                            userPipe : users_list}}</option>
-                                        <option *ngFor="let user of userslist" [value]="user.userId.userId">
-                                            {{user.userId.firstName|titlecase}} {{user.userId.lastName|titlecase}}
+                                        <!-- <option [value]="projectDetails.processOwner">{{projectDetails.processOwner |
+                                            userPipe : users_list}}</option> -->
+                                        <option *ngFor="let user of users_data" [value]="user.userId">
+                                            {{user.firstName|titlecase}} {{user.lastName|titlecase}}
                                         </option>
                                     </select>
                                 </div>
@@ -202,7 +202,8 @@
                                         <select class="small-input"
                                             (change)="projectDetails.projectHealth=$event.target.value"
                                             [value]="(projectDetails.projectHealth==undefined||projectDetails.projectHealth==null)?'':projectDetails.projectHealth">
-                                            <option value="">Select Project Health</option>
+                                            <option value="" disabled hidden>Select Project Health</option>
+                                            <option value="null" disabled hidden>Select Project Health</option>
                                             <option value="Good">Good</option>
                                             <option value="Needs Attention">Needs Attention</option>
                                             <option value="Risk">Risk</option>
@@ -271,6 +272,7 @@
                                     <div *ngIf="editdata==true">
                                         <input type="date" class="small-input"
                                             (change)="projectStartDate=$event.target.value" [value]="projectStartDate">
+                                        <span *ngIf="!projectStartDate"  class="errspan required">Start Date Required*</span>
                                     </div>
                                 </div>
                             </div>
@@ -1150,7 +1152,7 @@
                                                                         </div>
                                                                         <div *ngIf="!each.answer && selected_questionId != each.questionId"
                                                                             class="col-md-7 pl-0 form-group answer-btn">
-                                                                            <button class="btn btn-primary"
+                                                                            <button [disabled]="selectedQuestionEdit" class="btn btn-primary"
                                                                                 (click)="answerToQuestion(each)">Answer</button>
                                                                         </div>
                                                                         <div class="col-md-1 p-0 text-right pques-actions"
