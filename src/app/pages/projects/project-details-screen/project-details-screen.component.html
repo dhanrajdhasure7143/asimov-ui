@@ -202,7 +202,8 @@
                                         <select class="small-input"
                                             (change)="projectDetails.projectHealth=$event.target.value"
                                             [value]="(projectDetails.projectHealth==undefined||projectDetails.projectHealth==null)?'':projectDetails.projectHealth">
-                                            <option value="">Select Project Health</option>
+                                            <option value="" disabled hidden>Select Project Health</option>
+                                            <option value="null" disabled hidden>Select Project Health</option>
                                             <option value="Good">Good</option>
                                             <option value="Needs Attention">Needs Attention</option>
                                             <option value="Risk">Risk</option>

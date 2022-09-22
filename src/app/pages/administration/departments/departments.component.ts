@@ -73,8 +73,10 @@ export class DepartmentsComponent implements OnInit {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.value) {
+      this.spinner.show();
       this.api.deleteDepartments(delbody).subscribe(resp => {
         let value: any = resp
+        this.spinner.hide();
         if (value.message === "Successfully deleted the category") {
           Swal.fire({
             title: 'Success',
@@ -94,6 +96,15 @@ export class DepartmentsComponent implements OnInit {
         else {
           Swal.fire("Error", value.message, "error");
         }
+      },err=>{
+        this.spinner.hide();
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Something went wrong!',
+          heightAuto: false,
+        })
+
       })
     }
     })
