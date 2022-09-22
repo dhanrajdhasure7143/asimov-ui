@@ -174,7 +174,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
         this.dbconnections.sort((a,b) => a.connectionId > b.connectionId ? -1 : 1);
         this.dbconnections=this.dbconnections.map(item=>{
           item["categoryName"]=this.categoryList.find(item2=>item2.categoryId==item.categoryId).categoryName;
-          item["createdTimeStamp_converted"] = moment(new Date(item.createdTimeStamp)).format('LLL')
+          item["createdTimeStamp_converted"] = moment(new Date(item.createdTimeStamp)).format('lll')
           return item;
         })
         this.dataSource2= new MatTableDataSource(this.dbconnections);

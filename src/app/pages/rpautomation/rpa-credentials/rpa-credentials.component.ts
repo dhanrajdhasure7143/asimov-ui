@@ -128,7 +128,7 @@ inputNumberOnly(event){
            if(this.categoryList!=undefined){
             this.credentials=this.credentials.map(item=>{
               item["categoryName"]=this.categoryList.find(item2=>item2.categoryId==item.categoryId).categoryName;
-              item["createdTimeStamp_converted"] = moment(new Date(item.createdTimeStamp)).format('LLL')
+              item["createdTimeStamp_converted"] = moment(new Date(item.createdTimeStamp)).format('lll')
               return item;
             })
            }

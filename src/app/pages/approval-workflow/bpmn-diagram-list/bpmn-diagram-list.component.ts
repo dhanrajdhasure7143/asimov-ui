@@ -185,7 +185,7 @@ this.selectedrow =i;
         ele["processIntelligenceId"]=ele.bpmnProcessInfo[0].processIntelligenceId;
         ele["bpmnProcessName"]=ele.bpmnProcessInfo[0].bpmnProcessName;
         // ele["convertedModifiedTime"]=ele.bpmnProcessInfo[0].convertedModifiedTime;
-        ele["convertedModifiedTime"]=moment(new Date(ele.bpmnProcessInfo[0].convertedModifiedTime*1000)).format('LLL');
+        ele["convertedModifiedTime"]=moment(new Date(ele.bpmnProcessInfo[0].convertedModifiedTime*1000)).format('lll');
         ele["userName"]=ele.bpmnProcessInfo[0].userName;
         ele["role"]=ele.role;
 
