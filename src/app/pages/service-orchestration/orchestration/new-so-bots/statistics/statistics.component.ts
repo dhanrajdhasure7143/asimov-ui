@@ -120,13 +120,13 @@ this.getEnvironments();
 
 
   chart1(pieData){
-    let data:any=pieData.filter((item:any)=>{
-       //console.log(item);
-      if(item.litres!=0)
-      {
-        return item;
-      }
-    })
+    let data:any=pieData
+    // let data:any=pieData.map((item:any)=>{
+    //   if(item.litres=0)
+    //   {
+    //     return item;
+    //   }
+    // })
     // Themes begin
     am4core.useTheme(am4themes_animated);
     // Themes end
@@ -221,6 +221,14 @@ this.getEnvironments();
     chart.innerRadius = am4core.percent(0);
     chart.data = data;
 
+    // hide zero values in chart
+     pieSeries.events.on("datavalidated", function(ev) {
+      ev.target.dataItems.each((di) => {
+          if (di.values.value.value === 0 ) {
+            di.hide();
+          }
+      })
+    })
 
   }
 
