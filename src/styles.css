@@ -2940,3 +2940,9 @@ button.custom-popupbtn.mat-button {
 .innersform.card-form .mat-tab-header-pagination-controls-enabled .mat-tab-header-pagination {
   display: none;
 }
+
+/* BVC popover */
+.bvcsave popover-container.popover.in.popover-bottom {
+  margin-top: 14px;
+}
+/* BVC popover */

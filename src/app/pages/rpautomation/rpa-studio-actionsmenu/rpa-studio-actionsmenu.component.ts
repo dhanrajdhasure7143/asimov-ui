@@ -70,7 +70,7 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
   @ViewChild('t', { static: false }) ngbTabset;
   @Input('tabsArray') public tabsArray: any[];
   @ViewChild(RpaStudioDesignerworkspaceComponent, { static: false }) childBotWorkspace: RpaStudioDesignerworkspaceComponent;
-  @ViewChild('auditLogsPopup',{static:false}) public auditLogsPopup:any;
+ // @ViewChild('auditLogsPopup',{static:false}) public auditLogsPopup:any;
   @ViewChild('logspopup',{static:false}) public logspopup:any;
   public auditLogsModelRef:BsModalRef;
   public logsmodalref:BsModalRef
@@ -220,7 +220,6 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
                 Swal.fire("Error",response.errorMessage,"error")
             }
           },err=>{
-            console.log(err)
             this.spinner.hide();
             Swal.fire("Error","Unable to delete bot","error")
           })
@@ -231,7 +230,7 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
 
 
 
-  async saveBotFunAct() {
+  async saveBotFunAct(version_type,comments) {
     this.rpa_studio.spinner.show();
     this.finalenv=[];
     this.environment.forEach(data=>{
@@ -286,7 +285,6 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
                Swal.fire("Error",data.errorMessage,"error")
             }
           },err=>{
-            console.log(err)
             this.rpa_studio.spinner.hide();
             Swal.fire("Error","Unable to add audit logs","error")
           })
@@ -310,7 +308,7 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
     }
     else
     {
-       let checkbot:any=await this.childBotWorkspace.updateBotFun(this.savebotrespose,this.finalenv)
+       let checkbot:any=await this.childBotWorkspace.updateBotFun(this.savebotrespose,this.finalenv,version_type,comments)
        if(checkbot==false)
        {
         this.rpa_studio.spinner.hide();
@@ -334,7 +332,11 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
               icon: 'success',
               heightAuto: false,
             })
-            let auditLogs=[...this.childBotWorkspace.auditLogs];
+            let auditLogs=[...this.childBotWorkspace.auditLogs].map(item=>{
+              item["versionNew"]=this.savebotrespose.versionNew;
+              item['comments']=this.savebotrespose.comments;
+              return item
+            });
             if(auditLogs.length!=0)
             this.rest.addAuditLogs(auditLogs).subscribe((data:any)=>{
               this.childBotWorkspace.actualTaskValue=[...this.savebotrespose.tasks.filter(item=>item.version==this.savebotrespose.version)];
@@ -344,7 +346,6 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
                  Swal.fire("Error",data.errorMessage,"error")
               }
             },err=>{
-              console.log(err)
               this.rpa_studio.spinner.hide();
               Swal.fire("Error","Unable to add audit logs","error")
             })
@@ -363,7 +364,6 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
            
           }
         },err=>{
-          console.log(err)
           this.spinner.hide()
           Swal.fire("Error","Unable to update bot","error")
         });
@@ -573,7 +573,6 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
         Swal.fire("Error",data.errorMessage,"error")
       }
     },err=>{
-      console.log(err);
       this.spinner.hide();
       Swal.fire("Error","Unable to get predefined bots","error")
     });
@@ -597,7 +596,6 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
           Swal.fire("Error",response.errorMessage,"error")
         }
       },err=>{
-        console.log(err)
         this.rpa_studio.spinner.hide();
         Swal.fire("Error","Unable to get version bot","error")
       })
@@ -630,7 +628,7 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
             }
             return item;
           })].reverse();
-          this.auditLogsModelRef=this.modalService.show(this.auditLogsPopup, {class:"logs-modal"});
+        //  this.auditLogsModelRef=this.modalService.show(this.auditLogsPopup, {class:"logs-modal"});
         }
         else{
           Swal.fire("Error",data.errorMessage,"error")
@@ -747,8 +745,6 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
 
 loadpredefinedbot(botId, dropCoordinates)
 {
-
-  console.log(dropCoordinates)
   let droppedXcoordinate=dropCoordinates.x.split("px")[0]
   
   let droppedYcoordinate=dropCoordinates.y.split("px")[0]
@@ -1110,7 +1106,6 @@ loadpredefinedbot(botId, dropCoordinates)
       },err=>{
         this.logsLoading=false;
         Swal.fire("Error","Unable to open loop logs","error");
-        console.log(err)
       })
     }
   

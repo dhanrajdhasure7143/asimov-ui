@@ -1,0 +1,86 @@
+<div class="main-content prjmain">
+    <div class="content-area">
+        <div class="prj-rpadesign-main h-100">
+            <div class="h-100" id="my_workspace">
+                <div class="module-heading title">
+                    <div class="col-md-2 p-0">
+                        <span class="module-header-title">
+                            <span class="module-back-button" (click)="open()">
+                                <i aria-hidden="true" class="fas fa-arrow-left"></i>
+                            </span>
+                            <span class="module-parent-title">Audit Logs</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="prj-rpadesign-body">
+                    <div class="table_responsive graph_table">
+                        <table mat-table [dataSource]="dataSource" matSort class="PI table w-100">
+                            <ng-container matColumnDef="versionNew">
+                                <th mat-sort-header mat-header-cell *matHeaderCellDef  class="gconfig" >Version</th>
+                                <td mat-cell *matCellDef="let element"  class="gconfig" >
+                                  
+                                    <span *ngIf="element.versionNew!=null">V{{element.versionNew}}</span> 
+                                    <span *ngIf="element.versionNew==null">-</span> 
+                                </td>
+                            </ng-container> 
+                            <ng-container matColumnDef="changedDate">
+                                <th mat-sort-header mat-header-cell *matHeaderCellDef  class="gdescrip" >Timestamp</th>
+                                <td mat-cell *matCellDef="let element"  class="gdescrip" >{{element.changedDate}}</td>
+                            </ng-container>
+        
+                         
+                           
+                            <ng-container matColumnDef="botName">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header class="gactions" >Actions</th>
+                                <td mat-cell *matCellDef="let element" class="gactions">
+                                
+                                    <span *ngIf="element.Status=='UpdatedConfig'">
+                                        Updated <b>{{element.taskName}}</b> task input field <b>{{element.changeActivity}}</b> from <b>{{element.previousValue}}</b> to <b>{{element.newValue}}</b></span>
+                                    <span *ngIf="element.Status=='AddedTask'">
+                                        Added task <b>{{element.taskName}}</b></span>
+                                    <span *ngIf="element.Status=='BotCreated'">
+                                        Created Bot <b>{{element.taskName}}</b></span>
+                                    <span *ngIf="element.Status=='RemovedTask'">
+                                      Removed task <b>{{element.taskName}}</b></span>
+                                    <span *ngIf="element.Status=='AddedEnv'">
+                                       Added environment <b>{{element.taskName}}</b></span>
+                                    <span *ngIf="element.Status=='RemovedEnv'">
+                                         Removed environment <b>{{element.taskName}}</b></span>        
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="changedBy">
+                                <th mat-sort-header mat-header-cell *matHeaderCellDef  class="gchangedby" >Changed by</th>
+                                <td mat-cell *matCellDef="let element"  class="gchangedby" > 
+                                    <span *ngIf="element.changedBy!=null">{{element.changedBy}}</span> 
+                                    <span *ngIf="element.changedBy==''">-</span> 
+                                </td>
+                            </ng-container>
+                             <ng-container matColumnDef="comments">
+                                <th mat-sort-header mat-header-cell *matHeaderCellDef  class="gcmnts" >Comments</th>
+                                <td mat-cell *matCellDef="let element"  class="gcmnts" >
+                                    <span *ngIf="element.comments!=null" [matTooltip]="element.comments">{{fitTableViewCategory(element.comments)}}</span> 
+                                    <span *ngIf="element.comments==null">-</span> 
+                                    <span *ngIf="element.comments==''">-</span> 
+                                </td>
+                            </ng-container> 
+                            <ng-container matColumnDef="noData">
+                                <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
+                                </td>
+                            </ng-container>
+        
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="pList"></tr>
+                        </table>
+                    </div>
+                    <div class="supportpaginationdiv">
+                        <mat-paginator class="newpaginationdiv" #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]"
+                            [showFirstLastButtons]="true"></mat-paginator>
+                    </div>
+                </div>
+        
+            </div>
+        </div> 
+        
+    </div>
+
+</div>

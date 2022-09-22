@@ -20,6 +20,8 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   checkCreate:Boolean=false; 
   freetrail: string;
   isProcessAnalyst:Boolean=false;
+  version_type:any;
+  comments:any;
   constructor(private rpa_studio:RpaStudioComponent, 
     private router:Router,
     private activeRoute:ActivatedRoute) { }
@@ -36,21 +38,6 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
 
   ngAfterViewInit()
   {
-    // console.log(this.tabsArray.length)
-    // localStorage.setItem("isHeader","true");
-    // console.log("check")
-    //   setTimeout(()=>{
-    //   console.log(this.bot_instances)
-    //    localStorage.setItem("isHeader","true");
-    //     this.bot_instances.forEach((instance,index)=>{
-    //       console.log(instance)
-    //       this.current_instance=instance.rpa_actions_menu;
-    //       this.toolset_instance=instance;
-    //       this.selected_tab_instance=instance;
-    //       });
-    //   },2500)
-     
-  
     // localStorage.setItem("isHeader","true");
   }
 
@@ -117,7 +104,10 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
     
     
   }
-
+  clear(){
+    this.version_type='';
+    this.comments=''
+  }
   version_change(versionId)
   {
     this.current_instance.switchversion(versionId);
@@ -150,6 +140,12 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
     }
   }
 
+  auditLogs(){
+    let botId=this.current_instance.savebotrespose.botId;
+    let catergoryId=this.current_instance.savebotrespose.categoryId
+    this.router.navigate(["/pages/rpautomation/auditlogs"],{queryParams:{botId:botId,catergoryId:catergoryId}})
+    //this.current_instance.getAuditLogs()
+  }
 
   navigateToBack()
   {
@@ -170,5 +166,7 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   {
     localStorage.removeItem("bot_id")
   }
-  
+  SaveBot(){
+    this.current_instance.saveBotFunAct(this.version_type,this.comments)
+  }
 }

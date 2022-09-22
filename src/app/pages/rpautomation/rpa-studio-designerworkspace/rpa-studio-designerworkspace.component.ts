@@ -297,14 +297,12 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   {
       setTimeout(()=>{
         this.savedGroupsData.forEach((item:any)=>{
-          console.log(item)
           if(item.nodeIds.length!=0)
           {
             item.nodeIds.forEach((node:any)=>{
 
               let nodeElement:any=document.getElementById(node);
               let groupElement:any=document.getElementById(item.groupId)
-              console.log(groupElement)
               this.jsPlumbInstance.addToGroup(item.groupId, nodeElement);
             })
           }
@@ -554,7 +552,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       // node.selectedNodeId = "";
       const nodeWithCoordinates = Object.assign({}, node, dropCoordinates);
       this.nodes.push(nodeWithCoordinates);
-      console.log("node",nodeWithCoordinates)
       setTimeout(() => {
         this.populateNodes(nodeWithCoordinates);
         this.autoSaveLoopEnd(nodeWithCoordinates)
@@ -1393,7 +1390,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     this.finaldataobjects = [];
   }
 
-  async updateBotFun(botProperties, env) {
+  async updateBotFun(botProperties, env,version_type,comments) {
     this.checkorderflag=true;
     this.addsquences();
     this.arrange_task_order(this.startNodeId);
@@ -1401,6 +1398,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     await this.getsvg();
     this.rpaAuditLogs(env);
     this.saveBotdata = {
+      "versionType":version_type,
+      "comments":comments,
       "version": botProperties.version,
       "botId": botProperties.botId,
       "botName": botProperties.botName,
@@ -1423,7 +1422,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
      return false;
     else
     {
-      return this.rest.updateBot(this.saveBotdata)
+     return this.rest.updateBot(this.saveBotdata)
       //return false;
     } 
 
@@ -1476,7 +1475,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
                 });  
                 this.savedGroupsData.find(savedGrp=>savedGrp.groupId==GroupData.id).nodeIds.forEach(sampleItem=>{
                   let nodeElement:any=document.getElementById(sampleItem);
-                  console.log(nodeElement)
                   this.jsPlumbInstance.addToGroup(GroupData.id, nodeElement);
                 })
               }
@@ -1914,7 +1912,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   add_order(object) {
 
     let end = this.stopNodeId;
-    console.log("object",object)
     if(object!=undefined){
       this.final_tasks.push(object);
     }
