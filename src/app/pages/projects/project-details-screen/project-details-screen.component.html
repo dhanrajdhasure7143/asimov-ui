@@ -39,7 +39,7 @@
                         <button class="btn btn-default">Cancel</button>
                     </span>
                     <span *ngIf="editdata==true" (click)="updateprojectDetails()">
-                        <button [disabled]="projectNameFlag || projectPurposeFlag || processOwnerFlag"
+                        <button [disabled]="projectNameFlag || projectPurposeFlag || processOwnerFlag ||!projectStartDate"
                             class="btn btn-primary">Save</button>
                     </span>
                     <span class="prjdetails-headerbuttons" *ngIf="editdata==false">
@@ -272,6 +272,7 @@
                                     <div *ngIf="editdata==true">
                                         <input type="date" class="small-input"
                                             (change)="projectStartDate=$event.target.value" [value]="projectStartDate">
+                                        <span *ngIf="!projectStartDate"  class="errspan required">Start Date Required*</span>
                                     </div>
                                 </div>
                             </div>
