@@ -177,12 +177,12 @@
                                 </div>
                                 <div class="mainset" *ngIf="editdata==true">
                                     <span class="labeltit">Process Owner</span>
-                                    <select class="small-input" id="processowner" [value]="projectDetails.processOwner"
+                                    <select class="small-input" id="processowner" [(ngModel)]="processownername" name="process_ownerField"
                                         [attr.disabled]="processOwner==false">
-                                        <option [value]="projectDetails.processOwner">{{projectDetails.processOwner |
-                                            userPipe : users_list}}</option>
-                                        <option *ngFor="let user of userslist" [value]="user.userId.userId">
-                                            {{user.userId.firstName|titlecase}} {{user.userId.lastName|titlecase}}
+                                        <!-- <option [value]="projectDetails.processOwner">{{projectDetails.processOwner |
+                                            userPipe : users_list}}</option> -->
+                                        <option *ngFor="let user of users_data" [value]="user.userId">
+                                            {{user.firstName|titlecase}} {{user.lastName|titlecase}}
                                         </option>
                                     </select>
                                 </div>
@@ -1150,7 +1150,7 @@
                                                                         </div>
                                                                         <div *ngIf="!each.answer && selected_questionId != each.questionId"
                                                                             class="col-md-7 pl-0 form-group answer-btn">
-                                                                            <button class="btn btn-primary"
+                                                                            <button [disabled]="selectedQuestionEdit" class="btn btn-primary"
                                                                                 (click)="answerToQuestion(each)">Answer</button>
                                                                         </div>
                                                                         <div class="col-md-1 p-0 text-right pques-actions"
