@@ -63,6 +63,8 @@ import { RpaSoLogsComponent } from './rpa-so-logs/rpa-so-logs.component';
 import { AngularSplitModule } from 'angular-split';
 import { NgbModalDraggableModule } from 'ngb-modal-draggable';
 import { ResizableModule } from 'angular-resizable-element';
+import { PopoverModule } from 'ngx-bootstrap/popover';
+import { RpaAuditlogsComponent } from './rpa-auditlogs/rpa-auditlogs.component'
 @NgModule({
   declarations: [
     RpautomationComponent,
@@ -90,7 +92,8 @@ import { ResizableModule } from 'angular-resizable-element';
 	RpaCredentialsComponent,
 	TaskPipe,
 	TasksearchPipe,
-	RpaSoLogsComponent
+	RpaSoLogsComponent,
+	RpaAuditlogsComponent
   ],
   imports: [
     NgxMaterialTimepickerModule,
@@ -127,7 +130,8 @@ import { ResizableModule } from 'angular-resizable-element';
     Ng5SliderModule,
     AngularSplitModule.forRoot(),
     NgbModalDraggableModule,
-    ResizableModule
+    ResizableModule,
+    PopoverModule
   ],
   exports:[RpaSoLogsComponent],
   providers: [MatDatepickerModule,Rpa_Hints, BsModalRef, BsModalService,

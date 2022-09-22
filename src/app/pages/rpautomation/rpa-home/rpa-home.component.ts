@@ -37,7 +37,7 @@ export class RpaHomeComponent implements OnInit {
   public isTableHasData = true;
   public respdata1=false;
 
-   displayedColumns: string[] = ["botName","description","department","version","actions"];
+   displayedColumns: string[] = ["botName","description","department","version_new","actions"];
   displayedColumns2: string[] = ["processName","taskName","Assign","status","successTask","failureTask","Operations"];
   departmentlist :string[] = ['Development','QA','HR'];
   botNameFilter = new FormControl('');
@@ -298,6 +298,12 @@ export class RpaHomeComponent implements OnInit {
         this.loadflag=false;
       },1000)
       response=botlist;
+     response.map(item=>{
+      if(item.version_new!=null){
+        item["version_new"]= parseFloat(item.version_new)
+        item["version_new"]=item.version_new.toFixed(1)
+       }
+     })
       this.botlistitems=botlist;
       this.botslist=botlist
    
@@ -518,7 +524,6 @@ export class RpaHomeComponent implements OnInit {
           createBotFormValue.botDepartment=catResponse.data.categoryId;  
           this.spinner.show();
           this.rest.createBot(createbot).subscribe((res:any)=>{
-            console.log("res",res)
             let botId=res.botId;
             if(res.errorMessage==undefined){
               this.spinner.hide()
@@ -849,7 +854,6 @@ export class RpaHomeComponent implements OnInit {
       let catResponse : any;
       catResponse=data
       this.categaoriesList=catResponse.data.sort((a, b) => (a.categoryName.toLowerCase() > b.categoryName.toLowerCase()) ? 1 : ((b.categoryName.toLowerCase() > a.categoryName.toLowerCase()) ? -1 : 0));
-      //console.log(this.categaoriesList)
       if(this.categaoriesList.length==1)
         this.rpaCategory=this.categaoriesList[0].categoryId;
     });
@@ -1003,7 +1007,6 @@ export class RpaHomeComponent implements OnInit {
           })
           document.getElementById("edit-bot").style.display="none";
        },err=>{
-        console.log(err)
         this.spinner.hide();
         Swal.fire("Error","Unable to update bot details","error")
        });
@@ -1017,7 +1020,6 @@ export class RpaHomeComponent implements OnInit {
           Swal.fire("Error","Failed to update bot details","error");
         }
           },err=>{
-            console.log(err)
             this.spinner.hide();
             Swal.fire("Error","Unable to update bot details","error")
           })

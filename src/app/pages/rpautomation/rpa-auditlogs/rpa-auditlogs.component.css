@@ -1,0 +1,80 @@
+.prj-rpadesign-body {
+    padding: 10px 10px 0px 10px;
+    height: calc(100% - 44px);
+    overflow: hidden auto;
+  }
+  
+  .table_responsive.graph_table {
+    height: calc(100% - 44px);
+    overflow: hidden auto;
+    width: 100%;
+  }
+  
+  img.testplus {
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
+    cursor: pointer;
+  }
+  
+  .tsttooltipbtn:hover img.default-img,
+  .tsttooltipbtn img.hover-img {
+    display: none;
+  }
+  
+  .tsttooltipbtn:hover img.hover-img {
+    display: initial;
+  }
+  
+  .tsttooltipbtn {
+    position: relative;
+  }
+  
+  .tsttooltipbtn:hover span.testtooltip {
+    display: block;
+  }
+  
+  span.testtooltip {
+    position: absolute;
+    bottom: 25px;
+    right: 0px;
+    background-color: #001c47;
+    color: #fff;
+    width: max-content;
+    padding: 6px 10px;
+    border-radius: 4px;
+    display: none;
+    z-index: 2;
+  }
+  span.testtooltip:after {
+    content: "";
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    bottom: -4px;
+    background-color: #001c47;
+    transform: rotate(45deg);
+    right: 10px;
+}
+
+th.gconfig, td.gconfig {
+    width: 1%;
+}
+
+th.gdescrip, td.gdescrip {
+    width: 16%;
+}
+
+th.gactions, td.gactions {
+    width: 35%;
+    word-break: break-word;
+}
+
+th.gchangedby, td.gchangedby {
+    width: 18%;
+}
+
+th.gcmnts, td.gcmnts  {
+    width: 30%;
+    word-break: break-word;
+}

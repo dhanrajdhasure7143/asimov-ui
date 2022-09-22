@@ -84,7 +84,7 @@
                                 </div>
 
                                 <div class="flex-col header gridheader-th">
-                                    <button mat-sort-header="version">
+                                    <button mat-sort-header="version_new">
                                         <span>Version</span> 
                                     </button>
                                 </div>
@@ -120,7 +120,7 @@
                                                 <span *ngIf="bot.description==null">-</span>
                                             </div>
                                             <div class="flex-col">{{bot.categoryName}}</div>
-                                            <div class="flex-col">V{{bot.version}}</div>
+                                            <div class="flex-col">V{{bot.version_new}}</div>
                                             <div class="flex-col">
                                                 <span *ngIf="bot.botStatus=='Running'" class="text-primary">
                                                     <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus1">

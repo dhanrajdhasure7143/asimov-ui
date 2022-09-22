@@ -4,7 +4,6 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { RestApiService } from '../../services/rest-api.service';
 import Swal from 'sweetalert2';
-import { clear } from 'console';
 @Component({
   selector: 'app-rpa-so-logs',
   templateUrl: './rpa-so-logs.component.html',
@@ -16,7 +15,7 @@ export class RpaSoLogsComponent implements OnInit, OnDestroy {
   @ViewChild("logsSort",{static:false}) logsSort:MatSort;
   @ViewChild("loopsort",{static:false}) loopsort:MatSort;
   @ViewChild("logsPaginator",{static:false}) logsPaginator:MatPaginator;
-  displayedColumns: string[] = ['run_id','version','start_date','end_date', "bot_status"];
+  displayedColumns: string[] = ['run_id','version_new','start_date','end_date', "bot_status"];
   displayedColumns1: string[] = ['task_name', 'status','start_date','end_date','error_info' ];
   displayedloopColumns:string[]=['taskName','iterationId','status','startTS','endTS',"errorMsg"];
   automationLogColoumns:string[]=['internaltaskName','startTS','endTS', 'status','errorMsg']
@@ -70,7 +69,12 @@ export class RpaSoLogsComponent implements OnInit, OnDestroy {
     this.rest.getviewlogdata(this.logsbotid).subscribe(data =>{
       this.logresponse=data;
       this.logsLoading = false;
- 
+      this.logresponse.map(item=>{
+        if(item.version_new!=null){
+          item["version_new"]= parseFloat(item.version_new)
+          item["version_new"]=item.version_new.toFixed(1)
+         }
+       })
       if(this.logresponse.length >0)
       {
         this.respdata1 = false;
@@ -107,9 +111,11 @@ export class RpaSoLogsComponent implements OnInit, OnDestroy {
    //  this.filteredLogs=[...this.allLogs.filter(item=>item.version==this.filteredLogVersion)];
    this.filteredLogs=[...this.allLogs];
      this.Viewloglist = new MatTableDataSource(this.filteredLogs);
+
      this.changeDetector.detectChanges();
      this.Viewloglist.sort=this.logsSort;
      this.Viewloglist.paginator=this.logsPaginator;
+    
   },err=>{
     this.logsLoading=false;
     Swal.fire("Error","unable to get logs","error")
@@ -122,13 +128,6 @@ export class RpaSoLogsComponent implements OnInit, OnDestroy {
      let logs=[...this.filteredLogs]
      this.Viewloglist = new MatTableDataSource(logs);
      this.changeDetector.detectChanges();
-     // setTimeout(()=>{
-     //   console.log(this.Viewloglist)
-     //   console.log(this.logsPaginator)
-     //   console.log(this.logsSort)
-     //   this.Viewloglist.paginator=this.logsPaginator;
-     //   this.Viewloglist.sort=this.logsSort;
-     // },4000)
   }
 
   showLogsByRunId(runid,version,bot_status){
@@ -283,7 +282,6 @@ export class RpaSoLogsComponent implements OnInit, OnDestroy {
   //    this.loopbyrunid = new MatTableDataSource(this.fileteredLoopIterations);
 
   //    this.changeDetector.detectChanges();
-  //   console.log( this.selectedIterationId,this.iterationsList)
 
 
   // }

@@ -59,17 +59,18 @@
                           </ul>
                       </div>
                       <span class="bpsbtnsep">|</span>
-                      <div class="action-item hovericon" *ngIf="current_instance != undefined ">
-                          <!-- <button   (click)="current_instance.saveBotFunAct()"  [disabled]="current_instance.selectedEnvironments.length==0 || !((current_instance.savebotrespose!=undefined && isButtonVisible==true && userName==current_instance.savebotrespose.createdBy) || (current_instance.savebotrespose ==undefined) || (isButtonVisible==false))"> -->
-                          <button class="tsttooltipbtn" (click)="current_instance.saveBotFunAct()" [disabled]="current_instance.selectedEnvironments.length==0 ">
+                      <div class="action-item hovericon bvcsave" *ngIf="current_instance != undefined ">
+                        <button class="clr-hvr tsttooltipbtn"  [disabled]="current_instance.selectedEnvironments.length==0 " [outsideClick]="true" (click)="clear()" [popover]="popTemplate" placement="bottom">
+                          <img src="../../../../assets/images/RPA/icon_latest/save.svg" class="testplus1">
+                          <span class="testtooltip">Save Bot</span>
+                        </button>
+                          <!-- <button class="tsttooltipbtn" (click)="current_instance.saveBotFunAct()" [disabled]="current_instance.selectedEnvironments.length==0 ">
                     <img src="../../../../assets/images/RPA/icon_latest/save.svg" class="testplus1">
-                    <!-- <i class="ri-save-line"></i> -->
+
                     <span class="testtooltip">Save Bot</span>
-                    </button>
+                    </button> -->
                       </div>
-                      <!-- <div class="action-item" >
-                    <i class="ri-play-line"></i> 
-                </div> -->
+                     
                       <div class="action-item hovericon" *ngIf="current_instance != undefined">
                           <button class="tsttooltipbtn" [disabled]="current_instance.savebotrespose==undefined || current_instance.selectedEnvironments.length==0" (click)=" current_instance.executionAct()">
                     <img src="../../../../assets/images/RPA/icon_latest/play.svg" class="testplus1">
@@ -107,7 +108,8 @@
 
 
                       <div class="action-item hovericon" *ngIf="current_instance != undefined">
-                        <button class="tsttooltipbtn" [disabled]="current_instance.savebotrespose==undefined" (click)=" current_instance.getAuditLogs()">
+                        <button class="tsttooltipbtn" [disabled]="current_instance.savebotrespose==undefined" 
+                        (click)="auditLogs()" >
                 <img src="../../../../assets/images/RPA/RPA-Audit-1 (1).svg" class="testplus2">
                   <!-- <i class="ri-clipboard-line"></i> -->
                   <span class="testtooltip">Audit Logs</span>
@@ -234,17 +236,39 @@
                   </ng-template>
               </mat-tab>
           </mat-tab-group>
-          <div class="rpa-bottom-tab" headerPosition="below">
+           <div class="rpa-bottom-tab" headerPosition="below">
 
-              <div *ngIf="current_instance != undefined" class="footer-versions">
-                  <!-- <img src="../../../../assets/images/RPA/icon_latest/layer.svg" /> &nbsp;  -->
+              <!-- <div *ngIf="current_instance != undefined" class="footer-versions">
                   <select id="versions" (change)="version_change($event.target.value)" [value]="current_instance.selectedversion==undefined?0:current_instance.selectedversion">
                 <option value=0 disabled>Select Version</option>
                 <option  [value]="version.vId"  *ngFor="let version of current_instance.versionsList"  >
                   Version&nbsp; {{version.vId}}
                 </option>
               </select>
-              </div>
+              </div> -->
 
-          </div>
+          </div> 
       </div>
+      <ng-template #popTemplate>
+        <div class="custom-content Apr-cnt">
+          
+          <div class="form-group">
+            <label for="" class="label-control">Version</label>
+             <select [(ngModel)]="version_type"  class="form-control">
+              <option value="" disabled hidden>Select Version</option>
+              <option value="null" disabled hidden>Select Version</option>
+              <option value="undefined" disabled hidden>Select Version</option>
+              <option value="Major Version">Major Version</option>
+              <option value="Minor Version">Minor Version</option>
+            </select>   
+          </div>
+          <div class="form-group">
+            <label for="" class="label-control">Comments</label>
+            <textarea class="form-control" maxlength="255"  [(ngModel)]="comments"></textarea>
+          </div>
+          <div class="custom-footer-content">
+            <button class="btn btn-primary" (click)="SaveBot()">Save</button>
+          </div>
+        </div>
+      </ng-template>
+ 
