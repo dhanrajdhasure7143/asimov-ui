@@ -291,7 +291,7 @@ input.small-input[type="date"]::-webkit-calendar-picker-indicator {
   width: 100%;
 }
 .program-info .prg-title {
- word-wrap: break-word;
+  width: 30%;
 }
 .status-data span.labeltit {
   font-size: 13px !important;
