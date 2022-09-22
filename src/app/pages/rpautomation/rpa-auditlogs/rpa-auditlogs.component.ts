@@ -82,7 +82,7 @@ getAuditLogs(environments)
          {
            item["Status"]="UpdatedConfig"
          }
-         return item;
+         return item; 
        })].reverse();
      //  this.auditLogsModelRef=this.modalService.show(this.auditLogsPopup, {class:"logs-modal"});
      }
