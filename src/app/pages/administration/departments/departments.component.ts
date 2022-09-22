@@ -73,6 +73,7 @@ export class DepartmentsComponent implements OnInit {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.value) {
+      this.spinner.show();
       this.api.deleteDepartments(delbody).subscribe(resp => {
         let value: any = resp
         if (value.message === "Successfully deleted the category") {
@@ -87,6 +88,7 @@ export class DepartmentsComponent implements OnInit {
             heightAuto: false,
             confirmButtonText: 'Ok'
         })
+          this.spinner.hide();
           this.getAllDepartments();
           this.removeallchecks();
           this.checktodelete();
