@@ -652,6 +652,7 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
     let process = this.selected_process_names.find(process => process.processId == processId);
     if (process != undefined) {
       let processOwner: any = this.users_data.find(item => (item.userId == process.ProcessOwner))
+
       //let processOwner:any=this.userslist.find(item=>(`${item.userId.firstName} ${item.userId.lastName}`==process.createdBy))
       if (processOwner != undefined) {
       this.processownername='';
