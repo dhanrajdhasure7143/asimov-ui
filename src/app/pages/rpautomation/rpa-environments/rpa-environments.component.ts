@@ -174,6 +174,26 @@ import * as moment from 'moment';
      // document.getElementById("filters").style.display = "block";
   }
 
+  sortasc(event){
+    let sortdes : boolean;
+    if(event.direction=='asc')
+    sortdes=true;
+    else if(event.direction=='des')
+    sortdes=false;
+    if(event.direction!=""){
+      this.environments=this.environments.sort(function(a,b){
+        let check_a=isNaN(a[event.active])?a[event.active].toUpperCase():a[event.active];
+        let check_b=isNaN(b[event.active])?b[event.active].toUpperCase():b[event.active];
+        if (sortdes==true)
+          return (check_a > check_b) ? 1 : -1;
+        else
+          return (check_a < check_b) ? 1 : -1;
+      },this);
+    }else{
+      this.getallData();
+    }
+  }
+
   EnvType1(){
     if(this.insertForm.value.environmentType == "Windows"){
       //this.updateForm.value.portNumber="44";
