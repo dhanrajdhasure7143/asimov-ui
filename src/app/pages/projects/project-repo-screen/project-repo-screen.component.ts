@@ -563,13 +563,7 @@ this.route.queryParams.subscribe(data=>{​​​​​​​​
       return processName;
     }
 
-  fitTableViewCategory(processName) {
-    if (processName && processName.length > 10)
-      return processName.substr(0, 10) + '..';
-    return processName;
-  }
-
-  getFileCategoriesList(){
+   getFileCategoriesList(){
     this.api.getFileCategoriesList(this.projectid).subscribe((res:any)=>{
       this.filecategoriesList = res
     })
