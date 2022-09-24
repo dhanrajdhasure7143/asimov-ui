@@ -54,7 +54,7 @@ export class CreateProjectFormComponent implements OnInit {
 
     })
 
-    this.getvalchain();
+    // this.getvalchain();
     this.getprocessnames();
     this.freetrail=localStorage.getItem('freetrail')
 
