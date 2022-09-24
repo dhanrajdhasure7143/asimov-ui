@@ -182,19 +182,19 @@ span.logrefresh {
     margin-left: 8px;
 }
 
-.tsttooltipbtn:disabled {
+button:disabled {
     cursor: not-allowed !important;
 }
 
 .process-logs.modal-body {
-    height: calc(100vh - 300px);
+    /* height: calc(100vh - 300px); */
+    padding-top: 5px;
 }
 
 
 .Actions-column button:disabled{
-    background-color: white !important;
-    opacity: 0.4 !important;
-    cursor: not-allowed;
+    /* background-color: white !important;
+    opacity: 0.4 !important; */
 }
 
 
@@ -202,7 +202,46 @@ span.logrefresh {
     display: block;
     height: auto;
     box-sizing: border-box;
-    max-height: 60px !important;
+    max-height: 120px !important;
     z-index: 99999 !important;
     overflow-y: auto;
+}
+.addTasksBlock{
+    height: 200px !important;
+}
+
+.buttons{
+    margin-top: 57px;
+
+}
+
+.cell1 {
+    width: 10%
+}
+.cell2 {
+    width: 10%
+}
+.cell3 {
+    width: 10%
+}
+.cell4 {
+    width: 10%
+}
+.cell5 {
+    width: 10%
+}
+.cell6 {
+    width: 10%
+}
+.cell7 {
+    width: 15%
+}
+.cell8 {
+    width: 10%
+}
+.cell9 {
+    width: 5%
+}
+.cell10 {
+    width: 10%
 }

@@ -1,8 +1,11 @@
-<div class="modal-header modelprhead">
+<div ngb-modal-draggable [ngbModalDraggableHandle]="draggableHandle" class="cursor-all-scroll">
+    <div #draggableHandle class="modal-header modelprhead">
+<!-- <div class="modal-header modelprhead"> -->
     <h4 class="modal-title pull-left">Add Resources</h4>
     <button type="button" class="close pull-right" aria-label="Close" (click)="addresouceref.hide()">
       <span aria-hidden="true"><img alt="" src="../../../../../assets/images/Projects/circle-close.svg"></span>
     </button>
+</div>
 </div>
 <div class="modal-body modelprbody resourcescreen">
     <!-- <div class="container p-0" style="width:100%"> -->

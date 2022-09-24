@@ -69,3 +69,19 @@ span.testtooltip:before {
   right: 20px;
   top: 8px;
 }
+
+.cell1 {
+  width: 5%;
+}
+.cell2, .cell4 {
+  width: 22%;
+}
+.cell3 {
+  width: 25%;
+}
+.cell5 {
+  width: 20%;
+}
+.cell6 {
+  width: 6%;
+}

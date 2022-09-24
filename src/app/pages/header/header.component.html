@@ -82,19 +82,20 @@
     <span *ngIf="child_link && child_link.length != 0" [routerLink]="child_link.route" id="child">&nbsp;<i class="fa fa-arrow-right"></i>&nbsp;{{child_link.title}}</span>
    </span>
    <span class="example-spacer"></span>
-   <button mat-icon-button class="txt-wh" aria-label="Example icon-button with heart icon">
+   <!-- <button mat-icon-button class="txt-wh" aria-label="Example icon-button with heart icon">
     <img src="../../../assets/images/search.svg">
-   </button>
-   <button mat-icon-button class="txt-wh" aria-label="Example icon-button with heart icon">
+   </button> -->
+   <!-- <button mat-icon-button class="txt-wh" aria-label="Example icon-button with heart icon">
     <img src="../../../assets/images/plus-square.svg">
-   </button>
+   </button> -->
    <!-- <button mat-icon-button class="txt-wh"  (click)='slideUp("notifications")' aria-label="Example icon-button with heart icon">
     <i style="font-size: 18px;opacity: 0.5;" class="fa fa-bell"></i>
     <div *ngIf="this.notificationscount!=0" class="notification-count" >
       <span>{{notificationscount}}</span>
    </div>
    </button> -->
-   <div class="dropdown">
+   <!--As per requirement-->
+   <!-- <div class="dropdown"> -->
     <!-- <a id="dLabel" role="button" data-toggle="dropdown" data-target="#" href="/page.html">
       <i class="glyphicon glyphicon-bell"></i>
     </a> -->
@@ -104,12 +105,13 @@
         <span>{{notificationscount}}</span>
      </div>
      </button> -->
-      <button mat-icon-button type="button" [outsideClick]="false" class="clr-hvr txt-wh" (click)="getNotificationsList()" #pop2="bs-popover" [popover]="shareTemplate" placement="bottom">
+        <!--As per requirement-->
+      <!-- <button mat-icon-button type="button" [outsideClick]="false" class="clr-hvr txt-wh" (click)="getNotificationsList()" #pop2="bs-popover" [popover]="shareTemplate" placement="bottom">
         <i style="font-size: 18px;opacity: 0.5;" class="fa fa-bell"></i>
         <div *ngIf="notificationscount!=0" class="notification-count">
           <span>{{notificationscount}}</span>
         </div>
-      </button>
+      </button> -->
     <!-- <ul class="dropdown-menu notifications" role="menu" style="left: -160px;" aria-labelledby="dLabel">
       
       <div class="notification-heading"><h4 class="menu-title"><b>Notifications</b></h4>
@@ -149,8 +151,8 @@
        <h4><b>{{error}}</b></h4>
         </div> 
     </ul> -->
-    
-  </div>
+       <!--As per requirement-->
+  <!-- </div> -->
 
    <app-header-dropdown-overlay [overlay_notifications_dt]="overlay_notifications_model" [overlay_acc_dt]="overlay_acc_model" [overlay_user_manage_dt]="overlay_user_manage_model" [overlay_config_alert_dt]="overlay_config_alert_model" [overlay_invite_user_dt]="overlay_invite_user_model"></app-header-dropdown-overlay>
   
@@ -211,7 +213,7 @@
   </button>
   </mat-menu>
 
-  <span class="txt-wh header-seperator">|</span>
+  <!-- <span class="txt-wh header-seperator">|</span> -->
  
   <div style="line-height: 7px;margin-right: 13px;margin-top:6px;">
     <span class="txt-u header-rgttext" *ngIf="user_fName != null">{{user_fName | titlecase}} {{user_lName |titlecase}}</span><br>

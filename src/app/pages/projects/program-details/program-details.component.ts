@@ -628,6 +628,7 @@ export class ProgramDetailsComponent implements OnInit {
       this.modalref.hide();
       if(res.message==="Project Added Successfully"){
         Swal.fire("Success","Project Added Successfully !!","success")
+        this.getunassignedprojectslist(this.userRoles,this.userName,this.email);
       }else
       Swal.fire("Error","Unable to add the Project","error");
      
@@ -649,14 +650,14 @@ export class ProgramDetailsComponent implements OnInit {
     return value;
   }​​​​​​​​
   programeNameMaxLength(value){
-    if(value.length > 50){
+    if(value.length > 255){
     this.programeNameFlag = true;
     }else{
       this.programeNameFlag = false;
     }
      }
      programePurposeMaxLength(value){
-    if(value.length > 150){
+    if(value.length > 255){
     this.programePurposeFlag = true;
     }else{
       this.programePurposeFlag = false;

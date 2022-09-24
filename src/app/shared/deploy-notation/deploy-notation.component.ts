@@ -18,6 +18,7 @@ export class DeployNotationComponent implements OnInit {
   depName: string;
   tenantId: string;
   endPoint: string;
+  isLoading:boolean = false;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private rest: RestApiService,
@@ -34,7 +35,7 @@ export class DeployNotationComponent implements OnInit {
   }
 
   deployNotation() {
-    
+    this.isLoading = true;
     let selecetedTenant =  localStorage.getItem("tenantName");
     let splitTenant:any;
     if(selecetedTenant){
@@ -56,6 +57,7 @@ export class DeployNotationComponent implements OnInit {
     this.rest.deployBPMNNotation('/deployprocess/notation', formData)
       .subscribe(res => {
         let response:any = res;
+        this.isLoading = false;
         if(response.status == 'success' || response.status == 'Success'){
         this.deploy_success = true;
         if(response.definitionId !=''){
@@ -67,6 +69,7 @@ export class DeployNotationComponent implements OnInit {
         }
         
         } else{
+        this.isLoading = false;
           Swal.fire({
             title: 'Oops!',
             text: response.message,
@@ -93,7 +96,7 @@ export class DeployNotationComponent implements OnInit {
     // window.location.href=this.config.bpmPlatfromUrl+"/camunda/app/welcome/424d2067/#!/login?accessToken="+token+"&userID=karthik.peddinti@epsoftinc.com&tenentID=424d2067-41dc-44c1-b9a3-221efda06681"
     let navigateBackTo=this.router.url;
     
-    window.location.href = this.config.camundaUrl+"/camunda/app/welcome/"+splitTenant+"/#!/login?accessToken=" + token + "&userID="+userId+"&tenentID="+selecetedTenant+"&navigate_back="+navigateBackTo;
+    window.location.href = this.config.camundaUrl+"/workflow/app/welcome/"+splitTenant+"/#!/login?accessToken=" + token + "&userID="+userId+"&tenentID="+selecetedTenant+"&navigate_back="+navigateBackTo;
   
   }
 

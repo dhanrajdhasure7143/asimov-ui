@@ -9,6 +9,7 @@ import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import { NgxSpinnerService } from "ngx-spinner";
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-rpa-credentials',
@@ -84,7 +85,7 @@ export class RpaCredentialsComponent implements OnInit {
     this.spinner.show();
    // document.getElementById("filters").style.display='block';
     this.dt.changeHints(this.hints.rpadbchints);
-    this.getallCredentials();
+    //this.getallCredentials();
     this.getCategories();
     this.passwordtype1=false;
     this.passwordtype2=false;
@@ -127,6 +128,7 @@ inputNumberOnly(event){
            if(this.categoryList!=undefined){
             this.credentials=this.credentials.map(item=>{
               item["categoryName"]=this.categoryList.find(item2=>item2.categoryId==item.categoryId).categoryName;
+              item["createdTimeStamp_converted"] = moment(new Date(item.createdTimeStamp)).format('lll')
               return item;
             })
            }
@@ -394,7 +396,7 @@ updatecreddata()
       let response:any=data;
      
         this.categoryList=response.data;
-      
+      this.getallCredentials();
     })
   }
 }

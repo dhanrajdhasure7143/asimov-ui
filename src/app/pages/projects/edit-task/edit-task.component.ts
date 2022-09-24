@@ -80,6 +80,9 @@ export class EditTaskComponent implements OnInit {
   mindate= moment().format("YYYY-MM-DD");
   taskSummaryFlag: boolean = false;
   taskDescriptionFlag: boolean = false;
+  taskcategories: Object;
+  optionValue:any;
+  taskcategoriesList:any[]=[]
   constructor(private formBuilder:FormBuilder,
     private router:ActivatedRoute,
     private route:Router,
@@ -88,9 +91,10 @@ export class EditTaskComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
+    this.spinner.show();
     this.updatetaskForm=this.formBuilder.group({
       taskName:["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      // taskCategory: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      taskCategory: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       priority: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       startDate: ['', Validators.compose([Validators.maxLength(200)])],
       resources: ['', Validators.compose([Validators.maxLength(200)])],
@@ -118,6 +122,8 @@ export class EditTaskComponent implements OnInit {
         this.getallpiprocess();
         this.getallbpmprocess();
         this.getallbots();
+        this.getTaskCategoriesByProject();
+        this.getTaskCategories();
   }
 
 
@@ -129,7 +135,7 @@ export class EditTaskComponent implements OnInit {
       this.rest.gettaskandComments(params.projectid).subscribe(response=>{
         let taskList:any=response;
         let task:any=taskList.find(item=>item.id==data.taskId)
-        this.taskcategory=task.taskCategory
+        //this.taskcategory=task.taskCategory
         this.taskname=task.taskName
         this.lastModifiedBy=task.lastModifiedBy
         this.lastModifiedTimestamp=task.lastModifiedTimestamp
@@ -137,8 +143,6 @@ export class EditTaskComponent implements OnInit {
         this.startDate=task.startDate
         this.endDate=moment(task.endDate).format("YYYY-MM-DD")
         this.mindate=moment(this.startDate).format("YYYY-MM-DD")
-        console.log(this.endDate)
-       
           this.updatetaskdata(task);
        
         
@@ -146,16 +150,27 @@ export class EditTaskComponent implements OnInit {
     })
   }
 
-  
+  getTaskCategories(){
+    this.rest.getTaskCategories().subscribe(data =>{
+      this.taskcategories=data
+    })
+  }
+  OnChangeTaskCategory(data){
+    if(this.selectedtask.taskCategory==data.target.value){
+    this.updatetaskForm.get("correlationID").setValue(this.selectedtask.correlationID);
+  }else{
+    this.updatetaskForm.get("correlationID").setValue("");
+    }
+  }
   updatetaskdata(data)
   {  
-    
     this.taskcomments=[];
     this.taskhistory=[];
     this.rolelist=[];
     this.selectedtask=data
     
     this.updatetaskForm.get("taskName").setValue(data.taskName);
+    this.updatetaskForm.get("taskCategory").setValue(data.taskCategory);
     this.updatetaskForm.get("priority").setValue(data["priority"]);
     this.updatetaskForm.get("endDate").setValue(this.endDate);
     this.updatetaskForm.get("resources").setValue(data["resources"]);
@@ -173,8 +188,6 @@ export class EditTaskComponent implements OnInit {
       this.taskcomments_list=this.selectedtask.comments
 
       this.taskhistory=this.selectedtask.history
-    console.log("taskhistory",this.taskhistory)
-    console.log("taskcomment",this.taskcomments,this.taskcomments_list)
     this.getTaskAttachments();
     // setTimeout(() => {
     //   let user=this.users_list.find(item=>item.userId.userId==this.selectedtask.resources);
@@ -208,7 +221,10 @@ export class EditTaskComponent implements OnInit {
       taskupdatFormValue["history"]=this.taskhistory
       taskupdatFormValue["endDate"]=this.endDate
       taskupdatFormValue["taskName"]=this.taskname
-      taskupdatFormValue["taskCategory"]=this.taskcategory
+      if(this.optionValue == 'As-Is Process' || this.optionValue == 'To-Be Process'){
+        taskupdatFormValue["process"] = this.bpm_process_list.find(each=>each.correlationID == this.updatetaskForm.value.correlationID).processId
+      }
+     // taskupdatFormValue["taskCategory"]=this.taskcategory
       this.spinner.show();
       this.rest.updateTask(taskupdatFormValue).subscribe( res =>{
         this.spinner.hide();
@@ -322,7 +338,6 @@ else
       this.userid=user.userId.userId
       this.rest.getRole(this.userid).subscribe(data =>{
         this.userrole=data
-        console.log("userdata",this.userrole)
         for (let index = 0; index <= this.userrole.message.length; index++) {
           this.rolename =  this.userrole.message[index];
           if(this.rolename!=undefined){
@@ -334,7 +349,7 @@ else
         //this.rolename=this.userrole.message[0].name
        
       })
-
+this.spinner.hide();
     }
 
 
@@ -491,7 +506,6 @@ else
         "id": p.id,
         "fileName": p.fileName
       }
-      console.log(obj)
       selectedFiles.push(obj);
       });
       
@@ -568,5 +582,11 @@ else
       }else{
         this.taskDescriptionFlag = false;
       }
+       }
+  getTaskCategoriesByProject() {
+    this.rest.getTaskCategoriesByProject(this.project_id).subscribe((res:any) => {
+      this.taskcategoriesList = res
+    })
+
        }
 }

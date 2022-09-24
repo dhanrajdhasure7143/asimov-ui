@@ -374,6 +374,7 @@ th {
   background: #e8f7fd;
   font-size: 14px !important;
   vertical-align: middle !important;
+  text-align: left;
 }
 thead  tr,tbody tr {
   height: 40px;
@@ -1333,7 +1334,7 @@ mat-row {
     margin: 0px auto !important;
     display: flex;
     align-items: center;
-    overflow: hidden;
+    /* overflow: hidden; */
   }
 }
 
@@ -2361,7 +2362,7 @@ th.mat-header-cell {
 /* RPA Module New Styles */
 .rpa-content-div {
   /* padding: 10px; */
-  overflow:  auto;
+  overflow:  hidden;
   height: calc(100% - 0px);
 }
 /* RPA Module New Styles */
@@ -2408,6 +2409,7 @@ th.mat-header-cell {
 
 .actions-mbody .form-group {
   margin: 0px 0px 15px !important;
+  margin-bottom: 10px !important;
 }
 .actions-mbody .drop-container.dropzone {
   margin-bottom: 5px !important;
@@ -2528,7 +2530,7 @@ th.mat-header-cell {
 
 .logs-modal .logs-container
 {
-  height:400px  !important;
+  height: 395px  !important;
   overflow:auto;
 }
 .logs-table{
@@ -2556,6 +2558,7 @@ th.mat-header-cell {
 }
 th .mat-sort-header-button {
   font-size: 14px !important;
+  text-align: left;
 }
 td.mat-cell span {
   font-size: 13px;
@@ -2693,9 +2696,110 @@ span.pdicon {
   max-height: 65px !important;
   overflow: auto !important;
 }
+
+.vcmprop.mat-drawer-opened .mat-tab-body-wrapper {
+  padding: 10px 0px;
+}
+.vcmprop.mat-drawer-opened .mat-tab-label {
+  height: 45px;
+  justify-content: left !important;
+  padding-left: 15px !important;
+  min-width: 140px !important;
+}
+.vcmprop mat-ink-bar.mat-ink-bar {
+  width: 140px !important;
+}
+.vcmprop.mat-drawer-opened .mat-tab-header-pagination-controls-enabled .mat-tab-header-pagination {
+  display: none;
+}
 .custom-content-notification{
   min-width: 330px ;
   /* height: 330px; */
   height: 310px;
   overflow: auto;
+}
+.edit-task-tabs .mat-tab-body-wrapper {
+  height: calc(100vh - 340px) !important;
+}
+.workspace-title button.mat-sort-header-button {
+  font-size: 14px !important;
+}
+
+.vcm-treesmain .mat-tree-node {
+  min-height: 30px;
+}
+.vcm-treesmain .mat-icon-button {
+  width: auto;
+  height: 25px;
+  line-height: 25px;
+  color: #607088 !important
+}
+.vcm-treesmain .mat-icon-button .mat-icon {
+  line-height: 15px;
+  width: auto;
+  height: 18px;
+  color: #a0a0a0;
+}
+.actionsoverlay-mbody {
+  overflow: hidden !important;
+  padding: 0px !important;
+}
+.actionsoverlay-mbody .actions-datafields-div {
+  /* height: calc(100vh - 190px); */
+  height: calc(100vh - 160px);
+  overflow: auto;
+  padding: 15px;
+  width:100%;
+}
+.own-overlay as-split-area {
+  overflow: hidden !important;
+}
+.actionsoverlay-mbody .container.m-contanier.form-body {
+  height: 100vh;
+  overflow: hidden;
+}
+.overaly-innertable .testcell:nth-child(2) {
+  width: 30%;
+}
+.overaly-innertable .testcell {
+  width: calc(100% / 7 );
+}
+.process-expansion .mat-expansion-panel-body {
+  max-height: none !important;
+}
+
+.process-expansion span.mat-content .module-sub-header-title {
+  line-height: 32px !important;
+}
+.cursor-all-scroll{
+  cursor: all-scroll;
+}
+
+.prj_activities_block .mat-tab-label {
+  height: 36px;
+  padding: 0px 15px !important;
+  background-color: aliceblue !important;
+  color: #001c47 !important;
+}
+.prj_activities_block .mat-tab-label-active {
+  opacity: 1;
+}
+.prj_activities_block .mat-tab-label:first-child {
+  justify-content: flex-start;
+  background-color: aliceblue !important;
+}
+.prj_activities_block mat-tab-header.mat-tab-header {
+  background-color: aliceblue;
+  margin-top: 4px;
+  border-bottom: 0px !important;
+}
+/* .pg-newpopup .logs-container {
+  height: calc(100vh - 365px) !important;
+} */
+.innersform.card-form .mat-tab-body-wrapper {
+  overflow: hidden !important;
+  width: 100%;
+}
+.innersform.card-form .mat-tab-header-pagination-controls-enabled .mat-tab-header-pagination {
+  display: none;
 }

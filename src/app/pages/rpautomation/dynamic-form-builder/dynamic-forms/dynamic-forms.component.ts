@@ -3,63 +3,11 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { iter } from '@amcharts/amcharts4/core';
+import { CdkDragDrop, CdkDragStart, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Base64 } from 'js-base64';
 @Component({
   selector: 'app-dynamic-forms',
-  template:`
-    <form  [formGroup]="form" class="form-horizontal">
-      <div class="container m-contanier form-body">
-        <div class="col-md-12 p-0 form-group"  [id]="field.id+'_form_data'"  *ngFor="let field of fields; let i =index ">
-            <form-builder [field]="field" [fields]="fields" [form]="form"></form-builder>
-        </div>
-       
-        <div *ngIf="isMultiForm==true">
-          <br>
-            <button class="btn btn-success" *ngIf="editfill==false" [disabled]="!form.valid" (click)="Push()" >Add</button>
-            <button class="btn btn-success" *ngIf="editfill==true" [disabled]="!form.valid" (click)="Push()" >Update</button>
-          <br><br>
-        </div>
-
-        <div class="mt-2" *ngIf="isMultiForm==true">
-        <div class="tablmacl">
-        <div class="innertabld">
-            <table class="table">
-                <thead>
-                    <th *ngFor="let tableHeader of fields">{{tableHeader.label}}</th>
-                    <th>Actions</th>     
-               </thead>
-                <tbody>
-                    <tr *ngFor="let eachObj of fillarray  | paginate: { itemsPerPage: 2,currentPage: q }">
-                    <td *ngFor="let field of fields">
-                    <span *ngIf="checkRecord(eachObj, field)==false">
-                        {{eachObj[field.name+"_"+field.id]?eachObj[field.name+"_"+field.id]:'NA'}}
-                    </span>
-                    <span *ngIf="checkRecord(eachObj,field)==true">
-                      *******
-                    </span>
-                    </td>                    
-                       <td>
-                       <button tooltip="Edit" placement="bottom"  (click)="edit(eachObj)"><img src="../../../../assets/images/RPA/icon_latest/edit.svg" alt="" class="testplus">&nbsp;</button>
-                     <button tooltip="Delete" placement="bottom"  (click)="delete(eachObj)"><img src="../../../../assets/images/RPA/icon_latest/delete.svg" alt="" class="testplus">&nbsp;</button>
-                       </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div class="pagicl float-right">
-    <pagination-controls (pageChange)="q = $event"></pagination-controls>
-</div>
-        
-        </div>
-        <div class="form-footer" *ngIf="!feilddisable">
-            <button *ngIf="isdisabled==null && isMultiForm==false" type="submit" (click)="onSub()" [disabled]="!form.valid" class="btn btn-primary">Save</button>
-            <button *ngIf="isdisabled==true" type="submit" (click)="onSub()" [disabled]="true" class="btn btn-primary">Save</button>
-            <button *ngIf="isdisabled==null &&  isMultiForm==true" type="submit" (click)="onSub()" [disabled]="fillarray.length==0"   class="btn btn-primary">Save</button>
-        </div>
-      </div>
-    </form>
-  `,
+  templateUrl:'./dynamic-forms.component.html',
 })
 export class DynamicFormsComponent implements OnInit {
   @Output() onSubmit = new EventEmitter();
@@ -69,7 +17,10 @@ export class DynamicFormsComponent implements OnInit {
   @Input() formheader:any;
   @Input() multiarray:any=[]
   form: FormGroup;
+  otherAttributesForm:FormGroup;
+  otherAttributes:any=[];
   isdisabled:boolean;
+  q = 1
   userRole: string;
   fillarray:any=[]
   isMultiForm:Boolean=false;
@@ -77,11 +28,23 @@ export class DynamicFormsComponent implements OnInit {
   data: any=[]
   id: any;
   editfill:boolean=false;
+  drag:boolean
   constructor() {
    }
   onSub(){
     if(this.enableMultiForm.check==true){
-      this.Submit.emit(this.data)
+      this.data = this.fillarray.map(p => {
+        let filteredobject = {};
+        let sample = (Object.keys(p));
+        sample.map(item => {
+          if (item != "id")
+            filteredobject[item.split("_")[0]] = p[item];
+          else
+            filteredobject["id"] = p[item];
+        })
+        return filteredobject;
+      });
+      this.Submit.emit({multiform:this.data, otherFormData:this.otherAttributesForm.value})
     }
     else{
       this.onSubmit.emit(this.form.value)
@@ -95,7 +58,7 @@ export class DynamicFormsComponent implements OnInit {
     let valueKey=Object.keys(obj).find(item=>item.split("_")[0]=="fillValue");
     if(valueKey != undefined && key != undefined) 
       if(obj[key]=="password")
-      {
+      { 
         this.fields.find(item=>item.name=="fillValueType").value="password"
         this.fields.find(item=>item.name=="fillValue").type="password";
         this.fields.find(item=>item.name=="fillValue").value=obj[valueKey]  
@@ -105,7 +68,7 @@ export class DynamicFormsComponent implements OnInit {
       {
         this.fields.find(item=>item.name=="fillValue").type="textarea"
       }
-      let action_id= obj.Action_580
+      let action_id= obj.Action_536
     if (action_id == 'fill') {
       this.fields.forEach(item => {
         if (item.visibility == false) {
@@ -129,8 +92,6 @@ export class DynamicFormsComponent implements OnInit {
           }
         });
         if(!item.visibility){
-          console.log("item", this.form.get([item.name+'_'+item.id]))
-          console.log("fileds",this.fields)
           this.form.get([item.name+'_'+item.id]).clearValidators();
          }
          this.form.get([item.name+'_'+item.id]).updateValueAndValidity()
@@ -194,7 +155,6 @@ export class DynamicFormsComponent implements OnInit {
           else
             filteredobject["id"] = p[item];
         })
-        console.log("object", filteredobject)
         return filteredobject;
       });
     }
@@ -220,7 +180,6 @@ export class DynamicFormsComponent implements OnInit {
           else
             filteredobject["id"] = p[item];
         })
-        console.log("object", filteredobject)
         return filteredobject;
         // return{
         //   "webElementType":p.webElementType_223,
@@ -251,8 +210,6 @@ export class DynamicFormsComponent implements OnInit {
   ngOnInit() {
     let fieldsCtrls = {};
     this.isMultiForm=(this.enableMultiForm.check)
-  
-
     if(this.multiarray!=undefined){
       this.multiFormValue=[...this.enableMultiForm.value]
       let modifiedArray:any=[...this.multiarray.map((item:any)=>{
@@ -267,6 +224,18 @@ export class DynamicFormsComponent implements OnInit {
           return fieldData;
       })]
       this.fillarray=modifiedArray;
+      let otherAttributes:any[]=this.enableMultiForm.additionalAttributesList;
+      let otherFieldsCtrls:any=[];
+
+      otherAttributes.forEach((other_attr:any)=>{
+        if (other_attr.type == 'email')
+          otherFieldsCtrls[other_attr.name + '_' + other_attr.id] = new FormControl(other_attr.value || '', other_attr.required && other_attr.dependency == '' ? [Validators.pattern("[a-zA-Z0-9.-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{3,}")] : [Validators.pattern("[a-zA-Z0-9.-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{3,}")])
+        else
+          otherFieldsCtrls[other_attr.name + '_' + other_attr.id] = new FormControl(other_attr.value || '', other_attr.required && other_attr.dependency == '' ? [Validators.required] : [])
+      })
+      this.otherAttributes=otherAttributes;
+      this.otherAttributesForm=new FormGroup(otherFieldsCtrls);
+      //this.data=modifiedArray
     }
 
   
@@ -322,6 +291,13 @@ export class DynamicFormsComponent implements OnInit {
       }
      
   }
+  drop(event: CdkDragDrop<[]>) {
+    this.drag=true
+    moveItemInArray(this.fillarray, (this.q - 1) * 2 + event.previousIndex, (this.q - 1) * 2 + event.currentIndex);  
+    this.data=this.fillarray;
+
+}
+
 
 }
  // <div class="form-row"></div>

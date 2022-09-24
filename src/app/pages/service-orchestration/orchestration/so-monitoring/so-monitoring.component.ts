@@ -15,7 +15,7 @@ export class SoMonitoringComponent implements OnInit {
   
 
   ngOnInit() {
-  //  this.spinner.show();
+    //this.spinner.show();
     this.urlSafe= this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
   }
 
@@ -29,7 +29,7 @@ export class SoMonitoringComponent implements OnInit {
     {
       this.selectedTab=event.index;
       this.check_tab=event.index;
-     // this.spinner.show();
+      //this.spinner.show();
     }
   }
 }

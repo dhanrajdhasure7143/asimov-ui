@@ -1,552 +1,556 @@
 <div class="module-body bpms-canvas-body">
-<div class="row header_addon bpm-notation-fields">
-        <!-- *ngIf="!isfromApprover" -->
-    <div class="col-md-12 p-0" id="bpmnNotationList">
-            <label class="label-control">Notations</label>
-            <select [(ngModel)]="selected_notation" (change)="displayBPMN()" disableOptionCentering class="form-control">
-                <option value="undefined" disabled hidden>Select Notation</option>
-                <option value="null" disabled hidden>Select Notation</option>
-                <option value="" disabled hidden>Select Notation</option>
-                <option value=" " disabled hidden>Select Notation</option>
-                <option *ngFor="let each_bpmn of saved_bpmn_list;let bpmnIndex = index" [value]="bpmnIndex">
-                    {{(isShowConformance && each_bpmn.hasConformance?"AS IS vs ":"")+each_bpmn.bpmnProcessName+" ( V1."+each_bpmn.version+" )"|titlecase}}</option>
-            </select>
+    <div class="row header_addon bpm-notation-fields">
+            <!-- *ngIf="!isfromApprover" -->
+        <div class="col-md-12 p-0" id="bpmnNotationList">
+                <label class="label-control">Notations</label>
+                <select [(ngModel)]="selected_notation" (change)="displayBPMN()" disableOptionCentering class="form-control">
+                    <option value="undefined" disabled hidden>Select Notation</option>
+                    <option value="null" disabled hidden>Select Notation</option>
+                    <option value="" disabled hidden>Select Notation</option>
+                    <option value=" " disabled hidden>Select Notation</option>
+                    <option *ngFor="let each_bpmn of saved_bpmn_list;let bpmnIndex = index" [value]="bpmnIndex">
+                        {{(isShowConformance && each_bpmn.hasConformance?"AS IS vs ":"")+each_bpmn.bpmnProcessName+" ( V1."+each_bpmn.version+" )"|titlecase}}</option>
+                </select>
+        </div>
+        <!-- <div class="col-md-2 pl-0" *ngIf="!isfromApprover" id="approversList">
+                <label class="label-control">Approver List</label>
+                <select [(ngModel)]="selected_approver" [disabled]="rejectedOrApproved=='PENDING'" class="form-control">
+                    <option *ngFor="let each_approver of approver_list;let i=index" [value]=i>
+                        {{each_approver.firstName+" "+each_approver.lastName}}</option>
+                </select>
+        </div> -->
+        
+        <!-- <div class="col-md-2">
+            <button class="btn btn-primary eiap-btn" (click)="showConformance()" *ngIf="isShowConformance && !reSize && !hasConformance" [disabled]="disableShowConformance||rejectedOrApproved=='PENDING'">Show Conformance</button>
+            <button class="btn btn-primary eiap-btn" (click)="getBpmnDifferences()" *ngIf="isShowConformance && (hasConformance || reSize)">Show Differences</button>
+        </div> -->
+        <!-- <div class="col-md-1">
+            <div *ngIf="rejectedOrApproved && !isfromApprover" class="label_icon" [class.bg-red]="rejectedOrApproved=='REJECTED'" [class.bg-orange]="rejectedOrApproved=='INPROGRESS'" [class.bg-green]="rejectedOrApproved=='APPROVED'">
+                {{rejectedOrApproved}}</div>
+            <div *ngIf="isfromApprover" class="label_icon">{{rejectedOrApproved}}</div>
+        </div> -->
+        
+        <!-- <div class="col-md-1 functionality-icons p-0">
+            <span class="fa fa-upload" (click)="openDeployDialog()" *ngIf="rejectedOrApproved == 'APPROVED'"></span>
+            <span class="start-instance">
+                <span class="fa fa-play" (click)="openVariableDialog()" *ngIf="isStartProcessBtn"></span>
+            </span>
+            <span class="fa fa-keyboard" (click)="displayShortcut()"></span>
+            <span class="fa fa-crosshairs" (click)="fitNotationView()"></span>
+        </div> -->
+    
     </div>
-    <!-- <div class="col-md-2 pl-0" *ngIf="!isfromApprover" id="approversList">
-            <label class="label-control">Approver List</label>
-            <select [(ngModel)]="selected_approver" [disabled]="rejectedOrApproved=='PENDING'" class="form-control">
-                <option *ngFor="let each_approver of approver_list;let i=index" [value]=i>
-                    {{each_approver.firstName+" "+each_approver.lastName}}</option>
-            </select>
-    </div> -->
-    
-    <!-- <div class="col-md-2">
-        <button class="btn btn-primary eiap-btn" (click)="showConformance()" *ngIf="isShowConformance && !reSize && !hasConformance" [disabled]="disableShowConformance||rejectedOrApproved=='PENDING'">Show Conformance</button>
-        <button class="btn btn-primary eiap-btn" (click)="getBpmnDifferences()" *ngIf="isShowConformance && (hasConformance || reSize)">Show Differences</button>
-    </div> -->
-    <!-- <div class="col-md-1">
-        <div *ngIf="rejectedOrApproved && !isfromApprover" class="label_icon" [class.bg-red]="rejectedOrApproved=='REJECTED'" [class.bg-orange]="rejectedOrApproved=='INPROGRESS'" [class.bg-green]="rejectedOrApproved=='APPROVED'">
-            {{rejectedOrApproved}}</div>
-        <div *ngIf="isfromApprover" class="label_icon">{{rejectedOrApproved}}</div>
-    </div> -->
-    
-    <!-- <div class="col-md-1 functionality-icons p-0">
-        <span class="fa fa-upload" (click)="openDeployDialog()" *ngIf="rejectedOrApproved == 'APPROVED'"></span>
-        <span class="start-instance">
-            <span class="fa fa-play" (click)="openVariableDialog()" *ngIf="isStartProcessBtn"></span>
-        </span>
-        <span class="fa fa-keyboard" (click)="displayShortcut()"></span>
-        <span class="fa fa-crosshairs" (click)="fitNotationView()"></span>
-    </div> -->
-
-</div>
-<!-- <span class="update_info" *ngIf="updated_date_time">Autosaved @ <b>{{updated_date_time | date:"MM/dd/yyyy HH:mm:ss"}}</b></span> -->
-<as-split class="ex-percent h-100" [class.no-split-pane]="!isShowConformance || (isShowConformance && !hasConformance && !reSize)" [ngClass]="reSize?'bpmn-split':''" unit="percent">
-    <as-split-area [size]="isShowConformance?(reSize||hasConformance?50:100):0">
-        <span class="canvasOpt"><input type="radio" name="isBpmnModelerCanvas" [value]="true" [(ngModel)]="isConfBpmnModeler" selected #canvasopt/>&nbsp;As Is</span>
-        <div class="h-100 bps-c2-height" *ngIf="isShowConformance" [class.bps_overlay]="reSize|| hasConformance || rejectedOrApproved=='PENDING' || !isEdit">
-            <span class="info" *ngIf="rejectedOrApproved == 'PENDING' && !reSize">Business Process Notation has been submitted for approval. Cannot be edited till it is reviewed </span>
-            <div class="row h-100">
-                <div class="canvas2 col-md-12 p-0 h-100" [class.readOnly]="reSize|| hasConformance ||rejectedOrApproved=='PENDING' || !isEdit" id="canvas2"></div>
-                <!-- <div class="propertiesContainer" [class.hidden]="reSize|| hasConformance ||rejectedOrApproved=='PENDING'">
-                    <div class="propertiesTitle" (click)="togglePosition()">
-                        <div>Properties Panel</div>
-                    </div>
-                    <div id="properties" class="slide-right"></div>
-                </div> -->
-                <div [ngClass]="{propertiesContainerClosed: !propertiesContainer, propertiesContainerOpened: propertiesContainer}" class="propertiesContainer canvas2propcontainer" id="propertiesContainer" [class.hidden]="reSize|| hasConformance ||rejectedOrApproved=='PENDING'">
-                    <div *ngIf="!menuToggleTitle" [ngClass]="{hideTitle: !menuToggleTitle, showTitle: menuToggleTitle}" class="propertiesTitle" (click)="toggleOpen()">
-                        <div class="menuToggle">
-                            <img src="../../../../assets/images/BPMS/expand-left.svg" alt="menuToggleIcon" class="menuToggleIcon" >
+    <!-- <span class="update_info" *ngIf="updated_date_time">Autosaved @ <b>{{updated_date_time | date:"MM/dd/yyyy HH:mm:ss"}}</b></span> -->
+    <as-split class="ex-percent h-100" [class.no-split-pane]="!isShowConformance || (isShowConformance && !hasConformance && !reSize)" [ngClass]="reSize?'bpmn-split':''" unit="percent">
+        <as-split-area [size]="isShowConformance?(reSize||hasConformance?50:100):0">
+            <span class="canvasOpt"><input type="radio" name="isBpmnModelerCanvas" [value]="true" [(ngModel)]="isConfBpmnModeler" selected #canvasopt/>&nbsp;As Is</span>
+            <div class="h-100 bps-c2-height" *ngIf="isShowConformance" [class.bps_overlay]="reSize|| hasConformance || rejectedOrApproved=='PENDING' || !isEdit">
+                <span class="info" *ngIf="rejectedOrApproved == 'PENDING' && !reSize">Business Process Notation has been submitted for approval. Cannot be edited till it is reviewed </span>
+                <div class="row h-100">
+                    <div class="canvas2 col-md-12 p-0 h-100" [class.readOnly]="reSize|| hasConformance ||rejectedOrApproved=='PENDING' || !isEdit" id="canvas2"></div>
+                    <!-- <div class="propertiesContainer" [class.hidden]="reSize|| hasConformance ||rejectedOrApproved=='PENDING'">
+                        <div class="propertiesTitle" (click)="togglePosition()">
+                            <div>Properties Panel</div>
                         </div>
-                    </div>
-                    <div *ngIf="menuToggleTitle" [ngClass]="{hideTitle: !menuToggleTitle, showTitle: menuToggleTitle}" class="propertiesTitle" (click)="toggleClosed()">
-                        <div class="menuToggle" >
-                            <img src="../../../../assets/images/BPMS/expand-right.svg" alt="menuToggleIcon" class="menuToggleIcon" >
-                            <label class="menuToggleTitle">Menu</label>
+                        <div id="properties" class="slide-right"></div>
+                    </div> -->
+                    <div [ngClass]="{propertiesContainerClosed: !propertiesContainer, propertiesContainerOpened: propertiesContainer}" class="propertiesContainer canvas2propcontainer" id="propertiesContainer" [class.hidden]="reSize|| hasConformance ||rejectedOrApproved=='PENDING'">
+                        <div *ngIf="!menuToggleTitle" [ngClass]="{hideTitle: !menuToggleTitle, showTitle: menuToggleTitle}" class="propertiesTitle" (click)="toggleOpen()">
+                            <div class="menuToggle">
+                                <img src="../../../../assets/images/BPMS/expand-left.svg" alt="menuToggleIcon" class="menuToggleIcon" >
+                            </div>
                         </div>
-                    </div>
-
-                    <div class="propertiesPanelBody slide-right" id="propertiesPanelBody" [class.slide-left]='isopen'>
-
-                        <mat-accordion>
-                            <mat-expansion-panel (opened)="onExpansionClik('1')" hideToggle [expanded]="isOpenedState==1">
-                              <mat-expansion-panel-header>
-                                <mat-panel-title class="accordionHeaderMain">
-                                    <div class="accordionHeaderToggle">
-                                        <img src="../../../../assets/images/BPMS/Properties.svg" alt="menuToggleIcon" class="menuToggleIcon">
-                                        <label class="accordionHeader">Properties</label>
-                                        <img src="../../../../assets/images/BPMS/maximize-2.svg" alt="propexpandIcon" class="propexpandIcon">
-                                    </div>
-                                </mat-panel-title>
-                              </mat-expansion-panel-header>
-                              <div id="properties" class=""></div>
-                            </mat-expansion-panel>
-
-                            <mat-expansion-panel hideToggle class="menuprop-disabled">
-                            <!-- <mat-expansion-panel (opened)="onExpansionClik('2')" hideToggle [expanded]="isOpenedState==2"> -->
-                              <mat-expansion-panel-header>
-                                <mat-panel-title class="menuicons-disable" disabled="true">
-                                    <div class="accordionHeaderToggle">
-                                        <img src="../../../../assets/images/BPMS/Discussions.svg" alt="menuToggleIcon" class="menuToggleIcon">
-                                        <label for="" class="accordionHeader">Discussions</label>
-                                    </div>                                                
-                                </mat-panel-title>                                            
-                              </mat-expansion-panel-header>
-                              <!-- <mat-panel-description>
-                                <div class="activecollaboration">
-                                    <div class="row collab">
-                                        <div class="row lftusermsg">
-                                            <img alt="" src="../../../../assets/images/BPMS/user1.png">
-                                            <p>Lorem ipsum dolor sit amet.</p>
-                                            <p>Rachel M | 09th Jan, 12 pm</p>
+                        <div *ngIf="menuToggleTitle" [ngClass]="{hideTitle: !menuToggleTitle, showTitle: menuToggleTitle}" class="propertiesTitle" (click)="toggleClosed()">
+                            <div class="menuToggle" >
+                                <img src="../../../../assets/images/BPMS/expand-right.svg" alt="menuToggleIcon" class="menuToggleIcon" >
+                                <label class="menuToggleTitle">Menu</label>
+                            </div>
+                        </div>
+    
+                        <div class="propertiesPanelBody slide-right" id="propertiesPanelBody" [class.slide-left]='isopen'>
+    
+                            <mat-accordion>
+                                <mat-expansion-panel (opened)="onExpansionClik('1')" hideToggle [expanded]="isOpenedState==1">
+                                  <mat-expansion-panel-header>
+                                    <mat-panel-title class="accordionHeaderMain">
+                                        <div class="accordionHeaderToggle">
+                                            <img src="../../../../assets/images/BPMS/Properties.svg" alt="menuToggleIcon" class="menuToggleIcon">
+                                            <label class="accordionHeader">Properties</label>
+                                            <img src="../../../../assets/images/BPMS/maximize-2.svg" alt="propexpandIcon" class="propexpandIcon">
                                         </div>
-                                        <div class="row rgtusermsg">
-                                            <p>Lorem ipsum dolor sit amet.</p>
-                                            <p class="rttime">09th Jan, 12 pm</p>
+                                    </mat-panel-title>
+                                  </mat-expansion-panel-header>
+                                  <div id="properties" class=""></div>
+                                </mat-expansion-panel>
+    
+                                <mat-expansion-panel hideToggle class="menuprop-disabled">
+                                <!-- <mat-expansion-panel (opened)="onExpansionClik('2')" hideToggle [expanded]="isOpenedState==2"> -->
+                                  <mat-expansion-panel-header>
+                                    <mat-panel-title class="menuicons-disable" disabled="true">
+                                        <div class="accordionHeaderToggle">
+                                            <img src="../../../../assets/images/BPMS/Discussions.svg" alt="menuToggleIcon" class="menuToggleIcon">
+                                            <label for="" class="accordionHeader">Discussions</label>
+                                        </div>                                                
+                                    </mat-panel-title>                                            
+                                  </mat-expansion-panel-header>
+                                  <!-- <mat-panel-description>
+                                    <div class="activecollaboration">
+                                        <div class="row collab">
+                                            <div class="row lftusermsg">
+                                                <img alt="" src="../../../../assets/images/BPMS/user1.png">
+                                                <p>Lorem ipsum dolor sit amet.</p>
+                                                <p>Rachel M | 09th Jan, 12 pm</p>
+                                            </div>
+                                            <div class="row rgtusermsg">
+                                                <p>Lorem ipsum dolor sit amet.</p>
+                                                <p class="rttime">09th Jan, 12 pm</p>
+                                            </div>
+                                            <div class="row lftusermsg">
+                                                <img alt="" src="../../../../assets/images/BPMS/user2.png">
+                                                <p>Lorem ipsum dolor sit amet.</p>
+                                                <p><a href="#"><img alt="" src="../../../../assets/images/BPMS/attach-file.svg" width="16px" height="16px">Lorem ipsum.pdf</a></p>
+                                                <p>Rick Johnson | 09th Jan, 12 pm</p>
+                                            </div>
                                         </div>
-                                        <div class="row lftusermsg">
-                                            <img alt="" src="../../../../assets/images/BPMS/user2.png">
-                                            <p>Lorem ipsum dolor sit amet.</p>
-                                            <p><a href="#"><img alt="" src="../../../../assets/images/BPMS/attach-file.svg" width="16px" height="16px">Lorem ipsum.pdf</a></p>
-                                            <p>Rick Johnson | 09th Jan, 12 pm</p>
+                                        <div class="row collabottom">
+                                            <textarea  rows="3" class="msgip">Loreum ipsum dolor sit amet, consec</textarea>
+                                            <button class="btn"><img alt="" src="../../../../assets/images/BPMS/attach.svg"></button>
+                                            <button class="btn"><img alt="" src="../../../../assets/images/BPMS/Send.svg"></button>
                                         </div>
                                     </div>
-                                    <div class="row collabottom">
-                                        <textarea  rows="3" class="msgip">Loreum ipsum dolor sit amet, consec</textarea>
-                                        <button class="btn"><img alt="" src="../../../../assets/images/BPMS/attach.svg"></button>
-                                        <button class="btn"><img alt="" src="../../../../assets/images/BPMS/Send.svg"></button>
+                                  </mat-panel-description>                                           -->
+                                </mat-expansion-panel>
+                                
+                                <mat-expansion-panel (opened)="onExpansionClik('3')" hideToggle [expanded]="isOpenedState==3">
+                                  <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        <div class="accordionHeaderToggle">
+                                            <img src="../../../../assets/images/BPMS/Shortcuts.svg" alt="menuToggleIcon" class="menuToggleIcon">
+                                            <label for="" class="accordionHeader">Shortcuts</label>
+                                        </div>
+                                    </mat-panel-title>                                            
+                                  </mat-expansion-panel-header>
+                                  <mat-panel-description>
+                                    <div class="container">
+                                        <div><label for="" class="keyboard_header_shortcuts">Keyboard Shortcuts</label></div>
+                                        <table>
+                                            <tr *ngFor="let keyboardLabels of keyboardLabels">
+                                                <td><span class="keyboard_label_style">{{keyboardLabels.labelName}}</span></td>
+                                                <td>
+                                                    <div [innerHtml]="keyboardLabels.labelValue" class="keyboard_label_style"></div>
+                                                </td>
+                                            </tr>
+                                        </table>
                                     </div>
-                                </div>
-                              </mat-panel-description>                                           -->
-                            </mat-expansion-panel>
+                                  </mat-panel-description>                                         
+                                </mat-expansion-panel>
+                                
+                                <mat-expansion-panel hideToggle class="menuprop-disabled">
+                                <!-- <mat-expansion-panel (opened)="onExpansionClik('4')" hideToggle [expanded]="isOpenedState==4"> -->
+                                  <mat-expansion-panel-header>
+                                    <mat-panel-title class="menuicons-disable" disabled="true">
+                                        <div class="accordionHeaderToggle">
+                                            <img src="../../../../assets/images/BPMS/star.svg" alt="menuToggleIcon" class="menuToggleIcon">
+                                            <label for="" class="accordionHeader">Favorites</label>
+                                        </div>
+                                    </mat-panel-title>                                            
+                                  </mat-expansion-panel-header>
+                                  <!-- <mat-panel-description>
+                                    <div class="favouriteslistdiv">
+                                        <div class="row">
+                                            <img src="../../../../assets/images/BPMS/star-orange.svg" alt="menuToggleIcon" class="menuToggleIcon">
+                                            <label for="">Business Process Studio</label>
+                                            <label class="favsh">(BPM)</label>
+                                        </div>
+                                        <div class="row">
+                                            <img src="../../../../assets/images/BPMS/star-orange.svg" alt="menuToggleIcon" class="menuToggleIcon">
+                                            <label for="">Robotic Process Automation</label>
+                                            <label class="favsh">(RPA)</label>
+                                        </div>
+                                        <div class="row">
+                                            <img src="../../../../assets/images/BPMS/star-orange.svg" alt="menuToggleIcon" class="menuToggleIcon">
+                                            <label for="">Process Intelligence</label>
+                                            <label class="favsh">(PI)</label>
+                                        </div>
+                                    </div>
+                                  </mat-panel-description> -->
+                                </mat-expansion-panel>
+    
+                                <mat-expansion-panel hideToggle class="menuprop-disabled">
+                                <!-- <mat-expansion-panel (opened)="onExpansionClik('5')" hideToggle [expanded]="isOpenedState==5"> -->
+                                  <mat-expansion-panel-header>
+                                    <mat-panel-title class="menuicons-disable" disabled="true">
+                                        <div class="accordionHeaderToggle">
+                                            <img src="../../../../assets/images/BPMS/Activities.svg" alt="menuToggleIcon" class="menuToggleIcon">
+                                            <label for="" class="accordionHeader">Activities</label>
+                                        </div> 
+                                    </mat-panel-title>                                            
+                                  </mat-expansion-panel-header>
+                                  <!-- <mat-panel-description>
+                                    <div class="activitieslistdiv">
+                                        <p>Activities list Here</p>
+                                    </div>
+                                  </mat-panel-description> -->
+                                </mat-expansion-panel>
+    
+                            </mat-accordion>
                             
-                            <mat-expansion-panel (opened)="onExpansionClik('3')" hideToggle [expanded]="isOpenedState==3">
-                              <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                    <div class="accordionHeaderToggle">
-                                        <img src="../../../../assets/images/BPMS/Shortcuts.svg" alt="menuToggleIcon" class="menuToggleIcon">
-                                        <label for="" class="accordionHeader">Shortcuts</label>
-                                    </div>
-                                </mat-panel-title>                                            
-                              </mat-expansion-panel-header>
-                              <mat-panel-description>
-                                <div class="container">
-                                    <div><label for="" class="keyboard_header_shortcuts">Keyboard Shortcuts</label></div>
-                                    <table>
-                                        <tr *ngFor="let keyboardLabels of keyboardLabels">
-                                            <td><span class="keyboard_label_style">{{keyboardLabels.labelName}}</span></td>
-                                            <td>
-                                                <div [innerHtml]="keyboardLabels.labelValue" class="keyboard_label_style"></div>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-                              </mat-panel-description>                                         
-                            </mat-expansion-panel>
-                            
-                            <mat-expansion-panel hideToggle class="menuprop-disabled">
-                            <!-- <mat-expansion-panel (opened)="onExpansionClik('4')" hideToggle [expanded]="isOpenedState==4"> -->
-                              <mat-expansion-panel-header>
-                                <mat-panel-title class="menuicons-disable" disabled="true">
-                                    <div class="accordionHeaderToggle">
-                                        <img src="../../../../assets/images/BPMS/star.svg" alt="menuToggleIcon" class="menuToggleIcon">
-                                        <label for="" class="accordionHeader">Favorites</label>
-                                    </div>
-                                </mat-panel-title>                                            
-                              </mat-expansion-panel-header>
-                              <!-- <mat-panel-description>
-                                <div class="favouriteslistdiv">
-                                    <div class="row">
-                                        <img src="../../../../assets/images/BPMS/star-orange.svg" alt="menuToggleIcon" class="menuToggleIcon">
-                                        <label for="">Business Process Studio</label>
-                                        <label class="favsh">(BPM)</label>
-                                    </div>
-                                    <div class="row">
-                                        <img src="../../../../assets/images/BPMS/star-orange.svg" alt="menuToggleIcon" class="menuToggleIcon">
-                                        <label for="">Robotic Process Automation</label>
-                                        <label class="favsh">(RPA)</label>
-                                    </div>
-                                    <div class="row">
-                                        <img src="../../../../assets/images/BPMS/star-orange.svg" alt="menuToggleIcon" class="menuToggleIcon">
-                                        <label for="">Process Intelligence</label>
-                                        <label class="favsh">(PI)</label>
-                                    </div>
-                                </div>
-                              </mat-panel-description> -->
-                            </mat-expansion-panel>
-
-                            <mat-expansion-panel hideToggle class="menuprop-disabled">
-                            <!-- <mat-expansion-panel (opened)="onExpansionClik('5')" hideToggle [expanded]="isOpenedState==5"> -->
-                              <mat-expansion-panel-header>
-                                <mat-panel-title class="menuicons-disable" disabled="true">
-                                    <div class="accordionHeaderToggle">
-                                        <img src="../../../../assets/images/BPMS/Activities.svg" alt="menuToggleIcon" class="menuToggleIcon">
-                                        <label for="" class="accordionHeader">Activities</label>
-                                    </div> 
-                                </mat-panel-title>                                            
-                              </mat-expansion-panel-header>
-                              <!-- <mat-panel-description>
-                                <div class="activitieslistdiv">
-                                    <p>Activities list Here</p>
-                                </div>
-                              </mat-panel-description> -->
-                            </mat-expansion-panel>
-
-                        </mat-accordion>
-                        
+                        </div>
+                        <!-- <div id="properties" class="slide-right"></div> -->
                     </div>
-                    <!-- <div id="properties" class="slide-right"></div> -->
                 </div>
             </div>
-        </div>
-        <div class="canvas2 col-md-12 h-100" *ngIf="!isShowConformance" id="canvas2"></div>
-    </as-split-area>
-    <as-split-area [size]="isShowConformance?(reSize||hasConformance?50:0):100" [class.show]="!(isShowConformance && !isUploaded)">
-        <span class="canvasOpt" *ngIf="isShowConformance && (hasConformance || isUploaded)"><input type="radio" [value]="false" name="isBpmnModelerCanvas" [(ngModel)]="isConfBpmnModeler"/>&nbsp;To Be</span>
-        <app-upload-create-drop-bpmn *ngIf="isShowConformance && !hasConformance && !isUploaded" (update)="getUserBpmnList(true)" [data]="processName+'@'+category+'@'+randomNumber+'@'+pid"></app-upload-create-drop-bpmn>
-        <div [class.bps_overlay]="isfromApprover || !isEdit || rejectedOrApproved=='PENDING'" class="h-100">
-            <div class="h-100 canvas1 col-md-12" [class.readOnly]="isfromApprover || !isEdit || rejectedOrApproved=='PENDING'" id="canvas1" *ngIf="(hasConformance || isUploaded) && isShowConformance"></div>
-            <div *ngIf="!isShowConformance" class="h-100">
-                <mat-tab-group class="canvas-container h-100" headerPosition="below" (selectedTabChange)="displayXML($event)" #notationXMLTab>
-                    <mat-tab label="Notation" class="h-100">
-                        <div class="row h-100">
-                            <div class="canvas1 col-md-12 p-0 h-100" id="canvas1" [class.readOnly]="isfromApprover || !isEdit || rejectedOrApproved=='PENDING'"></div>
-                            <div [ngClass]="{propertiesContainerClosed: !propertiesContainer, propertiesContainerOpened: propertiesContainer}" class="propertiesContainer" id="propertiesContainer">
-                                <div *ngIf="!menuToggleTitle" [ngClass]="{hideTitle: !menuToggleTitle, showTitle: menuToggleTitle}" class="propertiesTitle" (click)="toggleOpen()">
-                                    <div class="menuToggle">
-                                        <img src="../../../../assets/images/BPMS/expand-left.svg" alt="menuToggleIcon" class="menuToggleIcon" >
+            <div class="canvas2 col-md-12 h-100" *ngIf="!isShowConformance" id="canvas2"></div>
+        </as-split-area>
+        <as-split-area [size]="isShowConformance?(reSize||hasConformance?50:0):100" [class.show]="!(isShowConformance && !isUploaded)">
+            <span class="canvasOpt" *ngIf="isShowConformance && (hasConformance || isUploaded)"><input type="radio" [value]="false" name="isBpmnModelerCanvas" [(ngModel)]="isConfBpmnModeler"/>&nbsp;To Be</span>
+            <app-upload-create-drop-bpmn *ngIf="isShowConformance && !hasConformance && !isUploaded" (update)="getUserBpmnList(true)" [data]="processName+'@'+category+'@'+randomNumber+'@'+pid"></app-upload-create-drop-bpmn>
+            <div [class.bps_overlay]="isfromApprover || !isEdit || rejectedOrApproved=='PENDING'" class="h-100">
+                <div class="h-100 canvas1 col-md-12" [class.readOnly]="isfromApprover || !isEdit || rejectedOrApproved=='PENDING'" id="canvas1" *ngIf="(hasConformance || isUploaded) && isShowConformance"></div>
+                <div *ngIf="!isShowConformance" class="h-100">
+                    <mat-tab-group class="canvas-container h-100" headerPosition="below" (selectedTabChange)="displayXML($event)" #notationXMLTab>
+                        <mat-tab label="Notation" class="h-100">
+                            <div class="row h-100">
+                                <div class="canvas1 col-md-12 p-0 h-100" id="canvas1" [class.readOnly]="isfromApprover || !isEdit || rejectedOrApproved=='PENDING'"></div>
+                                <div [ngClass]="{propertiesContainerClosed: !propertiesContainer, propertiesContainerOpened: propertiesContainer}" class="propertiesContainer" id="propertiesContainer">
+                                    <div *ngIf="!menuToggleTitle" [ngClass]="{hideTitle: !menuToggleTitle, showTitle: menuToggleTitle}" class="propertiesTitle" (click)="toggleOpen()">
+                                        <div class="menuToggle">
+                                            <img src="../../../../assets/images/BPMS/expand-left.svg" alt="menuToggleIcon" class="menuToggleIcon" >
+                                        </div>
                                     </div>
-                                </div>
-                                <div *ngIf="menuToggleTitle" [ngClass]="{hideTitle: !menuToggleTitle, showTitle: menuToggleTitle}" class="propertiesTitle" (click)="toggleClosed()">
-                                    <div class="menuToggle" >
-                                        <img src="../../../../assets/images/BPMS/expand-right.svg" alt="menuToggleIcon" class="menuToggleIcon" >
-                                        <label class="menuToggleTitle">Menu</label>
+                                    <div *ngIf="menuToggleTitle" [ngClass]="{hideTitle: !menuToggleTitle, showTitle: menuToggleTitle}" class="propertiesTitle" (click)="toggleClosed()">
+                                        <div class="menuToggle" >
+                                            <img src="../../../../assets/images/BPMS/expand-right.svg" alt="menuToggleIcon" class="menuToggleIcon" >
+                                            <label class="menuToggleTitle">Menu</label>
+                                        </div>
                                     </div>
-                                </div>
-
-                                <div class="propertiesPanelBody slide-right" id="propertiesPanelBody" [class.slide-left]='isopen'>
-
-                                    <mat-accordion>
-                                        <mat-expansion-panel (opened)="onExpansionClik('1')" hideToggle [expanded]="isOpenedState==1">
-                                          <mat-expansion-panel-header>
-                                            <mat-panel-title class="accordionHeaderMain">
-                                                <div class="accordionHeaderToggle">
-                                                    <img src="../../../../assets/images/BPMS/Properties.svg" alt="menuToggleIcon" class="menuToggleIcon">
-                                                    <label class="accordionHeader">Properties</label>
-                                                    <img src="../../../../assets/images/BPMS/maximize-2.svg" alt="propexpandIcon" class="propexpandIcon">
-                                                </div>
-                                            </mat-panel-title>
-                                          </mat-expansion-panel-header>
-                                          <div id="properties" class=""></div>
-                                        </mat-expansion-panel>
-
-                                        <mat-expansion-panel hideToggle class="menuprop-disabled">
-                                                <!-- <mat-expansion-panel (opened)="onExpansionClik('2')" hideToggle [expanded]="isOpenedState==2"> -->
-                                          <mat-expansion-panel-header>
-                                            <mat-panel-title class="menuicons-disable" disabled="true">
-                                                <div class="accordionHeaderToggle">
-                                                    <img src="../../../../assets/images/BPMS/Discussions.svg" alt="menuToggleIcon" class="menuToggleIcon">
-                                                    <label for="" class="accordionHeader">Discussions</label>
-                                                </div>                                                
-                                            </mat-panel-title>                                            
-                                          </mat-expansion-panel-header>
-                                          <!-- <mat-panel-description>
-                                            <div class="activecollaboration">
-                                                <div class="row collab">
-                                                    <div class="row lftusermsg">
-                                                        <img alt="" src="../../../../assets/images/BPMS/user1.png">
-                                                        <p>Lorem ipsum dolor sit amet.</p>
-                                                        <p>Rachel M | 09th Jan, 12 pm</p>
+    
+                                    <div class="propertiesPanelBody slide-right" id="propertiesPanelBody" [class.slide-left]='isopen'>
+    
+                                        <mat-accordion>
+                                            <mat-expansion-panel (opened)="onExpansionClik('1')" hideToggle [expanded]="isOpenedState==1">
+                                              <mat-expansion-panel-header>
+                                                <mat-panel-title class="accordionHeaderMain">
+                                                    <div class="accordionHeaderToggle">
+                                                        <img src="../../../../assets/images/BPMS/Properties.svg" alt="menuToggleIcon" class="menuToggleIcon">
+                                                        <label class="accordionHeader">Properties</label>
+                                                        <img src="../../../../assets/images/BPMS/maximize-2.svg" alt="propexpandIcon" class="propexpandIcon">
                                                     </div>
-                                                    <div class="row rgtusermsg">
-                                                        <p>Lorem ipsum dolor sit amet.</p>
-                                                        <p class="rttime">09th Jan, 12 pm</p>
+                                                </mat-panel-title>
+                                              </mat-expansion-panel-header>
+                                              <div id="properties" class=""></div>
+                                            </mat-expansion-panel>
+    
+                                            <mat-expansion-panel hideToggle class="menuprop-disabled">
+                                                    <!-- <mat-expansion-panel (opened)="onExpansionClik('2')" hideToggle [expanded]="isOpenedState==2"> -->
+                                              <mat-expansion-panel-header>
+                                                <mat-panel-title class="menuicons-disable" disabled="true">
+                                                    <div class="accordionHeaderToggle">
+                                                        <img src="../../../../assets/images/BPMS/Discussions.svg" alt="menuToggleIcon" class="menuToggleIcon">
+                                                        <label for="" class="accordionHeader">Discussions</label>
+                                                    </div>                                                
+                                                </mat-panel-title>                                            
+                                              </mat-expansion-panel-header>
+                                              <!-- <mat-panel-description>
+                                                <div class="activecollaboration">
+                                                    <div class="row collab">
+                                                        <div class="row lftusermsg">
+                                                            <img alt="" src="../../../../assets/images/BPMS/user1.png">
+                                                            <p>Lorem ipsum dolor sit amet.</p>
+                                                            <p>Rachel M | 09th Jan, 12 pm</p>
+                                                        </div>
+                                                        <div class="row rgtusermsg">
+                                                            <p>Lorem ipsum dolor sit amet.</p>
+                                                            <p class="rttime">09th Jan, 12 pm</p>
+                                                        </div>
+                                                        <div class="row lftusermsg">
+                                                            <img alt="" src="../../../../assets/images/BPMS/user2.png">
+                                                            <p>Lorem ipsum dolor sit amet.</p>
+                                                            <p><a href="#"><img alt="" src="../../../../assets/images/BPMS/attach-file.svg" width="16px" height="16px">Lorem ipsum.pdf</a></p>
+                                                            <p>Rick Johnson | 09th Jan, 12 pm</p>
+                                                        </div>
                                                     </div>
-                                                    <div class="row lftusermsg">
-                                                        <img alt="" src="../../../../assets/images/BPMS/user2.png">
-                                                        <p>Lorem ipsum dolor sit amet.</p>
-                                                        <p><a href="#"><img alt="" src="../../../../assets/images/BPMS/attach-file.svg" width="16px" height="16px">Lorem ipsum.pdf</a></p>
-                                                        <p>Rick Johnson | 09th Jan, 12 pm</p>
+                                                    <div class="row collabottom">
+                                                        <textarea  rows="3" class="msgip">Loreum ipsum dolor sit amet, consec</textarea>
+                                                        <button class="btn"><img alt="" src="../../../../assets/images/BPMS/attach.svg"></button>
+                                                        <button class="btn"><img alt="" src="../../../../assets/images/BPMS/Send.svg"></button>
                                                     </div>
                                                 </div>
-                                                <div class="row collabottom">
-                                                    <textarea  rows="3" class="msgip">Loreum ipsum dolor sit amet, consec</textarea>
-                                                    <button class="btn"><img alt="" src="../../../../assets/images/BPMS/attach.svg"></button>
-                                                    <button class="btn"><img alt="" src="../../../../assets/images/BPMS/Send.svg"></button>
+                                              </mat-panel-description>                                           -->
+                                            </mat-expansion-panel>
+                                            
+                                            <mat-expansion-panel (opened)="onExpansionClik('3')" hideToggle [expanded]="isOpenedState==3">
+                                              <mat-expansion-panel-header>
+                                                <mat-panel-title>
+                                                    <div class="accordionHeaderToggle">
+                                                        <img src="../../../../assets/images/BPMS/Shortcuts.svg" alt="menuToggleIcon" class="menuToggleIcon">
+                                                        <label for="" class="accordionHeader">Shortcuts</label>
+                                                    </div>
+                                                </mat-panel-title>                                            
+                                              </mat-expansion-panel-header>
+                                              <mat-panel-description>
+                                                <div class="container">
+                                                    <div><label for="" class="keyboard_header_shortcuts">Keyboard Shortcuts</label></div>
+                                                    <table>
+                                                        <tr *ngFor="let keyboardLabels of keyboardLabels">
+                                                            <td><span class="keyboard_label_style">{{keyboardLabels.labelName}}</span></td>
+                                                            <td>
+                                                                <div [innerHtml]="keyboardLabels.labelValue" class="keyboard_label_style"></div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
                                                 </div>
-                                            </div>
-                                          </mat-panel-description>                                           -->
-                                        </mat-expansion-panel>
+                                              </mat-panel-description>                                         
+                                            </mat-expansion-panel>
+    
+                                            <mat-expansion-panel hideToggle class="menuprop-disabled">
+                                            <!-- <mat-expansion-panel (opened)="onExpansionClik('4')" hideToggle [expanded]="isOpenedState==4"> -->
+                                              <mat-expansion-panel-header>
+                                                <mat-panel-title class="menuicons-disable" disabled="true">
+                                                    <div class="accordionHeaderToggle">
+                                                        <img src="../../../../assets/images/BPMS/star.svg" alt="menuToggleIcon" class="menuToggleIcon">
+                                                        <label for="" class="accordionHeader">Favorites</label>
+                                                    </div>
+                                                </mat-panel-title>                                            
+                                              </mat-expansion-panel-header>
+                                              <!-- <mat-panel-description>
+                                                <div class="favouriteslistdiv">
+                                                    <div class="row">
+                                                        <img src="../../../../assets/images/BPMS/star-orange.svg" alt="menuToggleIcon" class="menuToggleIcon">
+                                                        <label for="">Business Process Studio</label>
+                                                        <label class="favsh">(BPM)</label>
+                                                    </div>
+                                                    <div class="row">
+                                                        <img src="../../../../assets/images/BPMS/star-orange.svg" alt="menuToggleIcon" class="menuToggleIcon">
+                                                        <label for="">Robotic Process Automation</label>
+                                                        <label class="favsh">(RPA)</label>
+                                                    </div>
+                                                    <div class="row">
+                                                        <img src="../../../../assets/images/BPMS/star-orange.svg" alt="menuToggleIcon" class="menuToggleIcon">
+                                                        <label for="">Process Intelligence</label>
+                                                        <label class="favsh">(PI)</label>
+                                                    </div>
+                                                </div>
+                                              </mat-panel-description> -->
+                                            </mat-expansion-panel>
+    
+                                            <mat-expansion-panel hideToggle class="menuprop-disabled">
+                                                    <!-- <mat-expansion-panel (opened)="onExpansionClik('5')" hideToggle [expanded]="isOpenedState==5"> -->
+                                              <mat-expansion-panel-header>
+                                                <mat-panel-title class="menuicons-disable" disabled="true">
+                                                    <div class="accordionHeaderToggle">
+                                                        <img src="../../../../assets/images/BPMS/Activities.svg" alt="menuToggleIcon" class="menuToggleIcon">
+                                                        <label for="" class="accordionHeader">Activities</label>
+                                                    </div> 
+                                                </mat-panel-title>                                            
+                                              </mat-expansion-panel-header>
+                                              <!-- <mat-panel-description>
+                                                <div class="activitieslistdiv">
+                                                    <p>Activities list Here</p>
+                                                </div>
+                                              </mat-panel-description> -->
+                                            </mat-expansion-panel>
+    
+                                        </mat-accordion>
                                         
-                                        <mat-expansion-panel (opened)="onExpansionClik('3')" hideToggle [expanded]="isOpenedState==3">
-                                          <mat-expansion-panel-header>
-                                            <mat-panel-title>
-                                                <div class="accordionHeaderToggle">
-                                                    <img src="../../../../assets/images/BPMS/Shortcuts.svg" alt="menuToggleIcon" class="menuToggleIcon">
-                                                    <label for="" class="accordionHeader">Shortcuts</label>
-                                                </div>
-                                            </mat-panel-title>                                            
-                                          </mat-expansion-panel-header>
-                                          <mat-panel-description>
-                                            <div class="container">
-                                                <div><label for="" class="keyboard_header_shortcuts">Keyboard Shortcuts</label></div>
-                                                <table>
-                                                    <tr *ngFor="let keyboardLabels of keyboardLabels">
-                                                        <td><span class="keyboard_label_style">{{keyboardLabels.labelName}}</span></td>
-                                                        <td>
-                                                            <div [innerHtml]="keyboardLabels.labelValue" class="keyboard_label_style"></div>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </div>
-                                          </mat-panel-description>                                         
-                                        </mat-expansion-panel>
-
-                                        <mat-expansion-panel hideToggle class="menuprop-disabled">
-                                        <!-- <mat-expansion-panel (opened)="onExpansionClik('4')" hideToggle [expanded]="isOpenedState==4"> -->
-                                          <mat-expansion-panel-header>
-                                            <mat-panel-title class="menuicons-disable" disabled="true">
-                                                <div class="accordionHeaderToggle">
-                                                    <img src="../../../../assets/images/BPMS/star.svg" alt="menuToggleIcon" class="menuToggleIcon">
-                                                    <label for="" class="accordionHeader">Favorites</label>
-                                                </div>
-                                            </mat-panel-title>                                            
-                                          </mat-expansion-panel-header>
-                                          <!-- <mat-panel-description>
-                                            <div class="favouriteslistdiv">
-                                                <div class="row">
-                                                    <img src="../../../../assets/images/BPMS/star-orange.svg" alt="menuToggleIcon" class="menuToggleIcon">
-                                                    <label for="">Business Process Studio</label>
-                                                    <label class="favsh">(BPM)</label>
-                                                </div>
-                                                <div class="row">
-                                                    <img src="../../../../assets/images/BPMS/star-orange.svg" alt="menuToggleIcon" class="menuToggleIcon">
-                                                    <label for="">Robotic Process Automation</label>
-                                                    <label class="favsh">(RPA)</label>
-                                                </div>
-                                                <div class="row">
-                                                    <img src="../../../../assets/images/BPMS/star-orange.svg" alt="menuToggleIcon" class="menuToggleIcon">
-                                                    <label for="">Process Intelligence</label>
-                                                    <label class="favsh">(PI)</label>
-                                                </div>
-                                            </div>
-                                          </mat-panel-description> -->
-                                        </mat-expansion-panel>
-
-                                        <mat-expansion-panel hideToggle class="menuprop-disabled">
-                                                <!-- <mat-expansion-panel (opened)="onExpansionClik('5')" hideToggle [expanded]="isOpenedState==5"> -->
-                                          <mat-expansion-panel-header>
-                                            <mat-panel-title class="menuicons-disable" disabled="true">
-                                                <div class="accordionHeaderToggle">
-                                                    <img src="../../../../assets/images/BPMS/Activities.svg" alt="menuToggleIcon" class="menuToggleIcon">
-                                                    <label for="" class="accordionHeader">Activities</label>
-                                                </div> 
-                                            </mat-panel-title>                                            
-                                          </mat-expansion-panel-header>
-                                          <!-- <mat-panel-description>
-                                            <div class="activitieslistdiv">
-                                                <p>Activities list Here</p>
-                                            </div>
-                                          </mat-panel-description> -->
-                                        </mat-expansion-panel>
-
-                                    </mat-accordion>
-                                    
+                                    </div>
+                                    <!-- <div id="properties" class="slide-right"></div> -->
                                 </div>
-                                <!-- <div id="properties" class="slide-right"></div> -->
                             </div>
-                        </div>
-                        <ng-template #wrongXMLcontent>
-                            <div class="modal-header">
-                                <h4 class="modal-title pull-left xml-error">Error in XML</h4>
-                                <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
+                            <ng-template #wrongXMLcontent>
+                                <div class="modal-header">
+                                    <h4 class="modal-title pull-left xml-error">Error in XML</h4>
+                                    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    {{errXMLcontent}}
+                                </div>
+                            </ng-template>
+                        </mat-tab>
+                        <mat-tab label="XML">
+                            <div class="text-area xml-input">
+                                <textarea [(ngModel)]="xmlTabContent" rows="22">
+                                    {{xmlTabContent}}
+                                </textarea>
                             </div>
-                            <div class="modal-body">
-                                {{errXMLcontent}}
-                            </div>
-                        </ng-template>
-                    </mat-tab>
-                    <mat-tab label="XML">
-                        <div class="text-area xml-input">
-                            <textarea [(ngModel)]="xmlTabContent" rows="22">
-                                {{xmlTabContent}}
-                            </textarea>
-                        </div>
-                    </mat-tab>
-                </mat-tab-group>
-            </div>
-        </div>
-    </as-split-area>
-</as-split>
-<!-- <div class="row btn_row">
-<button class="right btn btn-primary eiap-btn"  id="approvalSubmit" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true" (click)="submitDiagramForApproval()">Save & Submit for Approval</button>
-<ngx-dropzone class="upload_again_btn" (change)="slideUp($event)" [multiple]=false [accept]="'.'+selectedNotationType"  *ngIf="!isShowConformance||(isShowConformance && ((reSize && isConfNavigation)||hasConformance)) && rejectedOrApproved !='PENDING'">
-  <ngx-dropzone-label>
-      <button class="btn btn-primary eiap-btn"  *ngIf="!isfromApprover">Upload Again</button>
-  </ngx-dropzone-label>
-</ngx-dropzone>
-<button class="right btn btn-primary eiap-btn"  [disabled]="isfromApprover" id="save" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true" (click)="saveprocess(null)">Save Process</button>
-<button *ngIf="isApprovedNotation" class="right btn btn-primary eiap-btn" id="orchestrate" (click)="orchestrate()">Orchestrate</button>
-  <span class="right">
-    <select [(ngModel)]="fileType">
-      <option value="svg">SVG</option>
-      <option value="png">PNG</option>
-      <option value="jpg">JPG</option>
-      <option [value]="selectedNotationType">{{selectedNotationType | uppercase }}</option>
-    </select>
-    <button id="download" (click)="downloadBpmn()"><img class="action-btn" src="..\assets\downloadimage.svg"></button>
-  </span>
-  <div class="zoom_btns">
-    <button (click)="zoomIn()" class="btn btn1 zoom btn-primary" id="zoom_in"><i class="fas fa-search-plus"></i></button>
-    <button (click)="zoomOut()" class="btn btn1 zoom-out btn-primary" id="zoom_out"><i class="fas fa-search-minus"></i></button>
-</div>
-</div> -->
-<div class="changesContainer" [class.hidden]="!isUploaded">
-    <div class="changesTitle" (click)="toggleChanges()">List of Changes</div>
-    <div id="changes" class="slide-bottom">
-        <app-list-of-changes (closeDiff)="clearDifferences()"></app-list-of-changes>
-    </div>
-</div>
-</div>
-<ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">
-    <p style="color: white">Auto Saving... </p>
-</ngx-spinner>
-<div class="spinoverlay" *ngIf="isLoading">
-    <div class="spincenter">
-        <!-- <mat-progress-spinner diameter=50 mode="indeterminate"></mat-progress-spinner> -->
-        <img  src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader"/>
-    </div>
-</div>
-<ng-template #keyboardShortcut>
-    <div><label for="" class="keyboard_header_shortcuts">Keyboard Shortcuts</label></div>
-    <table>
-        <tr *ngFor="let keyboardLabels of keyboardLabels">
-            <td><span class="keyboard_label_style">{{keyboardLabels.labelName}}</span></td>
-            <td>
-                <div [innerHtml]="keyboardLabels.labelValue" class="keyboard_label_style"></div>
-            </td>
-        </tr>
-    </table>
-</ng-template>
-
-<ng-template #variabletemplate class="startprocess-modal">
-    <div class="modal_size">
-        <div class="modal-header">
-            <div><h4>Start Process</h4></div>
-        </div>
-
-    <div class="modal-body">
-            <div class="">
-                <form action="" #business='ngForm'>
-                <div class="">
-                    <h5 for="">Business Key:</h5>
+                        </mat-tab>
+                    </mat-tab-group>
                 </div>
-                <div class="business-input">
-                    <input type="text" class="form-control" placeholder="Enter Business Key" #business_key id='business_key' name='business_key' [(ngModel)]="businessKey" required>
-                    <span *ngIf="((business_key.invalid && business.submitted) || (business_key.errors && business_key.touched) )" 
-                    class='fa fa-info-circle errspan'> Business Key is required </span>
-                </div>
-            </form>
             </div>
-            
-        <div class="" >
-            <div>
-                <p class="variable" (click)='addVariable()'>+ Add Variable</p>
-            </div>
-        </div>
-        <div class="col-sm-12" *ngIf="variables.length>0">
-            <div class="col-sm-3">Name</div>
-            <div class="col-sm-3">Type</div>
-            <div class="col-sm-3">Value</div>
-            <div class="col-sm-3"></div>
-        </div>
-        <form action="" #variableForm="ngForm">
-        <section class="col-sm-12 row" *ngFor="let item of variables; let i = index;">
-            <div class="col-sm-3">
-                <input type="text" class="variable-input form-control" placeholder="Name"  name="variable_name{{i}}" [(ngModel)]='item.variableName' required>
-            </div>
-            <div class="col-sm-3">
-                <select class="variable-input form-control" name="variable_type{{i}}" id="" [(ngModel)]='item.type' required>
-                    <option value="" disabled hidden>Select</option>
-                    <option value="boolean">Boolean</option>
-                    <option value="short">Short</option>
-                    <option value="integer">Integer</option>
-                    <option value="long">Long</option>
-                    <option value="double">Double</option>
-                    <option value="string">String</option>
-                    <option value="date">Date</option>
-                </select>
-            </div>
-            <div class="col-sm-3">
-                <input *ngIf="item.type!='boolean'" type="text" class="variable-input form-control" placeholder="Value" name="variable_value{{i}}" [(ngModel)]='item.value' required>
-                <select class="variable-input form-control" *ngIf="item.type=='boolean'" name="variable_value{{i}}" [(ngModel)]='item.value' id="" required>
-                    <option value="" disabled hidden>Select</option>
-                    <option value="true">True</option>
-                    <option value="false">False</option>
-                </select>
-            </div>
-            <div class="col-sm-3">
-                <button class="btn btn-danger eiap-btn" (click)="removevariable(i)">Remove</button>
-            </div>
-
-    </section>
-    </form>
-<div class="modal-footer1">
-    <div class="pull-right footer-btns">
-        <button class="btn btn-secondary cancel_btn eiap-btn" (click)="cancelProcess()">Cancel</button>
-        <button class="btn btn-primary eiap-btn" [disabled]='business.invalid || variableForm.invalid' (click)="startProcess()">Submit</button>
-        </div>
-  </div>
-    <!-- <div class="col-sm-12 row">
-        <div class="col-sm-5"></div>
-        <div class="col-sm-3">
-            <button class="btn btn-secondary cancel_btn eiap-btn" (click)="cancelProcess()">Cancel</button>
-        </div>
-        <div class="col-sm-1"></div>
-        <div class="col-sm-3">
-            <button class="btn btn-primary eiap-btn" [disabled]='business.invalid || variableForm.invalid' (click)="startProcess()">Submit</button>
-        </div>
+        </as-split-area>
+    </as-split>
+    <!-- <div class="row btn_row">
+    <button class="right btn btn-primary eiap-btn"  id="approvalSubmit" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true" (click)="submitDiagramForApproval()">Save & Submit for Approval</button>
+    <ngx-dropzone class="upload_again_btn" (change)="slideUp($event)" [multiple]=false [accept]="'.'+selectedNotationType"  *ngIf="!isShowConformance||(isShowConformance && ((reSize && isConfNavigation)||hasConformance)) && rejectedOrApproved !='PENDING'">
+      <ngx-dropzone-label>
+          <button class="btn btn-primary eiap-btn"  *ngIf="!isfromApprover">Upload Again</button>
+      </ngx-dropzone-label>
+    </ngx-dropzone>
+    <button class="right btn btn-primary eiap-btn"  [disabled]="isfromApprover" id="save" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true" (click)="saveprocess(null)">Save Process</button>
+    <button *ngIf="isApprovedNotation" class="right btn btn-primary eiap-btn" id="orchestrate" (click)="orchestrate()">Orchestrate</button>
+      <span class="right">
+        <select [(ngModel)]="fileType">
+          <option value="svg">SVG</option>
+          <option value="png">PNG</option>
+          <option value="jpg">JPG</option>
+          <option [value]="selectedNotationType">{{selectedNotationType | uppercase }}</option>
+        </select>
+        <button id="download" (click)="downloadBpmn()"><img class="action-btn" src="..\assets\downloadimage.svg"></button>
+      </span>
+      <div class="zoom_btns">
+        <button (click)="zoomIn()" class="btn btn1 zoom btn-primary" id="zoom_in"><i class="fas fa-search-plus"></i></button>
+        <button (click)="zoomOut()" class="btn btn1 zoom-out btn-primary" id="zoom_out"><i class="fas fa-search-minus"></i></button>
+    </div>
     </div> -->
-</div>
-</div>
-  </ng-template>
-
-  
-<ng-template #processowner_template>
-    <div class="modal-header">
-      <h4 class="modal-title pull-left">Process</h4>
-      <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="closeprocessOwnerModal()">
-        <span aria-hidden="true" class="visually-hidden">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <div>
-          <form action="" #processOwner="ngForm">
-            <div class="col-md-12 p-0 form-group">
-                <label class="label-control">Process Owner<span class="star">*</span></label>
-                <select name="powner" #powner="ngModel" [(ngModel)]="process_owner" required class="form-control">
-                    <option value="" disabled hidden>Select Process Owner</option>
-                    <option value="null" disabled hidden>Select Process Owner</option>
-                    <option value="undefined" disabled hidden>Select Process Owner</option>
-                    <option value="" disabled hidden>Select Process Owner</option>
-                    <option *ngFor="let each_approver of processowner_list;let i=index" [value]=i>
-                        {{each_approver.firstName|titlecase}}  {{each_approver.lastName?each_approver.lastName:''}}</option>
-
-                        <!-- <option *ngFor="let each_approver of processowner_list;let i=index" [value]=i>
-                            {{each_approver.firstName|titlecase}}  {{each_approver.lastName?each_approver.lastName:''}}</option> -->
-                </select>
-                <span *ngIf="((powner.invalid && processOwner.submitted) || (powner.errors && powner.touched) )" 
-                class='errspan required'> Please Select Process Owner </span>
-            </div>
-          </form>
-      </div>
-    </div>
-    <div class="modal-footer modelprfooter">
-        <div class="col-md-12 confirmationmsg">
-            <button class="btn btn-primary" [disabled]='!process_owner' (click)='saveprocess()'>Save</button>
+    <div class="changesContainer" [class.hidden]="!isUploaded">
+        <div class="changesTitle" (click)="toggleChanges()">List of Changes</div>
+        <div id="changes" class="slide-bottom">
+            <app-list-of-changes (closeDiff)="clearDifferences()"></app-list-of-changes>
         </div>
     </div>
-  </ng-template>
+    </div>
+    <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">
+        <p style="color: white">Auto Saving... </p>
+    </ngx-spinner>
+    <div class="spinoverlay" *ngIf="isLoading">
+        <div class="spincenter">
+            <!-- <mat-progress-spinner diameter=50 mode="indeterminate"></mat-progress-spinner> -->
+            <img  src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader"/>
+        </div>
+    </div>
+    <ng-template #keyboardShortcut>
+        <div><label for="" class="keyboard_header_shortcuts">Keyboard Shortcuts</label></div>
+        <table>
+            <tr *ngFor="let keyboardLabels of keyboardLabels">
+                <td><span class="keyboard_label_style">{{keyboardLabels.labelName}}</span></td>
+                <td>
+                    <div [innerHtml]="keyboardLabels.labelValue" class="keyboard_label_style"></div>
+                </td>
+            </tr>
+        </table>
+    </ng-template>
+    
+    <ng-template #variabletemplate class="startprocess-modal">
+        <div class="modal_size">
+            <div class="modal-header">
+                <div><h4>Start Process</h4></div>
+            </div>
+    
+        <div class="modal-body">
+                <div class="">
+                    <form action="" #business='ngForm'>
+                    <div class="">
+                        <h5 for="">Business Key:</h5>
+                    </div>
+                    <div class="business-input">
+                        <input type="text" class="form-control" placeholder="Enter Business Key" #business_key id='business_key' name='business_key' [(ngModel)]="businessKey" required>
+                        <span *ngIf="((business_key.invalid && business.submitted) || (business_key.errors && business_key.touched) )" 
+                        class='fa fa-info-circle errspan'> Business Key is required </span>
+                    </div>
+                </form>
+                </div>
+                
+            <div class="" >
+                <div>
+                    <p class="variable" (click)='addVariable()'>+ Add Variable</p>
+                </div>
+            </div>
+            <div class="col-sm-12" *ngIf="variables.length>0">
+                <div class="col-sm-3">Name</div>
+                <div class="col-sm-3">Type</div>
+                <div class="col-sm-3">Value</div>
+                <div class="col-sm-3"></div>
+            </div>
+            <form action="" #variableForm="ngForm">
+            <section class="col-sm-12 row" *ngFor="let item of variables; let i = index;">
+                <div class="col-sm-3">
+                    <input type="text" class="variable-input form-control" placeholder="Name"  name="variable_name{{i}}" [(ngModel)]='item.variableName' required>
+                </div>
+                <div class="col-sm-3">
+                    <select class="variable-input form-control" name="variable_type{{i}}" id="" [(ngModel)]='item.type' required>
+                        <option value="" disabled hidden>Select</option>
+                        <option value="boolean">Boolean</option>
+                        <option value="short">Short</option>
+                        <option value="integer">Integer</option>
+                        <option value="long">Long</option>
+                        <option value="double">Double</option>
+                        <option value="string">String</option>
+                        <option value="date">Date</option>
+                    </select>
+                </div>
+                <div class="col-sm-3">
+                    <input *ngIf="item.type!='boolean'" type="text" class="variable-input form-control" placeholder="Value" name="variable_value{{i}}" [(ngModel)]='item.value' required>
+                    <select class="variable-input form-control" *ngIf="item.type=='boolean'" name="variable_value{{i}}" [(ngModel)]='item.value' id="" required>
+                        <option value="" disabled hidden>Select</option>
+                        <option value="true">True</option>
+                        <option value="false">False</option>
+                    </select>
+                </div>
+                <div class="col-sm-3">
+                    <button class="btn btn-danger eiap-btn" (click)="removevariable(i)">Remove</button>
+                </div>
+    
+        </section>
+        </form>
+    <div class="modal-footer1">
+        <div class="pull-right footer-btns">
+            <button class="btn btn-secondary cancel_btn eiap-btn" (click)="cancelProcess()">Cancel</button>
+            <button class="btn btn-primary eiap-btn" [disabled]='business.invalid || variableForm.invalid' (click)="startProcess()">Submit</button>
+            </div>
+      </div>
+        <!-- <div class="col-sm-12 row">
+            <div class="col-sm-5"></div>
+            <div class="col-sm-3">
+                <button class="btn btn-secondary cancel_btn eiap-btn" (click)="cancelProcess()">Cancel</button>
+            </div>
+            <div class="col-sm-1"></div>
+            <div class="col-sm-3">
+                <button class="btn btn-primary eiap-btn" [disabled]='business.invalid || variableForm.invalid' (click)="startProcess()">Submit</button>
+            </div>
+        </div> -->
+    </div>
+    </div>
+      </ng-template>
+    
+      
+    <ng-template #processowner_template>
+        <div ngb-modal-draggable [ngbModalDraggableHandle]="draggableHandle" class="cursor-all-scroll">
+            <div #draggableHandle class="modal-header modelprhead">
+        <!-- <div class="modal-header"> -->
+          <h4 class="modal-title pull-left">Process</h4>
+          <button type="button" class="btn-close pull-right" aria-label="Close" (click)="closeprocessOwnerModal()">
+            <img alt="" src="../../../../../assets/images/Projects/circle-close.svg">
+            <!-- <span aria-hidden="true" class="visually-hidden">&times;</span> -->
+          </button>
+        </div>
+        </div>
+        <div class="modal-body">
+          <div>
+              <form action="" #processOwner="ngForm">
+                <div class="col-md-12 p-0 form-group">
+                    <label class="label-control">Process Owner<span class="star">*</span></label>
+                    <select name="powner" #powner="ngModel" [(ngModel)]="process_owner" required class="form-control">
+                        <option value="" disabled hidden>Select Process Owner</option>
+                        <option value="null" disabled hidden>Select Process Owner</option>
+                        <option value="undefined" disabled hidden>Select Process Owner</option>
+                        <option value="" disabled hidden>Select Process Owner</option>
+                        <option *ngFor="let each_approver of processowner_list;let i=index" [value]=i>
+                            {{each_approver.firstName|titlecase}}  {{each_approver.lastName?each_approver.lastName:''}}</option>
+    
+                            <!-- <option *ngFor="let each_approver of processowner_list;let i=index" [value]=i>
+                                {{each_approver.firstName|titlecase}}  {{each_approver.lastName?each_approver.lastName:''}}</option> -->
+                    </select>
+                    <span *ngIf="((powner.invalid && processOwner.submitted) || (powner.errors && powner.touched) )" 
+                    class='errspan required'> Please Select Process Owner </span>
+                </div>
+              </form>
+          </div>
+        </div>
+        <div class="modal-footer modelprfooter">
+            <div class="col-md-12 confirmationmsg">
+                <button class="btn btn-primary" [disabled]='!process_owner' (click)='saveprocess()'>Save</button>
+            </div>
+        </div>
+      </ng-template>

@@ -42,12 +42,12 @@ getAllCategories(){
   this.spinner.show();
   this.api.getDepartmentsList().subscribe(resp => {
     this.categories = resp.data; 
-    this.spinner.hide();
+    // this.spinner.hide();
     this.getRoles();
   })
  }
  getRoles(){
-  this.spinner.show();
+  // this.spinner.show();
    var roles1:any=[];
    this.depts=[];
   this.api.getAllRoles(2).subscribe(resp => {
@@ -84,7 +84,7 @@ getAllCategories(){
       this.email=this.userData.id;
       this.departments=this.depts;
       this.role=roles1[0];
-      this.spinner.hide();
+      setTimeout(()=>{ this.spinner.hide()},500);
   })
 //  })
 }
@@ -102,9 +102,11 @@ updateUser(){
       "department":this.departments.toString(),
       "rolesList": roles_list
   }
+  this.spinner.show()
 
   this.api.updateUserRoleDepartment(body).subscribe(resp=> {
     if(resp.message === "Successfuly updated role of an user for particular application"){
+      this.spinner.hide()
       Swal.fire({
         title: 'Success',
         text: "User details updated Successfully !!",
@@ -119,6 +121,7 @@ updateUser(){
       this.router.navigate(['/pages/admin/user-management'])
     })
     }else {
+      this.spinner.hide()
       Swal.fire("Error",resp.message,"error");
     }
 
@@ -126,14 +129,15 @@ updateUser(){
 }
 
 onchangeRole(value){
-  this.departments=[];
+ 
   if(value== '8'){
+    this.departments=[];
     this.categories.forEach(element => {
       this.departments.push(element.categoryId)
     });
     this.isdprtDisabled=true;
   }else{
-    this.departments=[];
+    this.departments = [];
    // this.departments=this.depts;
     this.isdprtDisabled=false;
   }

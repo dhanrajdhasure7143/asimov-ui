@@ -2,6 +2,7 @@ import {Input, Component, OnInit ,Pipe, PipeTransform } from '@angular/core';
 import { CronOptions } from 'src/app/shared/cron-editor/CronOptions';
 import {RestApiService} from 'src/app/pages/services/rest-api.service';
 import Swal from 'sweetalert2';
+import moment from 'moment';
 import { NotifierService } from 'angular-notifier';
 import cronstrue from 'cronstrue';
 @Component({
@@ -13,9 +14,11 @@ export class SoSchedulerComponent implements OnInit {
 
   @Input('data') public data: any;
   botid:any;
+  h:any;
   processid:any;
   public Environments:any;
-  public timesZones: any[] = ["UTC","Asia/Dubai","America/New_York","America/Los_Angeles","Asia/Kolkata","Canada/Atlantic","Canada/Central","Canada/Eastern","GMT"];
+  // public timesZones: any[] = ["UTC","Asia/Dubai","America/New_York","America/Los_Angeles","Asia/Kolkata","Canada/Atlantic","Canada/Central","Canada/Eastern","GMT"];
+  public timesZones: any = [];
   i="";
   public cronOptions: CronOptions = {
     formInputClass: 'form-control cron-editor-input',
@@ -49,7 +52,7 @@ export class SoSchedulerComponent implements OnInit {
   starttime:any="00:00";
   endtime:any="23:59";
   schedules:any=[];
-  startdate:any= new Date();
+  startdate:any;
   enddate:any;
   timezone:any="";
   schedule_list:any=[];
@@ -65,9 +68,36 @@ export class SoSchedulerComponent implements OnInit {
     deleteflag:false,
   }
   q=0;
+  selecteddate:any;
+  month:any;
+  day:any;
+  beforetime:boolean=false;
+  aftertime:boolean=false;
+  todaytime:any;
+  endtimeerror:any;
+  starttimeerror:any;
+  issame:boolean;
+  isbefore:boolean;
+  currenttime: any;
+  start_time:any;
+  end_time:any;
   constructor(private rest:RestApiService, private notifier: NotifierService) { }
 
   ngOnInit() {
+    var dtToday = new Date();
+    this.selecteddate=new Date()
+   // this.startdate=this.startdate.getFullYear()+"-"+(this.startdate.getMonth()+1)+"-"+this.startdate.getDate();
+   this.month = dtToday.getMonth() + 1;
+    var day = dtToday.getDate();
+    var year = dtToday.getFullYear();
+    if(this.month < 10)
+        this.month = '0' + this.month.toString();
+    if(day < 10)
+        this.day = '0' + day.toString();
+    
+    var minDate= year + '-' + this.month + '-' + day;
+    $('#txtDate').attr('min', minDate);
+    $('#enddatepicker').attr('min', minDate);
     if(this.data.processid!=undefined)
     {
       this.processid=this.data.processid
@@ -83,6 +113,25 @@ export class SoSchedulerComponent implements OnInit {
     this.enddate=this.startdate;
     this.timezone=""
     this.starttime=(new Date).getHours()+":"+(new Date).getMinutes();
+    this.todaytime=(new Date).getHours()+":"+(new Date).getMinutes();
+    let firstchar=this.todaytime.split(":")
+    let str1='0'
+    if(firstchar[0]<10){
+      var firstchar1=str1.concat(firstchar[0])
+      
+    }
+    else{
+      firstchar1=firstchar[0]
+    }
+    if(firstchar[1]<10){
+      var firstchar2=str1.concat(firstchar[1])
+    }
+    else{
+      firstchar2=firstchar[1]
+    }
+    this.todaytime=firstchar1+ ":" +firstchar2
+    console.log("todaytime",this.todaytime)
+    this.getAlltimezones();
   }
 
   get_schedule()
@@ -138,6 +187,31 @@ export class SoSchedulerComponent implements OnInit {
   add_sch()
   {
     // Scheduler
+    if(this.isDateToday(this.selecteddate)){
+      this.todaytime=(new Date).getHours()+":"+(new Date).getMinutes();;
+      let current_time=this.tConv24(this.todaytime)
+      let start_time=this.tConv24(this.starttime)
+       let validatecurrenttime=moment(start_time,'h:mma');
+       let validatesystemtime=moment(current_time,'h:mma');
+       let isbefore=(validatecurrenttime.isBefore(validatesystemtime));
+       if(isbefore){
+         this.beforetime=true;
+         this.starttimeerror="start time should not be before than current time"
+       }
+       else{
+        this.beforetime=false;
+        this.addscheduler()
+       }
+    }
+    else{
+      this.addscheduler()
+    }
+   
+   
+
+  }
+
+  addscheduler(){
     if(this.startdate !="" && this.enddate!=""  && this.cronExpression != "" && this.starttime!=undefined && this.endtime!=undefined && this.timezone!="" && this.timezone!=undefined)
     {
       let starttime=this.starttime.split(":")
@@ -204,9 +278,7 @@ export class SoSchedulerComponent implements OnInit {
       
       this.notifier.notify("error","Please give all inputs")
     }
-
   }
-
   check_all(event)
   {
     this.schedule_list.forEach((sch,index)=>{
@@ -534,7 +606,7 @@ export class SoSchedulerComponent implements OnInit {
           let resp:any=data;
           if(resp.errorMessage==undefined)
           {
-            this.notifier.notify("success","Schedule added successfully")
+            this.notifier.notify("success","Schedules saved successfully")
 
             /*if(resp.botMainSchedulerEntity==null){
             }
@@ -562,7 +634,7 @@ export class SoSchedulerComponent implements OnInit {
         let resp:any=data
         if(resp.errorMessage==undefined)
         {
-          this.notifier.notify("success",resp.response);
+          this.notifier.notify("success","Schedules saved successfully");
           this.get_schedule();
           this.updateflags();
         }
@@ -601,9 +673,160 @@ export class SoSchedulerComponent implements OnInit {
     return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
 
   }
-
-
-
+  onChangeHour(event,time){ 
+    
+    this.todaytime=(new Date).getHours()+":"+(new Date).getMinutes();;
+    
+       event=this.tConv24(event)
+       this.beforetime=false;
+       this.aftertime=false;
+       
+       if(this.isDateToday(this.selecteddate)){
+         if(time=='starttime'){
+        
+   
+   
+           this.currenttime=this.tConv24(this.todaytime)
+           this.end_time=this.tConv24(this.endtime)
+            let a=moment(event,'h:mma')
+            let b=moment(this.currenttime,'h:mma')
+            let f=moment(this.end_time,'h:mma')
+          
+            this.isbefore=(a.isBefore(b));
+            let g=(a.isAfter(f))
+            this.issame=(a.isSame(f))
+           if(this.isbefore){
+             this.starttimeerror="start time should not be before than current time"
+             this.beforetime=true
+           }
+           
+           if(g){
+              this.starttimeerror="start time should not be greater than end time";
+              this.beforetime=true
+           }
+           if(this.issame){
+             this.starttimeerror="start time should not be equal to end time";
+             this.beforetime=true
+           }
+          
+         }
+         else{
+           this.start_time=this.tConv24(this.starttime);
+           this.currenttime=this.tConv24(this.todaytime)
+           
+           let c=moment(this.start_time,'h:mma')
+           let d=moment(event,'h:mma');
+           let currenttime=moment(this.currenttime,'h:mma')
+           let beforecurrenttime=(d.isBefore(currenttime))
+          
+           let e=(c.isBefore(d))
+          let starttime_error=(c.isBefore(currenttime))
+           console.log(e)
+           if(e==false ){
+             this.aftertime=true;
+             this.endtimeerror="end time should not be before than or equal to start time"
+           }
+           if(beforecurrenttime){
+             this.aftertime=true;
+             this.endtimeerror="end time should not be before than or equal to currenttime"
+           }
+          if(starttime_error){
+            this.beforetime=true;
+            this.starttimeerror="start time should not be before than current time"
+          }
+         }
+       }
+       else{
+         if(this.startdate==this.enddate){
+           if(time=='starttime'){
+        
+   
+             this.end_time=this.tConv24(this.endtime)
+             this.start_time=this.tConv24(this.starttime)
+              let a=moment(this.end_time,'h:mma')
+              let b=moment(this.start_time,'h:mma')
+             this.issame=(a.isSame(b))
+              this.isbefore=(b.isAfter(a));
+             if(this.isbefore){
+               this.beforetime=true;
+               this.starttimeerror="start time should not be before than end time"
+     
+             }
+             if(this.issame ){
+               this.beforetime=true;
+               this.starttimeerror="start time should not be equal to end time"
+             }
+            
+           }
+           else{
+             this.end_time=this.tConv24(this.endtime)
+             this.start_time=this.tConv24(this.starttime)
+              let a=moment(this.end_time,'h:mma')
+              let b=moment(this.start_time,'h:mma')
+              this.issame=(a.isSame(b))
+              this.isbefore=(a.isBefore(b));
+              if(this.isbefore ){
+               this.aftertime=true;
+               this.endtimeerror="end time should not be before than start time"
+              }
+              if(this.issame){
+               this.aftertime=true;
+               this.endtimeerror="end time should not be equal to start time"
+              }
+             
+     
+           }
+         }
+        
+       }
+      
+      
+     }
+     tConv24(time24) {
+       
+       
+       var ts = time24;
+       var H = +ts.substr(0, 2);
+       this.h = (H % 12) || 12;
+       this.h = (this.h < 10)?("0"+this.h):this.h;  // leading 0 at the left for 1 digit hours
+       var ampm = H < 12 ? " AM" : " PM"; 
+       ts = this.h + ts.substr(2, 3) +ampm;
+       return ts;
+   
+     };
+  dateChange($event,date){
+    this.beforetime=false;
+    this.aftertime=false;
+   if(date=='startdate'){
+    this.enddate=this.startdate;
+    $('#enddatepicker').attr('min', this.startdate);
+   }
+  
+   this.selecteddate=$event.target.value
+   if(this.isDateToday($event.target.value)) {
+    this.starttime=(new Date).getHours()+":"+(new Date).getMinutes();
+    this.endtime='23:59'
+   }
+    else{
+      this.starttime="00:00";
+      this.endtime='23:59'
+    }
+    
+  }
+  isDateToday(date) {
+    const otherDate = new Date(date);
+    const todayDate = new Date();
+  
+    if (
+      otherDate.getDate() === todayDate.getDate() &&
+      otherDate.getMonth() === todayDate.getMonth() &&
+      otherDate.getFullYear() === todayDate.getFullYear()
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
 
   updateflags()
@@ -677,7 +900,12 @@ export class SoSchedulerComponent implements OnInit {
     this.selectedEnvironment="";
     this.timezone="";
   }
-
+  getAlltimezones(){
+    this.rest.getTimeZone().subscribe(res =>{
+      console.log(res);
+        this.timesZones=res;
+     })
+  }
 }
 
 

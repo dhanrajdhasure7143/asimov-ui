@@ -474,7 +474,7 @@ export class SoAutomatedTasksComponent implements OnInit, OnDestroy {
     this.rest.getCategoriesList().subscribe(data=>{
       let catResponse : any;
       catResponse=data
-      this.categaoriesList=catResponse.data;
+      this.categaoriesList=catResponse.data.sort((a, b) => (a.categoryName.toLowerCase() > b.categoryName.toLowerCase()) ? 1 : ((b.categoryName.toLowerCase() > a.categoryName.toLowerCase()) ? -1 : 0));
       this.selectedCategorylist = this.categaoriesList;
       this.getautomatedtasks(processid);
     });

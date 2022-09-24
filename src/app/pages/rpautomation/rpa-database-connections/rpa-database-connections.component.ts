@@ -10,6 +10,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import { NgxSpinnerService } from "ngx-spinner";
 import * as moment from 'moment';
+
 @Component({
   selector: 'app-rpa-database-connections',
   templateUrl: './rpa-database-connections.component.html',
@@ -21,14 +22,14 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
   displayedColumns1: string[] = ["check","connectiontName","categoryName","dataBaseType","hostAddress","portNumber","username","password","databasename","schemaName","activeStatus","createdTimeStamp","createdBy"];
   public toggle:boolean;
   dataSource2:MatTableDataSource<any>;
-  public dbupdateflag: boolean = false;
+  public dbupdateflag: boolean;
   public submitted:Boolean;
   public DBcheckflag:boolean = false;
   public dbupdateid : any;
   @ViewChild("paginator4",{static:false}) paginator4: MatPaginator;
   @ViewChild("sort2",{static:false}) sort2: MatSort;
   public button:string;
-  public dbconnections:any=[]
+  public dbconnections:any=[];
   public checkeddisabled:boolean =false;
   public DBcheckeddisabled:boolean =false;
   public dbupdatedata:any;
@@ -46,7 +47,6 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
     public isButtonVisible = false;
     pwdflag:boolean=false;
     addflag:boolean=false;
-
     constructor(private api:RestApiService, 
       private router:Router,
       private hints:Rpa_Hints, 
@@ -94,9 +94,10 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
     }
 
   ngOnInit() {
-    
-
-
+    this.api.getDatabaselist().subscribe(res=>{
+      this.databaselist=res;
+    })
+  
   //   //     document.getElementById("filters").style.display='block';
     this.dt.changeHints(this.hints.rpadbchints);
     //this.getallDBConnection();
@@ -120,62 +121,47 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
       );
         })
   }
-
-  // changeDatabaseType(event){
-
-  //    if(event.target.value=='Snowflake'){
-  //      this.snowflakeflag=true;
-  //      this.insertdbForm.controls.portNumber.clearValidators();
-  //      this.insertdbForm.controls.portNumber.updateValueAndValidity()
-  //    }
-  //    else{
-  //      this.snowflakeflag=false;
-  //      this.insertdbForm.controls.portNumber.setValidators([Validators.required,Validators.maxLength(6)]);
-  //      this.insertdbForm.controls.portNumber.updateValueAndValidity()
-  //    }
-  // }
   h2flag:boolean=false;
   changeDatabaseType(event){
-    if(event.target.value=='Snowflake'){
-      this.snowflakeflag=true;
-      this.pwdflag=false;
-      this.h2flag=false;
-      this.insertdbForm.controls.portNumber.clearValidators();
-      this.insertdbForm.controls.portNumber.updateValueAndValidity()
-    }
-    else if(event.target.value=='H2'){
-     this.pwdflag=true;
-     this.h2flag=true;
-     this.snowflakeflag=false;
-     //this.insertdbForm.controls.portNumber.clearValidators();
-     //this.insertdbForm.controls.portNumber.updateValueAndValidity();
-     this.insertdbForm.controls.password.clearValidators();
-     this.insertdbForm.controls.password.updateValueAndValidity();
-     this.insertdbForm.controls.schemaName.clearValidators();
-     this.insertdbForm.controls.schemaName.updateValueAndValidity();
-     this.insertdbForm.controls.warehouse.clearValidators();
-     this.insertdbForm.controls.warehouse.updateValueAndValidity();
-     this.insertdbForm.controls.role.clearValidators();
-     this.insertdbForm.controls.role.updateValueAndValidity();
-
-    }
-    else{
+     if(event.target.value=='Snowflake'){
+       this.snowflakeflag=true;
+       this.pwdflag=false;
+       this.h2flag=false;
+       this.insertdbForm.controls.portNumber.clearValidators();
+       this.insertdbForm.controls.portNumber.updateValueAndValidity()
+     }
+     else if(event.target.value=='H2'){
+      this.pwdflag=true;
+      this.h2flag=true;
       this.snowflakeflag=false;
-      this.pwdflag=false;
-      this.h2flag=false;
-      this.insertdbForm.controls.portNumber.setValidators([Validators.required,Validators.maxLength(6)]);
-      this.insertdbForm.controls.portNumber.updateValueAndValidity();
-      this.insertdbForm.controls.password.setValidators([Validators.required , Validators.maxLength(50)]) 
+      //this.insertdbForm.controls.portNumber.clearValidators();
+      //this.insertdbForm.controls.portNumber.updateValueAndValidity();
+      this.insertdbForm.controls.password.clearValidators();
       this.insertdbForm.controls.password.updateValueAndValidity();
-      this.insertdbForm.controls.schemaName.setValidators([Validators.required , Validators.maxLength(50)]);
+      this.insertdbForm.controls.schemaName.clearValidators();
       this.insertdbForm.controls.schemaName.updateValueAndValidity();
-    }
- }
+      this.insertdbForm.controls.warehouse.clearValidators();
+      this.insertdbForm.controls.warehouse.updateValueAndValidity();
+      this.insertdbForm.controls.role.clearValidators();
+      this.insertdbForm.controls.role.updateValueAndValidity();
+
+     }
+     else{
+       this.snowflakeflag=false;
+       this.pwdflag=false;
+       this.h2flag=false;
+       this.insertdbForm.controls.portNumber.setValidators([Validators.required,Validators.maxLength(6)]);
+       this.insertdbForm.controls.portNumber.updateValueAndValidity();
+       this.insertdbForm.controls.password.setValidators([Validators.required , Validators.maxLength(50)]) 
+       this.insertdbForm.controls.password.updateValueAndValidity();
+       this.insertdbForm.controls.schemaName.setValidators([Validators.required , Validators.maxLength(50)]);
+       this.insertdbForm.controls.schemaName.updateValueAndValidity();
+     }
+  }
   async getallDBConnection(){
     this.dbconnections= [];
     await this.api.listDBConnection().subscribe(
       data1 => {
-        if(Array.isArray(data1)){
         this.dbconnections = data1;
         if(this.dbconnections.length>0)
          { 
@@ -188,16 +174,16 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
         this.dbconnections.sort((a,b) => a.connectionId > b.connectionId ? -1 : 1);
         this.dbconnections=this.dbconnections.map(item=>{
           item["categoryName"]=this.categoryList.find(item2=>item2.categoryId==item.categoryId).categoryName;
-          item["createdTimeStamp_converted"] = moment(new Date(item.createdTimeStamp)).format('LLL')
+          item["createdTimeStamp_converted"] = moment(new Date(item.createdTimeStamp)).format('lll')
           return item;
         })
         this.dataSource2= new MatTableDataSource(this.dbconnections);
+        this.spinner.hide();
         setTimeout(() => {
           this.sortmethod(); 
         }, 80);
-        }
-        this.spinner.hide();
       });
+    //     document.getElementById("filters").style.display='block'; 
   }
 
   sortmethod(){
@@ -208,25 +194,20 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
   DBcheckAllCheckBox(ev) {
     this.dbconnections.forEach(x =>
        x.checked = ev.target.checked);
-       if(this.dbconnections.filter(data=>data.checked==true).length==this.dbconnections.length)
-       {
-         this.DBcheckflag=true;
-       }else
-       {
-         this.DBcheckflag=false;  
-       }
     this.DBchecktoupdate();
     this.checktodelete();
   }
   
   createdbconnection()
   {
+  //     document.getElementById("filters").style.display='none;
     document.getElementById("createdbconnection").style.display='block';
     this.insertdbForm.get("categoryId").setValue(this.categoryList.length==1?this.categoryList[0].categoryId:"0")
     document.getElementById("Updatedbconnection").style.display='none';
   }
 
   Updatedbconnection(){
+  //     document.getElementById("filters").style.display='none;
     document.getElementById("createdbconnection").style.display='none';
     document.getElementById("Updatedbconnection").style.display='block';
   }
@@ -252,8 +233,23 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
       {
         this.spinner.hide();
         if(res.errorMessage==undefined){
+        // Swal.fire({
+        //   position: 'center',
+        //   icon: 'success',
+        //   title: "Successfully Connected",
+        //   showConfirmButton: false,
+        //   timer: 2000
+        // })
         Swal.fire("Success","Successfully Connected","success")
-        }else{   
+        }else{
+          // Swal.fire({
+          //   position: 'center',
+          //   icon: 'error',
+          //   title: 'Connection Failed',
+          //   showConfirmButton: false,
+          //   timer: 2000
+          // })
+          
         Swal.fire("Error","Connection Failed","error")
         }
     },err=>{
@@ -265,6 +261,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
   else
   {
     this.spinner.hide();
+     //alert("Invalid Form");
      this.activestatus();
   }
 
@@ -302,10 +299,19 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
 
     this.insertdbForm.value.createdBy="admin";
     this.submitted=true;
+    //this.insertdbForm.value.databasename = this.insertdbForm.value.dataBaseType;
     let DBConnection = this.insertdbForm.value;
     this.api.addDBConnection(DBConnection).subscribe( res =>{
       let status:any=res;
       this.spinner.hide();
+    // Swal.fire({
+    //         position: 'center',
+    //         icon: 'success',
+    //         title: status.status,
+    //         showConfirmButton: false,
+    //         timer: 2000
+    //       })
+
           if(status.errorMessage==undefined)
           {
             
@@ -361,11 +367,19 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
         this.updatedbForm.value.activeStatus=8
       }
     let dbupdatFormValue =  this.updatedbForm.value;
+    //dbupdatFormValue["databasename"]= this.dbupdatedata.dataBaseType;
     dbupdatFormValue["connectionId"]= this.dbupdatedata.connectionId;
     dbupdatFormValue["createdBy"]= this.dbupdatedata.createdBy;
     this.api.updateDBConnection(dbupdatFormValue).subscribe( res => {
       let status: any= res;
       this.spinner.hide();
+      // Swal.fire({
+      //   position: 'center',
+      //   icon: 'success',
+      //   title: status.status,
+      //   showConfirmButton: false,
+      //   timer: 2000
+      // });
       if(status.errorMessage==undefined)
       {
         Swal.fire("Success",status.status,"success")
@@ -393,6 +407,7 @@ else
 
 updatedbdata()
   {    
+  //     document.getElementById("filters").style.display='none;
     document.getElementById('Updatedbconnection').style.display='block';
     let data:any;
     for(data of this.dbconnections)
@@ -427,7 +442,7 @@ updatedbdata()
           this.h2flag=false;
           this.updatedbForm.controls.portNumber.clearValidators();
           this.updatedbForm.controls.portNumber.updateValueAndValidity()
-        }    
+        } 
         else if(this.dbupdatedata["dataBaseType"]=='H2')   {
           this.pwdflag=true;
           this.h2flag=true;
@@ -456,6 +471,7 @@ updatedbdata()
 
   closedbconnection()
   {     
+  //     document.getElementById("filters").style.display='block';
     document.getElementById('createdbconnection').style.display='none';
     document.getElementById('Updatedbconnection').style.display='none';
     this.resetDBForm();
@@ -477,6 +493,13 @@ updatedbdata()
         this.api.deleteDBConnection(selecteddbconnection).subscribe( res =>{ 
           let status:any = res;
           this.spinner.hide();
+          // Swal.fire({
+          //   position: 'center',
+          //   icon: 'success',
+          //   title: status.status,
+          //   showConfirmButton: false,
+          //   timer: 2000    
+          // });
           if(status.errorMessage==undefined)
           {
             Swal.fire("Success",status.status,"success")
@@ -520,10 +543,10 @@ updatedbdata()
     this.dbconnections.find(data=>data.connectionId==id).checked=event.target.checked;
     if(this.dbconnections.filter(data=>data.checked==true).length==this.dbconnections.length)
     {
-      this.DBcheckflag=true;
+      this.dbupdateflag=true;
     }else
     {
-      this.DBcheckflag=false;  
+      this.dbupdateflag=false;  
     }
     this.DBchecktoupdate();
     this.checktodelete();

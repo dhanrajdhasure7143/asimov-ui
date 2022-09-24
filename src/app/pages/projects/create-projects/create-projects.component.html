@@ -41,7 +41,7 @@
                                         <div class="form-fields col-md-6 pl-0">
                                             <label class="label-control" for="programname">Program Name<span
                                                     class="star">*</span></label>
-                                            <input type="text" maxlength="51" class="form-control data"
+                                            <input type="text" maxlength="256" class="form-control data"
                                                 formControlName="programName" value="" placeholder="Enter Program Name"
                                                 [ngClass]="createprogram.get('programName').valid?'enteredfield-color':'inputfield-color'">
                                             <span
@@ -49,7 +49,7 @@
                                                 class="errspan required">Program Name Required*</span>
                                             <span *ngIf="createprogram.controls['programName'].hasError('maxlength')"
                                                 class="errspan required">
-                                                Maximum of 50 characters exceeded
+                                                Maximum of 255 characters exceeded
                                             </span>
                                         </div>
                                         <div class="form-fields col-md-6 pr-0">
@@ -80,10 +80,10 @@
                                         </div>
                                     </div>
                                     <div class="col-md-12">
-                                        <div class="form-fields col-md-6 pl-0">
+                                        <!-- <div class="form-fields col-md-6 pl-0">
                                             <label class="label-control" for="programpurpose">Add Program Purpose<span
                                                     class="star">*</span></label>
-                                            <input type="text" maxlength="51" class="form-control data"
+                                            <input type="text" maxlength="256" class="form-control data"
                                                 formControlName="purpose" value="" placeholder="Enter Program Purpose"
                                                 [ngClass]="createprogram.get('purpose').valid?'enteredfield-color':'inputfield-color'">
                                             <span
@@ -91,10 +91,10 @@
                                                 class="errspan required">Program Purpose Required*</span>
                                             <span *ngIf="createprogram.controls['purpose'].hasError('maxlength')"
                                                 class="errspan required">
-                                                Maximum of 50 characters exceeded
+                                                Maximum of 255 characters exceeded
                                             </span>
-                                        </div>
-                                        <div class="form-fields col-md-6 pr-0">
+                                        </div> -->
+                                        <div class="form-fields col-md-6 pl-0">
                                             <label class="label-control" for="owner">Owner<span
                                                     class="star">*</span></label>
                                             <select formControlName="owner" class="form-control data"  [attr.disabled]="loggedInUser!=undefined || loggedInUser !=''" 
@@ -119,10 +119,10 @@
                                                               <option value="Rejected">Rejected</option>
                                                           </select>
                                                           <span *ngIf="createprogram.get('status').invalid && createprogram.get('status').touched" class="errspan required">Status Required*</span>-->
-                                    </div>
-                                    <div class="col-md-12">
+                                    
+                                    
                                         
-                                            <div class="form-fields col-md-6 pl-0">
+                                            <div class="form-fields col-md-6 pr-0">
                                                 <!-- <label class="label-control" for="programValueChain">Value Chain<span
                                                         class="star">*</span></label>
                                                       
@@ -154,8 +154,8 @@
                                                     Department Required*
                                                 </div>
                                                 </div>
-                                        
-                                            <div class="form-fields col-md-6 pr-0">
+                                            </div>
+                                            <!-- <div class="form-fields col-md-6 pr-0">
                                                 <label class="label-control" for="measurableMetrics">Metrics To Be Measured<span class="star">*</span></label>
                                                 <input type="text" maxlength="51" class="form-control data"
                                                     formControlName="measurableMetrics" value=""
@@ -169,7 +169,7 @@
                                                     class="errspan required">
                                                     Maximum of 50 characters exceeded
                                                 </span>
-                                            </div>
+                                            </div> -->
                                         <!-- <div class="form-fields col-md-6 pr-0">
                                             <label class="label-control" for="process">Process<span
                                                     class="star">*</span></label>
@@ -185,7 +185,7 @@
                                                 class="errspan required">Process Required*</span>
                                         </div> -->
                                         
-                                    </div>
+                                   
                                     <div class="col-md-12">
                                         
 
@@ -309,7 +309,7 @@
                                             <div class="form-fields col-md-6 pr-0">
                                                 <label class="label-control" for="processOwner">Process Owner<span
                                                         class="star">*</span></label>
-                                                <select formControlName="processOwner" class="form-control data"  [attr.disabled]="processOwner==false" 
+                                                <select formControlName="processOwner" class="form-control data"  [attr.disabled]="processowner==false" 
                                                     [ngClass]="createprogram.get('processOwner').valid?'enteredfield-color':'inputfield-color'">
                                                     <option [value]="" disabled hidden>Select Process Owner</option>
                                                     <option value="" >Select Process Owner</option>
@@ -336,10 +336,10 @@
                                                         </span> -->
                                         <label class="label-control">Description</label>
                                         <textarea class="form-control" formControlName="description" row="3" (keyup)="descriptionMaxLength($event.target.value)"
-                                            placeholder="Enter Description" style=" resize: none;" maxlength="151"
+                                            placeholder="Enter Description" style=" resize: none;" maxlength="256"
                                             [ngClass]="createprogram.get('description').valid?'enteredfield-color':'inputfield-color'">></textarea>
                                             <span *ngIf="descptionFlag" class="errspan required">
-                                                Maximum of 150 characters
+                                                Maximum of 255 characters
                                               </span>
                                 
                                     </div>
@@ -429,11 +429,14 @@
 
 
     <ng-template class="modal-lg" #template>
-        <div class="modal-header modelprhead">
+        <div ngb-modal-draggable [ngbModalDraggableHandle]="draggableHandle" class="cursor-all-scroll">
+            <div #draggableHandle class="modal-header modelprhead">
+        <!-- <div class="modal-header modelprhead"> -->
             <h4 class="modal-title pull-left">Add New Project</h4>
             <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
                 <span aria-hidden="true"><img src="../../../../assets/images/Projects/circle-close.svg" alt=""></span>
             </button>
+        </div>
         </div>
         <div class="h-scroll-1">
             <app-create-project-form [users_list]="userslist" [initiatives_list]="initiatives" (oncreate)="linkcreateproject($event)" [processes]="selected_process_names"></app-create-project-form>

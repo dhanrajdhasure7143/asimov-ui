@@ -4,9 +4,9 @@
 /*@import "~@ng-select/ng-select/themes/material.theme.css";*/
 /* @import "../../../../assets/css/new-so-styles.css"; */
 select {
-    border-top: none;
+    /* border-top: none;
     border-right: none;
-    border-left: none;
+    border-left: none; */
 }
 
 #sch .ngb-tp-input-container input[type="text"] {
@@ -305,4 +305,7 @@ body .leftfporm select {
   height: calc(100vh - 320px);
   overflow: auto;
   width: 100%;
+}
+.so-bot-graph .mat-tab-body-content {
+  overflow: auto !important;
 }

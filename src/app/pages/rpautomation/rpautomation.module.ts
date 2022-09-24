@@ -59,6 +59,9 @@ import { TaskPipe } from './custom-pipes/task.pipe';
 import { TasksearchPipe } from './custom-pipes/tasksearch.pipe';
 import {MatPaginatorIntl} from '@angular/material';
 import { CustomMatPaginatorIntl } from 'src/app/shared/custom-mat-paginator-int';
+import { RpaSoLogsComponent } from './rpa-so-logs/rpa-so-logs.component';
+import { AngularSplitModule } from 'angular-split';
+import { NgbModalDraggableModule } from 'ngb-modal-draggable';
 
 @NgModule({
   declarations: [
@@ -86,7 +89,8 @@ import { CustomMatPaginatorIntl } from 'src/app/shared/custom-mat-paginator-int'
     EnvnameRpa,
 	RpaCredentialsComponent,
 	TaskPipe,
-	TasksearchPipe
+	TasksearchPipe,
+	RpaSoLogsComponent
   ],
   imports: [
     NgxMaterialTimepickerModule,
@@ -102,7 +106,7 @@ import { CustomMatPaginatorIntl } from 'src/app/shared/custom-mat-paginator-int'
     FilterPipeModule,
     DataTablesModule,
     NgbModule,MatExpansionModule,
-    ContextMenuModule.forRoot(),
+    // ContextMenuModule.forRoot(),
     DynamicFormBuilderModule,
     ReactiveFormsModule,
     CronEditorModule,
@@ -121,7 +125,10 @@ import { CustomMatPaginatorIntl } from 'src/app/shared/custom-mat-paginator-int'
     NgxSpinnerModule,
     MatSlideToggleModule,
     Ng5SliderModule,
+    AngularSplitModule.forRoot(),
+    NgbModalDraggableModule,
   ],
+  exports:[RpaSoLogsComponent],
   providers: [MatDatepickerModule,Rpa_Hints, BsModalRef, BsModalService,
     {
            provide: MatPaginatorIntl, 

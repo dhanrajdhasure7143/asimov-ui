@@ -456,14 +456,18 @@
     </div>
   </div>
   <div *ngIf="incident_flag==true" class="text-center">
-    <img src="../../../../../assets/images/SO/texture_image.svg"  style="height:calc(100vh - 400px)">
+    <!-- <img src="../../../../../assets/images/SO/texture_image.svg"  style="height:calc(100vh - 400px)">
     <br><br>
       <h4><b>Your instance is hibernating</b></h4>
-      <h4>Sign in to the service now to wake your instance</h4>
-    
+      <h4>Sign in to the service now to wake your instance</h4> -->
+      <img src="../../../../../assets/images/RPA/No-Items.svg" style="height:calc(100vh - 350px)">
+        
+      <h4>Configurations required to display content</h4>
+      <br>
+      <h4><b>Contact EZFlow team for your ITSM integration</b></h4>
       <!-- <a class="btn btn-primary" href="https://dev114035.service-now.com/api/now/table/incident" target="blank">Sign in</a> -->
-      <button class="btn btn-primary" disabled="true">Sign in</button>
-      &nbsp;<button disabled="true" class="btn btn-default" (click)="ngOnInit()">Refresh</button>
+      <!-- <button [disabled]="true" class="btn btn-primary">Sign in</button>
+      &nbsp;<button [disabled]="true" class="btn btn-default" (click)="ngOnInit()">Refresh</button> -->
 </div>
 
 <!-- <div class="text-center" >

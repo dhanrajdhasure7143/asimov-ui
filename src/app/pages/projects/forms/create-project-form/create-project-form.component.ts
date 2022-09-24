@@ -30,6 +30,7 @@ export class CreateProjectFormComponent implements OnInit {
   categoriesList:any=[];
   freetrail: string;
   processOwner:boolean;
+  resources_list:any[]=[];
   ngOnInit(): void {
     this.loggedInUserId=localStorage.getItem("ProfileuserId")
     this.insertForm2=this.formBuilder.group({
@@ -38,7 +39,7 @@ export class CreateProjectFormComponent implements OnInit {
       resource: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       owner: [this.loggedInUserId, Validators.compose([Validators.required, Validators.maxLength(50)])],
       mapValueChain: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      endDate: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      endDate: [""],
       startDate: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       priority: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       measurableMetrics: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
@@ -66,14 +67,14 @@ export class CreateProjectFormComponent implements OnInit {
     }
     this.rest.getCategoriesList().subscribe(res=> {
       this.categoriesList=res
-      this.categories_list=this.categoriesList.data
+      this.categories_list=this.categoriesList.data.sort((a, b) => (a.categoryName.toLowerCase() > b.categoryName.toLowerCase()) ? 1 : ((b.categoryName.toLowerCase() > a.categoryName.toLowerCase()) ? -1 : 0));
       // if(this.categories_list.length==1){
       //   this.categoryName=this.categories_list[0].categoryName
       // }
     });
-
    
   }
+
 
   getprocessnames()
   {
@@ -84,8 +85,24 @@ export class CreateProjectFormComponent implements OnInit {
       //this.selected_process_names=resp.filter(item=>item.status=="APPROVED");
       resp=response.filter(item=>item.status=="APPROVED");
       this.selected_process_names=resp.sort((a,b) => (a.processName.toLowerCase() > b.processName.toLowerCase() ) ? 1 : ((b.processName.toLowerCase() > a.processName.toLowerCase() ) ? -1 : 0));
+      // this.selected_process_names =[...this.selected_process_names.map(process=>
+
+      //   {
+      //     let userdata=this.users_list.find(userData=>userData.userId.userId==process.ProcessOwner)
+      //     if(userdata!=undefined){
+      //       process["processOwnerName"]=userdata.firstName +" "+  userdata.lastName; 
+            
+      //     }
+      //     return process;})]
     })
   }
+
+  ngOnChanges(){
+    this.users_list.forEach((element)=>{  
+      if(element.userId.userId!=this.loggedInUserId)
+     this.resources_list.push(element)
+   });
+}
 
  
   createproject()
@@ -113,7 +130,8 @@ export class CreateProjectFormComponent implements OnInit {
     let process=this.selected_process_names.find(process=>process.processId==processId);
     if(process!=undefined)
     {
-      let processOwner:any=this.users_list.find(item=>(`${item.userId.firstName} ${item.userId.lastName}`==process.createdBy))
+    
+      let processOwner:any=this.users_list.find(item=>(item.userId.userId==process.ProcessOwner))
       if(processOwner!=undefined)
       {
         this.insertForm2.get("processOwner").setValue(processOwner.userId.userId);
@@ -166,6 +184,7 @@ export class CreateProjectFormComponent implements OnInit {
   endDateMethod(){
    return false;
   }
+  
   onchangeDate(){
     if(this.insertForm2.get("endDate").value)
     this.insertForm2.get("endDate").setValue("0000-00-00");

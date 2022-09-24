@@ -163,6 +163,7 @@ ul#environments li img {
 .rpa-layout-header {
     background-color: #F3F3F3;
     padding: 5px 15px !important;
+    height: 97px !important;
 }
 
 .rpa-layout-header .module-heading {
@@ -313,6 +314,7 @@ ul#versions li.clickable:hover {
 
 ::ng-deep .rpa-bottom-tab {
     background: white !important;
+    height:45px !important;
     /* height: 40px !important;
   color:black !important; */
     padding: 10px !important;

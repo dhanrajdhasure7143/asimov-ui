@@ -11,6 +11,7 @@ import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import { NgxSpinnerService } from "ngx-spinner";
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-environments',
@@ -151,6 +152,7 @@ import { NgxSpinnerService } from "ngx-spinner";
         this.environments.sort((a,b) => a.activeTimeStamp > b.activeTimeStamp ? -1 : 1);
         this.environments=this.environments.map(item=>{
            item["categoryName"]=this.categoryList.find(item2=>item2.categoryId==item.categoryId).categoryName;
+          item["createdTimeStamp_converted"] = moment(new Date(item.createdTimeStamp)).format('lll')
             if(item.keyValue!=null)
             {
               item["password"]={
@@ -220,8 +222,10 @@ import { NgxSpinnerService } from "ngx-spinner";
   
   }
   resetEnvForm(){
+  
     this.insertForm.reset();
-    
+    this.password=null;
+    this.isKeyValuePair=false;
     this.insertForm.get("portNumber").setValue("22");
     this.insertForm.get("connectionType").setValue("SSH");
     this.insertForm.get("categoryId").setValue(this.categoryList.length==1?this.categoryList[0].categoryId:'0');
@@ -232,7 +236,8 @@ import { NgxSpinnerService } from "ngx-spinner";
 
   resetupdateEnvForm(){
     this.updateForm.reset();
-    
+    this.password=null;
+    this.isKeyValuePair=false;
     this.updateForm.get("portNumber").setValue("22");
     this.updateForm.get("connectionType").setValue("SSH");
     this.updateForm.get("environmentType").setValue("");
@@ -257,12 +262,13 @@ import { NgxSpinnerService } from "ngx-spinner";
     }
     if(this.isKeyValuePair==false)
     {
-      let connectionDetails=formdata.value;
+      let connectionDetails=JSON.parse(JSON.stringify(formdata.value));
       connectionDetails["password"]=this.password;
-      
+     // Object.assign(connectionDetails,({"password":this.password}))
+        
         
       this.spinner.show();
-      await this.api.testenvironment(formdata.value).subscribe( res =>
+      await this.api.testenvironment(connectionDetails).subscribe( res =>
         {
           this.spinner.hide();
           if(res.errorMessage==undefined){
@@ -457,7 +463,6 @@ import { NgxSpinnerService } from "ngx-spinner";
       updatFormValue["environmentId"]= this.updateenvdata.environmentId;
       updatFormValue["createdBy"]= this.updateenvdata.createdBy;
       updatFormValue["deployStatus"]= this.updateenvdata.deployStatus;
-      console.log(this.updateflag)
       // if(this.updateflag==false)
       // {
         if(this.isKeyValuePair==false)
@@ -480,7 +485,6 @@ import { NgxSpinnerService } from "ngx-spinner";
               Swal.fire("Error",response.errorMessage,"error")
             }
           },err=>{
-            console.log(err);
             this.spinner.hide();
             Swal.fire("Error","Unable to update environment details","error")
           });
@@ -553,7 +557,6 @@ import { NgxSpinnerService } from "ngx-spinner";
               Swal.fire("Error",response.errorMessage,"error")
             }
           },err=>{
-            console.log(err);
             this.spinner.hide();
             Swal.fire("Error","Unable to update environment details","error")
           });
@@ -567,7 +570,41 @@ import { NgxSpinnerService } from "ngx-spinner";
     //}
     
   }
-
+  keypair(event){
+    
+    this.isKeyValuePair=!this.isKeyValuePair;
+    if(event.target.checked==true){
+      if(this.updateenvdata.password.password!=undefined){
+        this.password=this.updateenvdata.password.password
+      }
+      else{
+        this.password=''
+      }
+      
+        if(this.keyValueFile==undefined){
+          this.keyValueFile=undefined
+        }
+        else{
+         
+          this.keyValueFile= this.updateenvdata.keyValue
+         
+        }
+      
+     
+    }
+    else{
+      if(this.keyValueFile==undefined){
+        this.keyValueFile=undefined
+      }
+      if(this.updateenvdata.password.password!=undefined){
+        this.password=this.updateenvdata.password.password
+      }
+      else{
+        this.password=''
+      }
+      
+    }
+  }
   updatedata()
   {
     document.getElementById("createenvironment").style.display='none';    
@@ -742,6 +779,11 @@ import { NgxSpinnerService } from "ngx-spinner";
          // Swal.fire("Error","Failed to deploy bot in selected evironment","error")
          Swal.fire("Success","Agent Deployed Successfully !!","success")
           this.spinner.hide(); 
+          this.removeallchecks();
+        this.getallData(); 
+        this.checktoupdate();
+        this.checktodelete();  
+          
       })
     }
   }

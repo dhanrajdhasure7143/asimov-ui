@@ -7,6 +7,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-departments',
@@ -41,6 +42,10 @@ export class DepartmentsComponent implements OnInit {
   getAllDepartments(){
     this.api.getDepartmentsList().subscribe(resp => {
       this.departments = resp
+      this.departments.data.map(item=>{
+        item["createdTimeStamp_converted"] = moment(new Date(item.createdAt)).format('lll')
+        return item
+      })
       this.dataSource2 = new MatTableDataSource(this.departments.data);
       this.dataSource2.paginator=this.paginator;
       this.dataSource2.sort = this.sort;    
@@ -68,8 +73,10 @@ export class DepartmentsComponent implements OnInit {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.value) {
+      this.spinner.show();
       this.api.deleteDepartments(delbody).subscribe(resp => {
         let value: any = resp
+        this.spinner.hide();
         if (value.message === "Successfully deleted the category") {
           Swal.fire({
             title: 'Success',
@@ -87,8 +94,18 @@ export class DepartmentsComponent implements OnInit {
           this.checktodelete();
         }
         else {
+          this.spinner.hide();
           Swal.fire("Error", value.message, "error");
         }
+      },err=>{
+        this.spinner.hide();
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Something went wrong!',
+          heightAuto: false,
+        })
+
       })
     }
     })

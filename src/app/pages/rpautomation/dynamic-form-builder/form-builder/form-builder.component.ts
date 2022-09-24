@@ -77,7 +77,6 @@ export class FormBuilderComponent implements OnInit {
 
   ngOnInit() {
   
-    console.log("form",this.form.controls[this.field.name+"_"+this.field.id])
     this.userRole = localStorage.getItem("userRole");
       if(this.userRole=='Process Owner' || this.userRole=='RPA Developer'){
         this.isdisabled=null
@@ -87,7 +86,6 @@ export class FormBuilderComponent implements OnInit {
       }
   }
   getfields(event){
-     console.log("event",event)
   }
 }
 

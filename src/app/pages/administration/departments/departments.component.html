@@ -28,7 +28,7 @@
                 </div>
                 <div>
                   <button  class="btn btn-primary" routerLink="/pages/admin/create-department">
-                    <img  src="../../../../assets/images/Projects/White-plus.svg" class="testplus"/>
+                    <!-- <img  src="../../../../assets/images/Projects/White-plus.svg" class="testplus"/> -->
                     Create New
                   </button>
                 </div>
@@ -67,10 +67,10 @@
             <table mat-table #sort2="matSort"  [dataSource]="dataSource2" matSort class="PI table w-100"  id="listofcred">
 
               <ng-container matColumnDef="check">
-                <th mat-header-cell *matHeaderCellDef >
+                <th mat-header-cell *matHeaderCellDef class="cell1">
                     <input [disabled]="Departmentcheckeddisabled" type="checkbox" id="Credcheckall" [checked]="Departmentcheckflag" (change)="DepartmentscheckAllCheckBox($event)">
                 </th>
-                <td mat-cell *matCellDef="let element; let i = index">
+                <td mat-cell *matCellDef="let element; let i = index" class="cell1">
                     <input type="checkbox" [checked]="element.checked" (change)="DepartmentscheckEnableDisableBtn(element.categoryId, $event)"> 
                 </td>
               </ng-container>
@@ -85,8 +85,8 @@
               </ng-container> -->
               
               <ng-container matColumnDef="categoryName">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Department</th>
-                  <td mat-cell *matCellDef="let element"> 
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header class="cell2">Department</th>
+                  <td mat-cell *matCellDef="let element" class="cell2"> 
                       <span *ngIf="element.categoryName!=null">{{element.categoryName}}</span> 
                       <span *ngIf="element.categoryName==''">-</span>
                       <span *ngIf="element.categoryName==null">-</span>
@@ -94,8 +94,8 @@
               </ng-container>
 
               <ng-container matColumnDef="owner">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Owner</th>
-                <td mat-cell *matCellDef="let element"> 
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="cell3">Owner</th>
+                <td mat-cell *matCellDef="let element" class="cell3"> 
                     <span *ngIf="element.owner!=null">{{element.owner| userPipe : users_list}}</span> 
                     <span *ngIf="element.owner==''">-</span>
                     <span *ngIf="element.owner==null">-</span>
@@ -103,17 +103,18 @@
               </ng-container>
               
               <ng-container matColumnDef="createdBy">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Created By</th>
-                  <td mat-cell *matCellDef="let element"> 
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header class="cell4">Created By</th>
+                  <td mat-cell *matCellDef="let element" class="cell4"> 
                     <span *ngIf="element.createdBy!=null" >{{element.createdBy}}</span>
                       <span *ngIf="element.createdBy==''">-</span>
                       <span *ngIf="element.createdBy==null">-</span>
               </ng-container>
     
               <ng-container matColumnDef="createdAt">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Created At</th>
-                  <td mat-cell *matCellDef="let element"> 
-                    <span *ngIf="element.createdAt!=null" >{{element.createdAt | date:'MMM d, y, HH:mm'}}</span>
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header class="cell5">Created At</th>
+                  <td mat-cell *matCellDef="let element" class="cell5"> 
+                    <!-- <span *ngIf="element.createdAt!=null" >{{element.createdAt | date:'MMM d, y, HH:mm'}}</span> -->
+                    <span *ngIf="element.createdAt!=null" >{{element.createdTimeStamp_converted}}</span>
                       <span *ngIf="element.createdAt==''">-</span> 
                       <span *ngIf=" element.createdAt==null">-</span> 
                   </td>
@@ -125,8 +126,8 @@
               </ng-container>
 
               <ng-container matColumnDef="action">
-                    <th mat-header-cell *matHeaderCellDef > Actions</th>
-                    <td mat-cell *matCellDef="let element" class="action-link tablacs"> 
+                    <th mat-header-cell *matHeaderCellDef class="cell6"> Actions</th>
+                    <td mat-cell *matCellDef="let element" class="action-link tablacs cell6"> 
                       <div class="newinntalx">
                         
                         <a  (click)="editdepartment(element)" matTooltip="Edit Department">

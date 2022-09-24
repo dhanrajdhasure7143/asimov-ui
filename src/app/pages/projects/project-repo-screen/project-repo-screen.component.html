@@ -64,8 +64,8 @@
             </span>  -->
             
             <span class="projects-menu-item gridicon"  (click)="onDownloadSelectedItems($event)"   matTooltip="Download" >
-              <img src="../../../assets/images/BPMS/download.svg" class="default-img">
-              <img src="../../../../assets/images/Projects/Download.svg" class="hover-img">
+              <img src="../../../../assets/images/Admin/download-black.svg" class="default-img">
+              <img src="../../../../assets/images/Admin/download-blue.svg" class="hover-img">
             </span> 
             <!-- <span class="projects-menu-item" type="button" (click)="onDeleteSelectedItems($event)"><i class="fa fa-trash"></i></span> -->
             <!-- <span class="projects-menu-item projects-menu-item1" type="button" (click)="onDownloadSelectedItems($event)"><img src="../../../../assets/images/Projects/Download.svg" class="testplus default-img"></span> -->
@@ -112,7 +112,7 @@
               <table mat-table #sort11="matSort" [dataSource]="dataSource3" matSort class="projecttable table" id="autotable">
 
                 <ng-container matColumnDef="check">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                  <th mat-header-cell *matHeaderCellDef>
                       <input [disabled]="uploadedFiledata.length==0" type="checkbox" id="Credcheckall" [checked]="filecheckeddisabled" (change)="filecheckAll($event)">
                   </th>
                   <td mat-cell *matCellDef="let element; let i = index">
@@ -183,8 +183,8 @@
                     <!-- <span class="projects-menu-item" (click)="onDeleteItem(element.id,element.fileName)"><i class="fa fa-trash"></i></span> -->
 
                     <span class="gridicon"  (click)="onDownloadItem(element.fileName)"   matTooltip="Download" >
-                      <img src="../../../assets/images/BPMS/download.svg" class="default-img">
-                      <img src="../../../../assets/images/Projects/Download.svg" class="hover-img">
+                      <img src="../../../../assets/images/Admin/download-black.svg" class="default-img">
+                      <img src="../../../../assets/images/Admin/download-blue.svg" class="hover-img">
                     </span> 
                     <!-- <span class="projects-menu-item projects-menu-item1" (click)="onDownloadItem(element.fileName)"> <img src="../../../assets/images/BPMS/download.svg" class="testplus1 default-img"></span> -->
                     <!-- <div class="newinntalx">
@@ -430,8 +430,8 @@
 
                     <ng-container matColumnDef="comments">
                       <th mat-header-cell *matHeaderCellDef mat-sort-header>Description</th>
-                      <td mat-cell *matCellDef="let element">
-                        <span *ngIf="element.comments!=null" matTooltipClass="my-custom-tooltip" [matTooltip]="element.comments" matTooltipPosition="below">{{element.comments.length>20?((element.comments.slice(0,20))+"..."):element.comments}}</span>
+                      <td mat-cell  *matCellDef="let element">
+                        <span *ngIf="element.comments!=null" matTooltipClass="my-custom-tooltip" [matTooltip]="element.comments" >{{element.comments.length>20?(element.comments.slice(0,20)+"..."):(element.comments)}}</span>
                         <span *ngIf="element.comments==null">---</span>
                       </td>
                     </ng-container>
@@ -481,22 +481,27 @@
                     <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(dataSource5!=null && dataSource5.data.length==0)}"></tr>
                   </table>
                 </div>
+                <mat-paginator class="newpaginationdiv" #paginator105 [pageSize]="3" [pageSizeOptions]="[3, 5, 10, 25, 50]" [showFirstLastButtons]="true">
+                </mat-paginator>
               </mat-tab>
             </mat-tab-group>
             
           </mat-card>
       </div>
       <ng-template class="modal-lr" #createRequestmodal>
-        <app-request-file [createRequestmodalref]="createRequestmodalref" [projectid]="projectid" (onrequest)="onrequestFileData($event)"></app-request-file>
+        <app-request-file [createRequestmodalref]="createRequestmodalref" [projectid]="projectid" [filecategoriesList]="filecategoriesList" (onrequest)="onrequestFileData($event)"></app-request-file>
       </ng-template>
 
       <ng-template #denyFileRequestmodal>
-        <div class="modal-header modelprhead">
+        <div ngb-modal-draggable [ngbModalDraggableHandle]="draggableHandle" class="cursor-all-scroll">
+          <div #draggableHandle class="modal-header modelprhead">
+        <!-- <div class="modal-header modelprhead"> -->
           <h4 class="modal-title pull-left" *ngIf="isDeny">Reason to deny file request</h4>
           <h4 class="modal-title pull-left" *ngIf="!isDeny">Reason to revoke file request</h4>
           <button type="button" class="close pull-right deny-serve" aria-label="Close" (click)="denyFileRequestmodalref.hide();denyFileRequestForm.reset()">
               <img alt="" src="../../../../../assets/images/Projects/circle-close.svg">
           </button>
+        </div>
         </div>
         <div class="modal-body modelprbody">
           <div class="container p-0" style="width:100%">          
@@ -530,7 +535,9 @@
             <span aria-hidden="true">&times;</span>
         </button>
         </div> -->
-        <div class="modal-header modelprhead">
+        <div ngb-modal-draggable [ngbModalDraggableHandle]="draggableHandle" class="cursor-all-scroll">
+          <div #draggableHandle class="modal-header modelprhead">
+        <!-- <div class="modal-header modelprhead"> -->
           <h4 class="modal-title pull-left">Upload File</h4>
           <button type="button" class="close pull-right" aria-label="Close" (click)="uploadFilemodalCancel()">
             <img alt="" src="../../../../../assets/images/Projects/circle-close.svg">
@@ -539,17 +546,20 @@
             <span aria-hidden="true">&times;</span>
           </button> -->
         </div>
+        </div>
 
-        <div class="modal-body modelprbody">
+        <div class="modal-body modelprbody uploadfilebdiv">
           <div class="container p-0" style="width:100%">
             <form [formGroup]="uploadFileForm" (ngSubmit)="submitUploadFileForm()">
                 <div class="row">
                     <div class="form-fields col-md-12">
                         <label for="fileCategory">File Category<span class="star">*</span></label>
-                        <select class="form-control"  formControlName="fileCategory" required>
-                          <option  [value]="null" disabled hidden>Select Category</option>
-                          <option value="" [selected]="true">Select Category</option>
-                          <option *ngFor="let categories of filecategories" >{{categories.category}}</option>
+                        <select class="form-control"  formControlName="fileCategory" name="file_cate1" [(ngModel)]="file_Category" required>
+                          <option [value]="undefined" disabled hidden>Select Category</option>
+                          <option [value]="null" disabled hidden>Select Category</option>
+                          <option [value]="" disabled hidden>Select Category</option>
+                          <option value="" disabled hidden>Select Category</option>
+                          <option *ngFor="let categories of filecategoriesList" [disabled]="categories.display == 'false'">{{categories.category}}</option>
                         </select>
                         <span
                             *ngIf="uploadFileForm.get('fileCategory').invalid && uploadFileForm.get('fileCategory').touched"
@@ -571,7 +581,7 @@
                     <div class="form-fields col-md-12">
                       <label>Upload<span class="star">*</span></label>
                       <div class="box-fileupload">
-                        <input type="file" name="file" (change)="chnagefileUploadForm($event)" id="file" class="inputfile" multiple/>
+                        <input type="file" name="file" (change)="chnagefileUploadForm($event)" id="file" class="inputfile" [multiple]='file_Category != "Template"'/>
                         <label for="file" (change)="chnagefileUploadForm($event)">
                           <img src="../../../../assets/images/Projects/fileupload.svg" class="testplusupload">
                           <span>Select File</span>
@@ -580,7 +590,7 @@
 
                     
                       <!-- <input type="file" class="form-control" (change)="chnagefileUploadForm($event)" formControlName="uploadFile" name="Upload-File"  placeholder="choose file" required multiple="true"> -->
-                      <div >
+                      <div class="upload-filesdiv">
                         <div class="row">
                           <div class="col-md-4 pl-0" *ngFor="let selected of listOfFiles"> 
                             <div class ="project-card">

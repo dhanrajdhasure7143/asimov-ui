@@ -1,1 +1,65 @@
-<p>dynamic-forms works!</p>
+<div class="form-horizontal">
+    <div class="container m-contanier form-body">
+        <div class="actions-datafields-div">
+            <form   [formGroup]="form">
+                <div class="col-md-12 p-0 form-group"  [id]="field.id+'_form_data'"  *ngFor="let field of fields; let i =index ">
+                    <form-builder [field]="field" [fields]="fields" [form]="form"></form-builder>
+                </div>
+            </form>
+                <div class="col-md-12 p-0 form-group" *ngIf="isMultiForm==true">            
+                    <button class="btn btn-success" *ngIf="editfill==false" [disabled]="!form.valid" (click)="Push()" >Add</button>
+                    <button class="btn btn-success" *ngIf="editfill==true" [disabled]="!form.valid" (click)="Push()" >Update</button>            
+                </div>
+
+                <div class="col-md-12 p-0 tablmacl" *ngIf="isMultiForm==true">
+                    <div class="table-responsive overaly-innertable">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th class="testcell" *ngFor="let tableHeader of fields">{{tableHeader.label}}</th>
+                                    <th class="testcell">Actions</th> 
+                                </tr>    
+                            </thead>
+                            <tbody cdkDropList (cdkDropListDropped)="drop($event)">
+                                <tr *ngFor="let eachObj of fillarray" cdkDrag>
+                                    <td *ngFor="let field of fields"  class="testcell">
+                                        <span *ngIf="checkRecord(eachObj, field)==false">
+                                            {{eachObj[field.name+"_"+field.id]?eachObj[field.name+"_"+field.id]:'NA'}}
+                                        </span>
+                                        <span *ngIf="checkRecord(eachObj,field)==true">
+                                        *******
+                                        </span>
+                                    </td>                    
+                                <td class="testcell">
+                                        <button tooltip="Edit" placement="bottom"  (click)="edit(eachObj)">
+                                            <img src="../../../../assets/images/RPA/icon_latest/edit.svg" alt="" class="testplus">
+                                        </button>
+                                        <button tooltip="Delete" placement="bottom"  (click)="delete(eachObj)">
+                                            <img src="../../../../assets/images/RPA/icon_latest/delete.svg" alt="" class="testplus">
+                                        </button>
+                                </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- <div class="col-md-12 p-0 pagicl text-right">
+                        <pagination-controls  (pageChange)="q = $event"></pagination-controls> 
+                    </div>       -->
+           
+                </div>
+              
+            
+                <div class="col-md-12 p-0 form-group"   *ngIf="isMultiForm==true">
+                    <div class="col-md-12 p-0 form-group"  [id]="field.id+'_form_data'"  *ngFor="let field of otherAttributes; let i =index ">
+                        <form-builder [field]="field" [fields]="fields" [form]="otherAttributesForm"></form-builder>
+                    </div>
+                </div>
+            
+        </div>
+        <div class="form-footer" *ngIf="!feilddisable">
+          <button *ngIf="isdisabled==null && isMultiForm==false" type="submit" (click)="onSub()" [disabled]="!form.valid" class="btn btn-primary">Save</button>
+          <button *ngIf="isdisabled==true" type="submit" (click)="onSub()" [disabled]="true" class="btn btn-primary">Save</button>
+          <button *ngIf="isdisabled==null &&  isMultiForm==true" type="submit" (click)="onSub()" [disabled]="fillarray.length==0  || !otherAttributesForm.valid"   class="btn btn-primary">Save</button>
+        </div>
+    </div>
+</div>

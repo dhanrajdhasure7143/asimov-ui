@@ -11,7 +11,8 @@
         </div>
         <div class="ml-auto prj-lstscr-btn" (click)="inviteUser()">
           <button class="btn btn-primary" type="button" >
-            <img  src="../../../../assets/images/Projects/White-plus.svg" class="testplus"/>Invite User
+            <!-- <img  src="../../../../assets/images/Projects/White-plus.svg" class="testplus"/> -->
+            Invite User
           </button>
           <!-- <button class="tsttooltipbtn" type="button" >
             <img  src="../../../../assets/images/RPA/icon_latest/new-blue.svg" class="testplus"/>
@@ -24,8 +25,8 @@
         <div class="users-tablelist">
           <table mat-table #sort2="matSort"  [dataSource]="dataSource2" matSort class="projecttable table"  id="listofcred">
             <ng-container matColumnDef="firstName">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
-                <td mat-cell *matCellDef="let element"> 
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="pcell1">Name</th>
+                <td mat-cell *matCellDef="let element" class="pcell1"> 
                     <span *ngIf="element.firstName!=null">{{element.firstName}}</span> 
                     <span *ngIf="element.firstName==''">-</span>
                     <span *ngIf="element.firstName==null">-</span>
@@ -33,17 +34,18 @@
               </ng-container>
               
               <ng-container matColumnDef="email">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
-                  <td mat-cell *matCellDef="let element"> 
-                      <span *ngIf="element.email!=null">{{element.email}}</span> 
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header class="pcell2">Email</th>
+                  <td mat-cell *matCellDef="let element" class="pcell2"> 
+                    <span *ngIf="element.email!=null" [matTooltip]="element.email">{{getreducedValue1(element.email)}}</span>
+                      <!-- <span *ngIf="element.email!=null">{{element.email}}</span>  -->
                       <span *ngIf="element.email==''">-</span>
                       <span *ngIf="element.email==null">-</span>
                   </td>
               </ng-container>
               
               <ng-container matColumnDef="designation">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Designation</th>
-                  <td mat-cell *matCellDef="let element"> 
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header class="pcell3">Designation</th>
+                  <td mat-cell *matCellDef="let element" class="pcell3"> 
                     <span *ngIf="element.designation!=null" >{{element.designation}}</span>
                       <span *ngIf="element.designation==''">-</span>
                       <span *ngIf="element.designation==null">-</span>
@@ -51,9 +53,9 @@
               </ng-container>
     
               <ng-container matColumnDef="department">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Department</th>
-                  <td mat-cell *matCellDef="let element" style="width: 2px"> 
-                    <span *ngIf="element.department!=null" >{{element.department.join(', ')}}</span>
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header class="pcell4">Department</th>
+                  <td mat-cell *matCellDef="let element"  class="pcell4"> 
+                    <span *ngIf="element.department!=null" [matTooltip]="element.department.join(', ')">{{getreducedValue(element.department.join(', '))}}</span>
                       <span *ngIf="element.department==''">-</span> 
                       <span *ngIf=" element.department==null">-</span> 
                   </td>
@@ -69,8 +71,8 @@
             </ng-container> -->
 
             <ng-container matColumnDef="roles">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Roles</th>
-                <td mat-cell *matCellDef="let element"> 
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="pcell5">Roles</th>
+                <td mat-cell *matCellDef="let element" class="pcell5"> 
                   <span *ngIf="element.roles!=null" >{{element.roles}}</span>
                     <span *ngIf="element.roles==''">-</span> 
                     <span *ngIf=" element.roles==null">-</span> 
@@ -78,17 +80,18 @@
             </ng-container>
 
             <ng-container matColumnDef="created_at">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Created At</th>
-                <td mat-cell *matCellDef="let element"> 
-                  <span *ngIf="element.created_at!=null" >{{element.created_at | date:'MMM d, y, HH:mm'}}</span>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="pcell6">Created At</th>
+                <td mat-cell *matCellDef="let element" class="pcell6"> 
+                  <!-- <span *ngIf="element.created_at!=null" >{{element.created_at | date:'MMM d, y, HH:mm'}}</span> -->
+                  <span *ngIf="element.created_at!=null" >{{element.created_at_modified}}</span>
                     <span *ngIf="element.created_at==''">-</span> 
                     <span *ngIf=" element.created_at==null">-</span> 
                 </td>
             </ng-container>
 
             <ng-container matColumnDef="status">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
-                <td mat-cell *matCellDef="let element"> 
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="pcell7">Status</th>
+                <td mat-cell *matCellDef="let element"class="pcell7"> 
                   <span *ngIf="element.status!=null" >{{element.status}}</span>
                     <span *ngIf="element.status==''">-</span> 
                     <span *ngIf=" element.status==null">-</span> 
@@ -101,8 +104,8 @@
                 </ng-container>
 
                 <ng-container matColumnDef="action">
-                    <th  mat-header-cell *matHeaderCellDef> Actions</th>
-                    <td  mat-cell *matCellDef="let element" class="action-link tablacs"> 
+                    <th  mat-header-cell *matHeaderCellDef class="pcell8"> Actions</th>
+                    <td  mat-cell *matCellDef="let element" class="action-link tablacs pcell8"> 
                       <div *ngIf="!(element.email===loggedinUser)" class="newinntalx">
                         
                         <a  (click)="modifyUser(element)" matTooltip="Edit User">

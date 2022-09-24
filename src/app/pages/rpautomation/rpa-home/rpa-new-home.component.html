@@ -42,9 +42,13 @@
                         
                         <div class="col-md-6 p-0">
                             <div class="col-md-6 form-group pr-0 rpa-searchip">
-                                <select class="form-control" (change)="applySearchFilter($event.target.value)">
-                                    <option value="" >All Categories</option>
-                                    <option [value]="category.categoryName" *ngFor="let category of categaoriesList">{{category.categoryName | titlecase}}</option>
+                                <select class="form-control" (change)="searchByCategory(categoryName)"  [disabled]="categaoriesList.length == 1"
+                                 #category="ngModel" [(ngModel)]="categoryName">
+                                    <option value="" disabled hidden>Select Category</option>
+                                <option value="null" disabled hidden>Select Category</option>
+                                <option value="undefined" disabled hidden>Select Category</option>
+                                <option value="allcategories" *ngIf="categaoriesList.length > 1">All Categories</option>
+                                    <option [value]="category.categoryName" *ngFor="let category of categaoriesList;let i=index;trackBy:loopTrackBy">{{category.categoryName | titlecase}}</option>
                                 </select>
                             </div>
                             <div class="col-md-6 form-group pr-0 rpa-searchip">
@@ -143,12 +147,12 @@
                                     
                                             </div>
                                             <div class="flex-col" *ngIf="!this.userRole.includes('Process Owner') && !this.userRole.includes('RPA Developer')">
-                                                <button tooltip="Edit Bot" placement="bottom" [disabled]="true" (click)="editbotoverlay(bot);botpanel1.toggle()"><img src="../../../../assets/images/RPA/icon_latest/edit.svg" alt="" class="testplus">&nbsp;</button>
-                                                <button tooltip="Delete Bot" placement="bottom" [disabled]="isButtonVisible==true" (click)="botdelete(bot.botId);botpanel1.toggle()"><img src="../../../../assets/images/RPA/icon_latest/delete.svg" alt="" class="testplus">&nbsp;</button>
+                                                <button tooltip="Edit Bot" placement="bottom" [disabled]="true" (click)="editbotoverlay(bot);botpanel1.toggle()"><img src="../../../../assets/images/RPA/icon_latest/edit.svg" alt="" class="testplus"></button>
+                                                <button tooltip="Delete Bot" placement="bottom" [disabled]="isButtonVisible==true" (click)="botdelete(bot.botId);botpanel1.toggle()"><img src="../../../../assets/images/RPA/icon_latest/delete.svg" alt="" class="testplus"></button>
                                             </div>
                                             <div class="flex-col" *ngIf="this.userRole.includes('Process Owner') || this.userRole.includes('RPA Developer')">
-                                                <button tooltip="Edit Bot" placement="bottom" [disabled]="!((isButtonVisible==true && userName==bot.createdBy)||(isButtonVisible==false))" (click)="editbotoverlay(bot);botpanel1.toggle()"><img src="../../../../assets/images/RPA/icon_latest/edit.svg" alt="" class="testplus">&nbsp;</button>
-                                                <button tooltip="Delete Bot" placement="bottom" [disabled]="isButtonVisible==true" (click)="botdelete(bot.botId);botpanel1.toggle()"><img src="../../../../assets/images/RPA/icon_latest/delete.svg" alt="" class="testplus">&nbsp;</button>
+                                                <button tooltip="Edit Bot" placement="bottom" [disabled]="!((isButtonVisible==true && userName==bot.createdBy)||(isButtonVisible==false))" (click)="editbotoverlay(bot);botpanel1.toggle()"><img src="../../../../assets/images/RPA/icon_latest/edit.svg" alt="" class="testplus"></button>
+                                                <button tooltip="Delete Bot" placement="bottom" [disabled]="isButtonVisible==true" (click)="botdelete(bot.botId);botpanel1.toggle()"><img src="../../../../assets/images/RPA/icon_latest/delete.svg" alt="" class="testplus"></button>
                                             </div>
                                         </div>
                                     </mat-panel-title>
@@ -176,11 +180,11 @@
                                 </div>
 
                             </mat-expansion-panel>
-                            <div class="text-center" *ngIf="bot_list.length==0">
+                            <!-- <div class="text-center" *ngIf="bot_list.length==0">
                                 <img class="no-item-img" src="../../../../assets/images/RPA/No-Items.svg">
                                 <h4 class="text-center" *ngIf="loadflag==false">No Items To Display</h4>
-                                <h4 class="text-center" *ngIf="loadflag==true">Loading</h4>
-                            </div>
+                                <h4 class="text-center" *ngIf="loadflag==true">Loading</h4>       
+                            </div> -->
                         </div>
                     </mat-accordion>
 
@@ -285,7 +289,7 @@
                                 <div *ngIf="(insertbot.get('botName').hasError('required') && insertbot.get('botName').touched) && !insertbot.controls['botName'].hasError('maxlength')" class="errspan required">
                                     Bot Name Required*
                                 </div>
-                                <div *ngIf="checkbotname " class="errspan required">
+                                <div *ngIf="checkbotname && insertbot.get('botName').value" class="errspan required">
                                     Bot Name is already exists*
                                 </div>
                                 <div *ngIf="botNamespace" class="errspan required">special characters are not allowed Excluding( _ & - )</div>
@@ -304,8 +308,12 @@
                             <div class="col-md-12 p-0 form-group">
                                 <label class="label-control" for="botDepartment">Category<span class="star">*</span></label>
 
-                                <select [(ngModel)]="rpaCategory" class="form-control" [disabled]="categaoriesList.length==1" [value]="categaoriesList.length==1?categaoriesList[0].categoryId:''" formControlName="botDepartment" name="botDepartment">
-                                    <option  value="">Select Category</option>
+                                <select [(ngModel)]="rpaCategory" class="form-control" 
+                                 [value]="categaoriesList.length==1?categaoriesList[0].categoryId:''"
+                                  formControlName="botDepartment" name="botDepartment">
+                                    <option value="" disabled hidden>Select Category</option>
+                                    <option value="null" disabled hidden>Select Category</option>
+                                    <option value="undefined" disabled hidden>Select Category</option>
                                     <option *ngFor ="let category of categaoriesList" [value]="category.categoryId">{{category.categoryName}}</option>
                                 </select>
                               
@@ -384,3 +392,13 @@
     </div>
 
 </ng-template>
+<div class="spinoverlay" *ngIf="isLoading">
+    <div class="spincenter">
+        <img src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader" />
+    </div>
+</div>
+<ngx-spinner bdColor="rgba(255,255,255,0.7)">
+    <img  src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader"/>
+    <!-- src='..\assets\images\RPA\rpa-loader.gif'  -->
+    
+  </ngx-spinner>

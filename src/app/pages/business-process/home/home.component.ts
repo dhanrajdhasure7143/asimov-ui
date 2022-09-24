@@ -21,6 +21,7 @@ import { MatSort, Sort } from '@angular/material';;
 import { fromMatSort, sortRows } from './../model/datasource-utils';
 import {FilterPipe} from './../custom_filter.pipe';
 import { Subscription } from 'rxjs';
+import * as moment from 'moment';
 @Component({
   selector: 'app-bpshome',
   templateUrl: './home.component.html',
@@ -63,6 +64,8 @@ export class BpsHomeComponent implements OnInit {
   isEdit:boolean=false;
   selectedObj:any={};
   refreshSubscription:Subscription;
+  selected_notation:any={};
+  isLoaderShow:boolean=true;
 
   constructor(private router:Router, private bpmnservice:SharebpmndiagramService, private dt:DataTransferService,
      private rest:RestApiService, private hints:BpsHints, private global:GlobalScript,
@@ -83,9 +86,6 @@ export class BpsHomeComponent implements OnInit {
     this.userEmail=localStorage.getItem("ProfileuserId");
     this.isApproverUser = this.userRole.includes('Process Architect')
     this.isLoading = true;
-    this.dt.changeParentModule({"route":"/pages/businessProcess/home", "title":"Business Process Studio"});
-    this.dt.changeChildModule({"route":"/pages/businessProcess/home","title":"BPMN Upload"});
-    this.dt.changeHints(this.hints.bpsHomeHints);
     this.getBPMNList();
     this.getAutoSavedDiagrams();
     this.getAllCategories();
@@ -105,13 +105,16 @@ export class BpsHomeComponent implements OnInit {
 
   async getBPMNList(){
     this.dt.processDetailsUpdateSuccess({"isRfresh":false});
-    await this.rest.getUserBpmnsList().subscribe( (res:any[]) =>  {
+    await this.rest.getUserBpmnsListWithoutNotation().subscribe( (res:any[]) =>  {
       this.saved_diagrams = res; 
       this.saved_diagramsList=res;
-      this.saved_diagrams.map(item => {item.xpandStatus = false;return item;})
+      this.saved_diagrams.map(item => {item.xpandStatus = false;
+        item.convertedModifiedTime_new = moment(new Date(item.convertedModifiedTime*1000)).format('lll')
+        return item;
+      })
       this.saved_diagrams.forEach(ele => {
         ele['eachObj']={
-          "bpmnXmlNotation":ele.bpmnXmlNotation,
+          // "bpmnXmlNotation":ele.bpmnXmlNotation,
           "bpmnConfProcessMeta":ele.bpmnConfProcessMeta,
           "bpmnProcessApproved":ele.bpmnProcessApproved,
           "convertedCreatedTime":ele.convertedCreatedTime,
@@ -123,7 +126,7 @@ export class BpsHomeComponent implements OnInit {
           "userName":ele.userName,
           "modifiedTimestamp":ele.modifiedTimestamp
         }
-        ele["bpmnXmlNotation"]=''
+        // ele["bpmnXmlNotation"]=''
         ele["bpmnConfProcessMeta"]=''
         ele["bpmnProcessApproved"]=''
         ele["convertedCreatedTime"]=''
@@ -142,11 +145,12 @@ export class BpsHomeComponent implements OnInit {
       this.assignPagenation(this.saved_diagrams);
 
       let selected_category=localStorage.getItem("bps_search_category");
-      if(this.categories_list.length == 1){
-        this.categoryName=this.categories_list[0].categoryName;
-      }else{
-        this.categoryName=selected_category?selected_category:'allcategories';
-      }
+        if(this.categories_list.length == 1){
+          this.categoryName=this.categories_list[0].categoryName;
+        }else{
+          this.categoryName=selected_category?selected_category:'allcategories';
+        }
+     
       this.searchByCategory(this.categoryName);
     },
     
@@ -161,17 +165,18 @@ export class BpsHomeComponent implements OnInit {
       this.saved_diagrams[this.index].xpandStatus=false;
   }
 
-  openDiagram(bpmnDiagram,index){
+  openDiagram(){
     // if(bpmnDiagram.bpmnProcessStatus && bpmnDiagram.bpmnProcessStatus =="PENDING" ) return;
-    let binaryXMLContent = bpmnDiagram.eachObj.bpmnXmlNotation; 
+    // let binaryXMLContent = bpmnDiagram.eachObj.bpmnXmlNotation; 
+    let binaryXMLContent = this.selected_notation.bpmnXmlNotation;
 // return;
-    let bpmnModelId = bpmnDiagram.bpmnModelId;
-    let bpmnVersion = bpmnDiagram.version;
-    let bpmnType = bpmnDiagram.ntype;
+    let bpmnModelId = this.selected_notation.bpmnModelId;
+    let bpmnVersion = this.selected_notation.version;
+    let bpmnType = this.selected_notation.ntype;
     this.bpmnservice.uploadBpmn(atob(binaryXMLContent));
-    let push_Obj={"rejectedOrApproved":bpmnDiagram.bpmnProcessStatus,"isfromApprover":false,
-    "isShowConformance":false,"isStartProcessBtn":false,"autosaveTime":bpmnDiagram.eachObj.modifiedTimestamp,
-    "isFromcreateScreen":false,'process_name':bpmnDiagram.bpmnProcessName,'isEditbtn':false,'isSavebtn':true,"selectedNotation":this.saved_diagramsList[index]}
+    let push_Obj={"rejectedOrApproved":this.selected_notation.bpmnProcessStatus,"isfromApprover":false,
+    "isShowConformance":false,"isStartProcessBtn":false,"autosaveTime":this.selected_notation.modifiedTimestamp,
+    "isFromcreateScreen":false,'process_name':this.selected_notation.bpmnProcessName,'isEditbtn':false,'isSavebtn':true,"selectedNotation":this.selected_notation}
 this.dt.bpsNotationaScreenValues(push_Obj);
 this.dt.bpsHeaderValues('');
     this.router.navigate(['/pages/businessProcess/uploadProcessModel'], { queryParams: { bpsId: bpmnModelId , ver: bpmnVersion, ntype: bpmnType}});
@@ -202,6 +207,11 @@ this.dt.bpsHeaderValues('');
       return processName.substr(0,14)+'...';
     return processName;
   }
+  fitTableViewCategory(processName){
+    if(processName && processName.length > 7)
+      return processName.substr(0,7)+'..';
+    return processName;
+  }
 
   fitTableViewTime(processName){
     if(processName && processName.length > 12)
@@ -229,10 +239,26 @@ this.dt.bpsHeaderValues('');
     // return fName&&lName?fName+" "+lName:fName?fName:lName?lName:'-';
    }
 
-  getDiagram(eachBPMN,i){
+   getSelectedNotation(eachBPMN,id){
+    this.isLoaderShow=true;
+    this.selected_notation={}
+    let req_body={
+      "bpmnModelId":eachBPMN.bpmnModelId,
+      "version":eachBPMN.version
+    }
+    this.rest.getBpmnNotationByIdandVersion(req_body).subscribe(res=>{this.selected_notation=res
+      this.isLoaderShow = false;
+      setTimeout(() => {
+        this.getDiagram(eachBPMN,id,this.selected_notation.bpmnXmlNotation)
+      }, 300);
+    })
+   }
+
+  getDiagram(eachBPMN,i,xml_data){
       var element = document.getElementById('_diagram'+i);
     element.scrollIntoView({behavior: "auto",block: "center", inline: "nearest"});
-    let byteBpmn = atob(eachBPMN.eachObj.bpmnXmlNotation);
+    // let byteBpmn = atob(eachBPMN.eachObj.bpmnXmlNotation);
+    let byteBpmn = atob(xml_data);
     this.index=i;
     if(document.getElementsByClassName('diagram_container'+i)[0].innerHTML.trim() != "") return;
     let notationJson = {
@@ -247,10 +273,11 @@ this.dt.bpsHeaderValues('');
       this.bpmnModeler = new CmmnJS(notationJson);
     else if(eachBPMN.ntype == "dmn")
       this.bpmnModeler = new DmnJS(notationJson); 
-    if(eachBPMN.bpmnProcessStatus != "APPROVED" && eachBPMN.bpmnProcessStatus != "REJECTED")
+    if(eachBPMN.bpmnProcessStatus != "APPROVED" && eachBPMN.bpmnProcessStatus != "REJECTED" && eachBPMN.bpmnProcessStatus != "PENDING")
       this.filterAutoSavedDiagrams(eachBPMN.bpmnModelId);
     if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"])
       byteBpmn = atob(this.autosavedDiagramVersion[0]["bpmnProcessMeta"]);
+      else byteBpmn = atob(xml_data);
       if(byteBpmn == "undefined"){
         this.rest.getBPMNFileContent("assets/resources/newDiagram.bpmn").subscribe(res => {
           this.bpmnModeler.importXML(res, function(err){
@@ -277,6 +304,7 @@ this.dt.bpsHeaderValues('');
     this.rest.getCategoriesList().subscribe(res => {
     this.categoryList = res;
     this.categories_list=this.categoryList.data
+    this.categories_list=this.categoryList.data.sort((a, b) => (a.categoryName.toLowerCase() > b.categoryName.toLowerCase()) ? 1 : ((b.categoryName.toLowerCase() > a.categoryName.toLowerCase()) ? -1 : 0));
     })
   }
   searchByCategory(category) {      // Filter table data based on selected categories
@@ -370,12 +398,14 @@ this.dt.bpsHeaderValues('');
       cancelButtonText: 'Cancel'
     }).then((res) => {
       if(res.isConfirmed){
+        this.isLoading = true;
         let data = {
           "bpmnModelId":bpmNotation.bpmnModelId,
           "version": bpmNotation.version
         }
         this.rest.deleteBPMNProcess(data).subscribe(res => {
           // console.log(res)
+          this.isLoading = false;
           if(res == "It is an ongoing project.Please contact Project Owner(s)"){
             Swal.fire({
               icon: 'info',
@@ -395,6 +425,7 @@ this.dt.bpsHeaderValues('');
           }
           // this.global.notify(bpmNotation.bpmnProcessName+' V1.'+bpmNotation.version+' deleted','success')
         }, err => {
+          this.isLoading = false;
           Swal.fire({
             icon: 'error',
             title: 'Oops...',
@@ -415,7 +446,7 @@ this.dt.bpsHeaderValues('');
     if(selecetedTenant){
        splitTenant = selecetedTenant.split('-')[0];
     }
-    window.location.href = "https://eiapcamundademo.epsoftinc.com:86/camunda/app/welcome/"+splitTenant+"/#!/login?accessToken=" + token + "&userID="+userId+"&tenentID="+selecetedTenant;
+    window.location.href = "http://10.11.0.127:8080/camunda/app/welcome/"+splitTenant+"/#!/login?accessToken=" + token + "&userID="+userId+"&tenentID="+selecetedTenant;
   }
 
 

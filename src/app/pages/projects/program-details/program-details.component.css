@@ -122,7 +122,7 @@ input[type=range]::-moz-range-thumb {
 
 
 .program-details-div{
-  padding: 10px 15px;
+  padding: 10px 12px 5px;
   background-color: #fff;
   margin-bottom: 15px;
 }
@@ -160,7 +160,7 @@ span.tab-text{
   align-items: center;
   /* padding: 0px 10px 0px 5px; */
   padding-right: 30px;
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
 }
 span.labelcont {
   /* font-size: 13px; */
@@ -181,9 +181,9 @@ span.programdesc {
 }
 .prgmgrid {
   background-color: #fff;
-  padding: 10px;
+  padding: 10px 12px;
   /* min-height: 380px; */
-  position: relative;
+  /* position: relative; */
 }
 .prgmgrid-body {
   margin-top: 10px;
@@ -233,7 +233,7 @@ td a:hover img.testplus.hover-img {
   font-size: 16px;
  }
  .user-owner-div{
-   margin-top: 10px;
+   /* margin-top: 10px; */
  }
 
   .letter-image{
@@ -244,6 +244,10 @@ td a:hover img.testplus.hover-img {
     text-align: center;
     /* letter-spacing: 2.5px; */
     font-size: 15px;
+    position: relative;
+    left: 0px;
+    top: 12px;
+
   }
   
   .program-owner-img{
@@ -251,6 +255,10 @@ td a:hover img.testplus.hover-img {
     width: 44px;
     height: 41px;
     margin-top: -10px;
+    width: 40px;
+    height: 40px;
+    /* margin-top: -10px; */
+
   }
 
 
@@ -285,15 +293,28 @@ input.small-input[type="date"]::-webkit-calendar-picker-indicator {
   width: 100%;
 }
 .program-info .prg-title {
-  width: 30%;
+  word-wrap: break-word;
 }
 .status-data span.labeltit {
   font-size: 13px !important;
   font-weight: 300;
-  margin-top: -2px;
+  margin-top: -1px;
 }
 .status-data span.labelcont {
   font-size: 17px !important;
   color: #001c47;
   font-weight: 500;
+}
+
+.percentage {
+
+  float: left;
+  width: 38px;
+}
+.newinntalx a.delete {
+  margin-right: 0px !important;
+}
+.newpaginationdiv.prgm-prjpgdiv {
+  bottom: 0px;
+  position: relative;
 }

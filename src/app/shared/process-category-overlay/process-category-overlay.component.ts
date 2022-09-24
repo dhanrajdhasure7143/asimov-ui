@@ -63,12 +63,18 @@ export class ProcessCategoryOverlayComponent implements OnInit {
         })
       }
     }else{
+      if(this.activatedRoute.snapshot['_routerState'].url.includes('businessProcess') || this.activatedRoute.snapshot['_routerState'].url.includes('vcm')){
+        this.isBpmnModule = true;
+      }
       this.processName='';
       this.categoryName=undefined;
       this.isValidName=false;
       if(this.overlay_data.module !="pi"){
         this.process_owner=undefined;
         this.notationType='';
+        if(this.overlay_data.ntype){
+          this.notationType=this.overlay_data.ntype
+        }
       }
     }
   if(changes['uploadedFileName']){
@@ -99,7 +105,7 @@ export class ProcessCategoryOverlayComponent implements OnInit {
     }
     this.rest.getCategoriesList().subscribe(res=> {
       this.categoriesList=res
-      this.categories_list=this.categoriesList.data
+      this.categories_list=this.categoriesList.data.sort((a, b) => (a.categoryName.toLowerCase() > b.categoryName.toLowerCase()) ? 1 : ((b.categoryName.toLowerCase() > a.categoryName.toLowerCase()) ? -1 : 0));
       if(this.categories_list.length==1){
         this.categoryName=this.categories_list[0].categoryName
       }

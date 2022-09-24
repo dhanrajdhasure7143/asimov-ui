@@ -46,6 +46,7 @@ export class ProjectRepoScreenComponent implements OnInit {
   @ViewChild("sort11",{static:false}) sort11: MatSort;
   @ViewChild("paginator101",{static:false}) paginator101: MatPaginator;
   @ViewChild("paginator102",{static:false}) paginator102: MatPaginator;
+  @ViewChild("paginator105",{static:false}) paginator105: MatPaginator;
   multiFilesArray: any[] = [];
   fileId: any;
   filedeleteflag:Boolean;
@@ -56,6 +57,8 @@ export class ProjectRepoScreenComponent implements OnInit {
   listOfFiles: any[] = [];
   uploadFileDescriptionFlag: boolean = false;
   // resources_list: any=[];
+  filecategoriesList:any[]=[];
+  file_Category:any;
 
   constructor(private modalService: BsModalService, private formBuilder: FormBuilder, private api:RestApiService, private route: ActivatedRoute, private spinner:NgxSpinnerService) { 
     
@@ -74,7 +77,7 @@ this.route.queryParams.subscribe(data=>{​​​​​​​​
 
 
  this.spinner.show();
-this.getFileDetails();
+
 
 
 
@@ -104,6 +107,7 @@ this.getFileDetails();
   
 
   createUploadRequest(createmodal){
+    this.getFileCategoriesList();
     this.createRequestmodalref=this.modalService.show(createmodal,{class:"modal-lr"})
   }
   
@@ -212,7 +216,7 @@ this.getFileDetails();
     this.denyFileRequestForm.reset();
   }
   uploadFile(template: TemplateRef<any>){
-
+    this.getFileCategoriesList();
     this.getFileCategories();
     this.uploadFilemodalref = this.modalService.show(template,{class:"modal-lr"});
   }
@@ -228,13 +232,8 @@ this.getFileDetails();
      fileData.append("comments", this.uploadFileForm.get("description").value)
     //  fileData.append("filePath", this.fileList)
      fileData.append("projectId", this.projectid)
-     
-   
-
-    
  this.api.uploadProjectFile(fileData).subscribe(res => {
    //message: "Resource Added Successfully
-   
    this.uploadFileForm.get("fileCategory").setValue("");
    this.uploadFileForm.get("description").setValue("");
    if(res.message!=undefined)
@@ -249,18 +248,14 @@ this.getFileDetails();
        icon: 'success',
        showCancelButton: false,
        confirmButtonColor: '#007bff',
-       cancelButtonColor: '#d33',
-       confirmButtonText: 'Ok'
+       confirmButtonText: 'Ok',
+       heightAuto: false
    }).then((result) => {
-    // this.resettask();
-    
-     
-   }) 
-     
+    // this.resettask(); 
+   })  
    }
    else
    Swal.fire("Error",res.message,"error");
-   
  })
   this.uploadFileForm.reset();
       this.listOfFiles=[];
@@ -269,7 +264,10 @@ this.getFileDetails();
   }
 
   chnagefileUploadForm(e){
-
+    if(this.file_Category == 'Template'){
+      this.listOfFiles=[];
+      this.fileList=[];
+    }
     for (var i = 0; i <= e.target.files.length - 1; i++) {
       var selectedFile = e.target.files[i];
       this.fileList.push(selectedFile);
@@ -288,13 +286,18 @@ this.getFileDetails();
   }
   getFileDetails(){
     this.api.getFileDetails(this.projectid).subscribe(data =>{
+      data.uploadedFiles.forEach(e=>{
+        this.userslist.forEach(ele=>{
+          // if(){
+          //   e["uploadedBy"]=ele.
+          // }
+        })
+      })
       this.uploadedFiledata=data.uploadedFiles.reverse();
-     
       this.dataSource3= new MatTableDataSource(this.uploadedFiledata);
       this.dataSource3.sort=this.sort11;
       this.dataSource3.paginator=this.paginator101;
       this.requestedFiledata=data.requestedFiles.reverse();
-    
       this.dataSource4= new MatTableDataSource(this.requestedFiledata);
       this.dataSource4.sort=this.sort12;
       this.dataSource4.paginator=this.paginator102;
@@ -304,27 +307,27 @@ this.getFileDetails();
       if(responseArray=[]){
         this.dataSource5= new MatTableDataSource(this.requestedFiledata);
         this.dataSource5.sort=this.sort13;
-      }
+        this.dataSource5.paginator=this.paginator105;
+      }else{
       responseArray.forEach(e=>{
         if(e.requestTo==loggedUser || e.requestFrom==loggedUser){
           this.filterdArray.push(e)
-          
         }
-    
-        this.dataSource5= new MatTableDataSource(this.filterdArray);
-        this.dataSource5.sort=this.sort13;
       })
-   
-      
+      this.dataSource5= new MatTableDataSource(this.filterdArray);
+      this.dataSource5.sort=this.sort13;
+      this.dataSource5.paginator=this.paginator105;
+      };
     })
     this.spinner.hide();
   }
-  getallusers()
-  {
+
+  getallusers(){
     let tenantid=localStorage.getItem("tenantName")
     this.api.getuserslist(tenantid).subscribe(item=>{
       let users:any=item
       this.userslist=users;
+      this.getFileDetails();
       
     })
   }
@@ -332,54 +335,39 @@ this.getFileDetails();
     var userName; 
     this.userslist.forEach(element => {
       if(element.userId.userId == event){
-        
         userName =  element.userId.firstName+" "+element.userId.lastName
       }
     });
     return userName;
   }
-  uploadRequetedFile(evnt, data){
 
+  uploadRequetedFile(evnt, data) {
     var fileData = new FormData();
-    
     fileData.append("category", data.category)
-     fileData.append("comments", data.comments)
-     fileData.append("id", data.id)
-     fileData.append("filePath", evnt.target.files[0])
-     fileData.append("projectId", this.projectid)
-  
-
-    
- this.api.uploadProjectFile(fileData).subscribe(res => {
-   //message: "Resource Added Successfully
-  
-   
-   this.getFileDetails();
-   if(res.message!=undefined)
-   {
-    
-     Swal.fire({
-       title: 'Success',
-       text: "File Uploaded Successfully",
-       position: 'center',
-       icon: 'success',
-       showCancelButton: false,
-       confirmButtonColor: '#007bff',
-       cancelButtonColor: '#d33',
-       confirmButtonText: 'Ok'
-   }).then((result) => {
-    // this.resettask();
-     
-     
-   }) 
-     
-   }
-   else
-   Swal.fire("Error",res.message,"error");
-   
- })
-
+    fileData.append("comments", data.comments)
+    fileData.append("id", data.id)
+    fileData.append("filePath", evnt.target.files[0])
+    fileData.append("projectId", this.projectid)
+    this.api.uploadProjectFile(fileData).subscribe(res => {
+      //message: "Resource Added Successfully
+      this.getFileDetails();
+      if (res.message != undefined) {
+        Swal.fire({
+          title: 'Success',
+          text: "File Uploaded Successfully",
+          position: 'center',
+          icon: 'success',
+          confirmButtonText: 'Ok',
+          heightAuto: false,
+        }).then((result) => {
+          // this.resettask();
+        })
+      }
+      else
+        Swal.fire("Error", res.message, "error");
+    })
   }
+
   onrequestFileData(en){
 
 
@@ -574,5 +562,17 @@ this.getFileDetails();
         return processName.substr(0, 10) + '..';
       return processName;
     }
+
+  fitTableViewCategory(processName) {
+    if (processName && processName.length > 10)
+      return processName.substr(0, 10) + '..';
+    return processName;
+  }
+
+  getFileCategoriesList(){
+    this.api.getFileCategoriesList(this.projectid).subscribe((res:any)=>{
+      this.filecategoriesList = res
+    })
+  }
 
 }

@@ -106,8 +106,8 @@
 
 
 .env-btn{
-  margin-left: 5px !important;
-  margin-right: 5px !important;
+  /* margin-left: 5px !important;
+  margin-right: 5px !important; */
 }
 
 .environment-search {
@@ -125,7 +125,7 @@
 }
 .environment-btntool {
   position: relative;
-  padding: 3px 6px;
+  padding: 6px;
   margin: 0px !important;
 }
 .environment-btntool img {
@@ -195,4 +195,38 @@ button:disabled {
 .downloadLink{
   text-decoration: underline !important;
   font-size: small;
+}
+
+
+
+.cell1, .cell7 {
+  width: 5%;
+}
+.cell2 {
+  width: 10%;
+}
+.cell3 {
+  width: 8%;
+}
+.cell4 {
+  width: 12%;
+}
+.cell5 {
+  width: 8%;
+}
+.cell6 {
+  width: 8%;
+}
+
+.cell8 {
+  width: 8%;
+}
+.cell9 {
+  width: 8%;
+}
+.cell10, .cell11 {
+  width: 5%;
+}
+.cell12, .cell13 {
+  width: 9%;
 }

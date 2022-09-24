@@ -156,17 +156,24 @@ export class RestApiService{
 
   getRestAttributes(attribute, taskId, attrId){
     let all_attr_data = JSON.parse(localStorage.getItem("attributes"))
+    if(attribute)
     this.http.get(attribute.dependency).subscribe(
-      (res:any[]) => {
+      (res:any) => {
+        if(res){
+        if(!res.errorMessage ){
         let tmpOpt = [];
+        if(res.length> 0){
         let keys = Object.keys(res[0])
         res.forEach(eachOpt => {
           let tmp_op = {key: eachOpt[keys[0]], label: eachOpt[keys[1]]};
           tmpOpt.push(tmp_op);
         })
         attribute.options = tmpOpt;
+      }
+      }
         all_attr_data[taskId][attrId] = attribute;
         localStorage.setItem("attributes", JSON.stringify(all_attr_data))
+    }
       }
     )
   }
@@ -256,26 +263,26 @@ export class RestApiService{
 
   //rest-api
 
-    getviewlogdata(botid,botverid)
-    {
-      return this.http.get("/rpa-service/logs/"+botid);
-    }
-
+  getviewlogdata(botid)
+  {
+    return this.http.get("/rpa-service/logs/"+botid);
+  }
     getViewlogbyrunid(botid,botverid,runid){
       return this.http.get("/rpa-service/logs/"+botid+"/"+botverid+"/"+runid);
     }
 
 
 
-  updateBotLog(botid,version, runid)
-  {
-    return this.http.get(`/rpa-service/updateLog/${botid}/${version}/${runid}`)
-  }
+ 
+    updateBotLog(botid,version, runid)
+    {
+      return this.http.post(`/rpa-service/kill-bot/${botid}/${version}/${runid}`,"")
+    }
+  
 
-
-  kill_process_log(processid, runid)
+  kill_process_log(processid,envid,runid)
   {
-    return this.http.post(`/rpa-service/updateProcessLog/${processid}/${runid}`,"")
+    return this.http.post(`/rpa-service/kill-process/${processid}/${envid}/${runid}`,"")
   }
 
   getbotlist(botType, botDepartment)
@@ -683,6 +690,10 @@ export class RestApiService{
     {
       return this.http.get<any>('/api/user/tenants/'+tenantid +'/users');
     }
+    getusername(tenantId){
+      return this.http.get<any>('/api/user/tenants/'+tenantId +'/usersDetails');
+      
+    }
 
     getAllUsersByDept()
     {
@@ -959,7 +970,10 @@ save_blueprism_config(data)
     {
       return this.http.get("/platform-service/project/findByProgramId?programId="+id);
     }
-
+    createBot(data:any){  
+      return this.http.post('/rpa-service/create-bot',data)
+    }
+  
 
 
 
@@ -1310,6 +1324,63 @@ deleteNotationFromTemp(body){
   return this.http.post('/bpsprocess/delete/processTempInfo/data',body); 
 }
 
+// vcm apis
+createVcm(body){
+  return this.http.post('/vcmv2/saveLevel1andlevel2vcm',body); 
+}
+
+getAllvcms(){
+  return this.http.get('/vcmv2/fetchallvcm');
+}
+
+getselectedVcmById(id){
+  return this.http.get('/vcmv2/fetchvcm?vcmId='+id);
+}
+deleteVcm(body){
+  return this.http.post('/vcmv2/deletevcm',body); 
+}
+
+uploadVCMPropDocument(body){
+  return this.http.post('/vcmv2/uploadDocuments',body);
+}
+getvcmAttachements(body){
+  return this.http.post('/vcmv2/fetchDocumentsByProcessType',body); 
+}
+ondeleteAttachements(body){
+  return this.http.post('/vcmv2/deleteDocument',body);
+}
+updateVcm(body){
+  return this.http.post('/vcmv2/updatevcm',body);
+}
+getCollaborators(uniqueId){
+  return this.http.get('/vcmv2/fetchCollaborations?uniqueId='+uniqueId)
+}
+createCollaborators(body){
+  return this.http.post('/vcmv2/createCollaborations',body);
+}
+updateCollaborators(body){
+  return this.http.post('/vcmv2/updateCollaborations',body);
+}
+deleteCollaborators(body){
+  return this.http.post('/vcmv2/deleteCollaborations',body);
+}
+deleteAttachements(body){
+  return this.http.post('/vcmv2/deleteDocument',body);
+}
+getAttachementsByIndivdualProcess(body){
+  return this.http.post('/vcmv2/fetchDocumentsByIndivdualProcess',body);
+}
+getAttachementsById(body){
+  return this.http.post('/vcmv2/fetchDocumentsBydocumentId',body);
+}
+getAttachementsBycategory(body){
+  return this.http.post('/vcmv2/fetchDocumentsByProcessType',body);
+}
+getAttachementsByLevel(body){
+  return this.http.post('/vcmv2/fetchDocumentsByLevel',body);
+}
+
+
 getLooplogs(botId,version,runId){
     return this.http.get(`/rpa-service/loop-logs/${botId}/${version}/${runId}`);
 }
@@ -1320,4 +1391,80 @@ getMultiFormAttributes(dependencyApi)
   return this.http.get(dependencyApi);
 }
 
+getAutomationLogs(botId, version, runId,taskId)
+{
+  return this.http.get(`/rpa-service/automation-logs/${botId}/${version}/${runId}/${taskId}`);
+}
+deleteSelectedvcmProcess(body){
+  return this.http.post('/vcmv2/deleteVcmByLevel',body);
+}
+
+getBpmnNotationByIdandVersion(body){ //  bps workspace api
+  return this.http.post("/bpsprocess/fetchByBpmnModelandVersion",body);
+}
+getUserBpmnsListWithoutNotation(){ //  bps workspace api
+  return this.http.get("/bpsprocess/fetchByTenantwithoutNotation");
+}
+
+//Process understanding screen in project details
+businessDetailsSave(body){
+  return this.http.post("/platform-service/project/saveProcessUnderstanding",body)
+}
+businessDetailsUpdate(body){
+  return this.http.post("/platform-service/project/updateProcessUnderstanding",body)
+}
+
+getProcessUderstandingDetails(projectId){
+  return this.http.get("/platform-service/project/fetchProcessUnderstanding?projectId="+projectId);
+}
+
+
+getQuestionnaires(projectId){
+  return this.http.get("/platform-service/project/fetchProcessQuestionnaire?projectId="+projectId);
+}
+processQuestionSave(body){
+  return this.http.post("/platform-service/project/saveProcessQuestionnaire",body)
+}
+answerUpdate(body){
+  return this.http.post("/platform-service/project/updateProcessQuestionnaire",body)
+}
+
+answerDelete(body){
+  return this.http.post("/platform-service/project/deleteProcessQuestionnaire",body)
+}
+
+getBPMNbyProcessId(body){
+  return this.http.post("/bpsprocess/getById",body);
+}
+
+processDocumentDownload(body){
+  return this.http.post("/platform-service/program/exportProcessDesignDocument",body);
+}
+saveRpaDesign(body){
+  return this.http.post("/platform-service/project/saveRpaDesign",body)
+}
+getRPAdesignData(taskId){
+  return this.http.get("/platform-service/project/fetchRpaDesign?taskId="+taskId);
+}
+updateRPADesignData(body){
+  return this.http.post("/platform-service/project/updateRpaDesign",body)
+}
+deleteRpaDesign(body){
+  return this.http.post("/platform-service/project/deleteRpaDesign",body)
+}
+getTaskCategoriesByProject(projectid){
+  return this.http.get("/platform-service/task/fetchTaskCategoriesByProject?projectId="+projectid)
+}
+getFileCategoriesList(id){
+  return this.http.get("/platform-service/document/fileCategoriesbyProject?projectId="+id)
+}
+getFilteredEnvironment(id){
+  return this.http.get("/rpa-service/agent/get-environments/"+id)
+}
+getDatabaselist(){
+  return this.http.get("/rpa-service/get-databasetypes")
+}
+getTimeZone(){
+  return this.http.get('/rpa-service/getTimeZones');
+}
 }

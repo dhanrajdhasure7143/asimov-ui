@@ -46,7 +46,7 @@ export class CreateProjectsComponent implements OnInit {
    projectsdata:any;
 
    loggedInUserId:any;
-   processOwner:boolean;
+   processowner:boolean;
    descptionFlag: boolean = false;
   constructor(
     private formBuilder: FormBuilder,
@@ -74,20 +74,20 @@ export class CreateProjectsComponent implements OnInit {
       access: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
   })
   this.createprogram=this.formBuilder.group({
-    programName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+    programName: ["", Validators.compose([Validators.required, Validators.maxLength(255)])],
     initiatives: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-    purpose: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+    //purpose: ["", Validators.compose([Validators.required, Validators.maxLength(255)])],
     priority: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-    measurableMetrics: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+    //measurableMetrics: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     //programHealth: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     programValueChain: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     process: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-    processOwner: [""],
+    processOwner: ["",Validators.compose([Validators.required])],
    // project: ["", Validators.compose([Validators.maxLength(50)])],
     owner: [this.loggedInUserId, Validators.compose([Validators.required, Validators.maxLength(50)])],
    // process: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
    // access: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-    description: ["", Validators.compose([Validators.maxLength(200)])],
+    description: ["", Validators.compose([Validators.maxLength(255)])],
    // status: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     })
 
@@ -102,7 +102,7 @@ export class CreateProjectsComponent implements OnInit {
     priority: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     measurableMetrics: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     process: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-    processOwner: [""],
+    processOwner: ["",Validators.compose([Validators.required])],
     description: ["", Validators.compose([Validators.maxLength(200)])],
     access: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
    // status: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
@@ -123,7 +123,7 @@ this.email=localStorage.getItem('ProfileuserId');
     this.getInitiatives();
     this.api.getCategoriesList().subscribe(res=> {
       this.categoriesList=res
-      this.categories_list=this.categoriesList.data
+      this.categories_list=this.categoriesList.data.sort((a, b) => (a.categoryName.toLowerCase() > b.categoryName.toLowerCase()) ? 1 : ((b.categoryName.toLowerCase() > a.categoryName.toLowerCase()) ? -1 : 0));
       // if(this.categories_list.length==1){
       //   this.categoryName=this.categories_list[0].categoryName
       // }
@@ -370,8 +370,7 @@ createproject(event)
   }
 
   descriptionMaxLength(value){
-    console.log(value)
- if(value.length > 150){
+ if(value.length > 255){
  this.descptionFlag = true;
  }else{
    this.descptionFlag = false;
@@ -383,11 +382,12 @@ createproject(event)
     let process=this.selected_process_names.find(process=>process.processId==processId);
     if(process!=undefined)
     {
-      let processOwner:any=this.userslist.find(item=>(`${item.userId.firstName} ${item.userId.lastName}`==process.createdBy))
+     // let processOwner:any=this.userslist.find(item=>(`${item.userId.firstName} ${item.userId.lastName}`==process.createdBy))
+     let processOwner:any=this.userslist.find(item=>(item.userId.userId==process.ProcessOwner))
       if(processOwner!=undefined)
       {
         this.createprogram.get("processOwner").setValue(processOwner.userId.userId);
-        this.processOwner=false;
+        this.processowner=false;
       }else
       {
         this.createprogram.get("processOwner").setValue("")

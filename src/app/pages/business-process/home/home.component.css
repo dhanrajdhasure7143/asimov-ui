@@ -29,7 +29,7 @@
 
 .workspace-title {
     background-color: #e8f7fd;
-    padding: 6px 10px !important;
+    padding: 5px 10px !important;
     display: flex;
     width: 100%;
     /* padding-right: 18px !important; */
@@ -81,9 +81,11 @@ span.comment {
     color: #212529;
     align-items: center;
 }
-.bps_overlay div {
+.bps_overlay1 {
     border-radius: 4px;
     height: 450px;
+    border: 1px solid #00a0e3;
+    border-radius: 10px;
 }
 .new-bps-grid-data .bps_overlay span.info.ng-star-inserted {
     border-radius: 4px;
@@ -223,22 +225,35 @@ div#bpmn_list {
         margin-bottom: 8px !important;
     }
 
-    .workspace-title.table button.mat-sort-header-button {
-        font-size: 14px;
-    }
-
     .expan-icon {
-        width: 20%;
+        width: 18%;
         color: #5b5b5b;
         opacity: 0.6;
     }
-    .cell.cell6 {
+    .cell.cell7 {
         padding-right: 10px;
     }
-    .cell.cell9, .cell.cell10, .cell.cell5, .cell.cell3 {
-        width: 50% !important;
+    .cell.cell10, .cell.cell11, .cell.cell3 {
+        width: 45% !important;
     }
-
+     .cell.cell6 {
+        width: 40% !important;
+    }
+    .cell.cell4 {
+        width: 60% !important;
+    }
+    .workspace-title .cell.cell5{
+        width: 95% !important;
+    }
+    .workspace-title .expan-icon {
+        width: 16%;
+    }
+    .cell.cell2 {
+        width: 75% !important;
+    }
+    .workspace-title .cell.cell2 {
+        width: 73% !important;
+    }
     .no-item-img{
         height: calc(100vh - 500px)
     } 
@@ -267,3 +282,7 @@ div#bpmn_list {
         padding-left: 3px;
         padding-right: 3px;
     }
+    .logs-loader{
+        margin-top:12%;
+        text-align: center;
+      }

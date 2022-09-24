@@ -42,7 +42,7 @@
                     </select> -->
 
                         <ng-select formControlName="resource" [multiple]="true" placeholder="Select Resources" [(ngModel)]="selectedresources" required>
-                            <ng-option *ngFor="let user of users_list" [value]="user.userId.userId">{{user.userId.firstName|titlecase}} {{user.userId.lastName|titlecase}}</ng-option>
+                            <ng-option *ngFor="let user of resources_list" [value]="user.userId.userId">{{user.userId.firstName|titlecase}} {{user.userId.lastName|titlecase}}</ng-option>
                         </ng-select>
 
                         <span *ngIf="insertForm2.get('resource').invalid && insertForm2.get('resource').touched" class="errspan required">Resources Required*</span>
@@ -162,14 +162,16 @@
                     <div class="form-fields col-md-6 pl-0">
                         <label class="label-control">Start Date<span class="star">*</span></label>
                         <!-- <input type="date"  formControlName="startDate" class="form-control"> -->
-                        <input class="form-control" type="date" name="daytime" [min]="mindate" max="9999-12-31" (change)="onchangeDate()" (keydown)="DateMethod()" formControlName="startDate" [ngClass]="insertForm2.get('startDate').valid?'enteredfield-color':'inputfield-color'">
+                        <input class="form-control" type="date" name="daytime"  max="9999-12-31" (change)="onchangeDate()" (keydown)="DateMethod()" formControlName="startDate" [ngClass]="insertForm2.get('startDate').valid?'enteredfield-color':'inputfield-color'">
                         <span *ngIf="insertForm2.get('startDate').invalid && insertForm2.get('startDate').touched" class="errspan required">Start Date Required*</span>
                     </div>
                     <div class="form-fields col-md-6 pr-0">
-                        <label class="label-control">End Date<span class="star">*</span></label>
+                        <label class="label-control">End Date<span class="star"></span></label>
                         <input class="form-control" type="date" name="daytime" max="9999-12-31" [min]="mindate" (keydown)="endDateMethod()" formControlName="endDate" class="form-control data" [ngClass]="insertForm2.get('endDate').valid?'enteredfield-color':'inputfield-color'">
                         <span *ngIf="insertForm2.get('endDate').invalid && insertForm2.get('endDate').touched" class="errspan required">End Date Required*</span>
                     </div>
+                </div>
+                <div class="col-md-12">
                     <div class="form-fields col-md-6 pl-0" *ngIf="freetrail!='true'">
                         <label class="label-control">Process Owner<span class="star">*</span></label>
                         <select formControlName="processOwner" [attr.disabled]="processOwner==false" class="form-control" [ngClass]="insertForm2.get('processOwner').valid?'enteredfield-color':'inputfield-color'">
@@ -184,11 +186,15 @@
                         <label class="label-control">Process Owner</label>
                         <select  [disabled]="true" class="form-control" [attr.disabled]="processOwner==false" [ngClass]="insertForm2.get('processOwner').valid?'enteredfield-color':'inputfield-color'">
                         <option value="">Select Process Owner</option>
-                    </select>
+                    </select> 
                     </div>
-
-
                 </div>
+                    
+
+                  
+
+
+                
                 <div class="col-md-12">
                     <div class="form-fields">
                         <label class="label-control">Project Description<span

@@ -95,12 +95,15 @@ export class RpaHomeComponent implements OnInit {
   userName:any="";
   displayedRows$: Observable<any[]>;
   rpaVisible:boolean=false;
+  botslist:any=[]
   userCheck:boolean=false;
   @ViewChild(MatSort,{static:false}) sort: MatSort;
   totalRows$: Observable<number>;
   @ViewChild(MatPaginator,{static:false}) paginator301: MatPaginator;
   freetrail: string;
-
+  botlistitems:any=[];
+  isLoading:boolean = false;
+  categoryName:any;
   constructor(
     private route: ActivatedRoute, 
     private rest:RestApiService, 
@@ -194,11 +197,12 @@ export class RpaHomeComponent implements OnInit {
         description:true,
       }
     this.dt.changeHints(this.datahints.rpahomehints );
+     this.getallbots();
     this.getCategoryList();
     this.getenvironments();
     
       
-      this.getallbots();
+     
 
 
     if(localStorage.getItem("taskId")!=undefined)
@@ -237,9 +241,9 @@ export class RpaHomeComponent implements OnInit {
     //     })
 
 
-          if(localStorage.getItem('project_id')!="null" && localStorage.getItem('bot_id')!="null"){
-            this.loadbotdata(localStorage.getItem('bot_id'));
-          }
+          // if(localStorage.getItem('project_id')!="null" && localStorage.getItem('bot_id')!="null"){
+          //   this.loadbotdata(localStorage.getItem('bot_id'));
+          // }
           this.freetrail=localStorage.getItem('freetrail')
      }
 
@@ -260,10 +264,12 @@ export class RpaHomeComponent implements OnInit {
         }).then((result) => {
         if (result.value) {
           let response;
+          this.spinner.show()
           this.rest.getDeleteBot(botId).subscribe(data=>{
             response= data;
             if(response.status!=undefined)
             {
+              this.spinner.hide()
               Swal.fire("Success",response.status,"success");
               this.getallbots();
               // Swal.fire({
@@ -274,6 +280,7 @@ export class RpaHomeComponent implements OnInit {
               //   timer:2000})
             }else
             {
+              this.spinner.hide()
               Swal.fire("Error",response.errorMessage,"error");
                 // Swal.fire({
                 //   position:'center',
@@ -317,20 +324,23 @@ export class RpaHomeComponent implements OnInit {
     this.bot_list=[];
     let response:any=[];
     this.spinner.show();
+   // this.isLoading=true
     this.loadflag=true;
     //spinner.show();
     //http://192.168.0.7:8080/rpa-service/get-all-bots
     this.rest.getAllActiveBots().subscribe(botlist =>
     {
       setTimeout(()=>{
-        this.spinner.hide();
+        
         this.loadflag=false;
-      },1000)
+      },2000)
       response=botlist;
+      this.botlistitems=botlist;
+      this.botslist=botlist
      // response=response.reverse();
       // if(response.length==0)
       // {
-      //   //this.rpa_studio.spinner.hide();
+      //   //this.rpa_studio.spinner.hide(); 
       // }
       // response.forEach(data=>{
       //   let object:any=data;
@@ -374,6 +384,13 @@ export class RpaHomeComponent implements OnInit {
       {
         this.respdata1 = true;
       }
+      let selected_category=localStorage.getItem("rpa_search_category");
+      if(this.categaoriesList.length == 1){
+        this.categoryName=this.categaoriesList[0].categoryName;
+      }else{
+        this.categoryName=selected_category?selected_category:'allcategories';
+      }
+      this.searchByCategory(this.categoryName);
       //response.sort((a,b) => a.createdAt > b.createdAt ? -1 : 1);
       
       //response=response.reverse();
@@ -553,14 +570,35 @@ export class RpaHomeComponent implements OnInit {
       }
       else {
         this.insertbot.reset();
-        this.insertbot.get("botDepartment").setValue("");
         document.getElementById("create-bot").style.display = "block";
+        if(this.categaoriesList.length==1){
+          this.rpaCategory=this.categaoriesList[0].categoryId;
+          let Id=this.categaoriesList[0].categoryId
+          this.categoryName=this.categaoriesList[0].categoryName;       
+            this.insertbot.get('botDepartment').setValue(Id)
+           this.insertbot.controls.botDepartment.disable();   
+        }
+        else{
+          this.insertbot.get('botDepartment').setValue('')
+          this.insertbot.controls.botDepartment.enable();
+        }
       }
     }
     else{
+     
       this.insertbot.reset();
-      this.insertbot.get("botDepartment").setValue("");
       document.getElementById("create-bot").style.display = "block";
+      if(this.categaoriesList.length==1){
+        this.rpaCategory=this.categaoriesList[0].categoryId;
+        let Id=this.categaoriesList[0].categoryId
+        this.categoryName=this.categaoriesList[0].categoryName;       
+          this.insertbot.get('botDepartment').setValue(Id)
+         this.insertbot.controls.botDepartment.disable();   
+      }
+      else{
+        this.insertbot.get('botDepartment').setValue('')
+        this.insertbot.controls.botDepartment.enable();
+      }
     }
   }
 
@@ -573,29 +611,64 @@ export class RpaHomeComponent implements OnInit {
    
     document.getElementById("create-bot").style.display ="none";
     var createBotFormValue=this.insertbot.value;
-    
+    let createbot={
+      "botName":createBotFormValue.botName,
+      // "department":createBotFormValue.botDepartment
+      "department":String(this.rpaCategory)
+     }
+      
     if(createBotFormValue.botDepartment=="others"){
       let rpaCategory:any={"categoryName":this.insertbot.value.newCategoryName,"categoryId":0, "createdAt":""};
+      this.isLoading=true;
       this.rest.addCategory(rpaCategory).subscribe(data=>{
         let catResponse : any;
         if(catResponse.errorMessage==undefined)
         {
           catResponse=data;
           createBotFormValue.botDepartment=catResponse.data.categoryId;  
-          let botId=Base64.encode(JSON.stringify(createBotFormValue));
-          this.router.navigate(["/pages/rpautomation/designer"],{queryParams:{botId:botId}})
+         
+          this.rest.createBot(createbot).subscribe((res:any)=>{
+            let botId=res.botId;
+            if(res.errorMessage==undefined){
+              this.isLoading=false;
+              this.router.navigate(["/pages/rpautomation/designer"],{queryParams:{botId:botId}});
+            }
+            else{
+              this.isLoading=false;
+              Swal.fire("Error",res.errorMessage,"error");
+            }   
+         
+           },err=>{
+            this.isLoading=false
+            Swal.fire("Error",catResponse.errorMessage,"error");
+          },);
+
         }
         else
         {
+          this.isLoading=false
           Swal.fire("Error",catResponse.errorMessage,"error");
         }
        
       });
     }else{
+     // let botId=Base64.encode(JSON.stringify(createBotFormValue));
+    this.isLoading=true;
+      this.rest.createBot(createbot).subscribe((res:any)=>{
+        let botId=res.botId
+        if(res.errorMessage==undefined){
+          this.isLoading=false
+          this.router.navigate(["/pages/rpautomation/designer"],{queryParams:{botId:botId}});
+        }
+        else{
+          this.isLoading=false
+          Swal.fire("Error",res.errorMessage,"error");
+        }   
+       },err=>{
+        this.isLoading=false
+        Swal.fire("Error","error");
+       })
 
-      let botId=Base64.encode(JSON.stringify(createBotFormValue));
-   
-      this.router.navigate(["/pages/rpautomation/designer"],{queryParams:{botId:botId}})
        
     }
     this.insertbot.reset();
@@ -610,12 +683,15 @@ export class RpaHomeComponent implements OnInit {
 
   close()
   {
+    this.checkbotname = false;
     document.getElementById("create-bot").style.display ="none";
     document.getElementById("edit-bot").style.display="none";
+    if(document.getElementById("load-bot"))
     document.getElementById("load-bot").style.display ="none";
   }
   editclose(){
     document.getElementById("edit-bot").style.display="none";
+    this.checkbotname=false;
   }
   
 
@@ -887,19 +963,17 @@ export class RpaHomeComponent implements OnInit {
     this.rest.getCategoriesList().subscribe(data=>{
       let catResponse : any;
       catResponse=data
-      this.categaoriesList=catResponse.data;
-      //console.log(this.categaoriesList)
-      if(this.categaoriesList.length==1)
+      // this.categaoriesList=catResponse.data;
+      this.categaoriesList=catResponse.data.sort((a, b) => (a.categoryName.toLowerCase() > b.categoryName.toLowerCase()) ? 1 : ((b.categoryName.toLowerCase() > a.categoryName.toLowerCase()) ? -1 : 0));
+
+      if(this.categaoriesList.length==1){
         this.rpaCategory=this.categaoriesList[0].categoryId;
+        let Id=this.categaoriesList[0].categoryId
+        this.categoryName=this.categaoriesList[0].categoryName;  
+      }
+     
     });
   }
-
-
-
-
-
-
-
 
   public sortkey:any;
 
@@ -921,7 +995,7 @@ export class RpaHomeComponent implements OnInit {
   editbotoverlay(botdetails){
     this.botNamespace=false
     document.getElementById("edit-bot").style.display="block";
-   let category=botdetails.department;
+   let category=botdetails.categoryName;
    let selectedcategory=this.categaoriesList.find(item=>item.categoryName==category)
     this.rpaCategory=selectedcategory.categoryId;
     if(this.rpaCategory==="others"){
@@ -939,6 +1013,13 @@ export class RpaHomeComponent implements OnInit {
         description:botdetails.description,
         newCategoryName:this.rpaCategory})
     }
+    
+   if(this.categaoriesList.length==1){
+     this.editbot.controls.department.disable()     
+  }
+  else{
+    this.editbot.controls.department.enable()
+  }
   }
 
   validate(code,event){
@@ -991,6 +1072,26 @@ export class RpaHomeComponent implements OnInit {
      rpaCategory["categoryName"] =this.editbot.value.newCategoryName;
    return this.rest.addCategory(rpaCategory);
   }
+  searchByCategory(category) { 
+    localStorage.setItem('rpa_search_category',category);     // Filter table data based on selected categories
+    var filter_saved_diagrams= []
+    this.botslist=[]
+    if (category == "allcategories") {
+     this.botslist=this.botlistitems;
+     this.assignPagination(this.botslist);
+      // this.dataSource.filter = fulldata;
+    }
+    else{  
+      filter_saved_diagrams=this.botlistitems;
+      
+      filter_saved_diagrams.forEach(e=>{
+        if(e.categoryName===category){
+          this.botslist.push(e)
+        }
+      });
+      this.assignPagination(this.botslist);
+    }
+  }
   onEditBot() {
     let botdetails = this.editbot.value;
     if(botdetails.department==="others"){
@@ -1036,14 +1137,15 @@ export class RpaHomeComponent implements OnInit {
         this.totalRows$ = rows$.pipe(map(rows => rows.length));
         this.displayedRows$ = rows$.pipe(sortRows(sortEvents$), paginateRows(pageEvents$));
         this.paginator301.firstPage();
+        this.spinner.hide();
       }
 
-      applySearchFilter(v){      
-    const filterPipe = new SearchRpaPipe();   
-     const fiteredArr = filterPipe.transform(this.bot_list,v);   
-          
-      this.assignPagination(fiteredArr)
-  }
+      applySearchFilter(v){  
+      const filterPipe = new SearchRpaPipe();   
+       const fiteredArr = filterPipe.transform(this.botslist,v);   
+            
+        this.assignPagination(fiteredArr)    
+  }
 
 
       

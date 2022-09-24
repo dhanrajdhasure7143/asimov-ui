@@ -46,62 +46,69 @@ this.getEnvironments();
 
 
 
-  getslametrics()
-  {
+  getslametrics(){
     this.rest.getslametrics().subscribe(metrics=>{
-     //console.log(metrics);
     
     })
   }
   getallbots()
   {
     am4core.useTheme(am4themes_animated);
-    this.rest.getallsobots().subscribe(item=>{
-       this.allbots=item;
-       let data:any=[{
-        "country": "Failure",
-        "litres": this.allbots.filter(bot=>bot.botStatus=="Failure").length,
-        "color": "#BC1D28"
-      },{
-        "country": "New",
-        "litres":  this.allbots.filter(bot=>bot.botStatus=="New").length,
-        "color": "#00a0e3"
-      }, {
-        "country": "Stopped",
-        "litres":  this.allbots.filter(bot=>bot.botStatus=="Stopped" || bot.botStatus=="Stop").length,
-        "color": "#FF0000"
-      },
-      {
-        "country": "Success",
-        "litres":  this.allbots.filter(bot=>bot.botStatus=="Success").length,
-        "color":"#62C849"
-      }];
-
-      
-      this.chart1(data)
-      //this.chart2()
-      let sourceType=[{
-        "country": "UiPath",
-        "litres": this.allbots.filter(item=>item.sourceType=="UiPath").length,
-        "color": "#fa4616"
-      },{
-        "country": "Blue Prism",
-        "litres":  this.allbots.filter(item=>item.sourceType=="BluePrism").length,
-        "color": "#001c47"
-      },{
-        "country": "EPSoft",
-        "litres":this.allbots.filter(item=>item.sourceType=="EPSoft").length,
-        "color": "#00a0e3"
-      }];
-      
-      this.chart3(sourceType, this.allbots.length);
-      //this.chart4();
-      
-      this.getprocesses();
-      this.getBpmnApprovedProcesses();
-      this.botruntimestats();
+    this.rest.getallsobots().subscribe((item:any)=>{
       this.spinner.hide();
+      if(item.errorMessage==undefined){
+        this.allbots=item;
+        let data:any=[{
+          "country": "Failure",
+          "litres": this.allbots.filter(bot=>bot.botStatus=="Failure").length,
+          "color": "#BC1D28"
+        },{
+          "country": "New",
+          "litres":  this.allbots.filter(bot=>bot.botStatus=="New").length,
+          "color": "#00a0e3"
+        }, {
+          "country": "Stopped",
+          "litres":  this.allbots.filter(bot=>bot.botStatus=="Stopped" || bot.botStatus=="Stop").length,
+          "color": "#FF0000"
+        },
+        {
+          "country": "Success",
+          "litres":  this.allbots.filter(bot=>bot.botStatus=="Success").length,
+          "color":"#62C849"
+        }];
+        this.chart1(data)
+
+        let sourceType=[{
+          "country": "UiPath",
+          "litres": this.allbots.filter(item=>item.sourceType=="UiPath").length,
+          "color": "#fa4616"
+        },{
+          "country": "Blue Prism",
+          "litres":  this.allbots.filter(item=>item.sourceType=="BluePrism").length,
+          "color": "#001c47"
+        },{
+          "country": "EPSoft",
+          "litres":this.allbots.filter(item=>item.sourceType=="EPSoft").length,
+          "color": "#00a0e3"
+        }];
+        
+        this.chart3(sourceType, this.allbots.length);
+        //this.chart4();
+        
+        this.getprocesses();
+        this.getBpmnApprovedProcesses();
+        this.botruntimestats();
+        
+      }
+  
+      else{
+        Swal.fire("Error",item.errorMessage,"error")
+      }
       
+      
+     
+      //this.chart2()
+     
     },
     err=>{
       this.spinner.hide();
@@ -110,8 +117,14 @@ this.getEnvironments();
   }
 
 
-  chart1(data){
-    
+  chart1(pieData){
+    let data:any=pieData
+    // let data:any=pieData.map((item:any)=>{
+    //   if(item.litres=0)
+    //   {
+    //     return item;
+    //   }
+    // })
     // Themes begin
     am4core.useTheme(am4themes_animated);
     // Themes end
@@ -206,6 +219,14 @@ this.getEnvironments();
     chart.innerRadius = am4core.percent(0);
     chart.data = data;
 
+    // hide zero values in chart
+     pieSeries.events.on("datavalidated", function(ev) {
+      ev.target.dataItems.each((di) => {
+          if (di.values.value.value === 0 ) {
+            di.hide();
+          }
+      })
+    })
 
   }
 
@@ -966,7 +987,6 @@ pieSeries.labels.template.fontSize = 18;
         {
           let filteredCoordinates:any=filteredbot.coordinates;
           //.filter(item=>moment(item.startTime,"x").format("D-MM-YYYY")==moment(today).format("D-MM-YYYY")||moment(item.startTime,"x").format("D-MM-YYYY")==moment(yesterday).format("D-MM-YYYY"));
-         //console.log("---------check--------",filteredCoordinates)
           if(filteredCoordinates.length>0)
           {
               let timedur:any=0;
@@ -982,9 +1002,7 @@ pieSeries.labels.template.fontSize = 18;
           }
         }
       });
-     //console.log(this.runtimestats)
       this.runtimestats=runtimestats.sort(function(a, b){return b.value - a.value});
-     //console.log(this.runtimestats)
       if(runtimestats.length!=0)
       {
         this.statschart();
@@ -1078,7 +1096,6 @@ pieSeries.labels.template.fontSize = 18;
   {
     this.rest.getUserBpmnsList().subscribe(data=>{
       let response:any=data;
-      //console.log(response);
       this.approved_processes=response.filter(data=>data.bpmnProcessStatus=="APPROVED");
       this.getprocessstatistics();
     })

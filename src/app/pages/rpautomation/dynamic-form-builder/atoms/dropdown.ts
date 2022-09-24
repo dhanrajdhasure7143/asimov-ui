@@ -63,7 +63,7 @@ export class DropDownComponent implements OnInit {
         if (!item1.visibility) {
           this.form.get([this.fieldsWithRef[i].name + '_' + this.fieldsWithRef[i].id]).clearValidators();
         }
-        if (item1.id != 580) {
+        if (item1.id != 536) {
           this.form.get([this.fieldsWithRef[i].name + '_' + this.fieldsWithRef[i].id]).reset();
         }
       })
@@ -72,7 +72,7 @@ export class DropDownComponent implements OnInit {
           this.fieldsWithRef.find(item2 => item2.id == item.id).visibility = true;
           this.fieldsWithRef.find(item2 => item2.id ==  item.id).required = true;
         }
-      })
+      }) 
     }
 
 
