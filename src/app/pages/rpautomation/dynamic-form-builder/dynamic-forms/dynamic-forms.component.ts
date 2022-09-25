@@ -68,7 +68,8 @@ export class DynamicFormsComponent implements OnInit {
       {
         this.fields.find(item=>item.name=="fillValue").type="textarea"
       }
-      let action_id= obj.Action_536
+      //prod 580
+      let action_id= obj.Action_580
     if (action_id == 'fill') {
       this.fields.forEach(item => {
         if (item.visibility == false) {
