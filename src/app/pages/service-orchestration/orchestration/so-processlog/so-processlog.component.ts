@@ -40,6 +40,7 @@ export class SoProcesslogComponent implements OnInit, OnDestroy{
   public interval2: any = 0;
   public selected_processRunId:any;
   public selected_runid:any;
+  public selected_botId:any;
   public logstatus:any;
   constructor( private rest:RestApiService, private changeDetectorRef: ChangeDetectorRef,private automated:NewSoAutomatedTasksComponent, private spinner: NgxSpinnerService) { }
 
@@ -164,24 +165,24 @@ export class SoProcesslogComponent implements OnInit, OnDestroy{
     });
   }
 
-  setLogByRunID(runid,bot_status){
+  setLogByRunID(runid,bot_status, bot_id, version){
     clearInterval(this.interval2)
-    this.ViewlogByrunid(runid)
+    this.ViewlogByrunid(runid, bot_id, version)
     this.loadLogsFlag=true
     if(bot_status == "Running" || bot_status == "New" ){
     this.interval1=  setInterval(()=>{
-      this.ViewlogByrunid(runid)
+      this.ViewlogByrunid(runid, bot_id, version)
     },3000)
   }
   }
 
-  ViewlogByrunid(runid){
+  ViewlogByrunid(runid, PbotId, pversion){
     this.selected_runid=runid;
     let responsedata:any=[];
     let logbyrunidresp1:any;
     let resplogbyrun1:any=[];
-    let PbotId = this.runidresponse.find(data =>data.run_id == runid).bot_id;
-    let pversion = this.runidresponse.find(data =>data.run_id == runid).version;
+   // let PbotId = this.runidresponse.find(data =>data.run_id == runid).bot_id;
+    //let pversion = this.runidresponse.find(data =>data.run_id == runid).version;
     document.getElementById("plogrunid").style.display="none";
     document.getElementById("pbotrunid").style.display="block";
     this.rest.getViewlogbyrunid(PbotId,pversion,runid).subscribe((data)=>{
