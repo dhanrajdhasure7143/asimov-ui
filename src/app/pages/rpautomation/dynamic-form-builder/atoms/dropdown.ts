@@ -63,7 +63,7 @@ export class DropDownComponent implements OnInit {
         if (!item1.visibility) {
           this.form.get([this.fieldsWithRef[i].name + '_' + this.fieldsWithRef[i].id]).clearValidators();
         }
-        if (item1.id != 536) {
+        if (item1.id != 580) { //web action field ID
           this.form.get([this.fieldsWithRef[i].name + '_' + this.fieldsWithRef[i].id]).reset();
         }
       })

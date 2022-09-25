@@ -220,6 +220,7 @@ this.dt.bpsHeaderValues('');
   }
 
   filterAutoSavedDiagrams(modelId){
+    this.autosavedDiagramVersion=[];
     this.autosavedDiagramVersion = this.autosavedDiagramList.filter(each_asDiag => {
       return each_asDiag.bpmnModelId == modelId;
     })
@@ -273,6 +274,7 @@ this.dt.bpsHeaderValues('');
       this.bpmnModeler = new CmmnJS(notationJson);
     else if(eachBPMN.ntype == "dmn")
       this.bpmnModeler = new DmnJS(notationJson); 
+      this.autosavedDiagramVersion=[];
     if(eachBPMN.bpmnProcessStatus != "APPROVED" && eachBPMN.bpmnProcessStatus != "REJECTED" && eachBPMN.bpmnProcessStatus != "PENDING")
       this.filterAutoSavedDiagrams(eachBPMN.bpmnModelId);
     if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"])
