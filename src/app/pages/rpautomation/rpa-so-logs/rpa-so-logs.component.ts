@@ -15,7 +15,7 @@ export class RpaSoLogsComponent implements OnInit, OnDestroy {
   @ViewChild("logsSort",{static:false}) logsSort:MatSort;
   @ViewChild("loopsort",{static:false}) loopsort:MatSort;
   @ViewChild("logsPaginator",{static:false}) logsPaginator:MatPaginator;
-  displayedColumns: string[] = ['run_id','version_new','start_date','end_date', "bot_status"];
+  displayedColumns: string[] = ['run_id','version','start_date','end_date', "bot_status"];
   displayedColumns1: string[] = ['task_name', 'status','start_date','end_date','error_info' ];
   displayedloopColumns:string[]=['taskName','iterationId','status','startTS','endTS',"errorMsg"];
   automationLogColoumns:string[]=['internaltaskName','startTS','endTS', 'status','errorMsg']
