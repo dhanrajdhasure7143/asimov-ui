@@ -69,12 +69,12 @@ export class RpaSoLogsComponent implements OnInit, OnDestroy {
     this.rest.getviewlogdata(this.logsbotid).subscribe(data =>{
       this.logresponse=data;
       this.logsLoading = false;
-      this.logresponse.map(item=>{
-        if(item.version_new!=null){
-          item["version_new"]= parseFloat(item.version_new)
-          item["version_new"]=item.version_new.toFixed(1)
-         }
-       })
+      // this.logresponse.map(item=>{
+      //   if(item.version_new!=null){
+      //     item["version_new"]= parseFloat(item.version_new)
+      //     item["version_new"]=item.version_new.toFixed(1)
+      //    }
+      //  })
       if(this.logresponse.length >0)
       {
         this.respdata1 = false;
