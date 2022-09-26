@@ -67,7 +67,7 @@
                   </ng-container>
   
                   <!-- Version Column -->
-                  <ng-container matColumnDef="version_new">
+                  <ng-container matColumnDef="version">
                       <th mat-header-cell *matHeaderCellDef mat-sort-header> Version 
                         <!-- <span >
                           <select class="logsVersionFilter clickable1" (change)="changeLogVersion($event)" [value]="filteredLogVersion" >
@@ -76,8 +76,8 @@
                         </span> -->
                      </th>
                       <td mat-cell *matCellDef="let element">
-                          <span *ngIf="element.version_new!=null">V{{element.version_new}}</span>
-                          <span *ngIf="element.version_new == undefined">-</span>
+                          <span *ngIf="element.version!=null">V{{element.version}}</span>
+                          <span *ngIf="element.version == undefined">-</span>
                       </td>
                   </ng-container>
   
