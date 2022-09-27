@@ -1482,6 +1482,7 @@ getTimeZone(){
 }
 getDatabaselist(){
   return this.http.get("/rpa-service/database/getdatabasetypes")
+  
 }
 }
 
