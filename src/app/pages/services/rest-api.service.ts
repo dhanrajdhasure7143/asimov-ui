@@ -1481,6 +1481,7 @@ getTimeZone(){
   return this.http.get('/rpa-service/getTimeZones');
 }
 getDatabaselist(){
-  return this.http.get("/rpa-service-databasetypes/database/getdatabasetypes")
+  return this.http.get("/rpa-service/database/getdatabasetypes") 
 }
 }
+
