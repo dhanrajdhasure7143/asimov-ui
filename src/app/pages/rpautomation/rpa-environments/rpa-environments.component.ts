@@ -126,45 +126,46 @@ import * as moment from 'moment';
         })
   }
 
- async getallData()
-  {
+ async getallData(){
     this.environments=[];
     await this.api.listEnvironments().subscribe(
     data => {
          let response:any= data;	
-         if(response.length>0)
-         { 
+         if(response.length>0){ 
            this.checkeddisabled = false;
-         }
-         else
-         {
+         }else{
            this.checkeddisabled = true;
          }
-        for(let i=0;i<response.length;i++)
-        {
-          let checks={
-            checked:false,
-            }
-          this.environments.push(Object.assign({}, response[i], checks));
-        }
-        this.environments.sort((a,b) => a.activeTimeStamp > b.activeTimeStamp ? -1 : 1);
-        this.environments=this.environments.map(item=>{
+
+        // for(let i=0;i<response.length;i++)
+        // {
+        //   let checks={
+        //     checked:false,
+        //     }
+        //   this.environments.push(Object.assign({}, response[i], checks));
+        // }
+        // this.environments.sort((a,b) => a.activeTimeStamp > b.activeTimeStamp ? -1 : 1);
+        this.environments=response.map(item=>{
            item["categoryName"]=this.categoryList.find(item2=>item2.categoryId==item.categoryId).categoryName;
+           item["checked"]=false;
            item["createdTimeStamp_converted"] = moment(new Date(item.createdTimeStamp)).format('LLL')
-            if(item.keyValue!=null)
-            {
+            if(item.keyValue!=null){
               item["password"]={
                 key:""
               }
-            }
-            else
-            {
+            }else{
               item["password"]={
                   password:item.password
               }
             }
            return item;
         })
+        this.environments.sort(function (a, b) {
+          a = new Date(a.activeTimeStamp);
+          b = new Date(b.activeTimeStamp);
+          return a > b ? -1 : a < b ? 1 : 0;
+        });
+
         this.dataSource1= new MatTableDataSource(this.environments);
         this.isDataSource = true;
         this.dataSource1.sort=this.sort1;
