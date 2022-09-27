@@ -58,7 +58,7 @@
     </div>
     <div class="col-md-12 con-envr">
         <div class="environment-tablegrid">
-            <table mat-table #sort1="matSort" (matSortChange)="sortasc($event)" [dataSource]="dataSource1" matSort class="RPA table" id="listofenv">
+            <table mat-table #sort1="matSort" [dataSource]="dataSource1" matSort class="RPA table" id="listofenv">
 
         <ng-container matColumnDef="check">
             <th mat-header-cell *matHeaderCellDef class="cell1">
