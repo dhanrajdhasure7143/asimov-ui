@@ -165,7 +165,7 @@
                     
                         <div class="col-md-12 p-0 form-group">
                             <label class="label-control" for="environmentName">Name<span class="star">*</span></label>
-                            <input type="text" (keypress)="onlyAlphabetsAllowed($event)" maxlength="51" class="form-control data" formControlName="environmentName" #environmentName value="" placeholder="Enter Name">
+                            <input type="text" maxlength="51" class="form-control data" formControlName="environmentName" #environmentName value="" placeholder="Enter Name">
                             <span *ngIf="(insertForm.get('environmentName').invalid && insertForm.get('environmentName').touched) && !insertForm.controls['environmentName'].hasError('maxlength')"  class="errspan required">Name Required*</span>
                             <div *ngIf="insertForm.controls['environmentName'].hasError('maxlength')"  class="errspan required">
                                 Maximum of 50 characters
@@ -221,7 +221,7 @@
                         </div>
                         <div class="col-md-12 p-0 form-group">
                             <label class="label-control" for="userName">Username<span class="star">*</span></label>
-                            <input type="text" (keypress)="onlyAlphabetsAllowed($event)" maxlength="51" class="form-control" formControlName="username" value="" placeholder="Enter Username">
+                            <input type="text" maxlength="51" class="form-control" formControlName="username" value="" placeholder="Enter Username">
                             <span *ngIf="(insertForm.get('username').invalid && insertForm.get('username').touched) && !insertForm.controls['username'].hasError('maxlength')"  class="errspan required"> Username Required*</span>
 
                             <div *ngIf="insertForm.controls['username'].hasError('maxlength')"  class="errspan required">
