@@ -77,7 +77,7 @@ import * as moment from 'moment';
         agentPath: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         hostAddress: ["", Validators.compose([Validators.required,  Validators.maxLength(50)])],
         categoryId:["0", Validators.compose([Validators.required])],
-        username: ["", Validators.compose([Validators.required,Validators.pattern('^[a-zA-Z \-\']+') ,Validators.maxLength(50)])],
+        username: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         connectionType: ["SSH",Validators.compose([Validators.required,, Validators.maxLength(50), Validators.pattern("[A-Za-z]*")])],
         portNumber: ["22",  Validators.compose([Validators.required, Validators.maxLength(4)])],
         activeStatus: [true] 
