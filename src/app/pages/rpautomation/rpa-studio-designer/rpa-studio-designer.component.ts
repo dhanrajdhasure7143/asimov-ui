@@ -30,6 +30,8 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   loadBotForm:FormGroup;
   toolsetSideNav:Boolean=false;
   predefinedBotsList:any=[];
+  isCreate:boolean = true;
+
   constructor(
     private router:Router,
     private activeRoute:ActivatedRoute,
@@ -377,6 +379,14 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
     })
   }
 
+  createEnvironment(){
+    this.isCreate=true;
+    document.getElementById("createenvironment").style.display='block';
+  }
+  
+  closeEnviromentOverlay() {
+    document.getElementById('createenvironment').style.display = 'none';
+  }
 
 
 }

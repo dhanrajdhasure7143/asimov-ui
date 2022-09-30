@@ -1,5 +1,5 @@
 import { RestApiService } from './../../../services/rest-api.service';
-import { Component, OnInit, ChangeDetectorRef, ViewChild, EventEmitter, Output, SimpleChanges, Input } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild, EventEmitter, Output, SimpleChanges, Input, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
 import Swal from 'sweetalert2';
 import {Router} from "@angular/router";
@@ -13,7 +13,7 @@ import { environmentobservable } from './../../model/environmentobservable';
 @Component({
   selector: 'app-rpa-environment-form',
   templateUrl: './rpa-environment-form.component.html',
-  styleUrls: ['./rpa-environment-form.component.css']
+  styleUrls: ['./rpa-environment-form.component.css'],
 })
   export class RpaEnvironmentFormComponent implements  OnInit{
     @Input() isCreate:boolean;
@@ -86,7 +86,6 @@ import { environmentobservable } from './../../model/environmentobservable';
   }
 
   ngOnChanges(changes: SimpleChanges){
-    console.log(this.updateenvdata)
     if(!this.isCreate && this.updateenvdata){
     this.updateForm.get("environmentName").setValue(this.updateenvdata["environmentName"]);
         this.updateForm.get("environmentType").setValue(this.updateenvdata["environmentType"]);
@@ -98,8 +97,18 @@ import { environmentobservable } from './../../model/environmentobservable';
         
         this.updateForm.get("connectionType").setValue(this.updateenvdata["connectionType"]);
         this.updateForm.get("portNumber").setValue(this.updateenvdata["portNumber"]);
+        if (this.updateenvdata.activeStatus == 7) {
+          this.toggle = true;
+          this.updateForm.get("activeStatus").setValue(true);
+        } else {
+          this.toggle = false;
+          this.updateForm.get("activeStatus").setValue(false);
+        }
+    }else{
+      this.insertForm.get("categoryId").setValue(this.categoryList.length==1?this.categoryList[0].categoryId:"0")
     }
   }
+  
   ngOnInit() {
     this.spinner.show();
     this.passwordtype1 = false;

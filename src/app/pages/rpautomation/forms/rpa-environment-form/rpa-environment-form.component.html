@@ -147,9 +147,9 @@
 
 
 
-<div *ngIf="isCreate">
+<div *ngIf="!isCreate">
     <div class="modal-body">
-        <div class="container m-contanier form-body" *ngIf="updateenvdata!=undefined">
+        <div class="container m-contanier form-body">
             <form [formGroup]="updateForm" (ngSubmit)="updateEnvironment()">
                 <div class="col-md-12 p-0 form-group">
                     <label class="label-control" for="environmentName">Name<span class="star">*</span></label>

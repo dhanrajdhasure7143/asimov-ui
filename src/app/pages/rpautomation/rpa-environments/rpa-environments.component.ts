@@ -58,7 +58,7 @@ import * as moment from 'moment';
     public password:any="";
     public keyValueFile:File;
     addflag:boolean=false;
-    isCreate:boolean=false;
+    isCreate:boolean=true;
     
   constructor(private api:RestApiService, 
     private router:Router, 
@@ -222,7 +222,7 @@ import * as moment from 'moment';
     this.isCreate=true;
     //document.getElementById("filters").style.display='none';
     document.getElementById("createenvironment").style.display='block';
-    this.insertForm.get("categoryId").setValue(this.categoryList.length==1?this.categoryList[0].categoryId:"0")
+
     document.getElementById("update-popup").style.display='none';
   
   }
@@ -581,20 +581,13 @@ import * as moment from 'moment';
   }
 
   updatedata() {
-    this.isCreate = true;
+    this.isCreate = false;
     document.getElementById("createenvironment").style.display = 'none';
     //document.getElementById("filters").style.display='none';
     document.getElementById('update-popup').style.display = 'block';
     let data: environmentobservable;
     for (let data of this.environments) {
       if (data.environmentId == this.updateid) {
-        if (data.activeStatus == 7) {
-          this.toggle = true;
-          this.updateForm.get("activeStatus").setValue(true);
-        } else {
-          this.toggle = false;
-          this.updateForm.get("activeStatus").setValue(false);
-        }
         if (data.password.password == undefined) {
           this.isKeyValuePair = true
           this.password = ""
@@ -607,7 +600,7 @@ import * as moment from 'moment';
         } else {
           this.keyValueFile = undefined
         }
-        this.updateenvdata = Object.create(data);
+        this.updateenvdata = data
       }
     }
   }
