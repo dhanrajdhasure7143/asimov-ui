@@ -65,6 +65,7 @@ import { NgbModalDraggableModule } from 'ngb-modal-draggable';
 import { ResizableModule } from 'angular-resizable-element';
 import { PopoverModule } from 'ngx-bootstrap/popover';
 import { RpaAuditlogsComponent } from './rpa-auditlogs/rpa-auditlogs.component'
+import { SearchRpaPipe } from './rpa-home/Search.pipe';
 @NgModule({
   declarations: [
     RpautomationComponent,
@@ -93,7 +94,8 @@ import { RpaAuditlogsComponent } from './rpa-auditlogs/rpa-auditlogs.component'
 	TaskPipe,
 	TasksearchPipe,
 	RpaSoLogsComponent,
-	RpaAuditlogsComponent
+	RpaAuditlogsComponent,
+  SearchRpaPipe
   ],
   imports: [
     NgxMaterialTimepickerModule,

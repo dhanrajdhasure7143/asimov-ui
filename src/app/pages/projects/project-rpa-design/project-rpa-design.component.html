@@ -73,11 +73,11 @@
                             </span>
 
                             <span *ngIf="element.id == selectedId">
-                                    <span class="tsttooltipbtn" (click)="updateConfiguration(element,i)">
+                                    <span class="tsttooltipbtn" (click)="updateConfiguration(element)">
                                         <img src="../../../../assets/images/VCM/Green Tick.svg" class="testplus" />
                                         <span class="testtooltip">Update</span>
                                     </span>
-                                    <span class="tsttooltipbtn"  (click)="cancelUpdaterow(i)">
+                                    <span class="tsttooltipbtn"  (click)="cancelUpdaterow()">
                                         <img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img" />
                                         <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" />
                                         <span class="testtooltip">Cancel</span>

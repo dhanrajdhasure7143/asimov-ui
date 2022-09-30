@@ -40,6 +40,7 @@ export class ProcessAnalystComponent implements OnInit {
   userRoles: any;
   userEmail: any;
   userName: any;
+  t:any;
   topEffortsSpent: any[]=[];
   displayedColumns1=['Process Name','Created Date','Submitted by','Approver Name'];
   displayedColumns3=['projectName','daysSpent'];

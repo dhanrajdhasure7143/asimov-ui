@@ -239,7 +239,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.dataid = '';
   }
 
-  deleteNotification(data, index) {
+  deleteNotification(data) {
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
