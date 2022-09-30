@@ -1,3 +1,4 @@
+import { RpaCredentialFormComponent } from './../forms/rpa-credential-form/rpa-credential-form.component';
 import { Component,  OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
 import {FormGroup, Validators, FormBuilder, Form } from '@angular/forms';
 import Swal from 'sweetalert2';
@@ -26,13 +27,12 @@ export class RpaCredentialsComponent implements OnInit {
   categoryList:any;
   @ViewChild("paginator3",{static:false}) paginator3: MatPaginator;
   @ViewChild("sort2",{static:false}) sort2: MatSort;
+  @ViewChild("rpaCred",{static:false}) rpaCred : RpaCredentialFormComponent
   public button:string;
   public credentials:any=[];
   public checkeddisabled:boolean =false;
   public Credcheckeddisabled:boolean =false;
   public credupdatedata:any;
-  public insertForm:FormGroup;
-    public updateForm:FormGroup;
     public Credupdateflag:Boolean;
     public Creddeleteflag:Boolean;
     public passwordtype1:Boolean;
@@ -42,6 +42,7 @@ export class RpaCredentialsComponent implements OnInit {
     userRole: any;
     public isButtonVisible = false;
     addflag:boolean=false;
+    isCreateForm:boolean;
     
     constructor(private api:RestApiService, 
       private router:Router,
@@ -51,31 +52,7 @@ export class RpaCredentialsComponent implements OnInit {
       private dt:DataTransferService,
       private spinner: NgxSpinnerService
       ) { 
-     
-          
-      this.insertForm=this.formBuilder.group({
-        userName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-        password: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-        categoryId:["0", Validators.compose([Validators.required])],
-        serverName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-        inBoundAddress: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-        inBoundAddressPort: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-        outBoundAddress: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-        outboundAddressPort: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-
-    })
   
-    this.updateForm=this.formBuilder.group({
-        userName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-        password: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
-        categoryId:["0", Validators.compose([Validators.required])],
-        serverName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-        inBoundAddress: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-        inBoundAddressPort: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-        outBoundAddress: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-        outboundAddressPort: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-
-    })
       this.Credupdateflag=false;
       this.Creddeleteflag=false;
       
@@ -118,9 +95,7 @@ inputNumberOnly(event){
     await this.api.get_All_Credentials(role).subscribe(
       data1 => {
         this.credentials = data1;
-        if(this.credentials.length>0)
-         { 
-           
+        if(this.credentials.length>0){ 
            this.Credcheckeddisabled = false;
            this.credentials.sort((a,b) => a.credentialId > b.credentialId ? -1 : 1);
            if(this.categoryList!=undefined){
@@ -164,128 +139,28 @@ inputNumberOnly(event){
     this.checktodelete();
   }
   
-  createcredentials()
-  {
+  openCreateCredential(){
+    this.isCreateForm = true;
     document.getElementById("createcredentials").style.display='block';
-    this.insertForm.get("categoryId").setValue(this.categoryList.length==1?this.categoryList[0].categoryId:"0")
-    document.getElementById("Updatecredntials").style.display='none';
+    // this.insertForm.get("categoryId").setValue(this.categoryList.length==1?this.categoryList[0].categoryId:"0")
+    // document.getElementById("Updatecredntials").style.display='none';
   }
 
-  Updatecredntials(){
-    document.getElementById("createcredentials").style.display='none';
-    document.getElementById("Updatecredntials").style.display='block';
-  }
-  
-
-  saveCredentials(){
-    
-    if(this.insertForm.valid)
-   {
-    this.spinner.show();
-    this.submitted=true;
-    let Credentials = this.insertForm.value;
-    this.api.save_credentials(Credentials).subscribe( res =>{
-      let status:any=res;
-      this.spinner.hide();
-      if(status.errorMessage==undefined)
-      {
-        Swal.fire("Success",status.status,"success");
-        this.getallCredentials();
-        this.Credchecktoupdate();
-        this.checktodelete();
-        document.getElementById('createcredentials').style.display= "none";
-        this.resetCredForm();
-        this.submitted=false; 
-      }
-      else
-      Swal.fire("Error",status.errorMessage,"error");
-
-  
-    },err=>{
-      this.spinner.hide();
-      Swal.fire("Error","Unable to save credentials","error");
-    });
-   
-  }
-  else{
-    //alert("Invalid Form");
-  }
-   }
-
-  resetCredForm(){
-    this.insertForm.reset();
-    this.insertForm.get("categoryId").setValue(this.categoryList.length==1?this.categoryList[0].categoryId:'0')
-    this.insertForm.get("serverName").setValue("")
-    
-    this.passwordtype1=false;
-  }
-
-  resetupdateCredForm(){
-    this.updateForm.reset();
-  }
-  
-  credentialsupdate(){
-    if(this.updateForm.valid)
-    {
-      this.spinner.show();
-    let credupdatFormValue =  this.updateForm.value;
-    credupdatFormValue["credentialId"]= this.credupdatedata.credentialId;
-    this.api.update_Credentials(credupdatFormValue).subscribe( res =>{
-      let status: any= res;
-      this.spinner.hide();
-      if(status.errorMessage==undefined)
-      {
-        Swal.fire("Success",status.status,"success");
-        this.removeallchecks();
-        this.getallCredentials();
-        this.Credchecktoupdate();
-        this.checktodelete(); 
-        document.getElementById('Updatecredntials').style.display='none';   
-      }
-      else
-      {
-        Swal.fire("Error",status.errorMessage,"error");
-      }
-     
-  },err=>{
-      this.spinner.hide();
-      Swal.fire("Error","Unable to update credentials","error")
-  });
-}
-else
-{
-  Swal.fire("Error","please fill all details","error");
-}
-  
-}
-
-updatecreddata()
-  {    
-    document.getElementById('Updatecredntials').style.display='block';
-    let data:any;
-    for(data of this.credentials)
-    {
-      if(data.credentialId==this.dbupdateid)
-      {
-        this.credupdatedata=data;
-        this.updateForm.get("userName").setValue(this.credupdatedata["userName"]);
-        this.updateForm.get("password").setValue(this.credupdatedata["password"]);
-        this.updateForm.get("serverName").setValue(this.credupdatedata["serverName"]);
-        this.updateForm.get("categoryId").setValue(this.credupdatedata["categoryId"]);
-        this.updateForm.get("inBoundAddress").setValue(this.credupdatedata["inBoundAddress"]);
-        this.updateForm.get("inBoundAddressPort").setValue(this.credupdatedata["inBoundAddressPort"]);
-        this.updateForm.get("outBoundAddress").setValue(this.credupdatedata["outBoundAddress"]);
-        this.updateForm.get("outboundAddressPort").setValue(this.credupdatedata["outboundAddressPort"]);
+  openUpdateCredential() {
+    document.getElementById('createcredentials').style.display = 'block';
+    let data: any;
+    this.isCreateForm = false;
+    for (data of this.credentials) {
+      if (data.credentialId == this.dbupdateid) {
+        this.credupdatedata = data;
         break;
       }
     }
   }
 
-  closecredentials()
-  {     
+  closecredentials(){
     document.getElementById('createcredentials').style.display='none';
-    document.getElementById('Updatecredntials').style.display='none';
-    this.resetCredForm();
+    this.rpaCred.resetCredForm();
   }
 
   deleteCredentials(){
@@ -304,17 +179,13 @@ updatecreddata()
         this.api.delete_Credentials(selectedcredentials).subscribe( res =>{ 
           let status:any = res;
           this.spinner.hide();
-          if(status.errorMessage==undefined)
-          {
-
+          if(status.errorMessage==undefined){
             Swal.fire("Success",status.status,"success");
             this.removeallchecks();
             this.getallCredentials();
-            
             this.Credchecktoupdate();  
             this.checktodelete();   
-          }else
-          {
+          }else{
             Swal.fire("Error",status.errorMessage,"error")
           }              
         },err=>{
@@ -323,11 +194,9 @@ updatecreddata()
         });
       }
     });
-
   }
 
-  Credchecktoupdate()
-  {
+  Credchecktoupdate(){
     const selectedcredentials = this.credentials.filter(product => product.checked==true);
     if(selectedcredentials.length > 0){
       this.addflag = true;
@@ -338,61 +207,56 @@ updatecreddata()
     {
       this.Credupdateflag=true;
       this.dbupdateid=selectedcredentials[0].credentialId;
-    }else
-    {
+    }else{
       this.Credupdateflag=false;
     }
   }
 
-  CredcheckEnableDisableBtn(id, event)
-  {
+  CredcheckEnableDisableBtn(id, event){
     this.credentials.find(data=>data.credentialId==id).checked=event.target.checked;
-    if(this.credentials.filter(data=>data.checked==true).length==this.credentials.length)
-    {
+    if(this.credentials.filter(data=>data.checked==true).length==this.credentials.length){
       this.Credcheckflag=true;
-    }else
-    {
+    }else{
       this.Credcheckflag=false;  
     }
     this.Credchecktoupdate();
     this.checktodelete();
   }
 
-  checktodelete()
-  {
+  checktodelete(){
     const selectedcredentialsdata = this.credentials.filter(product => product.checked).map(p => p.credentialId);
-    if(selectedcredentialsdata.length>0)
-    {
+    if(selectedcredentialsdata.length>0){
       this.Creddeleteflag=true;
-    }else
-    {
+    }else{
       this.Creddeleteflag=false;
     }
   }
 
   applyFilter1(filterValue: string) {
-    
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
     this.dataSource2.filter = filterValue;
   }
 
-  removeallchecks()
-  {
-    for(let i=0;i<this.credentials.length;i++)
-    {
+  removeallchecks(){
+    for(let i=0;i<this.credentials.length;i++){
       this.credentials[i].checked= false;
     }
     this.Credcheckflag=false;
   }
-  getCategories()
-  {
-    
+
+  getCategories(){
     this.api.getCategoriesList().subscribe(data=>{
       let response:any=data;
-     
         this.categoryList=response.data;
       this.getallCredentials();
     })
+  }
+
+  refreshCredentialList(event){
+    console.log(event)
+    if(event){
+      this.getallCredentials();
+    }
   }
 }

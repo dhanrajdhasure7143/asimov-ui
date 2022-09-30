@@ -215,13 +215,12 @@
                                 <option [value]="category.categoryId" *ngFor="let category of categoryList">{{category.categoryName}}</option>
                             </select>   
                              <span *ngIf="(insertForm.get('categoryId').invalid && insertForm.get('categoryId').touched)"  class="errspan required"> Category Required*</span>
-
-                           
+  
 
                         </div>
                         <div class="col-md-12 p-0 form-group">
                             <label class="label-control" for="userName">Username<span class="star">*</span></label>
-                            <input type="text" maxlength="51" class="form-control" formControlName="username" value="" placeholder="Enter Username">
+                            <input type="text"  maxlength="51" class="form-control" formControlName="username" value="" placeholder="Enter Username">
                             <span *ngIf="(insertForm.get('username').invalid && insertForm.get('username').touched) && !insertForm.controls['username'].hasError('maxlength')"  class="errspan required"> Username Required*</span>
 
                             <div *ngIf="insertForm.controls['username'].hasError('maxlength')"  class="errspan required">

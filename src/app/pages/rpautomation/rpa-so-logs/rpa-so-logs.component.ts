@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit, Output ,ViewChild, OnDestroy, EventEmitter } from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -35,6 +35,7 @@ export class RpaSoLogsComponent implements OnInit, OnDestroy {
   @Input ('logsbotid') public logsbotid:any;
   @Input ('AllVersionsList') public AllVersionsList:any=[];
   @Input('selectedversion') public selectedversion:any;
+  @Output('close') public closeEvent=new EventEmitter<any>();
   @ViewChild("paginator2",{static:false}) paginator2: MatPaginator;
   @ViewChild("sort2",{static:false}) sort2: MatSort;
   public allLogs:any=[];
@@ -401,11 +402,19 @@ export class RpaSoLogsComponent implements OnInit, OnDestroy {
     this.autoRefresh();   
   }
 
+
+  closeLogsOverlay()
+  {
+    this.selectedIterationTask==undefined;
+    this.closeEvent.emit(null)
+  }
+
 ngOnDestroy(): void {
   clearInterval(this.interval)
   clearInterval(this.timeInterval)
   clearInterval(this.interval3)
   clearInterval(this.interval2)
 }
+
   
 }

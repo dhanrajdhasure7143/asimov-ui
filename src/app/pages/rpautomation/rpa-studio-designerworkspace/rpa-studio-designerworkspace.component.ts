@@ -10,28 +10,38 @@ import { Rpa_Hints } from '../model/RPA-Hints';
 import { DataTransferService } from "../../services/data-transfer.service";
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import Swal from 'sweetalert2';
-import { RpaStudioComponent } from "../rpa-studio/rpa-studio.component";
-import { RpaToolsetComponent } from "../rpa-toolset/rpa-toolset.component";
+// import { RpaToolsetComponent } from "../rpa-toolset/rpa-toolset.component";
 import domtoimage from 'dom-to-image';
 import * as $ from 'jquery';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { RpaStudioDesignerComponent } from '../rpa-studio-designer/rpa-studio-designer.component';
-import { ItemsList } from '@ng-select/ng-select/ng-select/items-list';
 import { SplitComponent } from 'angular-split'
-
 @Component({
   selector: 'app-rpa-studio-designerworkspace',
   templateUrl: './rpa-studio-designerworkspace.component.html',
   styleUrls: ['./rpa-studio-designerworkspace.component.css']
 })
 export class RpaStudioDesignerworkspaceComponent implements OnInit {
-
+  @Input("bot") public finalbot: any;
+  @Input("toolsetItems") public toolset:any[];
+  @Input("environmentsList") public environmentsList:any[];
+  @Input("categoriesList") public categoriesList:any[];
+  @ViewChild('logspopup',{static:false}) public logsOverlayRef:any;
+  @ViewChild('screen', { static: false }) screen: ElementRef;
+  @ViewChild('canvas', { static: false }) canvas: ElementRef;
+  filteredEnvironments:any=[];
+  VersionsList:any=[]
+  // @ViewChild('downloadLink', { static: false }) downloadLink: ElementRef;
   recordandplayid:any;
   jsPlumbInstance;
   public stud: any = [];
   public optionsVisible: boolean = true;
   public scheduler: any;
+  schedulerComponentInput:any;
+  scheduleOverlayFlag:Boolean=false;
+  logsOverlayFlag:Boolean=false;
+  logsOverlayModel:any;
   result: any = [];
   fileterdarray:any=[]
   webelementtype:any=[]
@@ -59,11 +69,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   allFormValues: any[] = [];
   saveBotdata: any = [];
   alldataforms: any = [];
-  @ViewChild('screen', { static: false }) screen: ElementRef;
-  @ViewChild('canvas', { static: false }) canvas: ElementRef;
-  @ViewChild('downloadLink', { static: false }) downloadLink: ElementRef;
   public finaldataobjects: any = []
-  @Input("bot") public finalbot: any;
   dropVerCoordinates: any;
   dragareaid: any;
   outputboxid: any;
@@ -125,9 +131,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     private hints: Rpa_Hints,
     private dt: DataTransferService,
     private http: HttpClient,
-    private child_rpa_studio: RpaStudioComponent,
     private RPA_Designer_Component:RpaStudioDesignerComponent,
-    private toolset:RpaToolsetComponent,
+    // private toolset:RpaToolsetComponent,
     private formBuilder: FormBuilder,
     private spinner: NgxSpinnerService,
     private modalService: BsModalService,
@@ -169,20 +174,41 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     if (this.finalbot.botId != undefined) {
       this.finaldataobjects = this.finalbot.tasks.filter((item=>item.version==this.finalbot.version));
       this.actualTaskValue=[...this.finalbot.tasks];
-      this.actualEnv=[...this.finalbot.envIds]
+      this.actualEnv=[...this.finalbot.envIds];
       this.loadGroups("load");
       this.loadnodes();
-     
+      this.getSelectedEnvironments();
+      this.getAllVersions();
     }
     this.dragareaid = "dragarea__" + this.finalbot.botName;
     this.outputboxid = "outputbox__" + this.finalbot.botName;
-    this.getCategories();
+    //this.getCategories();
   }
 
 
 
-  ngAfterViewInit() {
+  getSelectedEnvironments()
+  {
+    this.filteredEnvironments=[...this.environmentsList.filter((item:any)=>item.categoryId===this.finalbot.categoryId)
+      .map(((item2:any)=>{
+        if(this.finalbot.envIds.find((item3:any)=>item3==item2.environmentId)!=undefined)
+          return {...item2,...{check:true}}
+        else
+          return {...item2,...{check:false}}
+      }))] 
+  }
 
+
+  checkUncheckEnvironments(envId)
+  {
+    if(this.filteredEnvironments.find((item:any)=>item.environmentId==envId)!=undefined)
+      this.filteredEnvironments.find((item:any)=>item.environmentId==envId).check=true;  
+  }
+
+
+
+  ngAfterViewInit() 
+  {
     this.jsPlumbInstance = jsPlumb.getInstance();
     var self = this;
     this.jsPlumbInstance.importDefaults({
@@ -282,7 +308,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     if (this.finalbot.botId != undefined) {
       this.addconnections(this.finalbot.sequences)
       
-      this.child_rpa_studio.spinner.hide()
+      //this.child_rpa_studio.spinner.hide()
       this.dragelement = document.querySelector('#' + this.dragareaid);
 
     }
@@ -393,14 +419,14 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       let templatenodes:any=[]
       let nodename = element.nodeId.split("__")[0];
       let nodeid = element.nodeId.split("__")[1];
-      templatenodes=this.toolset.templateNodes;
+      templatenodes=this.toolset;
       let node = {
         id: nodeid,
         name: nodename,
         selectedNodeTask: element.taskName,
         selectedNodeId: element.tMetaId,
-        path: this.toolset.templateNodes.find(data => data.name == nodename).path,
-        tasks: this.toolset.templateNodes.find(data => data.name == nodename).tasks,
+        path: this.toolset.find(data => data.name == nodename).path,
+        tasks: this.toolset.find(data => data.name == nodename).tasks,
       }
       let checkFlag:any=[]
       checkFlag=this.savedGroupsData.filter((groupData:any)=>{
@@ -1304,37 +1330,37 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     this.notifier.notify("info", "Data Saved Successfully");
   }
 
-  async saveBotFun(botProperties, env) {
-    this.checkorderflag=true;
-    this.addsquences();
-    this.arrange_task_order(this.startNodeId);
-    this.get_coordinates();
-    await this.getsvg();
-      this.saveBotdata = {
-        "botName": botProperties.botName,
-        "botType": botProperties.botType,
-        "description": botProperties.botDescription,
-        "department": botProperties.botDepartment,
-        "botMainSchedulerEntity": this.scheduler,
-        "envIds": env,
-        "isPredefined": botProperties.predefinedBot,
-        "tasks": this.final_tasks,
-        "createdBy": "admin",
-        "lastSubmittedBy": "admin",
-        "scheduler": this.scheduler,
-        "svg":this.svg,
-        "groups":this.getGroupsInfo(),
-        "sequences": this.getsequences(),
-      }
-      if(this.checkorderflag==false)
-      {
-        return  false;
-      }
-      else
-      {
-        return  await  this.rest.saveBot(this.saveBotdata)
-      }
-  }
+  // async saveBotFun(botProperties, env) {
+  //   this.checkorderflag=true;
+  //   this.addsquences();
+  //   this.arrange_task_order(this.startNodeId);
+  //   this.get_coordinates();
+  //   await this.getsvg();
+  //     this.saveBotdata = {
+  //       "botName": botProperties.botName,
+  //       "botType": botProperties.botType,
+  //       "description": botProperties.botDescription,
+  //       "department": botProperties.botDepartment,
+  //       "botMainSchedulerEntity": this.scheduler,
+  //       "envIds": env,
+  //       "isPredefined": botProperties.predefinedBot,
+  //       "tasks": this.final_tasks,
+  //       "createdBy": "admin",
+  //       "lastSubmittedBy": "admin",
+  //       "scheduler": this.scheduler,
+  //       "svg":this.svg,
+  //       "groups":this.getGroupsInfo(),
+  //       "sequences": this.getsequences(),
+  //     }
+  //     if(this.checkorderflag==false)
+  //     {
+  //       return  false;
+  //     }
+  //     else
+  //     {
+  //       return  await  this.rest.saveBot(this.saveBotdata)
+  //     }
+  // }
 
   async uploadfile(envids)
   {
@@ -1384,13 +1410,32 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     })
   }
 
-  resetdata() {
-    this.jsPlumbInstance.deleteEveryEndpoint()
-    this.nodes = [];
-    this.finaldataobjects = [];
+  resetDesigner() {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, reset designer!'
+    }).then((result:any) => {
+      //console.log(result)
+      if(result.value)
+      {
+        this.jsPlumbInstance.deleteEveryEndpoint()
+        this.nodes = [];
+        this.finaldataobjects = [];
+        this.groupsData=[]
+      }
+    });
   }
 
-  async updateBotFun(botProperties, env,version_type,comments) {
+  async updateBotFun(version_type,comments) {
+    let env=[...this.filteredEnvironments.filter((item:any)=>item.check==true).map((item2:any)=>{
+      return item2.environmentId
+    })];
+    this.spinner.show();
     this.checkorderflag=true;
     this.addsquences();
     this.arrange_task_order(this.startNodeId);
@@ -1400,29 +1445,61 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     this.saveBotdata = {
       "versionType":version_type,
       "comments":comments,
-      "version": botProperties.version,
-      "botId": botProperties.botId,
-      "botName": botProperties.botName,
-      "botType": botProperties.botType,
-      "description": botProperties.botDescription,
-      "department": botProperties.botDepartment,
+      "version": this.finalbot.version,
+      "botId": this.finalbot.botId,
+      "botName": this.finalbot.botName,
+      "botType": this.finalbot.botType,
+      "description": this.finalbot.botDescription,
+      "department": this.finalbot.botDepartment,
       "botMainSchedulerEntity":null,
       "envIds": env,
-      "isPredefined": botProperties.predefinedBot,
+      "isPredefined": this.finalbot.predefinedBot,
       "tasks": this.final_tasks,
       "createdBy": "admin",
       "groups":this.getGroupsInfo(),
       "lastSubmittedBy": "admin",
-      "scheduler": this.scheduler,
+      "scheduler": null,
       "svg":this.svg,
       "sequences": this.getsequences()
     }
    
     if(this.checkorderflag==false)
-     return false;
+      Swal.fire("Warning","Please check connections","warning")
     else
     {
-     return this.rest.updateBot(this.saveBotdata)
+      (await this.rest.updateBot(this.saveBotdata)).subscribe((response:any)=>{
+        this.spinner.hide()
+        if(response.errorMessage==undefined)
+        {
+          this.finalbot=response;
+          this.actualTaskValue=[...response.tasks];
+          this.actualEnv=[...response.envIds]
+          Swal.fire("Success","Bot updated successfully","success");
+          let auditLogsList=[...this.auditLogs.map(item=>{
+            item["versionNew"]=response.versionNew;
+            item['comments']=response.comments;
+            return item
+          })];
+          this.rest.addAuditLogs(auditLogsList).subscribe((response:any)=>{
+            if(response.errorMessage==undefined)
+            {
+              this.notifier.notify("Success","Audit logs updated successfully")
+            }
+            else
+            {
+              Swal.fire("Error",response.errorMessage, "error");
+            }
+          },err=>{
+            Swal.fire("Error","Unable to update audit logs","error")
+          })
+        }
+        else
+        {
+          Swal.fire("Error",response.errorMesssage, "error");
+        }
+      },(err)=>{
+        Swal.fire("Error","Unable to update bot","error");
+      })
       //return false;
     } 
 
@@ -1570,8 +1647,9 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
   downloadPng()
   {
+
+    //this.spinner.show()
     var element=document.getElementById(this.dragareaid)
-    
     var botName=this.finalbot.botName;
     domtoimage.toPng(element, { quality : 1,bgcolor : "white"})
       .then(function (dataUrl) {
@@ -1579,6 +1657,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         link.download = botName+".png";
         link.href = dataUrl;
         link.click();
+        //this.spinner.hide();
       })
       .catch(function (error) {
       });
@@ -1834,7 +1913,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       }
     })
 
-
+  
 
   }
 
@@ -2020,15 +2099,15 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
    } 
   }
 
-  getCategories(){
-    this.rest.getCategoriesList().subscribe(data=>{
-      let response:any=data;
-      if(response.errorMessage==undefined)
-      {
-        this.categoryList=response.data;
-      }
-    })
-  }
+  // getCategories(){
+  //   this.rest.getCategoriesList().subscribe(data=>{
+  //     let response:any=data;
+  //     if(response.errorMessage==undefined)
+  //     {
+  //       this.categoryList=response.data;
+  //     }
+  //   })
+  // }
 
   minimizeFullScreen(){
     this.isShowExpand=false;
@@ -2132,6 +2211,108 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       }
     })]
   }
+
+
+
+  executeBot()
+  {
+    this.spinner.show()
+    this.rest.execution(this.finalbot.botId).subscribe((response:any)=>{
+      this.spinner.hide()
+      if(response.errorMessage==undefined)
+        Swal.fire("Success",response.status,"success");
+      else
+        Swal.fire("Error",response.errorMessage, "error")
+    },err=>{
+      this.spinner.hide()
+      Swal.fire("Error","Unable to execute bot","error")
+    })
+  }
+
+
+
+  getAllVersions()
+  {
+    this.rest.getBotVersion(this.finalbot.botId).subscribe((response:any)=>{
+      if(response.errorMessage==undefined)
+      {
+        let sortedversions:any[]=response.sort((a, b) => (a.vId > b.vId) ? 1 : -1)
+        this.VersionsList=[...sortedversions.reverse()];
+      }
+      else
+      {
+        Swal.fire("Error",response.errorMessage, "error")
+      }
+    },err=>{
+      Swal.fire("Error","Unable to get versions", "error")
+    })
+  }
+
+  openScheduler()
+  {
+    this.schedulerComponentInput={
+      botid:this.finalbot.botId,
+      version:this.finalbot.version,
+      botName:this.finalbot.botName
+    }
+    this.scheduleOverlayFlag=true;
+    document.getElementById('sch').style.display='block'
+  }
+
+  closeScheduler()
+  {
+    document.getElementById('sch').style.display='none'
+    this.scheduleOverlayFlag=false;
+  }
+
+  openLogs()
+  {
+
+    this.logsOverlayFlag=true;
+    this.logsOverlayModel=this.modalService.show(this.logsOverlayRef, {class:"logs-modal"})
+    
+  }
+
+  closeLogsOverlay()
+  {
+    this.logsOverlayModel.hide();
+    this.logsOverlayFlag=false;
+  }
+
+  deleteBot()
+  {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+    if (result.value) {
+      this.spinner.show();
+      this.rest.getDeleteBot(this.finalbot.botId).subscribe(data=>{
+        let response:any=data;
+        this.spinner.hide()
+        if(response.status!=undefined)
+        {
+            Swal.fire("Success",response.status,"success");
+            $("#close_bot_"+this.finalbot.botName).click();
+        }
+        else
+        {
+            Swal.fire("Error",response.errorMessage,"error")
+        }
+      },err=>{
+        this.spinner.hide();
+        Swal.fire("Error","Unable to delete bot","error")
+      })
+  }
+
+    })
+  }
+
 }
 
 

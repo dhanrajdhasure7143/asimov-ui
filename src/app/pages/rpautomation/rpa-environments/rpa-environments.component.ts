@@ -58,6 +58,7 @@ import * as moment from 'moment';
     public password:any="";
     public keyValueFile:File;
     addflag:boolean=false;
+    isCreate:boolean=false;
     
   constructor(private api:RestApiService, 
     private router:Router, 
@@ -77,7 +78,7 @@ import * as moment from 'moment';
         agentPath: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         hostAddress: ["", Validators.compose([Validators.required,  Validators.maxLength(50)])],
         categoryId:["0", Validators.compose([Validators.required])],
-        username: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        username: ["", Validators.compose([Validators.required,Validators.pattern('^[a-zA-Z \-\']+') ,Validators.maxLength(50)])],
         connectionType: ["SSH",Validators.compose([Validators.required,, Validators.maxLength(50), Validators.pattern("[A-Za-z]*")])],
         portNumber: ["22",  Validators.compose([Validators.required, Validators.maxLength(4)])],
         activeStatus: [true] 
@@ -126,46 +127,45 @@ import * as moment from 'moment';
         })
   }
 
- async getallData(){
+ async getallData()
+  {
     this.environments=[];
     await this.api.listEnvironments().subscribe(
     data => {
          let response:any= data;	
-         if(response.length>0){ 
+         if(response.length>0)
+         { 
            this.checkeddisabled = false;
-         }else{
+         }
+         else
+         {
            this.checkeddisabled = true;
          }
-
-        // for(let i=0;i<response.length;i++)
-        // {
-        //   let checks={
-        //     checked:false,
-        //     }
-        //   this.environments.push(Object.assign({}, response[i], checks));
-        // }
-        // this.environments.sort((a,b) => a.activeTimeStamp > b.activeTimeStamp ? -1 : 1);
-        this.environments=response.map(item=>{
+        for(let i=0;i<response.length;i++)
+        {
+          let checks={
+            checked:false,
+            }
+          this.environments.push(Object.assign({}, response[i], checks));
+        }
+        this.environments.sort((a,b) => a.activeTimeStamp > b.activeTimeStamp ? -1 : 1);
+        this.environments=this.environments.map(item=>{
            item["categoryName"]=this.categoryList.find(item2=>item2.categoryId==item.categoryId).categoryName;
-           item["checked"]=false;
            item["createdTimeStamp_converted"] = moment(new Date(item.createdTimeStamp)).format('LLL')
-            if(item.keyValue!=null){
+            if(item.keyValue!=null)
+            {
               item["password"]={
                 key:""
               }
-            }else{
+            }
+            else
+            {
               item["password"]={
                   password:item.password
               }
             }
            return item;
         })
-        this.environments.sort(function (a, b) {
-          a = new Date(a.activeTimeStamp);
-          b = new Date(b.activeTimeStamp);
-          return a > b ? -1 : a < b ? 1 : 0;
-        });
-
         this.dataSource1= new MatTableDataSource(this.environments);
         this.isDataSource = true;
         this.dataSource1.sort=this.sort1;
@@ -218,9 +218,8 @@ import * as moment from 'moment';
     return true;
   }
   
-  create()
-  {
-    
+  create(){
+    this.isCreate=true;
     //document.getElementById("filters").style.display='none';
     document.getElementById("createenvironment").style.display='block';
     this.insertForm.get("categoryId").setValue(this.categoryList.length==1?this.categoryList[0].categoryId:"0")
@@ -581,98 +580,71 @@ import * as moment from 'moment';
     
   }
 
-  updatedata()
-  {
-    
-    document.getElementById("createenvironment").style.display='none';    
+  updatedata() {
+    this.isCreate = true;
+    document.getElementById("createenvironment").style.display = 'none';
     //document.getElementById("filters").style.display='none';
-    document.getElementById('update-popup').style.display='block';
-    let data:environmentobservable;
-    for(let data of this.environments)
-    {
-      if(data.environmentId==this.updateid)
-      {
-        if(data.activeStatus==7){
-          this.toggle=true;
+    document.getElementById('update-popup').style.display = 'block';
+    let data: environmentobservable;
+    for (let data of this.environments) {
+      if (data.environmentId == this.updateid) {
+        if (data.activeStatus == 7) {
+          this.toggle = true;
           this.updateForm.get("activeStatus").setValue(true);
-        }else{
-          this.toggle=false;
+        } else {
+          this.toggle = false;
           this.updateForm.get("activeStatus").setValue(false);
         }
-        this.updateenvdata=Object.create(data);
-        if(data.password.password==undefined)
-        {
-          this.isKeyValuePair=true
-          this.password=""
+        if (data.password.password == undefined) {
+          this.isKeyValuePair = true
+          this.password = ""
+        } else {
+          this.password = data.password.password;
+          this.isKeyValuePair = false;
         }
-        else
-        {
-          this.password=data.password.password;
-          this.isKeyValuePair=false;
+        if (data.keyValue != null) {
+          this.keyValueFile = data.keyValue
+        } else {
+          this.keyValueFile = undefined
         }
-        if(data.keyValue!=null){
-           this.keyValueFile=data.keyValue
-        }
-        else{
-          this.keyValueFile=undefined
-        }
-        this.updateForm.get("environmentName").setValue(this.updateenvdata["environmentName"]);
-        this.updateForm.get("environmentType").setValue(this.updateenvdata["environmentType"]);
-        this.updateForm.get("agentPath").setValue(this.updateenvdata["agentPath"]);
-        this.updateForm.get("categoryId").setValue(this.updateenvdata["categoryId"]);
-        this.updateForm.get("hostAddress").setValue(this.updateenvdata["hostAddress"]);
-        this.updateForm.get("username").setValue(this.updateenvdata["username"]);
-        // this.updateForm.get("password").setValue(this.updateenvdata["password"]);
-        
-        this.updateForm.get("connectionType").setValue(this.updateenvdata["connectionType"]);
-        this.updateForm.get("portNumber").setValue(this.updateenvdata["portNumber"]);
-        break;
+        this.updateenvdata = Object.create(data);
       }
     }
   }
-  keypair(event){
-    
-    this.isKeyValuePair=!this.isKeyValuePair;
-    if(event.target.checked==true){
-      if(this.updateenvdata.password.password!=undefined){
-        this.password=this.updateenvdata.password.password
+
+  keypair(event) {
+    this.isKeyValuePair = !this.isKeyValuePair;
+    if (event.target.checked == true) {
+      if (this.updateenvdata.password.password != undefined) {
+        this.password = this.updateenvdata.password.password
+      } else {
+        this.password = ''
       }
-      else{
-        this.password=''
+
+      if (this.keyValueFile == undefined) {
+        this.keyValueFile = undefined
+      } else {
+        this.keyValueFile = this.updateenvdata.keyValue
       }
-      
-        if(this.keyValueFile==undefined){
-          this.keyValueFile=undefined
-        }
-        else{
-         
-          this.keyValueFile= this.updateenvdata.keyValue
-         
-        }
-      
-     
-    }
-    else{
-      if(this.keyValueFile==undefined){
-        this.keyValueFile=undefined
+    } else {
+      if (this.keyValueFile == undefined) {
+        this.keyValueFile = undefined
       }
-      if(this.updateenvdata.password.password!=undefined){
-        this.password=this.updateenvdata.password.password
+      if (this.updateenvdata.password.password != undefined) {
+        this.password = this.updateenvdata.password.password
+      } else {
+        this.password = ''
       }
-      else{
-        this.password=''
-      }
-      
     }
   }
-  close()
-  { 
+
+  close() {
     //document.getElementById("filters").style.display='block';
-    document.getElementById('createenvironment').style.display='none';
-    document.getElementById('update-popup').style.display='none';
-    this.isKeyValuePair=false;
-    this.password="";
-    this.keyValueFile=undefined;
+    document.getElementById('createenvironment').style.display = 'none';
+    document.getElementById('update-popup').style.display = 'none';
+    this.isKeyValuePair = false;
+    this.password = "";
+    this.keyValueFile = undefined;
     this.resetEnvForm();
   }
 

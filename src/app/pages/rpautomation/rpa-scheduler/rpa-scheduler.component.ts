@@ -5,7 +5,6 @@ import Swal from 'sweetalert2';
 import cronstrue from 'cronstrue';
 import moment from 'moment';
 import { NotifierService } from 'angular-notifier';
-import { RpaStudioActionsmenuComponent } from '../rpa-studio-actionsmenu/rpa-studio-actionsmenu.component'
 
 
 @Component({
@@ -85,7 +84,7 @@ export class RpaSchedulerComponent implements OnInit {
   starttimeerror:any;
   aftertime:boolean=false;
   checkScheduler : boolean = false;
-  constructor(private rest:RestApiService, private notifier: NotifierService, private actions:RpaStudioActionsmenuComponent) { }
+  constructor(private rest:RestApiService, private notifier: NotifierService) { }
 
   ngOnInit() {
     var dtToday = new Date();

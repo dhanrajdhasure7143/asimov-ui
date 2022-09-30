@@ -1,0 +1,64 @@
+<div class="modal-body">
+    <form [formGroup]="botForm" (ngSubmit)="onCreateSubmit()">
+        <div class="container m-contanier form-body">
+            <div class="col-md-12 p-0 form-group">
+                <label class="label-control" for="botName">Bot Name<span class="star">*</span></label>
+                <input type="text" formControlName="botName" autocomplete="off" placeholder="Enter Bot Name"
+                    [(ngModel)]="botName" maxlength="31" (input)="validate(botName,$event)" class="form-control"
+                    name="botName" (change)="checkBotnamevalidation()" required />
+                <div *ngIf="(botForm.get('botName').hasError('required') && botForm.get('botName').touched) && !botForm.controls['botName'].hasError('maxlength')"
+                    class="errspan required">
+                    Bot Name Required*
+                </div>
+                <div *ngIf="checkbotname && botForm.get('botName').value" class="errspan required">
+                    Bot Name is already exists*
+                </div>
+                <div *ngIf="botNamespace" class="errspan required">special characters are not allowed Excluding( _ & - )
+                </div>
+
+                <div *ngIf="botForm.controls['botName'].hasError('maxlength')" class="errspan required">
+                    Maximum of 30 characters exceeded
+                </div>
+                <!-- <div *ngIf="botForm.controls['botName'].hasError('minlength')" class="errspan required">
+                                    Minimum 2 characters required
+                                </div> -->
+            </div>
+            <div class="col-md-12 p-0 form-group">
+                <label class="label-control" for="botDepartment">Category<span class="star">*</span></label>
+
+                <select [(ngModel)]="rpaCategory" class="form-control" [disabled]="categaoriesList.length==1"
+                    [value]="categaoriesList.length==1?categaoriesList[0].categoryId:''" formControlName="botDepartment"
+                    name="botDepartment">
+                    <option value="">Select Category</option>
+                    <option *ngFor="let category of categaoriesList" [value]="category.categoryId">
+                        {{category.categoryName}}</option>
+                </select>
+
+                <div *ngIf="botForm.get('botDepartment').invalid && botForm.get('botDepartment').touched"
+                    class="errspan required">
+                    Category Required*
+                </div>
+
+            </div>
+            <div class="col-md-12 p-0 form-group">
+                <label class="label-control" for="botDescription">Bot Description</label>
+                <textarea type="text" autocomplete="off" formControlName="botDescription"
+                    placeholder="Enter Bot Description" ngModel maxlength="151" rows="3" class="form-control"
+                    name="botDescription"></textarea>
+                <div *ngIf="botForm.controls['botDescription'].hasError('maxlength')" class="errspan required">
+                    Maximum of 150 characters exceeded
+                </div>
+            </div>
+
+            <div class="col-md-6 p-0 form-group">
+                <input type="checkbox" formControlName="predefinedBot" (click)="predefined($event)"
+                    name="predefinedBot">&nbsp; <span>Predefined Bot</span>
+            </div>
+        </div>
+        <div class="form-footer">
+            <button class="btn btn-primary"
+                [disabled]="botForm.invalid || botNamespace || checkbotname">Submit</button>
+        </div>
+    </form>
+</div>
+    

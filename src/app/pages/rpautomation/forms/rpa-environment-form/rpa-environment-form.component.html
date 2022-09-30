@@ -1,0 +1,301 @@
+<div *ngIf="isCreate">
+    <div class="modal-body">
+        <div class="container m-contanier form-body">
+            <form [formGroup]="insertForm" (ngSubmit)="savedata()">
+                <div class="col-md-12 p-0 form-group">
+                    <label class="label-control" for="environmentName">Name<span class="star">*</span></label>
+                    <input type="text" (keypress)="onlyAlphabetsAllowed($event)" maxlength="51"
+                        class="form-control data" formControlName="environmentName" #environmentName value=""
+                        placeholder="Enter Name">
+                    <span
+                        *ngIf="(insertForm.get('environmentName').invalid && insertForm.get('environmentName').touched) && !insertForm.controls['environmentName'].hasError('maxlength')"
+                        class="errspan required">Name Required*</span>
+                    <div *ngIf="insertForm.controls['environmentName'].hasError('maxlength')" class="errspan required">
+                        Maximum of 50 characters
+                    </div>
+                </div>
+                <div class="col-md-12 p-0 form-group">
+                    <label class="label-control" for="environmentType">Type<span class="star">*</span></label>
+                    <select class="form-control" formControlName="environmentType" (change)="EnvType1()">
+                        <option value="" [selected]="true">Select Type</option>
+                        <option value="Windows">Windows</option>
+                        <option value="Mac">Mac</option>
+                        <option value="Linux">Linux</option>
+
+                    </select>
+                    <span *ngIf="insertForm.get('environmentType').invalid && insertForm.get('environmentType').touched"
+                        class="errspan required">Type Required*</span>
+                </div>
+                <div class="col-md-12 p-0 form-group">
+                    <label class="label-control" for="agentPath">Agent Path<span class="star">*</span></label>
+                    <input type="text" maxlength="51" class="form-control" formControlName="agentPath" value=""
+                        placeholder="Enter Agent Path">
+                    <span
+                        *ngIf="(insertForm.get('agentPath').invalid && insertForm.get('agentPath').touched) && !insertForm.controls['agentPath'].hasError('maxlength')"
+                        class="errspan required"> Agent Path Required*</span>
+
+                    <div *ngIf="insertForm.controls['agentPath'].hasError('maxlength')" class="errspan required">
+                        Maximum of 50 characters
+                    </div>
+                </div>
+                <div class="col-md-12 p-0 form-group">
+                    <label class="label-control" for="hostAddress"> IP Address / Host<span class="star">*</span></label>
+                    <input type="text" maxlength="51" class="form-control" formControlName="hostAddress" value=""
+                        placeholder="Enter IP Address / Host">
+                    <span
+                        *ngIf="(insertForm.get('hostAddress').invalid && insertForm.get('hostAddress').touched) && !insertForm.controls['hostAddress'].hasError('maxlength') && !insertForm.controls['hostAddress'].hasError('pattern')"
+                        class="errspan required"> IP Address/Host Required*</span>
+                    <div *ngIf="(insertForm.controls['hostAddress'].hasError('pattern') && !insertForm.controls['hostAddress'].hasError('maxlength')) && insertForm.get('hostAddress').touched"
+                        class="errspan required">
+                        Invalid IP Address format
+                    </div>
+                    <div *ngIf="(insertForm.controls['hostAddress'].hasError('pattern') && insertForm.controls['hostAddress'].hasError('maxlength'))"
+                        class="errspan required">
+                        Invalid IP Address format
+                    </div>
+                </div>
+                <div class="col-md-12 p-0 form-group">
+                    <label class="label-control" for="categoryId">Category<span class="star">*</span></label>
+                    <select type="text" class="form-control" formControlName="categoryId"
+                        [value]="categoryList.length==1?categoryList[0].categoryId:'0'">
+                        <option value="0" disabled>Select Category</option>
+                        <option [value]="category.categoryId" *ngFor="let category of categoryList">
+                            {{category.categoryName}}</option>
+                    </select>
+                    <span *ngIf="(insertForm.get('categoryId').invalid && insertForm.get('categoryId').touched)"
+                        class="errspan required"> Category Required*</span>
+
+
+
+                </div>
+                <div class="col-md-12 p-0 form-group">
+                    <label class="label-control" for="userName">Username<span class="star">*</span></label>
+                    <input type="text" (keypress)="onlyAlphabetsAllowed($event)" maxlength="51" class="form-control"
+                        formControlName="username" value="" placeholder="Enter Username">
+                    <span
+                        *ngIf="(insertForm.get('username').invalid && insertForm.get('username').touched) && !insertForm.controls['username'].hasError('maxlength')"
+                        class="errspan required"> Username Required*</span>
+
+                    <div *ngIf="insertForm.controls['username'].hasError('maxlength')" class="errspan required">
+                        Maximum of 50 characters
+                    </div>
+
+                </div>
+                <div class="col-md-12 p-0 form-group">
+                    <label class="label-control" for="password"><input type="checkbox" [checked]="isKeyValuePair"
+                            (change)="keypair($event)">Key Pair Authentication<span class="star">*</span> </label>
+                </div>
+                <div class="col-md-12 p-0 form-group" *ngIf="isKeyValuePair==false">
+                    <label class="label-control" for="password">Password<span class="star">*</span></label>
+                    <input [type]="passwordtype1 ? 'text': 'password'" class="form-control" [(ngModel)]="password"
+                        [ngModelOptions]="{standalone: true}" placeholder="Enter Password">
+                    <span *ngIf="passwordtype1==false" (click)="passwordtype1 =!passwordtype1" class="pdicon">
+                        <img src="../../../../../assets/images/Projects/eye-show.svg" class="testplus1">
+                    </span>
+                    <span *ngIf="passwordtype1==true" (click)="passwordtype1 =!passwordtype1" class="pdicon">
+                        <img src="../../../../../assets/images/Projects/eye-hide.svg" class="testplus1">
+                    </span>
+                </div>
+                <div class="col-md-12 p-0 form-group" *ngIf="isKeyValuePair==true">
+                    <!-- <label class="label-control" for="KeyValuePair">Key Value Pair <span class="star">*</span></label> -->
+                    <input type="file" (change)="keyValueFile=$event.target.files[0]" class="form-control"
+                        id="KeyValuePair">
+                </div>
+                <div class="col-md-12 p-0 form-group">
+                    <label class="label-control" for="connectionType">Connection Type<span class="star">*</span></label>
+                    <input type="text" maxlength="51" class="form-control" formControlName="connectionType" value=""
+                        placeholder="Enter Connection Type" readonly>
+                    <span
+                        *ngIf="(insertForm.get('connectionType').invalid && insertForm.get('connectionType').touched) && !insertForm.controls['connectionType'].hasError('maxlength')"
+                        class="errspan required"> Connection Type Required*</span>
+                    <div *ngIf="insertForm.controls['connectionType'].hasError('maxlength')" class="errspan required">
+                        Maximum of 50 characters
+                    </div>
+
+                </div>
+
+                <div class="col-md-12 p-0 form-group">
+                    <label class="label-control" for="portNumber">Port<span class="star">*</span></label>
+                    <input type="number" maxlength="5" onkeypress="if(this.value.length==4) return false"
+                        class="form-control" (keypress)="onlyNumbersAllowed($event)" formControlName="portNumber"
+                        value="" placeholder="Enter Port">
+
+                    <span
+                        *ngIf="(insertForm.get('portNumber').invalid && insertForm.get('portNumber').touched) && !insertForm.controls['portNumber'].hasError('maxlength')"
+                        class="errspan required"> Port Required*</span>
+
+                    <div *ngIf="insertForm.controls['portNumber'].hasError('maxlength')" class="errspan required">
+                        Maximum of 4 characters
+                    </div>
+                </div>
+                <div class="col-md-6 p-0 form-group">
+                    <input type="checkbox" formControlName="activeStatus"> Active
+                </div>
+            </form>
+            <div class="form-footer">
+                <button class="btn btn-default" (click)="resetEnvForm()">Reset</button>
+                <button class="btn btn-primary btn-test"
+                    [disabled]="insertForm.invalid || !((password!='' && isKeyValuePair==false  )||(isKeyValuePair==true && keyValueFile!=undefined))"
+                    (click)="testConnection('insert')">Test Connection</button>
+                <button class="btn btn-primary"
+                    [disabled]="insertForm.invalid || submitted || insertForm.invalid || !((password!='' && isKeyValuePair==false  )||(isKeyValuePair==true && keyValueFile!=undefined))"
+                    (click)="saveEnvironmentV2()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div *ngIf="isCreate">
+    <div class="modal-body">
+        <div class="container m-contanier form-body" *ngIf="updateenvdata!=undefined">
+            <form [formGroup]="updateForm" (ngSubmit)="updateEnvironment()">
+                <div class="col-md-12 p-0 form-group">
+                    <label class="label-control" for="environmentName">Name<span class="star">*</span></label>
+                    <input type="text" class="form-control" maxlength="51" formControlName="environmentName"
+                        placeholder="Enter Name">
+                    <span
+                        *ngIf="(updateForm.get('environmentName').invalid && updateForm.get('environmentName').touched) && !updateForm.controls['environmentName'].hasError('maxlength')"
+                        class="errspan required">Name Required*</span>
+                    <div *ngIf="updateForm.controls['environmentName'].hasError('maxlength')" class="errspan required">
+                        Maximum of 50 characters
+                    </div>
+
+                </div>
+                <div class="col-md-12 p-0 form-group">
+                    <label class="label-control" for="environmentType">Type<span class="star">*</span></label>
+                    <select class="form-control" (change)="EnvType()" formControlName="environmentType">
+                        <option value="">--Select Type--</option>
+                        <option value="Windows">Windows</option>
+                        <option value="Mac">Mac</option>
+                        <option value="Linux">Linux</option>
+                    </select>
+                    <span *ngIf="updateForm.get('environmentType').invalid && updateForm.get('environmentType').touched"
+                        class="errspan required"> Environment Type Required*</span>
+                </div>
+                <div class="col-md-12 p-0 form-group">
+                    <label class="label-control" for="agentPath">Agent Path<span class="star">*</span></label>
+                    <input type="text" class="form-control" maxlength="51" formControlName="agentPath"
+                        placeholder="Enter Agent Path">
+                    <span
+                        *ngIf="(updateForm.get('agentPath').invalid && updateForm.get('agentPath').touched) && !updateForm.controls['agentPath'].hasError('maxlength')"
+                        class="errspan required"> Agent Path Required*</span>
+
+                    <div *ngIf="updateForm.controls['agentPath'].hasError('maxlength')" class="errspan required">
+                        Maximum of 50 characters
+                    </div>
+                </div>
+                <div class="col-md-12 p-0 form-group">
+                    <label class="label-control" for="hostAddress">IP Address / Host<span class="star">*</span></label>
+                    <input type="text" class="form-control" maxlength="51" formControlName="hostAddress"
+                        placeholder="Enter IP Address / Host">
+                    <span
+                        *ngIf="(updateForm.get('hostAddress').invalid && updateForm.get('hostAddress').touched) && !updateForm.controls['hostAddress'].hasError('maxlength') && !updateForm.controls['hostAddress'].hasError('pattern')"
+                        class="errspan required"> IP Address/Host Required*</span>
+                    <div *ngIf="(updateForm.controls['hostAddress'].hasError('pattern') && !updateForm.controls['hostAddress'].hasError('maxlength')) && updateForm.get('hostAddress').touched"
+                        class="errspan required">
+                        Invalid IP Address format
+                    </div>
+                    <div *ngIf="(updateForm.controls['hostAddress'].hasError('pattern') && updateForm.controls['hostAddress'].hasError('maxlength'))"
+                        class="errspan required">
+                        Invalid IP Address format
+                    </div>
+                </div>
+                <div class="col-md-12 p-0 form-group">
+                    <label class="label-control" for="categoryId">Category<span class="star">*</span></label>
+                    <select class="form-control" formControlName="categoryId">
+                        <option value="0" disabled>Select Category</option>
+                        <option [value]="category.categoryId" *ngFor="let category of categoryList">
+                            {{category.categoryName}}</option>
+                    </select>
+                    <span *ngIf="(updateForm.get('categoryId').invalid && updateForm.get('categoryId').touched)"
+                        class="errspan required"> Category Required*</span>
+
+                </div>
+
+                <div class="col-md-12 p-0 form-group">
+                    <label class="label-control" for="userName">Username<span class="star">*</span></label>
+                    <input type="text" class="form-control" maxlength="51" formControlName="username"
+                        placeholder="Enter Username">
+                    <span
+                        *ngIf="(updateForm.get('username').invalid && updateForm.get('username').touched) && !updateForm.controls['username'].hasError('maxlength')"
+                        class="errspan required"> Username Required*</span>
+
+                    <div *ngIf="updateForm.controls['username'].hasError('maxlength')" class="errspan required">
+                        Maximum of 50 characters
+                    </div>
+                </div>
+
+
+                <div class="col-md-12 p-0 form-group">
+                    <label class="label-control" for="password"><input type="checkbox" [checked]="isKeyValuePair"
+                            (change)="keypair($event)"> Key Pair Authentication<span class="star">*</span> </label>
+
+                </div>
+                <div class="col-md-12 p-0 form-group" *ngIf="isKeyValuePair==false">
+                    <label class="label-control" for="password">Password<span class="star">*</span></label>
+                    <input [type]="passwordtype1 ? 'text': 'password'" class="form-control" [(ngModel)]="password"
+                        [ngModelOptions]="{standalone: true}" placeholder="Enter Password">
+                    <span *ngIf="passwordtype1==false" (click)="passwordtype1 =!passwordtype1" class="pdicon">
+                        <img src="../../../../../assets/images/Projects/eye-show.svg" class="testplus1">
+                    </span>
+                    <span *ngIf="passwordtype1==true" (click)="passwordtype1 =!passwordtype1" class="pdicon">
+                        <img src="../../../../../assets/images/Projects/eye-hide.svg" class="testplus1">
+                    </span>
+                </div>
+                <div class="col-md-12 p-0 form-group" *ngIf="isKeyValuePair==true">
+
+                    <input type="file" (change)="keyValueFile=$event.target.files[0]" class="form-control"
+                        id="KeyValuePair">
+                    <a class="downloadLink" *ngIf="updateenvdata.keyValue !=null"
+                        (click)="downloadOption(updateenvdata.environmentName,updateenvdata.keyValue)">Download Key</a>
+                </div>
+
+                <div class="col-md-12 p-0 form-group">
+                    <label class="label-control" for=" connectionType">Connection Type<span
+                            class="star">*</span></label>
+                    <input type="text" maxlength="51" class="form-control" pattern="[a-zA-Z ]*"
+                        formControlName="connectionType" placeholder="Enter Connection Type" readonly>
+                    <span
+                        *ngIf="(updateForm.get('connectionType').invalid && updateForm.get('connectionType').touched) && !updateForm.controls['connectionType'].hasError('maxlength')"
+                        class="errspan required"> Connection Type Required*</span>
+                    <div *ngIf="updateForm.controls['connectionType'].hasError('maxlength')" class="errspan required">
+                        Maximum of 50 characters
+                    </div>
+
+                </div>
+
+                <div class="col-md-12 p-0 form-group">
+                    <label class="label-control" for="portNumber">Port<span class="star">*</span></label>
+                    <input type="text" maxlength="7" class="form-control"
+                        (keyup)="return (event.charCode > 47 && event.charCode < 58)" formControlName="portNumber"
+                        value="" placeholder="Enter Port">
+                    <span
+                        *ngIf="(updateForm.get('portNumber').invalid && updateForm.get('portNumber').touched) && !updateForm.controls['portNumber'].hasError('maxlength')"
+                        class="errspan required"> Port Required*</span>
+
+                    <div *ngIf="updateForm.controls['portNumber'].hasError('maxlength')" class="errspan required">
+                        Maximum of 6 characters
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-6 p-0 form-group">
+                    <input type="checkbox" [checked]="toggle" formControlName="activeStatus"> Active
+                </div>
+
+            </form>
+            <div class="form-footer">
+                <button class="btn btn-default" (click)="resetupdateEnvForm()">Reset</button>
+                <button class="btn btn-primary btn-test"
+                    [disabled]="updateForm.invalid  || !((password!='' && isKeyValuePair==false  )||(isKeyValuePair==true && keyValueFile!=undefined))"
+                    (click)="testConnection('update')">Test Connection</button>
+                <button class="btn btn-primary"
+                    [disabled]="updateForm.invalid || !((password!='' && isKeyValuePair==false  )||(isKeyValuePair==true && keyValueFile!=undefined))"
+                    (click)="updateEnvironmentV2()">Modify</button>
+            </div>
+        </div>
+    </div>
+</div>
