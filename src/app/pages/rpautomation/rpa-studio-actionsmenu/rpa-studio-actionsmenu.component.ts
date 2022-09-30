@@ -813,7 +813,7 @@ loadpredefinedbot(botId, dropCoordinates)
   {
     
    this.rpa_studio.spinner.show();
-    this.rest.assign_bot_and_task(botId,taskId, "EPSoft","Automated").subscribe(data=>{
+    this.rest.assign_bot_and_task(botId,taskId, "EPSoft","Automated","").subscribe(data=>{
       
       this.rpa_studio.spinner.hide();
       let response:any=data;
