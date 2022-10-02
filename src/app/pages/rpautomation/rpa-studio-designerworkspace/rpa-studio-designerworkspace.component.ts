@@ -1464,7 +1464,10 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     }
    
     if(this.checkorderflag==false)
+    {
+      this.spinner.hide();
       Swal.fire("Warning","Please check connections","warning")
+    }
     else
     {
       (await this.rest.updateBot(this.saveBotdata)).subscribe((response:any)=>{

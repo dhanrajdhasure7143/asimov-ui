@@ -326,11 +326,6 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
     this.current_instance.updateBotFun(this.version_type,this.comments)
   }
 
-  onCreate()
-  {
-
-  }
-
   loadBotFormOverlay()
   {
     document.getElementById("load-bot").style.display='block';
@@ -377,6 +372,26 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
     })
   }
 
+  openBotForm()
+  {
+    document.getElementById("bot-form").style.display='block';
+  }
 
+  closeBotForm()
+  {
+    document.getElementById("bot-form").style.display='none';
+  }
+
+  onBotCreate(event)
+  {
+    if(event !=null)
+    {
+      if(event.case=="create")
+      {
+        this.loadBotByBotId(event.botId);
+        this.getAllBots();
+      }
+    }
+  }
 
 }

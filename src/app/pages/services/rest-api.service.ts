@@ -648,16 +648,15 @@ export class RestApiService{
   }
 
 
-  assign_bot_and_task(id,taskid,source,type)
-  {
+  assign_bot_and_task(id,taskid,source,type,userID){
     let data:any
-    if(type=="Automated")
-    {
+    if(type=="Automated"){
       data={
-        "botId":id,
-        "taskId":taskid,
-        "assignedUserId":"0",
+       "botId":id,
+       "taskId":taskid,
+       "assignedUserId":"0",
        "sourceType":source,
+       "taskOwner":userID
       };
     }
     else if(type=="Human")
@@ -1481,7 +1480,6 @@ getTimeZone(){
   return this.http.get('/rpa-service/getTimeZones');
 }
 getDatabaselist(){
-  return this.http.get("/rpa-service/getdatabasetypes") 
+  return this.http.get("/rpa-service-databasetypes/database/getdatabasetypes")
 }
 }
-

@@ -37,7 +37,7 @@ export class RpaHomeComponent implements OnInit {
   public isTableHasData = true;
   public respdata1=false;
 
-   displayedColumns: string[] = ["botName","description","department","version_new","actions"];
+  displayedColumns: string[] = ["botName","description","department","version_new","actions"];
   displayedColumns2: string[] = ["processName","taskName","Assign","status","successTask","failureTask","Operations"];
   departmentlist :string[] = ['Development','QA','HR'];
   botNameFilter = new FormControl('');
@@ -77,6 +77,8 @@ export class RpaHomeComponent implements OnInit {
   importfile:any="";
   botImage:any=undefined;
   file_error:any="";
+  isCreateForm:boolean=false;
+  botDetails:any;
   @ViewChild("paginator1",{static:false}) paginator1: MatPaginator;
   @ViewChild("paginator2",{static:false}) paginator2: MatPaginator;
   @ViewChild("sort1",{static:false}) sort1: MatSort;
@@ -118,21 +120,21 @@ export class RpaHomeComponent implements OnInit {
   {
 
 
-    this.insertbot=this.formBuilder.group({
-      botName: ["", Validators.compose([Validators.required, Validators.maxLength(30)])],
-      botDepartment:["", Validators.required],
-      botDescription:["", Validators.compose([Validators.maxLength(500)])],
-      taskId:[""],
-      predefinedBot:[false],
-      newCategoryName:[""]
-  });
-    this.editbot=this.formBuilder.group({
-      botId: ["", Validators.required],
-      botName: ["", Validators.compose([Validators.required, Validators.maxLength(30)])],
-      department:["", Validators.required],
-      description:["", Validators.compose([Validators.maxLength(500)])],
-      newCategoryName:[""]
-     });
+  //   this.insertbot=this.formBuilder.group({
+  //     botName: ["", Validators.compose([Validators.required, Validators.maxLength(30)])],
+  //     botDepartment:["", Validators.required],
+  //     botDescription:["", Validators.compose([Validators.maxLength(500)])],
+  //     taskId:[""],
+  //     predefinedBot:[false],
+  //     newCategoryName:[""]
+  // });
+  //   this.editbot=this.formBuilder.group({
+  //     botId: ["", Validators.required],
+  //     botName: ["", Validators.compose([Validators.required, Validators.maxLength(30)])],
+  //     department:["", Validators.required],
+  //     description:["", Validators.compose([Validators.maxLength(500)])],
+  //     newCategoryName:[""]
+  //    });
   }
 
   openModal(template: TemplateRef<any>) {
@@ -590,7 +592,7 @@ export class RpaHomeComponent implements OnInit {
   {
     let botId=$("#"+id+"__select").val();
     if(botId!=0)
-    this.rest.assign_bot_and_task(botId,id,"EPSoft","Automated").subscribe(data=>{
+    this.rest.assign_bot_and_task(botId,id,"EPSoft","Automated","").subscribe(data=>{
       let response:any=data;
       if(response.status!=undefined)
       {
@@ -883,85 +885,111 @@ export class RpaHomeComponent implements OnInit {
    },this);
    this.sortkey[colKey]=!sortdes;
   }
-  editbotoverlay(botdetails){
-    this.botNamespace=false
-    document.getElementById("edit-bot").style.display="block";
-   let category=botdetails.categoryName;
-   let selectedcategory=this.categaoriesList.find(item=>item.categoryName==category)
-    this.rpaCategory=selectedcategory.categoryId;
-    if(this.rpaCategory==="others"){
-    this.editbot.setValue({
-      botId:botdetails.botId,
-      botName:botdetails.botName, 
-      department:this.rpaCategory, 
-      description:botdetails.description,
-      newCategoryName:this.newRpaCategory})
-    }else{
-      this.editbot.setValue({
-        botId:botdetails.botId,
-        botName:botdetails.botName, 
-        department:this.rpaCategory, 
-        description:botdetails.description,
-        newCategoryName:this.rpaCategory})
-    }
-    if(this.categaoriesList.length==1){
-      this.editbot.controls.department.disable()     
-   }
-   else{
-     this.editbot.controls.department.enable()
-   }
+
+
+  openEditBotOverlay(botDetails:any)
+  {
+    this.isCreateForm=false;
+    this.botDetails=botDetails;
+    document.getElementById('bot-form').style.display='block';
   }
 
-  validate(code,event){
-    let validate = code;
-    let botname = event.target.value;
-    this.count = 0;
-    // for(let i=0;i < validate.length; i++){
-    //   if(validate.charAt(i) == String.fromCharCode(32)||validate.charAt(i) == String.fromCharCode(46)){
-    //     this.count= this.count+1;
-    //   }
-    // }
-    var regex = new RegExp("^[a-zA-Z0-9_-]*$");
+
+  openCreateBotOverlay()
+  {
+    this.isCreateForm=true;
+    this.botDetails=undefined;
+    document.getElementById('bot-form').style.display='block';
+  }
+
+
+  botFormOutput(botOutput:any)
+  {
+    if(botOutput!=null)
+      if(botOutput.case=='create')
+        this.router.navigate(["/pages/rpautomation/designer"],{queryParams:{botId:botOutput.botId}});
+      else if(botOutput.case=='update')
+        this.getallbots();
+  }
+  // editbotoverlay(botdetails){
+  //   this.botNamespace=false
+  //   document.getElementById("edit-bot").style.display="block";
+  //  let category=botdetails.categoryName;
+  //  let selectedcategory=this.categaoriesList.find(item=>item.categoryName==category)
+  //   this.rpaCategory=selectedcategory.categoryId;
+  //   if(this.rpaCategory==="others"){
+  //   this.editbot.setValue({
+  //     botId:botdetails.botId,
+  //     botName:botdetails.botName, 
+  //     department:this.rpaCategory, 
+  //     description:botdetails.description,
+  //     newCategoryName:this.newRpaCategory})
+  //   }else{
+  //     this.editbot.setValue({
+  //       botId:botdetails.botId,
+  //       botName:botdetails.botName, 
+  //       department:this.rpaCategory, 
+  //       description:botdetails.description,
+  //       newCategoryName:this.rpaCategory})
+  //   }
+  //   if(this.categaoriesList.length==1){
+  //     this.editbot.controls.department.disable()     
+  //  }
+  //  else{
+  //    this.editbot.controls.department.enable()
+  //  }
+  // }
+
+  // validate(code,event){
+  //   let validate = code;
+  //   let botname = event.target.value;
+  //   this.count = 0;
+  //   // for(let i=0;i < validate.length; i++){
+  //   //   if(validate.charAt(i) == String.fromCharCode(32)||validate.charAt(i) == String.fromCharCode(46)){
+  //   //     this.count= this.count+1;
+  //   //   }
+  //   // }
+  //   var regex = new RegExp("^[a-zA-Z0-9_-]*$");
 
    
 
-      if(!(regex.test(botname))){
+  //     if(!(regex.test(botname))){
 
-        this.count=1;
+  //       this.count=1;
 
-      }
-    if(this.count !== 0)
-    {
-      this.botNamespace = true;
-    }
-    else{
-      this.botNamespace = false;
+  //     }
+  //   if(this.count !== 0)
+  //   {
+  //     this.botNamespace = true;
+  //   }
+  //   else{
+  //     this.botNamespace = false;
       
-    }
-  }
+  //   }
+  // }
 
 
 
 
-  checkBotnamevalidation()
-  {
-    let botname=this.editbot.get("botName").value;
+  // checkBotnamevalidation()
+  // {
+  //   let botname=this.editbot.get("botName").value;
 
-    this.rest.checkbotname(botname).subscribe(data=>{
-    if(data==true)
-    {
-      this.checkbotname=false;
-    }else
-    {
-      this.checkbotname=true;
-    }
-    })
-  }
-  saveRpaCategory(){
-    let rpaCategory:any={"categoryName":"","categoryId":0, "createdAt":""};
-     rpaCategory["categoryName"] =this.editbot.value.newCategoryName;
-   return this.rest.addCategory(rpaCategory);
-  }
+  //   this.rest.checkbotname(botname).subscribe(data=>{
+  //   if(data==true)
+  //   {
+  //     this.checkbotname=false;
+  //   }else
+  //   {
+  //     this.checkbotname=true;
+  //   }
+  //   })
+  // }
+  // saveRpaCategory(){
+  //   let rpaCategory:any={"categoryName":"","categoryId":0, "createdAt":""};
+  //    rpaCategory["categoryName"] =this.editbot.value.newCategoryName;
+  //  return this.rest.addCategory(rpaCategory);
+  // }
   searchByCategory(category) {   
     localStorage.setItem('rpa_search_category',category);    // Filter table data based on selected categories
     var filter_saved_diagrams= []
@@ -982,50 +1010,50 @@ export class RpaHomeComponent implements OnInit {
       this.assignPagination(this.botslist);
     }
   }
-  onEditBot() {
-    this.spinner.show()
-    let botdetails = this.editbot.value;
-    if(botdetails.department==="others"){
-      this.saveRpaCategory().subscribe(data=>{
-        let catResponse : any;
-        catResponse=data;
-        botdetails.department=catResponse.data.categoryId;
-        let modbotdetails={
-          "botId": botdetails.botId,
-          "botName": botdetails.botName,
-          "department": botdetails.department,
-          "description": botdetails.description
-         };
+  // onEditBot() {
+  //   this.spinner.show()
+  //   let botdetails = this.editbot.value;
+  //   if(botdetails.department==="others"){
+  //     this.saveRpaCategory().subscribe(data=>{
+  //       let catResponse : any;
+  //       catResponse=data;
+  //       botdetails.department=catResponse.data.categoryId;
+  //       let modbotdetails={
+  //         "botId": botdetails.botId,
+  //         "botName": botdetails.botName,
+  //         "department": botdetails.department,
+  //         "description": botdetails.description
+  //        };
        
-       this.rest.modifybotdetails(modbotdetails).subscribe(data=>{
-        if(data.message==="Bot details updated successfully"){
-          Swal.fire("Success","Bot Details Updated Successfully","success");
-           this.getallbots();
-        }else {
-          Swal.fire("Error","Failed to update bot details","error");
-        }
-          })
-          document.getElementById("edit-bot").style.display="none";
-       },err=>{
-        this.spinner.hide();
-        Swal.fire("Error","Unable to update bot details","error")
-       });
-      } else {
-      this.rest.modifybotdetails(botdetails).subscribe(data=>{
-        this.spinner.hide();
-        if(data.message==="Bot details updated successfully"){
-          Swal.fire("Success","Bot Details Updated Successfully","success");
-          this.getallbots();
-        }else {
-          Swal.fire("Error","Failed to update bot details","error");
-        }
-          },err=>{
-            this.spinner.hide();
-            Swal.fire("Error","Unable to update bot details","error")
-          })
-          document.getElementById("edit-bot").style.display="none";
-        }
-      }
+  //      this.rest.modifybotdetails(modbotdetails).subscribe(data=>{
+  //       if(data.message==="Bot details updated successfully"){
+  //         Swal.fire("Success","Bot Details Updated Successfully","success");
+  //          this.getallbots();
+  //       }else {
+  //         Swal.fire("Error","Failed to update bot details","error");
+  //       }
+  //         })
+  //         document.getElementById("edit-bot").style.display="none";
+  //      },err=>{
+  //       this.spinner.hide();
+  //       Swal.fire("Error","Unable to update bot details","error")
+  //      });
+  //     } else {
+  //     this.rest.modifybotdetails(botdetails).subscribe(data=>{
+  //       this.spinner.hide();
+  //       if(data.message==="Bot details updated successfully"){
+  //         Swal.fire("Success","Bot Details Updated Successfully","success");
+  //         this.getallbots();
+  //       }else {
+  //         Swal.fire("Error","Failed to update bot details","error");
+  //       }
+  //         },err=>{
+  //           this.spinner.hide();
+  //           Swal.fire("Error","Unable to update bot details","error")
+  //         })
+  //         document.getElementById("edit-bot").style.display="none";
+  //       }
+  //     }
 
   assignPagination(data) {
     const sortEvents$: Observable<Sort> = fromMatSort(this.sort);

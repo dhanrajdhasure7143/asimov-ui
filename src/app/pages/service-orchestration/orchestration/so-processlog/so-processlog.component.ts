@@ -6,6 +6,7 @@ import {RestApiService} from '../../../services/rest-api.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NewSoAutomatedTasksComponent } from '../new-so-automated-tasks/new-so-automated-tasks.component';
 import { NgxSpinnerService } from 'ngx-spinner';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-so-processlog',
   templateUrl: './so-processlog.component.html',
@@ -31,22 +32,27 @@ export class SoProcesslogComponent implements OnInit, OnDestroy{
   public dataSourcep2: MatTableDataSource<any>;
   public Environments:any;
   public dataSourcep3: MatTableDataSource<any>;
+  public dataSourcep4: MatTableDataSource<any>;
   public respdata1: boolean = false;
   public interval: any = 0;
   public displayedColumnsp1: string[] = ["processRunId","Environment","processStartDate","processEndDate","runStatus"];
   public displayedColumnsp2: string[] = ['bot_name','version','run_id','start_date','end_date', "bot_status"]; //,'log_statement'
   public displayedColumnsp3: string[] = ['task_name','start_date','end_date', 'status','error_info' ];
+  public displayedColoumnsp4: string[] =['taskName','iterationId','status','startTS','endTS',"errorMsg"];;
   public interval1: any = 0;
   public interval2: any = 0;
   public selected_processRunId:any;
   public selected_runid:any;
   public logstatus:any;
+  public iterationsList:any=[];
+  public loopIterations:any=[];
   constructor( private rest:RestApiService, private changeDetectorRef: ChangeDetectorRef,private automated:NewSoAutomatedTasksComponent, private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
     document.getElementById("viewlogid1").style.display="none";
     document.getElementById("plogrunid").style.display="none";
     document.getElementById("pbotrunid").style.display="none";
+    document.getElementById("loopStartLogs").style.display="none";
     this.Environments=this.automated.environments;
     this.setProcesslog();
   }
@@ -227,6 +233,47 @@ export class SoProcesslogComponent implements OnInit, OnDestroy{
       clearInterval(this.interval)
       clearInterval(this.interval1)
       clearInterval(this.interval2)
+    }
+
+
+    getLoopLogs(element){
+      this.iterationsList=[]
+      this.loadLogsFlag=true;
+      this.rest.getLooplogs(element.bot_id, element.version, element.run_id ).subscribe((response:any)=>{
+        this.loadLogsFlag=false;
+        if(response.errorMessage==undefined)
+        {
+          this.loopIterations=[...response];
+          this.loopIterations=this.loopIterations.sort((a,b) => b.iterationId > a.iterationId ? 1 : -1);
+          this.loopIterations=[...this.loopIterations.filter((item:any)=>item.taskName != 'Loop-End')]
+          //this.selectedIterationTask=e;
+          this.loopIterations.forEach(item=>{
+            if(this.iterationsList.find(item2=>item2==item.iterationId)==undefined)
+              this.iterationsList.push(item.iterationId)    
+          })
+          this.iterationsList=[...this.iterationsList.sort(function(a, b){return a - b})];
+          
+          // if((this.selectedIterationId==0 || this.selectedIterationId==undefined )&& this.iterationsList.length!=0)
+          //   this.selectedIterationId=this.iterationsList[this.iterationsList.length-1];
+          // this.fileteredLoopIterations=[...this.loopIterations.filter(item=>(item.iterationId==this.selectedIterationId))];
+          this.dataSourcep4 = new MatTableDataSource(this.loopIterations);
+          document.getElementById('pbotrunid').style.display='none';
+          document.getElementById('loopStartLogs').style.display='block';
+        }
+        else
+        {
+          Swal.fire("Error",response.errorMessage,"error");
+        }      
+      },err=>{
+        this.loadLogsFlag=false;
+        Swal.fire("Error","Unable to open loop logs","error");
+      })
+    }
+
+    backtasktable()
+    {
+      document.getElementById("loopStartLogs").style.display = "none";
+      document.getElementById("pbotrunid").style.display = "block";
     }
 }
 

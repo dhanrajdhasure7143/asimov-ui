@@ -245,7 +245,7 @@
           <img src="../../../../assets/images/RPA/icon_latest/add.svg" class="add-new"/>
         </span>
                       <mat-menu #menu="matMenu">
-                          <button mat-menu-item (click)="onCreate(0)" [disabled]="freetrail">
+                          <button mat-menu-item (click)="openBotForm()" [disabled]="freetrail">
               <img src="../../../../assets/images/RPA/icon_latest/add-fill.svg" class="menu-icon"/> &nbsp;Create New</button>
                           <hr>
                           <button mat-menu-item (click)="loadBotFormOverlay()" [disabled]="freetrail">
@@ -353,4 +353,9 @@
 
       </div>
   </div>
+</div>
+
+
+<div id="bot-form" class="rpa-modal">
+  <app-rpa-bot-form (output)="onBotCreate($event)" [isCreateForm]="true" [categoriesList]="categoriesList"></app-rpa-bot-form>
 </div>
