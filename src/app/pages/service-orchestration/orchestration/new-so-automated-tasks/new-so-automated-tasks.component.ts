@@ -93,6 +93,9 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
   isHumanLoading:any="Loading"
   taskslist: any;
   selectedexecutiontype:any="Serial"
+  public users_list: any[];
+  public userID: any;
+
   constructor(
     private route: ActivatedRoute,
     private rest:RestApiService,
@@ -174,6 +177,7 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
       this.gethumanslist();
       this.getuipathbots();
       this.getblueprismbots();
+      this.getallusers()
     });
     //this.getCategoryList(this.processId);
    
@@ -533,9 +537,8 @@ resetsla(){
 
 
 
-  getautomatedtasks(process)
-  {
-    this.spinner.show();
+  getautomatedtasks(process){
+   this.spinner.show();
     this.rest.getautomatedtasks(process).subscribe(automatedtasks=>{
       let response:any=[];
       response=automatedtasks;
@@ -545,13 +548,13 @@ resetsla(){
           this.Active_bots_list=bots;
           let responsedata=response.automationTasks.map(item=>{
               item["processFilterId"]="processId_"+item.processId+"_"+item.processName
-              if(item.sourceType=="UiPath")
-                item["taskOwner"]="Karthik Peddinti";
-              else if(item.sourceType=="EPSoft")
-                item["taskOwner"]=this.Active_bots_list.find(bot=>bot.botId==item.botId)==undefined?"---":this.Active_bots_list.find(bot=>bot.botId==item.botId).createdBy;
-              else{
-                item["taskOwner"]="---"
-              }
+              // if(item.sourceType=="UiPath")
+              //   item["taskOwner"]="Karthik Peddinti";
+              // else if(item.sourceType=="EPSoft")
+              //   item["taskOwner"]=this.Active_bots_list.find(bot=>bot.botId==item.botId)==undefined?"---":this.Active_bots_list.find(bot=>bot.botId==item.botId).createdBy;
+              // else{
+              //   item["taskOwner"]="---"
+              // }
               return item;
           });
           this.responsedata=responsedata;
@@ -585,6 +588,7 @@ resetsla(){
 
   getprocessnames(processId)
   {
+    this.spinner.show();
     this.rest.getprocessnames().subscribe(processnames=>{
       let resp:any=[]
       resp=processnames
@@ -668,8 +672,7 @@ resetsla(){
 
 
   
-    checkTaskAssigned(id)
-    {
+    checkTaskAssigned(id){
       var processId=id;
       if( this.automatedtask.filter(item=>item.processId==processId).length==0)
       {
@@ -756,15 +759,15 @@ resetsla(){
   {
     let botId=$("#"+id+"__select").val();
     let source=this.responsedata.find(item=>item.taskId==id).sourceType;
-    if(source=="UiPath")
-      this.responsedata.find(item=>item.taskId==id).taskOwner="Karthik Peddinti";
-    else if(source=="EPSoft")
-    {
-      this.responsedata.find(item=>item.taskId==id).taskOwner=this.bot_list.find(bot=>bot.botId==botId).createdBy;
-    }
-    else{
-      this.responsedata.find(item=>item.taskId==id).taskOwner="---"
-    }
+    // if(source=="UiPath")
+    //   this.responsedata.find(item=>item.taskId==id).taskOwner="Karthik Peddinti";
+    // else if(source=="EPSoft")
+    // {
+    //   this.responsedata.find(item=>item.taskId==id).taskOwner=this.bot_list.find(bot=>bot.botId==botId).createdBy;
+    // }
+    // else{
+    //   this.responsedata.find(item=>item.taskId==id).taskOwner="---"
+    // }
     // this.dataSource2= new MatTableDataSource(this.responsedata);
     // this.dataSource2.sort=this.automatedSort;
     // this.dataSource2.paginator=this.paginator10;
@@ -772,7 +775,7 @@ resetsla(){
     if(botId!=0)
     {
       this.spinner.show();
-      this.rest.assign_bot_and_task(botId,id,source,"Automated").subscribe(data=>{
+      this.rest.assign_bot_and_task(botId,id,source,"Automated",this.userID).subscribe(data=>{// added userID as we are sending taskowner
         let response:any=data;
         this.spinner.hide();
         if(response.status!=undefined)
@@ -806,7 +809,7 @@ resetsla(){
     if(botId!=0)
     {
       this.spinner.show();
-      this.rest.assign_bot_and_task(botId,task.taskId,"","Human").subscribe(data=>{
+      this.rest.assign_bot_and_task(botId,task.taskId,"","Human","").subscribe(data=>{
         let response:any=data;
         this.spinner.hide();
         if(response.status!=undefined)
@@ -1306,7 +1309,6 @@ resetsla(){
   }
 
   delete(taskid, processId){
-    console.log("processid======",processId,"and ",this.selectedvalue)
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -1327,6 +1329,7 @@ resetsla(){
         else {
           Swal.fire("Error", "Failed to delete task", "error");
         }
+        this.spinner.hide();
         })
     }
     })
@@ -1345,7 +1348,7 @@ resetsla(){
   }
 
   addexistingtasks(){
-    this.spinner.show();
+    //this.spinner.show();
     this.rest.addtaskInProcess(this.addTaskForm.get('tasks').value).subscribe(resp => {
       let value: any = resp
    
@@ -1361,6 +1364,25 @@ resetsla(){
     this.addTaskForm.reset();
   })
   }
+  
+  getallusers(){ // to get user list and display in dropdown
+    this.users_list=[];
+    let tenantid=localStorage.getItem("tenantName")
+    this.rest.getuserslist(tenantid).subscribe(res=>{
+      let users:any=res;
+      users.forEach(e=>{
+        if(e.user_role_status != "INACTIVE"){
+          this.users_list.push(e);
+          this.users_list.sort((a, b) => a.userId.firstName.localeCompare(b.userId.firstName));
+        }
+      })
+    }) 
+   }
+
+  changeTaskOwner(userid){// to get userId from users list
+    this.userID= userid
+  }
+
   
 }
 

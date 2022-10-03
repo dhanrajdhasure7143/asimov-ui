@@ -590,7 +590,7 @@ export class RpaHomeComponent implements OnInit {
   {
     let botId=$("#"+id+"__select").val();
     if(botId!=0)
-    this.rest.assign_bot_and_task(botId,id,"EPSoft","Automated").subscribe(data=>{
+    this.rest.assign_bot_and_task(botId,id,"EPSoft","Automated","").subscribe(data=>{
       let response:any=data;
       if(response.status!=undefined)
       {
