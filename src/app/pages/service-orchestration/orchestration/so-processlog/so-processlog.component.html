@@ -240,7 +240,7 @@
                         <span *ngIf="element.task_name!=null && element.task_name!='Loop-Start'" [matTooltip]="element.task_name">{{(element.task_name.length > 15) ? ((element.task_name).slice(0, 15) + '...') : element.task_name}}</span>
                         <span *ngIf="element.task_name == undefined">-</span>
                         <span *ngIf="element.task_name == 'Loop-Start'">
-                            <button style="color:#00a1e3; text-decoration: underline;" (click)="getLoopLogs(element)" >{{element.task_name}}</button>
+                            <button style="color:#00a1e3; text-decoration: underline;" (click)="setLoopLogs(element)" >{{element.task_name}}</button>
                         </span>
                     
                     </td>

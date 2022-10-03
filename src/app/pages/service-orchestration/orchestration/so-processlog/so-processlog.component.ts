@@ -41,6 +41,7 @@ export class SoProcesslogComponent implements OnInit, OnDestroy{
   public displayedColoumnsp4: string[] =['taskName','iterationId','status','startTS','endTS',"errorMsg"];;
   public interval1: any = 0;
   public interval2: any = 0;
+  public interval4:any;
   public selected_processRunId:any;
   public selected_runid:any;
   public logstatus:any;
@@ -233,12 +234,18 @@ export class SoProcesslogComponent implements OnInit, OnDestroy{
       clearInterval(this.interval)
       clearInterval(this.interval1)
       clearInterval(this.interval2)
+      clearInterval(this.interval4)
     }
 
 
+    setLoopLogs(element){
+      this.loadLogsFlag=true
+      this.interval4=setInterval(()=>{
+        this.getLoopLogs(element);
+      },3000)
+    }
     getLoopLogs(element){
       this.iterationsList=[]
-      this.loadLogsFlag=true;
       this.rest.getLooplogs(element.bot_id, element.version, element.run_id ).subscribe((response:any)=>{
         this.loadLogsFlag=false;
         if(response.errorMessage==undefined)
@@ -272,6 +279,7 @@ export class SoProcesslogComponent implements OnInit, OnDestroy{
 
     backtasktable()
     {
+      clearInterval(this.interval4)
       document.getElementById("loopStartLogs").style.display = "none";
       document.getElementById("pbotrunid").style.display = "block";
     }
