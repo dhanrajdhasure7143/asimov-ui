@@ -159,7 +159,7 @@
             <span class="rpa-modal-close" (click)="close()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
             <h4>Create Environment</h4>
         </div>
-        <app-rpa-environment-form [isCreate]="isCreate"></app-rpa-environment-form>
+        <app-rpa-environment-form  [categoriesList]="categoryList" [isCreate]="isCreate"></app-rpa-environment-form>
     </div>
 </div>
 
@@ -171,6 +171,6 @@
             <span class="rpa-modal-close" (click)="close()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
             <h4>Modify Environment</h4>
         </div>
-        <app-rpa-environment-form [isCreate]="isCreate" [updateenvdata]="updateenvdata"></app-rpa-environment-form>
+        <app-rpa-environment-form [isCreate]="isCreate" [categoriesList]="categoryList" [updateenvdata]="updateenvdata"></app-rpa-environment-form>
     </div>
 </div>
