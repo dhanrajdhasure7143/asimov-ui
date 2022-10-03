@@ -52,12 +52,9 @@
                               <li role="menuitem" class="clickable" *ngFor="let env of  current_instance.filteredEnvironments" style="white-space: nowrap;">
                                   <input type="checkbox" [checked]="env.check==true" (change)=" current_instance.checkUncheckEnvironments(env.environmentId)"> &nbsp; {{env.environmentName}}
                               </li>
-                              <!-- <li role="menuitem" class="clickable">
-                        <img src="../../../../assets/images/RPA/icon_latest/pluse-blue.svg" class="testplus"/>
-                        New
-                      
-                      </span>
-                              </li> -->
+                              <li role="menuitem" class="clickable" (click)="createEnvironment()">
+                                <img src="../../../../assets/images/RPA/icon_latest/pluse-blue.svg" class="testplus"/>New
+                              </li>
                           </ul>
                       </div>
                       <!-- <span class="bpsbtnsep">|</span> -->
@@ -359,3 +356,12 @@
 <div id="bot-form" class="rpa-modal">
   <app-rpa-bot-form (output)="onBotCreate($event)" [isCreateForm]="true" [categoriesList]="categoriesList"></app-rpa-bot-form>
 </div>
+
+<div id="createenvironment" class="rpa-modal">
+  <div class="rpa-modal-content">
+      <div class="rpa-modal-header">
+          <span class="rpa-modal-close" (click)="closeEnviromentOverlay()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
+          <h4>Create Environment</h4>
+      </div>
+      <app-rpa-environment-form [isCreate]="isCreate"></app-rpa-environment-form>
+  </div>
