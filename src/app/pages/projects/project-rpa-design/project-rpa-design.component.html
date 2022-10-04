@@ -12,7 +12,7 @@
             <div class="col-md-10 p-0">
                 <div class="tktlist-body-header">
                     <div class="tktlist-fields">
-                        <button class="btn btn-primary pull-right" (click)="addUser()">
+                        <button [disabled]="isAddEnable" class="btn btn-primary pull-right" (click)="addUser()">
                             <img src="../../../../assets/images/Projects/White-plus.svg" class="testplus">
                             Add New
                         </button>
@@ -85,7 +85,7 @@
                             </span>
 
                             <span *ngIf="element.new ">
-                                <span class="tsttooltipbtn" (click)="saveConfiguration(element,i)">
+                                <span *ngIf="!element.id != element.steps && element.description && element.configuration" class="tsttooltipbtn" (click)="saveConfiguration(element,i)">
                                     <img src="../../../../assets/images/VCM/Green Tick.svg" class="testplus" />
                                     <span class="testtooltip">Save</span>
                                 </span>
