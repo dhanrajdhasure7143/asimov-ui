@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RpaStudioWorkspaceComponent } from './rpa-studio-workspace.component';
+import { RpaBotFormComponent } from './rpa-bot-form.component';
 
-describe('RpaStudioWorkspaceComponent', () => {
-  let component: RpaStudioWorkspaceComponent;
-  let fixture: ComponentFixture<RpaStudioWorkspaceComponent>;
+describe('RpaBotFormComponent', () => {
+  let component: RpaBotFormComponent;
+  let fixture: ComponentFixture<RpaBotFormComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RpaStudioWorkspaceComponent ]
+      declarations: [ RpaBotFormComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RpaStudioWorkspaceComponent);
+    fixture = TestBed.createComponent(RpaBotFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

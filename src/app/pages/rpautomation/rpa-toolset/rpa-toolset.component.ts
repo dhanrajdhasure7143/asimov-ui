@@ -1,9 +1,6 @@
-import {ViewChild,Input, Component,Injectable, OnInit, ElementRef  } from '@angular/core';
+import {ViewChild,Input, Output, Component,Injectable, OnInit, ElementRef, EventEmitter  } from '@angular/core';
 import { RestApiService } from '../../services/rest-api.service';
-import { Options } from 'ng5-slider';
 import { DataTransferService } from '../../services/data-transfer.service';
-import { RpaStudioActionsComponent } from '../rpa-studio-actions/rpa-studio-actions.component';
-
 
 @Injectable()
 @Component({
@@ -13,89 +10,29 @@ import { RpaStudioActionsComponent } from '../rpa-studio-actions/rpa-studio-acti
 })
 export class RpaToolsetComponent implements OnInit {
 
-  constructor(private rest:RestApiService,
-    public dt:DataTransferService,
-  
-    ) { }
+    constructor(private rest:RestApiService,
+      public dt:DataTransferService,
+      ) { }
 
-  public userFilter:any={name:""};
-  @ViewChild('section', {static: false}) section: ElementRef<any>;
-  @ViewChild('rpa_actions',{static:false}) rpa_actions_menu:RpaStudioActionsComponent
-  @Input('bot') public botState: any;
-  @Input("toolset") public templateNodes:any=[];
-  toolSetData:any=[];
-  userRole:any;
-  search:any=false;
-  sidenavbutton:Boolean=false;
-  ngOnInit() {
-
-    this.dt.changeParentModule({"route":"/pages/rpautomation/home", "title":"RPA Studio"});
-    this.dt.changeChildModule({"route":"/pages/rpautomation/home","title":"Designer"});
-    this.gettoolset();
-  }
-
-  options: Options = {
-    step:0.1,
-    floor: 0,
-    ceil: 1,
-    // translate: (value: number): string => `${value}%`,
-    translate: (value: number): string => `${value*100}`,
-    hideLimitLabels: true,
-    hidePointerLabels: false,
-    vertical: true,
-  }
-  gettoolset()
-  {
-        this.toolSetData=[];
-        let data1:any = [];
-        this.userRole = localStorage.getItem("userRole")
-        this.userRole = this.userRole.split(',');
-        // this.rest.toolSet().subscribe(data => {
-        //   data1 = data
-        //   data1.General.forEach(element => {
-        //     let temp:any = {
-        //       name : element.name,
-        //       path : 'data:' + 'image/png' + ';base64,' + element.icon,
-        //       tasks: element.taskList,
-        //       expanded:false,
-        //     };
-        //     if((this.userRole.includes('User') &&
-        //           (temp.name === 'Email' || temp.name === 'Excel' || temp.name === 'Database' || temp.name === 'Developer'))
-        //         || !this.userRole.includes('User')){
-        //       this.templateNodes.push(temp)
-        //     }
-        //   })
-        //   if(!this.userRole.includes('User')){
-        //     data1.Advanced.forEach(element => {
-        //       let temp:any = {
-        //         name : element.name,
-        //         path : 'data:' + 'image/png' + ';base64,' + element.icon,
-        //         tasks: element.taskList,
-        //         expanded:false,
-        //       };
-        //       this.templateNodes.push(temp)
-        //     })
-        //   }
-
-        // })
+    public userFilter:any={name:""};
+    @ViewChild('section', {static: false}) section: ElementRef<any>;
+    @Input("toolsetItems") public templateNodes:any=[];
+   @Output("closeToolset") closeToolset=new EventEmitter();
+    userRole:any;
+    search:any=false;
+    sidenavbutton:Boolean=false;
+    ngOnInit() {
+      this.dt.changeParentModule({"route":"/pages/rpautomation/home", "title":"RPA Studio"});
+      this.dt.changeChildModule({"route":"/pages/rpautomation/home","title":"Designer"});
     }
-
     searchclear(){
       this.search=false
       this.userFilter.name=""
-     // this.templateNodes=[]
     }
-
-    public scrolltop(){
-      this.section.nativeElement.scrollTo({ top: (this.section.nativeElement.scrollTop - 40), behavior: 'smooth' });
+    closeToolsetEvent()
+    {
+      this.closeToolset.emit(null);
     }
-
-    public scrollbottom() {
-      this.section.nativeElement.scrollTo({ top: (this.section.nativeElement.scrollTop + 40), behavior: 'smooth' });
-    }
-
-
-
   }
 
 

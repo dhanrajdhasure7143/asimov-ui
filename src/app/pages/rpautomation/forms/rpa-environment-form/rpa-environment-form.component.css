@@ -3,33 +3,9 @@
   justify-content: center;
 }
 
-.rpa-table thead th {
-  border-bottom-width: thin;
-  border-bottom-color: #d9d9d9;
-}
-
-.rpa-table tfoot th {
-  border-top-color: #d9d9d9;
-  border-bottom-width: thin;
-  font-weight: 200;
-}
-
 .modal-body {
   max-height: calc(100vh - 160px);
   overflow-y: auto;
-}
-
-.rpa-table tbody tr td {
-  border-top-color: #d9d9d9;
-  border-bottom-width: thin;
-  font-weight: 200;
-  padding-top: 20px;
-  padding-bottom: 20px;
-}
-
-tr.mat-footer-row,
-tr.mat-row {
-  height: auto !important;
 }
 
 .rpa-tablebox {
@@ -37,10 +13,6 @@ tr.mat-row {
   padding-bottom: 10px;
   border-radius: 10px;
   height: 900px;
-}
-
-.rpa-table.dataTable thead .rpa-checkbox-th {
-  background: none;
 }
 
 .rpa-modal-content {
@@ -75,14 +47,6 @@ tr.mat-row {
   margin-top: -25px;
   position: relative;
   z-index: 2;
-}
-
-td {
-  white-space: nowrap;
-}
-
-th {
-  white-space: nowrap;
 }
 
 .environment-search {
@@ -170,47 +134,4 @@ button:disabled {
 .downloadLink {
   text-decoration: underline !important;
   font-size: small;
-}
-
-.cell1,
-.cell7 {
-  width: 5%;
-}
-
-.cell2 {
-  width: 10%;
-}
-
-.cell3 {
-  width: 8%;
-}
-
-.cell4 {
-  width: 12%;
-}
-
-.cell5 {
-  width: 8%;
-}
-
-.cell6 {
-  width: 8%;
-}
-
-.cell8 {
-  width: 8%;
-}
-
-.cell9 {
-  width: 8%;
-}
-
-.cell10,
-.cell11 {
-  width: 5%;
-}
-
-.cell12,
-.cell13 {
-  width: 9%;
 }
