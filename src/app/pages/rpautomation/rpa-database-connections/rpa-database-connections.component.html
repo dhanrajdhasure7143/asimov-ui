@@ -1,7 +1,8 @@
 <div class="rpa-content-div mx-3" *ngIf="this.isButtonVisible || enableDbconnection">
     <div class="row credential-search-tools">
-        <div class="rpa-env-search credential-search">            
-            <input class="form-control toolbar-search" placeholder="Search" *ngIf="!isSearch" (keyup)="applyFilter1($event.target.value)">
+        <div class="rpa-env-search credential-search">
+            <input class="form-control toolbar-search" placeholder="Search" *ngIf="!isSearch"
+                (keyup)="applyFilter1($event.target.value)">
             <img src="../../../../assets/images/search.svg" matSuffix *ngIf="!isSearch" class="testplus1">
         </div>
         <div class="env-data-tool credential-tools">
@@ -18,27 +19,27 @@
                 </button>
             </div>
             <div *ngIf="DBupdateflag == true" class="env-btn credential-btntool">
-                <button class="tsttooltipbtn" id="updatedbbtn"  (click)="updatedbdata()">        
-                    <img src='../../../../assets/images/RPA/icon_latest/edit-blue.svg'> 
-            <span class="testtooltip">Modify</span>           
-                </button>    
-            </div>   
-            <div *ngIf="DBupdateflag == false" class="env-btn credential-btntool">    
-                <button id="updatedbbtn" data-placement="top" title="Modify Database Connection" disabled>            
-                    <img src='../../../../assets/images/RPA/icon_latest/edit-dis.svg'>      
-                 <span class="testtooltip">Modify</span>        
-                 </button>   
+                <button class="tsttooltipbtn" id="updatedbbtn" (click)="updatedbdata()">
+                    <img src='../../../../assets/images/RPA/icon_latest/edit-blue.svg'>
+                    <span class="testtooltip">Modify</span>
+                </button>
+            </div>
+            <div *ngIf="DBupdateflag == false" class="env-btn credential-btntool">
+                <button id="updatedbbtn" data-placement="top" title="Modify Database Connection" disabled>
+                    <img src='../../../../assets/images/RPA/icon_latest/edit-dis.svg'>
+                    <span class="testtooltip">Modify</span>
+                </button>
             </div>
             <div *ngIf="DBdeleteflag==true" class="env-btn credential-btntool">
                 <button class="tsttooltipbtn" value="Delete" id="deletedbbtn" (click)="deletedbconnection()">
-                    <img src='../../../../assets/images/RPA/icon_latest/delete-blue.svg'> 
+                    <img src='../../../../assets/images/RPA/icon_latest/delete-blue.svg'>
                     <span class="testtooltip">Delete</span>
-                    </button>
-            </div>       
+                </button>
+            </div>
             <div *ngIf="DBdeleteflag==false" class="env-btn credential-btntool">
-                <button  id="deletedbbtn" title="Delete Database Connection" disabled>
-                    <img src='../../../../assets/images/RPA/icon_latest/delete-dis.svg'> 
-                <span class="testtooltip">Delete</span>
+                <button id="deletedbbtn" title="Delete Database Connection" disabled>
+                    <img src='../../../../assets/images/RPA/icon_latest/delete-dis.svg'>
+                    <span class="testtooltip">Delete</span>
                 </button>
             </div>
         </div>
@@ -46,83 +47,94 @@
     </div>
     <div class="col-md-12 con-envr">
         <div class="credential-tablegrid">
-            <table mat-table #sort2="matSort" [dataSource]="dataSource2" matSort class="RPA table"  id="listofdb">
-                
+            <table mat-table #sort2="matSort" [dataSource]="dataSource2" matSort class="RPA table" id="listofdb">
+
                 <ng-container matColumnDef="check">
                     <th mat-header-cell *matHeaderCellDef>
-                        <input [disabled]="DBcheckeddisabled" type="checkbox" id="DBcheckall" [checked]="DBcheckflag" (change)="DBcheckAllCheckBox($event)">
+                        <input [disabled]="DBcheckeddisabled" type="checkbox" id="DBcheckall" [checked]="DBcheckflag"
+                            (change)="DBcheckAllCheckBox($event)">
                     </th>
                     <td mat-cell *matCellDef="let element; let i = index">
-                        <input type="checkbox" [checked]="element.checked" (change)="DBcheckEnableDisableBtn(element.connectionId, $event)"> 
+                        <input type="checkbox" [checked]="element.checked"
+                            (change)="DBcheckEnableDisableBtn(element.connectionId, $event)">
                     </td>
                 </ng-container>
 
                 <ng-container matColumnDef="connectiontName">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Connection Name</th>
-                    <td mat-cell *matCellDef="let element"> 
-                        <span *ngIf="element.connectiontName!=null">{{element.connectiontName}}</span> 
-                        <span *ngIf="element.connectiontName==''">-</span> 
+                    <td mat-cell *matCellDef="let element">
+                        <span *ngIf="element.connectiontName!=null">{{element.connectiontName}}</span>
+                        <span *ngIf="element.connectiontName==''">-</span>
                     </td>
                 </ng-container>
 
                 <ng-container matColumnDef="categoryName">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
-                    <td mat-cell *matCellDef="let element"> 
-                        <span *ngIf="element.categoryName!=null">{{element.categoryName}}</span> 
-                        <span *ngIf="element.categoryName==''">-</span> </td>
+                    <td mat-cell *matCellDef="let element">
+                        <span *ngIf="element.categoryName!=null">{{element.categoryName}}</span>
+                        <span *ngIf="element.categoryName==''">-</span>
+                    </td>
                 </ng-container>
                 <ng-container matColumnDef="password">
                     <th mat-header-cell *matHeaderCellDef>Password</th>
-                    <td mat-cell *matCellDef="let element"> <span *ngIf="element.password!=null">*******</span> <span *ngIf="element.password==''">-</span> </td>
+                    <td mat-cell *matCellDef="let element"> <span *ngIf="element.password!=null">*******</span> <span
+                            *ngIf="element.password==''">-</span> </td>
                 </ng-container>
                 <ng-container matColumnDef="dataBaseType">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Database Type</th>
-                    <td mat-cell *matCellDef="let element"> 
-                        <span *ngIf="element.dataBaseType!=null">{{element.dataBaseType}}</span> 
-                        <span *ngIf="element.dataBaseType==''">-</span> 
+                    <td mat-cell *matCellDef="let element">
+                        <span *ngIf="element.dataBaseType!=null">{{element.dataBaseType}}</span>
+                        <span *ngIf="element.dataBaseType==''">-</span>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="databasename">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Database Name</th>
-                    <td mat-cell *matCellDef="let element"> 
-                        <span *ngIf="element.databasename!=null">{{element.databasename}}</span> 
-                        <span *ngIf="element.databasename==''">-</span> 
+                    <td mat-cell *matCellDef="let element">
+                        <span *ngIf="element.databasename!=null">{{element.databasename}}</span>
+                        <span *ngIf="element.databasename==''">-</span>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="hostAddress">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>IP Address / Host</th>
-                    <td mat-cell *matCellDef="let element"> 
-                        <span *ngIf="element.hostAddress!=null">{{element.hostAddress}}</span> 
-                        <span *ngIf="element.hostAddress==''">-</span> </td>
+                    <td mat-cell *matCellDef="let element">
+                        <span *ngIf="element.hostAddress!=null">{{element.hostAddress}}</span>
+                        <span *ngIf="element.hostAddress==''">-</span>
+                    </td>
                 </ng-container>
                 <ng-container matColumnDef="portNumber">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Port</th>
-                    <td mat-cell *matCellDef="let element"> <span *ngIf="element.portNumber!=null">{{element.portNumber}}</span>
-                         <span *ngIf="element.portNumber==''">-</span> </td>
+                    <td mat-cell *matCellDef="let element"> <span
+                            *ngIf="element.portNumber!=null">{{element.portNumber}}</span>
+                        <span *ngIf="element.portNumber==''">-</span>
+                    </td>
                 </ng-container>
                 <ng-container matColumnDef="username">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Username</th>
-                    <td mat-cell *matCellDef="let element"> <span *ngIf="element.username!=null">{{element.username}}</span>
-                         <span *ngIf="element.username==''">-</span></td>
+                    <td mat-cell *matCellDef="let element"> <span
+                            *ngIf="element.username!=null">{{element.username}}</span>
+                        <span *ngIf="element.username==''">-</span>
+                    </td>
                 </ng-container>
                 <ng-container matColumnDef="schemaName">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Schema</th>
-                    <td mat-cell *matCellDef="let element"> <span *ngIf="element.schemaName!=null">{{element.schemaName}}</span>
-                         <span *ngIf="element.schemaName==''">-</span></td>
+                    <td mat-cell *matCellDef="let element"> <span
+                            *ngIf="element.schemaName!=null">{{element.schemaName}}</span>
+                        <span *ngIf="element.schemaName==''">-</span>
+                    </td>
                 </ng-container>
                 <ng-container matColumnDef="createdBy">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Created By</th>
-                    <td mat-cell *matCellDef="let element"> 
-                        <span *ngIf="element.createdBy!=null">{{element.createdBy}}</span> 
-                        <span *ngIf="element.createdBy==''">-</span> 
+                    <td mat-cell *matCellDef="let element">
+                        <span *ngIf="element.createdBy!=null">{{element.createdBy}}</span>
+                        <span *ngIf="element.createdBy==''">-</span>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="activeStatus">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
                     <td mat-cell *matCellDef="let element">
                         <span *ngIf="element.activeStatus == 7"><span class='green'>Active</span></span>
-                        <span *ngIf="element.activeStatus == 8 || element.activeStatus == 0"><span class='red'>Inactive</span></span>
-                        
+                        <span *ngIf="element.activeStatus == 8 || element.activeStatus == 0"><span
+                                class='red'>Inactive</span></span>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="createdTimeStamp">
@@ -134,21 +146,10 @@
                 <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
             </table>
             <div>
-              </div>
-            
-        
-
-        </div>
-        <mat-paginator #paginator4 [pageSize]="10"   [pageIndex]="0" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons]="true" class="newpaginationdiv"></mat-paginator> 
-
-    </div>
-    <div id="createdbconnection" class="rpa-modal">
-        <div class="rpa-modal-content">
-            <div class="rpa-modal-header">
-                <span class="rpa-modal-close" (click)="closedbconnection()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
-                <h4 *ngIf="isDatabase">Create Database Connection</h4>
-                <h4 *ngIf="!isDatabase">Update Database Connection</h4>
             </div>
-            <app-rpa-database-form [isDatabase]="isDatabase" [dbupdatedata]="dbupdatedata" (refreshData)="refreshDatabaselist($event)"> </app-rpa-database-form>
         </div>
-    </div>      
+        <mat-paginator #paginator4 [pageSize]="10" [pageIndex]="0" [pageSizeOptions]="[5, 10, 25, 50]"
+            [showFirstLastButtons]="true" class="newpaginationdiv"></mat-paginator>
+    </div>
+
+    <app-rpa-database-form [isDatabase]="isDatabase" [dbupdatedata]="dbupdatedata" (refreshData)="refreshDataBaseList($event)"> </app-rpa-database-form>

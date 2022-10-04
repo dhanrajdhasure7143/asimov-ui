@@ -13,6 +13,7 @@ export class RpaEnvironmentFormComponent implements OnInit {
   @Input() isCreate: boolean;
   @Input() updateenvdata: any;
   @Input("categoriesList") categoriesList: any[]=[];
+  @Output() refreshTable = new EventEmitter<any>();
   public environmentName: FormControl;
   public environmentForm: FormGroup;
   public submitted: Boolean;
@@ -170,6 +171,7 @@ export class RpaEnvironmentFormComponent implements OnInit {
     this.spinner.show();
     this.api.addenvironmentV2(formData).subscribe((response: any) => {
       this.spinner.hide();
+      this.refreshTable.emit(true);
       if (response.errorMessage == undefined) {
         Swal.fire("Success", response.status, "success")
         document.getElementById("createenvironment").style.display = 'none';
@@ -189,6 +191,7 @@ export class RpaEnvironmentFormComponent implements OnInit {
       this.spinner.hide();
       Swal.fire("Error", "Unable to add environment", "error");
       this.submitted = false;
+      this.refreshTable.emit(false);
     });
   }
 
@@ -235,6 +238,7 @@ export class RpaEnvironmentFormComponent implements OnInit {
       await this.api.updateEnvironmentV2(updateEnvData).subscribe(res => {
         let response: any = res;
         this.spinner.hide();
+      this.refreshTable.emit(true);
         if (response.errorMessage == undefined) {
           Swal.fire("Success", res.status, "success")
           document.getElementById("update-popup").style.display = 'none';
@@ -248,6 +252,7 @@ export class RpaEnvironmentFormComponent implements OnInit {
     } else {
       this.spinner.hide();
       Swal.fire("Alert", "Update Environment is not configured for key pair authentication", "warning");
+      this.refreshTable.emit(false);
     }
   }
 
@@ -298,6 +303,19 @@ export class RpaEnvironmentFormComponent implements OnInit {
       return true
     }
     return false
+  }
+
+  onChangeEnvType(){
+    if(this.environmentForm.value.environmentType == "Windows"){
+      this.environmentForm.get("portNumber").setValue("44");
+    }else if(this.environmentForm.value.environmentType == "Linux"){
+      this.environmentForm.get("portNumber").setValue("22");
+    }
+  }
+
+  closeOverlay() {
+    this.resetEnvForm();
+    document.getElementById('createenvironment').style.display = 'none';
   }
 
 }

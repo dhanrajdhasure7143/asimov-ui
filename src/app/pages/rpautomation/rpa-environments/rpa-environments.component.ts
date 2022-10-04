@@ -63,6 +63,7 @@ export class RpaenvironmentsComponent implements OnInit {
   }
 
   async getallData() {
+    this.spinner.show();
     this.environments = [];
     await this.api.listEnvironments().subscribe(
       data => {
@@ -187,13 +188,6 @@ export class RpaenvironmentsComponent implements OnInit {
     }
   }
 
-  closeOverlay() {
-    document.getElementById('createenvironment').style.display = 'none';
-    this.isKeyValuePair = false;
-    this.password = "";
-    this.keyValueFile = undefined;
-  }
-
   async deleteEnvironments() {
     const selectedEnvironments = this.environments.filter(product => product.checked == true).map(p => p.environmentId);
     if (selectedEnvironments.length != 0) {
@@ -311,6 +305,11 @@ export class RpaenvironmentsComponent implements OnInit {
         this.getallData();
       }
     })
+  }
+
+  refreshEnvironmentList(event){
+    if(event)
+    this.getallData();
   }
 
 }
