@@ -47,7 +47,8 @@ export class NewSoDashboardComponent implements OnInit {
     incidentCount:"",
     human:"",
     bots:"",
-    processCount:""
+    processCount:"",
+   
   }
 
   processCount:any={
@@ -55,6 +56,7 @@ export class NewSoDashboardComponent implements OnInit {
     bots:"",
     humans:""
   }
+  q:any;
   config: any;
   collection = { count: this.processtable.length, data: [] };
   ngOnInit() {
