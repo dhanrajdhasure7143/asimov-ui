@@ -12,7 +12,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 export class RpaEnvironmentFormComponent implements OnInit {
   @Input() isCreate: boolean;
   @Input() updateenvdata: any;
-  @Input("categoriesList") categoriesList: any[];
+  @Input("categoriesList") categoriesList: any[]=[];
   public environmentName: FormControl;
   public environmentForm: FormGroup;
   public submitted: Boolean;
