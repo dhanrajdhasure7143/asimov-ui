@@ -1,21 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RpautomationComponent } from './rpautomation.component';
-import { RpaStudioComponent } from './rpa-studio/rpa-studio.component';
 import { RpautomationRoutingModule } from './rpautomation-routing.module';
 import { DndModule } from 'ngx-drag-drop';
-import { ContextMenuModule } from 'ngx-contextmenu';
 import { DynamicFormBuilderModule } from './dynamic-form-builder/dynamic-form-builder.module';
-import { RpaStudioTabsComponent } from './rpa-studio-tabs/rpa-studio-tabs.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { RpaStudioWorkspaceComponent } from './rpa-studio-workspace/rpa-studio-workspace.component';
-import { RpaStudioActionsComponent } from './rpa-studio-actions/rpa-studio-actions.component';
 import { RpaenvironmentsComponent } from './rpa-environments/rpa-environments.component';
 import { DataTablesModule } from 'angular-datatables';
 import { Ng5SliderModule } from 'ng5-slider';
 import { HttpClientModule } from '@angular/common/http';
-import { RpaWorkspaceComponent } from './rpa-workspace/rpa-workspace.component';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule, BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
@@ -38,12 +32,10 @@ import { RpaConfigurationsComponent } from './rpa-configurations/rpa-configurati
 import { RpaDatabaseConnectionsComponent } from './rpa-database-connections/rpa-database-connections.component';
 import { RpaToolsetComponent } from './rpa-toolset/rpa-toolset.component';
 import { RpaStudioDesignerComponent} from './rpa-studio-designer/rpa-studio-designer.component';
-import { RpaStudioActionsmenuComponent } from './rpa-studio-actionsmenu/rpa-studio-actionsmenu.component';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import{ipcustompipecreation} from './rpa-environments/IPAddressCustompipe';
 import { RpaStudioDesignerworkspaceComponent, Checkoutputbox } from './rpa-studio-designerworkspace/rpa-studio-designerworkspace.component';
-import { SchedulerComponent,Envname, Reverse } from './scheduler/scheduler.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {NgbTimepickerModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -65,35 +57,37 @@ import { NgbModalDraggableModule } from 'ngb-modal-draggable';
 import { ResizableModule } from 'angular-resizable-element';
 import { PopoverModule } from 'ngx-bootstrap/popover';
 import { RpaAuditlogsComponent } from './rpa-auditlogs/rpa-auditlogs.component'
+import { RpaBotFormComponent } from './forms/rpa-bot-form/rpa-bot-form.component';
+import { RpaDatabaseFormComponent } from './forms/rpa-database-form/rpa-database-form.component';
+import { RpaCredentialFormComponent } from './forms/rpa-credential-form/rpa-credential-form.component';
+import { RpaEnvironmentFormComponent } from './forms/rpa-environment-form/rpa-environment-form.component';
+import { SearchRpaPipe } from './rpa-home/Search.pipe';
+
 @NgModule({
   declarations: [
     RpautomationComponent,
     ipcustompipecreation,
-    Envname,
-    Reverse,
-    RpaStudioComponent,
-    RpaStudioTabsComponent,
-    RpaStudioWorkspaceComponent,
-    RpaStudioActionsComponent,
     RpaenvironmentsComponent,
-    RpaWorkspaceComponent,
     RpaHomeComponent,
     RpaConfigurationsComponent,
     RpaDatabaseConnectionsComponent,
     RpaToolsetComponent,
     RpaStudioDesignerComponent,
-    RpaStudioActionsmenuComponent,
     RpaStudioDesignerworkspaceComponent,
-    SchedulerComponent,
     RpaSchedulerComponent,
     Checkoutputbox,
     ReverseRpa,
     EnvnameRpa,
-	RpaCredentialsComponent,
-	TaskPipe,
-	TasksearchPipe,
-	RpaSoLogsComponent,
-	RpaAuditlogsComponent
+    RpaCredentialsComponent,
+    TaskPipe,
+    TasksearchPipe,
+    RpaSoLogsComponent,
+    RpaAuditlogsComponent,
+    RpaBotFormComponent,
+    RpaDatabaseFormComponent,
+    RpaCredentialFormComponent,
+    RpaEnvironmentFormComponent,
+    SearchRpaPipe
   ],
   imports: [
     NgxMaterialTimepickerModule,
@@ -131,7 +125,7 @@ import { RpaAuditlogsComponent } from './rpa-auditlogs/rpa-auditlogs.component'
     AngularSplitModule.forRoot(),
     NgbModalDraggableModule,
     ResizableModule,
-    PopoverModule
+    PopoverModule,
   ],
   exports:[RpaSoLogsComponent],
   providers: [MatDatepickerModule,Rpa_Hints, BsModalRef, BsModalService,

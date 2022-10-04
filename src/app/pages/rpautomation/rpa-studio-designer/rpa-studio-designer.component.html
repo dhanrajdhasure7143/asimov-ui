@@ -1,3 +1,7 @@
+<ngx-spinner bdColor="#bebcbc66" type="">
+  <img src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader" />
+</ngx-spinner>
+
 <div class="container-fluid main-content1 main-content">
   <div class="content-area RPA-Layout">
       <div class="rpa-layout-header">
@@ -11,7 +15,7 @@
                     </span>
                       <span class="rpa-main-title">RPA Studio</span>
                       <span class="rpatitsep">/</span>
-                      <span *ngIf="current_instance != undefined">{{current_instance.botState.botName}}</span>
+                      <span *ngIf="current_instance != undefined">{{current_instance.finalbot.botName}}</span>
                   </div>
 
                   <!-- <div *ngIf="current_instance != undefined" class="rpa-subtitle">
@@ -19,7 +23,7 @@
           <span *ngIf="current_instance.botState.botId!=undefined">Created By: {{current_instance.botState.createdBy}}&nbsp;|&nbsp;{{current_instance.botState.lastSubmittedTS | date :'medium'}}</span>
         </div> -->
               </div>
-              <div class="col-md-6 p-0">
+              <div  class="col-md-6 p-0">
 
                   <div class="actionsmenu-right">
                       <!-- <div class="action-item " *ngIf="current_instance != undefined"  dropdown    >
@@ -41,26 +45,22 @@
                           <button class="dropdown-action-item clickable dropdown-toggle" id="Environments" placement="bottom" tooltip="Environments" dropdownToggle type="button" aria-controls="environments">
                   <img src="../../../../assets/images/RPA/icon_latest/desktop.svg" />
                     &nbsp;
-                    <span *ngIf=" current_instance.selectedEnvironments.length==0">Environment</span>
-                    <span *ngIf=" current_instance.selectedEnvironments.length>=1">{{current_instance.selectedEnvironments[0].environmentName}}<span *ngIf="current_instance.selectedEnvironments.length>1">...({{current_instance.selectedEnvironments.length}})</span></span>
+                    <span *ngIf="getSelectedEnvironments().length==0">Environment</span>
+                    <span *ngIf="getSelectedEnvironments().length>=1">{{getSelectedEnvironments()[0].environmentName}}<span *ngIf="getSelectedEnvironments().length>1">...({{getSelectedEnvironments().length}})</span></span>
                     &nbsp;<span class="caret"></span>
                   </button>
                           <ul id="environments" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
-                              <li role="menuitem" class="clickable" *ngFor="let env of  current_instance.environment" style="white-space: nowrap;">
-                                  <input type="checkbox" [checked]="env.checked==true" (change)=" current_instance.checkuncheckenv(env.environmentId)"> &nbsp; {{env.environmentName}}
+                              <li role="menuitem" class="clickable" *ngFor="let env of  current_instance.filteredEnvironments" style="white-space: nowrap;">
+                                  <input type="checkbox" [checked]="env.check==true" (change)=" current_instance.checkUncheckEnvironments(env.environmentId)"> &nbsp; {{env.environmentName}}
                               </li>
-                              <li role="menuitem" class="clickable">
-                                  <span class="clickable" (click)="dropdown.isOpen=false; current_instance.create_env();">
-                        <img src="../../../../assets/images/RPA/icon_latest/pluse-blue.svg" class="testplus"/>
-                        New
-                      
-                      </span>
+                              <li role="menuitem" class="clickable" (click)="createEnvironment()">
+                                <img src="../../../../assets/images/RPA/icon_latest/pluse-blue.svg" class="testplus"/>New
                               </li>
                           </ul>
                       </div>
-                      <span class="bpsbtnsep">|</span>
+                      <!-- <span class="bpsbtnsep">|</span> -->
                       <div class="action-item hovericon bvcsave" *ngIf="current_instance != undefined ">
-                        <button class="clr-hvr tsttooltipbtn"  [disabled]="current_instance.selectedEnvironments.length==0 " [outsideClick]="true" (click)="clear()" [popover]="popTemplate" placement="bottom">
+                        <button class="clr-hvr tsttooltipbtn"  [disabled]="getSelectedEnvironments().length==0 " [outsideClick]="true" (click)="clear()" [popover]="popTemplate" placement="bottom">
                           <img src="../../../../assets/images/RPA/icon_latest/save.svg" class="testplus1">
                           <span class="testtooltip">Save Bot</span>
                         </button>
@@ -72,7 +72,7 @@
                       </div>
                      
                       <div class="action-item hovericon" *ngIf="current_instance != undefined">
-                          <button class="tsttooltipbtn" [disabled]="current_instance.savebotrespose==undefined || current_instance.selectedEnvironments.length==0" (click)=" current_instance.executionAct()">
+                          <button class="tsttooltipbtn" [disabled]="current_instance.finalbot==undefined || current_instance.filteredEnvironments.length==0" (click)=" current_instance.executeBot()">
                     <img src="../../../../assets/images/RPA/icon_latest/play.svg" class="testplus1">
                       <!-- <i class="ri-play-circle-line"></i> -->
                       <span class="testtooltip">Start Bot</span>
@@ -84,14 +84,14 @@
                     <span class="testtooltip">Stop Bot</span>
                   </button>
                       </div> -->
-                      <div class="action-item hovericon" *ngIf="current_instance != undefined" [isDisabled]="current_instance.predefinedbotsData.length==0" dropdown id="predefinedBotsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <div class="action-item hovericon" *ngIf="current_instance != undefined" [isDisabled]="predefinedBotsList.length==0" dropdown id="predefinedBotsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           <button  class="dropdown-action-item clickable dropdown-toggle tsttooltipbtn" id="predefinedBots" dropdownToggle  type="button" aria-controls="predefinedBotDropdown">
                             <img src="../../../../assets/images/RPA/icon_latest/Predefined Bots.svg" class="testplus1">
                             &nbsp;<span class="caret"></span>
                             <span class="testtooltip">Predefined Bots</span>
                           </button>
                           <ul id="predefinedBotDropdown" *dropdownMenu class="dropdown-menu action-menu-dropdown" role="menu" aria-labelledby="button-basic">
-                              <li role="menuitem" class="clickable" *ngFor="let predefinedBot of  current_instance.predefinedbotsData" style="white-space: nowrap;">
+                              <li role="menuitem" class="clickable" *ngFor="let predefinedBot of predefinedBotsList" style="white-space: nowrap;">
                                   <!-- <button [dndDraggable]="predefinedBot" (click)="current_instance.loadpredefinedbot(predefinedBot.botId)"> {{predefinedBot.botName}}</button> -->
                                   <div [dndDraggable]="predefinedBot"> {{predefinedBot.botName}}</div>  
                               </li>
@@ -99,7 +99,7 @@
 
                       </div>
                       <div class="action-item hovericon" *ngIf="current_instance != undefined">
-                          <button class="tsttooltipbtn" [disabled]="current_instance.savebotrespose==undefined" (click)="current_instance.filteredLogVersion=current_instance.selectedversion; current_instance.viewlogdata( current_instance.logspopup,'open')">
+                          <button class="tsttooltipbtn" [disabled]="current_instance.finalbot==undefined" (click)="current_instance.openLogs()">
                   <img src="../../../../assets/images/RPA/icon_latest/View Logs.svg" class="testplus1">
                     <!-- <i class="ri-clipboard-line"></i> -->
                     <span class="testtooltip">View Logs</span>
@@ -108,7 +108,7 @@
 
 
                       <div class="action-item hovericon" *ngIf="current_instance != undefined">
-                        <button class="tsttooltipbtn" [disabled]="current_instance.savebotrespose==undefined" 
+                        <button class="tsttooltipbtn" [disabled]="current_instance.finalbot==undefined" 
                         (click)="auditLogs()" >
                 <img src="../../../../assets/images/RPA/RPA-Audit-1 (1).svg" class="testplus2">
                   <!-- <i class="ri-clipboard-line"></i> -->
@@ -117,7 +117,7 @@
                     </div>
 
                     <div class="action-item hovericon" *ngIf="current_instance != undefined">
-                      <button class="tsttooltipbtn" [disabled]="current_instance.savebotrespose==undefined" (click)="current_instance.childBotWorkspace.addGroup()">
+                      <button class="tsttooltipbtn" [disabled]="current_instance.finalbot==undefined" (click)="current_instance.addGroup()">
                         <img src="../../../../assets/images/RPA/rpa-actions/group-activity.svg" class="testplus2">
                         <!-- <i class="ri-clipboard-line"></i> -->
                         <span class="testtooltip">Activity Grouping</span>
@@ -127,21 +127,21 @@
 
 
                       <div class="action-item hovericon" *ngIf="current_instance != undefined">
-                          <button class="tsttooltipbtn" [disabled]="current_instance.savebotrespose==undefined || freetrail=='true'" (click)=" current_instance.openschedule()">
+                          <button class="tsttooltipbtn" [disabled]="current_instance.finalbot==undefined || freetrail=='true'" (click)=" current_instance.openScheduler()">
                   <img src="../../../../assets/images/RPA/icon_latest/schedule.svg" class="testplus1">
                     <!-- <i class="ri-history-line"></i> -->
                     <span class="testtooltip">Scheduler</span>
                   </button>
                       </div>
                       <div class="action-item hovericon" *ngIf="current_instance != undefined">
-                          <button class="tsttooltipbtn" type="button" [disabled]="current_instance.savebotrespose==undefined" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          <button class="tsttooltipbtn" type="button" [disabled]="current_instance.finalbot==undefined" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <img src="../../../../assets/images/RPA/icon_latest/download.svg" class="testplus1">
                     <span class="testtooltip">Download</span>
                   </button>
                           <div class="rpa-dropdown dropdown-menu RPA-download" aria-labelledby="dropdownMenuButton">
-                              <div class="d-format"><a class="dropdown-item clickable" (click)=" current_instance.childBotWorkspace.downloadJpeg()">&nbsp;<span>JPEG</span></a></div>
-                              <div class="d-format"><a class="dropdown-item clickable" (click)=" current_instance.childBotWorkspace.downloadPng()">&nbsp;<span>PNG</span></a></div>
-                              <div class="d-format"><a class="dropdown-item clickable" (click)=" current_instance.childBotWorkspace.downloadPdf()">&nbsp;<span>PDF</span></a></div>
+                              <div class="d-format"><a class="dropdown-item clickable" (click)=" current_instance.downloadJpeg()">&nbsp;<span>JPEG</span></a></div>
+                              <div class="d-format"><a class="dropdown-item clickable" (click)=" current_instance.downloadPng()">&nbsp;<span>PNG</span></a></div>
+                              <div class="d-format"><a class="dropdown-item clickable" (click)=" current_instance.downloadPdf()">&nbsp;<span>PDF</span></a></div>
                           </div>
                       </div>
                       <!-- <div class="action-item" *ngIf="current_instance != undefined" placement="bottom" tooltip="Zoom in"(click)="current_instance.childBotWorkspace.zoomin('')">
@@ -157,13 +157,13 @@
                 </div> -->
 
                       <div class="action-item hovericon" *ngIf="current_instance != undefined ">
-                          <button class="tsttooltipbtn" [disabled]="current_instance.savebotrespose == undefined || isButtonVisible==true || isProcessAnalyst == true" (click)=" current_instance.delete()">
+                          <button class="tsttooltipbtn" [disabled]="current_instance.finalbot == undefined || isButtonVisible==true || isProcessAnalyst == true" (click)=" current_instance.deleteBot()">
                           <img src="../../../../assets/images/RPA/icon_latest/delete.svg" class="testplus1">
                           <span class="testtooltip">Delete</span>
                         </button>
                       </div>
                       <div class="action-item hovericon" *ngIf="current_instance != undefined">
-                          <button class="tsttooltipbtn" (click)=" current_instance.reset()">
+                          <button class="tsttooltipbtn" (click)=" current_instance.resetDesigner()">
                           <img src="../../../../assets/images/RPA/icon_latest/reset.svg" class="testplus1">
                           <span class="testtooltip">Reset Bot</span>
                         </button>
@@ -183,7 +183,7 @@
           <div class="toolsetmenuicon">
               <span class="module-sub-header-title clickable">
                 <span class="module-sub-header-title clickable">
-                  <button  class="toolset-text" [disabled]="toolset_instance == undefined" (click)="toolset_instance.sidenavbutton=!(toolset_instance.sidenavbutton)">
+                  <button  class="toolset-text"  (click)="toolsetSideNav=!(toolsetSideNav)">
                     <img src="../../../../assets/images/RPA/icon_latest/menu-line.svg" class="testplus" />
                   </button>
                 </span>
@@ -204,10 +204,10 @@
       </div>
       <div class="toolset-mainheader">
 
-          <mat-tab-group class="tabs" (selectedTabChange)="change_active_bot($event)" [selectedIndex]="tabsArray.length -1 ">
+          <mat-tab-group *ngIf="loadedBotsList.length!=0" class="tabs" (selectedTabChange)="change_active_bot($event)" [selectedIndex]="loadedBotsList.length -1 ">
               <!-- <span class="clickable">Toolset & Actions</span>  -->
 
-              <mat-tab *ngFor="let tab of tabsArray">
+              <mat-tab  *ngFor="let tab of loadedBotsList">
                   <ng-template mat-tab-label>
                       <span><img src="../../../../assets/images/Projects/bot.svg" class="bot-img"></span>
                       <span class="tab-botname">{{tab.botName}}</span>
@@ -218,18 +218,35 @@
             </button>
                       </div>
                   </ng-template>
-                  <app-rpa-toolset [bot]="tab" [toolset]="templateNodes" #rpa_bot_instance></app-rpa-toolset>
-              </mat-tab>
+
+                  
+                  <mat-drawer-container class="example-container">
+                    <mat-drawer #drawer [opened]="toolsetSideNav" style="z-index:0" mode="side" >
+                      <app-rpa-toolset [toolsetItems]="toolsetItems" (closeToolset)="toolsetSideNav=false" #rpa_bot_instance></app-rpa-toolset>
+                    </mat-drawer>
+                        <mat-drawer-content>
+                          <div class="row h-100">
+                          <div class="col-md-12 check p-0 h-100">
+                            <div *ngIf="loadedBotsList.length!=0" class="check">  
+                              <app-rpa-studio-designerworkspace [environmentsList]="environmentsList" [categoriesList]="categoriesList" [toolsetItems]="toolsetItems" [bot]="tab" #designerInstances></app-rpa-studio-designerworkspace>
+                            </div>
+                          </div>
+                        
+                        </div>
+                        </mat-drawer-content>
+                  </mat-drawer-container>
+              
+                    </mat-tab>
               <mat-tab [disabled]="true">
                   <ng-template mat-tab-label>
                       <span [matMenuTriggerFor]="menu" class="clickable text-primary" *ngIf="userRole!='User'">
           <img src="../../../../assets/images/RPA/icon_latest/add.svg" class="add-new"/>
         </span>
                       <mat-menu #menu="matMenu">
-                          <button mat-menu-item (click)="rpa_studio.onCreate(0)" [disabled]="freetrail">
+                          <button mat-menu-item (click)="openBotForm()" [disabled]="freetrail">
               <img src="../../../../assets/images/RPA/icon_latest/add-fill.svg" class="menu-icon"/> &nbsp;Create New</button>
                           <hr>
-                          <button mat-menu-item (click)="rpa_studio.onLoad()" [disabled]="freetrail">
+                          <button mat-menu-item (click)="loadBotFormOverlay()" [disabled]="freetrail">
               <img src="../../../../assets/images/RPA/icon_latest/load-bot-fill.svg" class="menu-icon"/> &nbsp;Load</button>
                       </mat-menu>
 
@@ -272,3 +289,80 @@
         </div>
       </ng-template>
  
+
+
+
+      
+<!--load bot overlay-->
+<div id="load-bot" class="rpa-modal">
+  <div class="rpa-modal-content">
+      <div class="rpa-modal-header">
+          <span class="rpa-modal-close" (click)="closeLoadBotFormOverlay()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
+          <h4>Load Bot</h4>
+      </div>
+      <div class="modal-body">
+
+          <form [formGroup]="loadBotForm" (ngSubmit)="onSubmitLoadBotFrom()">
+
+              <div class="container m-contanier form-body">
+
+                  <div class="col-md-12 p-0 form-group">
+                      <label class="label-control" for="botDepartment">Category<span class="star">*</span></label>
+                      <select class="form-control" (change)="filterBotListByCategory()" formControlName="botDepartment" name="botDepartment">
+            <option  value="" selected>--Select Category--</option>
+            <option *ngFor ="let category of categoriesList" [value]="category.categoryId">{{category.categoryName}}</option>
+          </select>
+                      <div *ngIf="loadBotForm.get('botDepartment').invalid && loadBotForm.get('botDepartment').touched" class="errspan required">
+                          Category Required*
+                      </div>
+                  </div>
+
+                  <!-- <div class="col-md-12 p-0 form-group">
+          <label class="label-control" for="botType">Bot Type<span class="star">*</span></label>
+          <select  class="form-control" formControlName="botType" name="botType" (change)="loadbotdata()" >
+            <option value="" selected>--Select Bot Type--</option>
+            <option  value=0>Attended</option>
+            <option  value=1>Unattended</option>
+          </select>
+          <div *ngIf="loadbot.get('botType').invalid && loadbot.get('botType').touched" class="errspan required" >
+            Bot Type Required*
+            </div>
+        </div> -->
+
+                  <div class="col-md-12 p-0 form-group">
+                      <label class="label-control" for="botType">Bot<span class="star">*</span></label>
+
+                      <select class="form-control" formControlName="bot" name="bot">
+            <option value="" selected>--Select Bot--</option>
+            <option *ngFor="let bot of filteredBotsList" [value]="bot.botId">{{bot.botName}}</option>
+          </select>
+                      <div *ngIf="loadBotForm.get('bot').invalid && loadBotForm.get('bot').touched" class="errspan required">
+                          Bot Required*
+                      </div>
+                  </div>
+
+              </div>
+
+              <div class="form-footer">
+                  <button class="btn btn-primary" [disabled]="loadBotForm.invalid">Submit</button>
+              </div>
+
+          </form>
+
+      </div>
+  </div>
+</div>
+
+
+<div id="bot-form" class="rpa-modal">
+  <app-rpa-bot-form (output)="onBotCreate($event)" [isCreateForm]="true" [categoriesList]="categoriesList"></app-rpa-bot-form>
+</div>
+
+<div id="createenvironment" class="rpa-modal">
+  <div class="rpa-modal-content">
+      <div class="rpa-modal-header">
+          <span class="rpa-modal-close" (click)="closeEnviromentOverlay()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
+          <h4>Create Environment</h4>
+      </div>
+      <app-rpa-environment-form [isCreate]="isCreate"></app-rpa-environment-form>
+  </div>

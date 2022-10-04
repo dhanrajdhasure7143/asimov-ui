@@ -1170,7 +1170,7 @@ export class FilterComponent implements OnInit {
     this.appliedPerformanceFiterValues.emit(reqObj)
   }
 
-  ontimedropdown_change(e){
+  ontimedropdown_change(){
     this.isDays_input=false;
     this.isHrs_input=false;
     this.isMints_input=false;
@@ -1183,7 +1183,7 @@ export class FilterComponent implements OnInit {
     this.isMints_input=true;
   }
 }
-ontimedropdown_change1(e){
+ontimedropdown_change1(){
   this.isDays_input1=false;
   this.isHrs_input1=false;
   this.isMints_input1=false;

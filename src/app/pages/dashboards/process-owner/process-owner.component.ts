@@ -52,6 +52,7 @@ export class ProcessOwnerComponent implements OnInit {
   @ViewChild("sort3",{static:false}) sort3: MatSort;
   @ViewChild("paginator3",{static:false}) paginator3: MatPaginator;
   topEffortsSpentdataSource:MatTableDataSource<any>;
+  t:any;
 
   constructor(private apiService: RestApiService, private jwtHelper: JwtHelperService) {
     this.userDetails = this.jwtHelper.decodeToken(localStorage.getItem('accessToken'));;

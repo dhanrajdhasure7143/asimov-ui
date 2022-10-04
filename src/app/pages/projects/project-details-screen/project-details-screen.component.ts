@@ -48,6 +48,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   dataSource9: MatTableDataSource<any>;
   categaoriesList: any;
   selected_process_names: any;
+  att:any;
 
   displayedColumns: string[] = ["taskCategory", "taskName", "resources", "status", "percentageComplete", "lastModifiedTimestamp", "lastModifiedBy", "createdBy", "action"];
   dataSource6: MatTableDataSource<any>;

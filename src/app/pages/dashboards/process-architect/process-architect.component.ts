@@ -40,6 +40,7 @@ export class ProcessArchitectComponent implements OnInit {
   userEmail: any;
   userName: any;
   p1=0;
+  t:any;
 
   displayedColumns1=['Process Name','Created Date','Submitted by'];
   displayedColumns2=['resource_name','days'];

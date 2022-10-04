@@ -1,6 +1,4 @@
 
-  <mat-drawer-container class="example-container">
-    <mat-drawer #drawer [opened]="sidenavbutton" style="z-index:0" mode="side" >
     
   
   
@@ -9,7 +7,7 @@
         <div class="actionsheaderdiv">
           <span class="left-panel-header">
             Toolset & Actions
-            <button type="button" class="toolset-close" (click)="sidenavbutton=false" aria-label="Close">
+            <button type="button" class="toolset-close" (click)="closeToolsetEvent()" aria-label="Close">
               <span aria-hidden="true"><img src="../../../../assets/images/RPA/icon_latest/close-circle-white.svg" class="textplus"></span>
             </button>
           </span>
@@ -73,16 +71,3 @@
     </div>
   
 
-</mat-drawer>
-  <mat-drawer-content>
-  <div class="row h-100">
-  <div class="col-md-12 check p-0 h-100">
-    <div *ngIf="templateNodes.length!=0" class="check">
-     
-      <app-rpa-studio-actionsmenu [bot]="botState" [toolset]="templateNodes" #rpa_actions></app-rpa-studio-actionsmenu>
-    </div>
-  </div>
-
-</div>
-</mat-drawer-content>
-</mat-drawer-container>

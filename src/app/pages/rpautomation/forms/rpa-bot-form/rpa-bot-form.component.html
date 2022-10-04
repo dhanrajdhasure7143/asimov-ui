@@ -1,0 +1,69 @@
+<div class="rpa-modal-content">
+    <div class="rpa-modal-header">
+        <span class="rpa-modal-close" (click)="closeBotForm()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
+        <h4 *ngIf="isCreateForm">Create Bot</h4>
+        <h4 *ngIf="!isCreateForm">Update Bot</h4>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="botForm" (ngSubmit)="onFormSubmit()">
+            <div class="container m-contanier form-body">
+                <div class="col-md-12 p-0 form-group">
+                    <label class="label-control" for="botName">Bot Name<span class="star">*</span></label>
+                    <input type="text" formControlName="botName" autocomplete="off" placeholder="Enter Bot Name"
+                        maxlength="31" (input)="validateBotName()" class="form-control"
+                        name="botName" required />
+                    <div *ngIf="(botForm.get('botName').hasError('required') && botForm.get('botName').touched) && !botForm.controls['botName'].hasError('maxlength')"
+                        class="errspan required">
+                        Bot Name Required*
+                    </div>
+                    <div *ngIf="botNameCheck && botForm.get('botName').value" class="errspan required">
+                        Bot Name is already exists*
+                    </div>
+                    <div *ngIf="botForm.get('botName').hasError('pattern')" class="errspan required">Spaces and special characters are not allowed Excluding( _ & - )
+                    </div>
+
+                    <div *ngIf="botForm.controls['botName'].hasError('maxlength')" class="errspan required">
+                        Maximum of 30 characters exceeded
+                    </div>
+                    <!-- <div *ngIf="botForm.controls['botName'].hasError('minlength')" class="errspan required">
+                                        Minimum 2 characters required
+                                    </div> -->
+                </div>
+                <div class="col-md-12 p-0 form-group">
+                    <label class="label-control" for="botDepartment">Category<span class="star">*</span></label>
+
+                    <select  class="form-control" [disabled]="categoriesList.length==1"
+                        [value]="categoriesList.length==1?categoriesList[0].categoryId:''" formControlName="department"
+                        name="botDepartment">
+                        <option value="">Select Category</option>
+                        <option *ngFor="let category of categoriesList" [value]="category.categoryId">{{category.categoryName}}</option>
+                    </select>
+
+                    <div *ngIf="botForm.get('department').invalid && botForm.get('department').touched" class="errspan required">
+                        Category Required*
+                    </div>
+
+                </div>
+                <div class="col-md-12 p-0 form-group">
+                    <label class="label-control" for="botDescription">Bot Description</label>
+                    <textarea type="text" autocomplete="off" formControlName="botDescription"
+                        placeholder="Enter Bot Description" ngModel maxlength="151" rows="3" class="form-control"
+                        name="botDescription"></textarea>
+                    <div *ngIf="botForm.controls['botDescription'].hasError('maxlength')" class="errspan required">
+                        Maximum of 150 characters exceeded
+                    </div>
+                </div>
+
+                <div class="col-md-6 p-0 form-group">
+                    <input type="checkbox" formControlName="predefinedBot" name="predefinedBot">&nbsp; <span>Predefined Bot</span>
+                </div>
+            </div>
+            <div class="form-footer">
+                <button class="btn btn-primary"
+                    [disabled]="botForm.invalid || botNameCheck"><span *ngIf="isCreateForm">Submit</span>
+                    <span *ngIf="!isCreateForm">Update</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
