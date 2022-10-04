@@ -236,12 +236,6 @@ export class RpaDatabaseFormComponent implements OnInit {
     this.dbForm.get("activeStatus").setValue(true);
     this.passwordtype1=false;
   }
-
-  resetdbForm(){
-    this.dbForm.reset();
-    this.dbForm.get("dataBaseType").setValue("");
-    this.dbForm.get("activeStatus").setValue(true);
-  }
   
   dbconnectionupdate() {
     if (this.dbForm.valid) {
@@ -316,5 +310,10 @@ export class RpaDatabaseFormComponent implements OnInit {
       this.dbForm.controls.schemaName.updateValueAndValidity();
     }
  }
+
+ closedbconnection(){  
+    this.resetDBForm();
+  document.getElementById('createdbconnection').style.display='none';
+}
 
 }

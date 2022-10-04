@@ -1,4 +1,3 @@
-import { RpaCredentialFormComponent } from './../forms/rpa-credential-form/rpa-credential-form.component';
 import { Component,  OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
 import {FormGroup, Validators, FormBuilder, Form } from '@angular/forms';
 import Swal from 'sweetalert2';
@@ -27,7 +26,6 @@ export class RpaCredentialsComponent implements OnInit {
   categoryList:any;
   @ViewChild("paginator3",{static:false}) paginator3: MatPaginator;
   @ViewChild("sort2",{static:false}) sort2: MatSort;
-  @ViewChild("rpaCred",{static:false}) rpaCred : RpaCredentialFormComponent
   public button:string;
   public credentials:any=[];
   public checkeddisabled:boolean =false;
@@ -156,11 +154,6 @@ inputNumberOnly(event){
         break;
       }
     }
-  }
-
-  closecredentials(){
-    document.getElementById('createcredentials').style.display='none';
-    this.rpaCred.resetCredForm();
   }
 
   deleteCredentials(){

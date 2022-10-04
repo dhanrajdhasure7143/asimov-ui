@@ -105,11 +105,8 @@ export class RpaCredentialFormComponent implements OnInit {
         }, err => {
           this.spinner.hide();
           Swal.fire("Error", "Unable to save credentials", "error");
+          this.refreshTable.emit(false)
         });
-
-      }
-      else {
-
       }
     } else {
       this.credentialsupdate();
@@ -141,6 +138,7 @@ resetCredForm(){
       }, err => {
         this.spinner.hide();
         Swal.fire("Error", "Unable to update credentials", "error")
+        this.refreshTable.emit(false);
       });
     } else {
       Swal.fire("Error", "please fill all details", "error");
@@ -152,6 +150,11 @@ resetCredForm(){
       let response: any = data;
       this.categoryList = response.data;
     })
+  }
+
+  closecredentials(){
+    document.getElementById('createcredentials').style.display='none';
+    this.resetCredForm();
   }
 
 }

@@ -164,14 +164,5 @@
     </div>
 </div>
 
-<div id="createenvironment" class="rpa-modal">
-    <div class="rpa-modal-content">
-        <div class="rpa-modal-header">
-            <span class="rpa-modal-close" (click)="closeOverlay()"><img
-                    src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
-            <h4 *ngIf="isCreate">Create Environment</h4>
-            <h4 *ngIf="!isCreate">Modify Environment</h4>
-        </div>
-        <app-rpa-environment-form [isCreate]="isCreate" [categoriesList]="categoryList" [updateenvdata]="updateenvdata"></app-rpa-environment-form>
-    </div>
-</div>
+
+    <app-rpa-environment-form [isCreate]="isCreate" [categoriesList]="categoryList" [updateenvdata]="updateenvdata" (refreshTable)="refreshEnvironmentList($event)"></app-rpa-environment-form>

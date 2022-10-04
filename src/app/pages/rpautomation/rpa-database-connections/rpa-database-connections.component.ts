@@ -10,7 +10,6 @@ import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import { NgxSpinnerService } from "ngx-spinner";
 import * as moment from 'moment';
-import { RpaDatabaseFormComponent } from '../forms/rpa-database-form/rpa-database-form.component';
 @Component({
   selector: 'app-rpa-database-connections',
   templateUrl: './rpa-database-connections.component.html',
@@ -28,7 +27,6 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
   public dbupdateid : any;
   @ViewChild("paginator4",{static:false}) paginator4: MatPaginator;
   @ViewChild("sort2",{static:false}) sort2: MatSort;
-  @ViewChild("rpaDatabase",{static:false}) rpaDatabase : RpaDatabaseFormComponent
   public button:string;
   public dbconnections:any=[]
   public checkeddisabled:boolean =false;
@@ -212,14 +210,6 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
     }
   }
 
-  closedbconnection(){  
-    setTimeout(()=>{
-      this.rpaDatabase.resetDBForm();
-    this.rpaDatabase.resetdbForm();  
-    },1000) 
-    document.getElementById('createdbconnection').style.display='none';
-  }
-
   deletedbconnection(){
     const selecteddbconnection = this.dbconnections.filter(product => product.checked==true).map(p => p.connectionId);
     Swal.fire({
@@ -317,8 +307,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
   }
 
 
-  getCategories()
-  {
+  getCategories(){
     this.api.getCategoriesList().subscribe(data=>{
       let response:any=data;
       if(response.errorMessage==undefined)
@@ -329,8 +318,8 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
     })
   }
 
-  refreshDatabaselist(ev){
-    if(ev){
+  refreshDataBaseList(event){
+    if(event){
       this.getallDBConnection()
     }
   }
