@@ -453,7 +453,7 @@
                       </div>
 
 
-                      <!-- <div class="col-md-12 p-0 form-group">
+                      <div class="col-md-12 pl-0 form-group">
                   <label class="label-control" for="breachAlerts">Breach Actual Alert<span class="star">*</span></label>
                   <select class="form-control"  value="" formControlName="breachAlerts">
                       <option value="">-- Select Breach Actual Alerts --</option>
@@ -461,12 +461,12 @@
                       <option value="Warning">Warning</option>
                       <option value="All">All</option>
                     </select>
-                  <span *ngIf="(insertslaForm_so_bot.get('breachAlerts').invalid && insertslaForm_so_bot.get('breachAlerts').touched) && !insertslaForm_so_bot.controls['breachAlerts'].hasError('maxlength')" class="errspan required">Required Breach Actual Alert*</span> -->
-                      <!--<div *ngIf="insertslaForm_so_bot.controls['breachAlerts'].hasError('maxlength')" class="errspan required">
+                  <span *ngIf="(insertslaForm_so_bot.get('breachAlerts').invalid && insertslaForm_so_bot.get('breachAlerts').touched) && !insertslaForm_so_bot.controls['breachAlerts'].hasError('maxlength')" class="errspan required">Required Breach Actual Alert*</span>
+                  <span *ngIf="insertslaForm_so_bot.controls['breachAlerts'].hasError('maxlength')" class="errspan required">
                       Maximum of 50 characters
-                  </div>-->
-                      <!-- </div> -->
-                      <div class="col-md-6 pr-0 form-group">
+                  </span>
+                      </div>
+                      <div class="col-md-6 pl-0 form-group">
                           <label class="label-control" for="thresholdLimit">Threshold Limit (Min)
                          <!-- <span class="star">*</span> -->
                        </label>
