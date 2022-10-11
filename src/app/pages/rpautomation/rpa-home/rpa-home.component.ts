@@ -526,6 +526,11 @@ export class RpaHomeComponent implements OnInit {
     this.assignPagination(fiteredArr)
   }
 
+  closeFormOverlay(event){
+  if(event)
+  this.isCreateForm=true;
+  }
+
 }
 
 
