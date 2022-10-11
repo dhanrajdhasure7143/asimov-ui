@@ -4,96 +4,42 @@
 
 export const environment = {
   production: false,
-  pi_url: 'https://ezflow.epsoftinc.com/prcintel',
-  bps_url: 'https://ezflow.epsoftinc.com/bpstudio',
-  rpa_url: 'https://ezflow.epsoftinc.com/wfrpa',
-  loopback_url: 'http://10.11.0.107:3000',
-  idm_url:'https://ezflow.idm.epsoftinc.com',
-  auth_url: "https://ezflow.epsoftinc.com/authservices",
-  pi_node_url: "https://ezflow.epsoftinc.com/pinode",
-  platform_url:'https://ezflow.epsoftinc.com/aiotalplatform',
-  schema_registry_url:"http://schema-registry:8081",
-  alerts_url:'https://ezflow.epsoftinc.com/alerts',
-  subscriptionendpoint_url:'https://ezflow.epsoftinc.com/subscriptions',
-
-  // Aiotal redirection urls 
-  myaccount_url : "https://ezflow.epsoftinc.com/#/activation",
-  logout_url: 'https://ezflow.epsoftinc.com/#/activation', 
-  //redirection_logout_url: 'https://eiapclouddemo.epsoftinc.com:86/#/user',
-  redirectout_url: 'https://ezflow.epsoftinc.com/#/signout',
-  
-  // PI Connectors
-  connector_topic: 'nodeq',
-  platform_home_url: 'https://ezflow.epsoftinc.com/#/',
-  pi_node_jobs: "http://pi-node-jobs:5000",
-  projectendpoint_url:'https://ezflow.epsoftinc.com/pcs',
-  camunda_url : "https://ezflow.camunda.epsoftinc.com",
-  socialLoginRedirectURL: 'https://ezflow.epsoftinc.com/#/user',
-
-
-  //BPMN Platform URL
-   // bpmnplatformUrl : "http://10.11.0.127:8080",
-
-  //DB Connector
-  dbConnectorHost: "pg-0",
-  dbName: "eiap_prod",
 
   // Data upload path
   data_path:"/usr/share/confluent-ftp-data",
 
-
-  //BPMN Platform URL
-  bpmnplatformUrl : "https://ezflow.epsoftinc.com"
-
- //  * QA ENV URl's
- 
- /*
-    pi_url: 'http://piqa.epsoftinc.in',
-    bps_url: 'http://bpsqa.epsoftinc.in',
-    rpa_url: 'http://rpaqa.epsoftinc.in',
-    loopback_url: 'http://10.11.0.107:3000',
-    idm_url:'http://idmqa.epsoftinc.in',
-    pi_node_url: "http://pinodedev.epsoftinc.in:3000",
-    auth_url: "http://authqa.epsoftinc.in",
-
-  //  * QA ENV URl's
+  pi_url: 'https://ezflow.qa.epsoftinc.com/prcintel',
+  bps_url: 'https://ezflow.qa.epsoftinc.com/bpstudio',
+  rpa_url: 'https://ezflow.qa.epsoftinc.com/wfrpa',
+  loopback_url: 'http://10.11.0.107:3000',
+  idm_url:'https://ezidm.qa.epsoftinc.com',
+  auth_url: "https://ezflow.qa.epsoftinc.com/authservices",
+  //for Auto build
+  pi_node_url: "https://ezflow.qa.epsoftinc.com/pinode",
+  pi_node_jobs: "http://pi-node-jobs:5000",
+  platform_url:'https://ezflow.qa.epsoftinc.com/aiotalplatform',
+  schema_registry_url:"http://schema-registry:8081",
+  alerts_url:'https://ezflow.qa.epsoftinc.com/alerts',
   
-     pi_url: 'http://piqa.epsoftinc.in',
-     bps_url: 'http://bpsqa.epsoftinc.in',
-     rpa_url: 'http://rpaqa.epsoftinc.in',
-     loopback_url: 'http://10.11.0.107:3000',
-     idm_url:'http://idmqa.epsoftinc.in',
-     pi_node_url: "http://10.11.0.108:3000",
-     auth_url: "http://authqa.epsoftinc.in",
-     platform_url:'http://apqa.epsoftinc.in',
-     schema_registry_url:"http://10.11.0.101:8081",
-     alerts_url:'http://alertsqa.epsoftinc.in',
-     pi_node_jobs: "http://10.11.0.108:5000",
-    
+   // Aiotal redirection urls
+  myaccount_url : "https://ezflow.qa.epsoftinc.com/#/activation",
+  logout_url: 'https://ezflow.qa.epsoftinc.com/#/activation',
+  redirectout_url: 'https://ezflow.qa.epsoftinc.com/#/signout',
+  platform_home_url: 'https://ezflow.qa.epsoftinc.com/#/',
+  projectendpoint_url:'https://ezflow.qa.epsoftinc.com/pcs',
+  subscriptionendpoint_url:'https://ezflow.qa.epsoftinc.com/subscriptions',
+  
+  //BPMN Platform URL
+  bpmnplatformUrl : "https://ezcamunda.qa.epsoftinc.com",
+    // camunda navigation 
+  camunda_url : "https://ezcamunda.qa.epsoftinc.com",
 
-  // Aiotal redirection urls 
-    myaccount_url : "http://eiapcloudqa.epsoftinc.in/#/activation",
-    logout_url: 'http://eiapcloudqa.epsoftinc.in/#/activation',
-   
   // PI Connectors
-   connector_topic: 'tyty',
+   connector_topic: 'nodeq',
 
-
-   //DB Connector
-    dbConnectorHost: "10.11.0.104",
-    dbName: 'eiap_qa',
-
-  
-  //BPMN Platform URL
-  bpmnplatformUrl : "http://10.11.0.128:8080"*/
+  //DB Connector
+   dbConnectorHost: "pgpoolqa",
+   dbName: 'eiap_qa',
+   dbPort:"5431"
 
 };
-
-/*
- * For easier debugging in development mode, you can import the following file
- * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
- *
- * This import should be commented out in production mode because it will have a negative impact
- * on performance if an error is thrown.
- */
-// import 'zone.js/dist/zone-error';  // Included with Angular CLI.
