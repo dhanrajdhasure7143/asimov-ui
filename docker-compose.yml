@@ -13,8 +13,12 @@ services:
     image: ${DOCKER_REGISTRY_URL}/asimov-ui:${DOCKER_TAG}
     deploy:
       replicas: 1
+      placement:
+        constraints:
+          - node.labels.environment == qa
     networks:
       - eps_net
     logging:
       options:
         tag: "{{.Name}}"
+
