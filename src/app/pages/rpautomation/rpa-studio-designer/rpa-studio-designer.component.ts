@@ -1,4 +1,4 @@
-import {Component, OnInit, QueryList,ViewChildren, OnDestroy } from '@angular/core';
+import {Component, OnInit, QueryList,ViewChildren, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -31,6 +31,7 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   toolsetSideNav:Boolean=false;
   predefinedBotsList:any=[];
   isCreate:boolean = true;
+  isActionsShow:boolean=false;
 
   constructor(
     private router:Router,
@@ -38,7 +39,8 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
     private rest:RestApiService,
     private spinner:NgxSpinnerService,
     private formGroup:FormBuilder,
-    private activatedRoute:ActivatedRoute
+    private activatedRoute:ActivatedRoute,
+    private changeDecoratorRef:ChangeDetectorRef
     ) { }
 
   ngOnInit() {
@@ -55,15 +57,10 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
       this.isProcessAnalyst=true;
     this.freetrail=localStorage.getItem('freetrail')
     this.getToolsetItems();
-    this.getAllBots();
+    // this.getAllBots();
     this.getAllEnvironments();
     this.getAllCategories();
     this.getPredefinedBots();
-  }
-
-  ngAfterViewInit()
-  {
-    // localStorage.setItem("isHeader","true");
   }
 
   getToolsetItems()
@@ -103,7 +100,7 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
             else
             {
               let botId=params.botId;
-              this.loadBotByBotId(botId);
+              this.loadBotByBotId(botId,"INIT");
             }
           })
       }
@@ -147,22 +144,19 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   }
 
 
-  getAllCategories()
-  {
-    this.rest.getCategoriesList().subscribe((response:any)=>{
-      if(response.errorMessage==undefined)
-      {
-        this.categoriesList=response.data;
+  getAllCategories() {
+    this.rest.getCategoriesList().subscribe((response: any) => {
+      if (response.errorMessage == undefined) {
+        this.categoriesList = response.data;
       }
-      else
-      {
-        Swal.fire("Error",response.errorMessage,"error");
+      else {
+        Swal.fire("Error", response.errorMessage, "error");
       }
     })
   }
 
 
-  loadBotByBotId(botId:any)
+  loadBotByBotId(botId:any,state:any)
   {
     this.spinner.show()
     this.rest.getbotdata(botId).subscribe((response:any)=>{
@@ -175,7 +169,10 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
           this.tabActiveId=response.botName;
           this.closeLoadBotFormOverlay();
           //this.spinner.hide();
-          this.change_active_bot({index:0});
+          if(state=="INIT")
+            setTimeout(() => {
+            this.change_active_bot({index:0});  
+            }, 1000);
         }
         else
         {
@@ -235,13 +232,10 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   }
 
 
-  change_active_bot(event)
-  {
+  change_active_bot(event){
     this.current_instance=undefined;
-    
     this.toolsetSideNav=false;
     this.spinner.show();
-    setTimeout(()=>{
       this.designerInstances.forEach((instance,index)=>{
         if(index==event.index)
         {
@@ -258,16 +252,17 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
     
         }
       })
-    },1500)
-    
-    
+      setTimeout(() => {
+        this.spinner.hide();
+      }, 1000);
   }
+
   clear(){
     this.version_type='';
     this.comments=''
   }
-  version_change(versionId)
-  {
+
+  version_change(versionId){
     this.current_instance.switchversion(versionId);
     let botName=this.current_instance.botState.botName
     this.selected_tab_instance=this.current_instance;
@@ -320,10 +315,10 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
     })
   }
 
-  ngOnDestroy()
-  {
+  ngOnDestroy() {
     localStorage.removeItem("bot_id")
   }
+
   SaveBot(){
     this.current_instance.updateBotFun(this.version_type,this.comments)
   }
@@ -339,28 +334,22 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
     document.getElementById("load-bot").style.display="none";
   }
 
-  onSubmitLoadBotFrom()
-  {
+  onSubmitLoadBotFrom() {
     let botId=this.loadBotForm.get("bot").value;
-    this.loadBotByBotId(botId)
+    this.loadBotByBotId(botId,"LOAD")
   }
 
-  filterBotListByCategory()
-  {
+  filterBotListByCategory() {
     let botDepartment:any=this.loadBotForm.get("botDepartment").value;
     this.filteredBotsList=[...this.botsList.filter((item:any)=>item.department==botDepartment)];
   }
 
 
-  getSelectedEnvironments()
-  {
+  getSelectedEnvironments(){
     return this.current_instance.filteredEnvironments.filter((item:any)=>item.check==true);
   }
 
-
-
-  getPredefinedBots()
-  {
+  getPredefinedBots() {
     this.spinner.show()
     this.rest.getpredefinedbots().subscribe((response:any)=>{
       this.spinner.hide()
@@ -374,8 +363,7 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
     })
   }
 
-  openBotForm()
-  {
+  openBotForm() {
     document.getElementById("bot-form").style.display='block';
   }
 
@@ -389,21 +377,21 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
     document.getElementById('createenvironment').style.display = 'none';
   }
 
-  closeBotForm()
-  {
+  closeBotForm(){
     document.getElementById("bot-form").style.display='none';
   }
 
-  onBotCreate(event)
-  {
-    if(event !=null)
-    {
-      if(event.case=="create")
-      {
-        this.loadBotByBotId(event.botId);
+  onBotCreate(event) {
+    if (event != null) {
+      if (event.case == "create") {
+        this.loadBotByBotId(event.botId, "LOAD");
         this.getAllBots();
       }
     }
+  }
+
+  openTabOptions(){
+    this.getAllBots();
   }
 
 }

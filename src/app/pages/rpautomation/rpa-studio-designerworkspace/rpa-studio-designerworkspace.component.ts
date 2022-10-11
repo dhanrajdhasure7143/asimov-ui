@@ -156,6 +156,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   ngOnInit() {
      this.passwordtype1=false;
     this.passwordtype2=false;
+    this.spinner.show();
     this.jsPlumbInstance = jsPlumb.getInstance();
     var self = this;
     this.jsPlumbInstance.importDefaults({
@@ -172,7 +173,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       name: "",
     }
     if (this.finalbot.botId != undefined) {
-      this.finaldataobjects = this.finalbot.tasks.filter((item=>item.version==this.finalbot.version));
+      // this.finaldataobjects = this.finalbot.tasks.filter((item=>item.version==this.finalbot.version));
+      this.finaldataobjects = this.finalbot.tasks;
       this.actualTaskValue=[...this.finalbot.tasks];
       this.actualEnv=[...this.finalbot.envIds];
       this.loadGroups("load");
@@ -199,10 +201,9 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
 
-  checkUncheckEnvironments(envId)
-  {
+  checkUncheckEnvironments(envId,value){
     if(this.filteredEnvironments.find((item:any)=>item.environmentId==envId)!=undefined)
-      this.filteredEnvironments.find((item:any)=>item.environmentId==envId).check=true;  
+      this.filteredEnvironments.find((item:any)=>item.environmentId==envId).check=value;
   }
 
 
