@@ -34,7 +34,7 @@ export class RpaBotFormComponent implements OnInit {
       botName: ["", Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern("^[a-zA-Z0-9_-]*$")])],
       department: ["", Validators.required],
       description: ["", Validators.compose([Validators.maxLength(500)])],
-      predefinedBot: [false]
+      isPredefined: [false]
     });
   }
 
@@ -43,13 +43,13 @@ export class RpaBotFormComponent implements OnInit {
       this.botForm.get("botName").setValue(this.botDetails.botName);
       this.botForm.get("department").setValue(this.botDetails.department);
       this.botForm.get("description").setValue(this.botDetails.description);
-      // this.botForm.get("isPredefined").setValue(false);
+      this.botForm.get("isPredefined").setValue(false);
     }else{
       this.botForm = this.formBuilder.group({
         botName: ["", Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern("^[a-zA-Z0-9_-]*$")])],
         department: ["", Validators.required],
         description: ["", Validators.compose([Validators.maxLength(500)])],
-        predefinedBot: [false]
+        isPredefined: [false]
       });
     }
   }
