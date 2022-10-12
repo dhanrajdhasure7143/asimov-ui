@@ -46,14 +46,14 @@
                     <label class="label-control" for="description">Bot Description</label>
                     <textarea type="text" autocomplete="off" formControlName="description"
                         placeholder="Enter Bot Description" ngModel maxlength="151" rows="3" class="form-control"
-                        name="description"></textarea>
+                        name="botDescription"></textarea>
                     <div *ngIf="botForm.controls['description'].hasError('maxlength')" class="errspan required">
                         Maximum of 150 characters exceeded
                     </div>
                 </div>
 
-                <div class="col-md-6 p-0 form-group" *ngIf="isCreateForm">
-                    <input type="checkbox" formControlName="predefinedBot" name="predefinedBot">&nbsp; <span>Predefined Bot</span>
+                <div class="col-md-6 p-0 form-group">
+                    <input type="checkbox" formControlName="isPredefined" name="predefinedBot">&nbsp; <span>Predefined Bot</span>
                 </div>
             </div>
             <div class="form-footer">

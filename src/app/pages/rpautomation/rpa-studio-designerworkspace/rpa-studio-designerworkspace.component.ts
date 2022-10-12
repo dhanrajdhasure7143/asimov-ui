@@ -569,7 +569,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     };
     if(event.data.botId!=undefined)
     {
-      this.RPA_Designer_Component.current_instance.loadpredefinedbot(event.data.botId, dropCoordinates)
+      this.loadPredefinedBot(event.data.botId, dropCoordinates);
+      //this.RPA_Designer_Component.current_instance.loadpredefinedbot(event.data.botId, dropCoordinates)
     }
     else
     {
@@ -2314,6 +2315,63 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       })
   }
 
+    })
+  }
+
+  loadPredefinedBot(botId, dropCoordinates)
+  {
+    this.rest.getbotdata(botId).subscribe((response:any)=>{
+      if(response.errorMessage==undefined)
+      {
+        let droppedXcoordinate=dropCoordinates.x.split("px")[0]
+        let droppedYcoordinate=dropCoordinates.y.split("px")[0]
+        this.spinner.show();
+
+        let j=0;
+        response.tasks.forEach(element=>
+        {
+          let nodename=  element.nodeId.split("__")[0];
+          let nodeid=(element.nodeId.split("__")[1]).split("|")[0];
+         
+          let node={
+            id:this.idGenerator(),
+            name:nodename,
+            selectedNodeTask:element.taskName,
+            path:this.toolset.find(data=>data.name==nodename).path,
+            selectedNodeId: element.tMetaId,
+            tasks:this.toolset.find(data=>data.name==nodename).tasks,
+            x:j+parseInt(droppedXcoordinate)+'px',
+            y:j+parseInt(droppedYcoordinate)+"px",
+        }
+        j=j+100;
+        if(response.sequences.find(item=>item.sourceTaskId==nodeid)!=undefined)
+        {
+          response.sequences.find(item=>item.sourceTaskId==nodeid).sourceTaskId=node.id
+        }
+  
+        if(response.sequences.find(item=>item.targetTaskId==nodeid)!=undefined)
+        {
+          response.sequences.find(item=>item.targetTaskId==nodeid).targetTaskId=node.id
+        }
+        element.nodeId=nodename+"__"+node.id;
+        this.nodes.push(node);
+        setTimeout(() => {
+          this.populateNodes(node);
+        }, 240);
+  
+  
+        })
+       
+        response.sequences.splice((response.sequences.length-1),1)
+        response.sequences.splice(0,1)
+       
+          this.addconnections(response.sequences);
+          this.spinner.hide();
+      }
+      else
+      {
+        Swal.fire("Error",response.errorMessage, "error");
+      }
     })
   }
 
