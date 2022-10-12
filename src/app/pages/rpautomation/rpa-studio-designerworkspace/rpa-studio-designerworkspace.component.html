@@ -1,6 +1,6 @@
 <div [id]="dragareaid">
   <div class="main" id="screen">
-    <div  class="drag-area" dndDropzone  (contextmenu)="$event.preventDefault()" (dndDrop)="onDrop($event,$event)" (click)="closemenu()" [ngClass]="{ 'workspace': disable, 'dndDropzoneDisabled': false, 'lightTheme': lightTheme }">
+    <div  class="drag-area" dndDropzone   (dndDrop)="onDrop($event,$event)" (click)="closemenu()" [ngClass]="{ 'workspace': disable, 'dndDropzoneDisabled': false, 'lightTheme': lightTheme }">
   
       <ng-container *ngFor="let node of nodes; let i = index">
         <div id="{{node.id}}" class="dndDropzone" (mouseover)="openoutputmenu(node)" (dblclick)="getTaskForm(node)" (contextmenu)="onRightClick(node, $event,i);$event.prevent" [ngStyle]="{'left': node.x, 'top' : node.y,'background-image' :  'url(' + node.path + ')'  }">
@@ -35,7 +35,7 @@
         <div [id]="group.id"    mwlResizable
         [enableGhostResize]="true"
         (resizeEnd)="onResizeEnd($event, group.id)"
-        [resizeEdges]="{ bottom: true, right: true, top: false, left: false }" [ngStyle]="{'left': group.x, 'top' : group.y, 'height':group.height, 'width':group.width}" class="groupElement">
+        [resizeEdges]="{ bottom: true, right: true, top: false, left: false }" [ngStyle]="{'left': group.x, 'top' : group.y, 'height':group.height, 'width':group.width, 'border-color' :group.color}" class="groupElement">
             <div class="groupHeader">
                 <span class="groupTitle" *ngIf="group.edit==false">{{group.groupName}}</span>
                 <span class="groupTitle clickable" (click)="removeGroup(group.id)" *ngIf="group.edit==false">
@@ -47,8 +47,10 @@
                 <span class="groupTitle clickable" *ngIf="group.edit==true">
                     <input type="text" (keyup)="group.groupName=$event.target.value" [value]="group.groupName">
                 </span>
-                <span class="groupTitle clickable" *ngIf="group.edit==true">
-                    <input type="color" (keyup)="group.color=$event.target.value" [value]="group.color">
+                <span class="groupTitle clickable " *ngIf="group.edit==true">
+                    &nbsp;
+                    <input type="color" (change)="group.color= $event.target.value" [value]="group.color" class="custom-color-picker">
+                    &nbsp;
                 </span>
                 <span class="text-suuccess groupTitle clickable" *ngIf="group.edit==true" (click)="group.edit=false" ><i class="ri-check-line"></i></span>
             </div>

@@ -1535,6 +1535,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           height:item.height,
           width:item.width,
           edit:false,
+          color:item.color
         }
         this.groupsData.push(GroupData);
         setTimeout(()=>{
@@ -2157,6 +2158,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         height:"150px",
         width:"250px",
         edit:false,
+        color:'black'
     }
     this.groupsData.push(GroupData);
     setTimeout(()=>{
