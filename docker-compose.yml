@@ -16,8 +16,8 @@ services:
       placement:
         constraints:
           - node.labels.environment == qa
-    networks:
-      - eps_net
+    #networks:
+     # - eps_net
     logging:
       options:
         tag: "{{.Name}}"
