@@ -246,6 +246,23 @@ button:disabled {
     width: 10%
 }
 
+button:hover img.testplus.default-img{
+    display: none;
+}
+  
+button:hover img.testplus.hover-img {
+    display : initial;
+}
+
+button:hover img.testplus1.default-img{
+    display: none;
+}
+  
+button:hover img.testplus1.hover-img {
+    display : initial;
+}
+
+
 
 
   

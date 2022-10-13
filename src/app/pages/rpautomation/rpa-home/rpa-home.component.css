@@ -476,3 +476,10 @@ button:disabled {
   cursor: not-allowed;
 }
 
+.flex-col button:hover img.testplus.default-img{
+  display: none;
+}
+
+.flex-col button:hover img.testplus.hover-img {
+  display : initial;
+}
