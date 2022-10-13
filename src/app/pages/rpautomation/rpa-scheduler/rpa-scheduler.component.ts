@@ -183,7 +183,8 @@ gettime(){
   }
   onChangeHour(event,time){ 
  
- this.todaytime=(new Date).getHours()+":"+(new Date).getMinutes();;
+//  this.todaytime=(new Date).getHours()+":"+(new Date).getMinutes();;
+    this.todaytime = moment().format("HH:mm");
  
     event=this.tConv24(event)
     this.beforetime=false;
