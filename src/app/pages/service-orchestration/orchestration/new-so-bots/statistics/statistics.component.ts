@@ -6,6 +6,7 @@ import * as moment from 'moment';
 import {NgxSpinnerService} from 'ngx-spinner';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
 import Swal from 'sweetalert2';
+import { DataTransferService } from 'src/app/pages/services/data-transfer.service';
 @Component({
   selector: 'app-statistics',
   templateUrl: './statistics.component.html',
@@ -22,15 +23,17 @@ export class StatisticsComponent implements OnInit {
     processnames:any=[];
     processstatistics:any;
     approved_processes:any;
+    public userDetails:any
   constructor(
     private spinner:NgxSpinnerService,
-    private rest:RestApiService
+    private rest:RestApiService,
+    private dataTransfer:DataTransferService
     ) { }
 
     public allbots:any;
   ngOnInit(){
+    this.getUserDetails();
     this.spinner.show();
-    this.getallbots();
     //this.getslametrics();
     this.getprocesses();
     setTimeout(()=>{
@@ -80,7 +83,9 @@ this.getEnvironments();
         }];
         this.chart1(data)
 
-        let sourceType=[{
+        let sourceType;
+        if(this.userDetails.thirdPartyRPAEnabled){
+         sourceType=[{
           "country": "UiPath",
           "litres": this.allbots.filter(item=>item.sourceType=="UiPath").length,
           "color": "#fa4616"
@@ -93,15 +98,22 @@ this.getEnvironments();
           "litres":this.allbots.filter(item=>item.sourceType=="EPSoft").length,
           "color": "#00a0e3"
         }];
-        
+        }
+        else{
+          sourceType=[{
+          "country": "EPSoft",
+          "litres":this.allbots.filter(item=>item.sourceType=="EPSoft").length,
+          "color": "#00a0e3"
+        }];
+      }
         this.chart3(sourceType, this.allbots.length);
         //this.chart4();
         
         this.getprocesses();
         this.getBpmnApprovedProcesses();
         this.botruntimestats();
-        
-      }
+      
+    }
   
       else{
         Swal.fire("Error",item.errorMessage,"error")
@@ -1193,6 +1205,15 @@ pieSeries.labels.template.fontSize = 18;
      chart.legend.labels.template.text = "{category} - {value}";
    }, 50);
 }
+
+getUserDetails(){ // capture the userDatails 
+  this.dataTransfer.logged_userData.subscribe(res=>{
+   if(res){
+     this.userDetails=res;
+     this.getallbots();
+      }
+    })
+  }
 
 
 }

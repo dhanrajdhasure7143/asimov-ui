@@ -171,12 +171,13 @@
                                 <span *ngIf="element.taskType=='Bot' || element.taskType=='Automated'">
                     <select class="form-control" [value]="element.sourceType" (change)="changesource($event.target.value,element.taskId)">
                         <option [value]="null" disabled hidden>Select Bot Source</option>
-                        <!-- <option value="">Select Bot Source</option> -->
-                        <option value="EPSoft">EPSoft</option>
+                        <!-- <option value="">Select Bot Source</option>
+                          <option value="EPSoft">EPSoft</option>
                         <option value="UiPath">UiPath</option>
-                        <option value="BluePrism">BluePrism</option>
+                        <option value="BluePrism">BluePrism</option> -->
                         <!--<option value="Blue Prism">Blue Prism</option>
                         <option value="Kofax">Kofax</option> -->
+                        <option [value]="item" *ngFor="let item of botSource_list">{{item}}</option>
                     </select>
                   </span>
                                 <span *ngIf="element.taskType=='Human'">
