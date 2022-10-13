@@ -95,6 +95,8 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
   selectedexecutiontype:any="Serial"
   public users_list: any[];
   public userID: any;
+  public userDetails:any={};
+  public botSource_list:any[]=[];
 
   constructor(
     private route: ActivatedRoute,
@@ -107,6 +109,7 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
     private dt : DataTransferService,
     private modalService:BsModalService,
     private cd:ChangeDetectorRef,
+    private dataTransfer: DataTransferService
    )
 
   {
@@ -149,6 +152,7 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
 
   ngOnInit() {
     this.dt.changeHints(this.hints.soochestartionhints);
+    this.getUserDetails();
     this.spinner.show();
     this.userRole = localStorage.getItem("userRole")
 
@@ -1382,6 +1386,21 @@ resetsla(){
   changeTaskOwner(userid){// to get userId from users list
     this.userID= userid
   }
+
+  getUserDetails() {  //third party tenant based visibility
+    this.dataTransfer.logged_userData.subscribe(res => {
+      if (res) {
+        this.userDetails = res;
+        if(this.userDetails.thirdPartyRPAEnabled){
+          this.botSource_list=["EPSoft","UiPath","BluePrism"];
+        }
+        else{
+          this.botSource_list=["EPSoft"];
+        }
+      }
+    })
+  }
+
 
   
 }

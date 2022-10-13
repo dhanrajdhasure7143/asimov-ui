@@ -10,9 +10,10 @@
               <div class="col-md-3 pl-0">
                   <select [(ngModel)]="selected_source" value="" class="form-control rpa-control" (change)="method()"> <!--(selectionChange)="applyFilter3($event.value)">-->
             <option value="">Select Source</option>
-            <option value="EPSoft">EPSoft</option>
+            <!-- <option value="EPSoft">EPSoft</option>
             <option value="BluePrism">BluePrism</option>
-            <option value="UiPath">UiPath</option>
+            <option value="UiPath">UiPath</option> -->
+            <option [value]="item" *ngFor="let item of botSource_list">{{item}}</option>
           </select> 
               </div>
               <div class="col-md-3 pl-0">
