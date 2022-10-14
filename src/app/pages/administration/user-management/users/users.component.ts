@@ -57,7 +57,7 @@ export class UsersComponent implements OnInit {
           "roles": roles,
           // "roles": "Admin",
           "created_at": element.created_at,
-          "created_at_modified": moment(new Date(element.created_at)).format('LLL'),
+          "created_at_modified": moment(new Date(element.created_at)).format('lll'),
         }
         this.userslist.push(userdata);
        });
