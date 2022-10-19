@@ -346,10 +346,12 @@
                                     </span>
                                     <span>
                                         <button  (click)="loadbotdatadesign(element.botId)"  *ngIf="element.sourceType == 'EPSoft'" matTooltip="View Bot">
-                                          <img src="../../../../../assets/images/Projects/eye-show.svg" class="testplus" />
+                                          <img src="../../../../../assets/images/Projects/eye-show.svg" class="testplus default-img" />
+                                          <img src="../../../../../assets/images/Projects/eye-show-blue.svg" class="testplus hover-img" />
                                         </button>
                                         <button  *ngIf="element.sourceType != 'EPSoft'" disabled class="undobtn">
-                                          <img src="../../../../../assets/images/SO/eye-show dis.svg" class="testplus" />
+                                          <img src="../../../../../assets/images/SO/eye-show dis.svg" class="testplus default-img" />
+                                          <img src="../../../../../assets/images/Projects/eye-show-blue.svg" class="testplus hover-img" />
                                         </button>
                                         <!-- <button [disabled]="element.botId==0"  [class]="element.botId==0?'undobtn':''" (click)="loadbotdatadesign(element.botId)"  [disabled]="element.sourceType!='EPSoft'" *ngIf="element.taskType =='Automated'||element.taskType =='Bot'" matTooltip="View             Bot">
                                           <img src="../../../../../assets/images/Projects/eye-show.svg" class="testplus" />
@@ -361,7 +363,8 @@
                                     </span>
                                     <span>
                                         <button  matTooltip="Delete Task" class="undobtn" (click)="delete(element.taskId, element.processId)">
-                                            <img src="../../../../../assets/images/Projects/delete-black.svg" class="testplus1"/>
+                                            <img src="../../../../../assets/images/Projects/delete-black.svg" class="testplus1 default-img"/>
+                                            <img src="../../../../assets/images/Projects/delete-red.svg" class="testplus1 hover-img"/>
                                         </button>
                                     </span>
                                 </div>
@@ -392,8 +395,9 @@
                                         </button>
                                     </span>
                                     <span>
-                                        <button  tooltip="Delete Task" (click)="delete(element.taskId)">
-                                          <img src="../../../../../assets/images/Projects/delete-black.svg" class="testplus"/>
+                                        <button  matTooltip="Delete Task" (click)="delete(element.taskId)">
+                                          <img src="../../../../../assets/images/Projects/delete-black.svg" class="testplus default-img"/>
+                                          <img src="../../../../assets/images/Projects/delete-red.svg" class="testplus hover-img"/>
                                         </button>
                                         <!-- <button (click)="SLACon(element.botId)" matTooltip="SLA Configuration"><i class="fa fa-cog" aria-hidden="true"></i></button> -->
                                         <!-- <button (click)="SLACon(element)" matTooltip="SLA Configuration"><i class="fa fa-cog" aria-hidden="true"></i></button> -->

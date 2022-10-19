@@ -923,9 +923,19 @@ export class CreateBpmnDiagramComponent implements OnInit, ComponentCanDeactivat
     })    
   }
   zoomIn() {
+    if(this.selectedNotationType=="dmn"){
+      this.bpmnModeler.getActiveViewer()
+        .get('zoomScroll').stepZoom(0.1);
+        return;
+    }
     this.bpmnModeler.get('zoomScroll').stepZoom(0.1);
   }
   zoomOut() {
+    if(this.selectedNotationType=="dmn"){
+      this.bpmnModeler.getActiveViewer()
+      .get('zoomScroll').stepZoom(-0.1);
+      return;
+    }
     this.bpmnModeler.get('zoomScroll').stepZoom(-0.1);
   }
   toggleOpen(){
