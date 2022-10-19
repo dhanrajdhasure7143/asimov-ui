@@ -18,7 +18,8 @@ export const environment = {
   idm_url:'http://idmdev.epsoftinc.in',
   auth_url: "http://authdev.epsoftinc.in",
   //for Auto build
-  pi_node_url: "http://10.11.0.107:3002",
+  pi_node_url: "http://10.11.0.107:3000",
+  //pi_node_url: "http://10.11.0.107:3002", // enable for old pi node code (old pi node code running in this port)
   pi_node_jobs: "http://10.11.0.107:5000",
   //for local environment
   //pi_node_url: "http://10.11.0.112:3000",

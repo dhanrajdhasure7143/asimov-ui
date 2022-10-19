@@ -85,6 +85,8 @@ public slaupdate : boolean = false;
     public logTasks:any=[];
     logsbotid:any;
     selectedversion:any;
+    public userDetails:any={};
+    public botSource_list:any[]=[];
     @ViewChild("paginator1",{static:false}) paginator1: MatPaginator;
     @ViewChild("sort1",{static:false}) sort1: MatSort;
     @ViewChild("paginator4",{static:false}) paginator4: MatPaginator;
@@ -112,7 +114,8 @@ public slaupdate : boolean = false;
       private formBuilder: FormBuilder,
       private notify:NotifierService,
       private modalService:BsModalService,
-      private detectChanges:ChangeDetectorRef
+      private detectChanges:ChangeDetectorRef,
+      private dataTransfer:DataTransferService
       )
     {
       this.insertslaForm_so_bot=this.formBuilder.group({
@@ -132,7 +135,8 @@ public slaupdate : boolean = false;
 
   ngOnInit() {
    // this.dt.changeHints(this.hints.botmanagment);
-    this.spinner.show();
+   this.getUserDetails();
+   this.spinner.show();
     this.getCategoryList();
     this.getallbots();
     this.getautomatedtasks();
@@ -1138,4 +1142,18 @@ public slaupdate : boolean = false;
         return false;
     }
   }
+  getUserDetails() { //capture user Details
+    this.dataTransfer.logged_userData.subscribe(res => {
+      if (res) {
+          this.userDetails = res;
+        if (this.userDetails.thirdPartyRPAEnabled) {
+          this.botSource_list = ["EPSoft","UiPath", "BluePrism"]
+        }
+        else {
+          this.botSource_list = ["EPSoft"]
+        }
+      }
+    })
+  }
+
 }
