@@ -1618,6 +1618,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
 zoomIn() {
 let modeler_obj = this.isConfBpmnModeler ? "confBpmnModeler" : "bpmnModeler";
 if(this.isShowConformance){
+  // this.confBpmnModeler.get('zoomScroll').stepZoom(0.1);
 this[modeler_obj].get('zoomScroll').stepZoom(0.1);
     }else{
       if(this.selectedNotationType=="dmn"){
@@ -1625,12 +1626,14 @@ this[modeler_obj].get('zoomScroll').stepZoom(0.1);
           .get('zoomScroll').stepZoom(0.1);
           return;
       }
+      // this.bpmnModeler.get('zoomScroll').stepZoom(0.1);
   this[modeler_obj].get('zoomScroll').stepZoom(0.1);
     }
   }
 zoomOut() {
 let modeler_obj = this.isConfBpmnModeler ? "confBpmnModeler" : "bpmnModeler";
 if(this.isShowConformance){
+// this.confBpmnModeler.get('zoomScroll').stepZoom(-0.1);
 this[modeler_obj].get('zoomScroll').stepZoom(-0.1);
     }else{
       if(this.selectedNotationType=="dmn"){
@@ -1638,6 +1641,7 @@ this[modeler_obj].get('zoomScroll').stepZoom(-0.1);
           .get('zoomScroll').stepZoom(-0.1);
           return;
       }
+      // this.bpmnModeler.get('zoomScroll').stepZoom(-0.1);
   this[modeler_obj].get('zoomScroll').stepZoom(-0.1);
     }
 }
