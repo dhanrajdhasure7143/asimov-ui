@@ -1621,7 +1621,7 @@ if(this.isShowConformance){
 this[modeler_obj].get('zoomScroll').stepZoom(0.1);
     }else{
       if(this.selectedNotationType=="dmn"){
-        this[modeler_obj].getActiveViewer()
+        this.bpmnModeler.getActiveViewer()
           .get('zoomScroll').stepZoom(0.1);
           return;
       }
@@ -1634,7 +1634,7 @@ if(this.isShowConformance){
 this[modeler_obj].get('zoomScroll').stepZoom(-0.1);
     }else{
       if(this.selectedNotationType=="dmn"){
-        this[modeler_obj].getActiveViewer()
+        this.bpmnModeler.getActiveViewer()
           .get('zoomScroll').stepZoom(-0.1);
           return;
       }
