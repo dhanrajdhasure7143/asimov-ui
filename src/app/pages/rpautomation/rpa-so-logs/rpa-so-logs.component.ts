@@ -407,6 +407,7 @@ export class RpaSoLogsComponent implements OnInit, OnDestroy {
   {
     this.selectedIterationTask==undefined;
     this.closeEvent.emit(null)
+    this.logsmodal.hide()
   }
 
 ngOnDestroy(): void {

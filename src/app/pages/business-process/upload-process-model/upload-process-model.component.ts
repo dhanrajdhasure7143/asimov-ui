@@ -1616,27 +1616,33 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
     this[modeler_obj].get('canvas').zoom('fit-viewport');
   }
 zoomIn() {
+let modeler_obj = this.isConfBpmnModeler ? "confBpmnModeler" : "bpmnModeler";
 if(this.isShowConformance){
-this.confBpmnModeler.get('zoomScroll').stepZoom(0.1);
+  // this.confBpmnModeler.get('zoomScroll').stepZoom(0.1);
+this[modeler_obj].get('zoomScroll').stepZoom(0.1);
     }else{
       if(this.selectedNotationType=="dmn"){
         this.bpmnModeler.getActiveViewer()
           .get('zoomScroll').stepZoom(0.1);
           return;
       }
-  this.bpmnModeler.get('zoomScroll').stepZoom(0.1);
+      // this.bpmnModeler.get('zoomScroll').stepZoom(0.1);
+  this[modeler_obj].get('zoomScroll').stepZoom(0.1);
     }
   }
 zoomOut() {
+let modeler_obj = this.isConfBpmnModeler ? "confBpmnModeler" : "bpmnModeler";
 if(this.isShowConformance){
-this.confBpmnModeler.get('zoomScroll').stepZoom(-0.1);
+// this.confBpmnModeler.get('zoomScroll').stepZoom(-0.1);
+this[modeler_obj].get('zoomScroll').stepZoom(-0.1);
     }else{
       if(this.selectedNotationType=="dmn"){
         this.bpmnModeler.getActiveViewer()
           .get('zoomScroll').stepZoom(-0.1);
           return;
       }
-  this.bpmnModeler.get('zoomScroll').stepZoom(-0.1);
+      // this.bpmnModeler.get('zoomScroll').stepZoom(-0.1);
+  this[modeler_obj].get('zoomScroll').stepZoom(-0.1);
     }
 }
 toggleOpen(){
