@@ -43,7 +43,7 @@ export class DepartmentsComponent implements OnInit {
     this.api.getDepartmentsList().subscribe(resp => {
       this.departments = resp
       this.departments.data.map(item=>{
-        item["createdTimeStamp_converted"] = moment(new Date(item.createdAt)).format('LLL')
+        item["createdTimeStamp_converted"] = moment(new Date(item.createdAt)).format('lll')
         return item
       })
       this.dataSource2 = new MatTableDataSource(this.departments.data);

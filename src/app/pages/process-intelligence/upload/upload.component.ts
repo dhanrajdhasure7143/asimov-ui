@@ -496,7 +496,7 @@ export class UploadComponent implements OnInit {
       });
       this.process_graph_list = this.process_List.data
       this.process_graph_list.forEach(element => {
-        element['convertedTime_new']= moment(new Date(element.convertedTime)).format('LLL')
+        element['convertedTime_new']= moment(new Date(element.convertedTime)).format('lll')
       });
       this.dataSource= new MatTableDataSource(this.process_graph_list);
       this.dataSource.sort=this.sort;

@@ -77,7 +77,7 @@ export class RpaenvironmentsComponent implements OnInit {
         this.environments = response.map(item => {
           item["checked"] = false;
           item["categoryName"] = this.categoryList.find(item2 => item2.categoryId == item.categoryId).categoryName;
-          item["createdTimeStamp_converted"] = moment(new Date(item.createdTimeStamp)).format('LLL')
+          item["createdTimeStamp_converted"] = moment(new Date(item.createdTimeStamp)).format('lll')
           if (item.keyValue != null) {
             item["password"] = {
               key: ""
