@@ -85,7 +85,6 @@ export class RpaSchedulerComponent implements OnInit {
   aftertime:boolean=false;
   checkScheduler : boolean = false;
   constructor(private rest:RestApiService, private notifier: NotifierService) { }
-
   ngOnInit() {
     var dtToday = new Date();
     this.selecteddate=new Date()
@@ -150,7 +149,11 @@ gettime(){
       this.rest.getbotSchedules(this.data).subscribe((response:any)=>{
         if(response.errorMessage==undefined)
         {
-          this.schedule_list=[...response];
+          this.schedule_list=[...response.map(item=>{
+            item["checked"]=false;
+            return item;
+          })];
+          this.checkScheduler=false;
           this.flags={
             startflag:false,
             stopflag:false,
@@ -449,19 +452,19 @@ gettime(){
 
   start_schedule()
   {
-    let checked_schedule=this.schedule_list.find(data=>data.check==true)
+    let checked_schedule=this.schedule_list.find(data=>data.checked==true)
     if(this.botid!=undefined && this.botid != "")
     {
       let schedule={
         botId:this.botid,
-        "botVersion": checked_schedule.botVersion,
+        "botVersion": this.data.version,
         "scheduleInterval":checked_schedule.scheduleInterval,
         "intervalId":checked_schedule.intervalId,
       }
       this.rest.start_schedule(schedule).subscribe((resp:any)=>{
         if(resp.errorMessage==undefined)
         {
-          this.notifier.notify("success",resp.status)
+          this.notifier.notify("success","Schedule started successfully")
           this.get_schedule();
         }
         else
@@ -472,10 +475,10 @@ gettime(){
 
   pause_schedule()
   {
-    let checked_schedule=this.schedule_list.find(data=>data.check==true)
+    let checked_schedule=this.schedule_list.find(data=>data.checked==true)
       let schedule={
         botId:this.data.botid,
-        "botVersion": checked_schedule.botVersion,
+        "botVersion": this.data.version,
         "scheduleInterval":checked_schedule.scheduleInterval,
         "intervalId":checked_schedule.intervalId,
       }
@@ -483,7 +486,8 @@ gettime(){
         let resp:any=data
         if(resp.errorMessage==undefined)
         {
-          this.notifier.notify("success",resp.status)
+
+          this.notifier.notify("success", "Schedule paused successfully");
           this.get_schedule();
         }
         else
@@ -496,10 +500,10 @@ gettime(){
 
   resume_schedule()
   {
-    let checked_schedule=this.schedule_list.find(data=>data.check==true)
+    let checked_schedule=this.schedule_list.find(data=>data.checked==true)
     let schedule={
       botId:this.data.botid,
-      "botVersion": checked_schedule.botVersion,
+      "botVersion": this.data.version,
       "scheduleInterval":checked_schedule.scheduleInterval,
       "intervalId":checked_schedule.intervalId,
     }
@@ -507,7 +511,7 @@ gettime(){
       let resp:any=data
       if(resp.errorMessage==undefined)
       {
-        this.notifier.notify("success", resp.status);
+        this.notifier.notify("success", "Schedule resumed successfully");
         this.get_schedule();
       }
       else
@@ -521,25 +525,19 @@ gettime(){
   {
     if(this.botid!="" && this.botid!=undefined)
     {
-      let list=this.schedule_list.filter(data=>data.check==true);
-      list.forEach(data=>{
-        let index2=this.schedule_list.findIndex(scheduleitem=>scheduleitem.intervalId==data.intervalId);
-        this.schedule_list.splice(index2,1);
-      })
-
+      let list=this.schedule_list.filter(data=>data.checked==true);
       this.rest.stop_schedule(list).subscribe((response:any)=>{
         if(response.errorMessage==undefined)
         {
-          Swal.fire("Success",response.status, "success");
+          this.notifier.notify("success", "Schedules deleted successfully");
           this.get_schedule();
         }
         else
         {
-          Swal.fire("Error",response.errorMessage,"error");
+          this.notifier.notify("error", response.errorMessage);
         }
       })
       // this.updateflags();
-      this.notifier.notify("success", "Schedules Deleted Sucessfully");
     }
   }
 
@@ -640,13 +638,14 @@ gettime(){
 
   updateflags()
   {
-    let length=this.schedule_list.filter(data=>data.check==true).length;
+
+    let length=this.schedule_list.filter(data=>data.checked==true).length;  
     if(length>0)
     {
       this.flags.deleteflag=true;
       if(length==1)
       {
-        let schedule=this.schedule_list.find(data=>data.check==true)
+        let schedule=this.schedule_list.find(data=>data.checked==true)
         if(schedule.botActionStatus!=undefined || schedule.schedularActionStatus!=undefined )
         {
           let status:any;
@@ -656,7 +655,6 @@ gettime(){
             status=schedule.botActionStatus
           if(status=='New')
           {
-
             this.flags.startflag=true;
             this.flags.pauseflag=false;
             this.flags.resumeflag=false;
