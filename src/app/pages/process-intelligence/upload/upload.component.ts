@@ -332,6 +332,7 @@ export class UploadComponent implements OnInit {
     reader.onload = () => {
       let csvRecordsArray: string[][] = [];
       (<string>reader.result).split(/\r\n|\n/).forEach((each, i) => {
+        if(each)
         csvRecordsArray.push(each.split(','));
       })
       this.dt.changePiData(csvRecordsArray); // share file data using behavior subject
