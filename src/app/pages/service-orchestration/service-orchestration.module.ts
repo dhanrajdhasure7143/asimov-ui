@@ -64,6 +64,7 @@ import { RpaSoLogsComponent } from '../rpautomation/rpa-so-logs/rpa-so-logs.comp
 import { RpautomationModule } from '../rpautomation/rpautomation.module';
 import { CustomMatPaginatorIntl } from 'src/app/shared/custom-mat-paginator-int';
 import { NgbModalDraggableModule } from 'ngb-modal-draggable';
+import { SoIncidentManagementComponent } from './orchestration/so-incident-management/so-incident-management.component';
 @NgModule({
   declarations: [OrchestrationComponent,ipcustompipecreation,
     BotStatusComponent,
@@ -91,7 +92,8 @@ import { NgbModalDraggableModule } from 'ngb-modal-draggable';
     BotsComponent,
     ProcessesComponent,
     ScheduledBotsComponent,
-    CheckResourcePipe],
+    CheckResourcePipe,
+    SoIncidentManagementComponent],
   imports: [
     CommonModule,
     FormsModule,
