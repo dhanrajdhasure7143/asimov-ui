@@ -1,81 +1,187 @@
 <div *ngIf="!loadingFlag">
-    <div *ngIf="incidentFlag">
-        <div class="so-sub-tab-content">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-10 p-0">
-                        <div class="col-md-3 form-group pl-0 sosearchfield">
-                            <input type="search" class="form-control rpa-control" placeholder="Search" [(ngModel)]="seachInput" (input)="searchIncidentTable()">
-                            <img src="../../../../assets/images/search.svg" class="testplus">
-                        </div>
-                    </div>
-                    <div class="col-md-2 p-0 env-data-tool text-right">
-                        <button (click)="reset()" id="bmreset" class="tsttooltipbtn">
-                            <img src="../../../../../assets/images/RPA/icon_latest/reset-blue.svg" class="testplus1">
-                            <span class="testtooltip">Reset</span>
-                        </button >
-                    </div>
-                </div>
-
-
-                <div class="incedent-management-table-container">
-                    <table mat-table  [dataSource]="incidentTableDataSource" #incidentTableSort="matSort" matSort class="RPA table" id="incident-table">
-
-                        <ng-container matColumnDef="incidentId">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="cell2">Incident Id</th>
-                            <td mat-cell *matCellDef="let element" class="cell2">
-                                <span *ngIf="element.incidentId!=null">{{element.incidentId}}</span>
-                                <span *ngIf="element.incidentId==null || element.incidentId==''">-</span> </td>
-                        </ng-container>
-                        <ng-container matColumnDef="convertedCreatedTime">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="cell1">Created At</th>
-                            <td mat-cell *matCellDef="let element" class="cell1">
-                                <span *ngIf="element.createdAt!=null">{{element.convertedCreatedTime}}</span>
-                                <span *ngIf="element.createdAt==null || element.createdAt==''">-</span> </td>
-                        </ng-container>
-                        <ng-container matColumnDef="assignedTo">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header class="cell1">Assigned To</th>
-                            <td mat-cell *matCellDef="let element" class="cell1">
-                            <span *ngIf="element.assignedTo!=null">{{element.assignedTo}}</span>
-                            <span *ngIf="element.assignedTo==null || element.assignedTo==''">-</span> </td>
-                        </ng-container>
-                        <ng-container matColumnDef="description">
-                            <th mat-header-cell *matHeaderCellDef mat-sort-header  class="cell1">Description</th>
-                            <td mat-cell *matCellDef="let element"   class="cell1">
-                                <span [matTooltip]="element.description"  matTooltipClass='incident-table-cell-tooltip' [matTooltipPosition]="'below'" *ngIf="element.description!=null">{{element.description.length>80 ? ((element.description).slice(0, 80) + '...') : element.description}}</span>
-                                <span *ngIf="element.description==null || element.description==''">-</span> 
-                            </td>
-                        </ng-container>
-
-                        <ng-container matColumnDef="incidentStatus">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header class="cell7">Incident Status</th>
-                        <td mat-cell *matCellDef="let element" class="cell7">
-                            <span *ngIf="element.incidentStatus!=null">{{element.incidentStatus}}</span>
-                            <span *ngIf="element.incidentStatus==null  || element.incidentStatus==''">-</span> 
-                        </td>
-                        </ng-container>
-                    
-                        <tr mat-header-row *matHeaderRowDef="incidentTableDisplayedColumns; sticky: true"></tr>
-                        <tr class="row-highlight" mat-row *matRowDef="let row; columns: incidentTableDisplayedColumns;"></tr>
-                        <tr class="mat-row" *matNoDataRow>
-                            <td class="mat-cell" [attr.colspan]="incidentTableDisplayedColumns.length">
-                                <h1>No Items To Display</h1>
-                            </td>
-                        </tr>
-                    </table>
-                
-                </div>
-                <div class="newpaginationdiv">
-                    <mat-paginator #incidentTablePaginator [pageSize]="10" [pageSizeOptions]="[5, 10,25,50]" [showFirstLastButtons]="true"></mat-paginator>
-                </div>
+  <div *ngIf="incidentFlag">
+    <div class="so-sub-tab-content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-10 p-0">
+            <div class="col-md-3 form-group pl-0 sosearchfield">
+              <input
+                type="search"
+                class="form-control rpa-control"
+                placeholder="Search"
+                [(ngModel)]="seachInput"
+                (input)="searchIncidentTable()"
+              />
+              <img
+                src="../../../../assets/images/search.svg"
+                class="testplus"
+              />
             </div>
+          </div>
+          <div class="col-md-2 p-0 env-data-tool text-right">
+            <button (click)="reset()" id="bmreset" class="tsttooltipbtn">
+              <img
+                src="../../../../../assets/images/RPA/icon_latest/reset-blue.svg"
+                class="testplus1"
+              />
+              <span class="testtooltip">Reset</span>
+            </button>
+          </div>
         </div>
+        <div class="incedent-management-table-container">
+          <table
+            mat-table
+            [dataSource]="incidentTableDataSource"
+            #incidentTableSort="matSort"
+            matSort
+            class="RPA table"
+            id="incident-table"
+          >
+            <ng-container matColumnDef="incidentId">
+              <th
+                mat-header-cell
+                *matHeaderCellDef
+                mat-sort-header
+                class="cell2"
+              >
+                Incident Id
+              </th>
+              <td mat-cell *matCellDef="let element" class="cell2">
+                <span *ngIf="element.incidentId != null">{{
+                  element.incidentId
+                }}</span>
+                <span
+                  *ngIf="element.incidentId == null || element.incidentId == ''"
+                  >-</span
+                >
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="convertedCreatedTime">
+              <th
+                mat-header-cell
+                *matHeaderCellDef
+                mat-sort-header
+                class="cell1"
+              >
+                Created At
+              </th>
+              <td mat-cell *matCellDef="let element" class="cell1">
+                <span *ngIf="element.createdAt != null">{{
+                  element.convertedCreatedTime
+                }}</span>
+                <span
+                  *ngIf="element.createdAt == null || element.createdAt == ''"
+                  >-</span
+                >
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="assignedTo">
+              <th
+                mat-header-cell
+                *matHeaderCellDef
+                mat-sort-header
+                class="cell1"
+              >
+                Assigned To
+              </th>
+              <td mat-cell *matCellDef="let element" class="cell1">
+                <span *ngIf="element.assignedTo != null">{{
+                  element.assignedTo
+                }}</span>
+                <span
+                  *ngIf="element.assignedTo == null || element.assignedTo == ''"
+                  >-</span
+                >
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="description">
+              <th
+                mat-header-cell
+                *matHeaderCellDef
+                mat-sort-header
+                class="cell1"
+              >
+                Description
+              </th>
+              <td mat-cell *matCellDef="let element" class="cell1">
+                <span
+                  [matTooltip]="element.description"
+                  matTooltipClass="incident-table-cell-tooltip"
+                  [matTooltipPosition]="'below'"
+                  *ngIf="element.description != null"
+                  >{{
+                    element.description.length > 80
+                      ? element.description.slice(0, 80) + "..."
+                      : element.description
+                  }}</span
+                >
+                <span
+                  *ngIf="
+                    element.description == null || element.description == ''
+                  "
+                  >-</span
+                >
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="incidentStatus">
+              <th
+                mat-header-cell
+                *matHeaderCellDef
+                mat-sort-header
+                class="cell7"
+              >
+                Incident Status
+              </th>
+              <td mat-cell *matCellDef="let element" class="cell7">
+                <span *ngIf="element.incidentStatus != null">{{
+                  element.incidentStatus
+                }}</span>
+                <span
+                  *ngIf="
+                    element.incidentStatus == null ||
+                    element.incidentStatus == ''
+                  "
+                  >-</span
+                >
+              </td>
+            </ng-container>
+            <tr
+              mat-header-row
+              *matHeaderRowDef="incidentTableDisplayedColumns; sticky: true"
+            ></tr>
+            <tr
+              class="row-highlight"
+              mat-row
+              *matRowDef="let row; columns: incidentTableDisplayedColumns"
+            ></tr>
+            <tr class="mat-row" *matNoDataRow>
+              <td
+                class="mat-cell"
+                [attr.colspan]="incidentTableDisplayedColumns.length"
+              >
+                <h1>No Items To Display</h1>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="newpaginationdiv">
+          <mat-paginator
+            #incidentTablePaginator
+            [pageSize]="10"
+            [pageSizeOptions]="[5, 10, 25, 50]"
+            [showFirstLastButtons]="true"
+          ></mat-paginator>
+        </div>
+      </div>
     </div>
-    <div class="text-center" *ngIf="!incidentFlag">
-        <img src="../../../../../assets/images/RPA/No-Items.svg"  style="height:calc(100vh - 350px)">
-        
-        <h4>Configurations required to display content</h4>
-        <br>
-        <h4><b>Contact EZFlow team for your ITSCM integration</b></h4>
-    </div>
+  </div>
+  <div class="text-center" *ngIf="!incidentFlag">
+    <img
+      src="../../../../../assets/images/RPA/No-Items.svg"
+      style="height: calc(100vh - 350px)"
+    />
+    <h4>Configurations required to display content</h4>
+    <br />
+    <h4><b>Contact EZFlow team for your ITSCM integration</b></h4>
+  </div>
 </div>
