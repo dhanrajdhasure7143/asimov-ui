@@ -21,6 +21,7 @@ export class SoIncidentManagementComponent implements OnInit {
     "convertedCreatedTime",
     "assignedTo",
     "description",
+    "priority",
     "incidentStatus",
   ];
   incidentTableDataSource: MatTableDataSource<any>;
