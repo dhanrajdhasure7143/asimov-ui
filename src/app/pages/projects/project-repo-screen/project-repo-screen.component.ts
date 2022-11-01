@@ -281,24 +281,15 @@ this.route.queryParams.subscribe(data=>{​​​​​​​​
       this.listOfFiles.push(value)
     }
     this.uploadFileForm.get("uploadFile").setValue(this.fileList);
-    
-    
   }
+
   getFileDetails(){
     this.api.getFileDetails(this.projectid).subscribe(data =>{
-
-
-      data.uploadedFiles.forEach(e=>{
-        this.userslist.forEach(ele=>{
-          // if(){
-          //   e["uploadedBy"]=ele.
-          // }
-        })
-      })
       this.uploadedFiledata=data.uploadedFiles.reverse();
       this.dataSource3= new MatTableDataSource(this.uploadedFiledata);
       this.dataSource3.sort=this.sort11;
       this.dataSource3.paginator=this.paginator101;
+      this.requestedFiledata=[];
       this.requestedFiledata=data.requestedFiles.reverse();
       this.dataSource4= new MatTableDataSource(this.requestedFiledata);
       this.dataSource4.sort=this.sort12;
@@ -306,11 +297,12 @@ this.route.queryParams.subscribe(data=>{​​​​​​​​
       let loggedUser=localStorage.getItem("ProfileuserId")
       let responseArray=this.requestedFiledata
       this.filterdArray=[]
-      if(responseArray=[]){
+      if(responseArray.length == 0){
         this.dataSource5= new MatTableDataSource(this.requestedFiledata);
         this.dataSource5.sort=this.sort13;
         this.dataSource5.paginator=this.paginator105;
       }else{
+        this.filterdArray=[]
       responseArray.forEach(e=>{
         if(e.requestTo==loggedUser || e.requestFrom==loggedUser){
           this.filterdArray.push(e)
