@@ -239,4 +239,10 @@ export class BusinessProcessComponent implements AfterViewChecked {
     this.router.navigate(['/pages/vcm/vcm-structure'],{queryParams: {id: this.vcm_id}})
   }
 
+  fitTableView(processName){
+    if(processName && processName.length > 20)
+      return processName.substr(0,20)+'...';
+    return processName;
+  }
+
 }

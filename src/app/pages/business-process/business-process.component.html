@@ -4,7 +4,7 @@
           <div class="col-md-6 new-bps-header-title">
             <span class="bps-header-title" [class.gen-bpsheader]="!rejectedOrApproved">
               <span class="module-header-title">Business Process Studio 
-                <span *ngIf="isHeaderShow == 'true'"><span *ngIf="currentNotation_name">/ </span> {{currentNotation_name}}</span>
+                <span *ngIf="isHeaderShow == 'true'" [matTooltip]=currentNotation_name matTooltipClass="bpsHeaderTooltip"><span *ngIf="currentNotation_name">/ </span> {{fitTableView(currentNotation_name)}}</span>
               </span>
               <span class="" *ngIf="isHeaderShow == 'true'">
                 <span *ngIf="rejectedOrApproved && !isfromApprover" class="label_icon inpro-label" [class.bg-red]="rejectedOrApproved=='REJECTED'" [class.bg-orange]="rejectedOrApproved=='INPROGRESS'" [class.bg-green]="rejectedOrApproved=='APPROVED'">

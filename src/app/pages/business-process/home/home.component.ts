@@ -201,8 +201,8 @@ this.dt.bpsHeaderValues('');
   }
 
   fitTableView(processName){
-    if(processName && processName.length > 14)
-      return processName.substr(0,14)+'...';
+    if(processName && processName.length > 11)
+      return processName.substr(0,11)+'...';
     return processName;
   }
   fitTableViewCategory(processName){
