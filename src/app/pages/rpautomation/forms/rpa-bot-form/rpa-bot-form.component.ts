@@ -117,5 +117,6 @@ export class RpaBotFormComponent implements OnInit {
     this.botForm.get("department").setValue("");
     document.getElementById('bot-form').style.display = 'none';
     this.closeFormOverlay.emit(true);
+    this.botNameCheck = false;
   }
 }
