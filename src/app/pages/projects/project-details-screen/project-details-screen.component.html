@@ -975,11 +975,11 @@
                                                             (click)="cancelEditProcess($event)">Cancel</button>
                                                         <button class="btn btn-primary"
                                                             *ngIf="businessDetails.length == 0 && isProcessEdit"
-                                                            [disabled]="!businessChallange || !businessPurpose"
+                                                            [disabled]="!businessChallange || !businessPurpose || !business_benefits"
                                                             (click)="saveBusinessProcess($event)">Save</button>
                                                         <button class="btn btn-primary"
                                                             style="margin-right: 0px !important;"
-                                                            [disabled]="!businessChallange || !businessPurpose"
+                                                            [disabled]="!businessChallange || !businessPurpose || !business_benefits"
                                                             *ngIf="businessDetails.length > 0 && isProcessEdit"
                                                             (click)="updateBusinessDetails($event)">Update</button>
                                                     </span>
@@ -1024,7 +1024,7 @@
                                                                 [(ngModel)]="business_benefits" class="form-control"
                                                                 placeholder="Enter Benefits" required></textarea>
                                                             <span
-                                                                *ngIf="((purpose.invalid && processForm.submitted) || (purpose.errors && purpose.touched) )"
+                                                                *ngIf="((_benefits.invalid && processForm.submitted) || (_benefits.errors && _benefits.touched) )"
                                                                 class='errspan required'> Benefits is required </span>
                                                         </div>
                                                     </form>
