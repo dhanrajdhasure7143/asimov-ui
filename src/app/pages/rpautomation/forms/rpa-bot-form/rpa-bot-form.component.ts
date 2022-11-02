@@ -86,7 +86,6 @@ export class RpaBotFormComponent implements OnInit {
     let botFormValue = { ...this.botForm.value, ...{ botId: this.botDetails.botId } };
     this.spinner.show();
     this.rest.modifybotdetails(botFormValue).subscribe((response: any) => {
-      this.spinner.hide();
       if (response.errorMessage == undefined) {
         Swal.fire("Success", "Bot details updated successfully!", "success");
         this.closeBotForm();
@@ -98,6 +97,7 @@ export class RpaBotFormComponent implements OnInit {
     }, err => {
       Swal.fire("Error", "Unable to update bot", "error");
       this.event.emit(null)
+      this.spinner.hide();
     })
   }
 
