@@ -24,7 +24,7 @@
                     <div class="col-md-12 p-0 form-group">
                         <label class="label-control" for="environmentType">Type<span class="star">*</span></label>
                         <select class="form-control" formControlName="environmentType" (change)="onChangeEnvType()">
-                            <option value="" [selected]="true">Select Type</option>
+                            <option value="" [selected]="true" hidden disabled>Select Type</option>
                             <option value="Windows">Windows</option>
                             <option value="Mac">Mac</option>
                             <option value="Linux">Linux</option>
@@ -68,7 +68,7 @@
                         <label class="label-control" for="categoryId">Category<span class="star">*</span></label>
                         <select type="text" class="form-control" formControlName="categoryId"
                             [value]="categoriesList.length==1?categoriesList[0].categoryId:'0'">
-                            <option value="0" disabled>Select Category</option>
+                            <option value="0" disabled hidden>Select Category</option>
                             <option [value]="category.categoryId" *ngFor="let category of categoriesList">
                                 {{category.categoryName}}</option>
                         </select>
