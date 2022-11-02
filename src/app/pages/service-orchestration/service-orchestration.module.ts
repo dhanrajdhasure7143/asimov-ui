@@ -17,8 +17,6 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatInputModule, MatIconModule, MatFormFieldModule, MatNativeDateModule, MatSlideToggleModule} from '@angular/material';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatSelectModule} from '@angular/material/select';
-// import { SoAutomatedTasksComponent,Checkbotslist,Checkhumanslist } from './orchestration/so-automated-tasks/so-automated-tasks.component';
-// import { SoBotManagementComponent } from './orchestration/so-bot-management/so-bot-management.component';
 import { Category,SoDashboardComponent,Slicedate, FilterBy } from './orchestration/so-dashboard/so-dashboard.component';
 import { CronEditorModule } from 'src/app/shared/cron-editor/cron-editor.module';
 import {NgbTimepickerModule} from '@ng-bootstrap/ng-bootstrap';
@@ -93,7 +91,8 @@ import { SoIncidentManagementComponent } from './orchestration/so-incident-manag
     ProcessesComponent,
     ScheduledBotsComponent,
     CheckResourcePipe,
-    SoIncidentManagementComponent],
+    SoIncidentManagementComponent,
+    SoUpdatedDashboardComponent],
   imports: [
     CommonModule,
     FormsModule,

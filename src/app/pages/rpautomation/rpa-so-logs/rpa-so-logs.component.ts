@@ -287,17 +287,17 @@ export class RpaSoLogsComponent implements OnInit, OnDestroy {
 
   // }
   
-  showLoopIteration(e,iterationId){
+  showLoopIteration(e){
     clearInterval(this.interval)
     clearInterval(this.timeInterval)
     this.logsLoading=true;
-    this.getLoopIterations(e,iterationId);
+    this.getLoopIterations(e);
     this.interval2= setInterval(()=>{
-    this.getLoopIterations(e,iterationId);
+    this.getLoopIterations(e);
     },3000)
   }
 
-  getLoopIterations(e, iterationId){
+  getLoopIterations(e){
     this.iterationsList=[]
     this.rest.getLooplogs(e.bot_id, e.version, e.run_id ).subscribe((response:any)=>{
       this.logsLoading= false;
@@ -358,7 +358,7 @@ export class RpaSoLogsComponent implements OnInit, OnDestroy {
     })
   }
 
-  updateLog(element: any, Logtemplate: any) {
+  updateLog(element: any) {
     clearInterval(this.interval)
     clearInterval(this.timeInterval)
     clearInterval(this.interval3)

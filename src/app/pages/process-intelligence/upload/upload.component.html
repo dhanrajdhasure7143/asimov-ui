@@ -79,7 +79,7 @@
                         </form>
                     </div>
                     <div class="test1">
-                        <div class="col-sm-12 graph_table" *ngIf="!isLoading">
+                        <div class="col-sm-12 graph_table">
                            <table mat-table [dataSource]="dataSource" matSort class="PI table w-100">
                                 <ng-container matColumnDef="piId">
                                         <th mat-header-cell *matHeaderCellDef mat-sort-header class="table_header pcell1">Process ID </th>
@@ -125,16 +125,16 @@
                                                 </span>
 
                                         </td>
-                                </ng-container>                                  
+                                </ng-container>
+                                <ng-container matColumnDef="noData">
+                                        <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
+                                            <span *ngIf="!isLoading">No Records Found</span>
+                                        </td>
+                                    </ng-container>
                                         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                                         <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="pList"></tr>
+                                        <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(process_graph_list.length==0)}"></tr>
                            </table>
-                           <div>
-                                <div *ngIf="process_graph_list.length==0" class="text-center">
-                                  <img  src="../../../../../assets/images/RPA/No-Items.svg" class="no-item-img">
-                                  <h3 class="text-center">No Items to display</h3>
-                                </div>
-                              </div>
                         </div>
                         <div class="pipaginationdiv">
                              <mat-paginator class="newpaginationdiv" #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons]="true"></mat-paginator>

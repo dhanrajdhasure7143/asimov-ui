@@ -25,7 +25,7 @@
                         <label class="label-control" for="dataBaseType">Database Type<span class="star">*</span></label>
                         <select name="Databaselist" class="form-control" formControlName="dataBaseType"
                             (change)="changeDatabaseType($event)">
-                            <option value="" hidden selected>Select Database Type</option>
+                            <option value="" hidden disabled selected>Select Database Type</option>
                             <option *ngFor="let dblist of databaselist" [value]="dblist.databaseName">
                                 {{dblist.databaseName}}
                             </option>
@@ -85,7 +85,7 @@
                         <label class="label-control" for="categoryId">Category<span class="star">*</span></label>
                         <select type="text" class="form-control" formControlName="categoryId"
                             [value]="categoryList.length==1?categoryList[0].categoryId:'0'">
-                            <option value="0" disabled>Select Category</option>
+                            <option value="0" disabled hidden>Select Category</option>
                             <option [value]="category.categoryId" *ngFor="let category of categoryList">
                                 {{category.categoryName}}</option>
                         </select>

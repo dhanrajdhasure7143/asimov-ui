@@ -109,7 +109,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   modeldisable: boolean = false;
   public taskcomments: any = [];
   multicomments: any[];
-  taskattacments: Object;
+  taskattacments: any;
   taskcomments_list: any[] = [];
   taskhistory: any = [];
   filecategories: any;
@@ -940,7 +940,7 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
   //   this.router.navigate(['/pages/projects/projectdetails',project])
   // }
 
-  deleteresource(data) {
+  deleteresource() {
     const selectedresource = this.resources_list.filter(product => product.checked == true).map(p => {
       return {
         "projectId": this.project_id,

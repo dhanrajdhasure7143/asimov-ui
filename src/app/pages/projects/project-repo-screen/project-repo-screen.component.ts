@@ -256,11 +256,12 @@ this.route.queryParams.subscribe(data=>{​​​​​​​​
    }
    else
    Swal.fire("Error",res.message,"error");
+   this.spinner.hide();
  })
   this.uploadFileForm.reset();
       this.listOfFiles=[];
       this.fileList=[];
-  this.spinner.hide();
+
   }
 
   chnagefileUploadForm(e){

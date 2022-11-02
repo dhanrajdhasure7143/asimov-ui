@@ -427,6 +427,10 @@ downloadAllFiles(){
       return processName.substr(0,25)+'...';
     return processName;
   }
+
+  loopTrackBy(index, term) {
+    return index;
+  }
   
 
 }

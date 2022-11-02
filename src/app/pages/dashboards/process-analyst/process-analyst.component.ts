@@ -28,7 +28,7 @@ export class ProcessAnalystComponent implements OnInit {
   allProjectStatus: Object;
   projectStatusArray: any[] = [];
   activityStream: any;
-  upcomingDueDates: Object;
+  upcomingDueDates: any;
   expenditureDays: any;
   expenditureProjects: any;
   effortExpenditureAnalysis: Object;

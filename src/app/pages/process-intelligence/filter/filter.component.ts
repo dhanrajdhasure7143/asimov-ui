@@ -1235,4 +1235,8 @@ onmaxvalueSet(){
   }
   }
 
+  onSelect(){// this method for graph selection changes
+
+  }
+
 } 
