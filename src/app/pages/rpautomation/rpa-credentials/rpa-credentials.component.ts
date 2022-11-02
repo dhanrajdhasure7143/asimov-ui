@@ -40,7 +40,10 @@ export class RpaCredentialsComponent implements OnInit {
     userRole: any;
     public isButtonVisible = false;
     addflag:boolean=false;
-    isCreateForm:boolean;
+    isCreateForm:boolean=true;
+    isSearch:boolean=false;
+    isLoading:boolean=true;
+
     
     constructor(private api:RestApiService, 
       private router:Router,
@@ -93,6 +96,7 @@ inputNumberOnly(event){
     await this.api.get_All_Credentials(role).subscribe(
       data1 => {
         this.credentials = data1;
+        this.isLoading=false;
         if(this.credentials.length>0){ 
            this.Credcheckeddisabled = false;
            this.credentials.sort((a,b) => a.credentialId > b.credentialId ? -1 : 1);

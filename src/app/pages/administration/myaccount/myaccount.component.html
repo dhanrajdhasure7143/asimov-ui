@@ -23,7 +23,7 @@
 
                 
                         <div class="container">
-                            <form autocomplete="off" #updateUser="ngForm" (ngSubmit)="updateAccount(form)">
+                            <form autocomplete="off" #updateUser="ngForm" (ngSubmit)="updateAccount()">
                                 <div class="row prj-crt-form">
                                   <div class="col-md-12 p-0">
                                     <div class="form-fields col-md-6 pl-0">
@@ -139,19 +139,4 @@
             </div>
         </div>
     </div>
-
-
-
-
-    <ng-template class="modal-lg" #template>
-        <div class="modal-header modelprhead">
-            <h4 class="modal-title pull-left">Add New Project</h4>
-            <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-                <span aria-hidden="true"><img src="../../../../assets/images/Projects/circle-close.svg" alt=""></span>
-            </button>
-        </div>
-        <div class="h-scroll">
-            <!-- <app-create-project-form [users_list]="userslist" (oncreate)="linkcreateproject($event)" [processes]="selected_process_names"></app-create-project-form> -->
-        </div>
-    </ng-template>
 </mat-card>

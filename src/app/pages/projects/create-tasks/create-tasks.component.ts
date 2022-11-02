@@ -31,6 +31,7 @@ export class CreateTasksComponent implements OnInit {
   taskDescriptionFlag: boolean = false;
   freetrail: string;
   _priority:any[]=["High","Medium","Low"];
+  optionValue:any;
   constructor(private formBuilder: FormBuilder,private spinner:NgxSpinnerService,private api:RestApiService,
     private router: Router, private route:ActivatedRoute) { }
 

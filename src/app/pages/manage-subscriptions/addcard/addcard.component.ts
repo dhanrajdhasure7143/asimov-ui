@@ -26,6 +26,7 @@ export class AddcardComponent implements OnInit {
   public monthlist: number[] = new Array(12);
   public yearList: number[] = new Array(11);
   private spacialSymbolEncryption:string = '->^<-';
+  cards:any;
   @Output() onBack = new EventEmitter<any>();
  
   constructor(private cryptoService:CryptoService,private api:RestApiService, private spinner:NgxSpinnerService) { }

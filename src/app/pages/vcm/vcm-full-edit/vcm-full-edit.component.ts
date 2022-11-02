@@ -446,7 +446,7 @@ export class VcmFullEditComponent implements OnInit {
   }
   //addednew
 
-  onCreateLevel3(level2,item){
+  onCreateLevel3(){
     // this.selectedNode_obj = level2;
     this.selectedNode_obj = this.selectedNode;
     this.inputUniqueId = this.selectedNode_obj.uniqueId;

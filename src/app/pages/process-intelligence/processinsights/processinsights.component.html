@@ -4,12 +4,12 @@
       <div class="row">
         <div class="container-fluid p-0 input-fields">
             <div class="col-sm-4 amountinputs text-center" id="humancost">
-                <label for="">Human Cost/Hour</label><input type="text" [disabled]="!isEditable" name="humanValue" [(ngModel)]="input1" (input)="getAllGraphsPriceCalculation(input1)">
+                <label for="">Human Cost/Hour</label><input type="text" [disabled]="!isEditable" name="humanValue" [(ngModel)]="input1" (input)="getAllGraphsPriceCalculation()">
                 <i *ngIf="!isEditable" (click)="editInput()"  class="fas fa-pen"></i>
                 <i *ngIf="isEditable" (click)="editInput()" class="fas fa-check-circle"></i>
             </div>
             <div class="col-sm-4 amountinputs text-center" id="BotCost">
-                <label for="">Bot Cost/Hour</label><input type="text" [disabled]="!isEditable1" name="robotinput" [(ngModel)]="robotinput" (input)="getAllGraphsPriceCalculation(robotValue)">
+                <label for="">Bot Cost/Hour</label><input type="text" [disabled]="!isEditable1" name="robotinput" [(ngModel)]="robotinput" (input)="getAllGraphsPriceCalculation()">
                 <i *ngIf="!isEditable1" (click)="editInput1()"  class="fas fa-pen"></i>
                 <i *ngIf="isEditable1" (click)="editInput1()" class="fas fa-check-circle"></i>
             </div>

@@ -51,7 +51,6 @@ export class RpaCredentialFormComponent implements OnInit {
   }
 
   ngOnChanges(changes:SimpleChanges){
-    console.log(changes,this.isCreateForm)
     if(!this.isCreateForm){
       this.credentialForm.get("userName").setValue(this.credupdatedata["userName"]);
       this.credentialForm.get("password").setValue(this.credupdatedata["password"]);

@@ -1088,5 +1088,9 @@ yScaleMin_duration: number = 0;
             am4core.color("rgba(143, 13, 20, 0.9)"),
         ];   
     }
+
+    loopTrackBy(index, term) {
+        return index;
+      }
   
 }

@@ -26,7 +26,7 @@ export class ProcessArchitectComponent implements OnInit {
   allProjectStatus: Object;
   projectStatusArray: any[] = [];
   activityStream: any;
-  upcomingDueDates: Object;
+  upcomingDueDates: any;
   expenditureDays: any;
   expenditureResources: any;
   effortExpenditureAnalysis: any=[];

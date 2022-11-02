@@ -97,6 +97,8 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
   public userID: any;
   public userDetails:any={};
   public botSource_list:any[]=[];
+  q=0;
+  tasks:any;
 
   constructor(
     private route: ActivatedRoute,
