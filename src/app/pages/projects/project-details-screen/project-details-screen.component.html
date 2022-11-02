@@ -1000,7 +1000,7 @@
                                                                 (keyup)="autoGrowcommentsBox()"
                                                                 #business_challange="ngModel"
                                                                 [(ngModel)]="businessChallange" class="form-control"
-                                                                placeholder="Enter Business Challenge"
+                                                                placeholder="Enter Business Challenge" (keydown)="Space($event)"
                                                                 required></textarea>
                                                             <span
                                                                 *ngIf="((business_challange.invalid && processForm.submitted) || (business_challange.errors && business_challange.touched) )"
@@ -1012,7 +1012,7 @@
                                                             <textarea name="purpose" id="purpose" #purpose="ngModel"
                                                                 (keyup)="autoGrowcommentsBox1()"
                                                                 [(ngModel)]="businessPurpose" class="form-control"
-                                                                placeholder="Enter Purpose" required></textarea>
+                                                                placeholder="Enter Purpose" (keydown)="Space($event)" required></textarea>
                                                             <span
                                                                 *ngIf="((purpose.invalid && processForm.submitted) || (purpose.errors && purpose.touched) )"
                                                                 class='errspan required'> Proposed Solution is required </span>
@@ -1022,7 +1022,7 @@
                                                             <textarea name="_benefits" id="_benefits"
                                                                 #_benefits="ngModel" (keyup)="autoGrowcommentsBox2()"
                                                                 [(ngModel)]="business_benefits" class="form-control"
-                                                                placeholder="Enter Benefits" required></textarea>
+                                                                placeholder="Enter Benefits" (keydown)="Space($event)" required></textarea>
                                                             <span
                                                                 *ngIf="((_benefits.invalid && processForm.submitted) || (_benefits.errors && _benefits.touched) )"
                                                                 class='errspan required'> Benefits is required </span>
@@ -1060,7 +1060,7 @@
                                                                 [ngClass]=" processQuestions.length == 0 ? 'proc-noques' : '' ">
                                                                 <textarea name="havequestion" id="have_question"
                                                                     [(ngModel)]="haveQuestion" class="form-control"
-                                                                    placeholder="Have a Question?"></textarea>
+                                                                    placeholder="Have a Question?" (keydown)="Space($event)"></textarea>
                                                                 <span class="procdesc_act s_ques">
                                                                     <span class="tsttooltipbtn" *ngIf="haveQuestion"
                                                                         (click)="saveQuestion()">
@@ -1112,7 +1112,7 @@
                                                                             <textarea name="answerUpdate"
                                                                                 id="question_update"
                                                                                 [(ngModel)]="selectedQuestionUpdate"
-                                                                                class="form-control"></textarea>
+                                                                                class="form-control" (keydown)="Space($event)"></textarea>
                                                                         </span>
                                                                         <span class="procdesc_act">
                                                                             <span class="tsttooltipbtn"
@@ -1188,7 +1188,7 @@
                                                                                 id="answer_update"
                                                                                 [(ngModel)]="selectedAnswerUpdate"
                                                                                 class="form-control"
-                                                                                placeholder="Enter Answer"></textarea>
+                                                                                placeholder="Enter Answer" (keydown)="Space($event)"></textarea>
                                                                             <span class="procdesc_act">
                                                                                 <span class="tsttooltipbtn"
                                                                                     (click)="updateAnswer_Question(each,'answer')"

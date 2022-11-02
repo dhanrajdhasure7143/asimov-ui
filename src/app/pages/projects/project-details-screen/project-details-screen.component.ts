@@ -1830,4 +1830,9 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
     })
   }
 
+  Space(event:any){
+    if(event.target.selectionStart === 0 && event.code === "Space"){
+      event.preventDefault();
+    }
+  }
 }
