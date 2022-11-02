@@ -358,18 +358,22 @@ export class RpaSoLogsComponent implements OnInit, OnDestroy {
     })
   }
 
-  updateLog(element: any,Logtemplate: any){
-    this.logsLoading=true;
-     this.rest.updateBotLog(element.bot_id,element.version,element.run_id).subscribe(data=>{
-        let response:any=data;  
-        this.logsLoading=false;
-        if(response.status==undefined)
-          this.viewlogdata();
-        else
-          Swal.fire("Success",response.status,"success");
-          this.viewlogdata();
-     });
-   }
+  updateLog(element: any, Logtemplate: any) {
+    clearInterval(this.interval)
+    clearInterval(this.timeInterval)
+    clearInterval(this.interval3)
+    clearInterval(this.interval2)
+    this.logsLoading = true;
+    this.rest.updateBotLog(element.bot_id, element.version, element.run_id).subscribe(data => {
+      let response: any = data;
+      this.logsLoading = false;
+      if (response.errorMessage)
+        Swal.fire("Error", response.errorMessage, "error");
+      else
+        Swal.fire("Success", response.status, "success");
+      this.viewlogdata();
+    });
+  }
 
 
   autoRefresh(){
