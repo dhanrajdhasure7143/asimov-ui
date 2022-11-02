@@ -359,8 +359,10 @@
 </div>
       
       
+
 <ng-template #logspopup>
-    <div *ngIf="logsOverlayFlag">
-        <app-rpa-so-logs (close)="closeLogsOverlay()"   [logsbotid]="finalbot.botId" [logsmodalref]="logsOverlayRef" [AllVersionsList]="VersionsList" [selectedversion]="finalbot.version"></app-rpa-so-logs>
+    <div ngb-modal-draggable [ngbModalDraggableHandle]="draggableHandle" class="cursor-all-scroll">
+        <app-rpa-so-logs (close)="closeLogsOverlay()" [logsbotid]="finalbot.botId" [logsmodalref]="logsOverlayRef"
+            [AllVersionsList]="VersionsList" [selectedversion]="finalbot.version"></app-rpa-so-logs>
     </div>
 </ng-template>

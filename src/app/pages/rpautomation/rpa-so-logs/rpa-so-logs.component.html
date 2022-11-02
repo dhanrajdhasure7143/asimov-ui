@@ -1,11 +1,7 @@
-<div ngb-modal-draggable [ngbModalDraggableHandle]="draggableHandle" class="cursor-all-scroll">
-  <div #draggableHandle class="modal-header modelprhead newmodelcla">
-     
+  <div  #draggableHandle class="modal-header modelprhead newmodelcla">
       <span *ngIf="viewlogid1!=undefined && selectedIterationTask==undefined && selectedAutomationTask==undefined" class="module-back-button" (click)="backtoPage()">
         <i class="fas fa-arrow-left" aria-hidden="true"></i>
       </span>
-  
-  
       <span *ngIf="selectedIterationTask!=undefined && selectedAutomationTask==undefined" class="module-back-button"  (click)="backtoRunid()">
       <i class="fas fa-arrow-left" aria-hidden="true"></i>
     </span>
@@ -52,7 +48,7 @@
      
     </span>
     </div>
-</div>
+
     <div class="modal-body newmodelbodycl" *ngIf="viewlogid1==undefined && selectedIterationTask==undefined && selectedAutomationTask==undefined" [id]="viewlogid" >
      
       <div class="logs-container" *ngIf="logsLoading==false" style="background: white;">

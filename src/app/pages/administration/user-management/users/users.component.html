@@ -2,7 +2,6 @@
     <mat-card id="projects_list_screen"  class="h-100">
       <div class="module-heading title">
         <div class="">
-          <!-- <span class="module-header-title"><span>Departments</span></span> -->
         </div>
         <div class="col-md-3 pl-0 userssearch">
           <input class="form-control toolbar-search departments-home-fileds" matInput (keyup)="applyFilter($event.target.value)"
@@ -14,10 +13,6 @@
             <!-- <img  src="../../../../assets/images/Projects/White-plus.svg" class="testplus"/> -->
             Invite User
           </button>
-          <!-- <button class="tsttooltipbtn" type="button" >
-            <img  src="../../../../assets/images/RPA/icon_latest/new-blue.svg" class="testplus"/>
-            <span class="testtooltip">Invite User</span>
-          </button> -->
         </div>    
        
       </div>
@@ -36,8 +31,7 @@
               <ng-container matColumnDef="email">
                   <th mat-header-cell *matHeaderCellDef mat-sort-header class="pcell2">Email</th>
                   <td mat-cell *matCellDef="let element" class="pcell2"> 
-                    <span *ngIf="element.email!=null" [matTooltip]="element.email">{{getreducedValue1(element.email)}}</span>
-                      <!-- <span *ngIf="element.email!=null">{{element.email}}</span>  -->
+                    <span *ngIf="element.email!=null" [matTooltip]="element.email">{{getreducedValue(element.email)}}</span>
                       <span *ngIf="element.email==''">-</span>
                       <span *ngIf="element.email==null">-</span>
                   </td>
@@ -60,15 +54,6 @@
                       <span *ngIf=" element.department==null">-</span> 
                   </td>
               </ng-container>
-
-              <!-- <ng-container matColumnDef="product">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Product</th>
-                <td mat-cell *matCellDef="let element"> 
-                  <span *ngIf="element.product!=null" >{{element.product}}</span>
-                    <span *ngIf="element.product==''">-</span> 
-                    <span *ngIf=" element.product==null">-</span> 
-                </td>
-            </ng-container> -->
 
             <ng-container matColumnDef="roles">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header class="pcell5">Roles</th>
@@ -146,7 +131,7 @@
   
   </div>
 
-  <div class="spinoverlay" *ngIf="userslist.length==0">
+  <div class="spinoverlay" *ngIf="isLoading">
     <div class="spincenter">
         <img src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader" />
     </div>
