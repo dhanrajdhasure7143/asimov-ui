@@ -6,86 +6,40 @@ export const environment = {
   production: false,
 
   // Data upload path
-   data_path:"/var/kafka",
+  data_path:"/usr/share/confluent-ftp-data",
 
-//   //  * DEV ENV URl's
-
-  pi_url: 'http://pidev.epsoftinc.in',
-
-  bps_url: 'http://bpsdev.epsoftinc.in',
-  rpa_url: 'http://rpadev.epsoftinc.in',
+  pi_url: 'https://ezflow.dev.epsoftinc.com/prcintel',
+  bps_url: 'https://ezflow.dev.epsoftinc.com/bpstudio',
+  rpa_url: 'https://ezflow.dev.epsoftinc.com/wfrpa',
   loopback_url: 'http://10.11.0.107:3000',
-  idm_url:'http://idmdev.epsoftinc.in',
-  auth_url: "http://authdev.epsoftinc.in",
+  idm_url:'https://ezidm.dev.epsoftinc.com',
+  auth_url: "https://ezflow.dev.epsoftinc.com/authservices",
   //for Auto build
-  pi_node_url: "http://10.11.0.107:3000",
-  //pi_node_url: "http://10.11.0.107:3002", // enable for old pi node code (old pi node code running in this port)
-  pi_node_jobs: "http://10.11.0.107:5000",
-  //for local environment
-  //pi_node_url: "http://10.11.0.112:3000",
+  pi_node_url: "https://ezflow.dev.epsoftinc.com/pinode",
+  pi_node_jobs: "http://pi-node-jobs:5000",
+  platform_url:'https://ezflow.dev.epsoftinc.com/aiotalplatform',
+  schema_registry_url:"http://schemadev-registry:8081",
+  alerts_url:'https://ezflow.dev.epsoftinc.com/alerts',
+  
+   // Aiotal redirection urls
+  myaccount_url : "https://ezflow.dev.epsoftinc.com/#/activation",
+  logout_url: 'https://ezflow.dev.epsoftinc.com/#/activation',
+  redirectout_url: 'https://ezflow.dev.epsoftinc.com/#/signout',
+  platform_home_url: 'https://ezflow.dev.epsoftinc.com/#/',
+  projectendpoint_url:'https://ezflow.dev.epsoftinc.com/pcs',
+  subscriptionendpoint_url:'https://ezflow.dev.epsoftinc.com/subscriptions',
+  
+  //BPMN Platform URL
+  bpmnplatformUrl : "https://ezworkflow.dev.epsoftinc.com",
+    // camunda navigation 
+  camunda_url : "https://ezworkflow.dev.epsoftinc.com",
 
-  platform_url:'http://apdev.epsoftinc.in',
-  schema_registry_url:"http://10.11.0.101:8081",
-  alerts_url:'http://alertsdev.epsoftinc.in',
+  // PI Connectors
+   connector_topic: 'nodeDEV',
 
- // Aiotal redirection urls
-  myaccount_url : "http://eiapclouddev.epsoftinc.in/#/activation",
-  logout_url: 'http://eiapclouddev.epsoftinc.in/#/activation',
-  redirectout_url: 'http://eiapclouddev.epsoftinc.in/#/signout',
-  platform_home_url: 'http://eiapclouddev.epsoftinc.in/#/',
-  projectendpoint_url:'http://10.11.0.107:8282',
-  subscriptionendpoint_url:'http://subscriptiondev.epsoftinc.in',
-// PI Connectors
-  connector_topic: 'nodeDev',
+  //DB Connector
+   dbConnectorHost: "pgpooldev",
+   dbName: 'eiap_dev',
+   dbPort:"5430"
 
-//BPMN Platform URL
-  bpmnplatformUrl : "http://10.11.0.127:8080",
-
-//DB Connector
-  dbConnectorHost: "10.11.0.113",
-  dbName: "asimov_aiotal",
-
-//camunda navigation 
-camunda_url : "http://10.11.0.127:8080",
-
-  //  * QA ENV URl's
-  //   pi_url: 'http://piqa.epsoftinc.in',
-  //   bps_url: 'http://bpsqa.epsoftinc.in',
-  //   rpa_url: 'http://rpaqa.epsoftinc.in',
-  //   loopback_url: 'http://10.11.0.107:3000',
-  //   idm_url:'http://10.11.0.108:8888',
-  //   pi_node_url: "http://10.11.0.108:3000",
-  //     pi_node_jobs: "http://10.11.0.108:5000",
-  //   auth_url: "http://authqa.epsoftinc.in",
-  //   platform_url:'http://apqa.epsoftinc.in',
-  //   schema_registry_url:"http://10.11.0.101:8081",
-  //   alerts_url:'http://alertsqa.epsoftinc.in',
-
-  // // Aiotal redirection urls
-  //  myaccount_url : "http://eiapcloudqa.epsoftinc.in/#/activation",
-  //  logout_url: 'http://eiapcloudqa.epsoftinc.in/#/activation',
-  // redirectout_url: 'http://eiapcloudqa.epsoftinc.in/#/signout',
-  // platform_home_url: 'http://eiapcloudqa.epsoftinc.in/#/',
-
-  // // PI Connectors
-  //  connector_topic: 'nodeq',
-
-  // //DB Connector
-  //  dbConnectorHost: "10.11.0.104",
-  //  dbName: 'eiap_qa',
-
-  // // BPMN Platform(camunda) URL
-  //   bpmnplatformUrl : "http://10.11.0.128:8080",
-
-  //camunda navigation 
-  // camunda_url : "http://10.11.0.128:8080",
 };
-
-/*
- * For easier debugging in development mode, you can import the following file
- * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
- *
- * This import should be commented out in production mode because it will have a negative impact
- * on performance if an error is thrown.
- */
-// import 'zone.js/dist/zone-error';  // Included with Angular CLI.
