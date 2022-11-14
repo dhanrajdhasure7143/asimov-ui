@@ -486,6 +486,7 @@ export class RpaHomeComponent implements OnInit {
 
 
   botFormOutput(botOutput: any) {
+    
     if (botOutput != null)
       if (botOutput.case == 'create')
         this.router.navigate(["/pages/rpautomation/designer"], { queryParams: { botId: botOutput.botId } });

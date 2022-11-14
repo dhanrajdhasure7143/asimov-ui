@@ -1,8 +1,10 @@
 import {Component, OnInit, QueryList,ViewChildren, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Base64 } from 'js-base64';
 import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
+import { isNumber } from 'util';
 import { RestApiService } from '../../services/rest-api.service';
 @Component({
   selector: 'app-rpa-studio-designer',
@@ -100,7 +102,20 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
             else
             {
               let botId=params.botId;
-              this.loadBotByBotId(botId,"INIT");
+              if(!isNaN(botId))
+                this.loadBotByBotId(botId,"INIT");
+              else
+              {
+                let botDetails=JSON.parse(Base64.decode(botId));
+                botDetails["categoryId"]=botDetails.department;
+                botDetails["envIds"]=[];
+                this.loadedBotsList.push(botDetails);
+                setTimeout(()=>{
+                  
+                  this.tabActiveId=response.botName;
+                  this.change_active_bot({index:0})
+                },200)
+              }
             }
           })
       }
@@ -119,9 +134,13 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   {
     this.rest.getAllActiveBots().subscribe((response:any)=>{
       if(response.errorMessage==undefined)
+      {
         this.botsList=response
-      else  
+      } 
+      else
+      {  
         Swal.fire("Error",response.errorMessage, "error")
+      }
     },err=>{
       Swal.fire("Error","Unable to load data","error");
     })
@@ -209,6 +228,7 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
     this.loadedBotsList.splice(this.loadedBotsList.indexOf(tab), 1)
     if(this.loadedBotsList.length==0)
     {
+      alert("Please save configuration before close")
       this.activeRoute.queryParams.subscribe(data=>{
         let params:any=data;
         if(params.name!=undefined)
@@ -236,20 +256,21 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
     this.current_instance=undefined;
     this.toolsetSideNav=false;
     this.spinner.show();
-      this.designerInstances.forEach((instance,index)=>{
+    console.log("hided")
+    console.log(event)  
+    this.designerInstances.forEach((instance,index)=>{
         if(index==event.index)
         {
           this.current_instance=instance;
           this.spinner.hide();
           let url=window.location.hash;
-          if(instance.finalbot!=undefined)
+          if(instance.finalbot.botId!=undefined)
             window.history.pushState("", "", url.split("botId")[0]+"botId="+instance.finalbot.botId);
-          // else
-          // {
-            // let botId=Base64.encode(JSON.stringify(this.loadedBotsList.find(item=>item.botName==instance.botState.botName)))
-            // window.history.pushState("", "", url.split("botId=")[0]+"botId="+botId);
-          //}
-    
+          else
+          {
+            let botId=Base64.encode(JSON.stringify(this.loadedBotsList.find(item=>item.botName==instance.finalbot.botName)));
+            window.history.pushState("", "", url.split("botId=")[0]+"botId="+botId);
+          }
         }
       })
       setTimeout(() => {
@@ -320,7 +341,7 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   }
 
   SaveBot(){
-    this.current_instance.updateBotFun(this.version_type,this.comments)
+    this.current_instance.checkBotDetails(this.version_type,this.comments)
   }
 
   loadBotFormOverlay()
@@ -370,7 +391,9 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   
   createEnvironment(){
     this.isCreate=true;
-    document.getElementById("createenvironment").style.display='block';
+    setTimeout(()=>{
+      document.getElementById("createenvironment").style.display='block';
+    },1000)
   }
   
   closeEnviromentOverlay() {
@@ -384,8 +407,22 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   onBotCreate(event) {
     if (event != null) {
       if (event.case == "create") {
-        this.loadBotByBotId(event.botId, "LOAD");
-        this.getAllBots();
+        if(!isNaN(event.botId))
+        {
+          this.loadBotByBotId(event.botId, "LOAD");
+          this.getAllBots();
+        }
+        else
+        {
+          let botDetails=JSON.parse(Base64.decode(event.botId));
+          botDetails["categoryId"]=botDetails.department;
+          botDetails["envIds"]=[];
+          this.loadedBotsList.push(botDetails);
+          let url=window.location.hash;
+          this.tabActiveId=botDetails.botName;
+          window.history.pushState("", "", url.split("botId=")[0]+"botId="+event.botId);
+          document.getElementById("bot-form").style.display='none';
+        }
       }
     }
   }
