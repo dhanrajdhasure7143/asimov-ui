@@ -1,7 +1,7 @@
 <div id="viewlogid1" class="newmodelcla">
-    <!-- <div class="text-left">
+    <div class="text-left">
         <button class="refecls" (click)="getprocesslog()" matTooltip="Refresh"><i class="fas fa-sync-alt"></i>&nbsp; Refresh</button>
-    </div> -->
+    </div>
     <div class="logs-overlay" >
         <div class="logs-container">
             <table mat-table [dataSource]="dataSourcep1" #sortp1="matSort" matSort class="logs-table" *ngIf="!loadLogsFlag">
@@ -108,7 +108,7 @@
 
     <div class="text-left">
         <button (click)="backplogrid()" class="refecls" ><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp; Back</button> &nbsp;&nbsp;
-        <!-- <button (click)="getprocessrunid(selected_processRunId)" class="refecls" matTooltip="Refresh"><i class="fas fa-sync-alt"></i>&nbsp; Refresh</button> -->
+        <button (click)="getprocessrunid(selected_processRunId)" class="refecls" matTooltip="Refresh"><i class="fas fa-sync-alt"></i>&nbsp; Refresh</button>
     </div>
     <div class="logs-overlay" >
         <div class="logs-container">
@@ -227,7 +227,7 @@
 <div id="pbotrunid" class="newmodelcla">
     <div class="text-left">
         <button (click)="backpbotrunid()" class="refecls" ><i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp; Back</button>&nbsp;&nbsp;
-        <!-- <button (click)="ViewlogByrunid(selected_runid)" class="refecls" matTooltip="Refresh"><i class="fas fa-sync-alt"></i>&nbsp; Refresh</button> -->
+        <button (click)="ViewlogByrunid(selected_runid, pBotId, pVersion)" class="refecls" matTooltip="Refresh"><i class="fas fa-sync-alt"></i>&nbsp; Refresh</button>
 
     </div>
     <div class="logs-overlay" >

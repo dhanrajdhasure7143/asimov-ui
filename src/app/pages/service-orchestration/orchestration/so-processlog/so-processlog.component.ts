@@ -40,7 +40,6 @@ export class SoProcesslogComponent implements OnInit, OnDestroy{
   public interval2: any = 0;
   public selected_processRunId:any;
   public selected_runid:any;
-  public selected_botId:any;
   public logstatus:any;
   constructor( private rest:RestApiService, private changeDetectorRef: ChangeDetectorRef,private automated:NewSoAutomatedTasksComponent, private spinner: NgxSpinnerService) { }
 
@@ -49,20 +48,24 @@ export class SoProcesslogComponent implements OnInit, OnDestroy{
     document.getElementById("plogrunid").style.display="none";
     document.getElementById("pbotrunid").style.display="none";
     this.Environments=this.automated.environments;
-    this.setProcesslog();
+    //this.setProcesslog();
+    this.loadLogsFlag=true;
+    this.getprocesslog();
   }
 
   setProcesslog(){
     clearInterval(this.interval2)
     this.getprocesslog()
     this.loadLogsFlag=true;
-    this.interval  = setInterval(()=> { 
-      this.getprocesslog()
-    }, 3000);
+    //  ----------- Auto Refresh Code -----------
+    // this.interval  = setInterval(()=> { 
+    //   this.getprocesslog()
+    // }, 3000);
     
   }
 
   getprocesslog(){
+    this.loadLogsFlag=true;
     let logbyrunidresp1:any;
     let resplogbyrun1: any = [];
     if(this.processId != '' && this.processId != undefined){
@@ -121,15 +124,16 @@ export class SoProcesslogComponent implements OnInit, OnDestroy{
   }
 
   setProcessByRunID(processRunId,runStatus){
-    clearInterval(this.interval)
+    //clearInterval(this.interval)
     this.getprocessrunid(processRunId)
     this.logstatus=runStatus
     this.loadLogsFlag=true 
-    if(runStatus == "Running" || runStatus == "New" ){
-    this.interval2=setInterval(()=>{
-    this.getprocessrunid(processRunId)
-    },3000)
-  }
+  //  ------------------ Auto Refresh Code ------------------
+  //   if(runStatus == "Running" || runStatus == "New" ){
+  //   this.interval2=setInterval(()=>{
+  //   this.getprocessrunid(processRunId)
+  //   },3000)
+  // }
   }
 
 
@@ -140,6 +144,7 @@ export class SoProcesslogComponent implements OnInit, OnDestroy{
     let processId = this.logresponse.find(data =>data.processRunId == processRunId).processId;
     document.getElementById("viewlogid1").style.display="none";
     document.getElementById("plogrunid").style.display="block";
+    this.loadLogsFlag=true;
     this.rest.getprocessruniddata(processId,processRunId).subscribe(data =>{
       this.runidresponse = data;
       this.loadLogsFlag=false;
@@ -167,25 +172,31 @@ export class SoProcesslogComponent implements OnInit, OnDestroy{
 
   setLogByRunID(runid,bot_status, bot_id, version){
     clearInterval(this.interval2)
-    this.ViewlogByrunid(runid, bot_id, version)
     this.loadLogsFlag=true
-    if(bot_status == "Running" || bot_status == "New" ){
-    this.interval1=  setInterval(()=>{
-      this.ViewlogByrunid(runid, bot_id, version)
-    },3000)
-  }
+    this.ViewlogByrunid(runid, bot_id, version)
+    //  ----------------- Auto Refresh Code ---------------
+    // if(bot_status == "Running" || bot_status == "New" ){
+    // this.interval1=  setInterval(()=>{
+    //   this.ViewlogByrunid(runid)
+    // },3000)
+    //}
   }
 
-  ViewlogByrunid(runid, PbotId, pversion){
+  pBotId:any;
+  pVersion:any;
+  ViewlogByrunid(runid, pBotId, pVersion){
     this.selected_runid=runid;
     let responsedata:any=[];
     let logbyrunidresp1:any;
     let resplogbyrun1:any=[];
-   // let PbotId = this.runidresponse.find(data =>data.run_id == runid).bot_id;
+    //let PbotId = this.runidresponse.find(data =>data.run_id == runid).bot_id;
     //let pversion = this.runidresponse.find(data =>data.run_id == runid).version;
     document.getElementById("plogrunid").style.display="none";
     document.getElementById("pbotrunid").style.display="block";
-    this.rest.getViewlogbyrunid(PbotId,pversion,runid).subscribe((data)=>{
+    this.loadLogsFlag=true
+    this.pBotId=pBotId;
+    this.pVersion=pVersion;
+    this.rest.getViewlogbyrunid(pBotId,pVersion,runid).subscribe((data)=>{
       responsedata = data;
       this.loadLogsFlag=false;
       if(responsedata.length >0){
@@ -206,6 +217,8 @@ export class SoProcesslogComponent implements OnInit, OnDestroy{
       this.dataSourcep3.sort=this.sortp3;
       this.dataSourcep3.paginator=this.paginator3;
       resplogbyrun1 = [];
+        },err=>{
+          this.loadLogsFlag=false;
         })
     }
 
