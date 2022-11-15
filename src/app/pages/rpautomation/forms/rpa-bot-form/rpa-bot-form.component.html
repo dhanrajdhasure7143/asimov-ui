@@ -16,7 +16,7 @@
                         class="errspan required">
                         Bot Name Required*
                     </div>
-                    <div *ngIf="botNameCheck && botForm.get('botName').value" class="errspan required">
+                    <div *ngIf="botNameCheck && botForm.get('botName').value && !botForm.get('botName').hasError('pattern')" class="errspan required">
                         Bot Name is already exists*
                     </div>
                     <div *ngIf="botForm.get('botName').hasError('pattern')" class="errspan required">Spaces and special characters are not allowed Excluding( _ & - )
