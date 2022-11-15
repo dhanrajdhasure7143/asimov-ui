@@ -117,7 +117,7 @@
                                             </div>
                                             <div class="flex-col">
                                                 <span *ngIf="bot.description!=null" placement="bottom" [tooltip]="bot.description" class="btndes"> {{(bot.description.length > 20) ? ((bot.description).slice(0, 20) + '...') : bot.description}}</span>
-                                                <span *ngIf="bot.description==null">-</span>
+                                                <span *ngIf="!bot.description">-</span>
                                             </div>
                                             <div class="flex-col">{{bot.categoryName}}</div>
                                             <div class="flex-col">V{{bot.version_new}}</div>
