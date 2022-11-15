@@ -61,7 +61,10 @@ export class RpaSoLogsComponent implements OnInit, OnDestroy {
     this.AllVersionsList=this.AllVersionsList.map(item=>{return item.vId});
     this.filteredLogVersion=this.selectedversion
     // this.viewlogdata()
-    this.autoRefresh()
+    // this.autoRefresh()
+    this.viewlogid1=undefined;
+    this.viewlogdata()
+    this.logsLoading = true;
   }
  
   viewlogdata(){
@@ -69,7 +72,7 @@ export class RpaSoLogsComponent implements OnInit, OnDestroy {
    let response: any;
    let log:any=[];
    this.logresponse=[];
-
+   this.logsLoading=true;
     this.rest.getviewlogdata(this.logsbotid).subscribe(data =>{
       this.logresponse=data;
       this.logsLoading = false;
@@ -140,19 +143,21 @@ export class RpaSoLogsComponent implements OnInit, OnDestroy {
     this.logsLoading=true;
     this.logStatus= bot_status
     this.ViewlogByrunid(runid,version);
-    if(bot_status == "Running" || bot_status == "New" ){
-   this.interval= setInterval(()=>{
-      this.ViewlogByrunid(runid,version)
-    },3000)
-  }else{
-    setTimeout(() => {
-      this.ViewlogByrunid(runid,version)
-    }, 5000);
-  }
-
+  //---------------- Auto refresh logs code --------------------
+  //   if(bot_status == "Running" || bot_status == "New" ){
+  //  this.interval= setInterval(()=>{
+  //     this.ViewlogByrunid(runid,version)
+  //   },3000)
+  // }else{
+  //   setTimeout(() => {
+  //     this.ViewlogByrunid(runid,version)
+  //   }, 5000);
+  // }
+  //  ------------------- End Auto Refresh Logs Code------------------
   }
 
   ViewlogByrunid(runid,version){
+    this.logsLoading=true;
    clearInterval(this.timeInterval)
    clearInterval(this.interval2)
     this.botrunid=runid;
@@ -307,13 +312,16 @@ export class RpaSoLogsComponent implements OnInit, OnDestroy {
     clearInterval(this.timeInterval)
     this.logsLoading=true;
     this.getLoopIterations(e,iterationId);
-    this.interval2= setInterval(()=>{
-    this.getLoopIterations(e,iterationId);
-    },3000)
+    //----------------- Auto Refresh Code ----------------
+    // this.interval2= setInterval(()=>{
+    //this.getLoopIterations(e,iterationId);
+    // },3000)
+    //----------------- Auto Refresh Code ----------------
   }
 
   getLoopIterations(e, iterationId){
     this.iterationsList=[]
+    this.logsLoading=true;
     this.rest.getLooplogs(e.bot_id, e.version, e.run_id ).subscribe((response:any)=>{
       this.logsLoading= false;
       if(response.errorMessage==undefined)
@@ -391,9 +399,9 @@ export class RpaSoLogsComponent implements OnInit, OnDestroy {
     this.viewlogid1=undefined;
     this.viewlogdata()
     this.logsLoading = true;
-    this.timeInterval = setInterval(() => {
-    this.viewlogdata()
-      }, 3000)   
+    // this.timeInterval = setInterval(() => {
+    // this.viewlogdata()
+    //   }, 3000)   
   }
 
   backtoPage(){
