@@ -407,14 +407,14 @@ export class RpaSoLogsComponent implements OnInit, OnDestroy {
   backtoPage(){
     this.viewlogid1=undefined
     clearInterval(this.interval)
-    this.autoRefresh();
+    // this.autoRefresh();
   }
 
   backtoRunid(){
     this.selectedIterationTask=undefined;
     this.selectedIterationId=0;
     clearInterval(this.interval)
-    this.showLogsByRunId(this.botrunid,this.selectedLogVersion,this.logStatus)
+    // this.showLogsByRunId(this.botrunid,this.selectedLogVersion,this.logStatus)
     clearInterval(this.interval2)
   }
 
@@ -422,7 +422,7 @@ export class RpaSoLogsComponent implements OnInit, OnDestroy {
     this.viewlogid1=undefined
     this.selectedAutomationTask=undefined;
     clearInterval(this.interval)
-    this.autoRefresh();   
+    // this.autoRefresh();   
   }
 
 ngOnDestroy(): void {
