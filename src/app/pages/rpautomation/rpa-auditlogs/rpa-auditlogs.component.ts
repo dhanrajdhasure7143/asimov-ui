@@ -30,6 +30,7 @@ export class RpaAuditlogsComponent implements OnInit {
         this.getEnvironments(params.catergoryId)
       }
     })
+    this.spinner.show();
   }
 
   getEnvironments(categoryId: number) { //to get environments
@@ -74,6 +75,7 @@ export class RpaAuditlogsComponent implements OnInit {
       else {
         Swal.fire("Error", response.errorMessage, "error")
       }
+      this.spinner.hide();
     }, err => {
       this.spinner.hide();
       Swal.fire("Error", "Unable to get audit logs", "error")
