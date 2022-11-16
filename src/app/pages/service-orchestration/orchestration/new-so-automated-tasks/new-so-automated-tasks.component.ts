@@ -595,7 +595,8 @@ resetsla(){
   getprocessnames(processId)
   {
     this.spinner.show();
-    this.rest.getprocessnames().subscribe(processnames=>{
+    // this.rest.getprocessnames().subscribe(processnames=>{
+    this.rest.getprocessnamesByLatestVersion().subscribe(processnames=>{
       let resp:any=[]
       resp=processnames
       this.process_names=resp.filter(item=>item.status=="APPROVED");

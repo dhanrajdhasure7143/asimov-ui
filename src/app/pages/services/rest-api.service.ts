@@ -1482,4 +1482,8 @@ getTimeZone(){
 getDatabaselist(){
   return this.http.get("/rpa-service/getdatabasetypes")
 }
+getprocessnamesByLatestVersion()
+{
+  return this.http.get("/rpa-service/latest-version/process-name");
+}
 }
