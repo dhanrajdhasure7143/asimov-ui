@@ -41,6 +41,11 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import { PopoverModule } from 'ngx-bootstrap/popover'
 import {MatPaginatorIntl} from '@angular/material';
 import {CustomMatPaginatorIntl} from "./../shared/custom-mat-paginator-int";
+
+export function jwtTokenGetter() {
+  return localStorage.getItem("accesstoken");
+}
+
 @NgModule({
   declarations: [
     PagesComponent,
@@ -71,7 +76,7 @@ import {CustomMatPaginatorIntl} from "./../shared/custom-mat-paginator-int";
     MatListModule,MatMenuModule,MatButtonModule,MatIconModule,MatToolbarModule,MatSidenavModule,MatTooltipModule,
      JwtModule.forRoot({
       config: {
-        tokenGetter:  () => localStorage.getItem('accesstoken')
+        tokenGetter: jwtTokenGetter
       }
     }),
     NgbModule,
