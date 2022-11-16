@@ -342,10 +342,7 @@ createproject(event)
   getValueChainProcesses(value)
   {
     // //this.valuechainprocesses=[];
-    // console.log(value);
-    // console.log(this.valuechain)
   // let processmaster=this.valuechain.find(item=>item.processGrpMasterId==value)
-    //console.log("-processMaster-",value)
     this.api.getvaluechainprocess(value).subscribe(data=>{
       let response:any=data;
       this.valuechainprocesses=response;
@@ -370,7 +367,6 @@ createproject(event)
   }
 
   descriptionMaxLength(value){
-    console.log(value)
  if(value.length > 255){
  this.descptionFlag = true;
  }else{

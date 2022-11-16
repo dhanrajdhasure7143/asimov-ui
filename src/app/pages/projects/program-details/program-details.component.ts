@@ -135,11 +135,9 @@ export class ProgramDetailsComponent implements OnInit {
     //   this.selectedProgram_id=program_id
     //   this.get_linked_projects(program_id);
     //   this.program_detials=this.projects_and_programs_list[0].find(item=>item.id==program_id);
-    //   console.log("pgrmdata: ", this.program_detials)
     //   if(this.program_detials){
     //     let usr_name=this.program_detials.owner.split('@')[0].split('.');
     //     this.owner_letters=usr_name[0].charAt(0)+usr_name[1].charAt(0);
-    //     console.log(this.owner_letters)
     //     }
     //   this.editdata=false;
     // });

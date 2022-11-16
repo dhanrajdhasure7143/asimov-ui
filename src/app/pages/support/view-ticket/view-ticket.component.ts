@@ -76,7 +76,6 @@ export class ViewTicketComponent implements OnInit {
     var deCryptUserDetails = this.jwtHelper.decodeToken(userDetails);
     this.userId = deCryptUserDetails.userDetails.userId;
     this.userName = deCryptUserDetails.userDetails.userName;
-    // console.log("name", this.userName,"id", this.userId);
     
     this.activateRouter.queryParams.subscribe(res => {
       if (res) {

@@ -61,7 +61,6 @@ export class D3flowchartComponent {
   //           element.style.visibility = "hidden";
   //         }
   //     }else{
-  //       console.log("test")
   //     }
   // }
 

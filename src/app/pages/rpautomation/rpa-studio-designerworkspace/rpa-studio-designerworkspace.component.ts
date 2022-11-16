@@ -1423,7 +1423,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, reset designer!'
     }).then((result:any) => {
-      //console.log(result)
       if(result.value)
       {
         this.jsPlumbInstance.deleteEveryEndpoint()

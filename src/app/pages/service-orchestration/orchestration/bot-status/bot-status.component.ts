@@ -166,9 +166,6 @@ export class BotStatusComponent implements OnInit {
       finalObjectData = []
       botData = [];
       this.performData.forEach((element, ind) => {
-        //console.log("==================")
-        //console.log(ind)
-        //console.log("===================")
         if(ind < 5)
         {
         labelData.push(element.botName)

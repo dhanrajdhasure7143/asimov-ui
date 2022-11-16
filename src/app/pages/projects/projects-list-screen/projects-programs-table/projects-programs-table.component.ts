@@ -498,7 +498,6 @@ export class ProjectsProgramsTableComponent implements OnInit {
 //     this.spinner.show();
 //     this.submitted=true;
 //     let program = this.createprogram.value;
-//     console.log("my prog",program)
 //  this.myProgrambody=   
 // {"programName":program.programname,
 // "initiatives":program.initiatives,
