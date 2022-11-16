@@ -251,7 +251,6 @@ inputNumberOnly(event){
   }
 
   refreshCredentialList(event){
-    console.log(event)
     if(event){
       this.getallCredentials();
     }

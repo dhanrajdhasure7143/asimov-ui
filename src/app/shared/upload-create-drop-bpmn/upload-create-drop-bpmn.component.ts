@@ -115,7 +115,6 @@ export class UploadCreateDropBpmnComponent implements OnInit {
   }
 
   uploadCreateBpmn(e){
-    console.log(e)
     this.randomId = UUID.UUID();
     this.create_editor=false;
     this.bpmnModel.bpmnProcessName=e.processName;

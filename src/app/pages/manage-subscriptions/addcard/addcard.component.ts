@@ -95,7 +95,6 @@ export class AddcardComponent implements OnInit {
         
     
     this.api.addNewCard(this.paymentToken.message,this.isdefault).subscribe(res=>{
-        // console.log('res',res);
         this.spinner.hide()
        // this.getAllPaymentmodes();
         if(res===null){
