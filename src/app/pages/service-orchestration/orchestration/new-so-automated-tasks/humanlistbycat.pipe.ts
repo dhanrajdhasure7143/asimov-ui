@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class HumanlistbycatPipe implements PipeTransform {
 
-  transform(value: any,arg1: any,categories:any) {
+  transform(value: any,arg1: any) {
     let users:any=[];
     let usersbycat:any=[];
     users=value;

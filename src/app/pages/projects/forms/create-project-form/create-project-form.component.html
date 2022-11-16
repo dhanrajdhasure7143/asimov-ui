@@ -23,7 +23,7 @@
                     </select> -->
                         <select formControlName="initiatives" class="form-control data" [ngClass]="insertForm2.get('initiatives').valid?'enteredfield-color':'inputfield-color'">
                         <option [value]="null" disabled hidden>Select Initiative</option>
-                        <option value="" [selected]="true">Select Initiative</option>
+                        <option value="" [selected]="true" disabled hidden>Select Initiative</option>
                         <option *ngFor="let initiativedata of initiatives_list" [value]="initiativedata.id">
                             {{initiativedata.initiative|titlecase}}</option>
                     </select>
@@ -50,8 +50,8 @@
                     <div class="form-fields col-md-6 pr-0">
                         <label class="label-control">Project Owner<span
                             class="star">*</span></label>
-                        <select formControlName="owner" [attr.disabled]="loggedInUser!=undefined || loggedInUser !=''" class="form-control data" [ngClass]="insertForm2.get('owner').valid?'enteredfield-color':'inputfield-color'">
-                        <option value="">Select Project Owner</option>
+                        <select formControlName="owner" disabled class="form-control data" [ngClass]="insertForm2.get('owner').valid?'enteredfield-color':'inputfield-color'">
+                        <option value="" disabled hidden>Select Project Owner</option>
                         <option *ngFor="let user of users_list" [value]="user.userId.userId">
                             {{user.userId.firstName|titlecase}} {{user.userId.lastName|titlecase}}</option>
                     </select>
@@ -88,7 +88,7 @@
                         formControlName="mapValueChain" name="mapValueChain" [ngClass]="insertForm2.get('mapValueChain').valid?'enteredfield-color':'inputfield-color'">
                       
                         <option [value]="null" disabled hidden>Select Department</option>
-                        <option value="" [selected]="true">Select Department</option>
+                        <option value="" [selected]="true" disabled hidden>Select Department</option>
                         <option *ngFor="let category of categories_list"
                             [value]="category.categoryName">{{category.categoryName}}</option>
                     </select>
@@ -105,7 +105,7 @@
                         <label class="label-control">Select Process<span class="star">*</span></label>
                         <select class="form-control data" formControlName="process" (change)="onProcessChange($event.target.value)" [ngClass]="insertForm2.get('process').valid?'enteredfield-color':'inputfield-color'">
                         <option [value]="null" disabled hidden>Select Process</option>
-                        <option value="" [selected]="true">Select Process</option>
+                        <option value="" [selected]="true" disabled hidden>Select Process</option>
                         <option *ngFor="let process of selected_process_names"
                             [value]="process.processId">{{process.processName}}</option>
                     </select>
@@ -115,7 +115,7 @@
                         <label class="label-control">Select Process</label>
                         <select class="form-control data" [disabled]="true" (change)="onProcessChange($event.target.value)" [ngClass]="insertForm2.get('process').valid?'enteredfield-color':'inputfield-color'">
                         <option [value]="null" disabled hidden>Select Process</option>
-                        <option value="" [selected]="true">Select Process</option>
+                        <option value="" [selected]="true" disabled hidden>Select Process</option>
                         <option *ngFor="let process of selected_process_names"
                             [value]="process.processId">{{process.processName|titlecase}}</option>
                     </select>
@@ -138,7 +138,7 @@
                         <label class="label-control">Project Priority<span
                             class="star">*</span></label>
                         <select formControlName="priority" class="form-control data" [ngClass]="insertForm2.get('priority').valid?'enteredfield-color':'inputfield-color'">
-                        <option value="">Select Project Priority</option>
+                        <option value="" disabled hidden>Select Project Priority</option>
                         <option value="High">High</option>
                         <option value="Medium">Medium</option>
                         <option value="Low">Low</option>
@@ -178,7 +178,7 @@
                     <div class="form-fields col-md-6 pl-0" *ngIf="freetrail!='true'">
                         <label class="label-control">Process Owner<span class="star">*</span></label>
                         <select formControlName="processOwner" [attr.disabled]="processOwner==false" class="form-control" [ngClass]="insertForm2.get('processOwner').valid?'enteredfield-color':'inputfield-color'">
-                            <option value="">Select Process Owner</option>
+                            <option value="" disabled hidden>Select Process Owner</option>
                             <option *ngFor="let user of users_list" [value]="user.userId.userId">
                                 {{user.userId.firstName|titlecase}} {{user.userId.lastName|titlecase}}</option>
                         </select>

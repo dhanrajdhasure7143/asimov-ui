@@ -373,7 +373,7 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   getPredefinedBots() {
     this.spinner.show()
     this.rest.getpredefinedbots().subscribe((response:any)=>{
-      this.spinner.hide()
+      // this.spinner.hide()
       if(response.errorMessage==undefined)
         this.predefinedBotsList=response
       else

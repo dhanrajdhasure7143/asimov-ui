@@ -233,4 +233,8 @@ export class BusinessInsightsComponent implements OnInit {
     this.displayedRows$ = rows$.pipe(paginateRows(pageEvents$));
   }
 
+  loopTrackBy(index, term) {
+    return index;
+  }
+
 }

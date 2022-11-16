@@ -465,8 +465,10 @@ export class RpaHomeComponent implements OnInit {
       let catResponse: any;
       catResponse = data
       this.categaoriesList = catResponse.data.sort((a, b) => (a.categoryName.toLowerCase() > b.categoryName.toLowerCase()) ? 1 : ((b.categoryName.toLowerCase() > a.categoryName.toLowerCase()) ? -1 : 0));
-      if (this.categaoriesList.length == 1)
+      if (this.categaoriesList.length == 1){
         this.rpaCategory = this.categaoriesList[0].categoryId;
+          this.categoryName = this.categaoriesList[0].categoryName;
+      }
     });
   }
 
@@ -530,6 +532,10 @@ export class RpaHomeComponent implements OnInit {
   closeFormOverlay(event){
   if(event)
   this.isCreateForm=true;
+  }
+
+  loopTrackBy(index, term) {
+    return index;
   }
 
 }

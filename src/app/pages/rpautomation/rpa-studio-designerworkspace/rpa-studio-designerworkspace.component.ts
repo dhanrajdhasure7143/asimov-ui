@@ -106,6 +106,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   };
   isShowExpand:boolean=false;
   splitAreamin_size="200";
+  draggableHandle:any;
 
   @ViewChild('template', { static: false }) template: TemplateRef<any>;
   

@@ -68,7 +68,6 @@ export class InviteUserComponent implements OnInit {
 getAllCategories(){
   this.api.getDepartmentsList().subscribe(resp => {
     this.categories = resp.data; 
-    console.log()
   })
  }
  getRoles(){

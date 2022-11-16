@@ -14,6 +14,7 @@ export class ChangePasswordComponent implements OnInit {
   public eyeshow: boolean = true;
   public neweyeshow: boolean = true;
   public confeyeshow: boolean = true;
+  public passwordvalidatemsg: boolean = true;
 
   constructor( private api:RestApiService, private spinner:NgxSpinnerService) { }
 

@@ -52,6 +52,8 @@ export class SoEnvBlueprismComponent implements OnInit {
   public toggle: boolean = false;
   public categoryList:any=[];
   public categoryLengthCheck:Boolean=false;
+  checkeddisabled:boolean = false;
+
 constructor(private api:RestApiService,
   private router:Router,
   private formBuilder: FormBuilder,

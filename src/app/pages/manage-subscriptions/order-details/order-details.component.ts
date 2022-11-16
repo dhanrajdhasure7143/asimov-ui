@@ -33,7 +33,7 @@ export class OrderDetailsComponent implements OnInit {
     this.getAllSubscrptions();
   }
 
-  subscriptiondata(data, index, template) {
+  subscriptiondata(data, index) {
     this.subscribeddata = data;
    // console.log(this.subscribeddata)
     this.modalRef = this.modalservice.show(this.subscriptiontemplate, { class: 'gray modal-lg' });
@@ -66,7 +66,7 @@ export class OrderDetailsComponent implements OnInit {
     this.getAllSubscrptions();
   }
 
-  selecteddata(data, index) {
+  selecteddata(data) {
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -85,7 +85,7 @@ export class OrderDetailsComponent implements OnInit {
 //    this.selectedIndex = index;
   }
 
-  subscriptionCancelModalSubmit(template)
+  subscriptionCancelModalSubmit()
   {
     this.spinner.show();
     this.rest.cancelSubscription(this.subscribeddata).subscribe(data => {
