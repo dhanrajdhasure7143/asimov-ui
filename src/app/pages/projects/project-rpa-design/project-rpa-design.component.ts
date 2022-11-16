@@ -31,7 +31,6 @@ export class ProjectRpaDesignComponent implements OnInit {
 
   constructor(private rest_api:RestApiService,private router : Router, private route : ActivatedRoute,private spinner: NgxSpinnerService) {
     this.route.queryParams.subscribe(params=>{
-      console.log(params)
       // id=2892&programId=2896
       this.projectId = params.projectId
       this.taskId = params.taskId
@@ -77,17 +76,7 @@ export class ProjectRpaDesignComponent implements OnInit {
     this.selectedId = null;
   }
 
-  deleteRow(index){
-    console.log(index,this.USER_DATA)
-    // this.USER_DATA = this.USER_DATA.filter((value,key)=>{
-    // return value.email != row_obj.email;
-    // });
-    // this.myDataArray = [...this.USER_DATA];//refresh the dataSource
-    // Swal.fire('Deleted successfully..!')
-    }
-
   cancelCreateNewrow(i) {
-    console.log("index:", i);
     this.USER_DATA.splice(i, 1);
     this.dataSource = new MatTableDataSource(this.USER_DATA);
     setTimeout(() => {
@@ -107,7 +96,6 @@ export class ProjectRpaDesignComponent implements OnInit {
     this.USER_DATA.forEach((ele,index)=>{
       if(ele.new){
         this.USER_DATA.splice(index, 1);
-        // console.log(this.USER_DATA)
         this.dataSource = new MatTableDataSource(this.USER_DATA);
         setTimeout(() => {
           this.dataSource.paginator = this.paginator;
@@ -149,7 +137,6 @@ export class ProjectRpaDesignComponent implements OnInit {
       }).then((result) => {
       this.getRPAdesignData();
       })
-      console.log(res)
     }, err =>{
       this.spinner.hide();
       Swal.fire({
@@ -181,7 +168,6 @@ export class ProjectRpaDesignComponent implements OnInit {
         this.getRPAdesignData();
       })
       this.selectedId = null
-      console.log(res)
     }, err => {
       this.spinner.hide();
       Swal.fire({

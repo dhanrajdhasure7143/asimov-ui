@@ -97,7 +97,7 @@
                                         <div class="form-fields col-md-6 pl-0">
                                             <label class="label-control" for="owner">Owner<span
                                                     class="star">*</span></label>
-                                            <select formControlName="owner" class="form-control data"  [attr.disabled]="loggedInUser!=undefined || loggedInUser !=''" 
+                                            <select formControlName="owner" class="form-control data" disabled 
                                                 [ngClass]="createprogram.get('owner').valid?'enteredfield-color':'inputfield-color'">
                                                 <option [value]="" disabled hidden>Select Owner</option>
                                                 <option value="" disabled hidden >Select Owner</option>

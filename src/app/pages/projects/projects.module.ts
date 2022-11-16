@@ -1,10 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { ProjectsRoutingModule } from './projects-routing.module';
 import { ProjectsComponent } from './projects.component';
-
-
 import { ProjectsListScreenComponent } from './projects-list-screen/projects-list-screen.component';
 import { DataTablesModule } from 'angular-datatables';
 import { MatTableModule } from '@angular/material/table';  
@@ -29,7 +26,6 @@ import { CreateProjectsComponent } from './create-projects/create-projects.compo
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { ProjectDetailsScreenComponent } from './project-details-screen/project-details-screen.component';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
-import { ProjectDetailsHeaderComponent } from './project-details-header/project-details-header.component';
 import { ProjectsDashboardComponent } from './projects-dashboard/projects-dashboard.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ProcessNamePipe } from './pipes/process-name.pipe';
@@ -65,7 +61,7 @@ const materialModules: any[] = [
 
 @NgModule({
   declarations: [ProjectsComponent, ProjectsListScreenComponent, ProjectsProgramsTableComponent, CreateProjectsComponent, FileSizePipe,UserImagePipe,
-    ProjectDetailsScreenComponent,ProjectDetailsHeaderComponent, ProjectsDashboardComponent, ProcessNamePipe,IntitiativePipe, UserPipePipe, ProjectRepoScreenComponent,CreateTasksComponent, AddResourcesComponent,ProgramDetailsComponent, UserDetialsPipe,RequestFileComponent, CreateProjectFormComponent, EditTaskComponent, BacklogsListComponent,
+    ProjectDetailsScreenComponent, ProjectsDashboardComponent, ProcessNamePipe,IntitiativePipe, UserPipePipe, ProjectRepoScreenComponent,CreateTasksComponent, AddResourcesComponent,ProgramDetailsComponent, UserDetialsPipe,RequestFileComponent, CreateProjectFormComponent, EditTaskComponent, BacklogsListComponent,
      BacklogsCreateComponent,
      ProjectRpaDesignComponent],
   imports: [

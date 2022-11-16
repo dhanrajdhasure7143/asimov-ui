@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class CheckResourcePipe implements PipeTransform {
 
-  transform(id: any, resourceList: any[], sourceType:any, taskType:any, categoryId:any ) {
+  transform(id: any, resourceList: any[], sourceType:any, taskType:any ) {
     var val="0"  
     if(taskType=="Automated")
       {

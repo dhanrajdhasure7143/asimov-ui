@@ -119,7 +119,7 @@
                     </ng-container>
                     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                     <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                    <tr class="row-highlight mat-footer" mat-footer-row  *matFooterRowDef="['noData']" [ngClass]="{'hide':!(userslist==undefined ||  userslist=='No records found')}"></tr>
+                    <tr class="row-highlight mat-footer" mat-footer-row  *matFooterRowDef="['noData']" [ngClass]="{'hide':!(userslist.length == 0)}"></tr>
           </table>
 
               

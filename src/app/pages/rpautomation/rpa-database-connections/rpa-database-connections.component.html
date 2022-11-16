@@ -1,9 +1,9 @@
 <div class="rpa-content-div mx-3" *ngIf="this.isButtonVisible || enableDbconnection">
     <div class="row credential-search-tools">
         <div class="rpa-env-search credential-search">
-            <input class="form-control toolbar-search" placeholder="Search" *ngIf="!isSearch"
+            <input class="form-control toolbar-search" placeholder="Search"
                 (keyup)="applyFilter1($event.target.value)">
-            <img src="../../../../assets/images/search.svg" matSuffix *ngIf="!isSearch" class="testplus1">
+            <img src="../../../../assets/images/search.svg" matSuffix class="testplus1">
         </div>
         <div class="env-data-tool credential-tools">
             <div *ngIf="!addflag" class="env-btn credential-btntool">

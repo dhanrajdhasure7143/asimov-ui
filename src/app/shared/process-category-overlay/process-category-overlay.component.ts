@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input, HostListener, ViewChild, SimpleChanges, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, HostListener, ViewChild, SimpleChanges, ChangeDetectorRef, TemplateRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
 import { ActivatedRoute } from '@angular/router';
@@ -19,6 +19,7 @@ export class ProcessCategoryOverlayComponent implements OnInit {
   @Output() proceed = new EventEmitter<any>();
   @Input() uploadedFileName?:string;
   @Input() overlay_data:any={};
+  processCategoryForm:any;
 
   processName = "";
   categoryName = "";
