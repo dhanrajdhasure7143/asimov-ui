@@ -23,7 +23,7 @@ export class SidebarComponent implements OnInit {
   plansList: any;
   expiry: any;
   showProjectsSubmenu: boolean = false;
-  constructor(private obj:PagesComponent, private dt:DataTransferService,
+  constructor(public obj:PagesComponent, private dt:DataTransferService,
     private rest_service: RestApiService) { }
 
   ngOnInit() {

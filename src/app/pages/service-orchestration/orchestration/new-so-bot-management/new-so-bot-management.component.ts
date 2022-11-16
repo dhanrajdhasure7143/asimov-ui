@@ -105,6 +105,8 @@ public slaupdate : boolean = false;
     displayedColumns6: string[] = ['ReleaseName','StartTime','EndTime','State','Info'];
     logbyrunid:MatTableDataSource<any>;
     popup:Boolean=false;
+    logs_modal:any;
+    draggableHandle:any;
     constructor(private route: ActivatedRoute,
       private rest:RestApiService,
       private router: Router,

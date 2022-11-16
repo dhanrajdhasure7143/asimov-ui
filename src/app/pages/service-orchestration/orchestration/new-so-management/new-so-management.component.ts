@@ -62,6 +62,14 @@ export class NewSoManagementComponent implements OnInit {
   dataSource1:any;
   isTableHasData:Boolean=false;
   nodata:Boolean=false;
+  inactivenew=1;
+  InactiveClosedRes = 1;
+  InactiveSolvedPer = 1;
+  InactiveSR = 1;
+  prihigh = 1;
+  primedium = 1;
+  prilow =1;
+  InactiveSWA = 1;
   ngOnInit(){
 
     this.incident_flag=true;

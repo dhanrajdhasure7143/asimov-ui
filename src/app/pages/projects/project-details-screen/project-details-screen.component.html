@@ -1566,10 +1566,10 @@
 
                             <div class="upload-filesdiv">
                                 <div class="row">
-                                    <div class="col-md-4 pl-0" *ngFor="let selected of listOfFiles">
+                                    <div class="col-md-4 pl-0" *ngFor="let selected of listOfFiles;let i =index">
                                         <div class="project-card">
                                             <span class="pull-right clickable" matTooltip="Remove"
-                                                (click)="removeSelectedFile(index)">
+                                                (click)="removeSelectedFile(i)">
                                                 <img class="testplus1"
                                                     src="../../../../assets/images/Projects/circle-close.svg" />
                                                 <!-- <i class="fa fa-trash"></i> -->
@@ -1663,10 +1663,10 @@
 
                     <div class="upload-filesdiv">
                         <div class="row">
-                            <div class="col-md-4 pl-0" *ngFor="let selected of listOfFiles">
+                            <div class="col-md-4 pl-0" *ngFor="let selected of listOfFiles;let i = index;">
                                 <div class="project-card">
                                     <span class="pull-right clickable" matTooltip="Remove"
-                                        (click)="removeSelectedFile(index)">
+                                        (click)="removeSelectedFile(i)">
                                         <img class="testplus1"
                                             src="../../../../assets/images/Projects/circle-close.svg" />
                                     </span>

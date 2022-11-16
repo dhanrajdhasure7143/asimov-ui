@@ -151,6 +151,7 @@ export class UploadProcessModelComponent implements ComponentCanDeactivate,OnIni
   process_owner:any;
   showconsfromanceModal:any;
   vcmId:any;
+  isopen:boolean=false;
 
   @ViewChild('variabletemplate',{ static: true }) variabletemplate: TemplateRef<any>;
   @ViewChild('keyboardShortcut',{ static: true }) keyboardShortcut: TemplateRef<any>;

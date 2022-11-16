@@ -1,4 +1,4 @@
-<div class="h-100" *ngIf="!isShow">
+<div class="h-100">
     <div class="row module-heading title">
         <div>
             <span class="module-back-button" routerLink="/pages/vcm/view-vcm">
@@ -469,7 +469,7 @@
                             <div class="form-fields col-md-12 p-0" *ngFor="let item of listOfFiles; let i = index">
 
                                 <div class="row project-card">
-                                    <span class="tsttooltipbtn pull-right clickable" (click)="removeSelectedFile(index)">
+                                    <span class="tsttooltipbtn pull-right clickable" (click)="removeSelectedFile(i)">
                                         <img class="testplus1" src="../../../../assets/images/VCM/circle-close-red.svg" />
                                         <span class="testtooltip">Remove</span>
                                     </span>

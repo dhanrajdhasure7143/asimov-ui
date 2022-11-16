@@ -142,7 +142,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr  style="padding:5px;" *ngFor="let config of activestatusSolvedPer | paginate: {id:'InactiveSolvedPer', itemsPerPage: 6,currentPage: InactiveSolvedPer}">
+                    <tr  style="padding:5px;" *ngFor="let config of activestatusSolvedPer | paginate: {itemsPerPage: 6,currentPage: InactiveSolvedPer}">
                       
                         <td><a style="color:black !important;text-decoration: none;" href="https://dev105659.service-now.com/navpage.do" target="_blank">{{config.incidentId}}</a></td>
                         <td><a style="color:black !important;text-decoration: none;" href="https://dev105659.service-now.com/navpage.do" target="_blank">{{config.assignedTo}}</a></td>

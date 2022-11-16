@@ -62,7 +62,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    private page_obj: PagesComponent,
+    public page_obj: PagesComponent,
     private dataTransfer: DataTransferService,
     private rpa: RestApiService,
     private spinner: NgxSpinnerService,

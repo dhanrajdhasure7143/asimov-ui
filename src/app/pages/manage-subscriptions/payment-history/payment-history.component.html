@@ -88,7 +88,7 @@
         <tr mat-header-row *matHeaderRowDef="displayedColumns8; sticky: true"></tr>
         <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns8;"></tr>
         <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['Loading']" [ngClass]="{'hide':dataSource8!=null}"></tr>
-        <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(dataSource8!=null && dataSource8.data.length==0 && dataSource8.errorMessage=='Customer not found')}"></tr>
+        <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(dataSource8!=null && dataSource8.data.length==0)}"></tr>
     </table>
     <mat-paginator class="newpaginationdiv" #paginator104 [pageSize]="3" [pageSizeOptions]="[3, 5, 10, 25, 50]" [showFirstLastButtons]="true">
     </mat-paginator>

@@ -26,6 +26,7 @@ export class ProgramDetailsComponent implements OnInit {
   program_id: any;
   programeNameFlag: boolean = false;
   programePurposeFlag: boolean = false;
+  p:number=1;
 
   constructor(
     private rest:RestApiService,

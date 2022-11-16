@@ -63,7 +63,7 @@
               </button>
             </span>  -->
             
-            <span class="projects-menu-item gridicon"  (click)="onDownloadSelectedItems($event)"   matTooltip="Download" >
+            <span class="projects-menu-item gridicon"  (click)="onDownloadSelectedItems()"   matTooltip="Download" >
               <img src="../../../../assets/images/Admin/download-black.svg" class="default-img">
               <img src="../../../../assets/images/Admin/download-blue.svg" class="hover-img">
             </span> 
@@ -592,11 +592,11 @@
                       <!-- <input type="file" class="form-control" (change)="chnagefileUploadForm($event)" formControlName="uploadFile" name="Upload-File"  placeholder="choose file" required multiple="true"> -->
                       <div class="upload-filesdiv">
                         <div class="row">
-                          <div class="col-md-4 pl-0" *ngFor="let selected of listOfFiles"> 
+                          <div class="col-md-4 pl-0" *ngFor="let selected of listOfFiles;let i = index"> 
                             <div class ="project-card">
 
                                 <span class="pull-right clickable" matTooltip="Remove"
-                                (click)="removeSelectedFile(index)">
+                                (click)="removeSelectedFile(i)">
                                     <img class="testplus1" src="../../../../assets/images/Projects/circle-close.svg" />
                                     <!-- <i class="fa fa-trash"></i> -->
                                 </span>

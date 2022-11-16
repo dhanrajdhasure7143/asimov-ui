@@ -533,6 +533,10 @@ export class RpaHomeComponent implements OnInit {
   this.isCreateForm=true;
   }
 
+  loopTrackBy(index, term) {
+    return index;
+  }
+
 }
 
 

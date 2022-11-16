@@ -106,6 +106,7 @@ export class CreateBpmnDiagramComponent implements OnInit, ComponentCanDeactivat
   header_btn_functions:Subscription;
   header_approvalBtn:Subscription;
   vcmId:any;
+  isopen:boolean = false;
   @ViewChild('variabletemplate',{ static: true }) variabletemplate: TemplateRef<any>;
   @ViewChild('keyboardShortcut',{ static: true }) keyboardShortcut: TemplateRef<any>;
   @ViewChild('dmnTabs',{ static: true }) dmnTabs: ElementRef<any>;

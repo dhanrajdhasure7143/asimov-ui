@@ -323,4 +323,9 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
       this.getallDBConnection()
     }
   }
+
+  loopTrackBy(index, term) {
+    return index;
+  }
+  
 }

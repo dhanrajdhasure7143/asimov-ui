@@ -277,4 +277,8 @@ export class CurrentplanComponent implements OnInit {
   contactUs(){
     window.location.href = "https://www.epsoftinc.com/"
   }
+  
+  loopTrackBy(index, term) {
+    return index;
+  }
 }
