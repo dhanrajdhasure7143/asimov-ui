@@ -174,7 +174,7 @@
                   </div>
               
                   <div class="action-item hovericon" *ngIf="current_instance != undefined">
-                    <button class="tsttooltipbtn" [disabled]="current_instance.finalbot==undefined || freetrail=='true'"
+                    <button class="tsttooltipbtn" [disabled]="current_instance.finalbot.botId==undefined || freetrail=='true'"
                       (click)=" current_instance.openScheduler()">
                       <img src="../../../../assets/images/RPA/icon_latest/schedule.svg" class="testplus1">
                       <span class="testtooltip">Scheduler</span>

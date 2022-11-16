@@ -27,6 +27,7 @@ export class RpaAuditlogsComponent implements OnInit {
         this.router.navigate(["home"])
       } else {
         this.botId = params.botId;
+        this.spinner.show();
         this.getEnvironments(params.catergoryId)
       }
     })
@@ -42,14 +43,20 @@ export class RpaAuditlogsComponent implements OnInit {
         this.getAuditLogs(environments)
       }
       else {
+        this.spinner.hide();
         Swal.fire("Error", response.errorMessage, "error")
       }
+    },err=>{
+      console.log(err)
+      this.spinner.hide();
     })
   }
 
   getAuditLogs(environments) {  // api to get audit logs
+    this.spinner.show()
     this.rest.getAuditLogs(this.botId).subscribe((data: any) => {
       let response: any = data
+      this.spinner.hide()
       if (response.errorMessage == undefined) {
         this.dataSource = new MatTableDataSource(response.Status);
         this.dataSource.paginator = this.paginator;
