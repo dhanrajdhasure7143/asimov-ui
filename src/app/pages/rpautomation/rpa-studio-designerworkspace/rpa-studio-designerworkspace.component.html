@@ -191,7 +191,7 @@
       <br />
       <label><input type="checkbox" formControlName="isPredefined" /> Is Predefined</label>
       <div class="text-right">
-        <button (click)="saveBotDetailsAndUpdate()" [disabled]="botDetailsForm.isInvalid" class="btn btn-primary eiap-btn">
+        <button (click)="saveBotDetailsAndUpdate()" [disabled]="botDetailsForm.invalid" class="btn btn-primary eiap-btn">
           Continue
         </button>
       </div>
@@ -467,7 +467,7 @@
     </div>
 
     <div class="modal-body actions-mbody">
-      <form [formGroup]="insertForm" (ngSubmit)="savedata()">
+      <form [formGroup]="insertForm" >
         <!-- <div class="row"> -->
         <div class="formelement">
           <label for="userName">Email<span class="star">*</span></label>
