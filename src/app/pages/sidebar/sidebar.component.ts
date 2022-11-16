@@ -112,7 +112,6 @@ export class SidebarComponent implements OnInit {
 getexpiryInfo(){
   this.rest_service.expiryInfo().subscribe(data => {
     this.expiry = data.Expiresin;
-    console.log("left over days ----",this.expiry)
 
   })
 }

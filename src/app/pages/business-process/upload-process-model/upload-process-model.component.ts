@@ -375,7 +375,6 @@ export class UploadProcessModelComponent implements ComponentCanDeactivate,OnIni
     } else {
       await this.rest.getUserBpmnsList().subscribe((res: any[]) => {
         this.full_saved_bpmn_list = res;
-        console.log(res)
         if (this.isShowConformance) {
         this.saved_bpmn_list = res.filter(each_bpmn => {
           return each_bpmn.processIntelligenceId && each_bpmn.processIntelligenceId.toString() == this.pid.toString();
@@ -831,7 +830,6 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
       if(_self.isShowConformance){
         // _self.autoSaveProcessowner_modal();
         // _self.showconsfromanceModal=bpmnModel
-        // console.log(_self.saved_bpmn_list[_self.selected_notation])
 
       }else{
         _self.autoSaveDiagram(bpmnModel);
@@ -1294,7 +1292,6 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
               // new added code start
               _self.saved_bpmn_list = res;
               let filterList = _self.saved_bpmn_list.filter(ele=>{return ele.version == inprogress_version})
-              console.log(filterList,filterList[0]['bpmnProcessStatus'])
                 _self.rejectedOrApproved = filterList[0]['bpmnProcessStatus'];
                 _self.updated_date_time = filterList[0]["modifiedTimestamp"];
               _self.push_Obj={"rejectedOrApproved":_self.rejectedOrApproved,"isfromApprover":_self.isfromApprover,

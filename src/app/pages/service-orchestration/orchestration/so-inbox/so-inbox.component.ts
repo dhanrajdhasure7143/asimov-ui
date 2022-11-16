@@ -67,7 +67,6 @@ export class SoInboxComponent implements OnInit {
 }
 
   /*botidshowaction(data){
-    console.log(data);
     document.getElementById("showaction").style.display = "block";
   }*/
 

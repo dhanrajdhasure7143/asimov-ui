@@ -78,7 +78,6 @@ export class RpaDatabaseFormComponent implements OnInit {
 
   ngOnChanges(changes : SimpleChanges){
      if(!this.isDatabase){    
-      console.log(this.dbupdatedata)
       if(this.dbupdatedata){
       this.dbForm.get("connectiontName").setValue(this.dbupdatedata["connectiontName"]);
       this.dbForm.get("categoryId").setValue(this.dbupdatedata["categoryId"]);      

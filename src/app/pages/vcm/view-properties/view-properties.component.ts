@@ -151,7 +151,6 @@ export class ViewPropertiesComponent implements OnInit {
   }
 
   ondeleteAttachements(data) {
-    console.log(data)
     let req_body=[]
     if(data == "all"){
       this.attachments.forEach(e => {
@@ -162,7 +161,6 @@ export class ViewPropertiesComponent implements OnInit {
       let obj = {"documentId":data.documentId}
       req_body.push(obj)
     }
-    console.log(req_body)
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",

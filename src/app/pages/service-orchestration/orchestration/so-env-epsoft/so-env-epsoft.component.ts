@@ -520,7 +520,7 @@ removeallchecks()
    
   }
   this.checkflag=false;
-  //console.log(this.environments);
+  
 }
 
 }
