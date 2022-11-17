@@ -106,8 +106,11 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   };
   isShowExpand:boolean=false;
   splitAreamin_size="200";
+  draggableHandle:any;
 
   @ViewChild('template', { static: false }) template: TemplateRef<any>;
+  
+  @ViewChild('checkBotTemplate', { static: false }) checkBotTemplate: TemplateRef<any>;
   public nodedata: any;
   categoryList:any=[];
   Webelementtype_array: { "Id": any; "value": any; }[];
@@ -123,6 +126,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     { size: 30, order: 2},
   ];
   public groupsData:any=[];
+  botDetailsForm:FormGroup;
+  botNameCheck:boolean=false;
   @ViewChild('splitEl', { static: false }) splitEl: SplitComponent;
   area_splitSize: any = {}
 
@@ -149,8 +154,12 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         inBoundAddressPort: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         outBoundAddress: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         outboundAddressPort: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-
     })
+    this.botDetailsForm=  this.formBuilder.group({
+      botName: ["", Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern("^[a-zA-Z0-9_-]*$")])],
+      description: ["", Validators.compose([Validators.maxLength(500)])],
+      isPredefined: [false]
+    });
   }
 
   ngOnInit() {
@@ -179,9 +188,9 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       this.actualEnv=[...this.finalbot.envIds];
       this.loadGroups("load");
       this.loadnodes();
-      this.getSelectedEnvironments();
       this.getAllVersions();
     }
+    this.getSelectedEnvironments();
     this.dragareaid = "dragarea__" + this.finalbot.botName;
     this.outputboxid = "outputbox__" + this.finalbot.botName;
     //this.getCategories();
@@ -189,14 +198,18 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
 
 
+
   getSelectedEnvironments()
   {
-    this.filteredEnvironments=[...this.environmentsList.filter((item:any)=>item.categoryId===this.finalbot.categoryId)
+    this.filteredEnvironments=[...this.environmentsList.filter((item:any)=>item.categoryId==this.finalbot.categoryId)
       .map(((item2:any)=>{
         if(this.finalbot.envIds.find((item3:any)=>item3==item2.environmentId)!=undefined)
+        {
           return {...item2,...{check:true}}
-        else
+        }else
+        {
           return {...item2,...{check:false}}
+        }
       }))] 
   }
 
@@ -209,7 +222,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
 
   ngAfterViewInit() 
-  {
+  {    
+   
     this.jsPlumbInstance = jsPlumb.getInstance();
     var self = this;
     this.jsPlumbInstance.importDefaults({
@@ -258,14 +272,32 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
             confirmButtonText: 'True'
           }).then((result) => {
             if (result.value) {
+                connection.addOverlay(
+                  ["Label", {
+                  label: "<span class='bg-white text-success'>True<span>",
+                  location: 0.8,
+                  cssClass: 'aLabel',
+                  id: "iflabel"+connection.id
+                  }]
+                );
+               
               let connected_node: any = this.nodes.find(develop => develop.id == connection.targetId);
               let connected_node_id: any = connected_node.name + "__" + connected_node.id;
               let source_node_id = node_object.nodeId;
               if (this.finaldataobjects.find(tasks => tasks.nodeId == source_node_id) != undefined) {
                 this.finaldataobjects.find(tasks => tasks.nodeId == source_node_id).attributes.find(attrs => attrs.metaAttrValue == "if").attrValue = connected_node_id;
               }
+              
             }
             else {
+              connection.addOverlay(
+                ["Label", {
+                  label: "<span class='bg-white text-danger'>False<span>",
+                  location: 0.8,
+                  cssClass: 'aLabel',
+                  id: "iflabel"+connection.id
+                }]
+              );
               let connected_node: any = this.nodes.find(develop => develop.id == connection.targetId);
               let connected_node_id: any = connected_node.name + "__" + connected_node.id;
               if (this.finaldataobjects.find(tasks => tasks.nodeId == node_object.nodeId) != undefined) {
@@ -297,7 +329,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
       }
       
-        
       this.setConnectionLabel(info.connection);
     });
 
@@ -1422,7 +1453,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, reset designer!'
     }).then((result:any) => {
-      //console.log(result)
       if(result.value)
       {
         this.jsPlumbInstance.deleteEveryEndpoint()
@@ -1433,6 +1463,56 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     });
   }
 
+  
+  checkBotDetails(versionType, comments)
+  {
+    if(this.finalbot.botId==undefined)
+    {
+      this.botDetailsForm.get("botName").setValue(this.finalbot.botName);
+      this.botDetailsForm.get("description").setValue(this.finalbot.description);
+      this.botDetailsForm.get("isPredefined").setValue(this.finalbot.isPredefined);
+      this.finalbot["versionType"]=versionType;
+      this.finalbot["comments"]=comments;
+      this.modalRef = this.modalService.show(this.checkBotTemplate);
+    }
+    else
+    {
+      this.updateBotFun(versionType, comments);
+    }
+  }
+
+  validateBotName() {
+    let botname = this.botDetailsForm.get("botName").value;
+    this.rest.checkbotname(botname).subscribe(data => {
+      if (data == true) {
+        this.botNameCheck = false;
+      } else {
+        this.botNameCheck = true;
+      }
+    })
+  }
+  
+  
+  saveBotDetailsAndUpdate()
+  {
+      this.spinner.show();
+      let versionType=this.finalbot.versionType;
+      let comments=this.finalbot.comments;
+      this.modalRef.hide();
+      let botDetails={...this.finalbot,...this.botDetailsForm.value}
+      this.rest.createBot(botDetails).subscribe((response:any)=>{
+        this.finalbot=response;
+        let url=window.location.hash;
+        window.history.pushState("", "", url.split("botId")[0]+"botId="+response.botId);
+        this.updateBotFun(versionType, comments)
+      },err=>{
+        console.log(err)
+        this.spinner.hide();
+        Swal.fire("Error","Unable to create bot","error")
+      })
+    
+   
+  }
   async updateBotFun(version_type,comments) {
     let env=[...this.filteredEnvironments.filter((item:any)=>item.check==true).map((item2:any)=>{
       return item2.environmentId
@@ -1488,7 +1568,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           this.rest.addAuditLogs(auditLogsList).subscribe((response:any)=>{
             if(response.errorMessage==undefined)
             {
-              this.notifier.notify("Success","Audit logs updated successfully")
+              this.notifier.notify("success","Audit logs updated successfully")
             }
             else
             {
@@ -1706,7 +1786,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
 
   async getsvg(){
-    let data= await domtoimage.toPng(document.getElementById(this.dragareaid))
+    let data= await domtoimage.toPng(document.getElementById(this.dragareaid), { quality : 1})
     this.svg=data;
   }
 

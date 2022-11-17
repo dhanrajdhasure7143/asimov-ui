@@ -105,6 +105,8 @@ public slaupdate : boolean = false;
     displayedColumns6: string[] = ['ReleaseName','StartTime','EndTime','State','Info'];
     logbyrunid:MatTableDataSource<any>;
     popup:Boolean=false;
+    logs_modal:any;
+    draggableHandle:any;
     constructor(private route: ActivatedRoute,
       private rest:RestApiService,
       private router: Router,
@@ -148,7 +150,6 @@ public slaupdate : boolean = false;
 
 
   ngAfterViewInit(): void {
-    console.log(this.sort5)
   }
   method(){
     let result: any = [];
@@ -468,7 +469,6 @@ public slaupdate : boolean = false;
         this.spinner.hide();
     }
     },(err)=>{
-      console.log(err)
       this.spinner.hide();
       Swal.fire("Error","Unable to get bots data","error")
     })
@@ -515,7 +515,6 @@ public slaupdate : boolean = false;
        else
          Swal.fire("Error",response.errorMessage,"error");
     },err=>{
-      console.log(err)
       this.spinner.hide();
       Swal.fire("Error","Unable to update logs","error")
     });
@@ -574,7 +573,6 @@ public slaupdate : boolean = false;
     //     Swal.fire("Error",data.errorMessage,"error");
     //   }
     // },(err)=>{
-    //   console.log(err)
     //   this.spinner.hide()
     //   this.logflag="Error"
     //   Swal.fire("Error","Unable to get logs","error")
@@ -600,7 +598,6 @@ public slaupdate : boolean = false;
   this.spinner.show()
    this.AllVersions=[];
    this.logsbotid=botId
-    console.log("botid",botId);
    this.rest.getBotVersion(botId).subscribe((data:any)=>{
      this.spinner.hide();
       if(data.errorMessage==undefined){
@@ -649,7 +646,6 @@ public slaupdate : boolean = false;
         Swal.fire("Error",data.errorMessage,"error")
       }
     },(err)=>{
-      console.log(err)
       this.spinner.hide();
       this.logflag="Error";
       Swal.fire("Error","Failed to get bot logs","error");
@@ -705,7 +701,6 @@ public slaupdate : boolean = false;
       // {
       //   let bot=this.bot_list.find(data=>data.botId==botid)
       //   this.rest.start_blueprism_bot(bot.botName).subscribe(data=>{
-      //     console.log(data);
       //     this.spinner.hide();
       //     Swal.fire("Bot Initiated Successfully!","","success");
       //     this.notify.notify("success",data);
@@ -720,7 +715,6 @@ public slaupdate : boolean = false;
             Swal.fire("Success","Bot Execution initiated successfully","success");
           },3000)
         this.rest.start_blueprism_bot(bot.botName).subscribe(data=>{
-          // console.log(data);
           // this.spinner.hide();
           // Swal.fire("Bot Initiated Successfully!","","success");
           
@@ -852,7 +846,6 @@ public slaupdate : boolean = false;
         if(action=="closed")
         this.logsmodalref=this.modalService.show(template,{class:"logs-modal"});
       },err=>{
-        console.log(err)
         this.spinner.hide()
         Swal.fire("Error","Unable to get uipath bots","error");
       });
@@ -930,12 +923,10 @@ public slaupdate : boolean = false;
     }
 
    /* applyFilter(filterValue:any) {
-      console.log(filterValue)
       let category=this.categaoriesList.find(val=>filterValue==val.categoryId);
       //this.selectedvalue=filterValue;
       filterValue = category.categoryName.trim(); // Remove whitespace
       filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-      console.log(filterValue);
       this.dataSource1.filter = filterValue;
     }
 
@@ -976,7 +967,6 @@ public slaupdate : boolean = false;
         Swal.fire("Error","Unable to get users list","error");
       }
     },err=>{
-      console.log(err);
       Swal.fire("Error","Unable to get users list","error");
     })
   }

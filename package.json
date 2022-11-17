@@ -122,7 +122,7 @@
     "@angular/cli": "~8.3.25",
     "@angular/compiler-cli": "~8.2.14",
     "@angular/language-service": "~8.2.14",
-    "@babel/compat-data": "~7.8.0",
+    "@babel/compat-data": "^7.20.1",
     "@types/datatables.net": "^1.10.19",
     "@types/jasmine": "~3.3.8",
     "@types/jasminewd2": "~2.0.3",

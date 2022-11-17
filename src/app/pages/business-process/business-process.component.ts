@@ -39,6 +39,8 @@ export class BusinessProcessComponent implements AfterViewChecked {
   lastModified_user:any;
   isVcm:boolean=false;
   vcm_id:any;
+  disableShowConformance:boolean = false;
+  isConfNavigation:boolean=false;
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private cdRef: ChangeDetectorRef, private dt: DataTransferService,private rest:RestApiService,
               @Inject(APP_CONFIG) private config, ) { }
 
@@ -235,7 +237,6 @@ export class BusinessProcessComponent implements AfterViewChecked {
   }
 
   backtoVcm(){
-    console.log(this.vcm_id);
     this.router.navigate(['/pages/vcm/vcm-structure'],{queryParams: {id: this.vcm_id}})
   }
 

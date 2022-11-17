@@ -1,15 +1,43 @@
 <div [id]="dragareaid">
-  <div class="main" id="screen">
-    <div  class="drag-area" dndDropzone   (dndDrop)="onDrop($event,$event)" (click)="closemenu()" [ngClass]="{ 'workspace': disable, 'dndDropzoneDisabled': false, 'lightTheme': lightTheme }">
-  
+  <div class="main">
+    <div
+      class="drag-area"
+      dndDropzone
+      (dndDrop)="onDrop($event, $event)"
+      (click)="closemenu()"
+      [ngClass]="{
+        workspace: disable,
+        dndDropzoneDisabled: false,
+        lightTheme: lightTheme
+      }"
+    >
       <ng-container *ngFor="let node of nodes; let i = index">
-        <div id="{{node.id}}" class="dndDropzone" (mouseover)="openoutputmenu(node)" (dblclick)="getTaskForm(node)" (contextmenu)="onRightClick(node, $event,i);$event.prevent" [ngStyle]="{'left': node.x, 'top' : node.y,'background-image' :  'url(' + node.path + ')'  }">
-
-                <span *ngIf="node.name!='START' && node.name !='STOP'" class="node-delete" (click)="deletenode(node)"><img src="../../../../assets/images/RPA/close-circle-fill.svg"></span>
-                <div class="connector-name" *ngIf="node.selectedNodeTask==''">{{node.name}} </div>
-                <div class="connector-name" *ngIf="node.selectedNodeTask!=''">{{node.selectedNodeTask}}</div>
-                <!--This is task menu which is disabled for now, If we get any requirment we can enable it-->
-                <!-- <div *ngIf="selectedNode.id==node.id && optionsVisible" class="node_tooltip">
+        <div
+          id="{{ node.id }}"
+          class="dndDropzone"
+          (mouseover)="openoutputmenu(node)"
+          (dblclick)="getTaskForm(node)"
+          (contextmenu)="onRightClick(node, $event, i); ($event.prevent)"
+          [ngStyle]="{
+            left: node.x,
+            top: node.y,
+            'background-image': 'url(' + node.path + ')'
+          }"
+        >
+          <span
+            *ngIf="node.name != 'START' && node.name != 'STOP'"
+            class="node-delete"
+            (click)="deletenode(node)"
+            ><img src="../../../../assets/images/RPA/close-circle-fill.svg"
+          /></span>
+          <div class="connector-name" *ngIf="node.selectedNodeTask == ''">
+            {{ node.name }}
+          </div>
+          <div class="connector-name" *ngIf="node.selectedNodeTask != ''">
+            {{ node.selectedNodeTask }}
+          </div>
+          <!--This is task menu which is disabled for now, If we get any requirment we can enable it-->
+          <!-- <div *ngIf="selectedNode.id==node.id && optionsVisible" class="node_tooltip">
                     <nav id="context-menu" class="context-menu contextmenu">
                         <div class="context-menu1">
                             <div class="context-menu__item" *ngFor="let menu of stud">
@@ -18,202 +46,399 @@
                         </div>
                     </nav>
                 </div> -->
-                <div [id]="'output_'+node.id" *ngIf="finalbot.botId!=undefined && node.selectedNodeTask=='Output Box' && (node | Checkoutputbox : finalbot) " style="display:none" class="node_tooltip">
-                    <nav id="context-menu" class="context-menu contextmenu">
-                        <div class="context-menu1">
-                            <div class="context-menu__item">
-                                <a class="context-menu__link" (click)="outputbox(node, outputboxModalRef)" data-action="View">Open Output Box
-                                </a>
-                            </div>
-                        </div>
-                    </nav>
+          <div
+            [id]="'output_' + node.id"
+            *ngIf="
+              finalbot.botId != undefined &&
+              node.selectedNodeTask == 'Output Box' &&
+              (node | Checkoutputbox: finalbot)
+            "
+            style="display: none"
+            class="node_tooltip"
+          >
+            <nav id="context-menu" class="context-menu contextmenu">
+              <div class="context-menu1">
+                <div class="context-menu__item">
+                  <a
+                    class="context-menu__link"
+                    (click)="outputbox(node, outputboxModalRef)"
+                    data-action="View"
+                    >Open Output Box
+                  </a>
                 </div>
+              </div>
+            </nav>
+          </div>
         </div>
       </ng-container>
       <!--Added Grouping Task in RPA Designer-->
       <ng-container *ngFor="let group of groupsData; let i = index">
-        <div [id]="group.id"    mwlResizable
-        [enableGhostResize]="true"
-        (resizeEnd)="onResizeEnd($event, group.id)"
-        [resizeEdges]="{ bottom: true, right: true, top: false, left: false }" [ngStyle]="{'left': group.x, 'top' : group.y, 'height':group.height, 'width':group.width, 'border-color' :group.color}" class="groupElement">
-            <div class="groupHeader">
-                <span class="groupTitle" *ngIf="group.edit==false">{{group.groupName}}</span>
-                <span class="groupTitle clickable" (click)="removeGroup(group.id)" *ngIf="group.edit==false">
-                    <i class="ri-delete-bin-line text-danger"></i>
-                </span>
-                <span class="groupTitle clickable" (click)="group.edit=true" *ngIf="group.edit==false">
-                    <i class="ri-pencil-line text-primary"></i>
-                </span>
-                <span class="groupTitle clickable" *ngIf="group.edit==true">
-                    <input type="text" (keyup)="group.groupName=$event.target.value" [value]="group.groupName">
-                </span>
-                <span class="groupTitle clickable " *ngIf="group.edit==true">
-                    &nbsp;
-                    <input type="color" (change)="group.color= $event.target.value" [value]="group.color" class="custom-color-picker">
-                    &nbsp;
-                </span>
-                <span class="text-suuccess groupTitle clickable" *ngIf="group.edit==true" (click)="group.edit=false" ><i class="ri-check-line"></i></span>
-            </div>
+        <div
+          [id]="group.id"
+          mwlResizable
+          [enableGhostResize]="true"
+          (resizeEnd)="onResizeEnd($event, group.id)"
+          [resizeEdges]="{ bottom: true, right: true, top: false, left: false }"
+          [ngStyle]="{
+            left: group.x,
+            top: group.y,
+            height: group.height,
+            width: group.width,
+            'border-color': group.color
+          }"
+          class="groupElement"
+        >
+          <div class="groupHeader">
+            <span class="groupTitle" *ngIf="group.edit == false">{{
+              group.groupName
+            }}</span>
+            <span
+              class="groupTitle clickable"
+              (click)="removeGroup(group.id)"
+              *ngIf="group.edit == false"
+            >
+              <i class="ri-delete-bin-line text-danger"></i>
+            </span>
+            <span
+              class="groupTitle clickable"
+              (click)="group.edit = true"
+              *ngIf="group.edit == false"
+            >
+              <i class="ri-pencil-line text-primary"></i>
+            </span>
+            <span class="groupTitle clickable" *ngIf="group.edit == true">
+              <input
+                type="text"
+                (keyup)="group.groupName = $event.target.value"
+                [value]="group.groupName"
+              />
+            </span>
+            <span class="groupTitle clickable" *ngIf="group.edit == true">
+              &nbsp;
+              <input
+                type="color"
+                (change)="group.color = $event.target.value"
+                [value]="group.color"
+                class="custom-color-picker"
+              />
+              &nbsp;
+            </span>
+            <span
+              class="text-suuccess groupTitle clickable"
+              *ngIf="group.edit == true"
+              (click)="group.edit = false"
+              ><i class="ri-check-line"></i
+            ></span>
+          </div>
         </div>
-        </ng-container>
-      <div *ngIf="nodes.length==0" class="dragactionsdiv">        
-            <!-- <img src="../../../../assets/images/RPA/icon_latest/dragdrop.svg" /> --> 
-             <img src="../../../../assets/images/RPA/dragarea.png" />
-            <span>Drag an action here...</span>
-    </div>
+      </ng-container>
+      <div *ngIf="nodes.length == 0" class="dragactionsdiv">
+        <!-- <img src="../../../../assets/images/RPA/icon_latest/dragdrop.svg" /> -->
+        <img src="../../../../assets/images/RPA/dragarea.png" />
+        <span>Drag an action here...</span>
+      </div>
     </div>
   </div>
-
 </div>
 
+<ng-template #checkBotTemplate>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Check Bot Details</h4>
+    <button
+      type="button"
+      class="btn-close close pull-right"
+      aria-label="Close"
+      (click)="modalRef?.hide()"
+    >
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="botDetailsForm">
+      <label>Bot Name</label>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Enter Bot Name"
+        (input)="validateBotName()"
+        formControlName="botName"
+      />
+      <div
+        *ngIf="
+          botDetailsForm.get('botName').hasError('required') &&
+          botDetailsForm.get('botName').touched &&
+          !botDetailsForm.controls['botName'].hasError('maxlength')
+        "
+        class="errspan required"
+      >
+        Bot Name Required*
+      </div>
+      <div
+        *ngIf="botNameCheck && botDetailsForm.get('botName').value"
+        class="errspan required"
+      >
+        Bot Name is already exists*
+      </div>
+      <div
+        *ngIf="botDetailsForm.get('botName').hasError('pattern')"
+        class="errspan required"
+      >
+        Spaces and special characters are not allowed Excluding( _ & - )
+      </div>
+      <br />
+      <label>Bot Description</label>
+      <textarea class="form-control" placeholder="Description" formControlName="description"></textarea>
+      <br />
+      <label><input type="checkbox" formControlName="isPredefined" /> Is Predefined</label>
+      <div class="text-right">
+        <button (click)="saveBotDetailsAndUpdate()" [disabled]="botDetailsForm.invalid" class="btn btn-primary eiap-btn">
+          Continue
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-template>
 
-<div class="own-overlay rpa-modal dynamic-forms-modal" *ngIf="hiddenPopUp" style="display: block;">
-    <as-split direction="horizontal" [useTransition]="true" (dragEnd)="onDragEnd($event)" #splitEl>
-        <as-split-area [size]="areas[0].size" order="areas[0].order">
-            <!-- <p>LEFT</p> -->
-        </as-split-area>
-        <!-- minSize="200" maxSize="300" -->
-        <as-split-area [size]="areas[1].size" order="areas[1].order" [minSize]="splitAreamin_size">
-            <div class="right_split">
-                <div class="rpa-modal-header">
-                    <span class="rpa-modal-close" >
-                        <img *ngIf="isShowExpand" src="../../../../assets/images/RPA/Expand-In.svg" (click)="minimizeFullScreen()" class="expandsvgimg">
-                        <img *ngIf="!isShowExpand" src="../../../../assets/images/RPA/Expand-Out.svg" (click)="expandFullScreen()" class="expandsvgimg">
-                        <img src="../../../../assets/images/RPA/icon_latest/close.svg" (click)="closeFun()" alt="">
-                    </span>
-                    <h4>{{formHeader}}</h4>
-                </div>
-                <div class="modal-body actions-mbody actionsoverlay-mbody" *ngIf="form_change">
-                    <app-dynamic-forms [fields]="getFields()" [multiarray]="multiarray" [formheader]="formHeader"
-                        [enableMultiForm]="enableMultiForm" (Submit)="submitform($event)"
-                        (onSubmit)="onFormSubmit($event)"></app-dynamic-forms>
-                </div>
-            </div>
-        </as-split-area>
-    </as-split>
+<div
+  class="own-overlay rpa-modal dynamic-forms-modal"
+  *ngIf="hiddenPopUp"
+  style="display: block"
+>
+  <as-split
+    direction="horizontal"
+    [useTransition]="true"
+    (dragEnd)="onDragEnd($event)"
+    #splitEl
+  >
+    <as-split-area [size]="areas[0].size" order="areas[0].order">
+      <!-- <p>LEFT</p> -->
+    </as-split-area>
+    <!-- minSize="200" maxSize="300" -->
+    <as-split-area
+      [size]="areas[1].size"
+      order="areas[1].order"
+      [minSize]="splitAreamin_size"
+    >
+      <div class="right_split">
+        <div class="rpa-modal-header">
+          <span class="rpa-modal-close">
+            <img
+              *ngIf="isShowExpand"
+              src="../../../../assets/images/RPA/Expand-In.svg"
+              (click)="minimizeFullScreen()"
+              class="expandsvgimg"
+            />
+            <img
+              *ngIf="!isShowExpand"
+              src="../../../../assets/images/RPA/Expand-Out.svg"
+              (click)="expandFullScreen()"
+              class="expandsvgimg"
+            />
+            <img
+              src="../../../../assets/images/RPA/icon_latest/close.svg"
+              (click)="closeFun()"
+              alt=""
+            />
+          </span>
+          <h4>{{ formHeader }}</h4>
+        </div>
+        <div
+          class="modal-body actions-mbody actionsoverlay-mbody"
+          *ngIf="form_change"
+        >
+          <app-dynamic-forms
+            [fields]="getFields()"
+            [multiarray]="multiarray"
+            [formheader]="formHeader"
+            [enableMultiForm]="enableMultiForm"
+            (Submit)="submitform($event)"
+            (onSubmit)="onFormSubmit($event)"
+          ></app-dynamic-forms>
+        </div>
+      </div>
+    </as-split-area>
+  </as-split>
 </div>
-
 
 <ng-template #outputboxModalRef>
   <div [id]="outputboxid">
-    <div ngb-modal-draggable [ngbModalDraggableHandle]="draggableHandle" class="cursor-all-scroll">
-        <div #draggableHandle class="modal-header modelprhead">
+    <div
+      ngb-modal-draggable
+      [ngbModalDraggableHandle]="draggableHandle"
+      class="cursor-all-scroll"
+    >
+      <div #draggableHandle class="modal-header modelprhead">
         <!-- <div  class="modal-header modelprhead">             -->
-            <h4 class="modal-title pull-left">
-                <span *ngIf="outputboxresult!=undefined" class="module-back-button" (click)="outputlayoutback()">
-                    <i class="fas fa-arrow-left" aria-hidden="true"></i>
-                </span>
-                Output Box
-            </h4>
-            <button (click)="closeoutputbox();modalRef.hide()" class="close pull-right">
-                <span>
-                    <img src="../../../../assets/images/Projects/circle-close.svg" alt="">
-                </span>  
-            </button>          
-        </div>
+        <h4 class="modal-title pull-left">
+          <span
+            *ngIf="outputboxresult != undefined"
+            class="module-back-button"
+            (click)="outputlayoutback()"
+          >
+            <i class="fas fa-arrow-left" aria-hidden="true"></i>
+          </span>
+          Output Box
+        </h4>
+        <button
+          (click)="closeoutputbox(); modalRef.hide()"
+          class="close pull-right"
+        >
+          <span>
+            <img
+              src="../../../../assets/images/Projects/circle-close.svg"
+              alt=""
+            />
+          </span>
+        </button>
+      </div>
     </div>
-        <div class="modal-body modelprbody">
+    <div class="modal-body modelprbody">
+      <div class="row" *ngIf="outputboxresult == undefined">
+        <div class="col-md-12 form-group">
+          <select class="form-control" [(ngModel)]="SelectedOutputType">
+            <option value="">--Select View Type--</option>
+            <option value="Table">Table</option>
+            <option value="Text">Text</option>
+            <option value="Image">Image</option>
+          </select>
+        </div>
+        <div class="col-md-12">
+          <button
+            class="btn btn-primary eiap-btn"
+            style="float: right"
+            (click)="getoutput()"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
 
-            <div class="row" *ngIf="outputboxresult==undefined">
-
-                <div class="col-md-12 form-group" >                        
-                    <select class="form-control" [(ngModel)]="SelectedOutputType">
-                        <option value="">--Select View Type--</option>
-                        <option value="Table">Table</option>
-                        <option value="Text">Text</option>
-                        <option value="Image">Image</option>
-                    </select>            
-                </div>
-                <div class="col-md-12">
-                    <button class="btn btn-primary eiap-btn" style="float: right" (click)="getoutput()">Submit</button>
-                </div>
-
-            </div>
-
-            <div class="row" *ngIf="SelectedOutputType=='Table' && outputboxresult!=undefined">
-                <!-- <div class="col-md-12">
+      <div
+        class="row"
+        *ngIf="SelectedOutputType == 'Table' && outputboxresult != undefined"
+      >
+        <!-- <div class="col-md-12">
                     <button class="btn btn-primary eiap-btn" style="float: right" (click)="outputlayoutback()">
                         <i class="fa fa-arrow-left" aria-hidden="true"></i> back
                     </button>
                 </div> -->
-                <div class="col-md-12">
-                    <table class="table logs-table">
-                        <thead>
-                            <tr>
-                                <th>Key</th>
-                                <th>Value</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let result of outputboxresult">
-                                <td>{{result.Key}}</td>
-                                <td>{{result.Value}}</td>
-                            </tr>
-                            <tr *ngIf="outputboxresult.length==0">
-                                <td colspan=2 style='text-align: center'>No Records Found</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>                   
-            </div>
+        <div class="col-md-12">
+          <table class="table logs-table">
+            <thead>
+              <tr>
+                <th>Key</th>
+                <th>Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let result of outputboxresult">
+                <td>{{ result.Key }}</td>
+                <td>{{ result.Value }}</td>
+              </tr>
+              <tr *ngIf="outputboxresult.length == 0">
+                <td colspan="2" style="text-align: center">No Records Found</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
 
-            <div class="row" *ngIf="SelectedOutputType=='Text' && outputboxresult!=undefined">
-                <!-- <div class="col-md-12">
+      <div
+        class="row"
+        *ngIf="SelectedOutputType == 'Text' && outputboxresult != undefined"
+      >
+        <!-- <div class="col-md-12">
                     <button style="float: right" class="btn btn-primary eiap-btn" data-placement="bottom" tooltip="Back" (click)="outputlayoutback()">
                         <i class="fa fa-arrow-left"></i>&nbsp;back
                     </button>
                 </div> -->
-                <div class="col-md-12 form-group">
-                    <textarea [id]="'text_'+outputboxid" disabled class="form-control" rows="6" style="resize:none;"></textarea>                       
-                </div>
-            </div>
-
-            <div class="row" *ngIf="SelectedOutputType=='Image' && outputboxresult!=undefined">
-                <div class="col-md-12">
-                    <a [href]="Image" download data-placement="bottom" tooltip="Download" style="float: right;margin-bottom: 5px;">
-                        <img src="../../../../assets/images/Projects/Download.svg" class="testplus">
-                    </a>
-                     <!-- <button class="btn btn-primary eiap-btn" style="float: right" (click)="outputlayoutback()">
-                         <i class="fa fa-arrow-left" aria-hidden="true"></i> back
-                     </button> -->                    
-                </div>
-                
-                <div class="col-md-12 text-center">
-                    <img [src]="Image" style="filter: none;height:400px;">
-                </div>
-            </div>
-
+        <div class="col-md-12 form-group">
+          <textarea
+            [id]="'text_' + outputboxid"
+            disabled
+            class="form-control"
+            rows="6"
+            style="resize: none"
+          ></textarea>
         </div>
-        
+      </div>
+
+      <div
+        class="row"
+        *ngIf="SelectedOutputType == 'Image' && outputboxresult != undefined"
+      >
+        <div class="col-md-12">
+          <a
+            [href]="Image"
+            download
+            data-placement="bottom"
+            tooltip="Download"
+            style="float: right; margin-bottom: 5px"
+          >
+            <img
+              src="../../../../assets/images/Projects/Download.svg"
+              class="testplus"
+            />
+          </a>
+          <!-- <button class="btn btn-primary eiap-btn" style="float: right" (click)="outputlayoutback()">
+                         <i class="fa fa-arrow-left" aria-hidden="true"></i> back
+                     </button> -->
+        </div>
+
+        <div class="col-md-12 text-center">
+          <img [src]="Image" style="filter: none; height: 400px" />
+        </div>
+      </div>
     </div>
+  </div>
 </ng-template>
 
 <div id="recordandplay" class="rpa-modal">
-    <div class="rpa-modal-content">
-        <div class="rpa-modal-header">
-            <span class="rpa-modal-close" (click)="close_record_play()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
-            <h4>Web Automation - Record and Play</h4>
+  <div class="rpa-modal-content">
+    <div class="rpa-modal-header">
+      <span class="rpa-modal-close" (click)="close_record_play()"
+        ><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""
+      /></span>
+      <h4>Web Automation - Record and Play</h4>
+    </div>
+    <div class="modal-body">
+      <div
+        class="container m-contanier form-body"
+        *ngIf="recordedcode == undefined"
+      >
+        <div class="col-md-12 p-0 form-group">
+          <label class="label-control">Url</label>
+          <input type="url" [(ngModel)]="rp_url" class="form-control" />
         </div>
-        <div class="modal-body">
-        
-            <div class="container m-contanier form-body" *ngIf="recordedcode==undefined">
-                <div class="col-md-12 p-0 form-group">
-                    <label class="label-control">Url</label>
-                    <input type='url' [(ngModel)]="rp_url" class="form-control">
-                </div>
-                <div class="col-md-12 p-0 form-group">
-                    <label class="label-control"></label>
-                    <textarea id="record_n_play" name='codeSnippet' [(ngModel)]="finalcode" class="form-control" rows="3"></textarea>
-                </div>
-            </div>
-            <div class="form-footer" style="right:0px;">
-                <button class='btn btn-default' [disabled]="rp_url == ''" (click)="recording('start')">Start Recording</button>
-                <button class='btn btn-primary' (click)="recording('stop')">Stop Recording</button>
-                <button class="btn btn-primary" (click)="submitcode()">Save code</button>
-            </div>
-        
-            <!--Added for record and playback-->
-            <!-- <div class="container" *ngIf="recordedcode==undefined">
+        <div class="col-md-12 p-0 form-group">
+          <label class="label-control"></label>
+          <textarea
+            id="record_n_play"
+            name="codeSnippet"
+            [(ngModel)]="finalcode"
+            class="form-control"
+            rows="3"
+          ></textarea>
+        </div>
+      </div>
+      <div class="form-footer" style="right: 0px">
+        <button
+          class="btn btn-default"
+          [disabled]="rp_url == ''"
+          (click)="recording('start')"
+        >
+          Start Recording
+        </button>
+        <button class="btn btn-primary" (click)="recording('stop')">
+          Stop Recording
+        </button>
+        <button class="btn btn-primary" (click)="submitcode()">
+          Save code
+        </button>
+      </div>
+
+      <!--Added for record and playback-->
+      <!-- <div class="container" *ngIf="recordedcode==undefined">
                 <br>
                 <b>Url</b>
                 <input type='url' [(ngModel)]="rp_url" class="form-control">
@@ -225,26 +450,115 @@
                 <button class="btn btn-primary" (click)="submitcode()">Save code</button>
 
             </div> -->
-        </div>
     </div>
+  </div>
 </div>
 
-
-
 <div id="createcredentials" class="rpa-modal">
-    <div class="rpa-modal-content">
-        <div class="rpa-modal-header">
-            <!-- <span class="rpa-modal-close" (click)="closecredentials()">&times;</span> -->
-            <div class="formelement">
-            <button (click)="back()" >
-                <i class="fa fa-arrow-left" aria-hidden="true"></i>
-                </button>
-                <span class="h4">Create Credentials</span>
-            </div>
+  <div class="rpa-modal-content">
+    <div class="rpa-modal-header">
+      <!-- <span class="rpa-modal-close" (click)="closecredentials()">&times;</span> -->
+      <div class="formelement">
+        <button (click)="back()">
+          <i class="fa fa-arrow-left" aria-hidden="true"></i>
+        </button>
+        <span class="h4">Create Credentials</span>
+      </div>
+    </div>
+
+    <div class="modal-body actions-mbody">
+      <form [formGroup]="insertForm" >
+        <!-- <div class="row"> -->
+        <div class="formelement">
+          <label for="userName">Email<span class="star">*</span></label>
+          <input
+            type="text"
+            maxlength="51"
+            class="form-control data"
+            formControlName="userName"
+            #userName
+            value=""
+            pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
+            placeholder="Enter Email"
+          />
+          <span
+            *ngIf="
+              insertForm.get('userName').invalid &&
+              insertForm.get('userName').touched &&
+              !insertForm.controls['userName'].hasError('pattern')
+            "
+            class="errspan required"
+            >Email Required*</span
+          >
+          <span
+            *ngIf="
+              (insertForm.controls['userName'].hasError('pattern') ||
+                insertForm.get('userName').hasError('required')) &&
+              !insertForm.get('userName').hasError('required')
+            "
+            class="errspan required"
+            >Enter valid email address</span
+          >
+          <div
+            *ngIf="insertForm.controls['userName'].hasError('maxlength')"
+            class="errspan required"
+          >
+            Maximum of 50 characters
+          </div>
+        </div>
+
+        <div class="formelement">
+          <label for="password">Password<span class="star">*</span></label>
+          <input
+            [type]="passwordtype1 ? 'text' : 'password'"
+            maxlength="51"
+            class="form-control"
+            formControlName="password"
+            value=""
+            placeholder="Enter Password"
+            passwordToggle
+          />
+          <span
+            *ngIf="passwordtype1 == false"
+            (click)="passwordtype1 = !passwordtype1"
+            class="pdicon"
+          >
+            <img
+              src="../../../../../assets/images/Projects/eye-show.svg"
+              class="credtestplus1"
+            />
+          </span>
+          <span
+            *ngIf="passwordtype1 == true"
+            (click)="passwordtype1 = !passwordtype1"
+            class="pdicon"
+          >
+            <img
+              src="../../../../../assets/images/Projects/eye-hide.svg"
+              class="credtestplus1"
+            />
+          </span>
+
+          <span
+            *ngIf="
+              insertForm.get('password').invalid &&
+              insertForm.get('password').touched &&
+              !insertForm.controls['password'].hasError('maxlength')
+            "
+            class="errspan required"
+          >
+            Password Required*</span
+          >
+          <div
+            *ngIf="insertForm.controls['password'].hasError('maxlength')"
+            class="errspan required"
+          >
+            Maximum of 50 characters
+          </div>
         </div>
         
         <div class="modal-body actions-mbody">
-            <form [formGroup]="insertForm" (ngSubmit)="savedata()">
+            <form [formGroup]="insertForm">
                 <!-- <div class="row"> -->
                     <div class="formelement">
                         <label for="userName">Email<span class="star">*</span></label>
@@ -266,103 +580,223 @@
                         <span *ngIf="passwordtype1==true" (click)="passwordtype1 =!passwordtype1"  class="pdicon">
                             <img src="../../../../../assets/images/Projects/eye-hide.svg"  class="credtestplus1">
                         </span>
+</div>
+        <div class="formelement">
+          <label class="label-control" for="categoryId"
+            >Category<span class="star">*</span></label
+          >
+          <select
+            type="text"
+            class="form-control"
+            formControlName="categoryId"
+            [value]="
+              categoryList.length == 1 ? categoryList[0].categoryId : '0'
+            "
+          >
+            <option value="0" disabled>Select Category</option>
+            <option
+              [value]="category.categoryId"
+              *ngFor="let category of categoryList"
+            >
+              {{ category.categoryName }}
+            </option>
+          </select>
+          <span
+            *ngIf="
+              insertForm.get('categoryId').invalid &&
+              insertForm.get('categoryId').touched
+            "
+            class="errspan required"
+            >Category Required*</span
+          >
+        </div>
 
-                        <span *ngIf="(insertForm.get('password').invalid && insertForm.get('password').touched) && !insertForm.controls['password'].hasError('maxlength')"  class="errspan required"> Password Required*</span>
-                        <div *ngIf="insertForm.controls['password'].hasError('maxlength')"  class="errspan required">
-                            Maximum of 50 characters
-                        </div> 
-                    </div>
-                    
-                    <div class="formelement">
-                        <label class="label-control" for="categoryId">Category<span class="star">*</span></label>
-                        <select type="text" class="form-control" formControlName="categoryId"  [value]="categoryList.length==1?categoryList[0].categoryId:'0'">
-                            <option value="0" disabled>Select Category</option>
-                            <option [value]="category.categoryId" *ngFor="let category of categoryList">{{category.categoryName}}</option>
-                        </select>   
-                            <span *ngIf="(insertForm.get('categoryId').invalid && insertForm.get('categoryId').touched)"  class="errspan required">Category Required*</span>
-                    </div>
+        <div class="formelement">
+          <label for="serverName">Mail Server<span class="star">*</span></label>
+          <select class="form-control" formControlName="serverName">
+            <option value="" [selected]="true">--Select Mail Server--</option>
+            <option value="Office365">Office365</option>
+            <option value="G-mail">G-mail</option>
+          </select>
+          <span
+            *ngIf="
+              insertForm.get('serverName').invalid &&
+              insertForm.get('serverName').touched
+            "
+            class="errspan required"
+          >
+            Server Type Required*</span
+          >
+        </div>
 
-                    <div class=" formelement">
-                        <label for="serverName">Mail Server<span class="star">*</span></label>
-                        <select class="form-control" formControlName="serverName">
-                            <option value="" [selected]="true">--Select Mail Server--</option>
-                            <option value="Office365">Office365</option>
-                            <option value="G-mail">G-mail</option>            
-                            </select>
-                        <span *ngIf="insertForm.get('serverName').invalid && insertForm.get('serverName').touched"  class="errspan required"> Server Type Required*</span>
-                    </div>
-
-                    <div class=" formelement">
-                        <label for="inBoundAddress">In Bound Address<span class="star">*</span></label>
-                        <input type="text" maxlength="51" class="form-control data" formControlName="inBoundAddress" #inBoundAddress value="" placeholder="Enter In Bound Address">
-                        <span *ngIf="(insertForm.get('inBoundAddress').invalid && insertForm.get('inBoundAddress').touched) && !insertForm.controls['inBoundAddress'].hasError('maxlength')"  class="errspan required">In Bound Address is required*</span>
-                        <div *ngIf="insertForm.controls['inBoundAddress'].hasError('maxlength')"  class="errspan required">
-                            Maximum of 50 characters
-                        </div>
-                    </div>
-                <!-- </div> 
+        <div class="formelement">
+          <label for="inBoundAddress"
+            >In Bound Address<span class="star">*</span></label
+          >
+          <input
+            type="text"
+            maxlength="51"
+            class="form-control data"
+            formControlName="inBoundAddress"
+            #inBoundAddress
+            value=""
+            placeholder="Enter In Bound Address"
+          />
+          <span
+            *ngIf="
+              insertForm.get('inBoundAddress').invalid &&
+              insertForm.get('inBoundAddress').touched &&
+              !insertForm.controls['inBoundAddress'].hasError('maxlength')
+            "
+            class="errspan required"
+            >In Bound Address is required*</span
+          >
+          <div
+            *ngIf="insertForm.controls['inBoundAddress'].hasError('maxlength')"
+            class="errspan required"
+          >
+            Maximum of 50 characters
+          </div>
+        </div>
+        <!-- </div> 
 
                 <div class="row"> -->
-                    <div class=" formelement">
-                        <label for="inBoundAddressPort">In Bound Address Port<span class="star">*</span></label>
-                        <input type="text" (keydown)="inputNumberOnly($event)" maxlength="6" class="form-control data" formControlName="inBoundAddressPort" #inBoundAddressPort value="" placeholder="Enter In Bound Address Port">
-                        <span *ngIf="(insertForm.get('inBoundAddressPort').invalid && insertForm.get('inBoundAddressPort').touched) && !insertForm.controls['inBoundAddressPort'].hasError('maxlength')"  class="errspan required">In Bound Address Port is required*</span>
-                        <div *ngIf="insertForm.controls['inBoundAddressPort'].hasError('maxlength')"  class="errspan required">
-                            Maximum of 50 characters
-                        </div>
-                    </div>
+        <div class="formelement">
+          <label for="inBoundAddressPort"
+            >In Bound Address Port<span class="star">*</span></label
+          >
+          <input
+            type="text"
+            (keydown)="inputNumberOnly($event)"
+            maxlength="6"
+            class="form-control data"
+            formControlName="inBoundAddressPort"
+            #inBoundAddressPort
+            value=""
+            placeholder="Enter In Bound Address Port"
+          />
+          <span
+            *ngIf="
+              insertForm.get('inBoundAddressPort').invalid &&
+              insertForm.get('inBoundAddressPort').touched &&
+              !insertForm.controls['inBoundAddressPort'].hasError('maxlength')
+            "
+            class="errspan required"
+            >In Bound Address Port is required*</span
+          >
+          <div
+            *ngIf="
+              insertForm.controls['inBoundAddressPort'].hasError('maxlength')
+            "
+            class="errspan required"
+          >
+            Maximum of 50 characters
+          </div>
+        </div>
 
-                    <div class=" formelement">
-                        <label for="outBoundAddress">Out Bound Address<span class="star">*</span></label>
-                        <input type="text" maxlength="51" class="form-control data" formControlName="outBoundAddress" #outBoundAddress value="" placeholder="Enter Out Bound Address">
-                        <span *ngIf="(insertForm.get('outBoundAddress').invalid && insertForm.get('outBoundAddress').touched) && !insertForm.controls['outBoundAddress'].hasError('maxlength')"  class="errspan required">Out Bound Address is required*</span>
-                        <div *ngIf="insertForm.controls['outBoundAddress'].hasError('maxlength')"  class="errspan required">
-                            Maximum of 50 characters
-                        </div>
-                    </div>
+        <div class="formelement">
+          <label for="outBoundAddress"
+            >Out Bound Address<span class="star">*</span></label
+          >
+          <input
+            type="text"
+            maxlength="51"
+            class="form-control data"
+            formControlName="outBoundAddress"
+            #outBoundAddress
+            value=""
+            placeholder="Enter Out Bound Address"
+          />
+          <span
+            *ngIf="
+              insertForm.get('outBoundAddress').invalid &&
+              insertForm.get('outBoundAddress').touched &&
+              !insertForm.controls['outBoundAddress'].hasError('maxlength')
+            "
+            class="errspan required"
+            >Out Bound Address is required*</span
+          >
+          <div
+            *ngIf="insertForm.controls['outBoundAddress'].hasError('maxlength')"
+            class="errspan required"
+          >
+            Maximum of 50 characters
+          </div>
+        </div>
 
-                    <div class=" formelement">
-                        <label for="outboundAddressPort">Out Bound Address Port<span class="star">*</span></label>
-                        <input type="text" (keydown)="inputNumberOnly($event)" maxlength="6" class="form-control data" formControlName="outboundAddressPort" #outboundAddressPort value="" placeholder="Enter Out Bound Address Port">
-                        <span *ngIf="(insertForm.get('outboundAddressPort').invalid && insertForm.get('outboundAddressPort').touched) && !insertForm.controls['outboundAddressPort'].hasError('maxlength')"  class="errspan required">Out Bound Address Port is required*</span>
-                        <div *ngIf="insertForm.controls['outboundAddressPort'].hasError('maxlength')"  class="errspan required">
-                            Maximum of 50 characters
-                        </div>
-                    </div>
+        <div class="formelement">
+          <label for="outboundAddressPort"
+            >Out Bound Address Port<span class="star">*</span></label
+          >
+          <input
+            type="text"
+            (keydown)="inputNumberOnly($event)"
+            maxlength="6"
+            class="form-control data"
+            formControlName="outboundAddressPort"
+            #outboundAddressPort
+            value=""
+            placeholder="Enter Out Bound Address Port"
+          />
+          <span
+            *ngIf="
+              insertForm.get('outboundAddressPort').invalid &&
+              insertForm.get('outboundAddressPort').touched &&
+              !insertForm.controls['outboundAddressPort'].hasError('maxlength')
+            "
+            class="errspan required"
+            >Out Bound Address Port is required*</span
+          >
+          <div
+            *ngIf="
+              insertForm.controls['outboundAddressPort'].hasError('maxlength')
+            "
+            class="errspan required"
+          >
+            Maximum of 50 characters
+          </div>
+        </div>
 
                     
                     <div class=" formelement">
-                        <input type="button" class="btn btn-primary" value="Save" (click)="saveCredentials()" [disabled]="insertForm.invalid || submitted">
+                        <input type="button" class="btn btn-primary" value="Save" (click)="saveCredentials()" [disabled]="insertForm.invalid">
                         &nbsp;&nbsp;
                         <input type="button" class="btn btn-primary" value="Reset"  (click)="resetCredForm()">
                     </div>
-                
-                
-            </form>
-        </div>
+                    </form>
+                    </div>
+                    
+      </form>
     </div>
+  </div>
 </div>
 
-
-
-
-<div id='sch' class="rpa-modal schedulemod">
-    <div class="rpa-modal-content">
-        <div class="rpa-modal-header">
-            <span class="rpa-modal-close" (click)="closeScheduler()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
-            <h4>Scheduler</h4>
-        </div>
-        <div *ngIf="scheduleOverlayFlag" class="modal-body actions-mbody">
-            <app-rpa-scheduler [data]="schedulerComponentInput"></app-rpa-scheduler>
-        </div>
+<div id="sch" class="rpa-modal schedulemod">
+  <div class="rpa-modal-content">
+    <div class="rpa-modal-header">
+      <span class="rpa-modal-close" (click)="closeScheduler()"
+        ><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""
+      /></span>
+      <h4>Scheduler</h4>
     </div>
+    <div *ngIf="scheduleOverlayFlag" class="modal-body actions-mbody">
+      <app-rpa-scheduler [data]="schedulerComponentInput"></app-rpa-scheduler>
+    </div>
+  </div>
 </div>
-      
-      
 
 <ng-template #logspopup>
-    <div ngb-modal-draggable [ngbModalDraggableHandle]="draggableHandle" class="cursor-all-scroll">
-        <app-rpa-so-logs (close)="closeLogsOverlay()" [logsbotid]="finalbot.botId" [logsmodalref]="logsOverlayRef"
-            [AllVersionsList]="VersionsList" [selectedversion]="finalbot.version"></app-rpa-so-logs>
-    </div>
+  <div
+    ngb-modal-draggable
+    [ngbModalDraggableHandle]="draggableHandle"
+    class="cursor-all-scroll"
+  >
+    <app-rpa-so-logs
+      (close)="closeLogsOverlay()"
+      [logsbotid]="finalbot.botId"
+      [logsmodalref]="logsOverlayRef"
+      [AllVersionsList]="VersionsList"
+      [selectedversion]="finalbot.version"
+    ></app-rpa-so-logs>
+  </div>
 </ng-template>

@@ -488,6 +488,7 @@ export class RpaHomeComponent implements OnInit {
 
 
   botFormOutput(botOutput: any) {
+    
     if (botOutput != null)
       if (botOutput.case == 'create')
         this.router.navigate(["/pages/rpautomation/designer"], { queryParams: { botId: botOutput.botId } });
@@ -531,6 +532,10 @@ export class RpaHomeComponent implements OnInit {
   closeFormOverlay(event){
   if(event)
   this.isCreateForm=true;
+  }
+
+  loopTrackBy(index, term) {
+    return index;
   }
 
 }

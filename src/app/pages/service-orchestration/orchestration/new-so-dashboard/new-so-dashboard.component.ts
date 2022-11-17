@@ -71,9 +71,7 @@ export class NewSoDashboardComponent implements OnInit {
       // this.chart2();
       this.spinner.hide();
     },500)
-    ////console.log('test');
     // this.dt.current_tab.subscribe(res=>{
-    //   ////console.log(res);
     //   if(res=='Dashboard'){
     //     $('.dashboardchart_shownnxt').hide();
     // $('.dashboardchart_show').show();
@@ -128,7 +126,6 @@ export class NewSoDashboardComponent implements OnInit {
   getincindents()
   {
     this.rest.getincidenttickets().subscribe(incidents=>{
-      //console.log(incidents);
     })
   }
   getdepartments()
@@ -156,7 +153,6 @@ export class NewSoDashboardComponent implements OnInit {
         country:item.categoryName.charAt(0).toUpperCase()+ item.categoryName.slice(1),
         research:this.processnames.filter(item2=>item2.categoryId==item.categoryId && item2.status=="APPROVED").length
       })
-      //console.log(this.processnames.filter(item2=>item2.categoryId==item.categoryId && item2.status=="APPROVED"))
     })
     this.loadChart1(processgroup)
     let botscount:any=[];
@@ -240,7 +236,7 @@ export class NewSoDashboardComponent implements OnInit {
               })
             })
 
-           //console.log(selectedprocesses)
+           
             this.processtable=[];
             this.processtableflag=true;
             this.taskstableflag=false;
@@ -317,7 +313,6 @@ export class NewSoDashboardComponent implements OnInit {
         ev => {
         let a = ev.target;
     var idOfPie = ev.target._dataItem.dataContext["botname"];
-   //console.log(idOfPie);
     this.processtableflag=false;
     this.taskstableflag=true
     this.tasksTable=this.automatedtasks.filter(item2=>item2.processName==idOfPie)
@@ -325,7 +320,6 @@ export class NewSoDashboardComponent implements OnInit {
     this.processCount.bots=this.tasksTable.filter(item=>item.taskType=="Automated").length;
     
     this.processCount.human=this.tasksTable.filter(item=>item.taskType=="Human").length;
-   //console.log(this.tasksTable)
 
 
      },

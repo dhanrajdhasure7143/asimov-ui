@@ -395,7 +395,6 @@ this.dt.bpsHeaderValues('');
           "version": bpmNotation.version
         }
         this.rest.deleteBPMNProcess(data).subscribe(res => {
-          // console.log(res)
           this.isLoading = false;
           if(res == "It is an ongoing project.Please contact Project Owner(s)"){
             Swal.fire({

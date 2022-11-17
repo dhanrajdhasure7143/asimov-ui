@@ -23,7 +23,7 @@ export class SidebarComponent implements OnInit {
   plansList: any;
   expiry: any;
   showProjectsSubmenu: boolean = false;
-  constructor(private obj:PagesComponent, private dt:DataTransferService,
+  constructor(public obj:PagesComponent, private dt:DataTransferService,
     private rest_service: RestApiService) { }
 
   ngOnInit() {
@@ -112,7 +112,6 @@ export class SidebarComponent implements OnInit {
 getexpiryInfo(){
   this.rest_service.expiryInfo().subscribe(data => {
     this.expiry = data.Expiresin;
-    console.log("left over days ----",this.expiry)
 
   })
 }

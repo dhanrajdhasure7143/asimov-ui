@@ -520,7 +520,7 @@ removeallchecks()
    
   }
   this.checkflag=false;
-  //console.log(this.environments);
+  
 }
 
 }
@@ -534,7 +534,7 @@ export class ipcustompipecreation implements PipeTransform {
     public str1: any;
     public str2: any;
     public hostadd:any=[];
-    transform(value: any, arg: any): any {
+    transform(value: any): any {
     var ip = value;
     this.str ='';
     this.str1 ='';

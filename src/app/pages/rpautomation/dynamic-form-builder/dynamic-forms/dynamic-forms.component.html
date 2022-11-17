@@ -12,7 +12,8 @@
                 </div>
 
             <div class="col-md-12 p-0 tablmacl" *ngIf="isMultiForm==true" #scrollContainer>
-                <div class="table-responsive overaly-innertable">
+                <!-- <div class="table-responsive overaly-innertable"> -->
+                <div class="overaly-innertable">
                     <table class="table">
                         <thead>
                             <tr>
@@ -53,7 +54,7 @@
                 </div>
             </div>
         </div>
-        <div class="form-footer" *ngIf="!feilddisable">
+        <div class="form-footer">
           <button *ngIf="isdisabled==null && isMultiForm==false" type="submit" (click)="onSub()" [disabled]="!form.valid" class="btn btn-primary">Save</button>
           <button *ngIf="isdisabled==true" type="submit" (click)="onSub()" [disabled]="true" class="btn btn-primary">Save</button>
           <button *ngIf="isdisabled==null &&  isMultiForm==true" type="submit" (click)="onSub()" [disabled]="fillarray.length==0 || !(otherAttributesForm.valid)"   class="btn btn-primary">Save</button>

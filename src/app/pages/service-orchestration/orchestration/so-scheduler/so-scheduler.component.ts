@@ -130,7 +130,6 @@ export class SoSchedulerComponent implements OnInit {
       firstchar2=firstchar[1]
     }
     this.todaytime=firstchar1+ ":" +firstchar2
-    console.log("todaytime",this.todaytime)
     this.getAlltimezones();
   }
 
@@ -221,12 +220,8 @@ export class SoSchedulerComponent implements OnInit {
        let startdate=this.startdate.split("-");
        let enddate=this.enddate.split("-");
         let data:any;
-      // console.log("-----------------check------------",this.startdate);
-      // console.log("----------------check-----------------",this.enddate);
       // this.startdate= new Date(Date.parse(this.startdate));
       // this.enddate=new Date(Date.parse(this.enddate));
-      // console.log("-----------------check------------",this.startdate);
-      // console.log("----------------check-----------------",this.enddate);
       if(this.botid!="" && this.botid!=undefined)
       {
         data={
@@ -310,7 +305,6 @@ export class SoSchedulerComponent implements OnInit {
         "scheduleInterval":checked_schedule.scheduleInterval,
         "intervalId":checked_schedule.intervalId,
       }
-      console.log("schedule",schedule)
       this.rest.start_schedule(schedule).subscribe(data=>{
         let resp:any=data
         if(resp.errorMessage!=undefined)
@@ -721,7 +715,6 @@ export class SoSchedulerComponent implements OnInit {
           
            let e=(c.isBefore(d))
           let starttime_error=(c.isBefore(currenttime))
-           console.log(e)
            if(e==false ){
              this.aftertime=true;
              this.endtimeerror="end time should not be before than or equal to start time"
@@ -902,7 +895,6 @@ export class SoSchedulerComponent implements OnInit {
   }
   getAlltimezones(){
     this.rest.getTimeZone().subscribe(res =>{
-      console.log(res);
         this.timesZones=res;
      })
   }

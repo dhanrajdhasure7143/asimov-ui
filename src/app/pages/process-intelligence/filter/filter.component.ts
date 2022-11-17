@@ -1128,7 +1128,6 @@ export class FilterComponent implements OnInit {
     this.perfrmanceFilterKeyValuepair.filter(res => {
       this.single.push({ name: res.duration, value: res.caseCount })
     });
-    // console.log(this.single)
 
     this.options1 = {
 

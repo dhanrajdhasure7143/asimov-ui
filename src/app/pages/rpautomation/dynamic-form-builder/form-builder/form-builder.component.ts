@@ -87,7 +87,6 @@ export class FormBuilderComponent implements OnInit {
       }
   }
   getfields(event){
-     console.log("event",event)
   }
 }
 
