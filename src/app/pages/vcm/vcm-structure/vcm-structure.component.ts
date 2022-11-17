@@ -905,12 +905,10 @@ export class VcmStructureComponent implements OnInit {
   }
 
   downloadAttachement(ele){
-    console.log(ele)
     this.isLoading=true;
     let res_data:any;
     let request= {"masterId":this.vcm_data.data.id,"documentId": ele.uniqueId}
     this.rest_api.getAttachementsById(request).subscribe(res=>{res_data=res
-      console.log(res)
     this.isLoading= false;
       let response:any=res_data.data.filedata
     var link = document.createElement('a');

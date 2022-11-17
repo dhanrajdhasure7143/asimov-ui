@@ -359,6 +359,10 @@ button:disabled {
   background-color: #f99d1c;
 }
 
+.bg-white{
+  background-color: white;
+}
+
 .invisible {
   visibility: hidden;
 }

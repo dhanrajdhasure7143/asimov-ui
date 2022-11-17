@@ -3,6 +3,7 @@ import { Component, EventEmitter, Inject, Input, OnInit, Output, TemplateRef, Vi
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatTableDataSource, MatPaginator, MatSort, PageEvent, Sort } from '@angular/material';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Base64 } from 'js-base64';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
 import Swal from 'sweetalert2';
@@ -22,6 +23,7 @@ export class RpaBotFormComponent implements OnInit {
   @Output() closeFormOverlay = new EventEmitter<any>();
   botForm:FormGroup;
   botNameCheck:any;
+  checkBotCategory:boolean=false;
   constructor( 
     private formBuilder:FormBuilder,
     private rest:RestApiService,
@@ -118,5 +120,24 @@ export class RpaBotFormComponent implements OnInit {
     document.getElementById('bot-form').style.display = 'none';
     this.closeFormOverlay.emit(true);
     this.botNameCheck = false;
+  }
+  
+
+  skipSaveBot()
+  {
+
+    let botDetails:any=this.botForm.value;
+    if(botDetails.department!='' && botDetails.department!=null )
+    {
+      if(botDetails.botName=='')
+      {
+        botDetails.botName="TEMPRORY-BOT-"+((new Date()).getTime());
+        console.log(botDetails);
+        this.event.emit({botId:Base64.encode(JSON.stringify(botDetails)),case:"create"});
+      }
+    }
+    else{
+      this.checkBotCategory=true;
+    }
   }
 }

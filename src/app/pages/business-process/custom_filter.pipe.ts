@@ -19,7 +19,6 @@ transform(items, term) {
                 continue;
             }
             if (typeof item[property] === 'object') {
-                // console.log(item[property]);
                 return false;
                 // if (checkInside(item[property], term)) {
                 //     return false;

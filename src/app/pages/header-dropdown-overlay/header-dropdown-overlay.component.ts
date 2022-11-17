@@ -99,7 +99,6 @@ close(){
        deleteNotification(data,index){
        
         this.rpa.deleteNotification(data).subscribe(resp=>{
-          // console.log(resp)
        this.getAllNotifications();
            this.notifier.show({
           type: "success",

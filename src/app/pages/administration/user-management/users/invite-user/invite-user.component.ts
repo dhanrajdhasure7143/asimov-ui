@@ -122,7 +122,6 @@ form.form.markAsUntouched();
   }
    
    var domianArr = this.inviteeMail.split('@');
-   console.log(domianArr[1]);
    this.api.getWhiteListedDomain(domianArr[1].toLowerCase()).subscribe(res => {
      if(res.Message && res.Message === "White listed domain.. Please proceed with invite"){
       this.api.inviteUserwithoutReg(body).subscribe(resp => {
@@ -159,7 +158,6 @@ form.form.markAsUntouched();
   }
 
   onchangeRole(value){
-    console.log(value)
     this.departments=[];
     if(value== '8'){
       this.categories.forEach(element => {

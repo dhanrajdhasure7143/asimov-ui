@@ -16,7 +16,12 @@
               "/*.css",
               "/*.js",
               "!/*-es5*.js",
-              "/enjoyhint/**"
+              "/enjoyhint/**",
+              "/assets/images/**",
+              "/assets/images/BPMS/**",
+              "/assets/images/PI/**",
+              "/assets/images/icons/**",
+              "!/assets/images/favicons/**"
           ],
           "urls": [ ]
       }
