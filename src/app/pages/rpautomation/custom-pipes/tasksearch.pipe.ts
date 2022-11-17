@@ -20,7 +20,6 @@ export class TasksearchPipe implements PipeTransform {
                 finalnode.expanded=true;
                 return finalnode
             })
-            //console.log(finaltask)
           }
         })
       })

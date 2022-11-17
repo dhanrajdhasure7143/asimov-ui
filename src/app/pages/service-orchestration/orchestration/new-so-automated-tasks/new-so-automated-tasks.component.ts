@@ -267,11 +267,9 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
   //       }
   //       else if(data.sourceType == 'UIPath')
   //        {
-  //          console.log("uiapath_bots",data.sourceType);
   //            this.uipath_bots.filter(x =>
   //             {
   //             if(x.Key == slaconId){
-  //             console.log(x.ProcessKey);
   //             this.insertslaForm.get("botName").setValue(x.ProcessKey);
   //             }
   //           });
@@ -454,7 +452,6 @@ cascadingImp(){
 //     thresholdLimit : parseInt(this.insertslaForm.value.thresholdLimit),
 //     totalRetries : parseInt(this.insertslaForm.value.totalRetries),
 //   };
-//   console.log(slaalertsc);
 //    this.rest.slaconfigapi(slaalertsc).subscribe( res =>
 //     {
 //       Swal.fire({

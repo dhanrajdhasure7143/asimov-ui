@@ -31,7 +31,6 @@ export class AppComponent {
       if(localStorage.getItem("accessToken") != null){
         this.apiservice.getNewAccessToken().subscribe(resp=>{
           this.newAccessToken=resp;
-          // console.log("token",this.newAccessToken.accessToken)
           localStorage.setItem('accessToken', this.newAccessToken.accessToken);
       });
       }

@@ -479,7 +479,6 @@ export class VcmFullEditComponent implements OnInit {
 
   updateVcm(){
     let req_body=this.getreqBody();
-    console.log(req_body)
     this.isLoading=true;
     this.rest_api.updateVcm(req_body).subscribe(res=>{
     this.isLoading=false;
@@ -787,7 +786,6 @@ export class VcmFullEditComponent implements OnInit {
 
   saveVCMForBpmn(e) {
     this.randomId = UUID.UUID();
-    console.log(this.selectedNode)
     if(this.selectedNode.level == "L2"){
     this.vcmProcess.filter((e) => e.title === this.selectedNode.parent)[0].children
       .filter(n => n.uniqueId === this.selectedNode.level1UniqueId)[0].children.
@@ -829,7 +827,6 @@ export class VcmFullEditComponent implements OnInit {
         );
       }
     let req_body = this.getreqBody();
-    console.log(req_body);
     this.isLoading = true;
     this.rest_api.updateVcm(req_body).subscribe(res => {
       this.uploadCreateBpmn(e)
@@ -909,7 +906,6 @@ export class VcmFullEditComponent implements OnInit {
   }
 
   cancelCreateProcess(){
-    console.log("cancel")
     this.inputUniqueId=null;
   }
   

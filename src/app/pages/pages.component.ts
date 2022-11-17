@@ -73,7 +73,6 @@ export class PagesComponent{
     }
   }
   // sidenavEvents(str) {
-  //   console.log(str);
   // }
 
 }

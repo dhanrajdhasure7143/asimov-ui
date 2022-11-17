@@ -35,7 +35,6 @@ export class OrderDetailsComponent implements OnInit {
 
   subscriptiondata(data, index) {
     this.subscribeddata = data;
-   // console.log(this.subscribeddata)
     this.modalRef = this.modalservice.show(this.subscriptiontemplate, { class: 'gray modal-lg' });
     if(this.subscribeddata.subscriptionId==null||this.subscribeddata.subscriptionId==undefined){
       this.subscribeddata.subscriptionId="--"
@@ -54,7 +53,6 @@ export class OrderDetailsComponent implements OnInit {
 });
 }
   infoModelSubmit(data) {
-   // console.log("data",data)
     localStorage.setItem("selectedproductId",data.name)
     this.modalRef.hide();
   //  this.router.navigate(['/activation/payment/chooseplan']);
