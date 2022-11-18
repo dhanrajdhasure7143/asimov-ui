@@ -35,7 +35,7 @@ export const environment = {
   camunda_url : "https://ezworkflow.dev.epsoftinc.com",
 
   // PI Connectors
-   connector_topic: 'nodeDEV',
+   connector_topic: 'nodeDev',
 
   //DB Connector
    dbConnectorHost: "pgpooldev",
