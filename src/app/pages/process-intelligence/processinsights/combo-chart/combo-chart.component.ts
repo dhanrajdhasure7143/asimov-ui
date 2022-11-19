@@ -29,6 +29,13 @@ import {
   @Component({
     selector: 'combo-chart-component',
     template: `
+    <xhtml:ng-template #tooltipTemplate let-model="model">
+    <div class="combo-chart-tooltip-name">{{ model[0].name}}</div>
+    <table>
+      <tr><td class="combo-chart-tooltip-font">{{model[0].series}}&nbsp;</td><td  class="combo-chart-tooltip-font">:&nbsp;{{model[0].value}}</td></tr>
+      <tr><td class="combo-chart-tooltip-font">{{model[1].series}}&nbsp;</td><td  class="combo-chart-tooltip-font">:&nbsp;{{model[1].value}}</td></tr>
+    </table>
+  </xhtml:ng-template>
       <ngx-charts-chart
         [view]="[width + legendSpacing, height]"
         [showLegend]="legend"
@@ -131,6 +138,7 @@ import {
                 [scaleType]="scaleType"
                 [visibleValue]="hoveredVertical"
                 [activeEntries]="activeEntries"
+                [tooltipTemplate]="tooltipTemplate"
                 [tooltipDisabled]="tooltipDisabled"
                 (select)="onClick($event)"
                 (activate)="onActivate($event)"
@@ -162,7 +170,7 @@ import {
     @Input() showGridLines: boolean = true;
     @Input() activeEntries: any[] = [];
     @Input() schemeType: string;
-    @Input() xAxisTickFormatting: any;
+    // @Input() xAxisTickFormatting: any;
     @Input() yAxisTickFormatting: any;
     @Input() yRightAxisTickFormatting: any;
     @Input() roundDomains: boolean = false;
@@ -522,5 +530,13 @@ import {
       this.activeEntries = [...this.activeEntries];
   
       this.deactivate.emit({ value: item, entries: this.activeEntries });
+    }
+
+    xAxisTickFormatting(value) {     
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+      if(value && value.length > 13){
+        return value.substr(0,8)+'..';
+      }
+      return value;
     }
   }

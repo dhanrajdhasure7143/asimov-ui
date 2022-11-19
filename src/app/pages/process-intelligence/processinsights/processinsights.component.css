@@ -532,3 +532,7 @@ img.hover-img {
   display: inline-block;
   overflow: hidden auto;
 }
+
+.box_shade div#scatter ::ng-deep .tick text {
+  transform: rotate(-30deg);
+}
