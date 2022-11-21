@@ -581,8 +581,8 @@ export class UploadComponent implements OnInit {
   }
 
   changeType(){
-    this.dbDetails.portNumber="5432"
-    this.dbDetails.dbName=this.config.dbName // eiap_qa - QA
+    this.dbDetails.portNumber=this.config.dbPort
+    this.dbDetails.dbName=this.config.dbName
   }
 
   onChangeMode(value){
