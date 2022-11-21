@@ -20,6 +20,16 @@
     width: 12.074%;
 }
 
+
 .cursor {
-   cursor: grabbing;
-  }
+    cursor: move; /* fallback if grab cursor is unsupported */
+    cursor: grab;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+}
+ /* (Optional) Apply a "closed-hand" cursor during drag operation. */
+.cursor:active {
+    cursor: grabbing;
+    cursor: -moz-grabbing;
+    cursor: -webkit-grabbing;
+}
