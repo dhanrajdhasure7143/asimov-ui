@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import * as XLSX from 'xlsx';
 import { NgxXml2jsonService } from 'ngx-xml2json';
-
 import { DataTransferService } from "../../services/data-transfer.service";
 import { RestApiService } from '../../services/rest-api.service';
 import { GlobalScript } from '../../../shared/global-script';
@@ -14,12 +13,12 @@ import { DataTableDirective } from 'angular-datatables';
 import * as moment from 'moment';
 import { NotifierService } from 'angular-notifier';
 import { APP_CONFIG } from 'src/app/app.config';
-import { NgxSpinnerService } from "ngx-spinner";
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
 import { NgForm } from '@angular/forms';
+import { LoaderService } from 'src/app/services/loader/loader.service';
 
 declare var target: any;
 @Component({
@@ -92,7 +91,7 @@ export class UploadComponent implements OnInit {
     private hints: PiHints,
     private ngxXml2jsonService: NgxXml2jsonService,
     private notifier:NotifierService,
-    private spinner:NgxSpinnerService,
+    private loader: LoaderService,
     @Inject(APP_CONFIG) private config) {  }
 
   ngOnInit() {
@@ -156,7 +155,7 @@ export class UploadComponent implements OnInit {
             heightAuto: false
           })
         } else {
-          this.isLoading = true;
+          this.loader.show();
           this.selectedFile = <File>event.addedFiles[0];
           const fd = new FormData();
           fd.append('file', this.selectedFile),
@@ -166,7 +165,7 @@ export class UploadComponent implements OnInit {
               let fileName = this.filedetails.data.split(':');
               this.rest.fileName.next(fileName[1]);
               this.onSelect(event, id)
-              this.isLoading = false;
+              this.loader.hide();
             }, err => {
               Swal.fire({
                 title: 'Error',
@@ -174,7 +173,7 @@ export class UploadComponent implements OnInit {
                 icon: 'error',
                 heightAuto: false,
               })
-              this.isLoading = false;
+              this.loader.hide();
             });
         }
       }
@@ -187,7 +186,7 @@ export class UploadComponent implements OnInit {
           heightAuto: false
         })
       } else {
-        this.isLoading = true;
+        this.loader.show();
         this.selectedFile = <File>event.addedFiles[0];
         const fd = new FormData();
         fd.append('file', this.selectedFile),
@@ -197,7 +196,7 @@ export class UploadComponent implements OnInit {
             let fileName = this.filedetails.data.split(':');
             this.rest.fileName.next(fileName[1]);
             this.onSelect(event, id)
-            this.isLoading = false;
+            this.loader.hide();
           }, err => {
             Swal.fire({
               title: 'Error',
@@ -205,7 +204,7 @@ export class UploadComponent implements OnInit {
               icon: 'error',
               heightAuto: false,
             })
-            this.isLoading = false;
+            this.loader.hide();
           });
       }
     }
@@ -486,7 +485,7 @@ export class UploadComponent implements OnInit {
   }
 
   getAlluserProcessPiIds() {        // get user process ids list on workspace
-    this.isLoading=true;
+    this.loader.show();
     this.dt.processDetailsUpdateSuccess({"isRfresh":false});
     this.rest.getAlluserProcessPiIds().subscribe(data => {
     this.process_List = data
@@ -502,7 +501,7 @@ export class UploadComponent implements OnInit {
       this.dataSource= new MatTableDataSource(this.process_graph_list);
       this.dataSource.sort=this.sort;
       this.dataSource.paginator=this.paginator;
-      this.isLoading=false;
+      this.loader.hide();
       this.getAllCategories();
     })
   }
@@ -606,7 +605,7 @@ export class UploadComponent implements OnInit {
 
 testDbConnection(){     // check DB connection with port id and psw
   this.processId = Math.floor(100000 + Math.random() * 900000);
-  this.isLoading=true;
+  this.loader.show();
     let modekey
     let modekey1
     let connectorBody:any= {}
@@ -668,7 +667,7 @@ testDbConnection(){     // check DB connection with port id and psw
         connectorBody[modekey]=this.dbDetails.timestamp
       }
     this.rest.getJDBCConnectorConfig(connectorBody).subscribe(res => {this.connectionResp=res
-        this.isLoading=false;
+        this.loader.hide();
         if(this.connectionResp.data.length==0){
           this.isDisabled = false;
             this.notifier.show({
@@ -676,7 +675,7 @@ testDbConnection(){     // check DB connection with port id and psw
               message: "Connected Successfully."
               });
           }else{
-            this.isLoading=false;
+            this.loader.hide();
             this.notifier.show({
               type: 'error',
               message: "Error"+this.connectionResp.data[0].errors
@@ -803,7 +802,7 @@ testDbConnection(){     // check DB connection with port id and psw
   }
   
 getDBTables(){      //get DB tables list
-  this.isLoading=true;
+  this.loader.show();
   var reqObj =  {
       "dbType": this.dbDetails.dbType,
       "password": this.dbDetails.password,
@@ -821,7 +820,7 @@ getDBTables(){      //get DB tables list
         });
         this.tableList = [...new Set(this.tableList)];
       }
-      this.isLoading=false;
+      this.loader.hide();
     },
     (err=>{
       this.isTableEnable=false;
@@ -830,7 +829,7 @@ getDBTables(){      //get DB tables list
           type: 'error',
           message: err.error.message
         });
-        this.isLoading=false;
+        this.loader.hide();
     }))
 }
 
@@ -923,7 +922,7 @@ getDBTables(){      //get DB tables list
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.value) {
-        this.isLoading=true;
+        this.loader.show();
         this.rest.deleteSelectedProcessID(req_body).subscribe(res=>{
           let status:any = res;
           Swal.fire({
@@ -937,7 +936,7 @@ getDBTables(){      //get DB tables list
             cancelButtonColor: '#d33',
             confirmButtonText: 'Ok'
           })
-          this.isLoading=false;
+          this.loader.hide();
           this.getAlluserProcessPiIds();
           },err => {
             Swal.fire({
@@ -946,7 +945,7 @@ getDBTables(){      //get DB tables list
               text: 'Something went wrong!',
               heightAuto: false,
             })
-            this.spinner.hide();          
+            this.loader.hide();         
           })
       }
     });
@@ -978,7 +977,7 @@ getDBTables(){      //get DB tables list
         let req_body={
           "piId":id
         }
-        this.isLoading=true;
+        this.loader.show();
         this.rest.deleteSelectedProcessID(req_body).subscribe(res=>{
           this.getAlluserProcessPiIds();
           Swal.fire({
@@ -987,7 +986,7 @@ getDBTables(){      //get DB tables list
             text: 'Process Deleted Successfully !!',
             heightAuto: false
           })
-          this.isLoading=false;
+          this.loader.hide();
         },err => {
                   Swal.fire({
                     icon: 'error',
@@ -995,7 +994,7 @@ getDBTables(){      //get DB tables list
                     text: 'Something went wrong!',
                     heightAuto: false,
                   })
-                  this.isLoading=false;
+                  this.loader.hide();
           })
       }else{
         Swal.fire({
