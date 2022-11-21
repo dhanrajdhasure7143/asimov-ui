@@ -20,6 +20,7 @@ import { fromMatSort, sortRows } from './../model/datasource-utils';
 import {FilterPipe} from './../custom_filter.pipe';
 import { Subscription } from 'rxjs';
 import * as moment from 'moment';
+import { LoaderService } from 'src/app/services/loader/loader.service.js';
 @Component({
   selector: 'app-bpshome',
   templateUrl: './home.component.html',
@@ -32,7 +33,6 @@ export class BpsHomeComponent implements OnInit {
   bkp_saved_diagrams:any[] = [];
   p: number = 1;
   term = "";
-  isLoading:boolean = false;
   isApproverUser:boolean = false;
   isAdminUser:boolean = false;
   sortedData:any;
@@ -67,6 +67,7 @@ export class BpsHomeComponent implements OnInit {
 
   constructor(private router:Router, private bpmnservice:SharebpmndiagramService, private dt:DataTransferService,
      private rest:RestApiService, private hints:BpsHints, private global:GlobalScript,
+     private loader: LoaderService
     ) { }
 
   ngOnInit(){
@@ -83,7 +84,7 @@ export class BpsHomeComponent implements OnInit {
     this.systemAdmin=this.userRole.includes("System Admin");
     this.userEmail=localStorage.getItem("ProfileuserId");
     this.isApproverUser = this.userRole.includes('Process Architect')
-    this.isLoading = true;
+    this.loader.show();
     this.getBPMNList();
     this.getAutoSavedDiagrams();
     this.getAllCategories();
@@ -94,7 +95,7 @@ export class BpsHomeComponent implements OnInit {
     this.refreshSubscription=this.dt.isTableRefresh.subscribe(res => {
       if (res) {
         if (res.isRfresh) {
-          this.isLoading = true;
+          this.loader.show();
           this.getBPMNList();
         }
       }
@@ -138,7 +139,7 @@ export class BpsHomeComponent implements OnInit {
       });
 
       this.bkp_saved_diagrams = res; 
-      this.isLoading = false;
+      this.loader.hide();
       this.savedDiagrams_list=this.saved_diagrams;
       this.assignPagenation(this.saved_diagrams);
 
@@ -152,7 +153,7 @@ export class BpsHomeComponent implements OnInit {
     },
     
     (err) => {
-      this.isLoading = false;
+      this.loader.hide();
     });
   }
 
@@ -389,13 +390,13 @@ this.dt.bpsHeaderValues('');
       cancelButtonText: 'Cancel'
     }).then((res) => {
       if(res.isConfirmed){
-        this.isLoading = true;
+        this.loader.show();
         let data = {
           "bpmnModelId":bpmNotation.bpmnModelId,
           "version": bpmNotation.version
         }
         this.rest.deleteBPMNProcess(data).subscribe(res => {
-          this.isLoading = false;
+          this.loader.hide();
           if(res == "It is an ongoing project.Please contact Project Owner(s)"){
             Swal.fire({
               icon: 'info',
@@ -410,11 +411,11 @@ this.dt.bpsHeaderValues('');
               text: bpmNotation.bpmnProcessName+' V1.'+bpmNotation.version+' deleted',
               heightAuto: false
             });
-          this.isLoading = true;
+          this.loader.show();
           this.getBPMNList();
           }
         }, err => {
-          this.isLoading = false;
+          this.loader.hide();
           Swal.fire({
             icon: 'error',
             title: 'Oops...',

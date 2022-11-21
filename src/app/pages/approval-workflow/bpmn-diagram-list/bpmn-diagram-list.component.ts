@@ -17,6 +17,7 @@ import { map } from 'rxjs/operators';
 import {MatTableDataSource} from '@angular/material/table';
 import { MatSort, Sort } from '@angular/material';
 import * as moment from 'moment';
+import { LoaderService } from 'src/app/services/loader/loader.service';
 @Component({
   selector: 'app-bpmn-diagram-list',
   templateUrl: './bpmn-diagram-list.component.html',
@@ -35,7 +36,6 @@ export class BpmnDiagramListComponent implements OnInit {
   xpandStatus=false;
   index: any;
   searchTerm;
-  isLoading:boolean = true;
   remarks: any='ignore';
   selectedrow: any;
   orderAsc:boolean = true;
@@ -48,15 +48,22 @@ export class BpmnDiagramListComponent implements OnInit {
   @ViewChild(MatPaginator,{static:false}) paginator: MatPaginator;
   dataSource:MatTableDataSource<any>;
 @ViewChild(MatSort,{static:false}) sort: MatSort;
-  constructor(private dt: DataTransferService,private hints:ApprovalHomeHints,private bpmnservice:SharebpmndiagramService,private global:GlobalScript, private model: DiagListData, private rest_Api: RestApiService,private router: Router) { }
+
+  constructor(private dt: DataTransferService,
+    private hints:ApprovalHomeHints,
+    private bpmnservice:SharebpmndiagramService,
+    private global:GlobalScript, 
+    private model: DiagListData, 
+    private rest_Api: RestApiService,
+    private router: Router,
+    private loader: LoaderService) { }
 
   ngOnInit() {
-    this.isLoading= true;
+    this.loader.show();
     localStorage.setItem("isheader","false")
     this.dt.changeParentModule({ "route": "/pages/approvalWorkflow/home", "title": "Approval Workflow" });
     this.dt.changeChildModule(undefined);
     this.bpmnlist();
-    // this.dt.changeHints(this.hints.bpsApprovalHomeHints);
   }
   getColor(status) {
     switch (status) {
@@ -177,7 +184,7 @@ this.selectedrow =i;
   }
    bpmnlist() {
      this.rest_Api.bpmnlist().subscribe(data => {
-      this.isLoading = false;
+      this.loader.hide();
       this.griddata = data;
      
       this.griddata.forEach(ele=>{
@@ -195,14 +202,12 @@ this.selectedrow =i;
      
      if(this.griddata.length==0){
       let touiGuide_ids=[{selector:'#bpmn_list', description:'List of saved BPMN/CMMN/DMN notations'}]
-     this.dt.changeHints(touiGuide_ids);
     }else{
      let touiGuide_ids=[
        { selector:'#bpmn_list', description:'List of saved BPMN/CMMN/DMN notations', showNext:true },
        { selector:'#bpmn_list_item1', event:'click', description:'Click on each record to display it as diagram' },
        { selector:'.diagram_container1', description:'BPMN Diagram of the clicked record' }
      ]
-     this.dt.changeHints(touiGuide_ids);
     }
      });
    }

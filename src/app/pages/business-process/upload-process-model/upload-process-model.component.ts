@@ -36,6 +36,7 @@ import minimapModule from "diagram-js-minimap";
 import BpmnColorPickerModule from 'bpmn-js-color-picker';
 import { ComponentCanDeactivate } from './../../../guards/bps-data-save.guard'
 import { Observable } from 'rxjs/Observable';
+import { LoaderService } from 'src/app/services/loader/loader.service.js';
 declare var require:any;
 
 
@@ -76,7 +77,6 @@ export class UploadProcessModelComponent implements ComponentCanDeactivate,OnIni
   selected_notation;
   selected_approver;
   diplayApproveBtn:boolean = false;
-  isLoading:boolean = false;
   rejectedOrApproved;
   isDiagramChanged:boolean = false;
   isApprovedNotation:boolean = false;
@@ -161,7 +161,8 @@ export class UploadProcessModelComponent implements ComponentCanDeactivate,OnIni
   @ViewChild('canvasopt',{ static: false }) canvasopt: ElementRef;
   @ViewChild('processowner_template',{ static: true }) processowner_template: TemplateRef<any>;
    constructor(private rest:RestApiService, private bpmnservice:SharebpmndiagramService,private router:Router, private spinner:NgxSpinnerService, private modalService: BsModalService,
-      private dt:DataTransferService, private route:ActivatedRoute, private global:GlobalScript, private hints:BpsHints,public dialog:MatDialog,private shortcut:BpmnShortcut) { }
+      private dt:DataTransferService, private route:ActivatedRoute, private global:GlobalScript, private hints:BpsHints,public dialog:MatDialog,private shortcut:BpmnShortcut,
+      private loader: LoaderService) { }
 
   canDeactivate(): Observable<boolean> | boolean {
     return !this.isDiagramChanged 
@@ -348,7 +349,7 @@ export class UploadProcessModelComponent implements ComponentCanDeactivate,OnIni
    }
 
   async getUserBpmnList(isFromConf){
-    this.isLoading = true;
+    this.loader.show();
     this.saved_bpmn_list = [];
     if (!this.isShowConformance && this.isfromApprover) {
       let req_body = {
@@ -365,7 +366,7 @@ export class UploadProcessModelComponent implements ComponentCanDeactivate,OnIni
         this.selected_notation = 0;
         this.notationListOldValue = this.selected_notation;
         setTimeout(() => {
-          this.isLoading = false;
+          this.loader.hide();
         }, 2000);
         setTimeout(() => {
           this.getSelectedApprover();
@@ -387,7 +388,7 @@ export class UploadProcessModelComponent implements ComponentCanDeactivate,OnIni
         else this.getSelectedNotation();
         this.notationListOldValue = this.selected_notation;
         setTimeout(() => {
-          this.isLoading = false;
+          this.loader.hide();
         }, 2000);
         setTimeout(() => {
           this.getSelectedApprover();
@@ -400,7 +401,7 @@ export class UploadProcessModelComponent implements ComponentCanDeactivate,OnIni
    getSelectedNotation(){
     //  let user_role=localStorage.getItem('userRole')
     //  if(user_role=='Process Architect' || user_role == 'Process Owner'){
-    //   this.isLoading = true;
+    //   this.loader.show();
     //   if(this.selected_modelId){
     //     this.rest.getBPMNProcessArchNotations(this.selected_modelId).subscribe(res=>{
     //       this.saved_bpmn_list=res
@@ -408,7 +409,7 @@ export class UploadProcessModelComponent implements ComponentCanDeactivate,OnIni
     //         if(this.selected_version == each_bpmn.version)
     //             this.selected_notation = i;
     //       })
-    //         this.isLoading=false;
+    //         this.loader.hide();
     //     })
     //   }else{
     //     this.saved_bpmn_list.forEach((each_bpmn,i) => {
@@ -724,11 +725,11 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
               console.error('could not import BPMN EZFlow notation', err);
             }
           }
-          _self.isLoading = false;
+          _self.loader.hide();
         }
       })
     }else{
-      this.isLoading = true;
+      this.loader.show();
       this.isDiagramChanged = false;
       this.disableShowConformance = false;
       this.diplayApproveBtn = true;
@@ -790,7 +791,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
           console.error('could not import BPMN EZFlow notation', err);
         }
       }
-      _self.isLoading = false;
+      _self.loader.hide();
     }
     this.getSelectedApprover();
   }
@@ -839,7 +840,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
   }
 
   showConformance(){
-    this.isLoading = true;
+    this.loader.show();
     this.selected_notation = 0;
     this.notationListOldValue = 0;
     this.isUploaded = this.saved_bpmn_list.length != 0;
@@ -855,7 +856,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
       this.getSelectedApprover();
       this.getAutoSavedDiagrams();
     }
-    this.isLoading = false;
+    this.loader.hide();
   }
 
   autoSaveDiagram(model){
@@ -955,17 +956,17 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
   }
 
   uploadAgainBpmn(e){
-    this.isLoading = true;
+    this.loader.show();
     let _self = this;
     var myReader: FileReader = new FileReader();
     myReader.onloadend = (ev) => {
-      this.isLoading = true;
+      this.loader.show();
       let fileString:string = myReader.result.toString();
       try{
         this.bpmnModeler.importXML(fileString);
         this.oldXml = fileString.trim();
         this.newXml = fileString.trim();
-        this.isLoading = false;
+        this.loader.hide();
       }catch(err){
         console.error('could not import BPMN EZFlow notation', err);
       }
@@ -1109,7 +1110,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
       });
       return;
     }
-    this.isLoading = true;
+    this.loader.show();
     let _self = this;
     let sel_List = this.saved_bpmn_list[this.selected_notation];
     let modeler_obj = this.isConfBpmnModeler ? "confBpmnModeler":"bpmnModeler";
@@ -1157,7 +1158,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
       bpmnModel.role=localStorage.getItem("userRole");
       _self.rest.submitBPMNforApproval(bpmnModel).subscribe(
         data=>{
-          _self.isLoading = false;
+          _self.loader.hide();
           _self.isDiagramChanged = false;
           if(data["errorCode"] == "2005"){
             Swal.fire({
@@ -1180,7 +1181,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
             });
           }
         },err => {
-          _self.isLoading = false;
+          _self.loader.hide();
           Swal.fire({
             icon: 'error',
             title: 'Oops!',
@@ -1199,7 +1200,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
     }
     if(!yesProceed) return;
     this.isDiagramChanged = false;
-    this.isLoading = true;
+    this.loader.show();
     let bpmnModel:BpmnModel = new BpmnModel();
     let _self = this;
     let sel_List = this.saved_bpmn_list[this.selected_notation];
@@ -1262,7 +1263,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
       bpmnModel.role=localStorage.getItem("userRole");
       _self.rest.saveBPMNprocessinfofromtemp(bpmnModel).subscribe(
         data=>{
-          _self.isLoading = false;
+          _self.loader.hide();
           if(data["errorCode"] == "2005"){
             Swal.fire({
               icon: 'error',
@@ -1328,7 +1329,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
           }
         },
         err => {
-          _self.isLoading = false;
+          _self.loader.hide();
           if(err.error.message == "2002")
           Swal.fire({
             icon: 'warning',
@@ -1354,14 +1355,14 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
   uploadConfBpmn(confBpmnData){
     let _self = this;
     let decrypted_data = atob(unescape(encodeURIComponent(confBpmnData)));
-    this.isLoading = true;
+    this.loader.show();
     setTimeout(()=> {
       this.initBpmnModeler();
       try{
         this.bpmnModeler.importXML(decrypted_data);
         this.confBpmnXml = decrypted_data;
         this.bpmnservice.uploadConfirmanceBpmnXMLDef( _self.bpmnModeler._definitions);
-        this.isLoading = false;
+        this.loader.hide();
         this.getUserBpmnList(null);
       }catch(err){
         console.error('could not import BPMN EZFlow notation', err);
@@ -1371,23 +1372,23 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
 
   displayXML(e){
     let _self = this;
-    _self.isLoading = true;
+    _self.loader.show();
     if(e.index == 1){
       this.bpmnModeler.saveXML({ format: true }, function(err, updatedXML) {
         _self.xmlTabContent = updatedXML;
-        _self.isLoading = false;
+        _self.loader.hide();
       })
     }else{
       this.bpmnModeler.importXML(this.xmlTabContent, function(err){
         if(err){
           _self.errXMLcontent = err;
           _self.openModal(_self.wrongXMLcontent);
-          _self.isLoading = false;
+          _self.loader.hide();
         }
         else{
           _self.oldXml = _self.xmlTabContent;
           _self.newXml = _self.xmlTabContent;
-          _self.isLoading = false;
+          _self.loader.hide();
         }
       });
     }
@@ -1513,7 +1514,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
       this.uploadAgainBpmn(e);
     }else{
       this.uploadedFile = null;
-      this.isLoading = false;
+      this.loader.hide();
       let message = "Oops! Something went wrong";
       if(e.rejectedFiles[0].reason == "type")
         message = "Please upload proper notation";

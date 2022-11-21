@@ -32,6 +32,7 @@ import BpmnColorPickerModule from 'bpmn-js-color-picker';
 import { Subscription } from 'rxjs';
 import { ComponentCanDeactivate } from './../../../guards/bps-data-save.guard'
 import { Observable } from 'rxjs/Observable';
+import { LoaderService } from 'src/app/services/loader/loader.service.js';
 
 
 @Component({
@@ -45,7 +46,6 @@ export class CreateBpmnDiagramComponent implements OnInit, ComponentCanDeactivat
   oldXml;
   newXml;
   autosaveObj:any;
-  isLoading:boolean = false;
   diplayApproveBtn:boolean = false;
   isDiagramChanged:boolean = false;
   isApprovedNotation:boolean = false;
@@ -113,7 +113,8 @@ export class CreateBpmnDiagramComponent implements OnInit, ComponentCanDeactivat
   @ViewChild("notationXMLTab", { static: false }) notationXmlTab: MatTabGroup;
   @ViewChild('wrongXMLcontent', { static: true}) wrongXMLcontent: TemplateRef<any>;
   constructor(private rest:RestApiService, private spinner:NgxSpinnerService, private dt:DataTransferService,private modalService: BsModalService,
-    private router:Router, private route:ActivatedRoute, private bpmnservice:SharebpmndiagramService, private global:GlobalScript, private hints:BpsHints, public dialog:MatDialog,private shortcut:BpmnShortcut) {}
+    private router:Router, private route:ActivatedRoute, private bpmnservice:SharebpmndiagramService, private global:GlobalScript, private hints:BpsHints, public dialog:MatDialog,private shortcut:BpmnShortcut,
+    private loader: LoaderService) {}
     
   canDeactivate(): Observable<boolean> | boolean {
     return !this.isDiagramChanged
@@ -196,7 +197,7 @@ export class CreateBpmnDiagramComponent implements OnInit, ComponentCanDeactivat
   }
 
   getUserBpmnList(){
-    this.isLoading = true;
+    this.loader.show();
     this.rest.getUserBpmnsList().subscribe( (res:any[]) =>  {
       this.saved_bpmn_list = res.filter(each_bpmn => {
         return each_bpmn.bpmnProcessStatus?each_bpmn.bpmnProcessStatus.toLowerCase() != "pending":true;
@@ -204,7 +205,7 @@ export class CreateBpmnDiagramComponent implements OnInit, ComponentCanDeactivat
       this.getSelectedNotation();
       // this.selected_notation = 0;
       this.notationListOldValue = 0;
-      this.isLoading = false;
+      this.loader.hide();
       this.getSelectedApprover();
       this.getAutoSavedDiagrams();
     });
@@ -444,7 +445,7 @@ export class CreateBpmnDiagramComponent implements OnInit, ComponentCanDeactivat
         }
       })
     }else{
-      this.isLoading = true;
+      this.loader.show();
       this.isDiagramChanged = false;
       this.diplayApproveBtn = true;
       this.keyboardLabels=this.shortcut[this.selectedNotationType];
@@ -467,7 +468,7 @@ export class CreateBpmnDiagramComponent implements OnInit, ComponentCanDeactivat
       this.bpmnModeler.importXML(selected_xml, function(err){
         _self.oldXml = selected_xml;
         _self.newXml = selected_xml;
-        _self.isLoading = false;
+        _self.loader.hide();
       });
     }
     this.getSelectedApprover();
@@ -479,23 +480,23 @@ export class CreateBpmnDiagramComponent implements OnInit, ComponentCanDeactivat
 
   displayXML(e){
     let _self = this;
-    _self.isLoading = true;
+    _self.loader.show();
     if(e.index == 1){
       this.bpmnModeler.saveXML({ format: true }, function(err, updatedXML) {
         _self.xmlTabContent = updatedXML;
-        _self.isLoading = false;
+        _self.loader.hide();
       })
     }else{
       this.bpmnModeler.importXML(this.xmlTabContent, function(err){
         if(err){
           _self.errXMLcontent = err;
           _self.openModal(_self.wrongXMLcontent);
-          _self.isLoading = false;
+          _self.loader.hide();
         }
         else{
           _self.oldXml = _self.xmlTabContent;
           _self.newXml = _self.xmlTabContent;
-          _self.isLoading = false;
+          _self.loader.hide();
         }
       });
     }
@@ -709,7 +710,7 @@ export class CreateBpmnDiagramComponent implements OnInit, ComponentCanDeactivat
     }
     this.isStartProcessBtn=false;
     let bpmnModel:BpmnModel = new BpmnModel();
-    this.isLoading = true;
+    this.loader.show();
     let _self = this;
     let sel_List = this.saved_bpmn_list[this.selected_notation];
     let sel_appr = this.approver_list[this.selected_approver];
@@ -735,7 +736,7 @@ export class CreateBpmnDiagramComponent implements OnInit, ComponentCanDeactivat
       _self.rest.submitBPMNforApproval(bpmnModel).subscribe(
         data=>{
           _self.isDiagramChanged = false;
-          _self.isLoading = false;
+          _self.loader.hide();
           _self.rejectedOrApproved="PENDING";
             _self.push_Obj={"rejectedOrApproved":"PENDING","isfromApprover":false,
             "isShowConformance":false,"isStartProcessBtn":_self.isStartProcessBtn,"autosaveTime":_self.updated_date_time,
@@ -748,7 +749,7 @@ export class CreateBpmnDiagramComponent implements OnInit, ComponentCanDeactivat
             heightAuto: false,
           });
         },err => {
-          _self.isLoading = false;
+          _self.loader.hide();
           Swal.fire({
             icon: 'error',
             title: 'Oops!',
@@ -762,7 +763,7 @@ export class CreateBpmnDiagramComponent implements OnInit, ComponentCanDeactivat
   saveprocess(newVal){
     this.isDiagramChanged = false;
     this.isStartProcessBtn=false;
-    this.isLoading = true;
+    this.loader.show();
     let bpmnModel:BpmnModel = new BpmnModel();
     let _self=this;
     let sel_List = this.saved_bpmn_list[this.selected_notation];
@@ -801,7 +802,7 @@ export class CreateBpmnDiagramComponent implements OnInit, ComponentCanDeactivat
             _self.router.navigate([],{ relativeTo:_self.route, queryParams:params });
             _self.getUserBpmnList();
           }
-          _self.isLoading = false;
+          _self.loader.hide();
           Swal.fire({
             icon: 'success',
             title: 'Saved',
@@ -819,7 +820,7 @@ export class CreateBpmnDiagramComponent implements OnInit, ComponentCanDeactivat
           }
         },
         err => {
-          _self.isLoading = false;
+          _self.loader.hide();
           if(err.error.message == "2002")
           Swal.fire(
             'Oops!',
@@ -847,7 +848,7 @@ export class CreateBpmnDiagramComponent implements OnInit, ComponentCanDeactivat
       this.uploadedFile = e.addedFiles[0];
     }else{
       this.uploadedFile = null;
-      this.isLoading = false;
+      this.loader.hide();
       let message = "Oops! Something went wrong";
       if(e.rejectedFiles[0].reason == "type")
         message = "Please upload proper notation";
