@@ -1,16 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { AdministrationRoutingModule } from './administration-routing.module';
 import { AdministrationComponent } from './administration.component';
-
-
 import { DataTablesModule } from 'angular-datatables';
 import { MatTableModule } from '@angular/material/table';  
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
-import { NgxSpinnerModule } from "ngx-spinner";
 import { ModalModule, BsModalRef  } from 'ngx-bootstrap/modal';
 import {
   MatDialogModule,
@@ -69,11 +65,9 @@ const materialModules: any[] = [
     DataTablesModule,MatTableModule,ReactiveFormsModule,FormsModule, MatSortModule,MatSliderModule,
     MatPaginatorModule,
     MatFormFieldModule,
-    MatMenuModule,MatButtonModule,NgxSpinnerModule,NgxPaginationModule,
+    MatMenuModule,MatButtonModule,NgxPaginationModule,
     ModalModule.forRoot(),
     MatProgressBarModule,NgSelectModule,Ng5SliderModule
-
-    
   ],
   providers:[
     BsModalRef, 

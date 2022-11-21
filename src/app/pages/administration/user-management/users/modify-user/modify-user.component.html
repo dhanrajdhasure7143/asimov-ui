@@ -24,23 +24,11 @@
 
                         <div class="col-md-12 p-0 form-fields">
                             <label class="label-control">Add Role<span class="star">*</span></label>
-                            <!-- <ng-select name = "multiroles" [multiple]="true" [items] =  "allRoles" [(ngModel)] = "roles"
-                                          bindValue = "name"
-                                          bindLabel = "name" required>
-                                          </ng-select>  -->
 
-                            <!-- <select formControlName="role" class="form-control data"
-                                              [ngClass]="editUserForm.get('role').valid?'enteredfield-color':'inputfield-color'">
-                                              <option [value]="null" disabled hidden>Select Role</option>
-                                              <option value="" [selected]="true">Select Role</option>
-                                              <option *ngFor="let role of allRoles" [value]="role.id">
-                                                  {{role.name}}</option>
-                                          </select> -->
                             <select name="roles" #roles="ngModel" [(ngModel)]="role" class="form-control data"
                                 (change)="onchangeRole($event.target.value)" placeholder="Select Role" required>
                                 <option *ngFor="let role of allRoles" [value]="role.id">{{role.name}}</option>
                             </select>
-                            <!-- <span *ngIf="editUserForm.get('role').invalid && editUserForm.get('role').touched" class="errspan required">Role Required*</span> -->
                         </div>
                         <div class="col-md-12 p-0 form-fields update_department">
                             <label class="label-control">Add Department(s)<span class="star">*</span></label>

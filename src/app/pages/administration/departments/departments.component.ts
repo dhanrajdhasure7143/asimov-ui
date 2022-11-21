@@ -2,12 +2,12 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
 import * as moment from 'moment';
+import { LoaderService } from 'src/app/services/loader/loader.service';
 
 @Component({
   selector: 'app-departments',
@@ -28,12 +28,12 @@ export class DepartmentsComponent implements OnInit {
   departmentName: any;
   department: string;
   users_list:any=[];
-  constructor(private api: RestApiService,private spinner: NgxSpinnerService,private router: Router ) {
+  constructor(private api: RestApiService,private loader: LoaderService,private router: Router ) {
   
   }
 
   ngOnInit(): void {
-    this.spinner.show();
+    this.loader.show();
     this.getAllDepartments();
     this.Departmentdeleteflag=false;
     this.getallusers();
@@ -54,7 +54,6 @@ export class DepartmentsComponent implements OnInit {
       this.searchByCategory(this.department);
     })
    }
-
 
   deleteDepartment() {
     const delbody = this.departments.data.filter(p => p.checked==true).map(p=>{
@@ -184,15 +183,15 @@ export class DepartmentsComponent implements OnInit {
     this.api.getuserslist(tenantid).subscribe(item=>{
       let users:any=item
       this.users_list=users;
-      this.spinner.hide();
+      this.loader.hide();
     })
   }
   
   applyFilter(filterValue: string) {
     this.dataSource2.filter = filterValue.trim().toLowerCase();
-
     if (this.dataSource2.paginator) {
       this.dataSource2.paginator.firstPage();
     }
   }
+  
 }
