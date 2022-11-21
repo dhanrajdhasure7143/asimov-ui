@@ -13,21 +13,6 @@
 }
 
 
-/*
-::ng-deep mat-tab-body {
-  overflow-y: unset !important;
-}
-
-::ng-deep .mat-tab-body-content
-{
-
-  overflow: hidden ! important;
-}
-::ng-deep mat-tab-body
-{
-  overflow-y: unset !important;
-}*/
-
 ::ng-deep .tabs .mat-tab-label {
     height: 36px !important;
     padding: 0 8px !important;
@@ -68,7 +53,6 @@ span.tab-botname {
 
 .action-item {
     width: auto;
-    /* font-size: 18px; */
     padding: 6px 8px;
     cursor: pointer;
     position: relative;
@@ -105,8 +89,6 @@ span.tab-botname {
 }
 
 .toolsetmenuicon img.testplus {
-    /* margin-right: 12px !important;
-  opacity: 0.5; */
     vertical-align: sub;
     margin: 3px 4px;
 }
@@ -118,7 +100,6 @@ span.tab-botname {
 
 .toolset-text {
     font-weight: 600 !important;
-    /* margin-left:1%; */
 }
 
 .main-content1 .module-header-title {
@@ -291,22 +272,10 @@ ul#versions li.clickable:hover {
 }
 
 
-/* span.module-back-button {
-  border: none !important;
-  margin: 0px !important;
-  font-size: 12px !important;
-} */
-
 .rpa-header-data {
     line-height: 1cm
 }
 
-
-/* .rpa-header-back-button{
-  border: none !important;
-  margin: 0px !important;
-  font-size: 16px !important;
-} */
 
 ::ng-deep .rpa-bottom-tab .mat-tab-header {
     background: white !important;
@@ -314,8 +283,6 @@ ul#versions li.clickable:hover {
 
 ::ng-deep .rpa-bottom-tab {
     background: white !important;
-    /* height: 40px !important;
-  color:black !important; */
     padding: 10px !important;
     border-top: 1px solid lightgray;
     text-align: end !important;

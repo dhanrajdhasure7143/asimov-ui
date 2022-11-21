@@ -1,17 +1,9 @@
 
 
 
-/*@import "~@ng-select/ng-select/themes/material.theme.css";*/
-/* @import "../../../../assets/css/new-so-styles.css"; */
-select {
-    /* border-top: none;
-    border-right: none;
-    border-left: none; */
-}
 
 #sch .ngb-tp-input-container input[type="text"] {
     width: 55px !important;
-    /* text-align: center; */
 }
 
 .my-new-div .tab-content{
@@ -31,10 +23,6 @@ select {
 }
 
 th{
-  /* background-color:#4AB0F5  !important;
-  vertical-align: middle !important;
-  color:white !important;
-  font-size: 18px !important; */
   background-color: #e8f7fd !important;
     color: #00a0e3 !important;
     font-size: 14px !important;
@@ -50,17 +38,10 @@ tr.mat-header-row {
   height: 45px !important;
 }
 
-/* .mat-sort-header-arrow{
-  color : white !important;
-} */
 
 .clickable{
   cursor: pointer;
 }
-/*.mat-tab-label{
-}*/
-
-
 
 .dropbtn {
   background-color: #4CAF50;
@@ -82,7 +63,6 @@ tr.mat-header-row {
   position: absolute;
   background-color: #f1f1f1;
   min-width: 160px;
-  /* box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); */
   z-index: 1;
 }
 
@@ -129,27 +109,7 @@ tr.mat-header-row {
 .pl-0 {
   padding-left: 0px;
 }
-/*.main-content.orches_new{
-  height: 100%;
-  padding: 16px;
-  overflow: auto;
-  position: relative;
-  background-color: #e3eaef;
-  box-shadow: 0px 0px 13px 0px rgb(236 236 241 / 44%);
-}
 
-.orches_new .content-area{
-  background: #ffffff;
-  padding: 5px;
-  box-shadow: 0px 0px 13px 0px #ececf170;
-  height: calc(100% - 50px);
-  overflow-y: auto;
-}
- .orches_new .module-heading {
-  background-color: #f8f8f8;
-  padding: 12px 6px;
-  margin-bottom: 0px;
-} */
 .orches_new .mat-ink-bar {
   transition: unset;
 }
@@ -169,7 +129,6 @@ tr.mat-header-row {
 }
 .newexecbots_progress label {
   font-size: 14px;
-  /* margin-bottom: 10px; */
   font-weight: 600;
   color: #001c47;
 }
@@ -237,13 +196,8 @@ body .leftfporm select {
 .leftfporm {
   display: flex !important;
   margin: 0px !important;
-  /* padding-top: 10px;
-  padding-bottom: 10px; */
 }
-/* .comncl {
-  width: 100%;
-  margin-right: 10px;
-} */
+
 .resecl button {
   padding: 7px 0px;
   margin-left: 5px;
@@ -254,12 +208,8 @@ body .leftfporm select {
 }
 .roghtform {
   line-height: 30px;
-  /* padding: 7px 0px; */
 }
-/* .roghtform span {
-  padding: 0px !important;
-  margin-left: 6px !important;
-} */
+
 .RPA.table select.form-control {
   border: 1px solid #ddd !important;
   width: 100%;

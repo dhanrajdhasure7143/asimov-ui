@@ -1,22 +1,10 @@
 @import "//netdna.bootstrapcdn.com/font-awesome/3.0/css/font-awesome.css";
-.section {
-  /* overflow-y: scroll;
-  max-height: 61vh;
-  white-space: nowrap;   */
-}
-.nodes {
-  /* padding: 5px; */
-}
 .con-img{
   width: 28px;
   height: 28px;
 }
 
 .search-content{
-  /* padding:10px; */
-  /* padding-right:25px; */
-  /* padding-left:0px;
-  padding-right: 10px; */
   position: relative;
   display: flex;
   width: 100%;
@@ -24,7 +12,6 @@
 }
 
 .toolset{
-   /* padding:10px;  */
    width:260px !important;
    margin: auto;
    height: 100%;
@@ -43,11 +30,6 @@
   position: relative  !important;
 }
 
-/* ::-webkit-scrollbar {
-  display: none;
-} */
-
-
 ::ng-deep .custom-slider .ng5-slider .ng5-slider-bar {
   color:white;
   height: 130px;
@@ -58,15 +40,9 @@
 
 .search{
   border-radius: 0px !important;
-  /* border-top: none !important;
-  border-left: none !important;
-  border-right: none !important; */
   width:100%;
   box-shadow: none !important;
   padding: 7px !important;
-
-  /* height:25px !important; */
-  /* border-bottom-color: lightgray !important; */
 }
 
 ::ng-deep .custom-slider .ng5-slider .ng5-slider-pointer{
@@ -157,7 +133,6 @@ background-color: white;
 
 
 .nodename{
-  /* font-size: 16px; */
   color: #001c47;
   font-weight: 400;
   font-size: 14px;
@@ -174,7 +149,6 @@ background-color: white;
 
 
 .taskname{
-  /* padding:10px; */
   font-size: 14px;
   color: #001c47;
   font-weight: 400;
@@ -209,17 +183,7 @@ background-color: white;
   display: flex;
   align-items: center;
 }
-/* .actionsheaderdiv button span {
-  position: absolute;
-  right: 10px;
-  top: 3px;
-  color: #001c47;
-  font-size: 25px;
-  font-weight: 700;
-} */
-/* .actionsheaderdiv button img {
-  vertical-align: baseline;
-} */
+
 .toolset-mainheader {
   padding: 5px 10px 4px 10px;
 }
@@ -243,9 +207,6 @@ background-color: white;
   margin-top: -3px;
 }
 .dragicons {
-  /* padding: 0px 10px;
-  overflow-y: scroll;
-  max-height: 57vh; */
   padding: 0px 5px 0px 12px;
   white-space: nowrap;
   height: calc(100% - 90px);

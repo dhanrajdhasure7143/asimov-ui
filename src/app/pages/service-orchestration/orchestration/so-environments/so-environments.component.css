@@ -28,7 +28,6 @@ tr.mat-footer-row, tr.mat-row {
 .rpa-tablebox{
 padding-top:10px;
 padding-bottom:10px;
-/* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);*/
 border-radius: 10px;
 height: 900px;
 }
@@ -65,24 +64,6 @@ margin-top: -25px;
 position: relative;
 z-index: 2;
 }
-
-
-/* ::-webkit-scrollbar-track {
-  display:none;
-}
-
-::-webkit-scrollbar-thumb {
-background:lightgray;
-}
-
-::-webkit-scrollbar {
-width: 10px;
-height:4px
-} */
-
-/* :host ::ng-deep .mat-sort-header-arrow {
-  color: white;
-} */
 
 
 :host ::ng-deep td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type, th.mat-header-cell:first-of-type {

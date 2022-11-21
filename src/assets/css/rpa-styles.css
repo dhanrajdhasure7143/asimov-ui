@@ -29,7 +29,6 @@
   margin: 0px -6px 0px 10px;
   background-color: white;
   border-radius: 2px;
-  /*padding:15px;*/
   padding-right:15px;
   padding-left:15px;
   
@@ -50,10 +49,7 @@ background-color: transparent;
 border-radius: 2px;
 padding: 0px 12px;
 }
- /* :visited,.btn_style1 :focus,.btn_style1 :active{
-background-color: blue;
-color:#fff;
-} */
+
 
 .btn_style1 img:active, .btn_style1 img:hover {
   background-color: blue;
@@ -109,7 +105,6 @@ border-bottom-color:#d9d9d9;
 .rpa-tablebox{
 padding-top:10px;
 padding-bottom:10px;
-/*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);*/
 border-radius: 10px;
 height: 500px;
 }
@@ -211,18 +206,6 @@ padding-bottom: 70px;
    
     
   }
-  /* /* To style the document scrollbar, remove `.custom-scrollbar` */
-  /* .rpa-custom-scrollbar::-webkit-scrollbar {
-    width: 3px;
-  }
-  .rpa-custom-scrollbar::-webkit-scrollbar-track {
-    background :rgb(255, 255, 255);
-    border-radius: 10px;
-  }
-  .rpa-custom-scrollbar::-webkit-scrollbar-thumb {
-    background : rgb(209, 209, 209);
-    border-radius: 10px;
-  }  */
 
  
   /* The  rpa-modal (background) */
@@ -283,8 +266,6 @@ padding-bottom: 70px;
   }
   
   .rpa-modal-header {
-  /* padding: 2px 16px;
-  background-color: #e5e5e5; */
   padding: 11px 15px 1px !important;
   border-bottom: 1px solid #e5e5e5;
   color: #000;
@@ -304,7 +285,6 @@ padding-bottom: 70px;
     bottom: 10px;
     right: 15px;
 }
-  /* .rpa-modal-body {padding: 2px 16px;} */
   
   
   /* Add Animation */
@@ -419,7 +399,6 @@ mat-paginator button:disabled{
 
 .rpa-home-table{
   height: calc(100vh - 295px);
-  /* height: calc(100vh - 433px); */
   overflow-y: scroll;
 }
 .open-btn-click {

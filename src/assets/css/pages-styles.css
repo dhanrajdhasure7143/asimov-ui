@@ -26,7 +26,5 @@
 .active #subheading{
     color:white;
 }
-.active  img{
-    /* filter: invert(0.5) sepia(1) hue-rotate(200deg) saturate(4) brightness(2); */
-}
+
 /* home component styles - Ends*/
