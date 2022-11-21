@@ -59,7 +59,6 @@ span.testtooltip:after {
 
 .table_responsive.graph_table tr td {
   vertical-align: top !important;
-  /* white-space: pre-line; */
   white-space: break-spaces;
 }
 
