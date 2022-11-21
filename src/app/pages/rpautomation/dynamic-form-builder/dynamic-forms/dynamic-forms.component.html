@@ -11,19 +11,20 @@
                     <button class="btn btn-success" *ngIf="editfill==true" [disabled]="!form.valid" (click)="Push()" >Update</button>            
                 </div>
 
-            <div class="col-md-12 p-0 tablmacl" *ngIf="isMultiForm==true">
+            <div class="col-md-12 p-0 tablmacl " *ngIf="isMultiForm==true"  #scrollContainer>
                 <!-- <div class="table-responsive overaly-innertable"> -->
                 <div class="overaly-innertable">
-                    <table class="table">
+                    <table class="table cursor">
                         <thead>
                             <tr>
-                                <th class="testcell" *ngFor="let tableHeader of fields">{{tableHeader.label}}</th>
-                                <th class="testcell">Actions</th> 
+                                <th class="col-md" *ngFor="let tableHeader of fields">{{tableHeader.label}}</th>
+                                <th class="col-md">Actions</th> 
                             </tr>    
                         </thead>
                         <tbody cdkDropList (cdkDropListDropped)="drop($event)">
-                            <tr *ngFor="let eachObj of fillarray" cdkDrag>
-                                <td *ngFor="let field of fields"  class="testcell">
+                            <tr *ngFor="let eachObj of fillarray"  cdkDragLockAxis="y"
+                            cdkDragBoundary=".actions-datafields-div" cdkDrag [cdkdirective]="scrollContainer">
+                                <td *ngFor="let field of fields"  class="col-md">
                                     <span *ngIf="checkRecord(eachObj, field)==false">
                                         {{eachObj[field.name+"_"+field.id]?eachObj[field.name+"_"+field.id]:'NA'}}
                                     </span>
@@ -31,7 +32,7 @@
                                        *******
                                     </span>
                                 </td>                    
-                               <td class="testcell">
+                               <td class="col-md">
                                     <button tooltip="Edit" placement="bottom"  (click)="edit(eachObj)">
                                         <img src="../../../../assets/images/RPA/icon_latest/edit.svg" alt="" class="testplus">
                                     </button>
