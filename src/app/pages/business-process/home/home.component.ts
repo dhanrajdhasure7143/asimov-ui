@@ -20,7 +20,8 @@ import { fromMatSort, sortRows } from './../model/datasource-utils';
 import {FilterPipe} from './../custom_filter.pipe';
 import { Subscription } from 'rxjs';
 import * as moment from 'moment';
-import { LoaderService } from 'src/app/services/loader/loader.service.js';
+import { LoaderService } from 'src/app/services/loader/loader.service';
+
 @Component({
   selector: 'app-bpshome',
   templateUrl: './home.component.html',
@@ -84,7 +85,6 @@ export class BpsHomeComponent implements OnInit {
     this.systemAdmin=this.userRole.includes("System Admin");
     this.userEmail=localStorage.getItem("ProfileuserId");
     this.isApproverUser = this.userRole.includes('Process Architect')
-    this.loader.show();
     this.getBPMNList();
     this.getAutoSavedDiagrams();
     this.getAllCategories();

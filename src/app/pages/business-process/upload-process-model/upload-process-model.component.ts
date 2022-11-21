@@ -36,7 +36,7 @@ import minimapModule from "diagram-js-minimap";
 import BpmnColorPickerModule from 'bpmn-js-color-picker';
 import { ComponentCanDeactivate } from './../../../guards/bps-data-save.guard'
 import { Observable } from 'rxjs/Observable';
-import { LoaderService } from 'src/app/services/loader/loader.service.js';
+import { LoaderService } from 'src/app/services/loader/loader.service';
 declare var require:any;
 
 
@@ -160,6 +160,7 @@ export class UploadProcessModelComponent implements ComponentCanDeactivate,OnIni
   @ViewChild('wrongXMLcontent', { static: true}) wrongXMLcontent: TemplateRef<any>;
   @ViewChild('canvasopt',{ static: false }) canvasopt: ElementRef;
   @ViewChild('processowner_template',{ static: true }) processowner_template: TemplateRef<any>;
+
    constructor(private rest:RestApiService, private bpmnservice:SharebpmndiagramService,private router:Router, private spinner:NgxSpinnerService, private modalService: BsModalService,
       private dt:DataTransferService, private route:ActivatedRoute, private global:GlobalScript, private hints:BpsHints,public dialog:MatDialog,private shortcut:BpmnShortcut,
       private loader: LoaderService) { }
@@ -169,6 +170,7 @@ export class UploadProcessModelComponent implements ComponentCanDeactivate,OnIni
   }
 
    ngOnInit() {
+    this.loader.show();
     localStorage.setItem("isheader","true")
     this.randomNumber = UUID.UUID();
     this.dt.changeHints(this.hints.bpsUploadHints);
