@@ -11,10 +11,10 @@
                     <button class="btn btn-success" *ngIf="editfill==true" [disabled]="!form.valid" (click)="Push()" >Update</button>            
                 </div>
 
-            <div class="col-md-12 p-0 tablmacl" *ngIf="isMultiForm==true" #scrollContainer>
+            <div class="col-md-12 p-0 tablmacl " *ngIf="isMultiForm==true"  #scrollContainer>
                 <!-- <div class="table-responsive overaly-innertable"> -->
                 <div class="overaly-innertable">
-                    <table class="table">
+                    <table class="table cursor">
                         <thead>
                             <tr>
                                 <th class="col-md" *ngFor="let tableHeader of fields">{{tableHeader.label}}</th>
@@ -22,7 +22,8 @@
                             </tr>    
                         </thead>
                         <tbody cdkDropList (cdkDropListDropped)="drop($event)">
-                            <tr *ngFor="let eachObj of fillarray" cdkDrag [cdkdirective]="scrollContainer">
+                            <tr *ngFor="let eachObj of fillarray"  cdkDragLockAxis="y"
+                            cdkDragBoundary=".actions-datafields-div" cdkDrag [cdkdirective]="scrollContainer">
                                 <td *ngFor="let field of fields"  class="col-md">
                                     <span *ngIf="checkRecord(eachObj, field)==false">
                                         {{eachObj[field.name+"_"+field.id]?eachObj[field.name+"_"+field.id]:'NA'}}

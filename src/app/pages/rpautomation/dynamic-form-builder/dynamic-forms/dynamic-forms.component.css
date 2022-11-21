@@ -19,3 +19,7 @@
 .col-md {
     width: 12.074%;
 }
+
+.cursor {
+   cursor: grabbing;
+  }
