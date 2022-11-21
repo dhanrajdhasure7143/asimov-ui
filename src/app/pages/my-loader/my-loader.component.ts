@@ -9,8 +9,7 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
 })
 export class MyLoaderComponent implements OnInit {
 
-  loading: boolean;
-
+  loading: boolean = false;
   constructor(private loaderService: LoaderService) {
 
     this.loaderService.isLoading.subscribe((v) => {
