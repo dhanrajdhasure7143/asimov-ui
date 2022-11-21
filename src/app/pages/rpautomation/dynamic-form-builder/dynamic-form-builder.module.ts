@@ -14,7 +14,7 @@ import {MatPaginatorIntl} from '@angular/material';
 import { CustomMatPaginatorIntl } from 'src/app/shared/custom-mat-paginator-int';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { DragDropModule } from "@angular/cdk/drag-drop";
-import { CdkDirective } from './dynamic-forms/cdkdirective';
+import { CdkDirective } from '../../../shared/directives/cdkdirective';
 @NgModule({
   declarations: [
     DynamicFormsComponent, 
