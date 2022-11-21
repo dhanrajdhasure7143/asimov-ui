@@ -7,6 +7,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { LoaderService } from 'src/app/services/loader/loader.service';
 
 
 @Component({
@@ -35,7 +36,6 @@ export class ProcessAnalystComponent implements OnInit {
   activityStreamRecent: any;
   activityStreamPending: any;
   filterByDays = ['All', '30', '60', '90'];
-  isLoading = true;
   userDetails: any;
   userRoles: any;
   userEmail: any;
@@ -51,11 +51,13 @@ export class ProcessAnalystComponent implements OnInit {
   @ViewChild("paginator3",{static:false}) paginator3: MatPaginator;
   topEffortsSpentdataSource:MatTableDataSource<any>;
 
-  constructor(private apiService: RestApiService, private jwtHelper: JwtHelperService) {
+  constructor(private apiService: RestApiService, private jwtHelper: JwtHelperService,
+    private loader: LoaderService) {
     this.userDetails = this.jwtHelper.decodeToken(localStorage.getItem('accessToken'));;
   }
 
   ngOnInit(): void {
+    this.loader.show();
     this.userRoles = this.userDetails.userDetails.roles[0].roleName;
     this.userEmail = this.userDetails.userDetails.userId;
     this.userName = this.userDetails.userDetails.userName;
@@ -71,7 +73,7 @@ export class ProcessAnalystComponent implements OnInit {
           this.totalProjects = res['Total Projects'];
           this.totalTasks = res['Tasks'];
           this.Processes = res['Processes'];
-          this.isLoading = false;
+          this.loader.hide();
         });
 
       this.apiService.getUpcomingDueDates(this.userRoles, this.userEmail, this.userName)
@@ -117,7 +119,7 @@ export class ProcessAnalystComponent implements OnInit {
         this.topEffortsSpentdataSource= new MatTableDataSource(this.topEffortsSpent);
         this.topEffortsSpentdataSource.sort=this.sort3;
         this.topEffortsSpentdataSource.paginator=this.paginator3;
-        this.isLoading = false;
+        this.loader.hide();
       })
     }
   }
@@ -127,7 +129,7 @@ export class ProcessAnalystComponent implements OnInit {
   getPendingApprovals(duration) {
     this.apiService.getPendingApprovals(this.userRoles, this.userEmail, this.userName, duration).subscribe((res: any) => {
       this.pendingApprovals = res;
-      this.isLoading = false;
+      this.loader.hide();
       this.pendingApprovalsdataSource= new MatTableDataSource(this.pendingApprovals);
       this.pendingApprovalsdataSource.sort=this.sort1;
       this.pendingApprovalsdataSource.paginator=this.paginator1;
@@ -147,7 +149,7 @@ export class ProcessAnalystComponent implements OnInit {
 
       }
       this.allProjectStatusChart(this.projectStatusArray);
-      this.isLoading = false;
+      this.loader.hide();
     });
   }
 
