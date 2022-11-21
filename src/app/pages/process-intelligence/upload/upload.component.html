@@ -265,11 +265,3 @@
 
 
 <process-category-overlay headerTitle="Save Process" [overlay_data]="overlay_data" buttonName="Save & Generate" (proceed)="generateGraph($event)" class="bpmnCreate"></process-category-overlay>
-
-
-
-<div class="spinoverlay" *ngIf="isLoading">
-        <div class="spincenter">
-            <img  src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader"/>
-        </div>
-    </div>

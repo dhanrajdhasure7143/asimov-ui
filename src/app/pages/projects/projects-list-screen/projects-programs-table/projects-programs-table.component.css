@@ -2,7 +2,6 @@
   width:100%;
   overflow-x: auto;
   height: calc(100% - 50px);
-  /* margin-top: 5px; */
 }
 .types2{
     color:#0062cf  !important;
@@ -71,10 +70,6 @@
 .tablacs button, .tablacs a:last-child {
   margin-right: 0px;
 }  
-.disable-bg{
-  /* background-color: gainsboro;
-  border-radius: 5px; */
-}
 .no-item-img{
   height:calc(100vh - 430px)
 }
