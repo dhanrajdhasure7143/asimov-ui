@@ -55,7 +55,8 @@ export class SoProcesslogComponent implements OnInit, OnDestroy{
     document.getElementById("pbotrunid").style.display="none";
     document.getElementById("loopStartLogs").style.display="none";
     this.Environments=this.automated.environments;
-    this.setProcesslog();
+    //this.setProcesslog();
+    this.getprocesslog()
   }
 
   setProcesslog(){
@@ -74,6 +75,7 @@ export class SoProcesslogComponent implements OnInit, OnDestroy{
     if(this.processId != '' && this.processId != undefined){
     this.logresponse=[];
     document.getElementById("viewlogid1").style.display = "block";
+    this.loadLogsFlag=true
     this.rest.getProcesslogsdata(this.processId).subscribe(data =>{
         this.logresponse = data;
         this.loadLogsFlag=false
@@ -115,8 +117,9 @@ export class SoProcesslogComponent implements OnInit, OnDestroy{
   backplogrid(){
     document.getElementById("plogrunid").style.display = "none";
     document.getElementById("viewlogid1").style.display = "block";
-    clearInterval(this.interval1)
-    this.setProcesslog()
+    //clearInterval(this.interval1)
+    //this.setProcesslog()
+    this.getprocesslog()
   }
 
   backpbotrunid(){
@@ -130,12 +133,12 @@ export class SoProcesslogComponent implements OnInit, OnDestroy{
     clearInterval(this.interval)
     this.getprocessrunid(processRunId)
     this.logstatus=runStatus
-    this.loadLogsFlag=true
-    if(runStatus == "Running" || runStatus == "New" ){
-    this.interval2=setInterval(()=>{
-    this.getprocessrunid(processRunId)
-    },3000)
-  }
+  //   this.loadLogsFlag=true
+  //   if(runStatus == "Running" || runStatus == "New" ){
+  //   // this.interval2=setInterval(()=>{
+  //   // this.getprocessrunid(processRunId)
+  //   // },3000)
+  // }
   }
 
 
@@ -146,6 +149,7 @@ export class SoProcesslogComponent implements OnInit, OnDestroy{
     let processId = this.logresponse.find(data =>data.processRunId == processRunId).processId;
     document.getElementById("viewlogid1").style.display="none";
     document.getElementById("plogrunid").style.display="block";
+    this.loadLogsFlag=true
     this.rest.getprocessruniddata(processId,processRunId).subscribe(data =>{
       this.runidresponse = data;
       this.loadLogsFlag=false;
@@ -191,6 +195,8 @@ export class SoProcesslogComponent implements OnInit, OnDestroy{
     let pversion = this.runidresponse.find(data =>data.run_id == runid).version;
     document.getElementById("plogrunid").style.display="none";
     document.getElementById("pbotrunid").style.display="block";
+    
+    this.loadLogsFlag=true
     this.rest.getViewlogbyrunid(PbotId,pversion,runid).subscribe((data)=>{
       responsedata = data;
       this.loadLogsFlag=false;
@@ -244,10 +250,15 @@ export class SoProcesslogComponent implements OnInit, OnDestroy{
         this.getLoopLogs(element);
       },3000)
     }
+
+
+    selectedLoopTask:any;
     getLoopLogs(element){
       this.iterationsList=[]
+      this.loadLogsFlag=true
       this.rest.getLooplogs(element.bot_id, element.version, element.run_id ).subscribe((response:any)=>{
         this.loadLogsFlag=false;
+        this.selectedLoopTask=element;
         if(response.errorMessage==undefined)
         {
           this.loopIterations=[...response];
