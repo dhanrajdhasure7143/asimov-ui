@@ -62,7 +62,7 @@
                     <span *ngIf="!isCreateForm">Update</span>
                 </button>
                 &nbsp;
-                <button (click)="skipSaveBot()" class="btn btn-primary">
+                <button *ngIf="isCreateForm" (click)="skipSaveBot()" class="btn btn-primary">
                     <span *ngIf="isCreateForm">Skip</span>
                 </button>
             </div>
