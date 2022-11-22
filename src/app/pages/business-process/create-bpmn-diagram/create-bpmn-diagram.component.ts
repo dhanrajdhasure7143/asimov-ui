@@ -32,7 +32,7 @@ import BpmnColorPickerModule from 'bpmn-js-color-picker';
 import { Subscription } from 'rxjs';
 import { ComponentCanDeactivate } from './../../../guards/bps-data-save.guard'
 import { Observable } from 'rxjs/Observable';
-import { LoaderService } from 'src/app/services/loader/loader.service.js';
+import { LoaderService } from 'src/app/services/loader/loader.service';
 
 
 @Component({

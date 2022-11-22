@@ -72,6 +72,7 @@ export class BpsHomeComponent implements OnInit {
     ) { }
 
   ngOnInit(){
+    this.loader.show();
     localStorage.setItem("isheader","false")
     this.userRole = localStorage.getItem("userRole")
     this.userRole = this.userRole.split(',');

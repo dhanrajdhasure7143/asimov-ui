@@ -14,7 +14,7 @@ export class ChangePasswordComponent implements OnInit {
   public eyeshow: boolean = true;
   public neweyeshow: boolean = true;
   public confeyeshow: boolean = true;
-  public passwordvalidatemsg: boolean = true;
+  public passwordvalidatemsg: boolean = false;
 
   constructor( private api:RestApiService, private loader:LoaderService) { }
 
