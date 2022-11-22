@@ -33,7 +33,6 @@
   .rpa-tablebox{
   padding-top:10px;
   padding-bottom:10px;
- /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);*/
   border-radius: 10px;
   height: 900px;
   }
@@ -83,19 +82,7 @@
   th{
     white-space:nowrap;
   }
-/* 
-  ::-webkit-scrollbar-track {
-    display:none;
-}
 
-::-webkit-scrollbar-thumb {
-  background:lightgray;
-}
-
-::-webkit-scrollbar {
-  width: 10px;
-  height:4px
-} */
 ::ng-deep .mat-tab-label{
   height :50px !important;
   padding: 0 10px !important;
@@ -116,7 +103,6 @@ min-width:10px !important;
 .rpaenv_header_addon {
   position: relative !important;
   top: 7px !important;
-  /*text-align: right !important;*/
   width: 0% !important;
   float: right !important;
 }

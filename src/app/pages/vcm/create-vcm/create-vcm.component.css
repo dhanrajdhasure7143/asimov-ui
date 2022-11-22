@@ -1,7 +1,5 @@
 .vcm-leveldiv {
     margin-top: 12px;
-    /* overflow: hidden;
-    height: calc(100vh - 142px); */
 }
 
 .vcm-leveldiv h4 {
@@ -39,7 +37,6 @@
 .dbichart-block {
     background: #f4fafd;
     border: 1px solid #cfe1f7;
-    /* min-height: 67vh; */
     min-height: calc(100vh - 220px);
     margin-bottom: 0px !important;
 }
@@ -301,7 +298,6 @@ span.testtooltip:before {
   }
   
 .close-btn h3 {
-    /* padding: 10px 10px 5px 15px; */
     padding: 15px 10px 15px 12px;
     margin: 0px;
     font-size: 16px;
@@ -351,7 +347,6 @@ span.poname {
     background-color: #00a0e3;
     color: #fff;
     border-radius: 100%;
-    /* padding: 9px 11px; */
     width: 38px;
     height: 38px;
     text-align: center;
@@ -363,7 +358,6 @@ span.poname {
 span.polabel {
     position: absolute;
     bottom: -3px;
-    /* left: 0; */
     left: 10px;
     color: #7a7a7a;
     font-size: 12px;
@@ -386,9 +380,7 @@ span.polabel {
     box-shadow: none !important;
 }
 .vcmprop div#propertiesPanelBody {
-    /* height: calc(100% - 40px); */
     position: absolute;
-    /* top: 40px; */
     overflow: auto;
     width: 100%;
 }
@@ -420,19 +412,9 @@ span.polabel {
     height: calc(100vh - 280px) !important;
 }
 .editcontent {
-    /* height: calc(100vh - 275px); */
     height: calc(100vh - 325px) !important;
 }
-/* properties overlay End*/
 
-/* .l2proccess-list {
-    overflow: auto;
-    height: calc(100vh - 392px);
-}
-.l1processlistdiv {
-    overflow: auto;
-    height: calc(100vh - 279px);
-} */
 .files span.fname {
     font-weight: 600;
     width: 100%;
@@ -471,8 +453,6 @@ span.polabel {
     text-align: center;
 }
 .inputfile {
-    /* width: 0.1px;
-    height: 0.1px; */
     width: 94%;
     height: 34px;
     opacity: 0;
@@ -493,7 +473,6 @@ span.polabel {
     font-weight: 400;
 }
 .file-size {
-    /* color: #999; */
     font-size: 12px;
     font-weight: 400;
     display: block;
@@ -510,9 +489,6 @@ p.podefault {
     line-height: 40px;
 }
 .poundef {
-    /* margin: 0px;
-    line-height: 36px;
-    padding: 6px 10px; */
     margin: 0px;
     padding: 0px 10px;
     text-overflow: ellipsis;

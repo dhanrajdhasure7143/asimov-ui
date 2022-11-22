@@ -37,7 +37,6 @@
   .rpa-tablebox{
   padding-top:10px;
   padding-bottom:10px;
-  /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);*/
   border-radius: 10px;
   height: 900px;
   }
@@ -83,18 +82,6 @@
     white-space:nowrap;
   }
   
-  /* ::-webkit-scrollbar-track {
-    display:none;
-  }
-  
-  ::-webkit-scrollbar-thumb {
-  background:lightgray;
-  }
-  
-  ::-webkit-scrollbar {
-  width: 10px;
-  height:4px
-  } */
   
   :host ::ng-deep .table>thead>tr>th{
     background-color: rgb(74, 176, 245) !important;
