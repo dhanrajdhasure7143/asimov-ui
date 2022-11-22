@@ -74,19 +74,6 @@ label.label-control {
   text-overflow: ellipsis;
 }
 
-.btn-primary,
-.btn-add,
-.btn-validat,
-.swal-button--confirm {
-  /* color: #FFF !important;
-  border-color: rgb(0, 161, 228) !important;
-  background: rgb(0, 161, 228) !important;
-  min-width: 102px;
-  font-size: 14px;
-  line-height: 18px;
-  padding: 11px 24px; */
-}
-
 .mat-fab.mat-primary,
 .mat-flat-button.mat-primary,
 .mat-mini-fab.mat-primary,
@@ -170,8 +157,7 @@ button.btn.btn-primary.prj-btn-save {
   color: #7B8694 !important;
   border-radius: 2px;  
   padding: 6px 10px !important;
-  /* font-weight: 600 !important; */
-}
+ }
 
 .maindivfoprm input:focus,
 .maindivfoprm select:focus,

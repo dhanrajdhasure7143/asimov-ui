@@ -39,7 +39,6 @@
         color: #00a1e3;
       }
       .comment-level-1 {
-        /* margin-left: 50px; */
         margin-top: 15px;
       }
       .comment-content {
@@ -62,24 +61,7 @@
       font-size: 1.0em!important;
       font-family:sans-serif;
     }
-  
-  
-    
-  /* label.label-control {
-    
-    border: 1px solid transparent;
-    border-bottom: medium none;
-    margin: 0px !important;
-    border-radius: 2px;
-    color: black;
-    font-weight: 600;
-    font-size: 14px;
-    margin-bottom: 3px !important;
-    white-space: nowrap;
-    width: 100%;
-    text-overflow: ellipsis;
-  } */
-  
+   
   .prj-crt-form {
     margin-right: -15px !important;
     margin-left: -15px !important;
@@ -100,7 +82,6 @@
 
   .labelcont{
     color: #00a0e3 !important;
-    /* margin-left: 5px; */
     display: block;
     font-weight: 600;
   }
@@ -132,12 +113,10 @@ button.btn.btn-primary.prj-lst-btn:hover img.testplus.hover-img {
   height: 32px;
   color: #00a0e3;
   background: #e6f2fd;
-  /* font-weight: 600; */
   padding: 3px;
   text-align: center;
   line-height: 25px;
   font-size: 15px;
-  /* letter-spacing: 1px; */
 }
 .res-circle-img {
   border-radius: 100%;
@@ -173,7 +152,6 @@ ul.historydiv, .edit-resourcesdiv  {
   height: 100%;
 }
 .attachmentdiv table {
-  /* height: calc(100% - 30px); */
   overflow: hidden scroll;
 }
 .attachmentdiv .paginationdiv1 {
@@ -199,9 +177,7 @@ ul.historydiv li {
   border-bottom: 1px solid #e5e5e5;
   padding: 10px 0px 15px;
 }
-/* ul.historydiv li:first-child {
-  padding-top: 0px;
-} */
+
 ul.historydiv li:last-child {
   border-bottom: none !important;
 }
@@ -214,31 +190,24 @@ ul.historydiv li:last-child {
 
 
 .userimage{
-  /* padding:10px; */
   margin-right: 15px;
 }
 .commentsadded {
-  /* font-weight: 600; */
   color: #001c47;
   background-color: #f8f8f8;
   padding: 6px 10px;
   border-radius: 4px;
   margin-top: 10px;
   font-size: 15px;
-  /* margin-left: 8px; */
 }
 
 ::ng-deep .edit-task-tabs .mat-tab-body-content{
-  /* height:178px !important; */
   overflow:auto !important;
   border : 1px solid #ddd;
 }
 
 
 .bg-task{
-  /* background-color: #F3F3F3;
-  padding: 10px !important;
-  margin-bottom: 15px !important; */
   padding-bottom: 8px !important;
   padding: 10px !important;
   margin: 10px !important;
@@ -265,7 +234,6 @@ ul.historydiv li:last-child {
 }
 
 .edit-task-body {
-  /* height: calc(100% - 55px) !important; */
   height: calc(100% - 49px) !important;
   overflow: auto !important;
 }
@@ -321,19 +289,6 @@ img.hover-img {
 .mat-paginator {
   padding-top: 6px;
 }  
-.task-name-input{
-  /* width:200px;  */
-}
-/*.edit-task-body-content input[type=date]::-webkit-calendar-picker-indicator {
-  -webkit-appearance: none;
-  display: none;
-}
-.edit-task-body-content input.form-control {
-  background-image: url('../../../../assets/images/Projects/calendar.svg');
-  background-position: calc(100% - 10px) center;
-  background-repeat: no-repeat;
-  cursor: pointer;
-}*/
 
 .Edittask-btns .btn-primary {
   margin-right: 0px !important;
