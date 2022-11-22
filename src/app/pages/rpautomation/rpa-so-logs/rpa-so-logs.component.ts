@@ -73,10 +73,10 @@ export class RpaSoLogsComponent implements OnInit {
         
        this.isDataEmpty=false;
         response=[...response.map((item:any)=>{
-          item["startDate"]=moment(item.start_time.split("T")[0]).format("MMM, DD, yyyy");
-          item["startTime"]=moment(item.start_time.split("T")[1]).format("");
-          item["endDate"]=moment(item.end_time.split("T")[0]).format("MMM, DD, yyyy");
-          item["endTime"]=moment(item.end_time.split("T")[1]).format("");
+          item["startDate"]!=null?item["startDate"]=moment(item.start_time.split("T")[0]).format("MMM, DD, yyyy"):item["startDate"]=null;
+          item["startTime"]!=null?item["startTime"]=moment(item.start_time.split("T")[1]).format(""):item["startTime"]=null;
+          item["endDate"]!=null?item["endDate"]=moment(item.end_time.split("T")[0]).format("MMM, DD, yyyy"):item["endDate"]=null; 
+          item["endTime"]!=null?item["endTime"]=moment(item.end_time.split("T")[1]).format(""):item["endTime"]=null;
           return item;
         }).sort((a,b) => a.version > b.version ? -1 : 1)];
         this.runsListDataSource = new MatTableDataSource(response);
@@ -147,7 +147,7 @@ export class RpaSoLogsComponent implements OnInit {
      }    
      }, err=>{
        this.logsLoading=false;
-       this.isDataEmpty==true;
+       this.isDataEmpty=true;
        Swal.fire("Error","unable to get logs","error")       
     })
    }
@@ -270,7 +270,7 @@ export class RpaSoLogsComponent implements OnInit {
     },err=>{
       this.logsLoading=false;
       
-      this.isDataEmpty==true;
+      this.isDataEmpty=true;
       Swal.fire("Error","Unable to open loop logs","error");
     })
   }
