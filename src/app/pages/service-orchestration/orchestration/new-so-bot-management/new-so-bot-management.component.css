@@ -12,12 +12,6 @@ select {
     border-left: none;
 }
 
-/*
-.bg-color {
-    background-color: rgb(241, 240, 240);
-}
-*/
-
 .rpa-modal-content{
     padding-bottom: 25px !important;
 }
@@ -48,9 +42,7 @@ select {
 .botmanagement-tablelist {
   width:100%;
   overflow: auto;
-  /* height: calc(100% - 40px); */
   height: calc(100vh - 265px);
-  /* margin-top: 5px; */
 }
 
 
@@ -62,12 +54,6 @@ select {
 .search-fields-width{
   width:200px;
 }
-/* .tableActionsIcons img {
-  height: 18px;
-  width: auto;
-  margin-right: 4px;
-} */
-
 
 .tableActionsIcons span {
   font-size: 16px;

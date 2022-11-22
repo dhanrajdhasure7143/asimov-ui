@@ -1,40 +1,7 @@
 .rpa-home-block {
-  /* 
-      margin-left: 0px;
-      align-items: center;
-      text-align: center;
-      border: 1px solid lightgrey;
-      padding-top: 5vh;
-      padding-bottom: 5vh;
-      padding-right: 0px;
-      padding-left: 0px;
-      margin-right: 20px;
-      height:25vh; */
   display: inline-block;
   margin: 0px;
   margin-right: 15px;
-}
-
-.rpa-home-block:hover {
-  /* background: #fff;
-      -webkit-box-shadow: 0 2px 10px -5px #000;
-      box-shadow: 0 2px 10px -5px #000; */
-}
-
-.rpa-home-block:hover .rpa-home-btn-title {
-  /* font-size: 14px; */
-  /* color: white;
-      font-weight: bold; */
-}
-
-.mat-expansion-panel-header-title .bg_threebtn:hover {
-  /* padding: 8px;
-margin-left: -12px;
-background-color: white;
-border-radius: 15px;
-width: 32px;
-height: 30px;
-box-shadow: -1px 0px 1px #888888; */
 }
 
 .resetbtn {
@@ -55,7 +22,6 @@ tr.mat-row {
   display: -webkit-box;
   width: 140px;
   -webkit-line-clamp: 1;
-  /* number of lines to show */
   -webkit-box-orient: vertical;
 }
 
@@ -98,7 +64,6 @@ tr.mat-row {
   color: white;
 }
 
-.classfont {}
 
 .rpa-home-bots {
   padding: 5px;
@@ -145,7 +110,6 @@ tr.mat-row {
   padding: 6px 12px !important;
 }
 
-.title-font {}
 
 .rpa-mat-form-field-category {
   width: 87%;
@@ -197,7 +161,6 @@ th {
   height: auto !important;
   border-radius: 5px;
   margin-left: 15px;
-  /*left:90px;*/
 }
 
 .Botdescriptelement {
@@ -213,22 +176,12 @@ th {
   height: auto !important;
   border-radius: 5px;
   margin-left: 15px;
-  /*left:230px;*/
 }
 
 .flex-row {
   display: flex;
   width: 100%;
   align-items: center;
-  /* padding-right:10px; */
-}
-
-.flex-col {
-  /* flex: 1; */
-}
-
-.header {
-  /* font-weight: bold; */
 }
 
 .heading-workspace {
@@ -245,20 +198,12 @@ th {
   line-height: 31px !important;
 }
 
-.edit-bot-button {
-  /* margin-left: 70%;
-margin-top: 5%; */
-}
-
 .custom-file-input::-webkit-file-upload-button {
   visibility: hidden;
 }
 
 .custom-file-input::before {
   text-align: center;
-  /* font-family: 'Font Awesome 5 Free';
-content: "\f574    Select File";
-font-weight: 600; */
   content: "Select File";
   display: inline-block;
   background: #00a1e3;
@@ -279,7 +224,6 @@ font-weight: 600; */
 }
 
 .header-btn1 {
-  /* top: 10px; */
   top: 21px;
   right: 26px;
 }
@@ -300,23 +244,18 @@ label.subtitle-tag {
 
 .main-subheader {
   padding: 15px 6px 0px;
-  /* border-bottom: 2px solid #ddd; */
   margin: 0px 0px 15px;
-  /* box-shadow: 0px 1px 6px rgb(0 0 0 / 10%); */
   border-radius: 4px;
   border: 1px solid #e1e7ec;
   display: flex;
   align-items: center;
-  /* justify-content: space-between; */
   width: 100%;
-  /* height: 180px; */
   height: 165px;
   background-color: #edf9fb;
 }
 
 .main-subheaderBtns {
   display: flex;
-  /* justify-content: flex-end; */
   align-items: center;
 }
 
@@ -338,7 +277,6 @@ h4.gridHeader {
   text-align: left !important;
   border-top: none !important;
   font-weight: 400;
-  /* border-bottom: 1px solid #4a4a4a33 !important; */
   padding: 8px 10px;
   display: inline-block;
   width: calc(100% / 6.3);
@@ -413,7 +351,6 @@ button#create_Configuration:hover {
   position: relative;
   bottom: -5px;
   width: 30%;
-  /* height: 145px; */
   height: 130px;
 }
 
@@ -456,7 +393,6 @@ i.material-icons.expand-open {
 }
 
 .no-item-img {
-  /* height: calc(100vh - 330px); */
   height: 230px;
 }
 

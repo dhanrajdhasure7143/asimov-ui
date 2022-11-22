@@ -4,7 +4,6 @@
 .update_info {
   position: absolute;
   right: 25px;
-  /* bottom: 20px; */
   bottom: 6px;
   color: #0062cf;
 }
@@ -161,24 +160,11 @@ mat-tab-body {
 
 /*List-of-changes component - Ends*/
 /* home component styles - Starts*/
-/* .first_col{
-  text-align: center;
-}
-.col-half-offset, .col-half-offsett{
-  margin-left:4.166666667%;
-  text-align:center;
-}
-.col-half-offset:nth-child(4) {
-  margin-left: 3.1666%;
-} */
 #bpmn_list .row {
-  /* font-size: 11px; */
   font-size: 12px;
 }
 
 #bpmn_list {
-  /* height: 62vh; */
-  /* height: 70vh; */
   height: calc(100vh - 95px);
   overflow: hidden auto;
 }
@@ -205,7 +191,6 @@ mat-tab-body {
 }
 
 div[class^='diagram_container'] svg {
-  /* zoom: 50%; */
   position: relative;
   z-index: -10;
 }
@@ -214,10 +199,8 @@ div[class^='diagram_container'] {
   height: 400px;
   border: 1px solid #00a0e3;
   border-radius: 10px;
-  /* overflow: hidden auto; */
   padding: 5px;
   position: relative;
-  /* top: -20px; */
 }
 
 .readOnly svg {
@@ -226,15 +209,11 @@ div[class^='diagram_container'] {
 }
 
 .bps_overlay {
-  /* height: 400px; */
   z-index: 30;
   cursor: pointer;
   opacity: 0.9;
 }
 
-.bps_overlay:hover {
-  /* background-color: #fdfdfd; */
-}
 
 mat-expansion-panel {
   border-top: 1px solid #ccccccb5;
@@ -249,9 +228,7 @@ mat-expansion-panel {
 }
 
 .box-heading {
-  /* font-weight: bold; */
   color: #5b5b5b;
-  /* margin: 20px 0; */
   margin: 0px;
   line-height: 2;
 }
@@ -261,7 +238,6 @@ mat-expansion-panel {
   width: 10.5%;
   text-align: center;
   align-items: center;
-  /* padding-right: 4px; */
   white-space: nowrap;
   font-size: 13px;
 }
@@ -397,10 +373,7 @@ mat-tab-body {
   margin-right: 0;
 }
 
-/* .bjs-container{ */
-/* zoom: 0.8; */
-/* margin-top: 40px; */
-/* } */
+
 .canvasOpt {
   display: inline-block;
   margin-left: 15px;
@@ -409,13 +382,6 @@ mat-tab-body {
 
 /*propeties panel */
 .propertiesContainer {
-  /* position: absolute;
-  width: 315px;
-  right: 0;
-  height: 69vh;
-  overflow: auto;
-  display: inline-flex; */
-
   position: absolute;
   top: 0px;
   width: 320px;
@@ -452,19 +418,12 @@ mat-tab-body {
 
 .propertiesTitle {
   padding: 8px 10px;
-  /* padding: 10px 10px; */
   line-height: 12px;
   font-size: 12px;
   background-color: #607088;
   cursor: pointer;
-  /* border: 1px solid #607088; */
-  /* border-radius: 5px 0 0 5px; */
-  /* height: 200px; */
-  /* width: 25px; */
   width: auto;
-  /* right: 0px;  */
   position: absolute;
-  /* top: 20vh; */
   top: 0%;
   overflow: hidden;
 }
@@ -477,10 +436,6 @@ mat-tab-body {
 
 .propertiesTitle div {
   position: relative;
-  /* top: 120px;
-  white-space: nowrap;
-  height: 5px;
-  transform: rotate(-90deg) */
 }
 
 #properties {
@@ -528,13 +483,7 @@ mat-tab-body {
   max-height: 500px;
 }
 
-/* .canvasOpt:focus{
-  background-color: #0062cf;
-  color: white;
-} */
-/* #canvas .bjs-container{
-  top: -100px;
-} */
+
 .ex-percent {
   height: 72vh !important;
 }
@@ -558,10 +507,6 @@ mat-tab-body {
   margin: 0 !important;
 }
 
-.upload_again_btn button {
-  /* margin: 5px 8px 5px 10px;
-  float: right; */
-}
 
 .kpis-and-submit-button-div {
   bottom: 0;
@@ -640,18 +585,6 @@ mat-tab-body {
   display: inline-block;
 }
 
-/* .upload-btn {
-
-  color: white;
-    background-color: #0162cb;
-    padding-left: 30px;
-    padding-right: 30px;
-    border-radius: 25px;
-    margin-top: 10px;
-    border: none;
-    margin-left: 132px;
-
-} */
 .upload-btn-wrapper input[type=file] {
   font-size: 100px;
   position: absolute;
@@ -713,10 +646,8 @@ mat-tab-body {
 
 .highlight {
   background-color: green;
-  /* color elements as green */
   opacity: 0.4;
   pointer-events: none;
-  /* no pointer events, allows clicking through onto the element */
 }
 
 /* upload process model component styles - Ends*/
@@ -771,14 +702,9 @@ label {
 
 /* shared bpmn-diagram component styles - Ends*/
 /* bpmn-diagram-list component styles - Starts*/
-.account_pay_details_table tr {
-  /* border-bottom: 1px solid #ccc;
-  cursor: pointer; */
-}
 
 
 .account_pay_details_table input {
-  /* height: 20px; */
   padding: 0px !important;
   border: none !important;
   background-color: unset;
@@ -820,16 +746,8 @@ label {
   float: right;
 }
 
-#btn_app {
-  /* background-color: #3ea307 !important; */
-}
-
-#btn_deny {
-  /* background-color: #dd1818 !important; */
-}
 
 .list_diag {
-  /* height: 400px; */
   z-index: 30;
   cursor: pointer;
   opacity: 0.9;
@@ -844,12 +762,10 @@ label {
 .text-cell, .text-cell-last {
   text-align: left !important;
   width: 100% !important;
-  /* padding-left: 63px !important; */
 }
 
 .text-cell-last {
   text-align-last: center;
-  /* padding-left: 109px !important; */
 }
 
 .box-border {
@@ -861,10 +777,8 @@ label {
 
 
 .box_area {
-  /* margin-top: 20px; */
   margin-top: 5px;
   margin-bottom: 15px;
-  /* margin-bottom: 24px; */
 }
 
 .keyboard_style_upload {
@@ -884,8 +798,6 @@ label {
 
 .keyboard_label_style {
   font-size: 14px;
-  /* padding-right: 20px;
-  padding-bottom: 10px; */
 }
 
 .keyboard_header_shortcuts {
@@ -904,7 +816,6 @@ label {
 }
 
 .approver_fit_btn {
-  /* height: 46px; */
   right: 0px;
 }
 
@@ -962,14 +873,11 @@ label {
 
 .djs-minimap .toggle:before {
   content: '' !important;
-  /* background: url(./../../assets/images/icons/map-marked-alt-solid.svg); */
   background: url(./../../assets/images/BPMS/map-marked-blue.svg);
   background-size: cover;
   position: absolute;
   width: 20px;
   height: 20px;
-  /* margin-left: -11px;
-  margin-top: -13px; */
   top: 5px;
   left: 5px;
   color: black;
@@ -1007,15 +915,10 @@ label {
   
   border-top: medium none !important;
   border-left: medium none !important;
-  /* border-right: 1px solid #cccccc !important; */
-  /* top: 50% !important;
-  transform: translate(0%, -50%) !important; */
   top: 0px !important;
 }
 
 .propertiesContainer.propertiesContainerClosed {
-  /* width: 40px;
-  height: 36px; */
   width: 42px;
   height: 100%;
 }
@@ -1023,7 +926,6 @@ label {
 mat-panel-title.mat-expansion-panel-header-title {
   align-items: center;
   padding: 5px 10px;
-  /* border-bottom: 1px solid #ccc; */
   margin: 0px;
 }
 
@@ -1101,14 +1003,10 @@ mat-panel-title.mat-expansion-panel-header-title {
   padding-top: 10px;
   line-height: 16px;
 }
-/* .chartinnsec g[aria-labelledby*="-title"] {
-  display: none !important;
-} */
+
 .canvas2propcontainer {
   top: 68px;
   height: calc(100vh - 155px);
-  /* top: 55px;
-  height: calc(100vh - 150px); */
 }
 .propertiesContainer.propertiesContainerClosed.canvas2propcontainer {
   top: 68px;

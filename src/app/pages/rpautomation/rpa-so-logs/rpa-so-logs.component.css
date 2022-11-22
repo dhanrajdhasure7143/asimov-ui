@@ -92,11 +92,6 @@
   overflow:visible !important;
   position: relative  !important;
 }
-/* 
-::-webkit-scrollbar {
-  display: none;
-} */
-
 
 .dropdown-menu::-webkit-scrollbar {
   display: block;
@@ -172,12 +167,9 @@ background-color: blue !important;
 
 
 .rpa-dropdown{
- /*top:-78px !important;*/
- /* min-width:53px !important; */
  min-width: 80px !important;
     padding: 0px !important;
     left: -10px;
- /* left: -38px; */
 }
 
 
@@ -192,17 +184,12 @@ background-color: blue !important;
   border: 1px solid lightgray;
   text-align:center; 
   width:50px;
-  /* overflow-y: scroll; */
   height:60vh;
 }
 
-
-
 .actionsmenu{
-  /* border-bottom: 1px solid lightgray; */
   margin-top: 5px !important;
 }
-
 
 .actionsmenu-right{
   display:flex;
@@ -214,7 +201,6 @@ background-color: blue !important;
 }
 .action-item {
   width:auto;
-  /* font-size: 18px; */
   padding: 6px 8px;
   margin-top: 8px;
   cursor: pointer;
@@ -249,13 +235,8 @@ background-color: blue !important;
 .dropdown-action-item{
   border-right: 1px solid #e0e0e0;
   padding-right:15px;
-  /* padding-left:15px; */
 }
 .rpa-custom-slider {
-  /* height: 200px;
-  position: absolute;
-  bottom: -80px;
-  right: 15px; */
   height: auto;
   position: absolute;
   bottom: 15px;
@@ -397,20 +378,4 @@ ul#versions li:hover {
 .logsVersionFilter:focus{
   border:none !important;
 }
-/* ::ng-deep .cdk-overlay-container{
-z-index: 1200 !important;
-}
-::ng-deep .mat-select-panel {
-position: absolute !important;
- bottom: -5%;
- transform-origin: bottom !important;
- transform: none !important;
-}
-::ng-deep .cdk-overlay-pane {
- top: unset !important;
- transform: none !important;
- bottom: 19% !important;
- right: 27% !important;
- left: unset !important;
-} */
 
