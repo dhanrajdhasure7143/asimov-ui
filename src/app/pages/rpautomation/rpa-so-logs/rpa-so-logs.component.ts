@@ -64,13 +64,11 @@ export class RpaSoLogsComponent implements OnInit {
   }
  
   viewRunsByBotId(){
-    //clearInterval(this.interval) 
     this.logsLoading=true;
     this.rest.getviewlogdata(this.logsbotid).subscribe((response:any) =>{
       this.logsLoading = false;
-      
       this.logsDisplayFlag="RUNS"
-      if(response.errorMesssage==undefined)
+      if(response.errorMessage==undefined)
       {
         
        this.isDataEmpty=false;
