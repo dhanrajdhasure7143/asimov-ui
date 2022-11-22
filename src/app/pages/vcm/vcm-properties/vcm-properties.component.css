@@ -27,7 +27,6 @@ img {
 }
 .proc_deffield {
     position: relative;
-    /* margin-bottom: 10px; */
 } 
 .proc_deffield span.procdesc_act {
     position: absolute;
@@ -70,7 +69,6 @@ span.docpill:hover {
     padding: 0px !important;
 }
 .prop_procdef h4 {
-    /* background-color: #e8f7fd; */
     padding:10px;
 }
 .prop_procdef p {
@@ -109,8 +107,6 @@ span.docpill:hover {
     text-align: center;
 }
 .inputfile {
-    /* width: 0.1px;
-    height: 0.1px; */
     width: 94%;
     height: 34px;
     opacity: 0;
