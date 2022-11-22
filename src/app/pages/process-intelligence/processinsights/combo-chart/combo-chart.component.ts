@@ -125,6 +125,7 @@ import {
               [yScale]="yScaleLine"
               [results]="combinedSeries"
               [colors]="colorsLine"
+              [tooltipTemplate]="tooltipTemplate"
               [tooltipDisabled]="tooltipDisabled"
               (hover)="updateHoveredVertical($event)"
             />

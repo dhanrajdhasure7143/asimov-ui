@@ -534,5 +534,5 @@ img.hover-img {
 }
 
 .box_shade div#scatter ::ng-deep .tick text {
-  transform: rotate(-30deg);
+  transform: rotate(-60deg);
 }
