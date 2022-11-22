@@ -9,8 +9,6 @@
     border-radius: 3px;
     padding: 10px;
     margin-bottom: 15px;
-    /* height: 245px;
-    overflow: hidden; */
 }
 .prop_docs {
     margin-bottom: 5px !important;
@@ -21,7 +19,6 @@
     padding-bottom: 12px;
     font-size: 15px;
     font-weight: 600;
-    /* border-bottom: 1px solid #e5e5e5; */
 }
 img {
     cursor: pointer;
@@ -75,10 +72,8 @@ span.docpill:hover {
 }
 .prop_procdef {
     padding: 0px !important;
-    /* padding-bottom: 10px !important; */
 }
 .prop_procdef h4 {
-    /* background-color: #e8f7fd; */
     padding:10px;
 }
 .prop_procdef p {
@@ -157,12 +152,10 @@ span.testtooltip:after {
     padding: 5px 10px !important;
     display: flex;
     width: 100%;
-    /* padding-right: 18px !important; */
     align-items: center;
     font-size: 14px;
     color: #00a0e3;
     font-weight: 600;
-    /* border-bottom: 1px solid #4a4a4a33 !important; */
     border: none;
     height: 40px;
 }
@@ -173,7 +166,6 @@ span.testtooltip:after {
 }
 .workspace-title span {
     text-align: left;
-    /* padding: 0px 5px; */
     width: 100%;
     display: inline;
     font-weight: 600;
@@ -235,7 +227,6 @@ div#bpmn_list {
 }
 
 .new-bps-grid-data mat-expansion-panel {
-    /* width: 100%; */
     width: 99.87%;
     position: relative;
     padding: 2px 0px !important;
@@ -321,14 +312,6 @@ div#bpmn_list {
         padding-right: 3px;
     }
 
-/* .prop-doccont {
-    height: calc(100vh - 460px) !important;
-    overflow: hidden auto;
-}
-.prop-detcont {
-    height: calc(100vh - 400px) !important;
-    overflow: hidden auto;
-} */
 mat-accordion span table.PI.table.w-100.mat-table,
 .prop-detcont mat-accordion .has-childlevels .mat-expansion-panel-content.ng-trigger-bodyExpansion {
     margin-left: 3.5% !important;
@@ -337,7 +320,6 @@ mat-accordion span table.PI.table.w-100.mat-table,
 span.no-childlevels div.col-md-12,
 span.has-childlevels div.col-md-12 {
     border-top: 1px solid #dee2e6;
-    /* width: 100%; */
     width: 99.8%;
     height: 40px;
     padding: 5px 10px !important;
@@ -423,16 +405,6 @@ span.has-childlevels mat-expansion-panel.mat-expanded {
     box-shadow: 0px 2px 6px #dbdbdb !important;
     margin-bottom: 8px !important;
 }
-/* span.no-childlevels div.col-md-12{
-    width: 99.87% !important;
-} 
-span.has-childlevels div.col-md-12{
-    width: 100% !important;
-}
-span.has-childlevels.l3childs div.row.col-md-12.p-0.cons_grid_content {
-    padding-right: 0px !important;
-} */
-
 
 /* properties overlay Start */
 
@@ -445,9 +417,7 @@ span.has-childlevels.l3childs div.row.col-md-12.p-0.cons_grid_content {
 }
 
 .vcmprop div#propertiesPanelBody {
-    /* height: calc(100% - 40px); */
     position: absolute;
-    /* top: 40px; */
     overflow: auto;
     width: 100%;
 }
@@ -487,7 +457,6 @@ span.has-childlevels.l3childs div.row.col-md-12.p-0.cons_grid_content {
 }
 
 .editcontent {
-    /* height: calc(100vh - 275px); */
     height: calc(100vh - 230px) !important;
 }
 .propertiesContainer .collab-grid {
