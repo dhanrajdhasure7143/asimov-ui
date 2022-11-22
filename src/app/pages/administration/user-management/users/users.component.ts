@@ -8,6 +8,7 @@ import { APP_CONFIG } from "src/app/app.config";
 import { RestApiService } from "src/app/pages/services/rest-api.service";
 import Swal from "sweetalert2";
 import * as moment from "moment";
+import { LoaderService } from "src/app/services/loader/loader.service";
 
 @Component({
   selector: "app-users",
@@ -32,12 +33,12 @@ export class UsersComponent implements OnInit {
   ];
   loggedinUser: string;
   freetrail: string;
-  isLoading: boolean = false;
 
   constructor(
     private api: RestApiService,
     private router: Router,
-    @Inject(APP_CONFIG) private config
+    @Inject(APP_CONFIG) private config,
+    private loader: LoaderService
   ) {}
 
   ngOnInit(): void {
@@ -45,13 +46,13 @@ export class UsersComponent implements OnInit {
     this.freetrail = localStorage.getItem("freetrail");
   }
   getUsers() {
-    this.isLoading = true;
+    this.loader.show();
     this.loggedinUser = localStorage.getItem("ProfileuserId");
     this.api
       .getuserslist(localStorage.getItem("tenantName"))
       .subscribe((resp) => {
         this.users = resp;
-        this.isLoading = false;
+        this.loader.hide();
         this.userslist = [];
         this.users.forEach((element) => {
           let roles: any;
@@ -97,13 +98,12 @@ export class UsersComponent implements OnInit {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.value) {
-        this.isLoading = true;
+        this.loader.show();
         this.api.deleteSelectedUser(data.email).subscribe(
           (resp) => {
             let value: any = resp;
             if (value.message === "User Deleted Successfully") {
               this.getUsers();
-              // Swal.fire("Success", "User Deleted Successfully!!", "success")
               Swal.fire({
                 title: "Success",
                 text: "User Deleted Successfully!!",
@@ -117,12 +117,12 @@ export class UsersComponent implements OnInit {
               });
             } else {
               Swal.fire("Error", "Failed to delete user", "error");
-              this.isLoading = false;
+              this.loader.hide();
             }
           },
           (err) => {
             Swal.fire("Error", "Failed to delete user", "error");
-            this.isLoading = false;
+            this.loader.hide();
           }
         );
       }

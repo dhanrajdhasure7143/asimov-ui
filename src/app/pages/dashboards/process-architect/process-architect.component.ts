@@ -7,6 +7,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { LoaderService } from 'src/app/services/loader/loader.service';
 
 @Component({
   selector: 'app-process-architect',
@@ -33,7 +34,6 @@ export class ProcessArchitectComponent implements OnInit {
   activityStreamRecent: any;
   activityStreamPending: any;
   filterByDays = ['All', '30', '60', '90'];
-  isLoading = true;
   userDetails: any;
   topEffortsSpent: any=[];
   userRoles: any;
@@ -55,12 +55,13 @@ export class ProcessArchitectComponent implements OnInit {
   @ViewChild("paginator3",{static:false}) paginator3: MatPaginator;
   topEffortsSpentdataSource:MatTableDataSource<any>;
 
-  constructor(private apiService: RestApiService, private jwtHelper: JwtHelperService) {
+  constructor(private apiService: RestApiService, private jwtHelper: JwtHelperService,
+    private loader: LoaderService) {
     this.userDetails = this.jwtHelper.decodeToken(localStorage.getItem('accessToken'));;
   }
 
   ngOnInit(): void {
-
+    this.loader.show();
     this.userRoles = this.userDetails.userDetails.roles[0].roleName;
     this.userEmail = this.userDetails.userDetails.userId;
     this.userName = this.userDetails.userDetails.userName;
@@ -77,7 +78,7 @@ export class ProcessArchitectComponent implements OnInit {
           this.totalProjects = res['Total Projects'];
           this.totalTasks = res['Tasks'];
           this.processes = res['Processes'];
-          this.isLoading = false;
+          this.loader.hide();
         });
 
       this.apiService.getUpcomingDueDates(this.userRoles, this.userEmail, this.userName)
@@ -154,7 +155,7 @@ export class ProcessArchitectComponent implements OnInit {
           projectCompletionArray.push(data);
         }
         this.projectDurationChart(projectCompletionArray);
-        this.isLoading = false;
+        this.loader.hide();
       });
   }
 
@@ -180,7 +181,7 @@ export class ProcessArchitectComponent implements OnInit {
 
       }
       this.allProjectStatusChart(this.projectStatusArray);
-      this.isLoading = false;
+      this.loader.hide();
     });
   }
 

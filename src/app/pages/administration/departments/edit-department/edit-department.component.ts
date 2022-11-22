@@ -2,8 +2,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
+import { LoaderService } from 'src/app/services/loader/loader.service';
 import Swal from 'sweetalert2';
-import { NgxSpinnerService } from 'ngx-spinner';
+
 @Component({
   selector: 'app-edit-department',
   templateUrl: './edit-department.component.html',
@@ -14,9 +15,11 @@ export class EditDepartmentComponent implements OnInit {
   editDepartmentForm:FormGroup;
   departmentowner: any;
   users_list:any=[];
-  constructor(private formBuilder: FormBuilder,private route:ActivatedRoute,
+  constructor(private formBuilder: FormBuilder,
+    private route:ActivatedRoute,
     private router:Router,
-    private api: RestApiService,private spinner:NgxSpinnerService) { }
+    private api: RestApiService,
+    private loader:LoaderService) { }
 
   ngOnInit(): void {
     this.editDepartmentForm=this.formBuilder.group({
@@ -24,7 +27,7 @@ export class EditDepartmentComponent implements OnInit {
       owner: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       })
       this.getDepartmentdetails();
-      this.spinner.show();
+      this.loader.show();
       this.getallusers();
   }
 
@@ -85,13 +88,12 @@ export class EditDepartmentComponent implements OnInit {
     this.editDepartmentForm.get("owner").setValue("");
   }
 
-  getallusers()
-  {
+  getallusers(){
     let tenantid=localStorage.getItem("tenantName")
     this.api.getuserslist(tenantid).subscribe(item=>{
       let users:any=item
       this.users_list=users;
-      this.spinner.hide();
+      this.loader.hide();
     })
   }
 }

@@ -1,10 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { AdministrationRoutingModule } from './administration-routing.module';
 import { AdministrationComponent } from './administration.component';
-
-
 import { DataTablesModule } from 'angular-datatables';
 import { MatTableModule } from '@angular/material/table';  
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -72,8 +69,6 @@ const materialModules: any[] = [
     MatMenuModule,MatButtonModule,NgxSpinnerModule,NgxPaginationModule,
     ModalModule.forRoot(),
     MatProgressBarModule,NgSelectModule,Ng5SliderModule
-
-    
   ],
   providers:[
     BsModalRef, 
