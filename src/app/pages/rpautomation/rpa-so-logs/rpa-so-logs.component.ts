@@ -16,7 +16,7 @@ export class RpaSoLogsComponent implements OnInit {
   @ViewChild("logsSort",{static:false}) logsSort:MatSort;
   @ViewChild("loopsort",{static:false}) loopsort:MatSort;
   @ViewChild("logsPaginator",{static:false}) logsPaginator:MatPaginator;
-  displayedColumns: string[] = ['run_id','version','start_date','end_date', "bot_status"];
+  RunsTableColoumns: string[] = ['run_id','version','startDate','endDate', "bot_status"];
   displayedColumns1: string[] = ['task_name', 'status','startDate','endDate','error_info' ];
   displayedloopColumns:string[]=['taskName','iterationId','status','startTS','endTS',"errorMsg"];
   automationLogColoumns:string[]=['internaltaskName','startTS','endTS', 'status','errorMsg']
@@ -73,10 +73,8 @@ export class RpaSoLogsComponent implements OnInit {
         
        this.isDataEmpty=false;
         response=[...response.map((item:any)=>{
-          item["startDate"]!=null?item["startDate"]=moment(item.start_time.split("T")[0]).format("MMM, DD, yyyy"):item["startDate"]=null;
-          item["startTime"]!=null?item["startTime"]=moment(item.start_time.split("T")[1]).format(""):item["startTime"]=null;
-          item["endDate"]!=null?item["endDate"]=moment(item.end_time.split("T")[0]).format("MMM, DD, yyyy"):item["endDate"]=null; 
-          item["endTime"]!=null?item["endTime"]=moment(item.end_time.split("T")[1]).format(""):item["endTime"]=null;
+          item["startDate"]=moment(item.start_time).format("MMM, DD, yyyy, H:mm:ss");
+          item["endDate"]=item.end_time!=null?moment(item.end_time).format("MMM, DD, yyyy, H:mm:ss"):item.end_time;
           return item;
         }).sort((a,b) => a.version > b.version ? -1 : 1)];
         this.runsListDataSource = new MatTableDataSource(response);
