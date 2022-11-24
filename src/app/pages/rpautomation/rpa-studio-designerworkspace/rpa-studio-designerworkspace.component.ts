@@ -613,7 +613,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       this.nodes.push(nodeWithCoordinates);
       setTimeout(() => {
         this.populateNodes(nodeWithCoordinates);
-        this.autoSaveLoopEnd(nodeWithCoordinates)
+        // this.autoSaveLoopEnd(nodeWithCoordinates)
+        this.autoSaveTaskConfig(nodeWithCoordinates);
       }, 240);
 
       if (this.nodes.length == 1) {
@@ -851,6 +852,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       this.formHeader = node.name + " - " + node.selectedNodeTask;
       this.selectedNode = node;
       let taskdata = this.finaldataobjects.find(data => data.nodeId == node.name + "__" + node.id);
+      console.log("-----------------task data----------",taskdata)
       if (taskdata != undefined) 
       {
         if (taskdata.tMetaId == node.selectedNodeId) 
@@ -1343,7 +1345,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
     let cutedata = {
       "taskName": this.selectedTask.name,
-      "tMetaId": this.selectedTask.id,
+      "tMetaId": parseInt(this.selectedTask.id),
       "inSeqId": 1,
       "taskSubCategoryId": "1",
       "outSeqId": 2,
@@ -1354,10 +1356,16 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     }
     let index = this.finaldataobjects.findIndex(sweetdata => sweetdata.nodeId == cutedata.nodeId)
     let savedTaskIndex=this.actualTaskValue.findIndex(sweetdata => sweetdata.nodeId == cutedata.nodeId)
-    if (index != undefined && index >= 0 && savedTaskIndex != undefined && savedTaskIndex >= 0) {
+    if(index != undefined && index >= 0 && savedTaskIndex != undefined && savedTaskIndex >= 0)
+    {
       cutedata["botTId"]=this.actualTaskValue[savedTaskIndex].botTId;
       this.finaldataobjects[index] = cutedata;
-    } else {
+    }
+    else if (index != undefined && index >= 0  &&  savedTaskIndex < 0) {
+      this.finaldataobjects[index] = cutedata;
+    } 
+    else
+    {
       this.finaldataobjects.push(cutedata);
     }
     this.notifier.notify("info", "Data Saved Successfully");
@@ -1580,9 +1588,11 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         }
         else
         {
+          this.spinner.hide()
           Swal.fire("Error",response.errorMesssage, "error");
         }
       },(err)=>{
+        this.spinner.hide()
         Swal.fire("Error","Unable to update bot","error");
       })
       //return false;
@@ -2456,6 +2466,28 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       }
     })
   }
+
+
+  
+  autoSaveTaskConfig(nodeData:any){
+    if (nodeData.selectedNodeTask != "") 
+    {
+      this.selectedTask = {
+        name: nodeData.selectedNodeTask,
+        id: parseInt(nodeData.selectedNodeId)
+      }
+    }
+    this.selectedNode = nodeData;
+    this.rest.attribute(nodeData.selectedNodeId).subscribe((res:any)=>{        
+      this.formVales=res;
+      let data=res;
+      let obj={}
+      data.map(ele=>{
+          obj[ele.name+'_'+ele.id]=ele.value;
+        })
+      this.onFormSubmit(obj)
+ })
+}
 
 }
 
