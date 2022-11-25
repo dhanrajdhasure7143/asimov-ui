@@ -1,4 +1,4 @@
-import { Component, OnInit,  NgZone ,AfterViewInit,ChangeDetectorRef, ViewChild, ElementRef, Input , Pipe, PipeTransform, TemplateRef} from '@angular/core';
+import { Component, OnInit,  NgZone ,AfterViewInit,ChangeDetectorRef, EventEmitter,Output,ViewChild, ElementRef, Input , Pipe, PipeTransform, TemplateRef} from '@angular/core';
 import { DndDropEvent } from 'ngx-drag-drop';
 import { fromEvent } from 'rxjs';
 import { jsPlumb, jsPlumbInstance } from 'jsplumb';
@@ -17,6 +17,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { RpaStudioDesignerComponent } from '../rpa-studio-designer/rpa-studio-designer.component';
 import { SplitComponent } from 'angular-split'
+
 @Component({
   selector: 'app-rpa-studio-designerworkspace',
   templateUrl: './rpa-studio-designerworkspace.component.html',
@@ -24,9 +25,11 @@ import { SplitComponent } from 'angular-split'
 })
 export class RpaStudioDesignerworkspaceComponent implements OnInit {
   @Input("bot") public finalbot: any;
+  @Input("index") public index:any;
   @Input("toolsetItems") public toolset:any[];
   @Input("environmentsList") public environmentsList:any[];
   @Input("categoriesList") public categoriesList:any[];
+  @Output('onCreateBotDetails') public onCreateBotDetails:EventEmitter<any>= new EventEmitter()
   @ViewChild('logspopup',{static:false}) public logsOverlayRef:any;
   @ViewChild('screen', { static: false }) screen: ElementRef;
   @ViewChild('canvas', { static: false }) canvas: ElementRef;
@@ -1510,6 +1513,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       let botDetails={...this.finalbot,...this.botDetailsForm.value}
       this.rest.createBot(botDetails).subscribe((response:any)=>{
         this.finalbot=response;
+        this.onCreateBotDetails.emit({index:this.index, botName:response.botName})
         let url=window.location.hash;
         window.history.pushState("", "", url.split("botId")[0]+"botId="+response.botId);
         this.updateBotFun(versionType, comments)

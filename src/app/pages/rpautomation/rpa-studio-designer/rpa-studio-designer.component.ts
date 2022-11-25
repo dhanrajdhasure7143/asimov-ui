@@ -228,7 +228,7 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
     this.loadedBotsList.splice(this.loadedBotsList.indexOf(tab), 1)
     if(this.loadedBotsList.length==0)
     {
-      alert("Please save configuration before close")
+      alert("Are you sure to exit without saving bot?")
       this.activeRoute.queryParams.subscribe(data=>{
         let params:any=data;
         if(params.name!=undefined)
@@ -431,6 +431,12 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
     this.getAllBots();
   }
 
-  
+  updateCreatedBotName(botNameDetails:any)
+  {
+    this.loadedBotsList[botNameDetails.index].botName=botNameDetails.botName;
+    this.tabActiveId=botNameDetails.botName;
+    console.log("lastceck",this.loadedBotsList[botNameDetails.index])
+    this.getAllBots()
+  }
 
 }
