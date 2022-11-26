@@ -80,34 +80,6 @@
     <div class="projectrepo-body">
       <div>
           <mat-card id="projects_details_screen" *ngIf="projects_toggle==false">
-         
-            <!-- <div class="projects-table-body">
-              <table>
-                <tr class="separated">
-                  <th>Category</th>
-                  <th>File Name</th>
-                  <th>Uploaded Date</th>
-                  <th>Uploaded by</th>
-                  <th>File Size</th>
-                  <th>Comments</th>
-                  <th>Actions</th>
-                </tr>
-                <tr *ngFor="let element of uploadedFiledata">
-                  <td>{{element.category}}</td>
-                  <td>{{element.fileName}}</td>
-                  <td>{{element.uploadedDate | date:'MMM dd, y, HH:mm:ss'}}</td>
-                  <td>{{getUserName(element.uploadedBy)}}</td>
-                  <td>{{element.fileSize | fileSizePipe}}</td>
-                  <td>{{element.comments}}</td>
-                  
-                  <td>
-                      <span class="projects-menu-item" (click)="onDeleteItem(element)"><i class="fa fa-trash"></i></span>
-                      <span class="projects-menu-item" (click)="onDownloadItem(element)"><i class="fa fa-download"></i></span>
-                  </td>
-                  </tr>
-               
-              </table>
-              </div> -->
             <div class="projects-table-body">
               <table mat-table #sort11="matSort" [dataSource]="dataSource3" matSort class="projecttable table" id="autotable">
 
@@ -235,84 +207,7 @@
                <b>Pending Requests</b>
               </span>            
             </div>
-            <!-- <mat-tab-group mat-align-tabs="Start">
-              <mat-tab label="All">
-              
-            <div class="projects-table-body">
-              <table>
-                <tr class="separated">
-                  <th>File Category</th>
-                  <th>Request From</th>
-                  <th>Request To</th>
-                  <th>Description</th>
-                  <th>Requested Date</th>
-                  <th>Actions</th>
-                  
-                </tr>
-                <tr *ngFor="let element of requestedFiledata">
-                  <td>{{element.category}}</td>
-                  <td>{{getUserName(element.requestFrom)}}</td>
-                  <td>{{getUserName(element.requestTo)}}</td>
-                  <td>{{element.comments}}</td>
-                  <td>{{element.uploadedDate | date:'MMM dd, y, HH:mm:ss'}}</td>
-                  
-                  <td>
-                    
-                      <span class="remove-action">
-                        <button *ngIf="!((loggedUser != element.requestFrom) && (loggedUser != element.requestTo))" (click)="denyFileRequest(denyFileRequestmodal, element)" type="button"><i class="fas fa-times"></i></button>
-                      </span>
-                      <span class="upload-action" *ngIf="loggedUser == element.requestTo">
-                        <input type="file" name="file" (change)="uploadRequetedFile($event, element)" id="file" class="inputfile" />
-                        <label for="file" (change)="uploadRequetedFile($event, element)"><i class="fas fa-file-upload"></i></label>
-                    </span>
-                    <span *ngIf="((loggedUser != element.requestFrom) && (loggedUser != element.requestTo))">-</span>
-
-                  </td>
-                  </tr>
-                  
-              </table>
-              </div>
             
-       
-      </mat-tab>
-        <mat-tab label="My Requests">
-      <div class="projects-table-body" style="padding:10px;">
-          <table>
-                <tr class="separated">
-                  <th>File Category</th>
-                  <th>Request From</th>
-                  <th>Request To</th>
-                  <th>Description</th>
-                  <th>Requested Date</th>
-                  <th>Actions</th>
-                  
-                </tr>
-                <tr *ngFor="let element of filterdArray">
-                  <td>{{element.category}}</td>
-                  <td>{{getUserName(element.requestFrom)}}</td>
-                  <td>{{getUserName(element.requestTo)}}</td>
-                  <td>{{element.comments}}</td>
-                  <td>{{element.uploadedDate | date:'MMM dd, y, HH:mm:ss'}}</td>
-                  
-                  <td>
-                    
-                      <span class="remove-action">
-                        <button *ngIf="!((loggedUser != element.requestFrom) && (loggedUser != element.requestTo))" (click)="denyFileRequest(denyFileRequestmodal, element)" type="button"><i class="fas fa-times"></i></button>
-                      </span>
-                      <span class="upload-action" *ngIf="loggedUser == element.requestTo">
-                        <input type="file" name="file" (change)="uploadRequetedFile($event, element)" id="file" class="inputfile" />
-                        <label for="file" (change)="uploadRequetedFile($event, element)"><i class="fas fa-file-upload"></i></label>
-                    </span>
-                    <span *ngIf="((loggedUser != element.requestFrom) && (loggedUser != element.requestTo))">-</span>
-
-                  </td>
-                  </tr>
-                  
-              </table>
-            
-              </div>
-            </mat-tab>
-          </mat-tab-group> -->
             <mat-tab-group mat-align-tabs="Start">
               <mat-tab label="All">
 

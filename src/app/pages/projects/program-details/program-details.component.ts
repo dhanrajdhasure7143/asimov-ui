@@ -518,39 +518,11 @@ export class ProgramDetailsComponent implements OnInit {
         Swal.fire("Error","Entered Project Name is Invalid","error")
       }
     })
-    // Swal.fire({
-    //   title: 'Are you sure?',
-    //   text: "You won't be able to revert this!",
-    //   icon: 'warning',
-    //   showCancelButton: true,
-    //   confirmButtonColor: '#3085d6',
-    //   cancelButtonColor: '#d33',
-    //   confirmButtonText: 'Yes, delete it!'
-    // }).then((result) => {
-    //   if (result.value) {
-    //     this.spinner.show();
-    //     this.api.delete_Project(delete_data).subscribe( res =>{ 
-    //       this.spinner.hide();
-    //       let response:any=res
-    //       if(response.errorMessage==undefined)
-    //       {
-    //         this.projects_list=[];
-    //         Swal.fire("Success",response.message,"success")
-    //         this.getallProjectsdata();
-    //       }
-    //       else
-    //       {
-    //         Swal.fire("Error",response.errorMessage,"error")
-    //       }
-    //     })
-    //   }
-    //   })
   }
 
   resetcreateproject()
   {
-        this.insertForm2.reset();
-        
+        this.insertForm2.reset();  
         this.insertForm2.get("resources").setValue("");
         this.insertForm2.get("mapValueChain").setValue("");
         this.insertForm2.get("owner").setValue("");

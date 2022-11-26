@@ -35,14 +35,14 @@
   <div class="modal-body newmodelbodycl">
     <div class="logs-container" >
     
-      <div [id]="viewlogid" *ngIf="logsLoading==false && logsDisplayFlag=='RUNS' && isDataEmpty==false" style="background: white;">
+      <div [id]="viewlogid" *ngIf="logsLoading==false && logsDisplayFlag=='RUNS' && isDataEmpty==false" class="log-bg">
               <table mat-table class="logs-table" [dataSource]="runsListDataSource" #sortRunsTable="matSort" matSort>
   
   
                   <!-- Run Id Column -->
                   <ng-container matColumnDef="run_id">
-                      <th mat-header-cell  *matHeaderCellDef mat-sort-header style="padding-left:55px;width:13%"> Run ID </th>
-                      <td mat-cell *matCellDef="let element" style="padding-left:55px;width:13%"><button style="color:#00a1e3; text-decoration: underline;" (click)="ViewlogByrunid(element.run_id,element.version,element.bot_status)">{{element.run_id}}</button></td>
+                      <th mat-header-cell  *matHeaderCellDef mat-sort-header class="table-grid-runId"> Run ID </th>
+                      <td mat-cell *matCellDef="let element" class="table-grid-runId"><button style="color:#00a1e3; text-decoration: underline;" (click)="ViewlogByrunid(element.run_id,element.version,element.bot_status)">{{element.run_id}}</button></td>
                   </ng-container>
   
                   <!-- Version Column -->
@@ -61,25 +61,25 @@
                   </ng-container>
   
                   <!-- Start Date Column -->
-                  <ng-container matColumnDef="start_date">
-                      <th mat-header-cell mat-sort-header *matHeaderCellDef style="width:25%;"> Start Date </th>
-                      <td mat-cell *matCellDef="let element" style="width:25%;">
+                  <ng-container matColumnDef="startDate">
+                      <th mat-header-cell mat-sort-header *matHeaderCellDef class="table-grid-date"> Start Date </th>
+                      <td mat-cell *matCellDef="let element" class="table-grid-date">
                           <!-- <span *ngIf="element.start_date!=null && element.start_date!='-' ">{{element.start_date | date:'EEE MMM d, yyyy' }}, <span *ngIf="element.start_time!=undefined && element.start_time != null">{{element.start_time}}</span></span> -->
                           <!-- <span *ngIf="element.start_date == undefined">--</span> -->
-                          <span>{{element.start_time |date: 'MMM d, y, H:mm:ss'}}</span>
-                          <span *ngIf="!element.start_time">-</span>
+                          <span>{{element.startDate}}</span>
+                          <span *ngIf="!element.startDate">-</span>
                       </td>
                   </ng-container>
   
                   <!-- End Date Column -->
   
-                  <ng-container matColumnDef="end_date">
-                      <th mat-header-cell mat-sort-header *matHeaderCellDef style="width:25%;"> End Date </th>
-                      <td mat-cell *matCellDef="let element" style="width:25%;">
+                  <ng-container matColumnDef="endDate">
+                      <th mat-header-cell mat-sort-header *matHeaderCellDef class="table-grid-date"> End Date </th>
+                      <td mat-cell *matCellDef="let element" class="table-grid-date">
                           <!-- <span *ngIf="element.end_date!=null && element.end_date!='---' ">{{element.end_date | date:'EEE MMM d, yyyy' }}, <span *ngIf="element.end_time!=undefined && element.end_time != null">{{element.end_time}}</span></span> -->
                           <!-- <span *ngIf="element.end_date == undefined || element.end_date=='---'">---</span> -->
-                          <span>{{element.end_time|date: 'MMM d, y, H:mm:ss'}}</span>
-                          <span *ngIf="!element.end_time ">-</span>
+                          <span>{{element.endDate}}</span>
+                          <span *ngIf="!element.endDate ">-</span>
                       </td>
                   </ng-container>
                   <ng-container matColumnDef="bot_status">
@@ -133,8 +133,8 @@
   
                 
   
-                  <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                  <tr mat-header-row *matHeaderRowDef="RunsTableColoumns; sticky: true"></tr>
+                  <tr mat-row *matRowDef="let row; columns: RunsTableColoumns;"></tr>
               </table>
       </div>
   
@@ -426,8 +426,10 @@
       </table>
       </div>
       <div *ngIf="isDataEmpty==true" class="text-center">
-        <img src="../../../../assets/images/RPA/No-Items.svg" style="height:250px">
-        <h5>No Items To Display</h5>
+        <!-- <img src="../../../../assets/images/RPA/No-Items.svg" style="height:250px"> -->
+          <div class="no-records">
+            <h4>No Records Found</h4>
+          </div>
       </div>
       <!-- <mat-paginator #paginator2 class="newpaginationdiv" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons] ="true"></mat-paginator> -->
     <div class="logs-container" *ngIf="logsLoading==true">
