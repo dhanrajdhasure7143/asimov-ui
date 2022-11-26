@@ -24,12 +24,9 @@ export class ProjectsProgramsTableComponent implements OnInit {
   displayedColumns1: string[] = ["id","type","initiatives","process","projectName","owner","priority","status","createdBy","action"];
   @ViewChild("paginator2",{static:false}) paginator2: MatPaginator;
   @ViewChild("sort2",{static:false}) sort2: MatSort;
-  
   @Input('status') public status_data: any;
   @Input('projects_list') public projects_list: any=[];
-  
   @Input('users_list') public users_list: any=[];
-  
   @Input('processes') public processes: any=[];
   // public selectedTab=0;
   // public check_tab=0;
@@ -56,27 +53,7 @@ export class ProjectsProgramsTableComponent implements OnInit {
   userName: string;
   initiatives: any;
   @Output() projectslistdata = new EventEmitter<any[]>();
-  //   public createprogram:FormGroup;
-  // updateddata: any;
-  // public updateflag: boolean;
-  // public Credupdateflag:Boolean;
-  //   public Creddeleteflag:Boolean;
-  //   public Credcheckflag:boolean = false;
-  // selectedprojectid: string;
-  // selectedprojecttype: any;
-  // projectmodifybody: any;
-  // submitted: boolean;
-  // insertForm: FormGroup;
-  // insertForm2:FormGroup;
-  // projDetials: {};
-  // myprojDetials:any;
-  // tablelist:any=[]
-  // prog_projectArray: any=[];
-  // myProgrambody: any;
-  // public selected_process_names:any=[];
-  // userslist:any;
-  // projectdetailsEncode: any;
-  // project: { id: any; };
+
   constructor( 
       private api:RestApiService,
       private formBuilder: FormBuilder,
