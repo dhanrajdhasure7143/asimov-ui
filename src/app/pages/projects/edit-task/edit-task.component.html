@@ -62,7 +62,6 @@
                         
                             <div class="value">
                                 <span class="level3">Last Modified By : {{lastModifiedBy}} </span>
-                                <!-- <span> | </span> -->
                                 <span class="level3 lmtime"> {{lastModifiedTimestamp |  date:'MMM dd, y, HH:mm:ss'}}</span>
                             </div>
                         
@@ -87,7 +86,6 @@
                     </div>
                     <div class="form-group col-md-6 pr-0">
                         <label class="label-control" id="enddate" for="endDate">Task Completion Date</label><br>
-                        <!-- <span class="labelcont">{{endDate  | date}}</span> -->
                         <input type="date" class="form-control rpa-control" [min]="mindate" max="9999-12-31" (change)="endDate=$event.target.value" [value]="endDate" formControlName="endDate">
                     </div>
                     <div class="form-group col-md-6 pl-0">
@@ -289,9 +287,6 @@
 
                             </li>
                         </ul>
-                        <!-- <div class="comment-content" > 
-                              
-                                </div> -->
                         <div class="text-center" *ngIf="taskhistory.length==0">
                             <h4><b>No Records Found</b></h4>
                         </div>
@@ -309,29 +304,7 @@
                         <img src="../../../../assets/images/Projects/Download.svg" class="hover-img">
                       </button>
                     </span>
-                            <!-- <table class="table" *ngIf="(taskattacments!=null && taskattacments.length!=0)">
-                        <thead>
-                          <tr>
-                            <th class="text-left">File Name</th>
-                            <th class="text-left">File Size (MB)</th>
-                            <th class="text-left">Actions</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr
-                            *ngFor="let attachments of taskattacments | paginate: { itemsPerPage: 2, currentPage: att } ">
-                            <td>{{attachments.fileName}}</td>
-                            <td class="text-left">{{attachments.fileSize | fileSizePipe}}</td>
-                            <td class="text-left">
-                              <span class="clickable" (click)="downloadTaskAttachment(attachments)">
-                                <img src="../../../../assets/images/Projects/Download.svg" class="testplus" />
-                              </span>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                      <pagination-controls *ngIf="(taskattacments!=null && taskattacments.length!=0)" class="pull-right"
-                        (pageChange)="att = $event"></pagination-controls> -->
+                            
                             <table mat-table #sort11="matSort" [dataSource]="dataSource3" matSort class="projecttable table" id="autotable">
                                 <ng-container matColumnDef="check">
                                     <th mat-header-cell *matHeaderCellDef mat-sort-header>
