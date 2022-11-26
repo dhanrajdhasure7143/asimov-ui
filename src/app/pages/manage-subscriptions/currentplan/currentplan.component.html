@@ -34,7 +34,7 @@
             <button *ngIf="planlist.nickName =='Free Tier'" [disabled]="planlist.freeSubscribed||planlist.subscribed" class="btn btn-primary selectplanbtn" (click)="selectedPlan(planlist)">Activate</button>
 
             <h5 *ngIf="planlist.nickName =='Enterprise'" class="enterprice">Enterprise Solution</h5>
-            <button *ngIf="planlist.nickName =='Enterprise'" [disabled]="(planlist.enterpriseSubscribed)"class="btn btn-primary selectplanbtn" (click)="contactUsSwal()">Contact Us</button>
+            <button *ngIf="planlist.nickName =='Enterprise'" [disabled]="(planlist.enterpriseSubscribed)"class="btn btn-primary selectplanbtn">Contact Us</button>
         </div>
         </div>
         </span>

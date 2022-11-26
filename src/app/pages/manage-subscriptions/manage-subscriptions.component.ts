@@ -20,7 +20,7 @@ export class ManageSubscriptionsComponent implements OnInit {
   billingaddresssection: boolean = false;
   paymenthistorysection: boolean = false;
   orderdetailssection: boolean = false;
-  constructor(private obj: PagesComponent, private rest_service: RestApiService) { }
+  constructor(public obj: PagesComponent, private rest_service: RestApiService) { }
 
   ngOnInit(): void {
 

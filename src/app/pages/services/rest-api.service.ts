@@ -1,3 +1,5 @@
+
+
 import { Injectable, OnInit } from '@angular/core';
 import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
@@ -75,7 +77,7 @@ export class RestApiService{
         });
        }
      }
-  
+
   getInbox(){
     return this.http.get('/rpa-service/inbox');
   }
@@ -178,6 +180,12 @@ export class RestApiService{
     )
   }
 
+
+  getMultiFormAttributes(dependencyApi)
+  {
+    return this.http.get(dependencyApi);
+  }
+
   async saveBot(data:any)
   {
     return await this.http.post('/rpa-service/save-bot',data)
@@ -187,7 +195,9 @@ export class RestApiService{
   {
     return await this.http.post('/rpa-service/update-bot',data)
   }
-
+  createBot(data:any){  
+    return this.http.post('/rpa-service/create-bot',data)
+  }
   async uploadfile(data:any,envids:any[])
   {
     let  url="/rpa-service/agent/file-upload-environments";
@@ -263,22 +273,22 @@ export class RestApiService{
 
   //rest-api
 
-  getviewlogdata(botid)
-  {
-    return this.http.get("/rpa-service/logs/"+botid);
-  }
+    getviewlogdata(botid)
+    {
+      return this.http.get("/rpa-service/logs/"+botid);
+    }
+
     getViewlogbyrunid(botid,botverid,runid){
       return this.http.get("/rpa-service/logs/"+botid+"/"+botverid+"/"+runid);
     }
 
 
 
- 
-    updateBotLog(botid,version, runid)
-    {
-      return this.http.post(`/rpa-service/kill-bot/${botid}/${version}/${runid}`,"")
-    }
-  
+  updateBotLog(botid,version, runid)
+  {
+    return this.http.post(`/rpa-service/kill-bot/${botid}/${version}/${runid}`,"")
+  }
+
 
   kill_process_log(processid,envid,runid)
   {
@@ -333,12 +343,14 @@ export class RestApiService{
   {
     return this.http.post<any>("/rpa-service/agent/save-environment",data);
   }
+
   
   addenvironmentV2(data:any):Observable<any>
   {
     return this.http.post<any>("/rpa-service/agent/save-environment-v2",data);
   }
   
+
   deleteenvironment(data:any) :Observable<any>
   {
     return this.http.post<any>("/rpa-service/agent/delete-environment",data);
@@ -350,12 +362,11 @@ export class RestApiService{
     }
     return this.http.put<any>("/rpa-service/agent/update-environment",data);
   }
-  
+
   updateEnvironmentV2(formData)
   {
     return this.http.post<any>("/rpa-service/agent/update-environment-v2",formData);
   }
-
   getAllRpaWorkSpaces(id:any){
     if(id==0)
     {
@@ -398,9 +409,10 @@ export class RestApiService{
     return this.http.get("/rpa-service/load-process-info/"+id);
   }
 
-  startprocess(processid,envid)
+  startprocess(processid,envid,executiontype)
   {
-    return this.http.post("/rpa-service/start-process/"+processid+"/"+envid,"");
+    return this.http.post("/rpa-service/start-process/"+processid+"/"+envid+"/"+executiontype,'');
+
   }
 
   fetchBpmnNotationFromPI(pid){
@@ -550,6 +562,16 @@ export class RestApiService{
 
 
 
+  getbotSchedules(data)
+  {
+    return this.http.post(`/rpa-service/getschedulesintervals-bot/${data.botid}?version=${data.version}`,{})
+  }
+
+  addbotSchedules(payload)
+  {
+    return this.http.post(`/rpa-service/specifiedscheduled-savebot`,payload)
+  }
+  
   start_schedule(data)
   {
     return this.http.post("/rpa-service/specifiedscheduled-startbot", data);
@@ -557,7 +579,7 @@ export class RestApiService{
 
   stop_schedule(data)
   {
-    return this.http.post("/rpa-service/specifiedscheduled-stopbot", data);
+    return this.http.post("/rpa-service/deleete-each-schedule-bot", data);
   }
 
   pause_schedule(data)
@@ -626,16 +648,15 @@ export class RestApiService{
   }
 
 
-  assign_bot_and_task(id,taskid,source,type)
-  {
+  assign_bot_and_task(id,taskid,source,type,userID){
     let data:any
-    if(type=="Automated")
-    {
+    if(type=="Automated"){
       data={
-        "botId":id,
-        "taskId":taskid,
-        "assignedUserId":"0",
+       "botId":id,
+       "taskId":taskid,
+       "assignedUserId":"0",
        "sourceType":source,
+       "taskOwner":userID
       };
     }
     else if(type=="Human")
@@ -690,6 +711,7 @@ export class RestApiService{
     {
       return this.http.get<any>('/api/user/tenants/'+tenantid +'/users');
     }
+
     getusername(tenantId){
       return this.http.get<any>('/api/user/tenants/'+tenantId +'/usersDetails');
       
@@ -970,10 +992,7 @@ save_blueprism_config(data)
     {
       return this.http.get("/platform-service/project/findByProgramId?programId="+id);
     }
-    createBot(data:any){  
-      return this.http.post('/rpa-service/create-bot',data)
-    }
-  
+
 
 
 
@@ -1380,21 +1399,17 @@ getAttachementsByLevel(body){
   return this.http.post('/vcmv2/fetchDocumentsByLevel',body);
 }
 
-
 getLooplogs(botId,version,runId){
-    return this.http.get(`/rpa-service/loop-logs/${botId}/${version}/${runId}`);
+  return this.http.get(`/rpa-service/loop-logs/${botId}/${version}/${runId}`);
 }
 
-
-getMultiFormAttributes(dependencyApi)
-{
-  return this.http.get(dependencyApi);
-}
 
 getAutomationLogs(botId, version, runId,taskId)
 {
   return this.http.get(`/rpa-service/automation-logs/${botId}/${version}/${runId}/${taskId}`);
 }
+
+
 deleteSelectedvcmProcess(body){
   return this.http.post('/vcmv2/deleteVcmByLevel',body);
 }
@@ -1461,10 +1476,14 @@ getFileCategoriesList(id){
 getFilteredEnvironment(id){
   return this.http.get("/rpa-service/agent/get-environments/"+id)
 }
-getDatabaselist(){
-  return this.http.get("/rpa-service/get-databasetypes")
-}
 getTimeZone(){
   return this.http.get('/rpa-service/getTimeZones');
+}
+getDatabaselist(){
+  return this.http.get("/rpa-service/getdatabasetypes")
+}
+getprocessnamesByLatestVersion()
+{
+  return this.http.get("/rpa-service/latest-version/process-name");
 }
 }

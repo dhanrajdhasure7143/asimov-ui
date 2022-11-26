@@ -45,7 +45,6 @@ export class PreviewFormProvider implements IPropertiesProvider {
 
     //Change drop down label String/Expression to text in I/O Tab
     let inputOutputtab = actualTabs[inputOutputTabInd];
-    // console.log(inputOutputtab);
 
     //add IO Specification tab
     var bo = getBusinessObject(element);
@@ -64,7 +63,6 @@ export class PreviewFormProvider implements IPropertiesProvider {
       actualTabs.splice(1,0,IOSpecTab);
 
       //Add Input/Output Tab for process
-      // console.log(actualTabs)
     }
 
     //add RPA Task tab

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="26.208" height="25.073" viewBox="0 0 26.208 25.073">
+  <g id="Group_499" data-name="Group 499" transform="translate(-3362.72 -3048.552)">
+    <path id="Path_208" data-name="Path 208" d="M3381.326,3049.723H3363.72V3072.8h24.208v-17.644Z" transform="translate(0 -0.171)" fill="none" stroke="#009fe3" stroke-width="2"/>
+    <g id="Rectangle_146" data-name="Rectangle 146" transform="translate(3370.235 3049.409)" fill="none" stroke="#009fe3" stroke-width="2">
+      <rect width="10.58" height="7.406" stroke="none"/>
+      <rect x="1" y="1" width="8.58" height="5.406" fill="none"/>
+    </g>
+    <path id="Path_209" data-name="Path 209" d="M3377.142,3052.367h2.772v2.264" transform="translate(-2.945 -0.147)" fill="none" stroke="#009fe3" stroke-width="1"/>
+    <g id="Rectangle_147" data-name="Rectangle 147" transform="translate(3367.612 3063.163)" fill="none" stroke="#009fe3" stroke-width="2">
+      <path d="M1.5,0H15.43a1.5,1.5,0,0,1,1.5,1.5V9.522a0,0,0,0,1,0,0H0a0,0,0,0,1,0,0V1.5A1.5,1.5,0,0,1,1.5,0Z" stroke="none"/>
+      <path d="M1.5,1H15.43a.5.5,0,0,1,.5.5V8.522a0,0,0,0,1,0,0H1a0,0,0,0,1,0,0V1.5A.5.5,0,0,1,1.5,1Z" fill="none"/>
+    </g>
+    <line id="Line_85" data-name="Line 85" x2="6.368" transform="translate(3372.843 3066.05)" fill="none" stroke="#009fe3" stroke-width="1"/>
+    <line id="Line_86" data-name="Line 86" x2="6.368" transform="translate(3372.843 3069.536)" fill="none" stroke="#009fe3" stroke-width="1"/>
+  </g>
+</svg>

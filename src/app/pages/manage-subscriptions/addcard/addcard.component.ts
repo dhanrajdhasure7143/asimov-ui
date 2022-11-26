@@ -26,6 +26,7 @@ export class AddcardComponent implements OnInit {
   public monthlist: number[] = new Array(12);
   public yearList: number[] = new Array(11);
   private spacialSymbolEncryption:string = '->^<-';
+  cards:any;
   @Output() onBack = new EventEmitter<any>();
  
   constructor(private cryptoService:CryptoService,private api:RestApiService, private spinner:NgxSpinnerService) { }
@@ -94,7 +95,6 @@ export class AddcardComponent implements OnInit {
         
     
     this.api.addNewCard(this.paymentToken.message,this.isdefault).subscribe(res=>{
-        // console.log('res',res);
         this.spinner.hide()
        // this.getAllPaymentmodes();
         if(res===null){

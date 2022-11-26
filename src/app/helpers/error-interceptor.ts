@@ -16,18 +16,15 @@ export class ErrorInterceptor implements HttpInterceptor {
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return next.handle(request).pipe(catchError(err => {
-        //    console.log(err);
            this.checkErrorCodes(err, request)
            
            const error = err.error.message || err.statusText;
-           //console.log(error);
            return throwError(err);
         }));
     }
 
     checkErrorCodes(err, reqUrl?){
         var _self = this;
-        //   console.log(err);
         if (reqUrl.url.indexOf('/api/login/beta/accessToken') < 0 && err.message.indexOf('oauth') < 0 && err.status === 401) {
             if(err.error.errorMessage){
                 this.authenticationService.logout();

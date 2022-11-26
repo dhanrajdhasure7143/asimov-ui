@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import * as BpmnJS from './../../../bpmn-modeler.development.js';
 import * as CmmnJS from 'cmmn-js/dist/cmmn-modeler.production.min.js';
 import * as DmnJS from 'dmn-js/dist/dmn-modeler.development.js';
-
 import { SharebpmndiagramService } from '../../services/sharebpmndiagram.service';
 import { DataTransferService } from '../../services/data-transfer.service';
 import { RestApiService } from '../../services/rest-api.service';
@@ -11,7 +10,6 @@ import { BpsHints } from '../model/bpmn-module-hints';
 import Swal from 'sweetalert2';
 import { GlobalScript } from 'src/app/shared/global-script';
 import {MatTableDataSource} from '@angular/material/table';
-
 import { MatPaginator, PageEvent } from '@angular/material';
 import { fromMatPaginator, paginateRows } from './../model/datasource-utils';
 import { Observable  } from 'rxjs/Observable';
@@ -22,6 +20,8 @@ import { fromMatSort, sortRows } from './../model/datasource-utils';
 import {FilterPipe} from './../custom_filter.pipe';
 import { Subscription } from 'rxjs';
 import * as moment from 'moment';
+import { LoaderService } from 'src/app/services/loader/loader.service';
+
 @Component({
   selector: 'app-bpshome',
   templateUrl: './home.component.html',
@@ -34,7 +34,6 @@ export class BpsHomeComponent implements OnInit {
   bkp_saved_diagrams:any[] = [];
   p: number = 1;
   term = "";
-  isLoading:boolean = false;
   isApproverUser:boolean = false;
   isAdminUser:boolean = false;
   sortedData:any;
@@ -69,9 +68,11 @@ export class BpsHomeComponent implements OnInit {
 
   constructor(private router:Router, private bpmnservice:SharebpmndiagramService, private dt:DataTransferService,
      private rest:RestApiService, private hints:BpsHints, private global:GlobalScript,
+     private loader: LoaderService
     ) { }
 
   ngOnInit(){
+    this.loader.show();
     localStorage.setItem("isheader","false")
     this.userRole = localStorage.getItem("userRole")
     this.userRole = this.userRole.split(',');
@@ -85,7 +86,6 @@ export class BpsHomeComponent implements OnInit {
     this.systemAdmin=this.userRole.includes("System Admin");
     this.userEmail=localStorage.getItem("ProfileuserId");
     this.isApproverUser = this.userRole.includes('Process Architect')
-    this.isLoading = true;
     this.getBPMNList();
     this.getAutoSavedDiagrams();
     this.getAllCategories();
@@ -96,7 +96,7 @@ export class BpsHomeComponent implements OnInit {
     this.refreshSubscription=this.dt.isTableRefresh.subscribe(res => {
       if (res) {
         if (res.isRfresh) {
-          this.isLoading = true;
+          this.loader.show();
           this.getBPMNList();
         }
       }
@@ -140,22 +140,21 @@ export class BpsHomeComponent implements OnInit {
       });
 
       this.bkp_saved_diagrams = res; 
-      this.isLoading = false;
+      this.loader.hide();
       this.savedDiagrams_list=this.saved_diagrams;
       this.assignPagenation(this.saved_diagrams);
 
       let selected_category=localStorage.getItem("bps_search_category");
-        if(this.categories_list.length == 1){
-          this.categoryName=this.categories_list[0].categoryName;
-        }else{
-          this.categoryName=selected_category?selected_category:'allcategories';
-        }
-     
+      if(this.categories_list.length == 1){
+        this.categoryName=this.categories_list[0].categoryName;
+      }else{
+        this.categoryName=selected_category?selected_category:'allcategories';
+      }
       this.searchByCategory(this.categoryName);
     },
     
     (err) => {
-      this.isLoading = false;
+      this.loader.hide();
     });
   }
 
@@ -168,7 +167,8 @@ export class BpsHomeComponent implements OnInit {
   openDiagram(){
     // if(bpmnDiagram.bpmnProcessStatus && bpmnDiagram.bpmnProcessStatus =="PENDING" ) return;
     // let binaryXMLContent = bpmnDiagram.eachObj.bpmnXmlNotation; 
-    let binaryXMLContent = this.selected_notation.bpmnXmlNotation;
+    let binaryXMLContent ='';
+    binaryXMLContent = this.selected_notation.bpmnXmlNotation;
 // return;
     let bpmnModelId = this.selected_notation.bpmnModelId;
     let bpmnVersion = this.selected_notation.version;
@@ -203,8 +203,8 @@ this.dt.bpsHeaderValues('');
   }
 
   fitTableView(processName){
-    if(processName && processName.length > 14)
-      return processName.substr(0,14)+'...';
+    if(processName && processName.length > 11)
+      return processName.substr(0,11)+'...';
     return processName;
   }
   fitTableViewCategory(processName){
@@ -230,14 +230,6 @@ this.dt.bpsHeaderValues('');
     if(apprName && apprName.length > 15)
       return apprName.substr(0,15)+'..';
     return apprName;
-    // let appr_arr = apprName.split('.');
-    // let fName = appr_arr[0];
-    // let lName = appr_arr[1];
-    // if(fName)
-    //   fName = fName.charAt(0).toUpperCase()+fName.substr(1);
-    // if(lName)
-    //   lName = lName.charAt(0).toUpperCase()+lName.substr(1);
-    // return fName&&lName?fName+" "+lName:fName?fName:lName?lName:'-';
    }
 
    getSelectedNotation(eachBPMN,id){
@@ -305,7 +297,6 @@ this.dt.bpsHeaderValues('');
   getAllCategories() {    // get all categories list for dropdown
     this.rest.getCategoriesList().subscribe(res => {
     this.categoryList = res;
-    this.categories_list=this.categoryList.data
     this.categories_list=this.categoryList.data.sort((a, b) => (a.categoryName.toLowerCase() > b.categoryName.toLowerCase()) ? 1 : ((b.categoryName.toLowerCase() > a.categoryName.toLowerCase()) ? -1 : 0));
     })
   }
@@ -400,14 +391,13 @@ this.dt.bpsHeaderValues('');
       cancelButtonText: 'Cancel'
     }).then((res) => {
       if(res.isConfirmed){
-        this.isLoading = true;
+        this.loader.show();
         let data = {
           "bpmnModelId":bpmNotation.bpmnModelId,
           "version": bpmNotation.version
         }
         this.rest.deleteBPMNProcess(data).subscribe(res => {
-          // console.log(res)
-          this.isLoading = false;
+          this.loader.hide();
           if(res == "It is an ongoing project.Please contact Project Owner(s)"){
             Swal.fire({
               icon: 'info',
@@ -422,12 +412,11 @@ this.dt.bpsHeaderValues('');
               text: bpmNotation.bpmnProcessName+' V1.'+bpmNotation.version+' deleted',
               heightAuto: false
             });
-          this.isLoading = true;
+          this.loader.show();
           this.getBPMNList();
           }
-          // this.global.notify(bpmNotation.bpmnProcessName+' V1.'+bpmNotation.version+' deleted','success')
         }, err => {
-          this.isLoading = false;
+          this.loader.hide();
           Swal.fire({
             icon: 'error',
             title: 'Oops...',
@@ -474,10 +463,6 @@ var filtered = test.reduce((filtered, item) => {
   return filtered
 }, [])
 this.assignPagenation(filtered)
-// const pageEvents$: Observable<PageEvent> = fromMatPaginator(this.paginator);
-//     const rows$ = of(filtered);
-//     this.totalRows$ = rows$.pipe(map(rows => rows.length));
-//     this.displayedRows$ = rows$.pipe(paginateRows(pageEvents$));
   }
  
   assignPagenation(data){

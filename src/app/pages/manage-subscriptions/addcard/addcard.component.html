@@ -26,7 +26,7 @@
               <div class="col-md-5"> 
                     <div class="form-group col-sm-10">
                       <label for="cardHolder">Cardholder Name</label>
-                      <input type="text"[disabled]="cardname" name="cardHolder" #cardHolder="ngModel" maxlength="30" [(ngModel)]="cardHoldername" class="form-control" id="cardHolder" placeholder="Enter Cardholder Name" required/>
+                      <input type="text" name="cardHolder" #cardHolder="ngModel" maxlength="30" [(ngModel)]="cardHoldername" class="form-control" id="cardHolder" placeholder="Enter Cardholder Name" required/>
                       <!-- [ngClass]="{ 'is-invalid': ((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) ) }" -->
                       <span *ngIf="((cardHolder.invalid && paymentform.submitted) || (cardHolder.errors && cardHolder.touched) )" 
                       class='fa fa-info-circle errspan'> Cardholder Name is required </span> 
@@ -34,7 +34,7 @@
       
                         <div class="form-group col-sm-10">
                           <label for="month">Month (MM)</label>
-                          <select id="month" [disabled]="expmonth" name="month" class="form-control" #month="ngModel"  [(ngModel)]="cardmonth" required>
+                          <select id="month" name="month" class="form-control" #month="ngModel"  [(ngModel)]="cardmonth" required>
                             <option  [value]="undefined" disabled hidden>Select Month</option>
                             <option *ngFor="let obj of monthlist; let j=index" [value]="0+(j+1)">{{0+(j+1)}}</option>
                         
@@ -71,7 +71,7 @@
                     </div>
                     <div class="form-group col-sm-10">
                       <label for="year">Year (YYYY)</label>
-                      <select id="year" [disabled]="expyear" class="form-control" name="year" #year="ngModel" [(ngModel)]="cardyear" required>
+                      <select id="year" class="form-control" name="year" #year="ngModel" [(ngModel)]="cardyear" required>
                         <option  [value]="undefined" disabled hidden>Select Year</option>
                         <option *ngFor="let obj of yearList; let i=index" [value]="2021+(i+1)">{{2021+(i+1)}}</option>
                         <!-- *ngFor='let count of userscount; let c = index' [value]="25*(c+1)" >{{25*(c+1)}}</option> -->
@@ -91,7 +91,7 @@
                        <!-- <button class="btn btn-primary" (click)="Back()" style="margin-left: 32%">Back</button> -->
                     <button type="button" class="btn btn-primary" (click)="resetForm(paymentform)" style='margin-left:66%;height:38px !important'>Reset</button>
                    
-                    <button class="btn btn-success pull-right " type="submit" [disabled] = "paymentform.invalid || showErr" >Save</button>
+                    <button class="btn btn-success pull-right " type="submit" [disabled] = "paymentform.invalid" >Save</button>
                     <button class="btn btn-primary pull-right" (click)="Back()">Back</button>
                    
                   </div>

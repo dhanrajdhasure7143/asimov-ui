@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import * as XLSX from 'xlsx';
 import { NgxXml2jsonService } from 'ngx-xml2json';
-
 import { DataTransferService } from "../../services/data-transfer.service";
 import { RestApiService } from '../../services/rest-api.service';
 import { GlobalScript } from '../../../shared/global-script';
@@ -14,12 +13,12 @@ import { DataTableDirective } from 'angular-datatables';
 import * as moment from 'moment';
 import { NotifierService } from 'angular-notifier';
 import { APP_CONFIG } from 'src/app/app.config';
-import { NgxSpinnerService } from "ngx-spinner";
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import { Subscription } from 'rxjs';
 import { NgForm } from '@angular/forms';
+import { LoaderService } from 'src/app/services/loader/loader.service';
 
 declare var target: any;
 @Component({
@@ -49,7 +48,6 @@ export class UploadComponent implements OnInit {
   orderAsc: boolean = true;
   categoryList: any = [];
   category: any;
-  dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
   isSearch: boolean = true;
   @ViewChild(DataTableDirective, { static: true })
@@ -85,6 +83,7 @@ export class UploadComponent implements OnInit {
   @ViewChild('database',{static:false}) mytemplateForm : NgForm;
   modesList=[{name:"Incrementing",value:"incrementing"},{name:"Timestamp",value:"timestamp"},{name:"Incrementing with Timestamp",value:"timestamp+incrementing"}]
 
+
   constructor(private router: Router,
     private dt: DataTransferService,
     private rest: RestApiService,
@@ -92,21 +91,18 @@ export class UploadComponent implements OnInit {
     private hints: PiHints,
     private ngxXml2jsonService: NgxXml2jsonService,
     private notifier:NotifierService,
-    private spinner:NgxSpinnerService,
+    private loader: LoaderService,
     @Inject(APP_CONFIG) private config) {  }
 
   ngOnInit() {
     this.dt.piHeaderValues('');
     if(document.getElementById("filters"))
     document.getElementById("filters").style.display = "block";
-    this.dt.changeParentModule({ "route": "/pages/processIntelligence/upload", "title": "Process Intelligence" });
-    this.dt.changeChildModule("");
     this.xlsx_csv_mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel,.csv,.xlsx,.xls';
     this.xes_mime = '.xes';
     this.db_mime = '.json';
     this.dt.changeHints(this.hints.uploadHints);
     this.getAlluserProcessPiIds();
-    // this.getAllCategories();
     this.userRole = localStorage.getItem("userRole")
     this.userRole = this.userRole.split(',');
     this.isButtonVisible = this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') || this.userRole.includes('Process Owner') || this.userRole.includes('Process Architect')  || this.userRole.includes('Process Analyst')  || this.userRole.includes('RPA Developer')  || this.userRole.includes('Process Architect') || this.userRole.includes("System Admin") ;
@@ -118,9 +114,6 @@ export class UploadComponent implements OnInit {
         } if(element.permissionName.includes('PI_Workspace_full')){
           this.enableWorkspace=true;
         }
-        // if(element.permissionName.includes('PI_Process_Graph_full')){
-        //   this.showprocessgraph=true;
-        // }
       }
           );
         })
@@ -133,10 +126,12 @@ export class UploadComponent implements OnInit {
       }
     })
   }
+
   ngOnDestroy() {
     this.refreshSubscription.unsubscribe();
     this.dtTrigger.unsubscribe();
   }
+
   onUpload(event, id) {     //for Upload csv/xls/xes/xes.gz file
     if (this.freetrail == 'true') {
       if (this.process_graph_list.length == this.config.pigraphfreetraillimit) {
@@ -151,8 +146,7 @@ export class UploadComponent implements OnInit {
           heightAuto: false,
           confirmButtonText: 'Ok'
         })
-      }
-      else {
+      } else {
         if (event.addedFiles.length == 0) {
           Swal.fire({
             title: 'Error',
@@ -161,7 +155,7 @@ export class UploadComponent implements OnInit {
             heightAuto: false
           })
         } else {
-          this.isLoading = true;
+          this.loader.show();
           this.selectedFile = <File>event.addedFiles[0];
           const fd = new FormData();
           fd.append('file', this.selectedFile),
@@ -171,7 +165,7 @@ export class UploadComponent implements OnInit {
               let fileName = this.filedetails.data.split(':');
               this.rest.fileName.next(fileName[1]);
               this.onSelect(event, id)
-              this.isLoading = false;
+              this.loader.hide();
             }, err => {
               Swal.fire({
                 title: 'Error',
@@ -179,12 +173,11 @@ export class UploadComponent implements OnInit {
                 icon: 'error',
                 heightAuto: false,
               })
-              this.isLoading = false;
+              this.loader.hide();
             });
         }
       }
-    }
-    else {
+    } else {
       if (event.addedFiles.length == 0) {
         Swal.fire({
           title: 'Error',
@@ -193,7 +186,7 @@ export class UploadComponent implements OnInit {
           heightAuto: false
         })
       } else {
-        this.isLoading = true;
+        this.loader.show();
         this.selectedFile = <File>event.addedFiles[0];
         const fd = new FormData();
         fd.append('file', this.selectedFile),
@@ -203,7 +196,7 @@ export class UploadComponent implements OnInit {
             let fileName = this.filedetails.data.split(':');
             this.rest.fileName.next(fileName[1]);
             this.onSelect(event, id)
-            this.isLoading = false;
+            this.loader.hide();
           }, err => {
             Swal.fire({
               title: 'Error',
@@ -211,7 +204,7 @@ export class UploadComponent implements OnInit {
               icon: 'error',
               heightAuto: false,
             })
-            this.isLoading = false;
+            this.loader.hide();
           });
       }
     }
@@ -270,7 +263,6 @@ export class UploadComponent implements OnInit {
           this.openXESGZFile()
       }
     }
-      //this.readXESFile(event);
   }
 
   openXESGZFile(){
@@ -297,8 +289,6 @@ export class UploadComponent implements OnInit {
       const wsname: string = wb.SheetNames[0];
       const ws: XLSX.WorkSheet = wb.Sheets[wsname];
       this.data = <any[][]>(XLSX.utils.sheet_to_json(ws, { header: 1, raw: false, range: 0 }));
-      // const ws2: XLSX.WorkSheet = wb.Sheets[wb.SheetNames[1]];
-
       this.dt.changePiData(this.data);
       let excelfile = [];
       excelfile = this.data;
@@ -315,11 +305,10 @@ export class UploadComponent implements OnInit {
            heightAuto: false,
            confirmButtonText: 'Ok'
        })
-      }
-      else{
+      } else{
         this.router.navigate(['/pages/processIntelligence/datadocument']);
       }
-     }else{
+     } else{
       if(excelfile.length<=2||excelfile[0].length==0||(excelfile[1].length==0&&excelfile[2].length==0)||excelfile[1].length==1){
         Swal.fire({
           title: 'Error',
@@ -342,6 +331,7 @@ export class UploadComponent implements OnInit {
     reader.onload = () => {
       let csvRecordsArray: string[][] = [];
       (<string>reader.result).split(/\r\n|\n/).forEach((each, i) => {
+        if(each)
         csvRecordsArray.push(each.split(','));
       })
       this.dt.changePiData(csvRecordsArray); // share file data using behavior subject
@@ -429,7 +419,6 @@ export class UploadComponent implements OnInit {
             }
           }
           string[0].forEach(ss => {
-
             if (ss['@attributes']['key'] == 'concept:name') {
               tmp_arr.push(ss['@attributes']['value']);
             }
@@ -471,7 +460,6 @@ export class UploadComponent implements OnInit {
     this.isIncrement=false;
     var modal = document.getElementById('myModal1');
     modal.style.display = "block";
-    // this.dbDetails={};
     this.rest.fileName.next(null);
     this.mytemplateForm.resetForm();
     this.isDisabled=true;
@@ -497,14 +485,8 @@ export class UploadComponent implements OnInit {
   }
 
   getAlluserProcessPiIds() {        // get user process ids list on workspace
-    this.isLoading=true;
+    this.loader.show();
     this.dt.processDetailsUpdateSuccess({"isRfresh":false});
-    this.dtOptions = {
-      pagingType: 'full_numbers',
-      pageLength: 6,
-      language: { searchPlaceholder: 'Search', },
-      "order": [],
-    };
     this.rest.getAlluserProcessPiIds().subscribe(data => {
     this.process_List = data
       this.process_List.data.sort(function (a, b) {
@@ -519,14 +501,8 @@ export class UploadComponent implements OnInit {
       this.dataSource= new MatTableDataSource(this.process_graph_list);
       this.dataSource.sort=this.sort;
       this.dataSource.paginator=this.paginator;
-      this.isLoading=false;
+      this.loader.hide();
       this.getAllCategories();
-      
-      // let selected_category=localStorage.getItem("pi_search_category");
-      // console.log(this.categories_list)
-      // this.categoryName=selected_category?selected_category:'allcategories';
-      // this.searchByCategory(this.categoryName);
-
     })
   }
 
@@ -535,6 +511,16 @@ export class UploadComponent implements OnInit {
   }
 
   onGraphSelection(selectedpiIdData) {    // View selected graph on workspace
+    if(selectedpiIdData.status == "Inprogress"){
+      Swal.fire({
+        position: 'center',
+        icon: 'info',
+        title: 'This graph is under processing, please try again later',
+        showConfirmButton: true,
+        heightAuto: false,
+      })
+    return
+    }
     this.isgraph = true;
     let selected_process_id = selectedpiIdData.piId
     this.router.navigate(["/pages/processIntelligence/flowChart"], { queryParams: { wpiId: selected_process_id } });
@@ -543,6 +529,7 @@ export class UploadComponent implements OnInit {
   getcategoryName(categoryName) {   
     return categoryName.charAt(0).toUpperCase() + categoryName.slice(1);
   }
+
   sortDataTable(arrayColNames, asc) { // if not asc, desc
     for (var i = 0; i < arrayColNames.length; i++) {
       var columnName = arrayColNames[i];
@@ -561,7 +548,6 @@ export class UploadComponent implements OnInit {
     this.categoryList = res
     this.categories_list=this.categoryList.data.sort((a, b) => (a.categoryName.toLowerCase() > b.categoryName.toLowerCase()) ? 1 : ((b.categoryName.toLowerCase() > a.categoryName.toLowerCase()) ? -1 : 0));
     let selected_category=localStorage.getItem("pi_search_category");
-      // console.log(this.categories_list)
       if(this.categories_list.length == 1){
         this.categoryName=this.categories_list[0].categoryName;
       }else{
@@ -585,38 +571,6 @@ export class UploadComponent implements OnInit {
        this.dataSource.paginator=this.paginator;
        this.dataSource.paginator.firstPage();
     }
-
-    // if (category == "allcategories") {
-    //   this.dtElement.dtInstance.then((dtInstance) => {
-    //     this.process_graph_list = this.process_List.data;
-
-    //     // this.dataSource= new MatTableDataSource(this.process_graph_list);
-    //     // this.dataSource.sort=this.sort;
-    //     // this.dataSource.paginator=this.paginator;
-    //     this.dataSource.filter = category
-    //   });
-    //   }
-    // } else {
-      // this.process_graph_list = []
-      // this.dtElement.dtInstance.then((dtInstance) => {
-
-      //   this.process_List.data.forEach(element => {
-      //     if (element.categoryName == category) {
-      //       this.process_graph_list.push(element)
-      //     }
-        // // });
-        // this.dataSource= new MatTableDataSource(this.process_graph_list);
-        // this.dataSource.sort=this.sort;
-        // this.dataSource.paginator=this.paginator;
-        // // Destroy the table first
-        // dtInstance.destroy();
-        // // Call the dtTrigger to rerender again
-        // this.dtTrigger.next();
-        
-        
-        
-      // })
-    // }
   }
 
   onsearchSelect() {
@@ -626,9 +580,10 @@ export class UploadComponent implements OnInit {
   }
 
   changeType(){
-    this.dbDetails.portNumber="5432"
-    this.dbDetails.dbName=this.config.dbName // eiap_qa - QA
+    this.dbDetails.portNumber=this.config.dbPort
+    this.dbDetails.dbName=this.config.dbName
   }
+
   onChangeMode(value){
     if(value=="incrementing"){
       this.isIncrement=true;
@@ -646,12 +601,11 @@ export class UploadComponent implements OnInit {
     this.mytemplateForm.controls["increment"].markAsUntouched();
     if(this.mytemplateForm.controls["timestamp"])
     this.mytemplateForm.controls["timestamp"].markAsUntouched();
-
   }
 
 testDbConnection(){     // check DB connection with port id and psw
   this.processId = Math.floor(100000 + Math.random() * 900000);
-  this.isLoading=true;
+  this.loader.show();
     let modekey
     let modekey1
     let connectorBody:any= {}
@@ -713,7 +667,7 @@ testDbConnection(){     // check DB connection with port id and psw
         connectorBody[modekey]=this.dbDetails.timestamp
       }
     this.rest.getJDBCConnectorConfig(connectorBody).subscribe(res => {this.connectionResp=res
-        this.isLoading=false;
+        this.loader.hide();
         if(this.connectionResp.data.length==0){
           this.isDisabled = false;
             this.notifier.show({
@@ -721,7 +675,7 @@ testDbConnection(){     // check DB connection with port id and psw
               message: "Connected Successfully."
               });
           }else{
-            this.isLoading=false;
+            this.loader.hide();
             this.notifier.show({
               type: 'error',
               message: "Error"+this.connectionResp.data[0].errors
@@ -848,7 +802,7 @@ testDbConnection(){     // check DB connection with port id and psw
   }
   
 getDBTables(){      //get DB tables list
-  this.isLoading=true;
+  this.loader.show();
   var reqObj =  {
       "dbType": this.dbDetails.dbType,
       "password": this.dbDetails.password,
@@ -866,7 +820,7 @@ getDBTables(){      //get DB tables list
         });
         this.tableList = [...new Set(this.tableList)];
       }
-      this.isLoading=false;
+      this.loader.hide();
     },
     (err=>{
       this.isTableEnable=false;
@@ -875,21 +829,21 @@ getDBTables(){      //get DB tables list
           type: 'error',
           message: err.error.message
         });
-        this.isLoading=false;
+        this.loader.hide();
     }))
 }
 
   onChangeTable(){
-      this.dbDetails.mode="";
-      this.mytemplateForm.controls["increase"].markAsUntouched();
-      this.dbDetails.increment="";
-      if(this.mytemplateForm.controls["increment"])
-      this.mytemplateForm.controls["increment"].markAsUntouched();
-      this.dbDetails.timestamp="";
-      if(this.mytemplateForm.controls["timestamp"])
-      this.mytemplateForm.controls["timestamp"].markAsUntouched();
-      this.isTimestammp=false;
-      this.isIncrement=false;
+    this.dbDetails.mode="";
+    this.mytemplateForm.controls["increase"].markAsUntouched();
+    this.dbDetails.increment="";
+    if(this.mytemplateForm.controls["increment"])
+    this.mytemplateForm.controls["increment"].markAsUntouched();
+    this.dbDetails.timestamp="";
+    if(this.mytemplateForm.controls["timestamp"])
+    this.mytemplateForm.controls["timestamp"].markAsUntouched();
+    this.isTimestammp=false;
+    this.isIncrement=false;
   }
 
   onKeyUpPassword(){
@@ -899,6 +853,7 @@ getDBTables(){      //get DB tables list
   }
 
   applyFilter(event: Event) {       // search entered process ids from search input
+    if(this.categories_list.length > 1)
     this.categoryName = 'allcategories';
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource= new MatTableDataSource(this.process_graph_list);
@@ -907,7 +862,6 @@ getDBTables(){      //get DB tables list
     this.dataSource.sort=this.sort;
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
-      
     }
   }
 
@@ -915,7 +869,6 @@ getDBTables(){      //get DB tables list
     var _self = this;
     this.rest.retryFailedProcessGraph(processDt.piId).subscribe((res:any)=>{
       if(res.is_error == false){
-        // Swal.fire("Great", ""+res.display_msg.info, "success");
         Swal.fire({
           title: 'Great',
           text: ""+res.display_msg.info,
@@ -948,7 +901,6 @@ getDBTables(){      //get DB tables list
           icon: 'error',
           heightAuto: false,
         })
-        // Swal.fire("Oops!", ""+res.display_msg.info, "error");
       }
     },(err)=>{
     })
@@ -959,9 +911,6 @@ getDBTables(){      //get DB tables list
     let req_body={
       "piId":id
     }
-    // this.rest.deleteSelectedProcessID(req_body).subscribe(res=>{
-    //   this.getAlluserProcessPiIds();
-    // })
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -973,7 +922,7 @@ getDBTables(){      //get DB tables list
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.value) {
-        this.isLoading=true;
+        this.loader.show();
         this.rest.deleteSelectedProcessID(req_body).subscribe(res=>{
           let status:any = res;
           Swal.fire({
@@ -987,7 +936,7 @@ getDBTables(){      //get DB tables list
             cancelButtonColor: '#d33',
             confirmButtonText: 'Ok'
           })
-          this.isLoading=false;
+          this.loader.hide();
           this.getAlluserProcessPiIds();
           },err => {
             Swal.fire({
@@ -996,12 +945,10 @@ getDBTables(){      //get DB tables list
               text: 'Something went wrong!',
               heightAuto: false,
             })
-            this.spinner.hide();
-                         
+            this.loader.hide();         
           })
       }
     });
-
   }
 
   onDeleteSelectedProcess1(id,status){
@@ -1030,17 +977,16 @@ getDBTables(){      //get DB tables list
         let req_body={
           "piId":id
         }
-        this.isLoading=true;
+        this.loader.show();
         this.rest.deleteSelectedProcessID(req_body).subscribe(res=>{
           this.getAlluserProcessPiIds();
-          // Swal.fire("Success","Process Deleted Successfully !!","success");
           Swal.fire({
             icon: 'success',
             title: 'Success',
             text: 'Process Deleted Successfully !!',
             heightAuto: false
           })
-          this.isLoading=false;
+          this.loader.hide();
         },err => {
                   Swal.fire({
                     icon: 'error',
@@ -1048,7 +994,7 @@ getDBTables(){      //get DB tables list
                     text: 'Something went wrong!',
                     heightAuto: false,
                   })
-                  this.isLoading=false;
+                  this.loader.hide();
           })
       }else{
         Swal.fire({
@@ -1057,7 +1003,6 @@ getDBTables(){      //get DB tables list
           text: 'Entered Process ID is Invalid !!',
           heightAuto: false
         })
-        // Swal.fire("Error","Entered Process ID is Invalid","error")
       }
     })
   }
@@ -1066,7 +1011,6 @@ getDBTables(){      //get DB tables list
     var modal = document.getElementById('myModal');
     modal.style.display="block";
   }
-
   onChangeValues(){
     this.isTableEnable = false;
     this.dbDetails.tableName = "";

@@ -20,6 +20,8 @@ export class PaymentHistoryComponent implements OnInit {
   tot: any=[];
   public tableData: any=[];
   invoiceid: any;
+  errorMessage:any;
+  
   constructor(private rest:RestApiService,private spinner:NgxSpinnerService) { }
 
   ngOnInit(): void {

@@ -12,14 +12,11 @@ import { BotStatusComponent } from './orchestration/bot-status/bot-status.compon
 import { BotManagementComponent } from './orchestration/bot-management/bot-management.component';
 import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
-import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatPaginatorIntl, MatPaginatorModule} from '@angular/material/paginator';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatInputModule, MatIconModule, MatFormFieldModule, MatNativeDateModule, MatSlideToggleModule} from '@angular/material';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatSelectModule} from '@angular/material/select';
-// import { SoAutomatedTasksComponent,Checkbotslist,Checkhumanslist } from './orchestration/so-automated-tasks/so-automated-tasks.component';
-// import { SoBotManagementComponent } from './orchestration/so-bot-management/so-bot-management.component';
-import { Category,SoDashboardComponent,Slicedate, FilterBy } from './orchestration/so-dashboard/so-dashboard.component';
 import { CronEditorModule } from 'src/app/shared/cron-editor/cron-editor.module';
 import {NgbTimepickerModule} from '@ng-bootstrap/ng-bootstrap';
 import { SoSchedulerComponent, Envname, Reverse } from './orchestration/so-scheduler/so-scheduler.component';
@@ -47,7 +44,6 @@ import { SoEnvEpsoftComponent ,ipcustompipecreation } from './orchestration/so-e
 import { ReactiveFormsModule } from '@angular/forms';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { ModalModule, BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { SlicedateUpdate, SoUpdatedDashboardComponent,CategoryUpdate } from './orchestration/so-updated-dashboard/so-updated-dashboard.component';
 import { Checkbotslist, Checkhumanslist, NewSoAutomatedTasksComponent } from './orchestration/new-so-automated-tasks/new-so-automated-tasks.component';
 import { BotlistbycatPipe } from './orchestration/new-so-automated-tasks/botlistbycat.pipe';
 import { HumanlistbycatPipe } from './orchestration/new-so-automated-tasks/humanlistbycat.pipe';
@@ -62,15 +58,13 @@ import { ProcessesComponent } from './orchestration/scheduled-bots/processes/pro
 import { CheckResourcePipe } from './orchestration/new-so-automated-tasks/check-resource.pipe';
 import { RpaSoLogsComponent } from '../rpautomation/rpa-so-logs/rpa-so-logs.component';
 import { RpautomationModule } from '../rpautomation/rpautomation.module';
+import { CustomMatPaginatorIntl } from 'src/app/shared/custom-mat-paginator-int';
 import { NgbModalDraggableModule } from 'ngb-modal-draggable';
+import { SoIncidentManagementComponent } from './orchestration/so-incident-management/so-incident-management.component';
 @NgModule({
   declarations: [OrchestrationComponent,ipcustompipecreation,
     BotStatusComponent,
-    FilterBy,
-    Category,
-    Reverse,
-    Slicedate,
-    BotManagementComponent, ServiceOrchestrationComponent, SoDashboardComponent, SoSchedulerComponent, SoProcesslogComponent, BotlistbycatPipe, HumanlistbycatPipe, Envname, SoInboxComponent,
+    BotManagementComponent, ServiceOrchestrationComponent,SoSchedulerComponent, SoProcesslogComponent, BotlistbycatPipe, HumanlistbycatPipe, Envname, SoInboxComponent,
   NewSoBotsComponent,
   NewSoManagementComponent,
   NewSoAutomatedTasksComponent,
@@ -81,8 +75,6 @@ import { NgbModalDraggableModule } from 'ngb-modal-draggable';
   SoEnvEpsoftComponent,
     Checkbotslist,
     Checkhumanslist,
-    SlicedateUpdate,
-    CategoryUpdate,
     NewSoBotManagementComponent,
     StatisticsComponent,
     MonitoringComponent,
@@ -90,7 +82,9 @@ import { NgbModalDraggableModule } from 'ngb-modal-draggable';
     BotsComponent,
     ProcessesComponent,
     ScheduledBotsComponent,
-    CheckResourcePipe],
+    CheckResourcePipe,
+    SoIncidentManagementComponent,
+    Reverse],
   imports: [
     CommonModule,
     FormsModule,
@@ -103,6 +97,7 @@ import { NgbModalDraggableModule } from 'ngb-modal-draggable';
     MatPaginatorModule,
     MatSortModule,
     MatTableModule,
+    NgbModalDraggableModule,
     MatTabsModule,
     CronEditorModule,
     MatNativeDateModule,
@@ -121,11 +116,14 @@ import { NgbModalDraggableModule } from 'ngb-modal-draggable';
     ModalModule.forRoot(),
     NgSelectModule,
     RpautomationModule,
-    NgbModalDraggableModule,
+
   ],
-  bootstrap: [SoDashboardComponent],
-  entryComponents: [FilterBy],
-  providers:[MatDatepickerModule,sohints, BsModalRef, BsModalService],
+
+  providers:[MatDatepickerModule,sohints, BsModalRef, BsModalService,
+    {
+      provide: MatPaginatorIntl, 
+      useClass: CustomMatPaginatorIntl
+    }]
 })
 export class ServiceOrchestrationModule {
 }

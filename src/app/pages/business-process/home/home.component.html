@@ -71,8 +71,8 @@
                                             fitTableView(each_diag.processOwnerName) : '-'}}</div>
                                         <div class="cell cell6">{{each_diag.bpmnProcessName ? " V1."+each_diag.version+"
                                             ": '-'}}</div>
-                                        <!-- <div class="cell cell7">{{each_diag.convertedModifiedTime*1000 | date:'medium'}} -->
-                                            <div class="cell cell7">{{each_diag.convertedModifiedTime_new}}
+                                            <!-- <div class="cell cell7">{{each_diag.convertedModifiedTime*1000 | date:'medium'}} -->
+                                                <div class="cell cell7">{{each_diag.convertedModifiedTime_new}}
                                         </div>
                                         <div class="cell cell8" [matTooltip]=each_diag.approverName
                                             matTooltipClass="bpsHeaderTooltip">{{each_diag.approverName ?
@@ -131,7 +131,7 @@
                                         Process
                                         Notation has been submitted for approval. Cannot be edited till it is reviewed
                                     </span>
-                                    <div [class]="'diagram_container'+i" (click)="openDiagram(selected_notation)"
+                                    <div [class]="'diagram_container'+i" (click)="openDiagram()"
                                         [id]="'_diagram'+i"></div>
                             </div>
                         </mat-expansion-panel>
@@ -143,10 +143,5 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
-<div class="spinoverlay" *ngIf="isLoading">
-    <div class="spincenter">
-        <img src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader" />
     </div>
 </div>

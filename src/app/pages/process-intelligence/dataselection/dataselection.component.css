@@ -109,16 +109,6 @@
     left: 165px;
     }
     
-    /* Set a style for all buttons */
-    
-    
-    
-    
-    /* Add padding to container elements */
-    /* .container {
-    padding: 16px;
-    } */
-    
     .m-contanier {
     padding: 16px;
     width: 35%;
@@ -142,9 +132,6 @@
 
     
 .new-PI-layout {
-    /* overflow: hidden auto;
-    height: calc(100% - 50px);
-    position: relative; */
     padding: 15px 10px 10px;
 }
 
@@ -153,7 +140,6 @@
 } 
 .PI-srh-graph {
     float: right;
-    /* width: 28.4%; */
 }
 .resur-value-data h5 {
     color: #00a0e3;

@@ -10,14 +10,12 @@ import { ProcessIntelligenceRoutingModule } from './process-intelligence-routing
 import { ProcessIntelligenceComponent } from './process-intelligence.component';
 import { UploadComponent } from './upload/upload.component';
 import { DatadocumentComponent } from './datadocument/datadocument.component';
-import { PiflowchartComponent } from './piflowchart/piflowchart.component';
 import { FilterComponent } from './filter/filter.component'
 import { FlowchartComponent } from './flowchart/flowchart.component';
 import { SearchPipe } from './pipes/search.pipe';
 import { PiHints } from './model/process-intelligence-module-hints';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { DataselectionComponent } from './dataselection/dataselection.component';
-import { PibpmnfilterComponent } from './pibpmnfilter/pibpmnfilter.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import {DataTablesModule} from 'angular-datatables';
@@ -47,12 +45,10 @@ import { PopoverModule } from 'ngx-bootstrap/popover';
     ProcessIntelligenceComponent, 
     UploadComponent, 
     DatadocumentComponent, 
-    PiflowchartComponent, 
     FilterComponent,
     FlowchartComponent,
     SearchPipe,
     DataselectionComponent,
-    PibpmnfilterComponent,
     XesdocumentComponent,
     D3flowchartComponent,
     ProcessinsightsComponent,

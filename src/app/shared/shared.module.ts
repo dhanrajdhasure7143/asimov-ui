@@ -21,7 +21,8 @@ import { NgbModalDraggableModule } from 'ngb-modal-draggable'
     FormsModule,
     MatInputModule, MatIconModule, MatFormFieldModule,MatDialogModule,
     MatOptionModule, MatSelectModule,
-    MatTooltipModule,NgbModalDraggableModule,
+    MatTooltipModule,
+    NgbModalDraggableModule
   ],
   providers: [],
   exports: [UploadCreateDropBpmnComponent, BpmnDiagramComponent, ProcessCategoryOverlayComponent,  SearchPipe, DeployNotationComponent],

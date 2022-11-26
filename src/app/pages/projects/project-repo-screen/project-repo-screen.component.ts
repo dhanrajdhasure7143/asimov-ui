@@ -256,11 +256,12 @@ this.route.queryParams.subscribe(data=>{​​​​​​​​
    }
    else
    Swal.fire("Error",res.message,"error");
+   this.spinner.hide();
  })
   this.uploadFileForm.reset();
       this.listOfFiles=[];
       this.fileList=[];
-  this.spinner.hide();
+
   }
 
   chnagefileUploadForm(e){
@@ -281,22 +282,15 @@ this.route.queryParams.subscribe(data=>{​​​​​​​​
       this.listOfFiles.push(value)
     }
     this.uploadFileForm.get("uploadFile").setValue(this.fileList);
-    
-    
   }
+
   getFileDetails(){
     this.api.getFileDetails(this.projectid).subscribe(data =>{
-      data.uploadedFiles.forEach(e=>{
-        this.userslist.forEach(ele=>{
-          // if(){
-          //   e["uploadedBy"]=ele.
-          // }
-        })
-      })
       this.uploadedFiledata=data.uploadedFiles.reverse();
       this.dataSource3= new MatTableDataSource(this.uploadedFiledata);
       this.dataSource3.sort=this.sort11;
       this.dataSource3.paginator=this.paginator101;
+      this.requestedFiledata=[];
       this.requestedFiledata=data.requestedFiles.reverse();
       this.dataSource4= new MatTableDataSource(this.requestedFiledata);
       this.dataSource4.sort=this.sort12;
@@ -304,11 +298,12 @@ this.route.queryParams.subscribe(data=>{​​​​​​​​
       let loggedUser=localStorage.getItem("ProfileuserId")
       let responseArray=this.requestedFiledata
       this.filterdArray=[]
-      if(responseArray=[]){
+      if(responseArray.length == 0){
         this.dataSource5= new MatTableDataSource(this.requestedFiledata);
         this.dataSource5.sort=this.sort13;
         this.dataSource5.paginator=this.paginator105;
       }else{
+        this.filterdArray=[]
       responseArray.forEach(e=>{
         if(e.requestTo==loggedUser || e.requestFrom==loggedUser){
           this.filterdArray.push(e)
@@ -317,7 +312,7 @@ this.route.queryParams.subscribe(data=>{​​​​​​​​
       this.dataSource5= new MatTableDataSource(this.filterdArray);
       this.dataSource5.sort=this.sort13;
       this.dataSource5.paginator=this.paginator105;
-      };
+      }; 
     })
     this.spinner.hide();
   }
@@ -340,7 +335,7 @@ this.route.queryParams.subscribe(data=>{​​​​​​​​
     });
     return userName;
   }
-
+  
   uploadRequetedFile(evnt, data) {
     var fileData = new FormData();
     fileData.append("category", data.category)
@@ -448,13 +443,18 @@ this.route.queryParams.subscribe(data=>{​​​​​​​​
   }
 
   filecheckAll(ev) {
-    // this.uploadedFiledata.forEach(x =>
-    //    x.checked = ev.target.checked);
-    
-    if(this.filecheckeddisabled==false)
-      this.uploadedFiledata=this.uploadedFiledata.map(item=>{item.checked=true; return item});
-    if(this.filecheckeddisabled==true)
-      this.uploadedFiledata=this.uploadedFiledata.map(item=>{item.checked=false; return item});
+    this.uploadedFiledata.forEach(x =>
+       x.checked = ev.target.checked);
+       if(this.uploadedFiledata.filter(data => data.checked == true).length == this.uploadedFiledata.length){
+        this.filecheckeddisabled = true;
+      }else{
+        this.filecheckeddisabled = false
+      }
+    // if(this.filecheckeddisabled==false)
+    //   this.uploadedFiledata=this.uploadedFiledata.map(item=>{item.checked=true; return item});
+    // if(this.filecheckeddisabled==true)
+    //   this.uploadedFiledata=this.uploadedFiledata.map(item=>{item.checked=false; return item});
+
     this.checktodelete();
   }
 
@@ -486,6 +486,11 @@ this.route.queryParams.subscribe(data=>{​​​​​​​​
   filechecktoggle(id, event)
   {
     this.uploadedFiledata.find(data=>data.id==id).checked=event.target.checked;
+    if(this.uploadedFiledata.filter(data => data.checked == true).length == this.uploadedFiledata.length){
+      this.filecheckeddisabled = true;
+    }else{
+      this.filecheckeddisabled = false
+    }
     this.checktodelete();
   }
   onDeleteSelectedItems(event){
@@ -548,7 +553,7 @@ this.route.queryParams.subscribe(data=>{​​​​​​​​
      this.listOfFiles=[];
      this.fileList=[];
      this.uploadFilemodalref.hide();
-    
+     
    }
    uploadFileDescriptionMaxLength(value){
     if(value.length > 150){
@@ -557,13 +562,14 @@ this.route.queryParams.subscribe(data=>{​​​​​​​​
       this.uploadFileDescriptionFlag = false;
     }
      }
-     fitTableViewCategory(processName) {
-      if (processName && processName.length > 10)
-        return processName.substr(0, 10) + '..';
-      return processName;
-    }
 
-   getFileCategoriesList(){
+  fitTableViewCategory(processName) {
+    if (processName && processName.length > 10)
+      return processName.substr(0, 10) + '..';
+    return processName;
+  }
+
+  getFileCategoriesList(){
     this.api.getFileCategoriesList(this.projectid).subscribe((res:any)=>{
       this.filecategoriesList = res
     })

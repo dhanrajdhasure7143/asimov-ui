@@ -10,28 +10,38 @@ import { Rpa_Hints } from '../model/RPA-Hints';
 import { DataTransferService } from "../../services/data-transfer.service";
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import Swal from 'sweetalert2';
-import { RpaStudioComponent } from "../rpa-studio/rpa-studio.component";
-import { RpaToolsetComponent } from "../rpa-toolset/rpa-toolset.component";
+// import { RpaToolsetComponent } from "../rpa-toolset/rpa-toolset.component";
 import domtoimage from 'dom-to-image';
 import * as $ from 'jquery';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { RpaStudioDesignerComponent } from '../rpa-studio-designer/rpa-studio-designer.component';
-import { ItemsList } from '@ng-select/ng-select/ng-select/items-list';
 import { SplitComponent } from 'angular-split'
-
 @Component({
   selector: 'app-rpa-studio-designerworkspace',
   templateUrl: './rpa-studio-designerworkspace.component.html',
   styleUrls: ['./rpa-studio-designerworkspace.component.css']
 })
 export class RpaStudioDesignerworkspaceComponent implements OnInit {
-
+  @Input("bot") public finalbot: any;
+  @Input("toolsetItems") public toolset:any[];
+  @Input("environmentsList") public environmentsList:any[];
+  @Input("categoriesList") public categoriesList:any[];
+  @ViewChild('logspopup',{static:false}) public logsOverlayRef:any;
+  @ViewChild('screen', { static: false }) screen: ElementRef;
+  @ViewChild('canvas', { static: false }) canvas: ElementRef;
+  filteredEnvironments:any=[];
+  VersionsList:any=[]
+  // @ViewChild('downloadLink', { static: false }) downloadLink: ElementRef;
   recordandplayid:any;
   jsPlumbInstance;
   public stud: any = [];
   public optionsVisible: boolean = true;
   public scheduler: any;
+  schedulerComponentInput:any;
+  scheduleOverlayFlag:Boolean=false;
+  logsOverlayFlag:Boolean=false;
+  logsOverlayModel:any;
   result: any = [];
   fileterdarray:any=[]
   webelementtype:any=[]
@@ -59,11 +69,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   allFormValues: any[] = [];
   saveBotdata: any = [];
   alldataforms: any = [];
-  @ViewChild('screen', { static: false }) screen: ElementRef;
-  @ViewChild('canvas', { static: false }) canvas: ElementRef;
-  @ViewChild('downloadLink', { static: false }) downloadLink: ElementRef;
   public finaldataobjects: any = []
-  @Input("bot") public finalbot: any;
   dropVerCoordinates: any;
   dragareaid: any;
   outputboxid: any;
@@ -96,11 +102,15 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   enableMultiForm:any={
     check:false,
     value:[],
+    additionalAttributesList:[]
   };
   isShowExpand:boolean=false;
   splitAreamin_size="200";
+  draggableHandle:any;
 
   @ViewChild('template', { static: false }) template: TemplateRef<any>;
+  
+  @ViewChild('checkBotTemplate', { static: false }) checkBotTemplate: TemplateRef<any>;
   public nodedata: any;
   categoryList:any=[];
   Webelementtype_array: { "Id": any; "value": any; }[];
@@ -115,17 +125,19 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     { size: 70, order: 1},
     { size: 30, order: 2},
   ];
+  public groupsData:any=[];
+  botDetailsForm:FormGroup;
+  botNameCheck:boolean=false;
   @ViewChild('splitEl', { static: false }) splitEl: SplitComponent;
   area_splitSize: any = {}
-  show_loopend:any;
+
   constructor(private rest: RestApiService,
     private notifier: NotifierService,
     private hints: Rpa_Hints,
     private dt: DataTransferService,
     private http: HttpClient,
-    private child_rpa_studio: RpaStudioComponent,
     private RPA_Designer_Component:RpaStudioDesignerComponent,
-    private toolset:RpaToolsetComponent,
+    // private toolset:RpaToolsetComponent,
     private formBuilder: FormBuilder,
     private spinner: NgxSpinnerService,
     private modalService: BsModalService,
@@ -142,13 +154,18 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         inBoundAddressPort: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         outBoundAddress: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         outboundAddressPort: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-
     })
+    this.botDetailsForm=  this.formBuilder.group({
+      botName: ["", Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern("^[a-zA-Z0-9_-]*$")])],
+      description: ["", Validators.compose([Validators.maxLength(500)])],
+      isPredefined: [false]
+    });
   }
 
   ngOnInit() {
      this.passwordtype1=false;
     this.passwordtype2=false;
+    this.spinner.show();
     this.jsPlumbInstance = jsPlumb.getInstance();
     var self = this;
     this.jsPlumbInstance.importDefaults({
@@ -165,22 +182,48 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       name: "",
     }
     if (this.finalbot.botId != undefined) {
+      // this.finaldataobjects = this.finalbot.tasks.filter((item=>item.version==this.finalbot.version));
       this.finaldataobjects = this.finalbot.tasks;
       this.actualTaskValue=[...this.finalbot.tasks];
       this.actualEnv=[...this.finalbot.envIds];
-      localStorage.setItem("botSchedulePayload_"+this.finalbot.botId,this.finalbot.botMainSchedulerEntity!=null?JSON.stringify({...{},...this.finalbot.botMainSchedulerEntity}):null);
-      this.reloadScheduleInterval();
+      this.loadGroups("load");
       this.loadnodes();
+      this.getAllVersions();
     }
+    this.getSelectedEnvironments();
     this.dragareaid = "dragarea__" + this.finalbot.botName;
     this.outputboxid = "outputbox__" + this.finalbot.botName;
-    this.getCategories();
+    //this.getCategories();
   }
 
 
 
-  ngAfterViewInit() {
 
+  getSelectedEnvironments()
+  {
+    this.filteredEnvironments=[...this.environmentsList.filter((item:any)=>item.categoryId==this.finalbot.categoryId)
+      .map(((item2:any)=>{
+        if(this.finalbot.envIds.find((item3:any)=>item3==item2.environmentId)!=undefined)
+        {
+          return {...item2,...{check:true}}
+        }else
+        {
+          return {...item2,...{check:false}}
+        }
+      }))] 
+  }
+
+
+  checkUncheckEnvironments(envId,value){
+    if(this.filteredEnvironments.find((item:any)=>item.environmentId==envId)!=undefined)
+      this.filteredEnvironments.find((item:any)=>item.environmentId==envId).check=value;
+  }
+
+
+
+  ngAfterViewInit() 
+  {    
+   
     this.jsPlumbInstance = jsPlumb.getInstance();
     var self = this;
     this.jsPlumbInstance.importDefaults({
@@ -225,18 +268,36 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            cancelButtonText: 'False',
+            cancelButtonText: 'Fasle',
             confirmButtonText: 'True'
           }).then((result) => {
             if (result.value) {
+                connection.addOverlay(
+                  ["Label", {
+                  label: "<span class='bg-white text-success'>True<span>",
+                  location: 0.8,
+                  cssClass: 'aLabel',
+                  id: "iflabel"+connection.id
+                  }]
+                );
+               
               let connected_node: any = this.nodes.find(develop => develop.id == connection.targetId);
               let connected_node_id: any = connected_node.name + "__" + connected_node.id;
               let source_node_id = node_object.nodeId;
               if (this.finaldataobjects.find(tasks => tasks.nodeId == source_node_id) != undefined) {
                 this.finaldataobjects.find(tasks => tasks.nodeId == source_node_id).attributes.find(attrs => attrs.metaAttrValue == "if").attrValue = connected_node_id;
               }
+              
             }
             else {
+              connection.addOverlay(
+                ["Label", {
+                  label: "<span class='bg-white text-danger'>False<span>",
+                  location: 0.8,
+                  cssClass: 'aLabel',
+                  id: "iflabel"+connection.id
+                }]
+              );
               let connected_node: any = this.nodes.find(develop => develop.id == connection.targetId);
               let connected_node_id: any = connected_node.name + "__" + connected_node.id;
               if (this.finaldataobjects.find(tasks => tasks.nodeId == node_object.nodeId) != undefined) {
@@ -268,7 +329,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
       }
       
-        
       this.setConnectionLabel(info.connection);
     });
 
@@ -279,7 +339,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     });
     if (this.finalbot.botId != undefined) {
       this.addconnections(this.finalbot.sequences)
-      this.child_rpa_studio.spinner.hide()
+      
+      //this.child_rpa_studio.spinner.hide()
       this.dragelement = document.querySelector('#' + this.dragareaid);
 
     }
@@ -290,7 +351,22 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
 
+  addTasksToGroups()
+  {
+      setTimeout(()=>{
+        this.savedGroupsData.forEach((item:any)=>{
+          if(item.nodeIds.length!=0)
+          {
+            item.nodeIds.forEach((node:any)=>{
 
+              let nodeElement:any=document.getElementById(node);
+              let groupElement:any=document.getElementById(item.groupId)
+              this.jsPlumbInstance.addToGroup(item.groupId, nodeElement);
+            })
+          }
+        })
+      })
+  }
   public coordinates:any;
   public loadnodes() {
     this.finaldataobjects.forEach((element,index )=> {
@@ -375,16 +451,30 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       let templatenodes:any=[]
       let nodename = element.nodeId.split("__")[0];
       let nodeid = element.nodeId.split("__")[1];
-      templatenodes=this.toolset.templateNodes;
+      templatenodes=this.toolset;
       let node = {
         id: nodeid,
         name: nodename,
         selectedNodeTask: element.taskName,
         selectedNodeId: element.tMetaId,
-        path: this.toolset.templateNodes.find(data => data.name == nodename).path,
-        tasks: this.toolset.templateNodes.find(data => data.name == nodename).tasks,
-        x: element.x,
-        y: element.y,
+        path: this.toolset.find(data => data.name == nodename).path,
+        tasks: this.toolset.find(data => data.name == nodename).tasks,
+      }
+      let checkFlag:any=[]
+      checkFlag=this.savedGroupsData.filter((groupData:any)=>{
+        if(groupData.nodeIds.find(item=>item==nodeid)!=undefined)
+          return groupData;
+      })
+      if(checkFlag.length==0)
+      {
+        node["x"]= element.x
+        node["y"]= element.y
+      }
+      else
+      {
+        let group:any=checkFlag[0];
+        node["x"]=(parseFloat(group.x.split("px")[0]))+(parseFloat(element.x.split("px")[0]))+"px";
+        node["y"]=(parseFloat(group.y.split("px")[0]))+(parseFloat(element.y.split("px")[0]))+"px";
       }
       if(this.nodes.find(item=>item.id==node.id)==undefined)
       {
@@ -434,7 +524,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
       });
       this.loadflag = true;
-      
+      this.addTasksToGroups();
     });
 
   }
@@ -510,7 +600,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     };
     if(event.data.botId!=undefined)
     {
-      this.RPA_Designer_Component.current_instance.loadpredefinedbot(event.data.botId, dropCoordinates)
+      this.loadPredefinedBot(event.data.botId, dropCoordinates);
+      //this.RPA_Designer_Component.current_instance.loadpredefinedbot(event.data.botId, dropCoordinates)
     }
     else
     {
@@ -563,10 +654,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   autoSaveLoopEnd(node){
-    this.selectedTask = {
-      name: node.selectedNodeTask,
-      id: node.selectedNodeId
-    }
    if(node.selectedNodeTask=='Loop-End'){
     this.rest.attribute(node.selectedNodeId).subscribe((res:any)=>{        
          let data=res;       
@@ -574,13 +661,13 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         data.map(ele=>{
             obj[ele.name+'_'+ele.id]=ele.value;
          })   
-         this.formVales=data;
-        this.formNodeFunc(node,'drag')
          this.onFormSubmit(obj)
     })
      
    }
   }
+
+
   idGenerator() {
     var S4 = function () {
       return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
@@ -599,7 +686,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
 
   populateNodes(nodeData) {
-
     const nodeIds = this.nodes.map(function (obj) {
       return obj.id;
     });
@@ -632,7 +718,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
 
     };
-
     const leftEndPointOptions = {
       endpoint: ['Dot', {
         radius: 2,
@@ -648,7 +733,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       Connector: ["Flowchart", { curviness: 90, cornerRadius: 5 }],
       cssClass: "path",
       connectorClass: "path",
-     
       connectorOverlays: [['Arrow', { width: 10, length: 10, location: 1 }]],
     
     };
@@ -747,18 +831,15 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     return this.fields;
   }
 
-  ngDistroy() {
+  ngDestroy() {
     this.unsubcribe();
   }
 
-  formNodeFunc(node,type) {
-    this.nodedata=node;
-    if(type=='dbclick'){
-      this.show_loopend=false;
-    }
-    else if(type=='drag'){
-      this.show_loopend=true;
-    }   
+
+  // Will create get attributes and set values and generate form
+  getTaskForm(node) {
+    
+    this.nodedata=node
     this.form_change=false;
     this.enableMultiForm.check=false;
     if (node.selectedNodeTask != "") 
@@ -880,7 +961,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     }else
     {
       Swal.fire("Please select task","","warning");
-    }  
+    }
   }
 
 
@@ -888,8 +969,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   {
     this.rest.getMultiFormAttributes(attr_data[0].dependency).subscribe(attributes=>{
       this.enableMultiForm.value=value;
-       this.multiarray=value
-        this.response(attributes,node)
+      this.multiarray=value
+      this.response(attributes,node)
     })
   }
 
@@ -899,10 +980,10 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     {
       $("#record_n_play").val(finalattributes.find(attr=>attr.taskId==71).value);
       document.getElementById('recordandplay').style.display='block';
-
     }
-
   }
+
+
   addoptions(attributes,node)
   {
     /*
@@ -933,7 +1014,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
 
 
-  response(data,node) {
+  response(data,node)
+  {
     if (data.error == "No Data Found") {
       this.fields = [];
       let type = "info";
@@ -941,19 +1023,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       this.notifier.notify(type, message);
     } else {
       this.fields = [];
-      if(node.selectedNodeTask=='Loop-End'){
-        this.hiddenPopUp = false;
-        if(this.show_loopend==false){
-          let type = "info";
-          let message = "No Configurations for this task"
-          this.notifier.notify(type, message);
-        }
-       
-      }
-      else{
-         this.hiddenPopUp = true;
-      }
-     
+      this.hiddenPopUp = true;
       this.form_change=true;
       data.forEach(element => {
         element.nodeId=node.id;
@@ -965,7 +1035,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         }
       });
       this.formVales = data
-      this.alldataforms.push(this.formVales)
+      //this.alldataforms.push(this.formVales)
       this.fields = data
       this.form = new FormGroup({
         fields: new FormControl(JSON.stringify(this.fields))
@@ -977,20 +1047,17 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         { size: 70, order: 1},
         { size: 30, order: 2},
       ];
-      if(this.splitEl!=undefined){
-        setTimeout(() => {
-          this.splitEl.dragProgress$.subscribe(x => {
-            this.ngZone.run(() =>{
-               this.area_splitSize = x
-               this.isShowExpand=false;
-               if(x.sizes[1] < 30){
-                this.splitAreamin_size="200";
-               }
-              });
-          });
-        }, 500);
-      }
-     
+      setTimeout(() => {
+        this.splitEl.dragProgress$.subscribe(x => {
+          this.ngZone.run(() =>{
+             this.area_splitSize = x
+             this.isShowExpand=false;
+             if(x.sizes[1] < 30){
+              this.splitAreamin_size="200";
+             }
+            });
+        });
+      }, 500);
     }
   }
 
@@ -1058,6 +1125,10 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   close_record_play(){
     document.getElementById('recordandplay').style.display='none';
   }
+
+
+
+  //MultiForm Submit
   submitform(event){
     let multiformResult = event
     // if (this.fieldValues['file1']) {
@@ -1105,24 +1176,34 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   
 //  }
 
- 
+
  
   
   this.fileterdarray = this.multiformdata.map(p=>{
+    let responseData={}
     if(p.type=="multiform")
-      return{
+      responseData={
         "metaAttrId": p.id,
         "metaAttrValue": p.name,
         "attrValue":JSON.stringify(multiformResult.multiform)
       }
     else
     {
-      return {
+      responseData={
         "metaAttrId": p.id,
         "metaAttrValue": p.name,
         "attrValue":multiformResult.otherFormData[p.name+'_'+p.id]
       }
     }
+
+    let index = this.actualTaskValue.findIndex(sweetdata => sweetdata.nodeId == this.selectedNode.name + "__" + this.selectedNode.id,)
+    if (index != undefined && index >= 0) {
+      responseData["attrId"]=this.actualTaskValue[index].attributes.find((attrItem:any)=>attrItem.metaAttrId==p.id).attrId;
+      responseData["botTaskId"]=this.actualTaskValue[index].attributes.find((attrItem:any)=>attrItem.metaAttrId==p.id).botTaskId;
+    
+    }
+    
+    return responseData;
     //   if(p.name=='webElementType'){
     //     return{
     //       "metaAttrId": p.id,
@@ -1159,15 +1240,18 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       "taskName": this.selectedTask.name,
       "tMetaId": this.selectedTask.id,
       "inSeqId": 1,
+      "taskId":'',
       "taskSubCategoryId": "1",
       "outSeqId": 2,
       "nodeId": this.selectedNode.name + "__" + this.selectedNode.id,
       "x": this.selectedNode.x,
       "y": this.selectedNode.y,
-      "attributes": this.fileterdarray ,
+      "attributes": this.fileterdarray,
     }
     let index = this.finaldataobjects.findIndex(sweetdata => sweetdata.nodeId == cutedata.nodeId)
+    let savedTaskIndex=this.actualTaskValue.findIndex(sweetdata => sweetdata.nodeId == cutedata.nodeId)
     if (index != undefined && index >= 0) {
+      cutedata["botTId"]=this.actualTaskValue[savedTaskIndex].botTId;
       this.finaldataobjects[index] = cutedata;
     } else {
       this.finaldataobjects.push(cutedata);
@@ -1175,6 +1259,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     this.notifier.notify("info", "Data Saved Successfully");
   }
 
+
+  //Normal Task Form Submit
   onFormSubmit(event) {
     this.fieldValues = event
     if (this.fieldValues['file1']) {
@@ -1186,21 +1272,26 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     if (this.fileData != undefined) {
       this.fieldValues['file'] = this.fileData
     }
-
-
     this.hiddenPopUp = false;
     let objAttr: any;
     let obj: any = [];
     this.formVales.forEach((ele, i) => {
       if (ele.visibility == true) {
-        let objKeys = Object.keys(this.fieldValues);
-      
+        //let objKeys = Object.keys(this.fieldValues);
         objAttr = {
           "metaAttrId": ele.id,
           "metaAttrValue": ele.name,
           "attrValue": '',
           "label":ele.label
         }
+
+        let index = this.finaldataobjects.findIndex(sweetdata => sweetdata.nodeId == (this.selectedNode.name + "__" + this.selectedNode.id))
+        let savedTaskIndex=this.actualTaskValue.findIndex(sweetdata => sweetdata.nodeId == (this.selectedNode.name + "__" + this.selectedNode.id))
+        if (index != undefined && index >= 0 && savedTaskIndex != undefined && savedTaskIndex >= 0 ) {
+          if(this.actualTaskValue[savedTaskIndex].attributes.find((attrItem:any)=>attrItem.metaAttrId==ele.id)!=undefined)          
+            objAttr["attrId"]=this.actualTaskValue[savedTaskIndex].attributes.find((attrItem:any)=>attrItem.metaAttrId==ele.id).attrId;
+            objAttr["botTaskId"]=this.actualTaskValue[savedTaskIndex].attributes.find((attrItem:any)=>attrItem.metaAttrId==ele.id).botTaskId; 
+          }
         if(ele.type=="checkbox" && this.fieldValues[ele.name+"_"+ele.id]=="")
         {
           objAttr["attrValue"]="false";
@@ -1249,8 +1340,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         obj.push(objAttr);
       }
     })
-    let cutedata = {
 
+    let cutedata = {
       "taskName": this.selectedTask.name,
       "tMetaId": this.selectedTask.id,
       "inSeqId": 1,
@@ -1262,68 +1353,69 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       "attributes": obj,
     }
     let index = this.finaldataobjects.findIndex(sweetdata => sweetdata.nodeId == cutedata.nodeId)
-    if (index != undefined && index >= 0) {
+    let savedTaskIndex=this.actualTaskValue.findIndex(sweetdata => sweetdata.nodeId == cutedata.nodeId)
+    if (index != undefined && index >= 0 && savedTaskIndex != undefined && savedTaskIndex >= 0) {
+      cutedata["botTId"]=this.actualTaskValue[savedTaskIndex].botTId;
       this.finaldataobjects[index] = cutedata;
     } else {
       this.finaldataobjects.push(cutedata);
-
     }
     this.notifier.notify("info", "Data Saved Successfully");
   }
 
-  async saveBotFun(botProperties, env) {
-    this.checkorderflag=true;
-    this.addsquences();
-    this.arrange_task_order(this.startNodeId);
-    this.get_coordinates();
-    await this.getsvg();
-      this.saveBotdata = {
-        "botName": botProperties.botName,
-        "botType": botProperties.botType,
-        "description": botProperties.botDescription,
-        "department": botProperties.botDepartment,
-        "botMainSchedulerEntity": this.scheduler,
-        "envIds": env,
-        "isPredefined": botProperties.predefinedBot,
-        "tasks": this.final_tasks,
-        "createdBy": "admin",
-        "lastSubmittedBy": "admin",
-        "scheduler": this.scheduler,
-        "svg":this.svg,
-        "sequences": this.getsequences(),
-      }
-     
-      if(this.checkorderflag==false)
-      {
-        return  false;
-      }
-      else
-      {
-        return  await  this.rest.saveBot(this.saveBotdata)
-      }
-  }
+  // async saveBotFun(botProperties, env) {
+  //   this.checkorderflag=true;
+  //   this.addsquences();
+  //   this.arrange_task_order(this.startNodeId);
+  //   this.get_coordinates();
+  //   await this.getsvg();
+  //     this.saveBotdata = {
+  //       "botName": botProperties.botName,
+  //       "botType": botProperties.botType,
+  //       "description": botProperties.botDescription,
+  //       "department": botProperties.botDepartment,
+  //       "botMainSchedulerEntity": this.scheduler,
+  //       "envIds": env,
+  //       "isPredefined": botProperties.predefinedBot,
+  //       "tasks": this.final_tasks,
+  //       "createdBy": "admin",
+  //       "lastSubmittedBy": "admin",
+  //       "scheduler": this.scheduler,
+  //       "svg":this.svg,
+  //       "groups":this.getGroupsInfo(),
+  //       "sequences": this.getsequences(),
+  //     }
+  //     if(this.checkorderflag==false)
+  //     {
+  //       return  false;
+  //     }
+  //     else
+  //     {
+  //       return  await  this.rest.saveBot(this.saveBotdata)
+  //     }
+  // }
 
   async uploadfile(envids)
   {
-     let tasks:any=[];
-     tasks=this.finaldataobjects.filter(data=>data.tMetaId==64);
-      for(let filedata of tasks)
+    let tasks:any=[];
+    tasks=this.finaldataobjects.filter(data=>data.tMetaId==64);
+    for(let filedata of tasks)
+    {
+      let filepath:any=filedata.attributes.find(data_file_rpa=>(data_file_rpa.metaAttrId==278));
+      if(filepath!=undefined)
       {
-        let filepath:any=filedata.attributes.find(data_file_rpa=>(data_file_rpa.metaAttrId==278));
-        if(filepath!=undefined)
-        {
-          let form = new FormData();
-          let file = new Blob([filepath.file]);
-          form.append("file",filepath.file);
-          let uploadrest:any=await  this.rest.uploadfile(form,envids);
-          await uploadrest.subscribe(res=> {
-            if(res[0].Path!=undefined)
-            {
-              this.notifier.notify("info","File Uploaded Successfully");
-            }
-          })
-        }
+        let form = new FormData();
+        let file = new Blob([filepath.file]);
+        form.append("file",filepath.file);
+        let uploadrest:any=await  this.rest.uploadfile(form,envids);
+        await uploadrest.subscribe(res=> {
+          if(res[0].Path!=undefined)
+          {
+            this.notifier.notify("info","File Uploaded Successfully");
+          }
+        })
       }
+    }
   }
 
   getsequences() {
@@ -1351,48 +1443,209 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     })
   }
 
-  resetdata() {
-    this.jsPlumbInstance.deleteEveryEndpoint()
-    this.nodes = [];
-    this.finaldataobjects = [];
+  resetDesigner() {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, reset designer!'
+    }).then((result:any) => {
+      if(result.value)
+      {
+        this.jsPlumbInstance.deleteEveryEndpoint()
+        this.nodes = [];
+        this.finaldataobjects = [];
+        this.groupsData=[]
+      }
+    });
   }
 
-  async updateBotFun(botProperties, env, latestSchedules) {
+  
+  checkBotDetails(versionType, comments)
+  {
+    if(this.finalbot.botId==undefined)
+    {
+      this.botDetailsForm.get("botName").setValue(this.finalbot.botName);
+      this.botDetailsForm.get("description").setValue(this.finalbot.description);
+      this.botDetailsForm.get("isPredefined").setValue(this.finalbot.isPredefined);
+      this.finalbot["versionType"]=versionType;
+      this.finalbot["comments"]=comments;
+      this.modalRef = this.modalService.show(this.checkBotTemplate);
+    }
+    else
+    {
+      this.updateBotFun(versionType, comments);
+    }
+  }
 
+  validateBotName() {
+    let botname = this.botDetailsForm.get("botName").value;
+    this.rest.checkbotname(botname).subscribe(data => {
+      if (data == true) {
+        this.botNameCheck = false;
+      } else {
+        this.botNameCheck = true;
+      }
+    })
+  }
+  
+  
+  saveBotDetailsAndUpdate()
+  {
+      this.spinner.show();
+      let versionType=this.finalbot.versionType;
+      let comments=this.finalbot.comments;
+      this.modalRef.hide();
+      let botDetails={...this.finalbot,...this.botDetailsForm.value}
+      this.rest.createBot(botDetails).subscribe((response:any)=>{
+        this.finalbot=response;
+        let url=window.location.hash;
+        window.history.pushState("", "", url.split("botId")[0]+"botId="+response.botId);
+        this.updateBotFun(versionType, comments)
+      },err=>{
+        console.log(err)
+        this.spinner.hide();
+        Swal.fire("Error","Unable to create bot","error")
+      })
+    
+   
+  }
+  async updateBotFun(version_type,comments) {
+    let env=[...this.filteredEnvironments.filter((item:any)=>item.check==true).map((item2:any)=>{
+      return item2.environmentId
+    })];
+    this.spinner.show();
     this.checkorderflag=true;
     this.addsquences();
     this.arrange_task_order(this.startNodeId);
     this.get_coordinates();
     await this.getsvg();
     this.rpaAuditLogs(env);
-    let bot_schedule:any=latestSchedules=="NORMAL"?JSON.parse(localStorage.getItem("botSchedulePayload_"+this.finalbot.botId)):latestSchedules;
     this.saveBotdata = {
-      "version": botProperties.version,
-      "botId": botProperties.botId,
-      "botName": botProperties.botName,
-      "botType": botProperties.botType,
-      "description": botProperties.botDescription,
-      "department": botProperties.botDepartment,
-      "botMainSchedulerEntity": bot_schedule,
+      "versionType":version_type,
+      "comments":comments,
+      "version": this.finalbot.version,
+      "botId": this.finalbot.botId,
+      "botName": this.finalbot.botName,
+      "botType": this.finalbot.botType,
+      "description": this.finalbot.botDescription,
+      "department": this.finalbot.botDepartment,
+      "botMainSchedulerEntity":null,
       "envIds": env,
-      "isPredefined": botProperties.predefinedBot,
+      "isPredefined": this.finalbot.predefinedBot,
       "tasks": this.final_tasks,
       "createdBy": "admin",
+      "groups":this.getGroupsInfo(),
       "lastSubmittedBy": "admin",
-      "scheduler": this.scheduler,
+      "scheduler": null,
       "svg":this.svg,
       "sequences": this.getsequences()
     }
    
     if(this.checkorderflag==false)
-     return false;
+    {
+      this.spinner.hide();
+      Swal.fire("Warning","Please check connections","warning")
+    }
     else
     {
-    
-      return this.rest.updateBot(this.saveBotdata)
+      (await this.rest.updateBot(this.saveBotdata)).subscribe((response:any)=>{
+        this.spinner.hide()
+        if(response.errorMessage==undefined)
+        {
+          this.finalbot=response;
+          this.actualTaskValue=[...response.tasks];
+          this.actualEnv=[...response.envIds]
+          Swal.fire("Success","Bot updated successfully","success");
+          let auditLogsList=[...this.auditLogs.map(item=>{
+            item["versionNew"]=response.versionNew;
+            item['comments']=response.comments;
+            return item
+          })];
+          this.rest.addAuditLogs(auditLogsList).subscribe((response:any)=>{
+            if(response.errorMessage==undefined)
+            {
+              this.notifier.notify("success","Audit logs updated successfully")
+            }
+            else
+            {
+              Swal.fire("Error",response.errorMessage, "error");
+            }
+          },err=>{
+            Swal.fire("Error","Unable to update audit logs","error")
+          })
+        }
+        else
+        {
+          Swal.fire("Error",response.errorMesssage, "error");
+        }
+      },(err)=>{
+        Swal.fire("Error","Unable to update bot","error");
+      })
       //return false;
     } 
 
+  }
+
+  savedGroupsData:any=[]
+  loadGroups(check)
+  {
+
+
+    if(check=="update")
+    {
+      this.groupsData.forEach((item:any)=>{
+        this.jsPlumbInstance.removeGroup(item.id);
+      })
+    }
+      this.groupsData=[];
+      let savedGroups=[...this.finalbot.groups];
+      this.savedGroupsData=[...this.finalbot.groups];
+      let i=0;
+      savedGroups.forEach(item=>{
+        let GroupData:any={
+          id:item.groupId,
+          el:undefined,
+          groupName:item.groupName,
+          x:item.x,
+          y:item.y,
+          height:item.height,
+          width:item.width,
+          edit:false,
+          color:item.color
+        }
+        this.groupsData.push(GroupData);
+        setTimeout(()=>{
+
+          let element:any=document.getElementById(GroupData.id);
+          this.groupsData.find((item:any)=>item.id==GroupData.id).el=element;
+          let  groupIds:any=[];
+          groupIds=this.groupsData.map((group:any)=>{return group.id});
+            if(check=='load')
+              this.jsPlumbInstance.addGroup(this.groupsData.find((group:any)=>group.id==GroupData.id));
+              this.jsPlumbInstance.draggable(groupIds, {
+                containment: true,
+              });
+              i++;
+              if(check=='update')
+              {
+                this.jsPlumbInstance.addGroup(this.groupsData.find((group:any)=>group.id==GroupData.id));
+                this.jsPlumbInstance.draggable(groupIds, {
+                  containment: true,
+                });  
+                this.savedGroupsData.find(savedGrp=>savedGrp.groupId==GroupData.id).nodeIds.forEach(sampleItem=>{
+                  let nodeElement:any=document.getElementById(sampleItem);
+                  this.jsPlumbInstance.addToGroup(GroupData.id, nodeElement);
+                })
+              }
+              this.jsPlumbInstance.repaintEverything()
+        },50)
+      
+      })
+  
   }
 
 
@@ -1480,8 +1733,9 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
   downloadPng()
   {
+
+    //this.spinner.show()
     var element=document.getElementById(this.dragareaid)
-    
     var botName=this.finalbot.botName;
     domtoimage.toPng(element, { quality : 1,bgcolor : "white"})
       .then(function (dataUrl) {
@@ -1489,6 +1743,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         link.download = botName+".png";
         link.href = dataUrl;
         link.click();
+        //this.spinner.hide();
       })
       .catch(function (error) {
       });
@@ -1498,7 +1753,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
     var element=document.getElementById(this.dragareaid)
     var botName=this.finalbot.botName;
-    domtoimage.toPng(element,{ quality: 1,bgcolor: "white"})
+    domtoimage.toPng(element,{ quality: 1,bgcolor : "white"})
     .then(function (dataUrl) {
       var link = document.createElement('a');
       link.download = `${botName}.jpeg`;
@@ -1531,7 +1786,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
 
   async getsvg(){
-    let data= await domtoimage.toPng(document.getElementById(this.dragareaid))
+    let data= await domtoimage.toPng(document.getElementById(this.dragareaid), { quality : 1})
     this.svg=data;
   }
 
@@ -1568,7 +1823,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           let inseq: any = this.jsPlumbInstance.getAllConnections().find(data => data.targetId == tasknode.nodeId.split("__")[1])
           this.finaldataobjects.find(checkdata => checkdata.nodeId == tasknode.nodeId).inSeqId = inseq.targetId;
         }
-        else {
+        else 
+        {
           if (tasknode.nodeId.split("__")[1] == target) {
             this.finaldataobjects.find(data => data.nodeId == tasknode.nodeId).inSeqId = source;
           }
@@ -1640,14 +1896,12 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     finalTasks.forEach((item:any)=>{
       if(actualTasks.find(item2=>item.nodeId==item2.nodeId)==undefined)
       {
-        if(this.auditLogs.find(auditItem=>auditItem.nodeId==item.nodeId)==undefined)
         this.auditLogs.push(
           {
             "botId": this.finalbot.botId,
             "botName": `${this.finalbot.botName}|AddedTask` ,
             "changeActivity":'-',
             "changedBy": `${firstName} ${lastName}` ,
-            "nodeId":item.nodeId,
             //"changedDate":(new Date().toLocaleDateString()+", "+new Date().toLocaleTimeString()),
             "newValue":'-',
             "previousValue":'-',
@@ -1659,53 +1913,49 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       else
       {
         let actualTask:any=(actualTasks.find(item2=>item.nodeId==item2.nodeId))
-        if(this.auditLogs.find(auditItem=>auditItem.nodeId==item.nodeId)==undefined)
-          for(let i=0;i<item.attributes.length;i++)
+        for(let i=0;i<item.attributes.length;i++)
+        {
+          let actualTaskAttribute=actualTask.attributes.find((att:any)=>att.metaAttrId==item.attributes[i].metaAttrId);
+          if(actualTaskAttribute != undefined)
           {
-            let actualTaskAttribute=actualTask.attributes.find((att:any)=>att.metaAttrId==item.attributes[i].metaAttrId);
-            if(actualTaskAttribute != undefined)
+            if(item.attributes[i].attrValue!=actualTaskAttribute.attrValue)
             {
-              if((item.attributes[i].attrValue!=actualTaskAttribute.attrValue))
-              {
-                this.auditLogs.push(
-                  {
-                    "botId": this.finalbot.botId,
-                    "botName": `${this.finalbot.botName}|UpdatedConfig` ,
-                    "changeActivity":item.attributes[i].label,
-                    "changedBy": `${firstName} ${lastName}` ,
-                    "nodeId":item.nodeId,
-                    //"changedDate":(new Date().toLocaleDateString()+", "+new Date().toLocaleTimeString()),
-                    "newValue":item.attributes[i].attrValue,
-                    "previousValue": actualTaskAttribute.attrValue,
-                    "taskName": actualTask.taskName,
-                    "version": this.finalbot.version
-                  }
-                )
-              }
+              this.auditLogs.push(
+                {
+                  "botId": this.finalbot.botId,
+                  "botName": `${this.finalbot.botName}|UpdatedConfig` ,
+                  "changeActivity":item.attributes[i].label,
+                  "changedBy": `${firstName} ${lastName}` ,
+                  //"changedDate":(new Date().toLocaleDateString()+", "+new Date().toLocaleTimeString()),
+                  "newValue":item.attributes[i].attrValue,
+                  "previousValue": actualTaskAttribute.attrValue,
+                  "taskName": actualTask.taskName,
+                  "version": this.finalbot.version
+                }
+              )
             }
-          
           }
+         
+        }
       }
     })
     let RemovedTasks:any=[]
     actualTasks.forEach((item:any)=>{
-      if(finalTasks.find((item2:any)=>item2.nodeId==item.nodeId)==undefined )
+      if(finalTasks.find((item2:any)=>item2.nodeId==item.nodeId)==undefined)
       {
-        if((this.auditLogs.find(auditItem=>auditItem.nodeId==item.nodeId)==undefined))
-          this.auditLogs.push(
-            {
-              "botId": this.finalbot.botId,
-              "botName": `${this.finalbot.botName}|RemovedTask` ,
-              "changeActivity":'-',
-              "changedBy": `${firstName} ${lastName}` ,
-              "nodeId":item.nodeId,
-            // "changedDate":(new Date().toLocaleDateString()+", "+new Date().toLocaleTimeString()),
-              "newValue":'-',
-              "previousValue":'-',
-              "taskName": item.taskName,
-              "version": this.finalbot.version
-            }
-          )
+        this.auditLogs.push(
+          {
+            "botId": this.finalbot.botId,
+            "botName": `${this.finalbot.botName}|RemovedTask` ,
+            "changeActivity":'-',
+            "changedBy": `${firstName} ${lastName}` ,
+           // "changedDate":(new Date().toLocaleDateString()+", "+new Date().toLocaleTimeString()),
+            "newValue":'-',
+            "previousValue":'-',
+            "taskName": item.taskName,
+            "version": this.finalbot.version
+          }
+        )
       }
     })
 
@@ -1749,7 +1999,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       }
     })
 
-
+  
 
   }
 
@@ -1825,6 +2075,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
 
   add_order(object) {
+
     let end = this.stopNodeId;
     if(object!=undefined){
       this.final_tasks.push(object);
@@ -1914,7 +2165,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
             showConfirmButton: false,
             timer: 2000
           })
-        this.formNodeFunc(this.nodedata,'save')
+        this.getTaskForm(this.nodedata)
          // this.modalRef.hide();
           document.getElementById('createcredentials').style.display= "none";
           this.resetCredForm();
@@ -1934,15 +2185,15 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
    } 
   }
 
-  getCategories(){
-    this.rest.getCategoriesList().subscribe(data=>{
-      let response:any=data;
-      if(response.errorMessage==undefined)
-      {
-        this.categoryList=response.data;
-      }
-    })
-  }
+  // getCategories(){
+  //   this.rest.getCategoriesList().subscribe(data=>{
+  //     let response:any=data;
+  //     if(response.errorMessage==undefined)
+  //     {
+  //       this.categoryList=response.data;
+  //     }
+  //   })
+  // }
 
   minimizeFullScreen(){
     this.isShowExpand=false;
@@ -1971,30 +2222,242 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       this.splitAreamin_size="null";
     }
   }
-  
-  ngOnDestroy(): void {
-    localStorage.removeItem("botSchedulePayload_"+this.finalbot.botId)
-    clearInterval(this.rescheduleInterval);
+
+
+
+
+  addGroup()
+  {
+
+    let GroupData:any={
+        id:this.idGenerator(),
+        el:undefined,
+        groupName:"Activity Group",
+        x:"10px",
+        y:"20px",
+        height:"150px",
+        width:"250px",
+        edit:false,
+        color:'black'
+    }
+    this.groupsData.push(GroupData);
+    setTimeout(()=>{
+      let element:any=document.getElementById(GroupData.id);
+      this.groupsData.find((item:any)=>item.id==GroupData.id).el=element;
+      this.jsPlumbInstance.addGroup(this.groupsData.find((item:any)=>item.id==GroupData.id));
+      let  groupIds:any=[];
+      groupIds=this.groupsData.map((item:any)=>{return item.id});
+      this.jsPlumbInstance.draggable(groupIds, {
+        containment: true,
+      });
+    },500)
   }
 
-  public rescheduleInterval:any;
-  reloadScheduleInterval()
+
+
+  removeGroup(groupId:any)
   {
-      // this.rescheduleInterval=setInterval(()=>{
-      //   if(this.actualTaskValue.find((item:any)=>item.taskName=="Reschedule"))
-      //   {
-      //     this.rest.getbotdata(this.finalbot.botId).subscribe((response:any)=>{
-      //       localStorage.setItem("botSchedulePayload_"+response.botId,JSON.stringify({...{},...response.botMainSchedulerEntity}));
-      //     },(err:any)=>{
-      //       console.log("fail to get schedules");
-      //     })
-      //   }
-      // }, 5000)
+      this.jsPlumbInstance.removeGroup(groupId);
+      let groupdata=this.groupsData.find((item:any)=>item.id==groupId);
+      this.groupsData.splice( this.groupsData.indexOf(groupdata), 1);
+  }
+
+
+  onResizeEnd(event:any, groupId:String)
+  {
+    if(this.groupsData.find((item:any)=>item.id==groupId)!=undefined)
+    {
+      this.groupsData.find((item:any)=>item.id==groupId).height=String(event.rectangle.height)+"px";
+      this.groupsData.find((item:any)=>item.id==groupId).width=String(event.rectangle.width)+"px";
+    }
+  }
+
+
+  getGroupsInfo()
+  {
+      return [...this.groupsData.map((item:any)=>{
+      let tempGroupData={...{},...item};
+      let connectedNodes=this.jsPlumbInstance.getGroup(item.id).getMembers();
+      if(this.savedGroupsData.find((group:any)=>group.groupId==item.id)!=undefined) 
+        tempGroupData["id"]=this.savedGroupsData.find((group:any)=>group.groupId==item.id).id;   
+      tempGroupData["groupId"]=item.id
+      if(connectedNodes.length!=0)
+      {
+        tempGroupData["nodeIds"]=connectedNodes.map((item2:any)=>{
+          return item2.id;
+        })
+        let pn:any=$("#"+item.id).first();
+        let position:any = pn.position();
+        tempGroupData.x=position.left + "px";
+        tempGroupData.y=position.top+"px";
+        delete tempGroupData.edit;
+        delete tempGroupData.el;
+        if(this.savedGroupsData.find((group:any)=>group.groupId==item.id)==undefined) 
+          delete tempGroupData.id;
+        return tempGroupData;
+      }
+    })]
+  }
+
+
+
+  executeBot()
+  {
+    this.spinner.show()
+    this.rest.execution(this.finalbot.botId).subscribe((response:any)=>{
+      this.spinner.hide()
+      if(response.errorMessage==undefined)
+        Swal.fire("Success",response.status,"success");
+      else
+        Swal.fire("Error",response.errorMessage, "error")
+    },err=>{
+      this.spinner.hide()
+      Swal.fire("Error","Unable to execute bot","error")
+    })
+  }
+
+
+
+  getAllVersions()
+  {
+    this.rest.getBotVersion(this.finalbot.botId).subscribe((response:any)=>{
+      if(response.errorMessage==undefined)
+      {
+        let sortedversions:any[]=response.sort((a, b) => (a.vId > b.vId) ? 1 : -1)
+        this.VersionsList=[...sortedversions.reverse()];
+      }
+      else
+      {
+        Swal.fire("Error",response.errorMessage, "error")
+      }
+    },err=>{
+      Swal.fire("Error","Unable to get versions", "error")
+    })
+  }
+
+  openScheduler()
+  {
+    this.schedulerComponentInput={
+      botid:this.finalbot.botId,
+      version:this.finalbot.version,
+      botName:this.finalbot.botName
+    }
+    this.scheduleOverlayFlag=true;
+    document.getElementById('sch').style.display='block'
+  }
+
+  closeScheduler()
+  {
+    document.getElementById('sch').style.display='none'
+    this.scheduleOverlayFlag=false;
+  }
+
+  openLogs()
+  {
+
+    this.logsOverlayFlag=true;
+    this.logsOverlayModel=this.modalService.show(this.logsOverlayRef, {class:"logs-modal"})
     
   }
 
-}
+  closeLogsOverlay()
+  {
+    this.logsOverlayModel.hide();
+    this.logsOverlayFlag=false;
+  }
 
+  deleteBot()
+  {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+    if (result.value) {
+      this.spinner.show();
+      this.rest.getDeleteBot(this.finalbot.botId).subscribe(data=>{
+        let response:any=data;
+        this.spinner.hide()
+        if(response.status!=undefined)
+        {
+            Swal.fire("Success",response.status,"success");
+            $("#close_bot_"+this.finalbot.botName).click();
+        }
+        else
+        {
+            Swal.fire("Error",response.errorMessage,"error")
+        }
+      },err=>{
+        this.spinner.hide();
+        Swal.fire("Error","Unable to delete bot","error")
+      })
+  }
+
+    })
+  }
+
+  loadPredefinedBot(botId, dropCoordinates)
+  {
+    this.rest.getbotdata(botId).subscribe((response:any)=>{
+      if(response.errorMessage==undefined)
+      {
+        let droppedXcoordinate=dropCoordinates.x.split("px")[0]
+        let droppedYcoordinate=dropCoordinates.y.split("px")[0]
+        this.spinner.show();
+
+        let j=0;
+        response.tasks.forEach(element=>
+        {
+          let nodename=  element.nodeId.split("__")[0];
+          let nodeid=(element.nodeId.split("__")[1]).split("|")[0];
+         
+          let node={
+            id:this.idGenerator(),
+            name:nodename,
+            selectedNodeTask:element.taskName,
+            path:this.toolset.find(data=>data.name==nodename).path,
+            selectedNodeId: element.tMetaId,
+            tasks:this.toolset.find(data=>data.name==nodename).tasks,
+            x:j+parseInt(droppedXcoordinate)+'px',
+            y:j+parseInt(droppedYcoordinate)+"px",
+        }
+        j=j+100;
+        if(response.sequences.find(item=>item.sourceTaskId==nodeid)!=undefined)
+        {
+          response.sequences.find(item=>item.sourceTaskId==nodeid).sourceTaskId=node.id
+        }
+  
+        if(response.sequences.find(item=>item.targetTaskId==nodeid)!=undefined)
+        {
+          response.sequences.find(item=>item.targetTaskId==nodeid).targetTaskId=node.id
+        }
+        element.nodeId=nodename+"__"+node.id;
+        this.nodes.push(node);
+        setTimeout(() => {
+          this.populateNodes(node);
+        }, 240);
+  
+  
+        })
+       
+        response.sequences.splice((response.sequences.length-1),1)
+        response.sequences.splice(0,1)
+       
+          this.addconnections(response.sequences);
+          this.spinner.hide();
+      }
+      else
+      {
+        Swal.fire("Error",response.errorMessage, "error");
+      }
+    })
+  }
+
+}
 
 
 @Pipe({name: 'Checkoutputbox'})
@@ -2015,6 +2478,4 @@ export class Checkoutputbox implements PipeTransform {
       return false;
     }
   }
-
-
 }

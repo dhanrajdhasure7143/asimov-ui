@@ -6,8 +6,8 @@ enum Filter {
   'Activity',
   // 'Cases',
   'Variants',
-  'End Points'
-  // 'Performance'
+  'End Points',
+  'Performance'
 }
 @Component({
   selector: 'app-filter',
@@ -84,7 +84,6 @@ export class FilterComponent implements OnInit {
     step: 0.1,
     floor: 0,
     ceil: 1,
-    // translate: (value: number): string => `${value}%`,
     translate: (value: number): string => `${value * 100}`,
     hideLimitLabels: true,
     hidePointerLabels: false,
@@ -93,11 +92,7 @@ export class FilterComponent implements OnInit {
   highValue: number = 1;
   vaue:number = 0;
   single = [];
-
-
-
   view: any[] = [1500, 200];
-
   // options
   showXAxis = false;
   showYAxis = false;
@@ -107,7 +102,6 @@ export class FilterComponent implements OnInit {
   xAxisLabel = 'dd';
   showYAxisLabel = false;
   yAxisLabel = 'gg';
-
   colorScheme = {
     domain: ['#0062cf', '#0db9f0']
   };
@@ -186,13 +180,11 @@ export class FilterComponent implements OnInit {
         this.endPointArray.push(obj)
       }
       this.performanceLogic(this.performanceFilterInput, 'caseduration');
-      // console.log("performance",this.performanceFilterInput)
     }, 4000);
     this.chart_filter_options = Object.keys(Filter).filter(val => isNaN(Filter[val]));
 
     // Performance filter logic 
-    
-    
+        
     this.manualRefresh.next();
   }
 
@@ -237,11 +229,9 @@ export class FilterComponent implements OnInit {
           this.endPointArray.push(obj)
         }
         this.performanceLogic(this.performanceFilterInput, 'caseduration');
-        // console.log("performance",this.performanceFilterInput)
       }, 1000);
     }
     this.chart_filter_options = Object.keys(Filter).filter(val => isNaN(Filter[val]));
-
     if (this.isClearFilter == true) {
       this.endptBt = true;
       for (var i = 0; i < this.variantListarray.length; i++) {
@@ -281,9 +271,6 @@ export class FilterComponent implements OnInit {
         this.endPointArray.push(obj)
       }
     }
-
-   // this.performanceLogic(this.performanceFilterInput, 'caseduration');
-    
   }
 
   loopTrackBy(index, term) {
@@ -312,7 +299,6 @@ export class FilterComponent implements OnInit {
       }
     };
     if (activityArray.length >= 1) {
-      // this.isApplyFilter=false;
       this.isDeselectActivity = false;
     } else {
       this.isApplyFilter = true;
@@ -343,11 +329,9 @@ export class FilterComponent implements OnInit {
     for (var i = 0; i < this.variantListarray.length; i++) {
       this.variantListarray[i].selected = "inactive"
     };
-
     this.isApplyFilter = true;
     this.isSelect = false;
   }
-
 
   deselectAllDataValue() {
     for (var i = 0; i < this.dataValuesNames.length; i++) {
@@ -382,6 +366,7 @@ export class FilterComponent implements OnInit {
     }
     this.applyVariantFilter()
   }
+
   channgeFilter() {    // filter type in bottom over lay
     this.endPointsArray = [{ name: "Start", selected: "inactive" }, { name: "End", selected: "inactive" }]
     if (this.filterby == "Activity") {
@@ -399,21 +384,19 @@ export class FilterComponent implements OnInit {
       // this.filterby = 'Activity';
       var modal = document.getElementById('myModal');
       modal.style.display = "block";
-
-
     } else {
       this.isActivity = false;
       this.isEndpoint = true;
       this.isVariantFilter = false;
     }
   }
+
   selectedStartPoint(data, index) {
     if (data.selected == "inactive") {
       this.startPointArray[index].selected = "active"
     } else {
       this.startPointArray[index].selected = "inactive"
     }
-
     this.selectedStartPointsCount = []
     this.startPointArray.forEach(element => {
       if (element.selected === "active") {
@@ -486,10 +469,7 @@ export class FilterComponent implements OnInit {
     if (this.appliedFilters.indexOf('EndPoint') == -1) {
       this.appliedFilters.push("EndPoint")
     }
-
     var obj: any = { startPoint: selectedstartPoints, endPoint: selectedEndPoints, }
-   
-
     this.selectedStartpoints.emit(obj);
     this.applyFilterValue.emit(true)
   }
@@ -534,7 +514,6 @@ export class FilterComponent implements OnInit {
         this.seletedVariant.push(this.variantListarray[i].name)
       }
     };
-
     if (this.seletedVariant.length >= 1) {
       this.appliedFilters.push("Variant")
     }
@@ -543,7 +522,6 @@ export class FilterComponent implements OnInit {
   }
 
   removeTag(value) {   // remove applied tag on filter
-
     for (var i = this.appliedFilters.length - 1; i >= 0; i--) {
       if (this.appliedFilters[i] === value) {
         this.appliedFilters.splice(i, 1);
@@ -571,6 +549,22 @@ export class FilterComponent implements OnInit {
       };
       this.comboFilter();
       this.isApplyFilter = true;
+    }else{
+      let seletedVariantArray = [];
+    for (var i = 0; i < this.variantListarray.length; i++) {
+      seletedVariantArray.push(this.variantListarray[i].name)
+    };
+
+    let object: any = { 
+      "activity": null,
+      "variants": seletedVariantArray,
+      "startPoint": null,
+      "endPoint": null,
+      "filterType":"performance"
+    };
+
+      this.selectedFilterValues.emit(object);
+    this.applyFilterValue.emit(true)
     }
     this.isStartPoint = false;
     this.isEndPoint = false;
@@ -589,7 +583,6 @@ export class FilterComponent implements OnInit {
         seletedActivity1.push(this.dataValues[i].name)
       }
     };
-
     // Variant 
     let seletedVariantArray = [];
     let seletedVariantArray1 = []
@@ -688,11 +681,8 @@ export class FilterComponent implements OnInit {
       })
     }
     this.customColors=custom_colorArray;
-
-   
     var cc = 0;
     //const unique = [...new Set(this.fcount.map(item => item.caseCount))];
-  
     this.fcount.filter(r => {
       cc += Number(r.caseCount);
     })
@@ -710,6 +700,7 @@ export class FilterComponent implements OnInit {
     ]
   }
   }
+
   endValue(e) {
     this.fcount = [];
     let fcount1 = []
@@ -733,7 +724,6 @@ export class FilterComponent implements OnInit {
       })
     }
     this.customColors=custom_colorArray;
-
     var cc = 0;
     this.fcount.filter(r => {
       cc += Number(r.caseCount);
@@ -778,8 +768,8 @@ export class FilterComponent implements OnInit {
       this.isnoof_casesInput=true;
       this.isnoof_casesInput1=true;
     }
-    
   }
+
   convertMS(ms) {
     if(this.pFilterType == 'noofcases'){
       return ms;
@@ -794,7 +784,6 @@ export class FilterComponent implements OnInit {
     m = m % 60;
     d = Math.floor(h / 24);
     h = h % 24;
-
     var pad = function (n) { return n < 10 ? '0' + n : n; };
     var result: any;
     if (d == 0) {
@@ -804,10 +793,10 @@ export class FilterComponent implements OnInit {
       (d == 1) ? ext = " day" : ext = " days";
       result = d + ext + ' ,' + pad(h) + ' hours ,' + pad(m) + ' mins';
     }
-
     return result;
   } 
   };
+
   getCaseDurationMetrics(pData){
     this.performanceTotalDuration =[];
     this.perfrmanceFilterKeyValuepair =[];
@@ -816,12 +805,10 @@ export class FilterComponent implements OnInit {
     this.minPerfValue = 0;
     this.maxPerfValue = 0;
     this.options1 = {};
-    // console.log("pData",pData)
     pData.data.filter(res => {
       this.totalCases += Number(res.case_value);
       this.performanceTotalDuration.push({ durationArray: res.filter_total_durations, caseValue: res.case_value });
     });
-
     this.performanceTotalDuration.forEach((obj) => {
       obj.durationArray.forEach(objDuartion => {
         Object.entries(objDuartion).forEach(([key, value]) => {
@@ -835,22 +822,16 @@ export class FilterComponent implements OnInit {
     this.perfrmanceFilterKeyValuepair.filter(res => {
       this.single.push({ name: res.duration, value: res.caseCount })
     });
-
-    // console.log(this.single)
     this.options1 = {
-
       floor: Number(this.perfrmanceFilterKeyValuepair[0].duration),
       ceil: Number(this.perfrmanceFilterKeyValuepair[this.perfrmanceFilterKeyValuepair.length - 1].duration),
-      // translate: (value: number): string => `${value}%`,
       translate: (value: number, label: LabelType): string => {
         switch (label) {
           case LabelType.Low:
             this.minPerfValue = value;
-            //console.log(value);
             return this.convertMS(value);
           case LabelType.High:
             this.maxPerfValue = value;
-           // console.log(value);
             return this.convertMS(value);
           default:
             return this.convertMS(value);
@@ -862,10 +843,9 @@ export class FilterComponent implements OnInit {
     }
     this.vaue = Number(this.perfrmanceFilterKeyValuepair[0].duration)
     this.highValue = Number(this.perfrmanceFilterKeyValuepair[this.perfrmanceFilterKeyValuepair.length - 1].duration)
-    // console.log(this.casePercentage);
   }
+
   getMeanActiveTime(pData){
-   
     this.performanceTotalDuration =[];
     this.perfrmanceFilterKeyValuepair =[];
     this.single = [];
@@ -895,7 +875,6 @@ export class FilterComponent implements OnInit {
 
       floor: Number(this.perfrmanceFilterKeyValuepair[0].duration),
       ceil: Number(this.perfrmanceFilterKeyValuepair[this.perfrmanceFilterKeyValuepair.length - 1].duration),
-      // translate: (value: number): string => `${value}%`,
       translate: (value: number, label: LabelType): string => {
         switch (label) {
           case LabelType.Low:
@@ -914,7 +893,6 @@ export class FilterComponent implements OnInit {
     }
     this.vaue = Number(this.perfrmanceFilterKeyValuepair[0].duration)
     this.highValue = Number(this.perfrmanceFilterKeyValuepair[this.perfrmanceFilterKeyValuepair.length - 1].duration)
-
   }
 
   getMeanWaitingTime(pData){
@@ -948,7 +926,6 @@ export class FilterComponent implements OnInit {
 
       floor: Number(this.perfrmanceFilterKeyValuepair[0].duration),
       ceil: Number(this.perfrmanceFilterKeyValuepair[this.perfrmanceFilterKeyValuepair.length - 1].duration),
-      // translate: (value: number): string => `${value}%`,
       translate: (value: number, label: LabelType): string => {
         switch (label) {
           case LabelType.Low:
@@ -967,7 +944,6 @@ export class FilterComponent implements OnInit {
     }
     this.vaue = Number(this.perfrmanceFilterKeyValuepair[0].duration)
     this.highValue = Number(this.perfrmanceFilterKeyValuepair[this.perfrmanceFilterKeyValuepair.length - 1].duration)
-
   }
 
   getMedianActiveTime(pData){
@@ -998,10 +974,8 @@ export class FilterComponent implements OnInit {
     });
 
     this.options1 = {
-
       floor: Number(this.perfrmanceFilterKeyValuepair[0].duration),
       ceil: Number(this.perfrmanceFilterKeyValuepair[this.perfrmanceFilterKeyValuepair.length - 1].duration),
-      // translate: (value: number): string => `${value}%`,
       translate: (value: number, label: LabelType): string => {
         switch (label) {
           case LabelType.Low:
@@ -1020,7 +994,6 @@ export class FilterComponent implements OnInit {
     }
     this.vaue = Number(this.perfrmanceFilterKeyValuepair[0].duration)
     this.highValue = Number(this.perfrmanceFilterKeyValuepair[this.perfrmanceFilterKeyValuepair.length - 1].duration)
-
   }
 
   getMedianWaitingTime(pData){
@@ -1073,7 +1046,6 @@ export class FilterComponent implements OnInit {
     }
     this.vaue = Number(this.perfrmanceFilterKeyValuepair[0].duration)
     this.highValue = Number(this.perfrmanceFilterKeyValuepair[this.perfrmanceFilterKeyValuepair.length - 1].duration)
-
   }
 
   getCaseUtilization(pData){
@@ -1156,7 +1128,6 @@ export class FilterComponent implements OnInit {
     this.perfrmanceFilterKeyValuepair.filter(res => {
       this.single.push({ name: res.duration, value: res.caseCount })
     });
-    // console.log(this.single)
 
     this.options1 = {
 
@@ -1191,10 +1162,14 @@ export class FilterComponent implements OnInit {
       "max_tot_duration":this.maxPerfValue,
       "filterType": this.pFilterType
     }
+    this.appliedFilters=[];
+    this.deselectAllDataValue();
+    this.deselectAllVariantList(); 
+    this.appliedFilters.push("Performance")
     this.appliedPerformanceFiterValues.emit(reqObj)
   }
 
-  ontimedropdown_change(e){
+  ontimedropdown_change(){
     this.isDays_input=false;
     this.isHrs_input=false;
     this.isMints_input=false;
@@ -1207,7 +1182,7 @@ export class FilterComponent implements OnInit {
     this.isMints_input=true;
   }
 }
-ontimedropdown_change1(e){
+ontimedropdown_change1(){
   this.isDays_input1=false;
   this.isHrs_input1=false;
   this.isMints_input1=false;
@@ -1257,6 +1232,10 @@ onmaxvalueSet(){
       }
     this.highValue=d+h+m;
   }
+  }
+
+  onSelect(){// this method for graph selection changes
+
   }
 
 } 

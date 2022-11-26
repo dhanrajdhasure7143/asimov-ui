@@ -43,11 +43,11 @@ export class OrchestrationComponent implements OnInit {
       }
       else
       {
-       this.selectedTab=2;
-        //this.selectedTab=3;
+        this.selectedTab=2;
+       // this.selectedTab=3;
         this.param=processId.processid;
-       this.check_tab=2;
-        //this.check_tab=3;
+        this.check_tab=2;
+      // this.check_tab=3;
        
       }
     });

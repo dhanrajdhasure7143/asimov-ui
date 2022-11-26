@@ -65,19 +65,6 @@ background-color:#ccd9ff;
   background-color:white !important;
 }
 
-.rpa-control{
-  /* width:100% !important;
-  border-top:none !important;
-  border-right: none !important;
-  border-left: none !important; */
-}
-
-.rpa-control:focus{
-  /* width:100% !important;
-  border-top:none !important;
-  border-right: none !important;
-  border-left: none !important; */
-}
 button:disabled{
   background-color: white !important;
   color: lightgray !important;

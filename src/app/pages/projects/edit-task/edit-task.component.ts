@@ -143,6 +143,7 @@ export class EditTaskComponent implements OnInit {
         this.startDate=task.startDate
         this.endDate=moment(task.endDate).format("YYYY-MM-DD")
         this.mindate=moment(this.startDate).format("YYYY-MM-DD")
+       
           this.updatetaskdata(task);
        
         
@@ -304,10 +305,8 @@ else
                 this.profilePicture=true;
               }
               this.base64Data= this.retrieveResonse.image;
-             // console.log("image",this.base64Data);
              // localStorage.setItem('image', this.base64Data);
               this.retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;
-             // console.log(this.retrievedImage);
             }
           );
     }

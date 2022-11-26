@@ -146,7 +146,7 @@
                     </div>
 
                     <div class="form-group col-md-12 p-0">
-                        <label class="label-control" id="summary" class="label-control">Summary</label>
+                        <label class="label-control" id="summary">Summary</label>
                         <textarea class="form-control" maxlength="151" formControlName="summary" rows="2" (keyup)="taskSummaryMaxLength($event.target.value)" style=" resize: none;" placeholder="Enter Summary">
                               </textarea>
                               <span *ngIf="taskSummaryFlag" class="errspan required">
@@ -304,7 +304,7 @@
                         <img src="../../../../assets/images/Projects/delete-red.svg" class="hover-img">
                       </button> 
                       
-                      <button type="button" [disabled]="filecheckflag" class="projects-menu-item gridicon" (click)="onDownloadSelectedItems($event)"   matTooltip="Download" >
+                      <button type="button" [disabled]="filecheckflag" class="projects-menu-item gridicon" (click)="onDownloadSelectedItems()"   matTooltip="Download" >
                         <img src="../../../assets/images/BPMS/download.svg"  class="default-img">
                         <img src="../../../../assets/images/Projects/Download.svg" class="hover-img">
                       </button>

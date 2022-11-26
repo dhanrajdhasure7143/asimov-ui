@@ -19,6 +19,7 @@ export class BotsComponent implements OnInit {
   @ViewChild("paginator4",{static:false}) paginator4: MatPaginator;
   @ViewChild("sort4",{static:false}) sort4: MatSort;
   public scheduledbots: any = [];
+  search:any;
   constructor(
       private rest:RestApiService,
       private spinner:NgxSpinnerService,

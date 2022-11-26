@@ -22,6 +22,7 @@ export class ProcessesComponent implements OnInit {
   public processschedule: any = [];
   environment: any;
   enivornmentname: any;
+  search:any;
   constructor(
       private rest:RestApiService,
       private spinner:NgxSpinnerService,

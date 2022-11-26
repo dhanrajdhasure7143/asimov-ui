@@ -61,6 +61,8 @@ export class HomeComponent implements OnInit {
     this.tenantId = localStorage.getItem('tenantName');
     this.rest_api.expiryInfo().subscribe(data => {
       this.expiry = data.Expiresin;
+      this.expiry = 1;
+      console.log("left over days ----",this.expiry)
       localStorage.setItem('expiresIn',this.expiry)
       // if(this.expiry<0){
       //   this.router.navigate(['/pages/subscriptions'])
@@ -76,6 +78,7 @@ export class HomeComponent implements OnInit {
      if(this.plansList.nickName=='Standard'){
        this.freetrail=true;
       this.isLoading=false;
+      console.log("expiry-----",this.expiry)
       if(this.expiry>0){
        this.router.navigate(['/pages/projects/listOfProjects'])}
        localStorage.setItem('freetrail',JSON.stringify(this.freetrail))

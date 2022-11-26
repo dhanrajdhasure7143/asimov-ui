@@ -7,36 +7,39 @@ import { CdkDragDrop, CdkDragStart, moveItemInArray, transferArrayItem } from '@
 import { Base64 } from 'js-base64';
 @Component({
   selector: 'app-dynamic-forms',
-  templateUrl:'./dynamic-forms.component.html',
+  templateUrl: './dynamic-forms.component.html',
+  styleUrls: ['./dynamic-forms.component.css']
+
 })
 export class DynamicFormsComponent implements OnInit {
   @Output() onSubmit = new EventEmitter();
   @Output() Submit = new EventEmitter();
-  @Input() enableMultiForm:any;
+  @Input() enableMultiForm: any;
   @Input() fields: any[] = [];
-  @Input() formheader:any;
-  @Input() multiarray:any=[]
+  @Input() formheader: any;
+  @Input() multiarray: any = []
   form: FormGroup;
   otherAttributesForm:FormGroup;
   otherAttributes:any=[];
-  isdisabled:boolean;
-  q = 1
+  isdisabled: boolean;
   userRole: string;
-  fillarray:any=[]
-  isMultiForm:Boolean=false;
-  multiFormValue=[];
-  data: any=[]
+  fillarray: any = []
+  isMultiForm: Boolean = false;
+  dragging: boolean;
+  multiFormValue = [];
+  data: any = []
   id: any;
-  editfill:boolean=false;
-  drag:boolean
+  selections: any = []
+  editfill: boolean = false;
+  q = 1
   constructor() {
-   }
-  onSub(){
-    if(this.enableMultiForm.check==true){
+  }
+  onSub() {
+    if (this.enableMultiForm.check == true) {
       this.data = this.fillarray.map(p => {
         let filteredobject = {};
         let sample = (Object.keys(p));
-        sample.map(item => {
+        sample.forEach(item => {
           if (item != "id")
             filteredobject[item.split("_")[0]] = p[item];
           else
@@ -46,50 +49,39 @@ export class DynamicFormsComponent implements OnInit {
       });
       this.Submit.emit({multiform:this.data, otherFormData:this.otherAttributesForm.value})
     }
-    else{
+    else {
       this.onSubmit.emit(this.form.value)
-    }    
+    }
   }
-  edit(webAutomationObject) {
-    let obj=Object.assign({}, webAutomationObject)
+  edit(obj) {
     this.editfill = true
     this.id = obj.id;
     let key=Object.keys(obj).find(item=>item.split("_")[0]=="fillValueType")
     let valueKey=Object.keys(obj).find(item=>item.split("_")[0]=="fillValue");
     if(valueKey != undefined && key != undefined) 
       if(obj[key]=="password")
-      { 
-        this.fields.find(item=>item.name=="fillValueType").value="password"
-        this.fields.find(item=>item.name=="fillValue").type="password";
-        this.fields.find(item=>item.name=="fillValue").value=obj[valueKey]  
-          //obj[valueKey]=Base64.decode(obj[valueKey]);
-      }
-      else
       {
-        this.fields.find(item=>item.name=="fillValue").type="textarea"
+        this.fields.find(item=>item.name=="fillValue").type="password"
+        obj[valueKey]=Base64.decode(obj[valueKey]);
       }
-      //prod 580
-      let action_id= obj.Action_580
-    if (action_id == 'fill') {
+    if (obj.Action_525 == 'fill') {
       this.fields.forEach(item => {
         if (item.visibility == false) {
           item.visibility = true;
           item.required = true;
         }
         setTimeout(() => {
-          this.form.patchValue(obj);
-          
+          this.form.patchValue(obj)
         }, 100);
       })
-    } else if (action_id == 'click') {
-    this.fields.forEach(item => {
-        let hideAttributes: any = item.options.find(item => item.key == action_id) != undefined ? item.options.find(item => item.key == action_id).hide_attributes : "";
+    } else if (obj.Action_525 == 'click') {
+      this.fields.forEach(item => {
+        let hideAttributes: any = item.options.find(item => item.key == obj.Action_525) != undefined ? item.options.find(item => item.key == obj.Action_525).hide_attributes : "";
         let hideAttributesIds: any = hideAttributes != null ? hideAttributes.split(",") : [];
         hideAttributesIds.forEach(item => {
           if (this.fields.find(fieldItem => fieldItem.id == parseInt(item)) != undefined) {
             this.fields.find(fieldItem => fieldItem.id == parseInt(item)).visibility = false;
             this.fields.find(fieldItem => fieldItem.id == parseInt(item)).required = false;
-            // this.form.patchValue(obj);
           }
         });
         if(!item.visibility){
@@ -99,7 +91,8 @@ export class DynamicFormsComponent implements OnInit {
          this.form.patchValue(obj);
 
       })
-    } else {
+    }
+    else {
       this.form.patchValue(obj);
     }
   }
@@ -107,8 +100,6 @@ export class DynamicFormsComponent implements OnInit {
     var index = this.fillarray.indexOf(obj);
     this.fillarray.splice(index, 1);
   }
-
-
   checkRecord(record, field)
   {
       let key=(Object.keys(record).find((item:any)=>item.split("_")[0]=="fillValueType"))
@@ -120,16 +111,13 @@ export class DynamicFormsComponent implements OnInit {
   Push() {
     let fillValueTypeId=this.fields.find((item:any)=>item.name=="fillValueType")!=undefined?this.fields.find((item:any)=>item.name=="fillValueType").id:"";
     let fillValueId=this.fields.find((item:any)=>item.name=="fillValue")!=undefined?this.fields.find((item:any)=>item.name=="fillValue").id:"";
-    if (this.editfill == true) {
-      let value = Object.assign({},this.form.value)
+    if(this.editfill == true) {
+      let value = (this.form.value)
       if(value["fillValueType_"+fillValueTypeId] != undefined)
       {
         if(value["fillValueType_"+fillValueTypeId]=="password")
         {
-          let data=this.fillarray.find((item:any)=>item.id==this.id)
-          if(data !=undefined)
-            if(data["fillValue_"+fillValueId]!=value["fillValue_"+fillValueId])
-              value["fillValue_"+fillValueId]=Base64.encode(value["fillValue_"+fillValueId])
+          value["fillValue_"+fillValueId]=Base64.encode(value["fillValue_"+fillValueId])
         }
       }
       value.id = this.id
@@ -140,14 +128,6 @@ export class DynamicFormsComponent implements OnInit {
         }
       }
       this.data = this.fillarray.map(p => {
-        // return{
-        //   "webElementType":p.webElementType_223,
-        //   "webElementValue":p.webElementValue_224,
-        //   "fillValueType":p.fillValueType_222,
-        //   "fillValue":p.fillValue_225,
-        //   "id":p.id
-
-        // }
         let filteredobject = {};
         let sample = (Object.keys(p));
         sample.map(item => {
@@ -156,11 +136,12 @@ export class DynamicFormsComponent implements OnInit {
           else
             filteredobject["id"] = p[item];
         })
+        
         return filteredobject;
-      });
+      })
     }
     else {
-      let value = (this.form.value)
+      let value = (this.form.value);
       if(value["fillValueType_"+fillValueTypeId] != undefined)
       {
         if(value["fillValueType_"+fillValueTypeId]=="password")
@@ -168,7 +149,7 @@ export class DynamicFormsComponent implements OnInit {
           value["fillValue_"+fillValueId]=Base64.encode(value["fillValue_"+fillValueId])
         }
       }
-      this.fillarray.push(this.form.value);
+      this.fillarray.push(value);
       this.fillarray.forEach((item, i) => {
         item.id = i + 1;
       });
@@ -182,26 +163,18 @@ export class DynamicFormsComponent implements OnInit {
             filteredobject["id"] = p[item];
         })
         return filteredobject;
-        // return{
-        //   "webElementType":p.webElementType_223,
-        //   "webElementValue":p.webElementValue_224,
-        //   "fillValueType":p.fillValueType_222,
-        //   "fillValue":p.fillValue_225,
-        //   "id":p.id
-
-        // }
       })
-    }  
-    this.form.reset();   
-    for(let i=0;i<this.fields.length;i++){
-      if(this.fields[i].type=="dropdown"){
-        this.fields[i].value="";
-        this.form.get([this.fields[i].name+'_'+this.fields[i].id]).setValue("")
-      }
     }
+    this.form.reset();
+    for (let i = 0; i < this.fields.length; i++) {
+      if (this.fields[i].type == "dropdown") {
+        this.fields[i].value = "";
+        this.form.get([this.fields[i].name + '_' + this.fields[i].id]).setValue("")
+      }
+    } 
   }
-  
-  idGenerator() {
+
+  idGenerator() { 
     var S4 = function () {
       return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
     };
@@ -210,21 +183,21 @@ export class DynamicFormsComponent implements OnInit {
 
   ngOnInit() {
     let fieldsCtrls = {};
-    this.isMultiForm=(this.enableMultiForm.check)
-    if(this.multiarray!=undefined){
-      this.multiFormValue=[...this.enableMultiForm.value]
-      let modifiedArray:any=[...this.multiarray.map((item:any)=>{
-          let objectKeys=Object.keys(item);
-          let fieldData={}
-          objectKeys.forEach((key:any)=>{
-            let obj=this.fields.find(field=>field.name==key)
-            if(obj!=undefined)
-              fieldData[key+"_"+obj.id]=item[key];
-          })
-          fieldData["id"]=item.id;
-          return fieldData;
+    this.isMultiForm = (this.enableMultiForm.check)
+    if (this.multiarray != undefined) {
+      this.multiFormValue = [...this.enableMultiForm.value]
+      let modifiedArray: any = [...this.multiarray.map((item: any) => {
+        let objectKeys = Object.keys(item);
+        let fieldData = {}
+        objectKeys.forEach((key: any) => {
+          let obj = this.fields.find(field => field.name == key)
+          if (obj != undefined)
+            fieldData[key + "_" + obj.id] = item[key];
+        })
+        fieldData["id"] = item.id;
+        return fieldData;
       })]
-      this.fillarray=modifiedArray;
+      this.fillarray = modifiedArray;
       let otherAttributes:any[]=this.enableMultiForm.additionalAttributesList;
       let otherFieldsCtrls:any=[];
 
@@ -236,70 +209,29 @@ export class DynamicFormsComponent implements OnInit {
       })
       this.otherAttributes=otherAttributes;
       this.otherAttributesForm=new FormGroup(otherFieldsCtrls);
-      //this.data=modifiedArray
     }
-
-  
-    // if(this.multiarray!=undefined){
-    //   this.fillarray=this.multiarray.map(p=>{
-    
-        
-    //     let filteredobject={};
-    //     let sample=(Object.keys(p));
-    //     console.log(sample)
-    //     sample.forEach(item=>{
-    //       if(item!="id")
-    //       {
-    //           this.fields.forEach((data,index)=>{
-              
-    //       //  filteredobject[this.fields[i].name+'_'+this.fields[i].id]=p[item]
-    //           filteredobject[this.fields[index].name+'_'+this.fields[index].id]=p[item]
-    //        })
-    //       }
-    //       else
-    //         filteredobject["id"]=p[item];
-    //     })
-    //     console.log("----------------------------", filteredobject)    
-    //     return filteredobject;
-    //   })
-    //   console.log("--------------",this.fillarray)
-    //   this.data=this.fillarray;
-    // }
-    
     for (let f of this.fields) {
-    //  if (f.type != 'checkbox') {
-      if(f.type=='email')
-        fieldsCtrls[f.name+'_'+f.id] = new FormControl(f.value || '', f.required && f.dependency == ''  ? [Validators.pattern("[a-zA-Z0-9.-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{3,}")] : [Validators.pattern("[a-zA-Z0-9.-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{3,}")])
+      if (f.type == 'email')
+        fieldsCtrls[f.name + '_' + f.id] = new FormControl(f.value || '', f.required && f.dependency == '' ? [Validators.pattern("[a-zA-Z0-9.-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{3,}")] : [Validators.pattern("[a-zA-Z0-9.-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{3,}")])
       else
-        fieldsCtrls[f.name+'_'+f.id] = new FormControl(f.value || '', f.required && f.dependency == ''  ? [Validators.required] : [])
-      //  console.log(f);
-     /* } else {
-        let opts = {};
-        for (let opt of f.options) {
-          opts[opt.key] = new FormControl(opt.value);
-        }
-        fieldsCtrls[f.name] = new FormGroup(opts)
-      }*/
-
+        fieldsCtrls[f.name + '_' + f.id] = new FormControl(f.value || '', f.required && f.dependency == '' ? [Validators.required] : [])
     }
     this.form = new FormGroup(fieldsCtrls);
     this.userRole = localStorage.getItem("userRole");
-      if(this.userRole=='Process Owner' || this.userRole=='RPA Developer'){
-        this.isdisabled=null
-      }
-      else{ 
-        this.isdisabled=true
-      }
-     
+    if (this.userRole == 'Process Owner' || this.userRole == 'RPA Developer') 
+    {
+      this.isdisabled = null
+    }
+    else 
+    {
+      this.isdisabled = true
+    }
+
   }
+
   drop(event: CdkDragDrop<[]>) {
-    this.drag=true
-    moveItemInArray(this.fillarray, (this.q - 1) * 2 + event.previousIndex, (this.q - 1) * 2 + event.currentIndex);  
-    this.data=this.fillarray;
-
+      moveItemInArray(this.fillarray, (this.q - 1) * 2 + event.previousIndex, (this.q - 1) * 2 + event.currentIndex);
+     this.data=this.fillarray
+  }
 }
 
-
-}
- // <div class="form-row"></div>
- // <div class="col-md-3"></div>

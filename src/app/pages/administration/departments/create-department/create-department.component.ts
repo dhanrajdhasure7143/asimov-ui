@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
+import { LoaderService } from 'src/app/services/loader/loader.service';
 import Swal from 'sweetalert2';
-import { NgxSpinnerService } from 'ngx-spinner';
+
 @Component({
   selector: 'app-create-department',
   templateUrl: './create-department.component.html',
@@ -14,15 +15,14 @@ export class CreateDepartmentComponent implements OnInit {
   createDepartmentForm:FormGroup;
   users_list:any=[];
   constructor(private formBuilder: FormBuilder,private api:RestApiService,private router:Router,
-    private spinner: NgxSpinnerService) { }
+    private loader: LoaderService) { }
 
   ngOnInit(): void {
-    this.spinner.show();
+    this.loader.show();
     this.createDepartmentForm=this.formBuilder.group({
       departmentName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       owner: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       })
-
       this.getallusers();
   }
 
@@ -32,6 +32,7 @@ export class CreateDepartmentComponent implements OnInit {
       "categoryName": this.createDepartmentForm.value.departmentName,
       "owner":this.createDepartmentForm.value.owner
     }
+    this.loader.show();
     this.api.createDepartment(body).subscribe(resp => {
       if(resp.message === "Successfully created the category"){
         Swal.fire({
@@ -47,14 +48,14 @@ export class CreateDepartmentComponent implements OnInit {
       }).then((result) => {
         this.resetdepartment();
         this.router.navigate(['/pages/admin/user-management'])
-      }) 
+      })
       }
       else if(resp.message==="Category already exists"){
         Swal.fire("Error","Department already exists","error");
-      }
-      else {
+      } else {
         Swal.fire("Error",resp.message,"error");
       }
+      this.loader.hide();
     })
   }
 
@@ -74,8 +75,7 @@ export class CreateDepartmentComponent implements OnInit {
           this.users_list.push(e);
         }
       })
-      // this.users_list=users;
-      this.spinner.hide();
+      this.loader.hide();
     })
   }
 }

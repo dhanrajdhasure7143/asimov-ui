@@ -62,7 +62,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    private page_obj: PagesComponent,
+    public page_obj: PagesComponent,
     private dataTransfer: DataTransferService,
     private rpa: RestApiService,
     private spinner: NgxSpinnerService,
@@ -187,8 +187,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.retrieveResonse = res;
       if (res) {
         this.user_details = this.retrieveResonse;
-        // this.getAllNotifications();
-        // this.getNotificationsList();
+        // this.getAllNotifications(); \\ enable to show notification in header
+        // this.getNotificationsList(); \\ enable to show notification in header
         this.user_name = this.retrieveResonse.firstName;
         this.user_designation = this.retrieveResonse.designation;
         this.dataTransfer.userDetails(this.user_details);
@@ -228,7 +228,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.notificationscount = 0;
       }
     })
-    // this.getCount();
+    // this.getCount(); \\ enable to show notification in header
   }
 
   deletnotification(id) {
@@ -239,7 +239,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.dataid = '';
   }
 
-  deleteNotification(data, index) {
+  deleteNotification(data) {
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -301,7 +301,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.rpa.getReadNotificaionCount(this.role, userId, id, this.notificationbody).subscribe(data => {
         this.notificationreadlist = data
         this.notificationsList.find(ntf => ntf.id == id).status = 'read'
-        this.getNotificationsList();
+        // this.getNotificationsList();
       })
     }
   }

@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatTabsModule } from '@angular/material';
-
 import { SharedModule } from '../shared/shared.module';
 import { PagesRoutingModule } from './pages-routing.module';
 import { PagesComponent } from './pages.component';
@@ -20,10 +19,8 @@ import {Ng2TelInputModule} from 'ng2-tel-input';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { NgxPaginationModule } from 'ngx-pagination';
 import {MatExpansionModule} from '@angular/material/expansion';
-
 import { NewSoDashboardComponent } from './service-orchestration/orchestration/new-so-dashboard/new-so-dashboard.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
-
 import {MatListModule} from '@angular/material/list';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
@@ -31,8 +28,6 @@ import {MatIconModule} from '@angular/material';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { sohints } from './service-orchestration/orchestration/model/new-so-hints';
-import { ProgramComponent } from './program/programlandingpage.component';
-import { ProgramcreationComponent } from './programcreation/programcreation.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { ProcessArchitectComponent } from './dashboards/process-architect/process-architect.component';
 import { ProcessOwnerComponent } from './dashboards/process-owner/process-owner.component';
@@ -43,9 +38,14 @@ import { ProcessAnalystComponent } from './dashboards/process-analyst/process-an
 import { MatTableModule } from '@angular/material/table';  
 import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
-import { PopoverModule } from 'ngx-bootstrap/popover';
+import { PopoverModule } from 'ngx-bootstrap/popover'
 import {MatPaginatorIntl} from '@angular/material';
-import {CustomMatPaginatorIntl} from './../shared/custom-mat-paginator-int';
+import {CustomMatPaginatorIntl} from "./../shared/custom-mat-paginator-int";
+
+export function jwtTokenGetter() {
+  return localStorage.getItem("accesstoken");
+}
+
 @NgModule({
   declarations: [
     PagesComponent,
@@ -56,8 +56,6 @@ import {CustomMatPaginatorIntl} from './../shared/custom-mat-paginator-int';
     HeaderDropdownOverlayComponent,
     SidebarComponent,
     NewSoDashboardComponent,
-    ProgramComponent,
-    ProgramcreationComponent,
     ProcessArchitectComponent,
     ProcessOwnerComponent,
     ProcessAnalystComponent,
@@ -78,7 +76,7 @@ import {CustomMatPaginatorIntl} from './../shared/custom-mat-paginator-int';
     MatListModule,MatMenuModule,MatButtonModule,MatIconModule,MatToolbarModule,MatSidenavModule,MatTooltipModule,
      JwtModule.forRoot({
       config: {
-        tokenGetter:  () => localStorage.getItem('accesstoken')
+        tokenGetter: jwtTokenGetter
       }
     }),
     NgbModule,
@@ -90,9 +88,9 @@ import {CustomMatPaginatorIntl} from './../shared/custom-mat-paginator-int';
   ],
   providers: [SharebpmndiagramService, PagesHints,sohints,
     {
-      provide: MatPaginatorIntl, 
-      useClass: CustomMatPaginatorIntl
-    }
+    provide: MatPaginatorIntl, 
+    useClass: CustomMatPaginatorIntl
+  }
   //  LoaderService,
   //  { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },
 ]

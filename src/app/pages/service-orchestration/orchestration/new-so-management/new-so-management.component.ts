@@ -62,30 +62,40 @@ export class NewSoManagementComponent implements OnInit {
   dataSource1:any;
   isTableHasData:Boolean=false;
   nodata:Boolean=false;
+  inactivenew=1;
+  InactiveClosedRes = 1;
+  InactiveSolvedPer = 1;
+  InactiveSR = 1;
+  prihigh = 1;
+  primedium = 1;
+  prilow =1;
+  InactiveSWA = 1;
   ngOnInit(){
-    this.spinner.show();
 
-     $(".left_arrow_chart1").hide();
-              $('.chartdivbody').hide();
-              $('.ASSolvedPer').hide();
-              $('.AsClosedRes').hide();
-              $('.ASSolvedWA').hide();
-              $('.ASSolvedRemo').hide();
-              $('.ASNew').hide();
+    this.incident_flag=true;
+    // this.spinner.show();
+
+    //  $(".left_arrow_chart1").hide();
+    //           $('.chartdivbody').hide();
+    //           $('.ASSolvedPer').hide();
+    //           $('.AsClosedRes').hide();
+    //           $('.ASSolvedWA').hide();
+    //           $('.ASSolvedRemo').hide();
+    //           $('.ASNew').hide();
     
-    //this.urlSafe= this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
-    $('.ASSolvedPer').hide();
-    $('.AsClosedRes').hide();
-    $('.ASSolvedWA').hide();
-    $('.ASSolvedRemo').hide();
-    $('.ASNew').hide();
-    $('.left_arrow_chart4').hide();
-    $('.chart_div_High_4').hide();
-    $('.chart_div_Medium_4').hide();
-    $('.chart_div_Low_4').hide();
-    this.getIncidents();
+    // //this.urlSafe= this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
+    // $('.ASSolvedPer').hide();
+    // $('.AsClosedRes').hide();
+    // $('.ASSolvedWA').hide();
+    // $('.ASSolvedRemo').hide();
+    // $('.ASNew').hide();
+    // $('.left_arrow_chart4').hide();
+    // $('.chart_div_High_4').hide();
+    // $('.chart_div_Medium_4').hide();
+    // $('.chart_div_Low_4').hide();
+    // this.getIncidents();
   
-    //this.gettickets();
+    // //this.gettickets();
   }
   getIncidents()
   {

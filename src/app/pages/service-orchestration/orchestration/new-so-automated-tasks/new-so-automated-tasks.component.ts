@@ -92,6 +92,14 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
   isbotloading:any="loading";
   isHumanLoading:any="Loading"
   taskslist: any;
+  selectedexecutiontype:any="Serial"
+  public users_list: any[];
+  public userID: any;
+  public userDetails:any={};
+  public botSource_list:any[]=[];
+  q=0;
+  tasks:any;
+
   constructor(
     private route: ActivatedRoute,
     private rest:RestApiService,
@@ -103,6 +111,7 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
     private dt : DataTransferService,
     private modalService:BsModalService,
     private cd:ChangeDetectorRef,
+    private dataTransfer: DataTransferService
    )
 
   {
@@ -145,6 +154,7 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
 
   ngOnInit() {
     this.dt.changeHints(this.hints.soochestartionhints);
+    this.getUserDetails();
     this.spinner.show();
     this.userRole = localStorage.getItem("userRole")
 
@@ -173,6 +183,7 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
       this.gethumanslist();
       this.getuipathbots();
       this.getblueprismbots();
+      this.getallusers()
     });
     //this.getCategoryList(this.processId);
    
@@ -256,11 +267,9 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
   //       }
   //       else if(data.sourceType == 'UIPath')
   //        {
-  //          console.log("uiapath_bots",data.sourceType);
   //            this.uipath_bots.filter(x =>
   //             {
   //             if(x.Key == slaconId){
-  //             console.log(x.ProcessKey);
   //             this.insertslaForm.get("botName").setValue(x.ProcessKey);
   //             }
   //           });
@@ -443,7 +452,6 @@ cascadingImp(){
 //     thresholdLimit : parseInt(this.insertslaForm.value.thresholdLimit),
 //     totalRetries : parseInt(this.insertslaForm.value.totalRetries),
 //   };
-//   console.log(slaalertsc);
 //    this.rest.slaconfigapi(slaalertsc).subscribe( res =>
 //     {
 //       Swal.fire({
@@ -513,10 +521,9 @@ resetsla(){
         this.bot_list=botlist;
         this.isbotloading='Success'
         if(this.selectedvalue!=null){
-       
-          setTimeout(() => {
-            this.checkTaskAssigned(this.selectedvalue)
-           }, 2000);    
+       setTimeout(() => {
+        this.checkTaskAssigned(this.selectedvalue)
+       }, 2000);
         }
       }
 
@@ -533,9 +540,8 @@ resetsla(){
 
 
 
-  getautomatedtasks(process)
-  {
-    this.spinner.show();
+  getautomatedtasks(process){
+   this.spinner.show();
     this.rest.getautomatedtasks(process).subscribe(automatedtasks=>{
       let response:any=[];
       response=automatedtasks;
@@ -545,13 +551,13 @@ resetsla(){
           this.Active_bots_list=bots;
           let responsedata=response.automationTasks.map(item=>{
               item["processFilterId"]="processId_"+item.processId+"_"+item.processName
-              if(item.sourceType=="UiPath")
-                item["taskOwner"]="Karthik Peddinti";
-              else if(item.sourceType=="EPSoft")
-                item["taskOwner"]=this.Active_bots_list.find(bot=>bot.botId==item.botId)==undefined?"---":this.Active_bots_list.find(bot=>bot.botId==item.botId).createdBy;
-              else{
-                item["taskOwner"]="---"
-              }
+              // if(item.sourceType=="UiPath")
+              //   item["taskOwner"]="Karthik Peddinti";
+              // else if(item.sourceType=="EPSoft")
+              //   item["taskOwner"]=this.Active_bots_list.find(bot=>bot.botId==item.botId)==undefined?"---":this.Active_bots_list.find(bot=>bot.botId==item.botId).createdBy;
+              // else{
+              //   item["taskOwner"]="---"
+              // }
               return item;
           });
           this.responsedata=responsedata;
@@ -585,7 +591,9 @@ resetsla(){
 
   getprocessnames(processId)
   {
-    this.rest.getprocessnames().subscribe(processnames=>{
+    this.spinner.show();
+    // this.rest.getprocessnames().subscribe(processnames=>{
+    this.rest.getprocessnamesByLatestVersion().subscribe(processnames=>{
       let resp:any=[]
       resp=processnames
       this.process_names=resp.filter(item=>item.status=="APPROVED");
@@ -668,8 +676,7 @@ resetsla(){
 
 
   
-    checkTaskAssigned(id)
-    {
+    checkTaskAssigned(id){
       var processId=id;
       if( this.automatedtask.filter(item=>item.processId==processId).length==0)
       {
@@ -756,15 +763,15 @@ resetsla(){
   {
     let botId=$("#"+id+"__select").val();
     let source=this.responsedata.find(item=>item.taskId==id).sourceType;
-    if(source=="UiPath")
-      this.responsedata.find(item=>item.taskId==id).taskOwner="Karthik Peddinti";
-    else if(source=="EPSoft")
-    {
-      this.responsedata.find(item=>item.taskId==id).taskOwner=this.bot_list.find(bot=>bot.botId==botId).createdBy;
-    }
-    else{
-      this.responsedata.find(item=>item.taskId==id).taskOwner="---"
-    }
+    // if(source=="UiPath")
+    //   this.responsedata.find(item=>item.taskId==id).taskOwner="Karthik Peddinti";
+    // else if(source=="EPSoft")
+    // {
+    //   this.responsedata.find(item=>item.taskId==id).taskOwner=this.bot_list.find(bot=>bot.botId==botId).createdBy;
+    // }
+    // else{
+    //   this.responsedata.find(item=>item.taskId==id).taskOwner="---"
+    // }
     // this.dataSource2= new MatTableDataSource(this.responsedata);
     // this.dataSource2.sort=this.automatedSort;
     // this.dataSource2.paginator=this.paginator10;
@@ -772,7 +779,7 @@ resetsla(){
     if(botId!=0)
     {
       this.spinner.show();
-      this.rest.assign_bot_and_task(botId,id,source,"Automated").subscribe(data=>{
+      this.rest.assign_bot_and_task(botId,id,source,"Automated",this.userID).subscribe(data=>{// added userID as we are sending taskowner
         let response:any=data;
         this.spinner.hide();
         if(response.status!=undefined)
@@ -806,7 +813,7 @@ resetsla(){
     if(botId!=0)
     {
       this.spinner.show();
-      this.rest.assign_bot_and_task(botId,task.taskId,"","Human").subscribe(data=>{
+      this.rest.assign_bot_and_task(botId,task.taskId,"","Human","").subscribe(data=>{
         let response:any=data;
         this.spinner.hide();
         if(response.status!=undefined)
@@ -855,7 +862,7 @@ resetsla(){
     if(this.selectedvalue!=undefined)
     {
       this.spinner.show();
-    this.rest.startprocess(this.selectedvalue,this.selectedEnvironment).subscribe(data=>{
+    this.rest.startprocess(this.selectedvalue,this.selectedEnvironment,this.selectedexecutiontype).subscribe(data=>{
       let response:any=data;
       this.spinner.hide();
       if(response.errorMessage==undefined){
@@ -986,7 +993,6 @@ resetsla(){
       let catResponse : any;
       catResponse=data
       this.categaoriesList=catResponse.data.sort((a, b) => (a.categoryName.toLowerCase() > b.categoryName.toLowerCase()) ? 1 : ((b.categoryName.toLowerCase() > a.categoryName.toLowerCase()) ? -1 : 0));
-
       this.getenvironments();
       this.getautomatedtasks(processid);
     });
@@ -1306,7 +1312,7 @@ resetsla(){
     },5000)
   }
 
-  delete(taskid, processId){
+  delete(taskid){
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -1327,6 +1333,7 @@ resetsla(){
         else {
           Swal.fire("Error", "Failed to delete task", "error");
         }
+        this.spinner.hide();
         })
     }
     })
@@ -1345,7 +1352,7 @@ resetsla(){
   }
 
   addexistingtasks(){
-    this.spinner.show();
+    //this.spinner.show();
     this.rest.addtaskInProcess(this.addTaskForm.get('tasks').value).subscribe(resp => {
       let value: any = resp
    
@@ -1361,6 +1368,40 @@ resetsla(){
     this.addTaskForm.reset();
   })
   }
+  
+  getallusers(){ // to get user list and display in dropdown
+    this.users_list=[];
+    let tenantid=localStorage.getItem("tenantName")
+    this.rest.getuserslist(tenantid).subscribe(res=>{
+      let users:any=res;
+      users.forEach(e=>{
+        if(e.user_role_status != "INACTIVE"){
+          this.users_list.push(e);
+          this.users_list.sort((a, b) => a.userId.firstName.localeCompare(b.userId.firstName));
+        }
+      })
+    }) 
+   }
+
+  changeTaskOwner(userid){// to get userId from users list
+    this.userID= userid
+  }
+
+  getUserDetails() {  //third party tenant based visibility
+    this.dataTransfer.logged_userData.subscribe(res => {
+      if (res) {
+        this.userDetails = res;
+        if(this.userDetails.thirdPartyRPAEnabled){
+          this.botSource_list=["EPSoft","UiPath","BluePrism"];
+        }
+        else{
+          this.botSource_list=["EPSoft"];
+        }
+      }
+    })
+  }
+
+
   
 }
 

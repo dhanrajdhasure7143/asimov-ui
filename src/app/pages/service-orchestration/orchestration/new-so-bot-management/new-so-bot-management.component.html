@@ -10,10 +10,11 @@
               <div class="col-md-3 pl-0">
                   <select [(ngModel)]="selected_source" value="" class="form-control rpa-control" (change)="method()"> <!--(selectionChange)="applyFilter3($event.value)">-->
             <option value="">Select Source</option>
-            <option value="EPSoft">EPSoft</option>
+            <!-- <option value="EPSoft">EPSoft</option>
             <option value="BluePrism">BluePrism</option>
-            <option value="UiPath">UiPath</option>
-          </select>
+            <option value="UiPath">UiPath</option> -->
+            <option [value]="item" *ngFor="let item of botSource_list">{{item}}</option>
+          </select> 
               </div>
               <div class="col-md-3 pl-0">
                 <select [(ngModel)]="selectedcat" class="form-control rpa-control" [disabled]="categaoriesList.length==1"   [value]="categaoriesList.length==1?categaoriesList[0].categoryId:''"  (change)="method()"> <!--(selectionChange)="applyFilter($event.value)"-->
@@ -187,8 +188,10 @@
 
 
   <ng-template #epsoft_logs_modal_ref>
-      <app-rpa-so-logs [logsbotid]="logsbotid" [logsmodalref]="logsmodalref" [AllVersionsList]="AllVersions" [selectedversion]="selectedversion"></app-rpa-so-logs>
-      
+    <div ngb-modal-draggable [ngbModalDraggableHandle]="draggableHandle" class="cursor-all-scroll">
+      <app-rpa-so-logs [logsbotid]="logsbotid" [logsmodalref]="logsmodalref" [AllVersionsList]="AllVersions"
+        [selectedversion]="selectedversion"></app-rpa-so-logs>
+    </div>
   </ng-template>
 
 
@@ -399,7 +402,7 @@
           </div>
           <div class="modal-body">
               <div class="container m-contanier form-body">
-                  <form [formGroup]="insertslaForm_so_bot" (ngSubmit)="savedata_SO_bot()">
+                  <form [formGroup]="insertslaForm_so_bot">
 
                       <!--<div class="col-md-12 p-0 form-group">
                       <label class="label-control" for="processName">Process Name<span class="star">*</span></label>
@@ -441,7 +444,7 @@
                         </div>-->
                       </div>
                       <div class="col-md-6 pl-0 form-group">
-                          <label class="label-control" for="slaConfigId">SLA Breach Limit (Min)<span class="star">*</span>
+                          <label class="label-control" for="slaConfigId">SLA Breach Limit (Min)
                          <!-- <span class="star">*</span> -->
                        </label>
                           <input type="number" min=0 max=60 maxlength="2" formControlName="slaConfigId" onkeypress="return (event.charCode > 47 && event.charCode < 58)" class="form-control data" value="" placeholder="00">
@@ -454,7 +457,7 @@
                       </div>
 
 
-                      <!-- <div class="col-md-12 p-0 form-group">
+                      <!-- <div class="col-md-12 pl-0 form-group">
                   <label class="label-control" for="breachAlerts">Breach Actual Alert<span class="star">*</span></label>
                   <select class="form-control"  value="" formControlName="breachAlerts">
                       <option value="">-- Select Breach Actual Alerts --</option>
@@ -462,13 +465,13 @@
                       <option value="Warning">Warning</option>
                       <option value="All">All</option>
                     </select>
-                  <span *ngIf="(insertslaForm_so_bot.get('breachAlerts').invalid && insertslaForm_so_bot.get('breachAlerts').touched) && !insertslaForm_so_bot.controls['breachAlerts'].hasError('maxlength')" class="errspan required">Required Breach Actual Alert*</span> -->
-                      <!--<div *ngIf="insertslaForm_so_bot.controls['breachAlerts'].hasError('maxlength')" class="errspan required">
+                  <span *ngIf="(insertslaForm_so_bot.get('breachAlerts').invalid && insertslaForm_so_bot.get('breachAlerts').touched) && !insertslaForm_so_bot.controls['breachAlerts'].hasError('maxlength')" class="errspan required">Required Breach Actual Alert*</span>
+                  <span *ngIf="insertslaForm_so_bot.controls['breachAlerts'].hasError('maxlength')" class="errspan required">
                       Maximum of 50 characters
-                  </div>-->
-                      <!-- </div> -->
-                      <div class="col-md-6 pr-0 form-group">
-                          <label class="label-control" for="thresholdLimit">Threshold Limit (Min)<span class="star">*</span>
+                  </span>
+                      </div> -->
+                      <div class="col-md-6 pl-0 form-group">
+                          <label class="label-control" for="thresholdLimit">Threshold Limit (Min)
                          <!-- <span class="star">*</span> -->
                        </label>
                           <input type="number" min=0 max=60 onkeypress="return (event.charCode > 47 && event.charCode < 58)" class="form-control data" formControlName="thresholdLimit" value="" maxlength="2" placeholder="00">

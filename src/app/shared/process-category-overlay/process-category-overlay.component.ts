@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input, HostListener, ViewChild, SimpleChanges, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, HostListener, ViewChild, SimpleChanges, ChangeDetectorRef, TemplateRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
 import { ActivatedRoute } from '@angular/router';
@@ -19,6 +19,7 @@ export class ProcessCategoryOverlayComponent implements OnInit {
   @Output() proceed = new EventEmitter<any>();
   @Input() uploadedFileName?:string;
   @Input() overlay_data:any={};
+  processCategoryForm:any;
 
   processName = "";
   categoryName = "";
@@ -40,12 +41,12 @@ export class ProcessCategoryOverlayComponent implements OnInit {
   freetrail: string;
   isLoading:boolean=false;
   isValidName:boolean=false;
+  notationsTypes=[{type:"BPMN",id:"bpmn"},{type:"CMMN",id:"cmmn"},{type:"DMN",id:"dmn"}];
   @ViewChild('processCategoryForm', {static: true}) processForm: NgForm;
   constructor( private rest:RestApiService, private activatedRoute: ActivatedRoute, private global:GlobalScript,
     private cdRef: ChangeDetectorRef, private dt: DataTransferService) { }
 
   ngOnChanges(changes: SimpleChanges) {
-    // console.log("this.ovrlayData",this.overlay_data)
     if(this.overlay_data.type=="edit"){
       this.isValidName=false;
       if(this.overlay_data.module=="pi"){
@@ -54,7 +55,6 @@ export class ProcessCategoryOverlayComponent implements OnInit {
       }else{
         this.categoryName=this.overlay_data.selectedObj.category;
         this.notationType=this.overlay_data.selectedObj.ntype;
-        // this.process_owner=this.overlay_data.selectedObj.processOwner;
         this.processName=this.overlay_data.selectedObj.bpmnProcessName;
         this.approver_list.forEach((e,i)=>{
           if(this.overlay_data.selectedObj.processOwner==e.userId){
@@ -63,6 +63,9 @@ export class ProcessCategoryOverlayComponent implements OnInit {
         })
       }
     }else{
+    if(this.overlay_data.component == 'vcm'){
+      this.notationsTypes=[{type:"BPMN",id:"bpmn"},{type:"DMN",id:"dmn"}];
+    }
       if(this.activatedRoute.snapshot['_routerState'].url.includes('businessProcess') || this.activatedRoute.snapshot['_routerState'].url.includes('vcm')){
         this.isBpmnModule = true;
       }
@@ -87,6 +90,7 @@ export class ProcessCategoryOverlayComponent implements OnInit {
     }
   }
   }
+
   ngAfterViewChecked(){
     if(this.categories_list.length==1){
       this.categoryName=this.categories_list[0].categoryName
@@ -212,53 +216,14 @@ export class ProcessCategoryOverlayComponent implements OnInit {
         event.preventDefault();
         return false;
       }
-
-    // this.process_name_error = false;
-    // if (event.target.value.length == 0) {
-    //   this.process_name_error = false;
-    // }
-    // if (event.target.value.includes(' ')) {
-    //   this.process_name_error = true;
-    //   return;
-    // }
-    // if ((event.target.value.length != 0 && event.target.value.length < 4) || (event.target.value.length > 25) ) {
-    //   this.process_name_error = true;
-    // }
-
-
-
-
-    // this.process_name_error=false;
-    // if(event.target.value.length==0 && event.code=="Space"){
-    //   event.preventDefault();
-    //   return false;
-    // }
-    // console.log(event.code)
-    
-    // let count1;
-    // if(event.code=="Space"){
-    //   count1=this.count++;
-    //   this.process_name_error=true;
-    // }else{
-    //   this.count=0;
-    // }
-    // console.log(count1)
-    // if(count1>=1){
-    //   event.preventDefault();
-    //   return false;
-    // }
-
-    // var str=event.target.value
-    // console.log("othercategory",this.othercategory);
-    // console.log(str.replace(/\s\s/g, " "))
-
   }
+
   async getApproverList(){
     let roles={
       "roleNames": ["Process Owner"]
-    }
+  }
 
-    await this.rest.getmultipleApproverforusers(roles).subscribe( res =>  {//Process Architect
+  await this.rest.getmultipleApproverforusers(roles).subscribe( res =>  {//Process Architect
      if(Array.isArray(res))
        this.approver_list = res;
    });
@@ -288,7 +253,6 @@ export class ProcessCategoryOverlayComponent implements OnInit {
             this.dt.processDetailsUpdateSuccess({"isRfresh":true});
           }
         });
-
         this.slideDown(null);
       });
     }else{
@@ -357,13 +321,9 @@ export class ProcessCategoryOverlayComponent implements OnInit {
             });
             this.slideDown(null);
           })
-
         }
-
       })
-
-    
-
     }
   }
+
 }

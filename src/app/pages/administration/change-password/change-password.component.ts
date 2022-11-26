@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { LoaderService } from 'src/app/services/loader/loader.service';
 import Swal from 'sweetalert2';
 import { RestApiService } from '../../services/rest-api.service';
-import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-change-password',
@@ -14,14 +14,15 @@ export class ChangePasswordComponent implements OnInit {
   public eyeshow: boolean = true;
   public neweyeshow: boolean = true;
   public confeyeshow: boolean = true;
+  public passwordvalidatemsg: boolean = false;
 
-  constructor( private api:RestApiService, private spinner:NgxSpinnerService) { }
+  constructor( private api:RestApiService, private loader:LoaderService) { }
 
   ngOnInit(): void {
   }
 
   passwordChange(form:NgForm){
-    this.spinner.show()
+    this.loader.show()
     let pswdbody = {
       "confirmPassword": this.pswdmodel.confirmPassword,
       "currentPassword": this.pswdmodel.currentPassword,
@@ -29,7 +30,6 @@ export class ChangePasswordComponent implements OnInit {
       "userId": localStorage.getItem('ProfileuserId')
     }
   this.api.changePassword(pswdbody).subscribe(res => {
-    this.spinner.hide();
   // this.pswdmodel = {};
   if(res.errorMessage === undefined){
     Swal.fire({
@@ -42,18 +42,20 @@ export class ChangePasswordComponent implements OnInit {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Ok'
     });
+    this.loader.hide();
   }else if(res.errorMessage === "Your current password was incorrect."){
       Swal.fire("Error","Please check your current password!","error");
-     
+      this.loader.hide(); 
     }else if(res.errorMessage === "The new password must be different from your previous used passwords"){
       Swal.fire("Error",res.errorMessage,"error");
-     
-    }else if(res.errorMessage === "The new password must be different from your current password"){
+      this.loader.hide(); 
+    }
+    else if(res.errorMessage === "The new password must be different from your current password"){
       Swal.fire("Error",res.errorMessage,"error");
-     
+      this.loader.hide(); 
     }
   }, err => {
-    this.spinner.hide();
+    this.loader.hide();
     // console
     Swal.fire("Error","Please check your current password!","error");})
  form.resetForm();

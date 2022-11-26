@@ -31,6 +31,7 @@ export class CreateTasksComponent implements OnInit {
   taskDescriptionFlag: boolean = false;
   freetrail: string;
   _priority:any[]=["High","Medium","Low"];
+  optionValue:any;
   constructor(private formBuilder: FormBuilder,private spinner:NgxSpinnerService,private api:RestApiService,
     private router: Router, private route:ActivatedRoute) { }
 
@@ -44,7 +45,7 @@ export class CreateTasksComponent implements OnInit {
       correlationID: [""],
       taskName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       timeEstimate: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      endDate: [""],
+      endDate: [""], 
       approvers: ["",Validators.compose([Validators.maxLength(50)])],
       description: ["", Validators.compose([Validators.maxLength(200)])],
       })

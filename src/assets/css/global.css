@@ -21,12 +21,9 @@
 
 input[type="text"]:not(.mat-input-element),
 input[type="password"] {
-  /* width: 138%; */
   border: none;
   border-bottom: 1px solid gray;
   text-align: left;
-  /* padding: 1em; */
-  /* margin:15px 0px; */
 }
 
 sup {
@@ -72,9 +69,6 @@ h6 {
   font-weight: 700;
 }
 
-/* .btn{
-    background-color: #00a0e3;
-} */
 .ure {
   color: #00a0e3;
   margin-left: 1em;
@@ -83,7 +77,6 @@ h6 {
 hr.new5 {
   border: 5px solid #00a0e3;
   margin-bottom: 0px;
-  /* position: fixed; */
 }
 
 /* App Module - login component styles - Starts*/
@@ -127,7 +120,6 @@ div.breadcrumb span {
 }
 
 div.breadcrumb span:hover {
-  /* font-weight: bold; */
   font-size: 13px;
 }
 
@@ -144,7 +136,6 @@ div.breadcrumb span:active {
 .active a {
   text-decoration: none;
   ;
-  /* background-color: #00a0e3; */
   color: #000;
 }
 
@@ -205,9 +196,7 @@ li a:active label {
   color: white;
 }
 
-/* svg:hover {
-  
-} */
+
 .icon_middle a:hover img {
   filter: invert(0.5) sepia(1) hue-rotate(200deg) saturate(4) brightness(2);
 }
@@ -235,9 +224,7 @@ li a:active label {
   display: block;
   color: #00a0e3;
   text-align: center;
-  /* padding: 12px; */
   text-decoration: none;
-  /* height: 90px; */
 }
 
 .header_nav ul {
@@ -260,7 +247,6 @@ i.fas.fa-chevron-down {
 
 .dropdown {
   position: relative;
-  /* display: inline-block; */
 }
 
 .dropdown-content {
@@ -278,7 +264,6 @@ i.fas.fa-chevron-down {
   color: #00a0e3;
   padding: 0px 0px !important;
   text-decoration: none;
-  /* display: block; */
 }
 
 .dropdown a:hover {
@@ -327,21 +312,17 @@ i.fas.fa-chevron-down {
   background-color: #ffffff;
   border-bottom: 1px solid #e5e5e5;
   padding: 6px 10px;
-  /* margin-bottom: 10px; */
   min-height: 48px;
   display: flex;
   align-items: center;
 }
 
 .module-heading-buttons button.btn {
-  /* margin: 0px 0px 0px 10px; */
   display: inline-flex;
   align-items: center;
 }
 
 .module-body {
-  /* height: calc(100% - 46px); */
-  /* height: calc(100% - 49px); */
   height: calc(100% - 55px);
   overflow: auto;
   padding: 15px 0px;

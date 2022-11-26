@@ -61,15 +61,12 @@ export class D3flowchartComponent {
   //           element.style.visibility = "hidden";
   //         }
   //     }else{
-  //       console.log("test")
   //     }
   // }
 
   ngOnInit() {
     this.processGraph();
   }
-
-
 
   ngOnChanges() {
     this.processGraph();
@@ -90,11 +87,6 @@ export class D3flowchartComponent {
     else if (this.isdownloadsvg == true) {
       this.exportSVG('svg')
     }
-    // if (this.isSlider == true) {
-    //   this.activeCssStyle = "fill";
-    // } else {
-    //   this.activeCssStyle = "stroke";
-    // }
   }
 
   processGraph() {
@@ -113,10 +105,6 @@ export class D3flowchartComponent {
           .attr("xmlns", "http://www.w3.org/2000/svg")
           .attr("xmlns:xlink", "http://www.w3.org/1999/xlink")
           .attr("width", w)
-          // .attr("height", h)
-          // .attr("overflow", 'auto')
-          // .attr("viewBox", '0 0 800 800')
-          // .attr("preserveAspectRatio", 'none')
           .attr('id', 'render')
           .attr("class", "pisvg")
 
@@ -214,26 +202,7 @@ export class D3flowchartComponent {
           .attr("offset", "97%")
           .attr("stop-color", "#1E1E1E")
           .attr("stop-opacity", 1.5);
-
-
-        //    gradient.attr("id", "performanceGradient")
-        //    .attr("x1", "10%")
-        //    .attr("x2", "60%")
-        //    .attr("y1", "0%")
-        //    .attr("y2", "100%");
-
-        //    gradient.append("stop")
-        //   .attr('class', 'stop-left')
-        //    .attr("offset", "3%")
-        //    .attr("stop-color", "red")
-        //    .attr("stop-opacity", 1);
-
-        // gradient.append("stop")
-        //    .attr('class', 'end')
-        //    .attr("offset", "100%")
-        //    .attr("stop-color", "blue")
-        //    .attr("stop-opacity", 1);
-
+        
         var states: any = {}
         if (this.model1) {
           for (var j = 0; j < this.model1.length; j++) {
@@ -270,7 +239,6 @@ export class D3flowchartComponent {
           let metricValue = "";
           if (value.metrics != undefined) {
             metricValue += '\n' + value.metrics;
-
           }
 
           if (state == 'Start' || state == 'End') {
@@ -282,7 +250,6 @@ export class D3flowchartComponent {
           value.rx = value.ry = 10;
           value.lableStyle = "font-zie: 4em";
           g.setNode(state, value);
-
         });
 
         // Set up the edges
@@ -468,7 +435,6 @@ export class D3flowchartComponent {
         const max_length = node_textLength_array.reduce(function (prev, current) {
           return (prev > current) ? prev : current
         })
-        // console.log(max_length);
 
         g.nodes().forEach(function (v) {
           var node = g.node(v);
@@ -481,7 +447,6 @@ export class D3flowchartComponent {
             node.paddingRight = 10
           }
           else {
-
             if (max_length > 30 && max_length <= 40) {
               node.width = 300
             } else if (max_length > 40 && max_length <= 50) {
@@ -560,7 +525,6 @@ export class D3flowchartComponent {
               var eachLine = nodesArray[i].label.split('\n')[0];
               g.node(eachLine).style = "fill: #a40000";
             }
-
           }
           for (var i1 = 0; i1 < nodesArray.length; i1++) {
             if (String(nodesArray[i1].label).includes('Days')) {
@@ -599,7 +563,6 @@ export class D3flowchartComponent {
               var eachLine = nodesArray[i].label.split('\n')[0];
               g.node(eachLine).style = "fill: #035386";
             }
-
           }
         }
         // Add some custom colors based on state
@@ -614,15 +577,10 @@ export class D3flowchartComponent {
           inner.attr("transform", d3.event.transform);
         });
         svg.call(zoom);
-
-
-
         // Create the renderer
         var render = new dagreD3.render();
-
         var wrap = function (text, width) {
           text.each(function (a) {
-
             var text = d3.select(this),
               words = text.text().split(/\s+/).reverse(),
               word,
@@ -806,11 +764,6 @@ export class D3flowchartComponent {
           this['style'] = this.selectedEdgeCssValue;
         })
 
-
-
-        // d3.selectAll("g .node")
-        // .style("fill","#fff")
-
         d3.selectAll("g g.label g")
           .attr("transform", "translate(-5,-15)")
 
@@ -824,7 +777,7 @@ export class D3flowchartComponent {
           .attr("transform", "translate(-60,-15)")
         d3.selectAll("g.circl g.label").attr("transform", "translate(0,5)")
 
-        if (me.isplay == true) {
+        if (me.isplay == true) { // play dot on edges
 
           d3.selectAll("g.edgePath")
             .append("circle")
@@ -860,12 +813,11 @@ export class D3flowchartComponent {
           d3.selectAll("g.edgePath circle").remove()
         }
 
-        // inner.selectAll('g.node')['_groups'][0][1]['attributes'][2].value="opacity: 1;fill: rgb(209, 54, 54)"
+        // node auto width and node color adjustment as per text length
         let nodes_Array = d3.selectAll("g.node text")['_groups'][0];
 
         nodes_Array.forEach((element, i) => {
           if (g.node(element['parentNode'].__data__).label) {
-            // console.log(g.node(element['parentNode'].__data__).label.split('\n')[0])
             if ((g.node(element['parentNode'].__data__).label != 'Start') && (g.node(element['parentNode'].__data__).label != 'End')) {
               let node_width = g.node(element['parentNode'].__data__)['width']
               let node_textLength = g.node(element['parentNode'].__data__).label.split('\n')[0].length;
@@ -881,29 +833,24 @@ export class D3flowchartComponent {
               } else if (node_width == 200) {
                 if (node_color == "#035386" || node_color == "#2182b4" || node_color == "#a40000") {
                   nodes_Array[i]['attributes'][1].value = "font-size: 14px;fill: #fff"
-                  // inner.selectAll('g.node')['_groups'][0][i]['attributes'][2].value="opacity: 1;fill: #030303"
                 } else {
                   nodes_Array[i]['attributes'][1].value = "font-size: 14px;fill: #030303"
-                  // inner.selectAll('g.node')['_groups'][0][i]['attributes'][2].value="opacity: 1;fill: #fff"
                 }
               } else {
                 if (node_color == "#035386" || node_color == "#2182b4" || node_color == "#a40000") {
                   nodes_Array[i]['attributes'][1].value = "font-size: 18px;fill: #fff"
-                  // inner.selectAll('g.node')['_groups'][0][i]['attributes'][2].value="opacity: 1;fill: #030303"
                 } else {
                   nodes_Array[i]['attributes'][1].value = "font-size: 18px;fill: #030303"
-                  // inner.selectAll('g.node')['_groups'][0][i]['attributes'][2].value="opacity: 1;fill: #fff"
                 }
               }
             }
           }
         });
 
-        // Center the graph
+        // graph auto adjust to the screen
         var initialScale = 0.42;
         svg.call(zoom.transform, d3.zoomIdentity.translate((svg.attr("width") - g.graph().width * initialScale) / 2, 53).scale(initialScale));
         svg.attr('height', g.graph().height * initialScale + 53)
-
         var zoom1 = 0.4;
 
         $('.zoom').click(function () { //Zoom In
@@ -937,15 +884,6 @@ export class D3flowchartComponent {
             svg.call(zoom.transform, d3.zoomIdentity.translate((svg.attr("width") - g.graph().width * initialScale1) / 2, 53).scale(initialScale1));
             svg.attr('height', g.graph().height * initialScale1 + 53)
           }
-          // if(g.graph().width>1583 && g.graph().width<3160){
-          //   var initialScale1 = 0.30;
-          //   svg.call(zoom.transform, d3.zoomIdentity.translate((svg.attr("width") - g.graph().width * initialScale1) / 2, 53).scale(initialScale1));
-          //   svg.attr('height', g.graph().height * initialScale1 + 53)
-          // }else if(g.graph().width>3160){
-          //   var initialScale1 = 0.22;
-          //   svg.call(zoom.transform, d3.zoomIdentity.translate((svg.attr("width") - g.graph().width * initialScale1) / 2, 53).scale(initialScale1));
-          //   svg.attr('height', g.graph().height * initialScale1 + 53)
-          // }
         }
       }
     }
@@ -955,7 +893,6 @@ export class D3flowchartComponent {
   exportSVG(fileType) {
     if (fileType == 'svg') {
       //get svg element.
-
       var svgEl = document.getElementById('render');
       var serializer = new XMLSerializer();
       var source = serializer.serializeToString(svgEl);
@@ -979,7 +916,6 @@ export class D3flowchartComponent {
       this.isdownloadsvg = false;
       this.issvg.emit(this.isdownloadsvg)
     } else {
-
       html2canvas(this.exportSVGtoPDF.nativeElement, {
         allowTaint: true,
         scrollY: -window.scrollY,

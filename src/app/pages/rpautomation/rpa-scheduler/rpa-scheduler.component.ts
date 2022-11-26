@@ -1,14 +1,11 @@
-import {Input, Component, OnInit ,Pipe, PipeTransform, Output, EventEmitter } from '@angular/core';
+import {Input, Component, OnInit ,Pipe, PipeTransform } from '@angular/core';
 import { CronOptions } from 'src/app/shared/cron-editor/CronOptions';
 import {RestApiService} from 'src/app/pages/services/rest-api.service';
 import Swal from 'sweetalert2';
 import cronstrue from 'cronstrue';
 import moment from 'moment';
 import { NotifierService } from 'angular-notifier';
-import { RpaStudioActionsmenuComponent } from '../rpa-studio-actionsmenu/rpa-studio-actionsmenu.component'
-import { first } from 'rxjs/operators';
-import { any } from '@amcharts/amcharts4/.internal/core/utils/Array';
-import { NgxSpinnerService } from 'ngx-spinner';
+
 
 @Component({
   selector: 'app-rpa-scheduler',
@@ -19,13 +16,11 @@ export class RpaSchedulerComponent implements OnInit {
 
 
   @Input('data') public data: any;
-  @Output() emitSchedule=new EventEmitter<any>();
   botid:any;
   processid:any;
   beforetime:boolean=false;
   public Environments:any;
-  public timesZones: any = ["UTC","Asia/Dubai","America/New_York","America/Los_Angeles","Asia/Kolkata","Canada/Atlantic","Canada/Central","Canada/Eastern","GMT"];
-  //public timesZones: any = [];
+  public timesZones: any = [];
   i="";
   public cronOptions: CronOptions = {
     formInputClass: 'form-control cron-editor-input',
@@ -88,10 +83,9 @@ export class RpaSchedulerComponent implements OnInit {
   end_time:any;
   starttimeerror:any;
   aftertime:boolean=false;
-  constructor(private rest:RestApiService, private notifier: NotifierService, private actions:RpaStudioActionsmenuComponent, private spinner:NgxSpinnerService) { }
-
+  checkScheduler : boolean = false;
+  constructor(private rest:RestApiService, private notifier: NotifierService) { }
   ngOnInit() {
-    
     var dtToday = new Date();
     this.selecteddate=new Date()
    // this.startdate=this.startdate.getFullYear()+"-"+(this.startdate.getMonth()+1)+"-"+this.startdate.getDate();
@@ -102,25 +96,27 @@ export class RpaSchedulerComponent implements OnInit {
         this.month = '0' + this.month.toString();
     if(day < 10)
         this.day = '0' + day.toString();
-    
     var minDate= year + '-' + this.month + '-' + day;
     $('#txtDate').attr('min', minDate);
     $('#enddatepicker').attr('min', minDate);
-    if(this.data.botid!=undefined && this.data.botid !="not_saved")
+    if(this.data.botid!=undefined)
     {
-      console.log("schedules-",this.data)
+
       this.botid=this.data.botid;
+  
       this.get_schedule()
       this.getenvironments();
 
-    }else if(this.data.botid=="not_saved")
-    {
-      this.botid=this.data.botid;
-      this.schedule_list=this.data.schedule_list;
     }
+    // else if(this.data.botid=="not_saved")
+    // {
+    //   this.botid=this.data.botid;
+    //   this.schedule_list=this.data.schedule_list;
+    // }
     this.enddate=this.startdate;
    this.gettime();
 
+    
 
     this.starttime=(new Date).getHours()+":"+(new Date).getMinutes();
      this.getAlltimezones();
@@ -148,45 +144,30 @@ gettime(){
 }
   get_schedule()
   {
-    this.schedule_list=[];
-    this.spinner.show();
-
-    if(this.botid!="" && this.botid!=undefined && this.botid!="not_saved")
+    if(this.data!=undefined)
     {
-      this.rest.getbotdata(this.botid).subscribe(data=>{
-        let response:any=data;
-        this.botdata=data
-        this.spinner.hide();
-      
-        if(response.botMainSchedulerEntity!=null)
+      this.rest.getbotSchedules(this.data).subscribe((response:any)=>{
+        if(response.errorMessage==undefined)
         {
-          this.schedule_list=response.botMainSchedulerEntity.scheduleIntervals;
-          this.schedule_list.forEach((sch,index)=>{
-            this.schedule_list[index].check=false;
-            this.schedule_list[index].save_status="saved";
-            this.schedule_list[index].run_status="not_started";
-          })
-          //this.actions.updatesavedschedules(response.botMainSchedulerEntity);
-          localStorage.setItem("botSchedulePayload_"+this.botid,JSON.stringify(response.botMainSchedulerEntity))
-          this.emitSchedule.emit(response.botMainSchedulerEntity);
-          this.updateflags()
+          this.schedule_list=[...response.map(item=>{
+            item["checked"]=false;
+            return item;
+          })];
+          this.checkScheduler=false;
+          this.flags={
+            startflag:false,
+            stopflag:false,
+            pauseflag:false,
+            resumeflag:false,
+            deleteflag:false,
+          }
         }
         else
-        {
-          localStorage.setItem("botSchedulePayload_"+this.botid,null);
-          this.emitSchedule.emit(null);
-        }
-      }, err=>{
-        console.log(err);
-        this.spinner.hide()
+          Swal.fire("Error",response.errorMessage, "error");
+      },err=>{
+        
+        Swal.fire("Error","Unable to load schedules","error");
       })
-    }
-    else if(this.botid=="not_saved")
-    {
-      this.schedule_list=[];
-    }
-    let sch:any={
-      scheduleIntervals:this.schedule_list
     }
   }
 
@@ -194,6 +175,8 @@ gettime(){
   {
     document.getElementById("sch").style.display="none";
   }
+
+
   onTimeZoneChange(timezone)
   {
     let d:any = new Date(new Date().toLocaleString("en-US", {timeZone: timezone}));
@@ -203,7 +186,8 @@ gettime(){
   }
   onChangeHour(event,time){ 
  
- this.todaytime=(new Date).getHours()+":"+(new Date).getMinutes();;
+//  this.todaytime=(new Date).getHours()+":"+(new Date).getMinutes();;
+    this.todaytime = moment().format("HH:mm");
  
     event=this.tConv24(event)
     this.beforetime=false;
@@ -246,6 +230,7 @@ gettime(){
        
         let e=(c.isBefore(d))
        let starttime_error=(c.isBefore(currenttime))
+        
         if(e==false ){
           this.aftertime=true;
           this.endtimeerror="end time should not be before than or equal to start time"
@@ -394,40 +379,69 @@ gettime(){
         let startdate=this.startdate.split("-");
         let enddate=this.enddate.split("-");
          let data:any;
-      if(this.botid!="" && this.botid!=undefined )
+      if(this.data.botid!=undefined )
       {
+
         data={
-          intervalId:this.generateid(),
+          scheduledIntervalid:27,
           scheduleInterval:this.cronExpression,
-          startDate:parseInt(startdate[0])+","+parseInt(startdate[1])+","+parseInt(startdate[2])+","+starttimeparse+","+parseInt(starttime[1]),
-          endDate:parseInt(enddate[0])+","+parseInt(enddate[1])+","+parseInt(enddate[2])+","+ endtimeparse+","+ parseInt(endtime[1]),
+          startDate:parseInt(startdate[0])+","+parseInt(startdate[1])+","+parseInt(startdate[2])+","+starttimeparse+","+starttime[1],
+          endDate:parseInt(enddate[0])+","+parseInt(enddate[1])+","+parseInt(enddate[2])+","+ endtimeparse+","+ endtime[1],
           timeZone:this.timezone,
-          save_status:"unsaved",
-          check:false,
+          botSource:"EPSoft",
+          botName:this.data.botName,
+          botId:this.data.botid,
+          botVersion:this.data.version,
+          botActionStatus:"New",
+          modifiedBy:`${localStorage.getItem("firstName")} ${localStorage.getItem("lastName")} `,
         }
         this.schedule_list.push(data);
+
+        
+        this.rest.addbotSchedules(this.schedule_list).subscribe((response:any)=>{
+          if(response.errorMessage == undefined)
+          {
+            Swal.fire("Success","Schedule saved successfully","success");
+            this.get_schedule();
+          }  
+          else
+            Swal.fire("Error",response.errorMessage,"error");
+        },err=>{
+          
+          Swal.fire("Error","Unable to save schedule","error");
+        })
       }
     }
     else
     {
-
       this.notifier.notify("error", "Please fill all inputs");
-     
     }
   }
 
   check_all(event)
   {
-    this.schedule_list.forEach((sch,index)=>{
-      this.schedule_list[index].check=event.target.checked;
+    this.schedule_list=this.schedule_list.map((sch)=>{
+      sch.checked=event.target.checked;
+      if(this.schedule_list.filter(data=>data.checked == true).length == this.schedule_list.length){
+        this.checkScheduler = true;
+      }else{
+        this.checkScheduler = false;
+      }
+      return sch;
     })
+   
     this.updateflags();
   }
 
 
   check_schedule(event,intervalid)
   {
-    this.schedule_list.find(data=>data.intervalId==intervalid).check=event.target.checked
+    this.schedule_list.find(data=>data.intervalId==intervalid).checked=event.target.checked;
+    if(this.schedule_list.filter(data=>data.checked == true).length == this.schedule_list.length){
+      this.checkScheduler = true;
+    }else{
+      this.checkScheduler = false;
+    }
     this.updateflags();
   }
 
@@ -438,43 +452,33 @@ gettime(){
 
   start_schedule()
   {
-    let checked_schedule=this.schedule_list.find(data=>data.check==true)
+    let checked_schedule=this.schedule_list.find(data=>data.checked==true)
     if(this.botid!=undefined && this.botid != "")
     {
       let schedule={
         botId:this.botid,
-        "botVersion": checked_schedule.botVersion,
+        "botVersion": this.data.version,
         "scheduleInterval":checked_schedule.scheduleInterval,
         "intervalId":checked_schedule.intervalId,
       }
-      this.rest.start_schedule(schedule).subscribe(data=>{
-        let resp:any=data;
-      
+      this.rest.start_schedule(schedule).subscribe((resp:any)=>{
         if(resp.errorMessage==undefined)
         {
-         
           this.notifier.notify("success","Schedule started successfully")
-        
           this.get_schedule();
         }
         else
-        {
           this.notifier.notify("error", resp.errorMessage);
-         
-        }
-
       })
     }
   }
 
   pause_schedule()
   {
-    let checked_schedule=this.schedule_list.find(data=>data.check==true)
-    if(this.botid!="" && this.botid!=undefined)
-    {
+    let checked_schedule=this.schedule_list.find(data=>data.checked==true)
       let schedule={
-        botId:this.botid,
-        "botVersion": checked_schedule.botVersion,
+        botId:this.data.botid,
+        "botVersion": this.data.version,
         "scheduleInterval":checked_schedule.scheduleInterval,
         "intervalId":checked_schedule.intervalId,
       }
@@ -482,8 +486,8 @@ gettime(){
         let resp:any=data
         if(resp.errorMessage==undefined)
         {
-          this.notifier.notify("success",resp.status)
-        
+
+          this.notifier.notify("success", "Schedule paused successfully");
           this.get_schedule();
         }
         else
@@ -492,15 +496,14 @@ gettime(){
           this.notifier.notify("error",resp.errorMessage)
         }
       })
-    }
   }
 
   resume_schedule()
   {
-    let checked_schedule=this.schedule_list.find(data=>data.check==true)
+    let checked_schedule=this.schedule_list.find(data=>data.checked==true)
     let schedule={
-      botId:this.botid,
-      "botVersion": checked_schedule.botVersion,
+      botId:this.data.botid,
+      "botVersion": this.data.version,
       "scheduleInterval":checked_schedule.scheduleInterval,
       "intervalId":checked_schedule.intervalId,
     }
@@ -508,13 +511,11 @@ gettime(){
       let resp:any=data
       if(resp.errorMessage==undefined)
       {
-        this.notifier.notify("success", resp.status);
+        this.notifier.notify("success", "Schedule resumed successfully");
         this.get_schedule();
       }
       else
-      {
         this.notifier.notify("error", resp.errorMessage);
-      }
     })
 
   }
@@ -524,133 +525,93 @@ gettime(){
   {
     if(this.botid!="" && this.botid!=undefined)
     {
-      let list=this.schedule_list.filter(data=>data.check==true);
-        list.forEach(data=>{
-          if(data.save_status=="unsaved")
-          {
-            let index2=this.schedule_list.findIndex(scheduleitem=>scheduleitem.intervalId==data.intervalId);
-            this.schedule_list.splice(index2,1);              
-            this.flags.startflag=false;
-            this.flags.pauseflag=false;
-            this.flags.resumeflag=false;
-            this.flags.stopflag=false;
-            this.flags.deleteflag=false;
-          }
-          else
-          {
-            this.rest.pause_schedule(data).subscribe((response:any)=>{
-              if(response.errorMessage==undefined)
-              {            
-                let index2=this.schedule_list.findIndex(scheduleitem=>scheduleitem.intervalId==data.intervalId);
-                this.schedule_list.splice(index2,1);              
-                this.flags.startflag=false;
-                this.flags.pauseflag=false;
-                this.flags.resumeflag=false;
-                this.flags.stopflag=false;
-                this.flags.deleteflag=false;
-              }
-            })
-          }
+      let list=this.schedule_list.filter(data=>data.checked==true);
+      this.rest.stop_schedule(list).subscribe((response:any)=>{
+        if(response.errorMessage==undefined)
+        {
+          this.notifier.notify("success", "Schedules deleted successfully");
+          this.get_schedule();
+        }
+        else
+        {
+          this.notifier.notify("error", response.errorMessage);
+        }
       })
-      //this.updateflags();
-     // this.notifier.notify("success", "Schedules Deleted Sucessfully");
+      // this.updateflags();
     }
   }
 
 
 
   
-  async saveschedule()
-  {
-    if(this.botid !=undefined && this.botid != "" && this.botid!="not_saved")
-    {
-      if(this.schedule_list.length==0)
-      {
-        this.botdata.botMainSchedulerEntity=null;
-      }
-      else
-      {
-        let schedules:any=[]
-        this.schedule_list.forEach(data=>{
-          if(data.save_status=="unsaved")
-          {
-            delete data.intervalId
-            schedules.push(data);
-          }
-          else if(data.save_status=="saved")
-          {
-            schedules.push(data)
-          }
-        })
-        if(this.botdata.botMainSchedulerEntity==null)
-        {
-          this.botdata.botMainSchedulerEntity={"scheduleIntervals":schedules};
-          
-
-        }
-        else if(schedules.length==0)
-        {
-          this.botdata.botMainSchedulerEntity=null;
-        }
-      }
-      // delete this.botdata.bpmnProcessName
-      // delete this.botdata.bpmnProcessId
-      // delete this.botdata.processIntelligenceId
-      // delete this.botdata.orgId
-      // delete this.botdata.predefined
-      // delete this.botdata.botVersionConfig
-      // delete this.botdata.botStatus;
-      // delete this.botdata.botType;
-      // delete this.botdata.categoryId;
-      // delete this.botdata.categoryName;
-      // delete this.botdata.lastSubmittedTS;
-      // delete this.botdata.botEnvVersionId;
-      // delete this.botdata.isPredefined;
-      // delete this.botdata.createdTs;
-      // delete this.botdata.isPredefined;
-      // delete this.botdata.categoryName;
-      // delete this.botdata.categoryId;
-      
-      this.spinner.show();
-      await (await this.rest.updateBot(this.botdata)).subscribe(data =>{
-        let resp:any=data;
-        if(resp.errorMessage){
-          this.notifier.notify("error","Failed to save the scheduler")
-        }
-        else if(resp.botMainSchedulerEntity==null)
-        {
-          this.notifier.notify("success", "Schedules Deleted Sucessfully");
+  // async saveschedule()
+  // {
+  //   if(this.botid !=undefined && this.botid != "" && this.botid!="not_saved")
+  //   {
+  //     if(this.schedule_list.length==0)
+  //     {
+  //       this.botdata.botMainSchedulerEntity=null;
+  //     }
+  //     else
+  //     {
+  //       let schedules:any=[]
+  //       this.schedule_list.forEach(data=>{
+  //         if(data.save_status=="unsaved")
+  //         {
+  //           delete data.intervalId
+  //           schedules.push(data);
+  //         }
+  //         else if(data.save_status=="saved")
+  //         {
+  //           schedules.push(data)
+  //         }
+  //       })
+  //       if(this.botdata.botMainSchedulerEntity==null)
+  //       {
+  //         this.botdata.botMainSchedulerEntity={"scheduleIntervals":schedules};
+  //       }
+  //       else if(schedules.length==0)
+  //       {
+  //         this.botdata.botMainSchedulerEntity=null;
+  //       }
+  //     }
+  //     await (await this.rest.updateBot(this.botdata)).subscribe(data =>{
+  //       let resp:any=data;
+  //       if(resp.errorMessage){
+  //         this.notifier.notify("error","Failed to save the scheduler")
+  //       }
+  //       else if(resp.botMainSchedulerEntity.scheduleIntervals.length==0)
+  //       {
+  //         this.notifier.notify("success","Updated successfully")
+  //       }
+  //       else if(resp.botMainSchedulerEntity.scheduleIntervals.length==this.schedule_list.length)
+  //       {
         
-          //this.notifier.notify("success","Updated successfully")
-        }
-        else if(resp.botMainSchedulerEntity.scheduleIntervals.length==this.schedule_list.length)
-        {
-          this.notifier.notify("success", "Schedules saved successfully"); 
-        }
+
+  //         this.notifier.notify("success", "Schedules saved successfully");
+          
+  //       }
        
-        this.get_schedule();
-      },err=>{
-        console.log(err)
-        this.spinner.hide();
-      })
-    }
-    else
-    {
-      let schedules:any=[]
-        this.schedule_list.forEach(data=>{
-          if(data.save_status=="unsaved")
-          {
-            delete data.intervalId
-            schedules.push(data);
-          }
-        });
-      this.notifier.notify("success","Schedule configured successfully")
-      let sch:any={
-        scheduleIntervals:schedules,
-      }
-      this.actions.saveschedule(sch,this.schedule_list);
-    }
-  }
+  //       this.get_schedule();
+  //     })
+  //   }
+  //   else
+  //   {
+  //     let schedules:any=[]
+  //       this.schedule_list.forEach(data=>{
+  //         if(data.save_status=="unsaved")
+  //         {
+  //           delete data.intervalId
+  //           schedules.push(data);
+  //         }
+  //       });
+  //     this.notifier.notify("success","Schedule configured successfully")
+  //     let sch:any={
+  //       scheduleIntervals:schedules,
+  //     }
+  //     //this.actions.saveschedule(sch,this.schedule_list);
+  //   }
+  // }
   getenvironments()
   {
     this.rest.listEnvironments().subscribe(response=>{
@@ -677,13 +638,14 @@ gettime(){
 
   updateflags()
   {
-    let length=this.schedule_list.filter(data=>data.check==true).length;
+
+    let length=this.schedule_list.filter(data=>data.checked==true).length;  
     if(length>0)
     {
       this.flags.deleteflag=true;
       if(length==1)
       {
-        let schedule=this.schedule_list.find(data=>data.check==true)
+        let schedule=this.schedule_list.find(data=>data.checked==true)
         if(schedule.botActionStatus!=undefined || schedule.schedularActionStatus!=undefined )
         {
           let status:any;
@@ -693,7 +655,6 @@ gettime(){
             status=schedule.botActionStatus
           if(status=='New')
           {
-
             this.flags.startflag=true;
             this.flags.pauseflag=false;
             this.flags.resumeflag=false;
@@ -746,8 +707,10 @@ gettime(){
     this.selectedEnvironment="";
     this.timezone="";
   }
+  
   getAlltimezones(){
     this.rest.getTimeZone().subscribe(res =>{
+      
         this.timesZones=res;
      })
   }

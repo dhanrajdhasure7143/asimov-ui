@@ -2,13 +2,11 @@
 .createform input,
 .createform select,
 .createform textarea {
-  /* background-color: #f6f6f6 !important; */
   border: 1px solid #D1D1D1;
   box-shadow: unset !important;
   color: #7B8694 !important;
   border-radius: 2px;  
   padding: 6px 10px !important;
-  /* font-weight: 600 !important; */
 }
 
 .createform input:focus,

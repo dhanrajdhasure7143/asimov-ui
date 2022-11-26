@@ -84,7 +84,6 @@ export class BotManagementComponent implements OnInit {
       this.feesDetails.bookingDetails.forEach(val => { val.cheked = true });
   }
   expression(data){
-   // console.log(data);
   }
   loopTrackBy(index, term){
     return index;

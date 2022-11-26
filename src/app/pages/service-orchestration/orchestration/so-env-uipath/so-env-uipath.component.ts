@@ -353,4 +353,8 @@ reset_UpdateUiPath(){
   this.UpdateUipathForm.reset();
   this.UpdateUipathForm.get("categoryId").setValue("")
 }
+
+deleteUiPath(){
+  
+}
 }

@@ -26,15 +26,9 @@
   display: flex;
   color: #212529;
 }
-.aprwkfl-grid-data div {
-  /* text-align: left !important;
-  width: 100% !important; */
-}
 .aprwkfl_search {
   float: right;
   display: flex;
-  /* padding-right: 0px;
-  margin: 20px 0px 10px 0px; */
 }
 .aprwkfl_search .label-control {
   font-size: 15px;

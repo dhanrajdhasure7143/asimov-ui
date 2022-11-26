@@ -97,7 +97,6 @@ export class XesdocumentComponent implements OnInit {
         "transforms.ValueToKey.fields": "caseID",
         "transforms.InsertField.type": "org.apache.kafka.connect.transforms.InsertField$Value",
         "transforms.InsertField.static.field": "piIdName",
-        // "transforms.InsertField.static.value": "1098-p1098"
         "transforms.InsertField.static.value": this.processId + "-p" + this.processId
       }
     }

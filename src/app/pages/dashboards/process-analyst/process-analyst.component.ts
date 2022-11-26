@@ -7,6 +7,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { LoaderService } from 'src/app/services/loader/loader.service';
 
 
 @Component({
@@ -28,18 +29,18 @@ export class ProcessAnalystComponent implements OnInit {
   allProjectStatus: Object;
   projectStatusArray: any[] = [];
   activityStream: any;
-  upcomingDueDates: Object;
+  upcomingDueDates: any;
   expenditureDays: any;
   expenditureProjects: any;
   effortExpenditureAnalysis: Object;
   activityStreamRecent: any;
   activityStreamPending: any;
   filterByDays = ['All', '30', '60', '90'];
-  isLoading = true;
   userDetails: any;
   userRoles: any;
   userEmail: any;
   userName: any;
+  t:any;
   topEffortsSpent: any[]=[];
   displayedColumns1=['Process Name','Created Date','Submitted by','Approver Name'];
   displayedColumns3=['projectName','daysSpent'];
@@ -50,11 +51,13 @@ export class ProcessAnalystComponent implements OnInit {
   @ViewChild("paginator3",{static:false}) paginator3: MatPaginator;
   topEffortsSpentdataSource:MatTableDataSource<any>;
 
-  constructor(private apiService: RestApiService, private jwtHelper: JwtHelperService) {
+  constructor(private apiService: RestApiService, private jwtHelper: JwtHelperService,
+    private loader: LoaderService) {
     this.userDetails = this.jwtHelper.decodeToken(localStorage.getItem('accessToken'));;
   }
 
   ngOnInit(): void {
+    this.loader.show();
     this.userRoles = this.userDetails.userDetails.roles[0].roleName;
     this.userEmail = this.userDetails.userDetails.userId;
     this.userName = this.userDetails.userDetails.userName;
@@ -70,16 +73,8 @@ export class ProcessAnalystComponent implements OnInit {
           this.totalProjects = res['Total Projects'];
           this.totalTasks = res['Tasks'];
           this.Processes = res['Processes'];
-          this.isLoading = false;
+          this.loader.hide();
         });
-
-
-      // this.apiService.getActivityStream(this.userRoles, this.userEmail, this.userName).subscribe(res => {
-      //   this.activityStreamRecent = res['Recent Approvals : '];
-      //   this.activityStreamPending = res['Pending Approvals : '];
-      //   this.activityStream = res['Recent Approvals : '];
-      //   console.log(res);
-      // });
 
       this.apiService.getUpcomingDueDates(this.userRoles, this.userEmail, this.userName)
       .subscribe(res => {
@@ -124,7 +119,7 @@ export class ProcessAnalystComponent implements OnInit {
         this.topEffortsSpentdataSource= new MatTableDataSource(this.topEffortsSpent);
         this.topEffortsSpentdataSource.sort=this.sort3;
         this.topEffortsSpentdataSource.paginator=this.paginator3;
-        this.isLoading = false;
+        this.loader.hide();
       })
     }
   }
@@ -134,7 +129,7 @@ export class ProcessAnalystComponent implements OnInit {
   getPendingApprovals(duration) {
     this.apiService.getPendingApprovals(this.userRoles, this.userEmail, this.userName, duration).subscribe((res: any) => {
       this.pendingApprovals = res;
-      this.isLoading = false;
+      this.loader.hide();
       this.pendingApprovalsdataSource= new MatTableDataSource(this.pendingApprovals);
       this.pendingApprovalsdataSource.sort=this.sort1;
       this.pendingApprovalsdataSource.paginator=this.paginator1;
@@ -154,7 +149,7 @@ export class ProcessAnalystComponent implements OnInit {
 
       }
       this.allProjectStatusChart(this.projectStatusArray);
-      this.isLoading = false;
+      this.loader.hide();
     });
   }
 
@@ -162,13 +157,6 @@ export class ProcessAnalystComponent implements OnInit {
     this.apiService.getAllTasksProgress(this.userRoles, this.userEmail, this.userName, duration).subscribe(res => {
       this.allProjectProgress = res;
       this.runtimestats = this.allProjectProgress;
-      // for (var i = 0; i < Object.keys(res).length; i++) {
-      //   var data = {
-      //     "name": Object.keys(res)[i],
-      //     "value": Object.values(res)[i],
-      //   }
-      //   this.runtimestats.push(data);
-      // }
       this.allProjectProgressChart();
     });
   }
@@ -200,70 +188,7 @@ export class ProcessAnalystComponent implements OnInit {
   allProjectStatusChart(data) {
     setTimeout(() => {
     this.status_donutChart(data);
-      
     }, 500);
-    // setTimeout(() => {
-    //   var chart = am4core.create("projectstatus-chart", am4charts.PieChart);
-    //   chart.innerRadius = am4core.percent(30);
-    //   chart.logo.__disabled = true;
-    //   var pieSeries = chart.series.push(new am4charts.PieSeries());
-    //   var colorSet = new am4core.ColorSet();
-    //   colorSet.list = ["#ce3779", "#575fcd", "#d89f59", "##f2dfa7", "#ff5b4f", "#74c7b8"
-    //   ].map(function (color: any) {
-    //     return am4core.color(color);
-    //   });
-    //   pieSeries.colors = colorSet;
-    //   pieSeries.dataFields.value = "value";
-    //   pieSeries.dataFields.category = "project";
-    //   pieSeries.slices.template.propertyFields.fill = "color";
-    //   pieSeries.slices.template.stroke = am4core.color("#fff");
-    //   pieSeries.slices.template.strokeWidth = 2;
-    //   pieSeries.slices.template.strokeOpacity = 1;
-    //   pieSeries.slices.template
-    //     // change the cursor on hover to make it apparent the object can be interacted with
-    //     .cursorOverStyle = [
-    //       {
-    //         "property": "cursor",
-    //         "value": "pointer"
-    //       }
-    //     ];
-    //   pieSeries.labels.template.maxWidth = 130;
-    //   pieSeries.labels.template.wrap = true;
-    //   pieSeries.labels.template.fontSize = 18;
-    //   pieSeries.labels.template.bent = false;
-    //   pieSeries.labels.template.padding(0, 0, 0, 0);
-    //   pieSeries.ticks.template.disabled = true;
-    //   pieSeries.alignLabels = false;
-    //   pieSeries.labels.template.text = "{value}";
-    //   pieSeries.labels.template.radius = am4core.percent(-40);
-    //   pieSeries.labels.template.fill = am4core.color("white");
-    //   // Create a base filter effect (as if it's not there) for the hover to return to
-    //   //var shadow = pieSeries.slices.template.filters.push(new am4core.DropShadowFilter);
-    //   //shadow.opacity = 0;
-
-    //   // Create hover state
-    //   var hoverState = pieSeries.slices.template.states.getKey("hover"); // normally we have to create the hover state, in this case it already exists
-
-    //   // Slightly shift the shadow and make it more prominent on hover
-    //   var hoverShadow = hoverState.filters.push(new am4core.DropShadowFilter);
-    //   hoverShadow.opacity = 0.7;
-    //   hoverShadow.blur = 5;
-
-    //   // Add a legend
-
-    //   chart.legend = new am4charts.Legend();
-    //   chart.legend.fontSize = 13;
-    //   let markerTemplate = chart.legend.markers.template;
-    //   markerTemplate.width = 10;
-    //   markerTemplate.height = 10;
-    //   chart.innerRadius = am4core.percent(0);
-    //   chart.data = data;
-
-    //   chart.legend = new am4charts.Legend();
-    //   chart.legend.fontSize = 13;
-    //   chart.legend.labels.template.text = "{category} - {value}";
-    // }, 50);
-
   }
 
   status_donutChart(data){
@@ -285,15 +210,11 @@ export class ProcessAnalystComponent implements OnInit {
       chart.legend.scrollable = true;
       chart.legend.fontSize = 12;
       chart.legend.reverseOrder = false;
-      // chart.data=data;
       chart.data=data;
-
       chart.legend.position = "right";
       chart.legend.valign = "middle";
       chart.innerRadius = 70;
-      // chart.tooltip="test";
       var label = chart.seriesContainer.createChild(am4core.Label);
-        // label.text = "230,900 Sales";
       label.horizontalCenter = "middle";
       label.verticalCenter = "middle";
       label.fontSize = 18;
@@ -303,8 +224,6 @@ export class ProcessAnalystComponent implements OnInit {
       series.labels.template.disabled = true;
       var _self=this;
       series.slices.template.adapter.add("tooltipText", function(text, target) {
-        // var text=_self.getTimeConversion('{_dataContext.totalDuration}');
-        //return "{_dataContext.activity} \n {_dataContext.convertedDuration}";
         return "Tasks: {value} \n {project} : {value.percent.formatNumber('#.#')}% [/]"
       });
       $('g:has(> g[stroke="#3cabff"])').hide();

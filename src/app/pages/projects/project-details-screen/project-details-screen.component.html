@@ -39,7 +39,7 @@
                         <button class="btn btn-default">Cancel</button>
                     </span>
                     <span *ngIf="editdata==true" (click)="updateprojectDetails()">
-                        <button [disabled]="projectNameFlag || projectPurposeFlag || processOwnerFlag ||!projectStartDate"
+                        <button [disabled]="projectNameFlag || projectPurposeFlag || processOwnerFlag || !projectStartDate"
                             class="btn btn-primary">Save</button>
                     </span>
                     <span class="prjdetails-headerbuttons" *ngIf="editdata==false">
@@ -272,7 +272,7 @@
                                     <div *ngIf="editdata==true">
                                         <input type="date" class="small-input"
                                             (change)="projectStartDate=$event.target.value" [value]="projectStartDate">
-                                        <span *ngIf="!projectStartDate"  class="errspan required">Start Date Required*</span>
+                                            <span *ngIf="!projectStartDate"  class="errspan required">Start Date Required*</span>
                                     </div>
                                 </div>
                             </div>
@@ -954,18 +954,16 @@
                                                     </span>
                                                 </div>
                                                 <div class="col-md-8 text-right">
-                                                    <!-- <span class="downloadpubtn tsttooltipbtn" (click)="xmlConvertToImageformate($event)"> -->
-                                                        
-                                                            <!-- <a href="data:image/png;base64,{{downloadData.data}}" download="{{projectDetails.projectName}}.doc"> -->
-
-                                                        <!-- <span class="downloadpubtn tsttooltipbtn" (click)="getDocumentforDowanload($event)">
-                                                                <img src="../../../../assets/images/Admin/download-black.svg" class="default-img testplus">
-                                                                <img src="../../../../assets/images/Admin/download-blue.svg" class="hover-img testplus"> -->
-                                                        
+                                                    <span class="downloadpubtn tsttooltipbtn"
+                                                        (click)="xmlConvertToImageformate($event)">
+                                                        <!-- <a href="data:image/png;base64,{{downloadData.data}}" download="{{projectDetails.projectName}}.doc"> -->
+                                                        <img src="../../../../assets/images/Admin/download-black.svg"
+                                                            class="default-img testplus">
+                                                        <img src="../../../../assets/images/Admin/download-blue.svg"
+                                                            class="hover-img testplus">
                                                         <!-- </a> -->
-                                                        
-                                                        <!-- <span class="testtooltip">Download</span>
-                                                    </span> -->
+                                                        <span class="testtooltip">Download</span>
+                                                    </span>
                                                     <span *ngIf="isOpenedState == 1">
                                                         <button class="btn btn-primary" *ngIf="!isProcessEdit"
                                                             (click)="editBusinessProcess($event)">
@@ -1002,7 +1000,7 @@
                                                                 (keyup)="autoGrowcommentsBox()"
                                                                 #business_challange="ngModel"
                                                                 [(ngModel)]="businessChallange" class="form-control"
-                                                                placeholder="Enter Business Challenge"
+                                                                placeholder="Enter Business Challenge" (keydown)="Space($event)"
                                                                 required></textarea>
                                                             <span
                                                                 *ngIf="((business_challange.invalid && processForm.submitted) || (business_challange.errors && business_challange.touched) )"
@@ -1014,7 +1012,7 @@
                                                             <textarea name="purpose" id="purpose" #purpose="ngModel"
                                                                 (keyup)="autoGrowcommentsBox1()"
                                                                 [(ngModel)]="businessPurpose" class="form-control"
-                                                                placeholder="Enter Purpose" required></textarea>
+                                                                placeholder="Enter Purpose" (keydown)="Space($event)" required></textarea>
                                                             <span
                                                                 *ngIf="((purpose.invalid && processForm.submitted) || (purpose.errors && purpose.touched) )"
                                                                 class='errspan required'> Proposed Solution is required </span>
@@ -1024,9 +1022,9 @@
                                                             <textarea name="_benefits" id="_benefits"
                                                                 #_benefits="ngModel" (keyup)="autoGrowcommentsBox2()"
                                                                 [(ngModel)]="business_benefits" class="form-control"
-                                                                placeholder="Enter Benefits" required></textarea>
+                                                                placeholder="Enter Benefits" (keydown)="Space($event)" required></textarea>
                                                             <span
-                                                                *ngIf="((purpose.invalid && processForm.submitted) || (purpose.errors && purpose.touched) )"
+                                                                *ngIf="((_benefits.invalid && processForm.submitted) || (_benefits.errors && _benefits.touched) )"
                                                                 class='errspan required'> Benefits is required </span>
                                                         </div>
                                                     </form>
@@ -1038,11 +1036,11 @@
                                                             {{processUnderstanding.businessChallenge}}</p>
                                                     </div>
                                                     <div class="col-md-12 form-group">
-                                                        <label class="label-control">Proposed Solution</label>
+                                                        <label class="label-control">Purpose of Automation</label>
                                                         <p class="nextLine-text line-break">{{processUnderstanding.purpose}}</p>
                                                     </div>
                                                     <div class="col-md-12 form-group">
-                                                        <label class="label-control">Benefits</label>
+                                                        <label class="label-control">Benefits of Automation</label>
                                                         <p class="nextLine-text line-break">{{processUnderstanding.benefits}}</p>
                                                     </div>
                                                 </div>
@@ -1062,7 +1060,7 @@
                                                                 [ngClass]=" processQuestions.length == 0 ? 'proc-noques' : '' ">
                                                                 <textarea name="havequestion" id="have_question"
                                                                     [(ngModel)]="haveQuestion" class="form-control"
-                                                                    placeholder="Have a Question?"></textarea>
+                                                                    placeholder="Have a Question?" (keydown)="Space($event)"></textarea>
                                                                 <span class="procdesc_act s_ques">
                                                                     <span class="tsttooltipbtn" *ngIf="haveQuestion"
                                                                         (click)="saveQuestion()">
@@ -1114,7 +1112,7 @@
                                                                             <textarea name="answerUpdate"
                                                                                 id="question_update"
                                                                                 [(ngModel)]="selectedQuestionUpdate"
-                                                                                class="form-control"></textarea>
+                                                                                class="form-control" (keydown)="Space($event)"></textarea>
                                                                         </span>
                                                                         <span class="procdesc_act">
                                                                             <span class="tsttooltipbtn"
@@ -1125,7 +1123,7 @@
                                                                                 <span class="testtooltip">Update</span>
                                                                             </span>
                                                                             <span class="tsttooltipbtn"
-                                                                                (click)="cancelUpdate('question')">
+                                                                                (click)="cancelUpdate()">
                                                                                 <img src="../../../../assets/images/VCM/VCM-close.svg"
                                                                                     class="testplus2" />
                                                                                 <span class="testtooltip">Cancel</span>
@@ -1190,7 +1188,7 @@
                                                                                 id="answer_update"
                                                                                 [(ngModel)]="selectedAnswerUpdate"
                                                                                 class="form-control"
-                                                                                placeholder="Enter Answer"></textarea>
+                                                                                placeholder="Enter Answer" (keydown)="Space($event)"></textarea>
                                                                             <span class="procdesc_act">
                                                                                 <span class="tsttooltipbtn"
                                                                                     (click)="updateAnswer_Question(each,'answer')"
@@ -1232,7 +1230,7 @@
 
 
     <ng-template #addresourcemodal>
-            <app-add-resources (newItemEvent)="addresources($event)" [resources]="resources"
+        <app-add-resources (newItemEvent)="addresources($event)" [resources]="resources"
                 [addresourcemodalref]="addresourcemodalref" [userslist]="userslist"></app-add-resources>
     </ng-template>
 
@@ -1510,8 +1508,7 @@
 
     <ng-template class="modal-up" #uploadtaskfilemodal>
         <div ngb-modal-draggable [ngbModalDraggableHandle]="draggableHandle" class="cursor-all-scroll">
-            <div #draggableHandle class="modal-header modelprhead">
-        <!-- <div class="modal-header modelprhead"> -->
+        <div #draggableHandle class="modal-header modelprhead">
             <h4 class="modal-title pull-left">Upload File</h4>
             <button type="button" class="close pull-right" aria-label="Close" (click)="uploadtaskFilemodalCancel()">
                 <span aria-hidden="true"><img alt=""
@@ -1569,10 +1566,10 @@
 
                             <div class="upload-filesdiv">
                                 <div class="row">
-                                    <div class="col-md-4 pl-0" *ngFor="let selected of listOfFiles">
+                                    <div class="col-md-4 pl-0" *ngFor="let selected of listOfFiles;let i =index">
                                         <div class="project-card">
                                             <span class="pull-right clickable" matTooltip="Remove"
-                                                (click)="removeSelectedFile(index)">
+                                                (click)="removeSelectedFile(i)">
                                                 <img class="testplus1"
                                                     src="../../../../assets/images/Projects/circle-close.svg" />
                                                 <!-- <i class="fa fa-trash"></i> -->
@@ -1615,7 +1612,7 @@
             <span aria-hidden="true"><img alt="" src="../../../../../assets/images/Projects/circle-close.svg"></span>
         </button>
     </div>
-    </div>
+</div>
     <div class="modal-body modelprbody uploadfilebdiv">
         <div class="container p-0" style="width:100%">
             <form [formGroup]="uploadFileFormDetails" (ngSubmit)="submitUploadFileFormattachment()">
@@ -1666,10 +1663,10 @@
 
                     <div class="upload-filesdiv">
                         <div class="row">
-                            <div class="col-md-4 pl-0" *ngFor="let selected of listOfFiles">
+                            <div class="col-md-4 pl-0" *ngFor="let selected of listOfFiles;let i = index;">
                                 <div class="project-card">
                                     <span class="pull-right clickable" matTooltip="Remove"
-                                        (click)="removeSelectedFile(index)">
+                                        (click)="removeSelectedFile(i)">
                                         <img class="testplus1"
                                             src="../../../../assets/images/Projects/circle-close.svg" />
                                     </span>

@@ -1,78 +1,3 @@
-/* .abrand_div img{
-    width:190px;
-}
-.abrand_div{
-    cursor: pointer;
-    outline: none !important;
-}
-.notification-icon{
-    margin-top: -24px !important;
-    margin-right: 20px;
-    cursor: pointer;
-}
-.icon_middle label{
-    margin-top: 5px;
-    line-height: 1.4 !important;
-}
-.drop_down a{
-    padding: 10px 4px !important;
-    color: #287ad6 !important;
-    font-size: 14px;
-    float: left;
-}
-.drop_down a:hover{
-    color: #287ad6 !important;
-    font-weight: bold !important;
-}
-.dropdown-menu{
-    padding:3px !important;
-    border: 1px solid #287ad6;
-}
-.header_icon{
-    padding-right: 7px !important;
-}
-.hd_icon{
-    padding-right: 5px;
-}
-
-
-.res-circle {
-    width: 62px;
-    border-radius: 100%;
-    text-align: center;
-    height: 60px;
-    margin-top: 5px;
-    color: black;
-    font-size: 25px;
-    background: #0091ea;
-    line-height: 59px;
-    margin-left: -5px;
-    font-weight: bold;
-    padding: 4px 3px;
-  }
-  .res-circle:after {
-    content: "";
-    display: block;
-    padding-bottom: 100%;
-  }
-
-  .notification-count
-  {
-      margin-left: -46px;
-      height: 19px;
-      width: 22px;
-      background: #ff6600;
-     color: white;
-     border: 2px solid #ff6600;
-     text-align: center;
-     border-radius: 57px;
-    font-weight: bold;
-    font-size: 11px;
-     line-height: 16px;
-  } */
-
-
-
   .ep-header-white{
     background-color: white !important;
     height: 52px;
@@ -97,12 +22,9 @@
   }
   
   .header{
-      /* background-color: #098DE6 !important;
-      color: white !important; */
       height: 60px !important;
   }
   .abrand{
-      /* background-color: #0A8DE8!important; */
       height: 80px;
       color: #001c47 !important;
   }
@@ -130,7 +52,6 @@
       font-weight: bold !important;
   }
   .dropdown-menu{
-      /* padding:3px !important; */
       border: 1px solid #287ad6;
   }
   .header_icon{
@@ -142,19 +63,6 @@
   .dropdown-menu {
       min-width: 170px !important;
   }
-  /* .res-circle {
-    width: 45px;
-    border-radius: 100%;
-    height: 45px;
-    margin-top: 2px;
-    color: rgb(255, 255, 255);
-    font-size: 18px;
-    background: rgb(0, 161, 228);
-    margin-left: 5px;
-    font-weight: bold;
-    padding: 6px 11px;
-
-    } */
   .res-circle {
     width: 44px;
     border-radius: 100%;
@@ -165,18 +73,14 @@
     margin-left: 5px;
     font-weight: bold;
     padding: 4px 12px;
-
     }
     .res-circle-img {
       border-radius: 100%;
       width: 43px;
       height: 41px;
-      /* width: 45px;
-      height: 45px; */
       margin-top: 0px;
       color: black;
       margin-left: -5px;
-      /* padding: 2px 5px; */
       border: 0px solid black;
     }
     .res-circle:after {
@@ -184,19 +88,6 @@
       display: block;
       padding-bottom: 100%;
     }
-/*   
-    .notification-count
-    {
-        margin-left: -46px;
-        padding:4px !important;
-        background: #ff6600;
-       color:white;
-       text-align: center;
-       border-radius: 57px;
-      font-weight: bold;
-      font-size: 11px;
-       line-height: 11px;
-    } */
     .notification-count {
       position: absolute;
       left: 20px;
@@ -214,11 +105,9 @@
     }
     .user-name .user-fName{
       padding-left: 12px !important;
-      /* margin-top: -23px !important; */
     }
     .user-name h6{
-      padding-left: 12px !important;
-  
+      padding-left: 12px !important;  
     }
     .user-info-dropdwn{
         padding-left: 15px;
@@ -236,7 +125,6 @@
   
     .icon_middle:hover label{
       color: white;
-      /* background-color: #0062cf !important; */
     }
     .icon_middle:hover img{
       filter: invert(0.5) sepia(1) hue-rotate(200deg) saturate(4) brightness(2);
@@ -389,8 +277,6 @@ button.ep-pad:hover img.header_icon {
   margin-right: 10px;
 }
 .levelsubblock img {
-  /* margin-bottom: 10px; */
-  /* margin-right: 10px; */
   height: 24px;
   width: auto;
 }
@@ -414,22 +300,17 @@ button.ep-pad:hover img.header_icon {
 .levelsubblock span {
   margin: 0px;
   line-height: normal;
-  /* color: #001c47; */
 }
 .demodp {
   display: block;
   width: 100%;
   text-align: left;
 }
-
-
-
 .notificatnmsgs{
   margin-top: 5px;
 }
 
 .deletefrm{
-  /* margin-top: 5px; */
   color: white;
   padding: 0px;
 }
@@ -446,45 +327,32 @@ button.ep-pad:hover img.header_icon {
     line-height: 20px;
         height: 20px;
         font-size: 10px;
-        /* margin-left: 25px;
-        border-radius: 10px; */
         margin-right: 10px;
   border-radius: 3px;
         color: black;
   }
  
   #myid{
-      /* width:170px;
-      height:120px;
-      border:1px solid gray;
-     display: none;
-     background-color: gray; */
      width: 255px;
   height: 120px;
   display: none;
   background-color: #bbb9b9;
   margin-left: 10px;
   padding: 10px;
-      /* // cursor:none; */
   }
   .isdelet{
       display: block !important;
       position: relative;
-      /* color: white !important; */
      z-index: 1000;
-      /* // cursor:none; */
   }
-  .isRead
- {
+  .isRead{
     color: grey;
 }
   .notify {
       margin-left: 149px;
       margin-top: 3px;
    }
-   .notificationpagination
-   {
-       /* margin-left: 52%;  */
+   .notificationpagination{
        position: fixed;
        bottom: 0px;
        right: 15px;
@@ -493,22 +361,16 @@ button.ep-pad:hover img.header_icon {
    {
        margin-left: 20px;
    }
-   .ntfnorecords
-   {
-       /* position: absolute; */
+   .ntfnorecords{
        margin-top: 113px;
        padding-left: 522px;
     }
     .table_cell.Notify_td {
-      /* width: 38%; */
      padding-left: 99px;
        }
-
 /* CSS used here will be applied after bootstrap.css */
-
 .dropdown {
   display:inline-block;
-  /* margin-left:20px; */
   padding:10px;
 }
 
@@ -555,21 +417,12 @@ margin:5px 0;
 }
 
 .item-title {
-/* 
-font-size:1.3rem;
-color:#0ba4ee;
-font-weight: bold; */
   font-size: 14px;
   font-weight: 500;
   color: #00a0e3;
   display: inline-block;
 }
-.notification-created
-{
-  /* font-size: 1.0rem;
-  margin-top: -32px;
-  font-weight: bold;
-  padding-left: 141px; */
+.notification-created{
   font-size: 12px;
   padding-left: 10px;
   color: #4fc306;
@@ -579,7 +432,6 @@ font-weight: bold; */
   white-space: pre-line;
   font-weight: 400;
   font-size: 14px;
-  /* color: rgb(9, 26, 9); */
 }
 
 .notifications a.content {
@@ -591,16 +443,12 @@ background:#ccc;
 .notification-item {
 padding:10px;
 margin:5px;
-/* background:#f2ebeb; */
 background:#f5f5f5;
 border-radius:4px;
 }
-
 .notification_action_cell{
-  /* margin-top: -46px; */
   margin-top: 3px;
 }
-
 .notif-close {
   float: right;
   line-height: 30px;

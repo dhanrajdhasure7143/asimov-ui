@@ -5,10 +5,6 @@
    background-color: rgb(241, 240, 240);
  }
  
- /* ::ng-deep  .mat-form-field
- {
-   line-height: 1.7 !important;
- } */
  ::ng-deep .mat-tooltip.tooltip {
  
    color:white !important;
@@ -21,7 +17,6 @@
    }
  
  
-  /* @import "../../../../../assets/css/new-so-styles.css"; */
   div#editparent {
    margin-top: 20px;
    border: 1px solid #ddd;

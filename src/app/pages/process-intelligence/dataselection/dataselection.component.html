@@ -112,8 +112,6 @@
                                 <option>Date/Time</option>
                                 </select>
                                 </th>
-                               
-                      
                   </tr>
             </thead>
             <tbody #container>
@@ -135,8 +133,6 @@
           <mat-paginator class="newpaginationdiv mat-paginator" #paginator [length]="totalRows$ | async" [pageIndex]="0" [pageSize]="50" [showFirstLastButtons]="true" [pageSizeOptions]="[50, 100, 200, 500]"></mat-paginator>
         </div>
       </form>
-      <!-- <div class="col-sm-8"></div> -->
-        <!-- <div class="col-sm-4"><pagination-controls (pageChange)="p = $event"></pagination-controls></div> -->
   </div>
 </div>
 <process-category-overlay headerTitle="Save Process" [overlay_data]="overlay_data" buttonName="Save & Generate" (proceed)="generateGraph($event)" class="bpmnCreate"></process-category-overlay>

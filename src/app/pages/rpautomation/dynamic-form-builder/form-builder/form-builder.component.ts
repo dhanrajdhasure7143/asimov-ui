@@ -51,10 +51,12 @@ template:`
           <span *ngIf="isEmail" class="errspan required">Enter valid email address</span>
           
         </div>
+        
 
       
     </div>
   </div>
+ 
   `,
 styleUrls: ['./form-builder.component.css']
 })
@@ -89,5 +91,3 @@ export class FormBuilderComponent implements OnInit {
   }
 }
 
-// <div class="col-md-12 row"></div>
-// style="position:absolute" class="alert alert-danger my-1 p-2 fadeInDown animated"

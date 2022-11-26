@@ -10,7 +10,6 @@ import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import { NgxSpinnerService } from "ngx-spinner";
 import * as moment from 'moment';
-
 @Component({
   selector: 'app-rpa-database-connections',
   templateUrl: './rpa-database-connections.component.html',
@@ -22,14 +21,14 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
   displayedColumns1: string[] = ["check","connectiontName","categoryName","dataBaseType","hostAddress","portNumber","username","password","databasename","schemaName","activeStatus","createdTimeStamp","createdBy"];
   public toggle:boolean;
   dataSource2:MatTableDataSource<any>;
-  public dbupdateflag: boolean;
+  public dbupdateflag: boolean = false;
   public submitted:Boolean;
   public DBcheckflag:boolean = false;
   public dbupdateid : any;
   @ViewChild("paginator4",{static:false}) paginator4: MatPaginator;
   @ViewChild("sort2",{static:false}) sort2: MatSort;
   public button:string;
-  public dbconnections:any=[];
+  public dbconnections:any=[]
   public checkeddisabled:boolean =false;
   public DBcheckeddisabled:boolean =false;
   public dbupdatedata:any;
@@ -47,143 +46,73 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
     public isButtonVisible = false;
     pwdflag:boolean=false;
     addflag:boolean=false;
+    isDatabase:boolean=false;
+    h2flag:boolean=false;
+
     constructor(private api:RestApiService, 
       private router:Router,
       private hints:Rpa_Hints, 
-      private formBuilder: FormBuilder,
-      private chanref:ChangeDetectorRef, 
       private dt:DataTransferService,
       private spinner: NgxSpinnerService
       ) { 
       const ipPattern = 
       "(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
-          
-      this.insertdbForm=this.formBuilder.group({
-        connectiontName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-        dataBaseType: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-        databasename: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-        hostAddress: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-        categoryId:["0", Validators.compose([Validators.required])],
-        password: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
-        portNumber: ["",  Validators.compose([Validators.required, Validators.maxLength(6)])],
-        schemaName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-        username: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-        role:["",Validators.compose([Validators.maxLength(50)])],
-        warehouse:["",Validators.compose([Validators.maxLength(50)])],
-        activeStatus: [true], 
-    })
-  
-    this.updatedbForm=this.formBuilder.group({
-      connectiontName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-        dataBaseType: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-        databasename: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-        categoryId:["0", Validators.compose([Validators.required])],
-        hostAddress: ["", Validators.compose([Validators.required,Validators.maxLength(50)])],
-        password: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
-        portNumber: ["",  Validators.compose([ Validators.maxLength(6)])],
-        schemaName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-        username: ["", Validators.compose([Validators.required, Validators.maxLength(50)])], 
-        role:["",Validators.compose([Validators.maxLength(50)])],
-        warehouse:["",Validators.compose([Validators.maxLength(50)])],
-        activeStatus: [""], 
-      
-    })
+    
       this.DBupdateflag=false;
       this.DBdeleteflag=false;
       
     }
 
   ngOnInit() {
-    this.api.getDatabaselist().subscribe(res=>{
-      this.databaselist=res;
+    this.api.getDatabaselist().subscribe(res => {
+      this.databaselist = res;
     })
-  
-  //   //     document.getElementById("filters").style.display='block';
-    this.dt.changeHints(this.hints.rpadbchints);
+    //   //     document.getElementById("filters").style.display='block';
     //this.getallDBConnection();
     this.getCategories()
     this.spinner.show();
-    this.passwordtype1=false;
-    this.passwordtype2=false;
-    
+    this.passwordtype1 = false;
+    this.passwordtype2 = false;
     this.userRole = localStorage.getItem("userRole")
     this.userRole = this.userRole.split(',');
     this.isButtonVisible = this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') || this.userRole.includes('RPA Admin') || this.userRole.includes('RPA Designer')
-    || this.userRole.includes('Process Owner') || this.userRole.includes('Process Architect')  || this.userRole.includes('Process Analyst')  || this.userRole.includes('RPA Developer')  || this.userRole.includes('Process Architect') || this.userRole.includes("System Admin")  || this.userRole.includes('User') ;
-    
-    this.api.getCustomUserRole(2).subscribe(role=>{
-      this.customUserRole=role.message[0].permission;
+      || this.userRole.includes('Process Owner') || this.userRole.includes('Process Architect') || this.userRole.includes('Process Analyst') || this.userRole.includes('RPA Developer') || this.userRole.includes('Process Architect') || this.userRole.includes("System Admin") || this.userRole.includes('User');
+
+    this.api.getCustomUserRole(2).subscribe(role => {
+      this.customUserRole = role.message[0].permission;
       this.customUserRole.forEach(element => {
-        if(element.permissionName.includes('RPA_DbConnection_full')){
-          this.enableDbconnection=true;
-        } 
+        if (element.permissionName.includes('RPA_DbConnection_full')) {
+          this.enableDbconnection = true;
+        }
       }
       );
-        })
+    })
   }
-  h2flag:boolean=false;
-  changeDatabaseType(event){
-     if(event.target.value=='Snowflake'){
-       this.snowflakeflag=true;
-       this.pwdflag=false;
-       this.h2flag=false;
-       this.insertdbForm.controls.portNumber.clearValidators();
-       this.insertdbForm.controls.portNumber.updateValueAndValidity()
-     }
-     else if(event.target.value=='H2'){
-      this.pwdflag=true;
-      this.h2flag=true;
-      this.snowflakeflag=false;
-      //this.insertdbForm.controls.portNumber.clearValidators();
-      //this.insertdbForm.controls.portNumber.updateValueAndValidity();
-      this.insertdbForm.controls.password.clearValidators();
-      this.insertdbForm.controls.password.updateValueAndValidity();
-      this.insertdbForm.controls.schemaName.clearValidators();
-      this.insertdbForm.controls.schemaName.updateValueAndValidity();
-      this.insertdbForm.controls.warehouse.clearValidators();
-      this.insertdbForm.controls.warehouse.updateValueAndValidity();
-      this.insertdbForm.controls.role.clearValidators();
-      this.insertdbForm.controls.role.updateValueAndValidity();
 
-     }
-     else{
-       this.snowflakeflag=false;
-       this.pwdflag=false;
-       this.h2flag=false;
-       this.insertdbForm.controls.portNumber.setValidators([Validators.required,Validators.maxLength(6)]);
-       this.insertdbForm.controls.portNumber.updateValueAndValidity();
-       this.insertdbForm.controls.password.setValidators([Validators.required , Validators.maxLength(50)]) 
-       this.insertdbForm.controls.password.updateValueAndValidity();
-       this.insertdbForm.controls.schemaName.setValidators([Validators.required , Validators.maxLength(50)]);
-       this.insertdbForm.controls.schemaName.updateValueAndValidity();
-     }
-  }
-  async getallDBConnection(){
-    this.dbconnections= [];
-    await this.api.listDBConnection().subscribe(
-      data1 => {
-        this.dbconnections = data1;
-        if(this.dbconnections.length>0)
-         { 
-           this.DBcheckeddisabled = false;
-         }
-         else
-         {
-           this.DBcheckeddisabled = true;
-         }
-        this.dbconnections.sort((a,b) => a.connectionId > b.connectionId ? -1 : 1);
-        this.dbconnections=this.dbconnections.map(item=>{
-          item["categoryName"]=this.categoryList.find(item2=>item2.categoryId==item.categoryId).categoryName;
-          item["createdTimeStamp_converted"] = moment(new Date(item.createdTimeStamp)).format('lll')
-          return item;
-        })
-        this.dataSource2= new MatTableDataSource(this.dbconnections);
+
+  async getallDBConnection() {
+    this.dbconnections = [];
+    await this.api.listDBConnection().subscribe(data1 => {
+        if (Array.isArray(data1)) {
+          this.dbconnections = data1;
+          if (this.dbconnections.length > 0) {
+            this.DBcheckeddisabled = false;
+          }else {
+            this.DBcheckeddisabled = true;
+          }
+          this.dbconnections.sort((a, b) => a.connectionId > b.connectionId ? -1 : 1);
+          this.dbconnections = this.dbconnections.map(item => {
+            item["categoryName"] = this.categoryList.find(item2 => item2.categoryId == item.categoryId).categoryName;
+            item["createdTimeStamp_converted"] = moment(new Date(item.createdTimeStamp)).format('lll')
+            return item;
+          })
+          this.dataSource2 = new MatTableDataSource(this.dbconnections);
+          setTimeout(() => {
+            this.sortmethod();
+          }, 80);
+        }
         this.spinner.hide();
-        setTimeout(() => {
-          this.sortmethod(); 
-        }, 80);
       });
-    //     document.getElementById("filters").style.display='block'; 
   }
 
   sortmethod(){
@@ -193,23 +122,26 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
 
   DBcheckAllCheckBox(ev) {
     this.dbconnections.forEach(x =>
-       x.checked = ev.target.checked);
+      x.checked = ev.target.checked);
+    if (this.dbconnections.filter(data => data.checked == true).length == this.dbconnections.length) {
+      this.DBcheckflag = true;
+    } else {
+      this.DBcheckflag = false;
+    }
     this.DBchecktoupdate();
     this.checktodelete();
   }
   
-  createdbconnection()
-  {
-  //     document.getElementById("filters").style.display='none;
+  opencreatedbconnection(){
+    this.isDatabase = true;
     document.getElementById("createdbconnection").style.display='block';
-    this.insertdbForm.get("categoryId").setValue(this.categoryList.length==1?this.categoryList[0].categoryId:"0")
-    document.getElementById("Updatedbconnection").style.display='none';
+    // this.insertdbForm.get("categoryId").setValue(this.categoryList.length==1?this.categoryList[0].categoryId:"0")
+    // document.getElementById("Updatedbconnection").style.display='none';
   }
 
   Updatedbconnection(){
-  //     document.getElementById("filters").style.display='none;
     document.getElementById("createdbconnection").style.display='none';
-    document.getElementById("Updatedbconnection").style.display='block';
+    // document.getElementById("Updatedbconnection").style.display='block';
   }
   
 
@@ -233,23 +165,8 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
       {
         this.spinner.hide();
         if(res.errorMessage==undefined){
-        // Swal.fire({
-        //   position: 'center',
-        //   icon: 'success',
-        //   title: "Successfully Connected",
-        //   showConfirmButton: false,
-        //   timer: 2000
-        // })
         Swal.fire("Success","Successfully Connected","success")
-        }else{
-          // Swal.fire({
-          //   position: 'center',
-          //   icon: 'error',
-          //   title: 'Connection Failed',
-          //   showConfirmButton: false,
-          //   timer: 2000
-          // })
-          
+        }else{   
         Swal.fire("Error","Connection Failed","error")
         }
     },err=>{
@@ -261,7 +178,6 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
   else
   {
     this.spinner.hide();
-     //alert("Invalid Form");
      this.activestatus();
   }
 
@@ -282,199 +198,16 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
       this.updatedbForm.value.activeStatus = false;
     }
   }
-  
-  
 
-  saveDBConnection(){
-    
-    if(this.insertdbForm.valid)
-   {
-    this.spinner.show();
-    if(this.insertdbForm.value.activeStatus==true)
-     {
-       this.insertdbForm.value.activeStatus=7
-     }else{
-       this.insertdbForm.value.activeStatus=8
-     }
-
-    this.insertdbForm.value.createdBy="admin";
-    this.submitted=true;
-    //this.insertdbForm.value.databasename = this.insertdbForm.value.dataBaseType;
-    let DBConnection = this.insertdbForm.value;
-    this.api.addDBConnection(DBConnection).subscribe( res =>{
-      let status:any=res;
-      this.spinner.hide();
-    // Swal.fire({
-    //         position: 'center',
-    //         icon: 'success',
-    //         title: status.status,
-    //         showConfirmButton: false,
-    //         timer: 2000
-    //       })
-
-          if(status.errorMessage==undefined)
-          {
-            
-            Swal.fire("Success",status.status,"success")
-            this.getallDBConnection();
-            this.DBchecktoupdate();
-            this.checktodelete();
-            document.getElementById('createdbconnection').style.display= "none";
-            this.resetDBForm();
-            this.submitted=false;
-            this.insertdbForm.get("activeStatus").setValue(true);    
-          }
-          else
-          {
-              this.submitted=false
-              Swal.fire("Error",status.errorMessage,"error")
-          }
-    },err=>{
-      this.spinner.hide();
-      this.submitted=false;
-      Swal.fire("Error","Unable to save database connections","error")
-    });
-   
-  }
-  else{
-    //alert("Invalid Form");
-    this.activestatus();
-  }
-   }
-
-  resetDBForm(){
-    this.insertdbForm.reset();
-    this.insertdbForm.get("dataBaseType").setValue("");
-    this.insertdbForm.get("categoryId").setValue(this.categoryList.length==1?this.categoryList[0].categoryId:'0')
-    this.insertdbForm.get("activeStatus").setValue(true);
-    this.passwordtype1=false;
-  }
-
-  resetupdateDBForm(){
-    this.updatedbForm.reset();
-    this.updatedbForm.get("dataBaseType").setValue("");
-    this.updatedbForm.get("activeStatus").setValue(true);
-  }
-  
-  dbconnectionupdate(){
-    if(this.updatedbForm.valid)
-    {
-      this.spinner.show();
-      if(this.updatedbForm.value.activeStatus==true)
-      {
-        this.updatedbForm.value.activeStatus=7
-      }else{
-        this.updatedbForm.value.activeStatus=8
-      }
-    let dbupdatFormValue =  this.updatedbForm.value;
-    //dbupdatFormValue["databasename"]= this.dbupdatedata.dataBaseType;
-    dbupdatFormValue["connectionId"]= this.dbupdatedata.connectionId;
-    dbupdatFormValue["createdBy"]= this.dbupdatedata.createdBy;
-    this.api.updateDBConnection(dbupdatFormValue).subscribe( res => {
-      let status: any= res;
-      this.spinner.hide();
-      // Swal.fire({
-      //   position: 'center',
-      //   icon: 'success',
-      //   title: status.status,
-      //   showConfirmButton: false,
-      //   timer: 2000
-      // });
-      if(status.errorMessage==undefined)
-      {
-        Swal.fire("Success",status.status,"success")
-        this.removeallchecks();
-        this.getallDBConnection();
-        this.DBchecktoupdate();
-        this.checktodelete(); 
-        document.getElementById('Updatedbconnection').style.display='none';   
-      }
-      else
-      {
-        Swal.fire("Error",status.errorMessage,"error")
-      }
-  },err=>{
-    this.spinner.hide();
-    Swal.fire("Error","Unable to update database connection details","error")
-  });
-}
-else
-{
-  //alert("please fill all details");
-}
-  
-}
-
-updatedbdata()
-  {    
-  //     document.getElementById("filters").style.display='none;
-    document.getElementById('Updatedbconnection').style.display='block';
-    let data:any;
-    for(data of this.dbconnections)
-    {
-      if(data.activeStatus==7){
-        this.toggle=true;
-        this.updatedbForm.get("activeStatus").setValue(true);
-      }else{
-        this.toggle=false;
-        this.updatedbForm.get("activeStatus").setValue(false);
-      }
-      if(data.connectionId==this.dbupdateid)
-      {
-        this.dbupdatedata=data;
-        this.updatedbForm.get("connectiontName").setValue(this.dbupdatedata["connectiontName"]);
-        this.updatedbForm.get("categoryId").setValue(this.dbupdatedata["categoryId"]);      
-        this.updatedbForm.get("dataBaseType").setValue(this.dbupdatedata["dataBaseType"]);  
-        if(this.dbupdatedata["dataBaseType"]=='PostgreSQL'){
-          this.snowflakeflag=false;
-          this.h2flag=false;
-          this.pwdflag=false;
-          this.updatedbForm.controls.portNumber.setValidators([Validators.required,Validators.maxLength(6)]);
-          this.updatedbForm.controls.password.setValidators([Validators.required,Validators.maxLength(50)]);
-          this.updatedbForm.controls.schemaName.setValidators([Validators.required,Validators.maxLength(50)]);
-          this.updatedbForm.controls.portNumber.updateValueAndValidity();
-          this.updatedbForm.controls.password.updateValueAndValidity()
-          this.updatedbForm.controls.schemaName.updateValueAndValidity()
-        } 
-        else if(this.dbupdatedata["dataBaseType"]=='Snowflake'){
-          this.snowflakeflag=true;
-          this.pwdflag=false;
-          this.h2flag=false;
-          this.updatedbForm.controls.portNumber.clearValidators();
-          this.updatedbForm.controls.portNumber.updateValueAndValidity()
-        } 
-        else if(this.dbupdatedata["dataBaseType"]=='H2')   {
-          this.pwdflag=true;
-          this.h2flag=true;
-          this.snowflakeflag=false;
-          this.updatedbForm.controls.password.clearValidators();
-          this.updatedbForm.controls.password.updateValueAndValidity();
-          this.updatedbForm.controls.schemaName.clearValidators();
-          this.updatedbForm.controls.schemaName.updateValueAndValidity();
-          this.updatedbForm.controls.warehouse.clearValidators();
-          this.updatedbForm.controls.warehouse.updateValueAndValidity();
-          this.updatedbForm.controls.role.clearValidators();
-          this.updatedbForm.controls.role.updateValueAndValidity();
-        }
-        this.updatedbForm.get("databasename").setValue(this.dbupdatedata["databasename"]);        
-        this.updatedbForm.get("hostAddress").setValue(this.dbupdatedata["hostAddress"]);      
-        this.updatedbForm.get("password").setValue(this.dbupdatedata["password"]);
-        this.updatedbForm.get("portNumber").setValue(this.dbupdatedata["portNumber"]);
-        this.updatedbForm.get("schemaName").setValue(this.dbupdatedata["schemaName"]);
-        this.updatedbForm.get("username").setValue(this.dbupdatedata["username"]);
-        this.updatedbForm.get("role").setValue(this.dbupdatedata["role"]);
-        this.updatedbForm.get("warehouse").setValue(this.dbupdatedata["warehouse"]);
-        break;
+  updatedbdata() {
+    document.getElementById('createdbconnection').style.display = 'block';
+    let data: any;
+    this.isDatabase = false;
+    for (data of this.dbconnections) {
+      if (data.connectionId == this.dbupdateid) {
+        this.dbupdatedata = data;
       }
     }
-  }
-
-  closedbconnection()
-  {     
-  //     document.getElementById("filters").style.display='block';
-    document.getElementById('createdbconnection').style.display='none';
-    document.getElementById('Updatedbconnection').style.display='none';
-    this.resetDBForm();
   }
 
   deletedbconnection(){
@@ -493,13 +226,6 @@ updatedbdata()
         this.api.deleteDBConnection(selecteddbconnection).subscribe( res =>{ 
           let status:any = res;
           this.spinner.hide();
-          // Swal.fire({
-          //   position: 'center',
-          //   icon: 'success',
-          //   title: status.status,
-          //   showConfirmButton: false,
-          //   timer: 2000    
-          // });
           if(status.errorMessage==undefined)
           {
             Swal.fire("Success",status.status,"success")
@@ -543,10 +269,10 @@ updatedbdata()
     this.dbconnections.find(data=>data.connectionId==id).checked=event.target.checked;
     if(this.dbconnections.filter(data=>data.checked==true).length==this.dbconnections.length)
     {
-      this.dbupdateflag=true;
+      this.DBcheckflag=true;
     }else
     {
-      this.dbupdateflag=false;  
+      this.DBcheckflag=false;  
     }
     this.DBchecktoupdate();
     this.checktodelete();
@@ -581,8 +307,7 @@ updatedbdata()
   }
 
 
-  getCategories()
-  {
+  getCategories(){
     this.api.getCategoriesList().subscribe(data=>{
       let response:any=data;
       if(response.errorMessage==undefined)
@@ -592,4 +317,15 @@ updatedbdata()
       }
     })
   }
+
+  refreshDataBaseList(event){
+    if(event){
+      this.getallDBConnection()
+    }
+  }
+
+  loopTrackBy(index, term) {
+    return index;
+  }
+  
 }

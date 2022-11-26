@@ -22,14 +22,14 @@
                         <div class="row">
                             <div class="col-md-12 p-0 form-fields">
                                 <label class="label-control">Summary<span class="star">*</span></label>
-                                <textarea id="text-summary" type="text" formControlName="summary" [(ngModel)]="summary" placeholder="Enter Summary" maxlength="256" class="form-control" (keyup)="autoGrowTextZone1($event)"></textarea>
+                                <textarea id="text-summary" type="text" formControlName="summary" [(ngModel)]="summary" placeholder="Enter Summary" maxlength="256" class="form-control" (keyup)="autoGrowTextZone1()"></textarea>
                                   
                                 <span *ngIf="createTicket.get('summary').invalid && createTicket.get('summary').touched" class="errspan required">Summary Required*</span>
                             </div>
                             <div class="col-md-12 p-0 form-fields">
                                 
                                 <label class="label-control">Description<span class="star">*</span></label>
-                                <textarea id="text-description" type="text" (keyup)="autoGrowTextZone($event)" formControlName="description" [(ngModel)]="description" placeholder="Enter Description" class="form-control"></textarea>
+                                <textarea id="text-description" type="text" (keyup)="autoGrowTextZone()" formControlName="description" [(ngModel)]="description" placeholder="Enter Description" class="form-control"></textarea>
                                 <span *ngIf="createTicket.get('description').invalid && createTicket.get('description').touched" class="errspan required">Description Required*</span>
                             </div>
                             <div class="col-md-12 p-0">

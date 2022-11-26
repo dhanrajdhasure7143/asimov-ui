@@ -6,9 +6,6 @@
 
 
   .projects-menu-item{
-    /* padding:5px;
-    font-size:22px;
-    color:#4AB0F5; */
     cursor: pointer;
   }
   .status-tabs{
@@ -42,7 +39,6 @@
     box-shadow: unset !important;
   }
   #projects_dashboard_header .status-tabs{
-    /* border: 1px solid rgb(221 221 221 / 70%) !important; */
     padding: 12px 15px;
   }
 
@@ -85,13 +81,6 @@
     color:black !important;
   }
 
-  /* .projecttable.table th{
-    
-    background-color:rgba(190, 229, 241, 0.616) !important;
-    vertical-align: middle !important;
-    color: #4AB0F5 !important;
-    font-size: 18px !important;
-  } */
   table {
     width: 100%;
   }
@@ -100,10 +89,6 @@
     color: black;
   }
 
-  .separated {
-    /* set border style for separated rows */
-    /* border-bottom: 1px solid skyblue; */
-  }
   .prjnewcl span.pull-right span button {
     border-radius: 2px;
     margin-right: 10px;
@@ -160,22 +145,10 @@
 }
 #projectfavourites .ng-star-inserted .status-tabs1 .tab-text {
   color: #a09f9f !important;
-  /* display: inline-block; */
 }
 
 .prjtalvcl hr {
   display: none !important;
-}
-.prjtalvcl tr.separated th {
-  /* font-size: 16px !important;
-  font-weight: 600; */
-  /* padding: 10px 0px !important; */
-}
-.prjtalvcl tr.separated td {
-  /* padding: 10px 0px; */
-}
-.prjtalvcl tbody tr.separated {
-  /* border-bottom: 1px solid #dddddd8c; */
 }
 .mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
   background-color: #00a0e3 !important;
@@ -199,11 +172,6 @@ span.projects-menu-item.prj-lst-btn button {
   color: #00a0e3;
   line-height: 18px;
 }
-span.projects-menu-item button {
-  /* background-color: #00a0e3 !important;
-  border: none;
-  border-radius: 3px !important; */
-}
 
 .status-data1 span {
   display: block;  
@@ -221,10 +189,8 @@ span.projects-menu-item button {
   margin-left: 3px;
 }
 .status-tabs, .projects_by_department, .projects_favourites {
-  /* box-shadow: 0px 1px 6px rgb(0 0 0 / 10%); */
   border-radius: 4px;
   border: 1px solid #e1e7ec;
-  /* border: medium none !important; */
 }
 
 .tab-number{

@@ -12,7 +12,7 @@
             <div class="col-md-10 p-0">
                 <div class="tktlist-body-header">
                     <div class="tktlist-fields">
-                        <button class="btn btn-primary pull-right" (click)="addUser()">
+                        <button [disabled]="isAddEnable" class="btn btn-primary pull-right" (click)="addUser()">
                             <img src="../../../../assets/images/Projects/White-plus.svg" class="testplus">
                             Add New
                         </button>
@@ -73,11 +73,11 @@
                             </span>
 
                             <span *ngIf="element.id == selectedId">
-                                    <span class="tsttooltipbtn" (click)="updateConfiguration(element,i)">
+                                    <span class="tsttooltipbtn" (click)="updateConfiguration(element)">
                                         <img src="../../../../assets/images/VCM/Green Tick.svg" class="testplus" />
                                         <span class="testtooltip">Update</span>
                                     </span>
-                                    <span class="tsttooltipbtn"  (click)="cancelUpdaterow(i)">
+                                    <span class="tsttooltipbtn"  (click)="cancelUpdaterow()">
                                         <img src="../../../../assets/images/VCM/VCM-close.svg" class="testplus2 default-img" />
                                         <img src="../../../../assets/images/VCM/VCM-close-red.svg" class="testplus2 hover-img" />
                                         <span class="testtooltip">Cancel</span>
@@ -85,7 +85,7 @@
                             </span>
 
                             <span *ngIf="element.new ">
-                                <span class="tsttooltipbtn" (click)="saveConfiguration(element,i)">
+                                <span *ngIf="!element.id != element.steps && element.description && element.configuration" class="tsttooltipbtn" (click)="saveConfiguration(element,i)">
                                     <img src="../../../../assets/images/VCM/Green Tick.svg" class="testplus" />
                                     <span class="testtooltip">Save</span>
                                 </span>
@@ -109,11 +109,5 @@
             </div>
         </div>
 
-    </div>
-
-    <div class="spinoverlay" *ngIf="isLoading">
-        <div class="spincenter">
-            <img src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader" />
-        </div>
     </div>
 </div>

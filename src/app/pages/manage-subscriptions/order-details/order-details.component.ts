@@ -33,9 +33,8 @@ export class OrderDetailsComponent implements OnInit {
     this.getAllSubscrptions();
   }
 
-  subscriptiondata(data, index, template) {
+  subscriptiondata(data, index) {
     this.subscribeddata = data;
-   // console.log(this.subscribeddata)
     this.modalRef = this.modalservice.show(this.subscriptiontemplate, { class: 'gray modal-lg' });
     if(this.subscribeddata.subscriptionId==null||this.subscribeddata.subscriptionId==undefined){
       this.subscribeddata.subscriptionId="--"
@@ -54,7 +53,6 @@ export class OrderDetailsComponent implements OnInit {
 });
 }
   infoModelSubmit(data) {
-   // console.log("data",data)
     localStorage.setItem("selectedproductId",data.name)
     this.modalRef.hide();
   //  this.router.navigate(['/activation/payment/chooseplan']);
@@ -66,7 +64,7 @@ export class OrderDetailsComponent implements OnInit {
     this.getAllSubscrptions();
   }
 
-  selecteddata(data, index) {
+  selecteddata(data) {
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -85,7 +83,7 @@ export class OrderDetailsComponent implements OnInit {
 //    this.selectedIndex = index;
   }
 
-  subscriptionCancelModalSubmit(template)
+  subscriptionCancelModalSubmit()
   {
     this.spinner.show();
     this.rest.cancelSubscription(this.subscribeddata).subscribe(data => {

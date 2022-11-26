@@ -10,7 +10,6 @@ import { RestApiService } from '../../../services/rest-api.service';
 import { ProjectsProgramsTableComponent } from '../../projects-list-screen/projects-programs-table/projects-programs-table.component';
 import { Subscription } from 'rxjs';
 import { DataTransferService } from 'src/app/pages/services/data-transfer.service';
-
 @Component({
   selector: 'app-add-resources',
   templateUrl: './add-resources.component.html',
@@ -21,8 +20,9 @@ export class AddResourcesComponent implements OnInit {
   addresourcesForm:FormGroup;
   mindate: string;
   @Input('addresourcemodalref') public addresouceref: BsModalRef;
-  @Input('userslist') public userslist:any[];
+  
   @Input('resources') public resourcesdata:any;
+  @Input('userslist') public userslist:any[];
   @Output() newItemEvent = new EventEmitter<String>();
   // userslist: any = [];
   projectdetails: Object;
@@ -39,7 +39,7 @@ export class AddResourcesComponent implements OnInit {
       
       })
 
-     // this.getallusers();
+      // this.getallusers();
       
   }
 
@@ -52,6 +52,8 @@ export class AddResourcesComponent implements OnInit {
   }
 
  
+
+
   getallusers() {
     this.spinner.show();
     this.sub = this.dataTransfer.logged_userData.subscribe(res => {
@@ -66,8 +68,6 @@ export class AddResourcesComponent implements OnInit {
       }
     });
   }
-
-
   // getallusers()
   // {
   //   let tenantid=localStorage.getItem("tenantName")

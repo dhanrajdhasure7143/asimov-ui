@@ -137,4 +137,9 @@ export class PaymentMethodsComponent implements OnInit {
       this.spinner.hide();
         });
   }
+
+  
+  loopTrackBy(index, term) {
+    return index;
+  }
 }

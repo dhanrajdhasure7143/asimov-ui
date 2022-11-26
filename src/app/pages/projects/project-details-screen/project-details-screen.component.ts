@@ -48,6 +48,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   dataSource9: MatTableDataSource<any>;
   categaoriesList: any;
   selected_process_names: any;
+  att:any;
 
   displayedColumns: string[] = ["taskCategory", "taskName", "resources", "status", "percentageComplete", "lastModifiedTimestamp", "lastModifiedBy", "createdBy", "action"];
   dataSource6: MatTableDataSource<any>;
@@ -108,7 +109,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   modeldisable: boolean = false;
   public taskcomments: any = [];
   multicomments: any[];
-  taskattacments: Object;
+  taskattacments: any;
   taskcomments_list: any[] = [];
   taskhistory: any = [];
   filecategories: any;
@@ -268,7 +269,6 @@ export class ProjectDetailsScreenComponent implements OnInit {
       if(res)
       this.loggedUserData = res
     });
-      // this.getDocumentforDowanload();
   }
 
 
@@ -279,6 +279,12 @@ export class ProjectDetailsScreenComponent implements OnInit {
   ResourcecheckAllCheckBox(ev) {
     this.resources_list.forEach(x =>
       x.checked = ev.target.checked);
+    if(this.resources_list.filter(data => data.checked == true).length == this.resources_list.length){
+      this.Resourcecheckflag = true;
+    }
+    else{
+      this.Resourcecheckflag = false;
+    }
     this.checktodelete();
   }
   uploadFile(template: TemplateRef<any>) {
@@ -443,6 +449,12 @@ export class ProjectDetailsScreenComponent implements OnInit {
 
   ResourcecheckEnableDisableBtn(id, event) {
     this.resources_list.find(data => data.id == id).checked = event.target.checked;
+    if(this.resources_list.filter(data => data.checked == true).length == this.resources_list.length){
+      this.Resourcecheckflag = true;
+    }
+    else{
+      this.Resourcecheckflag = false;
+    }
     this.checktodelete();
   }
 
@@ -528,7 +540,7 @@ this.projectDetails=res
 this.processownername = this.projectDetails.processOwner
 this.processOwnerFlag=false
 if(this.projectDetails.endDate){
-this.projectenddate=moment(this.projectDetails.endDate).format("YYYY-MM-DD");
+  this.projectenddate=moment(this.projectDetails.endDate).format("YYYY-MM-DD");
 }
 this.projectStartDate = moment(this.projectDetails.startDate).format("YYYY-MM-DD");
 //this.mindate = this.projectStartDate;
@@ -928,7 +940,7 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
   //   this.router.navigate(['/pages/projects/projectdetails',project])
   // }
 
-  deleteresource(data) {
+  deleteresource() {
     const selectedresource = this.resources_list.filter(product => product.checked == true).map(p => {
       return {
         "projectId": this.project_id,
@@ -976,7 +988,7 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
   }
 
   addresource(createmodal) {
-    this.addresourcemodalref = this.modalService.show(createmodal, { class: "modal-md" })
+    this.addresourcemodalref = this.modalService.show(createmodal, { class: "modal-lr" })
     // this.getallusers();
     // this.projectdetails();
   }
@@ -1772,23 +1784,6 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
     });
   }
 
-  getDocumentforDowanload(e) {
-    e.stopPropagation();
-    this.spinner.show();
-    let res_body = {
-      "projectId": this.project_id,
-      "asisprocessName": null,
-      "tobeprocessName": null,
-    }
-    this.rpa.processDocumentDownload(res_body).subscribe(res => {
-      this.downloadData = res
-      this.downloadFile()
-    },err=>{
-    this.spinner.hide();
-        Swal.fire("Error", "Failed to download", "error");
-    });
-  }
-
   downloadFile() {
     this.spinner.hide();
     var link = document.createElement("a");
@@ -1835,4 +1830,9 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
     })
   }
 
+  Space(event:any){
+    if(event.target.selectionStart === 0 && event.code === "Space"){
+      event.preventDefault();
+    }
+  }
 }

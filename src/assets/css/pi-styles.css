@@ -94,7 +94,6 @@ float: left !important;
 }
 
 .filter_typesOne{
-    /* margin-top: 10px; */
     font-size: 13px;
     font-weight: bold;
 }
@@ -160,9 +159,6 @@ float: left !important;
 
 }
 
-/* .data_values.selected {
-    background-color:gray;
-} */
 /* filter component styles - Ends*/
 /*flowchart component styles - Starts*/
 /* @import '../../../zoomSlider.css'; */
@@ -221,15 +217,11 @@ border-color: white !important
 padding-left: 5px;
 }
 .select_drpdwn{
-  /* background:none !important; */
-  /* font-size: 13px; */
   border:none !important;
   box-shadow: none !important;
   border-radius: 4px !important;
   border-top: 0px;
   border-bottom: 1px solid lightgray !important;
-  /* padding-left: 0px !important; */
-  /* padding-bottom: 0px !important; */
 }
 .dot {
   height: 60px;
@@ -345,11 +337,6 @@ padding: 2px;
   top: 20px;
   display: inline-block;
   z-index: 1000;
-  /* margin-top: 20px; */
-  /* background-color: none;
-  color: blue;
-  padding: 10px; */
-  /* height: 40px; */
   cursor: pointer;
 }
 .lableHide{
@@ -364,21 +351,16 @@ padding: 2px;
 }
 
 .tooltiptext1 {
-/* visibility: hidden; */
 width: 160px !important;
-/* background-color: white !important; */
-/* border-radius: 6px !important; */
 padding: 0px 0px;
 position: absolute;
 z-index: 1;
 top: 43px;
 left: -2px;
-/* margin-left: -60px; */
 background-color: #fff;
 background-clip: padding-box;
 border: 1px solid #ccc;
 border: 1px solid rgba(0,0,0,.15);
-/* border-radius: 4px; */
 box-shadow: 0 6px 12px rgba(0,0,0,.175);
 }
 
@@ -412,7 +394,6 @@ border-color: transparent transparent #ccc transparent ;
   padding: 5px;
   border-radius: 10px;
   width: 200px;
-  /* width: auto; */
   margin-right: 20px;
   max-height: 430px;
   align-self: auto !important;
@@ -528,9 +509,7 @@ transition: 0.5s;
     font-size: 14px !important;
     color: black;
 }
-/* .tooltip_body{
-  height: 230px;
-} */
+
 .tooltiptext1 hr{
   margin-top: 0px !important;
   margin-bottom: 0px !important;
@@ -544,11 +523,7 @@ font-size: 13px;
 .isactive{
   background: lightgray;
 }
-/* .path_slider1{
-  position: absolute;
-  z-index: 1000;
-  margin-left: 90%;
-} */
+
 ::ng-deep #myDiagramDiv canvas {
   outline: none;
   }
@@ -558,88 +533,7 @@ font-size: 13px;
     outline: none;
 }
 /*piflowchart component styles - Ends*/
-/*pi component styles - Starts*/
-/* .dashboard-container{
-    padding: 0;
-     
-  } 
-  .dashboard-navbar{
-      background-color: white;
-      height: 82px;
-      
-  }
-  .navbar-nav {
-      float: right;
-      margin: 0;
-  }
-  .navbar-inverse .navbar-nav>li>a {
-      margin-top: 20px;
-      color: black;
-      font-size: 144%;
-  }
-  .navbar-default .navbar-nav>li>a {
-      color: #777;
-      margin-top: 27px;
-      font-size: 215%;
-  }
-  h1{
-  margin-top: 58px;
-  font-size: 41px;
-  margin-left: 130px;
-  }
-  p{
-    margin-top: 35px;
-    margin-left: 130px;
-    font-size: 23px;
-    color: blue;
-  }
-  .getData{
-    width: 50%;
-    margin-left: 124px;
-    display: inline-flex;
-    height: 170px;
-    margin-top: 30px;
-  }
-  .getDataButtons{
-    height: 167px;
-    width: 25%;
-    margin-left: 4px;
-  }
-  .img-responsive{
-      height: 157px;
-      width: 100%;
 
-  }
-  
-  .menubar-options{
-    height: 107px;
-    width: 25%;
-    margin-top: 9px;
-   
-    display: inline-flex;
-    margin-left: 564px;
-  }
-  .option-buttons{
-    height: 104px;
-    width: 33.3%;
-  }
-  .options{
-      height: 101px;
-  }
-  .labels{
-      border: 1px solid black;
-      height: 20px;
-  }
-  label{
-    color: blue;
-    margin-top: 2px;
-    margin-left: 42px;
-  }
-  button{
-    border: none;
-    background: none;
-  } */
-/*pi component styles - Ends*/
 /*pi bpmn component styles - Starts*/
 /*header related css */
 .header-navigation{
@@ -849,10 +743,7 @@ label{
   .mainDiffContainer .left{
     border-right:dotted 10px #d02525;
   }
-  #canvas, #canvas1, #canvas2{
-    /* height: calc(100% - 30px); */
-    /* width: 100%; */
-}
+
 .overlay{
   width: 100%;
   height: 100%;
@@ -880,12 +771,7 @@ label{
   margin-top: 30px;
 }
 
-.upload_zone{
-    /* border:1px solid rgb(212, 179, 179);
-    padding: 0;
-    text-align: center;
-    margin: 2px 5px; */
-}
+
 .upload_btn{
     margin-left:-10px;
 }
@@ -909,9 +795,7 @@ label{
 }
 .process-name{
   margin-bottom: 20px;
-  /* font-weight: 0; */
   font-size: initial;
-  /* font-weight: none; */
   font-weight: normal;
 }
 .reports{
@@ -946,7 +830,6 @@ label{
 
 #category:focus{
   border-color: gray;
-  /* outline:none; */
   border: none
 }
 .close{
@@ -973,9 +856,7 @@ label{
 }
 .dataTables_filter label{
 font-size: 0px !important;
-/* color:white !important; */
 margin-bottom: 12px;
-/* border-bottom: 1px solid rgb(121, 118, 118) !important; */
 }
 .dataTables_filter{
 margin-top: -38px;
@@ -985,7 +866,6 @@ margin-top: -38px;
   border-right: 0px !important;
   border-top: 0px !important;
   box-shadow: none !important;
-  /* border-radius: 0px !important; */
   border-bottom: 1px solid rgb(121, 118, 118) !important;
   padding: 0px 5px;
 }
@@ -1127,9 +1007,7 @@ img.hover-img {
 .piechart_graph svg{
   margin-top: -9px;
 }
-#linechart1 tspan {
-  /* font-size: 12px !important; */
-}
+
 .linechart1 g[aria-labelledby*="-title"] {
   display: none;
 }

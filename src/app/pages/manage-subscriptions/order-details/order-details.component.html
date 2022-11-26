@@ -57,7 +57,7 @@
               <a  (click)="subscriptiondata(orders,subscriptiontemplate)"  matTooltip="View Subscription">
                 <img src="../../../../../assets/images/Projects/eye-show.svg" class="testplus default-img">
               </a>
-              <button class="subsc"  *ngIf="orders.status=='Active'"  (click)="selecteddata(orders,i)" matTooltip="Cancel Subscription"> 
+              <button class="subsc"  *ngIf="orders.status=='Active'"  (click)="selecteddata(orders)" matTooltip="Cancel Subscription"> 
                 <img src="../../../../../assets/images/unsubscribe.svg" >
               </button>
               <button class="subsc"  *ngIf="orders.status!='Active'" > 

@@ -85,6 +85,8 @@ public slaupdate : boolean = false;
     public logTasks:any=[];
     logsbotid:any;
     selectedversion:any;
+    public userDetails:any={};
+    public botSource_list:any[]=[];
     @ViewChild("paginator1",{static:false}) paginator1: MatPaginator;
     @ViewChild("sort1",{static:false}) sort1: MatSort;
     @ViewChild("paginator4",{static:false}) paginator4: MatPaginator;
@@ -103,6 +105,8 @@ public slaupdate : boolean = false;
     displayedColumns6: string[] = ['ReleaseName','StartTime','EndTime','State','Info'];
     logbyrunid:MatTableDataSource<any>;
     popup:Boolean=false;
+    logs_modal:any;
+    draggableHandle:any;
     constructor(private route: ActivatedRoute,
       private rest:RestApiService,
       private router: Router,
@@ -112,7 +116,8 @@ public slaupdate : boolean = false;
       private formBuilder: FormBuilder,
       private notify:NotifierService,
       private modalService:BsModalService,
-      private detectChanges:ChangeDetectorRef
+      private detectChanges:ChangeDetectorRef,
+      private dataTransfer:DataTransferService
       )
     {
       this.insertslaForm_so_bot=this.formBuilder.group({
@@ -121,9 +126,9 @@ public slaupdate : boolean = false;
         breachAlerts: [""],
         //notificationType: [""],
         retriesInterval: [""],
-        slaConfigId: ["", Validators.compose([Validators.required])],
+        slaConfigId: [""],
         taskOwner: ["", Validators.compose([Validators.required])],
-        thresholdLimit: ["", Validators.compose([Validators.required])],
+        thresholdLimit: [""],
         email:[false],
         sms:[false],
         totalRetries: [""],
@@ -132,7 +137,8 @@ public slaupdate : boolean = false;
 
   ngOnInit() {
    // this.dt.changeHints(this.hints.botmanagment);
-    this.spinner.show();
+   this.getUserDetails();
+   this.spinner.show();
     this.getCategoryList();
     this.getallbots();
     this.getautomatedtasks();
@@ -567,7 +573,6 @@ public slaupdate : boolean = false;
     //     Swal.fire("Error",data.errorMessage,"error");
     //   }
     // },(err)=>{
-    //   console.log(err)
     //   this.spinner.hide()
     //   this.logflag="Error"
     //   Swal.fire("Error","Unable to get logs","error")
@@ -590,21 +595,23 @@ public slaupdate : boolean = false;
  public AllVersions:any=[]
  getBotVerions(botId:number,version,template)
  {
-   this.spinner.show()
+  this.spinner.show()
    this.AllVersions=[];
    this.logsbotid=botId
    this.rest.getBotVersion(botId).subscribe((data:any)=>{
+     this.spinner.hide();
       if(data.errorMessage==undefined){
-        this.spinner.hide()
         this.AllVersions=data;
         this.selectedversion=version
         this.logsmodalref=this.modalService.show(template, {class:"logs-modal"})
       }
        
       else
+      {
         Swal.fire("Error",data.errorMessage,"error");
+      }
    },err=>{
-     this.spinner.hide()
+      this.spinner.hide()
       Swal.fire("Error","Unable to get versions","error")
    })
  }
@@ -694,7 +701,6 @@ public slaupdate : boolean = false;
       // {
       //   let bot=this.bot_list.find(data=>data.botId==botid)
       //   this.rest.start_blueprism_bot(bot.botName).subscribe(data=>{
-      //     console.log(data);
       //     this.spinner.hide();
       //     Swal.fire("Bot Initiated Successfully!","","success");
       //     this.notify.notify("success",data);
@@ -709,7 +715,6 @@ public slaupdate : boolean = false;
             Swal.fire("Success","Bot Execution initiated successfully","success");
           },3000)
         this.rest.start_blueprism_bot(bot.botName).subscribe(data=>{
-          // console.log(data);
           // this.spinner.hide();
           // Swal.fire("Bot Initiated Successfully!","","success");
           
@@ -841,6 +846,7 @@ public slaupdate : boolean = false;
         if(action=="closed")
         this.logsmodalref=this.modalService.show(template,{class:"logs-modal"});
       },err=>{
+        this.spinner.hide()
         Swal.fire("Error","Unable to get uipath bots","error");
       });
 
@@ -917,12 +923,10 @@ public slaupdate : boolean = false;
     }
 
    /* applyFilter(filterValue:any) {
-      console.log(filterValue)
       let category=this.categaoriesList.find(val=>filterValue==val.categoryId);
       //this.selectedvalue=filterValue;
       filterValue = category.categoryName.trim(); // Remove whitespace
       filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-      console.log(filterValue);
       this.dataSource1.filter = filterValue;
     }
 
@@ -945,7 +949,7 @@ public slaupdate : boolean = false;
     this.rest.getCategoriesList().subscribe(data=>{
       let catResponse : any;
       catResponse=data
-      this.categaoriesList=catResponse.data.sort((a, b) => (a.categoryName.toLowerCase() > b.categoryName.toLowerCase()) ? 1 : ((b.categoryName.toLowerCase() > a.categoryName.toLowerCase()) ? -1 : 0));      
+      this.categaoriesList=catResponse.data.sort((a, b) => (a.categoryName.toLowerCase() > b.categoryName.toLowerCase()) ? 1 : ((b.categoryName.toLowerCase() > a.categoryName.toLowerCase()) ? -1 : 0));
       (this.categaoriesList.length==1?this.selectedcat=this.categaoriesList[0].categoryId:"")
     });
   }
@@ -1128,4 +1132,18 @@ public slaupdate : boolean = false;
         return false;
     }
   }
+  getUserDetails() { //capture user Details
+    this.dataTransfer.logged_userData.subscribe(res => {
+      if (res) {
+          this.userDetails = res;
+        if (this.userDetails.thirdPartyRPAEnabled) {
+          this.botSource_list = ["EPSoft","UiPath", "BluePrism"]
+        }
+        else {
+          this.botSource_list = ["EPSoft"]
+        }
+      }
+    })
+  }
+
 }
