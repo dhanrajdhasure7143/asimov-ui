@@ -8,27 +8,6 @@
       <div class="ml-auto module-heading-buttons">
         <span class="pull-right" *ngIf="(!(this.userRoles.includes('System Admin')) && userName==program_detials.createdBy)
         || (this.userRoles.includes('System Admin'))">
-          <!-- <span>
-            Summary
-          </span>
-          <span>
-           <mat-slide-toggle></mat-slide-toggle>
-          </span>
-
-
-
-          <span class="item-data">
-             <i class="fa fa-file"></i>
-           </span>
-
-          <span class="item-data">
-           <i class="fa fa-history"></i>
-           </span>
-
-          <span class="item-data">
-           <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-           </span> -->
-
            <span *ngIf="editdata==true" (click)="getprogramdetails()">
              <button class="btn btn-default">
                <!-- <img src="../../../../assets/images/Projects/Project-Repo.svg" class="testplus default-img">

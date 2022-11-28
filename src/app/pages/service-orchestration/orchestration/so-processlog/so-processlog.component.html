@@ -125,8 +125,8 @@
                 <ng-container matColumnDef="version">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Version</th>
                     <td mat-cell *matCellDef="let element">
-                        <span *ngIf="element.version != null">V{{element.version}}</span>
-                        <span *ngIf="element.version == undefined">-</span>
+                        <span *ngIf="element.versionNew != null">V{{element.versionNew}}</span>
+                        <span *ngIf="element.versionNew == undefined">-</span>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="run_id">
