@@ -379,3 +379,29 @@ ul#versions li:hover {
   border:none !important;
 }
 
+.table-grid{
+  width: 18%  !important;
+}
+
+
+.table-grid-2{
+  width: 13% !important;
+}
+
+.table-grid-runId{
+  width:13% ;
+  padding:55px;
+}
+
+
+.table-grid-date{
+  width:25%;
+}
+
+.log-bg{
+  background-color: white !important;
+}
+
+.no-records{
+  margin-top:20%;
+}
