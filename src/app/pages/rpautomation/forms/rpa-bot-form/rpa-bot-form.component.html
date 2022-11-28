@@ -64,10 +64,10 @@
                     [disabled]="(botForm.invalid || botNameCheck)"  *ngIf="!isCreateForm" (click)="onFormSubmit()">
                     <span >Update</span>
                 </button>
-                <button *ngIf="isCreateForm && botForm.get('botName').value==''" (click)="onFormSubmit()" class="btn btn-primary" [disabled]="(botForm.get('department').hasError('required')) ">
+                <button *ngIf="isCreateForm && (botForm.get('botName').value==''|| botForm.get('botName').value==null) " (click)="onFormSubmit()" class="btn btn-primary" [disabled]="(botForm.get('department').hasError('required')) ">
                     <span >Submit</span>
                 </button>
-                <button *ngIf="isCreateForm && botForm.get('botName').value!=''" (click)="onFormSubmit()" class="btn btn-primary" [disabled]="(botForm.get('department').hasError('required') || botNameCheck || botForm.get('botName').hasError('pattern')) ">
+                <button *ngIf="isCreateForm && (botForm.get('botName').value!='' &&  botForm.get('botName').value!=null)" (click)="onFormSubmit()" class="btn btn-primary" [disabled]="(botForm.get('department').hasError('required') || botNameCheck || botForm.get('botName').hasError('pattern')) ">
                     <span >Submit</span>
                 </button>
                 <!-- &nbsp;

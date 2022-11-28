@@ -69,10 +69,11 @@ export class RpaBotFormComponent implements OnInit {
   createBot() {
     let botFormValue = this.botForm.value;
     console.log(botFormValue)
-    if(botFormValue.botName=='')
+    if(botFormValue.botName=='' || botFormValue.botName==null)
       this.skipSaveBot()
     else
     {
+      debugger
       this.spinner.show()
       this.rest.createBot(botFormValue).subscribe((response: any) => {
         this.spinner.hide()
@@ -134,11 +135,10 @@ export class RpaBotFormComponent implements OnInit {
 
   skipSaveBot()
   {
-    console.log('---------------')
     let botDetails:any=this.botForm.value;
     if(botDetails.department!='' && botDetails.department!=null )
     {
-      if(botDetails.botName=='')
+      if(botDetails.botName=='' || botDetails.botName==null)
       {
         botDetails.botName="Unsaved-Bot-"+((new Date()).getTime());
         console.log(botDetails);
