@@ -1564,6 +1564,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     }
     else
     {
+      let previousBotDetails:any={...{},...this.finalbot};
+      console.log("--- previous vot detals====",previousBotDetails);
       (await this.rest.updateBot(this.saveBotdata)).subscribe((response:any)=>{
         this.spinner.hide()
         if(response.errorMessage==undefined)
@@ -1576,7 +1578,22 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
             item["versionNew"]=response.versionNew;
             item['comments']=response.comments;
             return item
-          })];
+          })];      
+          let firstName=localStorage.getItem("firstName");
+          let lastName=localStorage.getItem("lastName")
+          if((parseFloat(previousBotDetails.versionNew).toFixed(1)) < ((parseFloat(response.versioNew)).toFixed(1)))
+            auditLogsList.push({
+              botId: response.botId,
+              botName: "SortingBot|UpdatedVersion",
+              changeActivity: "Updated Version",
+              changedBy: `${firstName} ${lastName}`,
+              comments: response.comments,
+              newValue: response.versionNew,
+              previousValue: previousBotDetails.versionNew,
+              taskName:"Sorting",
+              version: 1,
+              versionNew: response.versionNew,
+            })
           this.rest.addAuditLogs(auditLogsList).subscribe((response:any)=>{
             if(response.errorMessage==undefined)
             {

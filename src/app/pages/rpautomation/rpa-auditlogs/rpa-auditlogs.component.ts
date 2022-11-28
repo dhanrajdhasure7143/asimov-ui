@@ -72,6 +72,9 @@ export class RpaAuditlogsComponent implements OnInit {
               let envId = parseInt(item.taskName);
               item["taskName"] = environments.find((envItem: any) => envItem.environmentId == envId) == undefined ? 'Deleted Environment' : environments.find((envItem: any) => envItem.environmentId == envId).environmentName;
             }
+            if(item['status']=='UpdatedVersion'){
+              item["taskName"]=`Version ${item.previousValue} is upgraded to Version ${item.newValue}</b>`
+            }
           } else {
             item["Status"] = "UpdatedConfig"
           }

@@ -46,7 +46,10 @@
                                        Added environment <b>{{element.taskName}}</b></span>
                                     <span *ngIf="element.Status=='RemovedEnv'">
                                          Removed environment <b>{{element.taskName}}</b></span>        
-                                </td>
+                                    <span *ngIf="element.Status=='UpdatedVersion'">
+                                        Version upgraded from <b>V{{element.previousValue | number :'1.1-1'}}</b> to <b>V{{element.newValue | number :'1.1-1'}}</b>
+                                    </span>        
+                           </td>
                             </ng-container>
                             <ng-container matColumnDef="changedBy">
                                 <th mat-sort-header mat-header-cell *matHeaderCellDef  class="gchangedby" >Changed by</th>

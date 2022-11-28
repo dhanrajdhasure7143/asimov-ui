@@ -435,7 +435,6 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   {
     this.loadedBotsList[botNameDetails.index].botName=botNameDetails.botName;
     this.tabActiveId=botNameDetails.botName;
-    console.log("lastceck",this.loadedBotsList[botNameDetails.index])
     this.getAllBots()
   }
 
