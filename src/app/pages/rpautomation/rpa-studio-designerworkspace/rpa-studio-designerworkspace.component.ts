@@ -1,4 +1,4 @@
-import { Component, OnInit,  NgZone ,AfterViewInit,ChangeDetectorRef, ViewChild, ElementRef, Input , Pipe, PipeTransform, TemplateRef} from '@angular/core';
+import { Component, OnInit,  NgZone ,AfterViewInit,ChangeDetectorRef, EventEmitter,Output,ViewChild, ElementRef, Input , Pipe, PipeTransform, TemplateRef} from '@angular/core';
 import { DndDropEvent } from 'ngx-drag-drop';
 import { fromEvent } from 'rxjs';
 import { jsPlumb, jsPlumbInstance } from 'jsplumb';
@@ -17,6 +17,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { RpaStudioDesignerComponent } from '../rpa-studio-designer/rpa-studio-designer.component';
 import { SplitComponent } from 'angular-split'
+
 @Component({
   selector: 'app-rpa-studio-designerworkspace',
   templateUrl: './rpa-studio-designerworkspace.component.html',
@@ -24,9 +25,11 @@ import { SplitComponent } from 'angular-split'
 })
 export class RpaStudioDesignerworkspaceComponent implements OnInit {
   @Input("bot") public finalbot: any;
+  @Input("index") public index:any;
   @Input("toolsetItems") public toolset:any[];
   @Input("environmentsList") public environmentsList:any[];
   @Input("categoriesList") public categoriesList:any[];
+  @Output('onCreateBotDetails') public onCreateBotDetails:EventEmitter<any>= new EventEmitter()
   @ViewChild('logspopup',{static:false}) public logsOverlayRef:any;
   @ViewChild('screen', { static: false }) screen: ElementRef;
   @ViewChild('canvas', { static: false }) canvas: ElementRef;
@@ -613,7 +616,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       this.nodes.push(nodeWithCoordinates);
       setTimeout(() => {
         this.populateNodes(nodeWithCoordinates);
-        this.autoSaveLoopEnd(nodeWithCoordinates)
+        // this.autoSaveLoopEnd(nodeWithCoordinates)
+        this.autoSaveTaskConfig(nodeWithCoordinates);
       }, 240);
 
       if (this.nodes.length == 1) {
@@ -851,6 +855,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       this.formHeader = node.name + " - " + node.selectedNodeTask;
       this.selectedNode = node;
       let taskdata = this.finaldataobjects.find(data => data.nodeId == node.name + "__" + node.id);
+      console.log("-----------------task data----------",taskdata)
       if (taskdata != undefined) 
       {
         if (taskdata.tMetaId == node.selectedNodeId) 
@@ -1343,7 +1348,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
     let cutedata = {
       "taskName": this.selectedTask.name,
-      "tMetaId": this.selectedTask.id,
+      "tMetaId": parseInt(this.selectedTask.id),
       "inSeqId": 1,
       "taskSubCategoryId": "1",
       "outSeqId": 2,
@@ -1354,10 +1359,16 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     }
     let index = this.finaldataobjects.findIndex(sweetdata => sweetdata.nodeId == cutedata.nodeId)
     let savedTaskIndex=this.actualTaskValue.findIndex(sweetdata => sweetdata.nodeId == cutedata.nodeId)
-    if (index != undefined && index >= 0 && savedTaskIndex != undefined && savedTaskIndex >= 0) {
+    if(index != undefined && index >= 0 && savedTaskIndex != undefined && savedTaskIndex >= 0)
+    {
       cutedata["botTId"]=this.actualTaskValue[savedTaskIndex].botTId;
       this.finaldataobjects[index] = cutedata;
-    } else {
+    }
+    else if (index != undefined && index >= 0  &&  savedTaskIndex < 0) {
+      this.finaldataobjects[index] = cutedata;
+    } 
+    else
+    {
       this.finaldataobjects.push(cutedata);
     }
     this.notifier.notify("info", "Data Saved Successfully");
@@ -1502,6 +1513,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       let botDetails={...this.finalbot,...this.botDetailsForm.value}
       this.rest.createBot(botDetails).subscribe((response:any)=>{
         this.finalbot=response;
+        this.onCreateBotDetails.emit({index:this.index, botName:response.botName})
         let url=window.location.hash;
         window.history.pushState("", "", url.split("botId")[0]+"botId="+response.botId);
         this.updateBotFun(versionType, comments)
@@ -1552,6 +1564,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     }
     else
     {
+      let previousBotDetails:any={...{},...this.finalbot};
+      console.log("--- previous vot detals====",previousBotDetails);
       (await this.rest.updateBot(this.saveBotdata)).subscribe((response:any)=>{
         this.spinner.hide()
         if(response.errorMessage==undefined)
@@ -1564,7 +1578,22 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
             item["versionNew"]=response.versionNew;
             item['comments']=response.comments;
             return item
-          })];
+          })];      
+          let firstName=localStorage.getItem("firstName");
+          let lastName=localStorage.getItem("lastName")
+          if((parseFloat(previousBotDetails.versionNew).toFixed(1)) < ((parseFloat(response.versioNew)).toFixed(1)))
+            auditLogsList.push({
+              botId: response.botId,
+              botName: "SortingBot|UpdatedVersion",
+              changeActivity: "Updated Version",
+              changedBy: `${firstName} ${lastName}`,
+              comments: response.comments,
+              newValue: response.versionNew,
+              previousValue: previousBotDetails.versionNew,
+              taskName:"Sorting",
+              version: 1,
+              versionNew: response.versionNew,
+            })
           this.rest.addAuditLogs(auditLogsList).subscribe((response:any)=>{
             if(response.errorMessage==undefined)
             {
@@ -1580,9 +1609,11 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         }
         else
         {
+          this.spinner.hide()
           Swal.fire("Error",response.errorMesssage, "error");
         }
       },(err)=>{
+        this.spinner.hide()
         Swal.fire("Error","Unable to update bot","error");
       })
       //return false;
@@ -2456,6 +2487,28 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       }
     })
   }
+
+
+  
+  autoSaveTaskConfig(nodeData:any){
+    if (nodeData.selectedNodeTask != "") 
+    {
+      this.selectedTask = {
+        name: nodeData.selectedNodeTask,
+        id: parseInt(nodeData.selectedNodeId)
+      }
+    }
+    this.selectedNode = nodeData;
+    this.rest.attribute(nodeData.selectedNodeId).subscribe((res:any)=>{        
+      this.formVales=res;
+      let data=res;
+      let obj={}
+      data.map(ele=>{
+          obj[ele.name+'_'+ele.id]=ele.value;
+        })
+      this.onFormSubmit(obj)
+ })
+}
 
 }
 
