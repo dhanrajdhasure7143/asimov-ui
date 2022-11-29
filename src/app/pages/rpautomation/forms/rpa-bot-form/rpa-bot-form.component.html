@@ -60,13 +60,16 @@
             </div>
             <div class="form-footer">
                 <button class="btn btn-primary"
-                    [disabled]="(botForm.invalid || botNameCheck)"  *ngIf="!isCreateForm" (click)="onFormSubmit()">
+                    [disabled]="(botForm.invalid || botNameCheck)  && (!(unsaved))"  *ngIf="!isCreateForm" (click)="onFormSubmit()">
                     <span >Update</span>
                 </button>
-                <button *ngIf="isCreateForm && (botForm.get('botName').value==''|| botForm.get('botName').value==null) " (click)="onFormSubmit()" class="btn btn-primary" [disabled]="(botForm.get('department').hasError('required')) ">
+                <button *ngIf="isCreateForm && (botForm.get('botName').value==''|| botForm.get('botName').value==null) && (!(unsaved)) " (click)="onFormSubmit()" class="btn btn-primary" [disabled]="(botForm.get('department').hasError('required')) ">
                     <span >Submit</span>
                 </button>
-                <button *ngIf="isCreateForm && (botForm.get('botName').value!='' &&  botForm.get('botName').value!=null)" (click)="onFormSubmit()" class="btn btn-primary" [disabled]="(botForm.get('department').hasError('required') || botNameCheck || botForm.get('botName').hasError('pattern')) ">
+                <button *ngIf="isCreateForm && (botForm.get('botName').value!='' &&  botForm.get('botName').value!=null) && (!(unsaved))" (click)="onFormSubmit()" class="btn btn-primary" [disabled]="(botForm.get('department').hasError('required') || botNameCheck || botForm.get('botName').hasError('pattern')) ">
+                    <span >Submit</span>
+                </button>
+                <button *ngIf="(unsaved)" (click)="submitUnsavedBot()" class="btn btn-primary" [disabled]="(botForm.get('department').hasError('required') || botNameCheck || botForm.get('botName').hasError('pattern')) ">
                     <span >Submit</span>
                 </button>
                 <!-- &nbsp;

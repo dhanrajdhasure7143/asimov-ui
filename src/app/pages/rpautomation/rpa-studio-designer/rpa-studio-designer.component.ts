@@ -35,6 +35,8 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   isCreate:boolean = true;
   isActionsShow:boolean=false;
   botFormVisibility=false;
+  updateBotDetails:any={};
+  unsaved:boolean=false;
   constructor(
     private router:Router,
     private activeRoute:ActivatedRoute,
@@ -341,7 +343,11 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   }
 
   SaveBot(){
-    this.current_instance.checkBotDetails(this.version_type,this.comments)
+    this.botFormVisibility=true;
+    this.unsaved=true;
+    document.getElementById('bot-form').style.display='block'
+    this.updateBotDetails={...{},...this.current_instance.finalbot};
+    //this.current_instance.checkBotDetails(this.version_type,this.comments)
   }
 
   loadBotFormOverlay()
@@ -386,6 +392,7 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
 
   openBotForm() {
     this.botFormVisibility=true;
+    this.unsaved=false;
     document.getElementById("bot-form").style.display='block';
 
   }
@@ -438,6 +445,16 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
     this.loadedBotsList[botNameDetails.index].botName=botNameDetails.botName;
     this.tabActiveId=botNameDetails.botName;
     this.getAllBots()
+  }
+
+
+  submitUnsavedBotDetails(botDetails)
+  {
+    this.current_instance.saveBotDetailsAndUpdate(this.version_type,this.comments,botDetails)
+    document.getElementById('bot-form').style.display='none';
+    this.updateBotDetails={}
+    this.unsaved=false;
+    this.botFormVisibility=false;
   }
 
 }

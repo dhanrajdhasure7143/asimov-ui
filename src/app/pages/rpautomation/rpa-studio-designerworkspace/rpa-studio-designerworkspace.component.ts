@@ -1474,7 +1474,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   
-  checkBotDetails(versionType, comments)
+  checkBotDetails(versionType, comments, botDetails)
   {
     if(this.finalbot.botId==undefined)
     {
@@ -1503,14 +1503,11 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
   
   
-  saveBotDetailsAndUpdate()
+  saveBotDetailsAndUpdate(versionType, comments, botDetails)
   {
       this.spinner.show();
-      let versionType=this.finalbot.versionType;
-      let comments=this.finalbot.comments;
-      this.modalRef.hide();
-      let botDetails={...this.finalbot,...this.botDetailsForm.value}
-      this.rest.createBot(botDetails).subscribe((response:any)=>{
+      let finalBotDetails={...this.finalbot,...botDetails}
+      this.rest.createBot(finalBotDetails).subscribe((response:any)=>{
         this.finalbot=response;
         this.onCreateBotDetails.emit({index:this.index, botName:response.botName})
         let url=window.location.hash;
