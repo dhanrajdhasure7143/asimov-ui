@@ -134,6 +134,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   @ViewChild('splitEl', { static: false }) splitEl: SplitComponent;
   area_splitSize: any = {}
 
+  isBotUpdated:boolean=false;
+
   constructor(private rest: RestApiService,
     private notifier: NotifierService,
     private hints: Rpa_Hints,
@@ -1266,7 +1268,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
   //Normal Task Form Submit
   onFormSubmit(event) {
-    this.fieldValues = event
+    this.fieldValues = event;
+    this.isBotUpdated=true;
     if (this.fieldValues['file1']) {
       this.fieldValues['file1'] = this.fieldValues['file1'].substring(12)
     }
@@ -1565,6 +1568,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         this.spinner.hide()
         if(response.errorMessage==undefined)
         {
+          this.isBotUpdated=false;
           this.finalbot=response;
           this.actualTaskValue=[...response.tasks];
           this.actualEnv=[...response.envIds]

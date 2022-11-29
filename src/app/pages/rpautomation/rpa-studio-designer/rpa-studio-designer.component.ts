@@ -34,7 +34,7 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   predefinedBotsList:any=[];
   isCreate:boolean = true;
   isActionsShow:boolean=false;
-  botFormVisibility=false;
+  botFormVisibility:boolean=false;
   updateBotDetails:any={};
   unsaved:boolean=false;
   constructor(
@@ -226,11 +226,14 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   
   removetab(tab)
   {
+    if(this.current_instance.isBotUpdated)
+    if(!(confirm("Are you sure to exit without saving bot?")))
+      return
     
     this.loadedBotsList.splice(this.loadedBotsList.indexOf(tab), 1)
     if(this.loadedBotsList.length==0)
     {
-      alert("Are you sure to exit without saving bot?")
+     
       this.activeRoute.queryParams.subscribe(data=>{
         let params:any=data;
         if(params.name!=undefined)
