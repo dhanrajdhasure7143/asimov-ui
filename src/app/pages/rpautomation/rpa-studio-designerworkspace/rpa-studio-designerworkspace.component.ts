@@ -29,7 +29,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   @Input("toolsetItems") public toolset:any[];
   @Input("environmentsList") public environmentsList:any[];
   @Input("categoriesList") public categoriesList:any[];
-  @Output('onCreateBotDetails') public onCreateBotDetails:EventEmitter<any>= new EventEmitter()
+  @Output('onCreateBotDetails') public onCreateBotDetails:EventEmitter<any>= new EventEmitter();
   @ViewChild('logspopup',{static:false}) public logsOverlayRef:any;
   @ViewChild('screen', { static: false }) screen: ElementRef;
   @ViewChild('canvas', { static: false }) canvas: ElementRef;
@@ -855,7 +855,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       this.formHeader = node.name + " - " + node.selectedNodeTask;
       this.selectedNode = node;
       let taskdata = this.finaldataobjects.find(data => data.nodeId == node.name + "__" + node.id);
-      console.log("-----------------task data----------",taskdata)
       if (taskdata != undefined) 
       {
         if (taskdata.tMetaId == node.selectedNodeId) 
@@ -1565,7 +1564,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     else
     {
       let previousBotDetails:any={...{},...this.finalbot};
-      console.log("--- previous vot detals====",previousBotDetails);
       (await this.rest.updateBot(this.saveBotdata)).subscribe((response:any)=>{
         this.spinner.hide()
         if(response.errorMessage==undefined)
@@ -1581,7 +1579,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           })];      
           let firstName=localStorage.getItem("firstName");
           let lastName=localStorage.getItem("lastName")
-          if((parseFloat(previousBotDetails.versionNew).toFixed(1)) < ((parseFloat(response.versioNew)).toFixed(1)))
+          if((parseFloat(previousBotDetails.versionNew).toFixed(1)) < ((parseFloat(response.versionNew)).toFixed(1)))
             auditLogsList.push({
               botId: response.botId,
               botName: "SortingBot|UpdatedVersion",
@@ -1590,7 +1588,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
               comments: response.comments,
               newValue: response.versionNew,
               previousValue: previousBotDetails.versionNew,
-              taskName:"Sorting",
+              taskName:"Version Upgrade",
               version: 1,
               versionNew: response.versionNew,
             })

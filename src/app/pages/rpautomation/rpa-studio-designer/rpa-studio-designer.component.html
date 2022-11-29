@@ -369,7 +369,7 @@
 
 
 <div id="bot-form" class="rpa-modal">
-  <app-rpa-bot-form (output)="onBotCreate($event)" [isCreateForm]="true" [categoriesList]="categoriesList"></app-rpa-bot-form>
+  <app-rpa-bot-form *ngIf="botFormVisibility" (closeFormOverlay)="botFormVisibility=false" (output)="onBotCreate($event)" [unsavedBot]="false" [isCreateForm]="true" [categoriesList]="categoriesList"></app-rpa-bot-form>
 </div>
 
 <!-- <div id="createenvironment" class="rpa-modal">
@@ -378,5 +378,5 @@
           <span class="rpa-modal-close" (click)="closeEnviromentOverlay()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
           <h4>Create Environment</h4>
       </div> -->
-      <app-rpa-environment-form [updateenvdata]="{}" [categoriesList]="categoriesList" [isCreate]="isCreate"></app-rpa-environment-form>
+      <app-rpa-environment-form [updateenvdata]="{}"  [categoriesList]="categoriesList" [isCreate]="isCreate"></app-rpa-environment-form>
   <!-- </div> -->

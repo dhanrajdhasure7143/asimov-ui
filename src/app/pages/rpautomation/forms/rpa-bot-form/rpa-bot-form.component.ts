@@ -20,7 +20,9 @@ export class RpaBotFormComponent implements OnInit {
   @Input("isCreateForm") public isCreateForm:any;
   @Input("categoriesList") public categoriesList:any;
   @Input("botDetails") public botDetails:any;
+  @Input("unsavedBot") public unsaved:boolean;
   @Output() closeFormOverlay = new EventEmitter<any>();
+
   botForm:FormGroup;
   botNameCheck:any;
   checkBotCategory:boolean=false;
@@ -56,6 +58,11 @@ export class RpaBotFormComponent implements OnInit {
         description: ["", Validators.compose([Validators.maxLength(500)])],
         isPredefined: [false]
       });
+      if(this.categoriesList.length==1)
+      {
+        this.botForm.get('department').setValue(this.categoriesList[0].categoryId);
+        this.checkBotCategory=false;
+      }
     }
   }
 
@@ -68,12 +75,10 @@ export class RpaBotFormComponent implements OnInit {
 
   createBot() {
     let botFormValue = this.botForm.value;
-    console.log(botFormValue)
     if(botFormValue.botName=='' || botFormValue.botName==null)
       this.skipSaveBot()
     else
     {
-      debugger
       this.spinner.show()
       this.rest.createBot(botFormValue).subscribe((response: any) => {
         this.spinner.hide()
@@ -141,7 +146,6 @@ export class RpaBotFormComponent implements OnInit {
       if(botDetails.botName=='' || botDetails.botName==null)
       {
         botDetails.botName="Unsaved-Bot-"+((new Date()).getTime());
-        console.log(botDetails);
         this.event.emit({botId:Base64.encode(JSON.stringify(botDetails)),case:"create"});
       }
     }

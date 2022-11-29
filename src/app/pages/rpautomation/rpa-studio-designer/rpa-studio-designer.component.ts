@@ -34,7 +34,7 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   predefinedBotsList:any=[];
   isCreate:boolean = true;
   isActionsShow:boolean=false;
-
+  botFormVisibility=false;
   constructor(
     private router:Router,
     private activeRoute:ActivatedRoute,
@@ -385,7 +385,9 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   }
 
   openBotForm() {
+    this.botFormVisibility=true;
     document.getElementById("bot-form").style.display='block';
+
   }
 
   
@@ -407,8 +409,7 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   onBotCreate(event) {
     if (event != null) {
       if (event.case == "create") {
-        if(!isNaN(event.botId))
-        {
+        if(!isNaN(event.botId)){
           this.loadBotByBotId(event.botId, "LOAD");
           this.getAllBots();
         }
@@ -423,6 +424,7 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
           window.history.pushState("", "", url.split("botId=")[0]+"botId="+event.botId);
           document.getElementById("bot-form").style.display='none';
         }
+        this.botFormVisibility=false;
       }
     }
   }
