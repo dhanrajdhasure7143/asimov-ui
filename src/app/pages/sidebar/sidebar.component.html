@@ -36,8 +36,8 @@
           </span>
           <span class="side-menu-font" (click)="hightlight('listOfProjects','null')">Projects</span>
         </a>
-  
-        <mat-list-item (click)="showprocessesSubmenu = !showprocessesSubmenu; selection()" *ngIf="freetrail!=true"
+        <!-- ToDO  Enable for VCM -->
+        <!-- <mat-list-item (click)="showprocessesSubmenu = !showprocessesSubmenu; selection()" *ngIf="freetrail!=true"
           [ngClass]="{'activeMenu' : showprocessesSubmenu}" id='expand_processes' class="link"
           [matTooltip]=" !obj.sideBarOpen ? 'Processes' : ''" matTooltipClass="sidebarTooltip" matTooltipPosition="right">
           <span class="side-icon">
@@ -63,7 +63,7 @@
             routerLink="/pages/vcm/view-vcm">
             <span class="side-menu-font">Value Chain Mapping</span>
           </a>
-        </div>
+        </div> -->
   
         <a mat-list-item class="link" id='so' *ngIf="freetrail!=true" (click)="hightlight('so',null)"
           routerLink="/pages/serviceOrchestration/home" [matTooltip]=" !obj.sideBarOpen ? 'Orchestration' : ''"
