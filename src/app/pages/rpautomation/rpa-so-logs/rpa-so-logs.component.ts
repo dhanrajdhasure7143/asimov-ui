@@ -13,11 +13,12 @@ import Swal from 'sweetalert2';
 export class RpaSoLogsComponent implements OnInit {
   @Input('logsmodalref') public logsmodal: BsModalRef;
   runsListDataSource:MatTableDataSource<any>;
-  @ViewChild("logsSort",{static:false}) logsSort:MatSort;
-  @ViewChild("loopsort",{static:false}) loopsort:MatSort;
-  @ViewChild("logsPaginator",{static:false}) logsPaginator:MatPaginator;
+  @ViewChild("sortRunsTable",{static:false}) sortRunsTable:MatSort;
+  @ViewChild("sortLogsTable",{static:false}) sortLogsTable:MatSort;
+  @ViewChild("sortLoopLogsTable",{static:false}) sortLoopLogsTable:MatSort;
+ // @ViewChild("logsPaginator",{static:false}) logsPaginator:MatPaginator;
   RunsTableColoumns: string[] = ['run_id','version','startDate','endDate', "bot_status"];
-  displayedColumns1: string[] = ['task_name', 'status','startDate','endDate','error_info' ];
+  LogsTableColumns: string[] = ['task_name', 'status','startDate','endDate','error_info' ];
   displayedloopColumns:string[]=['taskName','iterationId','status','startTS','endTS',"errorMsg"];
   automationLogColoumns:string[]=['internaltaskName','startTS','endTS', 'status','errorMsg']
   public viewlogid1:any;
@@ -58,7 +59,6 @@ export class RpaSoLogsComponent implements OnInit {
   constructor( private modalService:BsModalService,
      private rest : RestApiService,
      private changeDetector:ChangeDetectorRef,private spinner:NgxSpinnerService) { }
-
   ngOnInit() {
     this.viewRunsByBotId();
   }
@@ -72,15 +72,15 @@ export class RpaSoLogsComponent implements OnInit {
       {
         
        this.isDataEmpty=false;
-        response=[...response.map((item:any)=>{
+       response=[...response.map((item:any, index)=>{
           item["startDate"]=moment(item.start_time).format("MMM, DD, yyyy, H:mm:ss");
           item["endDate"]=item.end_time!=null?moment(item.end_time).format("MMM, DD, yyyy, H:mm:ss"):item.end_time;
           return item;
         }).sort((a,b) => a.version > b.version ? -1 : 1)];
         this.runsListDataSource = new MatTableDataSource(response);
         setTimeout(()=>{
-          this.runsListDataSource.sort=this.logsSort;
-          this.runsListDataSource.paginator=this.logsPaginator;  
+          this.runsListDataSource.sort=this.sortRunsTable;
+          //this.runsListDataSource.paginator=this.logsPaginator;  
         },100)
       }
       else
@@ -134,7 +134,7 @@ export class RpaSoLogsComponent implements OnInit {
         
        this.logsListDataSource = new MatTableDataSource(response);
        setTimeout(()=>{
-          this.logsListDataSource.sort=this.sort2
+          this.logsListDataSource.sort=this.sortLogsTable
        },100)
      }
      else
@@ -254,7 +254,9 @@ export class RpaSoLogsComponent implements OnInit {
           this.isDataEmpty=true;
         else{
           this.logsListDataSource = new MatTableDataSource(response);
-          
+          setTimeout(()=>{
+            this.sortLoopLogsTable=this.logsListDataSource.sort;
+          },100)
         }
       }
       else

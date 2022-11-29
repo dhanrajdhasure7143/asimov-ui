@@ -139,7 +139,7 @@
         </div>
     
       <div [id]="viewlogid1" *ngIf="logsDisplayFlag=='LOGS' && logsLoading==false  && isDataEmpty==false" >
-            <table mat-table class="logs-table" [dataSource]="logsListDataSource" #sortLogsTable="matSort"  matSort style="width:100%;">
+            <table mat-table class="logs-table" [dataSource]="logsListDataSource" #sortLogsTable="matSort"  matSort class="w-100">
     
                 <!-- Task Name Column -->
                 <ng-container matColumnDef="task_name">
@@ -248,8 +248,8 @@
                     </td>
                 </ng-container> -->
     
-                <tr mat-header-row *matHeaderRowDef="displayedColumns1; sticky: true"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+                <tr mat-header-row *matHeaderRowDef="LogsTableColumns; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: LogsTableColumns;"></tr>
                 <!-- <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': !respdata2}"></tr> -->
             </table>
           <!-- <mat-paginator #paginator2 [pageSize]="5" [showFirstLastButtons]="true"></mat-paginator> -->
@@ -258,7 +258,7 @@
     
     
         <div *ngIf="logsLoading==false && logsDisplayFlag=='LOOP-LOGS' && isDataEmpty==false" class="logs-container"  >
-          <table mat-table class="logs-table"  [dataSource]="loopLogsListDataSource"  #sortLoopLogsTable="matSort" matSort style="width:100%;">
+          <table mat-table class="logs-table"  [dataSource]="loopLogsListDataSource"  #sortLoopLogsTable="matSort" matSort class="w-100">
             <ng-container matColumnDef="taskName">
               <th mat-header-cell  mat-sort-header  *matHeaderCellDef style="width:18%">Task Name </th>
               <td mat-cell *matCellDef="let element" style="width:18%">
@@ -287,7 +287,7 @@
                   <span *ngIf="element.endTS == undefined">--</span>
               </td>
             </ng-container>
-              <ng-container matColumnDef="status">
+            <ng-container matColumnDef="status">
                 <th mat-header-cell  mat-sort-header  *matHeaderCellDef style="width:18%">Status</th>
                 <td mat-cell *matCellDef="let element" style="width:18%">
                     <span *ngIf="element.status == 1">
@@ -337,8 +337,8 @@
                   <span *ngIf="element.errorMsg == undefined || element.errorMsg == '' || element.errorMsg==null">--</span>
               </td>
             </ng-container>
-            <tr mat-header-row *matHeaderRowDef="displayedloopColumns; sticky: true"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedloopColumns;"></tr>
+            <tr mat-header-row *matHeaderRowDef="LogsTableColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: LogsTableColumns;"></tr>
           </table>
         <!-- <mat-paginator #paginator2 class="newpaginationdiv" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons] ="true"></mat-paginator> -->
         </div>

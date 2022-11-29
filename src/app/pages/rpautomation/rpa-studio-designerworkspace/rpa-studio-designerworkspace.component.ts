@@ -29,7 +29,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   @Input("toolsetItems") public toolset:any[];
   @Input("environmentsList") public environmentsList:any[];
   @Input("categoriesList") public categoriesList:any[];
-  @Output('onCreateBotDetails') public onCreateBotDetails:EventEmitter<any>= new EventEmitter()
+  @Output('onCreateBotDetails') public onCreateBotDetails:EventEmitter<any>= new EventEmitter();
   @ViewChild('logspopup',{static:false}) public logsOverlayRef:any;
   @ViewChild('screen', { static: false }) screen: ElementRef;
   @ViewChild('canvas', { static: false }) canvas: ElementRef;
@@ -133,6 +133,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   botNameCheck:boolean=false;
   @ViewChild('splitEl', { static: false }) splitEl: SplitComponent;
   area_splitSize: any = {}
+
+  isBotUpdated:boolean=false;
 
   constructor(private rest: RestApiService,
     private notifier: NotifierService,
@@ -855,7 +857,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       this.formHeader = node.name + " - " + node.selectedNodeTask;
       this.selectedNode = node;
       let taskdata = this.finaldataobjects.find(data => data.nodeId == node.name + "__" + node.id);
-      console.log("-----------------task data----------",taskdata)
       if (taskdata != undefined) 
       {
         if (taskdata.tMetaId == node.selectedNodeId) 
@@ -1267,7 +1268,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
   //Normal Task Form Submit
   onFormSubmit(event) {
-    this.fieldValues = event
+    this.fieldValues = event;
+    this.isBotUpdated=true;
     if (this.fieldValues['file1']) {
       this.fieldValues['file1'] = this.fieldValues['file1'].substring(12)
     }
@@ -1475,7 +1477,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   
-  checkBotDetails(versionType, comments)
+  checkBotDetails(versionType, comments, botDetails)
   {
     if(this.finalbot.botId==undefined)
     {
@@ -1504,14 +1506,11 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
   
   
-  saveBotDetailsAndUpdate()
+  saveBotDetailsAndUpdate(versionType, comments, botDetails)
   {
       this.spinner.show();
-      let versionType=this.finalbot.versionType;
-      let comments=this.finalbot.comments;
-      this.modalRef.hide();
-      let botDetails={...this.finalbot,...this.botDetailsForm.value}
-      this.rest.createBot(botDetails).subscribe((response:any)=>{
+      let finalBotDetails={...this.finalbot,...botDetails}
+      this.rest.createBot(finalBotDetails).subscribe((response:any)=>{
         this.finalbot=response;
         this.onCreateBotDetails.emit({index:this.index, botName:response.botName})
         let url=window.location.hash;
@@ -1565,11 +1564,11 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     else
     {
       let previousBotDetails:any={...{},...this.finalbot};
-      console.log("--- previous vot detals====",previousBotDetails);
       (await this.rest.updateBot(this.saveBotdata)).subscribe((response:any)=>{
         this.spinner.hide()
         if(response.errorMessage==undefined)
         {
+          this.isBotUpdated=false;
           this.finalbot=response;
           this.actualTaskValue=[...response.tasks];
           this.actualEnv=[...response.envIds]
@@ -1581,7 +1580,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           })];      
           let firstName=localStorage.getItem("firstName");
           let lastName=localStorage.getItem("lastName")
-          if((parseFloat(previousBotDetails.versionNew).toFixed(1)) < ((parseFloat(response.versioNew)).toFixed(1)))
+          if((parseFloat(previousBotDetails.versionNew).toFixed(1)) < ((parseFloat(response.versionNew)).toFixed(1)))
             auditLogsList.push({
               botId: response.botId,
               botName: "SortingBot|UpdatedVersion",
@@ -1590,7 +1589,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
               comments: response.comments,
               newValue: response.versionNew,
               previousValue: previousBotDetails.versionNew,
-              taskName:"Sorting",
+              taskName:"Version Upgrade",
               version: 1,
               versionNew: response.versionNew,
             })
