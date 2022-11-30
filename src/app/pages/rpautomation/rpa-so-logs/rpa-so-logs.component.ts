@@ -16,10 +16,11 @@ export class RpaSoLogsComponent implements OnInit {
   @ViewChild("sortRunsTable",{static:false}) sortRunsTable:MatSort;
   @ViewChild("sortLogsTable",{static:false}) sortLogsTable:MatSort;
   @ViewChild("sortLoopLogsTable",{static:false}) sortLoopLogsTable:MatSort;
+  @ViewChild("sortAutomationLogsTable",{static:false}) sortAutomationLogsTable:MatSort;
  // @ViewChild("logsPaginator",{static:false}) logsPaginator:MatPaginator;
   RunsTableColoumns: string[] = ['run_id','version','startDate','endDate', "bot_status"];
   LogsTableColumns: string[] = ['task_name', 'status','startDate','endDate','error_info' ];
-  displayedloopColumns:string[]=['taskName','iterationId','status','startTS','endTS',"errorMsg"];
+  loopLogsTableColoumns:string[]=['taskName','iterationId','status','startDate','endDate',"errorMsg"];
   automationLogColoumns:string[]=['internaltaskName','startTS','endTS', 'status','errorMsg']
   public viewlogid1:any;
   public selectedIterationTask:any=undefined;
@@ -73,7 +74,7 @@ export class RpaSoLogsComponent implements OnInit {
         
        this.isDataEmpty=false;
        response=[...response.map((item:any, index)=>{
-          item["startDate"]=moment(item.start_time).format("MMM, DD, yyyy, H:mm:ss");
+          item["startDate"]=item.start_time!=null?moment(item.start_time).format("MMM, DD, yyyy, H:mm:ss"):item.start_time;
           item["endDate"]=item.end_time!=null?moment(item.end_time).format("MMM, DD, yyyy, H:mm:ss"):item.end_time;
           return item;
         }).sort((a,b) => a.version > b.version ? -1 : 1)];
@@ -248,15 +249,20 @@ export class RpaSoLogsComponent implements OnInit {
       this.isDataEmpty=false;
       if(response.errorMessage==undefined)
       {
-        response=[...response.sort((a,b) => b.iterationId > a.iterationId ? 1 : -1).filter((item:any)=>item.taskName != 'Loop-End')];
+        response=[...response.sort((a,b) => b.iterationId > a.iterationId ? 1 : -1).filter((item:any)=>item.taskName != 'Loop-End')].map((item:any)=>{
+          item["startDate"]=item.startTS!=null?(moment(item.startTS).format("MMM, DD, yyyy, H:mm:ss")):item.startTS;
+          item["endDate"]=item.endTS!=null?(moment(item.endTS).format("MMM, DD, yyyy, H:mm:ss")):item.endTS;
+          return item;
+        });
         this.selectedIterationTask=e;
-        if(response.length==0)
+        if(response.length==0){
           this.isDataEmpty=true;
+        }
         else{
-          this.logsListDataSource = new MatTableDataSource(response);
+          this.loopLogsListDataSource = new MatTableDataSource(response);
           setTimeout(()=>{
-            this.sortLoopLogsTable=this.logsListDataSource.sort;
-          },100)
+            this.sortLoopLogsTable=this.loopLogsListDataSource.sort;
+          },300)
         }
       }
       else
