@@ -402,9 +402,9 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   }
 
   openBotForm() {
+    document.getElementById("bot-form").style.display='block';
     this.botFormVisibility=true;
     this.unsaved=false;
-    document.getElementById("bot-form").style.display='block';
 
   }
 
@@ -421,6 +421,7 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   }
 
   closeBotForm(){
+    this.botFormVisibility=false;
     document.getElementById("bot-form").style.display='none';
   }
 

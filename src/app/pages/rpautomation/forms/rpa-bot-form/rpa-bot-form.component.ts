@@ -18,7 +18,7 @@ export class RpaBotFormComponent implements OnInit {
 
   @Output("output") public event= new EventEmitter<any>();
   @Input("isCreateForm") public isCreateForm:any;
-  @Input("categoriesList") public categoriesList:any;
+  @Input("categoriesList") public categoriesList:any[];
   @Input("botDetails") public botDetails:any;
   @Input("unsavedBot") public unsaved:boolean;
   @Output("unsavedOutput") public unsavedOutput=new EventEmitter<any>();
@@ -35,23 +35,13 @@ export class RpaBotFormComponent implements OnInit {
 
 
   ngOnInit(): void {
-    // this.botForm = this.formBuilder.group({
-    //   botName: [""],
-    //   department: ["", Validators.required],
-    //   description: ["", Validators.compose([Validators.maxLength(500)])],
-    //   isPredefined: [false]
-    // });
-  }
-
-  ngOnChanges(changes:SimpleChanges){
+    this.botForm = this.formBuilder.group({
+      botName: [""],
+      department: ["", Validators.required],
+      description: ["", Validators.compose([Validators.maxLength(500)])],
+      isPredefined: [false]
+    });
     if(!this.isCreateForm && this.botDetails!=undefined){
-      // this.botForm.get('botName').setValidators([Validators.required,Validators.maxLength(30), Validators.pattern("^[a-zA-Z0-9_-]*$")])
-      // this.botForm.get('botName').updateValueAndValidity();
-      // this.botForm.get("botName").setValue(this.botDetails.botName);
-      // this.botForm.get("department").setValue(this.botDetails.department);
-      // this.botForm.get("description").setValue(this.botDetails.description);
-      // this.botForm.get("isPredefined").setValue(false);
-
 
       this.botForm = this.formBuilder.group({
         botName: [this.botDetails.botName, Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern("^[a-zA-Z0-9_-]*$")])],
@@ -70,22 +60,26 @@ export class RpaBotFormComponent implements OnInit {
           description: [this.botDetails.description, Validators.compose([Validators.maxLength(500)])],
           isPredefined: [this.botDetails.isPredefined]
         });
-        // console.log(this.botDetails.botName)
-        // this.botForm.get('botName').setValue();
-        // this.botForm.get('department').setValue(this.botDetails.department);
-        // this.botForm.get('description').setValue(this.botDetails.description);
-        // this.botForm.get('isPredefined').setValue(this.botDetails.isPredefined)
       }
       else if(this.categoriesList.length==1)
       {
         this.botForm = this.formBuilder.group({
           botName: ["", Validators.compose([Validators.maxLength(30), Validators.pattern("^[a-zA-Z0-9_-]*$")])],
-          department: [this.categoriesList.length==1?this.categoriesList[0].categoryId:'', Validators.required],
+          department: ['', Validators.required],
           description: ['', Validators.compose([Validators.maxLength(500)])],
           isPredefined: [false]
         });
+        setTimeout(()=>{
+          this.botForm.get('department').setValue(this.categoriesList.length==1?this.categoriesList[0].categoryId:'');
+        },100)
       }
     }
+ 
+  }
+
+  ngOnChanges(changes:SimpleChanges){
+  
+  
   }
 
   onFormSubmit() {
