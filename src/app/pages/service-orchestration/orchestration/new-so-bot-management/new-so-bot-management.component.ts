@@ -990,7 +990,7 @@ public slaupdate : boolean = false;
 
     openscheduler(bot)
     {
-      $(".tour_guide").hide();
+   //   $(".tour_guide").hide();
       this.botid=bot.botId;
       this.schdata={
         botid:bot.botId,

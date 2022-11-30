@@ -56,6 +56,7 @@ export class RpaHomeComponent implements OnInit {
   modalRef: BsModalRef;
   exportid: any;
   allbots: any = [];
+  botFormVisibility:boolean=false;
   @Output() pageChange: EventEmitter<number>;
   @Output() pageBoundsCorrection: EventEmitter<number>;
 
@@ -93,7 +94,6 @@ export class RpaHomeComponent implements OnInit {
   botlistitems: any = []
   categoryName: any;
   public sortkey: any;
-  botFormVisibility:boolean=false;
   constructor(
     private rest: RestApiService,
     private modalService: BsModalService,

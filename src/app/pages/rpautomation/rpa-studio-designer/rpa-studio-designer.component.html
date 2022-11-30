@@ -119,7 +119,7 @@
                   <!-- <span class="bpsbtnsep">|</span> -->
                   <div class="action-item hovericon bvcsave" *ngIf="current_instance != undefined ">
                     <button class="clr-hvr tsttooltipbtn" [disabled]="getSelectedEnvironments().length==0 " [outsideClick]="true"
-                      (click)="clear()" [popover]="popTemplate" placement="bottom">
+                      (click)="clear()" #pop="bs-popover" [popover]="popTemplate" placement="bottom">
                       <img src="../../../../assets/images/RPA/icon_latest/save.svg" class="testplus1">
                       <span class="testtooltip">Save Bot</span>
                     </button>
