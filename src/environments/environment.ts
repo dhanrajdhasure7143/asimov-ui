@@ -30,9 +30,9 @@ export const environment = {
   subscriptionendpoint_url:'https://ezflow.qa.epsoftinc.com/subscriptions',
   
   //BPMN Platform URL
-  bpmnplatformUrl : "https://ezcamunda.qa.epsoftinc.com",
+  bpmnplatformUrl : "https://ezworkflow.qa.epsoftinc.com",
     // camunda navigation 
-  camunda_url : "https://ezcamunda.qa.epsoftinc.com",
+  camunda_url : "https://ezworkflow.qa.epsoftinc.com",
 
   // PI Connectors
    connector_topic: 'nodeq',
