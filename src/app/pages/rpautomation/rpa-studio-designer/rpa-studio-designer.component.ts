@@ -1,4 +1,4 @@
-import {Component, OnInit, QueryList,ViewChildren, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import {Component, OnInit, QueryList,ViewChildren, OnDestroy, ChangeDetectorRef, ViewChild, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Base64 } from 'js-base64';
@@ -346,11 +346,15 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   }
 
   SaveBot(){
-    this.botFormVisibility=true;
-    this.unsaved=true;
-    document.getElementById('bot-form').style.display='block'
-    this.updateBotDetails={...{},...this.current_instance.finalbot};
-    //this.current_instance.checkBotDetails(this.version_type,this.comments)
+    if(this.current_instance.finalbot.botId==undefined){
+      this.botFormVisibility=true;
+      this.unsaved=true;
+      document.getElementById('bot-form').style.display='block'
+      this.updateBotDetails={...{},...this.current_instance.finalbot};
+    }
+    else{
+      this.current_instance.updateBotFun(this.version_type,this.comments);
+    }
   }
 
   loadBotFormOverlay()
