@@ -127,7 +127,7 @@ import { SearchRpaPipe } from './rpa-home/Search.pipe';
     ResizableModule,
     PopoverModule,
   ],
-  exports:[RpaSoLogsComponent],
+  exports:[RpaSoLogsComponent,RpaSchedulerComponent],
   providers: [MatDatepickerModule,Rpa_Hints, BsModalRef, BsModalService,
     {
            provide: MatPaginatorIntl, 
