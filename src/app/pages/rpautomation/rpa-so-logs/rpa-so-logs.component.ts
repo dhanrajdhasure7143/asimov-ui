@@ -76,6 +76,7 @@ export class RpaSoLogsComponent implements OnInit {
        response=[...response.map((item:any, index)=>{
           item["startDate"]=item.start_time!=null?moment(item.start_time).format("MMM, DD, yyyy, H:mm:ss"):item.start_time;
           item["endDate"]=item.end_time!=null?moment(item.end_time).format("MMM, DD, yyyy, H:mm:ss"):item.end_time;
+          item["versionNew"]=parseFloat(item.versionNew).toFixed(1)
           return item;
         }).sort((a,b) => a.version > b.version ? -1 : 1)];
         this.runsListDataSource = new MatTableDataSource(response);
@@ -118,8 +119,8 @@ export class RpaSoLogsComponent implements OnInit {
         
        this.isDataEmpty=false; 
         response=[...response.map((item:any)=>{
-          item["startDate"]=moment(item.start_time).format("MMM, DD, yyyy, H:mm:ss");
-          item["endDate"]=moment(item.end_time).format("MMM, DD, yyyy, H:mm:ss");
+          item["startDate"]=item.start_time!=null?moment(item.start_time).format("MMM, DD, yyyy, H:mm:ss"):item.start_time;
+          item["endDate"]=item.end_time!=null?moment(item.end_time).format("MMM, DD, yyyy, H:mm:ss"):item.end_time;
           return item;
         }).filter((item:any)=>{
           if(item.task_name=='Loop-Start')
@@ -245,7 +246,6 @@ export class RpaSoLogsComponent implements OnInit {
     this.logsDisplayFlag='LOOP-LOGS'
     this.rest.getLooplogs(e.bot_id, e.version, e.run_id ).subscribe((response:any)=>{
       this.logsLoading= false;
-      
       this.isDataEmpty=false;
       if(response.errorMessage==undefined)
       {
@@ -261,8 +261,8 @@ export class RpaSoLogsComponent implements OnInit {
         else{
           this.loopLogsListDataSource = new MatTableDataSource(response);
           setTimeout(()=>{
-            this.sortLoopLogsTable=this.loopLogsListDataSource.sort;
-          },300)
+            this.loopLogsListDataSource.sort=this.sortLoopLogsTable;
+          },100)
         }
       }
       else
