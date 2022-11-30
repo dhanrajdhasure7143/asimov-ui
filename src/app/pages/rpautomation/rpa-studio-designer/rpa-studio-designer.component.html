@@ -369,7 +369,9 @@
 
 
 <div id="bot-form" class="rpa-modal">
-  <app-rpa-bot-form *ngIf="botFormVisibility" (unsavedOutput)="submitUnsavedBotDetails($event)" [botDetails]="updateBotDetails" (closeFormOverlay)="botFormVisibility=false" (output)="onBotCreate($event)" [unsavedBot]="unsaved" [isCreateForm]="true" [categoriesList]="categoriesList"></app-rpa-bot-form>
+  <div *ngIf="botFormVisibility">
+    <app-rpa-bot-form  (unsavedOutput)="submitUnsavedBotDetails($event)" [botDetails]="updateBotDetails" (closeFormOverlay)="botFormVisibility=false" (output)="onBotCreate($event)" [unsavedBot]="unsaved" [isCreateForm]="true" [categoriesList]="categoriesList"></app-rpa-bot-form>
+  </div>
 </div>
 
 <!-- <div id="createenvironment" class="rpa-modal">
