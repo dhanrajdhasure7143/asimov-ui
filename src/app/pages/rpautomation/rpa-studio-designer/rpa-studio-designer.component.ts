@@ -34,7 +34,9 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   predefinedBotsList:any=[];
   isCreate:boolean = true;
   isActionsShow:boolean=false;
-
+  botFormVisibility:boolean=false;
+  updateBotDetails:any={};
+  unsaved:boolean=false;
   constructor(
     private router:Router,
     private activeRoute:ActivatedRoute,
@@ -224,11 +226,14 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   
   removetab(tab)
   {
+    if(this.current_instance.isBotUpdated)
+    if(!(confirm("Are you sure to exit without saving bot?")))
+      return
     
     this.loadedBotsList.splice(this.loadedBotsList.indexOf(tab), 1)
     if(this.loadedBotsList.length==0)
     {
-      alert("Are you sure to exit without saving bot?")
+     
       this.activeRoute.queryParams.subscribe(data=>{
         let params:any=data;
         if(params.name!=undefined)
@@ -341,7 +346,11 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   }
 
   SaveBot(){
-    this.current_instance.checkBotDetails(this.version_type,this.comments)
+    this.botFormVisibility=true;
+    this.unsaved=true;
+    document.getElementById('bot-form').style.display='block'
+    this.updateBotDetails={...{},...this.current_instance.finalbot};
+    //this.current_instance.checkBotDetails(this.version_type,this.comments)
   }
 
   loadBotFormOverlay()
@@ -385,7 +394,10 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   }
 
   openBotForm() {
+    this.botFormVisibility=true;
+    this.unsaved=false;
     document.getElementById("bot-form").style.display='block';
+
   }
 
   
@@ -407,8 +419,7 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   onBotCreate(event) {
     if (event != null) {
       if (event.case == "create") {
-        if(!isNaN(event.botId))
-        {
+        if(!isNaN(event.botId)){
           this.loadBotByBotId(event.botId, "LOAD");
           this.getAllBots();
         }
@@ -423,6 +434,7 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
           window.history.pushState("", "", url.split("botId=")[0]+"botId="+event.botId);
           document.getElementById("bot-form").style.display='none';
         }
+        this.botFormVisibility=false;
       }
     }
   }
@@ -436,6 +448,16 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
     this.loadedBotsList[botNameDetails.index].botName=botNameDetails.botName;
     this.tabActiveId=botNameDetails.botName;
     this.getAllBots()
+  }
+
+
+  submitUnsavedBotDetails(botDetails)
+  {
+    this.current_instance.saveBotDetailsAndUpdate(this.version_type,this.comments,botDetails)
+    document.getElementById('bot-form').style.display='none';
+    this.updateBotDetails={}
+    this.unsaved=false;
+    this.botFormVisibility=false;
   }
 
 }
