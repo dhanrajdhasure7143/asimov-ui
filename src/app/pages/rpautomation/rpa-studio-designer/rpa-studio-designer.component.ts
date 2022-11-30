@@ -2,6 +2,7 @@ import {Component, OnInit, QueryList,ViewChildren, OnDestroy, ChangeDetectorRef,
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Base64 } from 'js-base64';
+import { PopoverDirective } from 'ngx-bootstrap/popover';
 import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
 import { isNumber } from 'util';
@@ -13,6 +14,7 @@ import { RestApiService } from '../../services/rest-api.service';
 })
 export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   @ViewChildren("designerInstances") designerInstances:QueryList<any>;
+  @ViewChild('versionControlPopup',{static:false}) versionControlPopup: PopoverDirective;
   current_instance:any;
   toolset_instance:any;
   selected_tab_instance:any;
@@ -347,12 +349,14 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
 
   SaveBot(){
     if(this.current_instance.finalbot.botId==undefined){
+      this.versionControlPopup.hide();
       this.botFormVisibility=true;
       this.unsaved=true;
       document.getElementById('bot-form').style.display='block'
       this.updateBotDetails={...{},...this.current_instance.finalbot};
     }
     else{
+      this.versionControlPopup.hide();
       this.current_instance.updateBotFun(this.version_type,this.comments);
     }
   }
@@ -398,9 +402,9 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   }
 
   openBotForm() {
+    document.getElementById("bot-form").style.display='block';
     this.botFormVisibility=true;
     this.unsaved=false;
-    document.getElementById("bot-form").style.display='block';
 
   }
 
@@ -417,6 +421,7 @@ export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   }
 
   closeBotForm(){
+    this.botFormVisibility=false;
     document.getElementById("bot-form").style.display='none';
   }
 
