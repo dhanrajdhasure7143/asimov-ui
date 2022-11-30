@@ -76,6 +76,7 @@ export class RpaSoLogsComponent implements OnInit {
        response=[...response.map((item:any, index)=>{
           item["startDate"]=item.start_time!=null?moment(item.start_time).format("MMM, DD, yyyy, H:mm:ss"):item.start_time;
           item["endDate"]=item.end_time!=null?moment(item.end_time).format("MMM, DD, yyyy, H:mm:ss"):item.end_time;
+          item["versionNew"]=parseFloat(item.versionNew).toFixed(1)
           return item;
         }).sort((a,b) => a.version > b.version ? -1 : 1)];
         this.runsListDataSource = new MatTableDataSource(response);
