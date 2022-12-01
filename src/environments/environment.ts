@@ -42,7 +42,6 @@ export const environment = {
    dbName: 'eiap_dev',
    dbPort:"5430",
 
-
   //RPA WebActions Action AttrId
-   webActionAttrId:536
+   webActionAttrId:580
 };
