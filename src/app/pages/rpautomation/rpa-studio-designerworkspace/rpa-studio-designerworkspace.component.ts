@@ -879,7 +879,14 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
                     
                     if(multiformAttribute.id==maxmad.metaAttrId)
                     {
-                      multiFormValue=[...JSON.parse(maxmad.attrValue)]
+                      if(maxmad.attrValue=='' || maxmad.attrValue==null)
+                      {
+                        multiFormValue=[];
+                      }
+                      else
+                      {
+                        multiFormValue=[...JSON.parse(maxmad.attrValue)];
+                      }
                     }
                     else
                     {
