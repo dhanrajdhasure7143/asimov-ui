@@ -47,9 +47,9 @@ export class HeaderDropdownOverlayComponent implements OnInit {
   constructor(private dt:DataTransferService ,private rpa:RestApiService,private notifier: NotifierService,private dialog:MatDialog) { }
 
   ngOnInit() {
-    setTimeout(() => {
-      this.getAllNotifications();
-    }, 900);
+    // setTimeout(() => {
+    //   this.getAllNotifications();
+    // }, 900);
    
   }
   telInputObject(obj) {

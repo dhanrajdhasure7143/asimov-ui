@@ -307,22 +307,22 @@ export class RpaSoLogsComponent implements OnInit {
     })
   }
 
-  // updateLog(element: any) {
-  //   clearInterval(this.interval)
-  //   clearInterval(this.timeInterval)
-  //   clearInterval(this.interval3)
-  //   clearInterval(this.interval2)
-  //   this.logsLoading = true;
-  //   this.rest.updateBotLog(element.bot_id, element.version, element.run_id).subscribe(data => {
-  //     let response: any = data;
-  //     this.logsLoading = false;
-  //     if (response.errorMessage)
-  //       Swal.fire("Error", response.errorMessage, "error");
-  //     else
-  //       Swal.fire("Success", response.status, "success");
-  //     this.viewRunsByBotId();
-  //   });
-  // }
+  updateLog(element: any) {
+    // clearInterval(this.interval)
+    // clearInterval(this.timeInterval)
+    // clearInterval(this.interval3)
+    // clearInterval(this.interval2)
+    this.logsLoading = true;
+    this.rest.updateBotLog(element.bot_id, element.version, element.run_id).subscribe(data => {
+      let response: any = data;
+      this.logsLoading = false;
+      if (response.errorMessage)
+        Swal.fire("Error", response.errorMessage, "error");
+      else
+        Swal.fire("Success", response.status, "success");
+      this.viewRunsByBotId();
+    });
+  }
 
 
   // autoRefresh(){
