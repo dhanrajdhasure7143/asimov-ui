@@ -5,6 +5,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { iter } from '@amcharts/amcharts4/core';
 import { CdkDragDrop, CdkDragStart, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Base64 } from 'js-base64';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-dynamic-forms',
   templateUrl: './dynamic-forms.component.html',
@@ -64,7 +65,7 @@ export class DynamicFormsComponent implements OnInit {
         this.fields.find(item=>item.name=="fillValue").type="password"
         obj[valueKey]=Base64.decode(obj[valueKey]);
       }
-    if (obj.Action_525 == 'fill') {
+    if (obj["Action_"+environment.webActionAttrId] == 'fill') {
       this.fields.forEach(item => {
         if (item.visibility == false) {
           item.visibility = true;
@@ -74,7 +75,7 @@ export class DynamicFormsComponent implements OnInit {
           this.form.patchValue(obj)
         }, 100);
       })
-    } else if (obj.Action_525 == 'click') {
+    } else if (obj["Action_"+environment.webActionAttrId] == 'click') {
       this.fields.forEach(item => {
         let hideAttributes: any = item.options.find(item => item.key == obj.Action_525) != undefined ? item.options.find(item => item.key == obj.Action_525).hide_attributes : "";
         let hideAttributesIds: any = hideAttributes != null ? hideAttributes.split(",") : [];
