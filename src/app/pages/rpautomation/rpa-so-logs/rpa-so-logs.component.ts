@@ -360,7 +360,6 @@ export class RpaSoLogsComponent implements OnInit {
   {
     this.selectedIterationTask==undefined;
     this.closeEvent.emit(null)
-    this.logsmodal.hide()
   }
 
 // ngOnDestroy(): void {

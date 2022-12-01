@@ -537,6 +537,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   delconn:Boolean=false;
   setConnectionLabel(connection) {
    let self=this;
+   var delconn=false
    connection.addOverlay(["Label", { 
     label: "<span style='padding:10px'><i class='text-danger fa fa-times' style=' padding: 5px; background: white; cursor: pointer;'></i></span>",
     location:0.5, 
@@ -549,7 +550,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           source:labelOverlay.component.sourceId,
           target:labelOverlay.component.targetId
         });
-        self.delconn=true;
+        delconn=true
         conn[0].removeOverlay("label"+conn[0].id);
         setTimeout(()=>{
 
@@ -570,10 +571,13 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     }); 
     if(self.jsPlumbInstance.getAllConnections().find(item=>item.sourceId==connection.sourceId && item.targetId==connection.targetId)!=undefined)
     connection.bind("mouseout", function(conn) {
-      if(self.delconn==false)
-      setTimeout(()=>{
-        connection.getOverlay("label"+conn.id).setVisible(false);
-      },1500);
+        setTimeout(()=>{
+          if(!delconn)
+          {
+            conn.getOverlay("label"+conn.id).setVisible(false);
+          }
+        },1500);
+      
     });
 }
 
@@ -667,7 +671,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         data.map(ele=>{
             obj[ele.name+'_'+ele.id]=ele.value;
          })   
-         this.onFormSubmit(obj)
+         this.onFormSubmit(obj,false)
     })
      
    }
@@ -1130,7 +1134,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       "codeSnippet":$("#record_n_play").val()
     }
     this.close_record_play();
-    this.onFormSubmit(data);
+    this.onFormSubmit(data, true);
   }
 
 
@@ -1274,7 +1278,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
 
   //Normal Task Form Submit
-  onFormSubmit(event) {
+  onFormSubmit(event:any, notifierflag:boolean) {
     this.fieldValues = event;
     this.isBotUpdated=true;
     if (this.fieldValues['file1']) {
@@ -1380,7 +1384,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     {
       this.finaldataobjects.push(cutedata);
     }
-    this.notifier.notify("info", "Data Saved Successfully");
+    if(notifierflag)
+      this.notifier.notify("info", "Data Saved Successfully");
   }
 
   // async saveBotFun(botProperties, env) {
@@ -2512,7 +2517,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       data.map(ele=>{
           obj[ele.name+'_'+ele.id]=ele.value;
         })
-      this.onFormSubmit(obj)
+      this.onFormSubmit(obj, false)
  })
 }
 
