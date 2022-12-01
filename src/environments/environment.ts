@@ -38,8 +38,11 @@ export const environment = {
    connector_topic: 'nodeq',
 
   //DB Connector
-   dbConnectorHost: "pgpoolqa",
-   dbName: 'eiap_qa',
-   dbPort:"5431"
+   dbConnectorHost: "pgpooldev",
+   dbName: 'eiap_dev',
+   dbPort:"5430",
 
+
+  //RPA WebActions Action AttrId
+   webActionAttrId:536
 };

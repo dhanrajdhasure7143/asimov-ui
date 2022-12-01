@@ -398,20 +398,21 @@ gettime(){
           botActionStatus:"New",
           modifiedBy:`${localStorage.getItem("firstName")} ${localStorage.getItem("lastName")} `,
         }
-        this.schedule_list.push(data);
+        let scheduleArr=[...this.schedule_list];
+        scheduleArr.push(data);
         this.loader.show()
-        this.rest.addbotSchedules(this.schedule_list).subscribe((response:any)=>{
+        this.rest.addbotSchedules(scheduleArr).subscribe((response:any)=>{
           this.loader.hide();
           if(response.errorMessage == undefined)
           {
-            Swal.fire("Success","Schedule saved successfully","success");
+            this.notifier.notify("success","Schedule saved successfully");
             this.get_schedule();
           }  
           else
-            Swal.fire("Error",response.errorMessage,"error");
+            this.notifier.notify("error",response.errorMessage);
         },err=>{
           this.loader.hide();
-          Swal.fire("Error","Unable to save schedule","error");
+          this.notifier.notify("error","Unable to save schedule");
         })
       }
     }
