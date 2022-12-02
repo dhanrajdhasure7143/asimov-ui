@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import cronstrue from 'cronstrue';
 import moment from 'moment';
 import { NotifierService } from 'angular-notifier';
+import { LoaderService } from 'src/app/services/loader/loader.service';
 
 
 @Component({
@@ -84,7 +85,7 @@ export class RpaSchedulerComponent implements OnInit {
   starttimeerror:any;
   aftertime:boolean=false;
   checkScheduler : boolean = false;
-  constructor(private rest:RestApiService, private notifier: NotifierService) { }
+  constructor(private rest:RestApiService, private notifier: NotifierService, private loader:LoaderService) { }
   ngOnInit() {
     var dtToday = new Date();
     this.selecteddate=new Date()
@@ -146,7 +147,9 @@ gettime(){
   {
     if(this.data!=undefined)
     {
+      this.loader.show()
       this.rest.getbotSchedules(this.data).subscribe((response:any)=>{
+        this.loader.hide()
         if(response.errorMessage==undefined)
         {
           this.schedule_list=[...response.map(item=>{
@@ -165,7 +168,7 @@ gettime(){
         else
           Swal.fire("Error",response.errorMessage, "error");
       },err=>{
-        
+        this.loader.hide()
         Swal.fire("Error","Unable to load schedules","error");
       })
     }
@@ -395,25 +398,27 @@ gettime(){
           botActionStatus:"New",
           modifiedBy:`${localStorage.getItem("firstName")} ${localStorage.getItem("lastName")} `,
         }
-        this.schedule_list.push(data);
-
-        
-        this.rest.addbotSchedules(this.schedule_list).subscribe((response:any)=>{
+        let scheduleArr=[...this.schedule_list];
+        scheduleArr.push(data);
+        this.loader.show()
+        this.rest.addbotSchedules(scheduleArr).subscribe((response:any)=>{
+          this.loader.hide();
           if(response.errorMessage == undefined)
           {
-            Swal.fire("Success","Schedule saved successfully","success");
+            this.notifier.notify("success","Schedule saved successfully");
             this.get_schedule();
           }  
           else
-            Swal.fire("Error",response.errorMessage,"error");
+            this.notifier.notify("error",response.errorMessage);
         },err=>{
-          
-          Swal.fire("Error","Unable to save schedule","error");
+          this.loader.hide();
+          this.notifier.notify("error","Unable to save schedule");
         })
       }
     }
     else
     {
+      this.loader.hide();
       this.notifier.notify("error", "Please fill all inputs");
     }
   }
@@ -523,10 +528,12 @@ gettime(){
 
   delete_schedule()
   {
+    this.loader.show()
     if(this.botid!="" && this.botid!=undefined)
     {
       let list=this.schedule_list.filter(data=>data.checked==true);
       this.rest.stop_schedule(list).subscribe((response:any)=>{
+        this.loader.hide();
         if(response.errorMessage==undefined)
         {
           this.notifier.notify("success", "Schedules deleted successfully");
@@ -536,6 +543,10 @@ gettime(){
         {
           this.notifier.notify("error", response.errorMessage);
         }
+      },err=>{
+        this.loader.hide()
+        this.notifier.notify("error", "Unable to delete schedule");
+        
       })
       // this.updateflags();
     }

@@ -631,7 +631,8 @@ background-color: blue !important;
   right: 10px;
 }
 ul#environments {
-  width: 165px;
+  /* width: 165px; */
+  width:auto;
   overflow: auto;
   max-height: 263px;
   font-size: 15px !important;

@@ -189,7 +189,7 @@
 
   <ng-template #epsoft_logs_modal_ref>
     <div ngb-modal-draggable [ngbModalDraggableHandle]="draggableHandle" class="cursor-all-scroll">
-      <app-rpa-so-logs [logsbotid]="logsbotid" [logsmodalref]="logsmodalref" [AllVersionsList]="AllVersions"
+      <app-rpa-so-logs (close)="closeLogsOverlay()" [logsbotid]="logsbotid" [logsmodalref]="logsmodalref" [AllVersionsList]="AllVersions"
         [selectedversion]="selectedversion"></app-rpa-so-logs>
     </div>
   </ng-template>

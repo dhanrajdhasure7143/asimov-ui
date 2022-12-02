@@ -425,7 +425,7 @@
             <tr mat-row *matRowDef="let row; columns: automationLogColoumns;"></tr>
         </table>
         </div>
-        <div *ngIf="isDataEmpty==true" class="text-center">
+        <div *ngIf="isDataEmpty==true && logsLoading==false" class="text-center">
           <!-- <img src="../../../../assets/images/RPA/No-Items.svg" style="height:250px"> -->
             <div class="no-records">
               <h4>No Records Found</h4>

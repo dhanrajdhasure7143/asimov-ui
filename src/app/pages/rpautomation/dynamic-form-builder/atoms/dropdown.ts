@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, Output,EventEmitter } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { throwMatDialogContentAlreadyAttachedError } from '@angular/material';
+import { environment } from 'src/environments/environment';
 import { RpaStudioDesignerworkspaceComponent } from '../../rpa-studio-designerworkspace/rpa-studio-designerworkspace.component';
 
 @Component({
@@ -13,12 +14,14 @@ import { RpaStudioDesignerworkspaceComponent } from '../../rpa-studio-designerwo
         <option  value="undefined"  hidden disabled>{{field.placeholder}}</option>
         <option *ngFor="let opt of field.options" [value]="opt.key">{{opt.label}}</option>
         <option *ngIf="field.label=='Email'" value="New">New</option>
-        <option *ngIf="field.label=='Action'" value='VerticalScrollbarPosition'>Vertical Scrollbar Position</option>
-        <option *ngIf="field.label=='Action'" value='Close'>Close</option>
         <option *ngIf="field.name=='fillValueType'" value="password">Password</option>
         </select>
       </div>
     `,
+
+    //-------------Sap Automation DropDown Values-------------
+    // <option *ngIf="field.label=='Action'" value='VerticalScrollbarPosition'>Vertical Scrollbar Position</option>
+    // <option *ngIf="field.label=='Action'" value='Close'>Close</option>
     styles:[`
     .form-control
     {
@@ -64,7 +67,7 @@ export class DropDownComponent implements OnInit {
             if (!item1.visibility) {
               this.form.get([this.fieldsWithRef[i].name + '_' + this.fieldsWithRef[i].id]).clearValidators();
             }
-            if (item1.id != 525) {
+            if (item1.id != environment.webActionAttrId) {
               this.form.get([this.fieldsWithRef[i].name + '_' + this.fieldsWithRef[i].id]).reset();
             }
           })
