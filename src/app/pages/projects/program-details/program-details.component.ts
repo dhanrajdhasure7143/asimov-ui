@@ -167,8 +167,8 @@ export class ProgramDetailsComponent implements OnInit {
   {
     this.rest.getProjectsByProgramId(id).subscribe(list=>{
       this.linked_projects=list;
-     
-      this.dataSource8= new MatTableDataSource(this.program_detials.project);
+      // this.dataSource8= new MatTableDataSource(this.program_detials.project);
+      this.dataSource8= new MatTableDataSource(this.linked_projects);
       this.dataSource8.sort=this.sort104;
       this.dataSource8.paginator=this.paginator104;
     })
