@@ -163,8 +163,7 @@ export class ProgramDetailsComponent implements OnInit {
   }
 
 
-  get_linked_projects(id)
-  {
+  get_linked_projects(id){
     this.rest.getProjectsByProgramId(id).subscribe(list=>{
       this.linked_projects=list;
       // this.dataSource8= new MatTableDataSource(this.program_detials.project);
