@@ -3,7 +3,7 @@ version: '3.8'
 networks:
   eps_net:
     external: true
-    name: "qa_be_default"
+    name: "dev_be_default"
   eps_host:
     external: true
     name: host
@@ -15,7 +15,7 @@ services:
       replicas: 1
       placement:
         constraints:
-          - node.labels.environment == qa
+          - node.labels.environment == dev
     networks:
       - eps_net
     logging:
