@@ -50,12 +50,12 @@ export class ProjectRepoScreenComponent implements OnInit {
   multiFilesArray: any[] = [];
   fileId: any;
   filedeleteflag:Boolean;
-  filecheckeddisabled:boolean =false;
-  filecheckflag:boolean = true;
+  filecheckeddisabled:boolean=false;
+  filecheckflag:boolean=true;
   selectedFiles: any=[];
   fileList: File[] = [];
   listOfFiles: any[] = [];
-  uploadFileDescriptionFlag: boolean = false;
+  uploadFileDescriptionFlag:boolean=true;
   // resources_list: any=[];
   filecategoriesList:any[]=[];
   file_Category:any;

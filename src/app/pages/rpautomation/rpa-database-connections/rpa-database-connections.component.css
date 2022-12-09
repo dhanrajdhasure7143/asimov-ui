@@ -150,6 +150,6 @@ span.testtooltip:before {
   font-weight: bold;
 }
 
-.no-item-img{
-  height:calc(100vh - 430px)
+.no-item-img {
+  height:200px;
 }

@@ -23,6 +23,7 @@
 
 .drop_box ngx-dropzone {
     height: 145px !important;
+    cursor:default;
 }
 .drop_box {
     height: 150px;
