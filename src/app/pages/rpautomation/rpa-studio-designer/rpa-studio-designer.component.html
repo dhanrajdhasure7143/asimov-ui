@@ -119,7 +119,7 @@
                   <!-- <span class="bpsbtnsep">|</span> -->
                   <div class="action-item hovericon bvcsave" *ngIf="current_instance != undefined ">
                     <button class="clr-hvr tsttooltipbtn" [disabled]="getSelectedEnvironments().length==0 " [outsideClick]="true"
-                      (click)="clear()" [popover]="popTemplate" placement="bottom">
+                      (click)="clear()"  #versionControlPopup="bs-popover" [popover]="popTemplate" placement="bottom">
                       <img src="../../../../assets/images/RPA/icon_latest/save.svg" class="testplus1">
                       <span class="testtooltip">Save Bot</span>
                     </button>
@@ -164,14 +164,14 @@
                       <span class="testtooltip">Audit Logs</span>
                     </button>
                   </div>
-              
-                  <div class="action-item hovericon" *ngIf="current_instance != undefined">
+                  <!-- TODO -- Enable below for grouping feature in RPA designer -->
+                  <!-- <div class="action-item hovericon" *ngIf="current_instance != undefined">
                     <button class="tsttooltipbtn" [disabled]="current_instance.finalbot==undefined"
                       (click)="current_instance.addGroup()">
                       <img src="../../../../assets/images/RPA/rpa-actions/group-activity.svg" class="testplus2">
                       <span class="testtooltip">Activity Grouping</span>
                     </button>
-                  </div>
+                  </div> -->
               
                   <div class="action-item hovericon" *ngIf="current_instance != undefined">
                     <button class="tsttooltipbtn" [disabled]="current_instance.finalbot.botId==undefined || freetrail=='true'"
@@ -240,7 +240,7 @@
           <mat-tab-group *ngIf="loadedBotsList.length!=0" class="tabs" (selectedTabChange)="change_active_bot($event)" [selectedIndex]="loadedBotsList.length -1 ">
               <!-- <span class="clickable">Toolset & Actions</span>  -->
 
-              <mat-tab  *ngFor="let tab of loadedBotsList">
+              <mat-tab  *ngFor="let tab of loadedBotsList; let i=index;">
                   <ng-template mat-tab-label>
                       <span><img src="../../../../assets/images/Projects/bot.svg" class="bot-img"></span>
                       <span class="tab-botname">{{tab.botName}}</span>
@@ -261,7 +261,7 @@
                           <div class="row h-100">
                           <div class="col-md-12 check p-0 h-100">
                             <div *ngIf="loadedBotsList.length!=0" class="check">  
-                              <app-rpa-studio-designerworkspace [environmentsList]="environmentsList" [categoriesList]="categoriesList" [toolsetItems]="toolsetItems" [bot]="tab" #designerInstances></app-rpa-studio-designerworkspace>
+                              <app-rpa-studio-designerworkspace (onCreateBotDetails)="updateCreatedBotName($event)" [index]="i" [environmentsList]="environmentsList" [categoriesList]="categoriesList" [toolsetItems]="toolsetItems" [bot]="tab" #designerInstances></app-rpa-studio-designerworkspace>
                             </div>
                           </div>
                         
@@ -305,9 +305,7 @@
           <div class="form-group">
             <label for="" class="label-control">Version</label>
              <select [(ngModel)]="version_type"  class="form-control">
-              <option value="" disabled hidden>Select Version</option>
-              <option value="null" disabled hidden>Select Version</option>
-              <option value="undefined" disabled hidden>Select Version</option>
+              <option value="">No Selected Version</option>
               <option value="Major Version">Major Version</option>
               <option value="Minor Version">Minor Version</option>
             </select>   
@@ -371,7 +369,9 @@
 
 
 <div id="bot-form" class="rpa-modal">
-  <app-rpa-bot-form (output)="onBotCreate($event)" [isCreateForm]="true" [categoriesList]="categoriesList"></app-rpa-bot-form>
+  <div *ngIf="botFormVisibility">
+    <app-rpa-bot-form  (unsavedOutput)="submitUnsavedBotDetails($event)" [botDetails]="updateBotDetails" (closeFormOverlay)="botFormVisibility=false" (output)="onBotCreate($event)" [unsavedBot]="unsaved" [isCreateForm]="true" [categoriesList]="categoriesList"></app-rpa-bot-form>
+  </div>
 </div>
 
 <!-- <div id="createenvironment" class="rpa-modal">
@@ -380,5 +380,5 @@
           <span class="rpa-modal-close" (click)="closeEnviromentOverlay()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
           <h4>Create Environment</h4>
       </div> -->
-      <app-rpa-environment-form [updateenvdata]="{}" [categoriesList]="categoriesList" [isCreate]="isCreate"></app-rpa-environment-form>
+      <app-rpa-environment-form [updateenvdata]="{}"  [categoriesList]="categoriesList" [isCreate]="isCreate"></app-rpa-environment-form>
   <!-- </div> -->

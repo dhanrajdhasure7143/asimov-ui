@@ -1,81 +1,80 @@
 .bg-color {
-    background-color: rgb(241, 240, 240);
+  background-color: rgb(241, 240, 240);
 }
 
 .undobtn {background-color:gainsboro; border-radius: 5px;}
 
 .verticalalignmiddle{
-    vertical-align: middle !important;
+  vertical-align: middle !important;
 }
 
 .inbox-tablegrid {
-    width: 100%;
-    overflow: auto;
-    height: calc(100vh - 265px);
-  }
-  
-  .inbox-tablegrid table td span{
-    font-size: 13px !important;
-  }
+  width: 100%;
+  overflow: auto;
+  height: calc(100vh - 265px);
+}
 
-  button:disabled {
-    cursor: not-allowed;
-    pointer-events: all !important;
-  }
+.inbox-tablegrid table td span{
+  font-size: 13px !important;
+}
 
-  .env-data-tool {
-    line-height: 30px;
-  }
-  .env-data-tool button.tsttooltipbtn {
-    position: relative;
-    padding: 0px 5px;
-  }
-  
-  span.testtooltip {
-    position: absolute;
-    top: 35px;
-    right: 0px;
-    background-color: #001c47;
-    color: #fff;
-    width: max-content;
-    padding: 3px 10px;
-    border-radius: 4px;
-    display: none;
-    z-index: 999;
-  }
-  
-  span.testtooltip:before {
-    content: '';
-    border: 2px solid #001c47;
-    border-width: 0px 0px 2px 2px;
-    position: absolute;
-    padding: 4px;
-    right: 13px;
-    top:  -5px;
-    background: #001c47;
-    transform: rotate(45deg);
-  }
-  
-  .tsttooltipbtn:hover span.testtooltip {
-    display: block;
-  }
-  
-  .cell1 {
-    width: 8%;
-  }
-  .cell2 {
-    width: 12%;
-  }
-  .cell3, .cell4 {
-    width: 15%;
-  }
-  .cell5, .cell6 {
-    width: 18%;
-  }
-  .cell7 {
-    width: 9%;
-  }
-  .cell8 {
-    width: 4%;
-  }
-  
+button:disabled {
+  cursor: not-allowed;
+  pointer-events: all !important;
+}
+
+.env-data-tool {
+  line-height: 30px;
+}
+.env-data-tool button.tsttooltipbtn {
+  position: relative;
+  padding: 0px 5px;
+}
+
+span.testtooltip {
+  position: absolute;
+  top: 35px;
+  right: 0px;
+  background-color: #001c47;
+  color: #fff;
+  width: max-content;
+  padding: 3px 10px;
+  border-radius: 4px;
+  display: none;
+  z-index: 999;
+}
+
+span.testtooltip:before {
+  content: '';
+  border: 2px solid #001c47;
+  border-width: 0px 0px 2px 2px;
+  position: absolute;
+  padding: 4px;
+  right: 13px;
+  top:  -5px;
+  background: #001c47;
+  transform: rotate(45deg);
+}
+
+.tsttooltipbtn:hover span.testtooltip {
+  display: block;
+}
+
+.cell1 {
+  width: 8%;
+}
+.cell2 {
+  width: 12%;
+}
+.cell3, .cell4 {
+  width: 15%;
+}
+.cell5, .cell6 {
+  width: 18%;
+}
+.cell7 {
+  width: 9%;
+}
+.cell8 {
+  width: 4%;
+}

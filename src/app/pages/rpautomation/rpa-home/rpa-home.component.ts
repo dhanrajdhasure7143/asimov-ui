@@ -56,6 +56,7 @@ export class RpaHomeComponent implements OnInit {
   modalRef: BsModalRef;
   exportid: any;
   allbots: any = [];
+  botFormVisibility:boolean=false;
   @Output() pageChange: EventEmitter<number>;
   @Output() pageBoundsCorrection: EventEmitter<number>;
 
@@ -93,7 +94,6 @@ export class RpaHomeComponent implements OnInit {
   botlistitems: any = []
   categoryName: any;
   public sortkey: any;
-
   constructor(
     private rest: RestApiService,
     private modalService: BsModalService,
@@ -476,6 +476,7 @@ export class RpaHomeComponent implements OnInit {
   openEditBotOverlay(botDetails: any) {
     this.isCreateForm = false;
     this.botDetails = botDetails;
+    this.botFormVisibility=true;
     document.getElementById('bot-form').style.display = 'block';
   }
 
@@ -483,6 +484,7 @@ export class RpaHomeComponent implements OnInit {
   openCreateBotOverlay() {
     this.isCreateForm = true;
     this.botDetails = undefined;
+    this.botFormVisibility=true;
     document.getElementById('bot-form').style.display = 'block';
   }
 
@@ -531,7 +533,8 @@ export class RpaHomeComponent implements OnInit {
 
   closeFormOverlay(event){
   if(event)
-  this.isCreateForm=true;
+    this.isCreateForm=true;
+    this.botFormVisibility=false;
   }
 
   loopTrackBy(index, term) {

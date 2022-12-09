@@ -118,7 +118,7 @@ this.email=localStorage.getItem('ProfileuserId');
     this.getallProjects(this.userRoles,this.name,this.email);
     this.getprocessnames();
     this.getunassignedprojectslist(this.userRoles,this.name,this.email);
-    this.getvalchain();
+    // this.getvalchain();
     this.mindate= moment().format("YYYY-MM-DD");
     this.getInitiatives();
     this.api.getCategoriesList().subscribe(res=> {

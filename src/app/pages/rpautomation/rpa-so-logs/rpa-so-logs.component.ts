@@ -13,12 +13,14 @@ import Swal from 'sweetalert2';
 export class RpaSoLogsComponent implements OnInit {
   @Input('logsmodalref') public logsmodal: BsModalRef;
   runsListDataSource:MatTableDataSource<any>;
-  @ViewChild("logsSort",{static:false}) logsSort:MatSort;
-  @ViewChild("loopsort",{static:false}) loopsort:MatSort;
-  @ViewChild("logsPaginator",{static:false}) logsPaginator:MatPaginator;
+  @ViewChild("sortRunsTable",{static:false}) sortRunsTable:MatSort;
+  @ViewChild("sortLogsTable",{static:false}) sortLogsTable:MatSort;
+  @ViewChild("sortLoopLogsTable",{static:false}) sortLoopLogsTable:MatSort;
+  @ViewChild("sortAutomationLogsTable",{static:false}) sortAutomationLogsTable:MatSort;
+ // @ViewChild("logsPaginator",{static:false}) logsPaginator:MatPaginator;
   RunsTableColoumns: string[] = ['run_id','version','startDate','endDate', "bot_status"];
-  displayedColumns1: string[] = ['task_name', 'status','startDate','endDate','error_info' ];
-  displayedloopColumns:string[]=['taskName','iterationId','status','startTS','endTS',"errorMsg"];
+  LogsTableColumns: string[] = ['task_name', 'status','startDate','endDate','error_info' ];
+  loopLogsTableColoumns:string[]=['taskName','iterationId','status','startDate','endDate',"errorMsg"];
   automationLogColoumns:string[]=['internaltaskName','startTS','endTS', 'status','errorMsg']
   public viewlogid1:any;
   public selectedIterationTask:any=undefined;
@@ -58,7 +60,6 @@ export class RpaSoLogsComponent implements OnInit {
   constructor( private modalService:BsModalService,
      private rest : RestApiService,
      private changeDetector:ChangeDetectorRef,private spinner:NgxSpinnerService) { }
-
   ngOnInit() {
     this.viewRunsByBotId();
   }
@@ -72,15 +73,16 @@ export class RpaSoLogsComponent implements OnInit {
       {
         
        this.isDataEmpty=false;
-        response=[...response.map((item:any)=>{
-          item["startDate"]=moment(item.start_time).format("MMM, DD, yyyy, H:mm:ss");
+       response=[...response.map((item:any, index)=>{
+          item["startDate"]=item.start_time!=null?moment(item.start_time).format("MMM, DD, yyyy, H:mm:ss"):item.start_time;
           item["endDate"]=item.end_time!=null?moment(item.end_time).format("MMM, DD, yyyy, H:mm:ss"):item.end_time;
+          item["versionNew"]=parseFloat(item.versionNew).toFixed(1)
           return item;
         }).sort((a,b) => a.version > b.version ? -1 : 1)];
         this.runsListDataSource = new MatTableDataSource(response);
         setTimeout(()=>{
-          this.runsListDataSource.sort=this.logsSort;
-          this.runsListDataSource.paginator=this.logsPaginator;  
+          this.runsListDataSource.sort=this.sortRunsTable;
+          //this.runsListDataSource.paginator=this.logsPaginator;  
         },100)
       }
       else
@@ -117,8 +119,8 @@ export class RpaSoLogsComponent implements OnInit {
         
        this.isDataEmpty=false; 
         response=[...response.map((item:any)=>{
-          item["startDate"]=moment(item.start_time).format("MMM, DD, yyyy, H:mm:ss");
-          item["endDate"]=moment(item.end_time).format("MMM, DD, yyyy, H:mm:ss");
+          item["startDate"]=item.start_time!=null?moment(item.start_time).format("MMM, DD, yyyy, H:mm:ss"):item.start_time;
+          item["endDate"]=item.end_time!=null?moment(item.end_time).format("MMM, DD, yyyy, H:mm:ss"):item.end_time;
           return item;
         }).filter((item:any)=>{
           if(item.task_name=='Loop-Start')
@@ -134,7 +136,7 @@ export class RpaSoLogsComponent implements OnInit {
         
        this.logsListDataSource = new MatTableDataSource(response);
        setTimeout(()=>{
-          this.logsListDataSource.sort=this.sort2
+          this.logsListDataSource.sort=this.sortLogsTable
        },100)
      }
      else
@@ -244,17 +246,23 @@ export class RpaSoLogsComponent implements OnInit {
     this.logsDisplayFlag='LOOP-LOGS'
     this.rest.getLooplogs(e.bot_id, e.version, e.run_id ).subscribe((response:any)=>{
       this.logsLoading= false;
-      
       this.isDataEmpty=false;
       if(response.errorMessage==undefined)
       {
-        response=[...response.sort((a,b) => b.iterationId > a.iterationId ? 1 : -1).filter((item:any)=>item.taskName != 'Loop-End')];
+        response=[...response.sort((a,b) => b.iterationId > a.iterationId ? 1 : -1).filter((item:any)=>item.taskName != 'Loop-End')].map((item:any)=>{
+          item["startDate"]=item.startTS!=null?(moment(item.startTS).format("MMM, DD, yyyy, H:mm:ss")):item.startTS;
+          item["endDate"]=item.endTS!=null?(moment(item.endTS).format("MMM, DD, yyyy, H:mm:ss")):item.endTS;
+          return item;
+        });
         this.selectedIterationTask=e;
-        if(response.length==0)
+        if(response.length==0){
           this.isDataEmpty=true;
+        }
         else{
-          this.logsListDataSource = new MatTableDataSource(response);
-          
+          this.loopLogsListDataSource = new MatTableDataSource(response);
+          setTimeout(()=>{
+            this.loopLogsListDataSource.sort=this.sortLoopLogsTable;
+          },100)
         }
       }
       else
@@ -299,22 +307,22 @@ export class RpaSoLogsComponent implements OnInit {
     })
   }
 
-  // updateLog(element: any) {
-  //   clearInterval(this.interval)
-  //   clearInterval(this.timeInterval)
-  //   clearInterval(this.interval3)
-  //   clearInterval(this.interval2)
-  //   this.logsLoading = true;
-  //   this.rest.updateBotLog(element.bot_id, element.version, element.run_id).subscribe(data => {
-  //     let response: any = data;
-  //     this.logsLoading = false;
-  //     if (response.errorMessage)
-  //       Swal.fire("Error", response.errorMessage, "error");
-  //     else
-  //       Swal.fire("Success", response.status, "success");
-  //     this.viewRunsByBotId();
-  //   });
-  // }
+  updateLog(element: any) {
+    // clearInterval(this.interval)
+    // clearInterval(this.timeInterval)
+    // clearInterval(this.interval3)
+    // clearInterval(this.interval2)
+    this.logsLoading = true;
+    this.rest.updateBotLog(element.bot_id, element.version, element.run_id).subscribe(data => {
+      let response: any = data;
+      this.logsLoading = false;
+      if (response.errorMessage)
+        Swal.fire("Error", response.errorMessage, "error");
+      else
+        Swal.fire("Success", response.status, "success");
+      this.viewRunsByBotId();
+    });
+  }
 
 
   // autoRefresh(){
@@ -352,7 +360,6 @@ export class RpaSoLogsComponent implements OnInit {
   {
     this.selectedIterationTask==undefined;
     this.closeEvent.emit(null)
-    this.logsmodal.hide()
   }
 
 // ngOnDestroy(): void {

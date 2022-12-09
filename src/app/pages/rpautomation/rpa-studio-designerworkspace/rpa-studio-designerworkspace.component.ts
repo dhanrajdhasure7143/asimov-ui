@@ -1,4 +1,4 @@
-import { Component, OnInit,  NgZone ,AfterViewInit,ChangeDetectorRef, ViewChild, ElementRef, Input , Pipe, PipeTransform, TemplateRef} from '@angular/core';
+import { Component, OnInit,  NgZone ,AfterViewInit,ChangeDetectorRef, EventEmitter,Output,ViewChild, ElementRef, Input , Pipe, PipeTransform, TemplateRef} from '@angular/core';
 import { DndDropEvent } from 'ngx-drag-drop';
 import { fromEvent } from 'rxjs';
 import { jsPlumb, jsPlumbInstance } from 'jsplumb';
@@ -17,6 +17,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { RpaStudioDesignerComponent } from '../rpa-studio-designer/rpa-studio-designer.component';
 import { SplitComponent } from 'angular-split'
+
 @Component({
   selector: 'app-rpa-studio-designerworkspace',
   templateUrl: './rpa-studio-designerworkspace.component.html',
@@ -24,9 +25,11 @@ import { SplitComponent } from 'angular-split'
 })
 export class RpaStudioDesignerworkspaceComponent implements OnInit {
   @Input("bot") public finalbot: any;
+  @Input("index") public index:any;
   @Input("toolsetItems") public toolset:any[];
   @Input("environmentsList") public environmentsList:any[];
   @Input("categoriesList") public categoriesList:any[];
+  @Output('onCreateBotDetails') public onCreateBotDetails:EventEmitter<any>= new EventEmitter();
   @ViewChild('logspopup',{static:false}) public logsOverlayRef:any;
   @ViewChild('screen', { static: false }) screen: ElementRef;
   @ViewChild('canvas', { static: false }) canvas: ElementRef;
@@ -130,6 +133,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   botNameCheck:boolean=false;
   @ViewChild('splitEl', { static: false }) splitEl: SplitComponent;
   area_splitSize: any = {}
+
+  isBotUpdated:boolean=false;
 
   constructor(private rest: RestApiService,
     private notifier: NotifierService,
@@ -532,6 +537,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   delconn:Boolean=false;
   setConnectionLabel(connection) {
    let self=this;
+   var delconn=false
    connection.addOverlay(["Label", { 
     label: "<span style='padding:10px'><i class='text-danger fa fa-times' style=' padding: 5px; background: white; cursor: pointer;'></i></span>",
     location:0.5, 
@@ -544,7 +550,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           source:labelOverlay.component.sourceId,
           target:labelOverlay.component.targetId
         });
-        self.delconn=true;
+        delconn=true
         conn[0].removeOverlay("label"+conn[0].id);
         setTimeout(()=>{
 
@@ -565,10 +571,13 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     }); 
     if(self.jsPlumbInstance.getAllConnections().find(item=>item.sourceId==connection.sourceId && item.targetId==connection.targetId)!=undefined)
     connection.bind("mouseout", function(conn) {
-      if(self.delconn==false)
-      setTimeout(()=>{
-        connection.getOverlay("label"+conn.id).setVisible(false);
-      },1500);
+        setTimeout(()=>{
+          if(!delconn)
+          {
+            conn.getOverlay("label"+conn.id).setVisible(false);
+          }
+        },1500);
+      
     });
 }
 
@@ -613,7 +622,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       this.nodes.push(nodeWithCoordinates);
       setTimeout(() => {
         this.populateNodes(nodeWithCoordinates);
-        this.autoSaveLoopEnd(nodeWithCoordinates)
+        // this.autoSaveLoopEnd(nodeWithCoordinates)
+        this.autoSaveTaskConfig(nodeWithCoordinates);
       }, 240);
 
       if (this.nodes.length == 1) {
@@ -661,7 +671,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         data.map(ele=>{
             obj[ele.name+'_'+ele.id]=ele.value;
          })   
-         this.onFormSubmit(obj)
+         this.onFormSubmit(obj,false)
     })
      
    }
@@ -851,6 +861,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       this.formHeader = node.name + " - " + node.selectedNodeTask;
       this.selectedNode = node;
       let taskdata = this.finaldataobjects.find(data => data.nodeId == node.name + "__" + node.id);
+      console.log("-----------------task data----------",taskdata)
       if (taskdata != undefined) 
       {
         if (taskdata.tMetaId == node.selectedNodeId) 
@@ -873,7 +884,14 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
                     
                     if(multiformAttribute.id==maxmad.metaAttrId)
                     {
-                      multiFormValue=[...JSON.parse(maxmad.attrValue)]
+                      if(maxmad.attrValue=='' || maxmad.attrValue==null)
+                      {
+                        multiFormValue=[];
+                      }
+                      else
+                      {
+                        multiFormValue=[...JSON.parse(maxmad.attrValue)];
+                      }
                     }
                     else
                     {
@@ -1117,7 +1135,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       "codeSnippet":$("#record_n_play").val()
     }
     this.close_record_play();
-    this.onFormSubmit(data);
+    this.onFormSubmit(data, true);
   }
 
 
@@ -1261,8 +1279,9 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
 
   //Normal Task Form Submit
-  onFormSubmit(event) {
-    this.fieldValues = event
+  onFormSubmit(event:any, notifierflag:boolean) {
+    this.fieldValues = event;
+    this.isBotUpdated=true;
     if (this.fieldValues['file1']) {
       this.fieldValues['file1'] = this.fieldValues['file1'].substring(12)
     }
@@ -1343,7 +1362,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
     let cutedata = {
       "taskName": this.selectedTask.name,
-      "tMetaId": this.selectedTask.id,
+      "tMetaId": parseInt(this.selectedTask.id),
       "inSeqId": 1,
       "taskSubCategoryId": "1",
       "outSeqId": 2,
@@ -1354,13 +1373,20 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     }
     let index = this.finaldataobjects.findIndex(sweetdata => sweetdata.nodeId == cutedata.nodeId)
     let savedTaskIndex=this.actualTaskValue.findIndex(sweetdata => sweetdata.nodeId == cutedata.nodeId)
-    if (index != undefined && index >= 0 && savedTaskIndex != undefined && savedTaskIndex >= 0) {
+    if(index != undefined && index >= 0 && savedTaskIndex != undefined && savedTaskIndex >= 0)
+    {
       cutedata["botTId"]=this.actualTaskValue[savedTaskIndex].botTId;
       this.finaldataobjects[index] = cutedata;
-    } else {
+    }
+    else if (index != undefined && index >= 0  &&  savedTaskIndex < 0) {
+      this.finaldataobjects[index] = cutedata;
+    } 
+    else
+    {
       this.finaldataobjects.push(cutedata);
     }
-    this.notifier.notify("info", "Data Saved Successfully");
+    if(notifierflag)
+      this.notifier.notify("info", "Data Saved Successfully");
   }
 
   // async saveBotFun(botProperties, env) {
@@ -1464,7 +1490,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   
-  checkBotDetails(versionType, comments)
+  checkBotDetails(versionType, comments, botDetails)
   {
     if(this.finalbot.botId==undefined)
     {
@@ -1493,15 +1519,13 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
   
   
-  saveBotDetailsAndUpdate()
+  saveBotDetailsAndUpdate(versionType, comments, botDetails)
   {
       this.spinner.show();
-      let versionType=this.finalbot.versionType;
-      let comments=this.finalbot.comments;
-      this.modalRef.hide();
-      let botDetails={...this.finalbot,...this.botDetailsForm.value}
-      this.rest.createBot(botDetails).subscribe((response:any)=>{
+      let finalBotDetails={...this.finalbot,...botDetails}
+      this.rest.createBot(finalBotDetails).subscribe((response:any)=>{
         this.finalbot=response;
+        this.onCreateBotDetails.emit({index:this.index, botName:response.botName})
         let url=window.location.hash;
         window.history.pushState("", "", url.split("botId")[0]+"botId="+response.botId);
         this.updateBotFun(versionType, comments)
@@ -1552,10 +1576,12 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     }
     else
     {
+      let previousBotDetails:any={...{},...this.finalbot};
       (await this.rest.updateBot(this.saveBotdata)).subscribe((response:any)=>{
         this.spinner.hide()
         if(response.errorMessage==undefined)
         {
+          this.isBotUpdated=false;
           this.finalbot=response;
           this.actualTaskValue=[...response.tasks];
           this.actualEnv=[...response.envIds]
@@ -1564,7 +1590,22 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
             item["versionNew"]=response.versionNew;
             item['comments']=response.comments;
             return item
-          })];
+          })];      
+          let firstName=localStorage.getItem("firstName");
+          let lastName=localStorage.getItem("lastName")
+          if((parseFloat(previousBotDetails.versionNew).toFixed(1)) < ((parseFloat(response.versionNew)).toFixed(1)))
+            auditLogsList.push({
+              botId: response.botId,
+              botName: "SortingBot|UpdatedVersion",
+              changeActivity: "Updated Version",
+              changedBy: `${firstName} ${lastName}`,
+              comments: response.comments,
+              newValue: response.versionNew,
+              previousValue: previousBotDetails.versionNew,
+              taskName:"Version Upgrade",
+              version: 1,
+              versionNew: response.versionNew,
+            })
           this.rest.addAuditLogs(auditLogsList).subscribe((response:any)=>{
             if(response.errorMessage==undefined)
             {
@@ -1580,9 +1621,11 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         }
         else
         {
+          this.spinner.hide()
           Swal.fire("Error",response.errorMesssage, "error");
         }
       },(err)=>{
+        this.spinner.hide()
         Swal.fire("Error","Unable to update bot","error");
       })
       //return false;
@@ -2456,6 +2499,28 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       }
     })
   }
+
+
+  
+  autoSaveTaskConfig(nodeData:any){
+    if (nodeData.selectedNodeTask != "") 
+    {
+      this.selectedTask = {
+        name: nodeData.selectedNodeTask,
+        id: parseInt(nodeData.selectedNodeId)
+      }
+    }
+    this.selectedNode = nodeData;
+    this.rest.attribute(nodeData.selectedNodeId).subscribe((res:any)=>{        
+      this.formVales=res;
+      let data=res;
+      let obj={}
+      data.map(ele=>{
+          obj[ele.name+'_'+ele.id]=ele.value;
+        })
+      this.onFormSubmit(obj, false)
+ })
+}
 
 }
 

@@ -199,7 +199,9 @@
 
         <!--Edit Bot UI Bot-->
         <div id="bot-form" class="rpa-modal">
-            <app-rpa-bot-form (output)="botFormOutput($event)" [isCreateForm]="isCreateForm" [botDetails]="botDetails" [categoriesList]="categaoriesList" (closeFormOverlay)="closeFormOverlay($event)"></app-rpa-bot-form>
+            <div *ngIf="botFormVisibility" >
+                <app-rpa-bot-form (output)="botFormOutput($event)" [unsavedBot]="false" [isCreateForm]="isCreateForm" [botDetails]="botDetails" [categoriesList]="categaoriesList" (closeFormOverlay)="closeFormOverlay($event)"></app-rpa-bot-form>
+            </div>
         </div>
 
         <!-- <div id="edit-bot" class="modal rpa-modal">

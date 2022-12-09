@@ -346,6 +346,11 @@ public slaupdate : boolean = false;
    document.getElementById("SLAConfig_overlay").style.display = "none";
    this.resetsla();
  }
+ 
+ closeLogsOverlay(){
+  this.logsmodalref.hide()
+ }
+ 
  slaalerts(){
   /*let notificationtype="";
   if(this.insertslaForm_so_bot.get("email").value==true)
@@ -990,7 +995,7 @@ public slaupdate : boolean = false;
 
     openscheduler(bot)
     {
-      $(".tour_guide").hide();
+   //   $(".tour_guide").hide();
       this.botid=bot.botId;
       this.schdata={
         botid:bot.botId,

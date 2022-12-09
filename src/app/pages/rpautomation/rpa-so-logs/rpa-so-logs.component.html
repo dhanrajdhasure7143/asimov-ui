@@ -1,443 +1,442 @@
-  <div  #draggableHandle class="modal-header modelprhead newmodelcla">
-    <span *ngIf="logsDisplayFlag=='LOGS'" class="module-back-button" (click)="logsDisplayFlag='RUNS';isDataEmpty=false">
-      <i class="fas fa-arrow-left" aria-hidden="true"></i>
+<div  #draggableHandle class="modal-header modelprhead newmodelcla">
+  <span *ngIf="logsDisplayFlag=='LOGS'" class="module-back-button" (click)="logsDisplayFlag='RUNS';isDataEmpty=false">
+    <i class="fas fa-arrow-left" aria-hidden="true"></i>
+  </span>
+  <span *ngIf="logsDisplayFlag=='LOOP-LOGS'" class="module-back-button"  (click)="logsDisplayFlag='LOGS'; isDataEmpty=false">
+    <i class="fas fa-arrow-left" aria-hidden="true"></i>
+  </span>
+  <span *ngIf="selectedAutomationTask!=undefined" class="module-back-button"  (click)="logsDisplayFlag='LOGS'; isDataEmpty=false">
+    <i class="fas fa-arrow-left" aria-hidden="true"></i>
+  </span>
+    Logs  
+   
+    <span *ngIf="viewlogid1!=undefined">
+      - Run ID - {{viewlogid1}}
     </span>
-    <span *ngIf="logsDisplayFlag=='LOOP-LOGS'" class="module-back-button"  (click)="logsDisplayFlag='LOGS'; isDataEmpty=false">
-      <i class="fas fa-arrow-left" aria-hidden="true"></i>
+    <span (click)="viewRunsByBotId()" *ngIf="logsDisplayFlag=='RUNS' " class="clickable1 refecls"  >
+      Refresh
     </span>
-    <span *ngIf="selectedAutomationTask!=undefined" class="module-back-button"  (click)="logsDisplayFlag='LOGS'; isDataEmpty=false">
-      <i class="fas fa-arrow-left" aria-hidden="true"></i>
+    <span (click)="ViewlogByrunid(botrunid, selectedLogVersion)" *ngIf="logsDisplayFlag=='LOGS'" class="clickable1 refecls">
+      Refresh
     </span>
-      Logs  
-     
-      <span *ngIf="viewlogid1!=undefined">
-        - Run ID - {{viewlogid1}}
-      </span>
-      <span (click)="viewRunsByBotId()" *ngIf="logsDisplayFlag=='RUNS' " class="clickable1 refecls"  >
+    <span (click)="getLoopIterations(selectedIterationTask)"  *ngIf="logsDisplayFlag=='LOOP-LOGS'" class="clickable1 refecls">
         Refresh
-      </span>
-      <span (click)="ViewlogByrunid(botrunid, selectedLogVersion)" *ngIf="logsDisplayFlag=='LOGS'" class="clickable1 refecls">
-        Refresh
-      </span>
-      <span (click)="getLoopIterations(selectedIterationTask)"  *ngIf="logsDisplayFlag=='LOOP-LOGS'" class="clickable1 refecls">
-          Refresh
-      </span>
-      <span (click)="getAutomationLogs(selectedAutomationTask)" *ngIf="logsDisplayFlag=='AUTOMATION-LOGS'" class="clickable1 refecls">
-          Refresh
-      </span>
-      <span class="pull-right">
-      <span class="clickable" (click)="closeLogsOverlay()">
-        <img src="../../../../assets/images/Projects/circle-close.svg" alt="">
-      </span>
     </span>
-    </div>
-
-    <div class="modal-body newmodelbodycl">
-      <div class="logs-container" >
-      
-        <div [id]="viewlogid" *ngIf="logsLoading==false && logsDisplayFlag=='RUNS' && isDataEmpty==false" class="log-bg">
-                <table mat-table class="logs-table" [dataSource]="runsListDataSource" #sortRunsTable="matSort" matSort>
-    
-    
-                    <!-- Run Id Column -->
-                    <ng-container matColumnDef="run_id">
-                        <th mat-header-cell  *matHeaderCellDef mat-sort-header class="table-grid-runId"> Run ID </th>
-                        <td mat-cell *matCellDef="let element" class="table-grid-runId"><button style="color:#00a1e3; text-decoration: underline;" (click)="ViewlogByrunid(element.run_id,element.version,element.bot_status)">{{element.run_id}}</button></td>
-                    </ng-container>
-    
-                    <!-- Version Column -->
-                    <ng-container matColumnDef="version">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Version 
-                          <!-- <span >
-                            <select class="logsVersionFilter clickable1" (change)="changeLogVersion($event)" [value]="filteredLogVersion" >
-                              <option [selected]="filteredLogVersion==version" [value]="version" *ngFor="let version of AllVersionsList">V {{version}}</option>
-                            </select>
-                          </span> -->
-                      </th>
-                        <td mat-cell *matCellDef="let element">
-                            <span *ngIf="element.versionNew!=null">V{{element.versionNew}}</span>
-                            <span *ngIf="element.versionNew == undefined">-</span>
-                        </td>
-                    </ng-container>
-    
-                    <!-- Start Date Column -->
-                    <ng-container matColumnDef="startDate">
-                        <th mat-header-cell mat-sort-header *matHeaderCellDef class="table-grid-date"> Start Date </th>
-                        <td mat-cell *matCellDef="let element" class="table-grid-date">
-                            <!-- <span *ngIf="element.start_date!=null && element.start_date!='-' ">{{element.start_date | date:'EEE MMM d, yyyy' }}, <span *ngIf="element.start_time!=undefined && element.start_time != null">{{element.start_time}}</span></span> -->
-                            <!-- <span *ngIf="element.start_date == undefined">--</span> -->
-                            <span>{{element.startDate}}</span>
-                            <span *ngIf="!element.startDate">-</span>
-                        </td>
-                    </ng-container>
-    
-                    <!-- End Date Column -->
-    
-                    <ng-container matColumnDef="endDate">
-                        <th mat-header-cell mat-sort-header *matHeaderCellDef class="table-grid-date"> End Date </th>
-                        <td mat-cell *matCellDef="let element" class="table-grid-date">
-                            <!-- <span *ngIf="element.end_date!=null && element.end_date!='---' ">{{element.end_date | date:'EEE MMM d, yyyy' }}, <span *ngIf="element.end_time!=undefined && element.end_time != null">{{element.end_time}}</span></span> -->
-                            <!-- <span *ngIf="element.end_date == undefined || element.end_date=='---'">---</span> -->
-                            <span>{{element.endDate}}</span>
-                            <span *ngIf="!element.endDate ">-</span>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="bot_status">
-                        <th mat-header-cell mat-sort-header *matHeaderCellDef>Status</th>
-                        <td class="" mat-cell *matCellDef="let element">
-                                <span *ngIf="element.bot_status=='Running'" class="text-primary" >
-                                  <span>
-                                    <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus">
-                                  </span>
-                                  {{element.bot_status}}&nbsp;&nbsp;&nbsp;
-                                  <span class="btn btn-xs btn-primary clickable1" (click)="updateLog(element)" >Kill</span> 
-                                </span>
-                                <span *ngIf="element.bot_status=='Success'" >
-                                  <span>
-                                    <img src="../../../../assets/images/RPA/icon_latest/Success.svg" class="testplus">
-                                  </span>
-                                  <span>{{element.bot_status}}</span>
-                                </span>
-    
-                                <span *ngIf="element.bot_status=='Failure'" >
-                                  <span>
-                                    <img src="../../../../assets/images/RPA/icon_latest/close-red.svg" class="testplus">
-                                  </span>
-                                  <span>{{element.bot_status}}</span>
-                                </span>
-                                <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
-                                <span *ngIf="element.bot_status=='New'" class="text-primary tableActionsIcons">
-                                  <span >
-                                  <img src="../../../../assets/images/RPA/userobot.png" class="testplus">
-                                  </span>
-                                  <span>{{element.bot_status}}</span>
-                                </span>
-    
-                                <span *ngIf="element.bot_status=='Stop' ||element.bot_status=='Stopped'  "  >
-                                  <span  >
-                                    <img src="../../../../assets/images/RPA/icon_latest/stop.svg" class="testplus">
-                                  </span>
-                                  <span>{{element.bot_status}}</span>
-                                </span>
-    
-                                <span *ngIf="element.bot_status=='Pause'||element.bot_status=='Paused'" >
-                                  <span >
-                                    <img src="../../../../assets/images/SO/pause-circle.svg" class="testplus">
-                                    <!-- <i class="fas fa-pause-circle text-primary"></i> -->
-                                  </span>
-                                  <span>{{element.bot_status}}</span>
-                                </span>
-    
-                            <span *ngIf="element.bot_status == undefined || element.bot_status == null">-</span></td>
-                    </ng-container>
-    
-                  
-    
-                    <tr mat-header-row *matHeaderRowDef="RunsTableColoumns; sticky: true"></tr>
-                    <tr mat-row *matRowDef="let row; columns: RunsTableColoumns;"></tr>
-                </table>
-        </div>
-    
-      <div [id]="viewlogid1" *ngIf="logsDisplayFlag=='LOGS' && logsLoading==false  && isDataEmpty==false" >
-            <table mat-table class="logs-table" [dataSource]="logsListDataSource" #sortLogsTable="matSort"  matSort style="width:100%;">
-    
-                <!-- Task Name Column -->
-                <ng-container matColumnDef="task_name">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left:55px;width:18%"> Task Name </th>
-                    <td mat-cell *matCellDef="let element" style="padding-left:55px;width:18%">
-                        <span *ngIf="element.task_name != null && element.task_name!='Loop-Start' && element.task_name!='Automate SAP'" class="btntaskname">
-                            {{(element.task_name.length > 25) ? ((element.task_name).slice(0, 25) + '...') : element.task_name}}
-                        </span>
-                          <span *ngIf="element.task_name=='Loop-Start'">
-                              <button style="color:#00a1e3; text-decoration: underline;" (click)="getLoopIterations(element)">{{element.task_name}}</button>
-                          </span>
-
-                          <span *ngIf="element.task_name=='Automate SAP'">
-                            <button style="color:#00a1e3; text-decoration: underline;" (click)="showAutomatedLogs(element)">{{element.task_name}}</button>
-                        </span>
-                        <span *ngIf="element.task_name == undefined">-</span>
-                    </td>
-    
-                </ng-container>
-    
-                <!-- Status Column -->
-                <ng-container matColumnDef="status">
-                    <th mat-header-cell *matHeaderCellDef style="width:13%">Status</th>
-                    <td class="" mat-cell *matCellDef="let element" style="width:13%">
-                        <span *ngIf="element.status=='Running'" class="text-primary" >
-                          <span>
-                            <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus">
-                          </span>{{element.status}}
-                        </span>
-    
-                        <span *ngIf="element.status=='Success'" >
-                          <span>
-                            <img src="../../../../assets/images/RPA/icon_latest/Success.svg" class="testplus">
-                          </span>
-                          <span>{{element.status}}</span>
-                        </span>
-    
-                        <span *ngIf="element.status=='Failure'" >
-                          <span>
-                            <img src="../../../../assets/images/RPA/icon_latest/close-red.svg" class="testplus">
-                          </span>
-                          <span>{{element.status}}</span>
-                        </span>
-                        <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
-                        <span *ngIf="element.status=='New'" class="text-primary tableActionsIcons">
-                          <span >
-                          <img src="../../../../assets/images/RPA/userobot.png" class="testplus">
-                          </span>
-                          <span>{{element.status}}</span>
-                        </span>
-    
-                        <span *ngIf="element.status=='Stop' || element.status=='Stopped'  " >
-                          <span>
-                            <!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">-->
-                            <img src="../../../../../assets/images/RPA/icon_latest/stop.svg" class="testplus">
-                          </span>
-                          <span>{{element.status}}</span>
-                        </span>
-    
-                        <span *ngIf="element.status=='Pause'||element.status=='Paused'" >
-                          <span class="text-primary">
-                            <img src="../../../../assets/images/SO/pause-circle.svg" class="testplus">
-                            <!-- <i class="fas fa-pause-circle text-primary"></i> -->
-                          </span>
-                          <span>{{element.status}}</span>
-                        </span>
-    
-                        <span *ngIf="element.status == undefined || element.status == null">-</span></td>
-                </ng-container>
-    
-                <!-- Start date Column -->
-                <ng-container   matColumnDef="startDate">
-                    <th mat-header-cell  mat-sort-header *matHeaderCellDef style="width:18%"> Start Date </th>
-                    <td mat-cell *matCellDef="let element" style="width:18%">
-                        <span *ngIf="element.startDate != null">{{element.startDate}}</span>
-                        <span *ngIf="element.startDate == undefined || element.startDate==''">--</span>
-                    </td>
-                </ng-container>
-    
-                <!-- End Time Column -->
-    
-    
-                <!-- End Date Column -->
-                <ng-container matColumnDef="endDate">
-                    <th mat-header-cell  mat-sort-header  *matHeaderCellDef style="width:18%"> End Date </th>
-                    <td mat-cell *matCellDef="let element" style="width:18%">
-                        <span *ngIf="element.endDate != null||element.endDate != undefined">{{element.endDate}}</span>
-                        <span *ngIf="element.endDate == undefined || element.endDate==''">--</span>
-                    </td>
-                </ng-container>
-    
-                <!-- Error Info Column -->
-                <ng-container matColumnDef="error_info">
-                    <th mat-header-cell  mat-sort-header *matHeaderCellDef> Info </th>
-                    <td mat-cell *matCellDef="let element">
-                        <span *ngIf="element.error_info!=null && element.error_info != 'NA'" [tooltip]="element.error_info" class="btnerrorinfo">
-                            {{(element.error_info.length > 50) ? ((element.error_info).slice(0, 50) + '...') : element.error_info}}</span>
-                        <span *ngIf="element.error_info == undefined ||element.error_info == 'NA' ">-</span>
-                        <!--<div class="errorinfoelement">{{element.error_info}}</div>-->
-                    </td>
-                </ng-container>
-    
-                <!-- <ng-container matColumnDef="noData">
-                    <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="7">
-                        No Records Found
-                    </td>
-                </ng-container> -->
-    
-                <tr mat-header-row *matHeaderRowDef="displayedColumns1; sticky: true"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
-                <!-- <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': !respdata2}"></tr> -->
-            </table>
-          <!-- <mat-paginator #paginator2 [pageSize]="5" [showFirstLastButtons]="true"></mat-paginator> -->
-          <!-- <mat-paginator #paginator2 class="newpaginationdiv" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons] ="true"></mat-paginator> -->
-      </div>
-    
-    
-        <div *ngIf="logsLoading==false && logsDisplayFlag=='LOOP-LOGS' && isDataEmpty==false" class="logs-container"  >
-          <table mat-table class="logs-table"  [dataSource]="loopLogsListDataSource"  #sortLoopLogsTable="matSort" matSort style="width:100%;">
-            <ng-container matColumnDef="taskName">
-              <th mat-header-cell  mat-sort-header  *matHeaderCellDef style="width:18%">Task Name </th>
-              <td mat-cell *matCellDef="let element" style="width:18%">
-                  <span *ngIf="element.taskName != null||element.taskName != undefined">{{element.taskName}}</span>
-                  <span *ngIf="element.taskName == undefined">--</span>
-              </td>
-            </ng-container>
-            <ng-container matColumnDef="iterationId">
-              <th mat-header-cell  mat-sort-header  *matHeaderCellDef style="width:18%">Iteration Id </th>
-              <td mat-cell *matCellDef="let element" style="width:18%">
-                  <span *ngIf="element.iterationId">{{element.iterationId}}</span>
-                  <span *ngIf="element.iterationId == undefined">--</span>
-              </td>
-            </ng-container>
-            <ng-container matColumnDef="startTS">
-              <th mat-header-cell  mat-sort-header  *matHeaderCellDef style="width:18%">Start Time </th>
-              <td mat-cell *matCellDef="let element" style="width:18%">
-                  <span *ngIf="element.startTS != null||element.startTS != undefined">{{element.startTS|date: 'MMM d, y, H:mm:ss'}}</span>
-                  <span *ngIf="element.startTS == undefined">--</span>
-              </td>
-            </ng-container>
-            <ng-container matColumnDef="endTS">
-              <th mat-header-cell  mat-sort-header  *matHeaderCellDef style="width:18%">End Time </th>
-              <td mat-cell *matCellDef="let element" style="width:18%">
-                  <span *ngIf="element.endTS != null||element.endTS != undefined">{{element.endTS|date: 'MMM d, y, H:mm:ss'}}</span>
-                  <span *ngIf="element.endTS == undefined">--</span>
-              </td>
-            </ng-container>
-              <ng-container matColumnDef="status">
-                <th mat-header-cell  mat-sort-header  *matHeaderCellDef style="width:18%">Status</th>
-                <td mat-cell *matCellDef="let element" style="width:18%">
-                    <span *ngIf="element.status == 1">
-                      <span>
-                        <img src="../../../../assets/images/RPA/userobot.png" class="testplus">
-                      </span>  
-                      New
-                    </span>
-                    <span *ngIf="element.status == 2">
-                      <span>
-                        <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus">
-                      </span>
-                      Running
-                    </span>
-                    <span *ngIf="element.status == 3">
-                      <span>
-                        <img src="../../../../assets/images/SO/pause-circle.svg" class="testplus">
-                      </span>
-                      Paused
-                    </span>
-                    <span *ngIf="element.status == 4">
-                      <span  >
-                        <img src="../../../../assets/images/RPA/icon_latest/stop.svg" class="testplus">
-                      </span>
-                      Stopped
-                    </span>
-                    <span *ngIf="element.status == 5">
-                      <span>
-                        <img src="../../../../assets/images/RPA/icon_latest/Success.svg" class="testplus">
-                      </span>
-                      Success
-                    </span>
-                    <span *ngIf="element.status == 6">  
-                      <span>
-                        <img src="../../../../assets/images/RPA/icon_latest/close-red.svg" class="testplus">
-                      </span>
-                      Failed
-                    </span>
-                  
-                    <span *ngIf="element.status == undefined">--</span>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="errorMsg">
-              <th mat-header-cell  mat-sort-header  *matHeaderCellDef style="width:18%">Info</th>
-              <td mat-cell *matCellDef="let element" style="width:18%">
-                  <span  [tooltip]="element.errorMsg" *ngIf="element.errorMsg != null && element.errorMsg != undefined && element.errorMsg!=''">  {{(element.errorMsg.length > 50) ? ((element.errorMsg).slice(0, 50) + '...') : element.errorMsg}}</span>
-                  <span *ngIf="element.errorMsg == undefined || element.errorMsg == '' || element.errorMsg==null">--</span>
-              </td>
-            </ng-container>
-            <tr mat-header-row *matHeaderRowDef="displayedloopColumns; sticky: true"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedloopColumns;"></tr>
-          </table>
-        <!-- <mat-paginator #paginator2 class="newpaginationdiv" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons] ="true"></mat-paginator> -->
-        </div>
-
-
-
-
-
-
-        <div *ngIf="logsLoading==false && logsDisplayFlag=='AUTOMATION-LOGS'  && isDataEmpty==false " class="logs-container"  >
-          <table mat-table class="logs-table"   (matSortChange)="sortLoopsIteration($event)"  *ngIf=" isDataEmpty==false" [dataSource]="automationLogsTable" #loopsort="matSort" matSort style="width:100%;">
-            <ng-container matColumnDef="internaltaskName">
-              <th mat-header-cell  mat-sort-header  *matHeaderCellDef style="width:18%">Task Name </th>
-              <td mat-cell *matCellDef="let element" style="width:18%">
-                  <span *ngIf="element.internaltaskName != null||element.internaltaskName != undefined">{{element.internaltaskName}}</span>
-                  <span *ngIf="element.internaltaskName == undefined">--</span>
-              </td>
-            </ng-container>
-            <ng-container matColumnDef="startTS">
-              <th mat-header-cell  mat-sort-header  *matHeaderCellDef style="width:18%">Start Time </th>
-              <td mat-cell *matCellDef="let element" style="width:18%">
-                  <span *ngIf="element.startTS != null||element.startTS != undefined">{{element.startTS|date: 'MMM d, y, H:mm:ss'}}</span>
-                  <span *ngIf="element.startTS == undefined">--</span>
-              </td>
-            </ng-container>
-            <ng-container matColumnDef="endTS">
-              <th mat-header-cell  mat-sort-header  *matHeaderCellDef style="width:18%">End Time </th>
-              <td mat-cell *matCellDef="let element" style="width:18%">
-                  <span *ngIf="element.endTS != null||element.endTS != undefined">{{element.endTS|date: 'MMM d, y, H:mm:ss'}}</span>
-                  <span *ngIf="element.endTS == undefined">--</span>
-              </td>
-            </ng-container>
-              <ng-container matColumnDef="status">
-                <th mat-header-cell  mat-sort-header  *matHeaderCellDef style="width:18%">Status</th>
-                <td mat-cell *matCellDef="let element" style="width:18%">
-                    <span *ngIf="element.status == 1">
-                      <span>
-                        <img src="../../../../assets/images/RPA/userobot.png" class="testplus">
-                      </span>  
-                      New
-                    </span>
-                    <span *ngIf="element.status == 2">
-                      <span>
-                        <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus">
-                      </span>
-                      Running
-                    </span>
-                    <span *ngIf="element.status == 3">
-                      <span>
-                        <img src="../../../../assets/images/SO/pause-circle.svg" class="testplus">
-                      </span>
-                      Paused
-                    </span>
-                    <span *ngIf="element.status == 4">
-                      <span  >
-                        <img src="../../../../assets/images/RPA/icon_latest/stop.svg" class="testplus">
-                      </span>
-                      Stopped
-                    </span>
-                    <span *ngIf="element.status == 5">
-                      <span>
-                        <img src="../../../../assets/images/RPA/icon_latest/Success.svg" class="testplus">
-                      </span>
-                      Success
-                    </span>
-                    <span *ngIf="element.status == 6">  
-                      <span>
-                        <img src="../../../../assets/images/RPA/icon_latest/close-red.svg" class="testplus">
-                      </span>
-                      Failed
-                    </span>
-                  
-                    <span *ngIf="element.status == undefined">--</span>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="errorMsg">
-              <th mat-header-cell  mat-sort-header  *matHeaderCellDef style="width:18%">Info</th>
-              <td mat-cell *matCellDef="let element" style="width:18%">
-                  <span  [tooltip]="element.errorMsg" *ngIf="element.errorMsg != null && element.errorMsg != undefined && element.errorMsg!=''">  {{(element.errorMsg.length > 50) ? ((element.errorMsg).slice(0, 50) + '...') : element.errorMsg}}</span>
-                  <span *ngIf="element.errorMsg == undefined || element.errorMsg == '' || element.errorMsg==null">--</span>
-              </td>
-            </ng-container>
-            <tr mat-header-row *matHeaderRowDef="automationLogColoumns; sticky: true"></tr>
-            <tr mat-row *matRowDef="let row; columns: automationLogColoumns;"></tr>
-        </table>
-        </div>
-        <div *ngIf="isDataEmpty==true" class="text-center">
-          <!-- <img src="../../../../assets/images/RPA/No-Items.svg" style="height:250px"> -->
-            <div class="no-records">
-              <h4>No Records Found</h4>
-            </div>
-        </div>
-        <!-- <mat-paginator #paginator2 class="newpaginationdiv" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons] ="true"></mat-paginator> -->
-      <div class="logs-container" *ngIf="logsLoading==true">
-        <div class="logs-loader">
-          <img src="../../../../assets/images/EZFlow_Loader.gif">
-        </div>
-      </div>
-    </div>
-  
+    <span (click)="getAutomationLogs(selectedAutomationTask)" *ngIf="logsDisplayFlag=='AUTOMATION-LOGS'" class="clickable1 refecls">
+        Refresh
+    </span>
+    <span class="pull-right">
+    <span class="clickable" (click)="closeLogsOverlay()">
+      <img src="../../../../assets/images/Projects/circle-close.svg" alt="">
+    </span>
+  </span>
   </div>
+
+  <div class="modal-body newmodelbodycl">
+    <div class="logs-container" >
+    
+      <div [id]="viewlogid" *ngIf="logsLoading==false && logsDisplayFlag=='RUNS' && isDataEmpty==false" class="log-bg">
+              <table mat-table class="logs-table" [dataSource]="runsListDataSource" #sortRunsTable="matSort" matSort>
   
+  
+                  <!-- Run Id Column -->
+                  <ng-container matColumnDef="run_id">
+                      <th mat-header-cell  *matHeaderCellDef mat-sort-header class="table-grid-runId"> Run ID </th>
+                      <td mat-cell *matCellDef="let element" class="table-grid-runId"><button style="color:#00a1e3; text-decoration: underline;" (click)="ViewlogByrunid(element.run_id,element.version,element.bot_status)">{{element.run_id}}</button></td>
+                  </ng-container>
+  
+                  <!-- Version Column -->
+                  <ng-container matColumnDef="version">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header> Version 
+                        <!-- <span >
+                          <select class="logsVersionFilter clickable1" (change)="changeLogVersion($event)" [value]="filteredLogVersion" >
+                            <option [selected]="filteredLogVersion==version" [value]="version" *ngFor="let version of AllVersionsList">V {{version}}</option>
+                          </select>
+                        </span> -->
+                    </th>
+                      <td mat-cell *matCellDef="let element">
+                          <span *ngIf="element.versionNew!=null">V{{element.versionNew}}</span>
+                          <span *ngIf="element.versionNew == undefined">-</span>
+                      </td>
+                  </ng-container>
+  
+                  <!-- Start Date Column -->
+                  <ng-container matColumnDef="startDate">
+                      <th mat-header-cell mat-sort-header *matHeaderCellDef class="table-grid-date"> Start Date </th>
+                      <td mat-cell *matCellDef="let element" class="table-grid-date">
+                          <!-- <span *ngIf="element.start_date!=null && element.start_date!='-' ">{{element.start_date | date:'EEE MMM d, yyyy' }}, <span *ngIf="element.start_time!=undefined && element.start_time != null">{{element.start_time}}</span></span> -->
+                          <!-- <span *ngIf="element.start_date == undefined">--</span> -->
+                          <span>{{element.startDate}}</span>
+                          <span *ngIf="!element.startDate">-</span>
+                      </td>
+                  </ng-container>
+  
+                  <!-- End Date Column -->
+  
+                  <ng-container matColumnDef="endDate">
+                      <th mat-header-cell mat-sort-header *matHeaderCellDef class="table-grid-date"> End Date </th>
+                      <td mat-cell *matCellDef="let element" class="table-grid-date">
+                          <!-- <span *ngIf="element.end_date!=null && element.end_date!='---' ">{{element.end_date | date:'EEE MMM d, yyyy' }}, <span *ngIf="element.end_time!=undefined && element.end_time != null">{{element.end_time}}</span></span> -->
+                          <!-- <span *ngIf="element.end_date == undefined || element.end_date=='---'">---</span> -->
+                          <span>{{element.endDate}}</span>
+                          <span *ngIf="!element.endDate ">-</span>
+                      </td>
+                  </ng-container>
+                  <ng-container matColumnDef="bot_status">
+                      <th mat-header-cell mat-sort-header *matHeaderCellDef>Status</th>
+                      <td class="" mat-cell *matCellDef="let element">
+                              <span *ngIf="element.bot_status=='Running'" class="text-primary" >
+                                <span>
+                                  <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus">
+                                </span>
+                                {{element.bot_status}}&nbsp;&nbsp;&nbsp;
+                                <span class="btn btn-xs btn-primary clickable1" (click)="updateLog(element)" >Kill</span> 
+                              </span>
+                              <span *ngIf="element.bot_status=='Success'" >
+                                <span>
+                                  <img src="../../../../assets/images/RPA/icon_latest/Success.svg" class="testplus">
+                                </span>
+                                <span>{{element.bot_status}}</span>
+                              </span>
+  
+                              <span *ngIf="element.bot_status=='Failure'" >
+                                <span>
+                                  <img src="../../../../assets/images/RPA/icon_latest/close-red.svg" class="testplus">
+                                </span>
+                                <span>{{element.bot_status}}</span>
+                              </span>
+                              <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
+                              <span *ngIf="element.bot_status=='New'" class="text-primary tableActionsIcons">
+                                <span >
+                                <img src="../../../../assets/images/RPA/userobot.png" class="testplus">
+                                </span>
+                                <span>{{element.bot_status}}</span>
+                              </span>
+  
+                              <span *ngIf="element.bot_status=='Stop' ||element.bot_status=='Stopped'  "  >
+                                <span  >
+                                  <img src="../../../../assets/images/RPA/icon_latest/stop.svg" class="testplus">
+                                </span>
+                                <span>{{element.bot_status}}</span>
+                              </span>
+  
+                              <span *ngIf="element.bot_status=='Pause'||element.bot_status=='Paused'" >
+                                <span >
+                                  <img src="../../../../assets/images/SO/pause-circle.svg" class="testplus">
+                                  <!-- <i class="fas fa-pause-circle text-primary"></i> -->
+                                </span>
+                                <span>{{element.bot_status}}</span>
+                              </span>
+  
+                          <span *ngIf="element.bot_status == undefined || element.bot_status == null">-</span></td>
+                  </ng-container>
+  
+                
+  
+                  <tr mat-header-row *matHeaderRowDef="RunsTableColoumns; sticky: true"></tr>
+                  <tr mat-row *matRowDef="let row; columns: RunsTableColoumns;"></tr>
+              </table>
+      </div>
+  
+    <div [id]="viewlogid1" *ngIf="logsDisplayFlag=='LOGS' && logsLoading==false  && isDataEmpty==false" class="logs-bg" >
+          <table mat-table class="logs-table" [dataSource]="logsListDataSource" #sortLogsTable="matSort"  matSort>
+  
+              <!-- Task Name Column -->
+              <ng-container matColumnDef="task_name">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left:55px;width:18%"> Task Name </th>
+                  <td mat-cell *matCellDef="let element" style="padding-left:55px;width:18%">
+                      <span *ngIf="element.task_name != null && element.task_name!='Loop-Start' && element.task_name!='Automate SAP'" class="btntaskname">
+                          {{(element.task_name.length > 25) ? ((element.task_name).slice(0, 25) + '...') : element.task_name}}
+                      </span>
+                        <span *ngIf="element.task_name=='Loop-Start'">
+                            <button style="color:#00a1e3; text-decoration: underline;" (click)="getLoopIterations(element)">{{element.task_name}}</button>
+                        </span>
+
+                        <span *ngIf="element.task_name=='Automate SAP'">
+                          <button style="color:#00a1e3; text-decoration: underline;" (click)="showAutomatedLogs(element)">{{element.task_name}}</button>
+                      </span>
+                      <span *ngIf="element.task_name == undefined">-</span>
+                  </td>
+  
+              </ng-container>
+  
+              <!-- Status Column -->
+              <ng-container matColumnDef="status">
+                  <th mat-header-cell *matHeaderCellDef style="width:13%">Status</th>
+                  <td class="" mat-cell *matCellDef="let element" style="width:13%">
+                      <span *ngIf="element.status=='Running'" class="text-primary" >
+                        <span>
+                          <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus">
+                        </span>{{element.status}}
+                      </span>
+  
+                      <span *ngIf="element.status=='Success'" >
+                        <span>
+                          <img src="../../../../assets/images/RPA/icon_latest/Success.svg" class="testplus">
+                        </span>
+                        <span>{{element.status}}</span>
+                      </span>
+  
+                      <span *ngIf="element.status=='Failure'" >
+                        <span>
+                          <img src="../../../../assets/images/RPA/icon_latest/close-red.svg" class="testplus">
+                        </span>
+                        <span>{{element.status}}</span>
+                      </span>
+                      <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
+                      <span *ngIf="element.status=='New'" class="text-primary tableActionsIcons">
+                        <span >
+                        <img src="../../../../assets/images/RPA/userobot.png" class="testplus">
+                        </span>
+                        <span>{{element.status}}</span>
+                      </span>
+  
+                      <span *ngIf="element.status=='Stop' || element.status=='Stopped'  " >
+                        <span>
+                          <!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">-->
+                          <img src="../../../../../assets/images/RPA/icon_latest/stop.svg" class="testplus">
+                        </span>
+                        <span>{{element.status}}</span>
+                      </span>
+  
+                      <span *ngIf="element.status=='Pause'||element.status=='Paused'" >
+                        <span class="text-primary">
+                          <img src="../../../../assets/images/SO/pause-circle.svg" class="testplus">
+                          <!-- <i class="fas fa-pause-circle text-primary"></i> -->
+                        </span>
+                        <span>{{element.status}}</span>
+                      </span>
+  
+                      <span *ngIf="element.status == undefined || element.status == null">-</span></td>
+              </ng-container>
+  
+              <!-- Start date Column -->
+              <ng-container   matColumnDef="startDate">
+                  <th mat-header-cell  mat-sort-header *matHeaderCellDef style="width:18%"> Start Date </th>
+                  <td mat-cell *matCellDef="let element" style="width:18%">
+                      <span *ngIf="element.startDate != null">{{element.startDate}}</span>
+                      <span *ngIf="element.startDate == undefined || element.startDate==''">--</span>
+                  </td>
+              </ng-container>
+  
+              <!-- End Time Column -->
+  
+  
+              <!-- End Date Column -->
+              <ng-container matColumnDef="endDate">
+                  <th mat-header-cell  mat-sort-header  *matHeaderCellDef style="width:18%"> End Date </th>
+                  <td mat-cell *matCellDef="let element" style="width:18%">
+                      <span *ngIf="element.endDate != null||element.endDate != undefined">{{element.endDate}}</span>
+                      <span *ngIf="element.endDate == undefined || element.endDate==''">--</span>
+                  </td>
+              </ng-container>
+  
+              <!-- Error Info Column -->
+              <ng-container matColumnDef="error_info">
+                  <th mat-header-cell  mat-sort-header *matHeaderCellDef> Info </th>
+                  <td mat-cell *matCellDef="let element">
+                      <span *ngIf="element.error_info!=null && element.error_info != 'NA'" [tooltip]="element.error_info" class="btnerrorinfo">
+                          {{(element.error_info.length > 50) ? ((element.error_info).slice(0, 50) + '...') : element.error_info}}</span>
+                      <span *ngIf="element.error_info == undefined ||element.error_info == 'NA' ">-</span>
+                      <!--<div class="errorinfoelement">{{element.error_info}}</div>-->
+                  </td>
+              </ng-container>
+  
+              <!-- <ng-container matColumnDef="noData">
+                  <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="7">
+                      No Records Found
+                  </td>
+              </ng-container> -->
+  
+              <tr mat-header-row *matHeaderRowDef="LogsTableColumns; sticky: true"></tr>
+              <tr mat-row *matRowDef="let row; columns: LogsTableColumns;"></tr>
+              <!-- <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': !respdata2}"></tr> -->
+          </table>
+        <!-- <mat-paginator #paginator2 [pageSize]="5" [showFirstLastButtons]="true"></mat-paginator> -->
+        <!-- <mat-paginator #paginator2 class="newpaginationdiv" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons] ="true"></mat-paginator> -->
+    </div>
+  
+  
+      <div *ngIf="logsLoading==false && logsDisplayFlag=='LOOP-LOGS' && isDataEmpty==false" class="logs-bg"  >
+        <table mat-table class="logs-table"  [dataSource]="loopLogsListDataSource"  #sortLoopLogsTable="matSort" matSort>
+          <ng-container matColumnDef="taskName">
+            <th mat-header-cell  mat-sort-header  *matHeaderCellDef style="width:18%">Task Name </th>
+            <td mat-cell *matCellDef="let element" style="width:18%">
+                <span *ngIf="element.taskName != null||element.taskName != undefined">{{element.taskName}}</span>
+                <span *ngIf="element.taskName == undefined">--</span>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="iterationId">
+            <th mat-header-cell  mat-sort-header  *matHeaderCellDef style="width:18%">Iteration Id </th>
+            <td mat-cell *matCellDef="let element" style="width:18%">
+                <span *ngIf="element.iterationId">{{element.iterationId}}</span>
+                <span *ngIf="element.iterationId == undefined">--</span>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="startDate">
+            <th mat-header-cell  mat-sort-header  *matHeaderCellDef style="width:18%">Start Time </th>
+            <td mat-cell *matCellDef="let element" style="width:18%">
+                <span *ngIf="element.startDate != null||element.startDate != undefined">{{element.startDate}}</span>
+                <span *ngIf="element.startDate == undefined">--</span>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="endDate">
+            <th mat-header-cell  mat-sort-header  *matHeaderCellDef style="width:18%">End Time </th>
+            <td mat-cell *matCellDef="let element" style="width:18%">
+                <span *ngIf="element.endDate != null||element.endDate != undefined">{{element.endDate}}</span>
+                <span *ngIf="element.endDate == undefined">--</span>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="status">
+              <th mat-header-cell  mat-sort-header  *matHeaderCellDef style="width:18%">Status</th>
+              <td mat-cell *matCellDef="let element" style="width:18%">
+                  <span *ngIf="element.status == 1">
+                    <span>
+                      <img src="../../../../assets/images/RPA/userobot.png" class="testplus">
+                    </span>  
+                    New
+                  </span>
+                  <span *ngIf="element.status == 2">
+                    <span>
+                      <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus">
+                    </span>
+                    Running
+                  </span>
+                  <span *ngIf="element.status == 3">
+                    <span>
+                      <img src="../../../../assets/images/SO/pause-circle.svg" class="testplus">
+                    </span>
+                    Paused
+                  </span>
+                  <span *ngIf="element.status == 4">
+                    <span  >
+                      <img src="../../../../assets/images/RPA/icon_latest/stop.svg" class="testplus">
+                    </span>
+                    Stopped
+                  </span>
+                  <span *ngIf="element.status == 5">
+                    <span>
+                      <img src="../../../../assets/images/RPA/icon_latest/Success.svg" class="testplus">
+                    </span>
+                    Success
+                  </span>
+                  <span *ngIf="element.status == 6">  
+                    <span>
+                      <img src="../../../../assets/images/RPA/icon_latest/close-red.svg" class="testplus">
+                    </span>
+                    Failed
+                  </span>
+                
+                  <span *ngIf="element.status == undefined">--</span>
+              </td>
+          </ng-container>
+          <ng-container matColumnDef="errorMsg">
+            <th mat-header-cell  mat-sort-header  *matHeaderCellDef style="width:18%">Info</th>
+            <td mat-cell *matCellDef="let element" style="width:18%">
+                <span  [tooltip]="element.errorMsg" *ngIf="element.errorMsg != null && element.errorMsg != undefined && element.errorMsg!=''">  {{(element.errorMsg.length > 50) ? ((element.errorMsg).slice(0, 50) + '...') : element.errorMsg}}</span>
+                <span *ngIf="element.errorMsg == undefined || element.errorMsg == '' || element.errorMsg==null">--</span>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="loopLogsTableColoumns; sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: loopLogsTableColoumns;"></tr>
+        </table>
+      <!-- <mat-paginator #paginator2 class="newpaginationdiv" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons] ="true"></mat-paginator> -->
+      </div>
+
+
+
+
+
+
+      <div *ngIf="logsLoading==false && logsDisplayFlag=='AUTOMATION-LOGS'  && isDataEmpty==false " class="logs-bg"  >
+        <table mat-table class="logs-table"   *ngIf=" isDataEmpty==false" [dataSource]="automationLogsTable" #sortAutomationLogsTable="matSort" matSort style="width:100%;">
+          <ng-container matColumnDef="internaltaskName">
+            <th mat-header-cell  mat-sort-header  *matHeaderCellDef style="width:18%">Task Name </th>
+            <td mat-cell *matCellDef="let element" style="width:18%">
+                <span *ngIf="element.internaltaskName != null||element.internaltaskName != undefined">{{element.internaltaskName}}</span>
+                <span *ngIf="element.internaltaskName == undefined">--</span>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="startTS">
+            <th mat-header-cell  mat-sort-header  *matHeaderCellDef style="width:18%">Start Time </th>
+            <td mat-cell *matCellDef="let element" style="width:18%">
+                <span *ngIf="element.startTS != null||element.startTS != undefined">{{element.startTS|date: 'MMM d, y, H:mm:ss'}}</span>
+                <span *ngIf="element.startTS == undefined">--</span>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="endTS">
+            <th mat-header-cell  mat-sort-header  *matHeaderCellDef style="width:18%">End Time </th>
+            <td mat-cell *matCellDef="let element" style="width:18%">
+                <span *ngIf="element.endTS != null||element.endTS != undefined">{{element.endTS|date: 'MMM d, y, H:mm:ss'}}</span>
+                <span *ngIf="element.endTS == undefined">--</span>
+            </td>
+          </ng-container>
+            <ng-container matColumnDef="status">
+              <th mat-header-cell  mat-sort-header  *matHeaderCellDef style="width:18%">Status</th>
+              <td mat-cell *matCellDef="let element" style="width:18%">
+                  <span *ngIf="element.status == 1">
+                    <span>
+                      <img src="../../../../assets/images/RPA/userobot.png" class="testplus">
+                    </span>  
+                    New
+                  </span>
+                  <span *ngIf="element.status == 2">
+                    <span>
+                      <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus">
+                    </span>
+                    Running
+                  </span>
+                  <span *ngIf="element.status == 3">
+                    <span>
+                      <img src="../../../../assets/images/SO/pause-circle.svg" class="testplus">
+                    </span>
+                    Paused
+                  </span>
+                  <span *ngIf="element.status == 4">
+                    <span  >
+                      <img src="../../../../assets/images/RPA/icon_latest/stop.svg" class="testplus">
+                    </span>
+                    Stopped
+                  </span>
+                  <span *ngIf="element.status == 5">
+                    <span>
+                      <img src="../../../../assets/images/RPA/icon_latest/Success.svg" class="testplus">
+                    </span>
+                    Success
+                  </span>
+                  <span *ngIf="element.status == 6">  
+                    <span>
+                      <img src="../../../../assets/images/RPA/icon_latest/close-red.svg" class="testplus">
+                    </span>
+                    Failed
+                  </span>
+                
+                  <span *ngIf="element.status == undefined">--</span>
+              </td>
+          </ng-container>
+          <ng-container matColumnDef="errorMsg">
+            <th mat-header-cell  mat-sort-header  *matHeaderCellDef style="width:18%">Info</th>
+            <td mat-cell *matCellDef="let element" style="width:18%">
+                <span  [tooltip]="element.errorMsg" *ngIf="element.errorMsg != null && element.errorMsg != undefined && element.errorMsg!=''">  {{(element.errorMsg.length > 50) ? ((element.errorMsg).slice(0, 50) + '...') : element.errorMsg}}</span>
+                <span *ngIf="element.errorMsg == undefined || element.errorMsg == '' || element.errorMsg==null">--</span>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="automationLogColoumns; sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: automationLogColoumns;"></tr>
+      </table>
+      </div>
+      <div *ngIf="isDataEmpty==true && logsLoading==false" class="text-center">
+        <!-- <img src="../../../../assets/images/RPA/No-Items.svg" style="height:250px"> -->
+          <div class="no-records">
+            <h4>No Records Found</h4>
+          </div>
+      </div>
+      <!-- <mat-paginator #paginator2 class="newpaginationdiv" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons] ="true"></mat-paginator> -->
+    <div class="logs-container" *ngIf="logsLoading==true">
+      <div class="logs-loader">
+        <img src="../../../../assets/images/EZFlow_Loader.gif">
+      </div>
+    </div>
+  </div>
+
+</div>

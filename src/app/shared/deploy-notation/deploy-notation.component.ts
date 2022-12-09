@@ -18,6 +18,7 @@ export class DeployNotationComponent implements OnInit {
   depName: string;
   tenantId: string;
   endPoint: string;
+  isLoading:boolean = false;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private rest: RestApiService,
@@ -34,7 +35,7 @@ export class DeployNotationComponent implements OnInit {
   }
 
   deployNotation() {
-    
+    this.isLoading = true;
     let selecetedTenant =  localStorage.getItem("tenantName");
     let splitTenant:any;
     if(selecetedTenant){
@@ -54,6 +55,7 @@ export class DeployNotationComponent implements OnInit {
     this.rest.deployBPMNNotation('/deployprocess/notation', formData)
       .subscribe(res => {
         let response:any = res;
+        this.isLoading = false;
         if(response.status == 'success' || response.status == 'Success'){
         this.deploy_success = true;
         if(response.definitionId !=''){
@@ -65,6 +67,7 @@ export class DeployNotationComponent implements OnInit {
         }
         
         } else{
+        this.isLoading = false;
           Swal.fire({
             title: 'Oops!',
             text: response.message,

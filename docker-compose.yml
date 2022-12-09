@@ -21,3 +21,4 @@ services:
     logging:
       options:
         tag: "{{.Name}}"
+

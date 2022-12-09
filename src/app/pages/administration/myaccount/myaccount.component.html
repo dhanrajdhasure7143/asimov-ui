@@ -103,11 +103,11 @@
                                     </div>  -->
                                     <div *ngIf="show" style=" padding-left: 0px !important" class="form-fields col-md-6 pr-0 Admin-countrylist">
                                       <label class="label-control" for="phoneumber">Phone<span class="star">*</span></label>
-                                      <input type="text" name="phoneumber" #phoneumber="ngModel" class="form-control data" [(ngModel)]="formOne.phoneNumber"/>
+                                      <input type="text" name="phoneumber" #phoneumber="ngModel" class="form-control data" [(ngModel)]="formOne.phoneNumber" placeholder="Enter Phone number"/>
                                     </div>
                                     <div *ngIf ="!isRefresh && !show" style=" padding-left: 0px !important" class="form-fields col-md-6 pr-0 Admin-countrylist">
                                       <label class="label-control" for="phoneumber">Phone<span class="star">*</span></label>
-                                      <input type="text" (keydown)="onKeydown($event)"  id="phoneNumber" name="phoneumber" style="margin-left:50px;" class="form-control data phonenumber" ng2TelInput [ng2TelInputOptions]="{initialCountry: phnCountryCode}"
+                                      <input type="text" (keydown)="onKeydown($event)"  id="phoneNumber" name="phoneumber" style="margin-left:50px;" placeholder="Enter Phone number" class="form-control data phonenumber" ng2TelInput [ng2TelInputOptions]="{initialCountry: phnCountryCode}"
                                         #phoneumber="ngModel" [(ngModel)]="formOne.phoneNumber" onKeyPress="if(this.value.length==10) return false;"
                                         pattern="^((\\+91-?)|0)?[0-9]{10}$" maxlength="10" required/>
                                       <span *ngIf="((phoneumber.invalid && updateUser.submitted) || (phoneumber.errors && phoneumber.touched) && !(phoneumber.errors.pattern) )"
@@ -118,7 +118,7 @@
                                     </div>                                              
                                     <div *ngIf ="isRefresh" style=" padding-left: 0px !important" class="form-fields col-md-6 pr-0 Admin-countrylist">
                                       <label class="label-control" for="phoneumber">Phone<span class="star">*</span></label>
-                                      <input type="text" (keydown)="onKeydown($event)" id="phoneNumber" name="phoneumber" style="margin-left:50px;" class="form-control data phonenumber" ng2TelInput [ng2TelInputOptions]="{initialCountry: phnCountryCode}"
+                                      <input type="text" (keydown)="onKeydown($event)" id="phoneNumber" name="phoneumber" style="margin-left:50px;" placeholder="Enter Phone number" class="form-control data phonenumber" ng2TelInput [ng2TelInputOptions]="{initialCountry: phnCountryCode}"
                                         #phoneumber="ngModel" [(ngModel)]="formOne.phoneNumber" onKeyPress="if(this.value.length==10) return false;"
                                         pattern="^((\\+91-?)|0)?[0-9]{10}$" maxlength="10" required/>
                                         <span *ngIf="((phoneumber.invalid && updateUser.submitted) || (phoneumber.errors && phoneumber.touched) && !(phoneumber.errors.pattern))"

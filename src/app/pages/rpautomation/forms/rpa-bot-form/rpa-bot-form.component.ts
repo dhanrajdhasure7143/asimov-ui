@@ -18,9 +18,12 @@ export class RpaBotFormComponent implements OnInit {
 
   @Output("output") public event= new EventEmitter<any>();
   @Input("isCreateForm") public isCreateForm:any;
-  @Input("categoriesList") public categoriesList:any;
+  @Input("categoriesList") public categoriesList:any[];
   @Input("botDetails") public botDetails:any;
+  @Input("unsavedBot") public unsaved:boolean;
+  @Output("unsavedOutput") public unsavedOutput=new EventEmitter<any>();
   @Output() closeFormOverlay = new EventEmitter<any>();
+
   botForm:FormGroup;
   botNameCheck:any;
   checkBotCategory:boolean=false;
@@ -33,27 +36,50 @@ export class RpaBotFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.botForm = this.formBuilder.group({
-      botName: ["", Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern("^[a-zA-Z0-9_-]*$")])],
+      botName: [""],
       department: ["", Validators.required],
       description: ["", Validators.compose([Validators.maxLength(500)])],
       isPredefined: [false]
     });
+    if(!this.isCreateForm && this.botDetails!=undefined){
+
+      this.botForm = this.formBuilder.group({
+        botName: [this.botDetails.botName, Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern("^[a-zA-Z0-9_-]*$")])],
+        department: [this.botDetails.department, Validators.required],
+        description: [this.botDetails.description, Validators.compose([Validators.maxLength(500)])],
+        isPredefined: [this.botDetails.isPredefined]
+      });
+      
+    }else{
+     
+      if(this.unsaved==true)
+      {
+        this.botForm = this.formBuilder.group({
+          botName: [this.botDetails.botName, Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern("^[a-zA-Z0-9_-]*$")])],
+          department: [this.botDetails.department, Validators.required],
+          description: [this.botDetails.description, Validators.compose([Validators.maxLength(500)])],
+          isPredefined: [this.botDetails.isPredefined]
+        });
+      }
+      else if(this.categoriesList.length==1)
+      {
+        this.botForm = this.formBuilder.group({
+          botName: ["", Validators.compose([Validators.maxLength(30), Validators.pattern("^[a-zA-Z0-9_-]*$")])],
+          department: ['', Validators.required],
+          description: ['', Validators.compose([Validators.maxLength(500)])],
+          isPredefined: [false]
+        });
+        setTimeout(()=>{
+          this.botForm.get('department').setValue(this.categoriesList.length==1?this.categoriesList[0].categoryId:'');
+        },100)
+      }
+    }
+ 
   }
 
   ngOnChanges(changes:SimpleChanges){
-    if(!this.isCreateForm && this.botDetails!=undefined){
-      this.botForm.get("botName").setValue(this.botDetails.botName);
-      this.botForm.get("department").setValue(this.botDetails.department);
-      this.botForm.get("description").setValue(this.botDetails.description);
-      this.botForm.get("isPredefined").setValue(false);
-    }else{
-      this.botForm = this.formBuilder.group({
-        botName: ["", Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern("^[a-zA-Z0-9_-]*$")])],
-        department: ["", Validators.required],
-        description: ["", Validators.compose([Validators.maxLength(500)])],
-        isPredefined: [false]
-      });
-    }
+  
+  
   }
 
   onFormSubmit() {
@@ -65,22 +91,27 @@ export class RpaBotFormComponent implements OnInit {
 
   createBot() {
     let botFormValue = this.botForm.value;
-    this.spinner.show()
-    this.rest.createBot(botFormValue).subscribe((response: any) => {
-      this.spinner.hide()
-      if (response.errorMessage == undefined) {
-        Swal.fire("Success", "Bot created successfully!", "success");
-        this.closeBotForm();
-        this.event.emit({ botId: response.botId, case: "create" });
-      } else {
-        Swal.fire("Error", response.errorMessage, "error");
+    if(botFormValue.botName=='' || botFormValue.botName==null)
+      this.skipSaveBot()
+    else
+    {
+      this.spinner.show()
+      this.rest.createBot(botFormValue).subscribe((response: any) => {
+        this.spinner.hide()
+        if (response.errorMessage == undefined) {
+          Swal.fire("Success", "Bot created successfully!", "success");
+          this.closeBotForm();
+          this.event.emit({ botId: response.botId, case: "create" });
+        } else {
+          Swal.fire("Error", response.errorMessage, "error");
+          this.event.emit(null);
+        }
+      }, err => {
+        this.spinner.hide();
+        Swal.fire("Error", "Unable to create bot", "error");
         this.event.emit(null);
-      }
-    }, err => {
-      this.spinner.hide();
-      Swal.fire("Error", "Unable to create bot", "error");
-      this.event.emit(null);
-    })
+      })
+    }
 
   }
 
@@ -125,19 +156,24 @@ export class RpaBotFormComponent implements OnInit {
 
   skipSaveBot()
   {
-
     let botDetails:any=this.botForm.value;
     if(botDetails.department!='' && botDetails.department!=null )
     {
-      if(botDetails.botName=='')
+      if(botDetails.botName=='' || botDetails.botName==null)
       {
-        botDetails.botName="TEMPRORY-BOT-"+((new Date()).getTime());
-        console.log(botDetails);
+        botDetails.botName="Unsaved-Bot-"+((new Date()).getTime());
         this.event.emit({botId:Base64.encode(JSON.stringify(botDetails)),case:"create"});
       }
     }
     else{
       this.checkBotCategory=true;
     }
+  }
+
+
+  submitUnsavedBot()
+  {
+    let botDetails=this.botForm.value;
+    this.unsavedOutput.emit(botDetails);
   }
 }

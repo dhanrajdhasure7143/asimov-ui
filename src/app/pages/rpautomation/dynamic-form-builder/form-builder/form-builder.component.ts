@@ -78,6 +78,7 @@ export class FormBuilderComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  
     this.userRole = localStorage.getItem("userRole");
       if(this.userRole=='Process Owner' || this.userRole=='RPA Developer'){
         this.isdisabled=null

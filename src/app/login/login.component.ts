@@ -17,6 +17,7 @@ export class LoginComponent{
 
   ngOnInit() {
     this.authService.logout();
+    this.router.navigate(['/redirect']);
   }
 
   getAccessToken(){

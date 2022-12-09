@@ -183,32 +183,31 @@
             <mat-paginator class="newpaginationdiv" #paginator1 [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]"
                  [showFirstLastButtons]="true"></mat-paginator>
           </div>
-      </div>
+      </div> 
   </div>
 
 
   <ng-template #epsoft_logs_modal_ref>
     <div ngb-modal-draggable [ngbModalDraggableHandle]="draggableHandle" class="cursor-all-scroll">
-      <app-rpa-so-logs [logsbotid]="logsbotid" [logsmodalref]="logsmodalref" [AllVersionsList]="AllVersions"
+      <app-rpa-so-logs (close)="closeLogsOverlay()" [logsbotid]="logsbotid" [logsmodalref]="logsmodalref" [AllVersionsList]="AllVersions"
         [selectedversion]="selectedversion"></app-rpa-so-logs>
     </div>
   </ng-template>
 
 
   <div *ngIf="popup">
-      <div id='sch' class="rpa-modal schedulemod newshacl" style="display:block">
-          <div class="rpa-modal-content">
-              <div class="rpa-modal-header">
-                  <span class="rpa-modal-close" (click)="close()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" class="testplus1"></span>
-                  <h4>Scheduler</h4>
-              </div>
-              <div class="modal-body actions-mbody">
-                  <app-so-scheduler [data]="schdata" id="Scheduler"></app-so-scheduler>
-              </div>
-          </div>
-      </div>
-  </div>
-
+    <div id='sch' class="rpa-modal schedulemod newshacl" style="display:block">
+        <div class="rpa-modal-content">
+            <div class="rpa-modal-header">
+                <span class="rpa-modal-close" (click)="close()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" class="testplus1"></span>
+                <h4>Scheduler</h4>
+            </div>
+            <div class="modal-body actions-mbody">
+                <app-rpa-scheduler [data]="schdata" id="Scheduler"></app-rpa-scheduler>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 

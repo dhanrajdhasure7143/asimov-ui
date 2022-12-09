@@ -40,6 +40,8 @@ export const environment = {
   //DB Connector
    dbConnectorHost: "pgpooldev",
    dbName: 'eiap_dev',
-   dbPort:"5430"
+   dbPort:"5430",
 
+  //RPA WebActions Action AttrId
+   webActionAttrId:536
 };

@@ -49,8 +49,7 @@ this.getEnvironments();
 
 
 
-  getslametrics()
-  {
+  getslametrics(){
     this.rest.getslametrics().subscribe(metrics=>{
     })
   }

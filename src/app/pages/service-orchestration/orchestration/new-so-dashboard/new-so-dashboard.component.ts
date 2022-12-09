@@ -19,7 +19,7 @@ export class NewSoDashboardComponent implements OnInit {
   constructor(
     private dt:DataTransferService,
     private spinner:NgxSpinnerService,
-    private hints:sohints,
+    //private hints:sohints,
     private rest:RestApiService
     ) { }
 
@@ -62,7 +62,7 @@ export class NewSoDashboardComponent implements OnInit {
   ngOnInit() {
     localStorage.setItem('project_id',null);
     this.spinner.show();
-    this.dt.changeHints(this.hints.sodashboard1);
+    //this.dt.changeHints(this.hints.sodashboard1);
     setTimeout(()=>{
       this.getdepartments();
       this.getprocessnames()

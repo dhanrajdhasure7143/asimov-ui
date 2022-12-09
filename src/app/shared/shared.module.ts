@@ -12,7 +12,6 @@ import { SearchPipe } from './pipes/search.pipe';
 import { DeployNotationComponent } from './deploy-notation/deploy-notation.component';
 import { NgbModalDraggableModule } from 'ngb-modal-draggable'
 
-
 @NgModule({
   declarations: [UploadCreateDropBpmnComponent, BpmnDiagramComponent, ProcessCategoryOverlayComponent, SearchPipe, DeployNotationComponent, ],
   imports: [
