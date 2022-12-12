@@ -1582,8 +1582,11 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         if(response.errorMessage==undefined)
         {
           this.isBotUpdated=false;
-          this.finalbot=response;
+          // this.finalbot=response;
+          // this.actualTaskValue=[...response.tasks];
+          this.finalbot={...{},...response};
           this.actualTaskValue=[...response.tasks];
+          this.finaldataobjects=[...response.tasks];
           this.actualEnv=[...response.envIds]
           Swal.fire("Success","Bot updated successfully","success");
           let auditLogsList=[...this.auditLogs.map(item=>{
