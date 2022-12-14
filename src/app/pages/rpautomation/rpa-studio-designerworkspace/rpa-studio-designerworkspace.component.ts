@@ -1599,8 +1599,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         {
           this.isBotUpdated=false;
           this.finalbot={...{},...response};
-          this.finaldataobjects=[...response.tasks];
-          this.actualTaskValue=[...response.tasks];
+          this.finaldataobjects=[...response.tasks.filter((item:any)=>item.version==response.version)]
+          this.actualTaskValue=[...response.tasks.filter((item:any)=>item.version==response.version)];
           this.actualEnv=[...response.envIds]
           Swal.fire("Success","Bot updated successfully","success");
           this.uploadfile(response.envIds);
