@@ -861,7 +861,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       this.formHeader = node.name + " - " + node.selectedNodeTask;
       this.selectedNode = node;
       let taskdata = this.finaldataobjects.find(data => data.nodeId == node.name + "__" + node.id);
-      console.log("-----------------task data----------",taskdata)
       if (taskdata != undefined) 
       {
         if (taskdata.tMetaId == node.selectedNodeId) 
@@ -1214,11 +1213,14 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       }
     }
 
-    let index = this.actualTaskValue.findIndex(sweetdata => sweetdata.nodeId == this.selectedNode.name + "__" + this.selectedNode.id,)
-    if (index != undefined && index >= 0) {
-      responseData["attrId"]=this.actualTaskValue[index].attributes.find((attrItem:any)=>attrItem.metaAttrId==p.id).attrId;
-      responseData["botTaskId"]=this.actualTaskValue[index].attributes.find((attrItem:any)=>attrItem.metaAttrId==p.id).botTaskId;
-    
+    let index = this.finaldataobjects.findIndex(sweetdata => sweetdata.nodeId == (this.selectedNode.name + "__" + this.selectedNode.id))
+    let savedTaskIndex=this.actualTaskValue.findIndex(sweetdata => sweetdata.nodeId == (this.selectedNode.name + "__" + this.selectedNode.id))
+    if (index != undefined && index >= 0 && savedTaskIndex != undefined && savedTaskIndex >= 0 ) {
+      if(this.actualTaskValue[savedTaskIndex].attributes.find((attrItem:any)=>attrItem.metaAttrId==p.id)!=undefined)
+      {
+        responseData["attrId"]=this.actualTaskValue[savedTaskIndex].attributes.find((attrItem:any)=>attrItem.metaAttrId==p.id).attrId;
+        responseData["botTaskId"]=this.actualTaskValue[savedTaskIndex].botTId;
+      }
     }
     
     return responseData;
@@ -1256,22 +1258,36 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     let cutedata = {
 
       "taskName": this.selectedTask.name,
-      "tMetaId": this.selectedTask.id,
-      "inSeqId": 1,
-      "taskId":'',
+      "tMetaId": parseInt(this.selectedTask.id),
       "taskSubCategoryId": "1",
+      "inSeqId": 1,
       "outSeqId": 2,
       "nodeId": this.selectedNode.name + "__" + this.selectedNode.id,
       "x": this.selectedNode.x,
       "y": this.selectedNode.y,
       "attributes": this.fileterdarray,
+      
     }
     let index = this.finaldataobjects.findIndex(sweetdata => sweetdata.nodeId == cutedata.nodeId)
     let savedTaskIndex=this.actualTaskValue.findIndex(sweetdata => sweetdata.nodeId == cutedata.nodeId)
-    if (index != undefined && index >= 0) {
+    // if (savedTaskIndex != undefined && savedTaskIndex >= 0) {
+    //   cutedata["botTId"]=this.actualTaskValue[savedTaskIndex].botTId;
+    //   this.finaldataobjects[index] = cutedata;
+    // } else {
+    //   this.finaldataobjects.push(cutedata);
+    // }
+
+
+    if(index != undefined && index >= 0 && savedTaskIndex != undefined && savedTaskIndex >= 0)
+    {
       cutedata["botTId"]=this.actualTaskValue[savedTaskIndex].botTId;
       this.finaldataobjects[index] = cutedata;
-    } else {
+    }
+    else if (index != undefined && index >= 0  &&  savedTaskIndex < 0) {
+      this.finaldataobjects[index] = cutedata;
+    } 
+    else
+    {
       this.finaldataobjects.push(cutedata);
     }
     this.notifier.notify("info", "Data Saved Successfully");
@@ -1309,7 +1325,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         if (index != undefined && index >= 0 && savedTaskIndex != undefined && savedTaskIndex >= 0 ) {
           if(this.actualTaskValue[savedTaskIndex].attributes.find((attrItem:any)=>attrItem.metaAttrId==ele.id)!=undefined)          
             objAttr["attrId"]=this.actualTaskValue[savedTaskIndex].attributes.find((attrItem:any)=>attrItem.metaAttrId==ele.id).attrId;
-            objAttr["botTaskId"]=this.actualTaskValue[savedTaskIndex].attributes.find((attrItem:any)=>attrItem.metaAttrId==ele.id).botTaskId; 
+            objAttr["botTaskId"]=this.actualTaskValue[savedTaskIndex].botTId; 
           }
         if(ele.type=="checkbox" && this.fieldValues[ele.name+"_"+ele.id]=="")
         {
@@ -1582,13 +1598,13 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         if(response.errorMessage==undefined)
         {
           this.isBotUpdated=false;
-          // this.finalbot=response;
-          // this.actualTaskValue=[...response.tasks];
           this.finalbot={...{},...response};
-          this.actualTaskValue=[...response.tasks];
-          this.finaldataobjects=[...response.tasks];
+          let filterDta= response.tasks.filter((item:any)=>item.version==response.version);
+          this.finaldataobjects=[...filterDta];
+          this.actualTaskValue=[...filterDta];
           this.actualEnv=[...response.envIds]
           Swal.fire("Success","Bot updated successfully","success");
+          this.uploadfile(response.envIds);
           let auditLogsList=[...this.auditLogs.map(item=>{
             item["versionNew"]=response.versionNew;
             item['comments']=response.comments;
