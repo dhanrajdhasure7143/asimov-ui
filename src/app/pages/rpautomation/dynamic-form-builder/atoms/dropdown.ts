@@ -47,6 +47,17 @@ export class DropDownComponent implements OnInit {
     ngOnInit(){
       this.fieldsWithRef=this.designer.fields;
       this.fieldsWithoutRef=[...this.designer.fields];
+      if(this.field.name=="fillValueType")
+      {
+        if(this.field.value=='Check Box')
+        {
+          
+          let tenant=localStorage.getItem('tenantName');
+          if(environment.ipcTenant==tenant){
+            this.fieldsWithRef.find((item:any)=>item.name=="fillValue").type="ipc-checkbox"
+          }
+        }
+      }
     }
 
       onChangeEmail(event, options , field) {
@@ -85,6 +96,17 @@ export class DropDownComponent implements OnInit {
           if(event.target.value=="password")
           {
             this.fieldsWithRef.find((item:any)=>item.name=="fillValue").type="password"
+          }
+          else if(event.target.value=="Check Box")
+          {
+            let tenant=localStorage.getItem('tenantName');
+            if(environment.ipcTenant==tenant){
+              this.fieldsWithRef.find((item:any)=>item.name=="fillValue").type="ipc-checkbox"
+              this.fieldsWithRef.find((item:any)=>item.name=="fillValue").value=''
+            }
+            else{
+              this.fieldsWithRef.find((item:any)=>item.name=="fillValue").type="textarea"
+            }
           }
           else
           {
