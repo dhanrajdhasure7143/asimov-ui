@@ -8,7 +8,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
       <div [formGroup]="form" *ngIf="field.type=='checkbox'">
         <div style="display:flex"  >
           <div  class="form-check form-check">
-             <input [attr.disabled]="feilddisable" [formControlName]="field.name+'_'+field.id" class="form-check-input" type="checkbox" [id]="field.id"  [checked]="field.value==true || field.value=='true'" />
+             <input [attr.disabled]="feilddisable" (change)="updateFields()" [formControlName]="field.name+'_'+field.id" class="form-check-input" type="checkbox" [id]="field.id"  [checked]="field.value==true || field.value=='true'" />
              &nbsp;<span>{{field.label}}</span>
           </div>
         </div>
@@ -27,6 +27,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 export class CheckBoxComponent implements OnInit  {
     @Input() field:any = {};
     @Input() form:FormGroup;
+    
     get isValid() { return this.form.controls[this.field.name+"_"+this.field.id].valid; }
     get isDirty() { return this.form.controls[this.field.name+"_"+this.field.id].dirty; }
     fields:any=[];
@@ -37,6 +38,16 @@ export class CheckBoxComponent implements OnInit  {
     ngOnInit() {
       this.fields=this.dynamic_forms.fields;
      
+
+      if(this.field.value=="true" && this.field.name=="isDownloadClick")
+      {
+        
+        let downloadRefField=this.dynamic_forms.fields.find((item:any)=>item.name=="downloadedRef")
+        downloadRefField.visibility=true;
+        downloadRefField.required=true;
+        this.form.get([downloadRefField.name + '_' + downloadRefField.id]).setValidators(Validators.required);
+        this.form.get([downloadRefField.name + '_' + downloadRefField.id]).updateValueAndValidity();
+      }
       let dependencydata:any=this.field.dependency;
       let dependency1=dependencydata.split(",")[0].split(":");
       let dependency2=dependencydata.split(",")[1].split(":");
@@ -64,6 +75,7 @@ export class CheckBoxComponent implements OnInit  {
      
 
       }
+
     }
     
     change()
@@ -94,6 +106,34 @@ export class CheckBoxComponent implements OnInit  {
       
 
       }
+     
+      
         
+    }
+    updateFields()
+    {
+      let check:any=document.getElementById(this.field.id);
+      let value=check.checked;
+      if(this.field.name=="isDownloadClick")
+      {
+        let downloadRefField=this.dynamic_forms.fields.find((item:any)=>item.name=="downloadedRef")
+        if(downloadRefField!=undefined)
+        {
+          if(value==true)
+          {
+            downloadRefField.visibility=true;
+            downloadRefField.required=true;
+            this.form.get([downloadRefField.name + '_' + downloadRefField.id]).setValidators(Validators.required);
+            this.form.get([downloadRefField.name + '_' + downloadRefField.id]).updateValueAndValidity();
+          }
+          else
+          {
+            downloadRefField.visibility=false;
+            downloadRefField.required=false;
+            this.form.get([downloadRefField.name + '_' + downloadRefField.id]).clearValidators();
+            this.form.get([downloadRefField.name + '_' + downloadRefField.id]).updateValueAndValidity();
+          }
+        }
+      }
     }
 }
