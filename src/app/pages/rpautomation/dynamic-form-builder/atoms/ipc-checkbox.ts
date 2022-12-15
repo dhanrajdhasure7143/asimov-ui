@@ -5,11 +5,11 @@ import { FormGroup } from '@angular/forms';
     selector: 'ipc-checkbox',
     template: `
       <div  [formGroup]="form">
-        <input type='checkbox' [checked]="payload.previousMonth" (change)="ipcCheckChange('PreviousMonth', $event)" name='previousmonth' >&nbsp; Previous Month
+        <input type='radio' [checked]="payload.previousMonth" (change)="ipcCheckChange('PreviousMonth', $event)" name='previousmonth' >&nbsp; Previous Month
         <br>
-        <input type='checkbox' [checked]="payload.currentMonth" (change)="ipcCheckChange('CurrentMonth', $event)" name='currentmonth'>&nbsp; Current Month
+        <input type='radio' [checked]="payload.currentMonth" (change)="ipcCheckChange('CurrentMonth', $event)" name='currentmonth'>&nbsp; Current Month
         <br>
-        <input type='checkbox' [checked]="payload.dateRange" (change)="ipcCheckChange('DateRange', $event)" name='daterange'>&nbsp; Date Range
+        <input type='radio' [checked]="payload.dateRange" (change)="ipcCheckChange('DateRange', $event)" name='daterange'>&nbsp; Date Range
         <br>
         <div *ngIf="payload.dateRange">
             <br>
