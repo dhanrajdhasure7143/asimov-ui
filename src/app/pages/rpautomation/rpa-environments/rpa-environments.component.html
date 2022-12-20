@@ -72,7 +72,7 @@
                 <ng-container matColumnDef="environmentName">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header class="cell2">Name</th>
                     <td mat-cell *matCellDef="let element" class="cell2"> <span
-                            *ngIf="element.environmentName!=null">{{element.environmentName}}</span> <span
+                            *ngIf="element.environmentName!=null" [tooltip]="element.environmentName" placement="bottom">{{(element.environmentName.length > 20) ? ((element.environmentName).slice(0, 20) + '...') : element.environmentName}}</span> <span
                             *ngIf="element.environmentName==''">-</span>
                     </td>
                 </ng-container>
