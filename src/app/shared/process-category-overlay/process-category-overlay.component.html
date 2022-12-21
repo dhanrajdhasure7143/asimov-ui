@@ -143,7 +143,7 @@
                         <label class="label-control">Enter Process Name<span class="star">*</span></label>
                         <input type="text"  maxlength="50" name="process_name" [(ngModel)]="processName" #process_name="ngModel" (keypress)="lettersOnly($event)" class="form-control" placeholder="Enter Process Name" required>
                         <span *ngIf="((process_name.invalid && processCategoryForm.submitted) || (process_name.errors && process_name.touched) )">
-                            <span class='errspan required' *ngIf="process_name.errors.required"> Please Enter Process Name</span>
+                            <span class='errspan required' *ngIf="process_name.errors.required">  Please Enter Process Name </span>
                             <!-- <span class='errspan required' *ngIf="process_name.errors.pattern"> Alphanumerics with _- are allowed having 4 - 25 characters</span> -->
                         </span>
                         <span class='errspan required' *ngIf="processName && isValidName"> Invalid Process name</span>
