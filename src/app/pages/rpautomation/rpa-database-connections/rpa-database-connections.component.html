@@ -141,15 +141,13 @@
                     <!-- <td mat-cell *matCellDef="let element"> <span *ngIf="element.createdTimeStamp!=null">{{element.createdTimeStamp | date}} {{element.createdTimeStamp.split("T")[1].split(".")[0]}}</span> <span *ngIf="element.createdTimeStamp==''">-</span> </td> -->
                     <td mat-cell *matCellDef="let element"> {{element.createdTimeStamp_converted}} </td>
                 </ng-container>
-               <tr mat-header-row *matHeaderRowDef="displayedColumns1; sticky: true"></tr>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns1; sticky: true"></tr>
                 <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
             </table>
+            <div class="noData" *ngIf="noDataMessage===true">No Data Found</div>
         </div>
-    <!-- </div> -->
-
         <mat-paginator #paginator4 [pageSize]="10" [pageIndex]="0" [pageSizeOptions]="[5, 10, 25, 50]"
             [showFirstLastButtons]="true" class="newpaginationdiv"></mat-paginator>
-    <!-- </div> -->
-</div>
-<app-rpa-database-form [isDatabase]="isDatabase" [dbupdatedata]="dbupdatedata"
-    (refreshData)="refreshDataBaseList($event)"> </app-rpa-database-form>
+    </div>
+    <app-rpa-database-form [isDatabase]="isDatabase" [dbupdatedata]="dbupdatedata"
+        (refreshData)="refreshDataBaseList($event)"> </app-rpa-database-form>

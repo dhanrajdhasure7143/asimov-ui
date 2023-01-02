@@ -43,6 +43,7 @@ export class RpaCredentialsComponent implements OnInit {
     isCreateForm:boolean=true;
     isSearch:boolean=false;
     isLoading:boolean=true;
+  noDataMessage: boolean;
 
     
     constructor(private api:RestApiService, 
@@ -233,6 +234,13 @@ inputNumberOnly(event){
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
     this.dataSource2.filter = filterValue;
+    console.log(this.dataSource2.filteredData.length);
+    if (this.dataSource2.filteredData.length === 0) {
+      this.noDataMessage = true;
+    }
+    else {
+      this.noDataMessage = false;
+    }
   }
 
   removeallchecks(){

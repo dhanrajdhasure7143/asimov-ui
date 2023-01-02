@@ -55,7 +55,7 @@ export class ProjectRepoScreenComponent implements OnInit {
   selectedFiles: any=[];
   fileList: File[] = [];
   listOfFiles: any[] = [];
-  uploadFileDescriptionFlag:boolean=true;
+  uploadFileDescriptionFlag:boolean=false;
   // resources_list: any=[];
   filecategoriesList:any[]=[];
   file_Category:any;

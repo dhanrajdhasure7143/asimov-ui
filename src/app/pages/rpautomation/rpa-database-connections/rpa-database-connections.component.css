@@ -153,3 +153,7 @@ span.testtooltip:before {
 .no-item-img {
   height:200px;
 }
+.noData{
+  text-align: center;
+  padding-top: 30px;
+}
