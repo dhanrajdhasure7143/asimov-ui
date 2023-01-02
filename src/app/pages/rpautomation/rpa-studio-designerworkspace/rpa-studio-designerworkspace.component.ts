@@ -910,18 +910,21 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
             else
             {
               taskdata.attributes.forEach(element => {
-                if(finalattributes.find(data => data.id == element.metaAttrId).type=='restapi')
+                if(finalattributes.find(data => data.id == element.metaAttrId)!=undefined)
                 {
-                  if(element.attrValue!='' && element.attrValue!=undefined)
+                  if(finalattributes.find(data => data.id == element.metaAttrId).type=='restapi')
                   {
-                    let attr_val=JSON.parse(element.attrValue);
-                    let attrnames=Object.getOwnPropertyNames(attr_val);
-                    finalattributes.find(data => data.id == element.metaAttrId).value=attr_val[attrnames[0]];
+                    if(element.attrValue!='' && element.attrValue!=undefined)
+                    {
+                      let attr_val=JSON.parse(element.attrValue);
+                      let attrnames=Object.getOwnPropertyNames(attr_val);
+                      finalattributes.find(data => data.id == element.metaAttrId).value=attr_val[attrnames[0]];
+                    }
                   }
-                }
-                else
-                {
-                  finalattributes.find(data => data.id == element.metaAttrId).value = element.attrValue;
+                  else
+                  {
+                    finalattributes.find(data => data.id == element.metaAttrId).value = element.attrValue;
+                  }
                 }
 
               });
