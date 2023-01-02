@@ -921,6 +921,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
                       finalattributes.find(data => data.id == element.metaAttrId).value=attr_val[attrnames[0]];
                     }
                   }
+                  
                   else
                   {
                     finalattributes.find(data => data.id == element.metaAttrId).value = element.attrValue;
