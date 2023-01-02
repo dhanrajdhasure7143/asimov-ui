@@ -130,7 +130,8 @@ resetCredForm(){
         this.refreshTable.emit(true)
         if (status.errorMessage == undefined) {
           Swal.fire("Success", status.status, "success");
-          document.getElementById('Updatecredntials').style.display = 'none';
+          // document.getElementById('Updatecredntials').style.display = 'none';
+          document.getElementById('createcredentials').style.display = 'none';
         } else {
           Swal.fire("Error", status.errorMessage, "error");
         }

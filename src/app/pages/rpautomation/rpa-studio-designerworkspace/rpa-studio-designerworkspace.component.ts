@@ -1388,7 +1388,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       "attributes": obj,
     }
     let index = this.finaldataobjects.findIndex(sweetdata => sweetdata.nodeId == cutedata.nodeId)
-    let savedTaskIndex=this.actualTaskValue.findIndex(sweetdata => sweetdata.nodeId == cutedata.nodeId)
+    let savedTaskIndex=this.actualTaskValue.findIndex(sweetdata => sweetdata.nodeId == cutedata.nodeId);
     if(index != undefined && index >= 0 && savedTaskIndex != undefined && savedTaskIndex >= 0)
     {
       cutedata["botTId"]=this.actualTaskValue[savedTaskIndex].botTId;
@@ -1546,7 +1546,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         window.history.pushState("", "", url.split("botId")[0]+"botId="+response.botId);
         this.updateBotFun(versionType, comments)
       },err=>{
-        console.log(err)
         this.spinner.hide();
         Swal.fire("Error","Unable to create bot","error")
       })
@@ -1592,16 +1591,18 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     }
     else
     {
+
       let previousBotDetails:any={...{},...this.finalbot};
       (await this.rest.updateBot(this.saveBotdata)).subscribe((response:any)=>{
         this.spinner.hide()
         if(response.errorMessage==undefined)
         {
           this.isBotUpdated=false;
+          // this.finalbot=response;
+          // this.actualTaskValue=[...response.tasks];
           this.finalbot={...{},...response};
-          let filterDta= response.tasks.filter((item:any)=>item.version==response.version);
-          this.finaldataobjects=[...filterDta];
-          this.actualTaskValue=[...filterDta];
+          this.actualTaskValue=[...response.tasks.filter((item)=>item.version=response.version)];
+          this.finaldataobjects=[...response.tasks.filter((item)=>item.version=response.version)];
           this.actualEnv=[...response.envIds]
           Swal.fire("Success","Bot updated successfully","success");
           this.uploadfile(response.envIds);
@@ -1648,7 +1649,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         Swal.fire("Error","Unable to update bot","error");
       })
       //return false;
-    } 
+    }
 
   }
 
@@ -2129,6 +2130,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
 
   
+ 
+  
   arrange_task_order(start) {
     this.final_tasks = [];
     let object = this.finaldataobjects.find(object => object.inSeqId == start);
@@ -2178,11 +2181,11 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         return;
       } else {
         this.add_order(object);
-
       }
     }
     return;
   }
+
 
   closecredentials()
   {     
@@ -2540,6 +2543,27 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       this.onFormSubmit(obj, false)
  })
 }
+
+// stopBot() {
+//   let data="";
+//   if(this.savebotrespose!=undefined)
+//   {
+//     // Swal.fire({
+//     //   position: 'top-end',
+//     //   icon: 'success',
+//     //   title: "Bot Execution Stopped !!",
+//     //   showConfirmButton: false,
+//     //   timer: 2000})
+
+//       this.startbot=true;
+//       this.pausebot=false;
+//       this.resumebot=false;
+//       this.rest.stopbot(this.savebotrespose.botId,data).subscribe(data=>{
+//         let resp:any=data
+//         Swal.fire(resp.status,"","success")
+//       })
+//   }
+// }
 
 }
 
