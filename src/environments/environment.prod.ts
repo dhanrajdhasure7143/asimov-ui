@@ -1,65 +1,35 @@
 export const environment = {
   production: true,
+
+  pi_url: "https://ezflow.epsoftinc.com/prcintel",
+  bps_url: "https://ezflow.epsoftinc.com/bpstudio",
+  rpa_url: "https://ezflow.epsoftinc.com/wfrpa",
+  loopback_url: "http://10.11.0.107:3000",
+  idm_url: "https://ezflow.idm.epsoftinc.com",
+  auth_url: "https://ezflow.epsoftinc.com/authservices",
+  pi_node_url: "https://ezflow.epsoftinc.com/pinode",
+  platform_url: "https://ezflow.epsoftinc.com/aiotalplatform",
+  schema_registry_url: "http://schema-registry:8081",
+  alerts_url: "https://ezflow.epsoftinc.com/alerts",
+  subscriptionendpoint_url: "https://ezflow.epsoftinc.com/subscriptions",
+  // Aiotal redirection urls
+  myaccount_url: "https://ezflow.epsoftinc.com/#/activation",
+  logout_url: "https://ezflow.epsoftinc.com/#/activation",
+  redirectout_url: "https://ezflow.epsoftinc.com/#/signout",
+  platform_home_url: "https://ezflow.epsoftinc.com/#/",
+  pi_node_jobs: "http://pi-node-jobs:5000",
+  projectendpoint_url: "https://ezflow.epsoftinc.com/pcs",
+  socialLoginRedirectURL: "https://ezflow.epsoftinc.com/#/user",
+  // camunda navigation
+  camunda_url: "https://ezworkflow.dev.epsoftinc.com",
   // Data upload path
-  data_path:"/var/kafka",
-
-  //  * DEV ENV URl's
-
-  //pi_url: 'http://pidev.epsoftinc.in',
-
-  //bps_url: 'http://bpsdev.epsoftinc.in',
-  //rpa_url: 'http://rpadev.epsoftinc.in',
-  //loopback_url: 'http://10.11.0.107:3000',
-  //idm_url:'http://idmdev.epsoftinc.in',
-  //auth_url: "http://authdev.epsoftinc.in",
-  //for Auto build
-  //pi_node_url: "http://10.11.0.107:3000",
-  //for local environment
-  //pi_node_url: "http://10.11.0.112:3000",
-
-  //platform_url:'http://apdev.epsoftinc.in',
-  //schema_registry_url:"http://10.11.0.101:8081",
-  //alerts_url:'http://alertsdev.epsoftinc.in',
-
- // Aiotal redirection urls
-  //myaccount_url : "http://eiapclouddev.epsoftinc.in/#/activation",
-  //logout_url: 'http://eiapclouddev.epsoftinc.in/#/activation',
-  //redirectout_url: 'http://eiapclouddev.epsoftinc.in/#/signout',
-
-// PI Connectors
-  //connector_topic: 'nodeDev',
-
-//BPMN Platform URL
-  //bpmnplatformUrl : "http://10.11.0.127:8080",
-
-//DB Connector
-  //dbConnectorHost: "10.11.0.113",
-  //dbName: "asimov_aiotal",
-
-  //  * QA ENV URl's
-     pi_url: 'http://piqa.epsoftinc.in',
-     bps_url: 'http://bpsqa.epsoftinc.in',
-     rpa_url: 'http://rpaqa.epsoftinc.in',
-     loopback_url: 'http://10.11.0.107:3000',
-     idm_url:'http://10.11.0.108:8888',
-     pi_node_url: "http://10.11.0.108:3000",
-     auth_url: "http://authqa.epsoftinc.in",
-     platform_url:'http://apqa.epsoftinc.in',
-     schema_registry_url:"http://10.11.0.101:8081",
-     alerts_url:'http://alertsqa.epsoftinc.in',
-
-   // Aiotal redirection urls
-    myaccount_url : "http://eiapcloudqa.epsoftinc.in/#/activation",
-    logout_url: 'http://eiapcloudqa.epsoftinc.in/#/activation',
-    redirectout_url: 'http://eiapcloudqa.epsoftinc.in/#/signout',
-
-   // PI Connectors
-    connector_topic: 'nodeq',
-
-   //DB Connector
-    dbConnectorHost: "10.11.0.104",
-    dbName: 'eiap_qa',
-
-  //BPMN Platform URL
-    bpmnplatformUrl : "http://10.11.0.128:8080"
+  data_path: "/usr/share/confluent-ftp-data",
+  // PI Connectors
+  connector_topic: "nodeq",
+  //DB Connector
+  dbConnectorHost: "pg-0",
+  dbName: "eiap_prod",
+  dbPort: "5432",
+  //RPA WebActions Action AttrId
+  webActionAttrId: 536,
 };
