@@ -36,4 +36,6 @@ export const environment = {
   dbPort: "5432",
   //RPA WebActions Action AttrId
   webActionAttrId: 536,
+  //IPCTenant
+  ipcTenant: "28b22b35-9dc5-4860-b5b5-559855d9618c"
 };
