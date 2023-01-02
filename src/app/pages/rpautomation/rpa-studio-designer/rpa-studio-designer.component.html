@@ -127,12 +127,19 @@
               
                   <div class="action-item hovericon" *ngIf="current_instance != undefined">
                     <button class="tsttooltipbtn"
-                      [disabled]="current_instance.finalbot==undefined || current_instance.filteredEnvironments.length==0"
+                      [disabled]="current_instance.finalbot.botId==undefined || current_instance.filteredEnvironments.length==0
+                      || current_instance.actualTaskValue.length == 0"
                       (click)=" current_instance.executeBot()">
                       <img src="../../../../assets/images/RPA/icon_latest/play.svg" class="testplus1">
                       <span class="testtooltip">Start Bot</span>
                     </button>
                   </div>
+                  <!-- <div class="action-item hovericon" *ngIf="current_instance != undefined">
+                    <button class="tsttooltipbtn" [disabled]="current_instance.savebotrespose==undefined || current_instance.pausebot==false" (click)=" current_instance.stopBot()">
+                       <img src="../../../../assets/images/RPA/icon_latest/Stop Bot.svg"class="testplus1">
+                       <span class="testtooltip">Stop Bot</span>
+                     </button>
+                  </div> -->
                   <div class="action-item hovericon" *ngIf="current_instance != undefined" [isDisabled]="predefinedBotsList.length==0"
                     dropdown id="predefinedBotsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <button class="dropdown-action-item clickable dropdown-toggle tsttooltipbtn" id="predefinedBots" dropdownToggle
@@ -276,7 +283,7 @@
           <img src="../../../../assets/images/RPA/icon_latest/add.svg" class="add-new"/>
         </span>
                       <mat-menu #menu="matMenu">
-                          <button mat-menu-item (click)="openBotForm()" [disabled]="freetrail">
+                          <button mat-menu-item (click)="openBotForm()" [disabled]="freetrail" *ngIf="userRole.includes('Process Owner') || userRole.includes('RPA Developer')">
               <img src="../../../../assets/images/RPA/icon_latest/add-fill.svg" class="menu-icon"/> &nbsp;Create New</button>
                           <hr>
                           <button mat-menu-item (click)="loadBotFormOverlay()" [disabled]="freetrail">

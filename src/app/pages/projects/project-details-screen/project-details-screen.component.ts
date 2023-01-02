@@ -962,7 +962,8 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
           let status: any = res;
           Swal.fire({
             title: 'Success',
-            text: "" + status.message,
+            // text: "" + status.message,
+            text: "Resource Deleted Successfully !",
             position: 'center',
             icon: 'success',
             showCancelButton: false,

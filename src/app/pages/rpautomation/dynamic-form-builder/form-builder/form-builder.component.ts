@@ -45,7 +45,24 @@ template:`
         <div *ngIf ="field.visibility">
           <file [feilddisable]="isdisabled" *ngSwitchCase="'multipart'" [field]="field" [form]="form"></file>
         </div>
+
+        <div *ngIf ="field.visibility">
+        <ipc-checkbox [feilddisable]="isdisabled" *ngSwitchCase="'ipc-checkbox'" [field]="field" [form]="form"></ipc-checkbox>
+      </div>
+      
+      <div *ngIf ="field.visibility">
+      <file [feilddisable]="isdisabled" *ngSwitchCase="'date-range'" [field]="field" [form]="form"></file>
+    </div>
+     
        
+        <div *ngIf ="field.visibility">
+        <ipc-checkbox [feilddisable]="isdisabled" *ngSwitchCase="'ipc-checkbox'" [field]="field" [form]="form"></ipc-checkbox>
+      </div>
+      
+      <div *ngIf ="field.visibility">
+      <file [feilddisable]="isdisabled" *ngSwitchCase="'date-range'" [field]="field" [form]="form"></file>
+    </div>
+    
         <div *ngIf="!isValid && (isDirty || istouched)">
           <span *ngIf="isRequired" class="errspan required">{{field.label}} is required</span>
           <span *ngIf="isEmail" class="errspan required">Enter valid email address</span>
@@ -78,7 +95,6 @@ export class FormBuilderComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-  
     this.userRole = localStorage.getItem("userRole");
       if(this.userRole=='Process Owner' || this.userRole=='RPA Developer'){
         this.isdisabled=null
