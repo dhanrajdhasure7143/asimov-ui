@@ -4,59 +4,38 @@
 
 export const environment = {
   production: false,
-  pi_url: 'https://eiapdemoapi.epsoftinc.com:96/prcintel',
-  bps_url: 'https://eiapdemoapi.epsoftinc.com:96/bpstudio',
-  rpa_url: 'https://eiapdemoapi.epsoftinc.com:96/wfrpa',
-  loopback_url: 'http://10.11.0.107:3000',
-  idm_url:'https://eiapdemoapi.epsoftinc.com:96/idm',
-  auth_url: "https://eiapdemoapi.epsoftinc.com:96/authservices",
-  pi_node_url: "https://eiapdemoapi.epsoftinc.com:96/pinode",
-  platform_url:'https://eiapdemoapi.epsoftinc.com:96/aiotalplatform',
-  
- // Aiotal redirection urls 
-  myaccount_url : "https://eiapclouddemo.epsoftinc.com:86/#/activation",
-  logout_url: 'https://eiapclouddemo.epsoftinc.com:86/#/activation', 
-  redirection_logout_url: 'https://eiapclouddemo.epsoftinc.com:86/#/user',
-// PI Connectors
-  connector_topic: 'nodeq',
 
-//DB Connector
-  dbConnectorHost: "172.16.0.64",
-  dbName: 'eiap_demo'
-
-
-
-
- //  * QA ENV URl's
- 
- /*
-    pi_url: 'http://piqa.epsoftinc.in',
-    bps_url: 'http://bpsqa.epsoftinc.in',
-    rpa_url: 'http://rpaqa.epsoftinc.in',
-    loopback_url: 'http://10.11.0.107:3000',
-    idm_url:'http://idmqa.epsoftinc.in',
-    pi_node_url: "http://pinodedev.epsoftinc.in:3000",
-    auth_url: "http://authqa.epsoftinc.in",
-
-  // Aiotal redirection urls 
-  myaccount_url : "http://eiapcloudqa.epsoftinc.in/#/activation",
-  logout_url: 'http://eiapcloudqa.epsoftinc.in/#/activation',
-   platform_url:'http://apqa.epsoftinc.in',
-
+  pi_url: "https://ezflow.demo.epsoftinc.com/prcintel",
+  bps_url: "https://ezflow.demo.epsoftinc.com/bpstudio",
+  rpa_url: "https://ezflow.demo.epsoftinc.com/wfrpa",
+  loopback_url: "http://10.11.0.107:3000",
+  idm_url: "https://ezidm.demo.epsoftinc.com",
+  auth_url: "https://ezflow.demo.epsoftinc.com/authservices",
+  pi_node_url: "https://ezflow.demo.epsoftinc.com/pinode",
+  platform_url: "https://ezflow.demo.epsoftinc.com/aiotalplatform",
+  schema_registry_url: "http://schema-demo-registry:8081",
+  alerts_url: "https://ezflow.demo.epsoftinc.com/alerts",
+  socialLoginRedirectURL: "https://ezflow.demo.epsoftinc.com/#/user",
+  // Aiotal redirection urls
+  myaccount_url: "https://ezflow.demo.epsoftinc.com/#/activation",
+  logout_url: "https://ezflow.demo.epsoftinc.com/#/activation",
+  redirectout_url: "https://ezflow.demo.epsoftinc.com/#/signout",
+  platform_home_url: "https://ezflow.demo.epsoftinc.com/#/",
+  pi_node_jobs: "http://pi-node-jobs-demo:5000",
+  projectendpoint_url: "https://ezflow.demo.epsoftinc.com/pcs",
+  subscriptionendpoint_url: "https://ezflow.demo.epsoftinc.com/subscriptions",
+  //BPMN Platform URL
+  camunda_url: "https://ezworkflow.demo.epsoftinc.com",
+  // Data upload path
+  data_path: "/usr/share/confluent-ftp-data",
   // PI Connectors
-   connector_topic: 'tyty',
-
+  connector_topic: "nodeq",
   //DB Connector
-   dbConnectorHost: "10.11.0.104",
-   dbName: 'eiap_qa'
-   */
+  dbConnectorHost: "pgpool",
+  dbName: "eiap_demo",
+  dbPort: "5432",
+  //RPA WebActions Action AttrId
+  webActionAttrId: 536,
+  //IPCTenant
+  ipcTenant: "28b22b35-9dc5-4860-b5b5-559855d9618c"
 };
-
-/*
- * For easier debugging in qaelopment mode, you can import the following file
- * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
- *
- * This import should be commented out in production mode because it will have a negative impact
- * on performance if an error is thrown.
- */
-// import 'zone.js/dist/zone-error';  // Included with Angular CLI.

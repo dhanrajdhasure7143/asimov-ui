@@ -3,15 +3,43 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: true,
-  pi_url: 'http://piqa.epsoftinc.in',
-  bps_url: 'http://bpsqa.epsoftinc.in',
-  rpa_url: 'http://rpaqa.epsoftinc.in',
-  loopback_url: 'http://10.11.0.107:3000',
-  idm_url:'http://idmqa.epsoftinc.in',
-  pi_node_url: "http://pinodedev.epsoftinc.in:3000",
-  platform_url:'http://apqa.epsoftinc.in',
-  alerts_url:'http://alertsqa.epsoftinc.in',
+  production: false,
+
+  pi_url: "https://ezflow.qa.epsoftinc.com/prcintel",
+  bps_url: "https://ezflow.qa.epsoftinc.com/bpstudio",
+  rpa_url: "https://ezflow.qa.epsoftinc.com/wfrpa",
+  loopback_url: "http://10.11.0.107:3000",
+  idm_url: "https://ezidm.qa.epsoftinc.com",
+  auth_url: "https://ezflow.qa.epsoftinc.com/authservices",
+  //for Auto build
+  pi_node_url: "https://ezflow.qa.epsoftinc.com/pinode",
+  pi_node_jobs: "http://pi-node-jobs:5000",
+  platform_url: "https://ezflow.qa.epsoftinc.com/aiotalplatform",
+  schema_registry_url: "http://schema-registry:8081",
+  alerts_url: "https://ezflow.qa.epsoftinc.com/alerts",
+  // Aiotal redirection urls
+  myaccount_url: "https://ezflow.qa.epsoftinc.com/#/activation",
+  logout_url: "https://ezflow.qa.epsoftinc.com/#/activation",
+  redirectout_url: "https://ezflow.qa.epsoftinc.com/#/signout",
+  platform_home_url: "https://ezflow.qa.epsoftinc.com/#/",
+  projectendpoint_url: "https://ezflow.qa.epsoftinc.com/pcs",
+  subscriptionendpoint_url: "https://ezflow.qa.epsoftinc.com/subscriptions",
+  //BPMN Platform URL
+  bpmnplatformUrl: "https://ezworkflow.qa.epsoftinc.com",
+  // camunda navigation
+  camunda_url: "https://ezworkflow.qa.epsoftinc.com",
+  // Data upload path
+  data_path: "/usr/share/confluent-ftp-data",
+  // PI Connectors
+  connector_topic: "nodeq",
+  //DB Connector
+  dbConnectorHost: "pgpooldev",
+  dbName: "eiap_dev",
+  dbPort: "5430",
+  //RPA WebActions Action AttrId
+  webActionAttrId: 580,
+  //IPCTenant
+  ipcTenant: "28b22b35-9dc5-4860-b5b5-559855d9618c"
 };
 
 /*
