@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-
+import moment from 'moment';
 @Component({
     selector: 'ipc-checkbox',
     template: `
@@ -17,7 +17,7 @@ import { FormGroup } from '@angular/forms';
             From Date:&nbsp; <input (change)="dateChange('fromDate', $event)" [value]="payload.fromDate" class='form-control' type='date'>
             </span>
             <span  class="col-md-6 pr-0">
-            To Date:&nbsp; <input  (change)="dateChange('toDate', $event)" [value]="payload.toDate" class='form-control' type='date'>
+            To Date:&nbsp; <input [max]="maxdate" (change)="dateChange('toDate', $event)" [value]="payload.toDate" class='form-control' type='date'>
             </span>
         </div>
       </div> 
@@ -27,6 +27,7 @@ export class IPCCheckboxComponent implements OnInit {
     @Input() field:any = {};
     @Input() form:FormGroup;
     @Input('feilddisable') public feilddisable:boolean;
+    maxdate= moment().format("YYYY-MM-DD");
 
     public payload:any={
         previousMonth:false,
@@ -35,7 +36,6 @@ export class IPCCheckboxComponent implements OnInit {
         fromDate:'',
         toDate:''
     }
-
 
     ngOnInit(): void {
         if(this.field.value!=''){

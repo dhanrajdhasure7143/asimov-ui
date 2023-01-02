@@ -16,6 +16,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { SoProcesslogComponent } from '../so-processlog/so-processlog.component';
 import {MatTable} from '@angular/material/table';
 import {CdkDragDrop, moveItemInArray, transferArrayItem, CdkDragHandle} from '@angular/cdk/drag-drop';
+import { ParseError } from '@angular/compiler';
 @Component({
   selector: 'app-new-so-automated-tasks',
   templateUrl: './new-so-automated-tasks.component.html',
@@ -99,7 +100,7 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
   public botSource_list:any[]=[];
   q=0;
   tasks:any;
-
+ ExecutionTypearr:any[] =[]
   constructor(
     private route: ActivatedRoute,
     private rest:RestApiService,
@@ -150,6 +151,7 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
     this.addTaskForm=this.formBuilder.group({
       tasks: [[], Validators.compose([Validators.required, Validators.maxLength(50)])]
     })
+
   }
 
   ngOnInit() {
@@ -180,13 +182,15 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
         this.getCategoryList(this.processId);
       },400)
       this.getallbots();
-      this.gethumanslist();
+      this.getUserslist();
       this.getuipathbots();
       this.getblueprismbots();
-      this.getallusers()
     });
     //this.getCategoryList(this.processId);
-   
+    this.ExecutionTypearr = [
+      { name: "Serial",},
+      { name: "Parllel"},
+    ];
  }
 
  sla_bot:any;
@@ -998,19 +1002,23 @@ resetsla(){
     });
   }
 
-  gethumanslist()
-  {
-    let tenant=localStorage.getItem("tenantName");
-    this.rest.getuserslist(tenant).subscribe(data=>{
-        this.isHumanLoading="Success"
-        this.humans_list=data;
-        if(this.isbotloading=="Success" && this.isHumanLoading=="Success")
-        {
-          if(this.selectedvalue!="")
-            this.checkTaskAssigned(this.selectedvalue)
+  getUserslist() {
+    let tenant = localStorage.getItem("tenantName");
+    this.rest.getuserslist(tenant).subscribe(data => {
+      this.isHumanLoading = "Success"
+      let users: any = data;
+      users.forEach(e => {
+        if (e.user_role_status != "INACTIVE") {
+          this.humans_list.push(e);
+          this.humans_list.sort((a, b) => a.userId.firstName.localeCompare(b.userId.firstName));
         }
-    },err=>{
-      this.isHumanLoading="Failure"
+      })
+      if (this.isbotloading == "Success" && this.isHumanLoading == "Success") {
+        if (this.selectedvalue != "")
+          this.checkTaskAssigned(this.selectedvalue)
+      }
+    }, err => {
+      this.isHumanLoading = "Failure"
     })
   }
 
@@ -1369,20 +1377,6 @@ resetsla(){
   })
   }
   
-  getallusers(){ // to get user list and display in dropdown
-    this.users_list=[];
-    let tenantid=localStorage.getItem("tenantName")
-    this.rest.getuserslist(tenantid).subscribe(res=>{
-      let users:any=res;
-      users.forEach(e=>{
-        if(e.user_role_status != "INACTIVE"){
-          this.users_list.push(e);
-          this.users_list.sort((a, b) => a.userId.firstName.localeCompare(b.userId.firstName));
-        }
-      })
-    }) 
-   }
-
   changeTaskOwner(userid){// to get userId from users list
     this.userID= userid
   }

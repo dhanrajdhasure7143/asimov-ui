@@ -10,7 +10,7 @@
     font-weight: 600;
     font-size: 22px;
     color: #001c47;
-    line-height: 0px !important;
+    /* line-height: 0px !important; */
 }
 .main-content1 .module-heading.title .value span {
     color: #001c47;

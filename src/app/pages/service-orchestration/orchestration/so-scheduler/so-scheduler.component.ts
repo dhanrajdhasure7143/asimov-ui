@@ -82,7 +82,8 @@ export class SoSchedulerComponent implements OnInit {
   start_time:any;
   end_time:any;
   constructor(private rest:RestApiService, private notifier: NotifierService) { }
-
+  mindate= moment().format("YYYY-MM-DD");
+  
   ngOnInit() {
     var dtToday = new Date();
     this.selecteddate=new Date()
