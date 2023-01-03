@@ -419,3 +419,7 @@ button:disabled {
 .flex-col button:hover img.testplus.hover-img {
   display : initial;
 }
+.noDataMessage{
+  text-align: center;
+  
+}

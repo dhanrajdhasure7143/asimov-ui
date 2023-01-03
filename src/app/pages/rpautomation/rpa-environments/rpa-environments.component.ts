@@ -37,7 +37,9 @@ export class RpaenvironmentsComponent implements OnInit {
   public keyValueFile: File;
   addflag: boolean = false;
   isCreate: boolean = true;
-
+  noDataMessage: boolean = false;
+  filterValue: number;
+  variableforapplyfilter:any;
   constructor(private api: RestApiService,
     private spinner: NgxSpinnerService) {
     this.updateflag = false;
@@ -59,7 +61,9 @@ export class RpaenvironmentsComponent implements OnInit {
         }
       }
       );
+      
     })
+    // this.length()
   }
 
   async getallData() {
@@ -67,12 +71,15 @@ export class RpaenvironmentsComponent implements OnInit {
     this.environments = [];
     await this.api.listEnvironments().subscribe(
       data => {
+        console.log(data);
         let response: any = data;
+        this.variableforapplyfilter=data;
         if (response.length > 0) {
           this.checkeddisabled = false;
         } else {
           this.checkeddisabled = true;
         }
+       
         // this.environments.sort((a, b) => a.activeTimeStamp > b.activeTimeStamp ? -1 : 1);
         this.environments = response.map(item => {
           item["checked"] = false;
@@ -99,7 +106,12 @@ export class RpaenvironmentsComponent implements OnInit {
         this.dataSource.paginator = this.paginator1;
         this.spinner.hide();
       });
+
   }
+
+  // length(){
+    
+  // }
 
   checkAllCheckBox(ev) {
     this.environments.forEach(x => x.checked = ev.target.checked)
@@ -288,6 +300,13 @@ export class RpaenvironmentsComponent implements OnInit {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
     this.dataSource.filter = filterValue;
+    // console.log(this.dataSource.filter);
+    if(this.dataSource.filteredData.length == 0){
+      this.noDataMessage = true;
+    }
+    else{
+      this.noDataMessage=false;
+    }
   }
 
   removeallchecks() {
@@ -310,6 +329,7 @@ export class RpaenvironmentsComponent implements OnInit {
   refreshEnvironmentList(event){
     if(event)
     this.getallData();
+    console.log(this.environments) 
   }
 
 }

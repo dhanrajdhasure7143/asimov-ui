@@ -5,6 +5,7 @@ import { RestApiService } from '../../services/rest-api.service';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import 'rxjs/add/operator/filter';
+import { MatTableDataSource } from '@angular/material/table';
 import { DataTransferService } from "../../services/data-transfer.service";
 import { Rpa_Hints } from "../model/RPA-Hints"
 // import * as $ from 'jquery';
@@ -59,7 +60,7 @@ export class RpaHomeComponent implements OnInit {
   botFormVisibility:boolean=false;
   @Output() pageChange: EventEmitter<number>;
   @Output() pageBoundsCorrection: EventEmitter<number>;
-
+  dataSource: MatTableDataSource<any>;
   importenv: any = "";
   importcat: any = "";
   importfile: any = "";
@@ -94,6 +95,8 @@ export class RpaHomeComponent implements OnInit {
   botlistitems: any = []
   categoryName: any;
   public sortkey: any;
+  noDataMessage: boolean;
+  // noDataMessage: boolean;
   constructor(
     private rest: RestApiService,
     private modalService: BsModalService,
@@ -528,7 +531,15 @@ export class RpaHomeComponent implements OnInit {
   applySearchFilter(v) {
     const filterPipe = new SearchRpaPipe();
     const fiteredArr = filterPipe.transform(this.botslist, v);
-    this.assignPagination(fiteredArr)
+    this.assignPagination(fiteredArr);
+    if(fiteredArr.length == 0){
+      this.noDataMessage = true;
+    }
+    else{
+      this.noDataMessage=false;
+    }
+  
+  
   }
 
   closeFormOverlay(event){

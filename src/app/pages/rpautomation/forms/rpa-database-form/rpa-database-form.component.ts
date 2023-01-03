@@ -55,7 +55,7 @@ export class RpaDatabaseFormComponent implements OnInit {
         dataBaseType: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         databasename: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         hostAddress: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-        categoryId:["0", Validators.compose([Validators.required])],
+        categoryId:["", Validators.compose([Validators.required])],
         password: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
         portNumber: ["",  Validators.compose([Validators.required, Validators.maxLength(6)])],
         schemaName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
