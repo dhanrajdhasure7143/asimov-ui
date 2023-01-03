@@ -20,7 +20,7 @@ export class CreateDepartmentComponent implements OnInit {
   ngOnInit(): void {
     this.loader.show();
     this.createDepartmentForm=this.formBuilder.group({
-      departmentName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      departmentName: ["", Validators.compose([Validators.required, Validators.maxLength(50),Validators.pattern("  ^[a-zA-Z0-9]([._-](?![._-])|[a-zA-Z0-9]){3,18}[a-zA-Z0-9]$")])],
       owner: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       })
       this.getallusers();

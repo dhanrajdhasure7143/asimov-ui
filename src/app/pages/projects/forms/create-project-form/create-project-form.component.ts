@@ -34,7 +34,7 @@ export class CreateProjectFormComponent implements OnInit {
   ngOnInit(): void {
     this.loggedInUserId=localStorage.getItem("ProfileuserId")
     this.insertForm2=this.formBuilder.group({
-      projectName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      projectName: ["", Validators.compose([Validators.required, Validators.maxLength(50),Validators.pattern("^[a-zA-Z0-9]([._-](?![._-])|[a-zA-Z0-9]){3,18}[a-zA-Z0-9]$")])],
       initiatives: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       resource: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       owner: [this.loggedInUserId, Validators.compose([Validators.required, Validators.maxLength(50)])],
@@ -42,14 +42,14 @@ export class CreateProjectFormComponent implements OnInit {
       endDate: [""],
       startDate: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       priority: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      measurableMetrics: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      measurableMetrics: ["", Validators.compose([Validators.required, Validators.maxLength(50),Validators.pattern("^[a-zA-Z0-9]([._-](?![._-])|[a-zA-Z0-9]){3,18}[a-zA-Z0-9]$")])],
       process: ["", Validators.compose([Validators.maxLength(50)])],
       processOwner: [""],
      
       // description: ["", Validators.compose([Validators.maxLength(200)])],
      // access: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       
-      projectPurpose: ["", Validators.compose([Validators.required, Validators.maxLength(150)])],
+      projectPurpose: ["", Validators.compose([Validators.required, Validators.maxLength(150),Validators.pattern("^[a-zA-Z0-9]([._-](?![._-])|[a-zA-Z0-9]){3,18}[a-zA-Z0-9]$")])],
       // status: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
 
     })
