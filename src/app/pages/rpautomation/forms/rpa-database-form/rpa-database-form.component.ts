@@ -253,7 +253,8 @@ export class RpaDatabaseFormComponent implements OnInit {
         this.refreshData.emit(true)
         if (status.errorMessage == undefined) {
           Swal.fire("Success", status.status, "success")
-          document.getElementById('Updatedbconnection').style.display = 'none';
+          // document.getElementById('Updatedbconnection').style.display = 'none';
+          document.getElementById('createdbconnection').style.display = 'none';
         } else {
           Swal.fire("Error", status.errorMessage, "error")
         }

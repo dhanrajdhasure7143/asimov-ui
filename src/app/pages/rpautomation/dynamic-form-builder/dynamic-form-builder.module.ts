@@ -7,7 +7,7 @@ import { CheckBoxComponent } from './atoms/checkbox';
 import { DropDownComponent } from './atoms/dropdown';
 import { RadioComponent } from './atoms/radio';
 import { TextBoxComponent } from './atoms/textbox';
-import { IPCCheckboxComponent } from './atoms/ipc-checkbox';
+import { IPCCheckboxComponent } from './atoms/ipc-checkbox'
 import { FileComponent } from './atoms/file.component';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';

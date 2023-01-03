@@ -241,7 +241,7 @@ export class RpaEnvironmentFormComponent implements OnInit {
       this.refreshTable.emit(true);
         if (response.errorMessage == undefined) {
           Swal.fire("Success", res.status, "success")
-          document.getElementById("update-popup").style.display = 'none';
+          document.getElementById("createenvironment").style.display = 'none';
         } else {
           Swal.fire("Error", response.errorMessage, "error")
         }

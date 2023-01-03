@@ -86,6 +86,7 @@ export class RpaSchedulerComponent implements OnInit {
   aftertime:boolean=false;
   checkScheduler : boolean = false;
   constructor(private rest:RestApiService, private notifier: NotifierService, private loader:LoaderService) { }
+  mindate= moment().format("YYYY-MM-DD");
   ngOnInit() {
     var dtToday = new Date();
     this.selecteddate=new Date()
@@ -240,7 +241,7 @@ gettime(){
         }
         if(beforecurrenttime){
           this.aftertime=true;
-          this.endtimeerror="end time should not be before than or equal to currenttime"
+          this.endtimeerror="end time should not be before than or equal to current time"
         }
        if(starttime_error){
          this.beforetime=true;

@@ -109,7 +109,10 @@ export class SoIncidentManagementComponent implements OnInit {
               this.spinner.hide();
             }, 100);
           }
-        } else{ this.spinner.hide(); Swal.fire("Error", response.errorMessage, "error")};
+        } else {
+           this.spinner.hide(); 
+          // Swal.fire("Error", response.errorMessage, "error")
+        };
       },
       (err) => {
         this.loadingFlag = false;
