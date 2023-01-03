@@ -300,7 +300,6 @@ export class RpaenvironmentsComponent implements OnInit {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
     this.dataSource.filter = filterValue;
-    // console.log(this.dataSource.filter);
     if(this.dataSource.filteredData.length == 0){
       this.noDataMessage = true;
     }
