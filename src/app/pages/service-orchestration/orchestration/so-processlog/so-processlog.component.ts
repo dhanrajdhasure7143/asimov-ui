@@ -12,7 +12,7 @@ import Swal from 'sweetalert2';
   templateUrl: './so-processlog.component.html',
   styleUrls: ['./so-processlog.component.css']
 })
-export class SoProcesslogComponent implements OnInit, OnDestroy{
+export class SoProcesslogComponent implements OnInit {
 
   @Input('processId') public processId: any;
   public logresponse: any;
@@ -59,15 +59,15 @@ export class SoProcesslogComponent implements OnInit, OnDestroy{
     this.getprocesslog()
   }
 
-  setProcesslog(){
-    clearInterval(this.interval2)
-    this.getprocesslog()
-    this.loadLogsFlag=true;
-    this.interval  = setInterval(()=> { 
-      this.getprocesslog()
-    }, 3000);
+  // setProcesslog(){
+  //   clearInterval(this.interval2)
+  //   this.getprocesslog()
+  //   this.loadLogsFlag=true;
+  //   this.interval  = setInterval(()=> { 
+  //     this.getprocesslog()
+  //   }, 3000);
     
-  }
+  // }
 
   getprocesslog(){
     let logbyrunidresp1:any;
@@ -123,23 +123,23 @@ export class SoProcesslogComponent implements OnInit, OnDestroy{
   }
 
   backpbotrunid(){
-    this.setProcessByRunID(this.selected_processRunId,this.logstatus)
+    this.getprocessrunid(this.selected_processRunId)
     document.getElementById("pbotrunid").style.display = "none";
     document.getElementById("plogrunid").style.display = "block";
-    clearInterval(this.interval1)
+    // clearInterval(this.interval1)
   }
 
-  setProcessByRunID(processRunId,runStatus){
-    clearInterval(this.interval)
-    this.getprocessrunid(processRunId)
-    this.logstatus=runStatus
-  //   this.loadLogsFlag=true
-  //   if(runStatus == "Running" || runStatus == "New" ){
-  //   // this.interval2=setInterval(()=>{
-  //   // this.getprocessrunid(processRunId)
-  //   // },3000)
+  // setProcessByRunID(processRunId,runStatus){
+  //   clearInterval(this.interval)
+  //   this.getprocessrunid(processRunId)
+  //   this.logstatus=runStatus
+  // //   this.loadLogsFlag=true
+  // //   if(runStatus == "Running" || runStatus == "New" ){
+  // //   // this.interval2=setInterval(()=>{
+  // //   // this.getprocessrunid(processRunId)
+  // //   // },3000)
+  // // }
   // }
-  }
 
 
   getprocessrunid(processRunId){
@@ -175,16 +175,16 @@ export class SoProcesslogComponent implements OnInit, OnDestroy{
     });
   }
 
-  setLogByRunID(runid,bot_status){
-    clearInterval(this.interval2)
-    this.ViewlogByrunid(runid)
-    this.loadLogsFlag=true
-    if(bot_status == "Running" || bot_status == "New" ){
-    this.interval1=  setInterval(()=>{
-      this.ViewlogByrunid(runid)
-    },3000)
-  }
-  }
+  // setLogByRunID(runid,bot_status){
+  //   clearInterval(this.interval2)
+  //   this.ViewlogByrunid(runid)
+  //   this.loadLogsFlag=true
+  //   if(bot_status == "Running" || bot_status == "New" ){
+  //   this.interval1=  setInterval(()=>{
+  //     this.ViewlogByrunid(runid)
+  //   },3000)
+  // }
+  // }
 
   ViewlogByrunid(runid){
     this.selected_runid=runid;
@@ -236,20 +236,20 @@ export class SoProcesslogComponent implements OnInit, OnDestroy{
       })
     }
 
-    ngOnDestroy(): void {
-      clearInterval(this.interval)
-      clearInterval(this.interval1)
-      clearInterval(this.interval2)
-      clearInterval(this.interval4)
-    }
+    // ngOnDestroy(): void {
+    //   clearInterval(this.interval)
+    //   clearInterval(this.interval1)
+    //   clearInterval(this.interval2)
+    //   clearInterval(this.interval4)
+    // }
 
 
-    setLoopLogs(element){
-      this.loadLogsFlag=true
-      this.interval4=setInterval(()=>{
-        this.getLoopLogs(element);
-      },3000)
-    }
+    // setLoopLogs(element){
+    //   this.loadLogsFlag=true
+    //   this.interval4=setInterval(()=>{
+    //     this.getLoopLogs(element);
+    //   },3000)
+    // }
 
 
     selectedLoopTask:any;
@@ -290,7 +290,7 @@ export class SoProcesslogComponent implements OnInit, OnDestroy{
 
     backtasktable()
     {
-      clearInterval(this.interval4)
+      // clearInterval(this.interval4)
       document.getElementById("loopStartLogs").style.display = "none";
       document.getElementById("pbotrunid").style.display = "block";
     }

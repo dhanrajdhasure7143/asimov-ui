@@ -31,7 +31,7 @@ export class RpaEnvironmentFormComponent implements OnInit {
     this.environmentForm = this.formBuilder.group({
       environmentName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       environmentType: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      agentPath: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      agentPath: ["", Validators.compose([Validators.required, Validators.maxLength(50),Validators.pattern("  ^[a-zA-Z0-9]([._-](?![._-])|[a-zA-Z0-9]){3,18}[a-zA-Z0-9]$")])],
       hostAddress: ["", Validators.compose([Validators.required, Validators.maxLength(50), Validators.pattern("(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)")])],
       categoryId: ["0", Validators.compose([Validators.required])],
       username: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
@@ -69,15 +69,15 @@ export class RpaEnvironmentFormComponent implements OnInit {
       this.environmentForm = this.formBuilder.group({
         environmentName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         environmentType: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-        agentPath: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        agentPath: ["", Validators.compose([Validators.required, Validators.maxLength(50),Validators.pattern("  ^[a-zA-Z0-9]([._-](?![._-])|[a-zA-Z0-9]){3,18}[a-zA-Z0-9]$")])],
         hostAddress: ["", Validators.compose([Validators.required, Validators.maxLength(50), Validators.pattern("(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)")])],
-        categoryId: ["0", Validators.compose([Validators.required])],
+        categoryId: ["", Validators.compose([Validators.required])],
         username: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         connectionType: ["SSH", Validators.compose([Validators.required, , Validators.maxLength(50), Validators.pattern("[A-Za-z]*")])],
         portNumber: ["22", Validators.compose([Validators.required, Validators.maxLength(4)])],
         activeStatus: [true]
       })
-      this.environmentForm.get("categoryId").setValue(this.categoriesList.length == 1 ? this.categoriesList[0].categoryId : "0")
+      // this.environmentForm.get("categoryId").setValue(this.categoriesList.length == 1 ? this.categoriesList[0].categoryId : "0")
     }
   }
 
@@ -241,7 +241,7 @@ export class RpaEnvironmentFormComponent implements OnInit {
       this.refreshTable.emit(true);
         if (response.errorMessage == undefined) {
           Swal.fire("Success", res.status, "success")
-          document.getElementById("update-popup").style.display = 'none';
+          document.getElementById("createenvironment").style.display = 'none';
         } else {
           Swal.fire("Error", response.errorMessage, "error")
         }

@@ -39,13 +39,22 @@
                         <input type="text" maxlength="51" class="form-control" formControlName="agentPath" value=""
                             placeholder="Enter Agent Path">
                         <span
-                            *ngIf="(environmentForm.get('agentPath').invalid && environmentForm.get('agentPath').touched) && !environmentForm.controls['agentPath'].hasError('maxlength')"
+                            *ngIf="(environmentForm.get('agentPath').invalid && environmentForm.get('agentPath').touched) && !environmentForm.controls['agentPath'].hasError('maxlength')&& !environmentForm.controls['agentPath'].hasError('pattern')"
                             class="errspan required"> Agent Path Required*</span>
 
                         <div *ngIf="environmentForm.controls['agentPath'].hasError('maxlength')"
                             class="errspan required">
                             Maximum of 50 characters
                         </div>
+                        <div *ngIf="(environmentForm.controls['agentPath'].hasError('pattern') && !environmentForm.controls['agentPath'].hasError('maxlength')) && environmentForm.get('agentPath').touched"
+                        class="errspan required">
+                        Invalid Agent Path format*
+                    </div>
+                    <div *ngIf="(environmentForm.controls['agentPath'].hasError('pattern') && environmentForm.controls['agentPath'].hasError('maxlength'))"
+                        class="errspan required">
+                        Invalid Agent Path format*
+                    </div>
+
                     </div>
                     <div class="col-md-12 p-0 form-group">
                         <label class="label-control" for="hostAddress"> IP Address / Host<span
@@ -66,9 +75,9 @@
                     </div>
                     <div class="col-md-12 p-0 form-group">
                         <label class="label-control" for="categoryId">Category<span class="star">*</span></label>
-                        <select type="text" class="form-control" formControlName="categoryId"
-                            [value]="categoriesList.length==1?categoriesList[0].categoryId:'0'">
-                            <option value="0" disabled hidden>Select Category</option>
+                        <select name="Category" class="form-control" formControlName="categoryId"
+                            [value]="categoriesList.length==1?categoriesList[0].categoryId:'0'" (change)="onChangeEnvType()" >
+                            <option value="" disabled hidden>Select Category</option>
                             <option [value]="category.categoryId" *ngFor="let category of categoriesList">
                                 {{category.categoryName}}</option>
                         </select>
@@ -90,7 +99,7 @@
                     </div>
                     <div class="col-md-12 p-0 form-group">
                         <label class="label-control" for="password"><input type="checkbox" [checked]="isKeyValuePair"
-                                (change)="keypair($event)">Key Pair Authentication<span class="star">*</span> </label>
+                                (change)="keypair($event)">Key Pair Authentication</label>
                     </div>
                     <div class="col-md-12 p-0 form-group" *ngIf="isKeyValuePair==false">
                         <label class="label-control" for="password">Password<span class="star">*</span></label>

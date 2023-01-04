@@ -214,3 +214,6 @@ button:disabled {
 .cell13 {
   width: 9%;
 }
+.noDataMessage{
+  text-align: center;
+}

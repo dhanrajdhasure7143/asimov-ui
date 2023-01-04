@@ -36,7 +36,7 @@ export class RpaBotFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.botForm = this.formBuilder.group({
-      botName: [""],
+      botName: ["",Validators.compose([Validators.required, Validators.maxLength(30), Validators.pattern("^[a-zA-Z0-9_-]*$")])],
       department: ["", Validators.required],
       description: ["", Validators.compose([Validators.maxLength(500)])],
       isPredefined: [false]
@@ -136,6 +136,7 @@ export class RpaBotFormComponent implements OnInit {
 
   validateBotName() {
     let botname = this.botForm.get("botName").value;
+    if(this.botDetails.botName !=botname){
     this.rest.checkbotname(botname).subscribe(data => {
       if (data == true) {
         this.botNameCheck = false;
@@ -143,6 +144,9 @@ export class RpaBotFormComponent implements OnInit {
         this.botNameCheck = true;
       }
     })
+  }else{
+    this.botNameCheck = false;
+  }
   }
 
   closeBotForm() {

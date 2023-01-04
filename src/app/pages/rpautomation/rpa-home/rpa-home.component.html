@@ -6,7 +6,7 @@
         <div class="row rpa-content-home">
             <div class="main-subheader">
                 <div class="main-subheaderTitle">
-                    <label class="main-subtitle">Let’s Automate !</label>
+                    <label class="main-subtitle">Let’s Automatee!</label>
                     <label class="subtitle-tag">Create and configure bots that suit your needs</label>
                     <div class="main-subheaderBtns">
                         <div class="rpa-home-block" id="createbot-Home" *ngIf="!this.userRole.includes('Process Owner') && !this.userRole.includes('RPA Developer')">
@@ -113,10 +113,10 @@
                                             </div>
                                             <div class="flex-col">
 
-                                                <span [tooltip]=bot.botName placement="bottom"> {{(bot.botName.length > 20) ? ((bot.botName).slice(0, 20) + '...') : bot.botName}}</span>
+                                                <span [matTooltip]=bot.botName placement="bottom"> {{(bot.botName.length > 20) ? ((bot.botName).slice(0, 20) + '...') : bot.botName}}</span>
                                             </div>
                                             <div class="flex-col">
-                                                <span *ngIf="bot.description!=null" placement="bottom" [tooltip]="bot.description" class="btndes"> {{(bot.description.length > 20) ? ((bot.description).slice(0, 20) + '...') : bot.description}}</span>
+                                                <span *ngIf="bot.description!=null" placement="bottom" [matTooltip]="bot.description" class="btndes"> {{(bot.description.length > 20) ? ((bot.description).slice(0, 20) + '...') : bot.description}}</span>
                                                 <span *ngIf="!bot.description">-</span>
                                             </div>
                                             <div class="flex-col">{{bot.categoryName}}</div>
@@ -126,18 +126,18 @@
                                                     <img src="../../../../assets/images/RPA/DotSpin.gif" class="testplus1">
                                                 </span>
                                                 <span *ngIf="bot.botStatus=='Success'">
-                                                    <img src="../../../../assets/images/RPA/icon_latest/Success.svg" tooltip="Success" placement="right"class="testplus1">
+                                                    <img src="../../../../assets/images/RPA/icon_latest/Success.svg" matTooltip="Success" placement="right"class="testplus1">
                                                 </span>
 
                                                 <span *ngIf="bot.botStatus=='Failure'">
-                                                    <img src="../../../../assets/images/RPA/icon_latest/close-red.svg" tooltip="Failed" placement="right" class="testplus1">
+                                                    <img src="../../../../assets/images/RPA/icon_latest/close-red.svg" matTooltip="Failed" placement="right" class="testplus1">
                                                 </span>
                                                 <span *ngIf="bot.botStatus=='New'" class="text-primary">
-                                                    <img src="../../../../assets/images/RPA/userobot.png"  tooltip="New" placement="right" class="testplus1">
+                                                    <img src="../../../../assets/images/RPA/userobot.png"  matTooltip="New" placement="right" class="testplus1">
                                                 </span>
 
                                                 <span *ngIf="bot.botStatus=='Stop' || bot.botStatus=='Stopped'">
-                                                    <img src="../../../../assets/images/RPA/icon_latest/stop.svg" tooltip="Stopped" placement="right"class="testplus1">
+                                                    <img src="../../../../assets/images/RPA/icon_latest/stop.svg" matTooltip="Stopped" placement="right"class="testplus1">
                                                 </span>
 
                                                 <span *ngIf="bot.botStatus=='Pause'||bot.botStatus=='Paused'" class="text-primary">
@@ -147,13 +147,13 @@
                                     
                                             </div>
                                             <div class="flex-col" *ngIf="!this.userRole.includes('Process Owner') && !this.userRole.includes('RPA Developer')">
-                                                <button tooltip="Edit Bot" placement="bottom" [disabled]="true" (click)="openEditBotOverlay(bot);botpanel1.toggle()">
+                                                <button matTooltip="Edit Bot" placement="bottom" [disabled]="true" (click)="openEditBotOverlay(bot);botpanel1.toggle()">
                                                     <img src="../../../../assets/images/Projects/edit-black.svg" alt="" class="testplus"> </button>
-                                                <button tooltip="Delete Bot" placement="bottom" [disabled]="isButtonVisible==true" (click)="botdelete(bot.botId);botpanel1.toggle()"><img src="../../../../assets/images/Projects/delete-black.svg" alt="" class="testplus"></button>
+                                                <button matTooltip="Delete Bot" placement="bottom" [disabled]="isButtonVisible==true" (click)="botdelete(bot.botId);botpanel1.toggle()"><img src="../../../../assets/images/Projects/delete-black.svg" alt="" class="testplus"></button>
                                             </div>
                                             <div class="flex-col" *ngIf="this.userRole.includes('Process Owner') || this.userRole.includes('RPA Developer')">
-                                                <button tooltip="Edit Bot" placement="bottom" [disabled]="!((isButtonVisible==true && userName==bot.createdBy)||(isButtonVisible==false))" (click)="openEditBotOverlay(bot);botpanel1.toggle()"><img src="../../../../assets/images/Projects/edit-black.svg" alt="" class="testplus default-img"><img src="../../../../../assets/images/Projects/Edit-blue.svg" alt="" class="testplus hover-img"> </button>                                                
-                                                <button tooltip="Delete Bot" placement="bottom" [disabled]="isButtonVisible==true" (click)="botdelete(bot.botId);botpanel1.toggle()"><img src="../../../../assets/images/Projects/delete-black.svg" alt="" class="testplus default-img">
+                                                <button matTooltip="Edit Bot" placement="bottom" [disabled]="!((isButtonVisible==true && userName==bot.createdBy)||(isButtonVisible==false))" (click)="openEditBotOverlay(bot);botpanel1.toggle()"><img src="../../../../assets/images/Projects/edit-black.svg" alt="" class="testplus default-img"><img src="../../../../../assets/images/Projects/Edit-blue.svg" alt="" class="testplus hover-img"> </button>                                                
+                                                <button matTooltip="Delete Bot" placement="bottom" [disabled]="isButtonVisible==true" (click)="botdelete(bot.botId);botpanel1.toggle()"><img src="../../../../assets/images/Projects/delete-black.svg" alt="" class="testplus default-img">
                                                 <img src="../../../../assets/images/Projects/delete-red.svg" alt="" class="testplus hover-img"></button>
                                             </div>
                                         </div>
@@ -182,11 +182,13 @@
                                 </div>
 
                             </mat-expansion-panel>
-                          
+                            <div class="noDataMessage" *ngIf="noDataMessage" >No Data Found</div>
+                        
                         </div>
+                       
+
                     </mat-accordion>
-
-
+                    
                 </div>
                 <div class="newpaginationdiv">
                     <mat-paginator #paginator301 [length]="totalRows$ | async" [pageIndex]="0" [pageSize]="10" [showFirstLastButtons]="true" [pageSizeOptions]="[5, 10, 25, 50]"></mat-paginator>

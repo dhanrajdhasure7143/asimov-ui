@@ -422,3 +422,7 @@ button:disabled {
 .cursor:hover{
   cursor: default;
 }
+.noDataMessage{
+  text-align: center;
+  
+}

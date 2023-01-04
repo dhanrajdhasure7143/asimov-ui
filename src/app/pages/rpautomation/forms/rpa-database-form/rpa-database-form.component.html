@@ -83,14 +83,14 @@
                     </div>
                     <div class="col-md-12 p-0 form-group">
                         <label class="label-control" for="categoryId">Category<span class="star">*</span></label>
-                        <select type="text" class="form-control" formControlName="categoryId"
+                        <select name="Category" type="text" class="form-control" formControlName="categoryId"
                             [value]="categoryList.length==1?categoryList[0].categoryId:'0'">
-                            <option value="0" disabled hidden>Select Category</option>
+                            <option value="" hidden disabled selected>Select Category</option>
                             <option [value]="category.categoryId" *ngFor="let category of categoryList">
                                 {{category.categoryName}}</option>
                         </select>
-                        <span *ngIf="(dbForm.get('categoryId').invalid && dbForm.get('categoryId').touched)"
-                            class="errspan required"> Username Required*</span>
+                        <span *ngIf="dbForm.get('categoryId').invalid && dbForm.get('categoryId').touched"
+                            class="errspan required">Category Required*</span>
                     </div>
                     <div class="col-md-12 p-0 form-group">
                         <label class="label-control" for="username">Username<span class="star">*</span></label>
