@@ -145,6 +145,8 @@
       </div>
     </div>
   </div>
+  <div class="noDataMessage" *ngIf="noDataMessage" >No Data Found</div>
+
   <mat-paginator #paginator2 [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons]="true"
     class="newpaginationdiv"></mat-paginator>
 </div>

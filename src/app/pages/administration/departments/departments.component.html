@@ -147,7 +147,7 @@
                     <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                     <tr class="row-highlight mat-footer" mat-footer-row  *matFooterRowDef="['noData']" [ngClass]="{'hide':!(departments==undefined ||  departments=='No records found')}"></tr>
             </table>
-
+            <div class="noDataMessage" *ngIf="noDataMessage" >No Data Found</div>
               <div>
                 <div *ngIf="departments.length==0" class="text-center">
                   <img  src="../../../../../assets/images/RPA/No-Items.svg" class="no-item-img">

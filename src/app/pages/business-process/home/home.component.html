@@ -46,6 +46,7 @@
                     <div class="cell cell10" mat-sort-header="reviewComments">Message</div>
                     <div class="cell cell11">Actions</div>
                 </div>
+
                 <div class="row col-md-12 new-bps-grid-data" id="bpmn_list">
                     <mat-accordion>
                         <mat-expansion-panel [(expanded)]="each_diag.xpandStatus"
@@ -135,8 +136,10 @@
                                         [id]="'_diagram'+i"></div>
                             </div>
                         </mat-expansion-panel>
+                        <div class="noDataMessage" *ngIf="noDataMessage" >No Data Found</div>
                     </mat-accordion>
                 </div>
+                
                 <div class="bpspaginationdiv">
                     <mat-paginator #paginator [length]="totalRows$ | async" [pageIndex]="0" [pageSize]="25"
                         [showFirstLastButtons]="true" [pageSizeOptions]="[5, 10, 25, 50]"></mat-paginator>

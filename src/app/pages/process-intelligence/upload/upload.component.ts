@@ -82,6 +82,7 @@ export class UploadComponent implements OnInit {
   refreshSubscription:Subscription;
   @ViewChild('database',{static:false}) mytemplateForm : NgForm;
   modesList=[{name:"Incrementing",value:"incrementing"},{name:"Timestamp",value:"timestamp"},{name:"Incrementing with Timestamp",value:"timestamp+incrementing"}]
+  noDataMessage: boolean;
 
 
   constructor(private router: Router,
@@ -862,6 +863,12 @@ getDBTables(){      //get DB tables list
     this.dataSource.sort=this.sort;
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
+    }
+    if(this.dataSource.filteredData.length == 0){
+      this.noDataMessage = true;
+    }
+    else{
+      this.noDataMessage=false;
     }
   }
 

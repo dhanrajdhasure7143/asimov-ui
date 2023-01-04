@@ -28,6 +28,7 @@ export class DepartmentsComponent implements OnInit {
   departmentName: any;
   department: string;
   users_list:any=[];
+  noDataMessage: boolean;
   constructor(private api: RestApiService,private loader: LoaderService,private router: Router ) {
   
   }
@@ -191,6 +192,12 @@ export class DepartmentsComponent implements OnInit {
     this.dataSource2.filter = filterValue.trim().toLowerCase();
     if (this.dataSource2.paginator) {
       this.dataSource2.paginator.firstPage();
+      if(this.dataSource2.filteredData.length == 0){
+        this.noDataMessage = true;
+      }
+      else{
+        this.noDataMessage=false;
+      }
     }
   }
   

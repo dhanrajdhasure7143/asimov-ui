@@ -62,6 +62,7 @@ export class ProjectsProgramsTableComponent implements OnInit {
   userName: string;
   initiatives: any;
   @Output() projectslistdata = new EventEmitter<any[]>();
+  noDataMessage: boolean;
 
   constructor(
     private api: RestApiService,
@@ -225,6 +226,12 @@ export class ProjectsProgramsTableComponent implements OnInit {
     this.dataSource2.sort = this.sort2;
     this.dataSource2.paginator = this.paginator2;
     this.dataSource2.filter;
+    if(this.dataSource2.filteredData.length == 0){
+      this.noDataMessage = true;
+    }
+    else{
+      this.noDataMessage=false;
+    }
   }
   deleteproject(project) {
     var projectdata: any = project;
