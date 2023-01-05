@@ -75,7 +75,7 @@ export class UploadComponent implements OnInit {
   categoryName: any;
   public isButtonVisible = false;
   isUploadFileName:string;
-  isLoading:boolean=false;
+  isLoading:boolean=true;
   categories_list:any[]=[];
   freetrail: string;
   overlay_data:any={};
@@ -107,6 +107,8 @@ export class UploadComponent implements OnInit {
     this.userRole = localStorage.getItem("userRole")
     this.userRole = this.userRole.split(',');
     this.isButtonVisible = this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') || this.userRole.includes('Process Owner') || this.userRole.includes('Process Architect')  || this.userRole.includes('Process Analyst')  || this.userRole.includes('RPA Developer')  || this.userRole.includes('Process Architect') || this.userRole.includes("System Admin") ;
+   
+  
     this.rest.getCustomUserRole(2).subscribe(role=>{
       this.customUserRole=role.message[0].permission;
       this.customUserRole.forEach(element => {
@@ -126,6 +128,7 @@ export class UploadComponent implements OnInit {
         }
       }
     })
+   
   }
 
   ngOnDestroy() {
@@ -488,8 +491,16 @@ export class UploadComponent implements OnInit {
   getAlluserProcessPiIds() {        // get user process ids list on workspace
     this.loader.show();
     this.dt.processDetailsUpdateSuccess({"isRfresh":false});
-    this.rest.getAlluserProcessPiIds().subscribe(data => {
-    this.process_List = data
+    this.rest.getAlluserProcessPiIds().subscribe((data:any) => {
+    this.process_List = data;
+    if(data.data.length==0)
+    {
+      this.noDataMessage=true;
+    }
+    else
+    {
+      this.noDataMessage=false;
+    }
       this.process_List.data.sort(function (a, b) {
         a = new Date(a.createdTime);
         b = new Date(b.createdTime);

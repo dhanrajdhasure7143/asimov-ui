@@ -202,10 +202,19 @@ export class RpaHomeComponent implements OnInit {
     this.rest.getAllActiveBots().subscribe(botlist => {
         this.loadflag = false;
       response = botlist;
+      if(response.length==0)
+      {
+        this.noDataMessage=true;
+      }
+      else
+      {
+        this.noDataMessage=false;
+      }
       response.map(item => {
         if (item.version_new != null) {
           item["version_new"] = parseFloat(item.version_new)
           item["version_new"] = item.version_new.toFixed(1)
+          
         }
       })
       this.botlistitems = botlist;
@@ -228,6 +237,7 @@ export class RpaHomeComponent implements OnInit {
   createoverlay() {
     this.botNamespace = false;
     if (this.freetrail == 'true') {
+     
       if (this.bot_list.length == this.appconfig.rpabotfreetraillimit) {
         Swal.fire({
           title: 'Error',

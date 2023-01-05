@@ -113,6 +113,14 @@ export class ProjectsProgramsTableComponent implements OnInit {
             this.viewallprojects = true;
           }
         });
+        if(Response.length==0)
+        {
+          this.noDataMessage=true;
+        }
+        else
+        {
+          this.noDataMessage=false;
+        }
       }
     });
     this.userName =

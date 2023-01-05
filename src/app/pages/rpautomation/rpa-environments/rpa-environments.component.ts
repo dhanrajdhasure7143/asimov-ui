@@ -40,6 +40,7 @@ export class RpaenvironmentsComponent implements OnInit {
   noDataMessage: boolean = false;
   filterValue: number;
   variableforapplyfilter:any;
+  filteredData: number;
   constructor(private api: RestApiService,
     private spinner: NgxSpinnerService) {
     this.updateflag = false;
@@ -77,6 +78,7 @@ export class RpaenvironmentsComponent implements OnInit {
         if (response.length > 0) {
           this.checkeddisabled = false;
         } else {
+          this.noDataMessage=true
           this.checkeddisabled = true;
         }
        
