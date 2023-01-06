@@ -49,7 +49,7 @@ export class DropDownComponent implements OnInit {
       this.fieldsWithoutRef=[...this.designer.fields];
       if(this.field.name=="fillValueType")
       {
-        if(this.field.value=='Check Box')
+        if(this.field.value=='Radio Button')
         {
           
           let tenant=localStorage.getItem('tenantName');
@@ -97,7 +97,7 @@ export class DropDownComponent implements OnInit {
           {
             this.fieldsWithRef.find((item:any)=>item.name=="fillValue").type="password"
           }
-          else if(event.target.value=="Check Box")
+          else if(event.target.value=="Radio Button")
           {
             let tenant=localStorage.getItem('tenantName');
             if(environment.ipcTenant==tenant){
