@@ -227,7 +227,6 @@ export class DynamicFormsComponent implements OnInit {
     {
       this.isdisabled = true
     }
-
   }
 
   drop(event: CdkDragDrop<[]>) {
