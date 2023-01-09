@@ -163,22 +163,23 @@
               <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
               <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
               </table>
-              <div *ngIf="respdata1 && (search !='' || selectedcat !='' || selected_source!='' ) && bot_list.length !=0" class="text-center">
+              <!-- <div *ngIf="respdata1 && (search !='' || selectedcat !='' || selected_source!='' ) && bot_list.length !=0" class="text-center">
                 <img src="../../../../../assets/images/RPA/No-Items.svg"  style="height:calc(100vh - 400px)">
                 <br><br>
                   <h4>No items to display</h4>
               
              
-               </div>
-         
+               </div> -->
+               <div class="noDataMessage" *ngIf="noDataMessage" >No Data Found</div>
+
             </div>
 
-          <div *ngIf="bot_list.length==0" style="text-align: center;">
+          <!-- <div *ngIf="bot_list.length==0" style="text-align: center;">
             <img src="../../../../../assets/images/RPA/No-Items.svg"  style="height:calc(100vh - 400px)">
             <br><br>
               <h4>No items to display</h4>
               
-          </div>
+          </div> -->
           <div class="newpaginationdiv">
             <mat-paginator class="newpaginationdiv" #paginator1 [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]"
                  [showFirstLastButtons]="true"></mat-paginator>
@@ -293,7 +294,8 @@
 
                   <tr mat-header-row *matHeaderRowDef="displayedColumns6; sticky: true"></tr>
                   <tr mat-row *matRowDef="let row; columns: displayedColumns6;"></tr>
-              </table>
+                  </table>
+                 <div class="noDataMessage" *ngIf="noDataMessage" >No Data Found</div>             
           </div>
           <!-- <mat-paginator #paginator6 [pageSize]="5" [showFirstLastButtons]="true"></mat-paginator> -->
       </div>

@@ -421,5 +421,7 @@ button:disabled {
 }
 .noDataMessage{
   text-align: center;
+  /* padding: 120px; */
+  margin-top: 100px;
   
 }

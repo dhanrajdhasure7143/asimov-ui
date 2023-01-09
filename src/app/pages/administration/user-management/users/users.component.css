@@ -86,4 +86,8 @@ span.testtooltip:before {
 .pcell8 {
   width: 4%;
 }
+.noDataMessage{
+  text-align: center;
+ margin-top: 100px;
+}
 

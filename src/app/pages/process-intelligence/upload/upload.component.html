@@ -135,6 +135,8 @@
                                 <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="pList"></tr>
                                 <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(process_graph_list.length==0)}"></tr>
                    </table>
+                   <div class="noDataMessage" *ngIf="noDataMessage" >No Data Found</div>
+                        
                 </div>
                 <div class="pipaginationdiv">
                      <mat-paginator class="newpaginationdiv" #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons]="true"></mat-paginator>

@@ -33,6 +33,7 @@ export class UsersComponent implements OnInit {
   ];
   loggedinUser: string;
   freetrail: string;
+  noDataMessage: boolean;
 
   constructor(
     private api: RestApiService,
@@ -165,6 +166,12 @@ export class UsersComponent implements OnInit {
     this.dataSource2.filter = filterValue.trim().toLowerCase();
     if (this.dataSource2.paginator) {
       this.dataSource2.paginator.firstPage();
+      if(this.dataSource2.filteredData.length == 0){
+        this.noDataMessage = true;
+      }
+      else{
+        this.noDataMessage=false;
+      }
     }
   }
 
