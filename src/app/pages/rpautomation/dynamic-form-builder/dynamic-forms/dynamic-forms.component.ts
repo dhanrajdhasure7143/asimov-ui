@@ -215,8 +215,8 @@ export class DynamicFormsComponent implements OnInit {
       if (f.type == 'email')
         fieldsCtrls[f.name + '_' + f.id] = new FormControl(f.value || '', f.required && f.dependency == '' ? [Validators.pattern("[a-zA-Z0-9.-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{3,}")] : [Validators.pattern("[a-zA-Z0-9.-]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{3,}")])
       else
-        fieldsCtrls[f.name + '_' + f.id] = new FormControl(f.value || '', f.required && f.dependency == '' ? [Validators.compose([Validators.required, Validators.pattern("^[A-Za-z0-9]+[A-Za-z0-9-@.\/#&+\w\s_?!,$~| =()\\{\\}\\[\\]]*$")])] : [Validators.pattern("^[A-Za-z0-9]+[A-Za-z0-9-@.\/#&+\w\s_?!,$~| =()\\{\\}\\[\\]]*$")])
-    }
+        fieldsCtrls[f.name + '_' + f.id] = new FormControl(f.value || '', f.required && f.dependency == '' ? [Validators.compose([Validators.required])] : [])
+    }//Validators.pattern("^[A-Za-z0-9]+[A-Za-z0-9-@.\/#&+\w\s_?!,$~| =()\\{\\}\\[\\]]*$")
     this.form = new FormGroup(fieldsCtrls);
     this.userRole = localStorage.getItem("userRole");
     if (this.userRole == 'Process Owner' || this.userRole == 'RPA Developer') 
