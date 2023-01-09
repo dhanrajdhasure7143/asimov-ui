@@ -29,7 +29,7 @@ export const environment = {
   // Data upload path
   data_path: "/usr/share/confluent-ftp-data",
   // PI Connectors
-  connector_topic: "kafkaDev",
+  connector_topic: "nodeDev",
   //DB Connector
   dbConnectorHost: "pgpooldev",
   dbName: "eiap_dev",
