@@ -205,15 +205,27 @@ export class SoProcesslogComponent implements OnInit {
       }else{
         this.respdata2 = true;
       }
-        responsedata.forEach(rlog=>{
+      let flag=0;
+      let updatedTaskList:any=[...responsedata.map(rlog=>{
         logbyrunidresp1=rlog;
         logbyrunidresp1["start_date"]=logbyrunidresp1.start_time;
         logbyrunidresp1["end_date"]=logbyrunidresp1.end_time;
         logbyrunidresp1.start_time=logbyrunidresp1.start_time;
         logbyrunidresp1.end_time=logbyrunidresp1.end_time;
-        resplogbyrun1.push(logbyrunidresp1)
-      });
-      this.dataSourcep3 = new MatTableDataSource(resplogbyrun1);
+        return logbyrunidresp1;
+        //resplogbyrun1.push(logbyrunidresp1)
+      }).filter((item:any)=>{
+        if(item.task_name=='Loop-Start')
+        {
+          flag=1;
+          return item;
+        }
+        if(item.task_name=='Loop-End')
+          flag=0;
+        if(flag==0)
+          return item;
+      })];
+      this.dataSourcep3 = new MatTableDataSource(updatedTaskList);
       this.changeDetectorRef.detectChanges();
       this.dataSourcep3.sort=this.sortp3;
       this.dataSourcep3.paginator=this.paginator3;
