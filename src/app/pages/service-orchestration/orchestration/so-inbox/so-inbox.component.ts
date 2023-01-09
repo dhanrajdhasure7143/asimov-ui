@@ -23,6 +23,7 @@ export class SoInboxComponent implements OnInit {
     logresponse:any=[];
     @ViewChild("paginator1",{static:false}) paginator1: MatPaginator;
     @ViewChild("sort1",{static:false}) sort1: MatSort;
+    noDataMessage: boolean;
 
     constructor(private route: ActivatedRoute,
       private rest:RestApiService,
@@ -114,6 +115,11 @@ export class SoInboxComponent implements OnInit {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
     this.dataSource1.filter = filterValue;
+    if(this.dataSource1.filteredData.length == 0){
+      this.noDataMessage = true;
+    } else{
+      this.noDataMessage=false;
+    }
   }
 
   reset(){
