@@ -46,6 +46,6 @@ task buildAll {
   tasks.findByName("dockerized").mustRunAfter "build"
 }
 
-jar.dependsOn "npm_run_build -- --c dev"
+jar.dependsOn "npm_run_build"
 clean.dependsOn "cleanAll"
 
