@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import moment from 'moment';
 import { NotifierService } from 'angular-notifier';
 import cronstrue from 'cronstrue';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-so-scheduler',
   templateUrl: './so-scheduler.component.html',
@@ -81,7 +82,8 @@ export class SoSchedulerComponent implements OnInit {
   currenttime: any;
   start_time:any;
   end_time:any;
-  constructor(private rest:RestApiService, private notifier: NotifierService) { }
+  constructor(private rest:RestApiService, private notifier: NotifierService,
+    private spinner:NgxSpinnerService) { }
   mindate= moment().format("YYYY-MM-DD");
   
   ngOnInit() {
@@ -567,7 +569,9 @@ export class SoSchedulerComponent implements OnInit {
 
 
   async saveschedule()
+  
   {
+    this.spinner.show();
     if(this.botid !=undefined && this.botid != "")
     {
       if(this.schedule_list.length==0)
@@ -602,7 +606,7 @@ export class SoSchedulerComponent implements OnInit {
           if(resp.errorMessage==undefined)
           {
             this.notifier.notify("success","Schedules saved successfully")
-
+           
             /*if(resp.botMainSchedulerEntity==null){
             }
             else if(resp.botMainSchedulerEntity.scheduleIntervals.length==this.schedule_list.length){
@@ -610,7 +614,7 @@ export class SoSchedulerComponent implements OnInit {
             }*/
             this.get_schedule();
             this.updateflags();
-
+           
           }
           else
           {
@@ -632,6 +636,7 @@ export class SoSchedulerComponent implements OnInit {
           this.notifier.notify("success","Schedules saved successfully");
           this.get_schedule();
           this.updateflags();
+          this.spinner.hide();
         }
         else
         {
