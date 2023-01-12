@@ -136,6 +136,7 @@ export class RpaBotFormComponent implements OnInit {
 
   validateBotName() {
     let botname = this.botForm.get("botName").value;
+    if(!this.isCreateForm){
     if(this.botDetails.botName !=botname){
     this.rest.checkbotname(botname).subscribe(data => {
       if (data == true) {
@@ -146,6 +147,14 @@ export class RpaBotFormComponent implements OnInit {
     })
   }else{
     this.botNameCheck = false;
+  }}else{
+    this.rest.checkbotname(botname).subscribe(data => {
+      if (data == true) {
+        this.botNameCheck = false;
+      } else {
+        this.botNameCheck = true;
+      }
+    })
   }
   }
 
