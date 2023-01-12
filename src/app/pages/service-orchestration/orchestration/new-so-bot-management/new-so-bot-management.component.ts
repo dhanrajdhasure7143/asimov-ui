@@ -107,6 +107,7 @@ public slaupdate : boolean = false;
     popup:Boolean=false;
     logs_modal:any;
     draggableHandle:any;
+  noDataMessage: boolean;
     constructor(private route: ActivatedRoute,
       private rest:RestApiService,
       private router: Router,
@@ -179,6 +180,11 @@ public slaupdate : boolean = false;
        this.dataSource1.filter = value1;
        this.dataSource1.sort=this.sort1;
        this.dataSource1.paginator=this.paginator1;
+       if(this.dataSource1.filteredData.length == 0){
+        this.noDataMessage = true;
+      } else{
+        this.noDataMessage=false;
+      }
       
     }
     else if(this.search != '' && this.selected_source !="")
@@ -196,6 +202,11 @@ public slaupdate : boolean = false;
        this.dataSource1.filter = value1;
        this.dataSource1.sort=this.sort1;
        this.dataSource1.paginator=this.paginator1;
+       if(this.dataSource1.filteredData.length == 0){
+        this.noDataMessage = true;
+      } else{
+        this.noDataMessage=false;
+      }
     }
     else if(this.search != '' && this.selectedcat != '')
     {
@@ -212,6 +223,11 @@ public slaupdate : boolean = false;
       let value1 = this.search.toLowerCase();
       
        this.dataSource1.filter = value1;
+       if(this.dataSource1.filteredData.length == 0){
+        this.noDataMessage = true;
+      } else{
+        this.noDataMessage=false;
+      }
      
        this.dataSource1.sort=this.sort1;
        this.dataSource1.paginator=this.paginator1;
@@ -245,6 +261,11 @@ public slaupdate : boolean = false;
       this.dataSource1.paginator=this.paginator1;
       let value1 = this.search.toLowerCase();
       this.dataSource1.filter = value1;
+      if(this.dataSource1.filteredData.length == 0){
+        this.noDataMessage = true;
+      } else{
+        this.noDataMessage=false;
+      }
       this.respdata1=(this.dataSource1.filteredData.length>0)?false:true;
       
     }
@@ -261,6 +282,11 @@ public slaupdate : boolean = false;
       this.dataSource1 = new MatTableDataSource(result);
       this.dataSource1.sort=this.sort1;
       this.dataSource1.paginator=this.paginator1;
+      if(this.dataSource1.filteredData.length == 0){
+        this.noDataMessage = true;
+      } else{
+        this.noDataMessage=false;
+      }
     }
     else if(this.selectedcat!="")
     {
@@ -275,12 +301,22 @@ public slaupdate : boolean = false;
       this.dataSource1 = new MatTableDataSource(result);
       this.dataSource1.sort=this.sort1;
       this.dataSource1.paginator=this.paginator1;
+      if(this.dataSource1.filteredData.length == 0){
+        this.noDataMessage = true;
+      } else{
+        this.noDataMessage=false;
+      }
     }
     else
     {
       this.dataSource1=new MatTableDataSource(this.bot_list);
       this.dataSource1.paginator=this.paginator1;
       this.dataSource1.sort=this.sort1;
+      if(this.dataSource1.filteredData.length == 0){
+        this.noDataMessage = true;
+      } else{
+        this.noDataMessage=false;
+      }
 
     }
   }

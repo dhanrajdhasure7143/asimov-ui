@@ -65,6 +65,7 @@ export class BpsHomeComponent implements OnInit {
   refreshSubscription:Subscription;
   selected_notation:any={};
   isLoaderShow:boolean=true;
+  noDataMessage: boolean;
 
   constructor(private router:Router, private bpmnservice:SharebpmndiagramService, private dt:DataTransferService,
      private rest:RestApiService, private hints:BpsHints, private global:GlobalScript,
@@ -488,6 +489,12 @@ this.assignPagenation(filtered)
     const filterPipe = new FilterPipe();
   const fiteredArr = filterPipe.transform(this.saved_diagrams,v);
   this.assignPagenation(fiteredArr)
+  if(fiteredArr.length == 0){
+    this.noDataMessage = true;
+  }
+  else{
+    this.noDataMessage=false;
+  }
   }
 
   onEdit(e,obj){

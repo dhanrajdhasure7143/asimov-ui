@@ -336,4 +336,8 @@ img.hover-img {
     width: 10%;
     cursor:default;
   }
+  .noDataMessage{
+    text-align: center;
+    margin-top: 100px;
+  }
   
