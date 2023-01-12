@@ -76,7 +76,7 @@
                     <div class="col-md-12 p-0 form-group">
                         <label class="label-control" for="categoryId">Category<span class="star">*</span></label>
                         <select name="Category" class="form-control" formControlName="categoryId"
-                            [value]="categoriesList.length==1?categoriesList[0].categoryId:'0'" (change)="onChangeEnvType()" >
+                            [value]="categoriesList.length==1?categoriesList[0].categoryId:''" (change)="onChangeEnvType()" >
                             <option value="" disabled hidden>Select Category</option>
                             <option [value]="category.categoryId" *ngFor="let category of categoriesList">
                                 {{category.categoryName}}</option>
