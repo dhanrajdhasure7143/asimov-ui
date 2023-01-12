@@ -66,9 +66,9 @@ export class RpaCredentialFormComponent implements OnInit {
         password: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         categoryId:["", Validators.compose([Validators.required])],
         serverName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-        inBoundAddress: ["", Validators.compose([Validators.required, Validators.maxLength(50),Validators.pattern("^[a-zA-Z0-9]([._-](?![._-])|[a-zA-Z0-9]){3,18}[a-zA-Z0-9]$")])],
+        inBoundAddress: ["", Validators.compose([Validators.required, Validators.maxLength(50),Validators.pattern("^[a-zA-Z0-9_-]*$")])],
         inBoundAddressPort: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-        outBoundAddress: ["", Validators.compose([Validators.required, Validators.maxLength(50),Validators.pattern("^[a-zA-Z0-9]([._-](?![._-])|[a-zA-Z0-9]){3,18}[a-zA-Z0-9]$")])],
+        outBoundAddress: ["", Validators.compose([Validators.required, Validators.maxLength(50),Validators.pattern("^[a-zA-Z0-9_-]*$")])],
         outboundAddressPort: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     })
     }
