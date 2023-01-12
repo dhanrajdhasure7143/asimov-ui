@@ -234,11 +234,9 @@ inputNumberOnly(event){
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
     this.dataSource2.filter = filterValue;
-    console.log(this.dataSource2.filteredData.length);
     if (this.dataSource2.filteredData.length === 0) {
       this.noDataMessage = true;
-    }
-    else {
+    }else {
       this.noDataMessage = false;
     }
   }

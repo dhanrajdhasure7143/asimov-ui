@@ -212,7 +212,7 @@ th {
   outline: none;
   color: white;
   white-space: nowrap;
-  -webkit-user-select:none;
+  -webkit-user-select: none;
   cursor: pointer;
   position: absolute;
   top: 27px;
