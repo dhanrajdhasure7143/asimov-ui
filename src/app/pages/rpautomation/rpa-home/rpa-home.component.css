@@ -419,6 +419,9 @@ button:disabled {
 .flex-col button:hover img.testplus.hover-img {
   display : initial;
 }
+.cursor:hover{
+  cursor: default;
+}
 .noDataMessage{
   text-align: center;
   /* padding: 120px; */

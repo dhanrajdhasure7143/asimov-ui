@@ -334,6 +334,7 @@ img.hover-img {
   }
   .pcell6 {
     width: 10%;
+    cursor:default;
   }
   .noDataMessage{
     text-align: center;

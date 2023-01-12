@@ -1,8 +1,7 @@
 <div class="rpa-content-div mx-3" *ngIf="this.isButtonVisible || enableDbconnection">
     <div class="row credential-search-tools">
         <div class="rpa-env-search credential-search">
-            <input class="form-control toolbar-search" placeholder="Search"
-                (keyup)="applyFilter1($event.target.value)">
+            <input class="form-control toolbar-search" placeholder="Search" (keyup)="applyFilter1($event.target.value)">
             <img src="../../../../assets/images/search.svg" matSuffix class="testplus1">
         </div>
         <div class="env-data-tool credential-tools">
@@ -21,13 +20,13 @@
             <div *ngIf="DBupdateflag == true" class="env-btn credential-btntool">
                 <button class="tsttooltipbtn" id="updatedbbtn" (click)="updatedbdata()">
                     <img src='../../../../assets/images/RPA/icon_latest/edit-blue.svg'>
-                    <span class="testtooltip">Modify</span>
+                    <span class="testtooltip">Edit</span>
                 </button>
             </div>
             <div *ngIf="DBupdateflag == false" class="env-btn credential-btntool">
                 <button id="updatedbbtn" data-placement="top" title="Modify Database Connection" disabled>
                     <img src='../../../../assets/images/RPA/icon_latest/edit-dis.svg'>
-                    <span class="testtooltip">Modify</span>
+                    <span class="testtooltip">Edit</span>
                 </button>
             </div>
             <div *ngIf="DBdeleteflag==true" class="env-btn credential-btntool">
@@ -145,11 +144,9 @@
                 <tr mat-header-row *matHeaderRowDef="displayedColumns1; sticky: true"></tr>
                 <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
             </table>
-            <div>
-            </div>
+            <div class="noData" *ngIf="noDataMessage===true">No Data Found</div>
         </div>
         <mat-paginator #paginator4 [pageSize]="10" [pageIndex]="0" [pageSizeOptions]="[5, 10, 25, 50]"
             [showFirstLastButtons]="true" class="newpaginationdiv"></mat-paginator>
     </div>
-
     <app-rpa-database-form [isDatabase]="isDatabase" [dbupdatedata]="dbupdatedata" (refreshData)="refreshDataBaseList($event)"> </app-rpa-database-form>

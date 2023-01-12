@@ -45,19 +45,19 @@
             </span>
 
             <span class="deleteSpan">
-              <span *ngIf="!filecheckflag" (click)="onDeleteSelectedItems($event)" class="delete-icon">
+              <span *ngIf="!filecheckflag" (click)="onDeleteSelectedItems($event)" class="delete-icon"   matTooltip="Delete">
                       <!-- <img matTooltip="Delete Process" matTooltipPosition="left" src="../../../../assets/images/BPMS/delete-red.svg"  > -->
-                      <img src="../../../../assets/images/Projects/delete-black.svg" matTooltip="Delete" class="default-img">
-                      <img src="../../../../assets/images/Projects/delete-red.svg" matTooltip="Delete" class="hover-img">
+                      <img src="../../../../../assets/images/Projects/delete-black.svg" class="default-img">
+                      <img src="../../../../../assets/images/Projects/delete-red.svg" class="hover-img">
               </span>
               <span *ngIf="filecheckflag" class="delete-icon delete-icon-disabled">
                       <img matTooltip="Delete" matTooltipPosition="bottom" src="../../../../assets/images/PI/delete_disabled.svg"  >
               </span>
       </span>
 
-            <!-- <span class="">
+            <!-- <span class="deleteSpan">
               
-              <button [disabled]="filecheckflag" class=""     matTooltip="Delete" >
+              <button [disabled]="filecheckflag" class="delete-icon delete-icon-disabled"     matTooltip="Delete" >
                 <img src="../../../../assets/images/Projects/delete-black.svg" class="default-img">
               <img src="../../../../assets/images/Projects/delete-red.svg" class="hover-img">
               </button>
@@ -67,9 +67,9 @@
               <img src="../../../../assets/images/Admin/download-black.svg" class="default-img">
               <img src="../../../../assets/images/Admin/download-blue.svg" class="hover-img">
             </span> 
-            <!-- <span class="projects-menu-item" type="button" (click)="onDeleteSelectedItems($event)"><i class="fa fa-trash"></i></span> -->
-            <!-- <span class="projects-menu-item projects-menu-item1" type="button" (click)="onDownloadSelectedItems($event)"><img src="../../../../assets/images/Projects/Download.svg" class="testplus default-img"></span> -->
-            <!-- <span class="projects-menu-item"><i class="fa fa-download"></i></span> -->
+             <!-- <span class="projects-menu-item" type="button" (click)="onDeleteSelectedItems($event)"><i class="fa fa-trash"></i></span> -->
+             <!-- <span class="projects-menu-item projects-menu-item1" type="button" (click)="onDownloadSelectedItems($event)"><img src="../../../../assets/images/Projects/Download.svg" class="testplus default-img"></span> -->
+             <!-- <span class="projects-menu-item"><i class="fa fa-download"></i></span>    -->
             <span class="projects-menu-item" matTooltip="More">
               <img src="../../../../assets/images/Projects/more.svg" class="testplus1">
             </span>            
