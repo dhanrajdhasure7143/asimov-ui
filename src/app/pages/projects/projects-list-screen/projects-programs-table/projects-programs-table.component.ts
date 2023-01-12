@@ -113,7 +113,7 @@ export class ProjectsProgramsTableComponent implements OnInit {
             this.viewallprojects = true;
           }
         });
-        if(Response.length==0)
+        if(this.dataSource2.filteredData.length==0)
         {
           this.noDataMessage=true;
         }
