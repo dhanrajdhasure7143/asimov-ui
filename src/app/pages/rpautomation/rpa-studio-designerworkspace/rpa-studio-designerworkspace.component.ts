@@ -1535,7 +1535,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       if (filepath != undefined) {
         let form = new FormData();
         let file = new Blob([filepath.file]);
-        form.append("file", filepath.file);
+        form.append("file", file);
         let uploadrest: any = await this.rest.uploadfile(form, envids);
         await uploadrest.subscribe((res) => {
           if (res[0].Path != undefined) {
