@@ -118,6 +118,7 @@ export class RpaEnvironmentFormComponent implements OnInit {
       if (this.isKeyValuePair == false) {
         let connectionDetails = JSON.parse(JSON.stringify(envFormValue));
         connectionDetails["password"] = this.password;
+        connectionDetails["categoryId"]=parseInt(connectionDetails["categoryId"])
         this.spinner.show();
         await this.api.testenvironment(connectionDetails).subscribe(res => {
           this.spinner.hide();
