@@ -1525,25 +1525,25 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   //     }
   // }
 
-  async uploadfile(envids) {
-    let tasks: any = [];
-    tasks = this.finaldataobjects.filter((data) => data.tMetaId == 64);
-    for (let filedata of tasks) {
-      let filepath: any = filedata.attributes.find(
-        (data_file_rpa) => data_file_rpa.metaAttrId == 278
-      );
-      if (filepath != undefined) {
-        let form = new FormData();
-        let file = new Blob([filepath.file]);
-        form.append("file", file);
+  async uploadfile(envids, tasks) {
+    console.log(this.files_data)
+    console.log(tasks)
+    this.files_data.forEach(async(item:any)=>{
+      if(tasks.find(item2=>item2.nodeId.split("__")[1]==item.nodeId))
+      {
+        let form=new FormData();
+        form.append("file", item.file);
         let uploadrest: any = await this.rest.uploadfile(form, envids);
         await uploadrest.subscribe((res) => {
           if (res[0].Path != undefined) {
-            this.notifier.notify("info", "File Uploaded Successfully");
+            //this.notifier.notify("info", "File Uploaded Successfully");
           }
         });
       }
-    }
+    })   
+         
+
+    
   }
 
   getsequences() {
@@ -1701,7 +1701,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
             ];
             this.actualEnv = [...response.envIds];
             Swal.fire("Success", "Bot updated successfully", "success");
-            this.uploadfile(response.envIds);
+            this.uploadfile(response.envIds, response.tasks);
             let auditLogsList = [
               ...this.auditLogs.map((item) => {
                 item["versionNew"] = response.versionNew;
