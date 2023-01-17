@@ -1535,6 +1535,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         form.append("file", item.file);
         let uploadrest: any = await this.rest.uploadfile(form, envids);
         await uploadrest.subscribe((res) => {
+          
           if (res[0].Path != undefined) {
             //this.notifier.notify("info", "File Uploaded Successfully");
           }
