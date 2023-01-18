@@ -3,7 +3,7 @@ import { RestApiService } from '../../services/rest-api.service';
 import { Observable  } from 'rxjs/Observable';
 import { of  } from 'rxjs/observable/of';
 import { map } from 'rxjs/operators';
-import { MatSort, Sort } from '@angular/material';;
+import { MatSort, Sort } from '@angular/material/sort';;
 import { fromMatSort, sortRows } from './../model/datasource-utils';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';

@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Inject, Input, OnInit, Output, TemplateRef, ViewChild, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatTableDataSource, MatPaginator, MatSort, PageEvent, Sort } from '@angular/material';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatSort, Sort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Base64 } from 'js-base64';
 import { NgxSpinnerService } from 'ngx-spinner';

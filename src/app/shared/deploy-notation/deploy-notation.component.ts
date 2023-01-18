@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Inject } from '@angular/core';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
-import { MatDialog, MatDialogRef } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { APP_CONFIG } from 'src/app/app.config';
 import Swal from 'sweetalert2';
 import { DataTransferService } from 'src/app/pages/services/data-transfer.service';

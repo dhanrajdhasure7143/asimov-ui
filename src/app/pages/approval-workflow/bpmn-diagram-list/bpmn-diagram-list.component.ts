@@ -9,13 +9,13 @@ import { ApprovalHomeHints } from './model/bpmn_approval_workflow';
 import { GlobalScript } from 'src/app/shared/global-script';
 import * as CmmnJS from 'cmmn-js/dist/cmmn-modeler.production.min.js';
 import * as DmnJS from 'dmn-js/dist/dmn-modeler.development.js';
-import { MatPaginator, PageEvent } from '@angular/material';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { fromMatPaginator, paginateRows, fromMatSort, sortRows } from './../../business-process/model/datasource-utils';
 import { Observable  } from 'rxjs/Observable';
 import { of  } from 'rxjs/observable/of';
 import { map } from 'rxjs/operators';
 import {MatTableDataSource} from '@angular/material/table';
-import { MatSort, Sort } from '@angular/material';
+import { MatSort, Sort } from '@angular/material/sort';
 import * as moment from 'moment';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 @Component({

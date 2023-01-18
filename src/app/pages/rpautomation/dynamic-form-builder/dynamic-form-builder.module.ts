@@ -11,7 +11,7 @@ import { IPCCheckboxComponent } from './atoms/ipc-checkbox'
 import { FileComponent } from './atoms/file.component';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
-import {MatPaginatorIntl} from '@angular/material';
+import { MatPaginatorIntl } from '@angular/material/paginator';
 import { CustomMatPaginatorIntl } from 'src/app/shared/custom-mat-paginator-int';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { DragDropModule } from "@angular/cdk/drag-drop";

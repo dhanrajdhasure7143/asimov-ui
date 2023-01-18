@@ -17,7 +17,8 @@ import ReplaceMenuProvider from "../bpmn-props-additional-tabs/ReplaceMenuProvid
 import { OriginalPropertiesProvider, PropertiesPanelModule, InjectionNames} from "../bpmn-props-additional-tabs/bpmn-js";
 import lintModule from 'bpmn-js-bpmnlint';
 import { SplitComponent, SplitAreaDirective } from 'angular-split';
-import { MatDialog, MatTabGroup } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatTabGroup } from '@angular/material/tabs';
 import { BpmnModel } from '../model/bpmn-autosave-model';
 import { SharebpmndiagramService } from '../../services/sharebpmndiagram.service';
 import { RestApiService } from '../../services/rest-api.service';

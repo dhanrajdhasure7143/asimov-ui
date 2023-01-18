@@ -19,7 +19,8 @@ import { DataselectionComponent } from './dataselection/dataselection.component'
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import {DataTablesModule} from 'angular-datatables';
-import {MatOptionModule, MatSelectModule} from '@angular/material';
+import { MatOptionModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { BackButtonDisableModule } from 'angular-disable-browser-back-button';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
@@ -30,13 +31,19 @@ import { ProcessinsightsComponent } from './processinsights/processinsights.comp
 import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
-import {MatInputModule, MatIconModule, MatFormFieldModule, MatTooltipModule,MatDialogModule, MatTabsModule,MatMenuModule} from '@angular/material';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import { ComboChartComponent } from './processinsights/combo-chart/combo-chart.component';
 import { ComboSeriesVerticalComponent } from './processinsights/combo-chart/combo-series-vertical.component';
 import {CustomMatPaginatorIntl} from './../../shared/custom-mat-paginator-int';
-import {MatPaginatorIntl} from '@angular/material';
+import { MatPaginatorIntl } from '@angular/material/paginator';
 import { BusinessInsightsComponent } from './business-insights/business-insights.component';
 import { PopoverModule } from 'ngx-bootstrap/popover';
 

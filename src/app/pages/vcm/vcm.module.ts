@@ -4,7 +4,27 @@ import { VcmRoutingModule } from './vcm-routing.module';
 import { ViewVcmComponent } from './view-vcm/view-vcm.component';
 import { CreateVcmComponent } from './create-vcm/create-vcm.component';
 import { VcmComponent } from './vcm.component';
-import { MatTreeModule, MatListModule, MatMenuModule, MatButtonModule, MatIconModule, MatToolbarModule, MatSidenavModule, MatTooltipModule, MatCard, MatCardModule, MatSortModule, MatPaginatorModule, MatTableModule, MatDialogModule, MatFormFieldModule, MatInputModule, MatProgressBarModule, MatProgressSpinnerModule, MatSelectModule, MatSliderModule, MatSlideToggleModule, MatTabsModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCard, MatCardModule } from '@angular/material/card';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatTreeModule } from '@angular/material/tree';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { VcmPropertiesComponent } from './vcm-properties/vcm-properties.component';
@@ -17,7 +37,7 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
 import { ModalModule, BsModalRef  } from 'ngx-bootstrap/modal';
 import { FullEditPropertiesComponent } from './full-edit-properties/full-edit-properties.component';
 import {CustomMatPaginatorIntl} from './../../shared/custom-mat-paginator-int';
-import {MatPaginatorIntl} from '@angular/material';
+import { MatPaginatorIntl } from '@angular/material/paginator';
 import { NgbModalDraggableModule } from 'ngb-modal-draggable'
 
 @NgModule({

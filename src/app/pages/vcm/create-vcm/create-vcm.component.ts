@@ -1,6 +1,6 @@
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
-import { MatTreeNestedDataSource } from '@angular/material';
+import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { MatTree } from '@angular/material/tree';
 import { MatDrawer } from '@angular/material/sidenav';
 import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";

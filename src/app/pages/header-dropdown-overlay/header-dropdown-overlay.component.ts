@@ -1,6 +1,6 @@
 import { Component, OnInit,Input,ViewChild,TemplateRef, HostListener } from '@angular/core';
 import { DataTransferService } from '../services/data-transfer.service';
-import {MatDialog} from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { RestApiService } from '../services/rest-api.service';
 import { NotifierService } from 'angular-notifier';
 

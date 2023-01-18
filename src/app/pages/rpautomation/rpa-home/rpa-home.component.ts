@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs/Observable';
-import { Sort } from '@angular/material';
+import { Sort } from '@angular/material/sort';
 import { of } from 'rxjs/observable/of';
 import { map } from 'rxjs/operators';
 import { fromMatPaginator, fromMatSort, paginateRows, sortRows } from '../model/datasource-utils';

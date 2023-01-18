@@ -9,17 +9,16 @@ import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { ModalModule, BsModalRef  } from 'ngx-bootstrap/modal';
-import {
-  MatDialogModule,
-  MatIconModule,
-  MatInputModule,
-  MatProgressSpinnerModule,
-  MatSelectModule,
-  MatTabsModule,
-  MatTooltipModule,
-  MatCardModule,
-  MatFormFieldModule,
-  MatButtonModule} from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSelectModule } from '@angular/material/select';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { MyAccountComponent } from './myaccount/myaccount.component';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
@@ -27,9 +26,9 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { Ng5SliderModule } from 'ng5-slider';
 import {MatSliderModule} from '@angular/material/slider';
 import {NgxPaginationModule} from 'ngx-pagination';
-import { MatMenuModule } from '@angular/material'; 
+import { MatMenuModule } from '@angular/material/menu'; 
 import {CustomMatPaginatorIntl} from './../../shared/custom-mat-paginator-int';
-import {MatPaginatorIntl} from '@angular/material';
+import { MatPaginatorIntl } from '@angular/material/paginator';
 import {Ng2TelInputModule} from 'ng2-tel-input';
 import { CompareValidatorDirective } from './comparepsw-validator.directive';
 import { DepartmentsComponent } from './departments/departments.component';

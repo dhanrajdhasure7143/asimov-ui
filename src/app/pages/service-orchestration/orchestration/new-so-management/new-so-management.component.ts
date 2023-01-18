@@ -10,7 +10,7 @@ import * as am4core from '@amcharts/amcharts4/core';
 import * as am4charts from '@amcharts/amcharts4/charts';
 import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 
-import { throwMatDuplicatedDrawerError } from '@angular/material';
+import { throwMatDuplicatedDrawerError } from '@angular/material/sidenav';
 import { NotifierService } from 'angular-notifier';
 @Component({
   selector: 'app-new-so-management',

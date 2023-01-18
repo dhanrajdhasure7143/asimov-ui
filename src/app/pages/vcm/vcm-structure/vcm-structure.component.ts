@@ -1,6 +1,6 @@
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { Component, ElementRef, OnInit, ViewChild, TemplateRef } from '@angular/core';
-import { MatTreeNestedDataSource } from '@angular/material';
+import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { MatTree } from '@angular/material/tree';
 import { ActivatedRoute, Router } from '@angular/router';
 // import { SharebpmndiagramService } from './pages/services/sharebpmndiagram.service';

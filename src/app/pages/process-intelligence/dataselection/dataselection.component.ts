@@ -7,7 +7,7 @@ import { GlobalScript } from '../../../shared/global-script';
 import Swal from 'sweetalert2';
 import { RestApiService } from '../../services/rest-api.service';
 import { APP_CONFIG } from 'src/app/app.config';
-import { MatPaginator, PageEvent } from '@angular/material';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { fromMatPaginator, paginateRows } from './../../business-process/model/datasource-utils';
 import { Observable  } from 'rxjs/Observable';
 import { of  } from 'rxjs/observable/of';

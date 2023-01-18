@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataTransferService} from "../../services/data-transfer.service";
-import {MatTabChangeEvent, VERSION} from '@angular/material';
+import { VERSION } from '@angular/material/core';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-rpa-configurations',

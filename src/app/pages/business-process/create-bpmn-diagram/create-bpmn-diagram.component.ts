@@ -13,7 +13,8 @@ import { OriginalPropertiesProvider, PropertiesPanelModule, InjectionNames} from
 import { NgxSpinnerService } from "ngx-spinner";
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import Swal from 'sweetalert2';
-import {MatDialog, MatTabGroup} from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatTabGroup } from '@angular/material/tabs';
 import { RestApiService } from '../../services/rest-api.service';
 import { DataTransferService } from '../../services/data-transfer.service';
 import { SharebpmndiagramService } from '../../services/sharebpmndiagram.service';
