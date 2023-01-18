@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { SoEnvUipathComponent } from './so-env-uipath.component';
 
@@ -6,7 +6,7 @@ describe('SoEnvUipathComponent', () => {
   let component: SoEnvUipathComponent;
   let fixture: ComponentFixture<SoEnvUipathComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ SoEnvUipathComponent ]
     })

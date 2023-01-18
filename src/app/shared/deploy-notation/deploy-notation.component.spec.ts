@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { DeployNotationComponent } from './deploy-notation.component';
 
@@ -6,7 +6,7 @@ describe('DeployNotationComponent', () => {
   let component: DeployNotationComponent;
   let fixture: ComponentFixture<DeployNotationComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ DeployNotationComponent ]
     })

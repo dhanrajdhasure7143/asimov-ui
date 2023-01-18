@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { RpaCredentialFormComponent } from './rpa-credential-form.component';
 
@@ -6,7 +6,7 @@ describe('RpaCredentialFormComponent', () => {
   let component: RpaCredentialFormComponent;
   let fixture: ComponentFixture<RpaCredentialFormComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ RpaCredentialFormComponent ]
     })

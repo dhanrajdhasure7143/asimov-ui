@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { RpaEnvironmentFormComponent } from './rpa-environment-form.component';
 
@@ -6,7 +6,7 @@ describe('RpaEnvironmentFormComponent', () => {
   let component: RpaEnvironmentFormComponent;
   let fixture: ComponentFixture<RpaEnvironmentFormComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ RpaEnvironmentFormComponent ]
     })

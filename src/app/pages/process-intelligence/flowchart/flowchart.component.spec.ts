@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { FlowchartComponent } from './flowchart.component';
 
@@ -6,7 +6,7 @@ describe('FlowchartComponent', () => {
   let component: FlowchartComponent;
   let fixture: ComponentFixture<FlowchartComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ FlowchartComponent ]
     })

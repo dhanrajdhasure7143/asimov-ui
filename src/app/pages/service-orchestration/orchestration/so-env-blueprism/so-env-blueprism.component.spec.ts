@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { SoEnvBlueprismComponent } from './so-env-blueprism.component';
 
@@ -6,7 +6,7 @@ describe('SoEnvBlueprismComponent', () => {
   let component: SoEnvBlueprismComponent;
   let fixture: ComponentFixture<SoEnvBlueprismComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ SoEnvBlueprismComponent ]
     })

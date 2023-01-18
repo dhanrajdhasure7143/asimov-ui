@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { ProcessCategoryOverlayComponent } from './process-category-overlay.component';
 
@@ -6,7 +6,7 @@ describe('ProcessCategoryOverlayComponent', () => {
   let component: ProcessCategoryOverlayComponent;
   let fixture: ComponentFixture<ProcessCategoryOverlayComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ ProcessCategoryOverlayComponent ]
     })

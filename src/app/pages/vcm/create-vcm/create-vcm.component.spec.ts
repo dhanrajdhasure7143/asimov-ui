@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { CreateVcmComponent } from './create-vcm.component';
 
@@ -6,7 +6,7 @@ describe('CreateVcmComponent', () => {
   let component: CreateVcmComponent;
   let fixture: ComponentFixture<CreateVcmComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ CreateVcmComponent ]
     })

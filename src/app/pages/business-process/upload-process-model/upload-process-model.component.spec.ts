@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { UploadProcessModelComponent } from './upload-process-model.component';
 
@@ -6,7 +6,7 @@ describe('UploadProcessModelComponent', () => {
   let component: UploadProcessModelComponent;
   let fixture: ComponentFixture<UploadProcessModelComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ UploadProcessModelComponent ]
     })

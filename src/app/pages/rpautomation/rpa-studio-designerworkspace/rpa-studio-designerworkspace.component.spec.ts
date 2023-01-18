@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { RpaStudioDesignerworkspaceComponent } from './rpa-studio-designerworkspace.component';
 
@@ -6,7 +6,7 @@ describe('RpaStudioDesignerworkspaceComponent', () => {
   let component: RpaStudioDesignerworkspaceComponent;
   let fixture: ComponentFixture<RpaStudioDesignerworkspaceComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ RpaStudioDesignerworkspaceComponent ]
     })

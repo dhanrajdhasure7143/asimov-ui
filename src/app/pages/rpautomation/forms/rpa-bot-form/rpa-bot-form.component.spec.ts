@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { RpaBotFormComponent } from './rpa-bot-form.component';
 
@@ -6,7 +6,7 @@ describe('RpaBotFormComponent', () => {
   let component: RpaBotFormComponent;
   let fixture: ComponentFixture<RpaBotFormComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ RpaBotFormComponent ]
     })

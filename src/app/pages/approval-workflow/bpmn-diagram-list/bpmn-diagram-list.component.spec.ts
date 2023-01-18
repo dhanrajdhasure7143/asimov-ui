@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { BpmnDiagramListComponent } from './bpmn-diagram-list.component';
 
@@ -6,7 +6,7 @@ describe('BpmnDiagramListComponent', () => {
   let component: BpmnDiagramListComponent;
   let fixture: ComponentFixture<BpmnDiagramListComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ BpmnDiagramListComponent ]
     })
