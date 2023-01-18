@@ -17,8 +17,8 @@ export class ProcessesComponent implements OnInit {
   dataSource5:MatTableDataSource<any>;
   public log:any=[];
   public tabledata: boolean = false;
-  @ViewChild("paginator4",{static:false}) paginator4: MatPaginator;
-  @ViewChild("sort4",{static:false}) sort4: MatSort;
+  @ViewChild("paginator4") paginator4: MatPaginator;
+  @ViewChild("sort4") sort4: MatSort;
   public processschedule: any = [];
   environment: any;
   enivornmentname: any;

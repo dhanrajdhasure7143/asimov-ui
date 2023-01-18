@@ -46,10 +46,10 @@ export class D3flowchartComponent {
 
   }
 
-  @ViewChild('exportSVGtoPDF', { static: false }) exportSVGtoPDF: ElementRef;
-  @ViewChild('canvas', { static: false }) canvas: ElementRef;
-  @ViewChild('downloadLink', { static: false }) downloadLink: ElementRef;
-  @ViewChild('render', { static: false }) render: ElementRef;
+  @ViewChild('exportSVGtoPDF') exportSVGtoPDF: ElementRef;
+  @ViewChild('canvas') canvas: ElementRef;
+  @ViewChild('downloadLink') downloadLink: ElementRef;
+  @ViewChild('render') render: ElementRef;
   // @ViewChild("exportSVGtoPDF",{static: false}) graph_canvas:ElementRef;
   // @HostListener('document:mouseover', ['$event.target'])
   // public onmouseover(targetElement) {

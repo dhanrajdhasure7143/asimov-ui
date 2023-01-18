@@ -25,7 +25,7 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
   providers: [DiagListData],
 })
 export class BpmnDiagramListComponent implements OnInit {
-  @ViewChild('matExpansionPanel', { static: false }) _matExpansionPanel:any
+  @ViewChild('matExpansionPanel') _matExpansionPanel:any
   approve_bpmn_list = this.model.diagList;
   message: any[] = [];
   griddata: any[]=[];
@@ -45,9 +45,9 @@ export class BpmnDiagramListComponent implements OnInit {
   pendingStatus="PENDING APPROVAL";
   displayedRows$: Observable<any[]>;
   totalRows$: Observable<number>;
-  @ViewChild(MatPaginator,{static:false}) paginator: MatPaginator;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   dataSource:MatTableDataSource<any>;
-@ViewChild(MatSort,{static:false}) sort: MatSort;
+@ViewChild(MatSort) sort: MatSort;
 
   constructor(private dt: DataTransferService,
     private hints:ApprovalHomeHints,

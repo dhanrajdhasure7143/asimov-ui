@@ -46,10 +46,10 @@ export class VcmStructureComponent implements OnInit {
   isLoading: boolean = false;
   vcmData: any[] = [];
   expandTree = false;
-  @ViewChild('tree', { static: false }) tree;
+  @ViewChild('tree') tree;
   isShow: boolean = false;
-  @ViewChild('drawer', { static: false }) drawer: MatDrawer;
-  @ViewChild('vcmTitle', { static: false }) vcmTitleEdit: ElementRef;
+  @ViewChild('drawer') drawer: MatDrawer;
+  @ViewChild('vcmTitle') vcmTitleEdit: ElementRef;
   processOwners_list: any = [];
   uploadedDocuments: any = [];
   vcm_data: any;

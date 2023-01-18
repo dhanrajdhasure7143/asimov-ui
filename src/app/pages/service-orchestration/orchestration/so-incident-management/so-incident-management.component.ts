@@ -16,9 +16,9 @@ export class SoIncidentManagementComponent implements OnInit {
   incidentFlag: boolean = false;
   loadingFlag: boolean = true;
   seachInput: string = "";
-  @ViewChild("incidentTablePaginator", { static: false })
+  @ViewChild("incidentTablePaginator")
   incidentTablePaginator: MatPaginator;
-  @ViewChild("incidentTableSort", { static: false }) incidentTableSort: MatSort;
+  @ViewChild("incidentTableSort") incidentTableSort: MatSort;
   incidentTableDisplayedColumns: any[] = [
     "incidentId",
     "convertedCreatedTime",

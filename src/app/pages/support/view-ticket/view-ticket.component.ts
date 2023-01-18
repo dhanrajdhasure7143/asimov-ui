@@ -60,7 +60,7 @@ export class ViewTicketComponent implements OnInit {
   displayedColumns = ['name', 'created', 'file_size', 'actions'];
   dataSource: MatTableDataSource<any>;
   listof_uploadFiles: any[];
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   ticket_status: any;
   all_attachements:any[];
   attachment_namesArray:any[];

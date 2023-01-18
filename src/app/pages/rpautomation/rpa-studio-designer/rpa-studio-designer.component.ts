@@ -14,7 +14,7 @@ import { RestApiService } from '../../services/rest-api.service';
 })
 export class RpaStudioDesignerComponent implements OnInit , OnDestroy{
   @ViewChildren("designerInstances") designerInstances:QueryList<any>;
-  @ViewChild('versionControlPopup',{static:false}) versionControlPopup: PopoverDirective;
+  @ViewChild('versionControlPopup') versionControlPopup: PopoverDirective;
   current_instance:any;
   toolset_instance:any;
   selected_tab_instance:any;

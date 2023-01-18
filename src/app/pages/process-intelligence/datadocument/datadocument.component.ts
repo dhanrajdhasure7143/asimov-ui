@@ -56,7 +56,7 @@ export class DatadocumentComponent implements OnInit {
   totalRows$: Observable<number>;
   errorsList:any=[];
 
-  @ViewChild(MatPaginator,{static:false}) paginator: MatPaginator;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild('template1',{ static: true }) template1: TemplateRef<any>;
   @ViewChild('notification',{ static: true }) notificationTemplate;
 

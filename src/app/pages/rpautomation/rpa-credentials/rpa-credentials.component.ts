@@ -24,8 +24,8 @@ export class RpaCredentialsComponent implements OnInit {
   public Credcheckflag:boolean = false;
   public dbupdateid : any;
   categoryList:any;
-  @ViewChild("paginator3",{static:false}) paginator3: MatPaginator;
-  @ViewChild("sort2",{static:false}) sort2: MatSort;
+  @ViewChild("paginator3") paginator3: MatPaginator;
+  @ViewChild("sort2") sort2: MatSort;
   public button:string;
   public credentials:any=[];
   public checkeddisabled:boolean =false;

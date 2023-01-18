@@ -33,7 +33,7 @@ export class ProjectsListScreenComponent implements OnInit {
     Deployed: 0,
   };
 
-  @ViewChild(ProjectsProgramsTableComponent, { static: false })
+  @ViewChild(ProjectsProgramsTableComponent)
   projecttable: ProjectsProgramsTableComponent;
   public isButtonVisible = false;
   public userRole: any = [];

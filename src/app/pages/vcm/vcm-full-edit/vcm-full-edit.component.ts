@@ -34,8 +34,8 @@ let TREE_DATA: any[] = [
   styleUrls: ['./vcm-full-edit.component.css']
 })
 export class VcmFullEditComponent implements OnInit {
-  @ViewChild('tree', { static: false }) tree: MatTree<any>;
-  @ViewChild('drawer', { static: false }) drawer: MatDrawer;
+  @ViewChild('tree') tree: MatTree<any>;
+  @ViewChild('drawer') drawer: MatDrawer;
 
 
   treeControl = new NestedTreeControl<any>(node => node.children);

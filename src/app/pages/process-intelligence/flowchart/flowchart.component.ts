@@ -86,7 +86,7 @@ export class FlowchartComponent implements OnInit {
   wpiIdNumber:any;
   startLinkvalue:boolean;
   issvg:boolean;
-  @ViewChild("toogleBtn",{static: false}) toogleBtn;
+  @ViewChild("toogleBtn") toogleBtn;
   sliderVariant:any=[];  
   isActivity_dropdwn:boolean=false;
   activity_value:any=[];
@@ -94,7 +94,7 @@ export class FlowchartComponent implements OnInit {
   activity_list:any=[];
   fullgraph_model:any;
   isNodata:boolean=true;
-  @ViewChild('activitySelect',{static: false}) activitySelect;
+  @ViewChild('activitySelect') activitySelect;
   variantCombo:any=[];
   isvariantSelectedOne:boolean=false;
   sliderGraphData:any=[];

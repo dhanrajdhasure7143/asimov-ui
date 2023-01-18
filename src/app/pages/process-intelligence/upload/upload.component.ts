@@ -64,8 +64,8 @@ export class UploadComponent implements OnInit {
   isTableEnable:boolean=false;
   sortIndex:number=2;
   dataSource:MatTableDataSource<any>;
-  @ViewChild(MatPaginator,{static:false}) paginator: MatPaginator;
-  @ViewChild(MatSort,{static:false}) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
   displayedColumns: string[] = ["piId","createdTime","piName","categoryName" ,"status","action"];
   customUserRole: any;
   enableuploadbuttons: boolean=false;
@@ -80,7 +80,7 @@ export class UploadComponent implements OnInit {
   freetrail: string;
   overlay_data:any={};
   refreshSubscription:Subscription;
-  @ViewChild('database',{static:false}) mytemplateForm : NgForm;
+  @ViewChild('database') mytemplateForm : NgForm;
   modesList=[{name:"Incrementing",value:"incrementing"},{name:"Timestamp",value:"timestamp"},{name:"Incrementing with Timestamp",value:"timestamp+incrementing"}]
   noDataMessage: boolean;
 

@@ -51,12 +51,12 @@ export class EditTaskComponent implements OnInit {
   uploadedFiledata: any;
   dataSource3: MatTableDataSource<any>;
   displayedColumns3: string[] = ["check", "fileName", "fileSize", "action"];
-  @ViewChild("sort11", { static: false }) sort11: MatSort;
-  @ViewChild("paginator101", { static: false }) paginator101: MatPaginator;
+  @ViewChild("sort11") sort11: MatSort;
+  @ViewChild("paginator101") paginator101: MatPaginator;
   dataSource4: MatTableDataSource<any>;
   displayedColumns4: string[] = ["lastUpdated"];
-  @ViewChild("sort12", { static: false }) sort12: MatSort;
-  @ViewChild("paginator102", { static: false }) paginator102: MatPaginator;
+  @ViewChild("sort12") sort12: MatSort;
+  @ViewChild("paginator102") paginator102: MatPaginator;
   requestedFiledata: any;
   filedeleteflag: Boolean;
   filecheckeddisabled: boolean = false;

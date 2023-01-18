@@ -63,7 +63,7 @@ export class DataselectionComponent implements OnInit {
   totalRows$: Observable<number>;
   overlay_data={}
 
-  @ViewChild(MatPaginator,{static:false}) paginator: MatPaginator;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private router:Router, 
                 private dt:DataTransferService, 

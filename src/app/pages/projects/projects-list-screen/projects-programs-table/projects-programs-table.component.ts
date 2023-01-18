@@ -39,8 +39,8 @@ export class ProjectsProgramsTableComponent implements OnInit {
     "createdBy",
     "action",
   ];
-  @ViewChild("paginator2", { static: false }) paginator2: MatPaginator;
-  @ViewChild("sort2", { static: false }) sort2: MatSort;
+  @ViewChild("paginator2") paginator2: MatPaginator;
+  @ViewChild("sort2") sort2: MatSort;
   @Input("status") public status_data: any;
   @Input("projects_list") public projects_list: any = [];
   @Input("users_list") public users_list: any = [];

@@ -61,7 +61,7 @@ export class CreateTicketComponent implements OnInit {
   displayedColumns = ['name', 'created', 'file_size', 'actions'];
   dataSource: MatTableDataSource<any>;
   listof_uploadFiles: any[];
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(
     public formBuilder: FormBuilder,

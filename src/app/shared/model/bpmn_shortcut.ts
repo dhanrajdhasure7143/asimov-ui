@@ -1,3 +1,5 @@
+import { Injectable } from "@angular/core";
+@Injectable()
 export class BpmnShortcut{
     common = [
       {"labelName":"Undo","labelValue":"Ctrl + Z"},

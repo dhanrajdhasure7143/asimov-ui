@@ -81,9 +81,9 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
   uiPathBotFlag:Boolean=false;
   public tasksArray:any=[];
   public processId:any;
-  @ViewChild("paginator10",{static:false}) paginator10: MatPaginator;
+  @ViewChild("paginator10") paginator10: MatPaginator;
  //@ViewChild(SoProcesslogComponent, { static: false }) processlogs_instance: SoProcesslogComponent;
-  @ViewChild("automatedSort",{static:false}) automatedSort: MatSort;
+  @ViewChild("automatedSort") automatedSort: MatSort;
   // @Input('processid') public processId: any;
   public insertslaForm_so_bot:FormGroup;
   public BluePrismConfigForm:FormGroup;

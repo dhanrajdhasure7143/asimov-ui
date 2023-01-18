@@ -56,8 +56,8 @@ export class BpsHomeComponent implements OnInit {
   bpmnVisible:Boolean=false;
   displayedRows$: Observable<any[]>;
   totalRows$: Observable<number>;
-  @ViewChild(MatSort,{static:false}) sort: MatSort;
-  @ViewChild(MatPaginator,{static:false}) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   categories_list:any[]=[];
   saved_diagramsList:any=[];
   isEdit:boolean=false;

@@ -13,8 +13,8 @@ import Swal from "sweetalert2";
   styleUrls: ["./project-rpa-design.component.css"],
 })
 export class ProjectRpaDesignComponent implements OnInit {
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
-  @ViewChild("paginator", { static: false }) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild("paginator") paginator: MatPaginator;
 
   displayedColumns: string[] = [
     "stepNo",

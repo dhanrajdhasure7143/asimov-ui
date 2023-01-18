@@ -110,7 +110,7 @@ export class CreateBpmnDiagramComponent implements OnInit, ComponentCanDeactivat
   @ViewChild('variabletemplate',{ static: true }) variabletemplate: TemplateRef<any>;
   @ViewChild('keyboardShortcut',{ static: true }) keyboardShortcut: TemplateRef<any>;
   @ViewChild('dmnTabs',{ static: true }) dmnTabs: ElementRef<any>;
-  @ViewChild("notationXMLTab", { static: false }) notationXmlTab: MatTabGroup;
+  @ViewChild("notationXMLTab") notationXmlTab: MatTabGroup;
   @ViewChild('wrongXMLcontent', { static: true}) wrongXMLcontent: TemplateRef<any>;
   constructor(private rest:RestApiService, private spinner:NgxSpinnerService, private dt:DataTransferService,private modalService: BsModalService,
     private router:Router, private route:ActivatedRoute, private bpmnservice:SharebpmndiagramService, private global:GlobalScript, private hints:BpsHints, public dialog:MatDialog,private shortcut:BpmnShortcut,

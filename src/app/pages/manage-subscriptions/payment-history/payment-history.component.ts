@@ -14,8 +14,8 @@ export class PaymentHistoryComponent implements OnInit {
   
   displayedColumns8: string[] = ["invoiceNumber","subscriptionId","amount","createDate","nextdue","status","action"];
   dataSource8:MatTableDataSource<any>;
-  @ViewChild("sort104",{static:false}) sort104: MatSort;
-  @ViewChild("paginator104",{static:false}) paginator104: MatPaginator;
+  @ViewChild("sort104") sort104: MatSort;
+  @ViewChild("paginator104") paginator104: MatPaginator;
   public invoicedata: any=[];
   tot: any=[];
   public tableData: any=[];

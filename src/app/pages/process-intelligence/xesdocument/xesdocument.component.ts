@@ -30,7 +30,7 @@ export class XesdocumentComponent implements OnInit {
   totalRows$: Observable<number>;
   overlay_data:any={};
 
-  @ViewChild(MatPaginator,{static:false}) paginator: MatPaginator;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
 
   constructor(private router: Router,

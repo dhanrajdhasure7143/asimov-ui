@@ -23,7 +23,7 @@ export class BusinessInsightsComponent implements OnInit {
   displayedRows$: Observable<any[]>;
   totalRows$: Observable<number>;
   isLoading:boolean=false;
-  @ViewChild(MatPaginator,{static:false}) paginator: MatPaginator;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   valueType:any;
 
   constructor(private rest:RestApiService,private route:ActivatedRoute) { 

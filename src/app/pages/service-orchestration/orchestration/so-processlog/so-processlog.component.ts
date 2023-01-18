@@ -22,12 +22,12 @@ export class SoProcesslogComponent implements OnInit {
   public respdata2: boolean = false;
   public respdata3: boolean = false;
   public loadLogsFlag:boolean=false;
-  @ViewChild("paginator1",{static:false}) paginator1: MatPaginator;
-  @ViewChild("paginator2",{static:false}) paginator2: MatPaginator;
-  @ViewChild("paginator3",{static:false}) paginator3: MatPaginator;
-  @ViewChild("sortp1",{static:false}) sortp1: MatSort;
-  @ViewChild("sortp2",{static:false}) sortp2: MatSort;
-  @ViewChild("sortp3",{static:false}) sortp3: MatSort;
+  @ViewChild("paginator1") paginator1: MatPaginator;
+  @ViewChild("paginator2") paginator2: MatPaginator;
+  @ViewChild("paginator3") paginator3: MatPaginator;
+  @ViewChild("sortp1") sortp1: MatSort;
+  @ViewChild("sortp2") sortp2: MatSort;
+  @ViewChild("sortp3") sortp3: MatSort;
   public dataSourcep1: MatTableDataSource<any>;
   public dataSourcep2: MatTableDataSource<any>;
   public Environments:any;

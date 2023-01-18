@@ -16,8 +16,8 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
 })
 export class DepartmentsComponent implements OnInit {
 
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
-  @ViewChild("paginator", { static: false }) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild("paginator") paginator: MatPaginator;
   dataSource2:MatTableDataSource<any>;
   displayedColumns: string[] = ["check","categoryName","owner","createdBy","createdAt","action"];
   public departments:any=[];

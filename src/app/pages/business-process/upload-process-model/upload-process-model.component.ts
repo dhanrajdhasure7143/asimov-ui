@@ -156,9 +156,9 @@ export class UploadProcessModelComponent implements ComponentCanDeactivate,OnIni
   @ViewChild('variabletemplate',{ static: true }) variabletemplate: TemplateRef<any>;
   @ViewChild('keyboardShortcut',{ static: true }) keyboardShortcut: TemplateRef<any>;
   @ViewChild('dmnTabs',{ static: true }) dmnTabs: ElementRef<any>;
-  @ViewChild("notationXMLTab", { static: false }) notationXmlTab: MatTabGroup;
+  @ViewChild("notationXMLTab") notationXmlTab: MatTabGroup;
   @ViewChild('wrongXMLcontent', { static: true}) wrongXMLcontent: TemplateRef<any>;
-  @ViewChild('canvasopt',{ static: false }) canvasopt: ElementRef;
+  @ViewChild('canvasopt') canvasopt: ElementRef;
   @ViewChild('processowner_template',{ static: true }) processowner_template: TemplateRef<any>;
 
    constructor(private rest:RestApiService, private bpmnservice:SharebpmndiagramService,private router:Router, private spinner:NgxSpinnerService, private modalService: BsModalService,

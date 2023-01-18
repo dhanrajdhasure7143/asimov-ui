@@ -1,3 +1,5 @@
+import { Injectable } from "@angular/core";
+@Injectable()
 export class Rpa_Hints{
     public rpahomehints = [
         { selector:'#createbot-Home', description:'Create Bot',showNext:true },

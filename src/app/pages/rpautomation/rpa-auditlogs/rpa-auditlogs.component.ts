@@ -13,12 +13,12 @@ import moment from 'moment';
   styleUrls: ['./rpa-auditlogs.component.css']
 })
 export class RpaAuditlogsComponent implements OnInit {
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatSort) sort: MatSort;
   botId: any;
   auditLogsData: any = [];
   displayedColumns: string[] = ["versionNew", "changedDate", 'botName', "changedBy", "comments"];
   dataSource: MatTableDataSource<any>;
-  @ViewChild("paginator", { static: false }) paginator: MatPaginator;
+  @ViewChild("paginator") paginator: MatPaginator;
   constructor(private activatedRoute: ActivatedRoute, private router: Router, private rest: RestApiService, private spinner: NgxSpinnerService) { }
   
   ngOnInit(): void {

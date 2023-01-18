@@ -43,14 +43,14 @@ export class ProcessOwnerComponent implements OnInit {
   displayedColumns1=['Process Name','Created Date','Submitted by'];
   displayedColumns2=['resource_name','days'];
   displayedColumns3=['projectName','daysSpent'];
-  @ViewChild("sort1",{static:false}) sort1: MatSort;
-  @ViewChild("paginator1",{static:false}) paginator1: MatPaginator;
+  @ViewChild("sort1") sort1: MatSort;
+  @ViewChild("paginator1") paginator1: MatPaginator;
   pendingApprovalsdataSource:MatTableDataSource<any>;
-  @ViewChild("sort2",{static:false}) sort2: MatSort;
-  @ViewChild("paginator2",{static:false}) paginator2: MatPaginator;
+  @ViewChild("sort2") sort2: MatSort;
+  @ViewChild("paginator2") paginator2: MatPaginator;
   effortExpenditureAnalysisDatasource:MatTableDataSource<any>;
-  @ViewChild("sort3",{static:false}) sort3: MatSort;
-  @ViewChild("paginator3",{static:false}) paginator3: MatPaginator;
+  @ViewChild("sort3") sort3: MatSort;
+  @ViewChild("paginator3") paginator3: MatPaginator;
   topEffortsSpentdataSource:MatTableDataSource<any>;
   t:any;
 
