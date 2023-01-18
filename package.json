@@ -12,17 +12,17 @@
   "private": true,
   "dependencies": {
     "@amcharts/amcharts4": "^4.10.15",
-    "@angular/animations": "~12.2.17",
+    "@angular/animations": "~13.3.12",
     "@angular/cdk": "^12.2.13",
-    "@angular/common": "~12.2.17",
-    "@angular/compiler": "~12.2.17",
-    "@angular/core": "~12.2.17",
-    "@angular/forms": "~12.2.17",
+    "@angular/common": "~13.3.12",
+    "@angular/compiler": "~13.3.12",
+    "@angular/core": "~13.3.12",
+    "@angular/forms": "~13.3.12",
     "@angular/material": "^11.2.13",
-    "@angular/platform-browser": "~12.2.17",
-    "@angular/platform-browser-dynamic": "~11.2.14",
-    "@angular/router": "~12.2.17",
-    "@angular/service-worker": "~12.2.17",
+    "@angular/platform-browser": "~13.3.12",
+    "@angular/platform-browser-dynamic": "~13.3.12",
+    "@angular/router": "~13.3.12",
+    "@angular/service-worker": "~13.3.12",
     "@auth0/angular-jwt": "^5.0.2",
     "@fortawesome/fontawesome-free": "^5.12.1",
     "@fortawesome/fontawesome-svg-core": "^1.2.27",
@@ -119,8 +119,8 @@
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.1102.19",
     "@angular/cli": "~11.2.19",
-    "@angular/compiler-cli": "~12.2.17",
-    "@angular/language-service": "~12.2.17",
+    "@angular/compiler-cli": "~13.3.12",
+    "@angular/language-service": "~13.3.12",
     "@babel/compat-data": "^7.20.1",
     "@types/datatables.net": "^1.10.19",
     "@types/jasmine": "~3.6.0",
@@ -139,6 +139,6 @@
     "protractor": "~7.0.0",
     "ts-node": "~7.0.0",
     "tslint": "~6.1.0",
-    "typescript": "~4.3.5"
+    "typescript": "~4.6.4"
   }
 }

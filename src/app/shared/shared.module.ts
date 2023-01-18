@@ -19,19 +19,18 @@ import { DeployNotationComponent } from './deploy-notation/deploy-notation.compo
 import { NgbModalDraggableModule } from 'ngb-modal-draggable'
 
 @NgModule({
-  declarations: [UploadCreateDropBpmnComponent, BpmnDiagramComponent, ProcessCategoryOverlayComponent, SearchPipe, DeployNotationComponent, ],
-  imports: [
-    CommonModule,
-    NgxDropzoneModule,
-    CronEditorModule,
-    FormsModule,
-    MatInputModule, MatIconModule, MatFormFieldModule,MatDialogModule,
-    MatOptionModule, MatSelectModule,
-    MatTooltipModule,
-    NgbModalDraggableModule
-  ],
-  providers: [],
-  exports: [UploadCreateDropBpmnComponent, BpmnDiagramComponent, ProcessCategoryOverlayComponent,  SearchPipe, DeployNotationComponent],
-  entryComponents: [DeployNotationComponent]
+    declarations: [UploadCreateDropBpmnComponent, BpmnDiagramComponent, ProcessCategoryOverlayComponent, SearchPipe, DeployNotationComponent,],
+    imports: [
+        CommonModule,
+        NgxDropzoneModule,
+        CronEditorModule,
+        FormsModule,
+        MatInputModule, MatIconModule, MatFormFieldModule, MatDialogModule,
+        MatOptionModule, MatSelectModule,
+        MatTooltipModule,
+        NgbModalDraggableModule
+    ],
+    providers: [],
+    exports: [UploadCreateDropBpmnComponent, BpmnDiagramComponent, ProcessCategoryOverlayComponent, SearchPipe, DeployNotationComponent]
 })
 export class SharedModule { }
