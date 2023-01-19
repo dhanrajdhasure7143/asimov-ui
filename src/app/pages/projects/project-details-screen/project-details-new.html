@@ -108,7 +108,7 @@
                                         </div>
                                         <div class="qcard-info">
                                             <label class="qcard-count">02</label>
-                                            <p class="qcard-name">Overdue Tasks</p>
+                                            <p class="qcard-name">Delayed Tasks</p>
                                         </div>                      
                                     </div>  
                                 </div>
@@ -122,21 +122,26 @@
                                         <!--style="margin-left: 8px;" style="margin-left: -9px;" -->
                                         <div class="qcard-info" >
                                             <label class="qcard-count">05</label>
-                                            <p class="qcard-name">Users Onboarded</p>
+                                            <p class="qcard-name">Completed Tasks</p>
                                         </div>                      
                                     </div>
-                                    <!-- <div class="d-flex w-100 align-items-center">
+                                </div>
+                            </div>
+                            <div class="col-md-4 pl-0">
+                                <div class="row quicksnapshot-cards lastrow-cards">
+                                    <div class="d-flex w-100 align-items-center">
                                         <div class="qcard-infoimg">
                                             <img src="./../../../../assets/images-n/projects/AutomationRate.svg" alt="AutomationRate" class="qcard-img">
                                         </div>
                                         <div class="qcard-info">
                                             <label class="qcard-count">02</label>
-                                            <p class="qcard-name">Automation Rate</p>
+                                            <p class="qcard-name">Users Onboarded</p>
                                         </div>                      
-                                    </div>   -->
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-4 pl-0">
+                            
+                            <div class="col-md-4">
                                 <div class="row quicksnapshot-cards lastrow-cards">
                                     <div class="d-flex w-100 align-items-center">
                                         <div class="qcard-infoimg">
@@ -149,28 +154,7 @@
                                     </div> 
                                 </div>
                             </div>
-                            <div class="col-md-4 ">
-                                <div class="row quicksnapshot-cards lastrow-cards">
-                                    <div class="d-flex w-100 align-items-center">
-                                        <div class="qcard-infoimg">
-                                            <img src="./../../../../assets/images-n/projects/AutomationRate.svg" alt="AutomationRate" class="qcard-img">
-                                        </div>
-                                        <div class="qcard-info">
-                                            <label class="qcard-count">02</label>
-                                            <p class="qcard-name">Automation Rate</p>
-                                        </div>                      
-                                    </div> 
-                                    <!-- <div class="d-flex w-100 align-items-center">
-                                        <div class="qcard-infoimg">
-                                            <img src="./../../../../assets/images-n/projects/UsersOnboard.svg" alt="UserOnboard" class="qcard-img" >
-                                        </div>
-                                        <div class="qcard-info" >
-                                            <label class="qcard-count">05</label>
-                                            <p class="qcard-name">Users Onboarded</p>
-                                        </div>                      
-                                    </div> -->
-                                </div>
-                            </div>
+                            
                             <div class="col-md-4 pr-0">
                                 <div class="row quicksnapshot-cards lastrow-cards">
                                     <div class="d-flex w-100 align-items-center">
@@ -180,7 +164,7 @@
                                         </div>
                                         <div class="qcard-info">
                                             <label class="qcard-count">02</label>
-                                            <p class="qcard-name">Unread Message</p>
+                                            <p class="qcard-name">Pending Approvals</p>
                                         </div>                      
                                     </div>   
                                 </div>
@@ -196,7 +180,7 @@
                         <button class="btn blue-btntext">
                             <a href="#"><span>Create Task </span></a>
                         </button>
-                        <button class="btn blue-btntext"  onclick="onboardUsers()">
+                        <button class="btn blue-btntext"  (click)="onboardUsers()">
                             <a><span>Onboard User</span></a>
                         </button>
                         <button class="btn blue-btntext">
@@ -262,15 +246,14 @@
                             <div class="row lftusermsg">
                                 <img alt="user-img" src="./../../../../assets/images-n/projects/user1.svg" />
                                 <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Lorem ipsum dolor.</p>
-                                <p><a href="#"><img alt="attachment" src="./../../../../assets/images-n/projects/paperclip.svg" width="16px"
-                                            height="16px" />Lorem ipsum.pdf</a></p>
+                                <!-- <p><a href="#">Lorem ipsum.pdf</a></p> -->
                                 <p class="userinfo">Rick Johnson | 09th Jan, 12 pm</p>
                             </div>
                         </div>
                         <div class="row collabottom">
                             <input type="text" class="msgip" placeholder=""
                                 value="Lorem ipsum dolor sit amet, consec" />
-                            <button class="btn"><img alt="attachment" src="./../../../../assets/images-n/projects/paperclip.svg" /></button>
+                            <!-- <button class="btn"><img alt="attachment" src="./../../../../assets/images-n/projects/paperclip.svg" /></button> -->
                             <button class="btn"><img alt="send" src="./../../../../assets/images-n/projects/send.svg" /></button>
                         </div>
                     </div>
@@ -281,3 +264,176 @@
     </div>
 </div>
            
+
+
+
+<!-- Onboard Users OVerlay -->
+<div id="overlayusers" style="display:none;" >
+    <div class="userstabsblock">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a data-toggle="tab" href="#onboarduserstab" class="nav-link active">
+                        Onboard Users
+                        <span> (03 Users selected) </span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a data-toggle="tab" href="#userstab" class="nav-link">
+                        Users
+                        <span></span>
+                    </a>
+                </li>
+                <li class="close">
+                    <a (click)="closeoverlay()"><img src="./../../../../assets/images-n/projects/close-circle-line.svg" alt="close" ></a>
+                </li>                
+            </ul>
+            
+            <div class="tab-content ">
+                <div id="onboarduserstab" class="tab-pane active">
+                    <div class="row searchdiv">
+                        <div class="col-md-5 pl-0 form-group">
+                            <select class="form-control">
+                                <option>All Roles</option>
+                                <option>Process Designer</option>
+                                <option>Process Architect</option>
+                                <option>RPA Designer</option>
+                            </select>
+                        </div>
+                        <div class="col-md-7 pr-0 form-group">
+                            <input type="text" placeholder="Search" class="form-control" />
+                            <img src="./../../../../assets/images-n/projects/search.svg" alt="search-icon" />
+                        </div>
+                    </div>
+                    <div class="tablediv">
+                        <table class="table">                        
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" />
+                                    </td>
+                                    <td><img alt="user-img" src="./../../../../assets/images-n/projects/user1.svg"> Rick</td>
+                                    <td>Process Designer</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" />
+                                    </td>
+                                    <td><img alt="user-img" src="./../../../../assets/images-n/projects/user1.svg"> Rick</td>
+                                    <td>Process Designer</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" />
+                                    </td>
+                                    <td><img alt="user-img" src="./../../../../assets/images-n/projects/user1.svg"> Rick</td>
+                                    <td>Process Designer</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" />
+                                    </td>
+                                    <td><img alt="user-img" src="./../../../../assets/images-n/projects/user1.svg"> Rick</td>
+                                    <td>Process Designer</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" />
+                                    </td>
+                                    <td><img alt="user-img" src="./../../../../assets/images-n/projects/user1.svg"> Rick</td>
+                                    <td>Process Designer</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" />
+                                    </td>
+                                    <td><img alt="user-img" src="./../../../../assets/images-n/projects/user1.svg"> Rick</td>
+                                    <td>Process Designer</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" />
+                                    </td>
+                                    <td><img alt="user-img" src="./../../../../assets/images-n/projects/user1.svg"> Rick</td>
+                                    <td>Process Designer</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" />
+                                    </td>
+                                    <td><img alt="user-img" src="./../../../../assets/images-n/projects/user1.svg"> Rick</td>
+                                    <td>Process Designer</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="row footerbtns justify-content-end">
+                        <button class="btn blue-btntext">Cancel</button>
+                        <button class="btn btn-onboard">Onboard Users</button>
+                    </div>
+                </div>
+                <div id="userstab" class="tab-pane fade">
+                        <div class="row searchdiv">
+                            <div class="col-md-5 pl-0 form-group">
+                               
+                            </div>
+                            <div class="col-md-7 pr-0 form-group">
+                                <input type="text" placeholder="Search" class="form-control" />
+                                <img src="./../../../../assets/images-n/projects/search.svg" alt="search-icon" />
+                            </div>
+                        </div>
+                        <div class="tablediv">
+                            <table class="table"> 
+                                <thead>
+                                    <tr>
+                                        <th>Users Onboarded</th>
+                                        <th>Designation</th>
+                                        <th>Number of Tasks</th>
+                                        <th>Task Type</th>
+                                    </tr>
+                                </thead>                       
+                                <tbody>
+                                    <tr>
+                                        <td>John</td>
+                                        <td>Process Designer</td>
+                                        <td>02</td>
+                                        <td>BPM & RPA</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Pete</td>
+                                        <td>Process Designer</td>
+                                        <td>01</td>
+                                        <td>BPM</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Surya</td>
+                                        <td>Process Architect</td>
+                                        <td>02</td>
+                                        <td>RPA</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Kriti</td>
+                                        <td>RPA Designer</td>
+                                        <td>01</td>
+                                        <td>RPA</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Kriti</td>
+                                        <td>Process Designer</td>
+                                        <td>01</td>
+                                        <td>PI</td>
+                                    </tr>
+                                    <tr>
+                                        <td>John</td>
+                                        <td>Process Architect</td>
+                                        <td>01</td>
+                                        <td>BPM</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                </div>
+            </div>
+    </div>
+</div>

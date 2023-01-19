@@ -28,7 +28,7 @@ import * as DmnJS from 'dmn-js/dist/dmn-modeler.development.js';
 export class ProjectDetailsScreenComponent implements OnInit {
   projects_toggle: Boolean = false;
   projectData: any;
-  projectDetails: any;
+  projectDetails: any={};
 
   lastname: string;
   firstname: string;
@@ -1836,4 +1836,17 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
       event.preventDefault();
     }
   }
+
+
+
+  onboardUsers() {
+    var v = document.getElementById("overlayusers");
+    if (v.style.display === "none") {
+       v.style.display = "block";
+    }
+}
+closeoverlay() {
+  var v = document.getElementById("overlayusers");
+  v.style.display = "none";
+}
 }
