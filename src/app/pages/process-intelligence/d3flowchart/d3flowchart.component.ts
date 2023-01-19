@@ -573,9 +573,13 @@ export class D3flowchartComponent {
         g.node("End").class = "circl"
 
         // Set up zoom support
-        var zoom = d3.zoom().on("zoom", function () {
-          inner.attr("transform", d3.event.transform);
-        });
+        // var zoom = d3.zoom().on("zoom", function () {
+        //   inner.attr("transform", d3.event.transform);
+        // });
+
+        const handleZoom = (e) => inner.attr('transform', e.transform);
+        const zoom = d3.zoom().on('zoom', handleZoom);
+
         svg.call(zoom);
         // Create the renderer
         var render = new dagreD3.render();
