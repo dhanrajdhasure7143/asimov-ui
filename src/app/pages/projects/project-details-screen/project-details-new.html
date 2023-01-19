@@ -1,0 +1,283 @@
+<div class="maincontent">
+    <div class="main-content">
+        <div class="row main-content-head">
+            <div class="col-md-4">
+                <h3>
+                    <label id="popup_title">
+                        <a href="#"><img src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow"></a>
+                    </label>
+                    <span class="title_text">
+                        Projects | <span class="sub_title_text"> {{projectDetails.projectName}}</span>
+                    </span>
+                </h3>
+            </div>
+            <div class="col-md-8 text-right">
+                <button class="btn" onclick="projectListView()">
+                    <img src="./../../../../assets/images-n/projects/Open.svg" alt="Open" >
+                    <span>Open</span>
+                </button>
+                <button class="btn">
+                    <img src="./../../../../assets/images-n/projects/Attribute.svg" alt="Attributes" >
+                    <span>Attributes</span>
+                </button>
+                <button class="btn">
+                    <img src="./../../../../assets/images-n/projects/more-vertical.svg" alt="Actions" >
+                    <span>Actions</span>
+                </button>
+            </div>
+        </div>
+        <div class="main-content-body">
+            <div class="row project-Information">
+                <div class="row project-overview">
+                    <div class="col-md-1 p-0">
+                        <div class="row project-status">
+                            <img src="./../../../../assets/images-n/projects/Inprogress.svg" alt="project-status-icon" >
+                            <p>{{projectDetails.status}}</p>
+                        </div>
+                    </div> 
+                    <div class="col-md-11 p-0">
+                        <div class="row project-ninfo">
+                            <div class="row align-items-center"> 
+                                    <span class="project-name">{{projectDetails.projectName}}</span>
+                                    <img src="./../../../../assets/images-n/projects/Warning.svg" alt="importance">
+                                    <span class="highimp">{{projectDetails.priority}}</span>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-9 pl-0 d-flex align-items-center">
+                                    <div class="row">
+                                        <div class="col-md-3 p-0 pinf">
+                                            <p>Account Financial Audit </p>
+                                            <label>Program Name</label>
+                                        </div>
+                                        <div class="col-md-3 p-0 pinf">
+                                            <p>{{projectDetails.mapValueChain}}</p>
+                                            <label>Departments (3)</label>
+                                        </div>
+                                        <div class="col-md-3 p-0 pinf">
+                                            <p>{{getUserName(projectDetails.owner)}}</p>
+                                            <label>Project Owner</label>
+                                        </div>
+                                        <div class="col-md-3 p-0 pinf">
+                                            <p>{{projectDetails.lastModifiedTimestamp |  date:'MMM dd, y, HH:mm:ss'}}</p>
+                                            <label>Last Updated</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 p-0">
+                                    <div class="d-flex">
+                                       <span class="kpibot">
+                                            <p>{{projectDetails.projectPercentage}} %</p>
+                                            <label>Project Completion</label>
+                                        </span>  
+                                        <!-- <img src="./../../../../assets/images-n/projects/robot.svg" alt="robot-image" class="robotimg"/>                     -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                                                                             
+                </div>
+                <div class="row project-description">
+                    <label>Description</label>
+                    <p>{{projectDetails.projectPurpose}} <span class="readmore">Read more</span></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8 pl-0">
+                    <div class="row quicksnapshot">
+                        <label class="colheads">Quick Snapshot</label>
+                        <div class="row">
+                            <div class="col-md-4 pl-0">
+                                <div class="row quicksnapshot-cards">
+                                    <div class="d-flex w-100 align-items-center">
+                                        <div class="qcard-infoimg">
+                                            <img src="./../../../../assets/images-n/projects/ActiveTasks.svg" alt="Active-Tasks" class="qcard-img">
+                                        </div>
+                                        <div class="qcard-info">
+                                            <label class="qcard-count">12</label>
+                                            <p class="qcard-name">Active Tasks</p>
+                                        </div>                      
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="row quicksnapshot-cards">
+                                    <div class="d-flex w-100 align-items-center">
+                                        <div class="qcard-infoimg">
+                                            <!-- <img src="./../../../../assets/images-n/projects/OverdueTasks.svg" alt="OverdueTasks" class="qcard-img"> -->
+                                            <img src="./../../../../assets/images-n/projects/OverdueTasks2.svg" alt="OverdueTasks" class="qcard-img">
+                                        </div>
+                                        <div class="qcard-info">
+                                            <label class="qcard-count">02</label>
+                                            <p class="qcard-name">Overdue Tasks</p>
+                                        </div>                      
+                                    </div>  
+                                </div>
+                            </div>
+                            <div class="col-md-4 pr-0">
+                                <div class="row quicksnapshot-cards">
+                                    <div class="d-flex w-100 align-items-center">
+                                        <div class="qcard-infoimg">
+                                            <img src="./../../../../assets/images-n/projects/UsersOnboard.svg" alt="UserOnboard" class="qcard-img" >
+                                        </div>
+                                        <!--style="margin-left: 8px;" style="margin-left: -9px;" -->
+                                        <div class="qcard-info" >
+                                            <label class="qcard-count">05</label>
+                                            <p class="qcard-name">Users Onboarded</p>
+                                        </div>                      
+                                    </div>
+                                    <!-- <div class="d-flex w-100 align-items-center">
+                                        <div class="qcard-infoimg">
+                                            <img src="./../../../../assets/images-n/projects/AutomationRate.svg" alt="AutomationRate" class="qcard-img">
+                                        </div>
+                                        <div class="qcard-info">
+                                            <label class="qcard-count">02</label>
+                                            <p class="qcard-name">Automation Rate</p>
+                                        </div>                      
+                                    </div>   -->
+                                </div>
+                            </div>
+                            <div class="col-md-4 pl-0">
+                                <div class="row quicksnapshot-cards lastrow-cards">
+                                    <div class="d-flex w-100 align-items-center">
+                                        <div class="qcard-infoimg">
+                                            <img src="./../../../../assets/images-n/projects/Documents.svg" alt="Documents" class="qcard-img">
+                                        </div>
+                                        <div class="qcard-info">
+                                            <label class="qcard-count">07</label>
+                                            <p class="qcard-name">Documents</p>
+                                        </div>                      
+                                    </div> 
+                                </div>
+                            </div>
+                            <div class="col-md-4 ">
+                                <div class="row quicksnapshot-cards lastrow-cards">
+                                    <div class="d-flex w-100 align-items-center">
+                                        <div class="qcard-infoimg">
+                                            <img src="./../../../../assets/images-n/projects/AutomationRate.svg" alt="AutomationRate" class="qcard-img">
+                                        </div>
+                                        <div class="qcard-info">
+                                            <label class="qcard-count">02</label>
+                                            <p class="qcard-name">Automation Rate</p>
+                                        </div>                      
+                                    </div> 
+                                    <!-- <div class="d-flex w-100 align-items-center">
+                                        <div class="qcard-infoimg">
+                                            <img src="./../../../../assets/images-n/projects/UsersOnboard.svg" alt="UserOnboard" class="qcard-img" >
+                                        </div>
+                                        <div class="qcard-info" >
+                                            <label class="qcard-count">05</label>
+                                            <p class="qcard-name">Users Onboarded</p>
+                                        </div>                      
+                                    </div> -->
+                                </div>
+                            </div>
+                            <div class="col-md-4 pr-0">
+                                <div class="row quicksnapshot-cards lastrow-cards">
+                                    <div class="d-flex w-100 align-items-center">
+                                        <div class="qcard-infoimg">
+                                            <!-- <img src="./../../../../assets/images-n/projects/Frame 2.svg" alt="UnreadMessages" class="qcard-img"> -->
+                                            <img src="./../../../../assets/images-n/projects/UnreadMessages.svg" alt="UnreadMessages" class="qcard-img">
+                                        </div>
+                                        <div class="qcard-info">
+                                            <label class="qcard-count">02</label>
+                                            <p class="qcard-name">Unread Message</p>
+                                        </div>                      
+                                    </div>   
+                                </div>
+                            </div>
+                        </div>
+                    </div>    
+                    <div class="row quick-actions">
+                        <h6>Quick Actions</h6>
+                        <img src="./../../../../assets/images-n/projects/Hand.svg" alt="handicon" >
+                        <button class="btn blue-btntext" onclick="taskListView()">
+                            <a><span>View Tasks</span></a>
+                        </button>
+                        <button class="btn blue-btntext">
+                            <a href="#"><span>Create Task </span></a>
+                        </button>
+                        <button class="btn blue-btntext"  onclick="onboardUsers()">
+                            <a><span>Onboard User</span></a>
+                        </button>
+                        <button class="btn blue-btntext">
+                            <a href="#"><span>Process Document</span></a>
+                        </button>
+                        <button class="btn blue-btntext">
+                           <a href="#"><span>Add Documents</span></a>
+                        </button>
+                        <button class="btn blue-btntext">
+                            <a href="#"><span>Request Document</span></a>
+                        </button>
+                    </div>                  
+                    <div class="row acresources">
+                        <label class="colheads">Recent Activities</label>
+                        <button class="btn blue-btntext"><a href="#">View All</a></button>
+                        <table class="table imgInFirstCol">
+                            <thead>
+                                <tr>
+                                    <th>Activity</th>
+                                    <th>Resource</th>
+                                    <th>Last Updated</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Procure work environment</td>
+                                    <td><img alt="user-img" src="./../../../../assets/images-n/projects/user1.svg"> Rick</td>
+                                    <td>09th Jan, 12 pm</td>
+                                </tr>
+                                <tr>
+                                    <td>Select necessary work equipment</td>
+                                    <td><img alt="user-img" src="./../../../../assets/images-n/projects/user2.svg"> James</td>
+                                    <td>09th Jan, 12 pm</td>
+                                </tr>
+                                <tr>
+                                    <td>Setup access rights</td>
+                                    <td><img alt="user-img" src="./../../../../assets/images-n/projects/user1.svg"> Johnson</td>
+                                    <td>09th Jan, 12 pm</td>
+                                </tr>
+                                <tr>
+                                    <td>Latest task completed</td>
+                                    <td><img alt="user-img" src="./../../../../assets/images-n/projects/user2.svg"> William</td>
+                                    <td>09th Jan, 12 pm</td>
+                                </tr>
+                               
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-4 pr-0 ">
+                    <div class="activecollaboration">
+                        <div class="row collab">
+                            <label class="colheads">Collaborations</label>
+                            <div class="row lftusermsg">
+                                <img alt="user-img" src="./../../../../assets/images-n/projects/user2.svg" />
+                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Lorem ipsum dolor.</p>
+                                <p class="userinfo">Rachel M | 09th Jan, 12 pm</p>
+                            </div>
+                            <div class="row rgtusermsg">
+                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Lorem ipsum dolor.</p>
+                                <p class="rttime">09th Jan, 12 pm</p>
+                            </div>
+                            <div class="row lftusermsg">
+                                <img alt="user-img" src="./../../../../assets/images-n/projects/user1.svg" />
+                                <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Lorem ipsum dolor.</p>
+                                <p><a href="#"><img alt="attachment" src="./../../../../assets/images-n/projects/paperclip.svg" width="16px"
+                                            height="16px" />Lorem ipsum.pdf</a></p>
+                                <p class="userinfo">Rick Johnson | 09th Jan, 12 pm</p>
+                            </div>
+                        </div>
+                        <div class="row collabottom">
+                            <input type="text" class="msgip" placeholder=""
+                                value="Lorem ipsum dolor sit amet, consec" />
+                            <button class="btn"><img alt="attachment" src="./../../../../assets/images-n/projects/paperclip.svg" /></button>
+                            <button class="btn"><img alt="send" src="./../../../../assets/images-n/projects/send.svg" /></button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+           

@@ -22,8 +22,8 @@ import * as DmnJS from 'dmn-js/dist/dmn-modeler.development.js';
 
 @Component({
   selector: 'app-project-details-screen',
-  templateUrl: './project-details-screen.component.html',
-  styleUrls: ['./project-details-screen.component.css']
+  templateUrl: './project-details-new.html',
+  styleUrls: ['./project-details-new.css']
 })
 export class ProjectDetailsScreenComponent implements OnInit {
   projects_toggle: Boolean = false;
