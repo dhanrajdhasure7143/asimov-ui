@@ -364,6 +364,10 @@ export class RpaSoLogsComponent implements OnInit {
     this.closeEvent.emit(null)
   }
 
+  showAutomatedLogs(element){
+
+  }
+
 // ngOnDestroy(): void {
 //   clearInterval(this.interval)
 //   clearInterval(this.timeInterval)

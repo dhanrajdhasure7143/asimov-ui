@@ -15,7 +15,6 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule, BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { CronEditorModule } from 'src/app/shared/cron-editor/cron-editor.module';
 import { FilterPipeModule } from 'ngx-filter-pipe';
-import { NgxPasswordToggleModule } from 'ngx-password-toggle';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { RpaHomeComponent } from './rpa-home/rpa-home.component';
 import {MatTableModule} from '@angular/material/table';
@@ -98,7 +97,6 @@ import { SearchRpaPipe } from './rpa-home/Search.pipe';
     NgbTimepickerModule,
     NgxPaginationModule,
     RpautomationRoutingModule,
-    NgxPasswordToggleModule,
     DndModule,
     MatTableModule,
     MatTabsModule,
