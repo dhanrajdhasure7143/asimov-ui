@@ -73,9 +73,14 @@ export class ProjectsProgramsTableComponent implements OnInit {
   loading: boolean = true;
 
   _selectedColumns:any[]=[];
+  customers:any=[]
   cols:any=[]
   search:any="";
   activityValues: number[] = [0, 100];
+  testAv=[{'type':'Project'}, {'type':'Program'}];
+  representatives:any=[];
+  customers2:any;
+
   constructor(
     private api: RestApiService,
     private formBuilder: FormBuilder,
@@ -117,6 +122,91 @@ export class ProjectsProgramsTableComponent implements OnInit {
   ngOnInit() {
 console.log(this.projects_list)
 
+this.customers=[
+  {
+    "id":1000,
+    "name":"James Butt",
+    "country":{
+       "name":"Algeria",
+       "code":"dz"
+    },
+    "company":"Benton, John B Jr",
+    "date":"2015-09-13",
+    "status":"unqualified",
+    "verified":true,
+    "activity":17,
+    "name2":"Ioni Bowcher",
+    "representative":{
+       "name":"Program",
+    },
+    "balance":70663
+ },
+ {
+    "id":1001,
+    "name":"Josephine Darakjy",
+    "country":{
+       "name":"Egypt",
+       "code":"eg"
+    },
+    "company":"Chanay, Jeffrey A Esq",
+    "date":"2019-02-09",
+    "status":"proposal",
+    "verified":true,
+    "activity":0,
+    name2:"Amy Elsner",
+    "representative":{
+       "name":"Project",
+    },
+    "balance":82429
+ },
+]
+
+
+this.customers2=[
+  {access: undefined,
+    createdBy: "Praveen Bokkala",
+    department:"Engineering",
+    endDate:"2022-12-15T00:00:00.000+00:00",
+    id:273,
+    initiatives:"2",
+    mapValueChain:"Engineering",
+    measurableMetrics:"4",
+    owner:"praveen.bokkala@epsoftinc.com",
+    priority:"Medium",
+    process:"11",
+    projectName:"testinggg",
+    resources: [''],
+    startDate: "2022-12-13T00:00:00.000+00:00",
+    createdDate:"2022-11-09T08:53:55.494",
+    updatedDate:"2022-11-09T08:53:55.494",
+    status:"New",
+    "representative":{
+      "name":"Program",
+   },
+    },
+    {access: undefined,
+    createdBy: "Praveen Bokkala",
+    department:"Engineering",
+    endDate:"2022-12-15T00:00:00.000+00:00",
+    createdDate:"2022-11-09T08:53:55.494",
+    id:273,
+    initiatives:"2",
+    mapValueChain:"Engineering",
+    measurableMetrics:"4",
+    owner:"praveen.bokkala@epsoftinc.com",
+    priority:"Medium",
+    process:"11",
+    projectName:"testinggg",
+    resources: [''],
+    startDate: "2022-12-13T00:00:00.000+00:00",
+    updatedDate:"2022-11-09T08:53:55.494",
+    status:"New",
+    "representative":{
+      "name":"Project",
+   },
+    },
+]
+
    
     this.statuses = [
       { label: "Type", value: "type" },
@@ -135,7 +225,20 @@ console.log(this.projects_list)
       { field: "Priority", header: "priority" },
       { field: "createdBy", header: "createdBy" }
   ];
+  this.representatives = [
+    {name: "Project"},
+    {name: "Program"},
 
+];
+
+this.statuses = [
+    {label: 'Unqualified', value: 'unqualified'},
+    {label: 'Qualified', value: 'qualified'},
+    {label: 'New', value: 'new'},
+    {label: 'Negotiation', value: 'negotiation'},
+    {label: 'Renewal', value: 'renewal'},
+    {label: 'Proposal', value: 'proposal'}
+]
   this._selectedColumns = this.cols;
   
     this.api.getCustomUserRole(2).subscribe((role) => {
@@ -255,8 +358,12 @@ set selectedColumns(val: any[]) {
           createdAt: moment(item.startDate).format("DD, MMM, YY"),
           createdBy: item.createdBy,
           lastModifiedBy: item.lastModifiedBy,
-          type: item.type,
-          department:item.department
+          "representative":{
+            "name":item.type,
+         },
+          department:item.department,
+          createdDate:moment(item.createdTimestamp).format("DD, MMM, YY"),
+          updatedDate:moment(item.lastModifiedBy).format("DD, MMM, YY")
         };
       else if (item.type == "Project")
         return {
@@ -269,9 +376,15 @@ set selectedColumns(val: any[]) {
           status: item.status,
           createdAt: moment(item.startDate).format("DD, MMM, YY"),
           createdBy: item.createdBy,
-          lastModifiedBy: item.lastModifiedBy,
-          type: item.type,
-          department:item.department
+          lastModifiedBy: moment(item.lastModifiedBy).format("DD, MMM, YY"),
+          "representative":{
+            "name":item.type,
+         },
+          department:item.department,
+          createdDate:moment(item.createdTimestamp).format("DD, MMM, YY"),
+          updatedDate:item.lastModifiedTimestamp
+
+
         };
     });
     this.projectDetails=projects_or_programs

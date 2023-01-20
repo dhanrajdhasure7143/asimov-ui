@@ -1,184 +1,75 @@
-<div class="card">
 
     
 
-    <p-table #dt1 [columns]="selectedColumns" [value]="projectDetails" dataKey="id" [reorderableColumns]="true" [frozenValue]="projectDetails"
-    [resizableColumns]="true" styleClass="p-datatable-gridlines" responsiveLayout="scroll" styleClass="p-datatable-customers p-datatable-gridlines"
-    columnResizeMode="expand" [globalFilterFields]="['process']">
-    <ng-template pTemplate="caption">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-9">
+
+
+
+
+    <div class="card">
+        <p-table #dt1 [value]="projectDetails" dataKey="id"
+            [rows]="10" styleClass="p-datatable-gridlines"
+            [globalFilterFields]="['representative.name']">
+            <ng-template pTemplate="caption">
+                <div class="p-d-flex">
+                    <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
+                    <span class="p-input-icon-left p-ml-auto">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" />
+                    </span>
                 </div>
-                <div class="col-md-3">
-                    <input type="search" class="form-control" [(ngModel)]="search" (keyup)="applyfilter($event)"
-                    id="search-project-or-program" placeholder="Search Projects/Programs">
-                </div>
-            </div>
-        </div>
-    </ng-template>
-    <!-- <ng-template pTemplate="caption">
-      <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
-    
-      <p-multiSelect [options]="cols" [(ngModel)]="selectedColumns" optionLabel="header"
-          selectedItemsLabel="{0} columns selected" [style]="{minWidth: '200px'}" placeholder="Choose Columns"></p-multiSelect>
-            <span class="p-input-icon-left p-ml-auto"><i class="pi pi-search"></i>
-                <input pInputText type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" />
-            </span> 
-    </ng-template> -->
-    
-        <ng-template pTemplate="header">
-            <tr>
-                <th pResizableColumn pSortableColumn="type" pReorderableColumn>
-                    <div class="p-d-flex p-jc-between p-ai-center">
-                        Type
-              <p-sortIcon field="type"></p-sortIcon>
-              <p-columnFilter field="projectName" matchMode="in" display="menu" [showMatchModes]="false"
-              [showOperator]="false" [showAddButton]="false">
-              <ng-template pTemplate="header">
-                  <div class="p-px-3 p-pt-3 p-pb-0">
-                      <span class="p-text-bold">Process Name Picker</span>
-                  </div>
-              </ng-template>
-              <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                  <p-multiSelect [ngModel]="value" [options]="[{'label':'Project', 'value':'Project'}, {'label':'Program', 'value':'Program'}]" placeholder="Any"
-                      (onChange)="filter($event.value)" optionLabel="label">
-                      <ng-template let-option pTemplate="item">
-                          <div class="p-multiselect-representative-option">
-                              <span class="p-ml-1">{{option.label}}</span>
-                          </div>
-                      </ng-template>
-                  </p-multiSelect>
-              </ng-template>
-          </p-columnFilter>
-                    </div>
-                </th>
-    
-                <th pSortableColumn="projectName" pResizableColumn pReorderableColumn>
-                    <div class="p-d-flex p-jc-between p-ai-center" >Name<p-sortIcon field="projectName"></p-sortIcon>
-                        <p-columnFilter field="projectName" matchMode="in" display="menu" [showMatchModes]="false"
-                            [showOperator]="false" [showAddButton]="false">
-                            <ng-template pTemplate="header">
-                                <div class="p-px-3 p-pt-3 p-pb-0">
-                                    <span class="p-text-bold">Process Name Picker</span>
-                                </div>
-                            </ng-template>
-                            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                                <p-multiSelect [ngModel]="value" [options]="projectnames" placeholder="Any"
-                                    (onChange)="filter($event.value)" optionLabel="label">
-                                    <ng-template let-option pTemplate="item">
-                                        <div class="p-multiselect-representative-option">
-                                            <span class="p-ml-1">{{getreducedValue(option.label)}}</span>
-                                        </div>
-                                    </ng-template>
-                                </p-multiSelect>
-                            </ng-template>
-                        </p-columnFilter>
-                    </div>
-                </th>
-    
-          <th pResizableColumn pSortableColumn="process" pReorderableColumn>
-                    <div class="p-d-flex p-jc-between p-ai-center" >Process<p-sortIcon field="process"></p-sortIcon>
-                        <p-columnFilter type="text" field="country.name" display="menu"></p-columnFilter>
-                    </div>
-                </th>
-    
-                <th pResizableColumn pReorderableColumn>
-                    <div class="p-d-flex p-jc-between p-ai-center" >
-                        Department
-                        <p-columnFilter type="date" field="date" display="menu"></p-columnFilter>
-                    </div>
-                </th>
-                <th>
-                    <div class="p-d-flex p-jc-between p-ai-center">
-                        Created Date
-                        <p-columnFilter type="numeric" field="balance" display="menu" currency="USD"></p-columnFilter>
-                    </div>
-                </th>
-                <th>
-                    <div class="p-d-flex p-jc-between p-ai-center">
-                        
-                        Last updated by
-                        <p-columnFilter field="status" matchMode="equals" display="menu">
-                            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                                <p-dropdown [ngModel]="value" [options]="statuses" (onChange)="filter($event.value)"
-                                    placeholder="Any">
-                                    <ng-template let-option pTemplate="item">
-                                        <span [class]="'customer-badge status-' + option.value">{{option.label}}</span>
-                                    </ng-template>
-                                </p-dropdown>
-                            </ng-template>
-                        </p-columnFilter>
-                    </div>
-                </th>
-                <th style="width: 8rem">
-                    <div class="p-d-flex p-jc-between p-ai-center">
-                        Action
-                        <p-columnFilter type="boolean" field="verified" display="menu"></p-columnFilter>
-                    </div>
-                </th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-element>
-            <tr>
-                <td>
-                    {{element.type}}
-                </td>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
 
-                <td><span class="image-text">{{getreducedValue(element.projectName)}}</span></td>
-                <td><span class="image-text">{{element.process | processName : processes}}</span></td>
-                <td>{{element.department}}</td>
-                <td>{{element.priority}}</td>
-                <td><span [class]="'element-badge status-' + element.status">{{element.startDate}}</span></td>
-                <!-- <td>
-                    <p-progressBar [value]="element.activity" [showValue]="false"></p-progressBar>
-                </td> -->
-                <td class="p-text-center">
-                    <!-- <i class="pi" [ngClass]="{'true-icon pi-check-circle': element.verified, 'false-icon pi-times-circle': !element.verified}"></i> -->
-                    <div class="newinntalx">
-                        <a class="clickable text-dark" *ngIf="element.type=='Project'" (click)="projectDetailsbyId(element)"
-                          matTooltip="Go To Project Details">
-                          <img src="../../../../../assets/images/Projects/eye-show.svg" class="default-img">
-                          <img src="../../../../../assets/images/Projects/eye-show-blue.svg" class="hover-img">
-                        </a>
-                        <a class="disable-bg text-dark" *ngIf="element.type=='Program'" (click)="programDetailsbyId(element)"
-                          matTooltip="Go To Program Details">
-                          <img src="../../../../../assets/images/Projects/eye-show.svg" class="default-img">
-                          <img src="../../../../../assets/images/Projects/eye-show-blue.svg" class="hover-img">
-                        </a>
-                        <!-- <a  *ngIf="element.type=='Project'" (click)="updatedata(updateprojectmodal,element)" >
-                            <img src="../../../../../assets/images/Projects/edit.svg" />
-                          </a> 
-                          <a *ngIf="element.type=='Program'" (click)="updatedata(updateprogrammodal,element)" >
-                            <img src="../../../../../assets/images/Projects/edit.svg" />
-                          </a> -->
-                        <a (click)="deleteproject(element)" *ngIf="element.type=='Project' && (!(this.userRoles.includes('System Admin')) && userName==element.createdBy)
-                           || (this.userRoles.includes('System Admin'))&& element.type=='Project'" matTooltip="Delete Project">
-                          <img src="../../../../../assets/images/Projects/delete-black.svg" class="default-img">
-                          <img src="../../../../../assets/images/Projects/delete-red.svg" class="hover-img">
-                        </a>
-                        <a (click)="deleteproject(element)" *ngIf="element.type=='Program' && (!(this.userRoles.includes('System Admin')) && userName==element.createdBy)
-                          || (this.userRoles.includes('System Admin'))&& element.type=='Program'" matTooltip="Delete Program">
-                          <img src="../../../../../assets/images/Projects/delete-black.svg" class="default-img">
-                          <img src="../../../../../assets/images/Projects/delete-red.svg" class="hover-img">
-                        </a>
-                        <!-- <a class="clickable text-dark" style="color:black"  *ngIf="element.type=='Project'"  (click)="projectDetailsbyId(element.id)" matTooltip="Go To Project Details">
-                          <i class="fa fa-eye"></i>
-                        </a> 
-                        <a class=" clickable text-dark"  matTooltip="Go To Program Details" (click)="programDetailsbyId(element)" style="color:black" *ngIf="element.type=='Program'" ><i class="fa fa-eye"></i></a>
-                        <a  *ngIf="element.type=='Project'" (click)="updatedata(updateprojectmodal,element)"  style="cursor:pointer"><i class="fa fa-edit"></i></a> 
-                        <a *ngIf="element.type=='Program'" (click)="updatedata(updateprogrammodal,element)"  style="cursor:pointer"><i class="fa fa-edit"></i></a> -->
-                        <!-- <a (click)="deleteproject(element)" [matTooltip]="'Delete '+element.type+' Details'" style="color:red;cursor:pointer"><i class="fa fa-trash" aria-hidden="true"></i></a>   -->
-                      </div>
-                </td>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="emptymessage">
-            <tr>
-                <td colspan="7">No data found</td>
-            </tr>
-        </ng-template>
-    </p-table>
+                    <th>
+                        <div class="p-d-flex p-jc-between p-ai-center">
+                            Type
+                            <p-columnFilter field="representative" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                                <ng-template pTemplate="header">
+                                    <div class="p-px-3 p-pt-3 p-pb-0">
+                                        <span class="p-text-bold">Type Picker</span>
+                                    </div>
+                                </ng-template>
+                                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                    <p-multiSelect [ngModel]="value" [options]="representatives" placeholder="Any" (onChange)="filter($event.value)" optionLabel="name">
+                                        <ng-template let-option pTemplate="item">
+                                            <div class="p-multiselect-representative-option">
+                                                <span class="p-ml-1">{{option.name}}</span>
+                                            </div>
+                                        </ng-template>
+                                    </p-multiSelect>
+                                </ng-template>
+                            </p-columnFilter>
+                        </div>
+                    </th>
+                    <th>Name</th>
+                    <th>Process</th>
+                    <th>Department</th>
+                    <th>Created Date</th>
+                    <th>Last Updated By</th>
+
+
+
+
+
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-element>
+                <tr>
+
+                    <td><span class="image-text">{{element.representative.name}}</span></td>
+                    <td>{{getreducedValue(element.projectName)}}</td>
+                    <td>{{element.process | processName : processes}}</td>
+                    <td>{{element.department}}</td>
+                    <td>{{element.createdDate}}</td>
+                    <td>{{element.updatedDate?element.updatedDate:element.createdDate}}</td>
+
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="7">No customers found</td>
+                </tr>
+            </ng-template>
+        </p-table>
     </div>
-    
-    
