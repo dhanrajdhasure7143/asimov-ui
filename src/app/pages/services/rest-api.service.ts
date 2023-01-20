@@ -5,7 +5,6 @@ import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { BpmnModel } from '../business-process/model/bpmn-autosave-model';
 import { IpServiceService } from '../../services/ip-service.service';
-import { Customer } from '../projects/customer';
 
 // const httpOptions = {
 //   headers: new HttpHeaders({
@@ -1488,10 +1487,4 @@ getprocessnamesByLatestVersion()
   return this.http.get("/rpa-service/latest-version/process-name");
 }
 
-getCustomersLarge() {
-  return this.http.get<any>('assets/customers-large.json')
-      .toPromise()
-      .then(res => <Customer[]>res.data)
-      .then(data => { return data; });
-}
 }

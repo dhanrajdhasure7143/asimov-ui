@@ -1,212 +1,152 @@
-<div class="card">
-<p-table #dt1 [columns]="selectedColumns" [value]="projectDetails" dataKey="id" [reorderableColumns]="true" [frozenValue]="projectDetails" [scrollable]="true" scrollHeight="400px"
-[resizableColumns]="true" styleClass="p-datatable-gridlines" responsiveLayout="scroll" [loading]="loading" styleClass="p-datatable-customers p-datatable-gridlines"
-columnResizeMode="expand" [globalFilterFields]="['name','country.name','representative.name','status']">
-<ng-template pTemplate="caption">
-  <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
-
-  <p-multiSelect [options]="cols" [(ngModel)]="selectedColumns" optionLabel="header"
-      selectedItemsLabel="{0} columns selected" [style]="{minWidth: '200px'}" placeholder="Choose Columns"></p-multiSelect>
-        <span class="p-input-icon-left p-ml-auto"><i class="pi pi-search"></i>
-            <input pInputText type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" />
-        </span> 
-</ng-template>
-
-	<ng-template pTemplate="header">
-		<tr>
-			<th pResizableColumn pSortableColumn="type" pReorderableColumn>
-				<div class="p-d-flex p-jc-between p-ai-center">
-					Type<p-sortIcon field="type"></p-sortIcon>
-					<p-columnFilter type="text" field="name" display="menu"></p-columnFilter>
-				</div>
-			</th>
-			<th pResizableColumn pSortableColumn="process" pReorderableColumn>
-				<div class="p-d-flex p-jc-between p-ai-center" >Process<p-sortIcon field="process"></p-sortIcon>
-					<p-columnFilter type="text" field="country.name" display="menu"></p-columnFilter>
-				</div>
-			</th>
-			<th pSortableColumn="projectName" pResizableColumn pReorderableColumn>
-				<div class="p-d-flex p-jc-between p-ai-center" >
-					project Name<p-sortIcon field="projectName"></p-sortIcon>
-					<p-columnFilter field="representative" matchMode="in" display="menu" [showMatchModes]="false"
-						[showOperator]="false" [showAddButton]="false">
-						<ng-template pTemplate="header">
-							<div class="p-px-3 p-pt-3 p-pb-0">
-								<span class="p-text-bold">Agent Picker</span>
-							</div>
-						</ng-template>
-						<ng-template pTemplate="filter" let-value let-filter="filterCallback">
-							<p-multiSelect [ngModel]="value" [options]="representatives" placeholder="Any"
-								(onChange)="filter($event.value)" optionLabel="name">
-								<ng-template let-option pTemplate="item">
-									<div class="p-multiselect-representative-option">
-										<span class="p-ml-1">{{option.name}}</span>
-									</div>
-								</ng-template>
-							</p-multiSelect>
-						</ng-template>
-					</p-columnFilter>
-				</div>
-			</th>
-			<th pResizableColumn pReorderableColumn>
-				<div class="p-d-flex p-jc-between p-ai-center" >
-					Owner
-					<p-columnFilter type="date" field="date" display="menu"></p-columnFilter>
-				</div>
-			</th>
-			<th>
-				<div class="p-d-flex p-jc-between p-ai-center">
-					Priority
-					<p-columnFilter type="numeric" field="balance" display="menu" currency="USD"></p-columnFilter>
-				</div>
-			</th>
-			<th>
-				<div class="p-d-flex p-jc-between p-ai-center">
-					createdBy
-					<p-columnFilter field="status" matchMode="equals" display="menu">
-						<ng-template pTemplate="filter" let-value let-filter="filterCallback">
-							<p-dropdown [ngModel]="value" [options]="statuses" (onChange)="filter($event.value)"
-								placeholder="Any">
-								<ng-template let-option pTemplate="item">
-									<span [class]="'customer-badge status-' + option.value">{{option.label}}</span>
-								</ng-template>
-							</p-dropdown>
-						</ng-template>
-					</p-columnFilter>
-				</div>
-			</th>
-			<th style="width: 8rem">
-				<div class="p-d-flex p-jc-between p-ai-center">
-					Action
-					<p-columnFilter type="boolean" field="verified" display="menu"></p-columnFilter>
-				</div>
-			</th>
-		</tr>
-	</ng-template>
-	<ng-template pTemplate="body" let-customer>
-		<tr>
-			<td>
-				{{customer.type}}
-			</td>
-			<td>
-				<span class="image-text">{{customer.process}}</span>
-			</td>
-			<td>
-				<span class="image-text">{{customer.projectName}}</span>
-			</td>
-			<td>
-				{{customer.owner}}
-			</td>
-			<td>
-				{{customer.priority}}
-			</td>
-			<td>
-				<span [class]="'customer-badge status-' + customer.status">{{customer.createdBy}}</span>
-			</td>
-			<!-- <td>
-				<p-progressBar [value]="customer.activity" [showValue]="false"></p-progressBar>
-			</td> -->
-			<td class="p-text-center">
-				<i class="pi" [ngClass]="{'true-icon pi-check-circle': customer.verified, 'false-icon pi-times-circle': !customer.verified}"></i>
-			</td>
-		</tr>
-	</ng-template>
-	<ng-template pTemplate="emptymessage">
-		<tr>
-			<td colspan="7">No customers found</td>
-		</tr>
-	</ng-template>
-</p-table>
-</div>
-
-
-
-
-<div class="card">
-  <h5>Filter Row</h5>
-  <p>Filters are displayed inline within a separate row.</p>
-  <p-table #dt2 [value]="customers" dataKey="id"
-      [rows]="10" [showCurrentPageReport]="true" [loading]="loading"
-      [paginator]="false"
-      [globalFilterFields]="['name','country.name','representative.name','status']">
-      <ng-template pTemplate="caption">
-          <div class="p-d-flex">
-              <span class="p-input-icon-left p-ml-auto">
-                  <i class="pi pi-search"></i>
-                  <input pInputText type="text" (input)="dt2.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" />
-              </span>
+<div class="project-list-table h-100">
+  <div class="prj-prg-tablelist">
+    <table mat-table #sort2="matSort" [dataSource]="dataSource2" matSort class="projecttable table" id="listofcred">
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="pcell1">ID</th>
+        <td mat-cell *matCellDef="let element" class="pcell1">
+          <span *ngIf="element.id!=null">{{element.id}}</span>
+          <span *ngIf="element.id==''">-</span>
+          <span *ngIf="element.id==null">-</span>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="type">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="pcell2">Type</th>
+        <td mat-cell *matCellDef="let element" class="pcell2">
+          <span *ngIf="element.type!=null">{{element.type}}</span>
+          <span *ngIf="element.type==''">-</span>
+          <span *ngIf="element.type==null">-</span>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="initiatives">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="pcell3">Initiative</th>
+        <td mat-cell *matCellDef="let element" class="pcell3">
+          <span *ngIf="element.initiatives!=null"
+            [matTooltip]="element.initiatives|initiativePipe : initiatives|titlecase" matTooltipClass="bpsHeaderTooltip"
+            matTooltipPosition="below">{{getreducedValue(element.initiatives|initiativePipe :
+            initiatives|titlecase)}}</span>
+          <span *ngIf="element.initiatives==''">-</span>
+          <span *ngIf="element.initiatives==null">-</span>
+      </ng-container>
+      <ng-container matColumnDef="process">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="pcell4">Process</th>
+        <td mat-cell *matCellDef="let element" class="pcell4">
+          <span *ngIf="element.process!=null" [matTooltip]="element.process | processName : processes"
+            matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below">{{getreducedValue(element.process |
+            processName : processes)}}</span>
+          <span *ngIf="element.process==''">-</span>
+          <span *ngIf=" element.process==null">-</span>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="projectName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="pcell5">Name</th>
+        <td mat-cell *matCellDef="let element" class="pcell5">
+          <span *ngIf="element.projectName!=null" [matTooltip]="element.projectName | processName : processes"
+            matTooltipClass="bpsHeaderTooltip"
+            matTooltipPosition="below">{{getreducedValue(element.projectName)}}</span>
+          <span *ngIf="element.projectName==''">-</span>
+          <span *ngIf=" element.projectName==null">-</span>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="owner">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="pcell6">Owner</th>
+        <td mat-cell *matCellDef="let element" class="pcell6">
+          <span *ngIf="element.owner!=null" [matTooltip]="element.owner| userPipe : users_list"
+            matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below">{{getreducedValue(element.owner| userPipe :
+            users_list)}}</span>
+          <span *ngIf="element.owner==''">-</span>
+          <span *ngIf=" element.owner==null">-</span>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="priority">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="pcell7">Priority</th>
+        <td mat-cell *matCellDef="let element" class="pcell7">
+          <span *ngIf="element.priority!=null">{{element.priority}}</span>
+          <span *ngIf="element.priority==''">-</span>
+          <span *ngIf=" element.priority==null">-</span>
+        </td>
+      </ng-container>
+      <!-- <ng-container matColumnDef="access">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Access</th>
+          <td mat-cell *matCellDef="let element"> 
+              <span *ngIf="element.access!=null">{{element.access}}</span> 
+              <span *ngIf="element.access==''" >-</span> 
+              <span *ngIf=" element.access==null">-</span> 
+          </td>
+          </ng-container> -->
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="pcell8">Status</th>
+        <td mat-cell *matCellDef="let element" class="pcell8">
+          <span *ngIf="element.status!=null">{{element.status}}</span>
+          <span *ngIf="element.status==''">-</span>
+          <span *ngIf=" element.status==null">-</span>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="createdBy">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="pcell9">Last Updated By</th>
+        <td mat-cell *matCellDef="let element" class="pcell9">
+          <span *ngIf="element.createdBy!=null">{{element.createdBy}}</span>
+          <span *ngIf="element.createdBy==''">-</span>
+          <span *ngIf=" element.createdBy==null">-</span>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="noData">
+        <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="11">
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef style="font-weight:normal" class="pcell10"> Actions</th>
+        <td mat-cell *matCellDef="let element" class="action-link tablacs pcell10">
+          <div class="newinntalx">
+            <a class="clickable text-dark" *ngIf="element.type=='Project'" (click)="projectDetailsbyId(element)"
+              matTooltip="Go To Project Details">
+              <img src="../../../../../assets/images/Projects/eye-show.svg" class="default-img">
+              <img src="../../../../../assets/images/Projects/eye-show-blue.svg" class="hover-img">
+            </a>
+            <a class="disable-bg text-dark" *ngIf="element.type=='Program'" (click)="programDetailsbyId(element)"
+              matTooltip="Go To Program Details">
+              <img src="../../../../../assets/images/Projects/eye-show.svg" class="default-img">
+              <img src="../../../../../assets/images/Projects/eye-show-blue.svg" class="hover-img">
+            </a>
+            <!-- <a  *ngIf="element.type=='Project'" (click)="updatedata(updateprojectmodal,element)" >
+                <img src="../../../../../assets/images/Projects/edit.svg" />
+              </a> 
+              <a *ngIf="element.type=='Program'" (click)="updatedata(updateprogrammodal,element)" >
+                <img src="../../../../../assets/images/Projects/edit.svg" />
+              </a> -->
+            <a (click)="deleteproject(element)" *ngIf="element.type=='Project' && (!(this.userRoles.includes('System Admin')) && userName==element.createdBy)
+               || (this.userRoles.includes('System Admin'))&& element.type=='Project'" matTooltip="Delete Project">
+              <img src="../../../../../assets/images/Projects/delete-black.svg" class="default-img">
+              <img src="../../../../../assets/images/Projects/delete-red.svg" class="hover-img">
+            </a>
+            <a (click)="deleteproject(element)" *ngIf="element.type=='Program' && (!(this.userRoles.includes('System Admin')) && userName==element.createdBy)
+              || (this.userRoles.includes('System Admin'))&& element.type=='Program'" matTooltip="Delete Program">
+              <img src="../../../../../assets/images/Projects/delete-black.svg" class="default-img">
+              <img src="../../../../../assets/images/Projects/delete-red.svg" class="hover-img">
+            </a>
+            <!-- <a class="clickable text-dark" style="color:black"  *ngIf="element.type=='Project'"  (click)="projectDetailsbyId(element.id)" matTooltip="Go To Project Details">
+              <i class="fa fa-eye"></i>
+            </a> 
+            <a class=" clickable text-dark"  matTooltip="Go To Program Details" (click)="programDetailsbyId(element)" style="color:black" *ngIf="element.type=='Program'" ><i class="fa fa-eye"></i></a>
+            <a  *ngIf="element.type=='Project'" (click)="updatedata(updateprojectmodal,element)"  style="cursor:pointer"><i class="fa fa-edit"></i></a> 
+            <a *ngIf="element.type=='Program'" (click)="updatedata(updateprogrammodal,element)"  style="cursor:pointer"><i class="fa fa-edit"></i></a> -->
+            <!-- <a (click)="deleteproject(element)" [matTooltip]="'Delete '+element.type+' Details'" style="color:red;cursor:pointer"><i class="fa fa-trash" aria-hidden="true"></i></a>   -->
           </div>
-      </ng-template>
-      <ng-template pTemplate="header">
-          <tr>
-              <th>Name</th>
-              <th>Country</th>
-              <th>Agent</th>
-              <th>Status</th>
-              <th style="width: 6rem">Verified</th>
-          </tr>
-          <tr>
-              <th>
-                  <p-columnFilter type="text" field="name"></p-columnFilter>
-              </th>
-              <th>
-                  <p-columnFilter type="text" field="country.name"></p-columnFilter>
-              </th>
-              <th>
-                  <p-columnFilter field="representative" matchMode="in" [showMenu]="false">
-                      <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                          <p-multiSelect [ngModel]="value" [options]="representatives" placeholder="Any" (onChange)="filter($event.value)" optionLabel="name">
-                              <ng-template let-option pTemplate="item">
-                                  <div class="p-multiselect-representative-option">
-                                      <img [alt]="option.label" src="assets/showcase/images/demo/avatar/{{option.image}}" width="32" style="vertical-align: middle" />
-                                      <span class="p-ml-1">{{option.name}}</span>
-                                  </div>
-                              </ng-template>
-                          </p-multiSelect>
-                      </ng-template>
-                  </p-columnFilter>
-              </th>
-              <th>
-                  <p-columnFilter field="status" matchMode="equals" [showMenu]="false">
-                      <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                          <p-dropdown [ngModel]="value" [options]="statuses" (onChange)="filter($event.value)" placeholder="Any" [showClear]="true">
-                              <ng-template let-option pTemplate="item">
-                                  <span [class]="'customer-badge status-' + option.value">{{option.label}}</span>
-                              </ng-template>
-                          </p-dropdown>
-                      </ng-template>
-                  </p-columnFilter>
-              </th>
-              <th>
-                  <p-columnFilter type="boolean" field="verified"></p-columnFilter>
-              </th>
-          </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-customer>
-          <tr>
-              <td>
-                  {{customer.name}}
-              </td>
-              <td>
-                  <img src="assets/showcase/images/demo/flag/flag_placeholder.png" [class]="'flag flag-' + customer.country.code" width="30">
-                  <span class="image-text">{{customer.country.name}}</span>
-              </td>
-              <td>
-                  <img [alt]="customer.representative.name" src="assets/showcase/images/demo/avatar/{{customer.representative.image}}" width="32" style="vertical-align: middle" />
-                  <span class="image-text">{{customer.representative.name}}</span>
-              </td>
-              <td>
-                  <span [class]="'customer-badge status-' + customer.status">{{customer.status}}</span>
-              </td>
-              <td>
-                  <i class="pi" [ngClass]="{'true-icon pi-check-circle': customer.verified, 'false-icon pi-times-circle': !customer.verified}"></i>
-              </td>
-          </tr>
-      </ng-template>
-      <ng-template pTemplate="emptymessage">
-          <tr>
-              <td colspan="5">No customers found.</td>
-          </tr>
-      </ng-template>
-  </p-table>
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns1; sticky: true"></tr>
+      <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+      <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']"
+        [ngClass]="{'hide':!(projects_list==undefined ||  projects_list=='No records found')}"></tr>
+    </table>
+    <div>
+      <!-- <div *ngIf="projects_list.length==0" class="text-center">
+        <img src="../../../../../assets/images/RPA/No-Items.svg" class="no-item-img">
+        <h3 class="text-center">No Data Found</h3>
+      </div> -->
+    </div>
+  </div>
+  <div class="noDataMessage" *ngIf="noDataMessage" >No Data Found</div>
+
+  <mat-paginator #paginator2 [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons]="true"
+    class="newpaginationdiv"></mat-paginator>
 </div>

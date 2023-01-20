@@ -19,13 +19,12 @@ import { Base64 } from "js-base64";
 import { Router } from "@angular/router";
 import { ProjectsListScreenComponent } from "../projects-list-screen.component";
 import moment from "moment";
-import {Customer, Representative } from "./../../customer"
 import { Table } from "primeng/table";
 import { SortEvent } from 'primeng/api';
 @Component({
   selector: "app-projects-programs-table",
-  templateUrl: "./projects-programs-table.component.html",
-  styleUrls: ["./projects-programs-table.component.css"],
+  templateUrl: "./projects-programs-table.html",
+  styleUrls: ["./projects-programs-table.css"],
 })
 export class ProjectsProgramsTableComponent implements OnInit {
   public updateForm: FormGroup;
@@ -65,10 +64,9 @@ export class ProjectsProgramsTableComponent implements OnInit {
   initiatives: any;
   @Output() projectslistdata = new EventEmitter<any[]>();
   noDataMessage: boolean;
-  customers: Customer[];
   projectDetails:any[]=[];
 
-  representatives: Representative[];
+  representatives: any[];
 
   statuses: any[];
 
@@ -117,17 +115,7 @@ export class ProjectsProgramsTableComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.api.getCustomersLarge().then(customers => {
-      this.customers = customers;
-      this.loading = false;
-
-      this.customers.forEach(
-        customer => (customer.date = new Date(customer.date))
-      );
-    console.log(this.customers)
-
-    });
-
+console.log(this.projects_list)
 
     this.representatives = [
       { name: "Amy Elsner", image: "amyelsner.png" },
@@ -258,6 +246,7 @@ set selectedColumns(val: any[]) {
         (item) => item.status == "Closed"
       );
 
+
     var projects_or_programs = this.projects_list.map((item: any) => {
       if (item.type == "Program")
         return {
@@ -287,6 +276,8 @@ set selectedColumns(val: any[]) {
         };
     });
 this.projectDetails=projects_or_programs
+console.log(this.projectDetails);
+
     this.dataSource2 = new MatTableDataSource(projects_or_programs);
 
     this.dataSource2.paginator = this.paginator2;
