@@ -1837,8 +1837,6 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
     }
   }
 
-
-
   onboardUsers() {
     var v = document.getElementById("overlayusers");
     if (v.style.display === "none") {
@@ -1848,5 +1846,9 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
 closeoverlay() {
   var v = document.getElementById("overlayusers");
   v.style.display = "none";
+}
+
+taskListView(){
+  this.router.navigate(['/pages/projects/tasks'],{queryParams:{id:this.project_id}});
 }
 }

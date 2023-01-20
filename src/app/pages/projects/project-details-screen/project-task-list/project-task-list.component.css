@@ -760,3 +760,27 @@ li.close {
     margin-right: 10px;
 }
 /* Overlay Styles */
+.table {
+    color: #232832 !important;
+    margin-bottom: 0 !important;
+}
+.table th {
+    border-top: none !important;
+    font-weight: 700;
+    border-bottom: 2px solid #098de6 !important;
+    padding: 8px 10px !important;
+    position: relative;
+}
+.table th:before {
+    content: " ";
+    position: absolute;
+    top: 5px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    border-bottom: 5px solid rgb(9 141 230 / 20%);
+}
+.table td {
+    padding: 10px 10px !important;
+    vertical-align: middle !important;
+}
