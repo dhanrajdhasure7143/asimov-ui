@@ -64,6 +64,7 @@ import {ButtonModule} from 'primeng/button';
 import {DropdownModule} from 'primeng/dropdown';
 import {ProgressBarModule} from 'primeng/progressbar';
 import {InputTextModule} from 'primeng/inputtext';
+import { ProjectTaskListComponent } from './project-details-screen/project-task-list/project-task-list.component'
 const materialModules: any[] = [
     
     
@@ -73,7 +74,8 @@ const materialModules: any[] = [
   declarations: [ProjectsComponent, ProjectsListScreenComponent, ProjectsProgramsTableComponent, CreateProjectsComponent, FileSizePipe,UserImagePipe,
     ProjectDetailsScreenComponent, ProjectsDashboardComponent, ProcessNamePipe,IntitiativePipe, UserPipePipe, ProjectRepoScreenComponent,CreateTasksComponent, AddResourcesComponent,ProgramDetailsComponent, UserDetialsPipe,RequestFileComponent, CreateProjectFormComponent, EditTaskComponent, BacklogsListComponent,
      BacklogsCreateComponent,
-     ProjectRpaDesignComponent],
+     ProjectRpaDesignComponent,
+     ProjectTaskListComponent],
   imports: [
     CommonModule,
     ProjectsRoutingModule,
