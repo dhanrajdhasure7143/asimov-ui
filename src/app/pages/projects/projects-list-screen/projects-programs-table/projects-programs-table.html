@@ -6,7 +6,7 @@
 
 
     <div class="card">
-        <p-table #dt1 [value]="projectDetails" dataKey="id"
+        <p-table #dt1 [value]="projectDetails"  [resizableColumns]="true"  dataKey="id"
             [rows]="10" styleClass="p-datatable-gridlines"
             [globalFilterFields]="['representative.name']">
             <ng-template pTemplate="caption">
@@ -21,7 +21,7 @@
             <ng-template pTemplate="header">
                 <tr>
 
-                    <th>
+                    <th pResizableColumn>
                         <div class="p-d-flex p-jc-between p-ai-center">
                             Type
                             <p-columnFilter field="representative" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
@@ -42,11 +42,106 @@
                             </p-columnFilter>
                         </div>
                     </th>
-                    <th>Name</th>
-                    <th>Process</th>
-                    <th>Department</th>
-                    <th>Created Date</th>
-                    <th>Last Updated By</th>
+                    <th pResizableColumn pSortableColumn="representative.name">
+                        
+                        <div class="p-d-flex p-jc-between p-ai-center">
+                        Name
+
+                        <p-columnFilter field="representative" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                            <ng-template pTemplate="header">
+                                <div class="p-px-3 p-pt-3 p-pb-0">
+                                    <span class="p-text-bold">Project Name Picker</span>
+                                </div>
+                            </ng-template>
+                            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                <p-multiSelect [ngModel]="value" [options]="representatives" placeholder="Any" (onChange)="filter($event.value)" optionLabel="name">
+                                    <ng-template let-option pTemplate="item">
+                                        <div class="p-multiselect-representative-option">
+                                            <span class="p-ml-1">{{option.name}}</span>
+                                        </div>
+                                    </ng-template>
+                                </p-multiSelect>
+                            </ng-template>
+                        </p-columnFilter>
+
+
+                        <p-sortIcon field="representative.name"></p-sortIcon>
+                        
+                        </div>
+
+                    </th>
+                    <th pResizableColumn pSortableColumn="process">
+                        
+                        
+                        <div class="p-d-flex p-jc-between p-ai-center">
+                            Process
+                            <p-columnFilter field="representative" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                                <ng-template pTemplate="header">
+                                    <div class="p-px-3 p-pt-3 p-pb-0">
+                                        <span class="p-text-bold">Project Name Picker</span>
+                                    </div>
+                                </ng-template>
+                                <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                    <p-multiSelect [ngModel]="value" [options]="representatives" placeholder="Any" (onChange)="filter($event.value)" optionLabel="name">
+                                        <ng-template let-option pTemplate="item">
+                                            <div class="p-multiselect-representative-option">
+                                                <span class="p-ml-1">{{option.name}}</span>
+                                            </div>
+                                        </ng-template>
+                                    </p-multiSelect>
+                                </ng-template>
+                            </p-columnFilter>
+                            <p-sortIcon field="process"></p-sortIcon>
+                        </div>
+                        
+                    </th >
+                    <th pResizableColumn  pSortableColumn="department">
+                        
+                        <div class="p-d-flex p-jc-between p-ai-center">
+                        Department
+                        <p-columnFilter field="representative" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                            <ng-template pTemplate="header">
+                                <div class="p-px-3 p-pt-3 p-pb-0">
+                                    <span class="p-text-bold">Project Name Picker</span>
+                                </div>
+                            </ng-template>
+                            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                <p-multiSelect [ngModel]="value" [options]="representatives" placeholder="Any" (onChange)="filter($event.value)" optionLabel="name">
+                                    <ng-template let-option pTemplate="item">
+                                        <div class="p-multiselect-representative-option">
+                                            <span class="p-ml-1">{{option.name}}</span>
+                                        </div>
+                                    </ng-template>
+                                </p-multiSelect>
+                            </ng-template>
+                        </p-columnFilter>
+                        <p-sortIcon field="department"></p-sortIcon>
+                    </div>
+                    </th>
+                    <th pResizableColumn  pSortableColumn="createdDate">
+                        
+                        <div class="p-d-flex p-jc-between p-ai-center">
+                        Created Date
+                        <p-columnFilter field="representative" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                            <ng-template pTemplate="header">
+                                <div class="p-px-3 p-pt-3 p-pb-0">
+                                    <span class="p-text-bold">Project Name Picker</span>
+                                </div>
+                            </ng-template>
+                            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                                <p-multiSelect [ngModel]="value" [options]="representatives" placeholder="Any" (onChange)="filter($event.value)" optionLabel="name">
+                                    <ng-template let-option pTemplate="item">
+                                        <div class="p-multiselect-representative-option">
+                                            <span class="p-ml-1">{{option.name}}</span>
+                                        </div>
+                                    </ng-template>
+                                </p-multiSelect>
+                            </ng-template>
+                        </p-columnFilter>
+                    
+                            </div>
+                    </th>
+                    <th pResizableColumn>Last Updated By</th>
 
 
 
