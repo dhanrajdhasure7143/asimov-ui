@@ -5,37 +5,37 @@
 export const environment = {
   production: false,
 
-  pi_url: "https://ezflow.demo.epsoftinc.com/prcintel",
-  bps_url: "https://ezflow.demo.epsoftinc.com/bpstudio",
-  rpa_url: "https://ezflow.demo.epsoftinc.com/wfrpa",
+  pi_url: "https://ezflow.dev.epsoftinc.com/prcintel",
+  bps_url: "https://ezflow.dev.epsoftinc.com/bpstudio",
+  rpa_url: "https://ezflow.dev.epsoftinc.com/wfrpa",
   loopback_url: "http://10.11.0.107:3000",
-  idm_url: "https://ezidm.demo.epsoftinc.com",
-  auth_url: "https://ezflow.demo.epsoftinc.com/authservices",
-  pi_node_url: "https://ezflow.demo.epsoftinc.com/pinode",
-  platform_url: "https://ezflow.demo.epsoftinc.com/aiotalplatform",
-  schema_registry_url: "http://schema-demo-registry:8081",
-  alerts_url: "https://ezflow.demo.epsoftinc.com/alerts",
-  socialLoginRedirectURL: "https://ezflow.demo.epsoftinc.com/#/user",
+  idm_url: "https://ezidm.dev.epsoftinc.com",
+  auth_url: "https://ezflow.dev.epsoftinc.com/authservices",
+  //for Auto build
+  pi_node_url: "https://ezflow.dev.epsoftinc.com/pinode",
+  pi_node_jobs: "http://pi-node-jobs:5000",
+  platform_url: "https://ezflow.dev.epsoftinc.com/aiotalplatform",
+  schema_registry_url: "http://schemadev-registry:8081",
+  alerts_url: "https://ezflow.dev.epsoftinc.com/alerts",
   // Aiotal redirection urls
-  myaccount_url: "https://ezflow.demo.epsoftinc.com/#/activation",
-  logout_url: "https://ezflow.demo.epsoftinc.com/#/activation",
-  redirectout_url: "https://ezflow.demo.epsoftinc.com/#/signout",
-  platform_home_url: "https://ezflow.demo.epsoftinc.com/#/",
-  pi_node_jobs: "http://pi-node-jobs-demo:5000",
-  projectendpoint_url: "https://ezflow.demo.epsoftinc.com/pcs",
-  subscriptionendpoint_url: "https://ezflow.demo.epsoftinc.com/subscriptions",
-  //BPMN Platform URL
-  camunda_url: "https://ezworkflow.demo.epsoftinc.com",
+  myaccount_url: "https://ezflow.dev.epsoftinc.com/#/activation",
+  logout_url: "https://ezflow.dev.epsoftinc.com/#/activation",
+  redirectout_url: "https://ezflow.dev.epsoftinc.com/#/signout",
+  platform_home_url: "https://ezflow.dev.epsoftinc.com/#/",
+  projectendpoint_url: "https://ezflow.dev.epsoftinc.com/pcs",
+  subscriptionendpoint_url: "https://ezflow.dev.epsoftinc.com/subscriptions",
+  // camunda navigation
+  camunda_url: "https://ezworkflow.dev.epsoftinc.com",
   // Data upload path
   data_path: "/usr/share/confluent-ftp-data",
   // PI Connectors
-  connector_topic: "nodeq",
+  connector_topic: "nodeDev",
   //DB Connector
-  dbConnectorHost: "pgpool",
-  dbName: "eiap_demo",
-  dbPort: "5432",
+  dbConnectorHost: "pgpooldev",
+  dbName: "eiap_dev",
+  dbPort: "5430",
   //RPA WebActions Action AttrId
   webActionAttrId: 536,
   //IPCTenant
-  ipcTenant: "28b22b35-9dc5-4860-b5b5-559855d9618c"
+  ipcTenant: "28b22b35-9dc5-4860-b5b5-559855d9618c",
 };
