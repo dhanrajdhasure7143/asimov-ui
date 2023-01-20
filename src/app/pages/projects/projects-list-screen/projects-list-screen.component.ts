@@ -100,6 +100,7 @@ export class ProjectsListScreenComponent implements OnInit {
             status: data.status == null ? "New" : data.status,
             resources: data.resources,
             mapValueChain: data.mapValueChain,
+            department:data.programValueChain,
             measurableMetrics: data.measurableMetrics,
             purpose: data.purpose,
           };
@@ -118,6 +119,7 @@ export class ProjectsListScreenComponent implements OnInit {
             createdBy: data.createdBy,
             resources: data.resources,
             mapValueChain: data.mapValueChain,
+            department:data.mapValueChain,
             measurableMetrics: data.measurableMetrics,
             startDate: data.startDate,
             endDate: data.endDate,

@@ -66,7 +66,7 @@ export class ProjectsProgramsTableComponent implements OnInit {
   noDataMessage: boolean;
   projectDetails:any[]=[];
 
-  representatives: any[];
+  projectnames: any[]=[];
 
   statuses: any[];
 
@@ -74,7 +74,7 @@ export class ProjectsProgramsTableComponent implements OnInit {
 
   _selectedColumns:any[]=[];
   cols:any=[]
-
+  search:any="";
   activityValues: number[] = [0, 100];
   constructor(
     private api: RestApiService,
@@ -117,18 +117,7 @@ export class ProjectsProgramsTableComponent implements OnInit {
   ngOnInit() {
 console.log(this.projects_list)
 
-    this.representatives = [
-      { name: "Amy Elsner", image: "amyelsner.png" },
-      { name: "Anna Fali", image: "annafali.png" },
-      { name: "Asiya Javayant", image: "asiyajavayant.png" },
-      { name: "Bernardo Dominic", image: "bernardodominic.png" },
-      { name: "Elwin Sharvill", image: "elwinsharvill.png" },
-      { name: "Ioni Bowcher", image: "ionibowcher.png" },
-      { name: "Ivan Magalhaes", image: "ivanmagalhaes.png" },
-      { name: "Onyama Limba", image: "onyamalimba.png" },
-      { name: "Stephen Shaw", image: "stephenshaw.png" },
-      { name: "XuXue Feng", image: "xuxuefeng.png" }
-    ];
+   
     this.statuses = [
       { label: "Type", value: "type" },
       { label: "Process", value: "process" },
@@ -248,6 +237,12 @@ set selectedColumns(val: any[]) {
 
 
     var projects_or_programs = this.projects_list.map((item: any) => {
+      
+      if(!(this.projectnames.find((item2:any)=>item2.name==item.projectName)))
+      {
+        this.projectnames.push({label:item.projectName, value:item.projectName})
+      }
+      console.log(this.projectnames)
       if (item.type == "Program")
         return {
           id: item.id,
@@ -257,9 +252,11 @@ set selectedColumns(val: any[]) {
           process: item.process,
           owner: item.owner,
           status: item.status,
+          createdAt: moment(item.startDate).format("DD, MMM, YY"),
           createdBy: item.createdBy,
           lastModifiedBy: item.lastModifiedBy,
           type: item.type,
+          department:item.department
         };
       else if (item.type == "Project")
         return {
@@ -270,16 +267,15 @@ set selectedColumns(val: any[]) {
           process: item.process,
           owner: item.owner,
           status: item.status,
+          createdAt: moment(item.startDate).format("DD, MMM, YY"),
           createdBy: item.createdBy,
           lastModifiedBy: item.lastModifiedBy,
           type: item.type,
+          department:item.department
         };
     });
-this.projectDetails=projects_or_programs
-console.log(this.projectDetails);
-
+    this.projectDetails=projects_or_programs
     this.dataSource2 = new MatTableDataSource(projects_or_programs);
-
     this.dataSource2.paginator = this.paginator2;
     this.dataSource2.sort = this.sort2;
   }
