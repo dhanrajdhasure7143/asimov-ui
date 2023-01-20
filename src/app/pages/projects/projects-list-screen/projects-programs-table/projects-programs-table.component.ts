@@ -19,7 +19,9 @@ import { Base64 } from "js-base64";
 import { Router } from "@angular/router";
 import { ProjectsListScreenComponent } from "../projects-list-screen.component";
 import moment from "moment";
-
+import {Customer, Representative } from "./../../customer"
+import { Table } from "primeng/table";
+import { SortEvent } from 'primeng/api';
 @Component({
   selector: "app-projects-programs-table",
   templateUrl: "./projects-programs-table.component.html",
@@ -63,7 +65,19 @@ export class ProjectsProgramsTableComponent implements OnInit {
   initiatives: any;
   @Output() projectslistdata = new EventEmitter<any[]>();
   noDataMessage: boolean;
+  customers: Customer[];
+  projectDetails:any[]=[];
 
+  representatives: Representative[];
+
+  statuses: any[];
+
+  loading: boolean = true;
+
+  _selectedColumns:any[]=[];
+  cols:any=[]
+
+  activityValues: number[] = [0, 100];
   constructor(
     private api: RestApiService,
     private formBuilder: FormBuilder,
@@ -103,6 +117,50 @@ export class ProjectsProgramsTableComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.api.getCustomersLarge().then(customers => {
+      this.customers = customers;
+      this.loading = false;
+
+      this.customers.forEach(
+        customer => (customer.date = new Date(customer.date))
+      );
+    console.log(this.customers)
+
+    });
+
+
+    this.representatives = [
+      { name: "Amy Elsner", image: "amyelsner.png" },
+      { name: "Anna Fali", image: "annafali.png" },
+      { name: "Asiya Javayant", image: "asiyajavayant.png" },
+      { name: "Bernardo Dominic", image: "bernardodominic.png" },
+      { name: "Elwin Sharvill", image: "elwinsharvill.png" },
+      { name: "Ioni Bowcher", image: "ionibowcher.png" },
+      { name: "Ivan Magalhaes", image: "ivanmagalhaes.png" },
+      { name: "Onyama Limba", image: "onyamalimba.png" },
+      { name: "Stephen Shaw", image: "stephenshaw.png" },
+      { name: "XuXue Feng", image: "xuxuefeng.png" }
+    ];
+    this.statuses = [
+      { label: "Type", value: "type" },
+      { label: "Process", value: "process" },
+      { label: "project Name", value: "projectName" },
+      { label: "Owner", value: "owner" },
+      { label: "Priority", value: "priority" },
+      { label: "createdBy", value: "createdBy" }
+    ]
+
+    this.cols = [
+      { field: "Type", header: "type" },
+      { field: "Process", header: "process" },
+      { field: "project Name", header: "projectName" },
+      { field: "Owner", header: "owner" },
+      { field: "Priority", header: "priority" },
+      { field: "createdBy", header: "createdBy" }
+  ];
+
+  this._selectedColumns = this.cols;
+  
     this.api.getCustomUserRole(2).subscribe((role) => {
       this.customUserRole = role;
       let element = [];
@@ -138,6 +196,16 @@ export class ProjectsProgramsTableComponent implements OnInit {
     this.mindate = moment().format("YYYY-MM-DD");
     this.getInitiatives();
   }
+
+  @Input() get selectedColumns(): any[] {
+    return this._selectedColumns;
+}
+
+set selectedColumns(val: any[]) {
+    //restore original order
+    console.log(val)
+    this._selectedColumns = this.cols.filter(col => val.includes(col));
+}
 
   programDetailsbyId(program) {
     this.router.navigate(["/pages/projects/programdetails"], {
@@ -218,7 +286,7 @@ export class ProjectsProgramsTableComponent implements OnInit {
           type: item.type,
         };
     });
-
+this.projectDetails=projects_or_programs
     this.dataSource2 = new MatTableDataSource(projects_or_programs);
 
     this.dataSource2.paginator = this.paginator2;
@@ -519,4 +587,8 @@ export class ProjectsProgramsTableComponent implements OnInit {
       this.initiatives = response;
     });
   }
+
+  clear(table: Table) {
+    table.clear();
+}
 }
