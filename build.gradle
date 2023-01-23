@@ -7,8 +7,8 @@ plugins {
 import org.apache.tools.ant.taskdefs.condition.Os      
 
 node {
-  version = "10.9.0"
-  npmVersion = "6.4.1"
+  version = "14.20.0"
+  npmVersion = "6.14.17"
   download = true
 }
 
