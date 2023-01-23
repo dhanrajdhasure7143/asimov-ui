@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ProjectsComponent } from './projects.component';
 import { ProjectsListScreenComponent } from './projects-list-screen/projects-list-screen.component';
-import { ProjectsProgramsTableComponent } from './projects-list-screen/projects-programs-table/projects-programs-table.component';
 import { CreateProjectsComponent } from './create-projects/create-projects.component';
 import { ProjectDetailsScreenComponent } from './project-details-screen/project-details-screen.component';
 import { ProjectsDashboardComponent } from './projects-dashboard/projects-dashboard.component';
@@ -30,7 +29,6 @@ const routes: Routes = [
     {path:'edit-task', component:EditTaskComponent},
     {path:'backlogsList', component:BacklogsListComponent},
     {path:'createBacklog', component:BacklogsCreateComponent},
-    {path:"", component:ProjectsProgramsTableComponent},
     {path:'repdesign',component:ProjectRpaDesignComponent},
     {path:'tasks',component:ProjectTaskListComponent},
     {path:'**', redirectTo:'/listOfProjects', pathMatch: 'full'}
