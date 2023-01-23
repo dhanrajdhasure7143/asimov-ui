@@ -72,7 +72,7 @@ export class ProjectsProgramsTableComponent implements OnInit {
 
   loading: boolean = true;
 
-  _selectedColumns:any[]=[];
+  _selectedColumns: any[];
   customers:any=[]
   cols:any=[]
   search:any="";
@@ -80,6 +80,7 @@ export class ProjectsProgramsTableComponent implements OnInit {
   testAv=[{'type':'Project'}, {'type':'Program'}];
   representatives:any=[];
   customers2:any;
+  doctypeLabel:any="";
 
   constructor(
     private api: RestApiService,
@@ -89,158 +90,144 @@ export class ProjectsProgramsTableComponent implements OnInit {
     private modalService: BsModalService,
     private project_main: ProjectsListScreenComponent
   ) {
-    this.updateForm = this.formBuilder.group({
-      type: ["",Validators.compose([Validators.required, Validators.maxLength(50)])],
-      initiatives: ["",Validators.compose([Validators.required, Validators.maxLength(50)])],
-      process: ["",Validators.compose([Validators.required, Validators.maxLength(50)])],
-      projectName: ["",Validators.compose([Validators.required, Validators.maxLength(50)])],
-      owner: ["",Validators.compose([Validators.required, Validators.maxLength(50)])],
-      priority: ["",Validators.compose([Validators.required, Validators.maxLength(50)])],
-      access: ["",Validators.compose([Validators.required, Validators.maxLength(50)])],
-      resources: ["",Validators.compose([Validators.required, Validators.maxLength(50)])],
-      mapValueChain: ["",Validators.compose([Validators.required, Validators.maxLength(50)])],
-      measurableMetrics: ["",Validators.compose([Validators.required, Validators.maxLength(50)])],
-      status: ["",Validators.compose([Validators.required, Validators.maxLength(50)])],
-      endDate: ["",Validators.compose([Validators.required, Validators.maxLength(50)])],
-      startDate: ["",Validators.compose([Validators.required, Validators.maxLength(50)])],
-    });
+    // this.updateForm = this.formBuilder.group({
+    //   type: ["",Validators.compose([Validators.required, Validators.maxLength(50)])],
+    //   initiatives: ["",Validators.compose([Validators.required, Validators.maxLength(50)])],
+    //   process: ["",Validators.compose([Validators.required, Validators.maxLength(50)])],
+    //   projectName: ["",Validators.compose([Validators.required, Validators.maxLength(50)])],
+    //   owner: ["",Validators.compose([Validators.required, Validators.maxLength(50)])],
+    //   priority: ["",Validators.compose([Validators.required, Validators.maxLength(50)])],
+    //   access: ["",Validators.compose([Validators.required, Validators.maxLength(50)])],
+    //   resources: ["",Validators.compose([Validators.required, Validators.maxLength(50)])],
+    //   mapValueChain: ["",Validators.compose([Validators.required, Validators.maxLength(50)])],
+    //   measurableMetrics: ["",Validators.compose([Validators.required, Validators.maxLength(50)])],
+    //   status: ["",Validators.compose([Validators.required, Validators.maxLength(50)])],
+    //   endDate: ["",Validators.compose([Validators.required, Validators.maxLength(50)])],
+    //   startDate: ["",Validators.compose([Validators.required, Validators.maxLength(50)])],
+    // });
 
-    this.updateprogramForm = this.formBuilder.group({
-      type: ["",Validators.compose([Validators.required, Validators.maxLength(50)])],
-      initiatives: ["",Validators.compose([Validators.required, Validators.maxLength(50)])],
-      process: ["",Validators.compose([Validators.required, Validators.maxLength(50)])],
-      projectName: ["",Validators.compose([Validators.required, Validators.maxLength(50)])],
-      owner: ["",Validators.compose([Validators.required, Validators.maxLength(50)])],
-      priority: ["",Validators.compose([Validators.required, Validators.maxLength(50)])],
-      access: ["",Validators.compose([Validators.required, Validators.maxLength(50)]),],
-      measurableMetrics: ["",Validators.compose([Validators.required, Validators.maxLength(50)])],
-      purpose: ["",Validators.compose([Validators.required, Validators.maxLength(50)])],
-      status: ["",Validators.compose([Validators.required, Validators.maxLength(50)])],
-    });
+    // this.updateprogramForm = this.formBuilder.group({
+    //   type: ["",Validators.compose([Validators.required, Validators.maxLength(50)])],
+    //   initiatives: ["",Validators.compose([Validators.required, Validators.maxLength(50)])],
+    //   process: ["",Validators.compose([Validators.required, Validators.maxLength(50)])],
+    //   projectName: ["",Validators.compose([Validators.required, Validators.maxLength(50)])],
+    //   owner: ["",Validators.compose([Validators.required, Validators.maxLength(50)])],
+    //   priority: ["",Validators.compose([Validators.required, Validators.maxLength(50)])],
+    //   access: ["",Validators.compose([Validators.required, Validators.maxLength(50)]),],
+    //   measurableMetrics: ["",Validators.compose([Validators.required, Validators.maxLength(50)])],
+    //   purpose: ["",Validators.compose([Validators.required, Validators.maxLength(50)])],
+    //   status: ["",Validators.compose([Validators.required, Validators.maxLength(50)])],
+    // });
   }
+
+
+  getColumns() {
+
+        let columnJson = [];
+        for (var i = 0; i < this.projects_list.length; i++) {
+
+          this.cols[i] =
+            { header: this.projects_list[i].UI_ColumnName, field: this.projects_list[i].MappingKey, datatype: this.projects_list[i].DataType, label: this.projects_list[i].UI_ColumnName, value: this.projects_list[i].DB_ColumnName ,display: this.projects_list[i].Display}
+        }
+
+}
 
   ngOnInit() {
 console.log(this.projects_list)
 
-this.customers=[
-  {
-    "id":1000,
-    "name":"James Butt",
-    "country":{
-       "name":"Algeria",
-       "code":"dz"
-    },
-    "company":"Benton, John B Jr",
-    "date":"2015-09-13",
-    "status":"unqualified",
-    "verified":true,
-    "activity":17,
-    "name2":"Ioni Bowcher",
-    "representative":{
-       "name":"Program",
-    },
-    "balance":70663
- },
- {
-    "id":1001,
-    "name":"Josephine Darakjy",
-    "country":{
-       "name":"Egypt",
-       "code":"eg"
-    },
-    "company":"Chanay, Jeffrey A Esq",
-    "date":"2019-02-09",
-    "status":"proposal",
-    "verified":true,
-    "activity":0,
-    name2:"Amy Elsner",
-    "representative":{
-       "name":"Project",
-    },
-    "balance":82429
- },
-]
+// let columnNames = Object.keys(this.projects_list[0]);
 
 
-this.customers2=[
-  {access: undefined,
-    createdBy: "Praveen Bokkala",
-    department:"Engineering",
-    endDate:"2022-12-15T00:00:00.000+00:00",
-    id:273,
-    initiatives:"2",
-    mapValueChain:"Engineering",
-    measurableMetrics:"4",
-    owner:"praveen.bokkala@epsoftinc.com",
-    priority:"Medium",
-    process:"11",
-    projectName:"testinggg",
-    resources: [''],
-    startDate: "2022-12-13T00:00:00.000+00:00",
-    createdDate:"2022-11-09T08:53:55.494",
-    updatedDate:"2022-11-09T08:53:55.494",
-    status:"New",
-    "representative":{
-      "name":"Program",
-   },
-    },
-    {access: undefined,
-    createdBy: "Praveen Bokkala",
-    department:"Engineering",
-    endDate:"2022-12-15T00:00:00.000+00:00",
-    createdDate:"2022-11-09T08:53:55.494",
-    id:273,
-    initiatives:"2",
-    mapValueChain:"Engineering",
-    measurableMetrics:"4",
-    owner:"praveen.bokkala@epsoftinc.com",
-    priority:"Medium",
-    process:"11",
-    projectName:"testinggg",
-    resources: [''],
-    startDate: "2022-12-13T00:00:00.000+00:00",
-    updatedDate:"2022-11-09T08:53:55.494",
-    status:"New",
-    "representative":{
-      "name":"Project",
-   },
-    },
-]
 
-   
-    this.statuses = [
-      { label: "Type", value: "type" },
-      { label: "Process", value: "process" },
-      { label: "project Name", value: "projectName" },
-      { label: "Owner", value: "owner" },
-      { label: "Priority", value: "priority" },
-      { label: "createdBy", value: "createdBy" }
-    ]
+// columnNames.shift();
+// console.log(columnNames)
 
-    this.cols = [
-      { field: "Type", header: "type" },
-      { field: "Process", header: "process" },
-      { field: "project Name", header: "projectName" },
-      { field: "Owner", header: "owner" },
-      { field: "Priority", header: "priority" },
-      { field: "createdBy", header: "createdBy" }
-  ];
-  this.representatives = [
-    {name: "Project"},
-    {name: "Program"},
+// this.customers=[
+//   {
+//     "id":1000,
+//     "name":"James Butt",
+//     "country":{
+//        "name":"Algeria",
+//        "code":"dz"
+//     },
+//     "company":"Benton, John B Jr",
+//     "date":"2015-09-13",
+//     "status":"unqualified",
+//     "verified":true,
+//     "activity":17,
+//     "name2":"Ioni Bowcher",
+//     "representative":{
+//        "name":"Program",
+//     },
+//     "balance":70663
+//  },
+//  {
+//     "id":1001,
+//     "name":"Josephine Darakjy",
+//     "country":{
+//        "name":"Egypt",
+//        "code":"eg"
+//     },
+//     "company":"Chanay, Jeffrey A Esq",
+//     "date":"2019-02-09",
+//     "status":"proposal",
+//     "verified":true,
+//     "activity":0,
+//     name2:"Amy Elsner",
+//     "representative":{
+//        "name":"Project",
+//     },
+//     "balance":82429
+//  },
+// ]
 
-];
 
-this.statuses = [
-    {label: 'Unqualified', value: 'unqualified'},
-    {label: 'Qualified', value: 'qualified'},
-    {label: 'New', value: 'new'},
-    {label: 'Negotiation', value: 'negotiation'},
-    {label: 'Renewal', value: 'renewal'},
-    {label: 'Proposal', value: 'proposal'}
-]
-  this._selectedColumns = this.cols;
-  
+// this.customers2=[
+//   {access: undefined,
+//     createdBy: "Praveen Bokkala",
+//     department:"Engineering",
+//     endDate:"2022-12-15T00:00:00.000+00:00",
+//     id:273,
+//     initiatives:"2",
+//     mapValueChain:"Engineering",
+//     measurableMetrics:"4",
+//     owner:"praveen.bokkala@epsoftinc.com",
+//     priority:"Medium",
+//     process:"11",
+//     projectName:"testinggg",
+//     resources: [''],
+//     startDate: "2022-12-13T00:00:00.000+00:00",
+//     createdDate:"2022-11-09T08:53:55.494",
+//     updatedDate:"2022-11-09T08:53:55.494",
+//     status:"New",
+//     "representative":{
+//       "name":"Program",
+//    },
+//     },
+//     {access: undefined,
+//     createdBy: "Praveen Bokkala",
+//     department:"Engineering",
+//     endDate:"2022-12-15T00:00:00.000+00:00",
+//     createdDate:"2022-11-09T08:53:55.494",
+//     id:273,
+//     initiatives:"2",
+//     mapValueChain:"Engineering",
+//     measurableMetrics:"4",
+//     owner:"praveen.bokkala@epsoftinc.com",
+//     priority:"Medium",
+//     process:"11",
+//     projectName:"testinggg",
+//     resources: [''],
+//     startDate: "2022-12-13T00:00:00.000+00:00",
+//     updatedDate:"2022-11-09T08:53:55.494",
+//     status:"New",
+//     "representative":{
+//       "name":"Project",
+//    },
+//     },
+// ]
+
+      
     this.api.getCustomUserRole(2).subscribe((role) => {
       this.customUserRole = role;
       let element = [];
@@ -263,7 +250,7 @@ this.statuses = [
       " " +
       localStorage.getItem("lastName");
     setTimeout(() => {
-      this.getallProjects();
+      // this.getallProjects();
     }, 500);
     this.userRoles = localStorage.getItem("userRole");
     this.userRoles = this.userRoles.split(",");
@@ -277,121 +264,155 @@ this.statuses = [
     this.getInitiatives();
   }
 
+  ngOnChanges(){
+    console.log(this.projects_list)
+
+        // this.projects_list = this.projects_list.filter(
+        //   (item) => item.status == this.status_data
+        // );
+    this.cols = [
+      { field: "type", header: "Type", visible:true, filter:true,filterWidget:"multiSelect",filterType:"text", sort:true,multi:false},
+      { field: "projectName", header: "Project Name", filter:true, visible:true,filterWidget:"normal",filterType:"text", sort:true, multi:true,multiOptions:["projectName","status"]},
+      { field: "process", header: "Process", visible:true, filter:true, filterWidget:"normal",filterType:"text", sort:true,multi:false},
+      { field: "department", header: "Department", visible:true, filter:true, filterWidget:"normal",filterType:"text", sort:true,multi:false},
+      { field: "createdDate", header: "Created Date", visible:true, filter:true, filterWidget:"normal",filterType:"date", sort:true,multi:false},
+      { field: "lastModifiedBy", header: "Last Updated By", visible:true, filter:true, filterWidget:"normal",filterType:"text", sort:true,multi:true,multiOptions:["lastModifiedBy","updatedDate"]},
+      { field: "updatedDate", header: "Updated Date", visible:false,filter:false, sort:false,multi:false},
+      { field: "status", header: "Status", visible:false,filter:false, sort:false,multi:false},
+      { field: "action", header: "Action", visible:true,filter:false, sort:false,multi:false}
+  ];
+
+  this.representatives = [
+    {name: "Project"},
+    {name: "Program"}
+];
+
+
+this.statuses = [
+  { name: "Project", value: "Project" },
+  { name: "Program", value: "Program" },
+
+];
+
+this._selectedColumns = this.cols;
+
+  }
+
   @Input() get selectedColumns(): any[] {
     return this._selectedColumns;
 }
 
 set selectedColumns(val: any[]) {
     //restore original order
-    console.log(val)
+    // console.log(val)
     this._selectedColumns = this.cols.filter(col => val.includes(col));
 }
 
-  programDetailsbyId(program) {
-    this.router.navigate(["/pages/projects/programdetails"], {
-      queryParams: { id: program.id },
-    });
+  viewDetailsbyId(event) {
+    if(event.type=="Program"){
+      this.router.navigate(["/pages/projects/programdetails"], {
+        queryParams: { id: event.id },
+      });
+    }else{
+      this.router.navigate(["/pages/projects/projectdetails"], {
+        queryParams: { id: event.id },
+      });
+    }
+
   }
 
-  projectDetailsbyId(project) {
-    this.router.navigate(["/pages/projects/projectdetails"], {
-      queryParams: { id: project.id },
-    });
-  }
-
-  getallProjects() {
-    this.projects_list.sort((a, b) => (a.id > b.id ? -1 : 1));
-    if (this.status_data == "New")
-      this.projects_list = this.projects_list.filter(
-        (item) => item.status == "New"
-      );
-    else if (this.status_data == "In Progress")
-      this.projects_list = this.projects_list.filter(
-        (item) => item.status == "In Progress"
-      );
-    else if (this.status_data == "In Review")
-      this.projects_list = this.projects_list.filter(
-        (item) => item.status == "In Review"
-      );
-    else if (this.status_data == "Pipeline")
-      this.projects_list = this.projects_list.filter(
-        (item) => item.status == "Pipeline"
-      );
-    else if (this.status_data == "Approved")
-      this.projects_list = this.projects_list.filter(
-        (item) => item.status == "Approved"
-      );
-    else if (this.status_data == "Rejected")
-      this.projects_list = this.projects_list.filter(
-        (item) => item.status == "Rejected"
-      );
-    else if (this.status_data == "Deployed")
-      this.projects_list = this.projects_list.filter(
-        (item) => item.status == "Deployed"
-      );
-    else if (this.status_data == "On Hold")
-      this.projects_list = this.projects_list.filter(
-        (item) => item.status == "On Hold"
-      );
-    else if (this.status_data == "Closed")
-      this.projects_list = this.projects_list.filter(
-        (item) => item.status == "Closed"
-      );
+  // getallProjects() {
+  //   this.projects_list.sort((a, b) => (a.id > b.id ? -1 : 1));
+  //   if (this.status_data == "New")
+  //     this.projects_list = this.projects_list.filter(
+  //       (item) => item.status == "New"
+  //     );
+  //   else if (this.status_data == "In Progress")
+  //     this.projects_list = this.projects_list.filter(
+  //       (item) => item.status == "In Progress"
+  //     );
+  //   else if (this.status_data == "In Review")
+  //     this.projects_list = this.projects_list.filter(
+  //       (item) => item.status == "In Review"
+  //     );
+  //   else if (this.status_data == "Pipeline")
+  //     this.projects_list = this.projects_list.filter(
+  //       (item) => item.status == "Pipeline"
+  //     );
+  //   else if (this.status_data == "Approved")
+  //     this.projects_list = this.projects_list.filter(
+  //       (item) => item.status == "Approved"
+  //     );
+  //   else if (this.status_data == "Rejected")
+  //     this.projects_list = this.projects_list.filter(
+  //       (item) => item.status == "Rejected"
+  //     );
+  //   else if (this.status_data == "Deployed")
+  //     this.projects_list = this.projects_list.filter(
+  //       (item) => item.status == "Deployed"
+  //     );
+  //   else if (this.status_data == "On Hold")
+  //     this.projects_list = this.projects_list.filter(
+  //       (item) => item.status == "On Hold"
+  //     );
+  //   else if (this.status_data == "Closed")
+  //     this.projects_list = this.projects_list.filter(
+  //       (item) => item.status == "Closed"
+  //     );
 
 
-    var projects_or_programs = this.projects_list.map((item: any) => {
+  //   var projects_or_programs = this.projects_list.map((item: any) => {
       
-      if(!(this.projectnames.find((item2:any)=>item2.name==item.projectName)))
-      {
-        this.projectnames.push({label:item.projectName, value:item.projectName})
-      }
-      console.log(this.projectnames)
-      if (item.type == "Program")
-        return {
-          id: item.id,
-          projectName: item.projectName,
-          initiatives: item.initiatives,
-          priority: item.priority,
-          process: item.process,
-          owner: item.owner,
-          status: item.status,
-          createdAt: moment(item.startDate).format("DD, MMM, YY"),
-          createdBy: item.createdBy,
-          lastModifiedBy: item.lastModifiedBy,
-          "representative":{
-            "name":item.type,
-         },
-          department:item.department,
-          createdDate:moment(item.createdTimestamp).format("DD, MMM, YY"),
-          updatedDate:moment(item.lastModifiedBy).format("DD, MMM, YY")
-        };
-      else if (item.type == "Project")
-        return {
-          id: item.id,
-          projectName: item.projectName,
-          initiatives: item.initiatives,
-          priority: item.priority,
-          process: item.process,
-          owner: item.owner,
-          status: item.status,
-          createdAt: moment(item.startDate).format("DD, MMM, YY"),
-          createdBy: item.createdBy,
-          lastModifiedBy: moment(item.lastModifiedBy).format("DD, MMM, YY"),
-          "representative":{
-            "name":item.type,
-         },
-          department:item.department,
-          createdDate:moment(item.createdTimestamp).format("DD, MMM, YY"),
-          updatedDate:item.lastModifiedTimestamp
+  //     if(!(this.projectnames.find((item2:any)=>item2.name==item.projectName)))
+  //     {
+  //       this.projectnames.push({label:item.projectName, value:item.projectName})
+  //     }
+  //     if (item.type == "Program")
+  //       return {
+  //         id: item.id,
+  //         projectName: item.projectName,
+  //         initiatives: item.initiatives,
+  //         priority: item.priority,
+  //         process: item.process,
+  //         owner: item.owner,
+  //         status: item.status,
+  //         createdAt: moment(item.startDate).format("DD, MMM, YY"),
+  //         createdBy: item.createdBy,
+  //         lastModifiedBy: item.lastModifiedBy,
+  //         "representative":{
+  //           "name":item.type,
+  //        },
+  //         department:item.department,
+  //         createdDate:moment(item.createdTimestamp).format("DD, MMM, YY"),
+  //         updatedDate:moment(item.lastModifiedBy).format("DD, MMM, YY")
+  //       };
+  //     else if (item.type == "Project")
+  //       return {
+  //         id: item.id,
+  //         projectName: item.projectName,
+  //         initiatives: item.initiatives,
+  //         priority: item.priority,
+  //         process: item.process,
+  //         owner: item.owner,
+  //         status: item.status,
+  //         createdAt: moment(item.startDate).format("DD, MMM, YY"),
+  //         createdBy: item.createdBy,
+  //         lastModifiedBy: item.lastModifiedBy,
+  //         "representative":{
+  //           "name":item.type,
+  //         },
+  //         department:item.department,
+  //         createdDate:moment(item.createdTimestamp).format("DD, MMM, YY"),
+  //         updatedDate:moment(item.lastModifiedTimestamp).format("DD, MMM, YY"),
+  //       };
+  //   });
+  //   this.projectDetails=projects_or_programs
+  //   console.log(projects_or_programs)
 
-
-        };
-    });
-    this.projectDetails=projects_or_programs
-    this.dataSource2 = new MatTableDataSource(projects_or_programs);
-    this.dataSource2.paginator = this.paginator2;
-    this.dataSource2.sort = this.sort2;
-  }
+  //   this.dataSource2 = new MatTableDataSource(projects_or_programs);
+  //   this.dataSource2.paginator = this.paginator2;
+  //   this.dataSource2.sort = this.sort2;
+  // }
 
   applyfilter(event) {
     let value1 = event.target.value.toLowerCase();
@@ -429,7 +450,7 @@ set selectedColumns(val: any[]) {
           this.spinner.show();
           this.api.delete_Project(delete_data).subscribe((res) => {
             this.spinner.hide();
-            this.getallProjects();
+            // this.getallProjects();
             let response: any = res;
             if (
               response.errorMessage == undefined &&
@@ -531,62 +552,62 @@ set selectedColumns(val: any[]) {
       ).length;
 
       this.spinner.hide();
-      this.getallProjects();
+      // this.getallProjects();
     });
 
     //document.getElementById("filters").style.display='block';
   }
 
-  updatedata(updatemodal, project) {
-    if (project.type == "Project") {
-      let data: any = this.projects_list.find((item) => item.id == project.id);
-      this.project_id = data.id;
-      if (data.id != undefined) {
-        this.updateForm.get("type").setValue(data["type"]);
-        this.updateForm.get("initiatives").setValue(data["initiatives"]);
-        this.updateForm.get("process").setValue(data["process"]);
-        this.updateForm.get("projectName").setValue(data["projectName"]);
-        this.updateForm.get("owner").setValue(parseInt(data["owner"]));
-        this.updateForm.get("access").setValue(data["access"]);
-        this.updateForm.get("priority").setValue(data["priority"]);
-        this.updateForm.get("resources").setValue(data["resources"]);
-        this.updateForm.get("mapValueChain").setValue(data["mapValueChain"]);
-        this.updateForm.get("status").setValue(data["status"]);
-        this.updateForm
-          .get("measurableMetrics")
-          .setValue(data["measurableMetrics"]);
-        this.updateForm
-          .get("endDate")
-          .setValue(moment(data["endDate"]).format("YYYY-MM-DD"));
-        this.updateForm
-          .get("startDate")
-          .setValue(moment(data["startDate"]).format("YYYY-MM-DD"));
-        this.updatemodalref = this.modalService.show(updatemodal, {
-          class: "modal-lg",
-        });
-      }
-    } else if (project.type == "Program") {
-      let data: any = this.projects_list.find((item) => item.id == project.id);
-      this.project_id = data.id;
-      if (data.id != undefined) {
-        this.updateprogramForm.get("type").setValue(data["type"]);
-        this.updateprogramForm.get("initiatives").setValue(data["initiatives"]);
-        this.updateprogramForm.get("process").setValue(data["process"]);
-        this.updateprogramForm.get("projectName").setValue(data["projectName"]);
-        this.updateprogramForm.get("owner").setValue(data["owner"]);
-        this.updateprogramForm.get("access").setValue(data["access"]);
-        this.updateprogramForm.get("priority").setValue(data["priority"]);
-        this.updateprogramForm
-          .get("measurableMetrics")
-          .setValue(data["measurableMetrics"]);
-        this.updateprogramForm.get("purpose").setValue(data["purpose"]);
-        this.updateprogramForm.get("status").setValue(data["status"]);
-        this.updatemodalref = this.modalService.show(updatemodal, {
-          class: "modal-lg",
-        });
-      }
-    }
-  }
+  // updatedata(updatemodal, project) {
+  //   if (project.type == "Project") {
+  //     let data: any = this.projects_list.find((item) => item.id == project.id);
+  //     this.project_id = data.id;
+  //     if (data.id != undefined) {
+  //       this.updateForm.get("type").setValue(data["type"]);
+  //       this.updateForm.get("initiatives").setValue(data["initiatives"]);
+  //       this.updateForm.get("process").setValue(data["process"]);
+  //       this.updateForm.get("projectName").setValue(data["projectName"]);
+  //       this.updateForm.get("owner").setValue(parseInt(data["owner"]));
+  //       this.updateForm.get("access").setValue(data["access"]);
+  //       this.updateForm.get("priority").setValue(data["priority"]);
+  //       this.updateForm.get("resources").setValue(data["resources"]);
+  //       this.updateForm.get("mapValueChain").setValue(data["mapValueChain"]);
+  //       this.updateForm.get("status").setValue(data["status"]);
+  //       this.updateForm
+  //         .get("measurableMetrics")
+  //         .setValue(data["measurableMetrics"]);
+  //       this.updateForm
+  //         .get("endDate")
+  //         .setValue(moment(data["endDate"]).format("YYYY-MM-DD"));
+  //       this.updateForm
+  //         .get("startDate")
+  //         .setValue(moment(data["startDate"]).format("YYYY-MM-DD"));
+  //       this.updatemodalref = this.modalService.show(updatemodal, {
+  //         class: "modal-lg",
+  //       });
+  //     }
+  //   } else if (project.type == "Program") {
+  //     let data: any = this.projects_list.find((item) => item.id == project.id);
+  //     this.project_id = data.id;
+  //     if (data.id != undefined) {
+  //       this.updateprogramForm.get("type").setValue(data["type"]);
+  //       this.updateprogramForm.get("initiatives").setValue(data["initiatives"]);
+  //       this.updateprogramForm.get("process").setValue(data["process"]);
+  //       this.updateprogramForm.get("projectName").setValue(data["projectName"]);
+  //       this.updateprogramForm.get("owner").setValue(data["owner"]);
+  //       this.updateprogramForm.get("access").setValue(data["access"]);
+  //       this.updateprogramForm.get("priority").setValue(data["priority"]);
+  //       this.updateprogramForm
+  //         .get("measurableMetrics")
+  //         .setValue(data["measurableMetrics"]);
+  //       this.updateprogramForm.get("purpose").setValue(data["purpose"]);
+  //       this.updateprogramForm.get("status").setValue(data["status"]);
+  //       this.updatemodalref = this.modalService.show(updatemodal, {
+  //         class: "modal-lg",
+  //       });
+  //     }
+  //   }
+  // }
 
   projectupdate() {
     if (this.updateForm.valid) {

@@ -7,6 +7,7 @@ import { ProjectsProgramsTableComponent } from "./projects-programs-table/projec
 import Swal from "sweetalert2";
 import { Router } from "@angular/router";
 import { query } from "@angular/animations";
+import moment from "moment";
 import { APP_CONFIG } from "src/app/app.config";
 
 @Component({
@@ -46,6 +47,7 @@ export class ProjectsListScreenComponent implements OnInit {
   create_Tabs: any;
   projectsresponse: any = [];
   freetrail: string;
+  all_projectslist:any[]=[];
   constructor(
     private dt: DataTransferService,
     private api: RestApiService,
@@ -85,75 +87,115 @@ export class ProjectsListScreenComponent implements OnInit {
     this.api.getAllProjects(roles, name, email).subscribe((res) => {
       let response: any = res;
       this.projectsresponse = response;
-      this.projects_list = [
+      this.all_projectslist = [
         ...response[0].map((data) => {
           return {
+            // id: data.id,
+            // projectName: data.programName,
+            // access: data.access,
+            // initiatives: data.initiatives,
+            // process: data.process,
+            // type: data.type,
+            // owner: data.owner,
+            // priority: data.priority,
+            // createdBy: data.createdBy,
+            // status: data.status == null ? "New" : data.status,
+            // // resources: data.resources,
+            // mapValueChain: data.mapValueChain,
+            // department:data.programValueChain,
+            // measurableMetrics: data.measurableMetrics,
+            // purpose: data.purpose,
+
             id: data.id,
             projectName: data.programName,
-            access: data.access,
             initiatives: data.initiatives,
-            process: data.process,
-            type: data.type,
-            owner: data.owner,
             priority: data.priority,
-            createdBy: data.createdBy,
+            process:  this.getProcessNames(data.process),
+            owner: data.owner,
             status: data.status == null ? "New" : data.status,
-            resources: data.resources,
-            mapValueChain: data.mapValueChain,
+            createdAt: moment(data.startDate).format("lll"),
+            createdBy: data.createdBy,
+            lastModifiedBy: data.lastModifiedBy,
+            "representative":{
+              "name":data.type,
+           },
+           type:data.type,
             department:data.programValueChain,
-            measurableMetrics: data.measurableMetrics,
-            purpose: data.purpose,
+            createdDate:moment(data.createdTimestamp).format("lll"),
+            updatedDate:moment(data.lastModifiedTimestamp).format("lll"),
+            mapValueChain: data.mapValueChain,
           };
         }),
         ...response[1].map((data) => {
           return {
+            // id: data.id,
+            // projectName: data.projectName,
+            // access: data.access,
+            // initiatives: data.initiatives,
+            // process: data.process,
+            // type: data.type == null ? "Project" : data.type,
+            // // owner: data.owner,
+            // status: data.status == null ? "New" : data.status,
+            // priority: data.priority,
+            // createdBy: data.createdBy,
+            // // resources: data.resources,
+            // mapValueChain: data.mapValueChain,
+            // department:data.mapValueChain,
+            // measurableMetrics: data.measurableMetrics,
+            // startDate: data.startDate,
+            // endDate: data.endDate,
+
             id: data.id,
-            projectName: data.projectName,
-            access: data.access,
-            initiatives: data.initiatives,
-            process: data.process,
-            type: data.type == null ? "Project" : data.type,
-            owner: data.owner,
-            status: data.status == null ? "New" : data.status,
-            priority: data.priority,
-            createdBy: data.createdBy,
-            resources: data.resources,
+          projectName: data.projectName,
+          initiatives: data.initiatives,
+          priority: data.priority,
+          process: this.getProcessNames(data.process),
+          owner: data.owner,
+          status: data.status == null ? "New" : data.status,
+          createdAt: moment(data.startDate).format("lll"),
+          createdBy: data.createdBy,
+          lastModifiedBy: data.lastModifiedBy,
+          "representative":{
+            "name":data.type == null ? "Project" : data.type,
+          },
+          type:data.type == null ? "Project" : data.type,
+          department:data.mapValueChain,
+          createdDate:moment(data.createdTimestamp).format("lll"),
+          updatedDate:moment(data.lastModifiedTimestamp).format("lll"),
             mapValueChain: data.mapValueChain,
-            department:data.mapValueChain,
-            measurableMetrics: data.measurableMetrics,
-            startDate: data.startDate,
-            endDate: data.endDate,
+
           };
         }),
       ];
       this.spinner.hide();
-      this.count.New = this.projects_list.filter(
+      this.count.New = this.all_projectslist.filter(
         (item) => item.status == "New"
       ).length;
-      this.count.Inprogress = this.projects_list.filter(
+      this.count.Inprogress = this.all_projectslist.filter(
         (item) => item.status == "In Progress"
       ).length;
-      this.count.Pipeline = this.projects_list.filter(
+      this.count.Pipeline = this.all_projectslist.filter(
         (item) => item.status == "Pipeline"
       ).length;
-      this.count.OnHold = this.projects_list.filter(
+      this.count.OnHold = this.all_projectslist.filter(
         (item) => item.status == "On Hold"
       ).length;
-      this.count.Rejected = this.projects_list.filter(
+      this.count.Rejected = this.all_projectslist.filter(
         (item) => item.status == "Rejected"
       ).length;
-      this.count.Inreview = this.projects_list.filter(
+      this.count.Inreview = this.all_projectslist.filter(
         (item) => item.status == "In Review"
       ).length;
-      this.count.Approved = this.projects_list.filter(
+      this.count.Approved = this.all_projectslist.filter(
         (item) => item.status == "Approved"
       ).length;
-      this.count.Closed = this.projects_list.filter(
+      this.count.Closed = this.all_projectslist.filter(
         (item) => item.status == "Closed"
       ).length;
-      this.count.Deployed = this.projects_list.filter(
+      this.count.Deployed = this.all_projectslist.filter(
         (item) => item.status == "Deployed"
       ).length;
+      this.projects_list = this.all_projectslist
       setTimeout(() => {
         this.selected_tab = 0;
       }, 100);
@@ -209,5 +251,26 @@ export class ProjectsListScreenComponent implements OnInit {
 
   getprojectsList(event) {
     this.projectsresponse = event;
+  }
+
+  getProcessNames(processId){
+    let processName:any;
+    if(isNaN && this.processes!=undefined)
+    {
+      
+      processName=this.processes.find(item=>item.processId==parseInt(processId));
+    }
+    return processName==undefined?processId:processName.processName;
+  }
+
+  onTabChanged(event){
+    console.log(event,"testing");
+    this.selected_tab = event.index
+    let filteredProjects = this.all_projectslist.filter(
+      (item) => item.status == event.tab.textLabel
+    );
+    
+    this.projects_list = filteredProjects;
+
   }
 }
