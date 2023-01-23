@@ -44,11 +44,11 @@ export class ProcessAnalystComponent implements OnInit {
   topEffortsSpent: any[]=[];
   displayedColumns1=['Process Name','Created Date','Submitted by','Approver Name'];
   displayedColumns3=['projectName','daysSpent'];
-  @ViewChild("sort1",{static:false}) sort1: MatSort;
-  @ViewChild("paginator1",{static:false}) paginator1: MatPaginator;
+  @ViewChild("sort1") sort1: MatSort;
+  @ViewChild("paginator1") paginator1: MatPaginator;
   pendingApprovalsdataSource:MatTableDataSource<any>;
-  @ViewChild("sort3",{static:false}) sort3: MatSort;
-  @ViewChild("paginator3",{static:false}) paginator3: MatPaginator;
+  @ViewChild("sort3") sort3: MatSort;
+  @ViewChild("paginator3") paginator3: MatPaginator;
   topEffortsSpentdataSource:MatTableDataSource<any>;
 
   constructor(private apiService: RestApiService, private jwtHelper: JwtHelperService,

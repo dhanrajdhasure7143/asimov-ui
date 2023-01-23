@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { ApprovalWorkflowComponent } from './approval-workflow.component';
 
@@ -6,7 +6,7 @@ describe('ApprovalWorkflowComponent', () => {
   let component: ApprovalWorkflowComponent;
   let fixture: ComponentFixture<ApprovalWorkflowComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ ApprovalWorkflowComponent ]
     })

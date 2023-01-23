@@ -7,7 +7,7 @@ import { DataTransferService } from "../../services/data-transfer.service";
 import { PiHints } from '../model/process-intelligence-module-hints';
 import { GlobalScript } from '../../../shared/global-script';
 
-import { MatPaginator, PageEvent } from '@angular/material';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { fromMatPaginator, paginateRows } from './../../business-process/model/datasource-utils';
 import { Observable  } from 'rxjs/Observable';
 import { of  } from 'rxjs/observable/of';
@@ -56,7 +56,7 @@ export class DatadocumentComponent implements OnInit {
   totalRows$: Observable<number>;
   errorsList:any=[];
 
-  @ViewChild(MatPaginator,{static:false}) paginator: MatPaginator;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild('template1',{ static: true }) template1: TemplateRef<any>;
   @ViewChild('notification',{ static: true }) notificationTemplate;
 

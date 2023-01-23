@@ -4,7 +4,7 @@ import * as am4charts from '@amcharts/amcharts4/charts';
 import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 import { RestApiService } from '../../services/rest-api.service';
 import { ActivatedRoute } from '@angular/router';
-import { MatPaginator, PageEvent } from '@angular/material';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { fromMatPaginator, paginateRows } from './../../business-process/model/datasource-utils';
 import { Observable  } from 'rxjs/Observable';
 import { of  } from 'rxjs/observable/of';
@@ -23,7 +23,7 @@ export class BusinessInsightsComponent implements OnInit {
   displayedRows$: Observable<any[]>;
   totalRows$: Observable<number>;
   isLoading:boolean=false;
-  @ViewChild(MatPaginator,{static:false}) paginator: MatPaginator;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   valueType:any;
 
   constructor(private rest:RestApiService,private route:ActivatedRoute) { 

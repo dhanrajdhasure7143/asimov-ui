@@ -24,17 +24,17 @@
           <span class="projects-menu-item"><i class="ri-more-2-line"></i></span>
         </span> -->
     </div>
-    <mat-tab-group class="projects-programs-list" mat-stretch-tabs
-      (selectedTabChange)="selected_tab=$event.index;search=''">
-      <mat-tab>
+    <mat-tab-group class="projects-programs-list" mat-stretch-tabs [selectedIndex]="selected_tab" (selectedTabChange)="onTabChanged($event)">
+      <mat-tab label="All">
         <ng-template mat-tab-label>
           <div class="status-tabs newstatu">
             <div class="status-img">
-              <img src="..\assets\images\Projects\total projects.svg" alt="">
+              <!-- <img src="..\assets\images-n\Projects\all-tasks.svg.svg" alt=""> -->
+              <img src="./../../../../assets/images-n/projects/all-tasks.svg" alt="">
             </div>
             <div class="status-data">
-              <span class="tab-count"><span *ngIf="projects_list.length<10">0</span>{{projects_list.length}}</span>
-              <span class="tab-text">Total</span>
+              <span class="tab-count"><span *ngIf="projects_list.length<10">0</span>{{all_projectslist.length}}</span>
+              <span class="tab-text">All</span>
             </div>
           </div>
         </ng-template>
@@ -43,11 +43,11 @@
             [processes]="processes" status="All" [projects_list]="projects_list"></app-projects-programs-table>
         </div>
       </mat-tab>
-      <mat-tab>
+      <mat-tab label="New">
         <ng-template mat-tab-label>
           <div class="status-tabs newstatu">
             <div class="status-img">
-              <img src="..\assets\images\Projects\new.svg" alt="">
+              <img src="./../../../../assets/images-n/projects/inprogress-tasks.svg" alt="">
             </div>
             <div class="status-data">
               <span class="tab-count"><span *ngIf="count.New<10">0</span>{{count.New}}</span>
@@ -60,11 +60,11 @@
             [projects_list]="projects_list"></app-projects-programs-table>
         </div>
       </mat-tab>
-      <mat-tab>
+      <mat-tab label="In Progress">
         <ng-template mat-tab-label>
           <div class="status-tabs newstatu">
             <div class="status-img">
-              <img src="..\assets\images\Projects\inprogress.svg" alt="">
+              <img src="./../../../../assets/images-n/projects/inprogress-tasks.svg" alt="">
             </div>
             <div class="status-data">
               <span class="tab-count"><span *ngIf="count.Inprogress<10">0</span>{{count.Inprogress}}</span>
@@ -77,11 +77,11 @@
             [projects_list]="projects_list"></app-projects-programs-table>
         </div>
       </mat-tab>
-      <mat-tab>
+      <mat-tab label="Pipeline">
         <ng-template mat-tab-label>
           <div class="status-tabs newstatu">
             <div class="status-img">
-              <img src="..\assets\images\Projects\inprogress.svg" alt="">
+              <img src="./../../../../assets/images-n/projects/inprogress-tasks.svg" alt="">
             </div>
             <div class="status-data">
               <span class="tab-count"><span *ngIf="count.Pipeline<10">0</span>{{count.Pipeline}}</span>
@@ -94,7 +94,7 @@
             [projects_list]="projects_list"></app-projects-programs-table>
         </div>
       </mat-tab>
-      <mat-tab>
+      <!-- <mat-tab>
         <ng-template mat-tab-label>
           <div class="status-tabs newstatu">
             <div class="status-img">
@@ -110,7 +110,7 @@
           <app-projects-programs-table [users_list]="users_list" [processes]="processes" status="In Review"
             [projects_list]="projects_list"></app-projects-programs-table>
         </div>
-      </mat-tab>
+      </mat-tab> -->
       <!-- <mat-tab>
             <ng-template mat-tab-label>
                 <div class="status-tabs newstatu">
@@ -144,11 +144,11 @@
                 <app-projects-programs-table [users_list]="users_list" [processes]="processes"  status="Rejected" [projects_list]="projects_list"></app-projects-programs-table>
               </div>
           </mat-tab>  -->
-      <mat-tab>
+      <mat-tab label="On Hold">
         <ng-template mat-tab-label>
           <div class="status-tabs newstatu">
             <div class="status-img">
-              <img src="..\assets\images\Projects\inreview.svg" alt="">
+              <img src="./../../../../assets/images-n/projects/inreview-tasks.svg" alt="">
             </div>
             <div class="status-data">
               <span class="tab-count"><span *ngIf="count.OnHold<10">0</span>{{count.OnHold}}</span>
@@ -161,11 +161,11 @@
             [projects_list]="projects_list"></app-projects-programs-table>
         </div>
       </mat-tab>
-      <mat-tab>
+      <mat-tab label="Closed">
         <ng-template mat-tab-label>
           <div class="status-tabs newstatu">
             <div class="status-img">
-              <img src="..\assets\images\Projects\rejected.svg" alt="">
+              <img src="./../../../../assets/images-n/projects/completed-tasks.svg" alt="">
             </div>
             <div class="status-data">
               <span class="tab-count"><span *ngIf="count.Rejected<10">0</span>{{count.Closed}}</span>
@@ -178,7 +178,7 @@
             [projects_list]="projects_list"></app-projects-programs-table>
         </div>
       </mat-tab>
-      <mat-tab>
+      <!-- <mat-tab>
         <ng-template mat-tab-label>
           <div class="status-tabs newstatu">
             <div class="status-img">
@@ -194,7 +194,7 @@
           <app-projects-programs-table [users_list]="users_list" [processes]="processes" status="Deployed"
             [projects_list]="projects_list"></app-projects-programs-table>
         </div>
-      </mat-tab>
+      </mat-tab> -->
     </mat-tab-group>
   </mat-card>
   <mat-card *ngIf="projects_toggle==true">

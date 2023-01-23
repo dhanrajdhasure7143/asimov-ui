@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { UploadCreateDropBpmnComponent } from './upload-create-drop-bpmn.component';
 
@@ -6,7 +6,7 @@ describe('UploadCreateDropBpmnComponent', () => {
   let component: UploadCreateDropBpmnComponent;
   let fixture: ComponentFixture<UploadCreateDropBpmnComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ UploadCreateDropBpmnComponent ]
     })

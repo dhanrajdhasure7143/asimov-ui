@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -15,10 +17,10 @@ export class OrderDetailsComponent implements OnInit {
 
   displayedColumns8: string[] = ["subscriptionId","name","planEntity.nickName","planEntity.amount","status","action"];
   dataSource8:MatTableDataSource<any>;
-  @ViewChild("sort104",{static:false}) sort104: MatSort;
-  @ViewChild("paginator104",{static:false}) paginator104: MatPaginator;
-  @ViewChild("subscriptiontemplate",{static:false}) subscriptiontemplate: any;
-  @ViewChild("subscriptioninfotemplate",{static:false}) subscriptioninfotemplate: any;
+  @ViewChild("sort104") sort104: MatSort;
+  @ViewChild("paginator104") paginator104: MatPaginator;
+  @ViewChild("subscriptiontemplate") subscriptiontemplate: any;
+  @ViewChild("subscriptioninfotemplate") subscriptioninfotemplate: any;
   subscribeddata: any;
   modalRef: BsModalRef;
   tableData: any;

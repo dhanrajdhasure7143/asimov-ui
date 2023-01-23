@@ -56,7 +56,7 @@ export class PagesComponent{
 
   sideBarOpen:Boolean=false;
   contentMargin:any;
-  @ViewChild(SidebarComponent, { static: false }) sidebar: SidebarComponent;
+  @ViewChild(SidebarComponent) sidebar: SidebarComponent;
   constructor( ) { }
 
   onToolbarMenuToggle() {

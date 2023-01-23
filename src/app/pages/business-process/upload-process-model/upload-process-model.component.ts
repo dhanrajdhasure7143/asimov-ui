@@ -17,7 +17,8 @@ import ReplaceMenuProvider from "../bpmn-props-additional-tabs/ReplaceMenuProvid
 import { OriginalPropertiesProvider, PropertiesPanelModule, InjectionNames} from "../bpmn-props-additional-tabs/bpmn-js";
 import lintModule from 'bpmn-js-bpmnlint';
 import { SplitComponent, SplitAreaDirective } from 'angular-split';
-import { MatDialog, MatTabGroup } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatTabGroup } from '@angular/material/tabs';
 import { BpmnModel } from '../model/bpmn-autosave-model';
 import { SharebpmndiagramService } from '../../services/sharebpmndiagram.service';
 import { RestApiService } from '../../services/rest-api.service';
@@ -156,9 +157,9 @@ export class UploadProcessModelComponent implements ComponentCanDeactivate,OnIni
   @ViewChild('variabletemplate',{ static: true }) variabletemplate: TemplateRef<any>;
   @ViewChild('keyboardShortcut',{ static: true }) keyboardShortcut: TemplateRef<any>;
   @ViewChild('dmnTabs',{ static: true }) dmnTabs: ElementRef<any>;
-  @ViewChild("notationXMLTab", { static: false }) notationXmlTab: MatTabGroup;
+  @ViewChild("notationXMLTab") notationXmlTab: MatTabGroup;
   @ViewChild('wrongXMLcontent', { static: true}) wrongXMLcontent: TemplateRef<any>;
-  @ViewChild('canvasopt',{ static: false }) canvasopt: ElementRef;
+  @ViewChild('canvasopt') canvasopt: ElementRef;
   @ViewChild('processowner_template',{ static: true }) processowner_template: TemplateRef<any>;
 
    constructor(private rest:RestApiService, private bpmnservice:SharebpmndiagramService,private router:Router, private spinner:NgxSpinnerService, private modalService: BsModalService,

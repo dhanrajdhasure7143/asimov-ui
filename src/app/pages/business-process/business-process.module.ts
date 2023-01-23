@@ -17,17 +17,24 @@ import { ListOfChangesComponent } from './list-of-changes/list-of-changes.compon
 import { NgxPaginationModule } from 'ngx-pagination';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {MatInputModule, MatIconModule, MatFormFieldModule, MatOptionModule, MatSelectModule, MatTooltipModule,MatDialogModule, MatTabsModule} from '@angular/material';
+import { MatOptionModule } from '@angular/material/core';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import {MatMenuModule} from '@angular/material/menu';
 import {CustomMatPaginatorIntl} from './../../shared/custom-mat-paginator-int';
-import {MatPaginatorIntl} from '@angular/material';
+import { MatPaginatorIntl } from '@angular/material/paginator';
 import { NgbModalDraggableModule } from 'ngb-modal-draggable'
 
 import {MatPaginatorModule} from '@angular/material/paginator';
 import{FilterPipe} from './custom_filter.pipe';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { PopoverModule } from 'ngx-bootstrap/popover'
-import { MatSortModule } from '@angular/material';
+import { MatSortModule } from '@angular/material/sort';
 import { BpsDataSaveGuard } from 'src/app/guards/bps-data-save.guard';
 
 @NgModule({

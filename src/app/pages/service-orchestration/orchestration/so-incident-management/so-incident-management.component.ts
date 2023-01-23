@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
-import { MatPaginator, MatSort, MatTableDataSource } from "@angular/material";
+import { MatPaginator } from "@angular/material/paginator";
+import { MatSort } from "@angular/material/sort";
+import { MatTableDataSource } from "@angular/material/table";
 import moment from "moment";
 import { NgxSpinnerService } from "ngx-spinner";
 import { RestApiService } from "src/app/pages/services/rest-api.service";
@@ -16,9 +18,9 @@ export class SoIncidentManagementComponent implements OnInit {
   incidentFlag: boolean = false;
   loadingFlag: boolean = true;
   seachInput: string = "";
-  @ViewChild("incidentTablePaginator", { static: false })
+  @ViewChild("incidentTablePaginator")
   incidentTablePaginator: MatPaginator;
-  @ViewChild("incidentTableSort", { static: false }) incidentTableSort: MatSort;
+  @ViewChild("incidentTableSort") incidentTableSort: MatSort;
   incidentTableDisplayedColumns: any[] = [
     "incidentId",
     "convertedCreatedTime",

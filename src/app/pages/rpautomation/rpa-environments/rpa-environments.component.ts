@@ -16,8 +16,8 @@ import * as moment from 'moment';
 export class RpaenvironmentsComponent implements OnInit {
   displayedColumns: string[] = ["check", "environmentName", "environmentType", "agentPath", "categoryName", "hostAddress", "portNumber", "username", "password", "activeStatus", "deployStatus", "createdTimeStamp", "createdBy"]; //,"connectionType"
   dataSource: MatTableDataSource<any>;
-  @ViewChild("paginator1", { static: false }) paginator1: MatPaginator;
-  @ViewChild("sort1", { static: false }) sort1: MatSort;
+  @ViewChild("paginator1") paginator1: MatPaginator;
+  @ViewChild("sort1") sort1: MatSort;
   @Output()
   title: EventEmitter<string> = new EventEmitter<string>();
   public environments: any = [];

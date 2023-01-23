@@ -15,7 +15,7 @@ export class RpaToolsetComponent implements OnInit {
       ) { }
 
     public userFilter:any={name:""};
-    @ViewChild('section', {static: false}) section: ElementRef<any>;
+    @ViewChild('section') section: ElementRef<any>;
     @Input("toolsetItems") public templateNodes:any=[];
    @Output("closeToolset") closeToolset=new EventEmitter();
     userRole:any;

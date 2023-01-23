@@ -30,9 +30,9 @@ export class SoEnvBlueprismComponent implements OnInit {
   public isTableHasData : boolean = false;
   public FilterHasnodata : boolean = true;
   public Formresponse : any;
-  @ViewChild("paginator1",{static:false}) paginator1: MatPaginator;
-  @ViewChild("sort1",{static:false}) sort1: MatSort;
-  @ViewChild('closebutton', {static: false}) closebutton
+  @ViewChild("paginator1") paginator1: MatPaginator;
+  @ViewChild("sort1") sort1: MatSort;
+  @ViewChild('closebutton') closebutton
   @Output()
   title:EventEmitter<string> = new EventEmitter<string>();
   public updateflag:Boolean;

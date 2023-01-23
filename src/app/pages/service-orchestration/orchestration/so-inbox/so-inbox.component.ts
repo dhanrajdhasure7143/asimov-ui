@@ -21,8 +21,8 @@ export class SoInboxComponent implements OnInit {
     logflag:Boolean;
     public showaction:boolean = false;
     logresponse:any=[];
-    @ViewChild("paginator1",{static:false}) paginator1: MatPaginator;
-    @ViewChild("sort1",{static:false}) sort1: MatSort;
+    @ViewChild("paginator1") paginator1: MatPaginator;
+    @ViewChild("sort1") sort1: MatSort;
     noDataMessage: boolean;
 
     constructor(private route: ActivatedRoute,

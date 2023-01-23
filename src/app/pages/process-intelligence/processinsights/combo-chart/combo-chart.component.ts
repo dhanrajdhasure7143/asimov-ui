@@ -157,7 +157,7 @@ import {
     @Input() curve: any = curveLinear;
     @Input() legend = false;
     @Input() legendTitle: string = 'Legend';
-    @Input() legendPosition: string = 'right';
+    @Input() legendPosition: any = 'right';
     @Input() xAxis;
     @Input() yAxis;
     @Input() showXAxisLabel;
@@ -170,12 +170,12 @@ import {
     @Input() gradient: boolean;
     @Input() showGridLines: boolean = true;
     @Input() activeEntries: any[] = [];
-    @Input() schemeType: string;
+    @Input() schemeType: any;
     // @Input() xAxisTickFormatting: any;
     @Input() yAxisTickFormatting: any;
     @Input() yRightAxisTickFormatting: any;
     @Input() roundDomains: boolean = false;
-    @Input() colorSchemeLine: any[];
+    @Input() colorSchemeLine: any;
     @Input() autoScale;
     @Input() lineChart: any;
     @Input() yLeftAxisScaleFactor: any;
@@ -187,10 +187,10 @@ import {
     @Output() activate: EventEmitter<any> = new EventEmitter();
     @Output() deactivate: EventEmitter<any> = new EventEmitter();
   
-    @ContentChild('tooltipTemplate', { static: false }) tooltipTemplate: TemplateRef<any>;
-    @ContentChild('seriesTooltipTemplate', { static: false }) seriesTooltipTemplate: TemplateRef<any>;
+    @ContentChild('tooltipTemplate') tooltipTemplate: TemplateRef<any>;
+    @ContentChild('seriesTooltipTemplate') seriesTooltipTemplate: TemplateRef<any>;
   
-    @ViewChild(LineSeriesComponent, { static: false }) lineSeriesComponent: LineSeriesComponent;
+    @ViewChild(LineSeriesComponent) lineSeriesComponent: LineSeriesComponent;
   
     dims: ViewDimensions;
     xScale: any;

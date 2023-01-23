@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import moment from 'moment';
 import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
@@ -14,8 +16,8 @@ export class PaymentHistoryComponent implements OnInit {
   
   displayedColumns8: string[] = ["invoiceNumber","subscriptionId","amount","createDate","nextdue","status","action"];
   dataSource8:MatTableDataSource<any>;
-  @ViewChild("sort104",{static:false}) sort104: MatSort;
-  @ViewChild("paginator104",{static:false}) paginator104: MatPaginator;
+  @ViewChild("sort104") sort104: MatSort;
+  @ViewChild("paginator104") paginator104: MatPaginator;
   public invoicedata: any=[];
   tot: any=[];
   public tableData: any=[];

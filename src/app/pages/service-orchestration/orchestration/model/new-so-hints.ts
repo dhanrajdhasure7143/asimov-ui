@@ -1,3 +1,5 @@
+import { Injectable } from "@angular/core";
+@Injectable()
 export class sohints{
     public sodashboard1 = [
         { selector:'#processgroup', description:'Search', showNext:true },

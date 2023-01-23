@@ -26,9 +26,9 @@ export class SoEnvUipathComponent implements OnInit {
   displayedColumns: string[] = ["check","accountName","categoryName","tenantName","clientId","userKey","active","createdTimeStamp","createdBy"];
   dataSource1:MatTableDataSource<any>;
   public isDataSource: boolean;
-  @ViewChild("paginator1",{static:false}) paginator1: MatPaginator;
-  @ViewChild("sort1",{static:false}) sort1: MatSort;
-  @ViewChild('closebutton', {static: false}) closebutton
+  @ViewChild("paginator1") paginator1: MatPaginator;
+  @ViewChild("sort1") sort1: MatSort;
+  @ViewChild('closebutton') closebutton
   @Output()
   title:EventEmitter<string> = new EventEmitter<string>();
   public environments:any=[];

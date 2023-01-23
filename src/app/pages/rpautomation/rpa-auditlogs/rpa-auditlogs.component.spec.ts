@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { RpaAuditlogsComponent } from './rpa-auditlogs.component';
 
@@ -6,7 +6,7 @@ describe('RpaAuditlogsComponent', () => {
   let component: RpaAuditlogsComponent;
   let fixture: ComponentFixture<RpaAuditlogsComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ RpaAuditlogsComponent ]
     })

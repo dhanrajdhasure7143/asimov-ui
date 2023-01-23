@@ -1,5 +1,7 @@
 import { ChangeDetectorRef, Component, Input, OnInit, Output ,ViewChild, OnDestroy, EventEmitter } from '@angular/core';
-import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { RestApiService } from '../../services/rest-api.service';
@@ -13,10 +15,10 @@ import Swal from 'sweetalert2';
 export class RpaSoLogsComponent implements OnInit {
   @Input('logsmodalref') public logsmodal: BsModalRef;
   runsListDataSource:MatTableDataSource<any>;
-  @ViewChild("sortRunsTable",{static:false}) sortRunsTable:MatSort;
-  @ViewChild("sortLogsTable",{static:false}) sortLogsTable:MatSort;
-  @ViewChild("sortLoopLogsTable",{static:false}) sortLoopLogsTable:MatSort;
-  @ViewChild("sortAutomationLogsTable",{static:false}) sortAutomationLogsTable:MatSort;
+  @ViewChild("sortRunsTable") sortRunsTable:MatSort;
+  @ViewChild("sortLogsTable") sortLogsTable:MatSort;
+  @ViewChild("sortLoopLogsTable") sortLoopLogsTable:MatSort;
+  @ViewChild("sortAutomationLogsTable") sortAutomationLogsTable:MatSort;
  // @ViewChild("logsPaginator",{static:false}) logsPaginator:MatPaginator;
   RunsTableColoumns: string[] = ['run_id','version','startDate','endDate', "bot_status"];
   LogsTableColumns: string[] = ['task_name', 'status','startDate','endDate','error_info' ];
@@ -39,8 +41,8 @@ export class RpaSoLogsComponent implements OnInit {
   @Input ('AllVersionsList') public AllVersionsList:any=[];
   @Input('selectedversion') public selectedversion:any;
   @Output('close') public closeEvent=new EventEmitter<any>();
-  @ViewChild("paginator2",{static:false}) paginator2: MatPaginator;
-  @ViewChild("sort2",{static:false}) sort2: MatSort;
+  @ViewChild("paginator2") paginator2: MatPaginator;
+  @ViewChild("sort2") sort2: MatSort;
   public allLogs:any=[];
   public botrunid:any;
   public allRuns:any=[];
@@ -360,6 +362,10 @@ export class RpaSoLogsComponent implements OnInit {
   {
     this.selectedIterationTask==undefined;
     this.closeEvent.emit(null)
+  }
+
+  showAutomatedLogs(element){
+
   }
 
 // ngOnDestroy(): void {

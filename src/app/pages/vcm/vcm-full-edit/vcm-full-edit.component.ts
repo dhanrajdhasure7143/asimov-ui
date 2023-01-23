@@ -1,6 +1,6 @@
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
-import { MatTreeNestedDataSource } from '@angular/material';
+import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { MatTree } from '@angular/material/tree';
 import { MatDrawer } from '@angular/material/sidenav';
 import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
@@ -34,8 +34,8 @@ let TREE_DATA: any[] = [
   styleUrls: ['./vcm-full-edit.component.css']
 })
 export class VcmFullEditComponent implements OnInit {
-  @ViewChild('tree', { static: false }) tree: MatTree<any>;
-  @ViewChild('drawer', { static: false }) drawer: MatDrawer;
+  @ViewChild('tree') tree: MatTree<any>;
+  @ViewChild('drawer') drawer: MatDrawer;
 
 
   treeControl = new NestedTreeControl<any>(node => node.children);

@@ -15,14 +15,15 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule, BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { CronEditorModule } from 'src/app/shared/cron-editor/cron-editor.module';
 import { FilterPipeModule } from 'ngx-filter-pipe';
-import { NgxPasswordToggleModule } from 'ngx-password-toggle';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { RpaHomeComponent } from './rpa-home/rpa-home.component';
 import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {MatInputModule, MatIconModule, MatFormFieldModule} from '@angular/material';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatSelectModule} from '@angular/material/select';
 import { NgxSpinnerModule } from "ngx-spinner";
@@ -40,7 +41,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {NgbTimepickerModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgxPaginationModule } from 'ngx-pagination';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
-import {MatNativeDateModule} from '@angular/material';
+import { MatNativeDateModule } from '@angular/material/core';
 import { RpaSchedulerComponent,ReverseRpa,EnvnameRpa } from './rpa-scheduler/rpa-scheduler.component';
 
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -49,7 +50,7 @@ import { RpaCredentialsComponent } from './rpa-credentials/rpa-credentials.compo
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { TaskPipe } from './custom-pipes/task.pipe';
 import { TasksearchPipe } from './custom-pipes/tasksearch.pipe';
-import {MatPaginatorIntl} from '@angular/material';
+import { MatPaginatorIntl } from '@angular/material/paginator';
 import { CustomMatPaginatorIntl } from 'src/app/shared/custom-mat-paginator-int';
 import { RpaSoLogsComponent } from './rpa-so-logs/rpa-so-logs.component';
 import { AngularSplitModule } from 'angular-split';
@@ -96,7 +97,6 @@ import { SearchRpaPipe } from './rpa-home/Search.pipe';
     NgbTimepickerModule,
     NgxPaginationModule,
     RpautomationRoutingModule,
-    NgxPasswordToggleModule,
     DndModule,
     MatTableModule,
     MatTabsModule,

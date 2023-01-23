@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -29,8 +29,8 @@ export interface PeriodicElement {
 })
 export class TicketListComponent implements OnInit {
 
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
-  @ViewChild("paginator", { static: false }) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild("paginator") paginator: MatPaginator;
 
   displayedColumns: string[] = ['id', 'summary', 'reporter', 'component', 'status',
     'impact', 'severity', 'priority', 'created_at', 'Action'];

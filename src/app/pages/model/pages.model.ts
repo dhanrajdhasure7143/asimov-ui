@@ -1,3 +1,5 @@
+import { Injectable } from "@angular/core";
+@Injectable()
 export class PagesHints{
     public homeHints = [
         { selector:'#PIBox', description:'Process Intelligence', showNext:true },

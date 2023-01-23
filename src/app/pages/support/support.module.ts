@@ -13,13 +13,15 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatTableModule} from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatIconModule, MatPaginatorModule, MatProgressBarModule } from '@angular/material';
+import { MatIconModule } from '@angular/material/icon';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { JwtModule } from '@auth0/angular-jwt';
-import { MatTooltipModule } from '@angular/material';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { ViewTicketComponent } from './view-ticket/view-ticket.component'
 
 import { CustomMatPaginatorIntl } from './../../shared/custom-mat-paginator-int';
-import { MatPaginatorIntl } from '@angular/material';
+import { MatPaginatorIntl } from '@angular/material/paginator';
 @NgModule({
   declarations: [CreateTicketComponent, TicketListComponent, SupportComponent, ViewTicketComponent],
   imports: [

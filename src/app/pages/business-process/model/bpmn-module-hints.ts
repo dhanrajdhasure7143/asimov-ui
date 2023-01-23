@@ -1,3 +1,5 @@
+import { Injectable } from "@angular/core";
+@Injectable()
 export class BpsHints{
     public bpsHomeHints = [
         { selector:'#upload_bpmn', description:'Drag/Drop or Upload BPMN/CMMN/DMN File', showNext:true },

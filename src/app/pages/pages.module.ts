@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { MatTabsModule } from '@angular/material';
+import { MatTabsModule } from '@angular/material/tabs';
 import { SharedModule } from '../shared/shared.module';
 import { PagesRoutingModule } from './pages-routing.module';
 import { PagesComponent } from './pages.component';
@@ -24,14 +24,14 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import {MatListModule} from '@angular/material/list';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
-import {MatIconModule} from '@angular/material';
+import { MatIconModule } from '@angular/material/icon';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { sohints } from './service-orchestration/orchestration/model/new-so-hints';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { ProcessArchitectComponent } from './dashboards/process-architect/process-architect.component';
 import { ProcessOwnerComponent } from './dashboards/process-owner/process-owner.component';
-import { MatProgressBarModule } from '@angular/material';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { JwtModule } from '@auth0/angular-jwt';
 import { ProcessAnalystComponent } from './dashboards/process-analyst/process-analyst.component';
@@ -39,7 +39,7 @@ import { MatTableModule } from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { PopoverModule } from 'ngx-bootstrap/popover'
-import {MatPaginatorIntl} from '@angular/material';
+import { MatPaginatorIntl } from '@angular/material/paginator';
 import {CustomMatPaginatorIntl} from "./../shared/custom-mat-paginator-int";
 
 export function jwtTokenGetter() {

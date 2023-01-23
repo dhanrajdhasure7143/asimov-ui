@@ -50,9 +50,9 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   @Input("categoriesList") public categoriesList: any[];
   @Output("onCreateBotDetails") public onCreateBotDetails: EventEmitter<any> =
     new EventEmitter();
-  @ViewChild("logspopup", { static: false }) public logsOverlayRef: any;
-  @ViewChild("screen", { static: false }) screen: ElementRef;
-  @ViewChild("canvas", { static: false }) canvas: ElementRef;
+  @ViewChild("logspopup") public logsOverlayRef: any;
+  @ViewChild("screen") screen: ElementRef;
+  @ViewChild("canvas") canvas: ElementRef;
   filteredEnvironments: any = [];
   VersionsList: any = [];
   // @ViewChild('downloadLink', { static: false }) downloadLink: ElementRef;
@@ -133,9 +133,9 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   splitAreamin_size = "200";
   draggableHandle: any;
 
-  @ViewChild("template", { static: false }) template: TemplateRef<any>;
+  @ViewChild("template") template: TemplateRef<any>;
 
-  @ViewChild("checkBotTemplate", { static: false })
+  @ViewChild("checkBotTemplate")
   checkBotTemplate: TemplateRef<any>;
   public nodedata: any;
   categoryList: any = [];
@@ -155,7 +155,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   public groupsData: any = [];
   botDetailsForm: FormGroup;
   botNameCheck: boolean = false;
-  @ViewChild("splitEl", { static: false }) splitEl: SplitComponent;
+  @ViewChild("splitEl") splitEl: SplitComponent;
   area_splitSize: any = {};
 
   isBotUpdated: boolean = false;

@@ -13,7 +13,7 @@ import { UUID } from 'angular2-uuid';
 })
 export class VcmPropertiesComponent implements OnInit {
 
-  @ViewChild('descriptionValue',{static:false})
+  @ViewChild('descriptionValue')
   texarea: ElementRef;
 
   vcmProperties = [];

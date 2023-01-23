@@ -12,7 +12,8 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { MatMenuModule, MatButtonModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
 import moment from 'moment';
 import { Subscription } from 'rxjs';
 import * as BpmnJS from './../../../bpmn-modeler.development.js';
@@ -22,13 +23,13 @@ import * as DmnJS from 'dmn-js/dist/dmn-modeler.development.js';
 
 @Component({
   selector: 'app-project-details-screen',
-  templateUrl: './project-details-screen.component.html',
-  styleUrls: ['./project-details-screen.component.css']
+  templateUrl: './project-details-new.html',
+  styleUrls: ['./project-details-new.css']
 })
 export class ProjectDetailsScreenComponent implements OnInit {
   projects_toggle: Boolean = false;
   projectData: any;
-  projectDetails: any;
+  projectDetails: any={};
 
   lastname: string;
   firstname: string;
@@ -53,17 +54,17 @@ export class ProjectDetailsScreenComponent implements OnInit {
   displayedColumns: string[] = ["taskCategory", "taskName", "resources", "status", "percentageComplete", "lastModifiedTimestamp", "lastModifiedBy", "createdBy", "action"];
   dataSource6: MatTableDataSource<any>;
   displayedColumns6: string[] = ["check", "firstName", "displayName", "user_Id", "last_active"];
-  @ViewChild("sort14", { static: false }) sort14: MatSort;
-  @ViewChild("sort11", { static: false }) sort11: MatSort;
-  @ViewChild("paginator104", { static: false }) paginator104: MatPaginator;
+  @ViewChild("sort14") sort14: MatSort;
+  @ViewChild("sort11") sort11: MatSort;
+  @ViewChild("paginator104") paginator104: MatPaginator;
   displayedColumns9: string[] = ["fileName","category", "uploadedBy", "uploadedDate", "fileSize"];
-  @ViewChild("sort16", { static: false }) sort16: MatSort;
-  @ViewChild("paginator109", { static: false }) paginator109: MatPaginator;
-  @ViewChild("sort12", { static: false }) sort12: MatSort;
+  @ViewChild("sort16") sort16: MatSort;
+  @ViewChild("paginator109") paginator109: MatPaginator;
+  @ViewChild("sort12") sort12: MatSort;
   dataSource5: MatTableDataSource<any>;
-  @ViewChild("sort13", { static: false }) sort13: MatSort;
-  @ViewChild("sort10", { static: false }) sort10: MatSort;
-  @ViewChild("paginator101", { static: false }) paginator101: MatPaginator;
+  @ViewChild("sort13") sort13: MatSort;
+  @ViewChild("sort10") sort10: MatSort;
+  @ViewChild("paginator101") paginator101: MatPaginator;
   responsedata: any;
   bot_list: any = [];
   automatedtask: any;
@@ -1836,4 +1837,19 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
       event.preventDefault();
     }
   }
+
+  onboardUsers() {
+    var v = document.getElementById("overlayusers");
+    if (v.style.display === "none") {
+       v.style.display = "block";
+    }
+}
+closeoverlay() {
+  var v = document.getElementById("overlayusers");
+  v.style.display = "none";
+}
+
+taskListView(){
+  this.router.navigate(['/pages/projects/tasks'],{queryParams:{id:this.project_id}});
+}
 }

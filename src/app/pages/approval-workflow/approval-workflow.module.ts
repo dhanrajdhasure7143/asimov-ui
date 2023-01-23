@@ -10,12 +10,17 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { ApprovalHomeHints } from './bpmn-diagram-list/model/bpmn_approval_workflow';
-import {MatInputModule, MatIconModule, MatFormFieldModule, MatOptionModule, MatSelectModule,MatTooltipModule} from '@angular/material';
+import { MatOptionModule } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { OrderByPipe } from './oerderby-pipe';
 import {CustomMatPaginatorIntl} from './../../shared/custom-mat-paginator-int';
-import {MatPaginatorIntl} from '@angular/material';
+import { MatPaginatorIntl } from '@angular/material/paginator';
 import {MatPaginatorModule} from '@angular/material/paginator';
-import { MatSortModule } from '@angular/material';
+import { MatSortModule } from '@angular/material/sort';
 
 
 @NgModule({

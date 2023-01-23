@@ -3,7 +3,7 @@ import { RestApiService } from '../../services/rest-api.service';
 import { Observable  } from 'rxjs/Observable';
 import { of  } from 'rxjs/observable/of';
 import { map } from 'rxjs/operators';
-import { MatSort, Sort } from '@angular/material';;
+import { MatSort, Sort } from '@angular/material/sort';;
 import { fromMatSort, sortRows } from './../model/datasource-utils';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
@@ -22,7 +22,7 @@ import { MatDrawer } from '@angular/material/sidenav';
 })
 export class ViewPropertiesComponent implements OnInit {
 
-  @ViewChild('drawer', { static: false }) drawer: MatDrawer;
+  @ViewChild('drawer') drawer: MatDrawer;
 
   @Input() vcm_data:any;
   @Input() processOwners_list:any=[];
@@ -35,9 +35,9 @@ export class ViewPropertiesComponent implements OnInit {
   isLoading:boolean=false;
   displayedRows$: Observable<any[]>;
   totalRows$: Observable<number>;
-  @ViewChild(MatSort,{static:false}) sort: MatSort;
-  @ViewChild("sort1",{static:false}) sort1: MatSort;
-  @ViewChild('sort3',{static:false}) sort3: MatSort;
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild("sort1") sort1: MatSort;
+  @ViewChild('sort3') sort3: MatSort;
   // @ViewChild(MatPaginator,{static:false}) paginator: MatPaginator;
   dataSource:MatTableDataSource<any>;
   dataSource1:MatTableDataSource<any>;

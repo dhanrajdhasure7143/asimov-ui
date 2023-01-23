@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs/Observable';
-import { Sort } from '@angular/material';
+import { Sort } from '@angular/material/sort';
 import { of } from 'rxjs/observable/of';
 import { map } from 'rxjs/operators';
 import { fromMatPaginator, fromMatSort, paginateRows, sortRows } from '../model/datasource-utils';
@@ -68,10 +68,10 @@ export class RpaHomeComponent implements OnInit {
   file_error: any = "";
   isCreateForm: boolean = false;
   botDetails: any;
-  @ViewChild("paginator1", { static: false }) paginator1: MatPaginator;
-  @ViewChild("paginator2", { static: false }) paginator2: MatPaginator;
-  @ViewChild("sort1", { static: false }) sort1: MatSort;
-  @ViewChild("sort2", { static: false }) sort2: MatSort;
+  @ViewChild("paginator1") paginator1: MatPaginator;
+  @ViewChild("paginator2") paginator2: MatPaginator;
+  @ViewChild("sort1") sort1: MatSort;
+  @ViewChild("sort2") sort2: MatSort;
   modbotName: any;
   modbotDescription: any;
   modDepartment: any;
@@ -88,9 +88,9 @@ export class RpaHomeComponent implements OnInit {
   rpaVisible: boolean = false;
   botslist: any = []
   userCheck: boolean = false;
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatSort) sort: MatSort;
   totalRows$: Observable<number>;
-  @ViewChild("paginator301", { static: false }) paginator301: MatPaginator;
+  @ViewChild("paginator301") paginator301: MatPaginator;
   freetrail: string;
   botlistitems: any = []
   categoryName: any;

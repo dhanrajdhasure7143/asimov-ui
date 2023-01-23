@@ -13,7 +13,8 @@ import { OriginalPropertiesProvider, PropertiesPanelModule, InjectionNames} from
 import { NgxSpinnerService } from "ngx-spinner";
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import Swal from 'sweetalert2';
-import {MatDialog, MatTabGroup} from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatTabGroup } from '@angular/material/tabs';
 import { RestApiService } from '../../services/rest-api.service';
 import { DataTransferService } from '../../services/data-transfer.service';
 import { SharebpmndiagramService } from '../../services/sharebpmndiagram.service';
@@ -110,7 +111,7 @@ export class CreateBpmnDiagramComponent implements OnInit, ComponentCanDeactivat
   @ViewChild('variabletemplate',{ static: true }) variabletemplate: TemplateRef<any>;
   @ViewChild('keyboardShortcut',{ static: true }) keyboardShortcut: TemplateRef<any>;
   @ViewChild('dmnTabs',{ static: true }) dmnTabs: ElementRef<any>;
-  @ViewChild("notationXMLTab", { static: false }) notationXmlTab: MatTabGroup;
+  @ViewChild("notationXMLTab") notationXmlTab: MatTabGroup;
   @ViewChild('wrongXMLcontent', { static: true}) wrongXMLcontent: TemplateRef<any>;
   constructor(private rest:RestApiService, private spinner:NgxSpinnerService, private dt:DataTransferService,private modalService: BsModalService,
     private router:Router, private route:ActivatedRoute, private bpmnservice:SharebpmndiagramService, private global:GlobalScript, private hints:BpsHints, public dialog:MatDialog,private shortcut:BpmnShortcut,

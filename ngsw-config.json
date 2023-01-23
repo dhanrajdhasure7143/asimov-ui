@@ -21,7 +21,8 @@
               "/assets/images/BPMS/**",
               "/assets/images/PI/**",
               "/assets/images/icons/**",
-              "!/assets/images/favicons/**"
+              "!/assets/images/favicons/**",
+          "/manifest.webmanifest"
           ],
           "urls": [ ]
       }

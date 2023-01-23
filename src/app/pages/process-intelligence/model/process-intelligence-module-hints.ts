@@ -1,3 +1,5 @@
+import { Injectable } from "@angular/core";
+@Injectable()
 export class PiHints{
     public dataDocumentHints = [
         { selector:'#uploaded_data', description:'Uploaded file data', showNext:true },

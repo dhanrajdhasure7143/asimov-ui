@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { RpaDatabaseFormComponent } from './rpa-database-form.component';
 
@@ -6,7 +6,7 @@ describe('RpaDatabaseFormComponent', () => {
   let component: RpaDatabaseFormComponent;
   let fixture: ComponentFixture<RpaDatabaseFormComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ RpaDatabaseFormComponent ]
     })

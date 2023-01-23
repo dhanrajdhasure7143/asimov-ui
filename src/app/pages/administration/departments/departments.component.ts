@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -16,8 +16,8 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
 })
 export class DepartmentsComponent implements OnInit {
 
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
-  @ViewChild("paginator", { static: false }) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild("paginator") paginator: MatPaginator;
   dataSource2:MatTableDataSource<any>;
   displayedColumns: string[] = ["check","categoryName","owner","createdBy","createdAt","action"];
   public departments:any=[];

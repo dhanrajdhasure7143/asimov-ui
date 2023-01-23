@@ -7,7 +7,7 @@ import * as moment from 'moment';
 import { APP_CONFIG } from 'src/app/app.config';
 import {MatTableDataSource} from '@angular/material/table';
 
-import { MatPaginator, PageEvent } from '@angular/material';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { fromMatPaginator, paginateRows } from './../../business-process/model/datasource-utils';
 import { Observable  } from 'rxjs/Observable';
 import { of  } from 'rxjs/observable/of';
@@ -30,7 +30,7 @@ export class XesdocumentComponent implements OnInit {
   totalRows$: Observable<number>;
   overlay_data:any={};
 
-  @ViewChild(MatPaginator,{static:false}) paginator: MatPaginator;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
 
   constructor(private router: Router,

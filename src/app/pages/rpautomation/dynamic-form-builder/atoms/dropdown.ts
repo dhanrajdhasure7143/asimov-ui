@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, Output,EventEmitter } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { throwMatDialogContentAlreadyAttachedError } from '@angular/material';
+import { throwMatDialogContentAlreadyAttachedError } from '@angular/material/dialog';
 import { environment } from 'src/environments/environment';
 import { RpaStudioDesignerworkspaceComponent } from '../../rpa-studio-designerworkspace/rpa-studio-designerworkspace.component';
 

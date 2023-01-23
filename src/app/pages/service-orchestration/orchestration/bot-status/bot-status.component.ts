@@ -17,8 +17,8 @@ export class BotStatusComponent implements OnInit {
   BotStatus:any;
   displayedColumns: string[] = ["botName","botType","categoryName","createdBy" ,"createdTS","description"];
   dataSource:MatTableDataSource<any>;
-  @ViewChild(MatPaginator,{static:false}) paginator: MatPaginator;
-  @ViewChild(MatSort,{static:false}) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
   gaugeType = "full";
   activeBots:any=[];
   gaugeValue = 28.3;

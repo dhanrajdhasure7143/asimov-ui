@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { HeaderDropdownOverlayComponent } from './header-dropdown-overlay.component';
 
@@ -6,7 +6,7 @@ describe('HeaderDropdownOverlayComponent', () => {
   let component: HeaderDropdownOverlayComponent;
   let fixture: ComponentFixture<HeaderDropdownOverlayComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ HeaderDropdownOverlayComponent ]
     })

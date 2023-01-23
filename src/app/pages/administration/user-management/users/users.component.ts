@@ -16,8 +16,8 @@ import { LoaderService } from "src/app/services/loader/loader.service";
   styleUrls: ["./users.component.css"],
 })
 export class UsersComponent implements OnInit {
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
-  @ViewChild("paginator", { static: false }) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild("paginator") paginator: MatPaginator;
   users: any;
   userslist = [];
   dataSource2: MatTableDataSource<any>;

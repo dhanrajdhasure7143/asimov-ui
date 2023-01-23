@@ -1,6 +1,6 @@
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { Component, ElementRef, OnInit, ViewChild, TemplateRef } from '@angular/core';
-import { MatTreeNestedDataSource } from '@angular/material';
+import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { MatTree } from '@angular/material/tree';
 import { ActivatedRoute, Router } from '@angular/router';
 // import { SharebpmndiagramService } from './pages/services/sharebpmndiagram.service';
@@ -46,10 +46,10 @@ export class VcmStructureComponent implements OnInit {
   isLoading: boolean = false;
   vcmData: any[] = [];
   expandTree = false;
-  @ViewChild('tree', { static: false }) tree;
+  @ViewChild('tree') tree;
   isShow: boolean = false;
-  @ViewChild('drawer', { static: false }) drawer: MatDrawer;
-  @ViewChild('vcmTitle', { static: false }) vcmTitleEdit: ElementRef;
+  @ViewChild('drawer') drawer: MatDrawer;
+  @ViewChild('vcmTitle') vcmTitleEdit: ElementRef;
   processOwners_list: any = [];
   uploadedDocuments: any = [];
   vcm_data: any;

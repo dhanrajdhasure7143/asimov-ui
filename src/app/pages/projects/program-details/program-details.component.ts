@@ -49,8 +49,8 @@ export class ProgramDetailsComponent implements OnInit {
     displayedColumns8: string[] = ["initiatives","projectName","owner","status","projectPercentage","lastModifiedTimestamp","lastModifiedBy", "createdBy","action"];
     dataSource8:MatTableDataSource<any>;
     selectedProgram_id:any
-    @ViewChild("sort104",{static:false}) sort104: MatSort;
-    @ViewChild("paginator104",{static:false}) paginator104: MatPaginator;
+    @ViewChild("sort104") sort104: MatSort;
+    @ViewChild("paginator104") paginator104: MatPaginator;
     public userRoles: any;
     public name: any;
     email: any;
