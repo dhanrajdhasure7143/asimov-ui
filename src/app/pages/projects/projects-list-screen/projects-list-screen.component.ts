@@ -3,7 +3,6 @@ import { Component, Inject, OnInit, ViewChild } from "@angular/core";
 import { DataTransferService } from "../../services/data-transfer.service";
 import { NgxSpinnerService } from "ngx-spinner";
 import { RestApiService } from "../../services/rest-api.service";
-import { ProjectsProgramsTableComponent } from "./projects-programs-table/projects-programs-table.component";
 import Swal from "sweetalert2";
 import { Router } from "@angular/router";
 import { query } from "@angular/animations";
@@ -16,7 +15,6 @@ import { APP_CONFIG } from "src/app/app.config";
   styleUrls: ["./projects-list-screen.component.css"],
 })
 export class ProjectsListScreenComponent implements OnInit {
-  projects_toggle: Boolean = false;
   projects_list: any = [];
   users_list: any = [];
   processes: any = [];
@@ -34,8 +32,6 @@ export class ProjectsListScreenComponent implements OnInit {
     Deployed: 0,
   };
 
-  @ViewChild(ProjectsProgramsTableComponent)
-  projecttable: ProjectsProgramsTableComponent;
   public isButtonVisible = false;
   public userRole: any = [];
   customUserRole: any;
@@ -48,6 +44,16 @@ export class ProjectsListScreenComponent implements OnInit {
   projectsresponse: any = [];
   freetrail: string;
   all_projectslist:any[]=[];
+  columns_list:any=[];
+  statuses: any[];
+  representatives:any=[];
+
+  _tabsList:any=[{tabName:"All","count":"0"},{tabName:"Pipeline","count":"0"},
+  {tabName:"New","count":"0"},
+  {tabName:"In Progress","count":"0"},
+  {tabName:"On Hold","count":"0"},
+  {tabName:"Closed","count":"0"}]
+
   constructor(
     private dt: DataTransferService,
     private api: RestApiService,
@@ -199,7 +205,39 @@ export class ProjectsListScreenComponent implements OnInit {
       setTimeout(() => {
         this.selected_tab = 0;
       }, 100);
+
+      this._tabsList.forEach(element => {
+        if(element.tabName == "All"){
+          element.count = this.all_projectslist.length
+        }else{
+        element.count = this.all_projectslist.filter(
+          (item) => item.status == element.tabName
+        ).length;
+        }
+      });
     });
+
+    this.columns_list = [
+      { ColumnName: "type", DisplayName: "Type", ShowGrid:true, ShowFilter:true,filterWidget:"multiSelect",filterType:"text", sort:true,multi:false},
+      { ColumnName: "projectName", DisplayName: "Project Name", ShowFilter:true, ShowGrid:true,filterWidget:"normal",filterType:"text", sort:true, multi:true,multiOptions:["projectName","status"]},
+      { ColumnName: "process", DisplayName: "Process", ShowGrid:true, ShowFilter:true, filterWidget:"normal",filterType:"text", sort:true,multi:false},
+      { ColumnName: "department", DisplayName: "Department", ShowGrid:true, ShowFilter:true, filterWidget:"normal",filterType:"text", sort:true,multi:false},
+      { ColumnName: "createdDate", DisplayName: "Created Date", ShowGrid:true, ShowFilter:true, filterWidget:"normal",filterType:"date", sort:true,multi:false},
+      { ColumnName: "lastModifiedBy", DisplayName: "Last Updated By", ShowGrid:true, ShowFilter:true, filterWidget:"normal",filterType:"text", sort:true,multi:true,multiOptions:["lastModifiedBy","updatedDate"]},
+      { ColumnName: "updatedDate", DisplayName: "Updated Date", ShowGrid:false,ShowFilter:false, sort:false,multi:false},
+      { ColumnName: "status", DisplayName: "Status", ShowGrid:false,ShowFilter:false, sort:false,multi:false},
+      { ColumnName: "action", DisplayName: "Action", ShowGrid:true,ShowFilter:false, sort:false,multi:false}
+    ];
+
+    this.representatives = [
+      {name: "Project"},
+      {name: "Program"}
+    ];
+
+    this.statuses = [
+      { name: "Project", value: "Project" },
+      { name: "Program", value: "Program" },
+    ];
     //document.getElementById("filters").style.display='block';
   }
 
@@ -257,20 +295,96 @@ export class ProjectsListScreenComponent implements OnInit {
     let processName:any;
     if(isNaN && this.processes!=undefined)
     {
-      
       processName=this.processes.find(item=>item.processId==parseInt(processId));
     }
     return processName==undefined?processId:processName.processName;
   }
 
   onTabChanged(event){
-    console.log(event,"testing");
     this.selected_tab = event.index
+    if(event.tab.textLabel =='All'){
+      this.projects_list = this.all_projectslist;
+    }else{
     let filteredProjects = this.all_projectslist.filter(
       (item) => item.status == event.tab.textLabel
     );
-    
     this.projects_list = filteredProjects;
-
+    }
   }
+
+  viewDetails(event) {
+    if(event.type=="Program"){
+      this.router.navigate(["/pages/projects/programdetails"], {
+        queryParams: { id: event.id },
+      });
+    }else{
+      this.router.navigate(["/pages/projects/projectdetails"], {
+        queryParams: { id: event.id },
+      });
+    }
+  }
+
+
+  deleteById(project) {
+    console.log("testing");
+    
+    var projectdata: any = project;
+    let delete_data = [{
+        id: project.id,
+        type: project.type,
+      },
+    ];
+    Swal.fire({
+      title: "Enter " + projectdata.type + " Name",
+      input: "text",
+      inputAttributes: {
+        autocapitalize: "off",
+      },
+      showCancelButton: true,
+      confirmButtonText: "Delete",
+    }).then((result) => {
+      let value: any = result.value;
+      if (value != undefined)
+        if (projectdata.projectName.trim() == value.trim()) {
+          this.spinner.show();
+          this.api.delete_Project(delete_data).subscribe((res) => {
+            this.spinner.hide();
+            // this.getallProjects();
+            let response: any = res;
+            if (
+              response.errorMessage == undefined &&
+              response.warningMessage == undefined
+            ) {
+              this.projects_list = [];
+              Swal.fire(
+                "Success",
+                "Project Deleted Successfully !!",
+                "success"
+              );
+            } else if (
+              response.errorMessage == undefined &&
+              response.message == undefined
+            ) {
+              Swal.fire("Error", response.warningMessage, "error");
+            } else {
+              Swal.fire("Error", response.errorMessage, "error");
+            }
+          });
+        } else {
+          Swal.fire(
+            "Error",
+            "Entered " + projectdata.type + " Name is Invalid",
+            "error"
+          );
+        }
+    });
+  }
+
+  getreducedValue(value) {
+    if (value != undefined) {
+      if (value.length > 15) return value.substring(0, 16) + "...";
+      else return value;
+    }
+  }
+  
 }

@@ -7,7 +7,6 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
 import { RestApiService } from '../../../services/rest-api.service';
-import { ProjectsProgramsTableComponent } from '../../projects-list-screen/projects-programs-table/projects-programs-table.component';
 import { Subscription } from 'rxjs';
 import { DataTransferService } from 'src/app/pages/services/data-transfer.service';
 @Component({

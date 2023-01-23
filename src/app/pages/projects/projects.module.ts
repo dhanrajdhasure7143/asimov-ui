@@ -20,7 +20,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { ProjectsProgramsTableComponent } from './projects-list-screen/projects-programs-table/projects-programs-table.component';
 import { CreateProjectsComponent } from './create-projects/create-projects.component';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { ProjectDetailsScreenComponent } from './project-details-screen/project-details-screen.component';
@@ -64,14 +63,15 @@ import {ButtonModule} from 'primeng/button';
 import {DropdownModule} from 'primeng/dropdown';
 import {ProgressBarModule} from 'primeng/progressbar';
 import {InputTextModule} from 'primeng/inputtext';
-import { ProjectTaskListComponent } from './project-details-screen/project-task-list/project-task-list.component'
+import { ProjectTaskListComponent } from './project-details-screen/project-task-list/project-task-list.component';
+import { SharedModule } from '../../shared/shared.module';
 const materialModules: any[] = [
     
     
   ];
 
 @NgModule({
-  declarations: [ProjectsComponent, ProjectsListScreenComponent, ProjectsProgramsTableComponent, CreateProjectsComponent, FileSizePipe,UserImagePipe,
+  declarations: [ProjectsComponent, ProjectsListScreenComponent, CreateProjectsComponent, FileSizePipe,UserImagePipe,
     ProjectDetailsScreenComponent, ProjectsDashboardComponent, ProcessNamePipe,IntitiativePipe, UserPipePipe, ProjectRepoScreenComponent,CreateTasksComponent, AddResourcesComponent,ProgramDetailsComponent, UserDetialsPipe,RequestFileComponent, CreateProjectFormComponent, EditTaskComponent, BacklogsListComponent,
      BacklogsCreateComponent,
      ProjectRpaDesignComponent,
@@ -109,7 +109,8 @@ const materialModules: any[] = [
     ButtonModule,
     DropdownModule,
     ProgressBarModule,
-    InputTextModule
+    InputTextModule,
+    SharedModule
     
   ],
   providers:[
