@@ -2615,7 +2615,3 @@ button.custom-popupbtn.mat-button {
 .bvcsave popover-container.popover.in.popover-bottom {
   margin-top: 14px;
 }
-
-#projects_list_screen .p-tabview .p-tabview-nav li{
-  width: 500px !important;
-}

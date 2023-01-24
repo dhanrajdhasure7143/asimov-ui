@@ -352,17 +352,14 @@
                         {{rowData[col.multiOptions[0]]}} <br>
                         <span> {{rowData[col.multiOptions[1]]}} </span>
                     </span>
-                    <span *ngIf="col.ColumnName == 'action'">
-                        <div class="newinntalx">
-                            <a class="clickable text-dark" (click)="viewDetailsbyId(rowData)" matTooltip="Go To Details">
-                              <img src="../../../../../assets/images/Projects/eye-show.svg" class="default-img">
-                              <img src="../../../../../assets/images/Projects/eye-show-blue.svg" class="hover-img">
-                            </a>
-                            <a (click)="deleteRow(rowData)" *ngIf="(!(this.userRoles.includes('System Admin')) && userName==rowData[col.createdBy])
-                            || (this.userRoles.includes('System Admin'))" matTooltip="Delete Project">
-                           <img src="../../../../../assets/images/Projects/delete-black.svg" class="default-img">
-                           <img src="../../../../../assets/images/Projects/delete-red.svg" class="hover-img">
-                         </a>
+                    <span *ngIf="col.ColumnName == 'action'" class="taskList-table-actions">
+                        <div class="newinntalx" *ngIf="rowData.id == selectedItem.id ">
+                            <span class="clickable text-dark" (click)="viewDetailsbyId(rowData)">
+                                <i class="pi pi-desktop" style="font-size: 1.5rem"></i> <span>Open Workspace</span>
+                            </span>
+                            <span (click)="deleteRow(rowData)">
+                                <i class="pi pi-ellipsis-v" style="font-size: 1.5rem"></i> <span>Actions</span>
+                         </span>
                            </div>
                     </span>
                 </td>

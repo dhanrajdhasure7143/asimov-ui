@@ -18,7 +18,7 @@ export class DynamicTableComponent implements OnInit {
   _selectedColumns: any[];
   customers:any=[];
   userName:any;
-  selectedItem:any;
+  selectedItem:any={};
 
   constructor() { }
 

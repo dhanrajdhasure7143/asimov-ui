@@ -27,3 +27,15 @@
   padding-top: 30px;
 }
 /* Shared Module - upload create drop component styles - Ends*/
+
+
+
+/* new styles -- start */
+
+
+#projects_list_screen .p-tabview .p-tabview-nav li{
+  width: 500px !important;
+}
+.taskList-table-actions .pi{
+  color: #098de6 !important;
+}
