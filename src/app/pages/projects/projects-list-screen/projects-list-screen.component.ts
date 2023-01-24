@@ -15,7 +15,7 @@ import { APP_CONFIG } from "src/app/app.config";
   styleUrls: ["./projects-list-screen.component.css"],
 })
 export class ProjectsListScreenComponent implements OnInit {
-  projects_list: any = [];
+  projects_list: any[] = [];
   users_list: any = [];
   processes: any = [];
   selected_tab: any;
@@ -43,17 +43,19 @@ export class ProjectsListScreenComponent implements OnInit {
   create_Tabs: any;
   projectsresponse: any = [];
   freetrail: string;
-  all_projectslist:any[]=[];
-  columns_list:any=[];
+  all_projectslist: any[] = [];
+  columns_list: any = [];
   statuses: any[];
-  representatives:any=[];
+  representatives: any = [];
 
-  _tabsList:any=[{tabName:"All","count":"0",img_src:"all-tasks.svg"},
-  {tabName:"Pipeline","count":"0",img_src:"inprogress-tasks.svg"},
-  {tabName:"New","count":"0", img_src:"inprogress-tasks.svg"},
-  {tabName:"In Progress","count":"0", img_src:"inprogress-tasks.svg" },
-  {tabName:"On Hold","count":"0", img_src:"inreview-tasks.svg"},
-  {tabName:"Closed","count":"0", img_src:"completed-tasks.svg"}]
+  _tabsList: any = [
+    { tabName: "All", count: "0", img_src: "all-tasks.svg" },
+    { tabName: "Pipeline", count: "0", img_src: "inprogress-tasks.svg" },
+    { tabName: "New", count: "0", img_src: "inprogress-tasks.svg" },
+    { tabName: "In Progress", count: "0", img_src: "inprogress-tasks.svg" },
+    { tabName: "On Hold", count: "0", img_src: "inreview-tasks.svg" },
+    { tabName: "Closed", count: "0", img_src: "completed-tasks.svg" },
+  ];
 
   constructor(
     private dt: DataTransferService,
@@ -81,7 +83,10 @@ export class ProjectsListScreenComponent implements OnInit {
 
     this.userRoles = localStorage.getItem("userRole");
     this.userRoles = this.userRoles.split(",");
-    this.name = localStorage.getItem("firstName") +" " + localStorage.getItem("lastName");
+    this.name =
+      localStorage.getItem("firstName") +
+      " " +
+      localStorage.getItem("lastName");
     this.email = localStorage.getItem("ProfileuserId");
     this.getallProjects(this.userRoles, this.name, this.email);
     this.getallusers();
@@ -117,19 +122,19 @@ export class ProjectsListScreenComponent implements OnInit {
             projectName: data.programName,
             initiatives: data.initiatives,
             priority: data.priority,
-            process:  this.getProcessNames(data.process),
+            process: this.getProcessNames(data.process),
             owner: data.owner,
             status: data.status == null ? "New" : data.status,
             createdAt: moment(data.startDate).format("lll"),
             createdBy: data.createdBy,
             lastModifiedBy: data.lastModifiedBy,
-            "representative":{
-              "name":data.type,
-           },
-           type:data.type,
-            department:data.programValueChain,
-            createdDate:moment(data.createdTimestamp).format("lll"),
-            updatedDate:moment(data.lastModifiedTimestamp).format("lll"),
+            representative: {
+              name: data.type,
+            },
+            type: data.type,
+            department: data.programValueChain,
+            createdDate: moment(data.createdTimestamp).format("lll"),
+            updatedDate: moment(data.lastModifiedTimestamp).format("lll"),
             mapValueChain: data.mapValueChain,
           };
         }),
@@ -153,24 +158,23 @@ export class ProjectsListScreenComponent implements OnInit {
             // endDate: data.endDate,
 
             id: data.id,
-          projectName: data.projectName,
-          initiatives: data.initiatives,
-          priority: data.priority,
-          process: this.getProcessNames(data.process),
-          owner: data.owner,
-          status: data.status == null ? "New" : data.status,
-          createdAt: moment(data.startDate).format("lll"),
-          createdBy: data.createdBy,
-          lastModifiedBy: data.lastModifiedBy,
-          "representative":{
-            "name":data.type == null ? "Project" : data.type,
-          },
-          type:data.type == null ? "Project" : data.type,
-          department:data.mapValueChain,
-          createdDate:moment(data.createdTimestamp).format("lll"),
-          updatedDate:moment(data.lastModifiedTimestamp).format("lll"),
+            projectName: data.projectName,
+            initiatives: data.initiatives,
+            priority: data.priority,
+            process: this.getProcessNames(data.process),
+            owner: data.owner,
+            status: data.status == null ? "New" : data.status,
+            createdAt: moment(data.startDate).format("lll"),
+            createdBy: data.createdBy,
+            lastModifiedBy: data.lastModifiedBy,
+            representative: {
+              name: data.type == null ? "Project" : data.type,
+            },
+            type: data.type == null ? "Project" : data.type,
+            department: data.mapValueChain,
+            createdDate: moment(data.createdTimestamp).format("lll"),
+            updatedDate: moment(data.lastModifiedTimestamp).format("lll"),
             mapValueChain: data.mapValueChain,
-
           };
         }),
       ];
@@ -202,38 +206,112 @@ export class ProjectsListScreenComponent implements OnInit {
       this.count.Deployed = this.all_projectslist.filter(
         (item) => item.status == "Deployed"
       ).length;
-      this.projects_list = this.all_projectslist
+      this.projects_list = this.all_projectslist;
       setTimeout(() => {
         this.selected_tab = 0;
       }, 100);
 
-      this._tabsList.forEach(element => {
-        if(element.tabName == "All"){
-          element.count = this.all_projectslist.length
-        }else{
-        element.count = this.all_projectslist.filter(
-          (item) => item.status == element.tabName
-        ).length;
+      this._tabsList.forEach((element) => {
+        if (element.tabName == "All") {
+          element.count = this.all_projectslist.length;
+        } else {
+          element.count = this.all_projectslist.filter(
+            (item) => item.status == element.tabName
+          ).length;
         }
       });
     });
 
     this.columns_list = [
-      { ColumnName: "type", DisplayName: "Type", ShowGrid:true, ShowFilter:true,filterWidget:"multiSelect",filterType:"text", sort:true,multi:false},
-      { ColumnName: "projectName", DisplayName: "Project Name", ShowFilter:true, ShowGrid:true,filterWidget:"normal",filterType:"text", sort:true, multi:true,multiOptions:["projectName","status"]},
-      { ColumnName: "process", DisplayName: "Process", ShowGrid:true, ShowFilter:true, filterWidget:"normal",filterType:"text", sort:true,multi:false},
-      { ColumnName: "department", DisplayName: "Department", ShowGrid:true, ShowFilter:true, filterWidget:"normal",filterType:"text", sort:true,multi:false},
-      { ColumnName: "createdDate", DisplayName: "Created Date", ShowGrid:true, ShowFilter:true, filterWidget:"normal",filterType:"date", sort:true,multi:false},
-      { ColumnName: "lastModifiedBy", DisplayName: "Last Updated By", ShowGrid:true, ShowFilter:true, filterWidget:"normal",filterType:"text", sort:true,multi:true,multiOptions:["lastModifiedBy","updatedDate"]},
-      { ColumnName: "updatedDate", DisplayName: "Updated Date", ShowGrid:false,ShowFilter:false, sort:false,multi:false},
-      { ColumnName: "status", DisplayName: "Status", ShowGrid:false,ShowFilter:false, sort:false,multi:false},
-      { ColumnName: "action", DisplayName: "Action", ShowGrid:true,ShowFilter:false, sort:false,multi:false}
+      {
+        ColumnName: "type",
+        DisplayName: "Type",
+        ShowGrid: true,
+        ShowFilter: true,
+        filterWidget: "multiSelect",
+        filterType: "text",
+        sort: true,
+        multi: false,
+      },
+      {
+        ColumnName: "projectName",
+        DisplayName: "Project Name",
+        ShowFilter: true,
+        ShowGrid: true,
+        filterWidget: "normal",
+        filterType: "text",
+        sort: true,
+        multi: true,
+        multiOptions: ["projectName", "status"],
+      },
+      {
+        ColumnName: "process",
+        DisplayName: "Process",
+        ShowGrid: true,
+        ShowFilter: true,
+        filterWidget: "normal",
+        filterType: "text",
+        sort: true,
+        multi: false,
+      },
+      {
+        ColumnName: "department",
+        DisplayName: "Department",
+        ShowGrid: true,
+        ShowFilter: true,
+        filterWidget: "normal",
+        filterType: "text",
+        sort: true,
+        multi: false,
+      },
+      {
+        ColumnName: "createdDate",
+        DisplayName: "Created Date",
+        ShowGrid: true,
+        ShowFilter: true,
+        filterWidget: "normal",
+        filterType: "date",
+        sort: true,
+        multi: false,
+      },
+      {
+        ColumnName: "lastModifiedBy",
+        DisplayName: "Last Updated By",
+        ShowGrid: true,
+        ShowFilter: true,
+        filterWidget: "normal",
+        filterType: "text",
+        sort: true,
+        multi: true,
+        multiOptions: ["lastModifiedBy", "updatedDate"],
+      },
+      {
+        ColumnName: "updatedDate",
+        DisplayName: "Updated Date",
+        ShowGrid: false,
+        ShowFilter: false,
+        sort: false,
+        multi: false,
+      },
+      {
+        ColumnName: "status",
+        DisplayName: "Status",
+        ShowGrid: false,
+        ShowFilter: false,
+        sort: false,
+        multi: false,
+      },
+      {
+        ColumnName: "action",
+        DisplayName: "Action",
+        ShowGrid: true,
+        ShowFilter: false,
+        sort: false,
+        multi: false,
+      },
     ];
 
-    this.representatives = [
-      {name: "Project"},
-      {name: "Program"}
-    ];
+    this.representatives = [{ name: "Project" }, { name: "Program" }];
 
     this.statuses = [
       { name: "Project", value: "Project" },
@@ -292,46 +370,46 @@ export class ProjectsListScreenComponent implements OnInit {
     this.projectsresponse = event;
   }
 
-  getProcessNames(processId){
-    let processName:any;
-    if(isNaN && this.processes!=undefined)
-    {
-      processName=this.processes.find(item=>item.processId==parseInt(processId));
+  getProcessNames(processId) {
+    let processName: any;
+    if (isNaN && this.processes != undefined) {
+      processName = this.processes.find(
+        (item) => item.processId == parseInt(processId)
+      );
     }
-    return processName==undefined?processId:processName.processName;
+    return processName == undefined ? processId : processName.processName;
   }
 
-  onTabChanged(event){
-    console.log(event)
-    this.selected_tab = event.index
-    if(event.tab.textLabel =='All'){
+  onTabChanged(event, tab) {
+    // this.selected_tab = event.index
+    if (tab == "All") {
       this.projects_list = this.all_projectslist;
-    }else{
-    let filteredProjects = this.all_projectslist.filter(
-      (item) => item.status == event.tab.textLabel
-    );
-    this.projects_list = filteredProjects;
+    } else {
+      let filteredProjects = this.all_projectslist.filter(
+        (item) => item.status == tab
+      );
+      this.projects_list = filteredProjects;
     }
   }
 
   viewDetails(event) {
-    if(event.type=="Program"){
+    if (event.type == "Program") {
       this.router.navigate(["/pages/projects/programdetails"], {
         queryParams: { id: event.id },
       });
-    }else{
+    } else {
       this.router.navigate(["/pages/projects/projectdetails"], {
         queryParams: { id: event.id },
       });
     }
   }
 
-
   deleteById(project) {
     console.log("testing");
-    
+
     var projectdata: any = project;
-    let delete_data = [{
+    let delete_data = [
+      {
         id: project.id,
         type: project.type,
       },
@@ -388,5 +466,4 @@ export class ProjectsListScreenComponent implements OnInit {
       else return value;
     }
   }
-  
 }

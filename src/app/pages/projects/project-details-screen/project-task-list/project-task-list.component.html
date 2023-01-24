@@ -31,32 +31,29 @@
             <div class="h-100">
 
                 <div class="" id="tabs_screen">
-                    <p-tabView  (onChange)="onTabChanged($event)">
-                        <p-tabPanel [header]="each.tabName" *ngFor="let each of _tabsList; let i = index" [selected]="i == 0">
+                    <p-tabView>
+                        <p-tabPanel [header]="each.tabName" *ngFor="let each of _tabsList; let i = index"
+                            [selected]="i == 0">
                             <ng-template pTemplate="header">
-                            <div class="status-tabs newstatu">
-                              <div class="status-img">
-                                <img src="../assets/images-n/projects/{{each.img_src}}" alt="">
-                              </div>
-                              <div class="status-data">
-                                <span class="tab-count">{{each.count}}</span>
-                                <span class="tab-text">{{each.tabName}}</span>
-                              </div>
-                            </div>
-                          </ng-template>
-                          <div class="">
-                            <app-dynamic-table 
-                                [columns_list]="columns_list"
-                                [table_data]="tasks_list"
-                                (viewDetails)="viewDetails($event)"
-                                (deleteItem)="deleteById($event)"
-                                [representatives]="representatives"
-                                [screenTable]="'taskList'">
+                                <div class="status-tabs newstatu" (click)="onTabChanged($event,each.tabName)">
+                                    <div class="status-img">
+                                        <img src="../assets/images-n/projects/{{each.img_src}}" alt="">
+                                    </div>
+                                    <div class="status-data">
+                                        <span class="tab-count">{{each.count}}</span>
+                                        <span class="tab-text">{{each.tabName}}</span>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </p-tabPanel>
+                        <div class="">
+                            <app-dynamic-table [columns_list]="columns_list" [table_data]="tasks_list"
+                                (viewDetails)="viewDetails($event)" (deleteItem)="deleteById($event)"
+                                [representatives]="representatives" [screenTable]="'taskList'">
                             </app-dynamic-table>
                         </div>
-                        </p-tabPanel>
                     </p-tabView>
-                  
+
                     <!-- <ul class="nav nav-tabs">
                         <li class="nav-item">
                             <a data-toggle="tab" href="#alltasks" class="nav-link">

@@ -11,7 +11,8 @@
             id="search-project-or-program" placeholder="Search Projects/Programs">
         </div> -->
         <div class=" prj-lstscr-btn py-5">
-          <a _ngcontent-svr-c17="" (click)="createNew()" *ngIf="enablecreateproject" class="btn btn-primary" type="button">
+          <a _ngcontent-svr-c17="" (click)="createNew()" *ngIf="enablecreateproject" class="btn btn-primary"
+            type="button">
             <img src="../../../../assets/images/Projects/White-plus.svg" class="testplus" />
             Create New
           </a>
@@ -24,11 +25,11 @@
         </span> -->
     </div>
 
-    <p-tabView  (onChange)="onTabChanged($event)">
+    <p-tabView>
 
       <p-tabPanel [header]="each.tabName" *ngFor="let each of _tabsList; let i = index" [selected]="i == 0">
-          <ng-template pTemplate="header">
-          <div class="status-tabs newstatu">
+        <ng-template pTemplate="header">
+          <div class="status-tabs newstatu" (click)="onTabChanged($event,each.tabName)">
             <div class="status-img">
               <!-- <img src="..\assets\images\Projects\total projects.svg" alt=""> -->
               <img src="../assets/images-n/projects/{{each.img_src}}" alt="">
@@ -40,19 +41,14 @@
             </div>
           </div>
         </ng-template>
-        <div class="">
-          <app-dynamic-table
-          [representatives]="representatives"
-          [columns_list]="columns_list"
-          [table_data]="projects_list"
-          [userRoles]="userRoles"
-          (viewDetails)="viewDetails($event)"
-          (deleteItem)="deleteById($event)"
-          [screenTable]="'projectList'"
-        ></app-dynamic-table>
-      </div>
+
       </p-tabPanel>
-  </p-tabView>
+      <div class="">
+        <app-dynamic-table [representatives]="representatives" [columns_list]="columns_list"
+          [table_data]="projects_list" [userRoles]="userRoles" (viewDetails)="viewDetails($event)"
+          (deleteItem)="deleteById($event)" [screenTable]="'projectList'"></app-dynamic-table>
+      </div>
+    </p-tabView>
 
     <!-- <mat-tab-group class="" mat-stretch-tabs [selectedIndex]="selected_tab" (selectedTabChange)="onTabChanged($event)">
       <div *ngFor="let each of _tabsList">
