@@ -4,7 +4,7 @@
             <div class="col-md-4">
                 <h3>
                     <label id="popup_title">
-                        <a href="" onclick="projectDetails()"><img
+                        <a href="" (click)="projectDetails()"><img
                                 src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow"></a>
                     </label>
                     <span class="title_text">
@@ -50,6 +50,7 @@
                                 [table_data]="tasks_list"
                                 (viewDetails)="viewDetails($event)"
                                 (deleteItem)="deleteById($event)"
+                                [representatives]="representatives"
                                 [screenTable]="'taskList'">
                             </app-dynamic-table>
                         </div>

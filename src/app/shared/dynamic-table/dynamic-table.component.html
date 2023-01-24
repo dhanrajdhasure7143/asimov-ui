@@ -155,14 +155,14 @@
                     <span *ngIf="col.ColumnName == 'action'">
                         <div class="newinntalx">
                             <a class="clickable text-dark" (click)="viewDetailsbyId(rowData)" matTooltip="Go To Details">
-                              <img src="../../../../../assets/images/Projects/eye-show.svg" class="default-img">
-                              <img src="../../../../../assets/images/Projects/eye-show-blue.svg" class="hover-img">
+                              <img src="../../../../../assets/images/Projects/eye-show.svg" alt="" class="default-img">
+                              <img src="../../../../../assets/images/Projects/eye-show-blue.svg" alt="" class="hover-img">
                             </a>
 
                             <a (click)="deleteRow(rowData)" *ngIf="(!(this.userRoles.includes('System Admin')) && userName==rowData[col.createdBy])
                             || (this.userRoles.includes('System Admin'))" matTooltip="Delete Project">
-                           <img src="../../../../../assets/images/Projects/delete-black.svg" class="default-img">
-                           <img src="../../../../../assets/images/Projects/delete-red.svg" class="hover-img">
+                           <img src="../../../../../assets/images/Projects/delete-black.svg" alt="" class="default-img">
+                           <img src="../../../../../assets/images/Projects/delete-red.svg" alt="" class="hover-img">
                          </a>
                            </div>
                     </span>
@@ -343,10 +343,10 @@
                     <span *ngIf="col.ColumnName == 'action'" class="taskList-table-actions">
                         <div class="newinntalx" [hidden]="!(rowData.id == selectedItem.id)">
                             <span class="clickable text-dark" (click)="viewDetailsbyId(rowData)">
-                                <i class="pi pi-desktop" style="font-size: 1.5rem"></i> <span>Open Workspace</span>
+                                <img src="./../../../../assets/images-n/projects/Open.svg" alt="Open"><span>Open Workspace</span>
                             </span>
                             <span (click)="deleteRow(rowData)">
-                                <i class="pi pi-ellipsis-v" style="font-size: 1.5rem"></i> <span>Actions</span>
+                                <img src="./../../../../assets/images-n/projects/more-vertical.svg" alt="Actions"> <span>Actions</span>
                          </span>
                            </div>
                     </span>
@@ -355,7 +355,7 @@
         </ng-template>
         <ng-template pTemplate="emptymessage">
             <tr>
-                <td colspan="7" class="text-center">No customers found</td>
+                <td colspan="7">No customers found</td>
             </tr>
         </ng-template>
     </p-table>

@@ -70,6 +70,7 @@ export class ProjectTaskListComponent implements OnInit {
         item["timeStamp_converted"] = moment(item.lastModifiedTimestamp);
         item["endDate_converted"] = moment(item.endDate).format("lll");
         item["assignedTo"] = this.getUserName(item.resources);
+        item["representative"] = {"name":item.priority}
         return item;
       });
       this.tasks_list.sort(function (a, b) {
@@ -92,7 +93,7 @@ export class ProjectTaskListComponent implements OnInit {
         DisplayName: "Task Name",
         ShowGrid: true,
         ShowFilter: true,
-        filterWidget: "multiSelect",
+        filterWidget: "normal",
         filterType: "text",
         sort: true,
         multi: false,
@@ -112,7 +113,7 @@ export class ProjectTaskListComponent implements OnInit {
         DisplayName: "Priority",
         ShowGrid: true,
         ShowFilter: true,
-        filterWidget: "normal",
+        filterWidget: "multiSelect",
         filterType: "text",
         sort: true,
         multi: false,
@@ -145,6 +146,12 @@ export class ProjectTaskListComponent implements OnInit {
         sort: false,
         multi: false,
       }
+    ];
+
+    this.representatives = [
+      {name: "High"},
+      {name: "Medium"},
+      {name: "Low"}
     ];
   }
 
