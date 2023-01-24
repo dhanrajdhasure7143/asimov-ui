@@ -64,7 +64,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private router: Router,
     public page_obj: PagesComponent,
     private dataTransfer: DataTransferService,
-    private rpa: RestApiService,
+    private rest_api: RestApiService,
     private spinner: NgxSpinnerService,
     private jwtHelper: JwtHelperService,private route: ActivatedRoute,
     @Inject(APP_CONFIG) private config) {
@@ -98,7 +98,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         }
       }
     });
-    this.rpa.getNewAccessToken().subscribe(resp => {
+    this.rest_api.getNewAccessToken().subscribe(resp => {
       this.newAccessToken = resp;
       localStorage.setItem('accessToken', this.newAccessToken.accessToken);
     });
@@ -108,7 +108,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.parent_subscription = this.dataTransfer.current_parent_module.subscribe(res => this.parent_link = res);
 
     this.child_subscription = this.dataTransfer.current_child_module.subscribe(res => this.child_link = res);
-    this.rpa.getUserRole(2).subscribe(res => {
+    this.rest_api.getUserRole(2).subscribe(res => {
       this.userRole = res.message;
       localStorage.setItem('userRole', this.userRole);
     }, error => {
@@ -126,6 +126,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.dataTransfer.logged_userData.subscribe(res=>{
       if(res){
         this.addUserName(res);
+        this.getAllUsers(res.tenantID)
       }
     });
   }
@@ -183,7 +184,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     var userDetails = localStorage.getItem('accessToken');
     var deCryptUserDetails = this.jwtHelper.decodeToken(userDetails);
     let userid = deCryptUserDetails.userDetails.userId;
-    this.rpa.getUserDetails(userid).subscribe(res => {
+    this.rest_api.getUserDetails(userid).subscribe(res => {
       this.retrieveResonse = res;
       if (res) {
         this.user_details = this.retrieveResonse;
@@ -221,7 +222,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       "tenantId": this.tenantId
     }
 
-    this.rpa.getNotificationaInitialCount(this.role, userId, notificationbody).subscribe(data => {
+    this.rest_api.getNotificationaInitialCount(this.role, userId, notificationbody).subscribe(data => {
       this.notificationList = data
       this.notificationscount = this.notificationList
       if (this.notificationscount == undefined || this.notificationscount == null) {
@@ -250,7 +251,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.value) {
-        this.rpa.deleteNotification(data).subscribe(resp => {
+        this.rest_api.deleteNotification(data).subscribe(resp => {
           Swal.fire({
             title: 'Success',
             text: `Notification Deleted Successfully!!`,
@@ -279,7 +280,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       "tenantId": this.tenantId
     }
     let resp_data:any;
-    this.rpa.getNotifications(this.role, userId, notificationbody).subscribe(data => {
+    this.rest_api.getNotifications(this.role, userId, notificationbody).subscribe(data => {
       resp_data = data
       if(Array.isArray(resp_data)){
         this.notificationsList=resp_data.reverse()
@@ -298,7 +299,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       "tenantId": this.tenantId
     }
     if (this.notificationsList.find(ntf => ntf.id == id).status != 'read') {
-      this.rpa.getReadNotificaionCount(this.role, userId, id, this.notificationbody).subscribe(data => {
+      this.rest_api.getReadNotificaionCount(this.role, userId, id, this.notificationbody).subscribe(data => {
         this.notificationreadlist = data
         this.notificationsList.find(ntf => ntf.id == id).status = 'read'
         // this.getNotificationsList();
@@ -313,4 +314,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
         var lname_fLetter = data.lastName.charAt(0);
         this.user_firstletter = fname_fLetter + lname_fLetter;
   }
+
+  getAllUsers(tenantid){
+  this.rest_api.getusername(tenantid).subscribe((res) => {
+    this.dataTransfer.tenantBasedUsersList(res)
+  });
+}
 }
