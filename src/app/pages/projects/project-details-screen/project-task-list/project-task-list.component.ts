@@ -14,13 +14,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class ProjectTaskListComponent implements OnInit {
 
-
-  tasks:any;
+  tasks_list:any;
   project_id:any;
-  dataSource2: MatTableDataSource<any>;
-  dataSource9: MatTableDataSource<any>;
-  @ViewChild("sort10", { static: false }) sort10: MatSort;
-  @ViewChild("paginator101", { static: false }) paginator101: MatPaginator;
+  columns_list:any[]=[];
+  representatives:any[]=[];
 
   constructor(private rest_api: RestApiService,
     private route : ActivatedRoute,private Router:Router) { 
@@ -29,25 +26,44 @@ export class ProjectTaskListComponent implements OnInit {
   ngOnInit(): void {
     this.route.queryParams.subscribe(data=>{​​​​​​
       this.project_id=data.id
-    this.getTaskandCommentsData()
+    this.getTasksList()
     })
   }
 
-  getTaskandCommentsData() {
+  getTasksList() {
     this.rest_api.gettaskandComments(this.project_id).subscribe(data => {
-      this.tasks = data;
-      this.tasks.map(item=>{item["timeStamp_converted"] = moment(item.lastModifiedTimestamp).valueOf();
+      this.tasks_list = data;
+      console.log("tasks Data",data)
+      this.tasks_list.map(item=>{item["timeStamp_converted"] = moment(item.lastModifiedTimestamp).valueOf();
         return item;
       })
-        this.tasks.sort(function (a, b) {
+        this.tasks_list.sort(function (a, b) {
           return b.timeStamp_converted - a.timeStamp_converted;
       });
-      this.dataSource2 = new MatTableDataSource(this.tasks);
-      this.dataSource2.sort = this.sort10;
-      this.dataSource2.paginator = this.paginator101;
     })
+
+    this.columns_list = [
+      { ColumnName: "taskName", DisplayName: "Task Name", ShowGrid:true, ShowFilter:true,filterWidget:"multiSelect",filterType:"text", sort:true,multi:false},
+      { ColumnName: "taskCategory", DisplayName: "Type", ShowFilter:true, ShowGrid:true,filterWidget:"normal",filterType:"text", sort:true, multi:false},
+      { ColumnName: "priority", DisplayName: "Priority", ShowGrid:true, ShowFilter:true, filterWidget:"normal",filterType:"text", sort:true,multi:false},
+      { ColumnName: "resources", DisplayName: "Assigned To", ShowGrid:true, ShowFilter:true, filterWidget:"normal",filterType:"text", sort:true,multi:false},
+      { ColumnName: "endDate", DisplayName: "Due Date", ShowGrid:true, ShowFilter:true, filterWidget:"normal",filterType:"date", sort:true,multi:false},
+      // { ColumnName: "lastModifiedBy", DisplayName: "Last Updated By", ShowGrid:true, ShowFilter:true, filterWidget:"normal",filterType:"text", sort:true,multi:true,multiOptions:["lastModifiedBy","updatedDate"]},
+      // { ColumnName: "updatedDate", DisplayName: "Updated Date", ShowGrid:false,ShowFilter:false, sort:false,multi:false},
+      // { ColumnName: "status", DisplayName: "Status", ShowGrid:false,ShowFilter:false, sort:false,multi:false},
+      { ColumnName: "action", DisplayName: "Action", ShowGrid:true,ShowFilter:false, sort:false,multi:false}
+    ];
   }
+
   projectDetails(){
     this.Router.navigate(['listOfProjects']);
+}
+
+deleteById(event){
+
+}
+
+viewDetails(event){
+
 }
 }
