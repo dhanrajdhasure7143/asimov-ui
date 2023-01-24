@@ -27,11 +27,36 @@
                 </button>
             </div>
         </div>
-        <div class="main-content-body tasklist-content">
-            <div class="row h-100">
+        <div class="">
+            <div class="h-100">
 
-                <div class="tabsblock">
-                    <ul class="nav nav-tabs">
+                <div class="" id="tabs_screen">
+                    <p-tabView  (onChange)="onTabChanged($event)">
+                        <p-tabPanel [header]="each.tabName" *ngFor="let each of _tabsList; let i = index" [selected]="i == 0">
+                            <ng-template pTemplate="header">
+                            <div class="status-tabs newstatu">
+                              <div class="status-img">
+                                <img src="../assets/images-n/projects/{{each.img_src}}" alt="">
+                              </div>
+                              <div class="status-data">
+                                <span class="tab-count">{{each.count}}</span>
+                                <span class="tab-text">{{each.tabName}}</span>
+                              </div>
+                            </div>
+                          </ng-template>
+                          <div class="">
+                            <app-dynamic-table 
+                                [columns_list]="columns_list"
+                                [table_data]="tasks_list"
+                                (viewDetails)="viewDetails($event)"
+                                (deleteItem)="deleteById($event)"
+                                [screenTable]="'taskList'">
+                            </app-dynamic-table>
+                        </div>
+                        </p-tabPanel>
+                    </p-tabView>
+                  
+                    <!-- <ul class="nav nav-tabs">
                         <li class="nav-item">
                             <a data-toggle="tab" href="#alltasks" class="nav-link">
                                 <img src="./../../../../assets/images-n/projects/all-tasks.svg" alt="All Tasks">
@@ -66,16 +91,11 @@
                                 <span class="taskscount">08</span>Closed
                             </a>
                         </li>
-                    </ul>
+                    </ul> -->
 
-                    <div class="tab-content ">
+                    <!-- <div class="tab-content ">
                         <div id="alltasks" class="tab-pane active">
-                            <!-- <div class="row searchdiv ">
-                                <div class="col-md-3 form-group  text-right">
-                                    <input type="text" placeholder="Search" class="form-control" />
-                                    <img src="./../../../../assets/images-n/projects/search.svg" alt="search-icon" />
-                                </div>
-                            </div> -->
+
                             <div class="row tablediv">
                                 <app-dynamic-table [columns_list]="columns_list"
                                     [table_data]="tasks_list"
@@ -85,7 +105,7 @@
                             </div>
                         </div>
 
-                    </div>
+                    </div> -->
                 </div>
 
             </div>

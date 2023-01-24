@@ -1,23 +1,16 @@
-<div class="card" *ngIf="screenTable=='common'">
+<div class="" *ngIf="screenTable=='common'">
     <p-table #dt1 [value]="table_data" [columns]="selectedColumns" [resizableColumns]="true" responsiveLayout="scroll"  dataKey="id"
-        styleClass="p-datatable-gridlines">
+        >
         <!-- [globalFilterFields]="['representative.name']"> -->
         <ng-template pTemplate="caption">
-            <p-multiSelect [options]="columns_list" [(ngModel)]="selectedColumns" optionLabel="DisplayName"
-            selectedItemsLabel="{0} columns selected" [style]="{minWidth: '200px'}" placeholder="Choose Columns"></p-multiSelect>
-          
             <div class="p-d-flex">
+                <p-multiSelect [options]="columns_list" [(ngModel)]="selectedColumns" optionLabel="DisplayName"
+                selectedItemsLabel="{0} columns selected" [style]="{minWidth: '200px'}" placeholder="Choose Columns"></p-multiSelect>
                 <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
-                <span class="p-input-icon-left p-ml-auto">
-                     <input type="text" pInputText size="50" placeholder="Search"
-                       style="width:auto" (input)="dt1.filterGlobal($event.target.value, 'contains')">
-                    <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
-                </span>
-
-                <!-- <span class="p-input-icon-left p-ml-auto">
+                <span class="p-input-icon-right">
                     <i class="pi pi-search"></i>
-                    <input pInputText type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword" />
-                </span> -->
+                    <input type="text" pInputText placeholder="Search" class="p-inputtext-lg" style="width:auto" (input)="dt1.filterGlobal($event.target.value, 'contains')" >        
+                </span>
             </div>
         </ng-template>
         <ng-template pTemplate="header" let-columns>
@@ -221,19 +214,17 @@
 
 
 
-<div class="card" *ngIf="screenTable=='projectList'">
+<div class="" *ngIf="screenTable=='projectList'">
     <p-table #dt1 [value]="table_data" [columns]="selectedColumns" [resizableColumns]="true" responsiveLayout="scroll"  dataKey="id"
-        styleClass="p-datatable-gridlines">
+        >
         <ng-template pTemplate="caption">
-            <p-multiSelect [options]="columns_list" [(ngModel)]="selectedColumns" optionLabel="DisplayName"
-            selectedItemsLabel="{0} columns selected" [style]="{minWidth: '200px'}" placeholder="Choose Columns"></p-multiSelect>
-          
             <div class="p-d-flex">
+                <p-multiSelect [options]="columns_list" [(ngModel)]="selectedColumns" optionLabel="DisplayName"
+                selectedItemsLabel="{0} columns selected" [style]="{minWidth: '200px'}" placeholder="Choose Columns"></p-multiSelect>
                 <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
-                <span class="p-input-icon-left p-ml-auto">
-                     <input type="text" pInputText size="50" placeholder="Search"
-                       style="width:auto" (input)="dt1.filterGlobal($event.target.value, 'contains')">
-                    <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
+                <span class="p-input-icon-right">
+                    <i class="pi pi-search"></i>
+                    <input type="text" pInputText placeholder="Search" class="p-inputtext-lg" style="width:auto" (input)="dt1.filterGlobal($event.target.value, 'contains')" >        
                 </span>
 
             </div>
@@ -300,19 +291,16 @@
 </div>
 
 
-<div class="card" *ngIf="screenTable=='taskList'">
-    <p-table #dt1 [value]="table_data" [columns]="selectedColumns" [resizableColumns]="true" responsiveLayout="scroll"  dataKey="id" selectionMode="single" [(selection)]="selectedItem"
-        styleClass="p-datatable-gridlines">
+<div class="" *ngIf="screenTable=='taskList'">
+    <p-table #dt1 [value]="table_data" [columns]="selectedColumns" [resizableColumns]="true" responsiveLayout="scroll"  dataKey="id" selectionMode="single" [(selection)]="selectedItem">
         <ng-template pTemplate="caption">
-            <p-multiSelect [options]="columns_list" [(ngModel)]="selectedColumns" optionLabel="DisplayName"
-            selectedItemsLabel="{0} columns selected" [style]="{minWidth: '200px'}" placeholder="Choose Columns"></p-multiSelect>
-          
             <div class="p-d-flex">
+                <p-multiSelect [options]="columns_list" [(ngModel)]="selectedColumns" optionLabel="DisplayName"
+                selectedItemsLabel="{0} columns selected" [style]="{minWidth: '200px'}" placeholder="Choose Columns"></p-multiSelect>
                 <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
-                <span class="p-input-icon-left p-ml-auto">
-                     <input type="text" pInputText size="50" placeholder="Search"
-                       style="width:auto" (input)="dt1.filterGlobal($event.target.value, 'contains')">
-                    <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
+                <span class="p-input-icon-right">
+                    <i class="pi pi-search"></i>
+                    <input type="text" pInputText placeholder="Search" class="p-inputtext-lg" style="width:auto" (input)="dt1.filterGlobal($event.target.value, 'contains')" >        
                 </span>
 
             </div>
@@ -353,7 +341,7 @@
                         <span> {{rowData[col.multiOptions[1]]}} </span>
                     </span>
                     <span *ngIf="col.ColumnName == 'action'" class="taskList-table-actions">
-                        <div class="newinntalx" *ngIf="rowData.id == selectedItem.id ">
+                        <div class="newinntalx" [hidden]="!(rowData.id == selectedItem.id)">
                             <span class="clickable text-dark" (click)="viewDetailsbyId(rowData)">
                                 <i class="pi pi-desktop" style="font-size: 1.5rem"></i> <span>Open Workspace</span>
                             </span>
@@ -367,7 +355,7 @@
         </ng-template>
         <ng-template pTemplate="emptymessage">
             <tr>
-                <td colspan="7">No customers found</td>
+                <td colspan="7" class="text-center">No customers found</td>
             </tr>
         </ng-template>
     </p-table>

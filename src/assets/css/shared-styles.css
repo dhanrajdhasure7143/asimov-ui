@@ -33,9 +33,18 @@
 /* new styles -- start */
 
 
-#projects_list_screen .p-tabview .p-tabview-nav li{
+#tabs_screen .p-tabview .p-tabview-nav li{
   width: 500px !important;
 }
-.taskList-table-actions .pi{
+#tabs_screen .taskList-table-actions .pi{
   color: #098de6 !important;
+}
+
+#tabs_screen .p-tabview-nav-content {
+  border: 1px solid #D0D0D0 !important;
+  border-radius: 5px;
+}
+
+#tabs_screen th{
+  color: #232832;
 }

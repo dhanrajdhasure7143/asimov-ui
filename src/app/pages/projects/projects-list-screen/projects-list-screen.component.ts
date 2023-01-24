@@ -48,11 +48,12 @@ export class ProjectsListScreenComponent implements OnInit {
   statuses: any[];
   representatives:any=[];
 
-  _tabsList:any=[{tabName:"All","count":"0"},{tabName:"Pipeline","count":"0"},
-  {tabName:"New","count":"0"},
-  {tabName:"In Progress","count":"0"},
-  {tabName:"On Hold","count":"0"},
-  {tabName:"Closed","count":"0"}]
+  _tabsList:any=[{tabName:"All","count":"0",img_src:"all-tasks.svg"},
+  {tabName:"Pipeline","count":"0",img_src:"inprogress-tasks.svg"},
+  {tabName:"New","count":"0", img_src:"inprogress-tasks.svg"},
+  {tabName:"In Progress","count":"0", img_src:"inprogress-tasks.svg" },
+  {tabName:"On Hold","count":"0", img_src:"inreview-tasks.svg"},
+  {tabName:"Closed","count":"0", img_src:"completed-tasks.svg"}]
 
   constructor(
     private dt: DataTransferService,
