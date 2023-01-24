@@ -18,6 +18,7 @@ export class DynamicTableComponent implements OnInit {
   _selectedColumns: any[];
   customers:any=[];
   userName:any;
+  selectedItem:any;
 
   constructor() { }
 
@@ -42,6 +43,7 @@ export class DynamicTableComponent implements OnInit {
     }
 
     clear(table: Table) {
-      table.clear();
+      console.log(this.selectedItem)
+      // table.clear();
     }
 }

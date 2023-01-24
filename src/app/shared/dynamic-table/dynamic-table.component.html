@@ -301,7 +301,7 @@
 
 
 <div class="card" *ngIf="screenTable=='taskList'">
-    <p-table #dt1 [value]="table_data" [columns]="selectedColumns" [resizableColumns]="true" responsiveLayout="scroll"  dataKey="id"
+    <p-table #dt1 [value]="table_data" [columns]="selectedColumns" [resizableColumns]="true" responsiveLayout="scroll"  dataKey="id" selectionMode="single" [(selection)]="selectedItem"
         styleClass="p-datatable-gridlines">
         <ng-template pTemplate="caption">
             <p-multiSelect [options]="columns_list" [(ngModel)]="selectedColumns" optionLabel="DisplayName"
@@ -345,15 +345,13 @@
         </ng-template>
 
         <ng-template pTemplate="body" let-rowData let-columns="columns">
-            <tr>
+            <tr [pSelectableRow]="rowData">
                 <td *ngFor="let col of columns" [hidden]="!col.ShowGrid">
-
                     <span *ngIf="!col.multi">{{rowData[col.ColumnName]}}</span>
                     <span *ngIf="col.multi">
                         {{rowData[col.multiOptions[0]]}} <br>
                         <span> {{rowData[col.multiOptions[1]]}} </span>
                     </span>
-
                     <span *ngIf="col.ColumnName == 'action'">
                         <div class="newinntalx">
                             <a class="clickable text-dark" (click)="viewDetailsbyId(rowData)" matTooltip="Go To Details">

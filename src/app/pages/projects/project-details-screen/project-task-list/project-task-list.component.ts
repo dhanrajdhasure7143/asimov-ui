@@ -51,7 +51,8 @@ export class ProjectTaskListComponent implements OnInit {
       // { ColumnName: "lastModifiedBy", DisplayName: "Last Updated By", ShowGrid:true, ShowFilter:true, filterWidget:"normal",filterType:"text", sort:true,multi:true,multiOptions:["lastModifiedBy","updatedDate"]},
       // { ColumnName: "updatedDate", DisplayName: "Updated Date", ShowGrid:false,ShowFilter:false, sort:false,multi:false},
       // { ColumnName: "status", DisplayName: "Status", ShowGrid:false,ShowFilter:false, sort:false,multi:false},
-      { ColumnName: "action", DisplayName: "Action", ShowGrid:true,ShowFilter:false, sort:false,multi:false}
+      { ColumnName: "action", DisplayName: "Action", ShowGrid:true,ShowFilter:false, sort:false,multi:false},
+      { ColumnName: "action1", DisplayName: "", ShowGrid:true,ShowFilter:false, sort:false,multi:false}
     ];
   }
 
