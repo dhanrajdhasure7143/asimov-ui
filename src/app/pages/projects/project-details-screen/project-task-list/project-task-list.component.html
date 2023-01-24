@@ -80,7 +80,8 @@
                                 <app-dynamic-table [columns_list]="columns_list"
                                     [table_data]="tasks_list"
                                     (viewDetails)="viewDetails($event)"
-                                    (deleteItem)="deleteById($event)"></app-dynamic-table>
+                                    (deleteItem)="deleteById($event)"
+                                    [screenTable]="'taskList'"></app-dynamic-table>
                             </div>
                         </div>
 

@@ -218,7 +218,7 @@ export class ProjectsListScreenComponent implements OnInit {
     });
 
     this.columns_list = [
-      { ColumnName: "type", DisplayName: "Type", ShowGrid:true, ShowFilter:true,filterWidget:"normal",filterType:"text", sort:true,multi:false},
+      { ColumnName: "type", DisplayName: "Type", ShowGrid:true, ShowFilter:true,filterWidget:"multiSelect",filterType:"text", sort:true,multi:false},
       { ColumnName: "projectName", DisplayName: "Project Name", ShowFilter:true, ShowGrid:true,filterWidget:"normal",filterType:"text", sort:true, multi:true,multiOptions:["projectName","status"]},
       { ColumnName: "process", DisplayName: "Process", ShowGrid:true, ShowFilter:true, filterWidget:"normal",filterType:"text", sort:true,multi:false},
       { ColumnName: "department", DisplayName: "Department", ShowGrid:true, ShowFilter:true, filterWidget:"normal",filterType:"text", sort:true,multi:false},

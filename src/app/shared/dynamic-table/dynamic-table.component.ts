@@ -11,7 +11,7 @@ export class DynamicTableComponent implements OnInit {
   @Input("columns_list") public columns_list:any[]=[];
   @Input("table_data") public table_data:any[]=[];
   @Input("representatives") public representatives:any[]=[];
-  @Input("isProjectList") public isProjectList:boolean;
+  @Input("screenTable") public screenTable:any;
   @Input("userRoles") public userRoles:any[]=[];
   @Output() viewDetails = new EventEmitter<any[]>();
   @Output() deleteItem = new EventEmitter<any[]>();
