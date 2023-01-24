@@ -52,4 +52,15 @@ export class DynamicTableComponent implements OnInit {
     console.log(this.selectedItem);
     // table.clear();
   }
+
+  getColor(status) {
+    switch (status) {
+      case 'Medium':
+        return 'orange';
+      case 'High':
+        return 'red';
+      case 'Low':
+        return 'green';
+    }
+  }
 }

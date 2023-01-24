@@ -242,7 +242,7 @@ export class ProjectsListScreenComponent implements OnInit {
         filterType: "text",
         sort: true,
         multi: true,
-        multiOptions: ["projectName", "status"],
+        multiOptions: ["projectName", "priority"],
       },
       {
         ColumnName: "process",
@@ -294,8 +294,8 @@ export class ProjectsListScreenComponent implements OnInit {
         multi: false,
       },
       {
-        ColumnName: "status",
-        DisplayName: "Status",
+        ColumnName: "priority",
+        DisplayName: "Priority",
         ShowGrid: false,
         ShowFilter: false,
         sort: false,
