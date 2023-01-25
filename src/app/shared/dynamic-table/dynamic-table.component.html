@@ -8,7 +8,7 @@
                 <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
                 <span class="p-input-icon-right">
                     <i class="pi pi-search"></i>
-                    <input type="text" pInputText placeholder="Search" class="p-inputtext-lg" style="width:auto" (input)="dt1.filterGlobal($event.target.value, 'contains')" >        
+                    <input type="text" pInputText placeholder="Search" class="p-inputtext-lg" style="width:auto" (input)="dt1.filterGlobal($event.target.value, 'contains')" >
                 </span>
             </div>
         </ng-template>
@@ -171,7 +171,7 @@
                          </a>
                            </div>
                     </span>
-                    
+
                 </td>
 
             </tr>
@@ -229,7 +229,7 @@
                 <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
                 <span class="p-input-icon-right">
                     <i class="pi pi-search"></i>
-                    <input type="text" pInputText placeholder="Search" class="p-inputtext-lg" style="width:auto" (input)="dt1.filterGlobal($event.target.value, 'contains')" >        
+                    <input type="text" pInputText placeholder="Search" class="p-inputtext-lg" style="width:auto" (input)="dt1.filterGlobal($event.target.value, 'contains')" >
                 </span>
 
             </div>
@@ -306,7 +306,7 @@
                 <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
                 <span class="p-input-icon-right">
                     <i class="pi pi-search"></i>
-                    <input type="text" pInputText placeholder="Search" class="p-inputtext-lg" style="width:auto" (input)="dt1.filterGlobal($event.target.value, 'contains')" >        
+                    <input type="text" pInputText placeholder="Search" class="p-inputtext-lg" style="width:auto" (input)="dt1.filterGlobal($event.target.value, 'contains')" >
                 </span>
 
             </div>
@@ -341,8 +341,9 @@
         <ng-template pTemplate="body" let-rowData let-columns="columns">
             <tr [pSelectableRow]="rowData">
                 <td *ngFor="let col of columns" [hidden]="!col.ShowGrid">
-                    <span *ngIf="!col.multi && col.ColumnName == 'priority' " [ngStyle]="{'color':getColor(rowData[col.multiOptions[1]])}">{{rowData[col.ColumnName]}}</span>
-                    <span *ngIf="!col.multi && col.ColumnName != 'priority' ">{{rowData[col.ColumnName]}}</span>
+                    <!-- <span *ngIf="!col.multi && col.ColumnName == 'priority' " [ngStyle]="{'color':getColor(rowData[col.multiOptions[1]])}">{{rowData[col.ColumnName]}}</span> -->
+                    <!-- <span *ngIf="!col.multi && col.ColumnName != 'priority' ">{{rowData[col.ColumnName]}}</span> -->
+                    <span >{{rowData[col.ColumnName]}}</span>
                     <span *ngIf="col.multi">
                         {{rowData[col.multiOptions[0]]}} <br>
                         <span> {{rowData[col.multiOptions[1]]}} </span>
@@ -370,21 +371,21 @@
 
 
 
-<!-- <p-dataTable [value]="projectDetails"  [style]="{'width':'100%','overflow':'auto!important'}" 
-  [responsive]="true"  [rows]="20" 
-   [resizableColumns]="true" 
-   columnResizeMode="expand" 
+<!-- <p-dataTable [value]="projectDetails"  [style]="{'width':'100%','overflow':'auto!important'}"
+  [responsive]="true"  [rows]="20"
+   [resizableColumns]="true"
+   columnResizeMode="expand"
    [immutable]=false
    [paginator]="true" [rowsPerPageOptions]="[10,15,20,25]"
   appendTo="body" #dt>
   <p-column  styleClass="checkbox ui-resizable-column" [style]="{'width': 'auto'}" selectionMode="multiple">
-  </p-column>  
+  </p-column>
   <p-column *ngFor="let col of cols;let j=index;" [style]="{'width':'auto','display':col.display} " [field]="col.ColumnName" [header]="col.header"
     [sortable]="true" [filter]="true" filterPlaceholder="Search" filterPlaceholder="Search"
     appendTo="body">
     <ng-template let-row="rowData" let-i="rowIndex" pTemplate="body">
       <div [pTooltip]="row[col.ColumnName]" [id]="col.ColumnName"></div>
-      
+
         <span  style="text-align:left;" *ngIf="col.datatype!='int' && col.datatype!='float'">
           {{row[col.ColumnName]}}
         </span>

@@ -69,7 +69,7 @@ label#popup_title {
     margin-left: 0px !important;
     margin-right: 8px;
     min-width: 0px;
-} 
+}
 
 
 .row.project-Information {
@@ -90,7 +90,7 @@ label#popup_title {
     padding: 30px 10px !important;
     display: block !important;
 }
-.project-status p{ 
+.project-status p{
     font-size: 12px;
     margin:0px;
 }
@@ -163,13 +163,14 @@ span.highimp {
     padding: 0px;
     height: 100%;
     border: 1px solid #dbdbdb;
-    border-radius: 6px;    
+    border-radius: 6px;
     background-color: #fff;
     position: relative;
 }
 .collab {
     padding: 20px !important;
     border-radius: 6px 6px 0px 0px;
+    height: 624px;
 }
 .row.lftusermsg {
     background: #EDF6FD;
@@ -323,7 +324,7 @@ button.btn:focus {
     z-index: 2;
     cursor: pointer;
 }
-  
+
 .userstabsblock{
     background-color: #fff;
     height: 100%;

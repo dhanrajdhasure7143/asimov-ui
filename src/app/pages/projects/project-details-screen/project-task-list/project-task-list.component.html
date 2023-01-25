@@ -4,19 +4,19 @@
             <div class="col-md-4">
                 <h3>
                     <label id="popup_title">
-                        <a href="" (click)="projectDetails()"><img
+                        <a (click)="backToProjectDetails()"><img
                                 src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow"></a>
                     </label>
                     <span class="title_text">
-                        Projects | Financial Breakdown Analysis | <span class="sub_title_text"> Tasks</span>
+                        Projects | {{projectName}} | <span class="sub_title_text"> Tasks</span>
                     </span>
                 </h3>
             </div>
             <div class="col-md-8 text-right">
-                <button class="btn">
+                <!-- <button class="btn">
                     <img src="./../../../../assets/images-n/projects/Open.svg" alt="Open">
                     <span>Open</span>
-                </button>
+                </button> -->
                 <button class="btn">
                     <img src="./../../../../assets/images-n/projects/plus-square_blue.svg" alt="Create">
                     <span>Create</span>
@@ -31,11 +31,11 @@
             <div class="h-100">
 
                 <div class="" id="tabs_screen">
-                    <p-tabView>
+                    <p-tabView #tabView (onChange)="onTabChanged($event, tabView)">
                         <p-tabPanel [header]="each.tabName" *ngFor="let each of _tabsList; let i = index"
                             [selected]="i == 0">
                             <ng-template pTemplate="header">
-                                <div class="status-tabs newstatu" (click)="onTabChanged($event,each.tabName)">
+                                <div class="status-tabs newstatu">
                                     <div class="status-img">
                                         <img src="../assets/images-n/projects/{{each.img_src}}" alt="">
                                     </div>

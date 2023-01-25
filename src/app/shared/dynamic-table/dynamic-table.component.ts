@@ -52,8 +52,8 @@ export class DynamicTableComponent implements OnInit {
   }
 
   clear(table: Table) {
-    console.log(this.checkBoxselected);
-    // table.clear();
+    // console.log(this.selectedItem);
+    table.clear();
   }
 
   getColor(status) {
