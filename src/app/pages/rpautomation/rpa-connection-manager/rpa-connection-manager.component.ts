@@ -36,8 +36,6 @@ export class RpaConnectionManagerComponent implements OnInit {
   getAllConnections() {
     this.rest_api.getConnectionslist().subscribe((data: any) => {
       this.connectorTable = data;
-      console.log(this.connectorTable);
-      // this.dataSource = new MatTableDataSource(this.connectorTable);
       this.spinner.hide();
       this.columns_list = [
         {
@@ -116,7 +114,6 @@ export class RpaConnectionManagerComponent implements OnInit {
   deleteById(event) {}
   deleteConnection() {}
   readSelectedData(data) {
-    console.log("connectionMnager component", data);
     data.length > 0 ?this.addflag =false :this.addflag =true
     data.length > 0 ?this.delete_flag =true :this.delete_flag =false
   }
