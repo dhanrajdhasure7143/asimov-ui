@@ -1,0 +1,11 @@
+.taskList-table-actions .p-component, .taskList-table-actions .p-component * {
+   color: #098de6 !important;
+}
+
+.p-input-icon-right{
+    margin: 0 0 0 60%;
+}
+
+.p-button-outlined{
+    margin: 0 0 0 10px;
+}

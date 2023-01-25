@@ -1,5 +1,5 @@
 <div class="h-100">
-  <mat-card id="projects_list_screen" class="h-100">
+  <p-card id="tabs_screen" class="h-100">
     <div class="module-heading title">
       <div class="">
         <!-- <span class="module-back-button" routerLink="/pages/projects/projectdashboard"><i class="fas fa-arrow-left" aria-hidden="true"></i></span> -->
@@ -11,7 +11,8 @@
             id="search-project-or-program" placeholder="Search Projects/Programs">
         </div> -->
         <div class=" prj-lstscr-btn py-5">
-          <a _ngcontent-svr-c17="" (click)="createNew()" *ngIf="enablecreateproject" class="btn btn-primary" type="button">
+          <a _ngcontent-svr-c17="" (click)="createNew()" *ngIf="enablecreateproject" class="btn btn-primary"
+            type="button">
             <img src="../../../../assets/images/Projects/White-plus.svg" class="testplus" />
             Create New
           </a>
@@ -24,7 +25,32 @@
         </span> -->
     </div>
 
-    <mat-tab-group class="projects-programs-list" mat-stretch-tabs [selectedIndex]="selected_tab" (selectedTabChange)="onTabChanged($event)">
+    <p-tabView #tabView (onChange)="onTabChanged($event, tabView)">
+
+      <p-tabPanel [header]="each.tabName" *ngFor="let each of _tabsList; let i = index" [selected]="i == 0">
+        <ng-template pTemplate="header">
+          <div class="status-tabs newstatu">
+            <div class="status-img">
+              <!-- <img src="..\assets\images\Projects\total projects.svg" alt=""> -->
+              <img src="../assets/images-n/projects/{{each.img_src}}" alt="">
+
+            </div>
+            <div class="status-data">
+              <span class="tab-count">{{each.count}}</span>
+              <span class="tab-text">{{each.tabName}}</span>
+            </div>
+          </div>
+        </ng-template>
+
+      </p-tabPanel>
+      <div class="">
+        <app-dynamic-table [representatives]="representatives" [columns_list]="columns_list"
+          [table_data]="projects_list" [userRoles]="userRoles" (viewDetails)="viewDetails($event)"
+          (deleteItem)="deleteById($event)" [screenTable]="'projectList'"></app-dynamic-table>
+      </div>
+    </p-tabView>
+
+    <!-- <mat-tab-group class="" mat-stretch-tabs [selectedIndex]="selected_tab" (selectedTabChange)="onTabChanged($event)">
       <div *ngFor="let each of _tabsList">
       <mat-tab [label]="each.tabName">
         <ng-template mat-tab-label>
@@ -39,7 +65,7 @@
           </div>
         </ng-template>
 
-        <div class="projects-table-body h-100">
+        <div class="">
           <app-dynamic-table
           [representatives]="representatives"
           [columns_list]="columns_list"
@@ -51,16 +77,6 @@
       </div>
       </mat-tab>
     </div>
-    </mat-tab-group>
-
-
-
-
-
-
-
-
-
-
-  </mat-card>
+    </mat-tab-group> -->
+  </p-card>
 </div>

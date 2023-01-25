@@ -4,33 +4,57 @@
             <div class="col-md-4">
                 <h3>
                     <label id="popup_title">
-                        <a href="" onclick="projectDetails()"><img src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow"></a>
+                        <a (click)="backToProjectDetails()"><img
+                                src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow"></a>
                     </label>
                     <span class="title_text">
-                        Projects | Financial Breakdown Analysis | <span class="sub_title_text"> Tasks</span>
+                        Projects | {{projectName}} | <span class="sub_title_text"> Tasks</span>
                     </span>
                 </h3>
             </div>
             <div class="col-md-8 text-right">
-                <button class="btn">
-                    <img src="./../../../../assets/images-n/projects/Open.svg" alt="Open" >
+                <!-- <button class="btn">
+                    <img src="./../../../../assets/images-n/projects/Open.svg" alt="Open">
                     <span>Open</span>
-                </button>
+                </button> -->
                 <button class="btn">
-                    <img src="./../../../../assets/images-n/projects/plus-square_blue.svg" alt="Create" >
+                    <img src="./../../../../assets/images-n/projects/plus-square_blue.svg" alt="Create">
                     <span>Create</span>
                 </button>
                 <button class="btn">
-                    <img src="./../../../../assets/images-n/projects/more-vertical.svg" alt="Actions" >
+                    <img src="./../../../../assets/images-n/projects/more-vertical.svg" alt="Actions">
                     <span>Actions</span>
                 </button>
             </div>
         </div>
-        <div class="main-content-body tasklist-content">
-            <div class="row h-100">
-                
-                <div class="tabsblock">
-                    <ul class="nav nav-tabs">
+        <div class="">
+            <div class="h-100">
+
+                <div class="" id="tabs_screen">
+                    <p-tabView #tabView (onChange)="onTabChanged($event, tabView)">
+                        <p-tabPanel [header]="each.tabName" *ngFor="let each of _tabsList; let i = index"
+                            [selected]="i == 0">
+                            <ng-template pTemplate="header">
+                                <div class="status-tabs newstatu">
+                                    <div class="status-img">
+                                        <img src="../assets/images-n/projects/{{each.img_src}}" alt="">
+                                    </div>
+                                    <div class="status-data">
+                                        <span class="tab-count">{{each.count}}</span>
+                                        <span class="tab-text">{{each.tabName}}</span>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </p-tabPanel>
+                        <div class="">
+                            <app-dynamic-table [columns_list]="columns_list" [table_data]="tasks_list"
+                                (viewDetails)="viewDetails($event)" (deleteItem)="deleteById($event)"
+                                [representatives]="representatives" [screenTable]="'taskList'">
+                            </app-dynamic-table>
+                        </div>
+                    </p-tabView>
+
+                    <!-- <ul class="nav nav-tabs">
                         <li class="nav-item">
                             <a data-toggle="tab" href="#alltasks" class="nav-link">
                                 <img src="./../../../../assets/images-n/projects/all-tasks.svg" alt="All Tasks">
@@ -39,113 +63,50 @@
                         </li>
                         <li class="nav-item">
                             <a data-toggle="tab" href="#newtasks" class="nav-link">
-                                <img src="./../../../../assets/images-n/projects/inprogress-tasks.svg" alt="InProgress Tasks">
+                                <img src="./../../../../assets/images-n/projects/inprogress-tasks.svg"
+                                    alt="InProgress Tasks">
                                 <span class="taskscount">07</span>New
                             </a>
                         </li>
                         <li class="nav-item">
                             <a data-toggle="tab" href="#inprogresstasks" class="nav-link">
-                                <img src="./../../../../assets/images-n/projects/inprogress-tasks.svg" alt="InProgress Tasks">
+                                <img src="./../../../../assets/images-n/projects/inprogress-tasks.svg"
+                                    alt="InProgress Tasks">
                                 <span class="taskscount">07</span>In Progress
                             </a>
                         </li>
                         <li class="nav-item">
                             <a data-toggle="tab" href="#inreviewtasks" class="nav-link">
-                                <img src="./../../../../assets/images-n/projects/inreview-tasks.svg" alt="In Review Tasks">
+                                <img src="./../../../../assets/images-n/projects/inreview-tasks.svg"
+                                    alt="In Review Tasks">
                                 <span class="taskscount">05</span>In Review
                             </a>
                         </li>
                         <li class="nav-item">
                             <a data-toggle="tab" href="#closedtasks" class="nav-link">
-                                <img src="./../../../../assets/images-n/projects/completed-tasks.svg" alt="Closed Tasks">
+                                <img src="./../../../../assets/images-n/projects/completed-tasks.svg"
+                                    alt="Closed Tasks">
                                 <span class="taskscount">08</span>Closed
                             </a>
                         </li>
-                    </ul>
-                    
-                    <div class="tab-content ">
+                    </ul> -->
+
+                    <!-- <div class="tab-content ">
                         <div id="alltasks" class="tab-pane active">
-                            <div class="row searchdiv ">
-                                <div class="col-md-3 form-group  text-right">
-                                    <input type="text" placeholder="Search" class="form-control" />
-                                    <img src="./../../../../assets/images-n/projects/search.svg" alt="search-icon" />
-                                </div>
-                            </div>
+
                             <div class="row tablediv">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>Task Name</th>
-                                            <th>Type</th>
-                                            <th>Priority</th>
-                                            <th>Assigned To</th>
-                                            <th>Due Date</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Update Process Document</td>
-                                            <td>BPM</td>
-                                            <td class="highpriority">High Priority</td>
-                                            <td><img alt="user-img" src="./../../../../assets/images-n/projects/user1.svg"> Rick</td>
-                                            <td>09 Jan'22</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Analyse PI Graph</td>
-                                            <td>BPM</td>
-                                            <td class="mediumpriority">Medium Priority</td>
-                                            <td><img alt="user-img" src="./../../../../assets/images-n/projects/user2.svg"> Surya</td>
-                                            <td>09 Jan'22</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Onboard New Resources</td>
-                                            <td>BPM</td>
-                                            <td class="highpriority">High Priority</td>
-                                            <td><span class="username">RK</span> Ravi</td>
-                                            <td>09 Jan'22</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Upload & Check</td>
-                                            <td>BPM</td>
-                                            <td class="lowpriority">Low Priority</td>
-                                            <td><img alt="user-img" src="./../../../../assets/images-n/projects/user1.svg"> Kiran</td>
-                                            <td>09 Jan'22</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Update Process Document</td>
-                                            <td>BPM</td>
-                                            <td class="highpriority">High Priority</td>
-                                            <td><img alt="user-img" src="./../../../../assets/images-n/projects/user1.svg"> Rick</td>
-                                            <td>09 Jan'22 <img src="./../../../../assets/images-n/projects/rejected_status.svg" alt="rejected"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Analyse PI Graph</td>
-                                            <td>BPM</td>
-                                            <td class="mediumpriority">Medium Priority</td>
-                                            <td><span class="username">KG</span> Karan</td>
-                                            <td>09 Jan'22</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                <app-dynamic-table [columns_list]="columns_list"
+                                    [table_data]="tasks_list"
+                                    (viewDetails)="viewDetails($event)"
+                                    (deleteItem)="deleteById($event)"
+                                    [screenTable]="'taskList'"></app-dynamic-table>
                             </div>
                         </div>
-                        <div id="newtasks" class="tab-pane fade">
-                          <p>New Tasks</p>
-                        </div>
-                        <div id="inprogresstasks" class="tab-pane fade">
-                          <p>In Progress Tasks</p>
-                        </div>
-                        <div id="inreviewtasks" class="tab-pane fade">
-                          <p>In Review Tasks</p>
-                        </div>
-                        <div id="closedtasks" class="tab-pane fade">
-                          <p>Closed Tasks</p>
-                        </div>
-                    </div>
+
+                    </div> -->
                 </div>
-               
+
             </div>
         </div>
     </div>
 </div>
-    
