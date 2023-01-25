@@ -948,7 +948,7 @@ foreignObject {
   padding-left: 0px !important
 }
 
-/* .main-content {
+.main-content {
   height: 100%;
   padding: 16px;
   padding-bottom: 6px;
@@ -960,7 +960,7 @@ foreignObject {
 
 .main-content1 {
   padding: 0px !important;
-} */
+}
 
 .content-area {
   background: #ffffff;

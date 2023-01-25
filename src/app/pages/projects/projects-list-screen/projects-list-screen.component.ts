@@ -166,7 +166,7 @@ export class ProjectsListScreenComponent implements OnInit {
             process: this.getProcessNames(data.process),
             owner: data.owner,
             status: data.status == null ? "New" : data.status,
-            createdAt: moment(data.createdTimestamp).format("lll"),
+            createdAt:data.createdTimestamp,
             createdBy: data.createdBy,
             lastModifiedBy: data.lastModifiedBy?data.lastModifiedBy : data.createdBy,
             representative: {
@@ -208,10 +208,14 @@ export class ProjectsListScreenComponent implements OnInit {
       // this.count.Deployed = this.all_projectslist.filter(
       //   (item) => item.status == "Deployed"
       // ).length;
-      this.projects_list = this.all_projectslist;
+
       this.all_projectslist.sort(function (a, b) {
-        return b.createdDate - a.createdDate;
+        a = new Date(a.createdDate);
+        b = new Date(b.createdDate);
+        return a > b ? -1 : a < b ? 1 : 0;
       });
+      
+      this.projects_list = this.all_projectslist;
 
       this._tabsList.forEach((element) => {
         if (element.tabName == "All") {
