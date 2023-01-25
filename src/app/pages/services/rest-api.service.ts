@@ -1486,5 +1486,8 @@ getprocessnamesByLatestVersion()
 {
   return this.http.get("/rpa-service/latest-version/process-name");
 }
+// getConnectionslist(){
+//   return this.http.get(`https://ezflow.dev.epsoftinc.com/sdk/getConnectionManagerTableData`);
+// }
 
 }

@@ -12,13 +12,17 @@ export class DynamicTableComponent implements OnInit {
   @Input("representatives") public representatives: any[] = [];
   @Input("screenTable") public screenTable: any;
   @Input("userRoles") public userRoles: any[] = [];
+  @Input("checkBoxShow") public checkBoxShow:boolean;
   @Output() viewDetails = new EventEmitter<any[]>();
   @Output() deleteItem = new EventEmitter<any[]>();
+  @Output() selectedData = new EventEmitter<any[]>();
   _selectedColumns: any[];
   customers: any = [];
   userName: any;
   selectedItem: any = {};
   loading: boolean = true;
+  checkBoxselected:any;
+  
 
   constructor() {}
 
@@ -62,5 +66,9 @@ export class DynamicTableComponent implements OnInit {
       case 'Low':
         return 'green';
     }
+  }
+
+  selectRow(){
+    this.selectedData.emit(this.checkBoxselected)
   }
 }
