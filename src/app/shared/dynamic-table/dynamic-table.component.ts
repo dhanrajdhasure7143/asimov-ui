@@ -15,6 +15,7 @@ export class DynamicTableComponent implements OnInit {
   @Input("checkBoxShow") public checkBoxShow:boolean;
   @Output() viewDetails = new EventEmitter<any[]>();
   @Output() deleteItem = new EventEmitter<any[]>();
+  @Output() selectedData = new EventEmitter<any[]>();
   _selectedColumns: any[];
   customers: any = [];
   userName: any;
@@ -65,5 +66,9 @@ export class DynamicTableComponent implements OnInit {
       case 'Low':
         return 'green';
     }
+  }
+
+  selectRow(){
+    this.selectedData.emit(this.checkBoxselected)
   }
 }

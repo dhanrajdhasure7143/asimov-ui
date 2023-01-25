@@ -14,8 +14,8 @@
         </ng-template>
         <ng-template pTemplate="header" let-columns>
             <tr>
-                <th style="width: 4rem" *ngIf="checkBoxShow">
-                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                <th style="width: 1rem" *ngIf="checkBoxShow">
+                    <p-tableHeaderCheckbox  (click)="selectRow()"></p-tableHeaderCheckbox>
                 </th>
                 <th *ngFor="let col of columns" pResizableColumn pSortableColumn="{{col.ColumnName}}" [hidden]="!col.ShowGrid">{{col.DisplayName}}
                     <!-- <p-columnFilter *ngIf="col.header == 'Type'" type="text" field="representative.name" display="menu"></p-columnFilter>
@@ -136,7 +136,7 @@
         <ng-template pTemplate="body" let-rowData let-columns="columns">
             <tr>
                 <td *ngIf="checkBoxShow">
-                <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
+                <p-tableCheckbox [value]="rowData"  (click)="selectRow()"></p-tableCheckbox>
                 </td>
                 <td *ngFor="let col of columns" [hidden]="!col.ShowGrid">
                     <!-- <span *ngIf="col.ColumnName != 'action' && col.ColumnName != 'projectName' && col.ColumnName != 'lastModifiedBy'">
