@@ -34,8 +34,8 @@ export class RpaConnectionManagerComponent implements OnInit {
   }
 
   getAllConnections() {
-    this.rest_api.getConnectionslist().subscribe((data: any) => {
-      this.connectorTable = data;
+    // this.rest_api.getConnectionslist().subscribe((data: any) => {
+      // this.connectorTable = data;
       this.spinner.hide();
       this.columns_list = [
         {
@@ -107,7 +107,7 @@ export class RpaConnectionManagerComponent implements OnInit {
         //   multi: false,
         // },
       ];
-    });
+    // });
   }
 
   viewDetails(event) {}

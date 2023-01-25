@@ -1,44 +1,3 @@
-.rpa-checkbox{
-    display: flex;
-    justify-content:center;
-  }
-  .rpa-table thead th {
-  border-bottom-width: thin;
-  border-bottom-color:#d9d9d9;
-  }
-  .rpa-table tfoot th{
-    border-top-color:#d9d9d9;
-    border-bottom-width: thin; 
-    font-weight: 200; 
-  }
-  .rpa-table tbody tr td
-  {
-    border-top-color:#d9d9d9;
-    border-bottom-width: thin; 
-    font-weight: 200;
-    padding-top: 20px;
-    padding-bottom: 20px; 
-  }
-
-  tr.mat-footer-row, tr.mat-row {
-    height: auto !important;
-}
-
-  .rpa-tablebox{
-  padding-top:10px;
-  padding-bottom:10px;
-  border-radius: 10px;
-  height: 900px;
-  }
-  .rpa-table.dataTable thead .rpa-checkbox-th{
-    background : none;
-  }
-
-  .rpa-modal-content{
-    padding-bottom:25px !important;
-  }
-
-  
   .env-btn > button:disabled > img{
     color:rgb(116, 116, 116) !important;
     background-color:white!important;
@@ -54,40 +13,10 @@
     color:lightgrey !important;
   }
 
-  .rpa-image1 {
-    height: 12px;
-    width: 12px;
-}
-
-.field-icon {
-  float: right;
-  margin-left: -25px;
-  margin-top: -25px;
-  position: relative;
-  z-index: 2;
-  }
-
-  td{
-    white-space:nowrap;
-  }
-  
-  th{
-    white-space:nowrap;
-  }
-
-.credential-tablegrid table td span{
+  .credential-tablegrid table td span{
   font-size: 13px !important;
 }
 
-.credential-search {
-  position: relative;
-  padding: 0px !important;
-}
-.credential-search  img {
-  position: absolute;
-  top: 9px;
-  right: 10px;
-}
 .credential-tools {
   padding: 0px !important;
   display: flex;
@@ -96,10 +25,6 @@
   position: relative;
   padding: 6px;
   margin: 0px !important;
-}
-button:disabled {
-  cursor: not-allowed;
-  pointer-events: all !important;
 }
 .credential-btntool img {
   width: 16px;
@@ -133,22 +58,4 @@ span.testtooltip:before {
   background: #001c47;
   -webkit-transform: rotate(45deg);
   transform: rotate(45deg);
-}
-
-.modal-body{
-  max-height: calc(100vh - 160px);
-  overflow-y: auto;
-}
-
-.no-item-img{
-  /* height:calc(100vh - 430px) */
-  height:200px;
-}
-.noData{
-  text-align: center;
-  margin-top: 30px;
-}
-
-*{
-  text-transform: capitalize;
 }
