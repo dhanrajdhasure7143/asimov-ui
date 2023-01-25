@@ -36,6 +36,17 @@
           <app-rpa-database-connections></app-rpa-database-connections>
         </div>
       </mat-tab>
+      <mat-tab label="Connection Manager">
+
+        <ng-template mat-tab-label>
+          <mat-icon  class="text-primary">link</mat-icon>
+            &nbsp;&nbsp;
+            Connection Manager
+        </ng-template>
+        <div *ngIf="check_tab==2">
+        <app-rpa-connection-manager></app-rpa-connection-manager>
+      </div>
+    </mat-tab>
 
       <mat-tab label="Email">
       
@@ -44,7 +55,7 @@
             &nbsp;&nbsp;
             Email
         </ng-template>
-        <div *ngIf="check_tab==2">
+        <div *ngIf="check_tab==3">
         <app-rpa-credentials></app-rpa-credentials>
       </div>
       </mat-tab>

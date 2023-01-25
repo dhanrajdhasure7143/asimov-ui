@@ -12,6 +12,7 @@ export class DynamicTableComponent implements OnInit {
   @Input("representatives") public representatives: any[] = [];
   @Input("screenTable") public screenTable: any;
   @Input("userRoles") public userRoles: any[] = [];
+  @Input("checkBoxShow") public checkBoxShow:boolean;
   @Output() viewDetails = new EventEmitter<any[]>();
   @Output() deleteItem = new EventEmitter<any[]>();
   _selectedColumns: any[];
@@ -19,6 +20,8 @@ export class DynamicTableComponent implements OnInit {
   userName: any;
   selectedItem: any = {};
   loading: boolean = true;
+  checkBoxselected:any;
+  
 
   constructor() {}
 
@@ -49,7 +52,7 @@ export class DynamicTableComponent implements OnInit {
   }
 
   clear(table: Table) {
-    console.log(this.selectedItem);
+    console.log(this.checkBoxselected);
     // table.clear();
   }
 
