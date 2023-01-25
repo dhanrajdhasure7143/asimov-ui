@@ -6,6 +6,8 @@ import { MatTableDataSource } from "@angular/material/table";
 import { MatPaginator } from "@angular/material/paginator";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DataTransferService } from "src/app/pages/services/data-transfer.service";
+import { TabView } from "primeng/tabview";
+import { LoaderService } from "src/app/services/loader/loader.service";
 
 @Component({
   selector: "app-project-task-list",
@@ -13,13 +15,14 @@ import { DataTransferService } from "src/app/pages/services/data-transfer.servic
   styleUrls: ["./project-task-list.component.css"],
 })
 export class ProjectTaskListComponent implements OnInit {
-  tasks_list: any;
-  all_tasks_list: any;
+  tasks_list: any[]=[];
+  all_tasks_list: any[]=[];
   project_id: any;
   columns_list: any[] = [];
   representatives: any[] = [];
   users_data: any = [];
-
+  project_details:any;
+  projectName:any;
   _tabsList: any = [
     { tabName: "All", count: "0", img_src: "all-tasks.svg" },
     { tabName: "New", count: "0", img_src: "inprogress-tasks.svg" },
@@ -31,8 +34,9 @@ export class ProjectTaskListComponent implements OnInit {
   constructor(
     private rest_api: RestApiService,
     private route: ActivatedRoute,
-    private Router: Router,
-    private dataTransfer: DataTransferService
+    private router: Router,
+    private dataTransfer: DataTransferService,
+    private loader : LoaderService
   ) {
     this.route.queryParams.subscribe((data) => {
       this.project_id = data.id;
@@ -40,7 +44,9 @@ export class ProjectTaskListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loader.show();
     this.getUsersList();
+    this.getProjectDetails();
   }
 
   getUsersList() {
@@ -63,7 +69,7 @@ export class ProjectTaskListComponent implements OnInit {
   }
 
   getTasksList() {
-    this.rest_api.gettaskandComments(this.project_id).subscribe((data) => {
+    this.rest_api.gettaskandComments(this.project_id).subscribe((data:any) => {
       this.all_tasks_list = data;
       console.log("tasks Data", data);
       this.all_tasks_list.map((item) => {
@@ -87,7 +93,7 @@ export class ProjectTaskListComponent implements OnInit {
         }
       });
     });
-
+    this.loader.hide();
     this.columns_list = [
       {
         ColumnName: "taskName",
@@ -155,17 +161,27 @@ export class ProjectTaskListComponent implements OnInit {
       { name: "Low" },
     ];
   }
+  
+ async getProjectDetails(){
+   await this.rest_api.getProjectDetailsById(this.project_id).subscribe( res=>{
+      console.log(res)
+      this.project_details = res
+      this.projectName = this.project_details.projectName
+    })
+  }
 
-  projectDetails() {
-    this.Router.navigate(["listOfProjects"]);
+  backToProjectDetails() {
+    this.router.navigate(["/pages/projects/projectdetails"], {
+      queryParams: { id: this.project_id },
+    });
   }
 
   deleteById(event) {}
 
   viewDetails(event) {}
 
-  onTabChanged(event, tab) {
-    console.log(event, tab);
+  onTabChanged(event, tabView: TabView) {
+    const tab = tabView.tabs[event.index].header;
     if (tab == "All") {
       this.tasks_list = this.all_tasks_list;
     } else {

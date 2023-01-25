@@ -25,11 +25,11 @@
         </span> -->
     </div>
 
-    <p-tabView>
+    <p-tabView #tabView (onChange)="onTabChanged($event, tabView)">
 
       <p-tabPanel [header]="each.tabName" *ngFor="let each of _tabsList; let i = index" [selected]="i == 0">
         <ng-template pTemplate="header">
-          <div class="status-tabs newstatu" (click)="onTabChanged($event,each.tabName)">
+          <div class="status-tabs newstatu">
             <div class="status-img">
               <!-- <img src="..\assets\images\Projects\total projects.svg" alt=""> -->
               <img src="../assets/images-n/projects/{{each.img_src}}" alt="">

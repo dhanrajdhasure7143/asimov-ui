@@ -8,6 +8,8 @@ import { Router } from "@angular/router";
 import { query } from "@angular/animations";
 import moment from "moment";
 import { APP_CONFIG } from "src/app/app.config";
+import { TabView } from "primeng/tabview";
+import { LoaderService } from "src/app/services/loader/loader.service";
 
 @Component({
   selector: "app-projects-list-screen",
@@ -60,12 +62,13 @@ export class ProjectsListScreenComponent implements OnInit {
   constructor(
     private dt: DataTransferService,
     private api: RestApiService,
-    private spinner: NgxSpinnerService,
+    private spinner: LoaderService,
     private router: Router,
     @Inject(APP_CONFIG) private config
   ) {}
 
   ngOnInit() {
+    this.spinner.show();
     localStorage.setItem("project_id", null);
     localStorage.setItem("bot_id", null);
     this.api.getCustomUserRole(2).subscribe((role) => {
@@ -95,7 +98,6 @@ export class ProjectsListScreenComponent implements OnInit {
   }
 
   getallProjects(roles, name, email) {
-    this.spinner.show();
     this.api.getAllProjects(roles, name, email).subscribe((res) => {
       let response: any = res;
       this.projectsresponse = response;
@@ -125,7 +127,7 @@ export class ProjectsListScreenComponent implements OnInit {
             process: this.getProcessNames(data.process),
             owner: data.owner,
             status: data.status == null ? "New" : data.status,
-            createdAt: moment(data.startDate).format("lll"),
+            createdAt: moment(data.createdTimestamp).format("lll"),
             createdBy: data.createdBy,
             lastModifiedBy: data.lastModifiedBy,
             representative: {
@@ -164,9 +166,9 @@ export class ProjectsListScreenComponent implements OnInit {
             process: this.getProcessNames(data.process),
             owner: data.owner,
             status: data.status == null ? "New" : data.status,
-            createdAt: moment(data.startDate).format("lll"),
+            createdAt: moment(data.createdTimestamp).format("lll"),
             createdBy: data.createdBy,
-            lastModifiedBy: data.lastModifiedBy,
+            lastModifiedBy: data.lastModifiedBy?data.lastModifiedBy : data.createdBy,
             representative: {
               name: data.type == null ? "Project" : data.type,
             },
@@ -179,37 +181,37 @@ export class ProjectsListScreenComponent implements OnInit {
         }),
       ];
       this.spinner.hide();
-      this.count.New = this.all_projectslist.filter(
-        (item) => item.status == "New"
-      ).length;
-      this.count.Inprogress = this.all_projectslist.filter(
-        (item) => item.status == "In Progress"
-      ).length;
-      this.count.Pipeline = this.all_projectslist.filter(
-        (item) => item.status == "Pipeline"
-      ).length;
-      this.count.OnHold = this.all_projectslist.filter(
-        (item) => item.status == "On Hold"
-      ).length;
-      this.count.Rejected = this.all_projectslist.filter(
-        (item) => item.status == "Rejected"
-      ).length;
-      this.count.Inreview = this.all_projectslist.filter(
-        (item) => item.status == "In Review"
-      ).length;
-      this.count.Approved = this.all_projectslist.filter(
-        (item) => item.status == "Approved"
-      ).length;
-      this.count.Closed = this.all_projectslist.filter(
-        (item) => item.status == "Closed"
-      ).length;
-      this.count.Deployed = this.all_projectslist.filter(
-        (item) => item.status == "Deployed"
-      ).length;
+      // this.count.New = this.all_projectslist.filter(
+      //   (item) => item.status == "New"
+      // ).length;
+      // this.count.Inprogress = this.all_projectslist.filter(
+      //   (item) => item.status == "In Progress"
+      // ).length;
+      // this.count.Pipeline = this.all_projectslist.filter(
+      //   (item) => item.status == "Pipeline"
+      // ).length;
+      // this.count.OnHold = this.all_projectslist.filter(
+      //   (item) => item.status == "On Hold"
+      // ).length;
+      // this.count.Rejected = this.all_projectslist.filter(
+      //   (item) => item.status == "Rejected"
+      // ).length;
+      // this.count.Inreview = this.all_projectslist.filter(
+      //   (item) => item.status == "In Review"
+      // ).length;
+      // this.count.Approved = this.all_projectslist.filter(
+      //   (item) => item.status == "Approved"
+      // ).length;
+      // this.count.Closed = this.all_projectslist.filter(
+      //   (item) => item.status == "Closed"
+      // ).length;
+      // this.count.Deployed = this.all_projectslist.filter(
+      //   (item) => item.status == "Deployed"
+      // ).length;
       this.projects_list = this.all_projectslist;
-      setTimeout(() => {
-        this.selected_tab = 0;
-      }, 100);
+      this.all_projectslist.sort(function (a, b) {
+        return b.createdDate - a.createdDate;
+      });
 
       this._tabsList.forEach((element) => {
         if (element.tabName == "All") {
@@ -221,6 +223,7 @@ export class ProjectsListScreenComponent implements OnInit {
         }
       });
     });
+    
 
     this.columns_list = [
       {
@@ -312,7 +315,6 @@ export class ProjectsListScreenComponent implements OnInit {
     ];
 
     this.representatives = [{ name: "Project" }, { name: "Program" }];
-
     this.statuses = [
       { name: "Project", value: "Project" },
       { name: "Program", value: "Program" },
@@ -380,8 +382,8 @@ export class ProjectsListScreenComponent implements OnInit {
     return processName == undefined ? processId : processName.processName;
   }
 
-  onTabChanged(event, tab) {
-    // this.selected_tab = event.index
+  onTabChanged(event, tabView: TabView) {
+    const tab = tabView.tabs[event.index].header;
     if (tab == "All") {
       this.projects_list = this.all_projectslist;
     } else {
@@ -466,4 +468,9 @@ export class ProjectsListScreenComponent implements OnInit {
       else return value;
     }
   }
+
+  tabViewChange(event, tabView: TabView) {
+    const headerValue = tabView.tabs[event.index].header;
+    console.log(headerValue)
+   }
 }
