@@ -46,15 +46,15 @@
 
 .mat-nav-list {
   a {
-    font-weight: 300;
+    // font-weight: 300;
   }
 }
 
 .ep-nav-font {
   a {
 
-    font-size: 20px !important;
-    font-weight: 400 !important;
+    // font-size: 20px !important;
+    // font-weight: 400 !important;
 
   }
 }
@@ -108,8 +108,8 @@
 }
 
 .active {
-  background-color: #ffffff !important;
-  color: #072f41;
+  // background-color: #ffffff !important;
+  // color: #072f41;
 
   .side-icon {
     color: white !important;
@@ -258,6 +258,7 @@ label.epsoft-label sup {
   width: 100%;
   padding: 0;
   position: relative;
+  background: transparent;
 }
 
 .submenus.expanded {

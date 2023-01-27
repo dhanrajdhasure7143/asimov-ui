@@ -16,7 +16,8 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 
   ::ng-deep .mat-drawer-side {
        border-right: none !important;
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)  !important;
+      box-shadow: inset 0px 4px 8px rgb(0 0 0 / 12%);
+      background-color: #fbfbfb;
   }
 
   ::ng-deep .mat-drawer {
@@ -33,11 +34,11 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     overflow: hidden;
   }
   .main{
-    height: calc(100% - 52px);
+    height: calc(100% - 60px);
     background-color: #d9dfe4 !important;
     z-index: 1;
     position: relative;
-    top: 52px;
+    top: 60px;
   }
 
   .eiap-main{

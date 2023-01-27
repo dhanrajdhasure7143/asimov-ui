@@ -1,5 +1,5 @@
 <div class="maincontent">
-    <div class="main-content">
+    <div class="h-100">
         <div class="row main-content-head">
             <div class="col-md-4">
                 <h3>
@@ -27,28 +27,34 @@
                 </button>
             </div>
         </div>
-<div id="tabs_screen">
-    <p-tabView #tabView (onChange)="onTabChanged($event, tabView)">
-      <p-tabPanel [header]="each.tabName" *ngFor="let each of _tabsList; let i = index" [selected]="i == 0">
-        <ng-template pTemplate="header">
-          <div class="status-tabs newstatu">
-            <div class="status-img">
-              <img src="../assets/images-n/projects/{{each.img_src}}" alt="">
+        <div class="main-content-body tablist-cont">
+          <div class="h-100">
+
+            <div id="tabs_screen">
+              <p-tabView #tabView (onChange)="onTabChanged($event, tabView)">
+                <p-tabPanel [header]="each.tabName" *ngFor="let each of _tabsList; let i = index" [selected]="i == 0">
+                  <ng-template pTemplate="header">
+                    <div class="status-tabs newstatu">
+                      <div class="status-img">
+                        <img src="../assets/images-n/projects/{{each.img_src}}" alt="">
+                      </div>
+                      <div class="status-data">
+                        <span class="tab-count">{{each.count}}</span>
+                        <span class="tab-text">{{each.tabName}}</span>
+                      </div>
+                    </div>
+                  </ng-template>
+                </p-tabPanel>
+                <div class="">
+                  <app-dynamic-table [representatives]="representatives" [columns_list]="columns_list"
+                    [table_data]="projects_list" [userRoles]="userRoles" (viewDetails)="viewDetails($event)"
+                    (deleteItem)="deleteById($event)" [screenTable]="'projectList'"></app-dynamic-table>
+                </div>
+              </p-tabView>
             </div>
-            <div class="status-data">
-              <span class="tab-count">{{each.count}}</span>
-              <span class="tab-text">{{each.tabName}}</span>
-            </div>
+
           </div>
-        </ng-template>
-      </p-tabPanel>
-      <div class="">
-        <app-dynamic-table [representatives]="representatives" [columns_list]="columns_list"
-          [table_data]="projects_list" [userRoles]="userRoles" (viewDetails)="viewDetails($event)"
-          (deleteItem)="deleteById($event)" [screenTable]="'projectList'"></app-dynamic-table>
-      </div>
-    </p-tabView>
-  </div>
+        </div>
 
     <!-- <mat-tab-group class="" mat-stretch-tabs [selectedIndex]="selected_tab" (selectedTabChange)="onTabChanged($event)">
       <div *ngFor="let each of _tabsList">

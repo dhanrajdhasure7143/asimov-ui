@@ -1,55 +1,5 @@
-.maincont {
-    width: calc(100% - 62px);
-    height: calc(100vh - 60px);
-    top: 60px;
-    left: 62px;
-    position: absolute;
-    z-index: 0;
-    background: #f9f9f9;
-    /* box-shadow: 0px 0px 8px 0px #d1d1d1; */
-}
-.contentarea {
-    height: 100%;
-    padding: 16px;
-    overflow: auto;
-    position: relative;
-}
-.maincontent {
-    height: 100%;
-    width: 100%;
-}
-
-.main-content {
-    height: 100%;
-}
-.main-content h3 {
-  font-weight: 400;
-  line-height: 30px;
-  display: flex;
-  align-items: center;
-  height: 100%;
-  font-size: 16px;
-  margin:0px;
-}
 span.sub_title_text {
     font-weight: 600;
-}
-
-.main-content-head {
-    align-items: center;
-    display: flex;
-    border-radius: 4px 4px 0px 0px;
-}
-.main-content-head button span {
-    margin-left: 5px;
-    font-size: 14px;
-}
-.main-content-body {
-    height: calc(100% - 40px);
-    overflow: auto;
-    position: relative;
-    padding: 10px 15px;
-    border-radius: 0px 0px 4px 4px;
 }
 
 label#popup_title {
