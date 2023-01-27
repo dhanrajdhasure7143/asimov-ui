@@ -10,10 +10,11 @@
       </button>
     </span>
     <span class="headerlogo">
-      <img src="assets/images/EZFlow_Logo.svg" class="header-logo" alt="EZFlow Logo">
+      <!-- <img src="assets/images/EZFlow_Logo.svg" class="header-logo" alt="EZFlow Logo"> -->
+      <img src="assets/images-n/common/headerimg/EZFlow-White-logo.svg" alt="EZFlow-Logo" />
     </span>
   </div>
-  <span class="txt-wh bread-crumb">
+  <!-- <span class="txt-wh bread-crumb">
     <span *ngIf="(parent_link && parent_link.length != 0)||(child_link && child_link.length != 0)"
       routerLink="/pages/home" (click)="selectedIndex=pages.length"></span>
     <span *ngIf="(parent_link && parent_link.length != 0)||(child_link && child_link.length != 0)"
@@ -22,7 +23,7 @@
       (click)="removenodes()" id="parent">&nbsp;|&nbsp;<u>{{parent_link.title}}</u></span>
     <span *ngIf="child_link && child_link.length != 0" [routerLink]="child_link.route" id="child">&nbsp;<i
         class="fa fa-arrow-right"></i>&nbsp;{{child_link.title}}</span>
-  </span>
+  </span> -->
   <span class="example-spacer"></span>
   <!-- <button mat-icon-button class="txt-wh" aria-label="Example icon-button with heart icon">
     <img src="../../../assets/images/search.svg">
@@ -39,11 +40,11 @@
       </div>
     </button>
   </div> -->
-  <app-header-dropdown-overlay [overlay_notifications_dt]="overlay_notifications_model"
+  <!-- <app-header-dropdown-overlay [overlay_notifications_dt]="overlay_notifications_model"
     [overlay_acc_dt]="overlay_acc_model" [overlay_user_manage_dt]="overlay_user_manage_model"
     [overlay_config_alert_dt]="overlay_config_alert_model" [overlay_invite_user_dt]="overlay_invite_user_model">
-  </app-header-dropdown-overlay>
-  <mat-menu #demo="matMenu">
+  </app-header-dropdown-overlay> -->
+  <!-- <mat-menu #demo="matMenu">
     <button class="demodp">
       <div class="levelsubblock">
         <div class="levelsubblock-img">
@@ -77,7 +78,7 @@
         </div>
       </div>
     </button>
-  </mat-menu>
+  </mat-menu> -->
   <!-- <span class="txt-wh header-seperator">|</span> -->
   <div class="space">
     <div class="form-fields">
@@ -105,7 +106,7 @@
       <span><img class="res-circle-img" src="../../../../assets/images/pro1.png" /></span>
     </div>
   </span>
-  <span class="text-white">
+  <span class="text-wh">
     <button mat-icon-button [matMenuTriggerFor]="menu" class="txt-wh" style="vertical-align: middle;"
       aria-label="Example icon-button with a menu">
       <mat-icon class="menu-button" style="opacity: 0.5;">&#xe5cf;
@@ -114,8 +115,7 @@
   </span>
   <mat-menu #menu="matMenu">
     <button class="ep-pad" (click)='myAccount()'><i class="far fa-user text-primary hd_icon"></i> My Account</button>
-    <button class="ep-pad" (click)='changepassword()'><i class="fas fa-lock text-primary hd_icon"></i> Change
-      password</button>
+    <button class="ep-pad" (click)='changepassword()'><i class="fas fa-lock text-primary hd_icon"></i> Change password</button>
     <button class="ep-pad" (click)='logout()'><i class="fas fa-sign-out-alt  text-primary hd_icon"></i>Signout</button>
   </mat-menu>
 </mat-toolbar>
