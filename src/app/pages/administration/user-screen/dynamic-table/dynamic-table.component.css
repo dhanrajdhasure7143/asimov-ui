@@ -1,0 +1,23 @@
+.table_responsive.graph_table {
+    /* height: 420px !important; */
+    height: calc(100% - 40px);
+    overflow: auto;
+    width: 100%;
+  }
+  
+  .department-body {
+    padding: 10px 10px 0px 10px;
+    height: calc(100% - 40px);
+    overflow: auto;
+  }
+  .mat-header-cell {
+    background: #f0fbfd;
+    font-weight: 500;
+    font-size: 15px;
+    color: black;
+  }
+  
+  .editButton{
+    border : none !important;
+  }
+ 

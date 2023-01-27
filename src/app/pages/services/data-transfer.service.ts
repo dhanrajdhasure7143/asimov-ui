@@ -122,5 +122,12 @@ export class DataTransferService {
   tenantBasedUsersList(value:any){
     this.usersList.next(value);
   }
+//dynamic screen
+private screenlist:BehaviorSubject<any> = new BehaviorSubject<any>({});
 
+screelistObservable = this.screenlist.asObservable();
+
+setScreenList(module:any){
+  this.screenlist.next(module);
+}
 }

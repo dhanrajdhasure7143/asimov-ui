@@ -1487,4 +1487,108 @@ getprocessnamesByLatestVersion()
   return this.http.get("/rpa-service/latest-version/process-name");
 }
 
+//dynamic screen apis////
+  postscreenData(data: any) {
+    return this.http.post("/platform-service/screenGenerator/savescreentable", data);
+  }
+
+  getListOfTables() {
+    return this.http.get("/platform-service/screenGenerator/tables");
+  }
+
+  getScreenList() {
+    return this.http.get("/platform-service/screenGenerator/getScreenColumns");
+  }
+
+  getUserScreenData(tableName: any, screenId: any) {
+    return this.http.get('/platform-service/screenGenerator/getdatabytable/' + tableName + '/' + screenId)
+  }
+
+  postUserscreenData(tablename: any, data: any) {
+    return this.http.post(`/platform-service/screenGenerator/savetabledata/${tablename}`, data, { responseType: 'text' });
+  }
+
+  getTabledataAdmin(tablename: any) {
+    return this.http.get(`/platform-service/screenGenerator/gettablefields/${tablename}`);
+  }
+
+  getUserScreenList() {
+    return this.http.get("/platform-service/screenGenerator/get-list-of-screennames")
+  }
+
+  deleteRecord(table_name: any, column_name: any, row_id: any) {
+    return this.http.delete(`/platform-service/screenGenerator/delete-data-in-table/${table_name}/${column_name}/${row_id}`)
+  }
+
+  getFormDetails(tableName: any) {
+    return this.http.get(`/platform-service/screenGenerator/get-list-of-columns/${tableName}`)
+  }
+
+  updateFormDetails(tablename: any, fieldname: any, rowId: any, data: any) {
+    return this.http.put(`/platform-service/screenGenerator/update_table_row/${tablename}/${fieldname}/${rowId}`, data, { responseType: 'text' });
+  }
+
+  updateScreenData(data: any, id: any) {
+    return this.http.put('/platform-service/screenGenerator/update-screen-tabledata/' + id, data)
+  }
+
+  saveScreenData(data: any,) {
+    return this.http.post('/platform-service/screenGenerator/save/screen-elementTabledata', data)
+  }
+
+  deleteScreen(Screen_ID: any) {
+    return this.http.delete(`/platform-service/screenGenerator/delete-data-in-screen-and-element-table/${Screen_ID}`);
+  }
+
+  updateColumn(elementId: any, screenId: any, data: any) {
+    return this.http.put(`/platform-service/screenGenerator/update-elementTable-row/${elementId}/${screenId}`, data);
+  }
+
+  getKpi() {
+    return this.http.get("/platform-service/screenGenerator/get-admin-kpi-details")
+  }
+
+  getElementTable(screenId: any) {
+    return this.http.get(`/platform-service/screenGenerator/getElement-FieldsData/${screenId}`)
+  }
+
+  getChartType() {
+    return this.http.get('/platform-service/screenGenerator/get-chart-typedata')
+  }
+
+  getPortalName(screenType: any) {
+    return this.http.get(`/platform-service/screenGenerator/getscreens/${screenType}`)
+  }
+
+  getConnectorsTable(connectionName: any) {
+    return this.http.get(`/platform-service/screenGenerator/getConnectionName/${connectionName}`)
+  }
+
+  getDashBoardScreens() {
+    return this.http.get('/platform-service/screenGenerator/get-dashboard-data')
+  }
+
+  createKPIserscreenData(dashboard_id: any, data: any) {
+    return this.http.post(`/platform-service/screenGenerator/add-kpidata/${dashboard_id}`, data, { responseType: 'text' });
+  }
+
+  getSelectedDashBoardData(dashboard_id: any) {
+    return this.http.get(`/platform-service/screenGenerator/kpi/${dashboard_id}`)
+  }
+
+  getMethodType() {
+    return this.http.get(`/platform-service/screenGenerator/get-method-type`)
+  }
+
+  getBodyType() {
+    return this.http.get(`/platform-service/screenGenerator/get-body-type`)
+  }
+
+  getConnectionNames() {
+    return this.http.get(`/platform-service/screenGenerator/getConnectionName`);
+  }
+
+  getconnectionActiontypes(connectionName: any) {
+    return this.http.get(`/platform-service/screenGenerator/getConnectionName/${connectionName}`)
+  }
 }

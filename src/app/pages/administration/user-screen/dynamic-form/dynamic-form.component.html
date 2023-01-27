@@ -1,0 +1,135 @@
+<div class="container-fluid">
+    <div *ngIf="!isEditForm">
+        <form [formGroup]="generatedForm" class="row">
+            <div class="col-md-6 px-4 py-2" *ngFor="let field of inputFieldData">
+                <div *ngIf="field.widget_type == 'textbox'|| field.widget_type == null || field.widget_type==''">
+                    <label class="over-lay">{{field.DisplayName | removeUnderscore | titlecase}} <span class="star"
+                            *ngIf="field.mandatory">*</span> </label>
+                    <input type="text" [formControlName]="field.ColumnName" class="form-control"
+                        [required]="field.mandatory" [placeholder]="field.placeholder" [maxlength]="field.length">
+                </div>
+                <div *ngIf="field.widget_type=='select' && !(field.ColumnName=='PortalName')">
+                    <label class="over-lay">{{field.DisplayName | removeUnderscore | titlecase}} <span class="star" *ngIf="field.mandatory">*</span>
+                    </label>
+                    <select class="form-select" [formControlName]="field.ColumnName" [required]="field.mandatory">
+                        <option value="" hidden disabled>Select Chart Type</option>
+                        <option value="null" hidden disabled>Select Option</option>
+                        <option value="undefined" hidden disabled>Select Option</option>
+                        <option *ngFor="let type of chartType">{{type.Type}}</option>
+                        <!-- <option value="column">Column</option>
+                        <option value="Bar">Bar</option>
+                        <option value="line">Line</option>
+                        <option value="Area">Area</option>
+                        <option value="Pie">Pie</option>
+                        <option value="timeseries">Timeseries</option>
+                        <option value="waterfall">Waterfall</option> -->
+                    </select>
+                </div>
+
+                <div *ngIf="field.widget_type=='select' && field.ColumnName=='PortalName'">
+                    <label class="over-lay">{{field.DisplayName | removeUnderscore | titlecase}} <span class="star" *ngIf="field.mandatory">*</span>
+                    </label>
+                    <select class="form-select" [formControlName]="field.ColumnName" [required]="field.mandatory">
+                        <option value="" hidden disabled>Select Screen Name</option>
+                        <option *ngFor="let portal of portalnames"> {{portal.screen_Name}}</option>
+                       
+                    </select>
+                </div>
+                <div *ngIf="field.widget_type =='checkbox'">
+                    <input type="checkbox" [formControlName]="field.ColumnName" [required]="field.mandatory">
+                    <label class="over-lay">{{field.DisplayName | removeUnderscore | titlecase}} <span class="star">*</span> </label>
+                </div>
+                <div *ngIf="field.widget_type =='radio'">
+                    <input type="radio" [formControlName]="field.ColumnName" [required]="field.mandatory">
+                    <label class="over-lay">{{field.DisplayName | removeUnderscore | titlecase}} <span class="star">*</span> </label>
+                </div>
+                <!-- <div *ngIf="field.defaultType=='Number'">
+                <label class="over-lay">{{field.DisplayName}} <span class="star">*</span> </label>
+                <input type="number" [formControlName]="field.ColumnName" class="form-control" [placeholder]="field.tooltip">
+            
+            </div>
+            <div *ngIf="field.defaultType=='Date'">
+                <label class="over-lay">{{field.DisplayName}} <span class="star">*</span> </label>
+                <input type="date" [formControlName]="field.ColumnName" class="form-control" [placeholder]="field.tooltip">
+            
+            </div>
+            <div *ngIf="field.defaultType=='Password'">
+                <label class="over-lay">{{field.DisplayName}} <span class="star">*</span> </label>
+                <input type="password" [formControlName]="field.ColumnName" class="form-control" [placeholder]="field.tooltip">
+            
+            </div> -->
+
+            </div>
+        </form><br>
+        <div class="w-100 py-2 px-3">
+            <button (click)="emitFormValue()" *ngIf="details==undefined" [disabled]="generatedForm.invalid"
+                class="btn btn-primary">Save</button> &nbsp;
+            <button (click)="emitFormValue()" *ngIf="details!=undefined" [disabled]="generatedForm.invalid"
+                class="btn btn-primary">Update</button> &nbsp;
+            <button (click)="resetForm()" class="btn btn-primary">Reset</button>
+        </div>
+    </div>
+
+    <div *ngIf="isEditForm">
+        <form [formGroup]="generatedForm" class="row">
+            <div class="col-md-6 px-4 py-2" *ngFor="let field of inputFieldData">
+                <div *ngIf="field.widget_type == 'textbox'|| field.widget_type == null || field.widget_type==''">
+                    <label class="over-lay">{{field.DisplayName | removeUnderscore | titlecase}} <span class="star"
+                            *ngIf="field.mandatory">*</span> </label>
+                    <input type="text" [formControlName]="field.ColumnName"
+                        [attr.disabled]="field.read_only ? '' : null && details!=undefined" class="form-control"
+                        [required]="field.mandatory" [placeholder]="field.placeholder" [maxlength]="field.length">
+                </div>
+                <div *ngIf="field.widget_type=='select'">
+                    <label class="over-lay">{{field.DisplayName | removeUnderscore | titlecase}} <span class="star" *ngIf="field.mandatory">*</span>
+                    </label>
+                    <select class="form-select" [formControlName]="field.ColumnName"
+                        [attr.disabled]="field.read_only ? '' : null" [required]="field.mandatory">
+                        <option value="" hidden disabled>Select Chart Type</option>
+                        <option value="Donut">Donut</option>
+                        <option value="column">Column</option>
+                        <option value="Bar">Bar</option>
+                        <option value="line">Line</option>
+                        <option value="Area">Area</option>
+                        <option value="Pie">Pie</option>
+                        <option value="timeseries">Timeseries</option>
+                        <option value="waterfall">Waterfall</option>
+                    </select>
+                </div>
+                <div *ngIf="field.widget_type =='checkbox'">
+                    <input type="checkbox" [formControlName]="field.ColumnName"
+                        [attr.disabled]="field.read_only ? '' : null" [required]="field.mandatory">
+                    <label class="over-lay">{{field.DisplayName | removeUnderscore | titlecase}} <span class="star">*</span> </label>
+                </div>
+                <div *ngIf="field.widget_type =='radio'">
+                    <input type="radio" [formControlName]="field.ColumnName"
+                        [attr.disabled]="field.read_only ? '' : null" [required]="field.mandatory">
+                    <label class="over-lay">{{field.DisplayName | removeUnderscore | titlecase}}<span class="star">*</span> </label>
+                </div>
+                <!-- <div *ngIf="field.defaultType=='Number'">
+                <label class="over-lay">{{field.DisplayName}} <span class="star">*</span> </label>
+                <input type="number" [formControlName]="field.ColumnName" class="form-control" [placeholder]="field.tooltip">
+            
+            </div>
+            <div *ngIf="field.defaultType=='Date'">
+                <label class="over-lay">{{field.DisplayName}} <span class="star">*</span> </label>
+                <input type="date" [formControlName]="field.ColumnName" class="form-control" [placeholder]="field.tooltip">
+            
+            </div>
+            <div *ngIf="field.defaultType=='Password'">
+                <label class="over-lay">{{field.DisplayName}} <span class="star">*</span> </label>
+                <input type="password" [formControlName]="field.ColumnName" class="form-control" [placeholder]="field.tooltip">
+            
+            </div> -->
+
+            </div>
+        </form>
+        <div class="w-100 py-2 px-3">
+            <button (click)="emitFormValue()" *ngIf="details==undefined" [disabled]="generatedForm.invalid"
+                class="btn btn-primary">Save</button> &nbsp;
+            <button (click)="emitFormValue()" *ngIf="details!=undefined" [disabled]="generatedForm.invalid"
+                class="btn btn-primary">Update</button> &nbsp;
+            <button (click)="resetForm()" class="btn btn-primary">Reset</button>
+        </div>
+    </div>
+</div>
