@@ -25,8 +25,12 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <app-dynamic-table 
+                                    [table_data]="tableData"  [screenTable]="'common'" [columns_list]="columns_list" 
+                                    [selectedScreen]="selectedScreen" (onEdit)="editForm($event)"
+                                    (deleteItem)="deleteRecord($event)"></app-dynamic-table>
                                    
-                                        <app-dynamic-table (onEdit)="editForm($event)" [selectedScreen]="selectedScreen"  (onDelete)="deleteRecord($event)" [tableDataInput]="tableData"></app-dynamic-table>
+                                        <!-- <app-dynamic-table (onEdit)="editForm($event)" [selectedScreen]="selectedScreen"  (onDelete)="deleteRecord($event)" [tableDataInput]="tableData"></app-dynamic-table> -->
                                   
                                 </div>
                             </div>
@@ -68,11 +72,5 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
-
-<div class="spinoverlay" *ngIf="loading">
-    <div class="spincenter">
-        <img  src='../../../../assets/images/EZFlow_Loader.gif'  class="ezflow-loader" alt="EZFlow_Loader" />
     </div>
 </div>

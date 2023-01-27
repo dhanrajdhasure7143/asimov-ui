@@ -14,6 +14,8 @@ export class DynamicTableComponent implements OnInit {
   @Input("userRoles") public userRoles: any[] = [];
   @Output() viewDetails = new EventEmitter<any[]>();
   @Output() deleteItem = new EventEmitter<any[]>();
+  @Output("onEdit") editEvent:any= new EventEmitter<any>();
+  @Input()selectedScreen:any;
   _selectedColumns: any[];
   customers: any = [];
   userName: any;
@@ -63,4 +65,9 @@ export class DynamicTableComponent implements OnInit {
         return 'green';
     }
   }
+  edit(rowData:any)
+  {
+    this.editEvent.emit(rowData);
+  }
+  
 }

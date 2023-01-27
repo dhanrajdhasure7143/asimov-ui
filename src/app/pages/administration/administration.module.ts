@@ -42,10 +42,10 @@ import { InviteUserComponent } from './user-management/users/invite-user/invite-
 import { ModifyUserComponent } from './user-management/users/modify-user/modify-user.component';
 import { UserScreenComponent } from './user-screen/user-screen.component';
 import { DynamicFormComponent } from './user-screen/dynamic-form/dynamic-form.component';
-import { DynamicTableComponent } from './user-screen/dynamic-table/dynamic-table.component';
 import { AdminAddScreenComponent } from './admin-add-screen/admin-add-screen.component';
 import { AdminScreenListComponent } from './admin-screen-list/admin-screen-list.component';
 import { RemoveUnderscorePipe } from 'src/app/services/remove-underscore.pipe';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 const materialModules: any[] = [
     
@@ -54,7 +54,7 @@ const materialModules: any[] = [
 
 @NgModule({
   declarations: [AdministrationComponent, MyAccountComponent,CompareValidatorDirective, DepartmentsComponent, CreateDepartmentComponent, EditDepartmentComponent, UserManagementComponent, ChangePasswordComponent, UserPipePipe, UsersComponent, InviteUserComponent, ModifyUserComponent,
-    UserScreenComponent,DynamicFormComponent,DynamicTableComponent,
+    UserScreenComponent,DynamicFormComponent,
     AdminAddScreenComponent,AdminScreenListComponent,RemoveUnderscorePipe],
   imports: [
     Ng2TelInputModule,
@@ -75,7 +75,8 @@ const materialModules: any[] = [
     MatFormFieldModule,
     MatMenuModule,MatButtonModule,NgxSpinnerModule,NgxPaginationModule,
     ModalModule.forRoot(),
-    MatProgressBarModule,NgSelectModule,Ng5SliderModule
+    MatProgressBarModule,NgSelectModule,Ng5SliderModule,
+    SharedModule
   ],
   providers:[
     BsModalRef, 

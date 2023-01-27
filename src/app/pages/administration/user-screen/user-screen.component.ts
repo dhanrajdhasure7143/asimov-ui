@@ -1,62 +1,57 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
+import { LoaderService } from "src/app/services/loader/loader.service";
 
-import Swal from 'sweetalert2'
-import { DataTransferService } from '../../services/data-transfer.service';
-import { RestApiService } from '../../services/rest-api.service';
-
+import Swal from "sweetalert2";
+import { DataTransferService } from "../../services/data-transfer.service";
+import { RestApiService } from "../../services/rest-api.service";
 
 @Component({
-  selector: 'app-user-screen',
-  templateUrl: './user-screen.component.html',
-  styleUrls: ['./user-screen.component.css'],
+  selector: "app-user-screen",
+  templateUrl: "./user-screen.component.html",
+  styleUrls: ["./user-screen.component.css"],
 })
 export class UserScreenComponent implements OnInit {
   tableData: any = [];
-  constructor(
-    private rest: RestApiService,
-    private datatransfer: DataTransferService,
-    private route: ActivatedRoute
-  ) {}
   screensList: any;
   primaryKey: any;
   updateDetails: any;
   formDetails: any = [];
-  loading: boolean = false;
-
+  columns_list: any = [];
   selectedScreen: any = {};
   displayFlag: string;
-  dash_board_list:any[]=[];
+  dash_board_list: any[] = [];
 
-
+  constructor(
+    private rest: RestApiService,
+    private datatransfer: DataTransferService,
+    private route: ActivatedRoute,
+    private spinner: LoaderService
+  ) {}
   ngOnInit(): void {
     // this.selectedScreen=this.screensList[0];
     this.route.queryParams.subscribe((res: any) => {
-      localStorage.setItem('screenId', res.Screen_ID);
+      localStorage.setItem("screenId", res.Screen_ID);
       this.getUserScreen_List(res.Screen_ID);
     });
     this.getDashboardScreens();
-    //  this.getUserScreenList();
-    //   this.displayTable();
   }
 
-  // onClickScreen(screen:any){
-  //   this.loading=true;
-  //   this.selectedScreen.emit(screen)
-  //   localStorage.setItem("screenId",screen.Screen_ID)
-  //   this.getFormFields(screen.Screen_ID);
-  //   this.getUserScreenData();
-  //   this.displayTable();
-  // }
-
   getUserScreen_List(screen_id: any) {
-    this.loading = true;
+    this.spinner.show();
     this.rest.getUserScreenList().subscribe((data: any) => {
       this.screensList = data;
       this.screensList.forEach((element: any) => {
         if (element.Screen_ID == screen_id) {
           this.selectedScreen = element;
-          console.log('selected Screen', this.selectedScreen);
+          console.log("selected Screen", this.selectedScreen);
           this.getUserScreenData();
         }
       });
@@ -72,7 +67,16 @@ export class UserScreenComponent implements OnInit {
       this.formDetails = res_data.filter((data: any) => {
         return data.ShowForm == true;
       });
-      // this.formDetails=response;
+      this.columns_list = res_data;
+      let obj = {
+        ColumnName: "action",
+        DisplayName: "Action",
+        ShowGrid: true,
+        ShowFilter: false,
+        sort: false,
+        multi: false,
+      };
+      this.columns_list.push(obj);
     });
   }
 
@@ -91,7 +95,7 @@ export class UserScreenComponent implements OnInit {
   }
 
   deleteRecord(data: any) {
-    this.loading = true;
+   this.spinner.show();
     this.rest
       .deleteRecord(
         this.selectedScreen.Table_Name,
@@ -100,72 +104,83 @@ export class UserScreenComponent implements OnInit {
       )
       .subscribe(
         (response: any) => {
-          Swal.fire('Success', 'Record deleted successfully', 'success');
+          Swal.fire("Success", "Record deleted successfully", "success");
           this.getUserScreenData();
-          // this.loading = false;
         },
         (err: any) => {
-          Swal.fire('Error', 'Unable to delete record', 'error');
+          Swal.fire("Error", "Unable to delete record", "error");
         }
       );
   }
 
   caputreFormValues(values: any) {
-    if(this.selectedScreen.Table_Name == "KPI"){
-      let selectedDashboardId:any
-      console.log(values)
-      console.log(this.dash_board_list)
-      this.dash_board_list.forEach(e=>{
-        if(e.dashbord_name == values.PortalName)
-        selectedDashboardId=e.dashbord_id
-      })
-    let val: any;
-    let payload = {objects: [values]};
+    if (this.selectedScreen.Table_Name == "KPI") {
+      let selectedDashboardId: any;
+      this.dash_board_list.forEach((e) => {
+        if (e.dashbord_name == values.PortalName)
+          selectedDashboardId = e.dashbord_id;
+      });
+      let val: any;
+      let payload = { objects: [values] };
       if (this.updateDetails == undefined) {
-        this.loading = true;
-        this.rest.createKPIserscreenData(selectedDashboardId,payload)
+      this.spinner.show();
+        this.rest
+          .createKPIserscreenData(selectedDashboardId, payload)
           .subscribe((data) => {
-            Swal.fire('Success', 'Record saved successfully', 'success');
+            Swal.fire("Success", "Record saved successfully", "success");
             this.getUserScreenData();
-            this.loading = false;
+            this.spinner.hide();
             this.displayFlag = DisplayEnum.DISPLAYTABLE;
           });
       } else {
-        this.loading = true;
-        this.rest.updateFormDetails(this.selectedScreen.Table_Name,this.primaryKey,this.updateDetails[this.primaryKey],(val = {objects: [values],}))
+        this.spinner.show();
+        this.rest
+          .updateFormDetails(
+            this.selectedScreen.Table_Name,
+            this.primaryKey,
+            this.updateDetails[this.primaryKey],
+            (val = { objects: [values] })
+          )
           .subscribe((response: any) => {
-            Swal.fire('Success', 'Record updated successfully', 'success');
+            Swal.fire("Success", "Record updated successfully", "success");
             this.getUserScreenData();
-            // this.loading = false;
             this.displayFlag = DisplayEnum.DISPLAYTABLE;
           });
       }
-    }else{
-    let val: any;
-    if (this.updateDetails == undefined) {
-      this.loading = true;
-      this.rest.postUserscreenData(this.selectedScreen.Table_Name,(val = {objects: [values],}))
-        .subscribe((data) => {
-          Swal.fire('Success', 'Record saved successfully', 'success');
-          this.getUserScreenData();
-          // this.loading = false;
-          this.displayFlag = DisplayEnum.DISPLAYTABLE;
-        });
     } else {
-      let payload = {
-        objects: [values],
-      };
-      // values[this.primaryKey]=this.updateDetails[this.primaryKey];
-      this.loading = true;
-      this.rest.updateFormDetails(this.selectedScreen.Table_Name,this.primaryKey,this.updateDetails[this.primaryKey],(val = {objects: [values],}))
-        .subscribe((response: any) => {
-          Swal.fire('Success', 'Record updated successfully', 'success');
-          this.getUserScreenData();
-          // this.loading = false;
-          this.displayFlag = DisplayEnum.DISPLAYTABLE;
-        });
+      let val: any;
+      if (this.updateDetails == undefined) {
+        this.spinner.show();
+        this.rest
+          .postUserscreenData(
+            this.selectedScreen.Table_Name,
+            (val = { objects: [values] })
+          )
+          .subscribe((data) => {
+            Swal.fire("Success", "Record saved successfully", "success");
+            this.getUserScreenData();
+            this.displayFlag = DisplayEnum.DISPLAYTABLE;
+          });
+      } else {
+        let payload = {
+          objects: [values],
+        };
+        // values[this.primaryKey]=this.updateDetails[this.primaryKey];
+        this.spinner.show();
+        this.rest
+          .updateFormDetails(
+            this.selectedScreen.Table_Name,
+            this.primaryKey,
+            this.updateDetails[this.primaryKey],
+            (val = { objects: [values] })
+          )
+          .subscribe((response: any) => {
+            Swal.fire("Success", "Record updated successfully", "success");
+            this.getUserScreenData();
+            this.displayFlag = DisplayEnum.DISPLAYTABLE;
+          });
+      }
     }
-  }
   }
 
   getUserScreenData() {
@@ -180,37 +195,35 @@ export class UserScreenComponent implements OnInit {
           let keys = Object.keys(data[0]);
           this.primaryKey = keys[0];
         } else {
-          this.primaryKey = '';
+          this.primaryKey = "";
         }
         let res_data = data;
         this.tableData = res_data;
-        this.loading = false;
+        this.spinner.hide();
         this.displayTable();
       });
   }
 
   getUserScreenList() {
-    this.loading = true;
+    this.spinner.show();
     this.datatransfer.screelistObservable.subscribe((data: any) => {
       this.selectedScreen = data;
-      localStorage.setItem('screenId', data.Screen_ID);
+      localStorage.setItem("screenId", data.Screen_ID);
       this.getFormFields(data.Screen_ID);
       this.getUserScreenData();
       this.displayTable();
-      //  this.loading = false;
     });
   }
 
-  getDashboardScreens(){
-    this.rest.getDashBoardScreens().subscribe((data:any)=>{
-      this.dash_board_list = data
-      console.log("data",this.dash_board_list)
+  getDashboardScreens() {
+    this.rest.getDashBoardScreens().subscribe((data: any) => {
+      this.dash_board_list = data;
+      console.log("data", this.dash_board_list);
     });
   }
 }
-enum DisplayEnum{
-  DISPLAYTABLE='DisplayTable',
-  EDITFORM='EditForm',
-  CREATEFORM='CreateForm'
+enum DisplayEnum {
+  DISPLAYTABLE = "DisplayTable",
+  EDITFORM = "EditForm",
+  CREATEFORM = "CreateForm",
 }
-
