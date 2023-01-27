@@ -2681,6 +2681,11 @@ div {
   font-size: 14px !important;
   font-weight: 400;
 }
+.row {
+  width: 100%;
+  margin: 0 !important;
+  padding: 0 !important;
+}
 
 /* Scrollbar styles */
 ::-webkit-scrollbar {
