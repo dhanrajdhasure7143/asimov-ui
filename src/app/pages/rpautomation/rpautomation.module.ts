@@ -63,6 +63,7 @@ import { RpaDatabaseFormComponent } from './forms/rpa-database-form/rpa-database
 import { RpaCredentialFormComponent } from './forms/rpa-credential-form/rpa-credential-form.component';
 import { RpaEnvironmentFormComponent } from './forms/rpa-environment-form/rpa-environment-form.component';
 import { SearchRpaPipe } from './rpa-home/Search.pipe';
+import { RpaConnectionManagerComponent } from './rpa-connection-manager/rpa-connection-manager.component';
 
 @NgModule({
   declarations: [
@@ -88,7 +89,8 @@ import { SearchRpaPipe } from './rpa-home/Search.pipe';
     RpaDatabaseFormComponent,
     RpaCredentialFormComponent,
     RpaEnvironmentFormComponent,
-    SearchRpaPipe
+    SearchRpaPipe,
+    RpaConnectionManagerComponent
   ],
   imports: [
     NgxMaterialTimepickerModule,
