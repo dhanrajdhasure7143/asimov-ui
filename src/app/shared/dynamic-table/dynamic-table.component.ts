@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
+import { statSync } from "fs";
 import { Table } from "primeng/table";
 
 @Component({
@@ -53,7 +54,6 @@ export class DynamicTableComponent implements OnInit {
   }
 
   clear(table: Table) {
-    // console.log(this.selectedItem);
     table.clear();
   }
 
