@@ -2843,4 +2843,9 @@ input.p-inputtext {
   color: #232832;
 }
 
+span.taskscount {
+  font-size: 44px !important;
+  margin-right: 5px;
+  font-weight: 400 !important;
+}
 /* NEW STYLES */
