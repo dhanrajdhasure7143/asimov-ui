@@ -69,16 +69,13 @@ export class DynamicTableComponent implements OnInit {
         return 'green';
     }
   }
-<<<<<<< HEAD
   edit(rowData:any)
   {
     this.editEvent.emit(rowData);
   }
   
-=======
 
   selectRow(){
     this.selectedData.emit(this.checkBoxselected)
   }
->>>>>>> Sprint-76
 }
