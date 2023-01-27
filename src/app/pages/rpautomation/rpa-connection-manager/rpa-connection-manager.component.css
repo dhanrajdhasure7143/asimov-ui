@@ -1,0 +1,61 @@
+  .env-btn > button:disabled > img{
+    color:rgb(116, 116, 116) !important;
+    background-color:white!important;
+  }
+  .env-btn > button:disabled{
+    background-color:white;
+  }
+  .env-btn > button > div{
+    color:black !important;
+  }
+
+  .env-btn > button:disabled > div{
+    color:lightgrey !important;
+  }
+
+  .credential-tablegrid table td span{
+  font-size: 13px !important;
+}
+
+.credential-tools {
+  padding: 0px !important;
+  display: flex;
+}
+.credential-btntool {
+  position: relative;
+  padding: 6px;
+  margin: 0px !important;
+}
+.credential-btntool img {
+  width: 16px;
+  height: 16px;
+}
+.tsttooltipbtn:hover span.testtooltip {
+  display: block;
+}
+span.testtooltip {
+  position: absolute;
+  top: 45px;
+  right: 0px;
+  background-color: #001c47;
+  color: #fff;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  padding: 3px 10px;
+  border-radius: 4px;
+  display: none;
+  z-index: 999;
+}
+span.testtooltip:before {
+  content: '';
+  border: 2px solid #001c47;
+  border-width: 0px 0px 2px 2px;
+  position: absolute;
+  padding: 4px;
+  right: 13px;
+  top: -5px;
+  background: #001c47;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}

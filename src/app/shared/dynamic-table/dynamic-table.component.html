@@ -1,6 +1,10 @@
 <div class="" *ngIf="screenTable=='common'">
+<<<<<<< HEAD
     <p-table #dt1 [value]="table_data"  [columns]="selectedColumns" [resizableColumns]="true" responsiveLayout="h-scroll"  dataKey="id"
   >
+=======
+    <p-table #dt1 [value]="table_data" [columns]="selectedColumns" [(selection)]="checkBoxselected" [resizableColumns]="true" responsiveLayout="scroll" dataKey="connectorId">
+>>>>>>> Sprint-76
         <!-- [globalFilterFields]="['representative.name']"> -->
         <ng-template pTemplate="caption">
             <div class="p-d-flex">
@@ -15,6 +19,9 @@
         </ng-template>
         <ng-template pTemplate="header" let-columns>
             <tr>
+                <th style="width: 1rem" *ngIf="checkBoxShow">
+                    <p-tableHeaderCheckbox  (click)="selectRow()"></p-tableHeaderCheckbox>
+                </th>
                 <th *ngFor="let col of columns" pResizableColumn pSortableColumn="{{col.ColumnName}}" [hidden]="!col.ShowGrid">{{col.DisplayName}}
                     <!-- <p-columnFilter *ngIf="col.header == 'Type'" type="text" field="representative.name" display="menu"></p-columnFilter>
                     <p-sortIcon *ngIf="col.header == 'Type'" field="representative.name"></p-sortIcon> -->
@@ -133,6 +140,9 @@
 
         <ng-template pTemplate="body" let-rowData let-columns="columns">
             <tr>
+                <td *ngIf="checkBoxShow">
+                <p-tableCheckbox [value]="rowData"  (click)="selectRow()"></p-tableCheckbox>
+                </td>
                 <td *ngFor="let col of columns" [hidden]="!col.ShowGrid">
                     <!-- <span *ngIf="col.ColumnName != 'action' && col.ColumnName != 'projectName' && col.ColumnName != 'lastModifiedBy'">
                         {{rowData[col.ColumnName]}}
@@ -339,9 +349,9 @@
         <ng-template pTemplate="body" let-rowData let-columns="columns">
             <tr [pSelectableRow]="rowData">
                 <td *ngFor="let col of columns" [hidden]="!col.ShowGrid">
-                    <!-- <span *ngIf="!col.multi && col.ColumnName == 'priority' " [ngStyle]="{'color':getColor(rowData[col.multiOptions[1]])}">{{rowData[col.ColumnName]}}</span> -->
-                    <!-- <span *ngIf="!col.multi && col.ColumnName != 'priority' ">{{rowData[col.ColumnName]}}</span> -->
-                    <span >{{rowData[col.ColumnName]}}</span>
+                    <span *ngIf="!col.multi && col.ColumnName == 'priority' " [ngStyle]="{'color':getColor(rowData[col.ColumnName])}">{{rowData[col.ColumnName]}}</span>
+                    <span *ngIf="!col.multi && col.ColumnName != 'priority' ">{{rowData[col.ColumnName]}}</span>
+                    <!-- <span >{{rowData[col.ColumnName]}}</span> -->
                     <span *ngIf="col.multi">
                         {{rowData[col.multiOptions[0]]}} <br>
                         <span> {{rowData[col.multiOptions[1]]}} </span>
@@ -349,11 +359,19 @@
                     <span *ngIf="col.ColumnName == 'action'" class="taskList-table-actions">
                         <div class="newinntalx" [hidden]="!(rowData.id == selectedItem.id)">
                             <span class="clickable text-dark" (click)="viewDetailsbyId(rowData)">
-                                <img src="./../../../../assets/images-n/projects/Open.svg" alt="Open"><span>Open Workspace</span>
+                                <img src="./../../../../assets/images-n/projects/Open.svg" alt="Open">
                             </span>
-                            <span (click)="deleteRow(rowData)">
+                            <a class="clickable text-dark" (click)="viewDetailsbyId(rowData)" matTooltip="Go To Details">
+                                <img src="../../../../../assets/images/Projects/eye-show.svg" class="default-img">
+                                <img src="../../../../../assets/images/Projects/eye-show-blue.svg" class="hover-img">
+                              </a>
+                              <a (click)="deleteRow(rowData)" matTooltip="Delete Project">
+                             <img src="../../../../../assets/images/Projects/delete-black.svg" class="default-img">
+                             <img src="../../../../../assets/images/Projects/delete-red.svg" class="hover-img">
+                           </a>
+                            <!-- <span (click)="deleteRow(rowData)">
                                 <img src="./../../../../assets/images-n/projects/more-vertical.svg" alt="Actions"> <span>Actions</span>
-                         </span>
+                         </span> -->
                            </div>
                     </span>
                 </td>

@@ -38,6 +38,7 @@
     overflow: hidden auto;
     height: calc(100vh - 310px);
 }
+/* need to remove
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -58,7 +59,7 @@
   cursor: pointer;
   width: 6px;
   height: 16px;
-}
+} */
 .data_values{
     border: 1px solid #e5e5e5;
     border-radius: 3px;

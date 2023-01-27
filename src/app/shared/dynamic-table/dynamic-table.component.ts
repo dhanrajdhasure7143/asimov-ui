@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
+import { statSync } from "fs";
 import { Table } from "primeng/table";
 
 @Component({
@@ -12,15 +13,19 @@ export class DynamicTableComponent implements OnInit {
   @Input("representatives") public representatives: any[] = [];
   @Input("screenTable") public screenTable: any;
   @Input("userRoles") public userRoles: any[] = [];
+  @Input("checkBoxShow") public checkBoxShow:boolean;
   @Output() viewDetails = new EventEmitter<any[]>();
   @Output() deleteItem = new EventEmitter<any[]>();
   @Output("onEdit") editEvent:any= new EventEmitter<any>();
   @Input()selectedScreen:any;
+  @Output() selectedData = new EventEmitter<any[]>();
   _selectedColumns: any[];
   customers: any = [];
   userName: any;
   selectedItem: any = {};
   loading: boolean = true;
+  checkBoxselected:any;
+  
 
   constructor() {}
 
@@ -51,7 +56,6 @@ export class DynamicTableComponent implements OnInit {
   }
 
   clear(table: Table) {
-    // console.log(this.selectedItem);
     table.clear();
   }
 
@@ -65,9 +69,16 @@ export class DynamicTableComponent implements OnInit {
         return 'green';
     }
   }
+<<<<<<< HEAD
   edit(rowData:any)
   {
     this.editEvent.emit(rowData);
   }
   
+=======
+
+  selectRow(){
+    this.selectedData.emit(this.checkBoxselected)
+  }
+>>>>>>> Sprint-76
 }

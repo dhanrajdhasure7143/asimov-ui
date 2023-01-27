@@ -67,6 +67,7 @@ import { ProjectTaskListComponent } from './project-details-screen/project-task-
 import { SharedModule } from '../../shared/shared.module';
 import {CardModule} from 'primeng/card';
 import {TabViewModule} from 'primeng/tabview';
+import {MenuModule} from 'primeng/menu';
 const materialModules: any[] = [
     
     
@@ -114,8 +115,8 @@ const materialModules: any[] = [
     InputTextModule,
     SharedModule,
     CardModule,
-    TabViewModule
-    
+    TabViewModule,
+    MenuModule
   ],
   providers:[
     BsModalRef, NotifierService,

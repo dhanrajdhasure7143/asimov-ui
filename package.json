@@ -39,7 +39,7 @@
     "angular-user-idle": "^2.2.4",
     "angular2-uuid": "^1.1.1",
     "babel-preset-es2015": "^6.24.1",
-    "bootstrap": "3.4.1",
+    "bootstrap": "^4.6.2",
     "bpmn": "^0.2.2",
     "bpmn-js": "^7.3.0",
     "bpmn-js-bpmnlint": "^0.15.0",

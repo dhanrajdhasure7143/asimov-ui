@@ -1,5 +1,5 @@
 <div class="maincontent">
-    <div class="main-content">
+    <div class="h-100">
         <div class="row main-content-head">
             <div class="col-md-4">
                 <h3>
@@ -14,16 +14,30 @@
             <div class="col-md-8 text-right">
                 <button class="btn">
                     <img src="./../../../../assets/images-n/projects/Open.svg" alt="Open" >
-                    <span>Open</span>
+                    <!-- <span>Open</span> -->
                 </button>
-                <button class="btn">
+                <!-- <button class="btn">
                     <img src="./../../../../assets/images-n/projects/Attribute.svg" alt="Attributes" >
                     <span>Attributes</span>
-                </button>
-                <button class="btn">
+                </button> -->
+                <!-- <button class="btn">
                     <img src="./../../../../assets/images-n/projects/more-vertical.svg" alt="Actions" >
                     <span>Actions</span>
-                </button>
+                </button> -->
+
+                <span class="text-wh">
+                    <button mat-icon-button [matMenuTriggerFor]="menu" class="txt-wh" style="vertical-align: middle;"
+                      aria-label="Example icon-button with a menu">
+                      <mat-icon class="menu-button" >
+                      </mat-icon>
+                      <img src="./../../../../assets/images-n/projects/more-vertical.svg" alt="Actions" >
+                    </button>
+                  </span>
+                  <mat-menu #menu="matMenu">
+                    <button class="ep-pad" (click)='taskListView()'> Tasks</button>
+                    <button class="ep-pad"> Documents </button>
+                    <button class="ep-pad" (click)='onboardUsers()'>Users</button>
+                  </mat-menu>
             </div>
         </div>
         <div class="main-content-body">
@@ -31,7 +45,8 @@
                 <div class="row project-overview">
                     <div class="col-md-1 p-0">
                         <div class="row project-status">
-                            <img src="./../../../../assets/images-n/projects/Inprogress.svg" alt="project-status-icon" >
+                            <img *ngIf="projectDetails.status == 'Closed'" src="./../../../../assets/images-n/projects/completed-tasks.svg" alt="project-status-icon" >
+                            <img *ngIf="projectDetails.status != 'Closed'" src="./../../../../assets/images-n/projects/inprogress-tasks.svg.svg" alt="project-status-icon" >
                             <p>{{projectDetails.status}}</p>
                         </div>
                     </div> 
@@ -45,7 +60,7 @@
                             <div class="row">
                                 <div class="col-md-9 pl-0 d-flex align-items-center">
                                     <div class="row">
-                                        <div class="col-md-5 p-0 pinf">
+                                        <div class="col-md-3 p-0 pinf">
                                             <p>Account Financial Audit </p>
                                             <label>Program Name</label>
                                         </div>
@@ -174,24 +189,27 @@
                     <div class="row quick-actions">
                         <h6>Quick Actions</h6>
                         <img src="./../../../../assets/images-n/projects/Hand.svg" alt="handicon" >
-                        <button class="btn blue-btntext" (click)="taskListView()">
-                            <a><span>View Tasks</span></a>
-                        </button>
                         <button class="btn blue-btntext">
-                            <a href="#"><span>Create Task </span></a>
+                            <a><span>Create Task</span></a>
                         </button>
+                        <!-- <button class="btn blue-btntext">
+                            <a><span> </span></a>
+                        </button> -->
                         <button class="btn blue-btntext"  (click)="onboardUsers()">
-                            <a><span>Onboard User</span></a>
+                            <a><span> Users</span></a>
                         </button>
                         <button class="btn blue-btntext">
-                            <a href="#"><span>Process Document</span></a>
+                            <a ><span>Create Folder</span></a>
                         </button>
                         <button class="btn blue-btntext">
-                           <a href="#"><span>Add Documents</span></a>
+                           <a><span>Create Documents</span></a>
                         </button>
                         <button class="btn blue-btntext">
-                            <a href="#"><span>Request Document</span></a>
+                            <a><span>View BPMN</span></a>
                         </button>
+                        <!-- <button class="btn blue-btntext">
+                            <a><span>Add BPMN</span></a>
+                        </button> -->
                     </div>                  
                     <div class="row acresources">
                         <label class="colheads">Recent Activities</label>

@@ -28,6 +28,7 @@ th{
         background-color: #fff;
         margin: 0 0 10px 0;
     }
+    /* need to remove
     .dashboard-scroll::-webkit-scrollbar {
         width:5px;
     }
@@ -38,4 +39,4 @@ th{
     .dashboard-scroll::-webkit-scrollbar-thumb {
         border-radius:5px;
         -webkit-box-shadow: inset 0 0 6px #e8f7fd; 
-    }
+    } */
