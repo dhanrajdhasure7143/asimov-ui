@@ -312,3 +312,22 @@ button.btn.btn-onboard {
     padding: 6px 30px;
 }
 /* Overlay Styles */
+
+button.ep-pad {
+    display: block;
+    width: 100%;
+    text-align: left;
+  }
+  
+   button.ep-pad:hover {
+    color: white;
+    background: #00a0e3;
+  }
+  
+  button.ep-pad:hover .hd_icon, button.ep-pad:hover .text-primary {
+    color: white;
+  }
+  
+  button.ep-pad:hover img.header_icon {
+    filter: brightness(10) grayscale(1) brightness(10);
+  }
