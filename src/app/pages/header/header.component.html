@@ -79,6 +79,15 @@
     </button>
   </mat-menu>
   <!-- <span class="txt-wh header-seperator">|</span> -->
+  <div class="space">
+    <div class="form-fields">
+      <select class="form-control data">
+        <option value="" hidden disabled>Select Tenant</option>
+        <option *ngFor="let tenant of tenantsList" [value]="tenant.tenant_name">{{tenant.tenant_name | titlecase}}
+        </option>
+      </select>
+    </div>
+  </div>
   <div style="line-height: 7px;margin-right: 13px;margin-top:6px;">
     <span class="txt-u header-rgttext" *ngIf="user_fName != null">{{user_fName | titlecase}} {{user_lName
       |titlecase}}</span><br>
