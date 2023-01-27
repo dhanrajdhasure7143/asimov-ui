@@ -20,6 +20,7 @@
 /* @import '~highlight.js/styles/github.css'; */
 /* @import "assets/css/global.css"; */
 /* You can add global styles to this file, and also import other style files */
+/* need to remove
 body,
 html {
 
@@ -53,7 +54,7 @@ div {
   color: inherit;
   font-family: 'Open Sans', sans-serif;
 
-}
+} */
 
 .breadcrumb {
   background-color: white !important;
@@ -445,7 +446,8 @@ ul.bpp-properties-tabs-links {
 }
 
 /*RPA-Environments*/
-html,
+/* need to remove
+ html,
 body {
   height: 100%;
   overflow: hidden;
@@ -453,14 +455,7 @@ body {
 
 body {
   margin: 0;
-  /*   */
-}
-
-
-
-
-
-
+} */
 
 /* d3 css */
 .node rect,
@@ -868,9 +863,10 @@ foreignObject {
 }
 
 
-#sidenav.menu-close .side-icon {
+/* need to remove
+ #sidenav.menu-close .side-icon {
   text-align: center !important;
-}
+} */
 
 
 #sidenav.menu-close .side-icon {
@@ -960,7 +956,7 @@ foreignObject {
 
 .main-content1 {
   padding: 0px !important;
-}
+} 
 
 .content-area {
   background: #ffffff;
@@ -1045,6 +1041,7 @@ div#propertiesPanelBody .bpp-properties-panel {
 
 .mat-form-field-infix {
   border: none;
+  padding: 0px 0px !important;
 }
 
 .mat-form-field-wrapper {
@@ -1172,7 +1169,8 @@ mat-row {
   width: 100%;
 }
 
-::-webkit-scrollbar {
+/* need to remove
+ ::-webkit-scrollbar {
   width: 7px;
   height: 7px;
   cursor: pointer;
@@ -1199,7 +1197,7 @@ mat-row {
   cursor: pointer;
   width: 8px;
   height: 8px;
-}
+} */
 
 mat-card {
   padding: 0px !important;
@@ -1593,6 +1591,7 @@ select.small-input {
 
 .bpp-properties-entry, .dpp-properties-entry {
   padding: 2px 0px !important;
+  margin-bottom: 0px !important;
 }
 
 .bpp-properties-panel input,
@@ -1696,9 +1695,10 @@ button.action-button.clear {
   width: calc(100% - 0px);
 }
 
+/* need to remove 
 .bpp-properties-entry, .dpp-properties-entry {
   margin-bottom: 0px !important;
-}
+} */
 
 .bpp-properties-entry.dpp-checkbox, .dpp-properties-entry.dpp-checkbox {
   display: flex;
@@ -1919,9 +1919,10 @@ button.btn:hover {
   align-items: center;
 }
 
+/* need to remove
 .mat-form-field-infix {
   padding: 0px 0px !important;
-}
+} */
 
 .mat-paginator-page-size-label,
 .mat-paginator-range-label {
@@ -2148,6 +2149,7 @@ th.mat-header-cell {
   outline: none;
   color: white;
   white-space: nowrap;
+  user-select: none;
   -webkit-user-select: none;
   cursor: pointer;
   position: absolute;
@@ -2534,12 +2536,13 @@ button.custom-popupbtn.mat-button {
   margin-bottom: 5px !important;
   color: #333c48 !important;
 }
+/*  need to remove
 button.custom-popupbtn.mat-button {
   padding: 0px !important;
   min-width: auto !important;
   line-height: unset !important;
   width: auto !important;
-}
+} */
 /* Full Edit Custom Popover */
 
 .prj_activities_block .mat-tab-label {
@@ -2615,3 +2618,94 @@ button.custom-popupbtn.mat-button {
 .bvcsave popover-container.popover.in.popover-bottom {
   margin-top: 14px;
 }
+
+
+
+
+/* ---NEW STYLES--- */
+
+/* Global CSS Variables */
+:root {
+  --main-txtcolor: #232832; 
+  --main-fontsize: 14px;
+  --main-fontweight: 400;
+  --main-bluecolor: #098de6;
+  --main-bgcolor: #f9f9f9;
+  --main-bordercolor: #dbdbdb;
+  --main-borderradius: 6px;
+  --high-importance: #ea3d3d;
+  --medium-importance: #E58600;
+  --low-importance: #27AD74;
+}
+/* Global CSS Variables */
+
+* {
+  box-sizing: border-box;
+}
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Source Sans 3', sans-serif !important;
+  font-size: var(--main-fontsize) !important;
+  font-weight: var(--main-fontweight) !important;
+  color: var(--main-txtcolor) !important;
+  height: 100vh;
+  width: 100%;
+  user-select: none;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a,
+ul,
+li,
+ol,
+span,
+button,
+th,
+td,
+div {
+  margin: 0;
+  padding: 0;
+  text-decoration: none !important;
+  list-style: none;
+  color: inherit;
+  font-family: 'Source Sans 3', sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 400;
+}
+
+/* Scrollbar styles */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  cursor: pointer;
+}
+::-webkit-scrollbar:hover {
+width: 8px !important;
+height: 8px !important;
+cursor: pointer;
+}
+::-webkit-scrollbar-track {
+background: transparent;
+}
+::-webkit-scrollbar-thumb {
+background: #098de630;
+border-radius: 10px;
+cursor: pointer;
+}
+::-webkit-scrollbar-thumb:hover {
+background: var(--main-bluecolor) !important;
+cursor: pointer;
+width: 8px;
+height: 8px;
+}
+/* Scrollbar styles */
+
+/* NEW STYLES */

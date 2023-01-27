@@ -1,8 +1,9 @@
 body{
     background-color: #F1F0F0;
+    /* need to remove
     font-family: 'Source Sans Pro', sans-serif !important;
     margin: 0px;
-    padding: 0px;
+    padding: 0px; */
 }
 h1,h2,h3,h4,h5,h6,a,ul,li,ol,p,span{
     margin: 0px;
