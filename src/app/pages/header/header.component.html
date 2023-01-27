@@ -89,11 +89,11 @@
       </select>
     </div>
   </div>
-  <div style="line-height: 7px;margin-right: 13px;margin-top:6px;">
-    <span class="txt-u header-rgttext" *ngIf="user_fName != null">{{user_fName | titlecase}} {{user_lName
-      |titlecase}}</span><br>
-    <span class="txt-u header-rgttext" *ngIf="user_fName == null">- -</span><br>
-    <span class="txt-u header-userrole">{{userRole}}</span>
+
+  <div class="txt-wh" style="line-height: 7px;margin-right: 13px;margin-top:6px;">
+    <span class="header-rgttext" *ngIf="user_fName != null">{{user_fName | titlecase}} {{user_lName | titlecase}}</span><br>
+    <span class="header-rgttext" *ngIf="user_fName == null">-</span><br>
+    <span class="header-userrole">{{userRole}}</span>
   </div>
   <span>
     <div *ngIf="profilePicture==true && user_fName!='null'">
