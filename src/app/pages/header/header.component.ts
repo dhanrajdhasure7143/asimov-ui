@@ -59,6 +59,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   tenantName:any;
   ProfileuserId:any;
   newAccessToken:any;
+  tenantsList: any;
 
   constructor(
     private router: Router,
@@ -129,6 +130,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.getAllUsers(res.tenantID)
       }
     });
+    this.getTenantLists();
   }
 
   loopTrackBy(index, term) {
@@ -319,5 +321,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   this.rest_api.getusername(tenantid).subscribe((res) => {
     this.dataTransfer.tenantBasedUsersList(res)
   });
+}
+getTenantLists(){
+  this.rest_api.getTenantnameslist().subscribe((res) => {
+    this.tenantsList = res;
+  })
 }
 }
