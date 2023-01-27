@@ -415,6 +415,7 @@ span.PI-frpr-spin:hover {
   display: inline-block;
   overflow: hidden auto;
 }
+/* need to remove
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -435,4 +436,4 @@ span.PI-frpr-spin:hover {
   cursor: pointer;
   width: 6px;
   height: 16px;
-}
+} */

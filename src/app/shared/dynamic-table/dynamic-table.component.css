@@ -3,7 +3,8 @@
 }
 
 .p-input-icon-right{
-    margin: 0 0 0 60%;
+    /* margin: 0 0 0 60%; */
+    float: right;
 }
 
 .p-button-outlined{

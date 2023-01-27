@@ -4,9 +4,9 @@
       <button mat-icon-button class="example-icon txt-wh" (click)="page_obj.onToolbarMenuToggle()"
         aria-label="Example icon-button with menu icon">
         <img src="../../../assets/images/menu-line.svg" *ngIf="page_obj.sideBarOpen==false"
-          [ngClass]="{sidebarclose: page_obj.sideBarOpen==false}">
+          [ngClass]="{sidebarclose: page_obj.sideBarOpen==false}"  style="filter: brightness(100);">
         <img src="../../../assets/images/menu-line.svg" *ngIf="page_obj.sideBarOpen==true"
-          [ngClass]="{sidebaropen: page_obj.sideBarOpen==true}">
+          [ngClass]="{sidebaropen: page_obj.sideBarOpen==true}"  style="filter: brightness(100);">
       </button>
     </span>
     <span class="headerlogo">
@@ -90,7 +90,7 @@
     </div>
   </div>
 
-  <div class="txt-wh" style="line-height: 7px;margin-right: 13px;margin-top:6px;">
+  <div class="txt-wh" style="line-height: 7px;margin-right: 13px;">
     <span class="header-rgttext" *ngIf="user_fName != null">{{user_fName | titlecase}} {{user_lName | titlecase}}</span><br>
     <span class="header-rgttext" *ngIf="user_fName == null">-</span><br>
     <span class="header-userrole">{{userRole}}</span>
@@ -109,7 +109,7 @@
   <span class="text-wh">
     <button mat-icon-button [matMenuTriggerFor]="menu" class="txt-wh" style="vertical-align: middle;"
       aria-label="Example icon-button with a menu">
-      <mat-icon class="menu-button" style="opacity: 0.5;">&#xe5cf;
+      <mat-icon class="menu-button" >&#xe5cf;
       </mat-icon>
     </button>
   </span>
