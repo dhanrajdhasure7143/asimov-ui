@@ -1,10 +1,5 @@
 <div class="" *ngIf="screenTable=='common'">
-<<<<<<< HEAD
-    <p-table #dt1 [value]="table_data"  [columns]="selectedColumns" [resizableColumns]="true" responsiveLayout="h-scroll"  dataKey="id"
-  >
-=======
     <p-table #dt1 [value]="table_data" [columns]="selectedColumns" [(selection)]="checkBoxselected" [resizableColumns]="true" responsiveLayout="scroll" dataKey="connectorId">
->>>>>>> Sprint-76
         <!-- [globalFilterFields]="['representative.name']"> -->
         <ng-template pTemplate="caption">
             <div class="p-d-flex">
