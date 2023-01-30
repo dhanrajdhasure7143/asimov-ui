@@ -64,7 +64,6 @@ export class ScreenGenerationDynamicFormComponent implements OnInit {
   }
 
   emitFormValue() {
-    console.log(this.generatedForm.value);
     this.outputEmitter.emit(this.generatedForm.value);
   }
 

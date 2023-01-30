@@ -35,10 +35,7 @@ export class DynamicTableComponent implements OnInit {
 
   ngOnChanges() {
     this._selectedColumns = this.columns_list;
-    console.log(this.columns_list);
-    
     if (this.table_data.length > 0) this.loading = false;
-    console.log(this.table_data);
   }
 
   @Input() get selectedColumns(): any[] {

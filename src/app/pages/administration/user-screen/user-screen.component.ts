@@ -50,7 +50,6 @@ export class UserScreenComponent implements OnInit {
       this.screensList.forEach((element: any) => {
         if (element.Screen_ID == screen_id) {
           this.selectedScreen = element;
-          console.log("selected Screen", this.selectedScreen);
           this.getUserScreenData();
         }
       });
@@ -216,7 +215,6 @@ export class UserScreenComponent implements OnInit {
   getDashboardScreens() {
     this.rest.getDashBoardScreens().subscribe((data: any) => {
       this.dash_board_list = data;
-      console.log("data", this.dash_board_list);
     });
   }
 }

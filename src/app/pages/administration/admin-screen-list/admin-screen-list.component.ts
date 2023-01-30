@@ -13,14 +13,9 @@ import { RestApiService } from '../../services/rest-api.service';
   styleUrls: ['./admin-screen-list.component.css']
 })
 export class AdminScreenListComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'tableName', 'action'];
-  dataSource:MatTableDataSource<any>;
   screenlist: any =[];
   loading:boolean = false;
   columns_list:any =[]
-  @ViewChild("paginator",{static:false}) paginator: MatPaginator;
-  @ViewChild("sort",{static:false}) sort: MatSort;
-
   constructor(private router:Router, private rest: RestApiService) { }
 
   ngOnInit(): void {
@@ -35,14 +30,13 @@ export class AdminScreenListComponent implements OnInit {
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();    
+ 
   }
   
   getScreenList(){
     this.loading= true;
     this.rest.getScreenList().subscribe(data=>{
     this.screenlist =data;
-    this.dataSource= new MatTableDataSource(this.screenlist);  
     this.columns_list = [
       {
         ColumnName: "Screen_Name",
@@ -75,10 +69,6 @@ export class AdminScreenListComponent implements OnInit {
         multi: false,
       }
     ]
-    setTimeout(() => {
-    this.dataSource.paginator=this.paginator;
-    this.dataSource.sort = this.sort;
-    }, 500);
     this.loading =false;
     })
   }
