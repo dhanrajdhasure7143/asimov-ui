@@ -448,15 +448,16 @@ span.testtooltip::before {
   overflow:visible !important;
   position: relative  !important;
 }
-/* 
+/* need to remove
 ::-webkit-scrollbar {
   display: none;
 } */
 
 
-.dropdown-menu::-webkit-scrollbar {
+/* need to remove
+ .dropdown-menu::-webkit-scrollbar {
   display: block;
-}
+} */
 
 .imageI{
   width: 100%;

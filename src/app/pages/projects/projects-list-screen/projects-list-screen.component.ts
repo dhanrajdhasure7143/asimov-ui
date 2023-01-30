@@ -8,6 +8,8 @@ import { Router } from "@angular/router";
 import { query } from "@angular/animations";
 import moment from "moment";
 import { APP_CONFIG } from "src/app/app.config";
+import { TabView } from "primeng/tabview";
+import { LoaderService } from "src/app/services/loader/loader.service";
 
 @Component({
   selector: "app-projects-list-screen",
@@ -15,7 +17,7 @@ import { APP_CONFIG } from "src/app/app.config";
   styleUrls: ["./projects-list-screen.component.css"],
 })
 export class ProjectsListScreenComponent implements OnInit {
-  projects_list: any = [];
+  projects_list: any[] = [];
   users_list: any = [];
   processes: any = [];
   selected_tab: any;
@@ -43,26 +45,30 @@ export class ProjectsListScreenComponent implements OnInit {
   create_Tabs: any;
   projectsresponse: any = [];
   freetrail: string;
-  all_projectslist:any[]=[];
-  columns_list:any=[];
+  all_projectslist: any[] = [];
+  columns_list: any = [];
   statuses: any[];
-  representatives:any=[];
+  representatives: any = [];
 
-  _tabsList:any=[{tabName:"All","count":"0"},{tabName:"Pipeline","count":"0"},
-  {tabName:"New","count":"0"},
-  {tabName:"In Progress","count":"0"},
-  {tabName:"On Hold","count":"0"},
-  {tabName:"Closed","count":"0"}]
+  _tabsList: any = [
+    { tabName: "All", count: "0", img_src: "all-tasks.svg" },
+    { tabName: "Pipeline", count: "0", img_src: "inprogress-tasks.svg" },
+    { tabName: "New", count: "0", img_src: "inprogress-tasks.svg" },
+    { tabName: "In Progress", count: "0", img_src: "inprogress-tasks.svg" },
+    { tabName: "On Hold", count: "0", img_src: "inreview-tasks.svg" },
+    { tabName: "Closed", count: "0", img_src: "completed-tasks.svg" },
+  ];
 
   constructor(
     private dt: DataTransferService,
     private api: RestApiService,
-    private spinner: NgxSpinnerService,
+    private spinner: LoaderService,
     private router: Router,
     @Inject(APP_CONFIG) private config
   ) {}
 
   ngOnInit() {
+    this.spinner.show();
     localStorage.setItem("project_id", null);
     localStorage.setItem("bot_id", null);
     this.api.getCustomUserRole(2).subscribe((role) => {
@@ -80,7 +86,10 @@ export class ProjectsListScreenComponent implements OnInit {
 
     this.userRoles = localStorage.getItem("userRole");
     this.userRoles = this.userRoles.split(",");
-    this.name = localStorage.getItem("firstName") +" " + localStorage.getItem("lastName");
+    this.name =
+      localStorage.getItem("firstName") +
+      " " +
+      localStorage.getItem("lastName");
     this.email = localStorage.getItem("ProfileuserId");
     this.getallProjects(this.userRoles, this.name, this.email);
     this.getallusers();
@@ -89,7 +98,6 @@ export class ProjectsListScreenComponent implements OnInit {
   }
 
   getallProjects(roles, name, email) {
-    this.spinner.show();
     this.api.getAllProjects(roles, name, email).subscribe((res) => {
       let response: any = res;
       this.projectsresponse = response;
@@ -116,19 +124,19 @@ export class ProjectsListScreenComponent implements OnInit {
             projectName: data.programName,
             initiatives: data.initiatives,
             priority: data.priority,
-            process:  this.getProcessNames(data.process),
+            process: this.getProcessNames(data.process),
             owner: data.owner,
             status: data.status == null ? "New" : data.status,
-            createdAt: moment(data.startDate).format("lll"),
+            createdAt: moment(data.createdTimestamp).format("lll"),
             createdBy: data.createdBy,
             lastModifiedBy: data.lastModifiedBy,
-            "representative":{
-              "name":data.type,
-           },
-           type:data.type,
-            department:data.programValueChain,
-            createdDate:moment(data.createdTimestamp).format("lll"),
-            updatedDate:moment(data.lastModifiedTimestamp).format("lll"),
+            representative: {
+              name: data.type,
+            },
+            type: data.type,
+            department: data.programValueChain,
+            createdDate: moment(data.createdTimestamp).format("lll"),
+            updatedDate: moment(data.lastModifiedTimestamp).format("lll"),
             mapValueChain: data.mapValueChain,
           };
         }),
@@ -152,88 +160,165 @@ export class ProjectsListScreenComponent implements OnInit {
             // endDate: data.endDate,
 
             id: data.id,
-          projectName: data.projectName,
-          initiatives: data.initiatives,
-          priority: data.priority,
-          process: this.getProcessNames(data.process),
-          owner: data.owner,
-          status: data.status == null ? "New" : data.status,
-          createdAt: moment(data.startDate).format("lll"),
-          createdBy: data.createdBy,
-          lastModifiedBy: data.lastModifiedBy,
-          "representative":{
-            "name":data.type == null ? "Project" : data.type,
-          },
-          type:data.type == null ? "Project" : data.type,
-          department:data.mapValueChain,
-          createdDate:moment(data.createdTimestamp).format("lll"),
-          updatedDate:moment(data.lastModifiedTimestamp).format("lll"),
+            projectName: data.projectName,
+            initiatives: data.initiatives,
+            priority: data.priority,
+            process: this.getProcessNames(data.process),
+            owner: data.owner,
+            status: data.status == null ? "New" : data.status,
+            createdAt:data.createdTimestamp,
+            createdBy: data.createdBy,
+            lastModifiedBy: data.lastModifiedBy?data.lastModifiedBy : data.createdBy,
+            representative: {
+              name: data.type == null ? "Project" : data.type,
+            },
+            type: data.type == null ? "Project" : data.type,
+            department: data.mapValueChain,
+            createdDate: moment(data.createdTimestamp).format("lll"),
+            updatedDate: moment(data.lastModifiedTimestamp).format("lll"),
             mapValueChain: data.mapValueChain,
-
           };
         }),
       ];
       this.spinner.hide();
-      this.count.New = this.all_projectslist.filter(
-        (item) => item.status == "New"
-      ).length;
-      this.count.Inprogress = this.all_projectslist.filter(
-        (item) => item.status == "In Progress"
-      ).length;
-      this.count.Pipeline = this.all_projectslist.filter(
-        (item) => item.status == "Pipeline"
-      ).length;
-      this.count.OnHold = this.all_projectslist.filter(
-        (item) => item.status == "On Hold"
-      ).length;
-      this.count.Rejected = this.all_projectslist.filter(
-        (item) => item.status == "Rejected"
-      ).length;
-      this.count.Inreview = this.all_projectslist.filter(
-        (item) => item.status == "In Review"
-      ).length;
-      this.count.Approved = this.all_projectslist.filter(
-        (item) => item.status == "Approved"
-      ).length;
-      this.count.Closed = this.all_projectslist.filter(
-        (item) => item.status == "Closed"
-      ).length;
-      this.count.Deployed = this.all_projectslist.filter(
-        (item) => item.status == "Deployed"
-      ).length;
-      this.projects_list = this.all_projectslist
-      setTimeout(() => {
-        this.selected_tab = 0;
-      }, 100);
+      // this.count.New = this.all_projectslist.filter(
+      //   (item) => item.status == "New"
+      // ).length;
+      // this.count.Inprogress = this.all_projectslist.filter(
+      //   (item) => item.status == "In Progress"
+      // ).length;
+      // this.count.Pipeline = this.all_projectslist.filter(
+      //   (item) => item.status == "Pipeline"
+      // ).length;
+      // this.count.OnHold = this.all_projectslist.filter(
+      //   (item) => item.status == "On Hold"
+      // ).length;
+      // this.count.Rejected = this.all_projectslist.filter(
+      //   (item) => item.status == "Rejected"
+      // ).length;
+      // this.count.Inreview = this.all_projectslist.filter(
+      //   (item) => item.status == "In Review"
+      // ).length;
+      // this.count.Approved = this.all_projectslist.filter(
+      //   (item) => item.status == "Approved"
+      // ).length;
+      // this.count.Closed = this.all_projectslist.filter(
+      //   (item) => item.status == "Closed"
+      // ).length;
+      // this.count.Deployed = this.all_projectslist.filter(
+      //   (item) => item.status == "Deployed"
+      // ).length;
 
-      this._tabsList.forEach(element => {
-        if(element.tabName == "All"){
-          element.count = this.all_projectslist.length
-        }else{
-        element.count = this.all_projectslist.filter(
-          (item) => item.status == element.tabName
-        ).length;
+      this.all_projectslist.sort(function (a, b) {
+        a = new Date(a.createdDate);
+        b = new Date(b.createdDate);
+        return a > b ? -1 : a < b ? 1 : 0;
+      });
+      
+      this.projects_list = this.all_projectslist;
+
+      this._tabsList.forEach((element) => {
+        if (element.tabName == "All") {
+          element.count = this.all_projectslist.length;
+        } else {
+          element.count = this.all_projectslist.filter(
+            (item) => item.status == element.tabName
+          ).length;
         }
       });
     });
+    
 
     this.columns_list = [
-      { ColumnName: "type", DisplayName: "Type", ShowGrid:true, ShowFilter:true,filterWidget:"multiSelect",filterType:"text", sort:true,multi:false},
-      { ColumnName: "projectName", DisplayName: "Project Name", ShowFilter:true, ShowGrid:true,filterWidget:"normal",filterType:"text", sort:true, multi:true,multiOptions:["projectName","status"]},
-      { ColumnName: "process", DisplayName: "Process", ShowGrid:true, ShowFilter:true, filterWidget:"normal",filterType:"text", sort:true,multi:false},
-      { ColumnName: "department", DisplayName: "Department", ShowGrid:true, ShowFilter:true, filterWidget:"normal",filterType:"text", sort:true,multi:false},
-      { ColumnName: "createdDate", DisplayName: "Created Date", ShowGrid:true, ShowFilter:true, filterWidget:"normal",filterType:"date", sort:true,multi:false},
-      { ColumnName: "lastModifiedBy", DisplayName: "Last Updated By", ShowGrid:true, ShowFilter:true, filterWidget:"normal",filterType:"text", sort:true,multi:true,multiOptions:["lastModifiedBy","updatedDate"]},
-      { ColumnName: "updatedDate", DisplayName: "Updated Date", ShowGrid:false,ShowFilter:false, sort:false,multi:false},
-      { ColumnName: "status", DisplayName: "Status", ShowGrid:false,ShowFilter:false, sort:false,multi:false},
-      { ColumnName: "action", DisplayName: "Action", ShowGrid:true,ShowFilter:false, sort:false,multi:false}
+      {
+        ColumnName: "type",
+        DisplayName: "Type",
+        ShowGrid: true,
+        ShowFilter: true,
+        filterWidget: "multiSelect",
+        filterType: "text",
+        sort: true,
+        multi: false,
+      },
+      {
+        ColumnName: "projectName",
+        DisplayName: "Project Name",
+        ShowFilter: true,
+        ShowGrid: true,
+        filterWidget: "normal",
+        filterType: "text",
+        sort: true,
+        multi: true,
+        multiOptions: ["projectName", "priority"],
+      },
+      {
+        ColumnName: "process",
+        DisplayName: "Process",
+        ShowGrid: true,
+        ShowFilter: true,
+        filterWidget: "normal",
+        filterType: "text",
+        sort: true,
+        multi: false,
+      },
+      {
+        ColumnName: "department",
+        DisplayName: "Department",
+        ShowGrid: true,
+        ShowFilter: true,
+        filterWidget: "normal",
+        filterType: "text",
+        sort: true,
+        multi: false,
+      },
+      {
+        ColumnName: "createdDate",
+        DisplayName: "Created Date",
+        ShowGrid: true,
+        ShowFilter: true,
+        filterWidget: "normal",
+        filterType: "date",
+        sort: true,
+        multi: false,
+      },
+      {
+        ColumnName: "lastModifiedBy",
+        DisplayName: "Last Updated By",
+        ShowGrid: true,
+        ShowFilter: true,
+        filterWidget: "normal",
+        filterType: "text",
+        sort: true,
+        multi: true,
+        multiOptions: ["lastModifiedBy", "updatedDate"],
+      },
+      // {
+      //   ColumnName: "updatedDate",
+      //   DisplayName: "Updated Date",
+      //   ShowGrid: false,
+      //   ShowFilter: false,
+      //   sort: false,
+      //   multi: false,
+      // },
+      // {
+      //   ColumnName: "priority",
+      //   DisplayName: "Priority",
+      //   ShowGrid: false,
+      //   ShowFilter: false,
+      //   sort: false,
+      //   multi: false,
+      // },
+      {
+        ColumnName: "action",
+        DisplayName: "Action",
+        ShowGrid: true,
+        ShowFilter: false,
+        sort: false,
+        multi: false,
+      },
     ];
 
-    this.representatives = [
-      {name: "Project"},
-      {name: "Program"}
-    ];
-
+    this.representatives = [{ name: "Project" }, { name: "Program" }];
     this.statuses = [
       { name: "Project", value: "Project" },
       { name: "Program", value: "Program" },
@@ -291,45 +376,46 @@ export class ProjectsListScreenComponent implements OnInit {
     this.projectsresponse = event;
   }
 
-  getProcessNames(processId){
-    let processName:any;
-    if(isNaN && this.processes!=undefined)
-    {
-      processName=this.processes.find(item=>item.processId==parseInt(processId));
+  getProcessNames(processId) {
+    let processName: any;
+    if (isNaN && this.processes != undefined) {
+      processName = this.processes.find(
+        (item) => item.processId == parseInt(processId)
+      );
     }
-    return processName==undefined?processId:processName.processName;
+    return processName == undefined ? processId : processName.processName;
   }
 
-  onTabChanged(event){
-    this.selected_tab = event.index
-    if(event.tab.textLabel =='All'){
+  onTabChanged(event, tabView: TabView) {
+    const tab = tabView.tabs[event.index].header;
+    if (tab == "All") {
       this.projects_list = this.all_projectslist;
-    }else{
-    let filteredProjects = this.all_projectslist.filter(
-      (item) => item.status == event.tab.textLabel
-    );
-    this.projects_list = filteredProjects;
+    } else {
+      let filteredProjects = this.all_projectslist.filter(
+        (item) => item.status == tab
+      );
+      this.projects_list = filteredProjects;
     }
   }
 
   viewDetails(event) {
-    if(event.type=="Program"){
+    if (event.type == "Program") {
       this.router.navigate(["/pages/projects/programdetails"], {
         queryParams: { id: event.id },
       });
-    }else{
+    } else {
       this.router.navigate(["/pages/projects/projectdetails"], {
         queryParams: { id: event.id },
       });
     }
   }
 
-
   deleteById(project) {
     console.log("testing");
-    
+
     var projectdata: any = project;
-    let delete_data = [{
+    let delete_data = [
+      {
         id: project.id,
         type: project.type,
       },
@@ -386,5 +472,9 @@ export class ProjectsListScreenComponent implements OnInit {
       else return value;
     }
   }
-  
+
+  tabViewChange(event, tabView: TabView) {
+    const headerValue = tabView.tabs[event.index].header;
+    console.log(headerValue)
+   }
 }

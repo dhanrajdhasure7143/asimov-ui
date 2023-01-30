@@ -1486,6 +1486,12 @@ getprocessnamesByLatestVersion()
 {
   return this.http.get("/rpa-service/latest-version/process-name");
 }
+// getConnectionslist(){
+//   return this.http.get(`https://ezflow.dev.epsoftinc.com/sdk/getConnectionManagerTableData`);
+// }
+getTenantnameslist() {
+  return this.http.get("/platform-service/screenGenerator/get-allorgtenent-data");
+}
 
 getAuthTypes(){
   return this.http.get(`https://ezflow.dev.epsoftinc.com/sdk/get-authorization-type`);

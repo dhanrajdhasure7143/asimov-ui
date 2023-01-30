@@ -20,6 +20,7 @@ import * as BpmnJS from './../../../bpmn-modeler.development.js';
 import { verifyHostBindings } from '@angular/compiler';
 import * as CmmnJS from 'cmmn-js/dist/cmmn-modeler.production.min.js';
 import * as DmnJS from 'dmn-js/dist/dmn-modeler.development.js';
+import {MenuItem} from 'primeng/api';
 
 @Component({
   selector: 'app-project-details-screen',
@@ -181,6 +182,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   business_benefits:any;
   bpmnModeler;
   bpmnModeler1;
+  items: MenuItem[];
 
   constructor(private dt: DataTransferService, private route: ActivatedRoute, private dataTransfer: DataTransferService, private rpa: RestApiService,
     private modalService: BsModalService, private formBuilder: FormBuilder, private router: Router,
@@ -270,6 +272,21 @@ export class ProjectDetailsScreenComponent implements OnInit {
       if(res)
       this.loggedUserData = res
     });
+
+    this.items = [{
+      label: 'File',
+      items: [
+          {label: 'New', icon: 'pi pi-fw pi-plus'},
+          {label: 'Download', icon: 'pi pi-fw pi-download'}
+      ]
+  },
+  {
+      label: 'Edit',
+      items: [
+          {label: 'Add User', icon: 'pi pi-fw pi-user-plus'},
+          {label: 'Remove User', icon: 'pi pi-fw pi-user-minus'}
+      ]
+  }];
   }
 
 
@@ -541,23 +558,23 @@ this.projectDetails=res
 this.processownername = this.projectDetails.processOwner
 this.processOwnerFlag=false
 if(this.projectDetails.endDate){
-  this.projectenddate=moment(this.projectDetails.endDate).format("YYYY-MM-DD");
+  this.projectenddate=moment(this.projectDetails.endDate).format("lll");
 }
-this.projectStartDate = moment(this.projectDetails.startDate).format("YYYY-MM-DD");
+this.projectStartDate = moment(this.projectDetails.startDate).format("lll");
 //this.mindate = this.projectStartDate;
 
 if(this.projectDetails){
   
   ​​​​​​let users:any=[]
-  this.projectDetails.resource.forEach(item=>{
-    this.users_list.forEach(item2=>{
-      if(item2.userId.userId == item.resource){
-        users.push(item2)
-      }
-    })
-      // if(this.users_list.find(item2=>item2.userId.userId==item.resource)!=undefined)
-      //   users.push(this.users_list.find(item2=>item2.userId.userId==item.resource))
- })
+//   this.projectDetails.resource.forEach(item=>{
+//     this.users_list.forEach(item2=>{
+//       if(item2.userId.userId == item.resource){
+//         users.push(item2)
+//       }
+//     })
+//       // if(this.users_list.find(item2=>item2.userId.userId==item.resource)!=undefined)
+//       //   users.push(this.users_list.find(item2=>item2.userId.userId==item.resource))
+//  })
  this.resources_list=users
  if(this.resources_list.length>0){
   this.Resourcecheckeddisabled= false;
@@ -594,19 +611,19 @@ if(usr_name.length > 1){
 
 //this.project_id=this.projectDetails.id
 let users:any=[]
-if(this.projectDetails.resource.length!=0){​​​​​​
-this.projectDetails.resource.forEach(item=>{​​​​​​
-users.push(item.resource)
- }​​​​​​)
-this.resources=users
+// if(this.projectDetails.resource.length!=0){​​​​​​
+// // this.projectDetails.resource.forEach(item=>{​​​​​​
+// // users.push(item.resource)
+// //  }​​​​​​)
+// this.resources=users
 
-this.loginresourcecheck=this.resources.find(item2=>item2==userid);
+// this.loginresourcecheck=this.resources.find(item2=>item2==userid);
 
- }​​​​​​
-else{​​​​​​
-this.resources=this.users_list
+//  }​​​​​​
+// else{​​​​​​
+// this.resources=this.users_list
 
- }​​​​​​ 
+//  }​​​​​​ 
  }​​​​​​)
  
 this.getTaskandCommentsData();
@@ -680,15 +697,15 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
       this.users_list = response;
       this.userslist = this.users_list.filter(x => x.user_role_status == 'ACTIVE')
       let users: any = []
-      this.projectDetails.resource.forEach(item => {
-        this.users_list.forEach(item2 => {
-          if (item2.userId.userId == item.resource) {
-            users.push(item2)
-          }
-        })
-        // if(this.users_list.find(item2=>item2.userId.userId==item.resource)!=undefined)
-        //   users.push(this.users_list.find(item2=>item2.userId.userId==item.resource))
-      })
+      // this.projectDetails.resource.forEach(item => {
+      //   this.users_list.forEach(item2 => {
+      //     if (item2.userId.userId == item.resource) {
+      //       users.push(item2)
+      //     }
+      //   })
+      //   // if(this.users_list.find(item2=>item2.userId.userId==item.resource)!=undefined)
+      //   //   users.push(this.users_list.find(item2=>item2.userId.userId==item.resource))
+      // })
       this.resources_list = users;
       if (this.resources_list.length > 0) {
         this.Resourcecheckeddisabled = false;

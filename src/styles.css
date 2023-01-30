@@ -17,9 +17,12 @@
 @import "~@ng-select/ng-select/themes/default.theme.css";
 @import "~cmmn-js/dist/assets/diagram-js.css";
 
+@import '~primeicons/primeicons.css';
+
 /* @import '~highlight.js/styles/github.css'; */
 /* @import "assets/css/global.css"; */
 /* You can add global styles to this file, and also import other style files */
+/* need to remove
 body,
 html {
 
@@ -53,7 +56,7 @@ div {
   color: inherit;
   font-family: 'Open Sans', sans-serif;
 
-}
+} */
 
 .breadcrumb {
   background-color: white !important;
@@ -445,7 +448,8 @@ ul.bpp-properties-tabs-links {
 }
 
 /*RPA-Environments*/
-html,
+/* need to remove
+ html,
 body {
   height: 100%;
   overflow: hidden;
@@ -453,14 +457,7 @@ body {
 
 body {
   margin: 0;
-  /*   */
-}
-
-
-
-
-
-
+} */
 
 /* d3 css */
 .node rect,
@@ -851,7 +848,8 @@ foreignObject {
 }
 
 #sidenav.menu-close {
-  width: 60px;
+  /* width: 60px; */
+  width: 62px;
   min-height: 100%;
   transition: width 0.05s;
 }
@@ -863,14 +861,15 @@ foreignObject {
 }
 
 #sidenav {
-  z-index: 2 !important;
-  box-shadow: 1px 0px 5px rgb(0 0 0 / 20%) !important;
+  /* z-index: 2 !important;
+  box-shadow: 1px 0px 5px rgb(0 0 0 / 20%) !important; */
 }
 
 
-#sidenav.menu-close .side-icon {
+/* need to remove
+ #sidenav.menu-close .side-icon {
   text-align: center !important;
-}
+} */
 
 
 #sidenav.menu-close .side-icon {
@@ -960,7 +959,7 @@ foreignObject {
 
 .main-content1 {
   padding: 0px !important;
-}
+} 
 
 .content-area {
   background: #ffffff;
@@ -1045,6 +1044,7 @@ div#propertiesPanelBody .bpp-properties-panel {
 
 .mat-form-field-infix {
   border: none;
+  padding: 0px 0px !important;
 }
 
 .mat-form-field-wrapper {
@@ -1172,7 +1172,8 @@ mat-row {
   width: 100%;
 }
 
-::-webkit-scrollbar {
+/* need to remove
+ ::-webkit-scrollbar {
   width: 7px;
   height: 7px;
   cursor: pointer;
@@ -1199,7 +1200,7 @@ mat-row {
   cursor: pointer;
   width: 8px;
   height: 8px;
-}
+} */
 
 mat-card {
   padding: 0px !important;
@@ -1593,6 +1594,7 @@ select.small-input {
 
 .bpp-properties-entry, .dpp-properties-entry {
   padding: 2px 0px !important;
+  margin-bottom: 0px !important;
 }
 
 .bpp-properties-panel input,
@@ -1696,9 +1698,10 @@ button.action-button.clear {
   width: calc(100% - 0px);
 }
 
+/* need to remove 
 .bpp-properties-entry, .dpp-properties-entry {
   margin-bottom: 0px !important;
-}
+} */
 
 .bpp-properties-entry.dpp-checkbox, .dpp-properties-entry.dpp-checkbox {
   display: flex;
@@ -1885,7 +1888,7 @@ button.btn {
   line-height: normal !important;
   border: medium none !important;
   font-size: 15px;
-  margin-right: 10px !important;
+  /* margin-right: 10px !important; */
   border-radius: 3px;
   color: #001c47;
   min-width: 75px;
@@ -1906,8 +1909,8 @@ button.btn.btn-primary[disabled] {
 }
 
 button.btn:hover {
-  background: #001c47 !important;
-  color: #fff !important;
+  /* background: #001c47 !important;
+  color: #fff !important; */
 }
 
 .newpaginationdiv mat-form-field {
@@ -1919,9 +1922,10 @@ button.btn:hover {
   align-items: center;
 }
 
+/* need to remove
 .mat-form-field-infix {
   padding: 0px 0px !important;
-}
+} */
 
 .mat-paginator-page-size-label,
 .mat-paginator-range-label {
@@ -2148,6 +2152,7 @@ th.mat-header-cell {
   outline: none;
   color: white;
   white-space: nowrap;
+  user-select: none;
   -webkit-user-select: none;
   cursor: pointer;
   position: absolute;
@@ -2534,12 +2539,13 @@ button.custom-popupbtn.mat-button {
   margin-bottom: 5px !important;
   color: #333c48 !important;
 }
+/*  need to remove
 button.custom-popupbtn.mat-button {
   padding: 0px !important;
   min-width: auto !important;
   line-height: unset !important;
   width: auto !important;
-}
+} */
 /* Full Edit Custom Popover */
 
 .prj_activities_block .mat-tab-label {
@@ -2615,3 +2621,231 @@ button.custom-popupbtn.mat-button {
 .bvcsave popover-container.popover.in.popover-bottom {
   margin-top: 14px;
 }
+
+
+
+
+/* ---NEW STYLES--- */
+
+/* Global CSS Variables */
+:root {
+  --main-txtcolor: #232832; 
+  --main-fontsize: 14px;
+  --main-fontweight: 400;
+  --main-bluecolor: #098de6;
+  --main-bgcolor: #f9f9f9;
+  --main-bordercolor: #dbdbdb;
+  --main-borderradius: 6px;
+  --high-importance: #ea3d3d;
+  --medium-importance: #E58600;
+  --low-importance: #27AD74;
+}
+/* Global CSS Variables */
+
+* {
+  box-sizing: border-box;
+}
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Source Sans 3', sans-serif !important;
+  font-size: var(--main-fontsize) !important;
+  font-weight: var(--main-fontweight) !important;
+  color: var(--main-txtcolor) !important;
+  height: 100vh;
+  width: 100%;
+  user-select: none;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a,
+ul,
+li,
+ol,
+span,
+button,
+th,
+td,
+div {
+  margin: 0;
+  padding: 0;
+  text-decoration: none !important;
+  list-style: none;
+  color: inherit;
+  font-size: 14px !important;
+  font-weight: 400;
+}
+.row {
+  width: 100%;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Scrollbar styles */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  cursor: pointer;
+}
+::-webkit-scrollbar:hover {
+width: 8px !important;
+height: 8px !important;
+cursor: pointer;
+}
+::-webkit-scrollbar-track {
+background: transparent;
+}
+::-webkit-scrollbar-thumb {
+background: #098de630;
+border-radius: 10px;
+cursor: pointer;
+}
+::-webkit-scrollbar-thumb:hover {
+background: var(--main-bluecolor) !important;
+cursor: pointer;
+width: 8px;
+height: 8px;
+}
+/* Scrollbar styles */
+
+.maincont {
+  width: 100%;
+  height: calc(100vh - 60px);
+  background: var(--main-bgcolor);
+  overflow: hidden;
+}
+.maincont-contentarea {
+  height: 100%;
+  padding: 16px;
+  position: relative;
+}
+.maincontent {
+  height: 100%;
+  width: 100%;
+}
+.main-content-head h3 {
+  font-weight: var(--main-fontweight);
+  line-height: 30px;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  font-size: 16px;
+  margin:0px;
+}
+.main-content-head button span {
+  margin-left: 5px;
+}
+.main-content-body {
+  height: calc(100% - 40px);
+  overflow: auto;
+  position: relative;
+  padding: 10px 15px;
+  border-radius: 0px 0px 4px 4px;
+}
+
+.main-content-body.tablist-cont {
+  overflow: hidden;
+}
+span.sub_title_text {
+  font-weight: 600;
+}
+label#popup_title {
+  margin: 0px;
+}
+#popup_title span {
+  margin-right: 5px;
+}
+#popup_title a {
+  cursor: pointer;
+  margin-right: 8px;
+}
+#popup_title a:hover {
+  color: #00a1e3;
+}
+#popup_title .rightareabtn {
+  margin-left: 0px !important;
+  margin-right: 8px;
+  min-width: 0px;
+}
+button.btn:focus {
+  box-shadow: none;
+}
+
+input.p-inputtext {
+  height: 36px;
+  border: 1px solid var(--main-bordercolor) !important;
+  font-size: 14px !important;
+  width: 250px !important;
+}
+
+.p-tabview .p-tabview-nav {
+  border: none !important;
+  background: transparent !important;
+}
+.p-tabview .p-tabview-panels {
+  background: transparent !important;
+  color: var(--main-txtcolor) !important;
+  padding: 15px 0px 0px !important;
+}
+.p-datatable .p-datatable-header {
+  background: transparent !important;
+  border: none !important;
+  border-width: unset !important;
+  padding: 0 !important;
+  font-weight: 400 !important;
+}
+.p-tabview .p-tabview-nav li .p-tabview-nav-link {
+    border-color: transparent !important; 
+    color: transparent !important;
+    background-color: transparent !important;
+    margin: 0px !important;
+    padding: 16px 16px 8px 16px !important;
+    border-width: 0 0 4px 0 !important;
+    box-shadow: none !important;
+}
+.p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+  border-color: #098de6 !important;
+}
+.p-tabview .p-tabview-nav li:not(.p-highlight):not(.p-disabled):hover .p-tabview-nav-link {
+  border-color: transparent;
+}
+
+.p-datatable-wrapper {
+  width: 100% !important;
+  margin-top: 10px;
+}
+.p-datatable .p-datatable-tbody > tr {
+  background: transparent !important;
+  height: 50px;
+}
+
+#tabs_screen .p-tabview .p-tabview-nav li{
+  width: 200px !important;
+}
+#tabs_screen .taskList-table-actions .pi{
+  color: #098de6 !important;
+}
+#tabs_screen .p-tabview-nav-content {
+  border: 1px solid #D0D0D0 !important;
+  background-color: #fff;
+  border-radius: 6px;
+  height: 70px;
+  width: 100%;
+}
+#tabs_screen th{
+  color: #232832;
+}
+
+span.taskscount {
+  font-size: 44px !important;
+  margin-right: 5px;
+  font-weight: 400 !important;
+}
+/* NEW STYLES */

@@ -65,6 +65,8 @@ import { RpaEnvironmentFormComponent } from './forms/rpa-environment-form/rpa-en
 import { SearchRpaPipe } from './rpa-home/Search.pipe';
 import { RpaConnectionManagerFormComponent } from './forms/rpa-connection-manager-form/rpa-connection-manager-form.component';
 import {MatCardModule} from '@angular/material/card';
+import { RpaConnectionManagerComponent } from './rpa-connection-manager/rpa-connection-manager.component';
+
 
 @NgModule({
   declarations: [
@@ -91,7 +93,8 @@ import {MatCardModule} from '@angular/material/card';
     RpaCredentialFormComponent,
     RpaEnvironmentFormComponent,
     SearchRpaPipe,
-    RpaConnectionManagerFormComponent
+    RpaConnectionManagerFormComponent,
+    RpaConnectionManagerComponent
   ],
   imports: [
     NgxMaterialTimepickerModule,

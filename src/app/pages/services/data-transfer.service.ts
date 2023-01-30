@@ -116,4 +116,11 @@ export class DataTransferService {
     this.vcmData.next(value);
   }
 
+  private usersList:BehaviorSubject<any>=new BehaviorSubject<any>(null)
+  tenantBased_UsersList=this.usersList.asObservable();
+
+  tenantBasedUsersList(value:any){
+    this.usersList.next(value);
+  }
+
 }

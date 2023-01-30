@@ -65,6 +65,9 @@ import {ProgressBarModule} from 'primeng/progressbar';
 import {InputTextModule} from 'primeng/inputtext';
 import { ProjectTaskListComponent } from './project-details-screen/project-task-list/project-task-list.component';
 import { SharedModule } from '../../shared/shared.module';
+import {CardModule} from 'primeng/card';
+import {TabViewModule} from 'primeng/tabview';
+import {MenuModule} from 'primeng/menu';
 const materialModules: any[] = [
     
     
@@ -110,8 +113,10 @@ const materialModules: any[] = [
     DropdownModule,
     ProgressBarModule,
     InputTextModule,
-    SharedModule
-    
+    SharedModule,
+    CardModule,
+    TabViewModule,
+    MenuModule
   ],
   providers:[
     BsModalRef, NotifierService,
