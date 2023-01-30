@@ -64,13 +64,3 @@
 .edit {
   cursor: pointer;
 }
-
-.departmentsearch {
-  position: relative;
-}
-
-.departmentsearch img.testplus {
-  position: absolute;
-  right: 20px;
-  top: 8px;
-}
