@@ -30,7 +30,7 @@
         <div class="main-content-body tablist-cont">
           <div class="h-100">
 
-            <div id="tabs_screen">
+            <div id="tabs_screen" class="h-100">
               <p-tabView #tabView (onChange)="onTabChanged($event, tabView)">
                 <p-tabPanel [header]="each.tabName" *ngFor="let each of _tabsList; let i = index" [selected]="i == 0">
                   <ng-template pTemplate="header">
@@ -39,7 +39,7 @@
                         <img src="../assets/images-n/projects/{{each.img_src}}" alt="">
                       </div>
                       <div class="status-data">
-                        <span class="tab-count">{{each.count}}</span>
+                        <span class="tab-count taskscount">{{each.count}}</span>
                         <span class="tab-text">{{each.tabName}}</span>
                       </div>
                     </div>
