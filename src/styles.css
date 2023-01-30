@@ -17,6 +17,8 @@
 @import "~@ng-select/ng-select/themes/default.theme.css";
 @import "~cmmn-js/dist/assets/diagram-js.css";
 
+@import '~primeicons/primeicons.css';
+
 /* @import '~highlight.js/styles/github.css'; */
 /* @import "assets/css/global.css"; */
 /* You can add global styles to this file, and also import other style files */
@@ -2677,7 +2679,6 @@ div {
   text-decoration: none !important;
   list-style: none;
   color: inherit;
-  font-family: 'Source Sans 3', sans-serif !important;
   font-size: 14px !important;
   font-weight: 400;
 }
@@ -2752,6 +2753,30 @@ height: 8px;
 .main-content-body.tablist-cont {
   overflow: hidden;
 }
+span.sub_title_text {
+  font-weight: 600;
+}
+label#popup_title {
+  margin: 0px;
+}
+#popup_title span {
+  margin-right: 5px;
+}
+#popup_title a {
+  cursor: pointer;
+  margin-right: 8px;
+}
+#popup_title a:hover {
+  color: #00a1e3;
+}
+#popup_title .rightareabtn {
+  margin-left: 0px !important;
+  margin-right: 8px;
+  min-width: 0px;
+}
+button.btn:focus {
+  box-shadow: none;
+}
 
 input.p-inputtext {
   height: 36px;
@@ -2777,10 +2802,19 @@ input.p-inputtext {
   font-weight: 400 !important;
 }
 .p-tabview .p-tabview-nav li .p-tabview-nav-link {
-  border: unset !important;
-  color: transparent !important;
-  background-color: transparent !important;
-  margin: 0px !important;
+    border-color: transparent !important; 
+    color: transparent !important;
+    background-color: transparent !important;
+    margin: 0px !important;
+    padding: 16px 16px 8px 16px !important;
+    border-width: 0 0 4px 0 !important;
+    box-shadow: none !important;
+}
+.p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+  border-color: #098de6 !important;
+}
+.p-tabview .p-tabview-nav li:not(.p-highlight):not(.p-disabled):hover .p-tabview-nav-link {
+  border-color: transparent;
 }
 
 .p-datatable-wrapper {
@@ -2788,7 +2822,8 @@ input.p-inputtext {
   margin-top: 10px;
 }
 .p-datatable .p-datatable-tbody > tr {
-  background: transparent;
+  background: transparent !important;
+  height: 50px;
 }
 
 #tabs_screen .p-tabview .p-tabview-nav li{
@@ -2808,4 +2843,9 @@ input.p-inputtext {
   color: #232832;
 }
 
+span.taskscount {
+  font-size: 44px !important;
+  margin-right: 5px;
+  font-weight: 400 !important;
+}
 /* NEW STYLES */

@@ -1,27 +1,3 @@
-span.sub_title_text {
-    font-weight: 600;
-}
-
-label#popup_title {
-    margin: 0px;
-}
-#popup_title span {
-    margin-right: 5px;
-}
-#popup_title a {
-    cursor: pointer;
-    margin-right: 8px;
-}
-#popup_title a:hover {
-    color: #00a1e3;
-}
-#popup_title .rightareabtn {
-    margin-left: 0px !important;
-    margin-right: 8px;
-    min-width: 0px;
-}
-
-
 .row.project-Information {
     border: 1px solid #dbdbdb;
     border-radius: 6px;
@@ -120,7 +96,7 @@ span.highimp {
 .collab {
     padding: 20px !important;
     border-radius: 6px 6px 0px 0px;
-    height: 624px;
+    height: 440px;
 }
 .row.lftusermsg {
     background: #EDF6FD;
@@ -155,7 +131,7 @@ span.highimp {
   margin-bottom: 0px;
 }
 label.colheads {
-    font-weight: 900;
+    font-weight: 600;
     font-size: 20px !important;
     margin-bottom: 20px;
 }
@@ -182,7 +158,7 @@ label.colheads {
   width:100%;
 }
 input.msgip {
-    width: 80%;
+    width: 88%;
     height: 56px;
     margin-right: 10px;
     border-radius: 10px;
@@ -256,9 +232,6 @@ p.qcard-name {
 .quick-actions button.btn.blue-btntext {
     padding: 0px 0px 0px 10px !important;
 }
-button.btn:focus {
-    box-shadow: none;
-}
 
 /* Overlay Styles */
 #overlayusers {
@@ -331,3 +304,9 @@ button.ep-pad {
   button.ep-pad:hover img.header_icon {
     filter: brightness(10) grayscale(1) brightness(10);
   }
+
+
+  .main-content-head .btn {
+    padding: 0px !important;
+    min-width: auto;
+}
