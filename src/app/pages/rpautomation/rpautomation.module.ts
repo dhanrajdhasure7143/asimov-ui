@@ -63,6 +63,8 @@ import { RpaDatabaseFormComponent } from './forms/rpa-database-form/rpa-database
 import { RpaCredentialFormComponent } from './forms/rpa-credential-form/rpa-credential-form.component';
 import { RpaEnvironmentFormComponent } from './forms/rpa-environment-form/rpa-environment-form.component';
 import { SearchRpaPipe } from './rpa-home/Search.pipe';
+import { RpaConnectionManagerFormComponent } from './forms/rpa-connection-manager-form/rpa-connection-manager-form.component';
+import {MatCardModule} from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -88,7 +90,8 @@ import { SearchRpaPipe } from './rpa-home/Search.pipe';
     RpaDatabaseFormComponent,
     RpaCredentialFormComponent,
     RpaEnvironmentFormComponent,
-    SearchRpaPipe
+    SearchRpaPipe,
+    RpaConnectionManagerFormComponent
   ],
   imports: [
     NgxMaterialTimepickerModule,
@@ -126,6 +129,7 @@ import { SearchRpaPipe } from './rpa-home/Search.pipe';
     NgbModalDraggableModule,
     ResizableModule,
     PopoverModule,
+    MatCardModule
   ],
   exports:[RpaSoLogsComponent,RpaSchedulerComponent],
   providers: [MatDatepickerModule,Rpa_Hints, BsModalRef, BsModalService,

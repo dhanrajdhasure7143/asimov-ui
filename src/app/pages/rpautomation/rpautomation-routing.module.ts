@@ -5,6 +5,7 @@ import { RpaConfigurationsComponent} from "./rpa-configurations/rpa-configuratio
 import { RpaHomeComponent } from './rpa-home/rpa-home.component';
 import { RpaAuditlogsComponent } from './rpa-auditlogs/rpa-auditlogs.component';
 import { RpaStudioDesignerComponent } from './rpa-studio-designer/rpa-studio-designer.component';
+import { RpaConnectionManagerFormComponent } from './forms/rpa-connection-manager-form/rpa-connection-manager-form.component';
 
 const routes: Routes = [
     {path:'', component:RpautomationComponent, children:[
@@ -12,6 +13,7 @@ const routes: Routes = [
       {path:'designer',component:RpaStudioDesignerComponent},
       {path:'configurations',  component:RpaConfigurationsComponent},
       {path:'auditlogs',component:RpaAuditlogsComponent},
+      {path:'connection',component:RpaConnectionManagerFormComponent},      
       {path:'**', redirectTo:'/home', pathMatch: 'full'}
     ]}
   ];

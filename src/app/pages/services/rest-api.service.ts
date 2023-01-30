@@ -1487,4 +1487,20 @@ getprocessnamesByLatestVersion()
   return this.http.get("/rpa-service/latest-version/process-name");
 }
 
+getAuthTypes(){
+  return this.http.get(`https://ezflow.dev.epsoftinc.com/sdk/get-authorization-type`);
+}
+
+testConnections(body){
+  return this.http.post(`https://ezflow.dev.epsoftinc.com/sdk/getTestApiCall`,body); 
+}
+
+getMethodTypes(){
+  return this.http.get(`https://ezflow.dev.epsoftinc.com/sdk/get-method-type`);
+}
+
+saveConnector(body){
+  return this.http.post(`https://ezflow.dev.epsoftinc.com/sdk/save-api-list`,body); 
+}
+
 }
