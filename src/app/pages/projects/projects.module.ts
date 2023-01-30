@@ -52,22 +52,11 @@ import { BacklogsCreateComponent } from './backlogs-create/backlogs-create.compo
 import { MatExpansionModule } from '@angular/material/expansion';
 import { ProjectRpaDesignComponent } from './project-rpa-design/project-rpa-design.component';
 import { NgbModalDraggableModule } from 'ngb-modal-draggable';
-import {TableModule} from 'primeng/table';
-import {ToastModule} from 'primeng/toast';
-import {CalendarModule} from 'primeng/calendar';
-import {SliderModule} from 'primeng/slider';
-import {MultiSelectModule} from 'primeng/multiselect';
-import {ContextMenuModule} from 'primeng/contextmenu';
-import {DialogModule} from 'primeng/dialog';
-import {ButtonModule} from 'primeng/button';
-import {DropdownModule} from 'primeng/dropdown';
-import {ProgressBarModule} from 'primeng/progressbar';
-import {InputTextModule} from 'primeng/inputtext';
 import { ProjectTaskListComponent } from './project-details-screen/project-task-list/project-task-list.component';
 import { SharedModule } from '../../shared/shared.module';
-import {CardModule} from 'primeng/card';
-import {TabViewModule} from 'primeng/tabview';
-import {MenuModule} from 'primeng/menu';
+import { AngularSplitModule } from 'angular-split';
+import { PrimengCustomModule } from 'src/app/primeng-custom/primeng-custom.module';
+
 const materialModules: any[] = [
     
     
@@ -102,21 +91,9 @@ const materialModules: any[] = [
     NgbModule,
     MatExpansionModule,
     NgbModalDraggableModule,
-    TableModule,
-    ToastModule,
-    CalendarModule,
-    SliderModule,
-    MultiSelectModule,
-    ContextMenuModule,
-    DialogModule,
-    ButtonModule,
-    DropdownModule,
-    ProgressBarModule,
-    InputTextModule,
     SharedModule,
-    CardModule,
-    TabViewModule,
-    MenuModule
+    AngularSplitModule.forRoot(),
+    PrimengCustomModule
   ],
   providers:[
     BsModalRef, NotifierService,
