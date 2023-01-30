@@ -16,7 +16,7 @@
                 <div class="container">
                     <form [formGroup]="connectorForm">
                         <div class="row prj-crt-form">
-                            <div class="col-md-12">
+                            <div class="col-md-12 d-flex">
                                 <div class="form-fields col-md-6 pl-0">
                                     <label class="label-control" for="programname"> Connector Name
                                         <span class="star">*</span>
@@ -35,7 +35,7 @@
                                     <span *ngIf="connectorForm.get('actionType').invalid && connectorForm.get('actionType').touched && !connectorForm.get('actionType').hasError('pattern')" class="errspan required"> Action Name Required* </span>
                                 </div>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-12 d-flex">
                                 <div class="form-fields col-md-6 pl-0">
                                     <label class="label-control" for="programname"> Method Type
                                         <span class="star">*</span>
