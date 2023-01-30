@@ -17,6 +17,7 @@ export class AdminScreenListComponent implements OnInit {
   dataSource:MatTableDataSource<any>;
   screenlist: any =[];
   loading:boolean = false;
+  columns_list:any =[]
   @ViewChild("paginator",{static:false}) paginator: MatPaginator;
   @ViewChild("sort",{static:false}) sort: MatSort;
 
@@ -42,6 +43,38 @@ export class AdminScreenListComponent implements OnInit {
     this.rest.getScreenList().subscribe(data=>{
     this.screenlist =data;
     this.dataSource= new MatTableDataSource(this.screenlist);  
+    this.columns_list = [
+      {
+        ColumnName: "Screen_Name",
+        DisplayName: "Screen Name",
+        ShowGrid: true,
+        ShowFilter: true,
+        filterWidget: "multiSelect",
+        filterType: "text",
+        sort: true,
+        multi: false,
+      },
+      {
+        ColumnName: "Table_Name",
+        DisplayName: "Table Name",
+        ShowGrid: true,
+        ShowFilter: true,
+        filterWidget: "multiSelect",
+        filterType: "text",
+        sort: true,
+        multi: false,
+      },
+      {
+        ColumnName: "action",
+        DisplayName: "Actions",
+        ShowGrid: true,
+        ShowFilter: true,
+        filterWidget: "multiSelect",
+        filterType: "text",
+        sort: true,
+        multi: false,
+      }
+    ]
     setTimeout(() => {
     this.dataSource.paginator=this.paginator;
     this.dataSource.sort = this.sort;

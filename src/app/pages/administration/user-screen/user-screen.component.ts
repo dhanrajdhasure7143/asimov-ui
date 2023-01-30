@@ -36,7 +36,6 @@ export class UserScreenComponent implements OnInit {
     private spinner: LoaderService
   ) {}
   ngOnInit(): void {
-    // this.selectedScreen=this.screensList[0];
     this.route.queryParams.subscribe((res: any) => {
       localStorage.setItem("screenId", res.Screen_ID);
       this.getUserScreen_List(res.Screen_ID);
@@ -95,7 +94,7 @@ export class UserScreenComponent implements OnInit {
   }
 
   deleteRecord(data: any) {
-   this.spinner.show();
+    this.spinner.show();
     this.rest
       .deleteRecord(
         this.selectedScreen.Table_Name,
@@ -123,7 +122,7 @@ export class UserScreenComponent implements OnInit {
       let val: any;
       let payload = { objects: [values] };
       if (this.updateDetails == undefined) {
-      this.spinner.show();
+        this.spinner.show();
         this.rest
           .createKPIserscreenData(selectedDashboardId, payload)
           .subscribe((data) => {
@@ -165,7 +164,6 @@ export class UserScreenComponent implements OnInit {
         let payload = {
           objects: [values],
         };
-        // values[this.primaryKey]=this.updateDetails[this.primaryKey];
         this.spinner.show();
         this.rest
           .updateFormDetails(

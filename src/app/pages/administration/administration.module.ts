@@ -41,11 +41,10 @@ import { UsersComponent } from './user-management/users/users.component';
 import { InviteUserComponent } from './user-management/users/invite-user/invite-user.component';
 import { ModifyUserComponent } from './user-management/users/modify-user/modify-user.component';
 import { UserScreenComponent } from './user-screen/user-screen.component';
-import { DynamicFormComponent } from './user-screen/dynamic-form/dynamic-form.component';
 import { AdminAddScreenComponent } from './admin-add-screen/admin-add-screen.component';
 import { AdminScreenListComponent } from './admin-screen-list/admin-screen-list.component';
-import { RemoveUnderscorePipe } from 'src/app/services/remove-underscore.pipe';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { ScreenGenerationDynamicFormComponent } from 'src/app/shared/screen-generation-dynamic-form/screen-generation-dynamic-form.component';
 
 const materialModules: any[] = [
     
@@ -54,8 +53,8 @@ const materialModules: any[] = [
 
 @NgModule({
   declarations: [AdministrationComponent, MyAccountComponent,CompareValidatorDirective, DepartmentsComponent, CreateDepartmentComponent, EditDepartmentComponent, UserManagementComponent, ChangePasswordComponent, UserPipePipe, UsersComponent, InviteUserComponent, ModifyUserComponent,
-    UserScreenComponent,DynamicFormComponent,
-    AdminAddScreenComponent,AdminScreenListComponent,RemoveUnderscorePipe],
+    UserScreenComponent,
+    AdminAddScreenComponent,AdminScreenListComponent],
   imports: [
     Ng2TelInputModule,
     CommonModule,
