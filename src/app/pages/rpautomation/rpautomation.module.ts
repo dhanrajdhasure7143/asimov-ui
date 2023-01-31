@@ -63,7 +63,10 @@ import { RpaDatabaseFormComponent } from './forms/rpa-database-form/rpa-database
 import { RpaCredentialFormComponent } from './forms/rpa-credential-form/rpa-credential-form.component';
 import { RpaEnvironmentFormComponent } from './forms/rpa-environment-form/rpa-environment-form.component';
 import { SearchRpaPipe } from './rpa-home/Search.pipe';
+import { RpaConnectionManagerFormComponent } from './forms/rpa-connection-manager-form/rpa-connection-manager-form.component';
 import { RpaConnectionManagerComponent } from './rpa-connection-manager/rpa-connection-manager.component';
+import { CardModule } from 'primeng/card';
+
 
 @NgModule({
   declarations: [
@@ -90,6 +93,7 @@ import { RpaConnectionManagerComponent } from './rpa-connection-manager/rpa-conn
     RpaCredentialFormComponent,
     RpaEnvironmentFormComponent,
     SearchRpaPipe,
+    RpaConnectionManagerFormComponent,
     RpaConnectionManagerComponent
   ],
   imports: [
@@ -128,6 +132,7 @@ import { RpaConnectionManagerComponent } from './rpa-connection-manager/rpa-conn
     NgbModalDraggableModule,
     ResizableModule,
     PopoverModule,
+    CardModule
   ],
   exports:[RpaSoLogsComponent,RpaSchedulerComponent],
   providers: [MatDatepickerModule,Rpa_Hints, BsModalRef, BsModalService,

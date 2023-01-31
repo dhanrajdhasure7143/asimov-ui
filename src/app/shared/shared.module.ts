@@ -9,7 +9,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
-
 import { UploadCreateDropBpmnComponent } from '../shared/upload-create-drop-bpmn/upload-create-drop-bpmn.component';
 import { BpmnDiagramComponent } from './bpmn-diagram/bpmn-diagram.component';
 import { CronEditorModule } from './cron-editor/cron-editor.module';
@@ -18,21 +17,12 @@ import { SearchPipe } from './pipes/search.pipe';
 import { DeployNotationComponent } from './deploy-notation/deploy-notation.component';
 import { NgbModalDraggableModule } from 'ngb-modal-draggable';
 import { DynamicTableComponent } from './dynamic-table/dynamic-table.component';
-import {TableModule} from 'primeng/table';
-import {ToastModule} from 'primeng/toast';
-import {CalendarModule} from 'primeng/calendar';
-import {SliderModule} from 'primeng/slider';
-import {MultiSelectModule} from 'primeng/multiselect';
-import {ContextMenuModule} from 'primeng/contextmenu';
-import {DialogModule} from 'primeng/dialog';
-import {ButtonModule} from 'primeng/button';
-import {DropdownModule} from 'primeng/dropdown';
-import {ProgressBarModule} from 'primeng/progressbar';
-import {InputTextModule} from 'primeng/inputtext';
-import { NgSelectComponent, NgSelectModule } from '@ng-select/ng-select';
-import { Ng2TelInputModule } from 'ng2-tel-input';
+import { PrimengCustomModule } from '../primeng-custom/primeng-custom.module';
 import { RemoveUnderscorePipe } from '../services/remove-underscore.pipe';
 import { ScreenGenerationDynamicFormComponent } from './screen-generation-dynamic-form/screen-generation-dynamic-form.component';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { Ng2TelInputModule } from 'ng2-tel-input';
+
 
 @NgModule({
     declarations: [UploadCreateDropBpmnComponent, BpmnDiagramComponent, ProcessCategoryOverlayComponent, SearchPipe, DeployNotationComponent, DynamicTableComponent, RemoveUnderscorePipe,ScreenGenerationDynamicFormComponent],
@@ -45,18 +35,7 @@ import { ScreenGenerationDynamicFormComponent } from './screen-generation-dynami
         MatOptionModule, MatSelectModule,
         MatTooltipModule,
         NgbModalDraggableModule,
-        TableModule,
-        ToastModule,
-        CalendarModule,
-        SliderModule,
-        MultiSelectModule,
-        ContextMenuModule, 
-        DialogModule, 
-        ButtonModule,
-        DropdownModule,
-        ProgressBarModule,
-        InputTextModule,
-        ReactiveFormsModule,
+        PrimengCustomModule,
         NgSelectModule,
         Ng2TelInputModule
     ],
