@@ -19,6 +19,7 @@ export class DynamicTableComponent implements OnInit {
   @Output("onEdit") editEvent:any= new EventEmitter<any>();
   @Input()selectedScreen:any;
   @Output() selectedData = new EventEmitter<any[]>();
+  @Input("deleteHide") public deleteHide:boolean;
   _selectedColumns: any[];
   customers: any = [];
   userName: any;
@@ -35,8 +36,6 @@ export class DynamicTableComponent implements OnInit {
 
   ngOnChanges() {
     this._selectedColumns = this.columns_list;
-    console.log(this.columns_list);
-    console.log(this.table_data);
     if (this.table_data.length > 0) this.loading = false;
   }
 

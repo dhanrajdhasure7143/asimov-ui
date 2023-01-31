@@ -1,74 +1,12 @@
-/* 
-
-.card {
-  width: 20%;
-  position: absolute;
-  top: 32px;
-  left: 247px;
-}
-
-.container.card_layout {
-  width: 772px;
-  position: absolute;
-  top: 9%;
-  left: 15%;
-  margin: -17px 0 0 -7px;
-  height: auto;
-}
-
-.card_layout mat-card.mat2-card.mat-card,
-.card-form {
-  width: 100% !important;
-}
-
-form.add-form {
-  width: 85% !important;
-  margin-left: 39px;
-}
-
-.col-md-4.plan_detail_box {
-  left: 91px;
-} */
-
 .h-scroll {
   height: calc(100vh - 130px);
   overflow: auto;
 }
 
-/* table {
-  width: 72%;
-  overflow: auto;
-} */
-
-/* .mat-header-cell {
-  background: #f0fbfd;
-  font-weight: 500;
-  font-size: 15px;
-  color: black;
+.editButton {
+  border: none !important;
 }
 
-.screen-paginator {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  min-height: 56px;
-  padding: 0 8px;
-  flex-wrap: wrap-reverse;
-  width: 70%;
-} */
-
-.modal-body {
-  max-height: 400px;
-  overflow-y: auto;
-}
-
-.editButton{
-  border : none !important;
-}
 .btn-continue {
   left: 952px;
-}
-table {
-  width: 72%;
-  overflow: auto;
 }

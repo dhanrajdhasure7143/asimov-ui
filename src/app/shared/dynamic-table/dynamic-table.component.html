@@ -169,14 +169,14 @@
                             <span *ngIf="selectedScreen">
                                 <button placement="bottom" class="editButton" [disabled]="!selectedScreen.Allow_Edit" (click)="edit(rowData)">
                                     <img src="../../../../assets/images/Projects/edit-black.svg" alt="" class="testplus clickable"> </button>
-                                <button class="editButton" [disabled]="!selectedScreen.Allow_Delete" (click)="deleteRow(rowData)">
+                                <button  class="editButton" [disabled]="!selectedScreen.Allow_Delete" (click)="deleteRow(rowData)">
                                     <img src="../../../../../assets/images/Projects/delete-black.svg" class="testplus clickable" alt="close">
                                 </button>
                             </span>
                             <span *ngIf="!selectedScreen">
                                 <button placement="bottom" class="editButton" (click)="edit(rowData)">
                                     <img src="../../../../assets/images/Projects/edit-black.svg" alt="" class="testplus clickable"> </button>
-                                <button class="editButton" (click)="deleteRow(rowData)">
+                                <button *ngIf="!deleteHide" class="editButton" (click)="deleteRow(rowData)">
                                     <img src="../../../../../assets/images/Projects/delete-black.svg" class="testplus clickable" alt="close">
                                 </button>
                             </span>

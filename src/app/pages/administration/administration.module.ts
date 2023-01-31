@@ -47,6 +47,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { ScreenGenerationDynamicFormComponent } from 'src/app/shared/screen-generation-dynamic-form/screen-generation-dynamic-form.component';
 import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
+import { PrimengCustomModule } from 'src/app/primeng-custom/primeng-custom.module';
 
 const materialModules: any[] = [
     
@@ -78,6 +79,7 @@ const materialModules: any[] = [
     ModalModule.forRoot(),
     MatProgressBarModule,NgSelectModule,Ng5SliderModule,
     SharedModule,
+    PrimengCustomModule
   ],
   providers:[
     BsModalRef, 

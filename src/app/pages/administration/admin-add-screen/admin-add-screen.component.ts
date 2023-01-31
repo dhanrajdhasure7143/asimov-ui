@@ -1,13 +1,8 @@
-import { Component, OnInit, TemplateRef, ViewChild } from "@angular/core";
+import { Component, Input, OnInit, TemplateRef, ViewChild } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { MatPaginator } from "@angular/material/paginator";
-import { MatTableDataSource } from "@angular/material/table";
 import { ActivatedRoute, Router } from "@angular/router";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { Template } from "@angular/compiler/src/render3/r3_ast";
 import { RestApiService } from "../../services/rest-api.service";
 import Swal from "sweetalert2";
-import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
 
 @Component({
   selector: "app-admin-add-screen",
@@ -17,10 +12,9 @@ import { BsModalRef, BsModalService } from "ngx-bootstrap/modal";
 export class AdminAddScreenComponent implements OnInit {
   public insertForm: FormGroup;
   public updateColumnForm: FormGroup;
-  data: any = [];
-  columnNames: any;
+  tableData: any = [];
   columns_list: any = [];
-  tabledata: any = [];
+  tableListData: any = [];
   textAlign: any = ["Right", "Left", "Center"];
   loading: boolean = false;
   tablehide: boolean = false;
@@ -31,7 +25,6 @@ export class AdminAddScreenComponent implements OnInit {
   elementId: any;
   updateColumndata: any = [];
   buttonDisable: boolean = false;
-  editbutton: boolean = false;
   displayData: any;
   elementData: any = [];
   showCheckbox: boolean = false;
@@ -152,14 +145,13 @@ export class AdminAddScreenComponent implements OnInit {
         this.display = false;
         Swal.fire("Success", "Screen Updated Successfully!", "success");
         this.loading = false;
-        
       });
   }
 
   getListofTables() {
     this.loading = true;
     this.rest.getListOfTables().subscribe((data) => {
-      this.tabledata = data;
+      this.tableListData = data;
       this.loading = false;
     });
   }
@@ -168,9 +160,8 @@ export class AdminAddScreenComponent implements OnInit {
     this.loading = true;
     this.tablehide = true;
     this.rest.getTabledataAdmin(tablename.value).subscribe((data) => {
-      this.data = data;
-      this.columns_list= this.data
-      console.log(this.columns_list);
+      this.tableData = data;
+      this.columns_list = this.tableData;
       this.columns_list = [
         {
           ColumnName: "column_name",
@@ -192,8 +183,7 @@ export class AdminAddScreenComponent implements OnInit {
           sort: true,
           multi: false,
         },
-      ]
-      this.editbutton = true;
+      ];
       this.loading = false;
     });
   }
@@ -203,7 +193,7 @@ export class AdminAddScreenComponent implements OnInit {
     let screenList: any;
     this.rest.getScreenList().subscribe((data) => {
       screenList = data;
-      this.isDisabled = true;   
+      this.isDisabled = true;
       let filterData = screenList.find(
         (data: any) => data.Screen_ID == this.screen_id
       );
@@ -229,7 +219,7 @@ export class AdminAddScreenComponent implements OnInit {
       this.tablehide = true;
       this.rest.getElementTable(this.screen_id).subscribe((data) => {
         this.elementData = data;
-        this.data = this.elementData
+        this.tableData = this.elementData;
         console.log(this.elementData);
         this.columns_list = [
           {
@@ -271,7 +261,7 @@ export class AdminAddScreenComponent implements OnInit {
             filterType: "text",
             sort: true,
             multi: false,
-          }
+          },
         ];
         // this.columnNames = [
         //   "ColumnName",
@@ -279,7 +269,7 @@ export class AdminAddScreenComponent implements OnInit {
         //   "data_type",
         //   "actions",
         // ];
-        
+
         // this.dataSource = new MatTableDataSource(this.elementData);
         // this.dataSource.paginator = this.paginator;
         this.loading = false;
@@ -325,44 +315,30 @@ export class AdminAddScreenComponent implements OnInit {
       this.savedata = data;
       this.columns_list = this.savedata;
       console.log(this.savedata);
-      this.data=this.savedata
+      this.tableData = this.savedata;
       this.columns_list = [
         {
           ColumnName: "ColumnName",
           DisplayName: "Column Name",
           ShowGrid: true,
-          ShowFilter: true,
-          filterWidget: "multiSelect",
-          filterType: "text",
-          sort: true,
-          multi: false,
+          sort: true
         },
         {
           ColumnName: "DisplayName",
           DisplayName: "Display Name",
-          ShowFilter: true,
           ShowGrid: true,
-          filterWidget: "normal",
-          filterType: "text",
           sort: true,
-          multi: false,
-        
         },
         {
           ColumnName: "action",
           DisplayName: "Actions",
           ShowGrid: true,
-          ShowFilter: true,
-          filterWidget: "normal",
-          filterType: "text",
-          sort: true,
-          multi: false,
+          sort: true
         },
-      ]
+      ];
       Swal.fire("Success", "Screen Saved successfully !", "success");
       this.loading = false;
       this.buttonDisable = true;
-      this.editbutton = false;
     }),
       (err: any) => {
         Swal.fire("Error", "Unable to Save!", "error");

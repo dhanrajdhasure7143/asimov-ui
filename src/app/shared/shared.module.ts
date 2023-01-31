@@ -37,7 +37,9 @@ import { Ng2TelInputModule } from 'ng2-tel-input';
         NgbModalDraggableModule,
         PrimengCustomModule,
         NgSelectModule,
-        Ng2TelInputModule
+        Ng2TelInputModule,
+        ReactiveFormsModule,
+        FormsModule
     ],
     providers: [],
     exports: [UploadCreateDropBpmnComponent, BpmnDiagramComponent, ProcessCategoryOverlayComponent, SearchPipe, DeployNotationComponent, DynamicTableComponent,ScreenGenerationDynamicFormComponent]
