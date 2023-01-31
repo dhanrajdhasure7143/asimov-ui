@@ -45,6 +45,8 @@ import { AdminAddScreenComponent } from './admin-add-screen/admin-add-screen.com
 import { AdminScreenListComponent } from './admin-screen-list/admin-screen-list.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ScreenGenerationDynamicFormComponent } from 'src/app/shared/screen-generation-dynamic-form/screen-generation-dynamic-form.component';
+import { CardModule } from 'primeng/card';
+import { DialogModule } from 'primeng/dialog';
 
 const materialModules: any[] = [
     
@@ -75,7 +77,7 @@ const materialModules: any[] = [
     MatMenuModule,MatButtonModule,NgxSpinnerModule,NgxPaginationModule,
     ModalModule.forRoot(),
     MatProgressBarModule,NgSelectModule,Ng5SliderModule,
-    SharedModule
+    SharedModule,
   ],
   providers:[
     BsModalRef, 
