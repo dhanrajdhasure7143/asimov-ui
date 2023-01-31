@@ -1,7 +1,7 @@
 <div class="maincontent">
     <div class="h-100">
         <div class="row main-content-head">
-            <div class="col-md-4">
+            <div class="col-md-4 pl-0">
                 <h3>
                     <label id="popup_title">
                         <a routerLink="/pages/projects/listOfProjects"><img src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow"></a>
@@ -11,7 +11,7 @@
                     </span>
                 </h3>
             </div>
-            <div class="col-md-8 text-right">
+            <div class="col-md-8 pr-0 text-right">
                 <button class="btn">
                     <img src="./../../../../assets/images-n/projects/Open.svg" alt="Open" >
                     <!-- <span>Open</span> -->
@@ -46,7 +46,7 @@
                     <div class="col-md-1 p-0">
                         <div class="row project-status">
                             <img *ngIf="projectDetails.status == 'Closed'" src="./../../../../assets/images-n/projects/completed-tasks.svg" alt="project-status-icon" >
-                            <img *ngIf="projectDetails.status != 'Closed'" src="./../../../../assets/images-n/projects/inprogress-tasks.svg.svg" alt="project-status-icon" >
+                            <img *ngIf="projectDetails.status != 'Closed'" src="./../../../../assets/images-n/projects/inprogress-tasks.svg" alt="project-status-icon" >
                             <p>{{projectDetails.status}}</p>
                         </div>
                     </div> 

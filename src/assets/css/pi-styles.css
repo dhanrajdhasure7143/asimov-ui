@@ -617,10 +617,7 @@ button{
   margin-left: 16px;
   height: 40px
 }
-label{
-    margin-top: 7px;
-      font-size: large;
-  }
+
   .rpa-logo{
     height: 44px;
     margin-left: -8px;
@@ -755,10 +752,7 @@ label{
   background-color: transparent;
   z-index: 2;
 }
-.row{
-  margin-left: 0;
-  margin-right: 0;
-}
+
 .mainDiffContainer{
   border: 1px solid black;
   display: inline-flex;
