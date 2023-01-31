@@ -64,7 +64,6 @@ import { RpaCredentialFormComponent } from './forms/rpa-credential-form/rpa-cred
 import { RpaEnvironmentFormComponent } from './forms/rpa-environment-form/rpa-environment-form.component';
 import { SearchRpaPipe } from './rpa-home/Search.pipe';
 import { RpaConnectionManagerFormComponent } from './forms/rpa-connection-manager-form/rpa-connection-manager-form.component';
-import {MatCardModule} from '@angular/material/card';
 import { RpaConnectionManagerComponent } from './rpa-connection-manager/rpa-connection-manager.component';
 import { CardModule } from 'primeng/card';
 
@@ -133,7 +132,6 @@ import { CardModule } from 'primeng/card';
     NgbModalDraggableModule,
     ResizableModule,
     PopoverModule,
-    MatCardModule,
     CardModule
   ],
   exports:[RpaSoLogsComponent,RpaSchedulerComponent],
