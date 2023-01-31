@@ -1,0 +1,56 @@
+<div class="h-100">
+  <mat-card id="projects_list_screen" class="h-100">
+    <div class="row module-heading title">
+      <span class="module-back-button" routerLink="/pages/home">
+        <i aria-hidden="true" class="fas fa-arrow-left"></i>
+      </span>
+      <span class="module-header-title">Screen Generation</span>
+    </div>
+    <div class="module-heading title">
+      <div class="col-md-12 p-0">
+        <div class="col-md-12 p-0 env-data-tool text-right">
+          <div>
+            <button
+              class="btn btn-primary"
+              style="float: right"
+              (click)="addNew()"
+            >
+              Add New
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="department-body">
+        <app-dynamic-table
+          [table_data]="screenlist"
+          [screenTable]="'common'"
+          [columns_list]="columns_list"
+          (onEdit)="editScreen($event)"
+          (deleteItem)="deleteScreen($event)"
+        ></app-dynamic-table>
+        <span *ngIf="screenlist.length == 0">
+          <h4 style="text-align: center">No Records Found</h4>
+        </span>
+      <div class="">
+        <mat-paginator
+          #paginator
+          [pageSize]="10"
+          [pageSizeOptions]="[5, 10, 25, 50]"
+          [showFirstLastButtons]="true"
+          class="newpaginationdiv"
+        ></mat-paginator>
+      </div>
+    </div>
+  </mat-card>
+</div>
+
+<div class="spinoverlay" *ngIf="loading">
+  <div class="spincenter">
+    <img
+      src="../../../../assets/images/EZFlow_Loader.gif"
+      class="ezflow-loader"
+      alt="EZFlow_Loader"
+    />
+  </div>
+</div>

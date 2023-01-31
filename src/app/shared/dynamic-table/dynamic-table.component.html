@@ -133,7 +133,7 @@
             </tr> -->
         </ng-template>
 
-        <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <ng-template pTemplate="body" let-rowData let-data let-columns="columns">
             <tr>
                 <td *ngIf="checkBoxShow">
                 <p-tableCheckbox [value]="rowData"  (click)="selectRow()"></p-tableCheckbox>
@@ -156,19 +156,35 @@
                         {{rowData[col.multiOptions[0]]}} <br>
                         <span> {{rowData[col.multiOptions[1]]}} </span>
                     </span>
-
+                      <span *ngIf="col.ColumnName!='action' && col.multi">
+                        {{ rowData[col.ColumnName]?rowData[col.ColumnName]:'-' }}
+                      </span>
                     <span *ngIf="col.ColumnName == 'action'">
                         <div class="newinntalx">
-                            <a class="clickable text-dark" (click)="viewDetailsbyId(rowData)" matTooltip="Go To Details">
+                            <!-- <a class="clickable text-dark" (click)="viewDetailsbyId(rowData)" matTooltip="Go To Details">
                               <img src="../../../../../assets/images/Projects/eye-show.svg" alt="" class="default-img">
                               <img src="../../../../../assets/images/Projects/eye-show-blue.svg" alt="" class="hover-img">
-                            </a>
-
-                            <a (click)="deleteRow(rowData)" *ngIf="(!(this.userRoles.includes('System Admin')) && userName==rowData[col.createdBy])
+                            </a> -->
+                            
+                            <span *ngIf="selectedScreen">
+                                <button placement="bottom" class="editButton" [disabled]="!selectedScreen.Allow_Edit" (click)="edit(rowData)">
+                                    <img src="../../../../assets/images/Projects/edit-black.svg" alt="" class="testplus clickable"> </button>
+                                <button  class="editButton" [disabled]="!selectedScreen.Allow_Delete" (click)="deleteRow(rowData)">
+                                    <img src="../../../../../assets/images/Projects/delete-black.svg" class="testplus clickable" alt="close">
+                                </button>
+                            </span>
+                            <span *ngIf="!selectedScreen">
+                                <button placement="bottom" class="editButton" (click)="edit(rowData)">
+                                    <img src="../../../../assets/images/Projects/edit-black.svg" alt="" class="testplus clickable"> </button>
+                                <button *ngIf="!deleteHide" class="editButton" (click)="deleteRow(rowData)">
+                                    <img src="../../../../../assets/images/Projects/delete-black.svg" class="testplus clickable" alt="close">
+                                </button>
+                            </span>
+                            <!-- <a (click)="deleteRow(rowData)" *ngIf="(!(this.userRoles.includes('System Admin')) && userName==rowData[col.createdBy])
                             || (this.userRoles.includes('System Admin'))" matTooltip="Delete Project">
                            <img src="../../../../../assets/images/Projects/delete-black.svg" alt="" class="default-img">
                            <img src="../../../../../assets/images/Projects/delete-red.svg" alt="" class="hover-img">
-                         </a>
+                         </a> -->
                            </div>
                     </span>
 
@@ -209,7 +225,7 @@
         </ng-template> -->
         <ng-template pTemplate="emptymessage">
             <tr>
-                <td  style="text-align: center;" colspan="7">No customers found</td>
+                <td  style="text-align: center;" colspan="7">No records found</td>
             </tr>
         </ng-template>
     </p-table>

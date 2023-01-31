@@ -1,0 +1,12 @@
+.h-scroll {
+  height: calc(100vh - 130px);
+  overflow: auto;
+}
+
+.editButton {
+  border: none !important;
+}
+
+.btn-continue {
+  left: 952px;
+}

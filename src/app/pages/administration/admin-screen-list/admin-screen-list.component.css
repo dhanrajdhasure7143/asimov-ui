@@ -1,0 +1,43 @@
+.main-content {
+  height: 100%;
+  padding: 16px;
+  /* padding-bottom: 110px; */
+  overflow: hidden;
+  /* position: relative; */
+  background-color: #e3eaef;
+  box-shadow: 0px 0px 13px 0px rgb(236 236 241 / 44%);
+}
+
+
+
+.title {
+  font-size: 20px;
+  margin-left: 10px;
+  color: rgb(89, 94, 94);
+  margin-top: 15px;
+}
+
+.head {
+  height: 50px;
+}
+
+.card {
+  box-shadow: 0px 1px 10px rgb(0 21 50 / 10%) !important;
+  /* height: 70px; */
+  /* margin-top: 50px; */
+}
+
+.menuLine {
+  margin-top: 10px;
+}
+
+.closeRed {
+  margin-left: 10px;
+  cursor: pointer;
+  width: 12px;
+  height: 12px;
+}
+
+.edit {
+  cursor: pointer;
+}
