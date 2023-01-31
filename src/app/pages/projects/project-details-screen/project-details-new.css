@@ -310,3 +310,49 @@ button.ep-pad {
     padding: 0px !important;
     min-width: auto;
 }
+
+.right_split {
+    background-color: white !important;
+  }
+  
+  .minimumwidth {
+    min-width: 300px !important;
+  }
+  
+  .right_split .rpa-modal-close img.expandsvgimg {
+    margin-right: 10px;
+  }
+  .own-overlay {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1040;
+  }
+  
+  .right_split {
+    background-color: white !important;
+  }
+  .dynamic-forms-modal{
+    padding-left: 60px !important;
+    margin-top: 52px !important;
+ }
+ 
+ .dynamic-forms-modal .rpa-modal-content{
+   
+   box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%) !important;
+ }
+
+ .right_split .rpa-modal-close img.expandsvgimg {
+    margin-right: 10px;
+  }
+  .modal-body.actions-mbody {
+    height: calc(100% - 135px);
+    overflow: hidden auto;
+    font-size:15px;
+  }
+
+  .status-data {
+    vertical-align: middle;
+    color: black !important;
+  }

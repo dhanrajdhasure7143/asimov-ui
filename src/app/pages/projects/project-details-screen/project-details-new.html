@@ -36,7 +36,7 @@
                   <mat-menu #menu="matMenu">
                     <button class="ep-pad" (click)='taskListView()'> Tasks</button>
                     <button class="ep-pad"> Documents </button>
-                    <button class="ep-pad" (click)='onboardUsers()'>Users</button>
+                    <button class="ep-pad" (click)='openUsersOverlay()'>Users</button>
                   </mat-menu>
             </div>
         </div>
@@ -195,7 +195,7 @@
                         <!-- <button class="btn blue-btntext">
                             <a><span> </span></a>
                         </button> -->
-                        <button class="btn blue-btntext"  (click)="onboardUsers()">
+                        <button class="btn blue-btntext"  (click)="openUsersOverlay()">
                             <a><span> Users</span></a>
                         </button>
                         <button class="btn blue-btntext">
@@ -285,8 +285,134 @@
 
 
 
-<!-- Onboard Users OVerlay -->
-<div id="overlayusers" style="display:none;" >
+
+
+
+
+
+<div class="own-overlay rpa-modal dynamic-forms-modal" [hidden]="!hiddenPopUp" style="display: block">
+    <as-split direction="horizontal" [useTransition]="true" (dragEnd)="onDragEnd($event)" #splitEl>
+        <as-split-area [size]="areas[0].size" order="areas[0].order">
+        </as-split-area>
+        <!-- minSize="200" maxSize="300" -->
+        <as-split-area [size]="areas[1].size" order="areas[1].order" [minSize]="splitAreamin_size">
+            <div class="right_split">
+                <div class="rpa-modal-header">
+                    <!-- <ul class="nav nav-tabs">
+                        <li class="nav-item" (click)="onUsersTab('new_users')">
+                            <a data-toggle="tab" href="#onboarduserstab" class="nav-link active">
+                                New Users
+                                <span> (03 Users selected) </span>
+                            </a>
+                        </li>
+                        <li class="nav-item" (click)="onUsersTab('existing')">
+                            <a class="nav-link">Existing Users</a>
+                        </li>
+                        <li class="close">
+                            <img *ngIf="isShowExpand" src="../../../../assets/images/RPA/Expand-In.svg"
+                            (click)="minimizeFullScreen()" class="expandsvgimg" />
+                        <img *ngIf="!isShowExpand" src="../../../../assets/images/RPA/Expand-Out.svg"
+                            (click)="expandFullScreen()" class="expandsvgimg" />
+                            <a (click)="closeFun()"><img src="./../../../../assets/images-n/projects/close-circle-line.svg" alt="close" ></a>
+                        </li>                
+                    </ul> -->
+
+                    <p-tabView #tabView (onChange)="onUsersTab($event.index)">
+                        <p-tabPanel>
+                            <ng-template pTemplate="header">
+                                <div class="status-tabs newstatu">
+                                  <div class="status-data">
+                                    <h3>New Users <span *ngIf="checkBoxselected.length >0"> ({{checkBoxselected.length}} Users selected) </span> </h3>
+                                  </div>
+                                </div>
+                              </ng-template>
+                        </p-tabPanel>
+                        <p-tabPanel>
+                            <ng-template pTemplate="header">
+                                <div class="status-tabs newstatu">
+                                  <div class="status-data">
+                                    <h4>Existing Users</h4>
+                                  </div>
+                                </div>
+                              </ng-template>
+                        </p-tabPanel>
+                    </p-tabView>
+                    <span class="close">
+                        <img *ngIf="isShowExpand" src="../../../../assets/images/RPA/Expand-In.svg"
+                        (click)="minimizeFullScreen()" class="expandsvgimg" />
+                    <img *ngIf="!isShowExpand" src="../../../../assets/images/RPA/Expand-Out.svg"
+                        (click)="expandFullScreen()" class="expandsvgimg" />
+                        <a (click)="closeOverlay()"><img src="./../../../../assets/images-n/projects/close-circle-line.svg" alt="close" ></a>
+                    </span>
+                    
+                    <!-- <span class="rpa-modal-close">
+                        <img *ngIf="isShowExpand" src="../../../../assets/images/RPA/Expand-In.svg"
+                            (click)="minimizeFullScreen()" class="expandsvgimg" />
+                        <img *ngIf="!isShowExpand" src="../../../../assets/images/RPA/Expand-Out.svg"
+                            (click)="expandFullScreen()" class="expandsvgimg" />
+                        <img src="../../../../assets/images/RPA/icon_latest/close.svg" (click)="closeFun()" alt="" />
+                    </span> -->
+                </div>
+                <div class="modal-body actions-mbody actionsoverlay-mbody">
+                    <div class="tab-pane">
+                        <div class="tablediv">
+                            <p-table #dt1 [value]="users_tableList" [globalFilterFields]="['displayName','user_name']" [columns]="columns_list" [(selection)]="checkBoxselected" [resizableColumns]="true" responsiveLayout="scroll" dataKey="id" >
+                                <ng-template pTemplate="caption">
+                                    <div class="p-d-flex" *ngIf="users_tabIndex != 1">
+                                        <p-dropdown [options]="roles_list"  [style]="{minWidth: '200px'}" [(ngModel)]="selectedRole" (onChange)="onChangeRole($event)" optionLabel="name"></p-dropdown>
+                                        <span class="p-input-icon-right">
+                                            <i class="pi pi-search"></i>
+                                            <input type="text" pInputText placeholder="Search" class="p-inputtext-lg" style="width:auto" (input)="dt1.filterGlobal($event.target.value, 'contains')" >
+                                        </span>
+                                    </div>
+                                </ng-template>
+                                <ng-template pTemplate="header" let-columns>
+                                    <tr *ngIf="users_tabIndex == 1">
+                                        <th *ngFor="let col of columns">{{col.DisplayName}}
+                                        </th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-rowData let-columns="columns">
+                                    <tr>
+                                        <td *ngIf="users_tabIndex != 1"> <p-tableCheckbox [value]="rowData"></p-tableCheckbox></td>
+                                        <td *ngFor="let col of columns">
+                                            <span>{{rowData[col.ColumnName]}}</span>
+                                            <span *ngIf="col.ColumnName == 'action'">
+                                                <div class="newinntalx">
+                                                    <a (click)="deleteuserById(rowData)">
+                                                   <img src="../../../../../assets/images/Projects/delete-black.svg" alt="" class="default-img">
+                                                   <img src="../../../../../assets/images/Projects/delete-red.svg" alt="" class="hover-img">
+                                                 </a>
+                                                </div>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="emptymessage">
+                                    <tr>
+                                        <td  style="text-align: center;" colspan="7">No Users found</td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                        <div class="row footerbtns justify-content-end" *ngIf="users_tabIndex != 1">
+                            <button class="btn blue-btntext">Cancel</button>
+                            <button class="btn btn-onboard">Onboard Users</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </as-split-area>
+    </as-split>
+</div>
+
+
+
+
+
+
+
+<!-- <div id="overlayusers" style="display:none;" >
     <div class="userstabsblock">
             <ul class="nav nav-tabs">
                 <li class="nav-item">
@@ -454,4 +580,4 @@
                 </div>
             </div>
     </div>
-</div>
+</div> -->
