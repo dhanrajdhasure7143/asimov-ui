@@ -92,11 +92,6 @@
   position: relative  !important;
 }
 
-/* need to remove
-.dropdown-menu::-webkit-scrollbar {
-  display: block;
-} */
-
 .imageI{
   width: 100%;
 }

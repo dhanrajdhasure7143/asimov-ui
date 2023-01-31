@@ -221,7 +221,7 @@
 
 <div class="" *ngIf="screenTable=='projectList'">
     <p-table #dt1 [value]="table_data" [columns]="selectedColumns" [reorderableColumns]="true" [resizableColumns]="true" responsiveLayout="scroll"  dataKey="id"
-    [scrollable]="true" scrollHeight="370px">
+    [scrollable]="true" scrollHeight="355px">
         <ng-template pTemplate="caption">
             <div class="p-d-flex">
                 <p-multiSelect [options]="columns_list" [(ngModel)]="selectedColumns" optionLabel="DisplayName"
@@ -298,7 +298,7 @@
 
 
 <div class="" *ngIf="screenTable=='taskList'">
-    <p-table #dt1 [value]="table_data" [columns]="selectedColumns" [reorderableColumns]="true" [resizableColumns]="true" responsiveLayout="scroll"  dataKey="id" selectionMode="single" [(selection)]="selectedItem" [scrollable]="true" scrollHeight="370px">
+    <p-table #dt1 [value]="table_data" [columns]="selectedColumns" [reorderableColumns]="true" [resizableColumns]="true" responsiveLayout="scroll"  dataKey="id" selectionMode="single" [(selection)]="selectedItem" [scrollable]="true" scrollHeight="355px">
         <ng-template pTemplate="caption">
             <div class="p-d-flex">
                 <p-multiSelect [options]="columns_list" [(ngModel)]="selectedColumns" optionLabel="DisplayName"

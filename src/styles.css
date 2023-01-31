@@ -22,41 +22,6 @@
 /* @import '~highlight.js/styles/github.css'; */
 /* @import "assets/css/global.css"; */
 /* You can add global styles to this file, and also import other style files */
-/* need to remove
-body,
-html {
-
-  font-family: 'Open Sans', sans-serif !important;
-  user-select: none;
-  color: #001c47;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-a,
-ul,
-li,
-ol,
-span,
-button,
-th,
-td,
-div {
-  margin: 0;
-  padding: 0;
-  font-size: 15px;
-  font-weight: 500;
-  text-decoration: none !important;
-  list-style: none;
-  color: inherit;
-  font-family: 'Open Sans', sans-serif;
-
-} */
 
 .breadcrumb {
   background-color: white !important;
@@ -448,16 +413,7 @@ ul.bpp-properties-tabs-links {
 }
 
 /*RPA-Environments*/
-/* need to remove
- html,
-body {
-  height: 100%;
-  overflow: hidden;
-}
 
-body {
-  margin: 0;
-} */
 
 /* d3 css */
 .node rect,
@@ -848,8 +804,6 @@ foreignObject {
 }
 
 #sidenav.menu-close {
-  /* need to remove
-  width: 60px; */
   width: 62px;
   min-height: 100%;
   transition: width 0.05s;
@@ -860,15 +814,6 @@ foreignObject {
   min-height: 100%;
   transition: width 0.05s;
 }
-/* need to remove
-#sidenav {
-   z-index: 2 !important;
-  box-shadow: 1px 0px 5px rgb(0 0 0 / 20%) !important; 
-}
- #sidenav.menu-close .side-icon {
-  text-align: center !important;
-} */
-
 
 #sidenav.menu-close .side-icon {
   text-align: center !important;
@@ -900,11 +845,6 @@ foreignObject {
 .p-0 {
   padding: 0px !important;
 }
-
-/* need to remove
- .row {
-  margin: 0px !important;
-} */
 
 #sidenav.menu-close span.poweredby {
   display: none;
@@ -1170,36 +1110,6 @@ mat-row {
   overflow: hidden;
   width: 100%;
 }
-
-/* need to remove
- ::-webkit-scrollbar {
-  width: 7px;
-  height: 7px;
-  cursor: pointer;
-}
-
-::-webkit-scrollbar:hover {
-  width: 8px !important;
-  height: 8px !important;
-  cursor: pointer;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #0081B833;
-  border-radius: 10px;
-  cursor: pointer;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgb(73, 88, 145);
-  cursor: pointer;
-  width: 8px;
-  height: 8px;
-} */
 
 mat-card {
   padding: 0px !important;
@@ -1697,11 +1607,6 @@ button.action-button.clear {
   width: calc(100% - 0px);
 }
 
-/* need to remove 
-.bpp-properties-entry, .dpp-properties-entry {
-  margin-bottom: 0px !important;
-} */
-
 .bpp-properties-entry.dpp-checkbox, .dpp-properties-entry.dpp-checkbox {
   display: flex;
   align-items: center;
@@ -1920,11 +1825,6 @@ button.btn:hover {
 .mat-paginator-page-size {
   align-items: center;
 }
-
-/* need to remove
-.mat-form-field-infix {
-  padding: 0px 0px !important;
-} */
 
 .mat-paginator-page-size-label,
 .mat-paginator-range-label {
@@ -2538,13 +2438,7 @@ button.custom-popupbtn.mat-button {
   margin-bottom: 5px !important;
   color: #333c48 !important;
 }
-/*  need to remove
-button.custom-popupbtn.mat-button {
-  padding: 0px !important;
-  min-width: auto !important;
-  line-height: unset !important;
-  width: auto !important;
-} */
+
 /* Full Edit Custom Popover */
 
 .prj_activities_block .mat-tab-label {
@@ -2641,6 +2535,10 @@ button.custom-popupbtn.mat-button {
 }
 /* Global CSS Variables */
 
+.mat-drawer-container  {
+  color: #232832 !important;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -2650,8 +2548,8 @@ html {
   margin: 0;
   padding: 0;
   font-family: 'Source Sans 3', sans-serif !important;
-  font-size: var(--main-fontsize) !important;
-  font-weight: var(--main-fontweight) !important;
+  font-size: var(--main-fontsize);
+  font-weight: var(--main-fontweight);
   color: var(--main-txtcolor) !important;
   height: 100vh;
   width: 100%;
@@ -2678,7 +2576,7 @@ div {
   text-decoration: none !important;
   list-style: none;
   color: inherit;
-  font-size: var(--main-fontsize) !important;
+  font-family:  'Source Sans 3', sans-serif;
   font-weight: 400;
 }
 .row {
@@ -2686,7 +2584,7 @@ div {
   margin: 0 !important;
 }
 
-/* Scrollbar styles */
+/* Scrollbar styles START */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -2711,7 +2609,7 @@ cursor: pointer;
 width: 8px;
 height: 8px;
 }
-/* Scrollbar styles */
+/* Scrollbar styles END */
 
 .maincont {
   width: 100%;
@@ -2721,7 +2619,7 @@ height: 8px;
 }
 .maincont-contentarea {
   height: 100%;
-  padding: 30px;
+  padding: 20px 30px;
   position: relative;
 }
 .maincontent {
@@ -2734,8 +2632,10 @@ height: 8px;
   display: flex;
   align-items: center;
   height: 100%;
-  font-size: 16px;
   margin:0px;
+}
+.main-content-head h3 .title_text{
+  font-size: 16px;
 }
 .main-content-head button span {
   margin-left: 5px;
@@ -2796,7 +2696,7 @@ input.p-inputtext {
 }
 .p-tabview .p-tabview-nav li .p-tabview-nav-link {
     border-color: transparent !important; 
-    color: transparent !important;
+    color: #232832 !important;
     background-color: transparent !important;
     margin: 0px !important;
     padding: 16px 16px 6px 16px !important;
@@ -2830,6 +2730,7 @@ span.tabscount {
   font-size: 44px !important;
   margin-right: 5px;
   font-weight: 400 !important;
+  line-height: 32px;
 }
 /* Tabs NEW Styles End */
 
@@ -2849,8 +2750,142 @@ span.tabscount {
 .p-datatable .p-datatable-tbody > tr {
   background: transparent !important;
   height: 50px;
+  color: #232832 !important;
+  font-size: 16px;
 }
+
+thead.p-datatable-thead tr {
+  border-top: none !important;
+  font-weight: 700;
+  border-bottom: 2px solid #098de6 !important;
+  /* padding: 10px 3px !important; */
+  position: relative;
+  height: 50px;
+}
+
+th.p-element.p-sortable-column.p-resizable-column:before {
+  content: " ";
+ position: absolute;
+ top: 5px;
+ left: 0px;
+ right: 0px;
+ bottom: 0px;
+ border-bottom: 5px solid rgb(9 141 230 / 20%);
+}
+
+th.p-element.p-sortable-column.p-resizable-column {
+  border: none !important;
+}
+
+ .p-datatable .p-sortable-column:not(.p-highlight):hover{
+ background-color: transparent !important;
+}
+.p-datatable .p-sortable-column:focus {
+  box-shadow: none !important;
+} 
 /* Grid NEW Styles End */
 
 
-/* ----------------------NEW STYLES------------------------- */
+/* ----------------------NEW STYLES END------------------------- */
+
+
+
+/* need to remove
+body,
+html {
+
+  font-family: 'Open Sans', sans-serif !important;
+  user-select: none;
+  color: #001c47;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a,
+ul,
+li,
+ol,
+span,
+button,
+th,
+td,
+div {
+  margin: 0;
+  padding: 0;
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: none !important;
+  list-style: none;
+  color: inherit;
+  font-family: 'Open Sans', sans-serif;
+
+} 
+
+ html,
+body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  margin: 0;
+} 
+
+#sidenav {
+   z-index: 2 !important;
+  box-shadow: 1px 0px 5px rgb(0 0 0 / 20%) !important; 
+}
+ #sidenav.menu-close .side-icon {
+  text-align: center !important;
+} 
+ .row {
+  margin: 0px !important;
+} 
+
+ ::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+  cursor: pointer;
+}
+
+::-webkit-scrollbar:hover {
+  width: 8px !important;
+  height: 8px !important;
+  cursor: pointer;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #0081B833;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(73, 88, 145);
+  cursor: pointer;
+  width: 8px;
+  height: 8px;
+} 
+ 
+.bpp-properties-entry, .dpp-properties-entry {
+  margin-bottom: 0px !important;
+} 
+
+.mat-form-field-infix {
+  padding: 0px 0px !important;
+} 
+button.custom-popupbtn.mat-button {
+  padding: 0px !important;
+  min-width: auto !important;
+  line-height: unset !important;
+  width: auto !important;
+} */
