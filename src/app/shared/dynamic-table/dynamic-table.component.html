@@ -1,5 +1,5 @@
 <div class="" *ngIf="screenTable=='common'">
-    <p-table #dt1 [value]="table_data" [columns]="selectedColumns" [(selection)]="checkBoxselected" [resizableColumns]="true" responsiveLayout="scroll" dataKey="connectorId" >
+    <p-table #dt1 [value]="table_data" [columns]="selectedColumns" [reorderableColumns]="true" [(selection)]="checkBoxselected" [resizableColumns]="true" responsiveLayout="scroll" dataKey="connectorId" >
         <!-- [globalFilterFields]="['representative.name']"> -->
         <ng-template pTemplate="caption">
             <div class="p-d-flex">
@@ -17,7 +17,7 @@
                 <th style="width: 1rem" *ngIf="checkBoxShow">
                     <p-tableHeaderCheckbox  (click)="selectRow()"></p-tableHeaderCheckbox>
                 </th>
-                <th *ngFor="let col of columns" pResizableColumn pSortableColumn="{{col.ColumnName}}" [hidden]="!col.ShowGrid">{{col.DisplayName}}
+                <th *ngFor="let col of columns" pReorderableColumn pResizableColumn pSortableColumn="{{col.ColumnName}}" [hidden]="!col.ShowGrid">{{col.DisplayName}}
                     <!-- <p-columnFilter *ngIf="col.header == 'Type'" type="text" field="representative.name" display="menu"></p-columnFilter>
                     <p-sortIcon *ngIf="col.header == 'Type'" field="representative.name"></p-sortIcon> -->
 
@@ -220,7 +220,7 @@
 
 
 <div class="" *ngIf="screenTable=='projectList'">
-    <p-table #dt1 [value]="table_data" [columns]="selectedColumns" [resizableColumns]="true" responsiveLayout="scroll"  dataKey="id"
+    <p-table #dt1 [value]="table_data" [columns]="selectedColumns" [reorderableColumns]="true" [resizableColumns]="true" responsiveLayout="scroll"  dataKey="id"
     [scrollable]="true" scrollHeight="370px">
         <ng-template pTemplate="caption">
             <div class="p-d-flex">
@@ -236,7 +236,7 @@
         </ng-template>
         <ng-template pTemplate="header" let-columns>
             <tr>
-                <th *ngFor="let col of columns" pResizableColumn pSortableColumn="{{col.ColumnName}}" [hidden]="!col.ShowGrid">{{col.DisplayName}}
+                <th *ngFor="let col of columns" pReorderableColumn pResizableColumn pSortableColumn="{{col.ColumnName}}" [hidden]="!col.ShowGrid">{{col.DisplayName}}
 
                     <p-columnFilter *ngIf="col.ShowFilter && col.filterWidget == 'multiSelect'" field="representative" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                         <ng-template pTemplate="header">
@@ -298,7 +298,7 @@
 
 
 <div class="" *ngIf="screenTable=='taskList'">
-    <p-table #dt1 [value]="table_data" [columns]="selectedColumns" [resizableColumns]="true" responsiveLayout="scroll"  dataKey="id" selectionMode="single" [(selection)]="selectedItem" [scrollable]="true" scrollHeight="370px">
+    <p-table #dt1 [value]="table_data" [columns]="selectedColumns" [reorderableColumns]="true" [resizableColumns]="true" responsiveLayout="scroll"  dataKey="id" selectionMode="single" [(selection)]="selectedItem" [scrollable]="true" scrollHeight="370px">
         <ng-template pTemplate="caption">
             <div class="p-d-flex">
                 <p-multiSelect [options]="columns_list" [(ngModel)]="selectedColumns" optionLabel="DisplayName"
@@ -313,7 +313,7 @@
         </ng-template>
         <ng-template pTemplate="header" let-columns>
             <tr>
-                <th *ngFor="let col of columns" pResizableColumn pSortableColumn="{{col.ColumnName}}" [hidden]="!col.ShowGrid">{{col.DisplayName}}
+                <th *ngFor="let col of columns" pReorderableColumn pResizableColumn pSortableColumn="{{col.ColumnName}}" [hidden]="!col.ShowGrid">{{col.DisplayName}}
 
                     <p-columnFilter *ngIf="col.ShowFilter && col.filterWidget == 'multiSelect'" field="representative" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                         <ng-template pTemplate="header">
