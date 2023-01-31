@@ -16,7 +16,10 @@ export class DynamicTableComponent implements OnInit {
   @Input("checkBoxShow") public checkBoxShow:boolean;
   @Output() viewDetails = new EventEmitter<any[]>();
   @Output() deleteItem = new EventEmitter<any[]>();
+  @Output("onEdit") editEvent:any= new EventEmitter<any>();
+  @Input()selectedScreen:any;
   @Output() selectedData = new EventEmitter<any[]>();
+  @Input("deleteHide") public deleteHide:boolean;
   _selectedColumns: any[];
   customers: any = [];
   userName: any;
@@ -27,12 +30,13 @@ export class DynamicTableComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+   
+  }
 
   ngOnChanges() {
     this._selectedColumns = this.columns_list;
     if (this.table_data.length > 0) this.loading = false;
-    console.log(this.table_data);
   }
 
   @Input() get selectedColumns(): any[] {
@@ -67,6 +71,11 @@ export class DynamicTableComponent implements OnInit {
         return 'green';
     }
   }
+  edit(rowData:any)
+  {
+    this.editEvent.emit(rowData);
+  }
+  
 
   selectRow(){
     this.selectedData.emit(this.checkBoxselected)

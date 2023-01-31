@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgxDropzoneModule } from 'ngx-dropzone';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatOptionModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -18,10 +18,14 @@ import { DeployNotationComponent } from './deploy-notation/deploy-notation.compo
 import { NgbModalDraggableModule } from 'ngb-modal-draggable';
 import { DynamicTableComponent } from './dynamic-table/dynamic-table.component';
 import { PrimengCustomModule } from '../primeng-custom/primeng-custom.module';
+import { RemoveUnderscorePipe } from '../services/remove-underscore.pipe';
+import { ScreenGenerationDynamicFormComponent } from './screen-generation-dynamic-form/screen-generation-dynamic-form.component';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { Ng2TelInputModule } from 'ng2-tel-input';
 
 
 @NgModule({
-    declarations: [UploadCreateDropBpmnComponent, BpmnDiagramComponent, ProcessCategoryOverlayComponent, SearchPipe, DeployNotationComponent, DynamicTableComponent,],
+    declarations: [UploadCreateDropBpmnComponent, BpmnDiagramComponent, ProcessCategoryOverlayComponent, SearchPipe, DeployNotationComponent, DynamicTableComponent, RemoveUnderscorePipe,ScreenGenerationDynamicFormComponent],
     imports: [
         CommonModule,
         NgxDropzoneModule,
@@ -31,9 +35,13 @@ import { PrimengCustomModule } from '../primeng-custom/primeng-custom.module';
         MatOptionModule, MatSelectModule,
         MatTooltipModule,
         NgbModalDraggableModule,
-        PrimengCustomModule
+        PrimengCustomModule,
+        NgSelectModule,
+        Ng2TelInputModule,
+        ReactiveFormsModule,
+        FormsModule
     ],
     providers: [],
-    exports: [UploadCreateDropBpmnComponent, BpmnDiagramComponent, ProcessCategoryOverlayComponent, SearchPipe, DeployNotationComponent, DynamicTableComponent]
+    exports: [UploadCreateDropBpmnComponent, BpmnDiagramComponent, ProcessCategoryOverlayComponent, SearchPipe, DeployNotationComponent, DynamicTableComponent,ScreenGenerationDynamicFormComponent]
 })
 export class SharedModule { }
