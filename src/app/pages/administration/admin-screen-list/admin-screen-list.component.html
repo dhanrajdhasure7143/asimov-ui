@@ -22,7 +22,6 @@
       </div>
     </div>
     <div class="department-body">
-      <div class="table_responsive graph_table">
         <app-dynamic-table
           [table_data]="screenlist"
           [screenTable]="'common'"
@@ -33,7 +32,6 @@
         <span *ngIf="screenlist.length == 0">
           <h4 style="text-align: center">No Records Found</h4>
         </span>
-      </div>
       <div class="">
         <mat-paginator
           #paginator
