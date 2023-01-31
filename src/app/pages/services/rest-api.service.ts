@@ -1493,4 +1493,20 @@ getTenantnameslist() {
   return this.http.get("/platform-service/screenGenerator/get-allorgtenent-data");
 }
 
+getAuthTypes(){
+  return this.http.get(`https://ezflow.dev.epsoftinc.com/sdk/get-authorization-type`);
+}
+
+testConnections(body){
+  return this.http.post(`https://ezflow.dev.epsoftinc.com/sdk/getTestApiCall`,body); 
+}
+
+getMethodTypes(){
+  return this.http.get(`https://ezflow.dev.epsoftinc.com/sdk/get-method-type`);
+}
+
+saveConnector(body){
+  return this.http.post(`https://ezflow.dev.epsoftinc.com/sdk/save-api-list`,body); 
+}
+
 }
