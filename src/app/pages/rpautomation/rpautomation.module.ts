@@ -66,6 +66,7 @@ import { SearchRpaPipe } from './rpa-home/Search.pipe';
 import { RpaConnectionManagerFormComponent } from './forms/rpa-connection-manager-form/rpa-connection-manager-form.component';
 import {MatCardModule} from '@angular/material/card';
 import { RpaConnectionManagerComponent } from './rpa-connection-manager/rpa-connection-manager.component';
+import { CardModule } from 'primeng/card';
 
 
 @NgModule({
@@ -132,7 +133,8 @@ import { RpaConnectionManagerComponent } from './rpa-connection-manager/rpa-conn
     NgbModalDraggableModule,
     ResizableModule,
     PopoverModule,
-    MatCardModule
+    MatCardModule,
+    CardModule
   ],
   exports:[RpaSoLogsComponent,RpaSchedulerComponent],
   providers: [MatDatepickerModule,Rpa_Hints, BsModalRef, BsModalService,
