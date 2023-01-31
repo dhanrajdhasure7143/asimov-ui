@@ -1,9 +1,7 @@
   .ep-header-white{
     background-color: #098DE6 !important;
-    /* height: 52px; */
     height: 60px;
     box-shadow: none !important;
-    /* box-shadow: 0px 1px 10px rgb(0 21 50 / 10%) !important; */
     position: absolute;
     z-index: 2;
   }
@@ -63,15 +61,6 @@
       min-width: 170px !important;
   }
   .res-circle {
-    /* width: 44px;
-    border-radius: 100%;
-    height: 42px;
-    margin-top: 2px;
-    color: rgb(255, 255, 255);
-    background: rgb(0, 161, 228);
-    margin-left: 5px;
-    font-weight: bold;
-    padding: 4px 12px; */
     width: 40px;
     border-radius: 100%;
     height: 40px;

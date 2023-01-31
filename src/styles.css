@@ -848,7 +848,8 @@ foreignObject {
 }
 
 #sidenav.menu-close {
-  /* width: 60px; */
+  /* need to remove
+  width: 60px; */
   width: 62px;
   min-height: 100%;
   transition: width 0.05s;
@@ -859,14 +860,11 @@ foreignObject {
   min-height: 100%;
   transition: width 0.05s;
 }
-
-#sidenav {
-  /* z-index: 2 !important;
-  box-shadow: 1px 0px 5px rgb(0 0 0 / 20%) !important; */
-}
-
-
 /* need to remove
+#sidenav {
+   z-index: 2 !important;
+  box-shadow: 1px 0px 5px rgb(0 0 0 / 20%) !important; 
+}
  #sidenav.menu-close .side-icon {
   text-align: center !important;
 } */
@@ -903,9 +901,10 @@ foreignObject {
   padding: 0px !important;
 }
 
-.row {
+/* need to remove
+ .row {
   margin: 0px !important;
-}
+} */
 
 #sidenav.menu-close span.poweredby {
   display: none;
@@ -2625,7 +2624,7 @@ button.custom-popupbtn.mat-button {
 
 
 
-/* ---NEW STYLES--- */
+/* ----------------------NEW STYLES------------------------- */
 
 /* Global CSS Variables */
 :root {
@@ -2679,13 +2678,12 @@ div {
   text-decoration: none !important;
   list-style: none;
   color: inherit;
-  font-size: 14px !important;
+  font-size: var(--main-fontsize) !important;
   font-weight: 400;
 }
 .row {
   width: 100%;
   margin: 0 !important;
-  padding: 0 !important;
 }
 
 /* Scrollbar styles */
@@ -2723,7 +2721,7 @@ height: 8px;
 }
 .maincont-contentarea {
   height: 100%;
-  padding: 16px;
+  padding: 30px;
   position: relative;
 }
 .maincontent {
@@ -2746,10 +2744,9 @@ height: 8px;
   height: calc(100% - 40px);
   overflow: auto;
   position: relative;
-  padding: 10px 15px;
+  padding: 10px 0px;
   border-radius: 0px 0px 4px 4px;
 }
-
 .main-content-body.tablist-cont {
   overflow: hidden;
 }
@@ -2781,56 +2778,43 @@ button.btn:focus {
 input.p-inputtext {
   height: 36px;
   border: 1px solid var(--main-bordercolor) !important;
-  font-size: 14px !important;
+  font-size: var(--main-fontsize) !important;
   width: 250px !important;
 }
+
+/* Tabs NEW Styles Start */
 
 .p-tabview .p-tabview-nav {
   border: none !important;
   background: transparent !important;
+  height: 70px;
 }
 .p-tabview .p-tabview-panels {
   background: transparent !important;
   color: var(--main-txtcolor) !important;
   padding: 15px 0px 0px !important;
 }
-.p-datatable .p-datatable-header {
-  background: transparent !important;
-  border: none !important;
-  border-width: unset !important;
-  padding: 0 !important;
-  font-weight: 400 !important;
-}
 .p-tabview .p-tabview-nav li .p-tabview-nav-link {
     border-color: transparent !important; 
     color: transparent !important;
     background-color: transparent !important;
     margin: 0px !important;
-    padding: 16px 16px 8px 16px !important;
+    padding: 16px 16px 6px 16px !important;
     border-width: 0 0 4px 0 !important;
     box-shadow: none !important;
+    height: 100%;
 }
 .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
-  border-color: #098de6 !important;
+  border-color: var(--main-bluecolor)!important;
 }
 .p-tabview .p-tabview-nav li:not(.p-highlight):not(.p-disabled):hover .p-tabview-nav-link {
   border-color: transparent;
 }
-
-.p-datatable-wrapper {
-  width: 100% !important;
-  margin-top: 10px;
-}
-.p-datatable .p-datatable-tbody > tr {
-  background: transparent !important;
-  height: 50px;
-}
-
 #tabs_screen .p-tabview .p-tabview-nav li{
   width: 200px !important;
 }
 #tabs_screen .taskList-table-actions .pi{
-  color: #098de6 !important;
+  color: var(--main-bluecolor) !important;
 }
 #tabs_screen .p-tabview-nav-content {
   border: 1px solid #D0D0D0 !important;
@@ -2840,12 +2824,33 @@ input.p-inputtext {
   width: 100%;
 }
 #tabs_screen th{
-  color: #232832;
+  color: var(--main-txtcolor);
 }
-
-span.taskscount {
+span.tabscount {
   font-size: 44px !important;
   margin-right: 5px;
   font-weight: 400 !important;
 }
-/* NEW STYLES */
+/* Tabs NEW Styles End */
+
+
+/* Grid NEW Styles Start */
+.p-datatable-wrapper {
+  width: 100% !important;
+  margin-top: 10px;
+}
+.p-datatable .p-datatable-header {
+  background: transparent !important;
+  border: none !important;
+  border-width: unset !important;
+  padding: 0 !important;
+  font-weight: 400 !important;
+}
+.p-datatable .p-datatable-tbody > tr {
+  background: transparent !important;
+  height: 50px;
+}
+/* Grid NEW Styles End */
+
+
+/* ----------------------NEW STYLES------------------------- */

@@ -368,10 +368,11 @@ mat-tab-body {
 
 /*List-of-changes component - Ends*/
 /* upload process model component styles - Starts*/
+/* need to remove
 .row {
   margin-left: 0;
   margin-right: 0;
-}
+} */
 
 
 .canvasOpt {

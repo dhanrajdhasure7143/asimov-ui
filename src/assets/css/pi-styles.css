@@ -755,10 +755,11 @@ label{
   background-color: transparent;
   z-index: 2;
 }
+/* need to remove
 .row{
   margin-left: 0;
   margin-right: 0;
-}
+} */
 .mainDiffContainer{
   border: 1px solid black;
   display: inline-flex;
