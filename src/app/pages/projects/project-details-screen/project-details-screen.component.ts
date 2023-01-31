@@ -1,6 +1,6 @@
 
 import { formatDate } from '@angular/common';
-import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, Input, NgZone, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -21,6 +21,7 @@ import { verifyHostBindings } from '@angular/compiler';
 import * as CmmnJS from 'cmmn-js/dist/cmmn-modeler.production.min.js';
 import * as DmnJS from 'dmn-js/dist/dmn-modeler.development.js';
 import {MenuItem} from 'primeng/api';
+import { SplitComponent } from "angular-split";
 
 @Component({
   selector: 'app-project-details-screen',
@@ -183,10 +184,33 @@ export class ProjectDetailsScreenComponent implements OnInit {
   bpmnModeler;
   bpmnModeler1;
   items: MenuItem[];
+  public areas = [
+    { size: 50, order: 1 },
+    { size: 50, order: 2 },
+  ];
+  isShowExpand: boolean = false;
+  splitAreamin_size = "500";
+  area_splitSize: any = {};
+  @ViewChild("splitEl") splitEl: SplitComponent;
+  public hiddenPopUp: boolean = false;
+  columns_list:any;
+  existingUsersList:any[]=[];
+  checkBoxselected:any[]=[];
+  roles_list = [
+    {name: 'All Roles', code: 'All'},
+    {name: 'Process Architect', code: 'Process Architect'},
+    {name: 'RPA Developer', code: 'RPA Developer'},
+    {name: 'Process Owner', code: 'Process Owner'},
+    {name: 'Process Designer', code: 'Process Designer'}
+  ];
+  selectedRole:any= "All";
+  users_tableList:any=[];
+  users_tabIndex:any=0;
 
   constructor(private dt: DataTransferService, private route: ActivatedRoute, private dataTransfer: DataTransferService, private rpa: RestApiService,
     private modalService: BsModalService, private formBuilder: FormBuilder, private router: Router,
-    private spinner: NgxSpinnerService) { }
+    private spinner: NgxSpinnerService,
+    private ngZone: NgZone) { }
 
   ngOnInit() {
     this.getUsersInfo()
@@ -273,20 +297,22 @@ export class ProjectDetailsScreenComponent implements OnInit {
       this.loggedUserData = res
     });
 
-    this.items = [{
-      label: 'File',
-      items: [
-          {label: 'New', icon: 'pi pi-fw pi-plus'},
-          {label: 'Download', icon: 'pi pi-fw pi-download'}
-      ]
-  },
-  {
-      label: 'Edit',
-      items: [
-          {label: 'Add User', icon: 'pi pi-fw pi-user-plus'},
-          {label: 'Remove User', icon: 'pi pi-fw pi-user-minus'}
-      ]
-  }];
+
+  this.areas = [
+    { size: 50, order: 1 },
+    { size: 50, order: 2 },
+  ];
+  setTimeout(() => {
+    this.splitEl.dragProgress$.subscribe((x) => {
+      this.ngZone.run(() => {
+        this.area_splitSize = x;
+        this.isShowExpand = false;
+        if (x.sizes[1] < 50) {
+          this.splitAreamin_size = "500";
+        }
+      });
+    });
+  }, 1000);
   }
 
 
@@ -546,93 +572,91 @@ export class ProjectDetailsScreenComponent implements OnInit {
   }
 
 
-projectdetails(){​​​​​​
-  const userid=localStorage.getItem('ProfileuserId');
-this.spinner.show()
-this.route.queryParams.subscribe(data=>{​​​​​​
-let paramsdata:any=data
-this.project_id=paramsdata.id
-this.editdata=false;
-this.rpa.getProjectDetailsById(paramsdata.id).subscribe( res=>{​​​​​​
-this.projectDetails=res
-this.processownername = this.projectDetails.processOwner
-this.processOwnerFlag=false
-if(this.projectDetails.endDate){
-  this.projectenddate=moment(this.projectDetails.endDate).format("lll");
-}
-this.projectStartDate = moment(this.projectDetails.startDate).format("lll");
-//this.mindate = this.projectStartDate;
-
-if(this.projectDetails){
-  
-  ​​​​​​let users:any=[]
-//   this.projectDetails.resource.forEach(item=>{
-//     this.users_list.forEach(item2=>{
-//       if(item2.userId.userId == item.resource){
-//         users.push(item2)
-//       }
-//     })
-//       // if(this.users_list.find(item2=>item2.userId.userId==item.resource)!=undefined)
-//       //   users.push(this.users_list.find(item2=>item2.userId.userId==item.resource))
-//  })
- this.resources_list=users
- if(this.resources_list.length>0){
-  this.Resourcecheckeddisabled= false;
-}
-else
-{
-  this.Resourcecheckeddisabled = true;
-}
-let users_updateddata=users
- this.resourceslength=users.length
- users_updateddata.forEach(element => {
-   element["firstName"]=element.userId.firstName
-   element["lastName"]=element.userId.lastName
-   element["displayName"]=element.roleID.displayName
-   element["user_Id"]=element.userId.userId
- });
-  this.dataSource6= new MatTableDataSource(users_updateddata);
-  setTimeout(() => {
-    this.dataSource6.sort=this.sort14;
-    this.dataSource6.paginator=this.paginator104;
-  }, 500);
-  this.spinner.hide()
- this.getTaskandCommentsData();
-  this.getLatestFiveAttachments(this.project_id);
-let usr_name=this.projectDetails.owner.split('@')[0].split('.');
-// this.owner_letters=usr_name[0].charAt(0)+usr_name[1].charAt(0);
-if(usr_name.length > 1){
-  this.owner_letters=usr_name[0].charAt(0)+usr_name[1].charAt(0);
-  }else{
-    this.owner_letters=usr_name[0].charAt(0);
+  projectdetails(){​​​​​​
+    const userid=localStorage.getItem('ProfileuserId');
+  this.spinner.show()
+  this.route.queryParams.subscribe(data=>{​​​​​​
+  let paramsdata:any=data
+  this.project_id=paramsdata.id
+  this.editdata=false;
+  this.rpa.getProjectDetailsById(paramsdata.id).subscribe( res=>{​​​​​​
+  this.projectDetails=res
+  this.processownername = this.projectDetails.processOwner
+  this.processOwnerFlag=false
+  if(this.projectDetails.endDate){
+    this.projectenddate=moment(this.projectDetails.endDate).format("lll");
   }
+  this.projectStartDate = moment(this.projectDetails.startDate).format("lll");
+  //this.mindate = this.projectStartDate;
 
-}​​​​​​
+  if(this.projectDetails){
+    ​​​​​​let users:any=[]
+    this.projectDetails.resource.forEach(item=>{
+      this.users_list.forEach(item2=>{
+        if(item2.userId.userId == item.resource){
+          users.push(item2)
+        }
+      })
+        // if(this.users_list.find(item2=>item2.userId.userId==item.resource)!=undefined)
+        //   users.push(this.users_list.find(item2=>item2.userId.userId==item.resource))
+  })
+  this.resources_list=users
+  if(this.resources_list.length>0){
+    this.Resourcecheckeddisabled= false;
+  } else {
+    this.Resourcecheckeddisabled = true;
+  }
+  let users_updateddata=users
+  this.resourceslength=users.length
+  users_updateddata.forEach(element => {
+    element["firstName"]=element.userId.firstName
+    element["lastName"]=element.userId.lastName
+    element["displayName"]=element.roleID.displayName
+    element["user_Id"]=element.userId.userId
+  });
+  this.existingUsersList = users_updateddata;
+    this.dataSource6= new MatTableDataSource(users_updateddata);
+    setTimeout(() => {
+      this.dataSource6.sort=this.sort14;
+      this.dataSource6.paginator=this.paginator104;
+    }, 500);
+    this.spinner.hide()
+  this.getTaskandCommentsData();
+    this.getLatestFiveAttachments(this.project_id);
+  let usr_name=this.projectDetails.owner.split('@')[0].split('.');
+  // this.owner_letters=usr_name[0].charAt(0)+usr_name[1].charAt(0);
+  if(usr_name.length > 1){
+    this.owner_letters=usr_name[0].charAt(0)+usr_name[1].charAt(0);
+    }else{
+      this.owner_letters=usr_name[0].charAt(0);
+    }
 
-//this.project_id=this.projectDetails.id
-let users:any=[]
-// if(this.projectDetails.resource.length!=0){​​​​​​
-// // this.projectDetails.resource.forEach(item=>{​​​​​​
-// // users.push(item.resource)
-// //  }​​​​​​)
-// this.resources=users
+  }​​​​​​
 
-// this.loginresourcecheck=this.resources.find(item2=>item2==userid);
+  //this.project_id=this.projectDetails.id
+  let users:any=[]
+  if(this.projectDetails.resource.length!=0){​​​​​​
+  // this.projectDetails.resource.forEach(item=>{​​​​​​
+  // users.push(item.resource)
+  //  }​​​​​​)
+  this.resources=users
 
-//  }​​​​​​
-// else{​​​​​​
-// this.resources=this.users_list
+  this.loginresourcecheck=this.resources.find(item2=>item2==userid);
 
-//  }​​​​​​ 
- }​​​​​​)
- 
-this.getTaskandCommentsData();
-this.getLatestFiveAttachments(this.project_id)
-paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsdata.programId;
- }​​​​​​);
+  }​​​​​​
+  else{​​​​​​
+  this.resources=this.users_list
 
-}
-​​​​​​
+  }​​​​​​ 
+  }​​​​​​)
+  
+  this.getTaskandCommentsData();
+  this.getLatestFiveAttachments(this.project_id)
+  paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsdata.programId;
+  }​​​​​​);
+
+  }
+  ​​​​​​
 
 
   profileName() {
@@ -696,16 +720,23 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
     this.rpa.getuserslist(tenantid).subscribe(response => {
       this.users_list = response;
       this.userslist = this.users_list.filter(x => x.user_role_status == 'ACTIVE')
-      let users: any = []
-      // this.projectDetails.resource.forEach(item => {
-      //   this.users_list.forEach(item2 => {
-      //     if (item2.userId.userId == item.resource) {
-      //       users.push(item2)
-      //     }
-      //   })
-      //   // if(this.users_list.find(item2=>item2.userId.userId==item.resource)!=undefined)
-      //   //   users.push(this.users_list.find(item2=>item2.userId.userId==item.resource))
-      // })
+      let users: any = [];
+      this.users_list.forEach(item2 => {
+        item2["firstName"] = item2.userId.firstName
+        item2["lastName"] = item2.userId.lastName
+        item2["displayName"] = item2.roleID.displayName
+        item2["user_Id"] = item2.userId.userId
+        item2["user_name"] = item2.userId.firstName+' '+item2.userId.lastName
+      })
+      this.projectDetails.resource.forEach(item => {
+        this.users_list.forEach(item2 => {
+          if (item2.userId.userId == item.resource) {
+            users.push(item2)
+          }
+        })
+        // if(this.users_list.find(item2=>item2.userId.userId==item.resource)!=undefined)
+        //   users.push(this.users_list.find(item2=>item2.userId.userId==item.resource))
+      })
       this.resources_list = users;
       if (this.resources_list.length > 0) {
         this.Resourcecheckeddisabled = false;
@@ -720,10 +751,14 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
         element["lastName"] = element.userId.lastName
         element["displayName"] = element.roleID.displayName
         element["user_Id"] = element.userId.userId
+        element["user_name"] = element.userId.firstName+' '+element.userId.lastName
       });
+      this.onUsersTab(0);
+    console.log(this.users_list)
+    this.existingUsersList = users_updateddata;
       this.dataSource6 = new MatTableDataSource(users_updateddata);
       this.dataSource6.sort = this.sort14;
-      this.spinner.hide()
+      this.spinner.hide();
       this.dataSource6.paginator = this.paginator104;
       // this.getTaskandCommentsData();
       this.getLatestFiveAttachments(this.project_id);
@@ -1855,18 +1890,77 @@ paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsda
     }
   }
 
-  onboardUsers() {
-    var v = document.getElementById("overlayusers");
-    if (v.style.display === "none") {
-       v.style.display = "block";
-    }
-}
-closeoverlay() {
-  var v = document.getElementById("overlayusers");
-  v.style.display = "none";
+  openUsersOverlay() {
+    this.hiddenPopUp = true;
 }
 
 taskListView(){
   this.router.navigate(['/pages/projects/tasks'],{queryParams:{id:this.project_id}});
 }
+
+minimizeFullScreen() {
+  this.isShowExpand = false;
+  this.splitAreamin_size = "200";
+  this.areas = [
+    { size: 50, order: 1 },
+    { size: 50, order: 2 },
+  ];
+}
+
+expandFullScreen() {
+  this.isShowExpand = true;
+  this.splitAreamin_size = "null";
+  this.areas = [
+    { size: 0, order: 1 },
+    { size: 100, order: 2 },
+  ];
+}
+
+onDragEnd(e: { gutterNum: number; sizes: number[] }) {
+
+  this.areas[0].size = e.sizes[0];
+  this.areas[1].size = e.sizes[1];
+  if (e.sizes[1] < 50) {
+    this.splitAreamin_size = "500";
+  } else {
+    this.splitAreamin_size = "null";
+  }
+}
+
+usersTable:any=[]
+
+closeOverlay() {
+    this.hiddenPopUp = false;
+  }
+
+  deleteuserById(event) {}
+
+
+  onChangeRole(event){
+    if(event.value.code == 'All') {
+    this.users_tableList = this.users_list
+    return
+    }
+    this.users_tableList = this.users_list.filter(item => (item.displayName == event.value.code))
+  }
+
+  onUsersTab(index){
+    this.users_tabIndex = index;
+    if(index == 0) {
+      this.users_tableList = this.users_list
+      this.columns_list = [
+        {ColumnName: "user_name"},
+        { ColumnName: "displayName"},
+      ];
+      return
+      }
+      this.users_tableList = this.existingUsersList
+      this.columns_list = [
+        {ColumnName: "user_name",DisplayName:"Users Onboarded"},
+        { ColumnName: "displayName",DisplayName:"Role"},
+        { ColumnName: "tasks",DisplayName:"Number of Tasks"},
+        { ColumnName: "action",DisplayName:"Actions"},
+      ];
+  }
+
 }
