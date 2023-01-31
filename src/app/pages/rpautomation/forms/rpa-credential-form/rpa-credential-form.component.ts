@@ -21,9 +21,9 @@ export class RpaCredentialFormComponent implements OnInit {
   public passwordtype2: Boolean;
   submitted: boolean;
 
-  constructor(private api:RestApiService, 
+  constructor(private api:RestApiService,
     private formBuilder: FormBuilder,
-    private chanref:ChangeDetectorRef, 
+    private chanref:ChangeDetectorRef,
     private spinner: NgxSpinnerService) {
 
       this.credentialForm=this.formBuilder.group({
@@ -47,7 +47,7 @@ export class RpaCredentialFormComponent implements OnInit {
     this.passwordtype1=false;
     this.passwordtype2=false;
 
-    
+
   }
 
   ngOnChanges(changes:SimpleChanges){
@@ -80,7 +80,7 @@ export class RpaCredentialFormComponent implements OnInit {
     let temp =numArray.includes(event.key); //gives true or false
    if(!temp){
     event.preventDefault();
-   } 
+   }
   }
 
   saveCredentials() {
@@ -89,6 +89,7 @@ export class RpaCredentialFormComponent implements OnInit {
         this.spinner.show();
         this.submitted = true;
         let Credentials = this.credentialForm.value;
+        Credentials["categoryId"]=parseInt(Credentials["categoryId"])
         this.api.save_credentials(Credentials).subscribe(res => {
           let status: any = res;
           this.spinner.hide();
@@ -124,6 +125,7 @@ resetCredForm(){
       this.spinner.show();
       let credupdatFormValue = this.credentialForm.value;
       credupdatFormValue["credentialId"] = this.credupdatedata.credentialId;
+      credupdatFormValue["categoryId"]=parseInt(credupdatFormValue["categoryId"]);
       this.api.update_Credentials(credupdatFormValue).subscribe(res => {
         let status: any = res;
         this.spinner.hide();

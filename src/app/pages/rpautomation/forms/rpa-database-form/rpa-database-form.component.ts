@@ -22,7 +22,7 @@ export class RpaDatabaseFormComponent implements OnInit {
   public dbupdateflag: boolean = false;
   public submitted:Boolean;
   public dbupdateid : any;
- 
+
   public button:string;
   public dbconnections:any=[]
   public checkeddisabled:boolean =false;
@@ -42,14 +42,14 @@ export class RpaDatabaseFormComponent implements OnInit {
     addflag:boolean=false;
     h2flag:boolean=false;
 
-  constructor(private api:RestApiService, 
+  constructor(private api:RestApiService,
     private router:Router,
-    private hints:Rpa_Hints, 
+    private hints:Rpa_Hints,
     private formBuilder: FormBuilder,
-    private chanref:ChangeDetectorRef, 
+    private chanref:ChangeDetectorRef,
     private dt:DataTransferService,
-    private spinner: NgxSpinnerService) { 
-          
+    private spinner: NgxSpinnerService) {
+
       this.dbForm=this.formBuilder.group({
         connectiontName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         dataBaseType: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
@@ -62,7 +62,7 @@ export class RpaDatabaseFormComponent implements OnInit {
         username: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         role:["",Validators.compose([Validators.maxLength(50)])],
         warehouse:["",Validators.compose([Validators.maxLength(50)])],
-        activeStatus: [true], 
+        activeStatus: [true],
     })
     }
 
@@ -77,11 +77,11 @@ export class RpaDatabaseFormComponent implements OnInit {
   }
 
   ngOnChanges(changes : SimpleChanges){
-     if(!this.isDatabase){    
+     if(!this.isDatabase){
       if(this.dbupdatedata){
       this.dbForm.get("connectiontName").setValue(this.dbupdatedata["connectiontName"]);
-      this.dbForm.get("categoryId").setValue(this.dbupdatedata["categoryId"]);      
-      this.dbForm.get("dataBaseType").setValue(this.dbupdatedata["dataBaseType"]);  
+      this.dbForm.get("categoryId").setValue(this.dbupdatedata["categoryId"]);
+      this.dbForm.get("dataBaseType").setValue(this.dbupdatedata["dataBaseType"]);
       if(this.dbupdatedata.activeStatus==7){
         this.dbForm.get("activeStatus").setValue(true);
       }else{
@@ -116,8 +116,8 @@ export class RpaDatabaseFormComponent implements OnInit {
         this.dbForm.controls.role.clearValidators();
         this.dbForm.controls.role.updateValueAndValidity();
       }
-      this.dbForm.get("databasename").setValue(this.dbupdatedata["databasename"]);        
-      this.dbForm.get("hostAddress").setValue(this.dbupdatedata["hostAddress"]);      
+      this.dbForm.get("databasename").setValue(this.dbupdatedata["databasename"]);
+      this.dbForm.get("hostAddress").setValue(this.dbupdatedata["hostAddress"]);
       this.dbForm.get("password").setValue(this.dbupdatedata["password"]);
       this.dbForm.get("portNumber").setValue(this.dbupdatedata["portNumber"]);
       this.dbForm.get("schemaName").setValue(this.dbupdatedata["schemaName"]);
@@ -138,7 +138,7 @@ export class RpaDatabaseFormComponent implements OnInit {
         username: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         role:["",Validators.compose([Validators.maxLength(50)])],
         warehouse:["",Validators.compose([Validators.maxLength(50)])],
-        activeStatus: [true], 
+        activeStatus: [true],
     });
      }
   }
@@ -188,7 +188,7 @@ export class RpaDatabaseFormComponent implements OnInit {
       this.dbForm.value.activeStatus = false;
     }
   }
-  
+
   saveDBConnection() {
     if (this.isDatabase) {
       if (this.dbForm.valid) {
@@ -201,6 +201,7 @@ export class RpaDatabaseFormComponent implements OnInit {
         this.dbForm.value.createdBy = "admin";
         this.submitted = true;
         let DBConnection = this.dbForm.value;
+        DBConnection["categoryId"]=parseInt(DBConnection["categoryId"])
         this.api.addDBConnection(DBConnection).subscribe(res => {
           let status: any = res;
           this.spinner.hide();
@@ -235,7 +236,7 @@ export class RpaDatabaseFormComponent implements OnInit {
     this.dbForm.get("activeStatus").setValue(true);
     this.passwordtype1=false;
   }
-  
+
   dbconnectionupdate() {
     if (this.dbForm.valid) {
       this.spinner.show();
@@ -247,6 +248,7 @@ export class RpaDatabaseFormComponent implements OnInit {
       let dbupdatFormValue = this.dbForm.value;
       dbupdatFormValue["connectionId"] = this.dbupdatedata.connectionId;
       dbupdatFormValue["createdBy"] = this.dbupdatedata.createdBy;
+      dbupdatFormValue["categoryId"]=parseInt(dbupdatFormValue["categoryId"])
       this.api.updateDBConnection(dbupdatFormValue).subscribe(res => {
         let status: any = res;
         this.spinner.hide();
@@ -304,14 +306,14 @@ export class RpaDatabaseFormComponent implements OnInit {
       this.h2flag=false;
       this.dbForm.controls.portNumber.setValidators([Validators.required,Validators.maxLength(6)]);
       this.dbForm.controls.portNumber.updateValueAndValidity();
-      this.dbForm.controls.password.setValidators([Validators.required , Validators.maxLength(50)]) 
+      this.dbForm.controls.password.setValidators([Validators.required , Validators.maxLength(50)])
       this.dbForm.controls.password.updateValueAndValidity();
       this.dbForm.controls.schemaName.setValidators([Validators.required , Validators.maxLength(50)]);
       this.dbForm.controls.schemaName.updateValueAndValidity();
     }
  }
 
- closedbconnection(){  
+ closedbconnection(){
     this.resetDBForm();
   document.getElementById('createdbconnection').style.display='none';
 }
