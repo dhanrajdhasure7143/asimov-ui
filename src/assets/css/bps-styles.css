@@ -368,11 +368,6 @@ mat-tab-body {
 
 /*List-of-changes component - Ends*/
 /* upload process model component styles - Starts*/
-.row {
-  margin-left: 0;
-  margin-right: 0;
-}
-
 
 .canvasOpt {
   display: inline-block;
@@ -670,11 +665,6 @@ mat-tab-body {
   width: 20%;
   margin-left: 16px;
   height: 40px
-}
-
-label {
-  margin-top: 12px;
-  font-size: large;
 }
 
 /* bps component styles - Ends*/

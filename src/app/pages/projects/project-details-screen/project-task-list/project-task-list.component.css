@@ -18,13 +18,7 @@ td p.lowpriority {
     display: flex;
     padding: 0px;
   }
-  
-  .tab-count, .tab-count span {
-    font-size: 36px;
-    font-weight: 300;
-    line-height: 32px;
-    color: #26272C;
-  }
+
   .status-img>img {
     height: 40px !important;
   }

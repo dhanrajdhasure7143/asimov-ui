@@ -170,14 +170,6 @@
     width: 100%;
     height: 550px;
 }
-/* need to remove
-* {
-    margin: 0px;
-    padding: 0px;
-}
-body {
-    font-size: 15px;
-} */
 
 button:focus {
     outline: none;
