@@ -1,10 +1,6 @@
 import {
   Component,
-  EventEmitter,
-  Input,
   OnInit,
-  Output,
-  ViewChild,
 } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { LoaderService } from "src/app/services/loader/loader.service";

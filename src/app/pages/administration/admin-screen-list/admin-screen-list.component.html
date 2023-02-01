@@ -29,9 +29,6 @@
           (onEdit)="editScreen($event)"
           (deleteItem)="deleteScreen($event)"
         ></app-dynamic-table>
-        <span *ngIf="screenlist.length == 0">
-          <h4 style="text-align: center">No Records Found</h4>
-        </span>
       <div class="">
         <mat-paginator
           #paginator

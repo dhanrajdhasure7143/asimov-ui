@@ -1,9 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
+import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import { MatSort } from '@angular/material/sort';
 import { RestApiService } from '../../services/rest-api.service';
 
 
