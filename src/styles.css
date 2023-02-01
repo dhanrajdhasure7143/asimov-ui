@@ -2644,7 +2644,7 @@ height: 8px;
   height: calc(100% - 40px);
   overflow: auto;
   position: relative;
-  padding: 10px 0px;
+  margin: 10px 0px;
   border-radius: 0px 0px 4px 4px;
 }
 .main-content-body.tablist-cont {
@@ -2739,6 +2739,7 @@ span.tabscount {
 .p-datatable-wrapper {
   width: 100% !important;
   margin-top: 10px;
+  height: calc(100vh - 275px);
 }
 .p-datatable .p-datatable-header {
   background: transparent !important;
@@ -2752,13 +2753,13 @@ span.tabscount {
   height: 50px;
   color: #232832 !important;
   font-size: 16px;
+  margin: 5px 0px 0px;
 }
 
 thead.p-datatable-thead tr {
   border-top: none !important;
   font-weight: 700;
   border-bottom: 2px solid #098de6 !important;
-  /* padding: 10px 3px !important; */
   position: relative;
   height: 50px;
 }
@@ -2783,7 +2784,31 @@ th.p-element.p-sortable-column.p-resizable-column {
 .p-datatable .p-sortable-column:focus {
   box-shadow: none !important;
 } 
+
+.p-datatable .p-datatable-tbody > tr > td {
+  border-bottom: 1px solid #E0E0E0 !important;
+}
+tr.p-element.p-selectable-row.p-highlight {    /*highlight of row*/
+  border: 1.5px solid #4AB0F5;
+  box-shadow: 2px 6px 10px rgb(0 0 0 / 8%);
+  border-radius: 8px;
+  outline: none;
+}
+tr.p-element.p-selectable-row.p-highlight > td:first-child { 
+  border-bottom-left-radius: 8px; /*highlight of row*/
+}
+tr.p-element.p-selectable-row.p-highlight > td:last-child {
+  border-bottom-right-radius: 8px; /*highlight of row*/
+}
+
 /* Grid NEW Styles End */
+
+/* primeng icons styles */
+.p-link {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+/* primeng icons styles */
 
 
 /* ----------------------NEW STYLES END------------------------- */

@@ -47,7 +47,7 @@
                         <div class="row project-status">
                             <img *ngIf="projectDetails.status == 'Closed'" src="./../../../../assets/images-n/projects/completed-tasks.svg" alt="project-status-icon" >
                             <img *ngIf="projectDetails.status != 'Closed'" src="./../../../../assets/images-n/projects/inprogress-tasks.svg" alt="project-status-icon" >
-                            <p>{{projectDetails.status}}</p>
+                            <!-- <p>{{projectDetails.status}}</p> -->
                         </div>
                     </div> 
                     <div class="col-md-11 p-0">
@@ -57,34 +57,37 @@
                                     <img src="./../../../../assets/images-n/projects/Warning.svg" alt="importance">
                                     <span class="highimp">{{projectDetails.priority}}</span>
                             </div>
-                            <div class="row">
-                                <div class="col-md-9 pl-0 d-flex align-items-center">
-                                    <div class="row">
-                                        <div class="col-md-3 p-0 pinf">
+                            <div class="row align-items-center justify-content-between">
+                                <!-- <div class="col-md-9 pl-0 d-flex align-items-center">
+                                    <div class="row"> -->
+                                        <div class="pinf">
                                             <p>Account Financial Audit </p>
                                             <label>Program Name</label>
                                         </div>
-                                        <div class="col-md-3 p-0 pinf">
+                                        <div class="pinf">
                                             <p>{{projectDetails.mapValueChain}}</p>
                                             <label>Departments</label>
                                         </div>
-                                        <div class="col-md-3 p-0 pinf">
+                                        <div class="pinf">
                                             <p>{{getUserName(projectDetails.owner)}}</p>
                                             <label>Project Owner</label>
                                         </div>
-                                        <div class="col-md-3 p-0 pinf">
+                                        <div class="pinf">
+                                            <p>{{projectDetails.status}}</p>
+                                            <label>Status</label>
+                                        </div>
+                                        <div class="pinf">
                                             <p>{{projectDetails.lastModifiedTimestamp |  date:'MMM dd, y, HH:mm:ss'}}</p>
                                             <label>Last Updated</label>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 p-0">
+                                    <!-- </div>
+                                </div> -->
+                                <div class="pinf">
                                     <div class="d-flex">
                                        <span class="kpibot">
                                             <p>{{projectDetails.projectPercentage}} %</p>
                                             <label>Project Completion</label>
-                                        </span>  
-                                        <!-- <img src="./../../../../assets/images-n/projects/robot.svg" alt="robot-image" class="robotimg"/>                     -->
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -143,7 +146,7 @@
                                 </div>
                             </div>
                             <div class="col-md-4 pl-0">
-                                <div class="row quicksnapshot-cards lastrow-cards">
+                                <div class="row quicksnapshot-cards ">
                                     <div class="d-flex w-100 align-items-center">
                                         <div class="qcard-infoimg">
                                             <img src="./../../../../assets/images-n/projects/AutomationRate.svg" alt="AutomationRate" class="qcard-img">
@@ -157,7 +160,7 @@
                             </div>
                             
                             <div class="col-md-4">
-                                <div class="row quicksnapshot-cards lastrow-cards">
+                                <div class="row quicksnapshot-cards ">
                                     <div class="d-flex w-100 align-items-center">
                                         <div class="qcard-infoimg">
                                             <img src="./../../../../assets/images-n/projects/Documents.svg" alt="Documents" class="qcard-img">
@@ -171,7 +174,7 @@
                             </div>
                             
                             <div class="col-md-4 pr-0">
-                                <div class="row quicksnapshot-cards lastrow-cards">
+                                <div class="row quicksnapshot-cards ">
                                     <div class="d-flex w-100 align-items-center">
                                         <div class="qcard-infoimg">
                                             <!-- <img src="./../../../../assets/images-n/projects/Frame 2.svg" alt="UnreadMessages" class="qcard-img"> -->
