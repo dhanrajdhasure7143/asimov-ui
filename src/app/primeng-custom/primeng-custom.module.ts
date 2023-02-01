@@ -23,6 +23,7 @@ import {InputTextModule} from 'primeng/inputtext';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {MessageModule} from 'primeng/message';
 import {FileUploadModule} from 'primeng/fileupload';
+import { TreeModule } from 'primeng/tree';
 
 
 
@@ -49,7 +50,8 @@ import {FileUploadModule} from 'primeng/fileupload';
     ButtonModule,
     DropdownModule,
     ProgressBarModule,
-    InputTextModule
+    InputTextModule,
+    TreeModule
   ],
   exports: [
     CommonModule,

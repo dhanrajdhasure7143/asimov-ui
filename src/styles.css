@@ -2849,3 +2849,11 @@ span.taskscount {
   font-weight: 400 !important;
 }
 /* NEW STYLES */
+
+.p-component-overlay{
+  z-index: 0 !important;
+}
+
+.p-sidebar-right{
+  top: 60px !important;
+}

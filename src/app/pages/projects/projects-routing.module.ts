@@ -13,6 +13,7 @@ import { BacklogsListComponent } from './backlogs-list/backlogs-list.component';
 import { BacklogsCreateComponent } from './backlogs-create/backlogs-create.component';
 import { ProjectRpaDesignComponent } from './project-rpa-design/project-rpa-design.component';
 import { ProjectTaskListComponent } from './project-details-screen/project-task-list/project-task-list.component';
+import { ProjectsDocumentComponent } from './project-details-screen/projects-document/projects-document.component';
 
 
 const routes: Routes = [
@@ -31,6 +32,7 @@ const routes: Routes = [
     {path:'createBacklog', component:BacklogsCreateComponent},
     {path:'repdesign',component:ProjectRpaDesignComponent},
     {path:'tasks',component:ProjectTaskListComponent},
+    {path:'document',component:ProjectsDocumentComponent},
     {path:'**', redirectTo:'/listOfProjects', pathMatch: 'full'}
     
   ]}
