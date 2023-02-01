@@ -126,8 +126,7 @@ onClickScreen(screen:any){
 
 getUserScreenList(){
   this.rest_service.getUserScreenList().subscribe((data:any)=>{
-    this.screensList=data;   
-    console.log(this.screensList)  
+    this.screensList=data;
   });
 }
 }

@@ -1,90 +1,113 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
-import Swal from 'sweetalert2';
-import { MatSort } from '@angular/material/sort';
-import { RestApiService } from '../../services/rest-api.service';
-
+import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+import Swal from "sweetalert2";
+import { RestApiService } from "../../services/rest-api.service";
 
 @Component({
-  selector: 'app-admin-screen-list',
-  templateUrl: './admin-screen-list.component.html',
-  styleUrls: ['./admin-screen-list.component.css']
+  selector: "app-admin-screen-list",
+  templateUrl: "./admin-screen-list.component.html",
+  styleUrls: ["./admin-screen-list.component.css"],
 })
 export class AdminScreenListComponent implements OnInit {
-  screenlist: any =[];
-  loading:boolean = false;
-  columns_list:any =[]
-  constructor(private router:Router, private rest: RestApiService) { }
+  screenlist: any = [];
+  loading: boolean = false;
+  columns_list: any = [];
+  constructor(private router: Router, private rest: RestApiService) {}
 
   ngOnInit(): void {
     this.getScreenList();
   }
-  
-  
 
-  addNew(){
-    this.router.navigate(['./pages/admin/admin-screen-create'])
+  addNew() {
+    this.router.navigate(["./pages/admin/admin-screen-create"]);
   }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
- 
-  }
-  
-  getScreenList(){
-    this.loading= true;
-    this.rest.getScreenList().subscribe(data=>{
-    this.screenlist =data;
-    this.columns_list = [
-      {
-        ColumnName: "Screen_Name",
-        DisplayName: "Screen Name",
-        ShowGrid: true,
-        ShowFilter: true,
-        filterWidget: "multiSelect",
-        filterType: "text",
-        sort: true,
-        multi: false,
-      },
-      {
-        ColumnName: "Table_Name",
-        DisplayName: "Table Name",
-        ShowGrid: true,
-        ShowFilter: true,
-        filterWidget: "multiSelect",
-        filterType: "text",
-        sort: true,
-        multi: false,
-      },
-      {
-        ColumnName: "action",
-        DisplayName: "Actions",
-        ShowGrid: true,
-        ShowFilter: true,
-        filterWidget: "multiSelect",
-        filterType: "text",
-        sort: true,
-        multi: false,
-      }
-    ]
-    this.loading =false;
-    })
   }
 
-  editScreen(event:any){
-    this.router.navigate(['./pages/admin/admin-screen-create'],{queryParams:{id:event.Screen_ID}});
+  getScreenList() {
+    this.loading = true;
+    this.rest.getScreenList().subscribe((data) => {
+      this.screenlist = data;
+      this.columns_list = [
+        {
+          ColumnName: "Screen_Name",
+          DisplayName: "Screen Name",
+          ShowGrid: true,
+          ShowFilter: true,
+          filterWidget: "multiSelect",
+          filterType: "text",
+          sort: true,
+          multi: false,
+        },
+        {
+          ColumnName: "Table_Name",
+          DisplayName: "Table Name",
+          ShowGrid: true,
+          ShowFilter: true,
+          filterWidget: "multiSelect",
+          filterType: "text",
+          sort: true,
+          multi: false,
+        },
+        {
+          ColumnName: "action",
+          DisplayName: "Actions",
+          ShowGrid: true,
+          ShowFilter: true,
+          filterWidget: "multiSelect",
+          filterType: "text",
+          sort: true,
+          multi: false,
+        },
+      ];
+      this.loading = false;
+    });
+  }
+
+  editScreen(event: any) {
+    this.router.navigate(["./pages/admin/admin-screen-create"], {
+      queryParams: { id: event.Screen_ID },
+    });
   }
 
   deleteScreen(id: any) {
     this.loading = true;
-    this.rest.deleteScreen(id.Screen_ID).subscribe(data => {
-      Swal.fire("Success", "Record deleted successfully", "success")
+
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You Delete the Record!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      heightAuto: false,
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.value) {
+        this.rest.deleteScreen(id.Screen_ID).subscribe((resp) => {
+          Swal.fire({
+            title: "Success",
+            text: "Record Deleted Successfully!!",
+            position: "center",
+            icon: "success",
+            showCancelButton: false,
+            confirmButtonColor: "#007bff",
+            cancelButtonColor: "#d33",
+            heightAuto: false,
+            confirmButtonText: "Ok",
+          }).then(()=>{
+            window.location.reload();
+          })      
+        },(err: any) => {
+            Swal.fire("Error", "Unable to delete record", "error")
+          });
+      }
       this.getScreenList();
       this.loading = false;
-    }),(err: any) => {
-      Swal.fire("Error", "Unable to delete record", "error")
-    }
+
+      // }),
+    });
   }
 }

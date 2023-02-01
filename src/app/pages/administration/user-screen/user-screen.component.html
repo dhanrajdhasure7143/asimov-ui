@@ -1,76 +1,103 @@
 <div class="container-fluid">
-    <div class="row no-gutter">
-        <div class="col-md-12">
-            <div class="header">
-                <div class="header-inner nav-item">
-                    <span class="h6 text-title">  {{selectedScreen.Screen_Name}} </span>
-                </div>
-                <div class="page-bg">
-                    <div class="padding-20">
-                        <div class="page-body box-shadow">
-                            <div *ngIf="displayFlag=='DisplayTable'">
-                                <div class="page-header">
-                                    <div class="row py-2">
-                                        <div class="col screen">
-                                            <div class="text-left px-3 w-100 h6" *ngIf="selectedScreen.Screen_Name">View {{selectedScreen.Screen_Name}} Details
-                                                
-                                            </div>
-                                        </div>
-                                        <div class="col screen">
-                                            <div class="text-right px-2" *ngIf="selectedScreen.Screen_Name">
-                                                <div>
-                                                    <button [disabled]="!selectedScreen.Allow_Insert" (click)="createForm()" class="btn btn-sm btn-primary">Add</button>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <app-dynamic-table 
-                                    [table_data]="tableData"  [screenTable]="'common'" [columns_list]="columns_list" 
-                                    [selectedScreen]="selectedScreen" (onEdit)="editForm($event)"
-                                    (deleteItem)="deleteRecord($event)"></app-dynamic-table>
-                                   
-                                        <!-- <app-dynamic-table (onEdit)="editForm($event)" [selectedScreen]="selectedScreen"  (onDelete)="deleteRecord($event)" [tableDataInput]="tableData"></app-dynamic-table> -->
-                                  
-                                </div>
-                            </div>
-                            <div *ngIf="displayFlag=='EditForm'">
-                                <div class="page-header">
-                                    <div class="row py-2">
-                                        <div class="col  ">
-                                            <div class="text-left px-3 w-100 h6"><span (click)="displayTable()" class="clickable color-primary primary-icon"><em class="ri-arrow-left-s-line"></em></span>&nbsp;Edit {{selectedScreen.screenName}}</div>
-                                        </div>
-                                        <!-- <div class="col">
-                                            <div class="text-right px-2">
-                                                <button (click)="createForm()" class="btn btn-sm btn-primary">Add</button>
-                                            </div>
-                                        </div> -->
-                                    </div>
-                                </div>
-                                <app-screen-generation-dynamic-form [details]="updateDetails" (emitFormValue)="caputreFormValues($event)" [inputFieldData]="formDetails" [dash_board_list]="dash_board_list"></app-screen-generation-dynamic-form>
-                                  
-                            </div>
-                            <div *ngIf="displayFlag=='CreateForm'">
-                                <div class="page-header">
-                                    <div class="row py-2">
-                                        <div class="col  ">
-                                            <div class="text-left px-3 w-100 h6"><span (click)="displayTable()" class="clickable color-primary primary-icon"><em class="ri-arrow-left-s-line"></em></span>&nbsp;Create {{selectedScreen.Screen_Name}}</div>
-                                        </div>
-                                        <!-- <div class="col">
-                                            <div class="text-right px-2">
-                                                <button (click)="createForm()" class="btn btn-sm btn-primary">Add</button>
-                                            </div>
-                                        </div> -->
-                                    </div>
-                                    <div>
-                                        <app-screen-generation-dynamic-form (emitFormValue)="caputreFormValues($event)" [inputFieldData]="formDetails"  [dash_board_list]="dash_board_list"></app-screen-generation-dynamic-form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  <div class="row no-gutter">
+    <div class="col-md-12">
+      <div class="header">
+        <div class="header-inner nav-item">
+          <span class="h6 text-title"> {{ selectedScreen.Screen_Name }} </span>
         </div>
+        <div class="page-bg">
+          <div class="padding-20">
+            <div class="page-body box-shadow">
+              <div *ngIf="displayFlag == 'DisplayTable'">
+                <div class="page-header">
+                  <div class="row py-2">
+                    <div class="col screen">
+                      <div
+                        class="text-left px-3 w-100 h6"
+                        *ngIf="selectedScreen.Screen_Name"
+                      >
+                        View {{ selectedScreen.Screen_Name }} Details
+                      </div>
+                    </div>
+                    <div class="col screen">
+                      <div
+                        class="text-right px-2"
+                        *ngIf="selectedScreen.Screen_Name"
+                      >
+                        <div>
+                          <button
+                            [disabled]="!selectedScreen.Allow_Insert"
+                            (click)="createForm()"
+                            class="btn btn-sm btn-primary"
+                          >
+                            Add
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <app-dynamic-table
+                    [table_data]="tableData"
+                    [screenTable]="'common'"
+                    [columns_list]="columns_list"
+                    [selectedScreen]="selectedScreen"
+                    (onEdit)="editForm($event)"
+                    (deleteItem)="deleteRecord($event)"
+                  ></app-dynamic-table>
+                </div>
+              </div>
+              <div *ngIf="displayFlag == 'EditForm'">
+                <div class="page-header">
+                  <div class="row py-2">
+                    <div class="col">
+                      <div class="text-left px-3 w-100 h6">
+                        <span
+                          (click)="displayTable()"
+                          class="clickable color-primary primary-icon"
+                          ><em class="ri-arrow-left-s-line"></em></span
+                        >&nbsp;Edit {{ selectedScreen.screenName }}
+                      </div>
+                    </div>
+                    <!-- <div class="col">
+                                            <div class="text-right px-2">
+                                                <button (click)="createForm()" class="btn btn-sm btn-primary">Add</button>
+                                            </div>
+                                        </div> -->
+                  </div>
+                </div>
+                <app-screen-generation-dynamic-form
+                  [details]="updateDetails"
+                  (emitFormValue)="caputreFormValues($event)"
+                  [inputFieldData]="formDetails"
+                  [dash_board_list]="dash_board_list"
+                ></app-screen-generation-dynamic-form>
+              </div>
+              <div *ngIf="displayFlag == 'CreateForm'">
+                <div class="page-header">
+                  <div class="row py-2">
+                    <div class="col">
+                      <div class="text-left px-3 w-100 h6">
+                        <span
+                          (click)="displayTable()"
+                          class="clickable color-primary primary-icon"
+                          ><em class="ri-arrow-left-s-line"></em></span
+                        >&nbsp;Create {{ selectedScreen.Screen_Name }}
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <app-screen-generation-dynamic-form
+                      (emitFormValue)="caputreFormValues($event)"
+                      [inputFieldData]="formDetails"
+                      [dash_board_list]="dash_board_list"
+                    ></app-screen-generation-dynamic-form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
