@@ -263,31 +263,8 @@ export class AdminAddScreenComponent implements OnInit {
             multi: false,
           },
         ];
-        // this.columnNames = [
-        //   "ColumnName",
-        //   "DisplayName",
-        //   "data_type",
-        //   "actions",
-        // ];
-
-        // this.dataSource = new MatTableDataSource(this.elementData);
-        // this.dataSource.paginator = this.paginator;
         this.loading = false;
       });
-
-      // this.rest.getTabledataAdmin(filterData.Table_Name).subscribe(data => {
-      //   this.data = data;
-      //   this.data = this.data.map((item: any) => {
-      //     item["actions"] = "actions";
-      //     return item;
-      //   })
-      //   this.columnNames = Object.keys(this.data[0]);
-      //   this.dataSource = new MatTableDataSource(this.data);
-      //   setTimeout(() => {
-      //     this.dataSource.paginator = this.paginator
-      //   }, 500);
-      //   this.loading = false;
-      // })
     });
   }
 
@@ -336,7 +313,25 @@ export class AdminAddScreenComponent implements OnInit {
           sort: true
         },
       ];
-      Swal.fire("Success", "Screen Saved successfully !", "success");
+      Swal.fire({
+        title: "Success",
+        text: "Screen Saved successfully !!",
+        position: "center",
+        icon: "success",
+        showCancelButton: false,
+        confirmButtonColor: "#007bff",
+        cancelButtonColor: "#d33",
+        heightAuto: false,
+        confirmButtonText: "Ok",
+      }).then(()=>{
+        this.backToScreenList();
+        setTimeout(() => {
+          window.location.reload();
+        }, 600);
+      })      
+     
+      // window.location.reload();
+      // Swal.fire("Success", "Screen Saved successfully !", "success");
       this.loading = false;
       this.buttonDisable = true;
     }),
