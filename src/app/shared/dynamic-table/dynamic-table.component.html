@@ -17,7 +17,7 @@
                 <th style="width: 1rem" *ngIf="checkBoxShow">
                     <p-tableHeaderCheckbox  (click)="selectRow()"></p-tableHeaderCheckbox>
                 </th>
-                <th *ngFor="let col of columns" pReorderableColumn pResizableColumn pSortableColumn="{{col.ColumnName}}" [hidden]="!col.ShowGrid">{{col.DisplayName}}
+                <th *ngFor="let col of columns" pReorderableColumn pResizableColumn pSortableColumn="{{col.ColumnName}}" [hidden]="!col.ShowGrid">{{col.DisplayName | removeUnderscore}}
                     <!-- <p-columnFilter *ngIf="col.header == 'Type'" type="text" field="representative.name" display="menu"></p-columnFilter>
                     <p-sortIcon *ngIf="col.header == 'Type'" field="representative.name"></p-sortIcon> -->
 
