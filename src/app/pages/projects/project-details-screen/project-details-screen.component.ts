@@ -940,11 +940,12 @@ export class ProjectDetailsScreenComponent implements OnInit {
     });
   }
 
-  addresources(event) {
+  addresources() {
     let item_data = {
       id: this.projectDetails.id,
       access: "Project",
-      resources: JSON.parse(event),
+      // resources: JSON.parse(event),
+      resources: this.checkBoxselected
     }
     this.spinner.show();
     this.addresourcemodalref.hide();
@@ -955,7 +956,6 @@ export class ProjectDetailsScreenComponent implements OnInit {
         this.getallusers();
         this.removeallchecks();
         this.checktodelete();
-
         Swal.fire("Success", response.status, "success");
       }
       else {
