@@ -29,10 +29,19 @@
             <p-card  class="cards"> <i class="pi pi-folder-open" style="font-size: 2rem"></i>  <br>   Add folder </p-card>
             <p-card  class="cards" *ngFor="let doc of documents">  <i class="pi pi-folder" style="font-size: 2rem"> </i> <br>  {{ doc }} </p-card>
            </div> -->
-            <p-tree [value]="files" selectionMode="single" (onNodeSelect)="nodeSelect($event)"> </p-tree>
-        </div>
+            <p-tree [value]="files" [filter]="true" selectionMode="single" scrollHeight="200px"
+                (onNodeSelect)="nodeSelect($event)" [(selection)]="selectedFile"> </p-tree>
 
-        <p-sidebar [(visible)]="display" position="right" styleClass="p-sidebar-md" [baseZIndex]="0">
+            <!-- <p-tree [value]="files"
+            
+            selectionMode="single"
+            [(selection)]="selected">
+    </p-tree> -->
+            <!-- <a class="btn btn-primary"
+           (click)="removeRoute(selected)">Remove Page</a>
+        </div> -->
+
+            <!-- <p-sidebar [(visible)]="display" position="right" styleClass="p-sidebar-md" [baseZIndex]="0">
             <div class="container">
                 <strong> Create / Upload </strong>
                 <div class="row">
@@ -64,9 +73,9 @@
                     </div>
                 </div>
             </div>
-        </p-sidebar>
+        </p-sidebar> -->
 
-        <p-sidebar [(visible)]="isSidebar" position="right" styleClass="p-sidebar-md">
+            <!-- <p-sidebar [(visible)]="isSidebar" position="right" styleClass="p-sidebar-md">
             <div class="container">
                 <strong> Create / Upload </strong>
                 <div class="row">
@@ -84,12 +93,20 @@
                     </div>
                 </div>
             </div>
-        </p-sidebar>
-        <p-dialog header="Folder Name" [(visible)]="isDialog" [style]="{width: '25vw'}">
-            <span class="p-float-label">
-                <input type="text" pInputText placeholder="Enter Folder Name" [(ngModel)]="folder" name="folder"> <br>
-                <button type="button" class="btn btn-primary" (click)="saveFolder(folder)"> Save </button>
-            </span>
-        </p-dialog>
+        </p-sidebar> -->
+            <p-dialog header="Folder Name" [(visible)]="isDialog" [style]="{width: '25vw'}">
+                <span class="p-float-label">
+                    <input type="text" pInputText placeholder="Enter Folder Name" [(ngModel)]="entered_folder_name"
+                        name="folder"> <br>
+                    <button type="button" class="btn btn-primary" (click)="saveFolder()"> Save </button>
+                </span>
+            </p-dialog>
+            <p-dialog header="Folder Name" [(visible)]="isDialogBox" [style]="{width: '25vw'}">
+                <span class="p-float-label">
+                    <input type="text" pInputText placeholder="Enter Folder Name" [(ngModel)]="folder_name"
+                        name="folder"> <br>
+                    <button type="button" class="btn btn-primary" (click)="addParent()"> Save </button>
+                </span>
+            </p-dialog>
+        </div>
     </div>
-</div>
