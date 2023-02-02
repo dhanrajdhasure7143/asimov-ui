@@ -30,7 +30,7 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit() {
     //this.disable();
-    document.cookie = "card_enabled=false";
+    document.cookie = "card_enabled=true";
     if(this.getCookie("card_enabled")!="false"){
       document.cookie = "card_enabled=true";
     }
