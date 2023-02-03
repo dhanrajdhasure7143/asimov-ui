@@ -11,6 +11,7 @@ export class ProjectsDocumentComponent implements OnInit {
   display: boolean = false;
   isSidebar: boolean = false;
   isDialog: boolean = false;
+  isDialog1: boolean = false;
   entered_folder_name: any;
   selectedFile: TreeNode;
   text: string;
@@ -25,7 +26,14 @@ export class ProjectsDocumentComponent implements OnInit {
     expandedIcon: "pi pi-folder-open",
     collapsedIcon: "pi pi-folder-open",
   };
-  folder_files:any=[]
+  folder_files:any=[];
+  selectedFolder: TreeNode
+  folderName : string;
+  enteredFolderName : string;
+  parentFolder : string;
+  fileImage : './../../../../assets/images-n/projects/file.svg'
+  folderImage : './../../../../assets/images-n/projects/folder.svg'
+
 
   constructor() {}
 
@@ -148,6 +156,8 @@ export class ProjectsDocumentComponent implements OnInit {
   }
 
   saveFolder() {
+    this.enteredFolderName = this.entered_folder_name
+      console.log("testing...")
     if (this.selectedFile && this.entered_folder_name) {
       let object = { ...{}, ...this.example };
       object.label = this.entered_folder_name;
@@ -182,6 +192,7 @@ export class ProjectsDocumentComponent implements OnInit {
   }
 
   addParent() {
+    this.parentFolder = this.folder_name
     this.files.push({
       key: String(this.files.length),
       label: this.folder_name,
@@ -205,6 +216,7 @@ export class ProjectsDocumentComponent implements OnInit {
   folderView(){
     // for (let i = 0; i < 100; i++)
     // console.log(this.files[i].children[i]);
+    this.folder_files = this.files
     this.isFolder = true;
     this.isTree = false;
   }
@@ -215,10 +227,46 @@ export class ProjectsDocumentComponent implements OnInit {
   }
 
   folderStructure(event){
-    console.log(event);
+    // console.log(event);
+    // console.log(this.selectedFolder);
+    this.folderName = event.label;
+    console.log(this.folderName,"folderName");
+    if(event.label =="Add Folder / Document")
+    return this.isDialog1 = true;
+
+    if(event.label =="Add Folder")
+    return this.isDialogBox = true;
+
+    this.selectedFolder = event
+    this.folder_files = event.children
     // this.isSubFolder = true;
     // this.isFolder = false;
   }
+
+  addSubfolder() {
+    console.log("testing..." ,this.selectedFolder)
+    
+  if (this.selectedFolder && this.entered_folder_name) {
+    let object = { ...{}, ...this.example };
+    object.label = this.entered_folder_name;
+    let objectKey = this.selectedFolder.children.length ? String(this.selectedFolder.children.length):"0";
+    object["key"] = this.selectedFolder.key + "-" + objectKey;
+    object["children"] = [
+      {
+        key: this.selectedFolder.key + "-" + objectKey + "-0" ,
+        label: "Add Folder / Document",
+        data: "Work Folder",
+        expandedIcon: "pi pi-folder-open",
+        collapsedIcon: "pi pi-folder",
+      },
+    ]
+    console.log("object",object)
+    this.selectedFolder.children.push(object);
+    this.entered_folder_name = "";
+    this.isDialog1 = false;
+    console.log(this.files)
+  }
+}
 
   // removeRoute(node) {
   //   const parent: any = this.findById(this.files, node.parentId);

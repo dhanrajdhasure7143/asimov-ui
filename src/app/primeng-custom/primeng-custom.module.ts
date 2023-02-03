@@ -74,7 +74,8 @@ import { TreeModule } from 'primeng/tree';
     ButtonModule,
     DropdownModule,
     ProgressBarModule,
-    InputTextModule
+    InputTextModule,
+    TreeModule
   ]
 })
 export class PrimengCustomModule { }

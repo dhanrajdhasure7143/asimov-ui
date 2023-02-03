@@ -57,7 +57,6 @@ import { SharedModule } from '../../shared/shared.module';
 import { AngularSplitModule } from 'angular-split';
 import { PrimengCustomModule } from 'src/app/primeng-custom/primeng-custom.module';
 import { ProjectsDocumentComponent } from './project-details-screen/projects-document/projects-document.component';
-import { TreeModule } from 'primeng/tree';
 
 const materialModules: any[] = [
     
@@ -97,7 +96,6 @@ const materialModules: any[] = [
     SharedModule,
     AngularSplitModule.forRoot(),
     PrimengCustomModule,
-    TreeModule
   ],
   providers:[
     BsModalRef, NotifierService,

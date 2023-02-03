@@ -25,12 +25,19 @@
             </div>
         </div>
         <div class="container">
+            <span class="title_text"></span>
             <div *ngIf="isFolder == true" class="d-flex">
-            <p-card  class="cards" *ngFor="let doc of folder_files" (click)="folderStructure(doc)">  <i class="pi pi-folder" style="font-size: 2rem"> </i> <br>  {{ doc.label }} </p-card>
+            <p-card  class="cards" *ngFor="let item of folder_files"  (click)="folderStructure(item)">  
+                <i *ngIf="item.collapsedIcon" class="pi" [class]="item.collapsedIcon" style="font-size: 2rem"> </i> 
+                <i *ngIf="!item.collapsedIcon" class="pi" [class]="item.icon" style="font-size: 2rem"> </i> <br>  
+                <span> {{ item.label }} </span>
+            </p-card>
            </div>
+
            <!-- <div *ngIf="isSubFolder == true" class="d-flex">
             <p-card  class="cards" *ngFor="let folder of files; let i=index"> <i class="pi pi-folder-open" style="font-size: 2rem"></i>  <br>   {{ folder[i].children[i].label }} </p-card>
            </div> -->
+
            <div *ngIf = "isTree == true">
             <p-tree [value]="files" [filter]="true" selectionMode="single" [style]="{'max-height':'auto','overflow':'auto'}"
                 (onNodeSelect)="nodeSelect($event)" [(selection)]="selectedFile"> </p-tree>
@@ -106,11 +113,23 @@
                     <button type="button" class="btn btn-primary" (click)="saveFolder()"> Save </button>
                 </span>
             </p-dialog>
+
             <p-dialog header="Folder Name" [(visible)]="isDialogBox" [style]="{width: '25vw'}">
                 <span class="p-float-label">
                     <input type="text" pInputText placeholder="Enter Folder Name" [(ngModel)]="folder_name"
                         name="folder"> <br>
                     <button type="button" class="btn btn-primary" (click)="addParent()"> Save </button>
+                </span>
+            </p-dialog>
+
+
+
+            <!-- add sub folder in folder structure -->
+            <p-dialog header="Folder Name" [(visible)]="isDialog1" [style]="{width: '25vw'}">
+                <span class="p-float-label">
+                    <input type="text" pInputText placeholder="Enter Folder Name" [(ngModel)]="entered_folder_name"
+                        name="folder"> <br>
+                    <button type="button" class="btn btn-primary" (click)="addSubfolder()"> Add Subfolder</button>
                 </span>
             </p-dialog>
 
