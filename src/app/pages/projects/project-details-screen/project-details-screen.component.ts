@@ -206,6 +206,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   selectedRole:any= "All";
   users_tableList:any=[];
   users_tabIndex:any=0;
+  usersTable:any=[];
 
   constructor(private dt: DataTransferService, private route: ActivatedRoute, private dataTransfer: DataTransferService, private rpa: RestApiService,
     private modalService: BsModalService, private formBuilder: FormBuilder, private router: Router,
@@ -298,21 +299,21 @@ export class ProjectDetailsScreenComponent implements OnInit {
     });
 
 
-  this.areas = [
-    { size: 50, order: 1 },
-    { size: 50, order: 2 },
-  ];
-  setTimeout(() => {
-    this.splitEl.dragProgress$.subscribe((x) => {
-      this.ngZone.run(() => {
-        this.area_splitSize = x;
-        this.isShowExpand = false;
-        if (x.sizes[1] < 50) {
-          this.splitAreamin_size = "500";
-        }
-      });
-    });
-  }, 1000);
+  // this.areas = [
+  //   { size: 50, order: 1 },
+  //   { size: 50, order: 2 },
+  // ];
+  // setTimeout(() => {
+  //   this.splitEl.dragProgress$.subscribe((x) => {
+  //     this.ngZone.run(() => {
+  //       this.area_splitSize = x;
+  //       this.isShowExpand = false;
+  //       if (x.sizes[1] < 50) {
+  //         this.splitAreamin_size = "500";
+  //       }
+  //     });
+  //   });
+  // }, 1000);
   }
 
 
@@ -1892,7 +1893,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
 
   openUsersOverlay() {
     this.hiddenPopUp = true;
-}
+  }
 
 taskListView(){
   this.router.navigate(['/pages/projects/tasks'],{queryParams:{id:this.project_id}});
@@ -1900,20 +1901,20 @@ taskListView(){
 
 minimizeFullScreen() {
   this.isShowExpand = false;
-  this.splitAreamin_size = "200";
-  this.areas = [
-    { size: 50, order: 1 },
-    { size: 50, order: 2 },
-  ];
+  // this.splitAreamin_size = "200";
+  // this.areas = [
+  //   { size: 50, order: 1 },
+  //   { size: 50, order: 2 },
+  // ];
 }
 
 expandFullScreen() {
   this.isShowExpand = true;
-  this.splitAreamin_size = "null";
-  this.areas = [
-    { size: 0, order: 1 },
-    { size: 100, order: 2 },
-  ];
+  // this.splitAreamin_size = "null";
+  // this.areas = [
+  //   { size: 0, order: 1 },
+  //   { size: 100, order: 2 },
+  // ];
 }
 
 onDragEnd(e: { gutterNum: number; sizes: number[] }) {
@@ -1927,10 +1928,9 @@ onDragEnd(e: { gutterNum: number; sizes: number[] }) {
   }
 }
 
-usersTable:any=[]
-
-closeOverlay() {
-    this.hiddenPopUp = false;
+  closeOverlay(event) {
+    console.log(event)
+    this.hiddenPopUp = event;
   }
 
   deleteuserById(event) {}
