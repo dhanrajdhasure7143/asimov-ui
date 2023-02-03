@@ -1,0 +1,17 @@
+<as-split direction="horizontal" [useTransition]="true" (dragEnd)="onDragEnd($event)" #splitEl>
+    <as-split-area [size]="areas[0].size" order="areas[0].order">
+    </as-split-area>
+    <as-split-area [size]="areas[1].size" order="areas[1].order" [minSize]="splitAreamin_size">
+        <div class="right_split">
+            <span class="splitter-headers">
+                <img *ngIf="isShowExpand" src="../../../../assets/images/RPA/Expand-In.svg"
+                    (click)="minimizeFullScreen()" class="expandsvgimg" />
+                <img *ngIf="!isShowExpand" src="../../../../assets/images/RPA/Expand-Out.svg"
+                    (click)="expandFullScreen()" class="expandsvgimg" />
+                <a (click)="closeSplitOverlay()"><img src="./../../../../assets/images-n/projects/close-circle-line.svg"
+                        alt="close"></a>
+            </span>
+            <ng-content></ng-content>
+        </div>
+    </as-split-area>
+</as-split>

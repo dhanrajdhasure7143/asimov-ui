@@ -4,7 +4,8 @@
             <div class="col-md-4 pl-0">
                 <h3>
                     <label id="popup_title">
-                        <a routerLink="/pages/projects/listOfProjects"><img src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow"></a>
+                        <a routerLink="/pages/projects/listOfProjects"><img
+                                src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow"></a>
                     </label>
                     <span class="title_text">
                         Projects | <span class="sub_title_text"> {{projectDetails.projectName}}</span>
@@ -13,7 +14,7 @@
             </div>
             <div class="col-md-8 pr-0 text-right">
                 <button class="btn">
-                    <img src="./../../../../assets/images-n/projects/Open.svg" alt="Open" >
+                    <img src="./../../../../assets/images-n/projects/Open.svg" alt="Open">
                     <!-- <span>Open</span> -->
                 </button>
                 <!-- <button class="btn">
@@ -27,17 +28,17 @@
 
                 <span class="text-wh">
                     <button mat-icon-button [matMenuTriggerFor]="menu" class="txt-wh" style="vertical-align: middle;"
-                      aria-label="Example icon-button with a menu">
-                      <mat-icon class="menu-button" >
-                      </mat-icon>
-                      <img src="./../../../../assets/images-n/projects/more-vertical.svg" alt="Actions" >
+                        aria-label="Example icon-button with a menu">
+                        <mat-icon class="menu-button">
+                        </mat-icon>
+                        <img src="./../../../../assets/images-n/projects/more-vertical.svg" alt="Actions">
                     </button>
-                  </span>
-                  <mat-menu #menu="matMenu">
+                </span>
+                <mat-menu #menu="matMenu">
                     <button class="ep-pad" (click)='taskListView()'> Tasks</button>
                     <button class="ep-pad"> Documents </button>
                     <button class="ep-pad" (click)='openUsersOverlay()'>Users</button>
-                  </mat-menu>
+                </mat-menu>
             </div>
         </div>
         <div class="main-content-body">
@@ -45,46 +46,50 @@
                 <div class="row project-overview">
                     <div class="col-md-1 p-0">
                         <div class="row project-status">
-                            <img *ngIf="projectDetails.status == 'Closed'" src="./../../../../assets/images-n/projects/completed-tasks.svg" alt="project-status-icon" >
-                            <img *ngIf="projectDetails.status != 'Closed'" src="./../../../../assets/images-n/projects/inprogress-tasks.svg" alt="project-status-icon" >
+                            <img *ngIf="projectDetails.status == 'Closed'"
+                                src="./../../../../assets/images-n/projects/completed-tasks.svg"
+                                alt="project-status-icon">
+                            <img *ngIf="projectDetails.status != 'Closed'"
+                                src="./../../../../assets/images-n/projects/inprogress-tasks.svg"
+                                alt="project-status-icon">
                             <!-- <p>{{projectDetails.status}}</p> -->
                         </div>
-                    </div> 
+                    </div>
                     <div class="col-md-11 p-0">
                         <div class="row project-ninfo">
-                            <div class="row align-items-center"> 
-                                    <span class="project-name">{{projectDetails.projectName}}</span>
-                                    <img src="./../../../../assets/images-n/projects/Warning.svg" alt="importance">
-                                    <span class="highimp">{{projectDetails.priority}}</span>
+                            <div class="row align-items-center">
+                                <span class="project-name">{{projectDetails.projectName}}</span>
+                                <img src="./../../../../assets/images-n/projects/Warning.svg" alt="importance">
+                                <span class="highimp">{{projectDetails.priority}}</span>
                             </div>
                             <div class="row pr-3 align-items-center justify-content-between">
                                 <!-- <div class="col-md-9 pl-0 d-flex align-items-center">
                                     <div class="row"> -->
-                                        <div class="pinf">
-                                            <p>Account Financial Audit </p>
-                                            <label>Program Name</label>
-                                        </div>
-                                        <div class="pinf">
-                                            <p>{{projectDetails.mapValueChain}}</p>
-                                            <label>Departments</label>
-                                        </div>
-                                        <div class="pinf">
-                                            <p>{{getUserName(projectDetails.owner)}}</p>
-                                            <label>Project Owner</label>
-                                        </div>
-                                        <div class="pinf">
-                                            <p>{{projectDetails.status}}</p>
-                                            <label>Status</label>
-                                        </div>
-                                        <div class="pinf">
-                                            <p>{{projectDetails.lastModifiedTimestamp |  date:'MMM dd, y, HH:mm:ss'}}</p>
-                                            <label>Last Updated</label>
-                                        </div>
-                                    <!-- </div>
+                                <div class="pinf">
+                                    <p>Account Financial Audit </p>
+                                    <label>Program Name</label>
+                                </div>
+                                <div class="pinf">
+                                    <p>{{projectDetails.mapValueChain}}</p>
+                                    <label>Departments</label>
+                                </div>
+                                <div class="pinf">
+                                    <p>{{getUserName(projectDetails.owner)}}</p>
+                                    <label>Project Owner</label>
+                                </div>
+                                <div class="pinf">
+                                    <p>{{projectDetails.status}}</p>
+                                    <label>Status</label>
+                                </div>
+                                <div class="pinf">
+                                    <p>{{projectDetails.lastModifiedTimestamp | date:'MMM dd, y, HH:mm:ss'}}</p>
+                                    <label>Last Updated</label>
+                                </div>
+                                <!-- </div>
                                 </div> -->
                                 <div class="pinf">
                                     <div class="d-flex">
-                                       <span class="kpibot">
+                                        <span class="kpibot">
                                             <p>{{projectDetails.projectPercentage}} %</p>
                                             <label>Project Completion</label>
                                         </span>
@@ -92,7 +97,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>                                                                             
+                    </div>
                 </div>
                 <div class="row project-description">
                     <label>Description</label>
@@ -108,12 +113,13 @@
                                 <div class="row quicksnapshot-cards">
                                     <div class="d-flex w-100 align-items-center">
                                         <div class="qcard-infoimg">
-                                            <img src="./../../../../assets/images-n/projects/ActiveTasks.svg" alt="Active-Tasks" class="qcard-img">
+                                            <img src="./../../../../assets/images-n/projects/ActiveTasks.svg"
+                                                alt="Active-Tasks" class="qcard-img">
                                         </div>
                                         <div class="qcard-info">
                                             <label class="qcard-count">12</label>
                                             <p class="qcard-name">Active Tasks</p>
-                                        </div>                      
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -122,26 +128,28 @@
                                     <div class="d-flex w-100 align-items-center">
                                         <div class="qcard-infoimg">
                                             <!-- <img src="./../../../../assets/images-n/projects/OverdueTasks.svg" alt="OverdueTasks" class="qcard-img"> -->
-                                            <img src="./../../../../assets/images-n/projects/OverdueTasks2.svg" alt="OverdueTasks" class="qcard-img">
+                                            <img src="./../../../../assets/images-n/projects/OverdueTasks2.svg"
+                                                alt="OverdueTasks" class="qcard-img">
                                         </div>
                                         <div class="qcard-info">
                                             <label class="qcard-count">02</label>
                                             <p class="qcard-name">Delayed Tasks</p>
-                                        </div>                      
-                                    </div>  
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-4 pr-0">
                                 <div class="row quicksnapshot-cards">
                                     <div class="d-flex w-100 align-items-center">
                                         <div class="qcard-infoimg">
-                                            <img src="./../../../../assets/images-n/projects/UsersOnboard.svg" alt="UserOnboard" class="qcard-img" >
+                                            <img src="./../../../../assets/images-n/projects/UsersOnboard.svg"
+                                                alt="UserOnboard" class="qcard-img">
                                         </div>
                                         <!--style="margin-left: 8px;" style="margin-left: -9px;" -->
-                                        <div class="qcard-info" >
+                                        <div class="qcard-info">
                                             <label class="qcard-count">05</label>
                                             <p class="qcard-name">Completed Tasks</p>
-                                        </div>                      
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -149,68 +157,71 @@
                                 <div class="row quicksnapshot-cards ">
                                     <div class="d-flex w-100 align-items-center">
                                         <div class="qcard-infoimg">
-                                            <img src="./../../../../assets/images-n/projects/AutomationRate.svg" alt="AutomationRate" class="qcard-img">
+                                            <img src="./../../../../assets/images-n/projects/AutomationRate.svg"
+                                                alt="AutomationRate" class="qcard-img">
                                         </div>
                                         <div class="qcard-info">
                                             <label class="qcard-count">02</label>
                                             <p class="qcard-name">Users Onboarded</p>
-                                        </div>                      
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="col-md-4">
                                 <div class="row quicksnapshot-cards ">
                                     <div class="d-flex w-100 align-items-center">
                                         <div class="qcard-infoimg">
-                                            <img src="./../../../../assets/images-n/projects/Documents.svg" alt="Documents" class="qcard-img">
+                                            <img src="./../../../../assets/images-n/projects/Documents.svg"
+                                                alt="Documents" class="qcard-img">
                                         </div>
                                         <div class="qcard-info">
                                             <label class="qcard-count">07</label>
                                             <p class="qcard-name">Documents</p>
-                                        </div>                      
-                                    </div> 
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            
+
                             <div class="col-md-4 pr-0">
                                 <div class="row quicksnapshot-cards ">
                                     <div class="d-flex w-100 align-items-center">
                                         <div class="qcard-infoimg">
                                             <!-- <img src="./../../../../assets/images-n/projects/Frame 2.svg" alt="UnreadMessages" class="qcard-img"> -->
-                                            <img src="./../../../../assets/images-n/projects/UnreadMessages.svg" alt="UnreadMessages" class="qcard-img">
+                                            <img src="./../../../../assets/images-n/projects/UnreadMessages.svg"
+                                                alt="UnreadMessages" class="qcard-img">
                                         </div>
                                         <div class="qcard-info">
                                             <label class="qcard-count">02</label>
                                             <p class="qcard-name">Pending Approvals</p>
-                                        </div>                      
-                                    </div>   
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>    
+                    </div>
                     <div class="row quick-actions">
                         <h6>Quick Actions</h6>
-                        <img src="./../../../../assets/images-n/projects/Hand.svg" alt="handicon" >
+                        <img src="./../../../../assets/images-n/projects/Hand.svg" alt="handicon">
                         <button class="btn blue-btntext">
                             <a><span>Create Task</span></a>
                         </button>
                         <!-- <button class="btn blue-btntext">
                             <a><span> </span></a>
                         </button> -->
-                        <button class="btn blue-btntext"  (click)="openUsersOverlay()">
+                        <button class="btn blue-btntext" (click)="openUsersOverlay()">
                             <a><span> Users</span></a>
                         </button>
                         <button class="btn blue-btntext">
-                            <a ><span>Create Folder</span></a>
+                            <a><span>Create Folder</span></a>
                         </button>
                         <button class="btn blue-btntext">
-                           <a><span>Create Documents</span></a>
+                            <a><span>Create Documents</span></a>
                         </button>
                         <button class="btn blue-btntext">
                             <a><span>View BPMN</span></a>
                         </button>
-                    </div>                  
+                    </div>
                     <div class="row acresources">
                         <h4 class="colheads">Recent Activities</h4>
                         <button class="btn blue-btntext"><a href="#">View All</a></button>
@@ -225,25 +236,29 @@
                             <tbody>
                                 <tr>
                                     <td>Procure work environment</td>
-                                    <td><img alt="user-img" src="./../../../../assets/images-n/projects/user1.svg"> Rick</td>
+                                    <td><img alt="user-img" src="./../../../../assets/images-n/projects/user1.svg"> Rick
+                                    </td>
                                     <td>09th Jan, 12 pm</td>
                                 </tr>
                                 <tr>
                                     <td>Select necessary work equipment</td>
-                                    <td><img alt="user-img" src="./../../../../assets/images-n/projects/user2.svg"> James</td>
+                                    <td><img alt="user-img" src="./../../../../assets/images-n/projects/user2.svg">
+                                        James</td>
                                     <td>09th Jan, 12 pm</td>
                                 </tr>
                                 <tr>
                                     <td>Setup access rights</td>
-                                    <td><img alt="user-img" src="./../../../../assets/images-n/projects/user1.svg"> Johnson</td>
+                                    <td><img alt="user-img" src="./../../../../assets/images-n/projects/user1.svg">
+                                        Johnson</td>
                                     <td>09th Jan, 12 pm</td>
                                 </tr>
                                 <tr>
                                     <td>Latest task completed</td>
-                                    <td><img alt="user-img" src="./../../../../assets/images-n/projects/user2.svg"> William</td>
+                                    <td><img alt="user-img" src="./../../../../assets/images-n/projects/user2.svg">
+                                        William</td>
                                     <td>09th Jan, 12 pm</td>
                                 </tr>
-                               
+
                             </tbody>
                         </table>
                     </div>
@@ -272,7 +287,8 @@
                             <input type="text" class="msgip" placeholder=""
                                 value="Lorem ipsum dolor sit amet, consec" />
                             <!-- <button class="btn"><img alt="attachment" src="./../../../../assets/images-n/projects/paperclip.svg" /></button> -->
-                            <button class="btn"><img alt="send" src="./../../../../assets/images-n/projects/send.svg" /></button>
+                            <button class="btn"><img alt="send"
+                                    src="./../../../../assets/images-n/projects/send.svg" /></button>
                         </div>
                     </div>
 
@@ -281,303 +297,104 @@
         </div>
     </div>
 </div>
-           
-
-
-
-
 
 
 
 
 <div class="own-overlay rpa-modal dynamic-forms-modal" [hidden]="!hiddenPopUp" style="display: block">
-    <as-split direction="horizontal" [useTransition]="true" (dragEnd)="onDragEnd($event)" #splitEl>
-        <as-split-area [size]="areas[0].size" order="areas[0].order">
-        </as-split-area>
-        <!-- minSize="200" maxSize="300" -->
-        <as-split-area [size]="areas[1].size" order="areas[1].order" [minSize]="splitAreamin_size">
-            <div class="right_split">
-                <div class="rpa-modal-header">
-                    <!-- <ul class="nav nav-tabs">
-                        <li class="nav-item" (click)="onUsersTab('new_users')">
-                            <a data-toggle="tab" href="#onboarduserstab" class="nav-link active">
-                                New Users
-                                <span> (03 Users selected) </span>
-                            </a>
-                        </li>
-                        <li class="nav-item" (click)="onUsersTab('existing')">
-                            <a class="nav-link">Existing Users</a>
-                        </li>
-                        <li class="close">
-                            <img *ngIf="isShowExpand" src="../../../../assets/images/RPA/Expand-In.svg"
-                            (click)="minimizeFullScreen()" class="expandsvgimg" />
-                        <img *ngIf="!isShowExpand" src="../../../../assets/images/RPA/Expand-Out.svg"
-                            (click)="expandFullScreen()" class="expandsvgimg" />
-                            <a (click)="closeFun()"><img src="./../../../../assets/images-n/projects/close-circle-line.svg" alt="close" ></a>
-                        </li>                
-                    </ul> -->
-
-                    <p-tabView #tabView (onChange)="onUsersTab($event.index)">
-                        <p-tabPanel>
-                            <ng-template pTemplate="header">
-                                <div class="status-tabs newstatu">
-                                  <div class="status-data">
-                                    <h3>New Users <span *ngIf="checkBoxselected.length >0"> ({{checkBoxselected.length}} Users selected) </span> </h3>
-                                  </div>
+    <app-split-overlay (closeOverlay)="closeOverlay($event)">
+        <div class="">
+            <div class="rpa-modal-header">
+                <p-tabView #tabView (onChange)="onUsersTab($event.index)">
+                    <p-tabPanel>
+                        <ng-template pTemplate="header">
+                            <div class="status-tabs newstatu">
+                                <div class="status-data">
+                                    <h3>New Users <span *ngIf="checkBoxselected.length >0"> ({{checkBoxselected.length}}
+                                            Users selected) </span> </h3>
                                 </div>
-                              </ng-template>
-                        </p-tabPanel>
-                        <p-tabPanel>
-                            <ng-template pTemplate="header">
-                                <div class="status-tabs newstatu">
-                                  <div class="status-data">
+                            </div>
+                        </ng-template>
+                    </p-tabPanel>
+                    <p-tabPanel>
+                        <ng-template pTemplate="header">
+                            <div class="status-tabs newstatu">
+                                <div class="status-data">
                                     <h4>Existing Users</h4>
-                                  </div>
                                 </div>
-                              </ng-template>
-                        </p-tabPanel>
-                    </p-tabView>
-                    <span class="close">
-                        <img *ngIf="isShowExpand" src="../../../../assets/images/RPA/Expand-In.svg"
-                        (click)="minimizeFullScreen()" class="expandsvgimg" />
-                    <img *ngIf="!isShowExpand" src="../../../../assets/images/RPA/Expand-Out.svg"
-                        (click)="expandFullScreen()" class="expandsvgimg" />
-                        <a (click)="closeOverlay()"><img src="./../../../../assets/images-n/projects/close-circle-line.svg" alt="close" ></a>
-                    </span>
-                    
-                    <!-- <span class="rpa-modal-close">
-                        <img *ngIf="isShowExpand" src="../../../../assets/images/RPA/Expand-In.svg"
-                            (click)="minimizeFullScreen()" class="expandsvgimg" />
-                        <img *ngIf="!isShowExpand" src="../../../../assets/images/RPA/Expand-Out.svg"
-                            (click)="expandFullScreen()" class="expandsvgimg" />
-                        <img src="../../../../assets/images/RPA/icon_latest/close.svg" (click)="closeFun()" alt="" />
-                    </span> -->
-                </div>
-                <div class="modal-body actions-mbody actionsoverlay-mbody">
-                    <div class="tab-pane">
-                        <div class="tablediv">
-                            <p-table #dt1 [value]="users_tableList" [globalFilterFields]="['displayName','user_name']" [columns]="columns_list" [(selection)]="checkBoxselected" [resizableColumns]="true" responsiveLayout="scroll" dataKey="id" >
-                                <ng-template pTemplate="caption">
-                                    <div class="p-d-flex" *ngIf="users_tabIndex != 1">
-                                        <p-dropdown [options]="roles_list"  [style]="{minWidth: '200px'}" [(ngModel)]="selectedRole" (onChange)="onChangeRole($event)" optionLabel="name"></p-dropdown>
-                                        <span class="p-input-icon-right">
-                                            <i class="pi pi-search"></i>
-                                            <input type="text" pInputText placeholder="Search" class="p-inputtext-lg" style="width:auto" (input)="dt1.filterGlobal($event.target.value, 'contains')" >
-                                        </span>
-                                    </div>
-                                </ng-template>
-                                <ng-template pTemplate="header" let-columns>
-                                    <tr *ngIf="users_tabIndex == 1">
-                                        <th *ngFor="let col of columns">{{col.DisplayName}}
-                                        </th>
-                                    </tr>
-                                </ng-template>
-                                <ng-template pTemplate="body" let-rowData let-columns="columns">
-                                    <tr>
-                                        <td *ngIf="users_tabIndex != 1"> <p-tableCheckbox [value]="rowData"></p-tableCheckbox></td>
-                                        <td *ngFor="let col of columns">
-                                            <span>{{rowData[col.ColumnName]}}</span>
-                                            <span *ngIf="col.ColumnName == 'action'">
-                                                <div class="newinntalx">
-                                                    <a (click)="deleteuserById(rowData)">
-                                                   <img src="../../../../../assets/images/Projects/delete-black.svg" alt="" class="default-img">
-                                                   <img src="../../../../../assets/images/Projects/delete-red.svg" alt="" class="hover-img">
-                                                 </a>
-                                                </div>
-                                            </span>
-                                        </td>
-                                    </tr>
-                                </ng-template>
-                                <ng-template pTemplate="emptymessage">
-                                    <tr>
-                                        <td  style="text-align: center;" colspan="7">No Users found</td>
-                                    </tr>
-                                </ng-template>
-                            </p-table>
-                        </div>
-                        <div class="row footerbtns justify-content-end" *ngIf="users_tabIndex != 1">
-                            <button class="btn blue-btntext">Cancel</button>
-                            <button class="btn btn-onboard">Onboard Users</button>
-                        </div>
-                    </div>
-                </div>
+                            </div>
+                        </ng-template>
+                    </p-tabPanel>
+                </p-tabView>
             </div>
-        </as-split-area>
-    </as-split>
-</div>
-
-
-
-
-
-
-
-<!-- <div id="overlayusers" style="display:none;" >
-    <div class="userstabsblock">
-            <ul class="nav nav-tabs">
-                <li class="nav-item">
-                    <a data-toggle="tab" href="#onboarduserstab" class="nav-link active">
-                        Onboard Users
-                        <span> (03 Users selected) </span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a data-toggle="tab" href="#userstab" class="nav-link">
-                        Users
-                        <span></span>
-                    </a>
-                </li>
-                <li class="close">
-                    <a (click)="closeoverlay()"><img src="./../../../../assets/images-n/projects/close-circle-line.svg" alt="close" ></a>
-                </li>                
-            </ul>
-            
-            <div class="tab-content ">
-                <div id="onboarduserstab" class="tab-pane active">
-                    <div class="row searchdiv">
-                        <div class="col-md-5 pl-0 form-group">
-                            <select class="form-control">
-                                <option>All Roles</option>
-                                <option>Process Designer</option>
-                                <option>Process Architect</option>
-                                <option>RPA Designer</option>
-                            </select>
-                        </div>
-                        <div class="col-md-7 pr-0 form-group">
-                            <input type="text" placeholder="Search" class="form-control" />
-                            <img src="./../../../../assets/images-n/projects/search.svg" alt="search-icon" />
-                        </div>
-                    </div>
+            <div class="modal-body actions-mbody actionsoverlay-mbody">
+                <div class="tab-pane">
                     <div class="tablediv">
-                        <table class="table">                        
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <input type="checkbox" />
-                                    </td>
-                                    <td><img alt="user-img" src="./../../../../assets/images-n/projects/user1.svg"> Rick</td>
-                                    <td>Process Designer</td>
+                        <p-table #dt1 [value]="users_tableList" [globalFilterFields]="['displayName','user_name']"
+                            [columns]="columns_list" [(selection)]="checkBoxselected" [resizableColumns]="true"
+                            responsiveLayout="scroll" dataKey="id">
+                            <ng-template pTemplate="caption">
+                                <div class="p-d-flex">
+                                    <p-dropdown *ngIf="users_tabIndex != 1" [options]="roles_list"
+                                        [style]="{minWidth: '200px'}" [(ngModel)]="selectedRole"
+                                        (onChange)="onChangeRole($event)" optionLabel="name"></p-dropdown>
+                                    <span class="p-input-icon-right">
+                                        <i class="pi pi-search"></i>
+                                        <input type="text" pInputText placeholder="Search" class="p-inputtext-lg"
+                                            style="width:auto"
+                                            (input)="dt1.filterGlobal($event.target.value, 'contains')">
+                                    </span>
+                                    <span *ngIf="users_tabIndex == 1">
+                                        <button class="btn">
+                                            <img src="./../../../../assets/images-n/projects/Open.svg" alt="Open">
+                                            <span>Open</span>
+                                        </button>
+                                        <button class="btn">
+                                            <img src="./../../../../assets/images-n/projects/plus-square_blue.svg"
+                                                alt="Create">
+                                            <span>Create</span>
+                                        </button>
+                                    </span>
+                                </div>
+                            </ng-template>
+                            <ng-template pTemplate="header" let-columns>
+                                <tr *ngIf="users_tabIndex == 1">
+                                    <th *ngFor="let col of columns">{{col.DisplayName}}
+                                    </th>
                                 </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-rowData let-columns="columns">
                                 <tr>
-                                    <td>
-                                        <input type="checkbox" />
+                                    <td *ngIf="users_tabIndex != 1"> <p-tableCheckbox
+                                            [value]="rowData"></p-tableCheckbox></td>
+                                    <td *ngFor="let col of columns">
+                                        <span>{{rowData[col.ColumnName]}}</span>
+                                        <span *ngIf="col.ColumnName == 'action'">
+                                            <div class="newinntalx">
+                                                <a (click)="deleteuserById(rowData)">
+                                                    <img src="../../../../../assets/images/Projects/delete-black.svg"
+                                                        alt="" class="default-img">
+                                                    <img src="../../../../../assets/images/Projects/delete-red.svg"
+                                                        alt="" class="hover-img">
+                                                </a>
+                                            </div>
+                                        </span>
                                     </td>
-                                    <td><img alt="user-img" src="./../../../../assets/images-n/projects/user1.svg"> Rick</td>
-                                    <td>Process Designer</td>
                                 </tr>
+                            </ng-template>
+                            <ng-template pTemplate="emptymessage">
                                 <tr>
-                                    <td>
-                                        <input type="checkbox" />
-                                    </td>
-                                    <td><img alt="user-img" src="./../../../../assets/images-n/projects/user1.svg"> Rick</td>
-                                    <td>Process Designer</td>
+                                    <td style="text-align: center;" colspan="7">No Users found</td>
                                 </tr>
-                                <tr>
-                                    <td>
-                                        <input type="checkbox" />
-                                    </td>
-                                    <td><img alt="user-img" src="./../../../../assets/images-n/projects/user1.svg"> Rick</td>
-                                    <td>Process Designer</td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <input type="checkbox" />
-                                    </td>
-                                    <td><img alt="user-img" src="./../../../../assets/images-n/projects/user1.svg"> Rick</td>
-                                    <td>Process Designer</td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <input type="checkbox" />
-                                    </td>
-                                    <td><img alt="user-img" src="./../../../../assets/images-n/projects/user1.svg"> Rick</td>
-                                    <td>Process Designer</td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <input type="checkbox" />
-                                    </td>
-                                    <td><img alt="user-img" src="./../../../../assets/images-n/projects/user1.svg"> Rick</td>
-                                    <td>Process Designer</td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <input type="checkbox" />
-                                    </td>
-                                    <td><img alt="user-img" src="./../../../../assets/images-n/projects/user1.svg"> Rick</td>
-                                    <td>Process Designer</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                            </ng-template>
+                        </p-table>
                     </div>
-
-                    <div class="row footerbtns justify-content-end">
+                    <div class="row footerbtns justify-content-end" *ngIf="users_tabIndex != 1">
                         <button class="btn blue-btntext">Cancel</button>
-                        <button class="btn btn-onboard">Onboard Users</button>
+                        <button class="btn btn-onboard" (click)="addresources()">Onboard Users</button>
                     </div>
-                </div>
-                <div id="userstab" class="tab-pane fade">
-                        <div class="row searchdiv">
-                            <div class="col-md-5 pl-0 form-group">
-                               
-                            </div>
-                            <div class="col-md-7 pr-0 form-group">
-                                <input type="text" placeholder="Search" class="form-control" />
-                                <img src="./../../../../assets/images-n/projects/search.svg" alt="search-icon" />
-                            </div>
-                        </div>
-                        <div class="tablediv">
-                            <table class="table"> 
-                                <thead>
-                                    <tr>
-                                        <th>Users Onboarded</th>
-                                        <th>Designation</th>
-                                        <th>Number of Tasks</th>
-                                        <th>Task Type</th>
-                                    </tr>
-                                </thead>                       
-                                <tbody>
-                                    <tr>
-                                        <td>John</td>
-                                        <td>Process Designer</td>
-                                        <td>02</td>
-                                        <td>BPM & RPA</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Pete</td>
-                                        <td>Process Designer</td>
-                                        <td>01</td>
-                                        <td>BPM</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Surya</td>
-                                        <td>Process Architect</td>
-                                        <td>02</td>
-                                        <td>RPA</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Kriti</td>
-                                        <td>RPA Designer</td>
-                                        <td>01</td>
-                                        <td>RPA</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Kriti</td>
-                                        <td>Process Designer</td>
-                                        <td>01</td>
-                                        <td>PI</td>
-                                    </tr>
-                                    <tr>
-                                        <td>John</td>
-                                        <td>Process Architect</td>
-                                        <td>01</td>
-                                        <td>BPM</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        
                 </div>
             </div>
-    </div>
-</div> -->
+        </div>
+    </app-split-overlay>
+</div>
