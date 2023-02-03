@@ -153,12 +153,25 @@
       </span>
                     <span class="side-menu-font">Support</span>
                 </a> -->
+                <a mat-list-item class="link" id="bps" (click)="hightlight('usermanagement','expand_admin')"
+          *ngIf="this.userRoles.includes('System Admin')" routerLink="/pages/admin/admin-screen-list">
+          <span class="side-icon">
+            <mat-icon>settings</mat-icon>
+          </span>
+          <span class="side-menu-font">Screen Generation</span>
+        </a>
+
+        <span *ngFor="let screen of screensList">
+          <a mat-list-item class="link" (click)="onClickScreen(screen)" (click)="hightlight('usermanagement','expand_admin')">
+            <div class="side-menu-font">{{screen.Screen_Name}}</div>
+          </a>
+        </span>
         </div>
   
         <!-- will uncomment Subscriptions after the completion of credit card work -->
   
-        <a *ngIf="this.getCookie('card_enabled')=='true'" mat-list-item class="link" id='subscriptions'
-          (click)="hightlight('subscriptions',null)" routerLink="/pages/subscriptions"
+        <a mat-list-item class="link" id='subscriptions'
+        *ngIf="this.userRoles.includes('System Admin')" (click)="hightlight('subscriptions',null)" routerLink="/pages/subscriptions"
           [matTooltip]=" !obj.sideBarOpen ? 'Subscriptions' : ''" matTooltip="Subscriptions"
           matTooltipClass="sidebarTooltip" matTooltipPosition="right">
           <span class="side-icon">

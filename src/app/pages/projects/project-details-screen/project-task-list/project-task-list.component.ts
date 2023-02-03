@@ -8,6 +8,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { DataTransferService } from "src/app/pages/services/data-transfer.service";
 import { TabView } from "primeng/tabview";
 import { LoaderService } from "src/app/services/loader/loader.service";
+import Swal from 'sweetalert2';
 
 @Component({
   selector: "app-project-task-list",
@@ -30,13 +31,14 @@ export class ProjectTaskListComponent implements OnInit {
     { tabName: "In Review", count: "0", img_src: "inreview-tasks.svg" },
     { tabName: "Closed", count: "0", img_src: "completed-tasks.svg" },
   ];
+  table_searchFields:any;
 
   constructor(
     private rest_api: RestApiService,
     private route: ActivatedRoute,
     private router: Router,
     private dataTransfer: DataTransferService,
-    private loader : LoaderService
+    private spinner : LoaderService
   ) {
     this.route.queryParams.subscribe((data) => {
       this.project_id = data.id;
@@ -44,7 +46,7 @@ export class ProjectTaskListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loader.show();
+    this.spinner.show();
     this.getUsersList();
     this.getProjectDetails();
   }
@@ -93,7 +95,7 @@ export class ProjectTaskListComponent implements OnInit {
         }
       });
     });
-    this.loader.hide();
+    this.spinner.hide();
     this.columns_list = [
       {
         ColumnName: "taskName",
@@ -160,6 +162,8 @@ export class ProjectTaskListComponent implements OnInit {
       { name: "Medium" },
       { name: "Low" },
     ];
+    this.table_searchFields=['taskName','taskCategory','priority','priority','assignedTo','endDate_converted']
+
   }
   
  async getProjectDetails(){
@@ -176,9 +180,10 @@ export class ProjectTaskListComponent implements OnInit {
     });
   }
 
-  deleteById(event) {}
 
-  viewDetails(event) {}
+  viewDetails(event) {
+    console.log(event)
+  }
 
   onTabChanged(event, tabView: TabView) {
     const tab = tabView.tabs[event.index].header;
@@ -190,5 +195,49 @@ export class ProjectTaskListComponent implements OnInit {
       );
       this.tasks_list = filteredProjects;
     }
+  }
+
+  deletetask(data) { // delete the task by selected id
+    let deletetask = [{
+      "id": data.id
+    }];
+
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
+        this.spinner.show();
+        this.rest_api.deleteTask(deletetask).subscribe(res => {
+          let status: any = res;
+          this.spinner.hide()
+          Swal.fire({
+            title: 'Success',
+            text: "" + status.message,
+            position: 'center',
+            icon: 'success',
+            showCancelButton: false,
+            confirmButtonColor: '#007bff',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ok'
+          })
+          this.getTasksList();
+
+        }, err => {
+          this.spinner.hide()
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!',
+          })
+
+        })
+      }
+    });
   }
 }

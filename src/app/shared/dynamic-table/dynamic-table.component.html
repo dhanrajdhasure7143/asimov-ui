@@ -1,5 +1,5 @@
 <div class="" *ngIf="screenTable=='common'">
-    <p-table #dt1 [value]="table_data" [columns]="selectedColumns" [reorderableColumns]="true" [(selection)]="checkBoxselected" [resizableColumns]="true" responsiveLayout="scroll" dataKey="connectorId" >
+    <p-table #dt1 [value]="table_data" [columns]="selectedColumns" [reorderableColumns]="true" [(selection)]="checkBoxselected" [resizableColumns]="true" responsiveLayout="scroll" [dataKey]="dataKeyId">
         <!-- [globalFilterFields]="['representative.name']"> -->
         <ng-template pTemplate="caption">
             <div class="p-d-flex">
@@ -17,10 +17,7 @@
                 <th style="width: 1rem" *ngIf="checkBoxShow">
                     <p-tableHeaderCheckbox  (click)="selectRow()"></p-tableHeaderCheckbox>
                 </th>
-                <th *ngFor="let col of columns" pReorderableColumn pResizableColumn pSortableColumn="{{col.ColumnName}}" [hidden]="!col.ShowGrid">{{col.DisplayName}}
-                    <!-- <p-columnFilter *ngIf="col.header == 'Type'" type="text" field="representative.name" display="menu"></p-columnFilter>
-                    <p-sortIcon *ngIf="col.header == 'Type'" field="representative.name"></p-sortIcon> -->
-
+                <th *ngFor="let col of columns" pReorderableColumn pResizableColumn pSortableColumn="{{col.ColumnName}}" [hidden]="!col.ShowGrid">{{col.DisplayName | removeUnderscore}}
                     <p-columnFilter *ngIf="col.ShowFilter && col.filterWidget == 'multiSelect'" field="representative" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                         <ng-template pTemplate="header">
                             <div class="p-px-3 p-pt-3 p-pb-0">
@@ -37,179 +34,49 @@
                             </p-multiSelect>
                         </ng-template>
                     </p-columnFilter>
-
-                    <!-- <div class="p-d-flex p-jc-between p-ai-center" *ngIf="col.ShowFilter && col.filterWidget == 'multiSelect'">
-                        Status
-                        <p-columnFilter field="status" matchMode="equals" display="menu">
-                            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                                <p-dropdown [ngModel]="value" [options]="statuses" (onChange)="filter($event.value)" placeholder="Any">
-                                    <ng-template let-option pTemplate="item">
-                                        <span [class]="'customer-badge status-' + option.value">{{option.label}}</span>
-                                    </ng-template>
-                                </p-dropdown>
-                            </ng-template>
-                        </p-columnFilter>
-                    </div> -->
-
-
-
-                    <!-- <div class="p-d-flex p-jc-between p-ai-center" *ngIf="col.ShowFilter && col.filterWidget == 'multiSelect'">
-                        Status
-                        <p-columnFilter  field="type" matchMode="equals" display="menu">
-                            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                                <p-dropdown [ngModel]="value" [options]="statuses" (onChange)="filter($event.value)" placeholder="Any">
-                                    <ng-template let-option pTemplate="item">
-                                        <span [class]="'customer-badge status-' + option.value">{{option.name}}</span>
-                                    </ng-template>
-                                </p-dropdown>
-                            </ng-template>
-                        </p-columnFilter>
-                    </div> -->
-
                     <p-columnFilter *ngIf="col.ShowFilter && col.filterWidget == 'normal'" [showAddButton]="false" type="{{col.filterType}}" field="{{col.ColumnName}}" display="menu"></p-columnFilter>
                     <p-sortIcon *ngIf="col.sort" field="{{col.ColumnName}}"></p-sortIcon>
                 </th>
             </tr>
-
-            <!-- <tr>
-                <th *ngFor="let col of columns" [ngSwitch]="col.ColumnName">
-                  <input *ngSwitchCase="'projectName'" pInputText type="text"
-                    (input)="dt1.ShowFilter($event.target.value, col.ColumnName, 'contains')" />
-                </th>
-              </tr> -->
-
-
-            <!-- <tr>
-                <th pResizableColumn>
-                    <div class="p-d-flex p-jc-between p-ai-center">Type
-                        <p-columnFilter field="representative" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
-                            <ng-template pTemplate="header">
-                                <div class="p-px-3 p-pt-3 p-pb-0">
-                                    <span class="p-text-bold">Type</span>
-                                </div>
-                            </ng-template>
-                            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                                <p-multiSelect [ngModel]="value" [options]="representatives" placeholder="Any" (onChange)="filter($event.value)" optionLabel="name">
-                                    <ng-template let-option pTemplate="item">
-                                        <div class="p-multiselect-representative-option">
-                                            <span class="p-ml-1">{{option.name}}</span>
-                                        </div>
-                                    </ng-template>
-                                </p-multiSelect>
-                            </ng-template>
-                        </p-columnFilter>
-                    </div>
-                </th>
-                <th pResizableColumn pSortableColumn="representative.name">
-                    <div class="p-d-flex p-jc-between p-ai-center">Name
-                    <p-columnFilter type="text" field="representative.name" display="menu"></p-columnFilter>
-                    <p-sortIcon field="representative.name"></p-sortIcon>
-                    </div>
-                </th>
-                <th pResizableColumn pSortableColumn="process">
-                    <div class="p-d-flex p-jc-between p-ai-center">Process
-                        <p-columnFilter type="text" field="process" display="menu"></p-columnFilter>
-                        <p-sortIcon field="process"></p-sortIcon>
-                    </div>
-                </th >
-                <th pResizableColumn  pSortableColumn="department">
-                    <div class="p-d-flex p-jc-between p-ai-center">Department
-                    <p-columnFilter type="text" field="department" display="menu"></p-columnFilter>
-                    <p-sortIcon field="department"></p-sortIcon>
-                </div>
-                </th>
-                <th pResizableColumn  pSortableColumn="createdDate">
-                    <div class="p-d-flex p-jc-between p-ai-center">Created Date
-                        <p-columnFilter type="text" field="createdDate" display="menu"></p-columnFilter>
-                    <p-sortIcon field="createdDate"></p-sortIcon>
-                    </div>
-                </th>
-                <th pResizableColumn>Last Updated By
-                    <p-columnFilter type="text" field="updatedDate" display="menu"></p-columnFilter>
-                    <p-sortIcon field="updatedDate"></p-sortIcon>
-
-                </th>
-                <th pResizableColumn>Actions</th>
-            </tr> -->
         </ng-template>
-
-        <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <ng-template pTemplate="body" let-rowData let-data let-columns="columns">
             <tr>
                 <td *ngIf="checkBoxShow">
                 <p-tableCheckbox [value]="rowData"  (click)="selectRow()"></p-tableCheckbox>
                 </td>
                 <td *ngFor="let col of columns" [hidden]="!col.ShowGrid">
-                    <!-- <span *ngIf="col.ColumnName != 'action' && col.ColumnName != 'projectName' && col.ColumnName != 'lastModifiedBy'">
-                        {{rowData[col.ColumnName]}}
-                    </span> -->
-                    <!-- <span *ngIf="col.ColumnName == 'projectName' ">
-                        {{rowData.projectName}} <br>
-                        {{rowData.status}}
-                    </span> -->
-                    <!-- <span *ngIf="col.ColumnName == 'lastModifiedBy' ">
-                        {{rowData.lastModifiedBy}} <br>
-                        {{rowData.updatedDate}}
-                    </span> -->
-
                     <span *ngIf="!col.multi">{{rowData[col.ColumnName]}}</span>
                     <span *ngIf="col.multi">
                         {{rowData[col.multiOptions[0]]}} <br>
                         <span> {{rowData[col.multiOptions[1]]}} </span>
                     </span>
-
+                      <span *ngIf="col.ColumnName!='action' && col.multi">
+                        {{ rowData[col.ColumnName]?rowData[col.ColumnName]:'-' }}
+                      </span>
                     <span *ngIf="col.ColumnName == 'action'">
                         <div class="newinntalx">
-                            <a class="clickable text-dark" (click)="viewDetailsbyId(rowData)" matTooltip="Go To Details">
-                              <img src="../../../../../assets/images/Projects/eye-show.svg" alt="" class="default-img">
-                              <img src="../../../../../assets/images/Projects/eye-show-blue.svg" alt="" class="hover-img">
-                            </a>
-
-                            <a (click)="deleteRow(rowData)" *ngIf="(!(this.userRoles.includes('System Admin')) && userName==rowData[col.createdBy])
-                            || (this.userRoles.includes('System Admin'))" matTooltip="Delete Project">
-                           <img src="../../../../../assets/images/Projects/delete-black.svg" alt="" class="default-img">
-                           <img src="../../../../../assets/images/Projects/delete-red.svg" alt="" class="hover-img">
-                         </a>
+                            <span *ngIf="selectedScreen">
+                                <button placement="bottom" class="editButton" [disabled]="!selectedScreen.Allow_Edit" (click)="edit(rowData)">
+                                    <img src="../../../../assets/images/Projects/edit-black.svg" alt="" class="testplus clickable"> </button>
+                                <button  class="editButton" [disabled]="!selectedScreen.Allow_Delete" (click)="deleteRow(rowData)">
+                                    <img src="../../../../../assets/images/Projects/delete-black.svg" class="testplus clickable" alt="close">
+                                </button>
+                            </span>
+                            <span *ngIf="!selectedScreen">
+                                <button placement="bottom" class="editButton" (click)="edit(rowData)">
+                                    <img src="../../../../assets/images/Projects/edit-black.svg" alt="" class="testplus clickable"> </button>
+                                <button *ngIf="!deleteHide" class="editButton" (click)="deleteRow(rowData)">
+                                    <img src="../../../../../assets/images/Projects/delete-black.svg" class="testplus clickable" alt="close">
+                                </button>
+                            </span>
                            </div>
                     </span>
-
                 </td>
-
             </tr>
         </ng-template>
-        <!-- <ng-template pTemplate="body" let-element>
-            <tr>
-                <td><span class="image-text">{{element.representative.name}}</span></td>
-                <td>{{getreducedValue(element.projectName)}} <br>
-                    <span> {{element.status}} </span>
-                </td>
-                <td>{{element.process}}</td>
-                <td>{{element.department}}</td>
-                <td>{{element.createdDate}}</td>
-                <td>{{element.lastModifiedBy}}<br>
-                    {{element.updatedDate?element.updatedDate:element.createdDate}}</td>
-                    <td>
-                        <div class="newinntalx">
-                            <a class="clickable text-dark" (click)="viewDetailsbyId(element,element.representative.type)" matTooltip="Go To Details">
-                              <img src="../../../../../assets/images/Projects/eye-show.svg" class="default-img">
-                              <img src="../../../../../assets/images/Projects/eye-show-blue.svg" class="hover-img">
-                            </a>
-                            <a (click)="deleteproject(element)" *ngIf="element.representative.type=='Project' && (!(this.userRoles.includes('System Admin')) && userName==element.createdBy)
-                            || (this.userRoles.includes('System Admin'))&& element.type=='Project'" matTooltip="Delete Project">
-                           <img src="../../../../../assets/images/Projects/delete-black.svg" class="default-img">
-                           <img src="../../../../../assets/images/Projects/delete-red.svg" class="hover-img">
-                         </a>
-                         <a (click)="deleteproject(element)" *ngIf="element.representative.type=='Program' && (!(this.userRoles.includes('System Admin')) && userName==element.createdBy)
-                           || (this.userRoles.includes('System Admin'))&& element.type=='Program'" matTooltip="Delete Program">
-                           <img src="../../../../../assets/images/Projects/delete-black.svg" class="default-img">
-                           <img src="../../../../../assets/images/Projects/delete-red.svg" class="hover-img">
-                         </a>
-                           </div>
-                    </td>
-            </tr>
-        </ng-template> -->
         <ng-template pTemplate="emptymessage">
             <tr>
-                <td  style="text-align: center;" colspan="7">No customers found</td>
+                <td  style="text-align: center;" colspan="7">No records found</td>
             </tr>
         </ng-template>
     </p-table>
@@ -218,10 +85,8 @@
 
 
 
-
-<div class="" *ngIf="screenTable=='projectList'">
-    <p-table #dt1 [value]="table_data" [columns]="selectedColumns" [reorderableColumns]="true" [resizableColumns]="true" responsiveLayout="scroll"  dataKey="id"
-    [scrollable]="true" scrollHeight="370px">
+<div class="" *ngIf="screenTable !='common'">
+    <p-table #dt1 [value]="table_data" [columns]="selectedColumns" [globalFilterFields]="search_fields" [reorderableColumns]="true" [resizableColumns]="true" responsiveLayout="scroll"  [dataKey]="dataKeyId" selectionMode="single" [(selection)]="selectedItem" [scrollable]="true" >
         <ng-template pTemplate="caption">
             <div class="p-d-flex">
                 <p-multiSelect [options]="columns_list" [(ngModel)]="selectedColumns" optionLabel="DisplayName"
@@ -231,13 +96,11 @@
                     <i class="pi pi-search"></i>
                     <input type="text" pInputText placeholder="Search" class="p-inputtext-lg" style="width:auto" (input)="dt1.filterGlobal($event.target.value, 'contains')" >
                 </span>
-
             </div>
         </ng-template>
         <ng-template pTemplate="header" let-columns>
             <tr>
                 <th *ngFor="let col of columns" pReorderableColumn pResizableColumn pSortableColumn="{{col.ColumnName}}" [hidden]="!col.ShowGrid">{{col.DisplayName}}
-
                     <p-columnFilter *ngIf="col.ShowFilter && col.filterWidget == 'multiSelect'" field="representative" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                         <ng-template pTemplate="header">
                             <div class="p-px-3 p-pt-3 p-pb-0">
@@ -261,17 +124,14 @@
             </tr>
         </ng-template>
 
-        <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <ng-template pTemplate="body" let-rowData let-columns="columns" *ngIf="screenTable=='projectList'">
             <tr>
                 <td *ngFor="let col of columns" [hidden]="!col.ShowGrid">
-
                     <span *ngIf="!col.multi">{{rowData[col.ColumnName]}}</span>
-                    <span *ngIf="col.multi">
-                        {{rowData[col.multiOptions[0]]}} <br>
+                    <span *ngIf="col.multi">{{rowData[col.multiOptions[0]]}} <br>
                         <span *ngIf="col.multiOptions[1] == 'priority'" [ngStyle]="{'color':getColor(rowData[col.multiOptions[1]])}"> {{rowData[col.multiOptions[1]]}} </span>
                         <span *ngIf="col.multiOptions[1] != 'priority'"> {{rowData[col.multiOptions[1]]}} </span>
                     </span>
-
                     <span *ngIf="col.ColumnName == 'action'">
                         <div class="newinntalx">
                             <a class="clickable text-dark" (click)="viewDetailsbyId(rowData)" matTooltip="Go To Details">
@@ -288,81 +148,28 @@
                 </td>
             </tr>
         </ng-template>
-        <ng-template pTemplate="emptymessage">
-            <tr>
-                <td colspan="7" style="text-align: center;">No customers found</td>
-            </tr>
-        </ng-template>
-    </p-table>
-</div>
 
-
-<div class="" *ngIf="screenTable=='taskList'">
-    <p-table #dt1 [value]="table_data" [columns]="selectedColumns" [reorderableColumns]="true" [resizableColumns]="true" responsiveLayout="scroll"  dataKey="id" selectionMode="single" [(selection)]="selectedItem" [scrollable]="true" scrollHeight="370px">
-        <ng-template pTemplate="caption">
-            <div class="p-d-flex">
-                <p-multiSelect [options]="columns_list" [(ngModel)]="selectedColumns" optionLabel="DisplayName"
-                selectedItemsLabel="{0} columns selected" [style]="{minWidth: '200px'}" placeholder="Choose Columns"></p-multiSelect>
-                <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
-                <span class="p-input-icon-right">
-                    <i class="pi pi-search"></i>
-                    <input type="text" pInputText placeholder="Search" class="p-inputtext-lg" style="width:auto" (input)="dt1.filterGlobal($event.target.value, 'contains')" >
-                </span>
-
-            </div>
-        </ng-template>
-        <ng-template pTemplate="header" let-columns>
-            <tr>
-                <th *ngFor="let col of columns" pReorderableColumn pResizableColumn pSortableColumn="{{col.ColumnName}}" [hidden]="!col.ShowGrid">{{col.DisplayName}}
-
-                    <p-columnFilter *ngIf="col.ShowFilter && col.filterWidget == 'multiSelect'" field="representative" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
-                        <ng-template pTemplate="header">
-                            <div class="p-px-3 p-pt-3 p-pb-0">
-                                <span class="p-text-bold">Type</span>
-                            </div>
-                        </ng-template>
-                        <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                            <p-multiSelect [ngModel]="value" [options]="representatives" placeholder="Any" (onChange)="filter($event.value)" optionLabel="name">
-                                <ng-template let-option pTemplate="item">
-                                    <div class="p-multiselect-representative-option">
-                                        <span class="p-ml-1">{{option.name}}</span>
-                                    </div>
-                                </ng-template>
-                            </p-multiSelect>
-                        </ng-template>
-                    </p-columnFilter>
-
-                    <p-columnFilter *ngIf="col.ShowFilter && col.filterWidget == 'normal'" [showAddButton]="false" type="{{col.filterType}}" field="{{col.ColumnName}}" display="menu"></p-columnFilter>
-                    <p-sortIcon *ngIf="col.sort" field="{{col.ColumnName}}"></p-sortIcon>
-                </th>
-            </tr>
-        </ng-template>
-
-        <ng-template pTemplate="body" let-rowData let-columns="columns">
+        <ng-template pTemplate="body" let-rowData let-columns="columns" *ngIf="screenTable=='taskList'">
             <tr [pSelectableRow]="rowData">
                 <td *ngFor="let col of columns" [hidden]="!col.ShowGrid">
                     <span *ngIf="!col.multi && col.ColumnName == 'priority' " [ngStyle]="{'color':getColor(rowData[col.ColumnName])}">{{rowData[col.ColumnName]}}</span>
                     <span *ngIf="!col.multi && col.ColumnName != 'priority' ">{{rowData[col.ColumnName]}}</span>
-                    <!-- <span >{{rowData[col.ColumnName]}}</span> -->
                     <span *ngIf="col.multi">
                         {{rowData[col.multiOptions[0]]}} <br>
                         <span> {{rowData[col.multiOptions[1]]}} </span>
                     </span>
                     <span *ngIf="col.ColumnName == 'action'" class="taskList-table-actions">
                         <div class="newinntalx" [hidden]="!(rowData.id == selectedItem.id)">
-                            <a class="clickable text-dark" (click)="viewDetailsbyId(rowData)" matTooltip="Open Workspace">
+                            <a class="clickable text-dark" matTooltip="Open Workspace">
                                 <img src="./../../../../assets/images-n/projects/Open.svg" alt="Open">
                             </a>
-                            <a class="clickable text-dark" (click)="viewDetailsbyId(rowData)" matTooltip="Go To Details">
+                            <a class="clickable text-dark" (click)="viewDetailsbyId(rowData)">
                                 <img src="../../../../../assets/images/Projects/eye-show-blue.svg" class="default-img">
                               </a>
-                              <a (click)="deleteRow(rowData)" matTooltip="Delete Task">
+                              <a (click)="deleteRow(rowData)">
                              <img src="../../../assets/images-n/common/delete-blue.svg" class="default-img">
                              <img src="../../../../../assets/images/Projects/delete-red.svg" class="hover-img">
                            </a>
-                            <!-- <span (click)="deleteRow(rowData)">
-                                <img src="./../../../../assets/images-n/projects/more-vertical.svg" alt="Actions"> <span>Actions</span>
-                         </span> -->
                            </div>
                     </span>
                 </td>
@@ -370,36 +177,8 @@
         </ng-template>
         <ng-template pTemplate="emptymessage">
             <tr>
-                <td colspan="7" style="text-align: center;">No customers found</td>
+                <td  style="text-align: center;" colspan="7">No records found</td>
             </tr>
         </ng-template>
     </p-table>
 </div>
-
-
-
-<!-- <p-dataTable [value]="projectDetails"  [style]="{'width':'100%','overflow':'auto!important'}"
-  [responsive]="true"  [rows]="20"
-   [resizableColumns]="true"
-   columnResizeMode="expand"
-   [immutable]=false
-   [paginator]="true" [rowsPerPageOptions]="[10,15,20,25]"
-  appendTo="body" #dt>
-  <p-column  styleClass="checkbox ui-resizable-column" [style]="{'width': 'auto'}" selectionMode="multiple">
-  </p-column>
-  <p-column *ngFor="let col of cols;let j=index;" [style]="{'width':'auto','display':col.display} " [field]="col.ColumnName" [header]="col.header"
-    [sortable]="true" [filter]="true" filterPlaceholder="Search" filterPlaceholder="Search"
-    appendTo="body">
-    <ng-template let-row="rowData" let-i="rowIndex" pTemplate="body">
-      <div [pTooltip]="row[col.ColumnName]" [id]="col.ColumnName"></div>
-
-        <span  style="text-align:left;" *ngIf="col.datatype!='int' && col.datatype!='float'">
-          {{row[col.ColumnName]}}
-        </span>
-
-        <span  style="text-align:top;float: top;padding-top: 4px !important;" *ngIf="col.datatype=='int' || col.datatype=='float' ">
-          {{row[col.ColumnName]}}
-        </span>
-    </ng-template>
-  </p-column>
-</p-dataTable>  -->

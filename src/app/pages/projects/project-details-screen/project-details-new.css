@@ -12,9 +12,8 @@
     background-color: rgb(9 141 230 / 10%);
     border-radius: 6px 0px 0px 0px;
     height: 100%;
-    text-align: center;
     padding: 30px 10px !important;
-    display: block !important;
+    justify-content: center;
 }
 .project-status p{
     font-size: 12px;
@@ -36,12 +35,12 @@ span.highimp {
     color: #EA3D3D;
     margin: 3px 0px 0px 5px;
 }
-.col-md-3.p-0.pinf p {
+.pinf p {
     margin-bottom: 5px;
     font-weight: 500;
     font-size: 16px !important;
 }
-.col-md-3.p-0.pinf label {
+.pinf label {
     color: #535353;
 }
 .kpibot {
@@ -53,13 +52,7 @@ span.highimp {
     margin-bottom: 2px;
     line-height: 1;
 }
-.robotimg {
-    position: absolute;
-    top: -50%;
-    left: 40%;
-    width: auto;
-    height: 130px
-}
+
 .row.project-description {
     background-color: #fff;
     border-top: 1px solid #e0e0ee;
@@ -130,10 +123,10 @@ span.highimp {
   font-size: 12px;
   margin-bottom: 0px;
 }
-label.colheads {
+.colheads {
     font-weight: 600;
     font-size: 20px !important;
-    margin-bottom: 20px;
+    margin-bottom: 15pxl
 }
 .collab p {
   margin-bottom: 10px;
@@ -184,7 +177,7 @@ input.msgip {
   background-color: #fff;
 }
 .acresources .blue-btntext {
-    padding: 0px 10px;
+    padding: 0px 10px !important;
     margin-bottom: 20px;
 }
 button.btn.blue-btntext a,
@@ -204,9 +197,7 @@ button.btn.blue-btntext{
     padding: 10px 15px !important;
     margin: 0px 0px 25px 0px !important;
 }
-/* .row.quicksnapshot-cards.lastrow-cards {
-    margin: 0px 0px 20px 0px !important;
-} */
+
 .qcard-info {
     margin-left: 15px;
     width: 70%;

@@ -127,9 +127,10 @@
   cursor: pointer;
 }
 
+/* need to remove
 ::ng-deep .mat-drawer-container {
 background-color: white;
-}
+} */
 
 
 .nodename{

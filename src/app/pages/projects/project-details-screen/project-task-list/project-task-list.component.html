@@ -1,7 +1,7 @@
 <div class="maincontent">
     <div class="h-100">
         <div class="row main-content-head">
-            <div class="col-md-4">
+            <div class="col-md-4 pl-0">
                 <h3>
                     <label id="popup_title">
                         <a (click)="backToProjectDetails()"><img
@@ -12,7 +12,7 @@
                     </span>
                 </h3>
             </div>
-            <div class="col-md-8 text-right">
+            <div class="col-md-8 pr-0 text-right">
                 <!-- <button class="btn">
                     <img src="./../../../../assets/images-n/projects/Open.svg" alt="Open">
                     <span>Open</span>
@@ -29,7 +29,6 @@
         </div>
         <div class="main-content-body tablist-cont">
             <div class="h-100">
-
                 <div class="h-100" id="tabs_screen">
                     <p-tabView #tabView (onChange)="onTabChanged($event, tabView)">
                         <p-tabPanel [header]="each.tabName" *ngFor="let each of _tabsList; let i = index"
@@ -40,72 +39,20 @@
                                         <img src="../assets/images-n/projects/{{each.img_src}}" alt="">
                                     </div>
                                     <div class="status-data">
-                                        <span class="tab-count taskscount">{{each.count}}</span>
-                                        <span class="tab-text">{{each.tabName}}</span>
+                                        <span class="tabscount">{{each.count}}</span>
+                                        <span class="">{{each.tabName}}</span>
                                     </div>
                                 </div>
                             </ng-template>
                         </p-tabPanel>
                         <div class="">
                             <app-dynamic-table [columns_list]="columns_list" [table_data]="tasks_list"
-                                (viewDetails)="viewDetails($event)" (deleteItem)="deleteById($event)"
-                                [representatives]="representatives" [screenTable]="'taskList'">
+                                (viewDetails)="viewDetails($event)" (deleteItem)="deletetask($event)"
+                                [representatives]="representatives" [screenTable]="'taskList'" [dataKeyId]="'id'" [search_fields]="table_searchFields">
                             </app-dynamic-table>
                         </div>
                     </p-tabView>
-
-                    <!-- <ul class="nav nav-tabs">
-                        <li class="nav-item">
-                            <a data-toggle="tab" href="#alltasks" class="nav-link">
-                                <img src="./../../../../assets/images-n/projects/all-tasks.svg" alt="All Tasks">
-                                <span class="taskscount">30</span>All
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a data-toggle="tab" href="#newtasks" class="nav-link">
-                                <img src="./../../../../assets/images-n/projects/inprogress-tasks.svg"
-                                    alt="InProgress Tasks">
-                                <span class="taskscount">07</span>New
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a data-toggle="tab" href="#inprogresstasks" class="nav-link">
-                                <img src="./../../../../assets/images-n/projects/inprogress-tasks.svg"
-                                    alt="InProgress Tasks">
-                                <span class="taskscount">07</span>In Progress
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a data-toggle="tab" href="#inreviewtasks" class="nav-link">
-                                <img src="./../../../../assets/images-n/projects/inreview-tasks.svg"
-                                    alt="In Review Tasks">
-                                <span class="taskscount">05</span>In Review
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a data-toggle="tab" href="#closedtasks" class="nav-link">
-                                <img src="./../../../../assets/images-n/projects/completed-tasks.svg"
-                                    alt="Closed Tasks">
-                                <span class="taskscount">08</span>Closed
-                            </a>
-                        </li>
-                    </ul> -->
-
-                    <!-- <div class="tab-content ">
-                        <div id="alltasks" class="tab-pane active">
-
-                            <div class="row tablediv">
-                                <app-dynamic-table [columns_list]="columns_list"
-                                    [table_data]="tasks_list"
-                                    (viewDetails)="viewDetails($event)"
-                                    (deleteItem)="deleteById($event)"
-                                    [screenTable]="'taskList'"></app-dynamic-table>
-                            </div>
-                        </div>
-
-                    </div> -->
                 </div>
-
             </div>
         </div>
     </div>

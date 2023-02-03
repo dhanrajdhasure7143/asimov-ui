@@ -3,6 +3,7 @@ import {PagesComponent} from '../pages.component'
 import * as $ from 'jquery';
 import { DataTransferService } from "./../../pages/services/data-transfer.service";
 import { RestApiService } from "./../services/rest-api.service"
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
@@ -23,12 +24,13 @@ export class SidebarComponent implements OnInit {
   plansList: any;
   expiry: any;
   showProjectsSubmenu: boolean = false;
+  screensList:any=[];
   constructor(public obj:PagesComponent, private dt:DataTransferService,
-    private rest_service: RestApiService) { }
+    private rest_service: RestApiService,private router:Router,) { }
 
   ngOnInit() {
     //this.disable();
-    document.cookie = "card_enabled=false";
+    document.cookie = "card_enabled=true";
     if(this.getCookie("card_enabled")!="false"){
       document.cookie = "card_enabled=true";
     }
@@ -53,6 +55,7 @@ export class SidebarComponent implements OnInit {
       // this.userRoles = localStorage.getItem("userRole")
     }, 200);
   this.getAllPlans();
+  this.getUserScreenList();
   }
   getCookie(cname) {
     let name = cname + "=";
@@ -114,5 +117,16 @@ getexpiryInfo(){
     this.expiry = data.Expiresin;
 
   })
+}
+onClickScreen(screen:any){
+  this.dt.setScreenList(screen)
+  this.router.navigate(["/pages/admin/user"],{queryParams:{Screen_ID:screen.Screen_ID,Table_Name:screen.Table_Name}});
+
+}
+
+getUserScreenList(){
+  this.rest_service.getUserScreenList().subscribe((data:any)=>{
+    this.screensList=data;
+  });
 }
 }

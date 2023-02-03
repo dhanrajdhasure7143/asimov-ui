@@ -59,7 +59,6 @@
 }
 
 label.label-control {
-  /* padding: 4px 0px; */
   border: 1px solid transparent;
   border-bottom: medium none;
   margin: 0px !important;
@@ -67,7 +66,6 @@ label.label-control {
   color: black;
   font-weight: 600;
   font-size: 14px;
-  /* height: 30px; */
   margin-bottom: 3px !important;
   white-space: nowrap;
   width: 100%;
