@@ -16,132 +16,154 @@ export class ProjectsDocumentComponent implements OnInit {
   text: string;
   folder_name: any;
   isDialogBox: boolean = false;
+  isFolder : boolean = true;
+  isTree : boolean = false;
+  isSubFolder : boolean = false;
   example: TreeNode = {
     label: "example",
     data: "Movies Folder",
     expandedIcon: "pi pi-folder-open",
     collapsedIcon: "pi pi-folder-open",
   };
+  folder_files:any=[]
 
   constructor() {}
 
   ngOnInit(): void {
     this.files = [
       {
+        key: "0",
         label: "Add Folder",
         data: "Movies Folder",
         expandedIcon: "pi pi-folder-open",
         collapsedIcon: "pi pi-folder-open",
       },
       {
+        key: "1",
         label: "Analysis",
         data: "Documents Folder",
         expandedIcon: "pi pi-folder-open",
         collapsedIcon: "pi pi-folder",
         children: [
           {
+            key: "1-0",
             label: "Add Folder / Document",
             data: "Work Folder",
             expandedIcon: "pi pi-folder-open",
             collapsedIcon: "pi pi-folder",
           },
-          { label: "Document 1", icon: "pi pi-file", data: "Document" },
-          { label: "Document 2", icon: "pi pi-file", data: "Document" },
-          { label: "Document 3", icon: "pi pi-file", data: "Document" },
+          { key: "1-1", label: "Document 1", icon: "pi pi-file", data: "Document" },
+          { key: "1-2", label: "Document 2", icon: "pi pi-file", data: "Document" },
+          { key: "1-3", label: "Document 3", icon: "pi pi-file", data: "Document" },
         ],
       },
       {
+        key: "2",
         label: "System Connectivity",
         data: "Pictures Folder",
         expandedIcon: "pi pi-folder-open",
         collapsedIcon: "pi pi-folder",
         children: [
           {
+            key: "2-0",
             label: "Add Folder / Document",
             data: "Work Folder",
             expandedIcon: "pi pi-folder-open",
             collapsedIcon: "pi pi-folder",
           },
-          { label: "Document 1", icon: "pi pi-file", data: "Document" },
-          { label: "Document 2", icon: "pi pi-file", data: "Document" },
-          { label: "Document 3", icon: "pi pi-file", data: "Document" },
+          { key: "2-1", label: "Document 1", icon: "pi pi-file", data: "Document" },
+          { key: "2-2",label: "Document 2", icon: "pi pi-file", data: "Document" },
+          { key: "2-3", label: "Document 3", icon: "pi pi-file", data: "Document" },
         ],
       },
       {
+        key: "3",
         label: "Process Documents",
         data: "Pictures Folder",
         expandedIcon: "pi pi-folder-open",
         collapsedIcon: "pi pi-folder",
         children: [
           {
+            key: "3-0",
             label: "Add Folder / Document",
             data: "Work Folder",
             expandedIcon: "pi pi-folder-open",
             collapsedIcon: "pi pi-folder",
           },
-          { label: "Document 1", icon: "pi pi-file", data: "Document" },
-          { label: "Document 2", icon: "pi pi-file", data: "Document" },
-          { label: "Document 3", icon: "pi pi-file", data: "Document" },
+          { key: "3-1", label: "Document 1", icon: "pi pi-file", data: "Document" },
+          { key: "3-2", label: "Document 2", icon: "pi pi-file", data: "Document" },
+          { key: "3-3", label: "Document 3", icon: "pi pi-file", data: "Document" },
         ],
       },
       {
+        key: "4",
         label: "Testing",
         data: "Movies Folder",
         expandedIcon: "pi pi-folder-open",
         collapsedIcon: "pi pi-folder",
         children: [
           {
+            key: "4-0",
             label: "Add Folder / Document",
             data: "Work Folder",
             expandedIcon: "pi pi-folder-open",
             collapsedIcon: "pi pi-folder",
           },
-          { label: "Document 1", icon: "pi pi-file", data: "Document" },
-          { label: "Document 2", icon: "pi pi-file", data: "Document" },
-          { label: "Document 3", icon: "pi pi-file", data: "Document" },
+          { key: "4-1", label: "Document 1", icon: "pi pi-file", data: "Document" },
+          { key: "4-2", label: "Document 2", icon: "pi pi-file", data: "Document" },
+          { key: "4-3", label: "Document 3", icon: "pi pi-file", data: "Document" },
         ],
       },
       {
+        key: "5",
         label: "References",
         data: "Movies Folder",
         expandedIcon: "pi pi-folder-open",
         collapsedIcon: "pi pi-folder",
         children: [
           {
+            key: "5-0",
             label: "Add Folder / Document",
             data: "Work Folder",
             expandedIcon: "pi pi-folder-open",
             collapsedIcon: "pi pi-folder",
           },
-          { label: "Document 1", icon: "pi pi-file", data: "Document" },
-          { label: "Document 2", icon: "pi pi-file", data: "Document" },
-          { label: "Document 3", icon: "pi pi-file", data: "Document" },
+          { key: "5-1", label: "Document 1", icon: "pi pi-file", data: "Document" },
+          { key: "5-2", label: "Document 2", icon: "pi pi-file", data: "Document" },
+          { key: "5-3", label: "Document 3", icon: "pi pi-file", data: "Document" },
         ],
       },
       {
+        key: "6",
         label: "New Folder",
         data: "Movies Folder",
         expandedIcon: "pi pi-folder-open",
         collapsedIcon: "pi pi-folder-open",
         children: [
-          { label: "Create File", icon: "pi pi-file", data: "Document" },
+          { key: "6-0", label: "Create File", icon: "pi pi-file", data: "Document" },
         ],
       },
     ];
+    this.folder_files = this.files
   }
 
   saveFolder() {
     if (this.selectedFile && this.entered_folder_name) {
       let object = { ...{}, ...this.example };
       object.label = this.entered_folder_name;
-      this.selectedFile.children.push(object);
+      let objectKey = this.selectedFile.parent.children.length ? String(this.selectedFile.parent.children.length):"0";
+      object["key"] = this.selectedFile.parent.key + "-" + objectKey;
+      object["children"] = [
+        {
+          key: this.selectedFile.parent.key + "-" + objectKey + "-0" ,
+          label: "Add Folder / Document",
+          data: "Work Folder",
+          expandedIcon: "pi pi-folder-open",
+          collapsedIcon: "pi pi-folder",
+        },
+      ]
+      this.selectedFile.parent.children.push(object);
       this.entered_folder_name = "";
-      console.log(
-        "Added child in ",
-        this.selectedFile,
-        "you can find in",
-        this.files
-      );
       this.isDialog = false;
     }
   }
@@ -150,8 +172,7 @@ export class ProjectsDocumentComponent implements OnInit {
     if (event.node.label == "Add Folder") {
       this.isDialogBox = true;
     }
-    for (let i = 0; i < 100; i++)
-      if (event.node.children[i].label == "Add Folder / Document") {
+      if (event.node.label == "Add Folder / Document") {
         this.isDialog = true;
       }
   }
@@ -162,12 +183,14 @@ export class ProjectsDocumentComponent implements OnInit {
 
   addParent() {
     this.files.push({
+      key: String(this.files.length),
       label: this.folder_name,
       data: "Movies Folder",
       expandedIcon: "pi pi-folder-open",
       collapsedIcon: "pi pi-folder-open",
       children: [
         {
+          key: String(this.files.length)+"-0" ,
           label: "Add Folder / Document",
           data: "Work Folder",
           expandedIcon: "pi pi-folder-open",
@@ -177,6 +200,24 @@ export class ProjectsDocumentComponent implements OnInit {
     });
     this.folder_name = "";
     this.isDialogBox = false;
+  }
+
+  folderView(){
+    // for (let i = 0; i < 100; i++)
+    // console.log(this.files[i].children[i]);
+    this.isFolder = true;
+    this.isTree = false;
+  }
+
+  treeView(){
+    this.isTree = true;
+    this.isFolder = false;
+  }
+
+  folderStructure(event){
+    console.log(event);
+    // this.isSubFolder = true;
+    // this.isFolder = false;
   }
 
   // removeRoute(node) {

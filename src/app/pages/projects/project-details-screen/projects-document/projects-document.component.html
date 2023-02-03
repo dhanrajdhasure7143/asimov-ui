@@ -25,12 +25,17 @@
             </div>
         </div>
         <div class="container">
-            <!-- <div class="d-flex">
-            <p-card  class="cards"> <i class="pi pi-folder-open" style="font-size: 2rem"></i>  <br>   Add folder </p-card>
-            <p-card  class="cards" *ngFor="let doc of documents">  <i class="pi pi-folder" style="font-size: 2rem"> </i> <br>  {{ doc }} </p-card>
+            <div *ngIf="isFolder == true" class="d-flex">
+            <p-card  class="cards" *ngFor="let doc of folder_files" (click)="folderStructure(doc)">  <i class="pi pi-folder" style="font-size: 2rem"> </i> <br>  {{ doc.label }} </p-card>
+           </div>
+           <!-- <div *ngIf="isSubFolder == true" class="d-flex">
+            <p-card  class="cards" *ngFor="let folder of files; let i=index"> <i class="pi pi-folder-open" style="font-size: 2rem"></i>  <br>   {{ folder[i].children[i].label }} </p-card>
            </div> -->
-            <p-tree [value]="files" [filter]="true" selectionMode="single" scrollHeight="200px"
+           <div *ngIf = "isTree == true">
+            <p-tree [value]="files" [filter]="true" selectionMode="single" [style]="{'max-height':'auto','overflow':'auto'}"
                 (onNodeSelect)="nodeSelect($event)" [(selection)]="selectedFile"> </p-tree>
+           </div>
+
 
             <!-- <p-tree [value]="files"
             
@@ -108,5 +113,7 @@
                     <button type="button" class="btn btn-primary" (click)="addParent()"> Save </button>
                 </span>
             </p-dialog>
+
+            <button type="button" class="btn btn-primary" (click)="folderView()"> Folder View</button> &nbsp; <button type="button" class="btn btn-primary" (click)="treeView()"> Tree View </button>
         </div>
     </div>
