@@ -25,8 +25,12 @@
                     <img src="./../../../../assets/images-n/projects/more-vertical.svg" alt="Actions" >
                     <span>Actions</span>
                 </button> -->
+                <button class="btn" type="button"  (click)="menu.toggle($event)">
+                    <img src="./../../../../assets/images-n/projects/more-vertical.svg" alt="Actions" >
+                </button>
+                <p-menu class="actionspopmenu" #menu [popup]="true" [model]="actionsitems"></p-menu>
 
-                <span class="text-wh">
+                <!-- <span class="text-wh">
                     <button mat-icon-button [matMenuTriggerFor]="menu" class="txt-wh" style="vertical-align: middle;"
                         aria-label="Example icon-button with a menu">
                         <mat-icon class="menu-button">
@@ -38,7 +42,7 @@
                     <button class="ep-pad" (click)='taskListView()'> Tasks</button>
                     <button class="ep-pad"> Documents </button>
                     <button class="ep-pad" (click)='openUsersOverlay()'>Users</button>
-                </mat-menu>
+                </mat-menu> -->
             </div>
         </div>
         <div class="main-content-body">

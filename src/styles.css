@@ -2805,12 +2805,31 @@ tr.p-element.p-selectable-row.p-highlight > td:last-child {
 
 /* Grid NEW Styles End */
 
-/* primeng icons styles */
 .p-link {
   background-color: transparent !important;
   box-shadow: none !important;
 }
-/* primeng icons styles */
+
+.actionspopmenu .p-menu-overlay {
+  position: absolute;
+    top: 40px !important;
+    right: 0px !important;
+    left: unset !important;
+    width: max-content;
+}
+/* .actionspopmenu .p-menu-overlay:before {
+  content: "";
+  background: #fff;
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  right: 10px;
+  top: -5px;
+  transform: rotate(45deg);
+  border: 1px solid #00000014;
+  border-bottom: none;
+  border-right: none;
+} */
 
 
 /* ----------------------NEW STYLES END------------------------- */
