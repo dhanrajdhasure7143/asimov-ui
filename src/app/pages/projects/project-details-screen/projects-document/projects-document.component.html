@@ -53,40 +53,6 @@
            (click)="removeRoute(selected)">Remove Page</a>
         </div> -->
 
-            <!-- <p-sidebar [(visible)]="display" position="right" styleClass="p-sidebar-md" [baseZIndex]="0">
-            <div class="container">
-                <strong> Create / Upload </strong>
-                <div class="row">
-                    <div class="col-md-6">
-                        <button>
-                            <p-card class="cards side"> <i class="pi pi-folder-open" style="font-size: 2rem"></i> <br>
-                                Create folder </p-card>
-                        </button>
-                    </div>
-                    <div class="col-md-6">
-                        <button>
-                            <p-card class="cards side"> <i class="pi pi-folder-open" style="font-size: 2rem"></i> <br>
-                                Upload folder </p-card>
-                        </button>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <button>
-                            <p-card class="cards side"> <i class="pi pi-folder-open" style="font-size: 2rem"></i> <br>
-                                Create Document </p-card>
-                        </button>
-                    </div>
-                    <div class="col-md-6">
-                        <button>
-                            <p-card class="cards side"> <i class="pi pi-folder-open" style="font-size: 2rem"></i> <br>
-                                Upload Document </p-card>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </p-sidebar> -->
-
             <!-- <p-sidebar [(visible)]="isSidebar" position="right" styleClass="p-sidebar-md">
             <div class="container">
                 <strong> Create / Upload </strong>
@@ -135,4 +101,42 @@
 
             <button type="button" class="btn btn-primary" (click)="folderView()"> Folder View</button> &nbsp; <button type="button" class="btn btn-primary" (click)="treeView()"> Tree View </button>
         </div>
+    </div>
+
+
+
+    <div class="own-overlay rpa-modal dynamic-forms-modal" [hidden]="!hiddenPopUp" style="display: block">
+        <app-split-overlay (closeOverlay)="closeOverlay($event)">
+            <div class="container">
+                <h2> Create / Upload </h2>
+                <div class="row">
+                    <div class="col-md-6">
+                        <button>
+                            <p-card class="cards side"> <i class="pi pi-folder-open" style="font-size: 2rem"></i> <br>
+                                Create folder </p-card>
+                        </button>
+                    </div>
+                    <div class="col-md-6">
+                        <button>
+                            <p-card class="cards side"> <i class="pi pi-folder-open" style="font-size: 2rem"></i> <br>
+                                Upload folder </p-card>
+                        </button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <button>
+                            <p-card class="cards side"> <i class="pi pi-folder-open" style="font-size: 2rem"></i> <br>
+                                Create Document </p-card>
+                        </button>
+                    </div>
+                    <div class="col-md-6">
+                        <button>
+                            <p-card class="cards side"> <i class="pi pi-folder-open" style="font-size: 2rem"></i> <br>
+                                Upload Document </p-card>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </app-split-overlay>
     </div>

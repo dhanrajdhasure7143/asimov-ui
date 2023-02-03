@@ -8,7 +8,7 @@ import { TreeNode } from "primeng/api";
 })
 export class ProjectsDocumentComponent implements OnInit {
   files: TreeNode[];
-  display: boolean = false;
+  hiddenPopUp: boolean = false;
   isSidebar: boolean = false;
   isDialog: boolean = false;
   isDialog1: boolean = false;
@@ -225,10 +225,13 @@ export class ProjectsDocumentComponent implements OnInit {
     this.isTree = true;
     this.isFolder = false;
   }
+  folderStructure1(){
+    this.hiddenPopUp = true;
+
+  }
 
   folderStructure(event){
-    // console.log(event);
-    // console.log(this.selectedFolder);
+
     this.folderName = event.label;
     console.log(this.folderName,"folderName");
     if(event.label =="Add Folder / Document")
@@ -239,8 +242,7 @@ export class ProjectsDocumentComponent implements OnInit {
 
     this.selectedFolder = event
     this.folder_files = event.children
-    // this.isSubFolder = true;
-    // this.isFolder = false;
+
   }
 
   addSubfolder() {
@@ -291,4 +293,8 @@ export class ProjectsDocumentComponent implements OnInit {
   //   }
   //   return false;
   // }
+
+  closeOverlay(event){
+    this.hiddenPopUp = event;
+  }
 }
