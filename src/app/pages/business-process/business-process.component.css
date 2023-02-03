@@ -54,7 +54,9 @@
     padding: 0px;
 }
 .new-bps-icons .bps-float {
-    float: right;
+    /* float: right; */
+    justify-content: end;
+    align-items: center;
 }
 .bpsbtnsep {
     color:#ddd;
