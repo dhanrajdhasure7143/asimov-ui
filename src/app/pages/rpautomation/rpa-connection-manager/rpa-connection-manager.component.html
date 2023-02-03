@@ -32,7 +32,7 @@
         <div class="credential-tablegrid">
             <app-dynamic-table [representatives]="representatives" [columns_list]="columns_list"
                 [table_data]="connectorTable" (viewDetails)="viewDetails($event)" (deleteItem)="deleteById($event)"
-                [screenTable]="'common'" [checkBoxShow]="checkBoxShow" (selectedData)="readSelectedData($event)"></app-dynamic-table>
+                [screenTable]="'common'" [checkBoxShow]="checkBoxShow" (selectedData)="readSelectedData($event)" [dataKeyId]="'connectorId'"></app-dynamic-table>
         </div>
     </div>
 </div>

@@ -22,10 +22,12 @@ import { RemoveUnderscorePipe } from '../services/remove-underscore.pipe';
 import { ScreenGenerationDynamicFormComponent } from './screen-generation-dynamic-form/screen-generation-dynamic-form.component';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { Ng2TelInputModule } from 'ng2-tel-input';
+import { SplitOverlayComponent } from './split-overlay/split-overlay.component';
+import { AngularSplitModule } from 'angular-split';
 
 
 @NgModule({
-    declarations: [UploadCreateDropBpmnComponent, BpmnDiagramComponent, ProcessCategoryOverlayComponent, SearchPipe, DeployNotationComponent, DynamicTableComponent, RemoveUnderscorePipe,ScreenGenerationDynamicFormComponent],
+    declarations: [UploadCreateDropBpmnComponent, BpmnDiagramComponent, ProcessCategoryOverlayComponent, SearchPipe, DeployNotationComponent, DynamicTableComponent, RemoveUnderscorePipe,ScreenGenerationDynamicFormComponent, SplitOverlayComponent],
     imports: [
         CommonModule,
         NgxDropzoneModule,
@@ -39,9 +41,11 @@ import { Ng2TelInputModule } from 'ng2-tel-input';
         NgSelectModule,
         Ng2TelInputModule,
         ReactiveFormsModule,
-        FormsModule
+        FormsModule,
+        AngularSplitModule.forRoot(),
     ],
     providers: [],
-    exports: [UploadCreateDropBpmnComponent, BpmnDiagramComponent, ProcessCategoryOverlayComponent, SearchPipe, DeployNotationComponent, DynamicTableComponent,ScreenGenerationDynamicFormComponent]
+    exports: [UploadCreateDropBpmnComponent, BpmnDiagramComponent, ProcessCategoryOverlayComponent, SearchPipe, DeployNotationComponent, DynamicTableComponent,ScreenGenerationDynamicFormComponent,
+        SplitOverlayComponent]
 })
 export class SharedModule { }

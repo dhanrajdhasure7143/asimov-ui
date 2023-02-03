@@ -20,6 +20,8 @@ export class DynamicTableComponent implements OnInit {
   @Input()selectedScreen:any;
   @Output() selectedData = new EventEmitter<any[]>();
   @Input("deleteHide") public deleteHide:boolean;
+  @Input("dataKeyId") public dataKeyId:any
+  @Input("search_fields") public search_fields:any;
   _selectedColumns: any[];
   customers: any = [];
   userName: any;
