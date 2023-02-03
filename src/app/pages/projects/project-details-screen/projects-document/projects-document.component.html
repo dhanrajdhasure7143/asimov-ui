@@ -1,4 +1,4 @@
-<div class="maincontent">
+<!-- <div class="maincontent"> -->
     <div class="h-100">
         <div class="row main-content-head">
             <div class="col-md-6">
@@ -99,7 +99,10 @@
                 </span>
             </p-dialog>
 
-            <button type="button" class="btn btn-primary" (click)="folderView()"> Folder View</button> &nbsp; <button type="button" class="btn btn-primary" (click)="treeView()"> Tree View </button>
+            <!-- <button type="button" class="btn btn-primary" (click)="folderView()"> Folder View</button> &nbsp; <button type="button" class="btn btn-primary" (click)="treeView()"> Tree View </button> -->
+        </div>
+        <div class="text-right">
+            <button type="button" class="btn btn-primary" (click)="folderView()"> <i class="pi pi-folder-open" style="font-size: 2rem"></i> </button> &nbsp; <button type="button" class="btn btn-primary" (click)="treeView()"> <i class="pi pi-sitemap" style="font-size: 2rem"></i> </button>
         </div>
     </div>
 
@@ -139,4 +142,5 @@
                 </div>
             </div>
         </app-split-overlay>
+
     </div>
