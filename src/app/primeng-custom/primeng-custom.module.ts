@@ -23,6 +23,10 @@ import {InputTextModule} from 'primeng/inputtext';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {MessageModule} from 'primeng/message';
 import {FileUploadModule} from 'primeng/fileupload';
+import {InputTextareaModule} from 'primeng/inputtextarea';
+import {InplaceModule} from 'primeng/inplace';
+import {EditorModule} from 'primeng/editor';
+
 
 
 
@@ -49,7 +53,13 @@ import {FileUploadModule} from 'primeng/fileupload';
     ButtonModule,
     DropdownModule,
     ProgressBarModule,
-    InputTextModule
+    InputTextModule,
+    ConfirmDialogModule,
+    EditorModule,
+    MessageModule,
+    FileUploadModule,
+    InputTextareaModule,
+    InplaceModule
   ],
   exports: [
     CommonModule,
@@ -72,7 +82,13 @@ import {FileUploadModule} from 'primeng/fileupload';
     ButtonModule,
     DropdownModule,
     ProgressBarModule,
-    InputTextModule
+    InputTextModule,
+    ConfirmDialogModule,
+    EditorModule,
+    MessageModule,
+    FileUploadModule,
+    InputTextareaModule,
+    InplaceModule
   ]
 })
 export class PrimengCustomModule { }

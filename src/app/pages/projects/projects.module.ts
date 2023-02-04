@@ -56,6 +56,8 @@ import { ProjectTaskListComponent } from './project-details-screen/project-task-
 import { SharedModule } from '../../shared/shared.module';
 import { AngularSplitModule } from 'angular-split';
 import { PrimengCustomModule } from 'src/app/primeng-custom/primeng-custom.module';
+import { ProjectTaskDetailsComponent } from './project-task-details/project-task-details.component';
+
 
 const materialModules: any[] = [
     
@@ -67,7 +69,8 @@ const materialModules: any[] = [
     ProjectDetailsScreenComponent, ProjectsDashboardComponent, ProcessNamePipe,IntitiativePipe, UserPipePipe, ProjectRepoScreenComponent,CreateTasksComponent, AddResourcesComponent,ProgramDetailsComponent, UserDetialsPipe,RequestFileComponent, CreateProjectFormComponent, EditTaskComponent, BacklogsListComponent,
      BacklogsCreateComponent,
      ProjectRpaDesignComponent,
-     ProjectTaskListComponent],
+     ProjectTaskListComponent,
+     ProjectTaskDetailsComponent],
   imports: [
     CommonModule,
     ProjectsRoutingModule,
@@ -93,7 +96,7 @@ const materialModules: any[] = [
     NgbModalDraggableModule,
     SharedModule,
     AngularSplitModule.forRoot(),
-    PrimengCustomModule
+    PrimengCustomModule,
   ],
   providers:[
     BsModalRef, NotifierService,
