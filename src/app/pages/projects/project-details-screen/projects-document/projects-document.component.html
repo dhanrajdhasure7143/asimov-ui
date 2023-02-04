@@ -27,7 +27,7 @@
         <div class="container">
             <span class="title_text"></span>
             <div *ngIf="isFolder == true" class="d-flex">
-            <p-card  class="cards" *ngFor="let item of folder_files"  (click)="folderStructure(item)">  
+            <p-card  class="cards" *ngFor="let item of folder_files"  (click)="openAddFolderOverlay(item)">  
                 <i *ngIf="item.collapsedIcon" class="pi" [class]="item.collapsedIcon" style="font-size: 2rem"> </i> 
                 <i *ngIf="!item.collapsedIcon" class="pi" [class]="item.icon" style="font-size: 2rem"> </i> <br>  
                 <span> {{ item.label }} </span>
@@ -76,7 +76,7 @@
                 <span class="p-float-label">
                     <input type="text" pInputText placeholder="Enter Folder Name" [(ngModel)]="entered_folder_name"
                         name="folder"> <br>
-                    <button type="button" class="btn btn-primary" (click)="saveFolder()"> Save </button>
+                    <button type="button" class="btn btn-primary" (click)="saveFolder()"> tree child Save </button>
                 </span>
             </p-dialog>
 
@@ -84,7 +84,7 @@
                 <span class="p-float-label">
                     <input type="text" pInputText placeholder="Enter Folder Name" [(ngModel)]="folder_name"
                         name="folder"> <br>
-                    <button type="button" class="btn btn-primary" (click)="addParent()"> Save </button>
+                    <button type="button" class="btn btn-primary" (click)="addParent()">parent Save </button>
                 </span>
             </p-dialog>
 
@@ -102,20 +102,22 @@
             <!-- <button type="button" class="btn btn-primary" (click)="folderView()"> Folder View</button> &nbsp; <button type="button" class="btn btn-primary" (click)="treeView()"> Tree View </button> -->
         </div>
         <div class="text-right">
-            <button type="button" class="btn btn-primary" (click)="folderView()"> <i class="pi pi-folder-open" style="font-size: 2rem"></i> </button> &nbsp; <button type="button" class="btn btn-primary" (click)="treeView()"> <i class="pi pi-sitemap" style="font-size: 2rem"></i> </button>
+            <button type="button" class="btn btn-primary" (click)="folderView()"> <i class="pi pi-folder-open" style="font-size: 2rem"></i> </button> 
+            &nbsp; 
+            <button type="button" class="btn btn-primary" (click)="treeView()"> <i class="pi pi-sitemap" style="font-size: 2rem"></i> </button>
         </div>
     </div>
 
 
 
-    <div class="own-overlay rpa-modal dynamic-forms-modal" [hidden]="!hiddenPopUp" style="display: block">
+    <div class="own-overlay rpa-modal dynamic-forms-modal" [hidden]="!createFolderPopUP" style="display: block">
         <app-split-overlay (closeOverlay)="closeOverlay($event)">
             <div class="container">
                 <h2> Create / Upload </h2>
                 <div class="row">
                     <div class="col-md-6">
                         <button>
-                            <p-card class="cards side"> <i class="pi pi-folder-open" style="font-size: 2rem"></i> <br>
+                            <p-card class="cards side" (click)="onCreateFolder()"> <i class="pi pi-folder-open" style="font-size: 2rem"></i> <br>
                                 Create folder </p-card>
                         </button>
                     </div>
@@ -126,7 +128,7 @@
                         </button>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row" *ngIf="hiddenPopUp1">
                     <div class="col-md-6">
                         <button>
                             <p-card class="cards side"> <i class="pi pi-folder-open" style="font-size: 2rem"></i> <br>
@@ -142,5 +144,41 @@
                 </div>
             </div>
         </app-split-overlay>
-
     </div>
+
+    <div class="own-overlay rpa-modal dynamic-forms-modal" [hidden]="!createTreeFolderOverlay" style="display: block">
+        <app-split-overlay (closeOverlay)="closeOverlay($event)">
+            <div class="container">
+                <h2> Create / Upload </h2>
+                <div class="row">
+                    <div class="col-md-6">
+                        <button>
+                            <p-card class="cards side" (click)="onCreateTreeFolder()"> <i class="pi pi-folder-open" style="font-size: 2rem"></i> <br>
+                                Create folder </p-card>
+                        </button>
+                    </div>
+                    <div class="col-md-6">
+                        <button>
+                            <p-card class="cards side"> <i class="pi pi-folder-open" style="font-size: 2rem"></i> <br>
+                                Upload folder </p-card>
+                        </button>
+                    </div>
+                </div>
+                <div class="row" *ngIf="hiddenPopUp1">
+                    <div class="col-md-6">
+                        <button>
+                            <p-card class="cards side"> <i class="pi pi-folder-open" style="font-size: 2rem"></i> <br>
+                                Create Document </p-card>
+                        </button>
+                    </div>
+                    <div class="col-md-6">
+                        <button>
+                            <p-card class="cards side"> <i class="pi pi-folder-open" style="font-size: 2rem"></i> <br>
+                                Upload Document </p-card>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </app-split-overlay>
+    </div>
+
