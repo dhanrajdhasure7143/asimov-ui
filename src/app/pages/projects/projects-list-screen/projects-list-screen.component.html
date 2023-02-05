@@ -1,60 +1,96 @@
 <div class="maincontent">
-    <div class="h-100">
-        <div class="row main-content-head">
-            <div class="col-md-4 pl-0">
-                <h3>
-                    <!-- <label id="popup_title">
+  <div class="h-100">
+    <div class="row main-content-head">
+      <div class="col-md-4 pl-0">
+        <h3>
+          <!-- <label id="popup_title">
                         <a (click)="backToProjectDetails()"><img
                                 src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow"></a>
                     </label> -->
-                    <span class="title_text">
-                        Projects
-                    </span>
-                </h3>
-            </div>
-            <div class="col-md-8 pr-0 text-right">
-                <!-- <button class="btn">
+          <span class="title_text">
+            Projects
+          </span>
+        </h3>
+      </div>
+      <div class="col-md-8 pr-0 text-right">
+        <!-- <button class="btn">
                     <img src="./../../../../assets/images-n/projects/Open.svg" alt="Open">
                     <span>Open</span>
                 </button> -->
-                <button class="btn" (click)="createNew()">
-                    <img src="./../../../../assets/images-n/projects/plus-square_blue.svg" alt="Create">
-                    <span>Create</span>
-                </button>
-                <button class="btn">
-                    <img src="./../../../../assets/images-n/projects/more-vertical.svg" alt="Actions">
-                    <span>Actions</span>
-                </button>
-            </div>
-        </div>
-        <div class="main-content-body tablist-cont">
-          <div class="h-100">
+        <button class="btn" (click)="onCreateNew()">
+          <img src="./../../../../assets/images-n/projects/plus-square_blue.svg" alt="Create">
+          <span>Create</span>
+        </button>
+        <button class="btn">
+          <img src="./../../../../assets/images-n/projects/more-vertical.svg" alt="Actions">
+          <span>Actions</span>
+        </button>
+      </div>
+    </div>
+    <div class="main-content-body tablist-cont">
+      <div class="h-100">
 
-            <div id="tabs_screen" class="h-100">
-              <p-tabView #tabView (onChange)="onTabChanged($event, tabView)">
-                <p-tabPanel [header]="each.tabName" *ngFor="let each of _tabsList; let i = index" [selected]="i == 0">
-                  <ng-template pTemplate="header">
-                    <div class="status-tabs">
-                      <div class="status-img">
-                        <img src="../assets/images-n/projects/{{each.img_src}}" alt="">
-                      </div>
-                      <div class="status-data">
-                        <span class="tabscount">{{each.count}}</span>
-                        <span class="">{{each.tabName}}</span>
-                      </div>
-                    </div>
-                  </ng-template>
-                </p-tabPanel>
-                <div class="">
-                  <app-dynamic-table [representatives]="representatives" [columns_list]="columns_list"
-                    [table_data]="projects_list" [userRoles]="userRoles" (viewDetails)="viewDetails($event)"
-                    (deleteItem)="deleteById($event)" [screenTable]="'projectList'" [dataKeyId]="'id'" [search_fields]="table_searchFields">
-                  </app-dynamic-table>
+        <div id="tabs_screen" class="h-100">
+          <p-tabView #tabView (onChange)="onTabChanged($event, tabView)">
+            <p-tabPanel [header]="each.tabName" *ngFor="let each of _tabsList; let i = index" [selected]="i == 0">
+              <ng-template pTemplate="header">
+                <div class="status-tabs">
+                  <div class="status-img">
+                    <img src="../assets/images-n/projects/{{each.img_src}}" alt="">
+                  </div>
+                  <div class="status-data">
+                    <span class="tabscount">{{each.count}}</span>
+                    <span class="">{{each.tabName}}</span>
+                  </div>
                 </div>
-              </p-tabView>
+              </ng-template>
+            </p-tabPanel>
+            <div class="">
+              <app-dynamic-table [representatives]="representatives" [columns_list]="columns_list"
+                [table_data]="projects_list" [userRoles]="userRoles" (viewDetails)="viewDetails($event)"
+                (deleteItem)="deleteById($event)" [screenTable]="'projectList'" [dataKeyId]="'id'"
+                [search_fields]="table_searchFields">
+              </app-dynamic-table>
             </div>
+          </p-tabView>
+        </div>
 
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<div [hidden]="!hiddenPopUp">
+  <app-split-overlay (closeOverlay)="closeOverlay($event)">
+    <div class="">
+      <div class="rpa-modal-header">
+        <h2 *ngIf="!isprojectCreateForm">Create Project / Program</h2>
+        <h2 *ngIf="isprojectCreateForm">Create Project</h2>
+      </div>
+      <div class="modal-body actions-mbody actionsoverlay-mbody">
+        <div class="container" *ngIf="!isprojectCreateForm">
+          <div class="row">
+            <div class="col-md-6">
+              <button type="button" (click)="onClikCreateProject()">
+                <p-card class="cards side"> <i class="pi pi-folder-open" style="font-size: 2rem"></i> <br>
+                  Create Project </p-card>
+              </button>
+            </div>
+            <div class="col-md-6">
+              <button>
+                <p-card class="cards side"> <i class="pi pi-folder-open" style="font-size: 2rem"></i> <br>
+                  Creat Program </p-card>
+              </button>
+            </div>
           </div>
         </div>
-</div>
+
+
+      </div>
+    </div>
+  </app-split-overlay>
 </div>
