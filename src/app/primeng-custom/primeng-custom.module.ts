@@ -24,6 +24,8 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {MessageModule} from 'primeng/message';
 import {FileUploadModule} from 'primeng/fileupload';
 import { TreeModule } from 'primeng/tree';
+import {RadioButtonModule} from 'primeng/radiobutton';
+import {InputTextareaModule} from 'primeng/inputtextarea';
 
 
 
@@ -51,7 +53,9 @@ import { TreeModule } from 'primeng/tree';
     DropdownModule,
     ProgressBarModule,
     InputTextModule,
-    TreeModule
+    TreeModule,
+    RadioButtonModule,
+    InputTextareaModule
   ],
   exports: [
     CommonModule,
@@ -75,7 +79,9 @@ import { TreeModule } from 'primeng/tree';
     DropdownModule,
     ProgressBarModule,
     InputTextModule,
-    TreeModule
+    TreeModule,
+    RadioButtonModule,
+    InputTextareaModule
   ]
 })
 export class PrimengCustomModule { }
