@@ -8,7 +8,7 @@
                                 src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow"></a>
                     </label>
                     <span class="title_text">
-                        Projects | <span class="sub_title_text"> {{projectDetails.projectName}}</span>
+                      <span routerLink="/pages/projects/listOfProjects">Projects</span> | <span class="sub_title_text"> {{projectDetails.projectName}}</span>
                     </span>
                 </h3>
             </div>
@@ -48,7 +48,7 @@
         <div class="main-content-body">
             <div class="row project-Information">
                 <div class="row project-overview">
-                    <div class="col-md-1 p-0">
+                    <div class="col-sm-1 p-0">
                         <div class="row project-status">
                             <img *ngIf="projectDetails.status == 'Closed'"
                                 src="./../../../../assets/images-n/projects/completed-tasks.svg"
@@ -59,7 +59,7 @@
                             <!-- <p>{{projectDetails.status}}</p> -->
                         </div>
                     </div>
-                    <div class="col-md-11 p-0">
+                    <div class="col p-0">
                         <div class="row project-ninfo">
                             <div class="row align-items-center">
                                 <span class="project-name">{{projectDetails.projectName}}</span>
@@ -103,9 +103,16 @@
                         </div>
                     </div>
                 </div>
-                <div class="row project-description">
-                    <label>Description</label>
-                    <p>{{projectDetails.projectPurpose}} <span class="readmore">Read more</span></p>
+                <div class="row">
+                    <div class="col-sm-1">
+                        <label>Description</label>
+                    </div>
+                    <div class="col">
+                        <span *ngIf="isReadmoreShow"> <p>{{projectDetails.projectPurpose}} <span class="readmore" (click)="onReadMoreHide()" >Hide</span></p> </span>
+                    <!-- <p>{{projectDetails.projectPurpose}}</p> -->
+                    <span *ngIf="!isReadmoreShow"><p>{{fitDescr(projectDetails.projectPurpose)}} <span class="readmore" (click)="onReadMoreHide()">Read more</span></p> </span>
+                    </div>
+
                 </div>
             </div>
             <div class="row">
@@ -334,7 +341,7 @@
             <div class="modal-body actions-mbody actionsoverlay-mbody">
                 <div class="tab-pane">
                     <div class="tablediv">
-                        <p-table #dt1 [value]="users_tableList" [globalFilterFields]="['displayName','user_name']"
+                        <p-table #dt1 [value]="users_tableList" [globalFilterFields]="['user_role','fullName']"
                             [columns]="columns_list" [(selection)]="checkBoxselected" [resizableColumns]="true"
                             responsiveLayout="scroll" dataKey="id">
                             <ng-template pTemplate="caption">

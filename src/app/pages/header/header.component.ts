@@ -326,6 +326,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       element["user_email"]= element.userId.userId
       element["firstName"]= element.userId.firstName
       element["lastName"]= element.userId.lastName
+      element["user_role"] = element.roleID.displayName
       element["fullName"] = this.titlecasePipe.transform(element.userId.firstName)+' '+this.titlecasePipe.transform(element.userId.lastName)
     });
     this.dataTransfer.tenantBasedUsersList(data)

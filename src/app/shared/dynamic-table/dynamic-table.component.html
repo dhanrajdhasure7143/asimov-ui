@@ -54,14 +54,19 @@
                     <p-tableCheckbox [value]="rowData" (click)="selectRow()"></p-tableCheckbox>
                 </td>
                 <td *ngFor="let col of columns" [hidden]="!col.ShowGrid">
-                    <span *ngIf="!col.multi">{{rowData[col.ColumnName]}}</span>
-                    <span *ngIf="col.multi">
-                        {{rowData[col.multiOptions[0]]}} <br>
-                        <span> {{rowData[col.multiOptions[1]]}} </span>
+                    <span *ngIf="!col.multi">
+                        <span *ngIf="col.ColumnName != 'priority'"> {{rowData[col.ColumnName]}} </span>
+                        <span *ngIf="col.ColumnName == 'priority'" [ngStyle]="{'color':getColor(rowData[col.ColumnName])}">{{rowData[col.ColumnName]}} Priority</span>
                     </span>
-                    <span *ngIf="col.ColumnName!='action' && col.multi">
+                    
+                    <span *ngIf="col.multi">{{rowData[col.multiOptions[0]]}} <br>
+                        <span *ngIf="col.multiOptions[1] == 'priority'" [ngStyle]="{'color':getColor(rowData[col.multiOptions[1]])}"> {{rowData[col.multiOptions[1]]}} Priority</span>
+                        <span *ngIf="col.multiOptions[1] != 'priority'"> {{rowData[col.multiOptions[1]]}} </span>
+                        <!-- <span> {{rowData[col.multiOptions[1]]}} </span> -->
+                    </span>
+                    <!-- <span *ngIf="col.ColumnName!='action' && col.multi">
                         {{ rowData[col.ColumnName]?rowData[col.ColumnName]:'-' }}
-                    </span>
+                    </span> -->
                     <span *ngIf="col.ColumnName == 'action' && screenTable=='common'">
                         <div class="newinntalx">
                             <span *ngIf="selectedScreen">
