@@ -1,4 +1,4 @@
-::ng-deep .ng-select-container {
+/* ::ng-deep .ng-select-container {
     height: auto !important;
     font-size: 1.0em!important;
     font-family:sans-serif;
@@ -9,7 +9,7 @@
     overflow: auto !important;
   }
 
-  
+
 .maindivfoprm input,
 .maindivfoprm select,
 .maindivfoprm textarea {
@@ -17,7 +17,7 @@
   border: 1px solid #D1D1D1;
   box-shadow: unset !important;
   color: #7B8694 !important;
-  border-radius: 2px;  
+  border-radius: 2px;
   padding: 6px 10px !important;
 }
 
@@ -80,4 +80,4 @@ button.btn.btn-primary.btn-update {
   margin: 0px auto;
   margin-top: 15px;
   margin-bottom: 15px;
-}
+} */
