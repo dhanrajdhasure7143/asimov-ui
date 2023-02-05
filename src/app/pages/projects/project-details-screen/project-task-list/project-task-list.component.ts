@@ -255,7 +255,27 @@ export class ProjectTaskListComponent implements OnInit {
   }
 
   closeOverlay(event) {
-    console.log(event);
     this.hiddenPopUp = event;
+  }
+
+  openTaskWorkSpace(data){
+    console.log(data);
+    
+    localStorage.setItem('project_id', this.project_id.id);
+    if (data.taskCategory == "RPA Implementation") {
+      this.router.navigate(['/pages/rpautomation/designer'], { queryParams: { projectId: this.project_id.id, botId: data.correlationID } })
+    }
+    if (data.taskCategory == "BPMN Design" || data.taskCategory == "As-Is Process" || data.taskCategory == "To-Be Process") {
+      this.router.navigate(['pages/businessProcess/uploadProcessModel'],
+        { queryParams: { "bpsId": data.correlationID.split(":")[0], "ver": data.correlationID.split(":")[1], "ntype": "bpmn" } })
+    }
+    if (data.taskCategory == "RPA Design") {
+      // this.router.navigate(['pages/projects/repdesign'],{ queryParams: {projectId: data.projectId,taskId:data.id,programId:this.programId}})
+    }
+
+    if (data.taskCategory == "Process Mining") {
+      this.router.navigate(['pages/processIntelligence/flowChart'], { queryParams: { "wpiId": data.correlationID } })
+    }
+
   }
 }

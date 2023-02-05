@@ -48,7 +48,8 @@
                       <div class="">
                           <app-dynamic-table [columns_list]="columns_list" [table_data]="tasks_list"
                               (viewDetails)="viewDetails($event)" (deleteItem)="deletetask($event)"
-                              [representatives]="representatives" [screenTable]="'taskList'" [dataKeyId]="'id'" [search_fields]="table_searchFields">
+                              [representatives]="representatives" [screenTable]="'taskList'" [dataKeyId]="'id'" [search_fields]="table_searchFields"
+                              [selectionMode]="'single'" (openTaskWorkSpace)="openTaskWorkSpace($event)">
                           </app-dynamic-table>
                       </div>
                   </p-tabView>
