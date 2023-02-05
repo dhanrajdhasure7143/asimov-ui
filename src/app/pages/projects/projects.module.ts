@@ -58,6 +58,7 @@ import { AngularSplitModule } from 'angular-split';
 import { PrimengCustomModule } from 'src/app/primeng-custom/primeng-custom.module';
 import { ProjectTaskDetailsComponent } from './project-task-details/project-task-details.component';
 
+import { ProjectsDocumentComponent } from './project-details-screen/projects-document/projects-document.component';
 
 const materialModules: any[] = [
     
@@ -70,7 +71,8 @@ const materialModules: any[] = [
      BacklogsCreateComponent,
      ProjectRpaDesignComponent,
      ProjectTaskListComponent,
-     ProjectTaskDetailsComponent],
+     ProjectTaskDetailsComponent,
+     ProjectsDocumentComponent],
   imports: [
     CommonModule,
     ProjectsRoutingModule,

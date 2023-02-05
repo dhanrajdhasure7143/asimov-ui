@@ -14,6 +14,7 @@ import { BacklogsCreateComponent } from './backlogs-create/backlogs-create.compo
 import { ProjectRpaDesignComponent } from './project-rpa-design/project-rpa-design.component';
 import { ProjectTaskListComponent } from './project-details-screen/project-task-list/project-task-list.component';
 import { ProjectTaskDetailsComponent} from './project-task-details/project-task-details.component';
+import { ProjectsDocumentComponent } from './project-details-screen/projects-document/projects-document.component';
 
 
 const routes: Routes = [
@@ -33,6 +34,7 @@ const routes: Routes = [
     {path:'repdesign',component:ProjectRpaDesignComponent},
     {path:'tasks',component:ProjectTaskListComponent},
     {path:'taskDetails',component:ProjectTaskDetailsComponent},
+    {path:'document',component:ProjectsDocumentComponent},
     {path:'**', redirectTo:'/listOfProjects', pathMatch: 'full'}
     
   ]}

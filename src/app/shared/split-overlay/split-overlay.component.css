@@ -1,6 +1,7 @@
 
 .right_split {
     background-color: white !important;
+    height: 100%;
 }
 
   .splitter-headers{
@@ -14,4 +15,21 @@
     opacity: .5;
     position: fixed;
     z-index: 1000;
+  }
+
+  .own-overlay {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1040;
+  }
+  
+  .dynamic-forms-modal{
+    padding-left: 60px !important;
+    margin-top: 52px !important;
+  }
+  
+  .dynamic-forms-modal .rpa-modal-content{
+   box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%) !important;
   }

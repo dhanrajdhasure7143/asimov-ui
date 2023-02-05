@@ -1,59 +1,76 @@
 <div class="maincontent">
-    <div class="h-100">
-        <div class="row main-content-head">
-            <div class="col-md-4 pl-0">
-                <h3>
-                    <label id="popup_title">
-                        <a (click)="backToProjectDetails()"><img
-                                src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow"></a>
-                    </label>
-                    <span class="title_text">
-                        Projects | {{projectName}} | <span class="sub_title_text"> Tasks</span>
-                    </span>
-                </h3>
-            </div>
-            <div class="col-md-8 pr-0 text-right">
-                <!-- <button class="btn">
-                    <img src="./../../../../assets/images-n/projects/Open.svg" alt="Open">
-                    <span>Open</span>
-                </button> -->
-                <button class="btn">
-                    <img src="./../../../../assets/images-n/projects/plus-square_blue.svg" alt="Create">
-                    <span>Create</span>
-                </button>
-                <button class="btn">
-                    <img src="./../../../../assets/images-n/projects/more-vertical.svg" alt="Actions">
-                    <span>Actions</span>
-                </button>
-            </div>
+  <div class="h-100">
+      <div class="row main-content-head">
+          <div class="col-md-4 pl-0">
+              <h3>
+                  <label id="popup_title">
+                      <a (click)="backToProjectDetails()"><img
+                              src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow"></a>
+                  </label>
+                  <span class="title_text">
+                    <span routerLink="/pages/projects/listOfProjects">Projects</span> | {{projectName}} | <span class="sub_title_text"> Tasks</span>
+                  </span>
+              </h3>
+          </div>
+          <div class="col-md-8 pr-0 text-right">
+              <!-- <button class="btn">
+                  <img src="./../../../../assets/images-n/projects/Open.svg" alt="Open">
+                  <span>Open</span>
+              </button> -->
+              <button class="btn" (click)="onCreateTask()">
+                  <img src="./../../../../assets/images-n/projects/plus-square_blue.svg" alt="Create">
+                  <span>Create</span>
+              </button>
+              <button class="btn">
+                  <img src="./../../../../assets/images-n/projects/more-vertical.svg" alt="Actions">
+                  <span>Actions</span>
+              </button>
+          </div>
+      </div>
+      <div class="main-content-body tablist-cont">
+          <div class="h-100">
+              <div class="h-100" id="tabs_screen">
+                  <p-tabView #tabView (onChange)="onTabChanged($event, tabView)">
+                      <p-tabPanel [header]="each.tabName" *ngFor="let each of _tabsList; let i = index"
+                          [selected]="i == 0">
+                          <ng-template pTemplate="header">
+                              <div class="status-tabs newstatu">
+                                  <div class="status-img">
+                                      <img src="../assets/images-n/projects/{{each.img_src}}" alt="">
+                                  </div>
+                                  <div class="status-data">
+                                      <span class="tabscount">{{each.count}}</span>
+                                      <span class="">{{each.tabName}}</span>
+                                  </div>
+                              </div>
+                          </ng-template>
+                      </p-tabPanel>
+                      <div class="">
+                          <app-dynamic-table [columns_list]="columns_list" [table_data]="tasks_list"
+                              (viewDetails)="viewDetails($event)" (deleteItem)="deletetask($event)"
+                              [representatives]="representatives" [screenTable]="'taskList'" [dataKeyId]="'id'" [search_fields]="table_searchFields"
+                              [selectionMode]="'single'" (openTaskWorkSpace)="openTaskWorkSpace($event)">
+                          </app-dynamic-table>
+                      </div>
+                  </p-tabView>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+<div [hidden]="!hiddenPopUp">
+  <app-split-overlay (closeOverlay)="closeOverlay($event)">
+      <div class="">
+          <div class="rpa-modal-header">
+            <h3>Create Task</h3>
+          </div>
+          <div class="modal-body actions-mbody actionsoverlay-mbody">
+          <div>
+            <app-create-tasks [users_list]="users_list"></app-create-tasks>
         </div>
-        <div class="main-content-body tablist-cont">
-            <div class="h-100">
-                <div class="h-100" id="tabs_screen">
-                    <p-tabView #tabView (onChange)="onTabChanged($event, tabView)">
-                        <p-tabPanel [header]="each.tabName" *ngFor="let each of _tabsList; let i = index"
-                            [selected]="i == 0">
-                            <ng-template pTemplate="header">
-                                <div class="status-tabs newstatu">
-                                    <div class="status-img">
-                                        <img src="../assets/images-n/projects/{{each.img_src}}" alt="">
-                                    </div>
-                                    <div class="status-data">
-                                        <span class="tabscount">{{each.count}}</span>
-                                        <span class="">{{each.tabName}}</span>
-                                    </div>
-                                </div>
-                            </ng-template>
-                        </p-tabPanel>
-                        <div class="">
-                            <app-dynamic-table [columns_list]="columns_list" [table_data]="tasks_list"
-                                (viewDetails)="viewDetails($event)" (deleteItem)="deletetask($event)"
-                                [representatives]="representatives" [screenTable]="'taskList'" [dataKeyId]="'id'" [search_fields]="table_searchFields">
-                            </app-dynamic-table>
-                        </div>
-                    </p-tabView>
-                </div>
-            </div>
-        </div>
-    </div>
+          </div>
+      </div>
+  </app-split-overlay>
 </div>

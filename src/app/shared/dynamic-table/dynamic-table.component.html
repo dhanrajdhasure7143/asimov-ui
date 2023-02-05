@@ -1,31 +1,39 @@
-<div class="" *ngIf="screenTable=='common'">
-    <p-table #dt1 [value]="table_data" [columns]="selectedColumns" [reorderableColumns]="true" [(selection)]="checkBoxselected" [resizableColumns]="true" responsiveLayout="scroll" [dataKey]="dataKeyId">
-        <!-- [globalFilterFields]="['representative.name']"> -->
+<div class="">
+    <p-table #dt1 [value]="table_data" [columns]="selectedColumns" [globalFilterFields]="search_fields"
+        [reorderableColumns]="true" [(selection)]="selectedItem"
+        [resizableColumns]="true" responsiveLayout="scroll" [selectionMode]="selectionMode" [dataKey]="dataKeyId">
         <ng-template pTemplate="caption">
             <div class="p-d-flex">
                 <p-multiSelect [options]="columns_list" [(ngModel)]="selectedColumns" optionLabel="DisplayName"
-                selectedItemsLabel="{0} columns selected" [style]="{minWidth: '200px'}" placeholder="Choose Columns"></p-multiSelect>
-                <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
+                    selectedItemsLabel="{0} columns selected" [style]="{minWidth: '200px'}"
+                    placeholder="Choose Columns"></p-multiSelect>
+                <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash"
+                    (click)="clear(dt1)"></button>
                 <span class="p-input-icon-right">
                     <i class="pi pi-search"></i>
-                    <input type="text" pInputText placeholder="Search" class="p-inputtext-lg" style="width:auto" (input)="dt1.filterGlobal($event.target.value, 'contains')" >
+                    <input type="text" pInputText placeholder="Search" class="p-inputtext-lg" style="width:auto"
+                        (input)="dt1.filterGlobal($event.target.value, 'contains')">
                 </span>
             </div>
         </ng-template>
         <ng-template pTemplate="header" let-columns>
             <tr>
                 <th style="width: 1rem" *ngIf="checkBoxShow">
-                    <p-tableHeaderCheckbox  (click)="selectRow()"></p-tableHeaderCheckbox>
+                    <p-tableHeaderCheckbox (click)="selectRow()"></p-tableHeaderCheckbox>
                 </th>
-                <th *ngFor="let col of columns" pReorderableColumn pResizableColumn pSortableColumn="{{col.ColumnName}}" [hidden]="!col.ShowGrid">{{col.DisplayName | removeUnderscore}}
-                    <p-columnFilter *ngIf="col.ShowFilter && col.filterWidget == 'multiSelect'" field="representative" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
+                <th *ngFor="let col of columns" pReorderableColumn pResizableColumn pSortableColumn="{{col.ColumnName}}"
+                    [hidden]="!col.ShowGrid">{{col.DisplayName | removeUnderscore}}
+                    <p-columnFilter *ngIf="col.ShowFilter && col.filterWidget == 'multiSelect'" field="representative"
+                        matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false"
+                        [showAddButton]="false">
                         <ng-template pTemplate="header">
                             <div class="p-px-3 p-pt-3 p-pb-0">
                                 <span class="p-text-bold">Type</span>
                             </div>
                         </ng-template>
                         <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                            <p-multiSelect [ngModel]="value" [options]="representatives" placeholder="Any" (onChange)="filter($event.value)" optionLabel="name">
+                            <p-multiSelect [ngModel]="value" [options]="representatives" placeholder="Any"
+                                (onChange)="filter($event.value)" optionLabel="name">
                                 <ng-template let-option pTemplate="item">
                                     <div class="p-multiselect-representative-option">
                                         <span class="p-ml-1">{{option.name}}</span>
@@ -34,49 +42,131 @@
                             </p-multiSelect>
                         </ng-template>
                     </p-columnFilter>
-                    <p-columnFilter *ngIf="col.ShowFilter && col.filterWidget == 'normal'" [showAddButton]="false" type="{{col.filterType}}" field="{{col.ColumnName}}" display="menu"></p-columnFilter>
+                    <p-columnFilter *ngIf="col.ShowFilter && col.filterWidget == 'normal'" [showAddButton]="false"
+                        type="{{col.filterType}}" field="{{col.ColumnName}}" display="menu"></p-columnFilter>
                     <p-sortIcon *ngIf="col.sort" field="{{col.ColumnName}}"></p-sortIcon>
                 </th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-rowData let-data let-columns="columns">
-            <tr>
+            <tr [pSelectableRow]="rowData" [pSelectableRowDisabled]="selectionMode != 'single'">
                 <td *ngIf="checkBoxShow">
-                <p-tableCheckbox [value]="rowData"  (click)="selectRow()"></p-tableCheckbox>
+                    <p-tableCheckbox [value]="rowData" (click)="selectRow()"></p-tableCheckbox>
                 </td>
                 <td *ngFor="let col of columns" [hidden]="!col.ShowGrid">
-                    <span *ngIf="!col.multi">{{rowData[col.ColumnName]}}</span>
-                    <span *ngIf="col.multi">
-                        {{rowData[col.multiOptions[0]]}} <br>
-                        <span> {{rowData[col.multiOptions[1]]}} </span>
+                    <span *ngIf="!col.multi">
+                        <span *ngIf="col.ColumnName != 'priority'"> {{rowData[col.ColumnName]}} </span>
+                        <span *ngIf="col.ColumnName == 'priority'" [ngStyle]="{'color':getColor(rowData[col.ColumnName])}">{{rowData[col.ColumnName]}} Priority</span>
                     </span>
-                      <span *ngIf="col.ColumnName!='action' && col.multi">
+                    
+                    <span *ngIf="col.multi">{{rowData[col.multiOptions[0]]}} <br>
+                        <span *ngIf="col.multiOptions[1] == 'priority'" [ngStyle]="{'color':getColor(rowData[col.multiOptions[1]])}"> {{rowData[col.multiOptions[1]]}} Priority</span>
+                        <span *ngIf="col.multiOptions[1] != 'priority'"> {{rowData[col.multiOptions[1]]}} </span>
+                        <!-- <span> {{rowData[col.multiOptions[1]]}} </span> -->
+                    </span>
+                    <!-- <span *ngIf="col.ColumnName!='action' && col.multi">
                         {{ rowData[col.ColumnName]?rowData[col.ColumnName]:'-' }}
-                      </span>
-                    <span *ngIf="col.ColumnName == 'action'">
+                    </span> -->
+                    <span *ngIf="col.ColumnName == 'action' && screenTable=='common'">
                         <div class="newinntalx">
                             <span *ngIf="selectedScreen">
-                                <button placement="bottom" class="editButton" [disabled]="!selectedScreen.Allow_Edit" (click)="edit(rowData)">
-                                    <img src="../../../../assets/images/Projects/edit-black.svg" alt="" class="testplus clickable"> </button>
-                                <button  class="editButton" [disabled]="!selectedScreen.Allow_Delete" (click)="deleteRow(rowData)">
-                                    <img src="../../../../../assets/images/Projects/delete-black.svg" class="testplus clickable" alt="close">
+                                <button placement="bottom" class="editButton" [disabled]="!selectedScreen.Allow_Edit"
+                                    (click)="editRowBy_Id(rowData)">
+                                    <img src="../../../../assets/images/Projects/edit-black.svg" alt=""
+                                        class="testplus clickable"> </button>
+                                <button class="editButton" [disabled]="!selectedScreen.Allow_Delete"
+                                    (click)="deleteRow(rowData)">
+                                    <img src="../../../../../assets/images/Projects/delete-black.svg"
+                                        class="testplus clickable" alt="close">
                                 </button>
                             </span>
                             <span *ngIf="!selectedScreen">
-                                <button placement="bottom" class="editButton" (click)="edit(rowData)">
-                                    <img src="../../../../assets/images/Projects/edit-black.svg" alt="" class="testplus clickable"> </button>
-                                <button *ngIf="!deleteHide" class="editButton" (click)="deleteRow(rowData)">
-                                    <img src="../../../../../assets/images/Projects/delete-black.svg" class="testplus clickable" alt="close">
+                                <button placement="bottom" class="editButton" (click)="editRowBy_Id(rowData)">
+                                    <img src="../../../../assets/images/Projects/edit-black.svg" alt=""
+                                        class="testplus clickable"> </button>
+                                <button *ngIf="show_delete_btn" class="editButton" (click)="deleteRow(rowData)">
+                                    <img src="../../../../../assets/images/Projects/delete-black.svg"
+                                        class="testplus clickable" alt="close">
                                 </button>
                             </span>
-                           </div>
+                        </div>
+                    </span>
+                    <span *ngIf="col.ColumnName == 'action' && screenTable=='projectList'">
+                        <div class="newinntalx">
+                            <a class="clickable text-dark" (click)="viewDetailsbyId(rowData)">
+                                <img src="../../../../../assets/images/Projects/eye-show.svg" class="default-img">
+                                <img src="../../../../../assets/images/Projects/eye-show-blue.svg" class="hover-img">
+                            </a>
+                            <a (click)="deleteRow(rowData)" *ngIf="(!(this.userRoles.includes('System Admin')) && userName==rowData[col.createdBy])
+                            || (this.userRoles.includes('System Admin'))">
+                                <img src="../../../../../assets/images/Projects/delete-black.svg" class="default-img">
+                                <img src="../../../../../assets/images/Projects/delete-red.svg" class="hover-img">
+                            </a>
+                        </div>
+                    </span>
+                    
+                    <span *ngIf="col.ColumnName == 'action' && screenTable =='taskList' && selectedItem != null" class="taskList-table-actions">
+                        <div class="newinntalx" [hidden]="!(rowData.id == selectedItem.id)">
+                            <a class="clickable text-dark" (click)="openWorkSpace(rowData)">
+                                <img src="./../../../../assets/images-n/projects/Open.svg" alt="Open">
+                            </a>
+                            <a class="clickable text-dark" (click)="viewDetailsbyId(rowData)">
+                                <img src="../../../../../assets/images/Projects/eye-show-blue.svg" class="default-img">
+                            </a>
+                            <a (click)="deleteRow(rowData)">
+                                <img src="../../../assets/images-n/common/delete-blue.svg" class="default-img">
+                                <img src="../../../../../assets/images/Projects/delete-red.svg" class="hover-img">
+                            </a>
+                        </div>
                     </span>
                 </td>
             </tr>
         </ng-template>
+
+        <!-- <ng-template pTemplate="body" let-rowData let-columns="columns" *ngIf="screenTable !='common'">
+            <tr>
+                <td *ngFor="let col of columns" [hidden]="!col.ShowGrid">
+                    <span *ngIf="!col.multi">{{rowData[col.ColumnName]}}</span>
+                    <span *ngIf="col.multi">{{rowData[col.multiOptions[0]]}} <br>
+                        <span *ngIf="col.multiOptions[1] == 'priority'"
+                            [ngStyle]="{'color':getColor(rowData[col.multiOptions[1]])}">
+                            {{rowData[col.multiOptions[1]]}} </span>
+                        <span *ngIf="col.multiOptions[1] != 'priority'"> {{rowData[col.multiOptions[1]]}} </span>
+                    </span>
+                    <span *ngIf="col.ColumnName == 'action' && screenTable=='projectList'">
+                        <div class="newinntalx">
+                            <a class="clickable text-dark" (click)="viewDetailsbyId(rowData)">
+                                <img src="../../../../../assets/images/Projects/eye-show.svg" class="default-img">
+                                <img src="../../../../../assets/images/Projects/eye-show-blue.svg" class="hover-img">
+                            </a>
+                            <a (click)="deleteRow(rowData)" *ngIf="(!(this.userRoles.includes('System Admin')) && userName==rowData[col.createdBy])
+                            || (this.userRoles.includes('System Admin'))">
+                                <img src="../../../../../assets/images/Projects/delete-black.svg" class="default-img">
+                                <img src="../../../../../assets/images/Projects/delete-red.svg" class="hover-img">
+                            </a>
+                        </div>
+                    </span>
+                    
+                    <span *ngIf="col.ColumnName == 'action' screenTable =='taskList'" class="taskList-table-actions">
+                        <div class="newinntalx" [hidden]="!(rowData.id == selectedItem.id)">
+                            <a class="clickable text-dark">
+                                <img src="./../../../../assets/images-n/projects/Open.svg" alt="Open">
+                            </a>
+                            <a class="clickable text-dark" (click)="viewDetailsbyId(rowData)">
+                                <img src="../../../../../assets/images/Projects/eye-show-blue.svg" class="default-img">
+                            </a>
+                            <a (click)="deleteRow(rowData)">
+                                <img src="../../../assets/images-n/common/delete-blue.svg" class="default-img">
+                                <img src="../../../../../assets/images/Projects/delete-red.svg" class="hover-img">
+                            </a>
+                        </div>
+                    </span>
+                </td>
+            </tr>
+        </ng-template> -->
         <ng-template pTemplate="emptymessage">
             <tr>
-                <td  style="text-align: center;" colspan="7">No records found</td>
+                <td style="text-align: center;" colspan="7">No records found</td>
             </tr>
         </ng-template>
     </p-table>
@@ -85,7 +175,7 @@
 
 
 
-<div class="" *ngIf="screenTable !='common'">
+<!-- <div class="" *ngIf="screenTable !='common'">
     <p-table #dt1 [value]="table_data" [columns]="selectedColumns" [globalFilterFields]="search_fields" [reorderableColumns]="true" [resizableColumns]="true" responsiveLayout="scroll"  [dataKey]="dataKeyId" selectionMode="single" [(selection)]="selectedItem" [scrollable]="true" >
         <ng-template pTemplate="caption">
             <div class="p-d-flex">
@@ -181,4 +271,4 @@
             </tr>
         </ng-template>
     </p-table>
-</div>
+</div> -->

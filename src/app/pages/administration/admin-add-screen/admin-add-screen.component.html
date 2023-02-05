@@ -108,7 +108,7 @@
         </div>
         <div *ngIf="tablehide && !loading">
           <app-dynamic-table [table_data]="tableData" [screenTable]="'common'" [columns_list]="columns_list"
-            (onEdit)="editColumn($event)" [deleteHide]="true"></app-dynamic-table>
+            (editRowById)="editColumn($event)" [show_delete_btn]="false"></app-dynamic-table>
         </div>
         <div class="col-sm-10 btn-continue">
           <button type="button" class="btn btn-secondary" (click)="backToScreenList()">
