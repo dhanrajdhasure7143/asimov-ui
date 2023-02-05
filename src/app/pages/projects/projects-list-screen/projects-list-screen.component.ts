@@ -49,6 +49,7 @@ export class ProjectsListScreenComponent implements OnInit {
   columns_list: any = [];
   statuses: any[];
   representatives: any = [];
+  table_searchFields:any=[]
 
   _tabsList: any = [
     { tabName: "All", count: "0", img_src: "all-tasks.svg" },
@@ -318,6 +319,7 @@ export class ProjectsListScreenComponent implements OnInit {
       },
     ];
 
+    this.table_searchFields=['type','projectName','priority','process','department','createdDate','lastModifiedBy','updatedDate']
     this.representatives = [{ name: "Project" }, { name: "Program" }];
     this.statuses = [
       { name: "Project", value: "Project" },
@@ -411,8 +413,6 @@ export class ProjectsListScreenComponent implements OnInit {
   }
 
   deleteById(project) {
-    console.log("testing");
-
     var projectdata: any = project;
     let delete_data = [
       {
@@ -447,6 +447,7 @@ export class ProjectsListScreenComponent implements OnInit {
                 "Project Deleted Successfully !!",
                 "success"
               );
+              this.getallProjects(this.userRoles, this.name, this.email);
             } else if (
               response.errorMessage == undefined &&
               response.message == undefined

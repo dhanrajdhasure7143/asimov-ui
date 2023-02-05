@@ -184,6 +184,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   bpmnModeler;
   bpmnModeler1;
   items: MenuItem[];
+  actionsitems: MenuItem[];
   public areas = [
     { size: 50, order: 1 },
     { size: 50, order: 2 },
@@ -206,6 +207,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   selectedRole:any= "All";
   users_tableList:any=[];
   users_tabIndex:any=0;
+  usersTable:any=[];
 
   constructor(private dt: DataTransferService, private route: ActivatedRoute, private dataTransfer: DataTransferService, private rpa: RestApiService,
     private modalService: BsModalService, private formBuilder: FormBuilder, private router: Router,
@@ -213,8 +215,25 @@ export class ProjectDetailsScreenComponent implements OnInit {
     private ngZone: NgZone) { }
 
   ngOnInit() {
-    this.getUsersInfo()
-    this.processOwner = false
+    this.getUsersInfo();
+    this.actionsitems = [
+      {
+        label: 'Tasks',
+        command: () => {
+          this.taskListView();
+        }
+      },
+      {
+        label: 'Users',
+        command: () => {
+          this.openUsersOverlay();
+        }
+      },
+      {
+        label: 'Documents'
+      }
+    ];
+    this.processOwner = false;
     localStorage.setItem('project_id', null);
     localStorage.setItem('bot_id', null);
     $('.link').removeClass('active');
@@ -298,21 +317,21 @@ export class ProjectDetailsScreenComponent implements OnInit {
     });
 
 
-  this.areas = [
-    { size: 50, order: 1 },
-    { size: 50, order: 2 },
-  ];
-  setTimeout(() => {
-    this.splitEl.dragProgress$.subscribe((x) => {
-      this.ngZone.run(() => {
-        this.area_splitSize = x;
-        this.isShowExpand = false;
-        if (x.sizes[1] < 50) {
-          this.splitAreamin_size = "500";
-        }
-      });
-    });
-  }, 1000);
+  // this.areas = [
+  //   { size: 50, order: 1 },
+  //   { size: 50, order: 2 },
+  // ];
+  // setTimeout(() => {
+  //   this.splitEl.dragProgress$.subscribe((x) => {
+  //     this.ngZone.run(() => {
+  //       this.area_splitSize = x;
+  //       this.isShowExpand = false;
+  //       if (x.sizes[1] < 50) {
+  //         this.splitAreamin_size = "500";
+  //       }
+  //     });
+  //   });
+  // }, 1000);
   }
 
 
@@ -940,11 +959,12 @@ export class ProjectDetailsScreenComponent implements OnInit {
     });
   }
 
-  addresources(event) {
+  addresources() {
     let item_data = {
       id: this.projectDetails.id,
       access: "Project",
-      resources: JSON.parse(event),
+      // resources: JSON.parse(event),
+      resources: this.checkBoxselected
     }
     this.spinner.show();
     this.addresourcemodalref.hide();
@@ -955,7 +975,6 @@ export class ProjectDetailsScreenComponent implements OnInit {
         this.getallusers();
         this.removeallchecks();
         this.checktodelete();
-
         Swal.fire("Success", response.status, "success");
       }
       else {
@@ -1892,7 +1911,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
 
   openUsersOverlay() {
     this.hiddenPopUp = true;
-}
+  }
 
 taskListView(){
   this.router.navigate(['/pages/projects/tasks'],{queryParams:{id:this.project_id}});
@@ -1900,20 +1919,20 @@ taskListView(){
 
 minimizeFullScreen() {
   this.isShowExpand = false;
-  this.splitAreamin_size = "200";
-  this.areas = [
-    { size: 50, order: 1 },
-    { size: 50, order: 2 },
-  ];
+  // this.splitAreamin_size = "200";
+  // this.areas = [
+  //   { size: 50, order: 1 },
+  //   { size: 50, order: 2 },
+  // ];
 }
 
 expandFullScreen() {
   this.isShowExpand = true;
-  this.splitAreamin_size = "null";
-  this.areas = [
-    { size: 0, order: 1 },
-    { size: 100, order: 2 },
-  ];
+  // this.splitAreamin_size = "null";
+  // this.areas = [
+  //   { size: 0, order: 1 },
+  //   { size: 100, order: 2 },
+  // ];
 }
 
 onDragEnd(e: { gutterNum: number; sizes: number[] }) {
@@ -1927,10 +1946,9 @@ onDragEnd(e: { gutterNum: number; sizes: number[] }) {
   }
 }
 
-usersTable:any=[]
-
-closeOverlay() {
-    this.hiddenPopUp = false;
+  closeOverlay(event) {
+    console.log(event)
+    this.hiddenPopUp = event;
   }
 
   deleteuserById(event) {}
