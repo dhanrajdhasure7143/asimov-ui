@@ -8,7 +8,7 @@ import { NotifierService } from 'angular-notifier';
 import Swal from 'sweetalert2';
 @Component({
   selector: 'app-create-project-form',
-  templateUrl: './create-project-form.component.html',
+  templateUrl: './create-project-form-new.component.html',
   styleUrls: ['./create-project-form.component.css']
 })
 export class CreateProjectFormComponent implements OnInit {
@@ -45,11 +45,11 @@ export class CreateProjectFormComponent implements OnInit {
       measurableMetrics: ["", Validators.compose([Validators.required, Validators.pattern("^[a-zA-Z0-9_-]*$")])],
       process: ["", Validators.compose([Validators.maxLength(50)])],
       processOwner: [""],
-     
+
       // description: ["", Validators.compose([Validators.maxLength(200)])],
      // access: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      
-      projectPurpose: ["", Validators.compose([Validators.required, Validators.maxLength(150),Validators.pattern("^[a-zA-Z0-9]([._-](?![._-])|[a-zA-Z0-9]){3,18}[a-zA-Z0-9]$")])],
+
+      projectPurpose: ["", Validators.compose([Validators.required, Validators.maxLength(250)])],
       // status: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
 
     })
@@ -73,11 +73,14 @@ export class CreateProjectFormComponent implements OnInit {
       // }
     });
 
-   
+
   }
+  city:any;
 
   ngOnChanges(){
-    this.users_list.forEach((element)=>{  
+    console.log(this.users_list);
+
+    this.users_list.forEach((element)=>{
       if(element.userId.userId!=this.loggedInUserId)
      this.resources_list.push(element)
    });
@@ -97,14 +100,14 @@ export class CreateProjectFormComponent implements OnInit {
       //   {
       //     let userdata=this.users_list.find(userData=>userData.userId.userId==process.ProcessOwner)
       //     if(userdata!=undefined){
-      //       process["processOwnerName"]=userdata.firstName +" "+  userdata.lastName; 
-            
+      //       process["processOwnerName"]=userdata.firstName +" "+  userdata.lastName;
+
       //     }
       //     return process;})]
     })
   }
 
- 
+
   createproject()
   {
     if(this.insertForm2.valid)
@@ -117,8 +120,8 @@ export class CreateProjectFormComponent implements OnInit {
       //this.insertForm2.value.mapValueChain=this.valuechain.find(item=>item.processGrpMasterId==this.insertForm2.value.mapValueChain).processName;
       let data=this.insertForm2.value;
       data["resource"]=data.resource.map(item=>{ return {resource:item}});
-      data["effortsSpent"]=0;      
-      data["projectHealth"]="Good";     
+      data["effortsSpent"]=0;
+      data["projectHealth"]="Good";
       data["projectPercentage"] =0;
       let project=JSON.stringify(data)
       this.oncreate.emit(project);
@@ -126,11 +129,11 @@ export class CreateProjectFormComponent implements OnInit {
   }
   onProcessChange(processId:number)
   {
-    
+
     let process=this.selected_process_names.find(process=>process.processId==processId);
     if(process!=undefined)
     {
-    
+
       let processOwner:any=this.users_list.find(item=>(item.userId.userId==process.ProcessOwner))
       if(processOwner!=undefined)
       {
@@ -144,20 +147,25 @@ export class CreateProjectFormComponent implements OnInit {
     }
   }
 
-  
+  onChange(){
+    console.log(this.insertForm2,"test");
+
+  }
+
+
   resetcreateproject()
   {
         this.insertForm2.reset();
-        
+
         this.insertForm2.get("resource").setValue("");
         this.insertForm2.get("mapValueChain").setValue("");
         this.insertForm2.get("owner").setValue(this.loggedInUserId);
-        
+
         this.insertForm2.get("processOwner").setValue("");
         this.insertForm2.get("initiatives").setValue("");
         this.insertForm2.get("priority").setValue("");
         this.insertForm2.get("process").setValue("");
-        
+
   }
 
 
