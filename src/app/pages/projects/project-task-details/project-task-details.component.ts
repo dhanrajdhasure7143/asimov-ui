@@ -13,23 +13,6 @@ export class ProjectTaskDetailsComponent implements OnInit {
   
   desc: any =
     "Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore neque cumque quo fugiat mollitia quas id earum perferendis ratione repudiandae magni odio nulla eveniet rerum accusamus error, ducimus provident. Est.";
-    customToolbar = [
-      { label: 'Bold', icon: 'pi pi-bold', command: (event) => this.toggleBold() },
-      { label: 'Italic', icon: 'pi pi-italic', command: (event) => this.toggleItalic() },
-      { label: 'Underline', icon: 'pi pi-underline', command: (event) => this.toggleUnderline() }
-    ];
-  
-    toggleBold() {
-      document.execCommand('bold', false, null);
-    }
-  
-    toggleItalic() {
-      document.execCommand('italic', false, null);
-    }
-  
-    toggleUnderline() {
-      document.execCommand('underline', false, null);
-    }
   project_id:any;
   task_details:any={};
   users_list:any;
