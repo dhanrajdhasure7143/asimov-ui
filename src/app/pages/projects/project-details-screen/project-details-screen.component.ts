@@ -185,6 +185,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   bpmnModeler;
   bpmnModeler1;
   items: MenuItem[];
+  actionsitems: MenuItem[];
   public areas = [
     { size: 50, order: 1 },
     { size: 50, order: 2 },
@@ -217,8 +218,25 @@ export class ProjectDetailsScreenComponent implements OnInit {
     private spinner: LoaderService) { }
 
   ngOnInit() {
-    this.getUsersInfo()
-    this.processOwner = false
+    this.getUsersInfo();
+    this.actionsitems = [
+      {
+        label: 'Tasks',
+        command: () => {
+          this.taskListView();
+        }
+      },
+      {
+        label: 'Users',
+        command: () => {
+          this.openUsersOverlay();
+        }
+      },
+      {
+        label: 'Documents'
+      }
+    ];
+    this.processOwner = false;
     localStorage.setItem('project_id', null);
     localStorage.setItem('bot_id', null);
     $('.link').removeClass('active');

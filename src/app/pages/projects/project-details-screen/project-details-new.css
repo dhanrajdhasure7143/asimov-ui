@@ -298,7 +298,7 @@ button.ep-pad {
 
 
   .main-content-head .btn {
-    padding: 0px !important;
+    /* padding: 0px !important; */
     min-width: auto;
 }
 
