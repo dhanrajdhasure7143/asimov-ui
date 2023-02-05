@@ -78,7 +78,6 @@ export class CreateProjectFormComponent implements OnInit {
   city:any;
 
   ngOnChanges(){
-    console.log(this.users_list);
 
     this.users_list.forEach((element)=>{
       if(element.userId.userId!=this.loggedInUserId)
@@ -148,7 +147,6 @@ export class CreateProjectFormComponent implements OnInit {
   }
 
   onChange(){
-    console.log(this.insertForm2,"test");
 
   }
 
