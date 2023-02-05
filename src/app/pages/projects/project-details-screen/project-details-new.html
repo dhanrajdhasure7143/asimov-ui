@@ -203,7 +203,7 @@
                     <div class="row quick-actions">
                         <h6>Quick Actions</h6>
                         <img src="./../../../../assets/images-n/projects/Hand.svg" alt="handicon">
-                        <button class="btn blue-btntext">
+                        <button class="btn blue-btntext" (click)="onCreateTask()">
                             <a><span>Create Task</span></a>
                         </button>
                         <!-- <button class="btn blue-btntext">
@@ -398,3 +398,18 @@
         </div>
     </app-split-overlay>
 </div>
+
+<div [hidden]="!createTaskOverlay">
+    <app-split-overlay (closeOverlay)="closeCreateTaskOverlay($event)">
+        <div class="">
+            <div class="rpa-modal-header">
+              <h3>Create Task</h3>
+            </div>
+            <div class="modal-body actions-mbody actionsoverlay-mbody">
+            <div>
+              <app-create-tasks [users_list]="users_list"></app-create-tasks>
+          </div>
+            </div>
+        </div>
+    </app-split-overlay>
+  </div>

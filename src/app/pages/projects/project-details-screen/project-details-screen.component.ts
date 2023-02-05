@@ -22,6 +22,7 @@ import * as CmmnJS from 'cmmn-js/dist/cmmn-modeler.production.min.js';
 import * as DmnJS from 'dmn-js/dist/dmn-modeler.development.js';
 import {MenuItem} from 'primeng/api';
 import { SplitComponent } from "angular-split";
+import { LoaderService } from 'src/app/services/loader/loader.service';
 
 @Component({
   selector: 'app-project-details-screen',
@@ -207,11 +208,13 @@ export class ProjectDetailsScreenComponent implements OnInit {
   users_tableList:any=[];
   users_tabIndex:any=0;
   usersTable:any=[];
+  createTaskOverlay: boolean = false;
+
+  test="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Modi non totam necessitatibus. Voluptatem labore architecto error quos? Esse doloribus perspiciatis illum nostrum voluptates, aut ducimus assumenda. Magnam sit ut dictaLorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat, deserunt accusamus veritatis itaque iste minima provident quod accusantium maiores adipisci numquam dolorum cupiditate, facilis illum optio cumque debitis odio recusandae.Lorem ipsum dolor sit, amet consectetur adipisicing elit. Temporibus, perferendis porro qui doloremque aspernatur ex quibusdam, numquam error doloribus facilis nobis fuga, cupiditate autem eius vero veritatis. Nemo, accusamus minima."
 
   constructor(private dt: DataTransferService, private route: ActivatedRoute, private dataTransfer: DataTransferService, private rpa: RestApiService,
     private modalService: BsModalService, private formBuilder: FormBuilder, private router: Router,
-    private spinner: NgxSpinnerService,
-    private ngZone: NgZone) { }
+    private spinner: LoaderService) { }
 
   ngOnInit() {
     this.getUsersInfo()
@@ -589,7 +592,8 @@ export class ProjectDetailsScreenComponent implements OnInit {
   }
   this.projectStartDate = moment(this.projectDetails.startDate).format("lll");
   //this.mindate = this.projectStartDate;
-
+  console.log(this.projectDetails);
+  
   if(this.projectDetails){
     ​​​​​​let users:any=[]
     this.projectDetails.resource.forEach(item=>{
@@ -1929,7 +1933,6 @@ onDragEnd(e: { gutterNum: number; sizes: number[] }) {
 }
 
   closeOverlay(event) {
-    console.log(event)
     this.hiddenPopUp = event;
   }
 
@@ -1961,6 +1964,14 @@ onDragEnd(e: { gutterNum: number; sizes: number[] }) {
         { ColumnName: "tasks",DisplayName:"Number of Tasks"},
         { ColumnName: "action",DisplayName:"Actions"},
       ];
+  }
+
+  onCreateTask() {
+    this.createTaskOverlay = true;
+  }
+
+  closeCreateTaskOverlay(event) {
+    this.createTaskOverlay = event;
   }
 
 }
