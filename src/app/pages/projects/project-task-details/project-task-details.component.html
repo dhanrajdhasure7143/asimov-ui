@@ -46,15 +46,15 @@
                                 <!-- <span class="highimp">{{projectDetails.priority}}</span> -->
                             </div>
                             <div class="row">
-                                <div class="col-md-9 pl-0 d-flex align-items-center">
+                                <div class="col pl-0 d-flex align-items-center">
                                     <div class="row">
-                                        <div class="col-md-3 p-0 pinf">
-                                            <p-inplace #inplace1 >
+                                        <div class="col p-0 pinf">
+                                            <p-inplace #inplace1>
                                                 <ng-template pTemplate="display">
                                                     <span class="task-header">{{task_details.taskName}}</span>
                                                 </ng-template>
                                                 <ng-template pTemplate="content">
-                                                    <input type="text" pInputText [(ngModel)]="task_details.taskName"/>
+                                                    <input type="text" [style]="{'width':'30%'}" pInputText [(ngModel)]="task_details.taskName"/>
                                                     <span class="pull-right">
                                                         <i class="pi pi-check"></i>
                                                         <i class="pi pi-times" (click)="inplaceActivate()"></i>
@@ -77,11 +77,15 @@
                                             <span class="">{{task_details.resources| userPipe : users_list}}</span>
                                         </ng-template>
                                         <ng-template pTemplate="content">
-                                            <select [(ngModel)]="task_details.resources" class="form-control rpa-control">
+                                            <!-- <select [(ngModel)]="task_details.resources" class="form-control rpa-control">
                                                 <option value="" disabled hidden>Select Assignee</option>
                                                 <option value="null" disabled >Select Assignee</option>
                                                 <option *ngFor="let user of users_list" [value]="user.userId.userId">{{user.userId.firstName}} {{user.userId.lastName}}</option>
-                                              </select>
+                                              </select> -->
+                                              <p-dropdown [options]="users_list" [filter]="true" [style]="{'width':'100%'}"
+                                                filterBy="user_email,fullName" required [autoDisplayFirst]="false" placeholder="Select Assignee"
+                                                [(ngModel)]="task_details.resources" optionValue="user_email" optionLabel="fullName">
+                                                </p-dropdown>
 
                                             <!-- <p-dropdown [options]="users_list" [(ngModel)]="task_details.resources" optionLabel="name"></p-dropdown> -->
                                             <!-- <input type="text" pInputText [(ngModel)]="task_details.resources"/> -->
@@ -95,7 +99,24 @@
                                     <label>Resource</label>
                                 </div>
                                 <div class="col-md-2 p-0 pinf">
-                                    <p>{{task_details.status}}</p>
+                                    <p-inplace #inplace1 >
+                                        <ng-template pTemplate="display">
+                                            <span >{{task_details.status}}</span>
+                                        </ng-template>
+                                        <ng-template pTemplate="content">
+                                            <select [(ngModel)]="task_details.status" class="form-control data">
+                                                <option value="">Select Status</option>
+                                                <option value="New">New</option>
+                                                <option value="In Progress">In Progress</option>
+                                                <option value="In Review">In Review</option>
+                                                <option value="Done">Done</option>
+                                              </select>
+                                            <span class="pull-right">
+                                                <i class="pi pi-check"></i>
+                                                <i class="pi pi-times" (click)="inplaceActivate()"></i>
+                                            </span>
+                                        </ng-template>
+                                    </p-inplace>
                                     <label>Status</label>
                                 </div>
                                 <div class="col-md-2 p-0 pinf">
@@ -116,7 +137,7 @@
                 </div> -->
             </div>
             <div class="row">
-                <div class="col-md-7">
+                <div class="col-7">
                     <div>
                         <b>Task Description</b> <br>
                         <p-inplace #inplace >
@@ -163,7 +184,7 @@
                         <button mat-raised-button color="primary">Save</button>
                     </div> -->
                 </div> &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
-                <div class="card commentBox">
+                <div class="col card commentBox">
                     <div>
                         <p-tabView>
                             <p-tabPanel header="Comments">
@@ -198,7 +219,7 @@
                                 <div class="addDiv">
                                     <b>Add Comment</b> <br>
                                     <!-- <textarea [rows]="2" [cols]="58" pInputTextarea [autoResize]="true"></textarea> -->
-                                    <textarea [rows]="2" [cols]="66" pInputTextarea></textarea>
+                                    <textarea [rows]="2" [style]="{'width':'100%'}"  pInputTextarea></textarea>
                                     <button type="button" class="btn btn-primary btn-sm" style="float: right;">Add</button>
                                 </div>
                             </p-tabPanel>

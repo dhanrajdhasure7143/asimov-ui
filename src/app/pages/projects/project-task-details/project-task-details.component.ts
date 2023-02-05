@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Inplace } from "primeng/inplace";
+import { DataTransferService } from "../../services/data-transfer.service";
 import { RestApiService } from "../../services/rest-api.service";
 
 @Component({
@@ -10,6 +11,8 @@ import { RestApiService } from "../../services/rest-api.service";
 })
 export class ProjectTaskDetailsComponent implements OnInit {
   @ViewChild("inplace") inplace!: Inplace;
+  @ViewChild("inplace1") inplace1!: Inplace;
+  @ViewChild("inplace2") inplace2!: Inplace;
   
   desc: any =
     "Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore neque cumque quo fugiat mollitia quas id earum perferendis ratione repudiandae magni odio nulla eveniet rerum accusamus error, ducimus provident. Est.";
@@ -21,7 +24,7 @@ export class ProjectTaskDetailsComponent implements OnInit {
 
   constructor(private route : ActivatedRoute,
     private rest_api : RestApiService,
-    private router: Router) {}
+    private router: Router,private dataTransfer : DataTransferService) {}
 
   ngOnInit(): void {
     this.getallusers();
@@ -31,6 +34,8 @@ export class ProjectTaskDetailsComponent implements OnInit {
   inplaceActivate() {
     // this.ip.activate();
     this.inplace.deactivate();
+    this.inplace1.deactivate();
+    this.inplace2.deactivate();
   }
 
   gettask() {
@@ -56,16 +61,20 @@ export class ProjectTaskDetailsComponent implements OnInit {
   }
 
   getallusers() {
-    let tenantid = localStorage.getItem("tenantName");
-    this.rest_api.getuserslist(tenantid).subscribe((response) => {
-      this.users_list = response;
-      this.gettask();
+    this.dataTransfer.tenantBased_UsersList.subscribe((res) => {
+      if (res) {
+        this.users_list = res;
+        this.gettask();
+      }
+    });
       // let user = this.users_list.find(
       //   (item) => item.userId.userId == this.selectedtask.resources
       // );
       // this.taskresourceemail = user.userId.userId;
       // this.getUserRole();
-    });
+
   }
+
+  
 
 }
