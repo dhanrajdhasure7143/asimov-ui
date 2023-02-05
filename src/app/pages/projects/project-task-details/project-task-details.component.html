@@ -1,0 +1,221 @@
+<div class="maincontent">
+    <div class="h-100">
+        <div class="row main-content-head">
+            <div class="col-md-4 pl-0">
+                <h3>
+                    <label id="popup_title">
+                        <a (click)="backToTaskList()"><img src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow"></a>
+                    </label>
+                    <span class="title_text">
+                        Projects | <span class="sub_title_text"> </span>
+                    </span>
+                </h3>
+            </div>
+            <div class="col-md-8 pr-0 text-right">
+                <button class="btn">
+                    <img src="./../../../../assets/images-n/projects/Open.svg" alt="Open">
+                    <!-- <span>Open</span> -->
+                </button>
+                <!-- <button class="btn">
+                    <img src="./../../../../assets/images-n/projects/Attribute.svg" alt="Attributes" >
+                    <span>Attributes</span>
+                </button> -->
+                <!-- <button class="btn">
+                    <img src="./../../../../assets/images-n/projects/more-vertical.svg" alt="Actions" >
+                    <span>Actions</span>
+                </button> -->
+            </div>
+        </div>
+        <div class="main-content-body">
+            <div class="row project-Information">
+                <div class="row project-overview">
+                    <div class="col-md-1 p-0">
+                        <div class="row project-status">
+                            <!-- <img *ngIf="projectDetails.status == 'Closed'" src="./../../../../assets/images-n/projects/completed-tasks.svg" alt="project-status-icon" >
+                            <img *ngIf="projectDetails.status != 'Closed'" src="./../../../../assets/images-n/projects/inprogress-tasks.svg" alt="project-status-icon" >
+                            <p>{{projectDetails.status}}</p> -->
+                            <img src="./../../../../assets/images-n/projects/inprogress-tasks.svg"
+                                alt="project-status-icon">
+                        </div>
+                    </div>
+                    <div class="col-md-11 p-0">
+                        <div class="row project-ninfo">
+                            <div class="row align-items-center">
+                                <!-- <span class="project-name">{{projectDetails.projectName}}</span> -->
+                                <!-- <img src="./../../../../assets/images-n/projects/Warning.svg" alt="importance"> -->
+                                <!-- <span class="highimp">{{projectDetails.priority}}</span> -->
+                            </div>
+                            <div class="row">
+                                <div class="col-md-9 pl-0 d-flex align-items-center">
+                                    <div class="row">
+                                        <div class="col-md-3 p-0 pinf">
+                                            <p-inplace #inplace1 >
+                                                <ng-template pTemplate="display">
+                                                    <span class="task-header">{{task_details.taskName}}</span>
+                                                </ng-template>
+                                                <ng-template pTemplate="content">
+                                                    <input type="text" pInputText [(ngModel)]="task_details.taskName"/>
+                                                    <span class="pull-right">
+                                                        <i class="pi pi-check"></i>
+                                                        <i class="pi pi-times" (click)="inplaceActivate()"></i>
+                                                    </span>
+                                                </ng-template>
+                                            </p-inplace>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2 p-0 pinf">
+                                    <p>{{task_details.createdBy}}</p>
+                                    <label>Assigned By</label>
+                                </div>
+                                <div class="col-md-2 p-0 pinf">
+                                    <!-- <p>{{task_details.resources| userPipe : users_list}}</p> -->
+                                    <p-inplace #inplace2>
+                                        <ng-template pTemplate="display">
+                                            <span class="">{{task_details.resources| userPipe : users_list}}</span>
+                                        </ng-template>
+                                        <ng-template pTemplate="content">
+                                            <select [(ngModel)]="task_details.resources" class="form-control rpa-control">
+                                                <option value="" disabled hidden>Select Assignee</option>
+                                                <option value="null" disabled >Select Assignee</option>
+                                                <option *ngFor="let user of users_list" [value]="user.userId.userId">{{user.userId.firstName}} {{user.userId.lastName}}</option>
+                                              </select>
+
+                                            <!-- <p-dropdown [options]="users_list" [(ngModel)]="task_details.resources" optionLabel="name"></p-dropdown> -->
+                                            <!-- <input type="text" pInputText [(ngModel)]="task_details.resources"/> -->
+                                            <!-- <option *ngFor="let user of users_list" [value]="user.userId.userId">{{user.userId.firstName}} {{user.userId.lastName}}</option> -->
+                                            <span >
+                                                <i class="pi pi-check"></i>
+                                                <i class="pi pi-times" (click)="inplaceActivate()"></i>
+                                            </span>
+                                        </ng-template>
+                                    </p-inplace>
+                                    <label>Resource</label>
+                                </div>
+                                <div class="col-md-2 p-0 pinf">
+                                    <p>{{task_details.status}}</p>
+                                    <label>Status</label>
+                                </div>
+                                <div class="col-md-2 p-0 pinf">
+                                    <p>{{task_details.endDate | date:'MMM dd, y, HH:mm:ss'}}</p>
+                                    <label>Due Date</label>
+                                </div>
+                                <div class="col-md-2 p-0 pinf">
+                                    <p>{{task_details.lastModifiedTimestamp |  date:'MMM dd, y, HH:mm:ss'}}</p>
+                                    <label>Last Updated</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="row project-description">
+                    <label>Description</label>
+                    <p>{{projectDetails.projectPurpose}} <span class="readmore">Read more</span></p>
+                </div> -->
+            </div>
+            <div class="row">
+                <div class="col-md-7">
+                    <div>
+                        <b>Task Description</b> <br>
+                        <p-inplace #inplace >
+                            <ng-template pTemplate="display">
+                                <!-- {{desc}} -->
+                                <div [innerHTML]="desc"></div>
+                            </ng-template>
+                            <ng-template pTemplate="content">
+                                <p-editor [(ngModel)]="desc" [style]="{'height':'225px'}">
+                                    <ng-template pTemplate="header">
+                                        <span class="ql-formats">
+                                            <select class="ql-font"></select>
+                                            <select class="ql-size"></select>
+                                            <button type="button" class="ql-bold" aria-label="Bold"></button>
+                                            <button type="button" class="ql-italic" aria-label="Italic"></button>
+                                            <button type="button" class="ql-underline" aria-label="Underline"></button>
+                                        </span>
+                                    </ng-template>
+                                </p-editor>
+                                <i class="pi pi-check"></i>
+                                <button><i class="pi pi-times" (click)="inplaceActivate()"></i></button>
+                            </ng-template>
+                        </p-inplace>
+                        <!-- <span> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsa incidunt tenetur, nam, aspernatur voluptatum tempore eligendi necessitatibus pariatur reiciendis dolore eum! Ea nobis quas vel, quam nam amet adipisci perspiciatis.
+                        </span> -->
+                        <!-- <textarea [rows]="10" [cols]="103" pInputTextarea>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        </textarea> -->
+                    </div>
+                    <!-- <div class="float-right">
+                        <button mat-raised-button>Cancel</button> &nbsp;&nbsp;
+                        <button mat-raised-button color="primary">Save</button>
+                    </div> -->
+                </div> &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+                <div class="card commentBox">
+                    <div>
+                        <p-tabView>
+                            <p-tabPanel header="Comments">
+                                <div class="comment-content" *ngFor="let item of taskcomments_list ;let i=index">
+                                    <div class="comment-content-subdiv">
+                                        <div class="userimage" *ngIf="(item.createdUserEmail|userImagePipe: users_list)as result">
+                                            <div class="res-circle" *ngIf="result.length==3">
+                                                {{item.createdUserEmail|userImagePipe:users_list}}
+                                            </div>
+                                            <div *ngIf="result.length>3">
+                                                <img class="res-circle-img " src="{{item.createdUserEmail|userImagePipe: users_list}}">
+                                            </div>
+                                        </div>
+                                        <div class="w-100">
+                                            <div class="row d-flex">
+                                                <div class="col-md-10 pl-0 comment-name">
+                                                    {{item.createdBy}} {{item.createdTimestamp | date :'MMM dd, y, HH:mm:ss'}}
+                                                </div>
+                                                <!-- <div class="col-md-2 pr-0 comment-action" *ngIf="i!=commentnumber">
+                                                    <button type="button" (click)="editComments(c.comments,i)">
+                                                        <img src="../../../../assets/images/Projects/edit-black.svg" class="testplus default-img" />
+                                                        <img src="../../../../assets/images/Projects/Edit-blue.svg" class="testplus hover-img" />
+                                                    </button>
+                                                </div> -->
+                                            </div>
+                                            <div class="commentsadded">{{item.comments}}</div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div>
+                                    <b>Add Comment</b> <br>
+                                    <!-- <textarea [rows]="2" [cols]="58" pInputTextarea [autoResize]="true"></textarea> -->
+                                    <textarea [rows]="2" [cols]="66" pInputTextarea></textarea>
+                                    <button type="button" class="btn btn-primary btn-sm" style="float: right;">Add</button>
+                                </div>
+                            </p-tabPanel>
+                            <p-tabPanel header="Audit">
+                                <ul class="historydiv">
+                                    <li *ngFor="let history of taskhistory_list">
+                                        <div class="ET-history">
+                                            <div class="" *ngIf="(history.lastModifiedUserEmail|userImagePipe: users_list)as result">
+                                                <div class="res-circle " *ngIf="result.length==3">
+                                                    {{history.lastModifiedUserEmail|userImagePipe: users_list}}
+                                                </div>
+                                                <!-- <div *ngIf="result.length>3">
+                                                    <img class="res-circle-img" src="{{history.lastModifiedUserEmail|userImagePipe: users_list}}">
+                                                </div> -->
+                                            </div>
+                                            <div class="histcontent">
+                                                {{history.message}}{{history.lastModifiedTimestamp | date:'MMM dd, y, HH:mm:ss'}}
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <div class="text-center" *ngIf="taskhistory_list.length==0">
+                                    <h4><b>No Records Found</b></h4>
+                                </div>
+                                
+                            </p-tabPanel> <br>
+                            
+                        </p-tabView>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

@@ -23,6 +23,7 @@ export class ProjectTaskListComponent implements OnInit {
   users_data: any = [];
   project_details:any;
   projectName:any;
+  task_id:any;
   _tabsList: any = [
     { tabName: "All", count: "0", img_src: "all-tasks.svg" },
     { tabName: "New", count: "0", img_src: "inprogress-tasks.svg" },
@@ -178,7 +179,12 @@ export class ProjectTaskListComponent implements OnInit {
 
   deleteById(event) {}
 
-  viewDetails(event) {}
+  viewDetails(event) {
+    console.log(event)
+    this.router.navigate(["/pages/projects/taskDetails"],{
+      queryParams:{task_id: event.id,project_id:this.project_id}
+    })
+  }
 
   onTabChanged(event, tabView: TabView) {
     const tab = tabView.tabs[event.index].header;
