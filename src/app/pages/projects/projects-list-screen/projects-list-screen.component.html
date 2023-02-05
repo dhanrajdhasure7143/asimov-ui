@@ -89,7 +89,9 @@
           </div>
         </div>
 
-
+        <div *ngIf="isprojectCreateForm">
+          <app-create-project-form [users_list]="users_list"></app-create-project-form>
+        </div>
       </div>
     </div>
   </app-split-overlay>
