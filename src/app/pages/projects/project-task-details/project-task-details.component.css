@@ -364,3 +364,13 @@ button.ep-pad {
   .task-header{
     font-size: 35px;
   }
+  
+.addDiv {
+  position: absolute;
+  z-index: 1;
+  margin-right: 22px;
+}
+.content {
+  height: calc(100vh - 450px);
+  overflow: auto;
+}
