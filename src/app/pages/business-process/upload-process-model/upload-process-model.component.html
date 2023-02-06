@@ -1,7 +1,7 @@
 <div class="module-body bpms-canvas-body">
     <div class="row header_addon bpm-notation-fields">
             <!-- *ngIf="!isfromApprover" -->
-        <div class="col-md-12 p-0" id="bpmnNotationList">
+        <div class="col-md-12 " id="bpmnNotationList">
                 <label class="label-control">Notations</label>
                 <select [(ngModel)]="selected_notation" (change)="displayBPMN()" disableOptionCentering class="form-control">
                     <option value="undefined" disabled hidden>Select Notation</option>
