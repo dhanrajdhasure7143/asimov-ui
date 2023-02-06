@@ -8,6 +8,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 import { PagesComponent } from '../pages.component'
 import Swal from 'sweetalert2';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { TitleCasePipe } from '@angular/common';
 
 @Component({
   selector: 'app-header',
@@ -68,7 +69,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private rest_api: RestApiService,
     private spinner: NgxSpinnerService,
     private jwtHelper: JwtHelperService,private route: ActivatedRoute,
-    @Inject(APP_CONFIG) private config) {
+    @Inject(APP_CONFIG) private config,
+    private titlecasePipe:TitleCasePipe) {
     this.route.queryParams.subscribe(params => {
       if (params['accessToken']) {
         var acToken = params['accessToken']
@@ -318,10 +320,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   getAllUsers(tenantid){
-  this.rest_api.getusername(tenantid).subscribe((res) => {
-    this.dataTransfer.tenantBasedUsersList(res)
+  this.rest_api.getuserslist(tenantid).subscribe((res) => {
+    let data =res
+    data.forEach(element => {
+      element["user_email"]= element.userId.userId
+      element["firstName"]= element.userId.firstName
+      element["lastName"]= element.userId.lastName
+      element["fullName"] = this.titlecasePipe.transform(element.userId.firstName)+' '+this.titlecasePipe.transform(element.userId.lastName)
+    });
+    this.dataTransfer.tenantBasedUsersList(data)
   });
 }
+
 getTenantLists(){
   this.rest_api.getTenantnameslist().subscribe((res) => {
     this.tenantsList = res;

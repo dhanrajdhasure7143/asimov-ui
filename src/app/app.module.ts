@@ -21,6 +21,7 @@ import { UserIdleModule } from 'angular-user-idle';
 import { RedirectionComponent } from './rediraction/redirection.component';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { ToastrModule } from 'ngx-toastr';
+import { TitleCasePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -71,7 +72,8 @@ import { ToastrModule } from 'ngx-toastr';
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     BackendURLProvider,
     GlobalScript,
-    NotifierService
+    NotifierService,
+    TitleCasePipe
   ],
   bootstrap: [AppComponent]
 })

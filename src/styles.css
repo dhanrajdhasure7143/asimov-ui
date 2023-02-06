@@ -2681,7 +2681,7 @@ input.p-inputtext {
   height: 36px;
   border: 1px solid var(--main-bordercolor) !important;
   font-size: var(--main-fontsize) !important;
-  width: 250px !important;
+  /* width: 250px !important; */
 }
 
 /* Tabs NEW Styles Start */
@@ -2935,3 +2935,11 @@ button.custom-popupbtn.mat-button {
   line-height: unset !important;
   width: auto !important;
 } */
+
+.p-card .p-card-body{
+  height: 160px !important;
+}
+
+.p-card .p-card-content {
+  margin-top: 20px !important;
+}
