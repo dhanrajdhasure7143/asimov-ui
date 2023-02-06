@@ -71,25 +71,15 @@
                                     <label>Assigned By</label>
                                 </div>
                                 <div class="col-md-2 p-0 pinf">
-                                    <!-- <p>{{task_details.resources| userPipe : users_list}}</p> -->
                                     <p-inplace #inplace2>
                                         <ng-template pTemplate="display">
                                             <span class="">{{task_details.resources| userPipe : users_list}}</span>
                                         </ng-template>
                                         <ng-template pTemplate="content">
-                                            <!-- <select [(ngModel)]="task_details.resources" class="form-control rpa-control">
-                                                <option value="" disabled hidden>Select Assignee</option>
-                                                <option value="null" disabled >Select Assignee</option>
-                                                <option *ngFor="let user of users_list" [value]="user.userId.userId">{{user.userId.firstName}} {{user.userId.lastName}}</option>
-                                              </select> -->
                                               <p-dropdown [options]="users_list" [filter]="true" [style]="{'width':'100%'}"
                                                 filterBy="user_email,fullName" required [autoDisplayFirst]="false" placeholder="Select Assignee"
                                                 [(ngModel)]="task_details.resources" optionValue="user_email" optionLabel="fullName">
                                                 </p-dropdown>
-
-                                            <!-- <p-dropdown [options]="users_list" [(ngModel)]="task_details.resources" optionLabel="name"></p-dropdown> -->
-                                            <!-- <input type="text" pInputText [(ngModel)]="task_details.resources"/> -->
-                                            <!-- <option *ngFor="let user of users_list" [value]="user.userId.userId">{{user.userId.firstName}} {{user.userId.lastName}}</option> -->
                                             <span >
                                                 <i class="pi pi-check"></i>
                                                 <i class="pi pi-times" (click)="inplaceActivate()"></i>
@@ -105,7 +95,6 @@
                                         </ng-template>
                                         <ng-template pTemplate="content">
                                             <select [(ngModel)]="task_details.status" class="form-control data">
-                                                <option value="">Select Status</option>
                                                 <option value="New">New</option>
                                                 <option value="In Progress">In Progress</option>
                                                 <option value="In Review">In Review</option>
@@ -142,31 +131,16 @@
                         <b>Task Description</b> <br>
                         <p-inplace #inplace >
                             <ng-template pTemplate="display">
-                                <!-- {{desc}} -->
                                 <div [innerHTML]="desc"></div>
                             </ng-template>
                             <ng-template pTemplate="content">
-                                <p-editor [(ngModel)]="desc" [style]="{'height':'225px'}">
+                                <p-editor [(ngModel)]="desc" [style]="{'height':'320px'}">
                                     <ng-template pTemplate="header">
                                         <span class="ql-formats">
-                                            <select class="ql-size"></select>
-                                            <select class="ql-font"></select>
                                             <button type="button" class="ql-bold" aria-label="Bold"></button>
                                             <button type="button" class="ql-italic" aria-label="Italic"></button>
                                             <button type="button" class="ql-underline" aria-label="Underline"></button>
-                                            <span>
-                                                <select class="ql-color"></select>
-                                                <select class="ql-background"></select>
-                                            </span>
                                         </span>
-                                        <span class="ql-formats">
-                                            <button class="ql-list" value="ordered"></button>
-                                            <button class="ql-list" value="bullet"></button>
-                                          </span>
-                                          <span class="ql-formats">
-                                            <button class="ql-direction" value="rtl"></button>
-                                            <select class="ql-align"></select>
-                                          </span>
                                     </ng-template>
                                 </p-editor>
                                 <i class="pi pi-check"></i>
@@ -186,23 +160,27 @@
                 </div> &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
                 <div class="col card commentBox">
                     <div>
-                        <p-tabView>
+                        <p-tabView styleClass="task-details-tabs">
                             <p-tabPanel header="Comments">
                             <div class="content">
-                                <div class="comment-content" *ngFor="let item of taskcomments_list ;let i=index">
-                                    <div class="comment-content-subdiv">
-                                        <div class="userimage" *ngIf="(item.createdUserEmail|userImagePipe: users_list)as result">
-                                            <div class="res-circle" *ngIf="result.length==3">
-                                                {{item.createdUserEmail|userImagePipe:users_list}}
-                                            </div>
-                                            <div *ngIf="result.length>3">
-                                                <img class="res-circle-img " src="{{item.createdUserEmail|userImagePipe: users_list}}">
-                                            </div>
-                                        </div>
-                                        <div class="w-100">
-                                            <div class="row d-flex">
-                                                <div class="col-md-10 pl-0 comment-name">
-                                                    {{item.createdBy}} {{item.createdTimestamp | date :'MMM dd, y, HH:mm:ss'}}
+                                <div class="" *ngFor=" let item of taskcomments_list">
+                                            <div class="row">
+                                                    <div class="col-2 userimage" *ngIf="(item.createdUserEmail|userImagePipe: users_list)as result">
+                                                        <div class="res-circle" *ngIf="result.length == 2">
+                                                            {{item.createdUserEmail|userImagePipe:users_list}}
+                                                        </div>
+                                                        <div *ngIf="result.length>3">
+                                                            <img class="res-circle-img " src="{{item.createdUserEmail|userImagePipe: users_list}}">
+                                                        </div>
+                                                    </div>
+                                                    <!-- <div class="res-circle">
+                                                        {{item.createdUserEmail|userImagePipe:users_list}}
+                                                    </div> -->
+                                                <div class="col-10 pl-0 comment-name">
+                                                   <h5> {{item.createdBy}} </h5>
+                                                    <div>{{item.createdTimestamp | date :'MMM dd, y, HH:mm:ss'}}</div>
+                                                    <!-- {{item.createdBy}} {{item.createdTimestamp | date :'MMM dd, y, HH:mm:ss'}} -->
+                                                    <div class="commentsadded">updated the feed back in map. please review it </div>
                                                 </div>
                                                 <!-- <div class="col-md-2 pr-0 comment-action" *ngIf="i!=commentnumber">
                                                     <button type="button" (click)="editComments(c.comments,i)">
@@ -210,10 +188,8 @@
                                                         <img src="../../../../assets/images/Projects/Edit-blue.svg" class="testplus hover-img" />
                                                     </button>
                                                 </div> -->
+
                                             </div>
-                                            <div class="commentsadded">{{item.comments}}</div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                                 <div class="addDiv">
@@ -227,14 +203,6 @@
                                 <ul class="historydiv">
                                     <li *ngFor="let history of taskhistory_list">
                                         <div class="ET-history">
-                                            <div class="" *ngIf="(history.lastModifiedUserEmail|userImagePipe: users_list)as result">
-                                                <div class="res-circle " *ngIf="result.length==3">
-                                                    {{history.lastModifiedUserEmail|userImagePipe: users_list}}
-                                                </div>
-                                                <!-- <div *ngIf="result.length>3">
-                                                    <img class="res-circle-img" src="{{history.lastModifiedUserEmail|userImagePipe: users_list}}">
-                                                </div> -->
-                                            </div>
                                             <div class="histcontent">
                                                 {{history.message}}{{history.lastModifiedTimestamp | date:'MMM dd, y, HH:mm:ss'}}
                                             </div>
@@ -242,11 +210,23 @@
                                     </li>
                                 </ul>
                                 <div class="text-center" *ngIf="taskhistory_list.length==0">
-                                    <h4><b>No Records Found</b></h4>
+                                    <h5>No Records Found</h5>
                                 </div>
-                                
-                            </p-tabPanel> <br>
-                            
+                            </p-tabPanel>
+                            <p-tabPanel header="Attachements">
+                                <ul class="historydiv">
+                                    <li *ngFor="let history of taskhistory_list">
+                                        <div class="ET-history">
+                                            <div class="histcontent">
+                                                {{history.message}}{{history.lastModifiedTimestamp | date:'MMM dd, y, HH:mm:ss'}}
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <div class="text-center" *ngIf="taskhistory_list.length==0">
+                                    <h5>No Records Found</h5>
+                                </div>
+                            </p-tabPanel>
                         </p-tabView>
                     </div>
                 </div>

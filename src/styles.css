@@ -2935,3 +2935,7 @@ button.custom-popupbtn.mat-button {
   line-height: unset !important;
   width: auto !important;
 } */
+
+.task-details-tabs .p-tabview-nav-container{
+  border-bottom: 1px solid !important;
+}
