@@ -2,20 +2,20 @@
 .createform input,
 .createform select,
 .createform textarea {
-  border: 1px solid #D1D1D1;
+  /* border: 1px solid #D1D1D1; */
   box-shadow: unset !important;
   color: #7B8694 !important;
-  border-radius: 2px;  
+  /* border-radius: 2px;   */
   padding: 6px 10px !important;
 }
 
-.createform input:focus,
+/* .createform input:focus,
 .createform select:focus,
 .createform textarea:focus {
   border-color: #00a0e3 !important;
   color: #001c47 !important;
   background-color: #fff !important;
-}
+} */
 
 .status-good {
   color: green;
@@ -31,8 +31,8 @@
 .createform select.enteredfield-color,
 .createform textarea.enteredfield-color {
   background-color: #ffffff !important;
-  border: 1px solid #D1D1D1;
-  color: #001c47 !important;
+  /* border: 1px solid #D1D1D1; */
+  /* color: #001c47 !important; */
 }
 
 
@@ -41,6 +41,6 @@
   }
   .prj-crt-form {
     margin-right: -15px !important;
-    margin-left: -15px !important;
+    /* margin-left: -15px !important; */
     padding-top: 15px !important;
   }

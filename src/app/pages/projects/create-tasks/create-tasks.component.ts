@@ -1,37 +1,39 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Base64 } from 'js-base64';
 import moment from 'moment';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { LoaderService } from 'src/app/services/loader/loader.service';
 import Swal from 'sweetalert2';
 import { RestApiService } from '../../services/rest-api.service';
-import { ProjectDetailsScreenComponent } from '../project-details-screen/project-details-screen.component';
 @Component({
   selector: 'app-create-tasks',
-  templateUrl: './create-tasks.component.html',
+  templateUrl: './create-tasks-new.component.html',
   styleUrls: ['./create-tasks.component.css']
 })
 export class CreateTasksComponent implements OnInit {
 
+  @Input('users_list') public users_list: any[];
   createtaskForm:FormGroup;
   mindate= moment().format("YYYY-MM-DD");
   maxdate= moment().format("YYYY-MM-DD");
-  userslist: any;
   pi_process_list: any;
   bpm_process_list: any;
   bot_list: any;
   projectdetails: Object;
   taskcategories: Object;
   task_categoriesList: any;
-  approverslist: any=[];
+  approverslist: any[]=[];
   project_id:number;
   taskDescriptionFlag: boolean = false;
   freetrail: string;
   _priority:any[]=["High","Medium","Low"];
   optionValue:any;
-  constructor(private formBuilder: FormBuilder,private spinner:NgxSpinnerService,private api:RestApiService,
+  emptyList:any[]=[];
+
+  constructor(private formBuilder: FormBuilder,private spinner:LoaderService,private api:RestApiService,
     private router: Router, private route:ActivatedRoute) { }
 
   ngOnInit() {
@@ -44,7 +46,7 @@ export class CreateTasksComponent implements OnInit {
       correlationID: [""],
       taskName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       timeEstimate: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      endDate: [""], 
+      endDate: [""],
       approvers: ["",Validators.compose([Validators.maxLength(50)])],
       description: ["", Validators.compose([Validators.maxLength(200)])],
       })
@@ -53,8 +55,8 @@ export class CreateTasksComponent implements OnInit {
 
       this.route.queryParams.subscribe(data=>{
         let response:any=data;
-        this.project_id=response.project_id
-        this.getallusers();
+        this.project_id=response.id
+        // this.getallusers();
         this.getTaskCategories();
         this.getTaskCategoriesByProject();
         this.getallpiprocess();
@@ -76,7 +78,19 @@ export class CreateTasksComponent implements OnInit {
     let temp =numArray.includes(event.key); //gives true or false
    if(!temp){
     event.preventDefault();
-   } 
+   }
+  }
+
+  ngOnChanges(changes:SimpleChanges){
+    if(changes.users_list && this.users_list.length>0){
+      for (let index = 0; index < this.users_list.length; index++) {
+        let user=this.users_list[index]
+        if(user.roleID.displayName==="Process Architect"){
+        const element = user;
+        this.approverslist.push(element);
+      }
+      }
+    }
   }
 
   savetasks()
@@ -107,20 +121,20 @@ export class CreateTasksComponent implements OnInit {
           confirmButtonText: 'Ok'
       }).then((result) => {
         this.resettask();
-        
+
         this.router.navigate(['/pages/projects/projectdetails'],{queryParams:{id:this.project_id}})
         //this.projectdetailscreen.getTaskandCommentsData();
-      }) 
-        
+      })
+
       }
       else
       Swal.fire("Error",response.message,"error");
-      
+
     })
   }
 
-  getallbpmprocess(){
-    this.api.getprocessnames().subscribe(data =>{
+  async getallbpmprocess(){
+   await this.api.getprocessnames().subscribe(data =>{
       let response:any=data;
       let resp:any="";
     resp=response.filter(item=>item.status=="APPROVED");
@@ -135,17 +149,22 @@ export class CreateTasksComponent implements OnInit {
     })
   }
 
-  getallbots(){
-    this.api.getAllActiveBots().subscribe(data =>{
+  async getallbots(){
+   await this.api.getAllActiveBots().subscribe(data =>{
       let response:any=data;
      this.bot_list=response.sort((a,b) => (a.botName.toLowerCase() > b.botName.toLowerCase() ) ? 1 : ((b.botName.toLowerCase() > a.botName.toLowerCase() ) ? -1 : 0));
+     this.spinner.hide();
+    })
+
+    await this.api.getTaskCategories().subscribe(data =>{
+      this.taskcategories=data
     })
   }
 
   getTaskCategories(){
-    this.api.getTaskCategories().subscribe(data =>{
-      this.taskcategories=data
-    })
+    // this.api.getTaskCategories().subscribe(data =>{
+    //   this.taskcategories=data
+    // })
   }
 
   getallusers()
@@ -154,9 +173,9 @@ export class CreateTasksComponent implements OnInit {
     this.api.getuserslist(tenantid).subscribe(item=>{
       let users:any=item
      // this.userslist=users.sort((a,b) => (a.userId.firstName.toLowerCase() > b.userId.firstName.toLowerCase() ) ? 1 : ((b.userId.firstName.toLowerCase() > a.userId.firstName.toLowerCase() ) ? -1 : 0));
-     this.userslist=users;
-      for (let index = 0; index < this.userslist.length; index++) {
-        let user=this.userslist[index]
+     this.users_list=users;
+      for (let index = 0; index < this.users_list.length; index++) {
+        let user=this.users_list[index]
         if(user.roleID.displayName==="Process Architect"){
         const element = user;
         this.approverslist.push(element)
@@ -165,7 +184,7 @@ export class CreateTasksComponent implements OnInit {
       this.spinner.hide();
     })
   }
-  
+
   resettask(){
     this.createtaskForm.reset();
     this.createtaskForm.get("taskCategory").setValue("");
@@ -189,9 +208,10 @@ export class CreateTasksComponent implements OnInit {
     this.api.getProjectDetailsById(this.project_id).subscribe(response=>{
       // this.maxdate=response.endDate;
       this.maxdate = moment(response.endDate).format("YYYY-MM-DD")
-     
+
   })
 }
+
 taskDescriptionMaxLength(value){
   if(value.length > 150){
   this.taskDescriptionFlag = true;
@@ -199,10 +219,10 @@ taskDescriptionMaxLength(value){
     this.taskDescriptionFlag = false;
   }
    }
-   
+
    getTaskCategoriesByProject(){
     this.api.getTaskCategoriesByProject(this.project_id).subscribe(res=>{this.task_categoriesList = res
     })
-    
+
    }
 }
