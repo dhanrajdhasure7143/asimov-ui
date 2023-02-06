@@ -70,7 +70,7 @@ span.highimp {
 }
 .project-description p {
     margin: 0px;
-    width: 75%;
+    /* width: 75%; */
     font-size: 16px;
 }
 .project-description span.readmore {

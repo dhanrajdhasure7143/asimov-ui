@@ -22,6 +22,7 @@ import * as CmmnJS from 'cmmn-js/dist/cmmn-modeler.production.min.js';
 import * as DmnJS from 'dmn-js/dist/dmn-modeler.development.js';
 import {MenuItem} from 'primeng/api';
 import { SplitComponent } from "angular-split";
+import { LoaderService } from 'src/app/services/loader/loader.service';
 
 @Component({
   selector: 'app-project-details-screen',
@@ -168,7 +169,6 @@ export class ProjectDetailsScreenComponent implements OnInit {
   selected_questionId: number;
   selectedAnswerUpdate: any;
   businessDetails: any = [];
-  loggedUserData:any;
   isOpenedState : number =0;
   selectedQuestionEdit:number;
   selectedQuestionUpdate:any;
@@ -208,14 +208,22 @@ export class ProjectDetailsScreenComponent implements OnInit {
   users_tableList:any=[];
   users_tabIndex:any=0;
   usersTable:any=[];
+  createTaskOverlay: boolean = false;
+  isReadmoreShow: boolean = false;
+  non_existUsers:any[]=[];
+
 
   constructor(private dt: DataTransferService, private route: ActivatedRoute, private dataTransfer: DataTransferService, private rpa: RestApiService,
     private modalService: BsModalService, private formBuilder: FormBuilder, private router: Router,
-    private spinner: NgxSpinnerService,
-    private ngZone: NgZone) { }
+    private spinner: LoaderService) {
+      this.route.queryParams.subscribe(data=>{​​​​​​
+        let paramsdata:any=data
+        this.project_id=paramsdata.id
+      });
+     }
 
   ngOnInit() {
-    this.getUsersInfo();
+    this.getallusers();
     this.actionsitems = [
       {
         label: 'Tasks',
@@ -265,8 +273,6 @@ export class ProjectDetailsScreenComponent implements OnInit {
       description: ["", Validators.compose([Validators.required, Validators.maxLength(200)])],
       uploadFile: ["", Validators.compose([Validators.required])],
     })
-    this.dt.changeParentModule({ "route": "/pages/projects/projects-list-screen", "title": "Projects" });
-    this.dt.changeChildModule(undefined);
 
     this.userRole = localStorage.getItem("userRole");
     this.userName = localStorage.getItem("firstName") + " " + localStorage.getItem("lastName");
@@ -294,11 +300,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
       }
     })
 
-
-    this.getallusers();
-    this.projectdetails();
     this.getallprocesses();
-
     setTimeout(() => {
       this.getImage();
       this.profileName();
@@ -310,28 +312,6 @@ export class ProjectDetailsScreenComponent implements OnInit {
     this.getInitiatives();
     this.Resourcedeleteflag = false;
     this.freetrail = localStorage.getItem("freetrail")
-
-    this.dataTransfer.logged_userData.subscribe(res=>{
-      if(res)
-      this.loggedUserData = res
-    });
-
-
-  // this.areas = [
-  //   { size: 50, order: 1 },
-  //   { size: 50, order: 2 },
-  // ];
-  // setTimeout(() => {
-  //   this.splitEl.dragProgress$.subscribe((x) => {
-  //     this.ngZone.run(() => {
-  //       this.area_splitSize = x;
-  //       this.isShowExpand = false;
-  //       if (x.sizes[1] < 50) {
-  //         this.splitAreamin_size = "500";
-  //       }
-  //     });
-  //   });
-  // }, 1000);
   }
 
 
@@ -457,15 +437,11 @@ export class ProjectDetailsScreenComponent implements OnInit {
       responseArray.forEach(e => {
         if (e.requestTo == loggedUser || e.requestFrom == loggedUser) {
           this.filterdArray.push(e)
-
         }
         this.dataSource5 = new MatTableDataSource(this.filterdArray);
         this.dataSource5.sort = this.sort13;
       })
-
-
     })
-
   }
 
   getreducedValue(value) {
@@ -591,14 +567,11 @@ export class ProjectDetailsScreenComponent implements OnInit {
   }
 
 
-  projectdetails(){​​​​​​
-    const userid=localStorage.getItem('ProfileuserId');
-  this.spinner.show()
-  this.route.queryParams.subscribe(data=>{​​​​​​
-  let paramsdata:any=data
-  this.project_id=paramsdata.id
-  this.editdata=false;
-  this.rpa.getProjectDetailsById(paramsdata.id).subscribe( res=>{​​​​​​
+  getProjectdetails(){​​​​​​
+  this.spinner.show();
+  this.existingUsersList = [];
+  this.non_existUsers = [];
+  this.rpa.getProjectDetailsById(this.project_id).subscribe( res=>{​​​​​​
   this.projectDetails=res
   this.processownername = this.projectDetails.processOwner
   this.processOwnerFlag=false
@@ -606,78 +579,41 @@ export class ProjectDetailsScreenComponent implements OnInit {
     this.projectenddate=moment(this.projectDetails.endDate).format("lll");
   }
   this.projectStartDate = moment(this.projectDetails.startDate).format("lll");
-  //this.mindate = this.projectStartDate;
-
-  if(this.projectDetails){
-    ​​​​​​let users:any=[]
-    this.projectDetails.resource.forEach(item=>{
-      this.users_list.forEach(item2=>{
-        if(item2.userId.userId == item.resource){
-          users.push(item2)
+  
+  ​​
+  //this.project_id=this.projectDetails.id
+  if(this.projectDetails.resource.length!=0){
+    // this.projectDetails.resource.forEach(item => {
+    //   this.users_list.forEach(item2 => {
+    //     console.log(item)
+    //     console.log(item2)
+    //     if (item2.user_email == item.resource) {
+    //       this.existingUsersList.push(item2)
+    //     }else{
+    //       this.non_existUsers.push(item2)
+    //     }
+    //   })
+    // })
+    this.projectDetails.resource.forEach(item => {
+      this.users_list.forEach(item2 => {
+        if (item2.user_email == item.resource) {
+          this.existingUsersList.push(item2)
+        // }else{
+        //   this.non_existUsers.push(item2)
         }
       })
-        // if(this.users_list.find(item2=>item2.userId.userId==item.resource)!=undefined)
-        //   users.push(this.users_list.find(item2=>item2.userId.userId==item.resource))
-  })
-  this.resources_list=users
-  if(this.resources_list.length>0){
-    this.Resourcecheckeddisabled= false;
-  } else {
-    this.Resourcecheckeddisabled = true;
+    })
+    // this.onUsersTab(0);
+  }else{
+    this.existingUsersList=[];
+    this.non_existUsers = this.users_list;
+    // this.onUsersTab(0);
   }
-  let users_updateddata=users
-  this.resourceslength=users.length
-  users_updateddata.forEach(element => {
-    element["firstName"]=element.userId.firstName
-    element["lastName"]=element.userId.lastName
-    element["displayName"]=element.roleID.displayName
-    element["user_Id"]=element.userId.userId
-  });
-  this.existingUsersList = users_updateddata;
-    this.dataSource6= new MatTableDataSource(users_updateddata);
-    setTimeout(() => {
-      this.dataSource6.sort=this.sort14;
-      this.dataSource6.paginator=this.paginator104;
-    }, 500);
-    this.spinner.hide()
-  this.getTaskandCommentsData();
-    this.getLatestFiveAttachments(this.project_id);
-  let usr_name=this.projectDetails.owner.split('@')[0].split('.');
-  // this.owner_letters=usr_name[0].charAt(0)+usr_name[1].charAt(0);
-  if(usr_name.length > 1){
-    this.owner_letters=usr_name[0].charAt(0)+usr_name[1].charAt(0);
-    }else{
-      this.owner_letters=usr_name[0].charAt(0);
-    }
-
-  }​​​​​​
-
-  //this.project_id=this.projectDetails.id
-  let users:any=[]
-  if(this.projectDetails.resource.length!=0){​​​​​​
-  // this.projectDetails.resource.forEach(item=>{​​​​​​
-  // users.push(item.resource)
-  //  }​​​​​​)
-  this.resources=users
-
-  this.loginresourcecheck=this.resources.find(item2=>item2==userid);
-
-  }​​​​​​
-  else{​​​​​​
-  this.resources=this.users_list
-
-  }​​​​​​ 
-  }​​​​​​)
-  
+  this.spinner.hide();
+})
   this.getTaskandCommentsData();
   this.getLatestFiveAttachments(this.project_id)
-  paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsdata.programId;
-  }​​​​​​);
-
   }
-  ​​​​​​
-
-
   profileName() {
     setTimeout(() => {
       this.firstname = this.resourcetablefirstname;
@@ -735,50 +671,45 @@ export class ProjectDetailsScreenComponent implements OnInit {
 
 
   getallusers() {
-    let tenantid = localStorage.getItem("tenantName");
-    this.rpa.getuserslist(tenantid).subscribe(response => {
-      this.users_list = response;
-      this.userslist = this.users_list.filter(x => x.user_role_status == 'ACTIVE')
-      let users: any = [];
-      this.users_list.forEach(item2 => {
-        item2["firstName"] = item2.userId.firstName
-        item2["lastName"] = item2.userId.lastName
-        item2["displayName"] = item2.roleID.displayName
-        item2["user_Id"] = item2.userId.userId
-        item2["user_name"] = item2.userId.firstName+' '+item2.userId.lastName
-      })
-      this.projectDetails.resource.forEach(item => {
-        this.users_list.forEach(item2 => {
-          if (item2.userId.userId == item.resource) {
-            users.push(item2)
-          }
-        })
-        // if(this.users_list.find(item2=>item2.userId.userId==item.resource)!=undefined)
-        //   users.push(this.users_list.find(item2=>item2.userId.userId==item.resource))
-      })
-      this.resources_list = users;
-      if (this.resources_list.length > 0) {
-        this.Resourcecheckeddisabled = false;
-      } else {
-        this.Resourcecheckeddisabled = true;
+    this.spinner.show();
+    this.dt.tenantBased_UsersList.subscribe(response => {
+      console.log(response)
+      let usersDatausers_list:any[] = [];
+      if(response)
+        usersDatausers_list = response;
+      if(usersDatausers_list.length>0){
+      this.getProjectdetails();
+      this.users_list = usersDatausers_list.filter(x => x.user_role_status == 'ACTIVE')
       }
-      let users_updateddata = users
-      this.resourceslength = users.length;
+      // this.users_list.forEach(item2 => {
+      //   item2["firstName"] = item2.userId.firstName
+      //   item2["lastName"] = item2.userId.lastName
+      //   item2["displayName"] = item2.roleID.displayName
+      //   item2["user_Id"] = item2.userId.userId
+      //   item2["user_name"] = item2.userId.firstName+' '+item2.userId.lastName
+      // })
 
-      users_updateddata.forEach(element => {
-        element["firstName"] = element.userId.firstName
-        element["lastName"] = element.userId.lastName
-        element["displayName"] = element.roleID.displayName
-        element["user_Id"] = element.userId.userId
-        element["user_name"] = element.userId.firstName+' '+element.userId.lastName
-      });
-      this.onUsersTab(0);
-    console.log(this.users_list)
-    this.existingUsersList = users_updateddata;
-      this.dataSource6 = new MatTableDataSource(users_updateddata);
-      this.dataSource6.sort = this.sort14;
-      this.spinner.hide();
-      this.dataSource6.paginator = this.paginator104;
+      // this.resources_list = users;
+      // if (this.resources_list.length > 0) {
+      //   this.Resourcecheckeddisabled = false;
+      // } else {
+      //   this.Resourcecheckeddisabled = true;
+      // }
+      // let users_updateddata = users
+      // this.resourceslength = users.length;
+
+      // users_updateddata.forEach(element => {
+      //   element["firstName"] = element.userId.firstName
+      //   element["lastName"] = element.userId.lastName
+      //   element["displayName"] = element.roleID.displayName
+      //   element["user_Id"] = element.userId.userId
+      //   element["user_name"] = element.userId.firstName+' '+element.userId.lastName
+      // });
+    // console.log(this.users_list)
+    // this.existingUsersList = users_updateddata;
+      // this.dataSource6 = new MatTableDataSource(users_updateddata);
+      // this.dataSource6.sort = this.sort14;
+      // this.dataSource6.paginator = this.paginator104;
       // this.getTaskandCommentsData();
       this.getLatestFiveAttachments(this.project_id);
     })
@@ -960,22 +891,26 @@ export class ProjectDetailsScreenComponent implements OnInit {
   }
 
   addresources() {
+    let usersArray=[]
+    this.checkBoxselected.forEach(e=>{
+      usersArray.push(e.user_email)
+    })
     let item_data = {
       id: this.projectDetails.id,
       access: "Project",
       // resources: JSON.parse(event),
-      resources: this.checkBoxselected
+      resources: usersArray
     }
     this.spinner.show();
-    this.addresourcemodalref.hide();
+    // this.addresourcemodalref.hide();
     this.rpa.addresourcebyid(item_data).subscribe(data => {
       let response: any = data;
       if (response.errorMessage == undefined) {
-        this.projectdetails();
-        this.getallusers();
-        this.removeallchecks();
+        this.getProjectdetails();
         this.checktodelete();
         Swal.fire("Success", response.status, "success");
+        this.checkBoxselected =[];
+        this.onUsersTab(0);
       }
       else {
         Swal.fire("Error", response.errorMessage, "error");
@@ -1012,13 +947,19 @@ export class ProjectDetailsScreenComponent implements OnInit {
   //   this.router.navigate(['/pages/projects/projectdetails',project])
   // }
 
-  deleteresource() {
-    const selectedresource = this.resources_list.filter(product => product.checked == true).map(p => {
-      return {
-        "projectId": this.project_id,
-        "resource": p.userId.userId
-      }
-    });
+  deleteuserById(row) {
+    // const selectedresource = this.resources_list.filter(product => product.checked == true).map(p => {
+    //   return {
+    //     "projectId": this.project_id,
+    //     "resource": p.userId.userId
+    //   }
+    // });
+    const selectedresource = [
+          {
+            "projectId": this.project_id,
+            "resource": row.user_email
+          }
+    ]
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -1031,10 +972,8 @@ export class ProjectDetailsScreenComponent implements OnInit {
       if (result.value) {
         this.spinner.show();
         this.rpa.deleteResource(selectedresource).subscribe(res => {
-          let status: any = res;
           Swal.fire({
             title: 'Success',
-            // text: "" + status.message,
             text: "Resource Deleted Successfully !",
             position: 'center',
             icon: 'success',
@@ -1043,9 +982,10 @@ export class ProjectDetailsScreenComponent implements OnInit {
             cancelButtonColor: '#d33',
             confirmButtonText: 'Ok'
           })
-          this.projectdetails();
-          this.getallusers();
-          this.removeallchecks();
+          this.getProjectdetails();
+          this.onUsersTab(1);
+          // this.getallusers();
+          // this.removeallchecks();
           this.checktodelete();
 
         }, err => {
@@ -1062,8 +1002,6 @@ export class ProjectDetailsScreenComponent implements OnInit {
 
   addresource(createmodal) {
     this.addresourcemodalref = this.modalService.show(createmodal, { class: "modal-lr" })
-    // this.getallusers();
-    // this.projectdetails();
   }
 
 
@@ -1167,7 +1105,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
         Swal.fire("Success", "Project Updated Successfully !!", "success")
       else
         Swal.fire("Error", response.errorMessage, "error");
-      this.projectdetails()
+      this.getProjectdetails()
       this.editdata = false;
     });
   }
@@ -1238,24 +1176,11 @@ export class ProjectDetailsScreenComponent implements OnInit {
     }
   }
 
-  getUsersInfo() {
-    this.sub = this.dataTransfer.logged_userData.subscribe(res => {
-      if (res) {
-        let tenantid = res.tenantID;
-        if (res.tenantID)
-          //this.sub.unsubscribe();
-          this.rpa.getusername(tenantid).subscribe(res => {
-            this.users_data = res;
-          })
-      }
-    });
-  }
-
   getUserName(event) {
     var userName;
-    this.users_data.forEach(element => {
-      if (element.userId == event) {
-        userName = element.firstName + " " + element.lastName
+    this.users_list.forEach(element => {
+      if (element.user_email == event) {
+        userName = element.fullName
       }
     });
     return userName;
@@ -1911,6 +1836,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
 
   openUsersOverlay() {
     this.hiddenPopUp = true;
+    this.onUsersTab(0);
   }
 
 taskListView(){
@@ -1947,19 +1873,15 @@ onDragEnd(e: { gutterNum: number; sizes: number[] }) {
 }
 
   closeOverlay(event) {
-    console.log(event)
     this.hiddenPopUp = event;
   }
 
-  deleteuserById(event) {}
-
-
   onChangeRole(event){
     if(event.value.code == 'All') {
-    this.users_tableList = this.users_list
+    this.users_tableList = this.non_existUsers
     return
     }
-    this.users_tableList = this.users_list.filter(item => (item.displayName == event.value.code))
+    this.users_tableList = this.non_existUsers.filter(item => (item.displayName == event.value.code))
   }
 
   onUsersTab(index){
@@ -1967,18 +1889,36 @@ onDragEnd(e: { gutterNum: number; sizes: number[] }) {
     if(index == 0) {
       this.users_tableList = this.users_list
       this.columns_list = [
-        {ColumnName: "user_name"},
-        { ColumnName: "displayName"},
+        {ColumnName: "fullName"},
+        { ColumnName: "user_role"},
       ];
       return
       }
       this.users_tableList = this.existingUsersList
       this.columns_list = [
-        {ColumnName: "user_name",DisplayName:"Users Onboarded"},
-        { ColumnName: "displayName",DisplayName:"Role"},
+        {ColumnName: "fullName",DisplayName:"Users Onboarded"},
+        { ColumnName: "user_role",DisplayName:"Role"},
         { ColumnName: "tasks",DisplayName:"Number of Tasks"},
         { ColumnName: "action",DisplayName:"Actions"},
       ];
+  }
+
+  onCreateTask() {
+    this.createTaskOverlay = true;
+  }
+
+  closeCreateTaskOverlay(event) {
+    this.createTaskOverlay = event;
+  }
+
+  fitDescr(data){
+    if(data && data.length > 150)
+      return data.substr(0,150)+'...';
+    return data;
+  }
+
+  onReadMoreHide(){
+    this.isReadmoreShow = ! this.isReadmoreShow
   }
 
 }
