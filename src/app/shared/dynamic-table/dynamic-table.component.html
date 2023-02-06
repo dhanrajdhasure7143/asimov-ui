@@ -8,7 +8,7 @@
                 <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
                 <span class="p-input-icon-right">
                     <i class="pi pi-search"></i>
-                    <input type="text" pInputText placeholder="Search" class="p-inputtext-lg" style="width:auto" (input)="dt1.filterGlobal($event.target.value, 'contains')" >
+                    <input type="text" pInputText placeholder="Search" class="p-inputtext" (input)="dt1.filterGlobal($event.target.value, 'contains')" >
                 </span>
             </div>
         </ng-template>
@@ -94,7 +94,7 @@
                 <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
                 <span class="p-input-icon-right">
                     <i class="pi pi-search"></i>
-                    <input type="text" pInputText placeholder="Search" class="p-inputtext-lg" style="width:auto" (input)="dt1.filterGlobal($event.target.value, 'contains')" >
+                    <input type="text" pInputText placeholder="Search" class="p-inputtext" (input)="dt1.filterGlobal($event.target.value, 'contains')" >
                 </span>
             </div>
         </ng-template>
@@ -103,8 +103,11 @@
                 <th *ngFor="let col of columns" pReorderableColumn pResizableColumn pSortableColumn="{{col.ColumnName}}" [hidden]="!col.ShowGrid">{{col.DisplayName}}
                     <p-columnFilter *ngIf="col.ShowFilter && col.filterWidget == 'multiSelect'" field="representative" matchMode="in" display="menu" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false">
                         <ng-template pTemplate="header">
-                            <div class="p-px-3 p-pt-3 p-pb-0">
+                            <!-- <div class="p-px-3 p-pt-3 p-pb-0">
                                 <span class="p-text-bold">Type</span>
+                            </div> -->
+                            <div class="px-3 pt-3 pb-0">
+                                <span class="font-bold">Type</span>
                             </div>
                         </ng-template>
                         <ng-template pTemplate="filter" let-value let-filter="filterCallback">
@@ -134,14 +137,14 @@
                     </span>
                     <span *ngIf="col.ColumnName == 'action'">
                         <div class="newinntalx">
-                            <a class="clickable text-dark" (click)="viewDetailsbyId(rowData)" matTooltip="Go To Details">
-                              <img src="../../../../../assets/images/Projects/eye-show.svg" class="default-img">
-                              <img src="../../../../../assets/images/Projects/eye-show-blue.svg" class="hover-img">
+                            <a class="" (click)="viewDetailsbyId(rowData)" matTooltip="Go To Details">
+                              <img src="../../../../../assets/images/Projects/eye-show.svg" alt="view" class="default-img">
+                              <!-- <img src="../../../../../assets/images/Projects/eye-show-blue.svg" class="hover-img"> -->
                             </a>
                             <a (click)="deleteRow(rowData)" *ngIf="(!(this.userRoles.includes('System Admin')) && userName==rowData[col.createdBy])
                             || (this.userRoles.includes('System Admin'))" matTooltip="Delete Project">
-                           <img src="../../../../../assets/images/Projects/delete-black.svg" class="default-img">
-                           <img src="../../../../../assets/images/Projects/delete-red.svg" class="hover-img">
+                           <img src="../../../../../assets/images/Projects/delete-black.svg" alt="delete" class="default-img">
+                           <!-- <img src="../../../../../assets/images/Projects/delete-red.svg" class="hover-img"> -->
                          </a>
                            </div>
                     </span>

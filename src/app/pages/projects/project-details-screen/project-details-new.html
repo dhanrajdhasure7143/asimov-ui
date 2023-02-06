@@ -166,7 +166,7 @@
                                         </div>
                                         <div class="qcard-info">
                                             <label class="qcard-count">02</label>
-                                            <p class="qcard-name">Users Onboarded</p>
+                                            <p class="qcard-name">Users</p>
                                         </div>
                                     </div>
                                 </div>
@@ -344,9 +344,7 @@
                                         (onChange)="onChangeRole($event)" optionLabel="name"></p-dropdown>
                                     <span class="p-input-icon-right">
                                         <i class="pi pi-search"></i>
-                                        <input type="text" pInputText placeholder="Search" class="p-inputtext-lg"
-                                            style="width:auto"
-                                            (input)="dt1.filterGlobal($event.target.value, 'contains')">
+                                        <input type="text" pInputText placeholder="Search" (input)="dt1.filterGlobal($event.target.value, 'contains')">
                                     </span>
                                     <span *ngIf="users_tabIndex == 1">
                                         <button class="btn">
