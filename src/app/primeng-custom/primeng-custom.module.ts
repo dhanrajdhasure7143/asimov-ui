@@ -26,6 +26,7 @@ import {FileUploadModule} from 'primeng/fileupload';
 import { TreeModule } from 'primeng/tree';
 import {RadioButtonModule} from 'primeng/radiobutton';
 import {InputTextareaModule} from 'primeng/inputtextarea';
+import {ImageModule} from 'primeng/image';
 
 
 
@@ -81,7 +82,9 @@ import {InputTextareaModule} from 'primeng/inputtextarea';
     InputTextModule,
     TreeModule,
     RadioButtonModule,
-    InputTextareaModule
+    InputTextareaModule,
+    MessageModule,
+    ImageModule
   ]
 })
 export class PrimengCustomModule { }
