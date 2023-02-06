@@ -139,17 +139,7 @@ export class ProjectsDocumentComponent implements OnInit {
           { key: "5-2", label: "Document 2", icon: "pi pi-file", data: "Document" },
           { key: "5-3", label: "Document 3", icon: "pi pi-file", data: "Document" },
         ],
-      },
-      {
-        key: "6",
-        label: "New Folder",
-        data: "Movies Folder",
-        expandedIcon: "pi pi-folder-open",
-        collapsedIcon: "pi pi-folder",
-        children: [
-          { key: "6-0", label: "Create File", icon: "pi pi-file", data: "Document" },
-        ],
-      },
+      }
     ];
     this.folder_files = this.files
   }
