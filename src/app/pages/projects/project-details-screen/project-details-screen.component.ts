@@ -237,9 +237,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
           this.openUsersOverlay();
         }
       },
-      {
-        label: 'Documents'
-      }
+      {label: 'Documents', command: () => {this.openDocumentScreen();}}
     ];
     this.processOwner = false;
     localStorage.setItem('project_id', null);
@@ -1921,4 +1919,7 @@ onDragEnd(e: { gutterNum: number; sizes: number[] }) {
     this.isReadmoreShow = ! this.isReadmoreShow
   }
 
+  openDocumentScreen(){
+    this.router.navigate(['/pages/projects/document'],{queryParams:{id:this.project_id}});
+  }
 }
