@@ -288,11 +288,10 @@
                             </div>
                         </div>
                         <div class="row collabottom">
-                            <input type="text" class="msgip" placeholder=""
+                            <input type="text" class="msgip" placeholder="" [(ngModel)]="typedMessage"
                                 value="Lorem ipsum dolor sit amet, consec" />
                             <!-- <button class="btn"><img alt="attachment" src="./../../../../assets/images-n/projects/paperclip.svg" /></button> -->
-                            <button class="btn"><img alt="send"
-                                    src="./../../../../assets/images-n/projects/send.svg" /></button>
+                            <button class="btn" (click)="sendMessage()"><img alt="send" src="./../../../../assets/images-n/projects/send.svg" /></button>
                         </div>
                     </div>
 

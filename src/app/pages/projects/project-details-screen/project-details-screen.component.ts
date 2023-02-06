@@ -22,7 +22,8 @@ import * as CmmnJS from 'cmmn-js/dist/cmmn-modeler.production.min.js';
 import * as DmnJS from 'dmn-js/dist/dmn-modeler.development.js';
 import {MenuItem} from 'primeng/api';
 import { SplitComponent } from "angular-split";
-
+import * as Stomp from 'stompjs';
+import * as SockJS from 'sockjs-client';
 @Component({
   selector: 'app-project-details-screen',
   templateUrl: './project-details-new.html',
@@ -32,7 +33,6 @@ export class ProjectDetailsScreenComponent implements OnInit {
   projects_toggle: Boolean = false;
   projectData: any;
   projectDetails: any={};
-
   lastname: string;
   firstname: string;
   firstletter: string;
@@ -52,7 +52,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   categaoriesList: any;
   selected_process_names: any;
   att:any;
-
+  typedMessage:any;
   displayedColumns: string[] = ["taskCategory", "taskName", "resources", "status", "percentageComplete", "lastModifiedTimestamp", "lastModifiedBy", "createdBy", "action"];
   dataSource6: MatTableDataSource<any>;
   displayedColumns6: string[] = ["check", "firstName", "displayName", "user_Id", "last_active"];
@@ -209,6 +209,8 @@ export class ProjectDetailsScreenComponent implements OnInit {
   users_tabIndex:any=0;
   usersTable:any=[];
 
+  stompClient;
+  messages:any[];
   constructor(private dt: DataTransferService, private route: ActivatedRoute, private dataTransfer: DataTransferService, private rpa: RestApiService,
     private modalService: BsModalService, private formBuilder: FormBuilder, private router: Router,
     private spinner: NgxSpinnerService,
@@ -293,7 +295,13 @@ export class ProjectDetailsScreenComponent implements OnInit {
         });
       }
     })
-
+    this.route.queryParams.subscribe((params:any)=>{
+      this.connectToWebSocket();
+      // this.rpa.getProjectMessages(params.id).subscribe((messages: any[]) => {
+      //   console.log(messages)
+      //   this.messages = messages;
+      // });
+    });
 
     this.getallusers();
     this.projectdetails();
@@ -598,6 +606,16 @@ export class ProjectDetailsScreenComponent implements OnInit {
   let paramsdata:any=data
   this.project_id=paramsdata.id
   this.editdata=false;
+  // this.stompClient = this.stompService.subscribe('/topic/public');
+  //   this.stompClient.map((message: any) => {
+  //     return JSON.parse(message.body);
+  //   }).subscribe((message: any) => {
+  //     this.messages.push(message);
+  //   });
+
+    // this.rpa.getProjectMessages(paramsdata).subscribe((messages: any[]) => {
+    //   this.messages = messages;
+    // });
   this.rpa.getProjectDetailsById(paramsdata.id).subscribe( res=>{​​​​​​
   this.projectDetails=res
   this.processownername = this.projectDetails.processOwner
@@ -1980,5 +1998,38 @@ onDragEnd(e: { gutterNum: number; sizes: number[] }) {
         { ColumnName: "action",DisplayName:"Actions"},
       ];
   }
+
+
+  connectToWebSocket() {
+    console.log("Initialize WebSocket Connection");
+    let ws = new SockJS("http://localhost:8080/projectChat");
+    this.stompClient = Stomp.over(ws);
+    const _this = this;
+    _this.stompClient.connect({}, function (frame) {
+        _this.stompClient.subscribe("/topic/messages", function (sdkEvent) {
+            console.log(sdkEvent)
+          
+        });
+        _this.stompClient.reconnect_delay = 2000;
+    },(err)=>{
+      console.log(err)
+    });
+};
+
+
+  sendMessage() {
+    let message={
+      userId:localStorage.getItem("ProfileuserId"),
+      message:this.typedMessage,
+      projectId:this.project_id,
+      rmid:0,
+      firstName:localStorage.getItem("firstName"),
+      lastName:localStorage.getItem("lastName"),
+    }
+    console.log("calling logout api via web socket");
+    console.log(message)
+    this.stompClient.send("/app/send", {}, JSON.stringify(message));
+}
+
 
 }
