@@ -2953,3 +2953,11 @@ button.custom-popupbtn.mat-button {
   line-height: unset !important;
   width: auto !important;
 } */
+
+.p-card .p-card-body{
+  height: 160px !important;
+}
+
+.p-card .p-card-content {
+  margin-top: 20px !important;
+}

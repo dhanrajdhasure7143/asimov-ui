@@ -70,7 +70,7 @@ span.highimp {
 }
 .project-description p {
     margin: 0px;
-    width: 75%;
+    /* width: 75%; */
     font-size: 16px;
 }
 .project-description span.readmore {
@@ -321,9 +321,6 @@ button.ep-pad {
     z-index: 1040;
   }
   
-  .right_split {
-    background-color: white !important;
-  }
   .dynamic-forms-modal{
     padding-left: 60px !important;
     margin-top: 52px !important;
@@ -334,9 +331,7 @@ button.ep-pad {
    box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%) !important;
  }
 
- .right_split .rpa-modal-close img.expandsvgimg {
-    margin-right: 10px;
-  }
+
   .modal-body.actions-mbody {
     height: calc(100% - 135px);
     overflow: hidden auto;

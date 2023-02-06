@@ -1,7 +1,6 @@
-import { Component, Inject, OnInit, ViewChild } from "@angular/core";
+import { Component, Inject, NgZone, OnInit, ViewChild } from "@angular/core";
 
 import { DataTransferService } from "../../services/data-transfer.service";
-import { NgxSpinnerService } from "ngx-spinner";
 import { RestApiService } from "../../services/rest-api.service";
 import Swal from "sweetalert2";
 import { Router } from "@angular/router";
@@ -50,7 +49,7 @@ export class ProjectsListScreenComponent implements OnInit {
   statuses: any[];
   representatives: any = [];
   table_searchFields:any=[]
-
+  hiddenPopUp:boolean = false;
   _tabsList: any = [
     { tabName: "All", count: "0", img_src: "all-tasks.svg" },
     { tabName: "Pipeline", count: "0", img_src: "inprogress-tasks.svg" },
@@ -59,13 +58,15 @@ export class ProjectsListScreenComponent implements OnInit {
     { tabName: "On Hold", count: "0", img_src: "inreview-tasks.svg" },
     { tabName: "Closed", count: "0", img_src: "completed-tasks.svg" },
   ];
+  isprojectCreateForm: boolean =false;
+
 
   constructor(
     private dt: DataTransferService,
     private api: RestApiService,
     private spinner: LoaderService,
     private router: Router,
-    @Inject(APP_CONFIG) private config
+    @Inject(APP_CONFIG) private config,
   ) {}
 
   ngOnInit() {
@@ -93,7 +94,8 @@ export class ProjectsListScreenComponent implements OnInit {
       localStorage.getItem("lastName");
     this.email = localStorage.getItem("ProfileuserId");
     this.getallProjects(this.userRoles, this.name, this.email);
-    this.getallusers();
+    // this.getallusers();
+    this.getUsersList()
     this.getallprocesses();
     this.freetrail = localStorage.getItem("freetrail");
   }
@@ -102,6 +104,7 @@ export class ProjectsListScreenComponent implements OnInit {
     this.api.getAllProjects(roles, name, email).subscribe((res) => {
       let response: any = res;
       this.projectsresponse = response;
+      console.log(response)
       this.all_projectslist = [
         ...response[0].map((data) => {
           return {
@@ -215,7 +218,7 @@ export class ProjectsListScreenComponent implements OnInit {
         b = new Date(b.createdDate);
         return a > b ? -1 : a < b ? 1 : 0;
       });
-      
+
       this.projects_list = this.all_projectslist;
 
       this._tabsList.forEach((element) => {
@@ -228,7 +231,7 @@ export class ProjectsListScreenComponent implements OnInit {
         }
       });
     });
-    
+
 
     this.columns_list = [
       {
@@ -478,4 +481,28 @@ export class ProjectsListScreenComponent implements OnInit {
     const headerValue = tabView.tabs[event.index].header;
     console.log(headerValue)
    }
+
+  closeOverlay(event) {
+    console.log(event)
+    this.hiddenPopUp = event;
+    this.isprojectCreateForm = false;
+  }
+
+  onCreateNew(){
+    this.hiddenPopUp = true;
+    this.isprojectCreateForm = false;
+  }
+
+  onClikCreateProject(){
+    this.isprojectCreateForm =true;
+  }
+
+  getUsersList() {
+    this.dt.tenantBased_UsersList.subscribe((res) => {
+      if (res) {
+        this.users_list = res;
+      }
+    });
+  }
+
 }
