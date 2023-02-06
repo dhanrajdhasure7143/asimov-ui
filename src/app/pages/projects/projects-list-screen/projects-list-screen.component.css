@@ -5,3 +5,33 @@
 .status-img > img {
   height: 40px !important;
 }
+
+.bgcolor{
+  /* background-color: #fff; */
+/* background-color: #f5f5f5; */
+background-color:#f5f5f5;
+padding-top: 10px;
+
+/* #f9f9f9 */
+}
+.prjoverlay
+{
+    /* width: 100%; */
+    min-height: 74vh;;
+
+    width: 160px;
+    height: 160px;
+
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.imgg{
+  /* display: flex; */
+  justify-content: center;
+    align-items: center;
+    height: 200px;
+    width:250px ;
+}
