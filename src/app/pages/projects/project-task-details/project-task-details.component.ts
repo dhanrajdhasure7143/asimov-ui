@@ -22,12 +22,17 @@ export class ProjectTaskDetailsComponent implements OnInit {
     "Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore neque cumque quo fugiat mollitia quas id earum perferendis ratione repudiandae magni odio nulla eveniet rerum accusamus error, ducimus provident. Est.";
   project_id: any;
   task_details: any = {};
+  selected_task_details: any = {};
   users_list: any[] = [];
   taskcomments_list: any[] = [];
   taskhistory_list: any[] = [];
   date1: Date;
   status: Status[];
   selectedCity: Status;
+  taskName:any;
+  edit_task_field:any;
+  edit_resource_field:any;
+  edit_status_field:any;
 
   constructor(
     private route: ActivatedRoute,
@@ -48,14 +53,6 @@ export class ProjectTaskDetailsComponent implements OnInit {
     this.getallusers();
   }
 
-  inplaceActivate() {
-    // this.ip.activate();
-    this.inplace.deactivate();
-    this.inplace1.deactivate();
-    this.inplace2.deactivate();
-    this.inplace3.deactivate();
-  }
-
   gettask() {
     this.route.queryParams.subscribe((data) => {
       let params: any = data;
@@ -66,6 +63,7 @@ export class ProjectTaskDetailsComponent implements OnInit {
         .subscribe((response) => {
           let taskList: any = response;
           this.task_details = taskList.find((item) => item.id == data.task_id);
+          // this.selected_task_details = taskList.find((item) => item.id == data.task_id);
           console.log(this.task_details);
           this.taskcomments_list = this.task_details.comments;
           this.taskhistory_list = this.task_details.history;
@@ -94,5 +92,45 @@ export class ProjectTaskDetailsComponent implements OnInit {
     // );
     // this.taskresourceemail = user.userId.userId;
     // this.getUserRole();
+  }
+
+  onDeactivate() {
+    console.log(this.task_details);
+    // this.ip.activate();
+    this.inplace.deactivate();
+    this.inplace1.deactivate();
+    this.inplace2.deactivate();
+    this.inplace3.deactivate();
+  }
+
+  inplaceActivateTaskName(){
+    console.log("test")
+    this.edit_task_field = this.task_details.taskName 
+    // e.deactivate();
+  }
+
+  onUpdateTaskName(){
+    this.task_details.taskName = this.edit_task_field
+    this.inplace.deactivate();
+  }
+
+  inplaceActivateResource(){
+    this.edit_resource_field = this.task_details.resources 
+
+  }
+
+  onUpdateResourceDetails(){
+    this.task_details.resources = this.edit_resource_field
+    this.inplace.deactivate();
+  }
+
+  inplaceActivateStatus(){
+    this.edit_status_field = this.task_details.status 
+
+  }
+
+  onUpdateStatusDetails(){
+    this.task_details.status = this.edit_status_field
+    this.inplace.deactivate();
   }
 }

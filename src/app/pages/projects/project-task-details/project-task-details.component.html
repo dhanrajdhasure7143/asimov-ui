@@ -49,15 +49,15 @@
                                 <div class="col pl-0 d-flex align-items-center">
                                     <div class="row">
                                         <div class="col p-0 pinf">
-                                            <p-inplace #inplace>
+                                            <p-inplace #inplace (onActivate)="inplaceActivateTaskName()">
                                                 <ng-template pTemplate="display">
                                                     <span class="task-header">{{task_details.taskName}}</span>
                                                 </ng-template>
                                                 <ng-template pTemplate="content">
-                                                    <input type="text" [style]="{'width':'30%'}" pInputText [(ngModel)]="task_details.taskName"/>
+                                                    <input type="text" [style]="{'width':'30%'}" pInputText [(ngModel)]="edit_task_field"/>
                                                     <span class="pull-right">
-                                                        <i class="pi pi-check"></i>
-                                                        <i class="pi pi-times" (click)="inplaceActivate()"></i>
+                                                        <i class="pi pi-check" (click)="onUpdateTaskName()"></i>
+                                                        <i class="pi pi-times" (click)="onDeactivate()"></i>
                                                     </span>
                                                 </ng-template>
                                             </p-inplace>
@@ -71,39 +71,33 @@
                                     <label>Assigned By</label>
                                 </div>
                                 <div class="col-md-2 p-0 pinf">
-                                    <p-inplace #inplace1>
+                                    <p-inplace #inplace1 (onActivate)="inplaceActivateResource()">
                                         <ng-template pTemplate="display">
                                             <span class="">{{task_details.resources| userPipe : users_list}}</span>
                                         </ng-template>
                                         <ng-template pTemplate="content">
                                               <p-dropdown [options]="users_list" [filter]="true" [style]="{'width':'100%'}"
                                                 filterBy="user_email,fullName" required [autoDisplayFirst]="false" placeholder="Select Assignee"
-                                                [(ngModel)]="task_details.resources" optionValue="user_email" optionLabel="fullName">
+                                                [(ngModel)]="edit_resource_field" optionValue="user_email" optionLabel="fullName">
                                                 </p-dropdown>
                                             <span >
-                                                <i class="pi pi-check"></i>
-                                                <i class="pi pi-times" (click)="inplaceActivate()"></i>
+                                                <i class="pi pi-check" (click)="onUpdateResourceDetails()"></i>
+                                                <i class="pi pi-times" (click)="onDeactivate()"></i>
                                             </span>
                                         </ng-template>
                                     </p-inplace>
                                     <label>Resource</label>
                                 </div>
                                 <div class="col-md-2 p-0 pinf">
-                                    <p-inplace #inplace2 >
+                                    <p-inplace #inplace2 (onActivate)="inplaceActivateStatus()">
                                         <ng-template pTemplate="display">
                                             <span >{{task_details.status}}</span>
                                         </ng-template>
                                         <ng-template pTemplate="content">
-                                            <p-dropdown [options]="status" [(ngModel)]="task_details.status" optionLabel="name"></p-dropdown>
-                                            <!-- <select [(ngModel)]="task_details.status" class="form-control data">
-                                                <option value="New">New</option>
-                                                <option value="In Progress">In Progress</option>
-                                                <option value="In Review">In Review</option>
-                                                <option value="Done">Done</option>
-                                              </select> -->
+                                            <p-dropdown [options]="status" [(ngModel)]="edit_status_field" required optionLabel="name" optionValue="name" ></p-dropdown>
                                             <span class="pull-right">
-                                                <i class="pi pi-check"></i>
-                                                <i class="pi pi-times" (click)="inplaceActivate()"></i>
+                                                <i class="pi pi-check" (click)="onUpdateStatusDetails()"></i>
+                                                <i class="pi pi-times" (click)="onDeactivate()"></i>
                                             </span>
                                         </ng-template>
                                     </p-inplace>
@@ -150,7 +144,7 @@
                                     </ng-template>
                                 </p-editor>
                                 <i class="pi pi-check"></i>
-                                <button><i class="pi pi-times" (click)="inplaceActivate()"></i></button>
+                                <button><i class="pi pi-times" (click)="onDeactivate()"></i></button>
                             </ng-template>
                         </p-inplace>
                         <!-- <span> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsa incidunt tenetur, nam, aspernatur voluptatum tempore eligendi necessitatibus pariatur reiciendis dolore eum! Ea nobis quas vel, quam nam amet adipisci perspiciatis.
