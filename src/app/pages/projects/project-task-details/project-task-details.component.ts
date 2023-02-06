@@ -5,6 +5,9 @@ import { LoaderService } from "src/app/services/loader/loader.service";
 import { DataTransferService } from "../../services/data-transfer.service";
 import { RestApiService } from "../../services/rest-api.service";
 
+interface Status {
+  name: string,
+}
 @Component({
   selector: "app-project-task-details",
   templateUrl: "./project-task-details.component.html",
@@ -14,6 +17,7 @@ export class ProjectTaskDetailsComponent implements OnInit {
   @ViewChild("inplace") inplace!: Inplace;
   @ViewChild("inplace1") inplace1!: Inplace;
   @ViewChild("inplace2") inplace2!: Inplace;
+  @ViewChild("inplace3") inplace3!: Inplace;
   desc: any =
     "Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore neque cumque quo fugiat mollitia quas id earum perferendis ratione repudiandae magni odio nulla eveniet rerum accusamus error, ducimus provident. Est.";
   project_id: any;
@@ -21,6 +25,9 @@ export class ProjectTaskDetailsComponent implements OnInit {
   users_list: any[] = [];
   taskcomments_list: any[] = [];
   taskhistory_list: any[] = [];
+  date1: Date;
+  status: Status[];
+  selectedCity: Status;
 
   constructor(
     private route: ActivatedRoute,
@@ -28,9 +35,16 @@ export class ProjectTaskDetailsComponent implements OnInit {
     private router: Router,
     private dataTransfer: DataTransferService,
     private spinner: LoaderService
-  ) {}
+  ) {
+    this.status = [
+    {name: 'New'},
+    {name: 'In Progress'},
+    {name: 'In Review'},
+    {name: 'Done'},
+];}
 
   ngOnInit(): void {
+    let today = new Date();
     this.getallusers();
   }
 
@@ -39,6 +53,7 @@ export class ProjectTaskDetailsComponent implements OnInit {
     this.inplace.deactivate();
     this.inplace1.deactivate();
     this.inplace2.deactivate();
+    this.inplace3.deactivate();
   }
 
   gettask() {
