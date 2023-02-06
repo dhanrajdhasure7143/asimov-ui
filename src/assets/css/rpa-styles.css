@@ -247,7 +247,7 @@ padding-bottom: 70px;
   /* The Close Button */
   .rpa-modal-close {
     float: right;
-    line-height: 35px;
+    /* line-height: 35px; */
   }
   
   .rpa-modal-close img {

@@ -999,7 +999,8 @@ mat-panel-title.mat-expansion-panel-header-title {
   height: calc(100vh - 155px);
 }
 .propertiesContainer.propertiesContainerClosed.canvas2propcontainer {
-  top: 68px;
+  /* top: 68px; */
+  top: 85px;
   height: calc(100vh - 155px);
 }
 .canvas2 .bjs-powered-by {
