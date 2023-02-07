@@ -1,5 +1,6 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, TemplateRef, ViewChild } from "@angular/core";
 import { TreeNode } from "primeng/api";
+import { RestApiService } from "src/app/pages/services/rest-api.service";
 
 @Component({
   selector: "app-projects-document",
@@ -7,7 +8,7 @@ import { TreeNode } from "primeng/api";
   styleUrls: ["./projects-document.component.css"],
 })
 export class ProjectsDocumentComponent implements OnInit {
-  files: TreeNode[];
+  files: any[];
   createFolderPopUP: boolean = false;
   hiddenPopUp1: boolean = false;
   createTreeFolderOverlay: boolean = false;
@@ -15,7 +16,7 @@ export class ProjectsDocumentComponent implements OnInit {
   isDialog: boolean = false;
   isDialog1: boolean = false;
   entered_folder_name: any;
-  selectedFile: TreeNode;
+  selectedFile: any;
   text: string;
   folder_name: any;
   isDialogBox: boolean = false;
@@ -26,15 +27,18 @@ export class ProjectsDocumentComponent implements OnInit {
     key :"",
     label: "",
     data: "Movies Folder",
-    expandedIcon: "pi pi-folder-open",
-    collapsedIcon: "pi pi-folder",
+    expandedIcon: "fas fa-folder-open",
+    collapsedIcon: "fas fa-folder",
   };
   folder_files:any=[];
-  selectedFolder: TreeNode
+  selectedFolder: any;
   selectedItem:any;
+  @ViewChild('op', {static: false}) model;
+  isDialog2:boolean = false;
+  term:any;
 
 
-  constructor() {}
+  constructor(private rest_api : RestApiService) {}
 
   ngOnInit(): void {
     this.files = [
@@ -59,8 +63,8 @@ export class ProjectsDocumentComponent implements OnInit {
             expandedIcon: "fas fa-folder-open",
             collapsedIcon: "fas fa-folder",
           },
-          { key: "1-1", label: "Document 1", icon: "fa fa-file-word-o", data: "Document" },
-          { key: "1-2", label: "Document 2", icon: "fa fa-file-word-o", data: "Document" },
+          { key: "1-1", label: "Document 1", icon: "pi pi-file", data: "Document" },
+          { key: "1-2", label: "Document 2", icon: "pi pi-file", data: "Document" },
           { key: "1-3", label: "Document 3", icon: "pi pi-file", data: "Document" },
         ],
       },
@@ -144,7 +148,7 @@ export class ProjectsDocumentComponent implements OnInit {
     this.folder_files = this.files
   }
 
-  saveFolder() {
+  treeChildSave() {
     if (this.selectedFile && this.entered_folder_name) {
       let object = { ...{}, ...this.sampleNode_object };
       object.label = this.entered_folder_name;
@@ -155,8 +159,8 @@ export class ProjectsDocumentComponent implements OnInit {
           key: this.selectedFile.parent.key + "-" + objectKey + "-0" ,
           label: "Add Folder / Document",
           data: "Work Folder",
-          expandedIcon: "pi pi-folder-open",
-          collapsedIcon: "pi pi-folder",
+          expandedIcon: "fas fa-folder-open",
+          collapsedIcon: "fas fa-folder",
         },
       ]
       this.selectedFile.parent.children.push(object);
@@ -166,6 +170,9 @@ export class ProjectsDocumentComponent implements OnInit {
   }
 
   nodeSelect(item) {
+    // this.model.toggle();
+    // this.model.show();
+
     this.selectedItem = item;
     if(this.selectedItem.node.label =="Add Folder / Document" || this.selectedItem.node.label =="Add Folder"){
       this.createTreeFolderOverlay = true;
@@ -175,7 +182,7 @@ export class ProjectsDocumentComponent implements OnInit {
       if(this.selectedItem.node.label =="Add Folder")
       return this.hiddenPopUp1 = false;
     }else{
-      console.log(item,"open Doc")
+      // console.log(item,"open Doc")
     }
 
     // if (item.node.label == "Add Folder") {
@@ -248,15 +255,14 @@ export class ProjectsDocumentComponent implements OnInit {
         key: this.selectedFolder.key + "-" + objectKey + "-0" ,
         label: "Add Folder / Document",
         data: "Work Folder",
-        expandedIcon: "pi pi-folder-open",
-        collapsedIcon: "pi pi-folder",
+        expandedIcon: "fas fa-folder-open",
+        collapsedIcon: "fas fa-folder",
       }
     ]
     console.log("object",object)
     this.selectedFolder.children.push(object);
     this.entered_folder_name = "";
     this.isDialog1 = false;
-    console.log(this.files)
   }
 }
 
@@ -265,15 +271,15 @@ addParent() {
     key: String(this.files.length),
     label: this.folder_name,
     data: "Movies Folder",
-    expandedIcon: "pi pi-folder-open",
-    collapsedIcon: "pi pi-folder-open",
+    expandedIcon: "fas fa-folder-open",
+    collapsedIcon: "fas fa-folder",
     children: [
       {
         key: String(this.files.length)+"-0" ,
         label: "Add Folder / Document",
         data: "Work Folder",
-        expandedIcon: "pi pi-folder-open",
-        collapsedIcon: "pi pi-folder",
+        expandedIcon: "fas fa-folder-open",
+        collapsedIcon: "fas fa-folder",
       },
     ],
   });
@@ -308,5 +314,28 @@ addParent() {
   closeOverlay(event){
     this.createFolderPopUP = event;
     this.createTreeFolderOverlay = event;
+  }
+
+  nodeUnselect(){
+    console.log("testing")
+  }
+
+  onNodeClick(event,node){
+    // console.log(node)
+    this.model.hide();
+    if(node.label != "Add Folder" && node.label != "Add Folder / Document"){
+      setTimeout(() => {
+        this.model.show(event)
+        }, 200);
+    }
+  }
+
+  onFolderRename(){
+    this.isDialog2 = true;
+    this.entered_folder_name = this.selectedItem.node.label
+  }
+
+  saveRenameFolder(){
+
   }
 }

@@ -59,6 +59,7 @@ import { PrimengCustomModule } from 'src/app/primeng-custom/primeng-custom.modul
 import { ProjectTaskDetailsComponent } from './project-task-details/project-task-details.component';
 
 import { ProjectsDocumentComponent } from './project-details-screen/projects-document/projects-document.component';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 const materialModules: any[] = [
     
@@ -99,6 +100,7 @@ const materialModules: any[] = [
     SharedModule,
     AngularSplitModule.forRoot(),
     PrimengCustomModule,
+    Ng2SearchPipeModule
   ],
   providers:[
     BsModalRef, NotifierService,

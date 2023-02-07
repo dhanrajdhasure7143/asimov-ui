@@ -212,20 +212,21 @@ export class ProjectDetailsScreenComponent implements OnInit {
   createTaskOverlay: boolean = false;
   isReadmoreShow: boolean = false;
   non_existUsers:any[]=[];
-
-
   stompClient;
   messages:any[];
+  
   constructor(private dt: DataTransferService, private route: ActivatedRoute, private dataTransfer: DataTransferService, private rpa: RestApiService,
     private modalService: BsModalService, private formBuilder: FormBuilder, private router: Router,
     private spinner: LoaderService) {
       this.route.queryParams.subscribe(data=>{​​​​​​
         let paramsdata:any=data
-        this.project_id=paramsdata.id
+        this.project_id = paramsdata.project_id
+        console.log(this.project_id)
         this.connectToWebSocket();
       });
 
      }
+     
 
   ngOnInit() {
     this.getallusers();
