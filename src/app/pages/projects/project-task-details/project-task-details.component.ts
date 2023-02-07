@@ -29,11 +29,17 @@ export class ProjectTaskDetailsComponent implements OnInit {
   taskhistory_list: any[] = [];
   date1: Date;
   status: Status[];
+  attached_list:any=[];
+  checkBoxselected:any[]=[];
+  columns_list:any;
   selectedCity: Status;
   taskName:any;
   edit_task_field:any;
   edit_resource_field:any;
   edit_status_field:any;
+  hiddenPopUp:boolean = false;
+  isprojectCreateForm: boolean =false;
+
 
   constructor(
     private route: ActivatedRoute,
@@ -123,7 +129,7 @@ export class ProjectTaskDetailsComponent implements OnInit {
 
   onUpdateResourceDetails(){
     this.task_details.resources = this.edit_resource_field
-    this.inplace.deactivate();
+    this.inplace1.deactivate();
   }
 
   inplaceActivateStatus(){
@@ -133,6 +139,29 @@ export class ProjectTaskDetailsComponent implements OnInit {
 
   onUpdateStatusDetails(){
     this.task_details.status = this.edit_status_field
-    this.inplace.deactivate();
+    this.inplace2.deactivate();
+  }
+
+  closeOverlay(event) {
+    console.log(event)
+    this.hiddenPopUp = event;
+    this.isprojectCreateForm = false;
+  }
+
+  taskAttachments(){
+    this.hiddenPopUp = true;
+    this.isprojectCreateForm = false;
+    this.columns_list = [
+      {ColumnName: "fullName",DisplayName:"Document Name"},
+      { ColumnName: "user_role",DisplayName:"Attached Date"},
+      { ColumnName: "actions",DisplayName:"Actions"},
+    ];
+  }
+
+  onClikCreateProject(){
+    
+  }
+  deleteuserById(rowData){
+
   }
 }

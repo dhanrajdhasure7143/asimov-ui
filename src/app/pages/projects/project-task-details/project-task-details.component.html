@@ -13,7 +13,8 @@
             </div>
             <div class="col-md-8 pr-0 text-right">
                 <button class="btn">
-                    <img src="./../../../../assets/images-n/projects/Open.svg" alt="Open">
+                    <img src="./../../../../assets/images-n/projects/Open.svg" alt="Open"> &nbsp;&nbsp;
+                    <i class="pi pi-paperclip" (click)="taskAttachments()"></i>
                     <!-- <span>Open</span> -->
                 </button>
                 <!-- <button class="btn">
@@ -166,12 +167,12 @@
                                 <div class="" *ngFor=" let item of taskcomments_list">
                                             <div class="row">
                                                     <div class="col-2 userimage" *ngIf="(item.createdUserEmail|userImagePipe: users_list)as result">
-                                                        <div class="res-circle" *ngIf="result.length == 2">
+                                                        <!-- <div class="res-circle" *ngIf="result.length == 2">
                                                             {{item.createdUserEmail|userImagePipe:users_list}}
                                                         </div>
                                                         <div *ngIf="result.length>3">
                                                             <img class="res-circle-img " src="{{item.createdUserEmail|userImagePipe: users_list}}">
-                                                        </div>
+                                                        </div> -->
                                                     </div>
                                                     <!-- <div class="res-circle">
                                                         {{item.createdUserEmail|userImagePipe:users_list}}
@@ -209,27 +210,65 @@
                                         </div>
                                     </li>
                                 </ul>
-                                <div class="text-center" *ngIf="taskhistory_list.length==0">
+                                <!-- <div class="text-center" *ngIf="taskhistory_list.length==0">
                                     <h5>No Records Found</h5>
-                                </div>
-                            </p-tabPanel>
-                            <p-tabPanel header="Attachements">
-                                <ul class="historydiv">
-                                    <li *ngFor="let history of taskhistory_list">
-                                        <div class="ET-history">
-                                            <div class="histcontent">
-                                                {{history.message}}{{history.lastModifiedTimestamp | date:'MMM dd, y, HH:mm:ss'}}
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                                <div class="text-center" *ngIf="taskhistory_list.length==0">
-                                    <h5>No Records Found</h5>
-                                </div>
+                                </div> -->
                             </p-tabPanel>
                         </p-tabView>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+
+
+
+    <div [hidden]="!hiddenPopUp">
+        <app-split-overlay (closeOverlay)="closeOverlay($event)">
+            <div class="bgcolor">
+                <div class="rpa-modal-header">
+                    <h5> Attached Documnets</h5>
+                    <br>
+                </div>
+                <div class="modal-body actions-mbody actionsoverlay-mbody ">
+                    <div class="tablediv">
+                        <p-table #dt1 [value]="attached_list" [columns]="columns_list" [(selection)]="checkBoxselected"
+                            [resizableColumns]="true" responsiveLayout="scroll" dataKey="id">
+                            <ng-template pTemplate="header" let-columns>
+                                <tr>
+                                    <th style="width: 3rem">
+                                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                                    </th>
+                                    <th *ngFor="let col of columns">{{col.DisplayName}}
+                                    </th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-rowData let-columns="columns">
+                                <tr>
+                                    <td> <p-tableCheckbox></p-tableCheckbox></td>
+                                    <td>
+                                        <span></span>
+                                        <span>
+                                            <div class="newinntalx">
+                                                <a (click)="deleteuserById(rowData)">
+                                                    <img src="../../../../../assets/images/Projects/delete-black.svg" alt=""
+                                                        class="default-img">
+                                                    <img src="../../../../../assets/images/Projects/delete-red.svg" alt=""
+                                                        class="hover-img">
+                                                </a>
+                                            </div>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="emptymessage">
+                                <tr>
+                                    <td style="text-align: center;" colspan="7">No Documents Found</td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+            </div>
+        </app-split-overlay>
     </div>
