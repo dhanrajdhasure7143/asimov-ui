@@ -16,18 +16,19 @@ export class DynamicTableComponent implements OnInit {
   @Input("checkBoxShow") public checkBoxShow:boolean;
   @Output() viewDetails = new EventEmitter<any[]>();
   @Output() deleteItem = new EventEmitter<any[]>();
-  @Output("onEdit") editEvent:any= new EventEmitter<any>();
+  @Output() openTaskWorkSpace = new EventEmitter<any[]>();
+  @Output("editRowById") editRowById:any= new EventEmitter<any>();
   @Input()selectedScreen:any;
   @Output() selectedData = new EventEmitter<any[]>();
-  @Input("deleteHide") public deleteHide:boolean;
+  @Input("show_delete_btn") public show_delete_btn:boolean;
   @Input("dataKeyId") public dataKeyId:any
   @Input("search_fields") public search_fields:any;
+  @Input("selectionMode") public selectionMode:any;
   _selectedColumns: any[];
   customers: any = [];
   userName: any;
-  selectedItem: any = {};
+  selectedItem: any;
   loading: boolean = true;
-  checkBoxselected:any;
   
 
   constructor() {}
@@ -37,6 +38,9 @@ export class DynamicTableComponent implements OnInit {
   }
 
   ngOnChanges() {
+    if(this.selectionMode == 'single') this.selectedItem={}
+    else this.selectedItem = []
+    
     this._selectedColumns = this.columns_list;
     if (this.table_data.length > 0) this.loading = false;
   }
@@ -73,13 +77,16 @@ export class DynamicTableComponent implements OnInit {
         return 'green';
     }
   }
-  edit(rowData:any)
-  {
-    this.editEvent.emit(rowData);
+
+  editRowBy_Id(rowData:any){
+    this.editRowById.emit(rowData);
   }
-  
 
   selectRow(){
-    this.selectedData.emit(this.checkBoxselected)
+    this.selectedData.emit(this.selectedItem)
+  }
+
+  openWorkSpace(row){
+    this.openTaskWorkSpace.emit(row)
   }
 }
