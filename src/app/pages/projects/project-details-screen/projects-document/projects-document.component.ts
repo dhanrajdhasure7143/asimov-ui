@@ -1,4 +1,5 @@
 import { Component, OnInit, TemplateRef, ViewChild } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
 import { TreeNode } from "primeng/api";
 import { RestApiService } from "src/app/pages/services/rest-api.service";
 
@@ -36,9 +37,19 @@ export class ProjectsDocumentComponent implements OnInit {
   @ViewChild('op', {static: false}) model;
   isDialog2:boolean = false;
   term:any;
+  params_data:any;
+  project_id:any;
+  project_name:any;
 
 
-  constructor(private rest_api : RestApiService) {}
+  constructor(private rest_api : RestApiService, private route : ActivatedRoute) {
+    this.route.queryParams.subscribe((data) => {
+      this.params_data = data;
+      console.log(data);
+      this.project_id = this.params_data.project_id;
+      this.project_name = this.params_data.project_name;
+    });
+  }
 
   ngOnInit(): void {
     this.files = [
@@ -337,5 +348,23 @@ addParent() {
 
   saveRenameFolder(){
 
+  }
+
+  
+  getFileDetails() {
+    this.rest_api.getFileDetails(this.project_id).subscribe(data => {
+      // this.uploadedFiledata = data.uploadedFiles.reverse();
+
+      // this.requestedFiledata = data.requestedFiles.reverse();
+
+      // let loggedUser = localStorage.getItem("ProfileuserId")
+      // let responseArray = this.requestedFiledata
+      // this.filterdArray = []
+      // responseArray.forEach(e => {
+      //   if (e.requestTo == loggedUser || e.requestFrom == loggedUser) {
+      //     this.filterdArray.push(e)
+        // }
+      // })
+    })
   }
 }
