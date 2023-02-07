@@ -1840,7 +1840,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   }
 
 taskListView(){
-  this.router.navigate(['/pages/projects/tasks'],{queryParams:{id:this.project_id}});
+  this.router.navigate(['/pages/projects/tasks'],{queryParams:{project_id:this.project_id,"project_name":this.projectDetails.projectName}});
 }
 
 minimizeFullScreen() {

@@ -55,7 +55,7 @@ export class CreateTasksComponent implements OnInit {
 
       this.route.queryParams.subscribe(data=>{
         let response:any=data;
-        this.project_id=response.id
+        this.project_id=response.project_id
         // this.getallusers();
         this.getTaskCategories();
         this.getTaskCategoriesByProject();

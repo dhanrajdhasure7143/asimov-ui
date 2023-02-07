@@ -28,6 +28,8 @@ import {InplaceModule} from 'primeng/inplace';
 import {EditorModule} from 'primeng/editor';
 import { TreeModule } from 'primeng/tree';
 import {RadioButtonModule} from 'primeng/radiobutton';
+import {ImageModule} from 'primeng/image';
+
 
 
 @NgModule({
@@ -95,6 +97,7 @@ import {RadioButtonModule} from 'primeng/radiobutton';
     TreeModule,
     RadioButtonModule,
     MessageModule,
+    ImageModule
   ]
 })
 export class PrimengCustomModule { }

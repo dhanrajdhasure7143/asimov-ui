@@ -21,6 +21,7 @@ export class ProjectTaskDetailsComponent implements OnInit {
   desc: any =
     "Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore neque cumque quo fugiat mollitia quas id earum perferendis ratione repudiandae magni odio nulla eveniet rerum accusamus error, ducimus provident. Est.";
   project_id: any;
+  project_name:any;
   task_details: any = {};
   selected_task_details: any = {};
   users_list: any[] = [];
@@ -58,6 +59,7 @@ export class ProjectTaskDetailsComponent implements OnInit {
       let params: any = data;
       console.log(data);
       this.project_id = params.project_id;
+      this.project_name = params.project_id;
       this.rest_api
         .gettaskandComments(this.project_id)
         .subscribe((response) => {
