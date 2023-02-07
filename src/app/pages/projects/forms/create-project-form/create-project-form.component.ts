@@ -35,26 +35,31 @@ export class CreateProjectFormComponent implements OnInit {
     this.loggedInUserId=localStorage.getItem("ProfileuserId")
     this.insertForm2=this.formBuilder.group({
       projectName: ["", Validators.compose([Validators.required, Validators.maxLength(50),Validators.pattern("^[a-zA-Z0-9_-]*$")])],
-      initiatives: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      resource: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      owner: [this.loggedInUserId, Validators.compose([Validators.required, Validators.maxLength(50)])],
-      mapValueChain: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      endDate: [""],
-      startDate: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      priority: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      measurableMetrics: ["", Validators.compose([Validators.required, Validators.pattern("^[a-zA-Z0-9_-]*$")])],
-      process: ["", Validators.compose([Validators.maxLength(50)])],
       processOwner: [""],
+      process: ["", Validators.compose([Validators.maxLength(50)])],
+      priority: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      mapValueChain: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      projectPurpose: ["", Validators.compose([Validators.required, Validators.maxLength(150)])],
+
+
+
+
+      // initiatives: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      // resource: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      // owner: [this.loggedInUserId, Validators.compose([Validators.required, Validators.maxLength(50)])],
+      // endDate: [""],
+      // startDate: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      // measurableMetrics: ["", Validators.compose([Validators.required, Validators.pattern("^[a-zA-Z0-9_-]*$")])],
 
       // description: ["", Validators.compose([Validators.maxLength(200)])],
      // access: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       
-      projectPurpose: ["", Validators.compose([Validators.required, Validators.maxLength(150)])],
+
       // status: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
 
     })
 
-    this.getvalchain();
+    // this.getvalchain();
     this.getprocessnames();
     this.freetrail=localStorage.getItem('freetrail')
 
@@ -176,14 +181,14 @@ export class CreateProjectFormComponent implements OnInit {
   }
 
 
-  getvalchain()
-  {
-    this.valuechain=[];
-    this.rest.getvaluechain().subscribe(res=>{
-      let response:any=res;
-      this.valuechain=response;
-    })
-  }
+  // getvalchain()
+  // {
+  //   this.valuechain=[];
+  //   this.rest.getvaluechain().subscribe(res=>{
+  //     let response:any=res;
+  //     this.valuechain=response;
+  //   })
+  // }
   DateMethod(){
     return false;
   }

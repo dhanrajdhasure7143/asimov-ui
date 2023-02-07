@@ -24,14 +24,6 @@
                           autoWidth="false" [filter]="true" [style]="{'width':'100%'}"
                           placeholder="Select a Department" optionLabel="categoryName"
                           optionValue="categoryName"></p-dropdown>
-                      <!-- <select class="form-control data"
-                      [disabled]="categories_list.length==1"
-                      formControlName="mapValueChain" name="mapValueChain" [ngClass]="insertForm2.get('mapValueChain').valid?'enteredfield-color':'inputfield-color'">
-                      <option [value]="null" disabled hidden>Select Department</option>
-                      <option value="" [selected]="true" disabled hidden>Select Department</option>
-                      <option *ngFor="let category of categories_list"
-                          [value]="category.categoryName">{{category.categoryName}}</option>
-                  </select> -->
                       <div *ngIf="insertForm2.get('mapValueChain').invalid && insertForm2.get('mapValueChain').touched"
                           class="errspan required">
                           Department Required*
@@ -41,11 +33,6 @@
               <div class="row">
                   <div class="form-fields col">
                       <label class="label-control">Process Owner<span class="star">*</span></label>
-                      <!-- <select formControlName="processOwner" [attr.disabled]="processOwner==false" class="form-control" [ngClass]="insertForm2.get('processOwner').valid?'enteredfield-color':'inputfield-color'">
-                          <option value="" disabled hidden>Select Process Owner</option>
-                          <option *ngFor="let user of users_list" [value]="user.userId.userId">
-                              {{user.userId.firstName|titlecase}} {{user.userId.lastName|titlecase}}</option>
-                      </select> -->
                       <p-dropdown [options]="users_list" [filter]="true" [style]="{'width':'100%'}"
                           filterBy="user_email,fullName" required [autoDisplayFirst]="false" (onChange)="onChange()"
                           placeholder="Select Process Owner" formControlName="processOwner" optionValue="user_email"
@@ -65,14 +52,6 @@
                           required [autoDisplayFirst]="false" placeholder="Select Process" formControlName="process"
                           optionValue="processId" optionLabel="processName" filterBy="processName">
                       </p-dropdown>
-                      <!-- <select class="form-control data" formControlName="process"
-                          (change)="onProcessChange($event.target.value)"
-                          [ngClass]="insertForm2.get('process').valid?'enteredfield-color':'inputfield-color'">
-                          <option [value]="null" disabled hidden>Select Process</option>
-                          <option value="" [selected]="true" disabled hidden>Select Process</option>
-                          <option *ngFor="let process of selected_process_names" [value]="process.processId">
-                              {{process.processName}}</option>
-                      </select> -->
                       <span *ngIf="insertForm2.get('process').invalid && insertForm2.get('process').touched"
                           class="errspan required">Process Required*</span>
                   </div>
@@ -80,12 +59,6 @@
               <div class="row">
                   <div class="form-fields">
                       <label class="label-control">Project Priority<span class="star">*</span></label>
-                      <!-- <select formControlName="priority" class="form-control data" [ngClass]="insertForm2.get('priority').valid?'enteredfield-color':'inputfield-color'">
-                      <option value="" disabled hidden>Select Project Priority</option>
-                      <option value="High">High</option>
-                      <option value="Medium">Medium</option>
-                      <option value="Low">Low</option>
-                  </select> -->
                       <div>
                           <!-- <div class="field-radiobutton">
                               <p-radioButton name="Priority" value="Low" formControlName="priority"></p-radioButton>
