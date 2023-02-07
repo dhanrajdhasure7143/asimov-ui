@@ -30,7 +30,6 @@ import { TreeModule } from 'primeng/tree';
 import {RadioButtonModule} from 'primeng/radiobutton';
 
 
-
 @NgModule({
   declarations: [],
   imports: [
@@ -95,6 +94,7 @@ import {RadioButtonModule} from 'primeng/radiobutton';
     InplaceModule,
     TreeModule,
     RadioButtonModule,
+    MessageModule,
   ]
 })
 export class PrimengCustomModule { }

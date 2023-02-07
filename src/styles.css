@@ -2681,7 +2681,6 @@ input.p-inputtext {
   height: 36px;
   border: 1px solid var(--main-bordercolor) !important;
   font-size: var(--main-fontsize) !important;
-  /* width: 250px !important; */
 }
 
 /* Tabs NEW Styles Start */
@@ -2809,6 +2808,23 @@ tr.p-element.p-selectable-row.p-highlight > td:last-child {
   background-color: transparent !important;
   box-shadow: none !important;
 }
+/* grid-filter Overlay Styles Start */
+.p-column-filter-buttonbar .p-button.p-button-outlined {
+  color: var(--main-bluecolor) !important;
+  background: transparent !important;
+  margin-right: 10px;
+}
+.p-column-filter-buttonbar {
+  justify-content: left !important;
+  padding: 0px 16px 10px !important;
+}
+.p-column-filter-buttonbar .p-button {
+  background: var(--main-bluecolor) !important;
+  border: 1px solid var(--main-bluecolor) !important;
+  padding: 4px 12px;
+}
+/* grid-filter Overlay Styles End */
+
 
 .actionspopmenu .p-menu-overlay {
   position: absolute;
@@ -2817,7 +2833,9 @@ tr.p-element.p-selectable-row.p-highlight > td:last-child {
     left: unset !important;
     width: max-content;
 }
-/* .actionspopmenu .p-menu-overlay:before {
+
+/* uncomment if need arrow for popovermenu
+.actionspopmenu .p-menu-overlay:before {
   content: "";
   background: #fff;
   width: 10px;
@@ -2938,4 +2956,11 @@ button.custom-popupbtn.mat-button {
 
 .task-details-tabs .p-tabview-nav-container{
   border-bottom: 1px solid !important;
+}
+.p-card .p-card-body{
+  height: 160px !important;
+}
+
+.p-card .p-card-content {
+  margin-top: 20px !important;
 }

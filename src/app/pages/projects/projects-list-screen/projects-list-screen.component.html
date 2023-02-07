@@ -64,27 +64,36 @@
 
 
 
-<div [hidden]="!hiddenPopUp">
-  <app-split-overlay (closeOverlay)="closeOverlay($event)">
-    <div class="">
-      <div class="rpa-modal-header">
-        <h2 *ngIf="!isprojectCreateForm">Create Project / Program</h2>
+<div [hidden]="!hiddenPopUp" >
+  <app-split-overlay (closeOverlay)="closeOverlay($event)"  >
+    <div class="bgcolor">
+      <div class="rpa-modal-header" >
+        <h5 *ngIf="!isprojectCreateForm">Create Project / Program</h5>
         <h2 *ngIf="isprojectCreateForm">Create Project</h2>
+        <br>
       </div>
-      <div class="modal-body actions-mbody actionsoverlay-mbody">
-        <div class="container" *ngIf="!isprojectCreateForm">
+      <div class="modal-body actions-mbody actionsoverlay-mbody ">
+        <div class="container " *ngIf="!isprojectCreateForm">
           <div class="row">
-            <div class="col-md-6">
-              <button type="button" (click)="onClikCreateProject()">
-                <p-card class="cards side"> <i class="pi pi-folder-open" style="font-size: 2rem"></i> <br>
-                  Create Project </p-card>
+            <div class="col-md-6 prjoverlay">
+              <p-card class="cards imgg"  >
+              <button type="button" (click)="onClikCreateProject()" style="padding-left:50px;">
+                <p-image src="../../../../assets/images/Projects/Create Project.png"  alt="Image" width="75" ></p-image>
+                 <br> &nbsp;
+                  <span class=" title_text">Create Project</span>
+                  &nbsp;
               </button>
+            </p-card>
             </div>
-            <div class="col-md-6">
-              <button>
-                <p-card class="cards side"> <i class="pi pi-folder-open" style="font-size: 2rem"></i> <br>
-                  Creat Program </p-card>
+            <div  class="col-md-6 prjoverlay">
+            <p-card class="cards side imgg" >
+              <button  type="button" style="padding-left:60px;">
+                <br>
+                <p-image src="../../../../assets/images/Projects/create program.png"  alt="Image" width="75" ></p-image>
+                <br>&nbsp;
+                <span > Creat Program</span>
               </button>
+            </p-card>
             </div>
           </div>
         </div>
