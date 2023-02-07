@@ -40,7 +40,7 @@
            </div> -->
 
            <div *ngIf = "isTree == true">
-            <p-tree [value]="files" [filter]="true" selectionMode="single" [style]="{'max-height':'auto','overflow':'auto'}"
+            <p-tree [value]="files" [filter]="true" styleClass="document-tree" selectionMode="single" [style]="{'max-height':'auto','overflow':'auto'}"
                 (onNodeSelect)="nodeSelect($event)" [(selection)]="selectedFile"> </p-tree>
            </div>
 
