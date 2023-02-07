@@ -23,9 +23,11 @@ import {InputTextModule} from 'primeng/inputtext';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {MessageModule} from 'primeng/message';
 import {FileUploadModule} from 'primeng/fileupload';
+import {InputTextareaModule} from 'primeng/inputtextarea';
+import {InplaceModule} from 'primeng/inplace';
+import {EditorModule} from 'primeng/editor';
 import { TreeModule } from 'primeng/tree';
 import {RadioButtonModule} from 'primeng/radiobutton';
-import {InputTextareaModule} from 'primeng/inputtextarea';
 import {ImageModule} from 'primeng/image';
 
 
@@ -54,6 +56,12 @@ import {ImageModule} from 'primeng/image';
     DropdownModule,
     ProgressBarModule,
     InputTextModule,
+    ConfirmDialogModule,
+    EditorModule,
+    MessageModule,
+    FileUploadModule,
+    InputTextareaModule,
+    InplaceModule,
     TreeModule,
     RadioButtonModule,
     InputTextareaModule
@@ -80,9 +88,14 @@ import {ImageModule} from 'primeng/image';
     DropdownModule,
     ProgressBarModule,
     InputTextModule,
+    ConfirmDialogModule,
+    EditorModule,
+    MessageModule,
+    FileUploadModule,
+    InputTextareaModule,
+    InplaceModule,
     TreeModule,
     RadioButtonModule,
-    InputTextareaModule,
     MessageModule,
     ImageModule
   ]

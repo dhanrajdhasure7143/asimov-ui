@@ -20,7 +20,7 @@ export class ProjectTaskListComponent implements OnInit {
   representatives: any[] = [];
   users_list: any = [];
   project_details: any;
-  projectName: any;
+  task_id:any;
   _tabsList: any = [
     { tabName: "All", count: "0", img_src: "all-tasks.svg" },
     { tabName: "New", count: "0", img_src: "inprogress-tasks.svg" },
@@ -30,6 +30,7 @@ export class ProjectTaskListComponent implements OnInit {
   ];
   table_searchFields: any;
   hiddenPopUp: boolean = false;
+  project_name:any;
 
   constructor(
     private rest_api: RestApiService,
@@ -39,14 +40,14 @@ export class ProjectTaskListComponent implements OnInit {
     private spinner: LoaderService
   ) {
     this.route.queryParams.subscribe((data) => {
-      this.project_id = data.id;
+      this.project_id = data.project_id;
+      this.project_name = data.project_name;
     });
   }
 
   ngOnInit(): void {
     this.spinner.show();
     this.getUsersList();
-    this.getProjectDetails();
   }
 
   getUsersList() {
@@ -170,16 +171,6 @@ export class ProjectTaskListComponent implements OnInit {
     ];
   }
 
-  async getProjectDetails() {
-    await this.rest_api
-      .getProjectDetailsById(this.project_id)
-      .subscribe((res) => {
-        console.log(res);
-        this.project_details = res;
-        this.projectName = this.project_details.projectName;
-      });
-  }
-
   backToProjectDetails() {
     this.router.navigate(["/pages/projects/projectdetails"], {
       queryParams: { id: this.project_id },
@@ -187,7 +178,11 @@ export class ProjectTaskListComponent implements OnInit {
   }
 
   viewDetails(event) {
-    console.log(event);
+    console.log(event)
+    // this.router.navigate(["/pages/projects/taskDetails"],{
+    //   queryParams:{task_id: event.id,project_id:this.project_id}
+    // })
+      this.router.navigate(['/pages/projects/projectdetails'],{queryParams:{project_id:this.project_id,"project_name":this.project_name,"task_id": event.id}});
   }
 
   onTabChanged(event, tabView: TabView) {

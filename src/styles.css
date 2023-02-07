@@ -2954,6 +2954,9 @@ button.custom-popupbtn.mat-button {
   width: auto !important;
 } */
 
+.task-details-tabs .p-tabview-nav-container{
+  border-bottom: 1px solid !important;
+}
 .p-card .p-card-body{
   height: 160px !important;
 }
