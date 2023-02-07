@@ -2964,3 +2964,6 @@ button.custom-popupbtn.mat-button {
 .p-card .p-card-content {
   margin-top: 20px !important;
 }
+.document-tree .fa-folder-open, .document-tree .fa-folder{
+  color:var(--main-bluecolor) !important;
+}
