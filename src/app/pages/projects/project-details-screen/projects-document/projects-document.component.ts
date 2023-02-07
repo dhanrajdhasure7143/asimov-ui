@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { TreeNode } from "primeng/api";
+import { MenuItem, TreeNode } from "primeng/api";
 
 @Component({
   selector: "app-projects-document",
@@ -32,6 +32,8 @@ export class ProjectsDocumentComponent implements OnInit {
   folder_files:any=[];
   selectedFolder: TreeNode
   selectedItem:any;
+  isOverlay : boolean = false;
+  items: MenuItem[];
 
 
   constructor() {}
@@ -142,6 +144,24 @@ export class ProjectsDocumentComponent implements OnInit {
       }
     ];
     this.folder_files = this.files
+
+    this.items = [{
+      label: 'Options',
+      items: [{
+          label: 'Download',
+          icon: 'pi pi-refresh',
+          command: () => {
+              this.download();
+          }
+      },
+      {
+          label: 'Delete',
+          icon: 'pi pi-times',
+          command: () => {
+              this.delete();
+          }
+      }
+      ]}];
   }
 
   saveFolder() {
@@ -176,6 +196,10 @@ export class ProjectsDocumentComponent implements OnInit {
       return this.hiddenPopUp1 = false;
     }else{
       console.log(item,"open Doc")
+    }
+
+    if(this.selectedItem.node.label){
+      return this.isOverlay = true;
     }
 
     // if (item.node.label == "Add Folder") {
@@ -308,5 +332,12 @@ addParent() {
   closeOverlay(event){
     this.createFolderPopUP = event;
     this.createTreeFolderOverlay = event;
+  }
+
+  delete(){
+  }
+
+  download(){
+
   }
 }

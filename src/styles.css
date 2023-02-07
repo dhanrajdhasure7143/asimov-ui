@@ -2964,3 +2964,15 @@ button.custom-popupbtn.mat-button {
 .document-tree .fa-folder-open, .document-tree .fa-folder{
   color:var(--main-bluecolor) !important;
 }
+
+.tree .p-tree .p-tree-filter-container .p-tree-filter {
+  width: 30% !important;
+}
+
+.tree .p-tree{
+  height: 380px !important;
+}
+
+.tree .pi-search:before{
+  margin: 0 833px 0 0;
+}
