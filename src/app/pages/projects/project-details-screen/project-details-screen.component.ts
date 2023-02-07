@@ -1959,6 +1959,7 @@ onDragEnd(e: { gutterNum: number; sizes: number[] }) {
   }
 
   openDocumentScreen(){
-    this.router.navigate(['/pages/projects/document'],{queryParams:{id:this.project_id}});
+    // this.router.navigate(['/pages/projects/document'],{queryParams:{id:this.project_id}});
+    this.router.navigate(['/pages/projects/document'],{queryParams:{project_id:this.project_id,"project_name":this.projectDetails.projectName}});
   }
 }

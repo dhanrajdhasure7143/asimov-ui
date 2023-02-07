@@ -4,6 +4,7 @@ import { Inplace } from "primeng/inplace";
 import { LoaderService } from "src/app/services/loader/loader.service";
 import { DataTransferService } from "../../services/data-transfer.service";
 import { RestApiService } from "../../services/rest-api.service";
+import Swal from "sweetalert2";
 
 interface Status {
   name: string,
@@ -39,6 +40,7 @@ export class ProjectTaskDetailsComponent implements OnInit {
   edit_status_field:any;
   hiddenPopUp:boolean = false;
   isprojectCreateForm: boolean =false;
+  params_data:any;
 
 
   constructor(
@@ -62,12 +64,11 @@ export class ProjectTaskDetailsComponent implements OnInit {
 
   gettask() {
     this.route.queryParams.subscribe((data) => {
-      let params: any = data;
+      this.params_data = data;
       console.log(data);
-      this.project_id = params.project_id;
-      this.project_name = params.project_id;
-      this.rest_api
-        .gettaskandComments(this.project_id)
+      this.project_id = this.params_data.project_id;
+      this.project_name = this.params_data.project_name;
+      this.rest_api.gettaskandComments(this.project_id)
         .subscribe((response) => {
           let taskList: any = response;
           this.task_details = taskList.find((item) => item.id == data.task_id);
@@ -85,6 +86,8 @@ export class ProjectTaskDetailsComponent implements OnInit {
     // this.router.navigate(['/pages/projects/tasks'],{
     //   queryParams:{id: this.project_id}
     // })
+  this.router.navigate(['/pages/projects/tasks'],{queryParams:{project_id:this.project_id,"project_name":this.project_name}});
+
   }
 
   getallusers() {
@@ -93,6 +96,7 @@ export class ProjectTaskDetailsComponent implements OnInit {
       if (res) {
         this.users_list = res;
         this.gettask();
+        this.getTaskAttachments();
       }
     });
     // let user = this.users_list.find(
@@ -161,7 +165,75 @@ export class ProjectTaskDetailsComponent implements OnInit {
   onClikCreateProject(){
     
   }
+
   deleteuserById(rowData){
 
   }
+
+  postcomments(comments: string) {
+    if (comments != "") {
+      let now = new Date().getTime();
+      // this.currentDate = now;
+      let idnumber = this.taskcomments_list.length + 1;
+      this.taskcomments_list.push({
+        id: idnumber,
+        comments: comments,
+      });
+    }
+    // (<HTMLInputElement>document.getElementById("addcomment")).value = "";
+  }
+
+ async getTaskAttachments() {
+   await this.rest_api.getTaskAttachments(this.params_data.project_id, this.params_data.task_id)
+      .subscribe((data) => {
+        // this.taskattacments = data;
+        // if (this.taskattacments.length == 0) {
+        //   this.hidetaskdeletedownload = false;
+        // } else {
+        //   this.hidetaskdeletedownload = true;
+        // }
+      });
+  }
+  updatetask() {
+    // if (this.updatetaskForm.valid) {
+      // this.task_details
+
+      // let taskupdatFormValue = this.updatetaskForm.value;
+      let taskupdatFormValue = this.task_details;
+      // taskupdatFormValue["id"] = this.selectedtask.id;
+      taskupdatFormValue["percentageComplete"] = "";
+      taskupdatFormValue["comments"] = this.taskcomments_list;
+      taskupdatFormValue["history"] = this.taskhistory_list;
+      // taskupdatFormValue["endDate"] = this.endDate;
+      // taskupdatFormValue["taskName"] = this.taskname;
+      // if (
+      //   this.optionValue == "As-Is Process" ||
+      //   this.optionValue == "To-Be Process"
+      // ) {
+      //   taskupdatFormValue["process"] = this.bpm_process_list.find(
+      //     (each) =>
+      //       each.correlationID == this.updatetaskForm.value.correlationID
+      //   ).processId;
+      // }
+      // taskupdatFormValue["taskCategory"]=this.taskcategory
+      this.spinner.show();
+      this.rest_api.updateTask(taskupdatFormValue).subscribe(
+        (res) => {
+          this.spinner.hide();
+          let status: any = res;
+          if (status.errorMessage == undefined) {
+            Swal.fire("Success", "Task Updated Successfully !!", "success");
+          } else {
+            Swal.fire("Error", status.errorMessage, "error");
+          }
+        },
+        (err) => {
+          Swal.fire("Error", "Something Went Wrong", "error");
+        }
+      );
+    // } else {
+    //   alert("please fill all details");
+    // }
+  }
+
 }
