@@ -214,7 +214,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   non_existUsers:any[]=[];
   stompClient;
   messages:any[];
-  
+
   constructor(private dt: DataTransferService, private route: ActivatedRoute, private dataTransfer: DataTransferService, private rpa: RestApiService,
     private modalService: BsModalService, private formBuilder: FormBuilder, private router: Router,
     private spinner: LoaderService) {
@@ -576,6 +576,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   this.non_existUsers = [];
   this.rpa.getProjectDetailsById(this.project_id).subscribe( res=>{​​​​​​
   this.projectDetails=res
+  console.log("testing",res)
   this.processownername = this.projectDetails.processOwner
   this.processOwnerFlag=false
   if(this.projectDetails.endDate){
@@ -584,6 +585,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   this.projectStartDate = moment(this.projectDetails.startDate).format("lll");
   
   ​​
+  console.log( this.projectDetails)
   //this.project_id=this.projectDetails.id
   if(this.projectDetails.resource.length!=0){
     // this.projectDetails.resource.forEach(item => {
@@ -676,7 +678,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   getallusers() {
     this.spinner.show();
     this.dt.tenantBased_UsersList.subscribe(response => {
-      console.log(response)
+      console.log("test",response)
       let usersDatausers_list:any[] = [];
       if(response)
         usersDatausers_list = response;

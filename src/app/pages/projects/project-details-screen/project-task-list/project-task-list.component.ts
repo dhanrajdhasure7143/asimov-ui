@@ -20,7 +20,7 @@ export class ProjectTaskListComponent implements OnInit {
   representatives: any[] = [];
   users_list: any = [];
   project_details: any;
-  task_id:any;
+  task_id: any;
   _tabsList: any = [
     { tabName: "All", count: "0", img_src: "all-tasks.svg" },
     { tabName: "New", count: "0", img_src: "inprogress-tasks.svg" },
@@ -30,7 +30,7 @@ export class ProjectTaskListComponent implements OnInit {
   ];
   table_searchFields: any;
   hiddenPopUp: boolean = false;
-  project_name:any;
+  project_name: any;
 
   constructor(
     private rest_api: RestApiService,
@@ -178,11 +178,17 @@ export class ProjectTaskListComponent implements OnInit {
   }
 
   viewDetails(event) {
-    console.log(event)
+    console.log(event);
     // this.router.navigate(["/pages/projects/taskDetails"],{
     //   queryParams:{task_id: event.id,project_id:this.project_id}
     // })
-      this.router.navigate(['/pages/projects/projectdetails'],{queryParams:{project_id:this.project_id,"project_name":this.project_name,"task_id": event.id}});
+    this.router.navigate(["/pages/projects/taskDetails"], {
+      queryParams: {
+        project_id: this.project_id,
+        project_name: this.project_name,
+        task_id: event.id,
+      },
+    });
   }
 
   onTabChanged(event, tabView: TabView) {
@@ -253,24 +259,39 @@ export class ProjectTaskListComponent implements OnInit {
     this.hiddenPopUp = event;
   }
 
-  openTaskWorkSpace(data){
+  openTaskWorkSpace(data) {
     console.log(data);
-    
-    localStorage.setItem('project_id', this.project_id.id);
+
+    localStorage.setItem("project_id", this.project_id.id);
     if (data.taskCategory == "RPA Implementation") {
-      this.router.navigate(['/pages/rpautomation/designer'], { queryParams: { projectId: this.project_id.id, botId: data.correlationID } })
+      this.router.navigate(["/pages/rpautomation/designer"], {
+        queryParams: {
+          projectId: this.project_id.id,
+          botId: data.correlationID,
+        },
+      });
     }
-    if (data.taskCategory == "BPMN Design" || data.taskCategory == "As-Is Process" || data.taskCategory == "To-Be Process") {
-      this.router.navigate(['pages/businessProcess/uploadProcessModel'],
-        { queryParams: { "bpsId": data.correlationID.split(":")[0], "ver": data.correlationID.split(":")[1], "ntype": "bpmn" } })
+    if (
+      data.taskCategory == "BPMN Design" ||
+      data.taskCategory == "As-Is Process" ||
+      data.taskCategory == "To-Be Process"
+    ) {
+      this.router.navigate(["pages/businessProcess/uploadProcessModel"], {
+        queryParams: {
+          bpsId: data.correlationID.split(":")[0],
+          ver: data.correlationID.split(":")[1],
+          ntype: "bpmn",
+        },
+      });
     }
     if (data.taskCategory == "RPA Design") {
       // this.router.navigate(['pages/projects/repdesign'],{ queryParams: {projectId: data.projectId,taskId:data.id,programId:this.programId}})
     }
 
     if (data.taskCategory == "Process Mining") {
-      this.router.navigate(['pages/processIntelligence/flowChart'], { queryParams: { "wpiId": data.correlationID } })
+      this.router.navigate(["pages/processIntelligence/flowChart"], {
+        queryParams: { wpiId: data.correlationID },
+      });
     }
-
   }
 }

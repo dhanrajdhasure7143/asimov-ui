@@ -67,8 +67,8 @@ export class ProjectTaskDetailsComponent implements OnInit {
           this.task_details = taskList.find((item) => item.id == data.task_id);
           // this.selected_task_details = taskList.find((item) => item.id == data.task_id);
           console.log(this.task_details);
-          this.taskcomments_list = this.task_details.comments;
-          this.taskhistory_list = this.task_details.history;
+          // this.taskcomments_list = this.task_details.comments;
+          // this.taskhistory_list = this.task_details.history;
         });
       this.spinner.hide();
     });
