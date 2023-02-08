@@ -2678,13 +2678,12 @@ button.btn:focus {
 }
 
 input.p-inputtext {
-  height: 34px;
+  /* height: 34px; */
   border: 1px solid var(--main-bordercolor) !important;
   font-size: var(--main-fontsize) !important;
 }
 
 /* Tabs NEW Styles Start */
-
 .p-tabview .p-tabview-nav {
   border: none !important;
   background: transparent !important;
@@ -2694,6 +2693,7 @@ input.p-inputtext {
   background: transparent !important;
   color: var(--main-txtcolor) !important;
   padding: 15px 0px 0px !important;
+  height: 100%;
 }
 .p-tabview .p-tabview-nav li .p-tabview-nav-link {
     border-color: transparent !important; 
@@ -2840,9 +2840,48 @@ tr.p-element.p-selectable-row.p-highlight > td:last-child {
 .p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box:hover {
   border-color: var(--main-bluecolor) !important;
 }
+.p-dropdown {
+  border: 1px solid var(--main-bordercolor) !important;
+  width: 200px;
+}
+.listdropdown .p-dropdown{
+  margin-right: 15px;
+}
 /* primeNg components Styles End */
 
+/* Overlay Screen Styles Start */
+.dynamic-forms-modal{
+  padding-left: 60px !important;
+  margin-top: 60px !important;
+}
+.splitoverlaydiv {
+  padding: 10px 20px 0px;
+  height: 100%;
+}
+.splitoverlaydiv .p-tabview.p-component {
+  height: 100%;
+}
+.splitoverlaycontent {
+  height: calc(100% - 160px);
+}
+.splitoverlaydiv h4 {
+  font-size: 16px;
+  margin: 0px !important;
+}
+.splitoverlaydiv .p-tabview .p-tabview-nav li .p-tabview-nav-link {
+  padding: 0px 15px !important;
+}
+.splitoverlaydiv .p-tabview .p-tabview-nav {
+  height: 45px;
+  border-bottom: 1px solid #e0e0e0 !important;
+}
+button.btn.bluebg-button {
+  background-color: var(--main-bluecolor);
+  color: #fff;
+  padding: 6px 30px;
+}
 
+/* Overlay  Screen Styles End */
 
 .actionspopmenu .p-menu-overlay {
   position: absolute;
@@ -2851,7 +2890,6 @@ tr.p-element.p-selectable-row.p-highlight > td:last-child {
     left: unset !important;
     width: max-content;
 }
-
 /* uncomment if need arrow for popovermenu
 .actionspopmenu .p-menu-overlay:before {
   content: "";
