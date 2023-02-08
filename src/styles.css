@@ -2967,6 +2967,6 @@ button.custom-popupbtn.mat-button {
 .icon-color{
   color:var(--main-bluecolor) !important;
 }
-.document-tree .fa-folder-open, .document-tree .fa-folder{
+.document-tree .pi-folder-open, .document-tree .pi-folder{
   color:var(--main-bluecolor) !important;
 }

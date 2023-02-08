@@ -214,6 +214,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   non_existUsers:any[]=[];
   stompClient;
   messages:any[];
+  project_desc:any='';
 
   constructor(private dt: DataTransferService, private route: ActivatedRoute, private dataTransfer: DataTransferService, private rpa: RestApiService,
     private modalService: BsModalService, private formBuilder: FormBuilder, private router: Router,
@@ -578,6 +579,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   this.projectDetails=res
   console.log("testing",res)
   this.processownername = this.projectDetails.processOwner
+  this.project_desc = this.projectDetails.projectPurpose
   this.processOwnerFlag=false
   if(this.projectDetails.endDate){
     this.projectenddate=moment(this.projectDetails.endDate).format("lll");
@@ -1911,7 +1913,7 @@ onDragEnd(e: { gutterNum: number; sizes: number[] }) {
 
   connectToWebSocket() {
     console.log("Initialize WebSocket Connection");
-    let ws = new SockJS("http://localhost:8080/projectChat");
+    let ws = new SockJS("https://ezflow.dev.epsoftinc.com/messageservice/projectChat");
     this.stompClient = Stomp.over(ws);
     const _this = this;
     _this.stompClient.connect({}, function (frame) {
@@ -1948,7 +1950,7 @@ onDragEnd(e: { gutterNum: number; sizes: number[] }) {
     this.createTaskOverlay = event;
   }
 
-  fitDescr(data){
+  truncateDesc(data){
     if(data && data.length > 150)
       return data.substr(0,150)+'...';
     return data;

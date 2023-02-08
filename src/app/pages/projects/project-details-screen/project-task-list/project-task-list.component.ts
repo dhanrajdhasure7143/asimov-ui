@@ -173,15 +173,12 @@ export class ProjectTaskListComponent implements OnInit {
 
   backToProjectDetails() {
     this.router.navigate(["/pages/projects/projectdetails"], {
-      queryParams: { id: this.project_id },
+      queryParams: { project_id: this.project_id },
     });
   }
 
   viewDetails(event) {
     console.log(event);
-    // this.router.navigate(["/pages/projects/taskDetails"],{
-    //   queryParams:{task_id: event.id,project_id:this.project_id}
-    // })
     this.router.navigate(["/pages/projects/taskDetails"], {
       queryParams: {
         project_id: this.project_id,
