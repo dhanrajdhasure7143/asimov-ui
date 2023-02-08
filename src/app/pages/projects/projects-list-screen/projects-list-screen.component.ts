@@ -104,86 +104,69 @@ export class ProjectsListScreenComponent implements OnInit {
     this.api.getAllProjects(roles, name, email).subscribe((res) => {
       let response: any = res;
       this.projectsresponse = response;
-      console.log(response)
-      this.all_projectslist = [
-        ...response[0].map((data) => {
-          return {
-            // id: data.id,
-            // projectName: data.programName,
-            // access: data.access,
-            // initiatives: data.initiatives,
-            // process: data.process,
-            // type: data.type,
-            // owner: data.owner,
-            // priority: data.priority,
-            // createdBy: data.createdBy,
-            // status: data.status == null ? "New" : data.status,
-            // // resources: data.resources,
-            // mapValueChain: data.mapValueChain,
-            // department:data.programValueChain,
-            // measurableMetrics: data.measurableMetrics,
-            // purpose: data.purpose,
-
-            id: data.id,
-            projectName: data.programName,
-            initiatives: data.initiatives,
-            priority: data.priority,
-            process: this.getProcessNames(data.process),
-            owner: data.owner,
-            status: data.status == null ? "New" : data.status,
-            createdAt: moment(data.createdTimestamp).format("lll"),
-            createdBy: data.createdBy,
-            lastModifiedBy: data.lastModifiedBy,
-            representative: {
-              name: data.type,
-            },
-            type: data.type,
-            department: data.programValueChain,
-            createdDate: moment(data.createdTimestamp).format("lll"),
-            updatedDate: moment(data.lastModifiedTimestamp).format("lll"),
-            mapValueChain: data.mapValueChain,
-          };
-        }),
-        ...response[1].map((data) => {
-          return {
-            // id: data.id,
-            // projectName: data.projectName,
-            // access: data.access,
-            // initiatives: data.initiatives,
-            // process: data.process,
-            // type: data.type == null ? "Project" : data.type,
-            // // owner: data.owner,
-            // status: data.status == null ? "New" : data.status,
-            // priority: data.priority,
-            // createdBy: data.createdBy,
-            // // resources: data.resources,
-            // mapValueChain: data.mapValueChain,
-            // department:data.mapValueChain,
-            // measurableMetrics: data.measurableMetrics,
-            // startDate: data.startDate,
-            // endDate: data.endDate,
-
-            id: data.id,
-            projectName: data.projectName,
-            initiatives: data.initiatives,
-            priority: data.priority,
-            process: this.getProcessNames(data.process),
-            owner: data.owner,
-            status: data.status == null ? "New" : data.status,
-            createdAt:data.createdTimestamp,
-            createdBy: data.createdBy,
-            lastModifiedBy: data.lastModifiedBy?data.lastModifiedBy : data.createdBy,
-            representative: {
-              name: data.type == null ? "Project" : data.type,
-            },
-            type: data.type == null ? "Project" : data.type,
-            department: data.mapValueChain,
-            createdDate: moment(data.createdTimestamp).format("lll"),
-            updatedDate: moment(data.lastModifiedTimestamp).format("lll"),
-            mapValueChain: data.mapValueChain,
-          };
-        }),
-      ];
+      let res_list = response[0].concat(response[1])
+      // console.log(res_list)
+      res_list.map(data=>{
+        data["projectName"] = data.programName? data.programName: data.projectName
+        data["process_name"] = this.getProcessNames(data.process)
+        data["status"] = data.status == null ? "New" : data.status
+        data["createdAt"] = moment(data.createdTimestamp).format("lll")
+        data["representative"]= {name: data.type == null ? "Project" : data.type}
+        data["type"] = data.type == null ? "Project" : data.type
+        data["department"]= data.mapValueChain?data.mapValueChain: data.programValueChain
+        data["createdDate"] = moment(data.createdTimestamp).format("lll")
+        data["updatedDate"] = moment(data.lastModifiedTimestamp).format("lll")
+        return data
+      })
+      this.projects_list = [];
+        this.all_projectslist = res_list
+        // console.log(this.all_projectslist)
+      // this.all_projectslist = [
+      //   ...response[0].map((data) => {
+      //     return {
+      //       id: data.id,
+      //       projectName: data.programName,
+      //       initiatives: data.initiatives,
+      //       priority: data.priority,
+      //       process: this.getProcessNames(data.process),
+      //       owner: data.owner,
+      //       status: data.status == null ? "New" : data.status,
+      //       createdAt: moment(data.createdTimestamp).format("lll"),
+      //       createdBy: data.createdBy,
+      //       lastModifiedBy: data.lastModifiedBy,
+      //       representative: {
+      //         name: data.type,
+      //       },
+      //       type: data.type,
+      //       department: data.programValueChain,
+      //       createdDate: moment(data.createdTimestamp).format("lll"),
+      //       updatedDate: moment(data.lastModifiedTimestamp).format("lll"),
+      //       mapValueChain: data.mapValueChain,
+      //     };
+      //   }),
+      //   ...response[1].map((data) => {
+      //     return {
+      //       id: data.id,
+      //       projectName: data.projectName,
+      //       initiatives: data.initiatives,
+      //       priority: data.priority,
+      //       process: this.getProcessNames(data.process),
+      //       owner: data.owner,
+      //       status: data.status == null ? "New" : data.status,
+      //       createdAt:data.createdTimestamp,
+      //       createdBy: data.createdBy,
+      //       lastModifiedBy: data.lastModifiedBy?data.lastModifiedBy : data.createdBy,
+      //       representative: {
+      //         name: data.type == null ? "Project" : data.type,
+      //       },
+      //       type: data.type == null ? "Project" : data.type,
+      //       department: data.mapValueChain,
+      //       createdDate: moment(data.createdTimestamp).format("lll"),
+      //       updatedDate: moment(data.lastModifiedTimestamp).format("lll"),
+      //       mapValueChain: data.mapValueChain,
+      //     };
+      //   }),
+      // ];
       this.spinner.hide();
       // this.count.New = this.all_projectslist.filter(
       //   (item) => item.status == "New"
@@ -256,7 +239,7 @@ export class ProjectsListScreenComponent implements OnInit {
         multiOptions: ["projectName", "priority"],
       },
       {
-        ColumnName: "process",
+        ColumnName: "process_name",
         DisplayName: "Process",
         ShowGrid: true,
         ShowFilter: true,
@@ -410,7 +393,7 @@ export class ProjectsListScreenComponent implements OnInit {
       });
     } else {
       this.router.navigate(["/pages/projects/projectdetails"], {
-        queryParams: { id: event.id },
+        queryParams: { project_id: event.id },
       });
     }
   }
@@ -444,7 +427,6 @@ export class ProjectsListScreenComponent implements OnInit {
               response.errorMessage == undefined &&
               response.warningMessage == undefined
             ) {
-              this.projects_list = [];
               Swal.fire(
                 "Success",
                 "Project Deleted Successfully !!",
@@ -503,6 +485,11 @@ export class ProjectsListScreenComponent implements OnInit {
         this.users_list = res;
       }
     });
+  }
+
+  getProjectName(event){
+    if(event) return event
+    else return "Project"
   }
 
 }

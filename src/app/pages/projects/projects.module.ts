@@ -56,7 +56,10 @@ import { ProjectTaskListComponent } from './project-details-screen/project-task-
 import { SharedModule } from '../../shared/shared.module';
 import { AngularSplitModule } from 'angular-split';
 import { PrimengCustomModule } from 'src/app/primeng-custom/primeng-custom.module';
+import { ProjectTaskDetailsComponent } from './project-task-details/project-task-details.component';
+
 import { ProjectsDocumentComponent } from './project-details-screen/projects-document/projects-document.component';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 const materialModules: any[] = [
     
@@ -69,6 +72,7 @@ const materialModules: any[] = [
      BacklogsCreateComponent,
      ProjectRpaDesignComponent,
      ProjectTaskListComponent,
+     ProjectTaskDetailsComponent,
      ProjectsDocumentComponent],
   imports: [
     CommonModule,
@@ -96,6 +100,7 @@ const materialModules: any[] = [
     SharedModule,
     AngularSplitModule.forRoot(),
     PrimengCustomModule,
+    Ng2SearchPipeModule
   ],
   providers:[
     BsModalRef, NotifierService,

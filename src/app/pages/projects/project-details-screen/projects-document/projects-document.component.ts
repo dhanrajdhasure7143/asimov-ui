@@ -1,5 +1,7 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, TemplateRef, ViewChild } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
 import { TreeNode } from "primeng/api";
+import { RestApiService } from "src/app/pages/services/rest-api.service";
 
 @Component({
   selector: "app-projects-document",
@@ -7,7 +9,7 @@ import { TreeNode } from "primeng/api";
   styleUrls: ["./projects-document.component.css"],
 })
 export class ProjectsDocumentComponent implements OnInit {
-  files: TreeNode[];
+  files: any[];
   createFolderPopUP: boolean = false;
   hiddenPopUp1: boolean = false;
   createTreeFolderOverlay: boolean = false;
@@ -15,7 +17,7 @@ export class ProjectsDocumentComponent implements OnInit {
   isDialog: boolean = false;
   isDialog1: boolean = false;
   entered_folder_name: any;
-  selectedFile: TreeNode;
+  selectedFile: any;
   text: string;
   folder_name: any;
   isDialogBox: boolean = false;
@@ -30,11 +32,24 @@ export class ProjectsDocumentComponent implements OnInit {
     collapsedIcon: "pi pi-folder",
   };
   folder_files:any=[];
-  selectedFolder: TreeNode
+  selectedFolder: any;
   selectedItem:any;
+  @ViewChild('op', {static: false}) model;
+  isDialog2:boolean = false;
+  term:any;
+  params_data:any;
+  project_id:any;
+  project_name:any;
 
 
-  constructor() {}
+  constructor(private rest_api : RestApiService, private route : ActivatedRoute) {
+    this.route.queryParams.subscribe((data) => {
+      this.params_data = data;
+      console.log(data);
+      this.project_id = this.params_data.project_id;
+      this.project_name = this.params_data.project_name;
+    });
+  }
 
   ngOnInit(): void {
     this.files = [
@@ -42,15 +57,15 @@ export class ProjectsDocumentComponent implements OnInit {
         key: "0",
         label: "Add Folder",
         data: "Movies Folder",
-        expandedIcon: "pi pi-folder-open",
-        collapsedIcon: "pi pi-folder-open",
+        collapsedIcon: 'pi pi-folder',
+        expandedIcon: 'pi pi-folder'
       },
       {
         key: "1",
         label: "Analysis",
         data: "Documents Folder",
-        expandedIcon: "pi pi-folder-open",
-        collapsedIcon: "pi pi-folder",
+        collapsedIcon: 'pi pi-folder',
+        expandedIcon: 'pi pi-folder-open',
         children: [
           {
             key: "1-0",
@@ -144,7 +159,7 @@ export class ProjectsDocumentComponent implements OnInit {
     this.folder_files = this.files
   }
 
-  saveFolder() {
+  treeChildSave() {
     if (this.selectedFile && this.entered_folder_name) {
       let object = { ...{}, ...this.sampleNode_object };
       object.label = this.entered_folder_name;
@@ -166,6 +181,9 @@ export class ProjectsDocumentComponent implements OnInit {
   }
 
   nodeSelect(item) {
+    // this.model.toggle();
+    // this.model.show();
+
     this.selectedItem = item;
     if(this.selectedItem.node.label =="Add Folder / Document" || this.selectedItem.node.label =="Add Folder"){
       this.createTreeFolderOverlay = true;
@@ -175,7 +193,7 @@ export class ProjectsDocumentComponent implements OnInit {
       if(this.selectedItem.node.label =="Add Folder")
       return this.hiddenPopUp1 = false;
     }else{
-      console.log(item,"open Doc")
+      // console.log(item,"open Doc")
     }
 
     // if (item.node.label == "Add Folder") {
@@ -256,7 +274,6 @@ export class ProjectsDocumentComponent implements OnInit {
     this.selectedFolder.children.push(object);
     this.entered_folder_name = "";
     this.isDialog1 = false;
-    console.log(this.files)
   }
 }
 
@@ -266,7 +283,7 @@ addParent() {
     label: this.folder_name,
     data: "Movies Folder",
     expandedIcon: "pi pi-folder-open",
-    collapsedIcon: "pi pi-folder-open",
+    collapsedIcon: "pi pi-folder",
     children: [
       {
         key: String(this.files.length)+"-0" ,
@@ -308,5 +325,46 @@ addParent() {
   closeOverlay(event){
     this.createFolderPopUP = event;
     this.createTreeFolderOverlay = event;
+  }
+
+  nodeUnselect(){
+    console.log("testing")
+  }
+
+  onNodeClick(event,node){
+    // console.log(node)
+    this.model.hide();
+    if(node.label != "Add Folder" && node.label != "Add Folder / Document"){
+      setTimeout(() => {
+        this.model.show(event)
+        }, 200);
+    }
+  }
+
+  onFolderRename(){
+    this.isDialog2 = true;
+    this.entered_folder_name = this.selectedItem.node.label
+  }
+
+  saveRenameFolder(){
+
+  }
+
+  
+  getFileDetails() {
+    this.rest_api.getFileDetails(this.project_id).subscribe(data => {
+      // this.uploadedFiledata = data.uploadedFiles.reverse();
+
+      // this.requestedFiledata = data.requestedFiles.reverse();
+
+      // let loggedUser = localStorage.getItem("ProfileuserId")
+      // let responseArray = this.requestedFiledata
+      // this.filterdArray = []
+      // responseArray.forEach(e => {
+      //   if (e.requestTo == loggedUser || e.requestFrom == loggedUser) {
+      //     this.filterdArray.push(e)
+        // }
+      // })
+    })
   }
 }

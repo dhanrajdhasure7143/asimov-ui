@@ -22,6 +22,8 @@ import * as CmmnJS from 'cmmn-js/dist/cmmn-modeler.production.min.js';
 import * as DmnJS from 'dmn-js/dist/dmn-modeler.development.js';
 import {MenuItem} from 'primeng/api';
 import { SplitComponent } from "angular-split";
+import * as Stomp from 'stompjs';
+import * as SockJS from 'sockjs-client';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 
 @Component({
@@ -33,7 +35,6 @@ export class ProjectDetailsScreenComponent implements OnInit {
   projects_toggle: Boolean = false;
   projectData: any;
   projectDetails: any={};
-
   lastname: string;
   firstname: string;
   firstletter: string;
@@ -53,7 +54,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   categaoriesList: any;
   selected_process_names: any;
   att:any;
-
+  typedMessage:any;
   displayedColumns: string[] = ["taskCategory", "taskName", "resources", "status", "percentageComplete", "lastModifiedTimestamp", "lastModifiedBy", "createdBy", "action"];
   dataSource6: MatTableDataSource<any>;
   displayedColumns6: string[] = ["check", "firstName", "displayName", "user_Id", "last_active"];
@@ -211,16 +212,22 @@ export class ProjectDetailsScreenComponent implements OnInit {
   createTaskOverlay: boolean = false;
   isReadmoreShow: boolean = false;
   non_existUsers:any[]=[];
-
+  stompClient;
+  messages:any[];
+  project_desc:any='';
 
   constructor(private dt: DataTransferService, private route: ActivatedRoute, private dataTransfer: DataTransferService, private rpa: RestApiService,
     private modalService: BsModalService, private formBuilder: FormBuilder, private router: Router,
     private spinner: LoaderService) {
       this.route.queryParams.subscribe(data=>{​​​​​​
         let paramsdata:any=data
-        this.project_id=paramsdata.id
+        this.project_id = paramsdata.project_id
+        console.log(this.project_id)
+        this.connectToWebSocket();
       });
+
      }
+     
 
   ngOnInit() {
     this.getallusers();
@@ -237,9 +244,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
           this.openUsersOverlay();
         }
       },
-      {
-        label: 'Documents'
-      }
+      {label: 'Documents', command: () => {this.openDocumentScreen();}}
     ];
     this.processOwner = false;
     localStorage.setItem('project_id', null);
@@ -299,7 +304,6 @@ export class ProjectDetailsScreenComponent implements OnInit {
         });
       }
     })
-
     this.getallprocesses();
     setTimeout(() => {
       this.getImage();
@@ -573,7 +577,9 @@ export class ProjectDetailsScreenComponent implements OnInit {
   this.non_existUsers = [];
   this.rpa.getProjectDetailsById(this.project_id).subscribe( res=>{​​​​​​
   this.projectDetails=res
+  console.log("testing",res)
   this.processownername = this.projectDetails.processOwner
+  this.project_desc = this.projectDetails.projectPurpose
   this.processOwnerFlag=false
   if(this.projectDetails.endDate){
     this.projectenddate=moment(this.projectDetails.endDate).format("lll");
@@ -581,6 +587,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   this.projectStartDate = moment(this.projectDetails.startDate).format("lll");
   
   ​​
+  console.log( this.projectDetails)
   //this.project_id=this.projectDetails.id
   if(this.projectDetails.resource.length!=0){
     // this.projectDetails.resource.forEach(item => {
@@ -673,7 +680,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   getallusers() {
     this.spinner.show();
     this.dt.tenantBased_UsersList.subscribe(response => {
-      console.log(response)
+      console.log("test",response)
       let usersDatausers_list:any[] = [];
       if(response)
         usersDatausers_list = response;
@@ -1840,7 +1847,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   }
 
 taskListView(){
-  this.router.navigate(['/pages/projects/tasks'],{queryParams:{id:this.project_id}});
+  this.router.navigate(['/pages/projects/tasks'],{queryParams:{project_id:this.project_id,"project_name":this.projectDetails.projectName}});
 }
 
 minimizeFullScreen() {
@@ -1903,6 +1910,38 @@ onDragEnd(e: { gutterNum: number; sizes: number[] }) {
       ];
   }
 
+
+  connectToWebSocket() {
+    console.log("Initialize WebSocket Connection");
+    let ws = new SockJS("https://ezflow.dev.epsoftinc.com/messageservice/projectChat");
+    this.stompClient = Stomp.over(ws);
+    const _this = this;
+    _this.stompClient.connect({}, function (frame) {
+        _this.stompClient.subscribe("/topic/messages", function (sdkEvent) {
+            console.log(sdkEvent)
+          
+        });
+        _this.stompClient.reconnect_delay = 2000;
+    },(err)=>{
+      console.log(err)
+    });
+};
+
+
+  sendMessage() {
+    let message={
+      userId:localStorage.getItem("ProfileuserId"),
+      message:this.typedMessage,
+      projectId:this.project_id,
+      rmid:0,
+      firstName:localStorage.getItem("firstName"),
+      lastName:localStorage.getItem("lastName"),
+    }
+    console.log("calling logout api via web socket");
+    console.log(message)
+    this.stompClient.send("/app/send", {}, JSON.stringify(message));
+}
+
   onCreateTask() {
     this.createTaskOverlay = true;
   }
@@ -1911,7 +1950,7 @@ onDragEnd(e: { gutterNum: number; sizes: number[] }) {
     this.createTaskOverlay = event;
   }
 
-  fitDescr(data){
+  truncateDesc(data){
     if(data && data.length > 150)
       return data.substr(0,150)+'...';
     return data;
@@ -1921,4 +1960,8 @@ onDragEnd(e: { gutterNum: number; sizes: number[] }) {
     this.isReadmoreShow = ! this.isReadmoreShow
   }
 
+  openDocumentScreen(){
+    // this.router.navigate(['/pages/projects/document'],{queryParams:{id:this.project_id}});
+    this.router.navigate(['/pages/projects/document'],{queryParams:{project_id:this.project_id,"project_name":this.projectDetails.projectName}});
+  }
 }

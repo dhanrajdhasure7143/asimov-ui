@@ -108,9 +108,9 @@
                         <label>Description</label>
                     </div>
                     <div class="col">
-                        <span *ngIf="isReadmoreShow"> <p>{{projectDetails.projectPurpose}} <span class="readmore" (click)="onReadMoreHide()" >Hide</span></p> </span>
+                        <span *ngIf="isReadmoreShow"> <p>{{project_desc}} <span class="readmore icon-color" (click)="onReadMoreHide()" >Hide</span></p> </span>
                     <!-- <p>{{projectDetails.projectPurpose}}</p> -->
-                    <span *ngIf="!isReadmoreShow"><p>{{fitDescr(projectDetails.projectPurpose)}} <span class="readmore" (click)="onReadMoreHide()">Read more</span></p> </span>
+                    <span *ngIf="!isReadmoreShow"><p>{{truncateDesc(project_desc)}} <span class="readmore icon-color" (click)="onReadMoreHide()" *ngIf="project_desc.length > 150">Read more</span></p> </span>
                     </div>
 
                 </div>
@@ -295,11 +295,10 @@
                             </div>
                         </div>
                         <div class="row collabottom">
-                            <input type="text" class="msgip" placeholder=""
+                            <input type="text" class="msgip" placeholder="" [(ngModel)]="typedMessage"
                                 value="Lorem ipsum dolor sit amet, consec" />
                             <!-- <button class="btn"><img alt="attachment" src="./../../../../assets/images-n/projects/paperclip.svg" /></button> -->
-                            <button class="btn"><img alt="send"
-                                    src="./../../../../assets/images-n/projects/send.svg" /></button>
+                            <button class="btn" (click)="sendMessage()"><img alt="send" src="./../../../../assets/images-n/projects/send.svg" /></button>
                         </div>
                     </div>
 

@@ -1,31 +1,55 @@
 .icons .pi {
-    margin: 3px 0 0 10px;
+  margin: 3px 0 0 10px;
 }
 
-.container {
-    margin: 10px 0 0 0;
-    height: 440px;
+.container-fluid {
+  margin: 10px 0 0 0;
+  height: 380px !important;
+  overflow-x: auto;
+  padding: 0px !important;
 }
 
 .cards {
-    width: 20%;
-    margin: 10px;
-    text-align: center;
+  width: 20%;
+  margin: 10px;
+  text-align: center;
 }
 
-.dynamic-forms-modal .rpa-modal-content{
-   
-    box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%) !important;
-  }
-  .own-overlay {
-    position: fixed;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 1040;
-  }
+.dynamic-forms-modal .rpa-modal-content {
+  box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%) !important;
+}
 
   .dynamic-forms-modal{
     padding-left: 60px !important;
     margin-top: 50px !important;
  }
+.own-overlay {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1040;
+}
+
+.dynamic-forms-modal {
+  padding-left: 60px !important;
+  margin-top: 50px !important;
+}
+
+.p-card .p-card-body {
+  height: 160px !important;
+}
+
+.p-card .p-card-content {
+  margin-top: 20px !important;
+}
+
+.text-right {
+  margin: 50px 20px 0 0;
+}
+
+.box{
+  height: 100px;
+  width: 100px;
+  border: 1px solid black;
+}

@@ -1,34 +1,40 @@
     <div class="h-100">
         <div class="row main-content-head">
-            <div class="col-md-6">
+            <div class="col-9">
                 <h3>
                     <label id="popup_title">
                         <a routerLink="/pages/projects/projectdetails"><img
                                 src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow"></a>
                     </label>
                     <span class="title_text">
-                        Projects | Financial Breakdown Analysis | <strong> Document </strong>
+                        Projects | {{project_name}} | <strong> Document </strong>
                     </span>
                 </h3>
             </div>
-            <div class="col-md-3">
+            <div class="col-3">
                 <span class="p-input-icon-right">
                     <i class="pi pi-search"></i>
-                    <input type="text" pInputText placeholder="Type to search">
+                    <input type="text" pInputText placeholder="Type to search" [(ngModel)]="term">
+                </span>
+                <span class="pl-2" >
+                    <i (click)="op1.toggle($event)" class="pi pi-filter-slash icon-color" style="font-size: 1.5rem"></i>
                 </span>
             </div>
-            <div class="col-md-3 icons">
+
+            <!-- <div class="col-md-3 icons">
                 <i class="pi pi-desktop"></i> Open
                 <i class="pi pi-plus-circle"></i> Create
                 <i class="pi pi-ellipsis-v"></i>Actions
-            </div>
+            </div> -->
         </div>
         <div class="container">
-            <span class="title_text"></span>
+            <div class="row">
+                <div class="col">
+            <!-- <span class="title_text"></span> -->
             <div *ngIf="isFolder == true" class="d-flex">
-            <p-card  class="cards" *ngFor="let item of folder_files"  (click)="openAddFolderOverlay(item)">  
-                <i *ngIf="item.collapsedIcon" class="pi" [class]="item.collapsedIcon" style="font-size: 2rem"> </i> 
-                <i *ngIf="!item.collapsedIcon" class="pi" [class]="item.icon" style="font-size: 2rem"> </i> <br>   <br>
+            <p-card  class="cards" styleClass="document-tree" *ngFor="let item of folder_files|filter:term"  (click)="openAddFolderOverlay(item)">  
+                <i [class]="item.collapsedIcon" style="font-size: 2rem"> </i>
+                <i *ngIf="!item.collapsedIcon" class="icon-color" [class]="item.icon" style="font-size: 2rem"> </i> <br>   <br>
                 <span> {{ item.label }} </span>
             </p-card>
            </div>
@@ -38,13 +44,26 @@
            </div> -->
 
            <div *ngIf = "isTree == true">
-            <p-tree [value]="files" [filter]="true" selectionMode="single" [style]="{'max-height':'auto','overflow':'auto'}"
-                (onNodeSelect)="nodeSelect($event)" [(selection)]="selectedFile"> </p-tree>
+            <p-tree [value]="files" [filter]="true" styleClass="document-tree" selectionMode="single" [style]="{'max-height':'auto','overflow':'auto'}"
+                (onNodeSelect)="nodeSelect($event)" (onNodeUnselect)="nodeUnselect()" [(selection)]="selectedFile"> 
+                <ng-template let-node pTemplate="default">
+                    <b (click)="onNodeClick($event,node)">{{node.label}}</b>
+                </ng-template>
+            </p-tree>
+
+            <!-- <p-tree [value]="files">
+                <ng-template let-node pTemplate="default">
+                    <input [(ngModel)]="node.label" type="text" style="width:100%">
+                </ng-template>
+                <ng-template let-node pTemplate="test">
+                    <h3>{{node.label}}</h3>
+                </ng-template>
+            </p-tree> -->
+
            </div>
 
 
             <!-- <p-tree [value]="files"
-            
             selectionMode="single"
             [(selection)]="selected">
     </p-tree> -->
@@ -52,41 +71,17 @@
            (click)="removeRoute(selected)">Remove Page</a>
         </div> -->
 
-
-            <p-dialog header="Folder Name" [(visible)]="isDialog" [style]="{width: '25vw'}">
-                <span class="p-float-label">
-                    <input type="text" pInputText placeholder="Enter Folder Name" [(ngModel)]="entered_folder_name"
-                        name="folder"> <br>
-                    <button type="button" class="btn btn-primary" (click)="saveFolder()"> tree child Save </button>
-                </span>
-            </p-dialog>
-
-            <p-dialog header="Folder Name" [(visible)]="isDialogBox" [style]="{width: '25vw'}">
-                <span class="p-float-label">
-                    <input type="text" pInputText placeholder="Enter Folder Name" [(ngModel)]="folder_name"
-                        name="folder"> <br>
-                    <button type="button" class="btn btn-primary" (click)="addParent()">parent Save </button>
-                </span>
-            </p-dialog>
-
-
-
-            <!-- add sub folder in folder structure -->
-            <p-dialog header="Folder Name" [(visible)]="isDialog1" [style]="{width: '25vw'}">
-                <span class="p-float-label">
-                    <input type="text" pInputText placeholder="Enter Folder Name" [(ngModel)]="entered_folder_name"
-                        name="folder"> <br>
-                    <button type="button" class="btn btn-primary" (click)="addSubfolder()"> Add Subfolder</button>
-                </span>
-            </p-dialog>
+            <div class="text-right">
+                <button type="button" class="btn btn-primary" (click)="folderView()"> <i class="pi pi-folder" style="font-size: 2rem"></i> </button> 
+                &nbsp; 
+                <button type="button" class="btn btn-primary" (click)="treeView()"> <i class="pi pi-sitemap" style="font-size: 2rem"></i> </button>
+            </div>
 
             <!-- <button type="button" class="btn btn-primary" (click)="folderView()"> Folder View</button> &nbsp; <button type="button" class="btn btn-primary" (click)="treeView()"> Tree View </button> -->
         </div>
-        <div class="text-right">
-            <button type="button" class="btn btn-primary" (click)="folderView()"> <i class="pi pi-folder-open" style="font-size: 2rem"></i> </button> 
-            &nbsp; 
-            <button type="button" class="btn btn-primary" (click)="treeView()"> <i class="pi pi-sitemap" style="font-size: 2rem"></i> </button>
         </div>
+    </div>
+
     </div>
 
 
@@ -98,13 +93,13 @@
                 <div class="row">
                     <div class="col-md-6">
                         <button>
-                            <p-card class="cards side" (click)="onCreateFolder()"> <i class="pi pi-folder-open" style="font-size: 2rem"></i> <br>
+                            <p-card class="cards side" (click)="onCreateFolder()"> <i class="pi pi-folder icon-color" style="font-size: 2rem"></i> <br>
                                 Create folder </p-card>
                         </button>
                     </div>
                     <div class="col-md-6">
                         <button>
-                            <p-card class="cards side"> <i class="pi pi-folder-open" style="font-size: 2rem"></i> <br>
+                            <p-card class="cards side"> <i class="pi pi-folder icon-color" style="font-size: 2rem"></i> <br>
                                 Upload folder </p-card>
                         </button>
                     </div>
@@ -112,13 +107,13 @@
                 <div class="row" *ngIf="hiddenPopUp1">
                     <div class="col-md-6">
                         <button>
-                            <p-card class="cards side"> <i class="pi pi-folder-open" style="font-size: 2rem"></i> <br>
+                            <p-card class="cards side"> <i class="pi pi-file icon-color" style="font-size: 2rem"></i> <br>
                                 Create Document </p-card>
                         </button>
                     </div>
                     <div class="col-md-6">
                         <button>
-                            <p-card class="cards side"> <i class="pi pi-folder-open" style="font-size: 2rem"></i> <br>
+                            <p-card class="cards side"> <i class="pi pi-file icon-color" style="font-size: 2rem"></i> <br>
                                 Upload Document </p-card>
                         </button>
                     </div>
@@ -134,13 +129,13 @@
                 <div class="row">
                     <div class="col-md-6">
                         <button>
-                            <p-card class="cards side" (click)="onCreateTreeFolder()"> <i class="pi pi-folder-open" style="font-size: 2rem"></i> <br>
+                            <p-card class="cards side" (click)="onCreateTreeFolder()"> <i class="pi pi-folder icon-color" style="font-size: 2rem"></i> <br>
                                 Create folder </p-card>
                         </button>
                     </div>
                     <div class="col-md-6">
                         <button>
-                            <p-card class="cards side"> <i class="pi pi-folder-open" style="font-size: 2rem"></i> <br>
+                            <p-card class="cards side"> <i class="pi pi-folder icon-color" style="font-size: 2rem"></i> <br>
                                 Upload folder </p-card>
                         </button>
                     </div>
@@ -148,13 +143,13 @@
                 <div class="row" *ngIf="hiddenPopUp1">
                     <div class="col-md-6">
                         <button>
-                            <p-card class="cards side"> <i class="pi pi-folder-open" style="font-size: 2rem"></i> <br>
+                            <p-card class="cards side"> <i class="pi pi-file" style="font-size: 2rem"></i> <br>
                                 Create Document </p-card>
                         </button>
                     </div>
                     <div class="col-md-6">
                         <button>
-                            <p-card class="cards side"> <i class="pi pi-folder-open" style="font-size: 2rem"></i> <br>
+                            <p-card class="cards side"> <i class="pi pi-file" style="font-size: 2rem"></i> <br>
                                 Upload Document </p-card>
                         </button>
                     </div>
@@ -163,3 +158,50 @@
         </app-split-overlay>
     </div>
 
+    <p-dialog header="Folder Name" [(visible)]="isDialogBox" [style]="{width: '25vw'}">
+        <span class="p-float-label">
+            <input type="text" pInputText placeholder="Enter Folder Name" [(ngModel)]="folder_name"
+                name="folder"> <br>
+            <button type="button" class="btn btn-primary" (click)="addParent()"> Save </button>
+        </span>
+    </p-dialog>
+
+
+    <p-dialog header="Folder Name" [(visible)]="isDialog" [style]="{width: '25vw'}">
+        <span class="p-float-label">
+            <input type="text" pInputText placeholder="Enter Folder Name" [(ngModel)]="entered_folder_name"
+                name="folder"> <br>
+            <button type="button" class="btn btn-primary" (click)="treeChildSave()">Save</button>
+        </span>
+    </p-dialog>
+
+    <!-- add sub folder in folder structure -->
+    <p-dialog header="Folder Name" [(visible)]="isDialog1" [style]="{width: '25vw'}">
+        <span class="p-float-label">
+            <input type="text" pInputText placeholder="Enter Folder Name" [(ngModel)]="entered_folder_name"
+                name="folder"> <br>
+            <button type="button" class="btn btn-primary" (click)="addSubfolder()">Save</button>
+        </span>
+    </p-dialog>
+
+    <p-dialog header="Folder Name" [(visible)]="isDialog2" [style]="{width: '25vw'}">
+        <span class="p-float-label">
+            <input type="text" pInputText placeholder="Enter Folder Name" [(ngModel)]="entered_folder_name"
+                name="folder"> <br>
+            <button type="button" class="btn btn-primary" (click)="saveRenameFolder()">Save</button>
+        </span>
+    </p-dialog>
+
+    <p-overlayPanel #op>
+        <ng-template pTemplate>
+            <div class="" (click)="onFolderRename()">Rename</div>
+            <div>Delete</div>
+        </ng-template>
+    </p-overlayPanel>
+
+    <p-overlayPanel #op1>
+        <ng-template pTemplate>
+            <div >Task 1</div>
+            <div>Task 2</div>
+        </ng-template>
+    </p-overlayPanel>
