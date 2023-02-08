@@ -1911,7 +1911,7 @@ onDragEnd(e: { gutterNum: number; sizes: number[] }) {
 
   connectToWebSocket() {
     console.log("Initialize WebSocket Connection");
-    let ws = new SockJS("http://localhost:8080/projectChat");
+    let ws = new SockJS("https://ezflow.dev.epsoftinc.com/messageservice/projectChat");
     this.stompClient = Stomp.over(ws);
     const _this = this;
     _this.stompClient.connect({}, function (frame) {
