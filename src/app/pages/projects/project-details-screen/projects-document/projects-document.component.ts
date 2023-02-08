@@ -28,8 +28,8 @@ export class ProjectsDocumentComponent implements OnInit {
     key :"",
     label: "",
     data: "Movies Folder",
-    expandedIcon: "fas fa-folder-open",
-    collapsedIcon: "fas fa-folder",
+    expandedIcon: "pi pi-folder-open",
+    collapsedIcon: "pi pi-folder",
   };
   folder_files:any=[];
   selectedFolder: any;
@@ -57,22 +57,22 @@ export class ProjectsDocumentComponent implements OnInit {
         key: "0",
         label: "Add Folder",
         data: "Movies Folder",
-        collapsedIcon: 'fas fa-folder',
-        expandedIcon: 'fas fa-folder'
+        collapsedIcon: 'pi pi-folder',
+        expandedIcon: 'pi pi-folder'
       },
       {
         key: "1",
         label: "Analysis",
         data: "Documents Folder",
-        collapsedIcon: 'fas fa-folder',
-        expandedIcon: 'fas fa-folder-open',
+        collapsedIcon: 'pi pi-folder',
+        expandedIcon: 'pi pi-folder-open',
         children: [
           {
             key: "1-0",
             label: "Add Folder / Document",
             data: "Work Folder",
-            expandedIcon: "fas fa-folder-open",
-            collapsedIcon: "fas fa-folder",
+            expandedIcon: "pi pi-folder-open",
+            collapsedIcon: "pi pi-folder",
           },
           { key: "1-1", label: "Document 1", icon: "pi pi-file", data: "Document" },
           { key: "1-2", label: "Document 2", icon: "pi pi-file", data: "Document" },
@@ -83,15 +83,15 @@ export class ProjectsDocumentComponent implements OnInit {
         key: "2",
         label: "System Connectivity",
         data: "Pictures Folder",
-        expandedIcon: "fas fa-folder-open",
-        collapsedIcon: "fas fa-folder",
+        expandedIcon: "pi pi-folder-open",
+        collapsedIcon: "pi pi-folder",
         children: [
           {
             key: "2-0",
             label: "Add Folder / Document",
             data: "Work Folder",
-            expandedIcon: "fas fa-folder-open",
-            collapsedIcon: "fas fa-folder",
+            expandedIcon: "pi pi-folder-open",
+            collapsedIcon: "pi pi-folder",
           },
           { key: "2-1", label: "Document 1", icon: "pi pi-file", data: "Document" },
           { key: "2-2",label: "Document 2", icon: "pi pi-file", data: "Document" },
@@ -102,15 +102,15 @@ export class ProjectsDocumentComponent implements OnInit {
         key: "3",
         label: "Process Documents",
         data: "Pictures Folder",
-        expandedIcon: "fas fa-folder-open",
-        collapsedIcon: "fas fa-folder",
+        expandedIcon: "pi pi-folder-open",
+        collapsedIcon: "pi pi-folder",
         children: [
           {
             key: "3-0",
             label: "Add Folder / Document",
             data: "Work Folder",
-            expandedIcon: "fas fa-folder-open",
-            collapsedIcon: "fas fa-folder",
+            expandedIcon: "pi pi-folder-open",
+            collapsedIcon: "pi pi-folder",
           },
           { key: "3-1", label: "Document 1", icon: "pi pi-file", data: "Document" },
           { key: "3-2", label: "Document 2", icon: "pi pi-file", data: "Document" },
@@ -121,15 +121,15 @@ export class ProjectsDocumentComponent implements OnInit {
         key: "4",
         label: "Testing",
         data: "Movies Folder",
-        expandedIcon: "fas fa-folder-open",
-        collapsedIcon: "fas fa-folder",
+        expandedIcon: "pi pi-folder-open",
+        collapsedIcon: "pi pi-folder",
         children: [
           {
             key: "4-0",
             label: "Add Folder / Document",
             data: "Work Folder",
-            expandedIcon: "fas fa-folder-open",
-            collapsedIcon: "fas fa-folder",
+            expandedIcon: "pi pi-folder-open",
+            collapsedIcon: "pi pi-folder",
           },
           { key: "4-1", label: "Document 1", icon: "pi pi-file", data: "Document" },
           { key: "4-2", label: "Document 2", icon: "pi pi-file", data: "Document" },
@@ -140,15 +140,15 @@ export class ProjectsDocumentComponent implements OnInit {
         key: "5",
         label: "References",
         data: "Movies Folder",
-        expandedIcon: "fas fa-folder-open",
-        collapsedIcon: "fas fa-folder",
+        expandedIcon: "pi pi-folder-open",
+        collapsedIcon: "pi pi-folder",
         children: [
           {
             key: "5-0",
             label: "Add Folder / Document",
             data: "Work Folder",
-            expandedIcon: "fas fa-folder-open",
-            collapsedIcon: "fas fa-folder",
+            expandedIcon: "pi pi-folder-open",
+            collapsedIcon: "pi pi-folder",
           },
           { key: "5-1", label: "Document 1", icon: "pi pi-file", data: "Document" },
           { key: "5-2", label: "Document 2", icon: "pi pi-file", data: "Document" },
@@ -170,8 +170,8 @@ export class ProjectsDocumentComponent implements OnInit {
           key: this.selectedFile.parent.key + "-" + objectKey + "-0" ,
           label: "Add Folder / Document",
           data: "Work Folder",
-          expandedIcon: "fas fa-folder-open",
-          collapsedIcon: "fas fa-folder",
+          expandedIcon: "pi pi-folder-open",
+          collapsedIcon: "pi pi-folder",
         },
       ]
       this.selectedFile.parent.children.push(object);
@@ -266,8 +266,8 @@ export class ProjectsDocumentComponent implements OnInit {
         key: this.selectedFolder.key + "-" + objectKey + "-0" ,
         label: "Add Folder / Document",
         data: "Work Folder",
-        expandedIcon: "fas fa-folder-open",
-        collapsedIcon: "fas fa-folder",
+        expandedIcon: "pi pi-folder-open",
+        collapsedIcon: "pi pi-folder",
       }
     ]
     console.log("object",object)
@@ -282,15 +282,15 @@ addParent() {
     key: String(this.files.length),
     label: this.folder_name,
     data: "Movies Folder",
-    expandedIcon: "fas fa-folder-open",
-    collapsedIcon: "fas fa-folder",
+    expandedIcon: "pi pi-folder-open",
+    collapsedIcon: "pi pi-folder",
     children: [
       {
         key: String(this.files.length)+"-0" ,
         label: "Add Folder / Document",
         data: "Work Folder",
-        expandedIcon: "fas fa-folder-open",
-        collapsedIcon: "fas fa-folder",
+        expandedIcon: "pi pi-folder-open",
+        collapsedIcon: "pi pi-folder",
       },
     ],
   });

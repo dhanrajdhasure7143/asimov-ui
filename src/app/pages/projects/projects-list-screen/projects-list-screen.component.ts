@@ -118,6 +118,7 @@ export class ProjectsListScreenComponent implements OnInit {
         data["updatedDate"] = moment(data.lastModifiedTimestamp).format("lll")
         return data
       })
+      this.projects_list = [];
         this.all_projectslist = res_list
         // console.log(this.all_projectslist)
       // this.all_projectslist = [
@@ -426,7 +427,6 @@ export class ProjectsListScreenComponent implements OnInit {
               response.errorMessage == undefined &&
               response.warningMessage == undefined
             ) {
-              this.projects_list = [];
               Swal.fire(
                 "Success",
                 "Project Deleted Successfully !!",

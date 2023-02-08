@@ -62,19 +62,17 @@ export class CreateProjectFormComponent implements OnInit {
       ],
       projectPurpose: [
         "",
-        Validators.compose([Validators.required, Validators.maxLength(150)]),
+        Validators.compose([Validators.required, Validators.maxLength(250)]),
       ],
+      owner: [this.loggedInUserId, Validators.compose([Validators.required, Validators.maxLength(50)])],
 
       // initiatives: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       // resource: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      // owner: [this.loggedInUserId, Validators.compose([Validators.required, Validators.maxLength(50)])],
       // endDate: [""],
       // startDate: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       // measurableMetrics: ["", Validators.compose([Validators.required, Validators.pattern("^[a-zA-Z0-9_-]*$")])],
-
       // description: ["", Validators.compose([Validators.maxLength(200)])],
       // access: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-
       // status: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     });
 
@@ -186,14 +184,14 @@ export class CreateProjectFormComponent implements OnInit {
   resetcreateproject() {
     this.insertForm2.reset();
 
-    this.insertForm2.get("resource").setValue("");
-    this.insertForm2.get("mapValueChain").setValue("");
-    this.insertForm2.get("owner").setValue(this.loggedInUserId);
+    // this.insertForm2.get("resource").setValue("");
+    // this.insertForm2.get("mapValueChain").setValue("");
+    // this.insertForm2.get("owner").setValue(this.loggedInUserId);
 
-    this.insertForm2.get("processOwner").setValue("");
-    this.insertForm2.get("initiatives").setValue("");
-    this.insertForm2.get("priority").setValue("");
-    this.insertForm2.get("process").setValue("");
+    // this.insertForm2.get("processOwner").setValue("");
+    // this.insertForm2.get("initiatives").setValue("");
+    // this.insertForm2.get("priority").setValue("");
+    // this.insertForm2.get("process").setValue("");
   }
 
   getValueChainProcesses(value) {
