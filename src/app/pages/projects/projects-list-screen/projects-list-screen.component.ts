@@ -116,6 +116,7 @@ export class ProjectsListScreenComponent implements OnInit {
         data["department"]= data.mapValueChain?data.mapValueChain: data.programValueChain
         data["createdDate"] = moment(data.createdTimestamp).format("lll")
         data["updatedDate"] = moment(data.lastModifiedTimestamp).format("lll")
+        data["lastModifiedBy"] = data.lastModifiedBy?data.lastModifiedBy : data.createdBy
         return data
       })
       this.projects_list = [];
@@ -305,7 +306,7 @@ export class ProjectsListScreenComponent implements OnInit {
       },
     ];
 
-    this.table_searchFields=['type','projectName','priority','process','department','createdDate','lastModifiedBy','updatedDate']
+    this.table_searchFields=['type','projectName','priority','process_name','department','createdDate','lastModifiedBy','updatedDate']
     this.representatives = [{ name: "Project" }, { name: "Program" }];
     this.statuses = [
       { name: "Project", value: "Project" },

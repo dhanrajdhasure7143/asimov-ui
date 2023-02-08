@@ -215,13 +215,14 @@ export class ProjectDetailsScreenComponent implements OnInit {
   stompClient;
   messages:any[];
   project_desc:any='';
+  params_data:any;
 
   constructor(private dt: DataTransferService, private route: ActivatedRoute, private dataTransfer: DataTransferService, private rpa: RestApiService,
     private modalService: BsModalService, private formBuilder: FormBuilder, private router: Router,
     private spinner: LoaderService) {
       this.route.queryParams.subscribe(data=>{​​​​​​
-        let paramsdata:any=data
-        this.project_id = paramsdata.project_id
+        this.params_data=data
+        this.project_id = this.params_data.project_id
         console.log(this.project_id)
         this.connectToWebSocket();
       });
@@ -580,6 +581,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   console.log("testing",res)
   this.processownername = this.projectDetails.processOwner
   this.project_desc = this.projectDetails.projectPurpose
+  this.params_data["project_name"]= this.projectDetails.projectName
   this.processOwnerFlag=false
   if(this.projectDetails.endDate){
     this.projectenddate=moment(this.projectDetails.endDate).format("lll");

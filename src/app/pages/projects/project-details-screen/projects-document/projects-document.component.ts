@@ -1,5 +1,5 @@
 import { Component, OnInit, TemplateRef, ViewChild } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { TreeNode } from "primeng/api";
 import { RestApiService } from "src/app/pages/services/rest-api.service";
 
@@ -41,8 +41,10 @@ export class ProjectsDocumentComponent implements OnInit {
   project_id:any;
   project_name:any;
 
+  constructor(private rest_api : RestApiService,
+    private route : ActivatedRoute,
+    private router : Router) {
 
-  constructor(private rest_api : RestApiService, private route : ActivatedRoute) {
     this.route.queryParams.subscribe((data) => {
       this.params_data = data;
       console.log(data);
@@ -249,7 +251,6 @@ export class ProjectsDocumentComponent implements OnInit {
 
     if(this.selectedItem.label =="Add Folder")
     return this.isDialogBox = true;
-
     this.selectedFolder = this.selectedItem
     this.folder_files = this.selectedItem.children
 
@@ -366,5 +367,11 @@ addParent() {
         // }
       // })
     })
+  }
+
+  backToProjectDetails() {
+    this.router.navigate(["/pages/projects/projectdetails"], {
+      queryParams: { project_id: this.project_id },
+    });
   }
 }

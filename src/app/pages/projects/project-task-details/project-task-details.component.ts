@@ -5,6 +5,7 @@ import { LoaderService } from "src/app/services/loader/loader.service";
 import { DataTransferService } from "../../services/data-transfer.service";
 import { RestApiService } from "../../services/rest-api.service";
 import Swal from "sweetalert2";
+import * as moment from "moment";
 
 interface Status {
   name: string,
@@ -19,8 +20,9 @@ export class ProjectTaskDetailsComponent implements OnInit {
   @ViewChild("inplace1") inplace1!: Inplace;
   @ViewChild("inplace2") inplace2!: Inplace;
   @ViewChild("inplace3") inplace3!: Inplace;
-  desc: any =
-    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore neque cumque quo fugiat mollitia quas id earum perferendis ratione repudiandae magni odio nulla eveniet rerum accusamus error, ducimus provident. Est.";
+  @ViewChild("inplace4") inplace4!: Inplace;
+  @ViewChild("inplace4") inplace5!: Inplace;
+  task_desc: any;
   project_id: any;
   project_name:any;
   task_details: any = {};
@@ -41,7 +43,11 @@ export class ProjectTaskDetailsComponent implements OnInit {
   hiddenPopUp:boolean = false;
   isprojectCreateForm: boolean =false;
   params_data:any;
-
+  due_date:any;
+  mindate:any;
+  add_comment : any;
+  added_comments_list:any=[];
+  edit_percentage_field:any;
 
   constructor(
     private route: ActivatedRoute,
@@ -65,17 +71,24 @@ export class ProjectTaskDetailsComponent implements OnInit {
   gettask() {
     this.route.queryParams.subscribe((data) => {
       this.params_data = data;
-      console.log(data);
       this.project_id = this.params_data.project_id;
       this.project_name = this.params_data.project_name;
-      this.rest_api.gettaskandComments(this.project_id)
+      this.rest_api.getProjectTaskDetailsById(this.project_id,this.params_data.task_id)
         .subscribe((response) => {
+          console.log("testing",response)
           let taskList: any = response;
-          this.task_details = taskList.find((item) => item.id == data.task_id);
+          this.task_details = taskList[0];
+          // this.task_details = taskList.find((item) => item.id == data.task_id);
           // this.selected_task_details = taskList.find((item) => item.id == data.task_id);
-          console.log(this.task_details);
-          // this.taskcomments_list = this.task_details.comments;
-          // this.taskhistory_list = this.task_details.history;
+          console.log("taskDetails",this.task_details);
+          this.taskcomments_list = this.task_details.comments;
+          this.taskhistory_list = this.task_details.history;
+          this.added_comments_list =[];
+          // this.added_comments_list = this.task_details.history;
+          this.task_desc = this.task_details.description;
+
+          // this.due_date = moment(this.task_details.endDate).format("YYYY-MM-DD");
+        this.mindate = moment(this.task_details.startDate).format("YYYY-MM-DD");
         });
       this.spinner.hide();
     });
@@ -95,6 +108,7 @@ export class ProjectTaskDetailsComponent implements OnInit {
     this.dataTransfer.tenantBased_UsersList.subscribe((res) => {
       if (res) {
         this.users_list = res;
+        this.spinner.show();
         this.gettask();
         this.getTaskAttachments();
       }
@@ -113,17 +127,20 @@ export class ProjectTaskDetailsComponent implements OnInit {
     this.inplace1.deactivate();
     this.inplace2.deactivate();
     this.inplace3.deactivate();
+    this.inplace4.deactivate();
+    this.inplace5.deactivate();
   }
 
-  inplaceActivateTaskName(){
-    console.log("test")
-    this.edit_task_field = this.task_details.taskName 
+  inplaceActivateTaskName(field){
+    this[field] = this.task_details[field] 
     // e.deactivate();
+
   }
 
-  onUpdateTaskName(){
-    this.task_details.taskName = this.edit_task_field
-    this.inplace.deactivate();
+  onUpdateTaskName(field){
+    this.task_details[field] = this[field];
+    this.updatetask();
+    this.onDeactivate();
   }
 
   inplaceActivateResource(){
@@ -133,6 +150,7 @@ export class ProjectTaskDetailsComponent implements OnInit {
 
   onUpdateResourceDetails(){
     this.task_details.resources = this.edit_resource_field
+    this.updatetask();
     this.inplace1.deactivate();
   }
 
@@ -142,8 +160,45 @@ export class ProjectTaskDetailsComponent implements OnInit {
   }
 
   onUpdateStatusDetails(){
-    this.task_details.status = this.edit_status_field
+    this.task_details.status = this.edit_status_field;
+    this.updatetask();
     this.inplace2.deactivate();
+  }
+
+  inplaceActivateDate(){
+    // this.due_date = this.task_details.endDate 
+    this.due_date = moment(this.task_details.endDate).format("YYYY-MM-DD");
+
+  }
+
+  onUpdateDueDate(){
+    this.task_details.endDate = this.due_date
+    this.updatetask();
+    this.inplace4.deactivate();
+  }
+
+  inplaceActivateDesc(){
+    this.task_desc = this.task_details.description 
+  }
+
+  onUpdateDesc(){
+    this.task_details.description = this.task_desc.toString();
+    this.updatetask();
+    this.inplace3.deactivate();
+  }
+
+  inplaceActivatePercent(){
+    this.edit_percentage_field = this.task_details.percentageComplete;
+  }
+
+  onUpdatePercent(){
+    if(this.edit_percentage_field >100){
+      this.edit_percentage_field = 100
+    }else{
+      this.task_details.percentageComplete = this.edit_percentage_field
+      this.updatetask();
+      this.inplace5.deactivate();
+    }
   }
 
   closeOverlay(event) {
@@ -170,17 +225,20 @@ export class ProjectTaskDetailsComponent implements OnInit {
 
   }
 
-  postcomments(comments: string) {
-    if (comments != "") {
-      let now = new Date().getTime();
-      // this.currentDate = now;
+  postcomments() {
+    if (this.add_comment != "") {
+      this.added_comments_list =[]
+      // this.added_comments_list = this.task_details.history;
       let idnumber = this.taskcomments_list.length + 1;
-      this.taskcomments_list.push({
+      this.added_comments_list.push({
         id: idnumber,
-        comments: comments,
+        comments: this.add_comment,
+        // createdTimestamp: new Date().getTime(),
+        createdBy : localStorage.getItem('firstName')+' '+ localStorage.getItem('lastName'),
+        createdUserEmail: localStorage.getItem('ProfileuserId')
       });
+      this.updatetask();
     }
-    // (<HTMLInputElement>document.getElementById("addcomment")).value = "";
   }
 
  async getTaskAttachments() {
@@ -194,6 +252,38 @@ export class ProjectTaskDetailsComponent implements OnInit {
         // }
       });
   }
+  descChanges(str){
+
+  //   var parser = new DOMParser();
+	// var doc = parser.parseFromString(str, 'text/html');
+  // console.log(doc)
+  // console.log(doc.body)
+	// return doc.body;
+
+  let spanEl: HTMLElement = document.createElement('div');
+      spanEl.innerText = str;
+      return spanEl.outerHTML
+
+  var dom = document.createElement('div');
+	dom.innerHTML = str;
+	return dom
+
+
+  //   var dom = document.createElement('div');
+	// dom.innerHTML = str;
+	// return dom;
+//     var wrapper= document.createElement('div');
+// wrapper.innerHTML= str;
+// var div= wrapper.firstChild;
+// return div
+
+// var doc = new DOMParser().parseFromString(str, "text/xml")
+// return doc
+
+  // var dom = document.createElement('div');
+	// dom.innerHTML = str;
+	// return dom;
+  }
   updatetask() {
     // if (this.updatetaskForm.valid) {
       // this.task_details
@@ -201,8 +291,8 @@ export class ProjectTaskDetailsComponent implements OnInit {
       // let taskupdatFormValue = this.updatetaskForm.value;
       let taskupdatFormValue = this.task_details;
       // taskupdatFormValue["id"] = this.selectedtask.id;
-      taskupdatFormValue["percentageComplete"] = "";
-      taskupdatFormValue["comments"] = this.taskcomments_list;
+      taskupdatFormValue["percentageComplete"] = "10";
+      taskupdatFormValue["comments"] = this.added_comments_list;
       taskupdatFormValue["history"] = this.taskhistory_list;
       // taskupdatFormValue["endDate"] = this.endDate;
       // taskupdatFormValue["taskName"] = this.taskname;
@@ -216,16 +306,17 @@ export class ProjectTaskDetailsComponent implements OnInit {
       //   ).processId;
       // }
       // taskupdatFormValue["taskCategory"]=this.taskcategory
-      this.spinner.show();
       this.rest_api.updateTask(taskupdatFormValue).subscribe(
         (res) => {
-          this.spinner.hide();
-          let status: any = res;
-          if (status.errorMessage == undefined) {
-            Swal.fire("Success", "Task Updated Successfully !!", "success");
-          } else {
-            Swal.fire("Error", status.errorMessage, "error");
-          }
+          this.taskcomments_list = this.added_comments_list
+          this.add_comment='';
+          this.gettask();
+          // let status: any = res;
+          // if (status.errorMessage == undefined) {
+          //   Swal.fire("Success", "Task Updated Successfully !!", "success");
+          // } else {
+          //   Swal.fire("Error", status.errorMessage, "error");
+          // }
         },
         (err) => {
           Swal.fire("Error", "Something Went Wrong", "error");

@@ -16,6 +16,7 @@ import { RestApiService } from '../../services/rest-api.service';
 export class CreateTasksComponent implements OnInit {
 
   @Input('users_list') public users_list: any[];
+  @Input('params_data') public params_data: any;
   createtaskForm:FormGroup;
   mindate= moment().format("YYYY-MM-DD");
   maxdate= moment().format("YYYY-MM-DD");
@@ -47,7 +48,7 @@ export class CreateTasksComponent implements OnInit {
       endDate: ["",Validators.compose([Validators.required])],
       resources: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       approvers: ["",Validators.compose([Validators.maxLength(50)])],
-      description: ["", Validators.compose([Validators.maxLength(200)])],
+      description: ["", Validators.compose([Validators.maxLength(250)])],
 
 
       // timeEstimate: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
@@ -108,6 +109,7 @@ export class CreateTasksComponent implements OnInit {
     this.api.createTask(data).subscribe(data=>{
       let response:any=data;
       this.spinner.hide();
+      console.log(response)
       if(response.message!=undefined)
       {
         let status: any= response;
@@ -123,8 +125,13 @@ export class CreateTasksComponent implements OnInit {
           confirmButtonText: 'Ok'
       }).then((result) => {
         this.resettask();
-
-        this.router.navigate(['/pages/projects/projectdetails'],{queryParams:{id:this.project_id}})
+        // this.router.navigate(["/pages/projects/taskDetails"], {
+        //   queryParams: {
+        //     project_id: this.params_data.project_id,
+        //     project_name: this.params_data.project_name,
+        //     task_id: event.id,
+        //   },
+        // });
         //this.projectdetailscreen.getTaskandCommentsData();
       })
 
