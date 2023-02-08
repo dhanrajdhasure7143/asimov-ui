@@ -39,23 +39,25 @@ export class CreateTasksComponent implements OnInit {
   ngOnInit() {
 
      this.createtaskForm=this.formBuilder.group({
-      taskCategory: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      priority: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      startDate: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      resources: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      correlationID: [""],
       taskName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      timeEstimate: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      endDate: [""],
+      taskCategory: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      correlationID: [""],
+      priority: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      startDate: ["", Validators.compose([Validators.required])],
+      endDate: ["",Validators.compose([Validators.required])],
+      resources: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       approvers: ["",Validators.compose([Validators.maxLength(50)])],
       description: ["", Validators.compose([Validators.maxLength(200)])],
+
+
+      // timeEstimate: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       })
 
       this.spinner.show();
 
       this.route.queryParams.subscribe(data=>{
         let response:any=data;
-        this.project_id=response.id
+        this.project_id=response.project_id
         // this.getallusers();
         this.getTaskCategories();
         this.getTaskCategoriesByProject();
