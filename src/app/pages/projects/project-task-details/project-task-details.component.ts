@@ -158,7 +158,7 @@ export class ProjectTaskDetailsComponent implements OnInit {
     this.columns_list = [
       {ColumnName: "fullName",DisplayName:"Document Name"},
       { ColumnName: "user_role",DisplayName:"Attached Date"},
-      { ColumnName: "actions",DisplayName:"Actions"},
+      // { ColumnName: "actions",DisplayName:"Actions"},
     ];
   }
 

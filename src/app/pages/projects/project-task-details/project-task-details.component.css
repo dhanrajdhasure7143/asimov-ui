@@ -395,3 +395,12 @@ button.ep-pad {
     display: block;
     padding-bottom: 100%;
   }
+  textarea.md-textarea-scroll{
+    overflow-y: auto;
+  }
+  textarea.md-textarea {
+    padding: 0;
+    resize: none;
+    min-height: 3rem;
+    width: 100%;
+  }
