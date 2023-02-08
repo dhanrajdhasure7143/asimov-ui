@@ -64,18 +64,17 @@ span.highimp {
     margin: 0px 10px 0px 0px !important;
     border-right: 1px solid #dbdbdb;
     padding-right: 10px;
-    align-items: center;
-    display: flex;
-    font-size: 12px;
+    /* font-size: 12px; */
 }
 .project-description p {
     margin: 0px;
-    /* width: 75%; */
+    width: 75%;
     font-size: 16px;
 }
 .project-description span.readmore {
     color: #098de6;
     cursor: pointer;
+    margin-left: 5px;
 }
 
 .activecollaboration {

@@ -2678,7 +2678,7 @@ button.btn:focus {
 }
 
 input.p-inputtext {
-  height: 36px;
+  height: 34px;
   border: 1px solid var(--main-bordercolor) !important;
   font-size: var(--main-fontsize) !important;
 }
@@ -2801,13 +2801,6 @@ tr.p-element.p-selectable-row.p-highlight > td:first-child {
 tr.p-element.p-selectable-row.p-highlight > td:last-child {
   border-bottom-right-radius: 8px; /*highlight of row*/
 }
-
-/* Grid NEW Styles End */
-
-.p-link {
-  background-color: transparent !important;
-  box-shadow: none !important;
-}
 /* grid-filter Overlay Styles Start */
 .p-column-filter-buttonbar .p-button.p-button-outlined {
   color: var(--main-bluecolor) !important;
@@ -2824,6 +2817,31 @@ tr.p-element.p-selectable-row.p-highlight > td:last-child {
   padding: 4px 12px;
 }
 /* grid-filter Overlay Styles End */
+
+/* Grid NEW Styles End */
+
+/* primeNg components Styles Start */
+.p-link {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+.p-multiselect-panel .p-multiselect-items .p-multiselect-item.p-highlight,
+.p-multiselect-panel .p-multiselect-items .p-multiselect-item:not(.p-highlight):not(.p-disabled):hover {
+  background: transparent !important;
+}
+.p-multiselect-panel .p-multiselect-items .p-multiselect-item:focus {
+  box-shadow: none !important;
+}
+.p-checkbox .p-checkbox-box.p-highlight,
+.p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box.p-highlight:hover {
+  border-color: var(--main-bluecolor) !important;
+  background: var(--main-bluecolor) !important;
+}
+.p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box:hover {
+  border-color: var(--main-bluecolor) !important;
+}
+/* primeNg components Styles End */
+
 
 
 .actionspopmenu .p-menu-overlay {
