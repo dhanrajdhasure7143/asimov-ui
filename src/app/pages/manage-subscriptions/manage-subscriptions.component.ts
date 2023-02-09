@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LoaderService } from 'src/app/services/loader/loader.service';
 import { PagesComponent } from '../pages.component';
 import { RestApiService } from '../services/rest-api.service';
 
@@ -11,7 +12,6 @@ export class ManageSubscriptionsComponent implements OnInit {
   isExpanded = true;
   showSubmenu: boolean = false;
   showadminSubmenu: boolean = false;
-  isShowing = false;
   showSubSubMenu: boolean = false;
   showadminSubSubMenu: boolean = false;
   userRoles: any;
@@ -20,7 +20,8 @@ export class ManageSubscriptionsComponent implements OnInit {
   billingaddresssection: boolean = false;
   paymenthistorysection: boolean = false;
   orderdetailssection: boolean = false;
-  constructor(public obj: PagesComponent, private rest_service: RestApiService) { }
+  constructor(public obj: PagesComponent, private rest_service: RestApiService,
+    private spinner: LoaderService) { }
 
   ngOnInit(): void {
 
@@ -43,6 +44,7 @@ export class ManageSubscriptionsComponent implements OnInit {
 
 
   hightlight(element, name) {
+    this.spinner.show();
     localStorage.setItem('selectedModule', element + '&' + name)
     $('.link').removeClass('active');
     $('#' + element).addClass("active");
@@ -88,5 +90,7 @@ export class ManageSubscriptionsComponent implements OnInit {
       this.currentplansection = false
       this.paymentmethodssection = false
     }
+    this.spinner.hide();
   }
+  
 }

@@ -223,13 +223,13 @@
         <div class="rpa-modal-header">
           <span class="rpa-modal-close">
             <img
-              *ngIf="isShowExpand"
+              *ngIf="isShowExpand_icon"
               src="../../../../assets/images/RPA/Expand-In.svg"
               (click)="minimizeFullScreen()"
               class="expandsvgimg"
             />
             <img
-              *ngIf="!isShowExpand"
+              *ngIf="!isShowExpand_icon"
               src="../../../../assets/images/RPA/Expand-Out.svg"
               (click)="expandFullScreen()"
               class="expandsvgimg"
