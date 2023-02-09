@@ -1,5 +1,5 @@
 import { Component, OnInit, TemplateRef, ViewChild } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { TreeNode } from "primeng/api";
 import { RestApiService } from "src/app/pages/services/rest-api.service";
 
@@ -42,8 +42,8 @@ export class ProjectsDocumentComponent implements OnInit {
   project_name:any;
 
 
-  constructor(private rest_api : RestApiService, private route : ActivatedRoute) {
-    this.route.queryParams.subscribe((data) => {
+  constructor(private rest_api : RestApiService, private activedRoute : ActivatedRoute, private router:Router) {
+    this.activedRoute.queryParams.subscribe((data) => {
       this.params_data = data;
       console.log(data);
       this.project_id = this.params_data.project_id;
@@ -367,4 +367,12 @@ addParent() {
       // })
     })
   }
+
+
+  navigateToCreateDocument()
+  {
+    this.router.navigate(['pages/projects/document-editor'],
+    { queryParams: { project_id:this.project_id, projectName:this.project_name  } })
+  }
+  
 }

@@ -3,7 +3,7 @@
             <div class="col-9">
                 <h3>
                     <label id="popup_title">
-                        <a routerLink="/pages/projects/projectdetails"><img
+                        <a routerLink="/pages/projects/projectdetails"  [queryParams]="{project_id: project_id}"><img
                                 src="./../../../../assets/images-n/projects/backarrow.svg" alt="back-arrow"></a>
                     </label>
                     <span class="title_text">
@@ -106,7 +106,7 @@
                 </div>
                 <div class="row" *ngIf="hiddenPopUp1">
                     <div class="col-md-6">
-                        <button>
+                        <button  (click)="navigateToCreateDocument()">
                             <p-card class="cards side"> <i class="pi pi-file icon-color" style="font-size: 2rem"></i> <br>
                                 Create Document </p-card>
                         </button>
@@ -142,7 +142,7 @@
                 </div>
                 <div class="row" *ngIf="hiddenPopUp1">
                     <div class="col-md-6">
-                        <button>
+                        <button  (click)="navigateToCreateDocument()">
                             <p-card class="cards side"> <i class="pi pi-file" style="font-size: 2rem"></i> <br>
                                 Create Document </p-card>
                         </button>
