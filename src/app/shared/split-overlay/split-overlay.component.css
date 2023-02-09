@@ -1,37 +1,14 @@
-
 .right_split {
-    /* background-color: white !important; */
-      background-color:#f5f5f5;
-
-    height: 100%;
+  background-color:#f9f9f9;
+  height: 100%;
 }
-
-  .splitter-headers{
-    margin-top: 10px;
-    float: right;
-    font-size: 1.5rem;
-    font-weight: 700;
-    line-height: 1;
-    color: #000;
-    text-shadow: 0 1px 0 #fff;
-    opacity: .5;
-    position: fixed;
-    z-index: 1000;
-  }
-
-  .own-overlay {
-    position: fixed;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 1040;
-  }
-
-  .dynamic-forms-modal{
-    padding-left: 60px !important;
-    margin-top: 52px !important;
-  }
-
-  .dynamic-forms-modal .rpa-modal-content{
-   box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%) !important;
-  }
+.splitter-headers {
+  position: absolute;
+  right: 20px;
+  top: 18px;
+  z-index: 9999;
+  cursor: pointer;
+}
+a.closeoverlay {
+  margin-left: 10px;
+}
