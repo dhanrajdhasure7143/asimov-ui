@@ -5,6 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { LoaderService } from 'src/app/services/loader/loader.service';
 import Swal from 'sweetalert2';
 import { RestApiService } from '../../services/rest-api.service';
 
@@ -29,7 +30,7 @@ export class OrderDetailsComponent implements OnInit {
   public plancheckbox: any;
   public feedbackbox: any;
   constructor(private modalservice:BsModalService,private router:Router,private rest:RestApiService,
-    private spinner:NgxSpinnerService) { }
+    private spinner:LoaderService) { }
 
   ngOnInit(): void {
     this.getAllSubscrptions();

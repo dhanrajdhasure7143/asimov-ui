@@ -159,6 +159,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   area_splitSize: any = {};
 
   isBotUpdated: boolean = false;
+  isShowExpand_icon : boolean = false;
 
   constructor(
     private rest: RestApiService,
@@ -1893,6 +1894,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
   closeFun() {
     this.hiddenPopUp = false;
+    this.isShowExpand_icon = false;
     this.hiddenCreateBotPopUp = false;
     this.fields = [];
   }
@@ -2380,6 +2382,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   minimizeFullScreen() {
     this.isShowExpand = false;
     this.splitAreamin_size = "200";
+    this.isShowExpand_icon = false;
     this.areas = [
       { size: 70, order: 1 },
       { size: 30, order: 2 },
@@ -2387,6 +2390,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   expandFullScreen() {
+    this.isShowExpand_icon = true;
     this.isShowExpand = true;
     this.splitAreamin_size = "null";
     this.areas = [
