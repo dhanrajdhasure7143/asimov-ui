@@ -14,6 +14,7 @@ import { LoaderService } from "src/app/services/loader/loader.service";
   styleUrls: ["./create-project-form.component.css"],
 })
 export class CreateProjectFormComponent implements OnInit {
+  @Input('hiddenPopUp') public hiddenPopUp: boolean;
   insertForm2: FormGroup;
   selectedresources: any = [];
   valuechain: any = [];
@@ -108,6 +109,10 @@ export class CreateProjectFormComponent implements OnInit {
       if (element.userId.userId != this.loggedInUserId)
         this.resources_list.push(element);
     });
+    if(!this.hiddenPopUp)
+      setTimeout(() => {
+        this.resetcreateproject();
+      }, 200);
   }
 
   getprocessnames() {
@@ -255,7 +260,7 @@ export class CreateProjectFormComponent implements OnInit {
           this.resetcreateproject();
           // this.router.navigate(['/pages/projects/projectdetails'],{queryParams:{id:response.project.id}})
           this.router.navigate(["/pages/projects/projectdetails"], {
-            queryParams: { project_id: response.project.id,isCreated:true},
+            queryParams: { project_id: response.project.id,project_name: response.project.projectName,isCreated:true},
           });
         });
       } else Swal.fire("Error", response.errorMessage, "error");

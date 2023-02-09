@@ -220,7 +220,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   constructor(private dt: DataTransferService, private route: ActivatedRoute, private dataTransfer: DataTransferService, private rpa: RestApiService,
     private modalService: BsModalService, private formBuilder: FormBuilder, private router: Router,
     private spinner: LoaderService) {
-      this.route.queryParams.subscribe(data=>{​​​​​​
+      this.route.queryParams.subscribe((data:any)=>{​​​​​​
         this.params_data=data
         this.project_id = this.params_data.project_id
         console.log(this.project_id)
@@ -581,7 +581,6 @@ export class ProjectDetailsScreenComponent implements OnInit {
   console.log("testing",res)
   this.processownername = this.projectDetails.processOwner
   this.project_desc = this.projectDetails.projectPurpose
-  this.params_data["project_name"]= this.projectDetails.projectName
   this.processOwnerFlag=false
   if(this.projectDetails.endDate){
     this.projectenddate=moment(this.projectDetails.endDate).format("lll");
@@ -1963,7 +1962,6 @@ onDragEnd(e: { gutterNum: number; sizes: number[] }) {
   }
 
   openDocumentScreen(){
-    // this.router.navigate(['/pages/projects/document'],{queryParams:{id:this.project_id}});
     this.router.navigate(['/pages/projects/document'],{queryParams:{project_id:this.project_id,"project_name":this.projectDetails.projectName}});
   }
 }

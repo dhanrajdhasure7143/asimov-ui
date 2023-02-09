@@ -63,6 +63,7 @@ export class SplitOverlayComponent implements OnInit {
   }
 
   closeSplitOverlay(){ // close the splitter overlay
+    this.minimizeFullScreen();
     this.closeOverlay.emit(false)
   }
   
