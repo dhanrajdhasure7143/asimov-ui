@@ -4,7 +4,7 @@
   </ngx-spinner>
 <div class="main-content">
     <div class="row content-area">
-        <div class="module-heading title ">
+        <div class="row module-heading title ">
           <span class="module-back-button" routerLink="/pages/rpautomation/home">
               <i class="fas fa-arrow-left" aria-hidden="true"></i>
           </span>
@@ -13,7 +13,7 @@
           </span>
         </div>
 
-      <mat-tab-group [selectedIndex]="selectedTab" (selectedTabChange)="onTabChanged($event)">
+      <mat-tab-group class="w-100" [selectedIndex]="selectedTab" (selectedTabChange)="onTabChanged($event)">
           <mat-tab label="Environments">
 
               <ng-template mat-tab-label>

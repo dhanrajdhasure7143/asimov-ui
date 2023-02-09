@@ -691,7 +691,8 @@ foreignObject {
 
 .canvas-container .mat-tab-label {
   min-width: 90px !important;
-  height: 36px !important;
+  /* height: 36px !important; */
+  height: 45px !important;
   padding: 5px;
   font-weight: normal !important;
 }
@@ -1889,10 +1890,12 @@ button.btn.btn-primary:first-child {
 
 .bpm-notation-fields {
   position: absolute !important;
-  bottom: 6px;
+  bottom: 40px;
+  right: 0px;
   width: 100%;
+  /* bottom: 6px;
   right: 15px;
-  width: auto;
+  width: auto; */
   top: auto;
   z-index: 100;
 }
