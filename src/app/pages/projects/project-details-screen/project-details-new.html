@@ -93,7 +93,7 @@
                                 </div> -->
                                 <div class="pinf">
                                     <div class="d-flex">
-                                        <span class="kpibot">
+                                        <span class="kpipercent">
                                             <p>{{projectDetails.projectPercentage}} %</p>
                                             <label>Project Completion</label>
                                         </span>
@@ -103,16 +103,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-sm-1">
-                        <label>Description</label>
-                    </div>
-                    <div class="col">
-                        <span *ngIf="isReadmoreShow"> <p>{{project_desc}} <span class="readmore icon-color" (click)="onReadMoreHide()" >Hide</span></p> </span>
+                <div class="row project-description">
+                    <label>Description</label>
+                    <p *ngIf="isReadmoreShow">{{project_desc}} <span class="readmore icon-color" (click)="onReadMoreHide()" >Hide</span></p>
                     <!-- <p>{{projectDetails.projectPurpose}}</p> -->
-                    <span *ngIf="!isReadmoreShow"><p>{{truncateDesc(project_desc)}} <span class="readmore icon-color" (click)="onReadMoreHide()" *ngIf="project_desc.length > 150">Read more</span></p> </span>
-                    </div>
-
+                    <p *ngIf="!isReadmoreShow">{{truncateDesc(project_desc)}} <span class="readmore icon-color" (click)="onReadMoreHide()" *ngIf="project_desc.length > 150">Read more</span></p>
+                   
                 </div>
             </div>
             <div class="row">
@@ -221,7 +217,7 @@
                             <a><span> </span></a>
                         </button> -->
                         <button class="btn blue-btntext" (click)="openUsersOverlay()">
-                            <a><span> Users</span></a>
+                            <a><span>Users</span></a>
                         </button>
                         <button class="btn blue-btntext">
                             <a><span>Create Folder</span></a>
@@ -309,100 +305,88 @@
 </div>
 
 
+<!-- own-overlay rpa-modal dynamic-forms-modal -->
 
-
-<div class="own-overlay rpa-modal dynamic-forms-modal" [hidden]="!hiddenPopUp" style="display: block">
+<div class="" [hidden]="!hiddenPopUp" style="display: block">
     <app-split-overlay (closeOverlay)="closeOverlay($event)">
-        <div class="">
-            <div class="rpa-modal-header">
-                <p-tabView #tabView (onChange)="onUsersTab($event.index)">
-                    <p-tabPanel>
-                        <ng-template pTemplate="header">
-                            <div class="status-tabs newstatu">
-                                <div class="status-data">
-                                    <h3>New Users <span *ngIf="checkBoxselected.length >0"> ({{checkBoxselected.length}}
-                                            Users selected) </span> </h3>
-                                </div>
+        <div class="splitoverlaydiv">
+            <p-tabView #tabView (onChange)="onUsersTab($event.index)">
+                <p-tabPanel>
+                    <ng-template pTemplate="header">
+                        <h4>New Users <span *ngIf="checkBoxselected.length >0"> ({{checkBoxselected.length}}
+                                        Users selected) </span></h4>
+                    </ng-template>
+                </p-tabPanel>
+                <p-tabPanel>
+                    <ng-template pTemplate="header">
+                        <h4>Existing Users</h4>
+                    </ng-template>
+                </p-tabPanel>
+            
+                <div class="splitoverlaycontent">
+                    <p-table #dt1 [value]="users_tableList" [globalFilterFields]="['user_role','fullName']"
+                        [columns]="columns_list" [(selection)]="checkBoxselected" [resizableColumns]="true"
+                        responsiveLayout="scroll" dataKey="id">
+                        <ng-template pTemplate="caption">
+                            <div class="d-flex">
+                                <p-dropdown *ngIf="users_tabIndex != 1" [options]="roles_list"
+                                    class="listdropdown" [(ngModel)]="selectedRole"
+                                    (onChange)="onChangeRole($event)" optionLabel="name"></p-dropdown>
+                                <span class="p-input-icon-right">
+                                    <i class="pi pi-search"></i>
+                                    <input type="text" pInputText placeholder="Search" (input)="dt1.filterGlobal($event.target.value, 'contains')">
+                                </span>
+                                <span *ngIf="users_tabIndex == 1" class="userstabbtns">
+                                    <button class="btn">
+                                        <img src="./../../../../assets/images-n/projects/Open.svg" alt="Open">
+                                        <span>Open</span>
+                                    </button>
+                                    <button class="btn">
+                                        <img src="./../../../../assets/images-n/projects/plus-square_blue.svg"
+                                            alt="Create">
+                                        <span>Create</span>
+                                    </button>
+                                </span>
                             </div>
                         </ng-template>
-                    </p-tabPanel>
-                    <p-tabPanel>
-                        <ng-template pTemplate="header">
-                            <div class="status-tabs newstatu">
-                                <div class="status-data">
-                                    <h4>Existing Users</h4>
-                                </div>
-                            </div>
+                        <ng-template pTemplate="header" let-columns>
+                            <tr *ngIf="users_tabIndex == 1">
+                                <th *ngFor="let col of columns">{{col.DisplayName}}
+                                </th>
+                            </tr>
                         </ng-template>
-                    </p-tabPanel>
-                </p-tabView>
-            </div>
-            <div class="modal-body actions-mbody actionsoverlay-mbody">
-                <div class="tab-pane">
-                    <div class="tablediv">
-                        <p-table #dt1 [value]="users_tableList" [globalFilterFields]="['user_role','fullName']"
-                            [columns]="columns_list" [(selection)]="checkBoxselected" [resizableColumns]="true"
-                            responsiveLayout="scroll" dataKey="id">
-                            <ng-template pTemplate="caption">
-                                <div class="p-d-flex">
-                                    <p-dropdown *ngIf="users_tabIndex != 1" [options]="roles_list"
-                                        [style]="{minWidth: '200px'}" [(ngModel)]="selectedRole"
-                                        (onChange)="onChangeRole($event)" optionLabel="name"></p-dropdown>
-                                    <span class="p-input-icon-right">
-                                        <i class="pi pi-search"></i>
-                                        <input type="text" pInputText placeholder="Search" (input)="dt1.filterGlobal($event.target.value, 'contains')">
+                        <ng-template pTemplate="body" let-rowData let-columns="columns">
+                            <tr>
+                                <td *ngIf="users_tabIndex != 1"> <p-tableCheckbox
+                                        [value]="rowData"></p-tableCheckbox></td>
+                                <td *ngFor="let col of columns">
+                                    <span>{{rowData[col.ColumnName]}}</span>
+                                    <span *ngIf="col.ColumnName == 'action'">
+                                        <div class="newinntalx">
+                                            <a (click)="deleteuserById(rowData)">
+                                                <img src="../../../../../assets/images/Projects/delete-black.svg"
+                                                    alt="" class="default-img">
+                                                <img src="../../../../../assets/images/Projects/delete-red.svg"
+                                                    alt="" class="hover-img">
+                                            </a>
+                                        </div>
                                     </span>
-                                    <span *ngIf="users_tabIndex == 1">
-                                        <button class="btn">
-                                            <img src="./../../../../assets/images-n/projects/Open.svg" alt="Open">
-                                            <span>Open</span>
-                                        </button>
-                                        <button class="btn">
-                                            <img src="./../../../../assets/images-n/projects/plus-square_blue.svg"
-                                                alt="Create">
-                                            <span>Create</span>
-                                        </button>
-                                    </span>
-                                </div>
-                            </ng-template>
-                            <ng-template pTemplate="header" let-columns>
-                                <tr *ngIf="users_tabIndex == 1">
-                                    <th *ngFor="let col of columns">{{col.DisplayName}}
-                                    </th>
-                                </tr>
-                            </ng-template>
-                            <ng-template pTemplate="body" let-rowData let-columns="columns">
-                                <tr>
-                                    <td *ngIf="users_tabIndex != 1"> <p-tableCheckbox
-                                            [value]="rowData"></p-tableCheckbox></td>
-                                    <td *ngFor="let col of columns">
-                                        <span>{{rowData[col.ColumnName]}}</span>
-                                        <span *ngIf="col.ColumnName == 'action'">
-                                            <div class="newinntalx">
-                                                <a (click)="deleteuserById(rowData)">
-                                                    <img src="../../../../../assets/images/Projects/delete-black.svg"
-                                                        alt="" class="default-img">
-                                                    <img src="../../../../../assets/images/Projects/delete-red.svg"
-                                                        alt="" class="hover-img">
-                                                </a>
-                                            </div>
-                                        </span>
-                                    </td>
-                                </tr>
-                            </ng-template>
-                            <ng-template pTemplate="emptymessage">
-                                <tr>
-                                    <td style="text-align: center;" colspan="7">No Users found</td>
-                                </tr>
-                            </ng-template>
-                        </p-table>
-                    </div>
-                    <div class="row footerbtns justify-content-end" *ngIf="users_tabIndex != 1">
-                        <button class="btn blue-btntext">Cancel</button>
-                        <button class="btn btn-onboard" (click)="addresources()">Onboard Users</button>
-                    </div>
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="emptymessage">
+                            <tr>
+                                <td style="text-align: center;" colspan="7">No Users found</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
                 </div>
-            </div>
+                <div class="row justify-content-end" *ngIf="users_tabIndex != 1">
+                    <button class="btn blue-btntext">Cancel</button>
+                    <button class="btn bluebg-button" (click)="addresources()">Onboard Users</button>
+                </div>
+            </p-tabView>
+            
         </div>
     </app-split-overlay>
 </div>

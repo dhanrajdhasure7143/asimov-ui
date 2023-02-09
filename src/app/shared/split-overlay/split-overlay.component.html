@@ -5,11 +5,11 @@
     <as-split-area [size]="areas[1].size" order="areas[1].order" [minSize]="splitAreamin_size">
         <div class="right_split">
             <span class="splitter-headers">
-                <img *ngIf="isShowExpand" src="../../../../assets/images/RPA/Expand-In.svg"
+                <img *ngIf="isShowExpand" src="../../../assets/images-n/projects/minimize.svg"
                     (click)="minimizeFullScreen()" class="expandsvgimg" />
-                <img *ngIf="!isShowExpand" src="../../../../assets/images/RPA/Expand-Out.svg"
+                <img *ngIf="!isShowExpand" src="../../../assets/images-n/projects/maximize.svg"
                     (click)="expandFullScreen()" class="expandsvgimg" />
-                <a (click)="closeSplitOverlay()"><img src="./../../../../assets/images-n/projects/close-circle-line.svg"
+                <a (click)="closeSplitOverlay()" class="closeoverlay"><img src="./../../../../assets/images-n/projects/close-circle-line.svg"
                         alt="close"></a>
             </span>
             <ng-content></ng-content>
