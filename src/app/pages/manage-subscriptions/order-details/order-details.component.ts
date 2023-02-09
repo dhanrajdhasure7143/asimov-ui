@@ -24,7 +24,7 @@ export class OrderDetailsComponent implements OnInit {
   @ViewChild("subscriptioninfotemplate") subscriptioninfotemplate: any;
   subscribeddata: any;
   modalRef: BsModalRef;
-  tableData: any;
+  tableData: any[] =[];
   public stopcheckbox: any;
   public pricecheckbox: any;
   public plancheckbox: any;
