@@ -3,6 +3,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
 import { RestApiService } from '../../services/rest-api.service';
 import { Router } from '@angular/router';
+import { LoaderService } from 'src/app/services/loader/loader.service';
 
 @Component({
   selector: 'app-payment-methods',
@@ -13,7 +14,7 @@ export class PaymentMethodsComponent implements OnInit {
   paymentMode: any;
   error: string;
   showcarddetails:boolean=false;
-  constructor(private api:RestApiService,private spinner:NgxSpinnerService,private router: Router) { }
+  constructor(private api:RestApiService,private spinner:LoaderService,private router: Router) { }
 
   ngOnInit(): void {
     this.getAllPaymentmodes();
