@@ -4,7 +4,7 @@
             <div class="col-md-8"></div>
         </div>
         <div class="row">
-            <div class="col-md-12 offset-1 new-bps-sample">
+            <div class="col-md-12 new-bps-sample">
                 <app-upload-create-drop-bpmn [bpmn_list]="savedDiagrams_list" [selectedObj]="selectedObj"
                     [isEdit_data]="isEdit" isConfirmance="false"></app-upload-create-drop-bpmn>
             </div>
@@ -13,7 +13,7 @@
                     <div class="col-md-6 pl-0">
                         <h4 class="box-heading">My Workspace</h4>
                     </div>
-                    <div class="col-md-6 p-0">
+                    <div class="row col-md-6 p-0">
                         <div class="col-md-6 form-group pr-0 bps-labcls">
                             <select name="category" (change)="searchByCategory(categoryName)"
                                 [disabled]="categories_list.length == 1" #category="ngModel" [(ngModel)]="categoryName"
@@ -48,7 +48,7 @@
                 </div>
 
                 <div class="row col-md-12 new-bps-grid-data" id="bpmn_list">
-                    <mat-accordion>
+                    <mat-accordion class="w-100">
                         <mat-expansion-panel [(expanded)]="each_diag.xpandStatus"
                             *ngFor="let each_diag of displayedRows$ | async ;let i=index;trackBy:loopTrackBy"
                             [id]="'bpmn_list_item'+i" (opened)="getSelectedNotation(each_diag,i)" hideToggle>

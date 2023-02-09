@@ -91,3 +91,7 @@ span.testtooltip:before {
  margin-top: 100px;
 }
 
+.userssearch input {
+  height: 20px !important;
+  margin: 0px !important;
+}

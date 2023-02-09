@@ -89,3 +89,8 @@ span.testtooltip:before {
   text-align: center;
   margin-top:100px;
 }
+
+.departmentsearch input {
+  height: 20px !important;
+  margin: 0px !important;
+}

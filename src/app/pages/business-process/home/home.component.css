@@ -34,6 +34,7 @@
     font-weight: 600;
     border: none;
     height: 40px;
+    flex-wrap: unset;
 }
 
 .myworkspace-style .col-md-6 mat-form-field {
@@ -69,6 +70,7 @@ span.comment {
     display: flex;
     color: #212529;
     align-items: center;
+    flex-wrap: unset;
 }
 .bps_overlay1 {
     border-radius: 4px;
