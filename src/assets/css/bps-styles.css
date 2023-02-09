@@ -496,6 +496,7 @@ mat-tab-body {
 .upload_again_btn {
   display: inline !important;
   margin: 0 !important;
+  height: auto !important;
 }
 
 .upload_again_btn ngx-dropzone-label {

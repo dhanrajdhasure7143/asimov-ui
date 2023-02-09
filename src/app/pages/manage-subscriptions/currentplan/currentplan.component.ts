@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { CryptoService } from 'src/app/services/crypto.service';
+import { LoaderService } from 'src/app/services/loader/loader.service';
 import Swal from 'sweetalert2';
 import { RestApiService } from '../../services/rest-api.service';
 
@@ -53,7 +54,7 @@ export class CurrentplanComponent implements OnInit {
   expiry: any;
  
   constructor(
-    private api: RestApiService, private spinner: NgxSpinnerService,private modalService: BsModalService,
+    private api: RestApiService, private spinner: LoaderService,private modalService: BsModalService,
     private cryptoService: CryptoService,private router:Router
   ) { }
 
