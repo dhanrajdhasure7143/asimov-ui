@@ -22,6 +22,7 @@ export class ProjectTaskDetailsComponent implements OnInit {
   @ViewChild("inplace3") inplace3!: Inplace;
   @ViewChild("inplace4") inplace4!: Inplace;
   @ViewChild("inplace5") inplace5!: Inplace;
+  @ViewChild("inplace6") inplace6!: Inplace;
   task_desc: any;
   project_id: any;
   project_name: any;
@@ -48,6 +49,7 @@ export class ProjectTaskDetailsComponent implements OnInit {
   add_comment: any;
   added_comments_list: any = [];
   percentageComplete: any;
+  priority:any;
 
   constructor(
     private route: ActivatedRoute,
@@ -137,6 +139,7 @@ export class ProjectTaskDetailsComponent implements OnInit {
     this.inplace3.deactivate();
     this.inplace4.deactivate();
     this.inplace5.deactivate();
+    this.inplace6.deactivate();
   }
 
   inplaceActivate(field) {
@@ -298,5 +301,13 @@ export class ProjectTaskDetailsComponent implements OnInit {
     // } else {
     //   alert("please fill all details");
     // }
+  }
+  attachDocument(){
+
+  }
+  Space(event:any){
+    if(event.target.selectionStart === 0 && event.code === "Space"){
+      event.preventDefault();
+    }
   }
 }

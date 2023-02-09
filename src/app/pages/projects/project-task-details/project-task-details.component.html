@@ -62,14 +62,16 @@
                                                 </ng-template>
                                                 <ng-template pTemplate="content">
                                                     <input type="text" [style]="{'width':'30%'}" pInputText
-                                                        [(ngModel)]="taskName" />
+                                                        [(ngModel)]="taskName" (keydown)="Space($event)"/>
                                                     <span class="pull-right">
                                                         <i class="pi pi-check"
-                                                            (click)="onUpdateDetails('taskName')"></i>
+                                                            *ngIf="taskName" (click)="onUpdateDetails('taskName')"></i>
                                                         <i class="pi pi-times" (click)="onDeactivate()"></i>
                                                     </span>
                                                 </ng-template>
                                             </p-inplace>
+                                            <p-inplace #inplace6 (onActivate)="inplaceActivate('priority')">
+                                                <ng-template pTemplate="display">
                                             <span>
                                                 <img src="./../../../../assets/images-n/projects/low_priority.svg"
                                                     alt="importance" *ngIf="task_details.priority == 'Low'">
@@ -79,6 +81,27 @@
                                                     alt="importance" *ngIf="task_details.priority == 'High'">
                                                 <span class="highimp">{{task_details.priority}}</span>
                                             </span>
+                                        </ng-template>
+                                        <ng-template pTemplate="content">
+                                                <div class="p-field-radiobutton">
+                                                    <p-radioButton name="taskPriority" value="Low" [(ngModel)]="priority" ></p-radioButton>
+                                                    <label for="low">Low</label>
+                                                </div>
+                                                <div class="p-field-radiobutton">
+                                                    <p-radioButton name="taskPriority" value="Medium" [(ngModel)]="priority"></p-radioButton>
+                                                    <label for="inProgress">Medium</label>
+                                                </div>
+                                                <div class="p-field-radiobutton">
+                                                    <p-radioButton name="taskPriority" value="High" [(ngModel)]="priority"></p-radioButton>
+                                                    <label for="high">High</label>
+                                                </div>
+                                            <span class="pull-right">
+                                                <i class="pi pi-check"
+                                                    (click)="onUpdateDetails('priority')"></i>
+                                                <i class="pi pi-times" (click)="onDeactivate()"></i>
+                                            </span>
+                                        </ng-template>
+                                            </p-inplace>
                                         </div>
 
                                     </div>
@@ -257,6 +280,7 @@
                                 </div>
                             </p-tabPanel>
                             <p-tabPanel header="Audit">
+                            <div class="historyContent">
                                 <ul class="historydiv">
                                     <li *ngFor="let history of taskhistory_list">
                                         <div class="ET-history">
@@ -267,6 +291,7 @@
                                         </div>
                                     </li>
                                 </ul>
+                            </div>
                                 <!-- <div class="text-center" *ngIf="taskhistory_list.length==0">
                                     <h5>No Records Found</h5>
                                 </div> -->
@@ -327,10 +352,11 @@
                     </div>
                 </div>
             </div>
-            <div style="color: rgb(82, 82, 248);">
+            <div (click)="attachDocument()" type="file" style="color: rgb(82, 82, 248);">
+                <input type="text">
                 <button>
                     <img tyrpe="file" src="../../../../assets/images-n/projects/Attach.svg" alt=""> &nbsp;
-                    <span>Attach Documents</span>
+                   Attach Documents
                 </button>
             </div>
         </app-split-overlay>
