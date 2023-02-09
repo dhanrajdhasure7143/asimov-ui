@@ -82,9 +82,9 @@
   <!-- <span class="txt-wh header-seperator">|</span> -->
   <div class="space">
     <div class="">
-      <select class="form-control data">
+      <select class="form-control data" (change)="onChangeTenant($event.target.value)">
         <option value="" hidden disabled>Select Tenant</option>
-        <option *ngFor="let tenant of tenantsList" [value]="tenant.tenant_name">{{tenant.tenant_name | titlecase}}
+        <option *ngFor="let tenant of tenantsList" [value]="tenant.tenant_id">{{tenant.tenant_name | titlecase}}
         </option>
       </select>
     </div>
