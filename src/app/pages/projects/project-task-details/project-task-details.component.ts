@@ -50,6 +50,10 @@ export class ProjectTaskDetailsComponent implements OnInit {
   added_comments_list: any = [];
   percentageComplete: any;
   priority:any;
+  isFile_upload_dialog:boolean = false;
+  selected_folder:any;
+  folder_files:any;
+  files:any;
 
   constructor(
     private route: ActivatedRoute,
@@ -302,12 +306,131 @@ export class ProjectTaskDetailsComponent implements OnInit {
     //   alert("please fill all details");
     // }
   }
-  attachDocument(){
+  chnagefileUploadForm(event){
+    console.log(event)
+    this.isFile_upload_dialog = true;
 
+    // for (var i = 0; i <= e.target.files.length - 1; i++) {
+    // }
+    this.files = [
+      {
+        key: "0",
+        label: "Add Folder",
+        data: "Movies Folder",
+        collapsedIcon: 'pi pi-folder',
+        expandedIcon: 'pi pi-folder'
+      },
+      {
+        key: "1",
+        label: "Analysis",
+        data: "Documents Folder",
+        collapsedIcon: 'pi pi-folder',
+        expandedIcon: 'pi pi-folder-open',
+        children: [
+          {
+            key: "1-0",
+            label: "Add Folder / Document",
+            data: "Work Folder",
+            expandedIcon: "pi pi-folder-open",
+            collapsedIcon: "pi pi-folder",
+          },
+          { key: "1-1", label: "Document 1", icon: "pi pi-file", data: "Document" },
+          { key: "1-2", label: "Document 2", icon: "pi pi-file", data: "Document" },
+          { key: "1-3", label: "Document 3", icon: "pi pi-file", data: "Document" },
+        ],
+      },
+      {
+        key: "2",
+        label: "System Connectivity",
+        data: "Pictures Folder",
+        expandedIcon: "pi pi-folder-open",
+        collapsedIcon: "pi pi-folder",
+        children: [
+          {
+            key: "2-0",
+            label: "Add Folder / Document",
+            data: "Work Folder",
+            expandedIcon: "pi pi-folder-open",
+            collapsedIcon: "pi pi-folder",
+          },
+          { key: "2-1", label: "Document 1", icon: "pi pi-file", data: "Document" },
+          { key: "2-2",label: "Document 2", icon: "pi pi-file", data: "Document" },
+          { key: "2-3", label: "Document 3", icon: "pi pi-file", data: "Document" },
+        ],
+      },
+      {
+        key: "3",
+        label: "Process Documents",
+        data: "Pictures Folder",
+        expandedIcon: "pi pi-folder-open",
+        collapsedIcon: "pi pi-folder",
+        children: [
+          {
+            key: "3-0",
+            label: "Add Folder / Document",
+            data: "Work Folder",
+            expandedIcon: "pi pi-folder-open",
+            collapsedIcon: "pi pi-folder",
+          },
+          { key: "3-1", label: "Document 1", icon: "pi pi-file", data: "Document" },
+          { key: "3-2", label: "Document 2", icon: "pi pi-file", data: "Document" },
+          { key: "3-3", label: "Document 3", icon: "pi pi-file", data: "Document" },
+        ],
+      },
+      {
+        key: "4",
+        label: "Testing",
+        data: "Movies Folder",
+        expandedIcon: "pi pi-folder-open",
+        collapsedIcon: "pi pi-folder",
+        children: [
+          {
+            key: "4-0",
+            label: "Add Folder / Document",
+            data: "Work Folder",
+            expandedIcon: "pi pi-folder-open",
+            collapsedIcon: "pi pi-folder",
+          },
+          { key: "4-1", label: "Document 1", icon: "pi pi-file", data: "Document" },
+          { key: "4-2", label: "Document 2", icon: "pi pi-file", data: "Document" },
+          { key: "4-3", label: "Document 3", icon: "pi pi-file", data: "Document" },
+        ],
+      },
+      {
+        key: "5",
+        label: "References",
+        data: "Movies Folder",
+        expandedIcon: "pi pi-folder-open",
+        collapsedIcon: "pi pi-folder",
+        children: [
+          {
+            key: "5-0",
+            label: "Add Folder / Document",
+            data: "Work Folder",
+            expandedIcon: "pi pi-folder-open",
+            collapsedIcon: "pi pi-folder",
+          },
+          { key: "5-1", label: "Document 1", icon: "pi pi-file", data: "Document" },
+          { key: "5-2", label: "Document 2", icon: "pi pi-file", data: "Document" },
+          { key: "5-3", label: "Document 3", icon: "pi pi-file", data: "Document" },
+        ],
+      }
+    ];
+    this.folder_files = this.files
   }
+
   Space(event:any){
     if(event.target.selectionStart === 0 && event.code === "Space"){
       event.preventDefault();
     }
   }
+
+  nodeUnselect(){
+
+  }
+
+  onCloseFolderOverlay(){
+    this.isFile_upload_dialog = false;
+  }
+
 }

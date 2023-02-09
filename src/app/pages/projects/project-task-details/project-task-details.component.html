@@ -352,11 +352,21 @@
                     </div>
                 </div>
             </div>
-            <div (click)="attachDocument()" type="file" style="color: rgb(82, 82, 248);">
-                <button>
-                    <img type="file" src="../../../../assets/images-n/projects/Attach.svg" alt=""> &nbsp;
-                   Attach Documents
-                </button>
+            <div >
+                <div class="" (change)="chnagefileUploadForm($event)">
+                    <div class="fileupsec"><input type="file" name="myfile" multiple id=""><img type="file" src="../../../../assets/images-n/projects/Attach.svg" alt=""> &nbsp; <span>Attach Documents</span></div>
+                 </div>
             </div>
         </app-split-overlay>
     </div>
+
+    <p-dialog header="Folder Name" [(visible)]="isFile_upload_dialog" [style]="{width: '25vw'}" (onHide)="onCloseFolderOverlay()">
+        <span class="p-float-label">
+            <p-tree [value]="files" [filter]="false" styleClass="document-tree" selectionMode="single" [style]="{'max-height':'auto','overflow':'auto'}"
+            (onNodeUnselect)="nodeUnselect()" [(selection)]="selected_folder"> 
+            <!-- <ng-template let-node pTemplate="default">
+                <b (click)="onNodeClick($event,node)">{{node.label}}</b>
+            </ng-template> -->
+        </p-tree>
+        </span>
+    </p-dialog>

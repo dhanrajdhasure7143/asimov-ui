@@ -409,4 +409,27 @@ button.ep-pad {
     overflow: auto;
     min-height: 280px;
   }
+
+  .fileupsec {
+    position: relative;
+  }
+  
+   input[type="file"] {
+    opacity: 0;
+    cursor: pointer;
+    width: 125px;
+    z-index: 1;
+    position: relative;
+  }
+  .fileupsec span {
+    position: absolute;
+    color: var(--main-bluecolor);
+    padding: 4px 20px;
+    top: 0px;
+    border-radius: 4px;
+    left: 0px;
+    cursor: pointer;
+    z-index: 0;
+  }
+
   
