@@ -134,11 +134,11 @@
                               class="errspan required">From Date Required*</span>
                       </div>
                       <div class="">
-                          <label class="label-control" for="endDate">To<span class="star"></span></label>
+                          <label class="label-control" for="endDate">To<span class="star">*</span></label>
                           <input class="form-control enteredfield-color" type="date" name="daytime" max="9999-12-31"
                               [min]="mindate" (keydown)="endDateMethod()" formControlName="endDate">
                           <span *ngIf="createtaskForm.get('endDate').invalid && createtaskForm.get('endDate').touched"
-                              class="errspan required">To Date Required</span>
+                              class="errspan required">To Date Required*</span>
                       </div>
                   </div>
               </div>
@@ -151,10 +151,12 @@
                   style=" resize: none;">
                           </textarea> -->
                   <textarea [style]="{'width':'100%'}" [rows]="4" pInputTextarea formControlName="description"
-                      [autoResize]="true" maxlength="251" required></textarea>
+                      [autoResize]="true" maxlength="251"></textarea>
                   <span *ngIf="taskDescriptionFlag" class="errspan required">
                       Maximum of 150 characters
                   </span>
+                  <span *ngIf="createtaskForm.get('description').invalid && createtaskForm.get('description').touched"
+                  class="errspan required">Task Description Required*</span>
               </div>
           </div>
       </div>

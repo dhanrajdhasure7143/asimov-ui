@@ -34,7 +34,7 @@
                   <div class="form-fields col">
                       <label class="label-control">Process Owner<span class="star">*</span></label>
                       <p-dropdown [options]="users_list" [filter]="true" [style]="{'width':'100%'}"
-                          filterBy="user_email,fullName" required [autoDisplayFirst]="false" (onChange)="onChange()"
+                          filterBy="user_email,fullName" [autoDisplayFirst]="false" (onChange)="onChange()"
                           placeholder="Select Process Owner" formControlName="processOwner" optionValue="user_email"
                           optionLabel="fullName">
                           <!-- <ng-template let-group pTemplate="group">
