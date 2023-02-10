@@ -81,3 +81,6 @@ button.btn.btn-primary.btn-update {
   margin-top: 15px;
   margin-bottom: 15px;
 } */
+.form-check label{
+  padding-right: 20px;
+}

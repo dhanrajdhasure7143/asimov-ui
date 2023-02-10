@@ -92,14 +92,16 @@ span.highimp {
 .collab {
     padding: 20px !important;
     border-radius: 6px 6px 0px 0px;
-    height: 440px;
+    height: 530px;
+    display: block;
 }
 .lftusermsg {
     background: #EDF6FD;
     border-radius: 0px 15px 15px 15px !important;
     padding: 15px 6px 10px 30px !important;
-    margin: 10px 10px !important;
+    margin: 20px 10px !important;
     position: relative;
+    width: 70%;
 }
 .lftusermsg p {
   width: 100%;
@@ -107,18 +109,23 @@ span.highimp {
 .rgtusermsg {
   background: #42A7EB;
   border-radius: 15px 0px 15px 15px;
-  padding: 15px 10px !important;
+  padding: 15px 10px 2px !important;
   margin: 10px 0px 20px 0px !important;
   color: #fff;
+  width: 70%;
+  margin-left: 25% !important;
+  position: relative;
 }
 .lftuserimg .user_keys {
   position: absolute;
   top: -4px;
 }
-.lftusermsg .user_keys {
-  position: absolute;
-  top: -8px;
-  left: -8px;
+.lftusermsg .user_keys.res-circle {
+    position: absolute;
+    top: -20px;
+    left: -15px;
+    background-color: #098de6;
+    color: #fff;
 }
 .rgtusermsg p.rttime {
   text-align: right !important;
@@ -240,7 +247,7 @@ span.userstabbtns {
   padding-right: 0px !important;
 }
 #message-body{
-    height: 500px;
+    height: 95%;
     overflow: auto;
 }
 .res-circle {
@@ -258,25 +265,54 @@ span.userstabbtns {
     height: 32px;
     margin-top: 7px;
     margin-left: 5px;
-    font-weight: bold;
     padding: 5px 7px;
-    border: 1px solid black;
+    /* border: 1px solid black; */
   }
-    .res-circle:after {
-      content: "";
-      display: block;
-      padding-bottom: 100%;
-    }
+
     .res-reply{
         width: 32px;
+        width: 32px;
         height: 32px;
-        margin-top: 7px;
-        margin-left: 30px;
-        font-weight: bold;
-        padding: 5px 7px;
+        position: absolute;
+        top: 8px;
+        right: -10px;
       }
-        .res-reply:after {
-          content: "";
-          display: block;
-          padding-bottom: 100%;
-        }
+
+      .emptychat img {
+        width: auto;
+        height: 280px;
+        margin-top: 10%;
+    }
+    .emptychat p {
+        margin-top: 10px;
+        font-size: 22px;
+        font-weight: 500;
+    }
+
+    div.vertical-line{
+        width: 1px;
+        background-color: silver;
+        height: 100%;
+        float: left;
+        border: 1px ridge silver ;
+        border-radius: 1px;
+    }
+    .text {
+        position: relative;
+        font-size: 14px;
+        color: black;
+        font-family: sans-serif;
+        width: 165px;
+        text-align: center;
+        margin-left: 30px;
+      }
+      .linkss {
+        margin-left: 59px;
+      }
+      .imggg{
+        /* display: flex; */
+        justify-content: center;
+        width: 100%;
+        /* margin-left: 132px;
+        margin-bottom: 87px; */
+      }

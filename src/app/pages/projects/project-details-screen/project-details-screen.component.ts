@@ -218,7 +218,8 @@ export class ProjectDetailsScreenComponent implements OnInit {
   params_data:any;
   logged_userId:any='';
   userDetails:any;
-  replay_msg_id:any
+  replay_msg_id:any;
+  isCreate= false;
 
   constructor(private dt: DataTransferService, private route: ActivatedRoute, private dataTransfer: DataTransferService, private rest_api: RestApiService,
     private modalService: BsModalService, private formBuilder: FormBuilder, private router: Router,
@@ -226,6 +227,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
       this.route.queryParams.subscribe((data:any)=>{​​​​​​
         this.params_data=data
         this.project_id = this.params_data.project_id
+        if(this.params_data.isCreated) this.isCreate = this.params_data.isCreated
         this.getallusers();
       });
 
@@ -926,6 +928,8 @@ export class ProjectDetailsScreenComponent implements OnInit {
       if (response.errorMessage == undefined) {
         this.getProjectdetails();
         this.checktodelete();
+        // this.isCreate = false;
+        // this.router.navigate([],{ relativeTo:this.route, queryParams:{project_id: this.params_data.project.id} });
         Swal.fire("Success", response.status, "success");
         this.checkBoxselected =[];
         this.onUsersTab(0);
@@ -1956,6 +1960,7 @@ onDragEnd(e: { gutterNum: number; sizes: number[] }) {
     }
     console.log("calling logout api via web socket");
     // console.log(message)
+    this.typedMessage='';
     this.stompClient.send("/app/send", {}, JSON.stringify(message));
 }
 
@@ -1963,7 +1968,6 @@ onDragEnd(e: { gutterNum: number; sizes: number[] }) {
     this.rest_api.getMessagesByProjectId(this.project_id).subscribe((res:any)=>{
       this.messages_list = res;
       setTimeout(()=>{
-      this.typedMessage='';
           var objDiv = document.getElementById("message-body");
           objDiv.scrollTop = objDiv.scrollHeight;
         },100)
@@ -1999,4 +2003,9 @@ onDragEnd(e: { gutterNum: number; sizes: number[] }) {
     replyMessage(messageId){
     this.replay_msg_id=messageId;
    }
+
+   navigateToCreateDocument(){
+    this.router.navigate(['pages/projects/document-editor'],
+    { queryParams: { project_id:this.project_id, projectName:this.projectDetails.projectName  } })
+  }
 }
