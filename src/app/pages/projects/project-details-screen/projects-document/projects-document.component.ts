@@ -374,4 +374,10 @@ addParent() {
       queryParams: { project_id: this.project_id },
     });
   }
+
+  navigateToCreateDocument(){
+    this.router.navigate(['pages/projects/document-editor'],
+    { queryParams: { project_id:this.project_id, projectName:this.project_name  } })
+  }
+  
 }
