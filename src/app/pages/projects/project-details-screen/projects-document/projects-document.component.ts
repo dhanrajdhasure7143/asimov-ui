@@ -41,9 +41,11 @@ export class ProjectsDocumentComponent implements OnInit {
   project_id:any;
   project_name:any;
 
+  constructor(private rest_api : RestApiService,
+    private route : ActivatedRoute,
+    private router : Router) {
 
-  constructor(private rest_api : RestApiService, private activedRoute : ActivatedRoute, private router:Router) {
-    this.activedRoute.queryParams.subscribe((data) => {
+    this.route.queryParams.subscribe((data) => {
       this.params_data = data;
       console.log(data);
       this.project_id = this.params_data.project_id;
@@ -249,7 +251,6 @@ export class ProjectsDocumentComponent implements OnInit {
 
     if(this.selectedItem.label =="Add Folder")
     return this.isDialogBox = true;
-
     this.selectedFolder = this.selectedItem
     this.folder_files = this.selectedItem.children
 
@@ -368,9 +369,13 @@ addParent() {
     })
   }
 
+  backToProjectDetails() {
+    this.router.navigate(["/pages/projects/projectdetails"], {
+      queryParams: { project_id: this.project_id },
+    });
+  }
 
-  navigateToCreateDocument()
-  {
+  navigateToCreateDocument(){
     this.router.navigate(['pages/projects/document-editor'],
     { queryParams: { project_id:this.project_id, projectName:this.project_name  } })
   }

@@ -63,15 +63,17 @@
                         <div class="row project-ninfo">
                             <div class="row align-items-center">
                                 <span class="project-name">{{projectDetails.projectName}}</span>
-                                <img src="./../../../../assets/images-n/projects/Warning.svg" alt="importance">
+                                <img src="./../../../../assets/images-n/projects/low_priority.svg" *ngIf="projectDetails.priority == 'Low'" alt="importance">
+                                <img src="./../../../../assets/images-n/projects/medium_priority.svg" alt="importance" *ngIf="projectDetails.priority == 'Medium'">
+                                <img src="./../../../../assets/images-n/projects/high_priority.svg" alt="importance"  *ngIf="projectDetails.priority == 'High'">
                                 <span class="highimp">{{projectDetails.priority}}</span>
                             </div>
                             <div class="row pr-3 align-items-center justify-content-between">
                                 <!-- <div class="col-md-9 pl-0 d-flex align-items-center">
                                     <div class="row"> -->
                                 <div class="pinf">
-                                    <p>Account Financial Audit </p>
-                                    <label>Program Name</label>
+                                    <p>{{getUserName(projectDetails.processOwner)}}</p>
+                                    <label>Process Owner</label>
                                 </div>
                                 <div class="pinf">
                                     <p>{{projectDetails.mapValueChain}}</p>
@@ -79,7 +81,7 @@
                                 </div>
                                 <div class="pinf">
                                     <p>{{getUserName(projectDetails.owner)}}</p>
-                                    <label>Project Owner</label>
+                                    <label>Created By</label>
                                 </div>
                                 <div class="pinf">
                                     <p>{{projectDetails.status}}</p>
@@ -108,7 +110,6 @@
                     <p *ngIf="isReadmoreShow">{{project_desc}} <span class="readmore icon-color" (click)="onReadMoreHide()" >Hide</span></p>
                     <!-- <p>{{projectDetails.projectPurpose}}</p> -->
                     <p *ngIf="!isReadmoreShow">{{truncateDesc(project_desc)}} <span class="readmore icon-color" (click)="onReadMoreHide()" *ngIf="project_desc.length > 150">Read more</span></p>
-                   
                 </div>
             </div>
             <div class="row">
@@ -399,7 +400,7 @@
             </div>
             <div class="modal-body actions-mbody actionsoverlay-mbody">
             <div>
-              <app-create-tasks [users_list]="users_list"></app-create-tasks>
+              <app-create-tasks [users_list]="users_list" [params_data]="params_data" [hiddenPopUp]="createTaskOverlay"></app-create-tasks>
           </div>
             </div>
         </div>

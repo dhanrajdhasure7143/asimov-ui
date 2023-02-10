@@ -1613,5 +1613,7 @@ getMethodTypes(){
 saveConnector(body){
   return this.http.post(`https://ezflow.dev.epsoftinc.com/sdk/save-api-list`,body); 
 }
-
+getProjectTaskDetailsById(projectId,taskId){
+  return this.http.get('/platform-service/task/findTaskByProjectIdAndTaskId?projectId='+projectId+'&taskId='+taskId)
+}
 }
