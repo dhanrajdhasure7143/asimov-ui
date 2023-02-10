@@ -190,7 +190,7 @@
                 </div> -->
             </div>
             <div class="row">
-                <div class="col-7">
+                <div class="col-sm-7 pl-0">
                     <div>
                         <b>Task Description</b> 
                         <p-inplace #inplace3 (onActivate)="inplaceActivateDesc()">
@@ -225,20 +225,20 @@
                         <button mat-raised-button color="primary">Save</button>
                     </div> -->
                 </div>   
-                <div class="col card commentBox">
-                    <div>
+                <div class="col-sm-5 pr-0">
+                    <div class="commentBox">
                         <p-tabView styleClass="task-details-tabs">
                             <p-tabPanel header="Comments">
                                 <div class="content">
                                     <div class="" *ngFor=" let item of taskcomments_list">
                                         <div class="row">
-                                            <div class="col-2 userimage">
+                                            <div class="userimage">
                                                 <div class="res-circle">
                                                     {{item.createdUserEmail|userImagePipe:users_list}}
                                                 </div>
                                             </div>
 
-                                            <div class="col-10 pl-0 comment-name">
+                                            <div class="comment-name">
                                                 <h5> {{item.createdBy}} </h5>
                                                 <div>{{item.createdTimestamp | date :'MMM dd, y, HH:mm:ss'}}</div>
                                                 <!-- {{item.createdBy}} {{item.createdTimestamp | date :'MMM dd, y, HH:mm:ss'}} -->
@@ -255,13 +255,12 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <b>Add Comment</b> 
+                                    <label>Add Comment</label> 
                                     <!-- <textarea [rows]="2" [cols]="58" pInputTextarea [autoResize]="true"></textarea> -->
                                     <!-- <textarea type="text" id="textarea"  class="md-textarea form-control" [(ngModel)]="add_comment"></textarea> -->
                                     <textarea [style]="{'width':'100%'}" [rows]="2" pInputTextarea
                                         [(ngModel)]="add_comment" [autoResize]="true" maxlength="100"></textarea>
-                                    <button type="button" class="btn btn-primary btn-sm"
-                                        style="float: right; margin-top: 6px;" (click)='postcomments()'>Add</button>
+                                    <button type="button" class="btn btn-primary btn-sm" (click)='postcomments()'>Add</button>
                                 </div>
                             </p-tabPanel>
                             <p-tabPanel header="Audit">

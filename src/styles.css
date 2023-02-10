@@ -2869,7 +2869,8 @@ tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
   padding: 10px 20px 0px;
   height: 100%;
 }
-.splitoverlaydiv .p-tabview.p-component {
+.splitoverlaydiv .p-tabview.p-component,
+.commentBox .p-tabview.p-component {
   height: 100%;
 }
 .splitoverlaycontent {
@@ -2888,7 +2889,8 @@ tr.p-element.p-selectable-row.p-highlight > td { /*highlight of row*/
 .splitoverlaydiv .p-tabview .p-tabview-nav li .p-tabview-nav-link {
   padding: 0px 15px !important;
 }
-.splitoverlaydiv .p-tabview .p-tabview-nav {
+.splitoverlaydiv .p-tabview .p-tabview-nav,
+.commentBox .p-tabview .p-tabview-nav {
   height: 45px;
   border-bottom: 1px solid #e0e0e0 !important;
 }
@@ -2896,6 +2898,9 @@ button.btn.bluebg-button {
   background-color: var(--main-bluecolor);
   color: #fff;
   padding: 6px 30px;
+}
+.commentBox .p-tabview-panels {
+  height: calc(100% - 45px) !important;
 }
 
 /* Overlay  Screen Styles End */
@@ -3027,9 +3032,7 @@ button.custom-popupbtn.mat-button {
   width: auto !important;
 } */
 
-.task-details-tabs .p-tabview-nav-container{
-  border-bottom: 1px solid !important;
-}
+
 .p-card .p-card-body{
   height: 160px !important;
 }
