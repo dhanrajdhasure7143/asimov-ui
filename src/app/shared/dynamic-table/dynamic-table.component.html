@@ -1,6 +1,6 @@
 <div class="">
     <p-table #dt1 [value]="table_data" [columns]="selectedColumns" [globalFilterFields]="search_fields"
-        [reorderableColumns]="true" [(selection)]="selectedItem"
+        [reorderableColumns]="true" [(selection)]="selectedItem" [scrollable]="true"
         [resizableColumns]="true" responsiveLayout="scroll" [selectionMode]="selectionMode" [dataKey]="dataKeyId">
         <ng-template pTemplate="caption">
             <div class="p-d-flex">

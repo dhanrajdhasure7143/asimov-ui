@@ -45,7 +45,7 @@
                                     <ng-template pTemplate="content">
                                         <input type="text" [style]="{'width':'30%'}" pInputText
                                             [(ngModel)]="taskName" (keydown)="Space($event)"/>
-                                        <span class="pull-right">
+                                        <span class="editfields">
                                             <i class="pi pi-check"
                                                 *ngIf="taskName" (click)="onUpdateDetails('taskName')"></i>
                                             <i class="pi pi-times" (click)="onDeactivate()"></i>
@@ -63,7 +63,7 @@
                                                 <span class="mediumimp" *ngIf="task_details.priority == 'Medium'">{{task_details.priority}}</span>
                                             <img src="./../../../../assets/images-n/projects/high_priority.svg"
                                                 alt="importance" *ngIf="task_details.priority == 'High'">
-                                            <span class="highimp">{{task_details.priority}}</span>
+                                            <span class="highimp" *ngIf="task_details.priority == 'High'">{{task_details.priority}}</span>
                                         </span>
                                     </ng-template>
                                     <ng-template pTemplate="content">
@@ -99,7 +99,7 @@
                                         <ng-template pTemplate="display">
                                             <span class="">{{task_details.resources| userPipe : users_list}}</span>
                                         </ng-template>
-                                        <ng-template pTemplate="content">
+                                        <ng-template pTemplate="content">                                            
                                             <p-dropdown [options]="users_list" [filter]="true"
                                                 [style]="{'width':'100%'}" filterBy="user_email,fullName" required
                                                 [autoDisplayFirst]="false" placeholder="Select Assignee"
@@ -178,11 +178,11 @@
                                             <label>Task Completion</label>
                                         </span>
                                     </div>
-                                </div>                                
+                                </div>
                             </div>
                         </div>
                     </div>
-                    
+
                 </div>
                 <!-- <div class="row project-description">
                     <label>Description</label>
@@ -192,15 +192,18 @@
             <div class="row">
                 <div class="col-sm-7 pl-0">
                     <div>
-                        <b>Task Description</b> 
+                        <h4 class="colheads">Task Description</h4>
                         <p-inplace #inplace3 (onActivate)="inplaceActivateDesc()">
                             <ng-template pTemplate="display">
                                 <span [innerHTML]="task_desc"></span>
                                 <!-- <div [innerHtml]="task_desc.html"></div> -->
-
                                 <!-- <span>{{descChanges(task_desc)}}</span> -->
                             </ng-template>
-                            <ng-template pTemplate="content">
+                            <ng-template pTemplate="content taskdescription">
+                                <span class="editfields">
+                                    <i class="pi pi-check" (click)="onUpdateDesc()"></i>
+                                    <i class="pi pi-times" (click)="onDeactivate()"></i>
+                                </span> 
                                 <p-editor [(ngModel)]="task_desc" [style]="{'height':'320px'}">
                                     <ng-template pTemplate="header">
                                         <span class="ql-formats">
@@ -210,8 +213,6 @@
                                         </span>
                                     </ng-template>
                                 </p-editor>
-                                <i class="pi pi-check" (click)="onUpdateDesc()"></i>
-                                <i class="pi pi-times" (click)="onDeactivate()"></i>
                             </ng-template>
                         </p-inplace>
                         <!-- <span> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsa incidunt tenetur, nam, aspernatur voluptatum tempore eligendi necessitatibus pariatur reiciendis dolore eum! Ea nobis quas vel, quam nam amet adipisci perspiciatis.
@@ -221,10 +222,10 @@
                         </textarea> -->
                     </div>
                     <!-- <div class="float-right">
-                        <button mat-raised-button>Cancel</button> 
+                        <button mat-raised-button>Cancel</button>
                         <button mat-raised-button color="primary">Save</button>
                     </div> -->
-                </div>   
+                </div>
                 <div class="col-sm-5 pr-0">
                     <div class="commentBox">
                         <p-tabView styleClass="task-details-tabs">
@@ -234,7 +235,7 @@
                                         <div class="row">
                                             <div class="userimage">
                                                 <div class="res-circle">
-                                                    {{item.createdUserEmail|userImagePipe:users_list}}
+                                                    <span>{{item.createdUserEmail|userImagePipe:users_list}}</span>
                                                 </div>
                                             </div>
 
@@ -255,7 +256,7 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <label>Add Comment</label> 
+                                    <label>Add Comment</label>
                                     <!-- <textarea [rows]="2" [cols]="58" pInputTextarea [autoResize]="true"></textarea> -->
                                     <!-- <textarea type="text" id="textarea"  class="md-textarea form-control" [(ngModel)]="add_comment"></textarea> -->
                                     <textarea [style]="{'width':'100%'}" [rows]="2" pInputTextarea
@@ -267,12 +268,10 @@
                             <div class="historyContent">
                                 <ul class="historydiv">
                                     <li *ngFor="let history of taskhistory_list">
-                                        <div class="ET-history">
-                                            <div class="histcontent">
-                                                {{history.message}}{{history.lastModifiedTimestamp | date:'MMM dd, y,
+                                        <span>
+                                            {{history.message}}{{history.lastModifiedTimestamp | date:'MMM dd, y,
                                                 HH:mm:ss'}}
-                                            </div>
-                                        </div>
+                                        </span>
                                     </li>
                                 </ul>
                             </div>
@@ -294,7 +293,7 @@
             <div class="bgcolor">
                 <div class="rpa-modal-header">
                     <h5> Attached Documnets</h5>
-                    
+
                 </div>
                 <div class="modal-body actions-mbody actionsoverlay-mbody ">
                     <div class="tablediv">
@@ -347,7 +346,7 @@
     <p-dialog header="Folder Name" [(visible)]="isFile_upload_dialog" [style]="{width: '25vw'}" (onHide)="onCloseFolderOverlay()">
         <span class="p-float-label">
             <p-tree [value]="files" [filter]="false" styleClass="document-tree" selectionMode="single" [style]="{'max-height':'auto','overflow':'auto'}"
-            (onNodeUnselect)="nodeUnselect()" [(selection)]="selected_folder"> 
+            (onNodeUnselect)="nodeUnselect()" [(selection)]="selected_folder">
             <!-- <ng-template let-node pTemplate="default">
                 <b (click)="onNodeClick($event,node)">{{node.label}}</b>
             </ng-template> -->
