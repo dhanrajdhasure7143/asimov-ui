@@ -279,13 +279,15 @@
                             <div *ngFor="let each of messages_list">
                             <div class="lftusermsg" *ngIf="logged_userId != each.userId">
                                 <!-- <img alt="user-img" src="./../../../../assets/images-n/projects/user2.svg" /> -->
-                                <div class="user_keys">{{userFirstValues(each.firstName,each.lastName)}}</div>
+                                <div class="user_keys res-circle">{{userFirstValues(each.firstName,each.lastName)}}</div>
+                                <div class="user_keys res-reply"><i class="pi pi-replay"></i></div>
                                 <div>
                                     <p>{{each.message}}</p>
                                 </div>
                                 <p class="userinfo">{{each.firstName}} {{each.lastName}} | {{each.createdTimestamp| date:'MMM d, y, HH:mm'}}</p>
                             </div>
                             <div class="rgtusermsg" *ngIf="logged_userId == each.userId">
+                                <div class="user_keys res-reply"><i class="pi pi-replay"></i></div>
                                 <div>
                                     <p>{{each.message}}</p>
                                 </div>

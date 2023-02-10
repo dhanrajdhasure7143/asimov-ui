@@ -1949,12 +1949,11 @@ onDragEnd(e: { gutterNum: number; sizes: number[] }) {
       userId:this.logged_userId,
       message:this.typedMessage,
       projectId:this.project_id,
-      rmid:753,
+      rmId:753,
       firstName:this.userDetails.firstName,
       lastName:this.userDetails.lastName,
     }
     console.log("calling logout api via web socket");
-    this.typedMessage='';
     // console.log(message)
     this.stompClient.send("/app/send", {}, JSON.stringify(message));
 }
@@ -1963,6 +1962,7 @@ onDragEnd(e: { gutterNum: number; sizes: number[] }) {
     this.rest_api.getMessagesByProjectId(this.project_id).subscribe((res:any)=>{
       this.messages_list = res;
       setTimeout(()=>{
+      this.typedMessage='';
           var objDiv = document.getElementById("message-body");
           objDiv.scrollTop = objDiv.scrollHeight;
         },100)

@@ -243,3 +243,40 @@ span.userstabbtns {
     height: 500px;
     overflow: auto;
 }
+.res-circle {
+    /* width: 44px;
+    border-radius: 100%;
+    height: 43px;
+    margin-top: 2px;
+    background: #fff;
+    margin-left: 5px;
+    font-weight: bold;
+    padding: 8px 11px;
+    border: 1px solid black; */
+    width: 32px;
+    border-radius: 100%;
+    height: 32px;
+    margin-top: 7px;
+    margin-left: 5px;
+    font-weight: bold;
+    padding: 5px 7px;
+    border: 1px solid black;
+  }
+    .res-circle:after {
+      content: "";
+      display: block;
+      padding-bottom: 100%;
+    }
+    .res-reply{
+        width: 32px;
+        height: 32px;
+        margin-top: 7px;
+        margin-left: 30px;
+        font-weight: bold;
+        padding: 5px 7px;
+      }
+        .res-reply:after {
+          content: "";
+          display: block;
+          padding-bottom: 100%;
+        }
