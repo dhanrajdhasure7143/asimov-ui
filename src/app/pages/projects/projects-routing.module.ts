@@ -15,6 +15,7 @@ import { ProjectRpaDesignComponent } from './project-rpa-design/project-rpa-desi
 import { ProjectTaskListComponent } from './project-details-screen/project-task-list/project-task-list.component';
 import { ProjectTaskDetailsComponent} from './project-task-details/project-task-details.component';
 import { ProjectsDocumentComponent } from './project-details-screen/projects-document/projects-document.component';
+import { ProjectDocumentEditorComponent } from './project-details-screen/project-document-editor/project-document-editor.component';
 
 
 const routes: Routes = [
@@ -35,6 +36,7 @@ const routes: Routes = [
     {path:'tasks',component:ProjectTaskListComponent},
     {path:'taskDetails',component:ProjectTaskDetailsComponent},
     {path:'document',component:ProjectsDocumentComponent},
+    {path:'document-editor', component:ProjectDocumentEditorComponent},
     {path:'**', redirectTo:'/listOfProjects', pathMatch: 'full'}
     
   ]}
